@@ -1,0 +1,191 @@
+* {
+    box-sizing: border-box;  /* include padding and border in the elements width/size */
+  }
+  body {
+    display: flex;
+    min-height: 100vh;
+    min-width: 100vw;
+    flex-direction: column;
+    margin: 0;
+    background-color: lightsalmon;
+    align-items: stretch;
+  }
+  .header, .footer {
+    flex: 0 1 20px;   /*sized to content */
+    background: yellowgreen;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .header, .footer {
+    padding: 1;
+    border: 1px solid black;
+  }
+  #lftPbuttonDiv{
+    flex: 0 1 100px;
+  }
+  #rtPbuttonDiv{
+    flex: 0 1 100px;
+  }
+
+  #mainMenu{
+    flex: 0 1 500px;
+  }
+
+  .main { 
+    flex: 1 1 auto;                  /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    height: 100%;
+    background-color: red;
+  }
+  .nav {
+    resize: horizontal;
+    overflow: auto;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    background-color: lavender;
+    border: 1px solid black;
+  }
+  .labHolder{
+    background-color: lightskyblue;
+    flex: 1;
+    border: 1px solid black;
+  }
+  .lab {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    background-color: lightgray;
+  }
+  .labBench {
+    background-color: lightgoldenrodyellow;
+    flex: 1;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .benchPopTop {
+    border: 1px solid black;
+    flex:0 1 30px;
+    resize: vertical;     /* broken: resize is not working here */
+    overflow: auto;
+    display: flex;
+    flex-direction: row;
+    background-color: lightblue;
+  }
+  .benchPopMid {
+    border: 1px solid black;
+    flex: 1;
+    background-color: lightgrey
+  }
+  .benchPopBot {
+    flex: 0 1 40px;
+    border: 1px solid black;
+    background-color: peachpuff;
+  }
+
+  .orgTop {
+    border: 1px solid black;
+    flex:0 1 30px;
+    resize: vertical;     /* broken: resize is not working here */
+    overflow: auto;
+    display: flex;
+    flex-direction: row;
+  }
+  .orgTopLt{
+    flex: 1;  
+    display: flex;
+    flex-direction: row;
+    background-color: linen;
+  }
+  #activeOrgan{
+    background-color: lawngreen;
+    border: 1px solid red;
+    width: 90%;
+  }
+  .orgTopRt{
+    flex: 0 1 200 px;
+    background-color: paleturquoise;
+  }
+  .orgMid {
+    border: 1px solid black;
+    flex:1;
+  }
+  .orgBot {
+    flex: 0 1 40px;
+    border: 1px solid black;
+  }
+  #cycleSlider{
+    background-color: mediumpurple;
+  }
+  .labInfo {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 344px;          /* flex: 0 1 40px; is fixed in that dimension */
+    border: 1px solid black;
+    background: beige;
+  }
+  .labInfoTop {
+    border: 1px solid black;
+    flex:0 1 220px;
+    resize: vertical;     /* broken: resize is not working here */
+    overflow: auto;
+  }
+  .labInfoMid {
+    border: 1px solid black;
+    flex:1;
+  }
+  .labInfoBot {
+    flex: 0 1 20px;
+    border: 1px solid black;
+  }
+  #Statistics{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid purple;
+    height: 342px;
+    resize: vertical;
+    overflow: auto;
+    visibility: 
+  }
+  #Selected{
+    flex: 0 1 170;
+    border: 1px solid red;
+    resize: horizontal;
+    overflow: auto;
+  }
+  #popStats{
+    flex: 1;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
+    border: 1px solid green;
+  }
+  #miniChart{
+    flex: 1;
+    border: 1px solid black;
+  }
+  #miniChartYaxis{
+    flex: 0 1 30px;
+    border: 1px solid black;
+  }
+.mainPageButtons{
+  border: 1px solid black;
+  flex:0 1 120px;
+  resize: vertical;     /* broken: resize is not working here */
+  overflow: auto;
+}
+.freezer{
+  border: 1px solid black;
+  flex:1;
+}
+.freezerSection{
+  font-size: 130%;
+  background-color: rgb(215, 215, 248);
+}
+.trash{
+  flex: 0 1 40px;
+  border: 1px solid black;
+}
+
