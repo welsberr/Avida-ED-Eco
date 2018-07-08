@@ -230,8 +230,8 @@ button {display:inline;}
   text-align: center;
 }
 
-.resourceButton {
-  width: 100px
+.resourceButton_oldDelete {
+  width: 13px
 }
 
 .dojoDndItem {

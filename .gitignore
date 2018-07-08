@@ -1,3 +1,4 @@
 .DS_Store
 *.*~
 
+/HTML5Application/nbproject/private/

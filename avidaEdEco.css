@@ -123,11 +123,15 @@
     background-color: mediumpurple;
   }
   .labInfo {
-    display: flex;
-    flex-direction: column;
     flex: 0 1 344px;          /* flex: 0 1 40px; is fixed in that dimension */
     border: 1px solid black;
     background: beige;
+  }
+  .lapInfoBlock{
+    display: flex;
+    flex-direction: column;
+    background-color: lightsteelblue;
+    height: 100%;
   }
   .labInfoTop {
     border: 1px solid black;
@@ -150,7 +154,6 @@
     height: 342px;
     resize: vertical;
     overflow: auto;
-    visibility: 
   }
   #Selected{
     flex: 0 1 170;
@@ -175,6 +178,17 @@
   flex:0 1 120px;
   resize: vertical;     /* broken: resize is not working here */
   overflow: auto;
+}
+.taskSets{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+.taskLevel{
+  flex:0 1 8em;
+  border: 1px solid #EEE;
+  padding: 3px;
 }
 .freezer{
   border: 1px solid black;
