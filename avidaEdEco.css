@@ -123,7 +123,7 @@
     background-color: mediumpurple;
   }
   .labInfo {
-    flex: 0 1 344px;          /* flex: 0 1 40px; is fixed in that dimension */
+    flex: 0 1 344px;          /* flex: 0 1 344px; is fixed in that dimension */
     border: 1px solid black;
     background: beige;
   }
@@ -151,6 +151,7 @@
     display: flex;
     flex-direction: row;
     border: 1px solid purple;
+    background-color: #F5F5F5;
     height: 342px;
     resize: vertical;
     overflow: auto;
@@ -165,7 +166,7 @@
     flex: 1;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
     border: 1px solid green;
   }
-  #miniChart{
+  #popChrtHolder{
     flex: 1;
     border: 1px solid black;
   }
@@ -203,3 +204,31 @@
   border: 1px solid black;
 }
 
+  .analysisArea{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: lightgray;
+  }
+  .anaTop{
+    flex: 1;
+    border: 1px solid black;
+  }
+  .anaBot {
+    flex: 0 1 75px;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    border: 1px solid black;
+    background-color: peachpuff;
+  }
+  .analegend{
+    flex: 1;
+    border: 1px solid black;
+    background-color: seashell;
+  }
+  .anaYaxis{
+    flex: 0 1 500px;
+    background-color: lavender;
+  }

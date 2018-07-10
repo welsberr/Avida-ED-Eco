@@ -9,11 +9,13 @@ and open the template in the editor.
 */
 
 #population {
-  display: flex;
-  visibility: visible;
+  display: none;
 }
 #organism{
   display: none;
+}
+#analysis{
+  display: flex;
 }
 
 #labInfoPopData{
@@ -22,3 +24,5 @@ and open the template in the editor.
 #labInfoPopSetup{    /* was called setupBlock */
   display: flex;
 }
+
+.noSize{display: none}

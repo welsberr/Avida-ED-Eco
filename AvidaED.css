@@ -308,7 +308,6 @@ button {display:inline;}
 }
 
 /* dojo css */
-
 .dijitBorderContainer {
   padding: 1px;
 }
@@ -327,17 +326,15 @@ table.topSotTable {
   border: 0;
   padding: 0;
   table-layout: auto;
+  background-color: #DDDDDD;
+  width: 100%;
 }
 .topSotTable th, .top td {  padding: 0px;  }
 .topTable tr *:nth-child(1) {
   text-align: right;
 }
-.topSotTable tr *:nth-child(2) {
-  width: 40px;
-}
 
 .topSotTable tr:nth-child(odd) {background: #D7D7D7}
-.topSotTable tr:nth-child(even) {background: #DDDDDD}
 
 table.topPopTable {
   border-collapse: collapse;
