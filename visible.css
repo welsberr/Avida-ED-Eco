@@ -8,17 +8,17 @@ and open the template in the editor.
     Author     : dianeblackwood
 */
 
-#population {
+#populationBlock {
   display: none;
 }
-#organism{
-  display: none;
-}
-#analysis{
+#organismBlock{
   display: flex;
 }
+#analysisBlock{
+  display: none;
+}
 
-#labInfoPopData{
+#setupBlock{
   display: none;    
 }
 #labInfoPopSetup{    /* was called setupBlock */

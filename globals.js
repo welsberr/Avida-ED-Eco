@@ -1,6 +1,7 @@
 //***************************************
 // Defaults and Constants
 // one global to hold them all.
+var av = av || {};  //incase av already exists
 
 Number.prototype.pad = function(size) {
   var s = String(this);

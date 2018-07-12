@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>Avida-ED 4</title>
+	<title>Avida-ED Ecology</title>
 	<meta charset='utf-8' />
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<script type='text/javascript' src='lib/dojo/dojo.js' data-dojo-config="'parseOnLoad':false,'async':true,
@@ -31,6 +31,7 @@
 	<script type='text/javascript' src='globals.js'></script>
 	<script type='text/javascript' src='placeParent.js'></script>
 	<script type='text/javascript' src='utilities.js'></script>
+  <script type='text/javascript' src='AvidaED.js'></script>
 
 	<link href='images/favicon.ico' rel='icon' type='image/x-icon' />
 	<link rel='stylesheet' href='lib/jquery-ui/themes/smoothness/jquery-ui.css'>
@@ -41,19 +42,32 @@
 		@import 'avidaEdEco.css';
 		@import 'visible.css';
 	</style>
+    <script>
+    function avResize() {
+      //console.log('initial handler in html only');
+      // av.ui.browserResizeEventHandler()  //gets an error on a fresh load
+    }
+
+    //never triggered not sure why. trying to get mouse coordinates for IE
+    function getCoords(event) {
+      av.mouse.grdX = event.clientX;
+      av.mouse.grdY = event.clientY;
+      console.log(' on grid in html xy', event.clientX, event.clientY);
+    }
+  </script>
 </head>
 
-<body>
-  <!-- http://stackoverflow.com/questions/20828799/creating-a-splash-page-in-html5 -->
-<div id='splash'>
-  <div align='center'>
-    <h1 style='color:whitesmoke'>Avida-ED 3.2.0 is loading . . .</h1>
-    <img src='images/Avida-ED-icon.png' /><br />
-    <img src='images/AvidaGrid.gif' />
+<body onresize='avResize()'>
+  <span title="http://stackoverflow.com/questions/20828799/creating-a-splash-page-in-html5"></span>
+  <div id='splash'>
+    <div align='center'>
+      <h1 style='color:whitesmoke'>Avida-ED 3.2.0 is loading . . .</h1>
+      <img src='images/Avida-ED-icon.png' /><br />
+      <img src='images/AvidaGrid.gif' />
+    </div>
   </div>
-</div>
 
-	<div class="header">
+	<div class="headerRow">
 		<div id="lftPbuttonDiv">&nbsp;&nbsp;lft panel button</div>
 		<div id="mainMenu">
       <input id='putWS' type='file' style = 'display:none;' onchange='av.fio.userPickZipRead()' />
@@ -132,7 +146,8 @@
               </div>
             </span>
           </span>
-          <span data-dojo-type='dijit/PopupMenuBarItem' label='Debug' id='mnDebug' style = 'visibility: hidden'> <!--visible/hidden-->
+          <span title="visibility: hidden/visible; display=block/flex/none"></span>
+          <span data-dojo-type='dijit/PopupMenuBarItem' label='Debug' id='mnDebug' style = 'visibility: hidden'> 
             <span data-dojo-type='dijit/Menu'>
               <span data-dojo-type='dijit/MenuItem' id='mnDbThrowError' label='Throw Error'></span>
               <span data-dojo-type='dijit/MenuItem' id='mnDbThrowData' label='Send Data to console'></span>
@@ -153,8 +168,8 @@
 		<div id="rtPbuttonDiv">rt panel button</div>
 	</div>
 
-	<div class="main">
-		<div class="nav">
+	<div class="mainRow">
+		<div class="navCol">
 			<div class="mainPageButtons" id='mainButtons'>
 				<table id='mainButtonTable' style='border-collapse:collapse;table-layout:auto;width:100%;height:auto;' border='0'>
 					<tbody>
@@ -176,26 +191,26 @@
 			<div class="freezer">
 				<div class="iceWrap">
 					<h3>Freezer</h3>
-					<!-- https://stackoverflow.com/questions/24977965/collapsible-lists-using-html-and-css -->
+          <span title="https://stackoverflow.com/questions/24977965/collapsible-lists-using-html-and-css"></span>
 					<details open>
 						<summary class="freezerSection">Configured Dishes</summary>
-						<ul>
-							<li>@default</li>
-							<li>nan_only</li>
+						<ul id='fzConfig' class='container'>
+							<li>config1</li>
+							<li>config2</li>
 						</ul>
 					</details>
 					<details open>
 						<summary class="freezerSection">Organsims</summary>
-						<ul>
-							<li>@ancestor</li>
-							<li>@all_functions</li>
+						<ul id='fzOrgan' class='container'>
+							<li>critter1</li>
+							<li>critter2</li>
 						</ul>
 					</details>
 					<details open>
 						<summary class="freezerSection">Populated Dishes</summary>
-						<ul>
-							<li>@example</li>
-							<li>nan_only@100updates</li>
+						<ul id='fzWorld' class='container'>
+							<li>pop1</li>
+							<li>pop2</li>
 						</ul>
 					</details>
 				</div>
@@ -205,13 +220,13 @@
 					<img id='trashCanImage' src='images/Avida-ED-trash-icon.png' style='width: 32px;' />
 				</span>
 			</div>
-		</div>  <!-- end of nav -->
+    </div><span comment="end of navCol"></span>
 
-	 	<div class="labHolder">
+	 	<div class="mainBlockHolder">
       
-      <div class=lab id="population">
-				<div class="labBench">
-          <div class="benchPopTop" id='popTop'>
+      <div class="mainBlockClassRow" id="populationBlock">
+				<div class="popBenchCol">
+          <div class="benchPopTopRow" id='popTop'>
           <table border='0' style='border-collapse: collapse; table-layout: auto; width: 100%; height: auto;'>
             <tbody>
             <tr style='vertical-align: middle; line-height: 25px'>
@@ -229,22 +244,21 @@
           </table>
           </div>
           <div class="benchPopMid" id='gridHolder'>
-            <canvas data-dojo-type='dojo.dnd.Target' id='gridCanvas' />
+            <canvas data-dojo-type='dojo.dnd.Target' id='gridCanvas'></canvas>
           </div>
           <div class="benchPopBot" id="popBot">
             <table border='0' style='border-collapse: collapse; table-layout: auto; width: 100%; height: auto;' id='gridControlTable'>
               <tbody>
               <tr>
-                <!--<div id='scaleDiv' style='overflow: auto'>-->
+              <span title="was a div around scaleCanvas id='scaleDiv' style='overflow: auto'"></span>
                   <canvas id='scaleCanvas' width='30 px' height='30 px' style='border:1px solid #DDDDDD;'></canvas>
-                <!--</div>-->
               </tr>
               <tr>
                 <td>
                   Time: <label id='TimeLabel'>(not started)</label><br/>
                   <button id='freezeButton'>Freeze</button>
                 </td>
-                <td style='text-align: center; min-width:166px'><!--166px-->
+                <td style='text-align: center; min-width:166px'>
                   Mode
                   <select data-dojo-type='dijit/form/Select' id='colorMode' data-dojo-props='name: "colorMode"'>
                     <option value='Fitness' selected='selected'>Fitness</option>
@@ -269,8 +283,8 @@
             </table>
           </div>
 				</div>
-				<div class="labInfo">
-          <div class="lapInfoBlock" id="labInfoPopSetup" >
+				<div class="popInfo">
+          <div id="setupBlock" class="labInfoBlock">
             <form id='setupForm'>
               <label>Environmental Settings</label>
 
@@ -386,7 +400,7 @@
               </span>
             </form>            
           </div><span comment="end of labInfoPopSetup"></span>
-          <div class="lapInfoBlock" id="labInfoPopData" >
+          <div class="labInfoBlock" id="labInfoPopData" >
             <div id="Statistics">
               <div id="Selected">
                 <div class='popStatsTitle'>
@@ -598,13 +612,13 @@
               </select>
             </div> 
           </div>  <span comment="end of labInfoBlock"></span>
-				</div>  <span comment="end of labInfoData"></span>
-			</div>  <span comment="end of population"></span>
+				</div>  <span comment="end of popInfo"></span>
+      </div>  <span title="mainBlockClassRow id=populationBlock"></span>
 
       
-      <div class=lab id="organism">
-        <div class="labBench">
-          <div class="orgTop">
+      <div class="mainBlockClassRow" id="organismBlock">
+        <div class="orgBenchCol">
+          <div class="orgBenchTopRow">
             <div class="orgTopLt">
               <img src='images/Avida-ED-ancestor-icon.png' style='height: 32px;' id='actOrgImg' />
               <div id='activeOrgan' class='popContainer'></div>
@@ -634,8 +648,8 @@
               <button id='orgEnd' disabled>End</button>
             </div>
           </div>
-				</div>
-        <div class="labInfo">
+        </div><span title="end of orgBenchCol"></span>
+        <div class="orgInfo">
             <table border='0'
                    style='border-collapse: collapse; table-layout: auto; width: 100%; height: auto; background-color:#DDD'>
               <colgroup>
@@ -704,13 +718,12 @@
               <p>About to Execute:</p>
               <textarea type='text' id='ExecuteAbout' readonly style='height: 50px; width: 100%;'></textarea>
             </span>
-        </div>
-      </div>  
+        </div><span title="end of orgInfo"></span>
+      </div><span title="mainBlockClassRow id=organismBlock"></span>
       
-      <div class="analysisArea" id="analysis">
-        <div class="anaTop" id='organismCanvasHolder'>
-          <canvas data-dojo-type='dojo.dnd.Target' id='organCanvas' width='100' height='100'
-                  style='border:1px solid #000000;'></canvas>
+      <div class="analysisArea" id="analysisBlock">
+        <div class="anaTop" id='organismCanvasHolder' comment="anaChrtHolder">
+          <div id='anlDndChart' style='height: 100%; width: 100%;'>
         </div>
         <div class="anaBot">
           <div class="analegend">
@@ -783,73 +796,72 @@
         </div><span value="anaBot"></span>
       </div>
       
-    </div> <span comment="end of labHolder"></span>
-  </div> <span comment="end of main"></span>
+    </div> <span comment="end of mainBlockHolder"></span>
+  </div> <span comment="mainBlockHolder"></span>
+</div>
   
-  <span comment="---------------------------------------------------------------------------------- Dialog boxes --"></span>
-  <span comment="------------------------------------------------------------------------ Save WSfile Dialog box --"></span>
-  <div  class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='sWSfDialog' title='The freezer has changed since last saved in a workspace'>
-    <div class='dijitDialogPaneContentArea'>
-      <p>Would you like to save before loading another workspace?</p>
-    </div>
-    <div class='dijitDialogPaneActionBar'>
-      <button data-dojo-type='dijit/form/Button' type='button' data-dojo-props='onClick:function(){sWSfDialog.hide();}'
-              id='sWSfCancel'>Cancel loading workspace
-      </button>
-      <button data-dojo-type='dijit/form/Button' type='button' id='sWSfSave'>Save current workspace</button>
-      <button data-dojo-type='dijit/form/Button' type='button' id='sWSfOpen'>Open workspace</button>
-    </div>
+<span title="-------------------------------------------------------------------------------------- Dialog boxes --"></span>
+<span title="---------------------------------------------------------------------------- Save WSfile Dialog box --"></span>
+<div  class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='sWSfDialog' title='The freezer has changed since last saved in a workspace'>
+  <div class='dijitDialogPaneContentArea'>
+    <p>Would you like to save before loading another workspace?</p>
   </div>
-
-  <span comment="--------------------------------------------------------------- Save mnFlExportGraph Dialog box --"></span>
-  <div  class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='mnFlExportGraphDialog'
-       title='Expoert Graphics has not been implemented - for now:'>
-    <div class='dijitDialogPaneContentArea'>
-      <h3>For Mac users</h3>
-      <p>Press the combination [command][shift][4] and use your cursor to select the part of the screen desired.
-        A png file will be saved to the desktop with a name of the form: <br />
-        Screen Shot 2016-10-11 at 3.34.36 PM.png
-      </p>
-      <h3>For PC users</h3>
-      <p>
-        Use Snipping Tool: It is in the Accessories Folder or you can Type "Snip" in the 'search programs and files'
-        field once your hit the 'start button'. Hold and drag the cursor around the area you want to capture. SnippingTool
-        will then allow you to save as a png, gif, jpg or single file html.
-      </p>
-    </div>
-    <div class='dijitDialogPaneActionBar'>
-      <button data-dojo-type='dijit/form/Button' type='button'  id='mnFlExportGraphCancel'
-              data-dojo-props='onClick:function(){mnFlExportGraphDialog.hide();}'>Close Dialog
-      </button>
-    </div>
+  <div class='dijitDialogPaneActionBar'>
+    <button data-dojo-type='dijit/form/Button' type='button' data-dojo-props='onClick:function(){sWSfDialog.hide();}'
+            id='sWSfCancel'>Cancel loading workspace
+    </button>
+    <button data-dojo-type='dijit/form/Button' type='button' id='sWSfSave'>Save current workspace</button>
+    <button data-dojo-type='dijit/form/Button' type='button' id='sWSfOpen'>Open workspace</button>
   </div>
+</div>
 
-  <span comment="----------------------------------------------------------------- Export Stand Alone Dialog box --"></span>
-  <div class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='mnFlStandAloneAppDialog'
-       title='Stand alone version of Avida-ED 3.2.0'>
-    <div class='dijitDialogPaneContentArea'>
-      <h3>For working where there is no internet access</h3>
+<span title="------------------------------------------------------------------- Save mnFlExportGraph Dialog box --"></span>
+<div  class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='mnFlExportGraphDialog'
+     title='Expoert Graphics has not been implemented - for now:'>
+  <div class='dijitDialogPaneContentArea'>
+    <h3>For Mac users</h3>
+    <p>Press the combination [command][shift][4] and use your cursor to select the part of the screen desired.
+      A png file will be saved to the desktop with a name of the form: <br />
+      Screen Shot 2016-10-11 at 3.34.36 PM.png
+    </p>
+    <h3>For PC users</h3>
+    <p>
+      Use Snipping Tool: It is in the Accessories Folder or you can Type "Snip" in the 'search programs and files'
+      field once your hit the 'start button'. Hold and drag the cursor around the area you want to capture. SnippingTool
+      will then allow you to save as a png, gif, jpg or single file html.
+    </p>
+  </div>
+  <div class='dijitDialogPaneActionBar'>
+    <button data-dojo-type='dijit/form/Button' type='button'  id='mnFlExportGraphCancel'
+            data-dojo-props='onClick:function(){mnFlExportGraphDialog.hide();}'>Close Dialog
+    </button>
+  </div>
+</div>
+
+<span title="--------------------------------------------------------------------- Export Stand Alone Dialog box --"></span>
+<div class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='mnFlStandAloneAppDialog'
+     title='Stand alone version of Avida-ED 3.2.0'>
+  <div class='dijitDialogPaneContentArea'>
+    <h3>For working where there is no internet access</h3>
+    <ul>
+      <li class="slim"><a href="pkgs/Avida-ED-Web-PC_2016_0918.exe" target='_blank'>Avida-ED Windows installer for self-hosted version 2016_0918</a></li>
+      <li><a href="pkgs/Avida-ED_Server_3.0.0.app.zip" target='_blank'>Avida-ED 3.2.0 for Mac OS 10.6 and above</a></li>
       <ul>
-        <li class="slim"><a href="pkgs/Avida-ED-Web-PC_2016_0918.exe" target='_blank'>Avida-ED Windows installer for self-hosted version 2016_0918</a></li>
-        <li><a href="pkgs/Avida-ED_Server_3.0.0.app.zip" target='_blank'>Avida-ED 3.2.0 for Mac OS 10.6 and above</a></li>
-        <ul>
-          <li>Unzip the file once it is downloaded</li>
-          <li>Move the file ‘Avida-ED Web.app’ to the Applications Folder</li>
-          <li>. . . Your Mac will complain that the file is from an unknown source, you will have to approve opening it</li>
-        </ul>
-        </li>
+        <li>Unzip the file once it is downloaded</li>
+        <li>Move the file ‘Avida-ED Web.app’ to the Applications Folder</li>
+        <li>. . . Your Mac will complain that the file is from an unknown source, you will have to approve opening it</li>
       </ul>
-    </div>
-    <div class='dijitDialogPaneActionBar'>
-      <button data-dojo-type='dijit/form/Button' type='button'  id='mnFlStandAloneAppDialogCancel'
-              data-dojo-props='onClick:function(){mnFlStandAloneAppDialog.hide();}'>Close Dialog
-      </button>
-    </div>
+      </li>
+    </ul>
   </div>
+  <div class='dijitDialogPaneActionBar'>
+    <button data-dojo-type='dijit/form/Button' type='button'  id='mnFlStandAloneAppDialogCancel'
+            data-dojo-props='onClick:function(){mnFlStandAloneAppDialog.hide();}'>Close Dialog
+    </button>
+  </div>
+</div>
 
-  <span comment="--------------------------------------------------------------- Save mnFlExportGraph Dialog box --"></span>
-  <span comment="--------------------------------------------------------------- Save mnFlExportGraph Dialog box --"></span>
-<!--------------------------------------------------- Freezer Dialog -------------------------------------------------->
+<span title="-------------------------------------------------------------------------------- Freezer Dialog box --"></span>
 <div  class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='fzDialog' title='What would you like to save to the freezer?'>
   <div class='dijitDialogPaneContentArea'>
     <p>Configuration saves the experiment settings only.</p>
@@ -867,7 +879,8 @@
   </div>
 </div>
 
-<!------------------------------------------------ New button Dialog -------------------------------------------------->
+<span title="-------------------------------------------------------------------------------- Freezer Dialog box --"></span>
+<span title="--------------------------------------------------------------------------------- New button Dialog --"></span>
 <div  class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='newDialog'
      title='Would you like to save or discard the current petri dish before starting a new experiment?'>
   <div class='dijitDialogPaneContentArea'>
@@ -884,7 +897,7 @@
   </div>
 </div>
 
-<!----------------------------- Single Organism Replication Settings Dialog Box --------------------------------------->
+<span title="------------------------------------------------------- Single Organism Replication Settings Dialog --"></span>
 <div class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='OrganSetupDialog' title='Settings for single organism reproduction'>
   <div class='dijitDialogPaneContentArea'>
     <form id='OrganRepeatForm'>
@@ -920,7 +933,7 @@
   </div>
 </div>
 
-<!------------------------------------------ Need Ancestor Dialog ----------------------------------------------------->
+<span title="------------------------------------------------------------------------------ Need Ancestor Dialog --"></span>
 <div class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='NeedAncestorDialog'
      title='Unable to resume experiment; there is no start organism in the petri dish.'>
   <div class='dijitDialogPaneContentArea'>
@@ -934,7 +947,7 @@
   </div>
 </div>
 
-<!------------------------------------------ Help About Dialog -------------------------------------------------------->
+<span title="--------------------------------------------------------------------------------- Help About Dialog --"></span>
 <div class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='mnHpAboutDialog'
      title='Avida-ED: written in javascript with Avida in C++ via Emscripten'>
   <div class='dijitDialogPaneContentArea' align='center'>
@@ -1278,7 +1291,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
   </div>
 </div>
 
-<!---------------------------------------- Restart Avida with in same browser Session (Does not work ------------------->
+<span title="---------------------------------------- Restart Avida with in same browser Session (Does not work) --"></span>
 <div class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='restartAvidaDialog'
      title='There has been a fatal error in Avida'>
   <div class='dijitDialogPaneContentArea'>
@@ -1291,7 +1304,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
   </div>
 </div>
 
-<!---------------------------------------- Suggesting restart if not loaded after a time delay  ----------------------->
+<span title="----------------------------------------------- Suggesting restart if not loaded after a time delay --"></span>
 <div class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='appReloadDialog'
      title='Avida-ED failed to load'>
   <div class='dijitDialogPaneContentArea'>
@@ -1306,8 +1319,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
   </div>
 </div>
 
-<!------------------------------------- Send Log Data via e-mail client  ---------------------------------------------->
-<!-- Saving session log when no e-mail client present -->
+<span title="------------------------------------------------------------------- Send Log Data via e-mail client --"></span>
 <div class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='sendLogDialog'
      title='Avida-ED Problem Report - help us make Avida-ED better'>
   <div class='dijitDialogPaneContentArea'>
@@ -1332,8 +1344,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
   </div>
 </div>
 
-<!------------------------------------- Send Log Data by posting to database  ---------------------------------------------->
-<!-- Saving session log when no e-mail client present -->
+<span title="-------------------------------------------------------------- Send Log Data by posting to database --"></span>
+<span title="-------------------------------------------------- Saving session log when no e-mail client present --"></span>
 <div class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='postLogDialog'
      title='Avida-ED Problem Report - help us make Avida-ED better'>
   <div class='dijitDialogPaneContentArea'>
@@ -1375,7 +1387,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
   </div>
 </div>
 
-<!-------------------------------------- Save time recorder data to a csv file ---------------------------------------->
+<span title="------------------------------------------------------------- Save time recorder data to a csv file --"></span>
 <div class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='saveCSVdialog'
      title='write a file'>
   <div class='dijitDialogPaneContentArea'>
@@ -1386,9 +1398,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
             id='saveCSVdialogCancel'>Cancel
     </button>
   </div>
-   <!--    <button data-dojo-type='dijit/form/Button' type='button' id='sendLogDialogSave'>Save</button>  -->
+  <span title="<button data-dojo-type='dijit/form/Button' type='button' id='sendLogDialogSave'>Save</button>"></span>
 </div>
 
-<!------------------------------------------ closing the file --------------------------------------------------------->
+
+<span title="---------------------------------------------------------------------------------- closing the file --"></span>
 
 </body>
