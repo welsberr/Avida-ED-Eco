@@ -2,13 +2,18 @@
     box-sizing: border-box;  /* include padding and border in the elements width/size */
   }
   body {
+    margin: 0;
+    background-color: cyan;
+  }
+  
+  #allAvida{
     display: flex;
     min-height: 100vh;
     min-width: 100vw;
     flex-direction: column;
     margin: 0;
     background-color: lightsalmon;
-    align-items: stretch;
+    align-items: stretch;      
   }
   .headerRow, .footerRow {
     flex: 0 1 20px;   /*sized to content */
@@ -79,7 +84,7 @@
   .benchPopMid {
     border: 1px solid black;
     flex: 1;
-    background-color: lightgrey
+    background-color: blue;
   }
   .benchPopBot{
     flex: 0 1 40px;

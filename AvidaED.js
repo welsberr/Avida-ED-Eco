@@ -261,11 +261,13 @@ require([
     av.dom.mapBC = document.getElementById('mapBC');
     av.dom.popInfo = document.getElementById('popInfo');
     av.dom.popBot = document.getElementById('popBot');
+    
+    av.dom.freezeButton = document.getElementById('freezeButton');
     av.dom.populationBlock = document.getElementById('populationBlock');
     av.dom.organismBlock = document.getElementById('organismBlock');
     av.dom.analysisBlock = document.getElementById('analysisBlock');
 
-      av.dom.populationButton = document.getElementById('populationButton');
+    av.dom.populationButton = document.getElementById('populationButton');
     
     av.dom.mnFlStandAloneApp = document.getElementById('mnFlStandAloneApp');
     av.dom.mnHpAbout = document.getElementById('mnHpAbout');
@@ -1351,7 +1353,7 @@ require([
   //**************************************      Freeze Button      *****************************************************
   //Saves either configuration or populated dish
   //Also creates context menu for all new freezer items.*/
-  document.getElementById('freezeButton').onclick = function () {
+  av.dom.freezeButton.onclick = function () {
     av.post.addUser('Button: freezeButton');
     if ('prepping' == av.grd.runState) av.ptd.FrConfigFn();
     else {
@@ -1650,13 +1652,16 @@ require([
 
   av.grd.drawGridSetupFn = function () {
     'use strict';
+    console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+
     if (undefined != av.grd.msg) {
       if ('prepping' != av.grd.runState && undefined != av.grd.msg.fitness) {
         //av.grd.setMapData();  //update color information for offpsring once run has started only if screen visable.
         av.grd.findLogicOutline();
       }
     }
-    if ('populationBlock' === av.ui.page && 'Setup' === av.dom.popSetupButton.textContent) {
+    //if ('populationBlock' === av.ui.page && 'Setup' === av.dom.popSetupButton.textContent) {
+    if ('populationBlock' === av.ui.page) {
       if ('None' == dijit.byId('colorMode').value) {
         if (av.grd.newlyNone) {
           av.grd.newlyNone = false;
@@ -1673,8 +1678,10 @@ require([
             //av.grd.findLogicOutline(); //needs to be done for all updates
           }
         }
-        //figure out scale or legend
-        av.grd.CanvasScale.width = document.getElementById('gridControlTable').clientWidth - 1;
+        console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+
+              //figure out scale or legend
+        av.grd.CanvasScale.width = document.getElementById('gridControlTable').clientWidth - 2;
         document.getElementById('popBot').style.height = '5px';
         if ('Ancestor Organism' == dijit.byId('colorMode').value) {
           av.grd.drawLegend();
@@ -1684,17 +1691,21 @@ require([
         }
         //console.log('after drawing scale or legend. update=',av.grd.oldUpdate);
 
+        console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
         document.getElementById('popBot').style.height = document.getElementById('popBot').scrollHeight + 'px';
         //dijit.byId('populationBlock').resize();
 
         var gridHolderHt = av.dom.gridHolder.clientHeight;
         av.ui.num = Math.floor(gridHolderHt / 4);
 
-        av.grd.CanvasGrid.width = av.dom.gridHolder.clientWidth - 1;
-        av.grd.CanvasGrid.height = gridHolderHt - 2;
+        console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+        console.log('av.grd.CanvasGrid.width ht =', av.grd.CanvasGrid.width, av.grd.CanvasGrid.height);
+        av.grd.CanvasGrid.width = av.dom.gridHolder.clientWidth - 1;  //was - 3
+        av.grd.CanvasGrid.height = gridHolderHt - 1;
         av.grd.spaceX = av.grd.CanvasGrid.width;
         av.grd.spaceY = av.grd.CanvasGrid.height;
         console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+        console.log('av.grd.CanvasGrid.width ht =', av.grd.CanvasGrid.width, av.grd.CanvasGrid.height);
 
         av.grd.findGridSize(av.grd, av.parents);
         if (av.dom.gridHolder.scrollHeight == av.dom.gridHolder.clientHeight + 17) {
