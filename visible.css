@@ -9,10 +9,10 @@ and open the template in the editor.
 */
 
 #populationBlock {
-  display: none;
+  display: flex;
 }
 #organismBlock{
-  display: flex;
+  display: none;
 }
 #analysisBlock{
   display: none;

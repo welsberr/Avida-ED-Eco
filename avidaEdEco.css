@@ -87,18 +87,18 @@
     background-color: peachpuff;
   }
 
-  .popInfo {
+  #spopInfo {
     flex: 0 1 344px;          /* flex: 0 1 344px; is fixed in that dimension */
     border: 1px solid black;
     background: beige;
   }
 
-  .labInfo {
+  #labInfoBlock {
     flex: 0 1 344px;          /* flex: 0 1 344px; is fixed in that dimension */
     border: 1px solid black;
     background: beige;
   }
-  .labInfoBlock{
+  .labInfoClass{
     display: flex;
     flex-direction: column;
     background-color: lightsteelblue;
@@ -118,7 +118,7 @@
     flex: 0 1 20px;
     border: 1px solid black;
   }
-  #Statistics{
+  #popStatistics{
     display: flex;
     flex-direction: row;
     border: 1px solid purple;
@@ -133,7 +133,7 @@
     resize: horizontal;
     overflow: auto;
   }
-  #popStats{
+  #popStats4grid{
     flex: 1;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
     border: 1px solid green;
   }
@@ -162,7 +162,7 @@
   border: 1px solid #EEE;
   padding: 3px;
 }
-.freezer{
+.freezerClass{
   border: 1px solid black;
   flex:1;
 }

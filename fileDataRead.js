@@ -1,4 +1,5 @@
 //Read file data
+var av = av || {};  //incase av already exists
 
 av.fio.addFzItem = function(dndSection, name, type, fileNum) {
   'use strict';
@@ -14,12 +15,12 @@ av.fio.addFzItem = function(dndSection, name, type, fileNum) {
   if (0 < fileNum) { av.dnd.contextMenu(dndSection, domid); }
   //av.dnd.contextMenu(dndSection, domid);
   return domid;
-}
+};
 
 //need to make sure freezer loaded first so not currently in use. Delete later if not used tiba
 av.fio.loadDefaultConfig = function() {
   'use strict';
-  console.log('')
+  console.log('');
   av.fzr.actConfig.name = av.fzr.file['c0/entryname.txt'];
   av.fzr.actConfig.type = 'c';
   av.dnd.activeConfig.selectAll().deleteSelectedNodes();
@@ -28,10 +29,10 @@ av.fio.loadDefaultConfig = function() {
   var mapItems = Object.keys(av.dnd.activeConfig.map);
   av.fzr.actConfig.actDomid = mapItems[mapItems.length - 1];  //domid from active config. Not sure if needed.
   av.fzr.actConfig.fzDomid = av.fzr.domid['c0'];
-  if (av.debug.fio) console.log('avida.cfg', av.fzr.file['c0/avida.cfg'])
+  if (av.debug.fio) console.log('avida.cfg', av.fzr.file['c0/avida.cfg']);
   av.frd.avidaCFG2form(av.fzr.file['c0/avida.cfg']);
   av.frd.environmentCFG2form(av.fzr.file['c0/environment.cfg']);
-}
+};
 
 av.fio.setActiveConfig = function(dndSection, name, type){
   av.dnd.activeConfig.selectAll().deleteSelectedNodes();
@@ -44,7 +45,7 @@ av.fio.setActiveConfig = function(dndSection, name, type){
   av.fzr.actConfig.name = name;
   av.fzr.actConfig.type = type;
   return av.fzr.actConfig.actDomid;
-}
+};
 
 av.frd.add2freezerFromFile = function (loadConfigFlag) {
   'use strict';
@@ -55,7 +56,7 @@ av.frd.add2freezerFromFile = function (loadConfigFlag) {
   var name, domid;
   //console.log('av.fio.thisfile.asText()', av.fio.thisfile.asText());
   //console.log('av.fio.thisfile', av.fio.thisfile);
-  if (null == av.fio.thisfile.asText()) { name = av.fio.anID; }
+  if (null === av.fio.thisfile.asText()) { name = av.fio.anID; }
   else { name = wsb('\n', av.fio.thisfile.asText()); }
 
   //if (av.debug.fio) console.log('type ', type, '; dir', dir, '; num', num);
@@ -64,7 +65,7 @@ av.frd.add2freezerFromFile = function (loadConfigFlag) {
       domid = av.fio.addFzItem(av.dnd.fzConfig, name, type, num);
       if (av.fzr.cNum < Number(num)) {av.fzr.cNum = Number(num); }
       //console.log('c: num', num, '; name', name, 'flag', loadConfigFlag);
-      if (0 == num && loadConfigFlag) {var ConfigActiveDomID = av.fio.setActiveConfig(av.dnd.activeConfig, name, 'b');}
+      if (0 === num && loadConfigFlag) {var ConfigActiveDomID = av.fio.setActiveConfig(av.dnd.activeConfig, name, 'b');}
       break;
     case 'g':
       domid = av.fio.addFzItem(av.dnd.fzOrgan, name, type, num);
@@ -78,7 +79,7 @@ av.frd.add2freezerFromFile = function (loadConfigFlag) {
   av.fzr.file[av.fio.anID] = name;
   av.fzr.domid[dir] = domid;
   av.fzr.dir[domid] = dir;
-}
+};
 
 av.fio.processFiles = function (loadConfigFlag){
   'use strict';
@@ -104,8 +105,8 @@ av.fio.processFiles = function (loadConfigFlag){
     case 'tr4':
     case 'update':
       if (loadConfigFlag) {
-        if ('c0/avida.cfg' == av.fio.anID) {av.frd.avidaCFG2form(av.fio.thisfile.asText());}
-        if ('c0/environment.cfg' == av.fio.anID) {av.frd.environmentCFG2form(av.fio.thisfile.asText().trim());}
+        if ('c0/avida.cfg' === av.fio.anID) {av.frd.avidaCFG2form(av.fio.thisfile.asText());}
+        if ('c0/environment.cfg' === av.fio.anID) {av.frd.environmentCFG2form(av.fio.thisfile.asText().trim());}
       }
       av.fzr.file[av.fio.anID] = av.fio.thisfile.asText().trim();
       break;
@@ -115,7 +116,7 @@ av.fio.processFiles = function (loadConfigFlag){
   }
   //if (av.debug.fio) console.log('file type in zip: fname ', av.fio.fName, '; id ', av.fio.anID, '; type ', fileType);
   //console.log('file type in zip: fname ', av.fio.fName, '; id ', av.fio.anID, '; type ', fileType);
-}
+};
 
 
 av.fio.processItemFiles = function (){
@@ -145,7 +146,7 @@ av.fio.processItemFiles = function (){
       if (av.debug.fio) console.log('undefined file type in zip: full ', av.fio.fName, '; id ', av.fio.anID);
       break;
   }
-}
+};
 
 
 //---------------------------------- update config data from file data stored in freezer -------------------------------
@@ -161,7 +162,7 @@ av.frd.updateSetup = function () {
   av.frd.environmentCFG2form(doctext);
   doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
   av.frd.pauseRunAtTXT2form(doctext);
-}
+};
 
 //----------------------- section to put data from environment.cfg into setup form of population page ------------------
 
@@ -200,16 +201,18 @@ av.frd.environmentCFGparse = function (filestr) {
 av.frd.environmentCFG2form = function (fileStr) {
   'use strict';
   var dict = av.frd.environmentCFGparse(fileStr);
-  dijit.byId('notose').set('checked', dict.NOT);
-  dijit.byId('nanose').set('checked', dict.NAND);
-  dijit.byId('andose').set('checked', dict.AND);
-  dijit.byId('ornose').set('checked', dict.ORN);
-  dijit.byId('orose').set('checked', dict.OR);
-  dijit.byId('andnose').set('checked', dict.ANDN);
-  dijit.byId('norose').set('checked', dict.NOR);
-  dijit.byId('xorose').set('checked', dict.XOR);
-  dijit.byId('equose').set('checked', dict.EQU);
-}
+  av.dom.notose.checked = dict.NOT;
+  av.dom.andose.checked = dict.AND;
+  av.dom.orose.checked = dict.OR
+  av.dom.norose.checked = dict.NOR;
+  av.dom.equose.checked = dict.EQU;
+  av.dom.nanose.checked = dict.NAND;
+  av.dom.ornose.checked = dict.ORN;
+  av.dom.andnose.checked = dict.ANDN;
+  av.dom.xorose.checked = dict.XOR;
+
+  //dijit.byId('notose').set('checked', dict.NOT);
+};
 
 //----------------------------- section to put data from avida.cfg into setup form of population page ------------------
 //makes a dictionary entry out of line if the key and value are the first two items.
@@ -240,9 +243,9 @@ av.frd.avidaCFGparse = function (filestr) {
 av.frd.avidaCFG2form = function (fileStr){
   'use strict';
   var dict = av.frd.avidaCFGparse(fileStr);
-  av.dom.sizeCols.value = dict.WORLD_X
+  av.dom.sizeCols.value = dict.WORLD_X;
   //dijit.byId('sizeCols').set('value', dict.WORLD_X);
-  av.dom.sizeRows.value = dict.WORLD_Y
+  av.dom.sizeRows.value = dict.WORLD_Y;
   //dijit.byId('sizeRows').set('value', dict.WORLD_Y);
   document.getElementById('muteInput').value = dict.COPY_MUT_PROB*100;
   //var event = new Event('change');

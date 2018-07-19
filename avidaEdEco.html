@@ -188,32 +188,30 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="freezer">
-				<div class="iceWrap">
-					<h3>Freezer</h3>
-          <span title="https://stackoverflow.com/questions/24977965/collapsible-lists-using-html-and-css"></span>
-					<details open>
-						<summary class="freezerSection">Configured Dishes</summary>
-						<ul id='fzConfig' class='container'>
-							<li>config1</li>
-							<li>config2</li>
-						</ul>
-					</details>
-					<details open>
-						<summary class="freezerSection">Organsims</summary>
-						<ul id='fzOrgan' class='container'>
-							<li>critter1</li>
-							<li>critter2</li>
-						</ul>
-					</details>
-					<details open>
-						<summary class="freezerSection">Populated Dishes</summary>
-						<ul id='fzWorld' class='container'>
-							<li>pop1</li>
-							<li>pop2</li>
-						</ul>
-					</details>
-				</div>
+			<div class="freezerClass">
+        <h3>Freezer</h3>
+        <span title="https://stackoverflow.com/questions/24977965/collapsible-lists-using-html-and-css"></span>
+        <details open>
+          <summary class="freezerSection">Configured Dishes</summary>
+          <ul id='fzConfig' class='container'>
+            <li>config1</li>
+            <li>config2</li>
+          </ul>
+        </details>
+        <details open>
+          <summary class="freezerSection">Organsims</summary>
+          <ul id='fzOrgan' class='container'>
+            <li>critter1</li>
+            <li>critter2</li>
+          </ul>
+        </details>
+        <details open>
+          <summary class="freezerSection">Populated Dishes</summary>
+          <ul id='fzWorld' class='container'>
+            <li>pop1</li>
+            <li>pop2</li>
+          </ul>
+        </details>
 			</div>
 			<div class="trash">
 				<span id='trashCan' class='container'>
@@ -283,8 +281,222 @@
             </table>
           </div>
 				</div>
-				<div class="popInfo">
-          <div id="setupBlock" class="labInfoBlock">
+				<div id="popInfo"> 
+          
+          <div class="labInfoClass" id="labInfoBlock">
+            <div id="popStatistics">
+              <div id="Selected">
+                <div class='popStatsTitle'>
+                  <label id='sotLabel'>Selected Organism Type</label>
+                </div>
+                <table id='sotTopTable' class='topSotTable'>
+                  <tbody>
+                    <tr>
+                      <td><div class='sotL'>Name:&nbsp;<canvas id='sotColor' width='10' height='10'></canvas></div></td>
+                      <td colspan='2'><div class='noWrapR'><label id='nameLabel'></label></div></td>
+                    </tr>
+                    <tr>
+                      <td><div class='sotL'>Fitness:&nbsp;</div></td>
+                      <td><div class='sotR'><label id='fitLabel'></label></div></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><div class='sotL'>Energy Acq. Rate:&nbsp;</div></td>
+                      <td><div class='sotR'><label id='energyAcqRateLabel'></label></div></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><div class='sotL'>Offspring Cost:&nbsp;</div></td>
+                      <td><div class='sotR'><label id='offspringCostLabel'></label></div></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><div class='sotL'>Age (updates):&nbsp;</div></td>
+                      <td><div class='sotR'><label id='ageLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><div class='sotL'>Ancestor:&nbsp;</div></td>
+                      <td colspan='2'><div class='noWrapR'><label id='ancestorLabel'></label></div></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class='sotL'>Viable:&nbsp;</div></td>
+                      <td colspan='2'><div class='noWrapR'><label id='viableLabel'></label></div></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table id='sotBotTable' class='botSotTable' style="background-color: white;">
+                  <tbody>
+                    <tr>
+                      <th>
+                        <div class='noWrapF'><label id='sotFn'>Function&nbsp;&nbsp;</label></div></th>
+                      <th colspan='2' style='min-width: 110px; background-color: #fff'><div class='noWrapN'><label id='sotTimes'>Times Performed</label></div></th>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><label id='notLabel'>NOT</label></div></td>
+                      <td><div class='noWrap2'><label id='notTime'></label></div></td>
+                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><label id='nanLabel'>NAN</label></div></td>
+                      <td><div class='noWrap2'><label id='nanTime'></label></div></td>
+                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><label id='andLabel'>AND</label></div></td>
+                      <td><div class='noWrap2'><label id='andTime'></label></div></td>
+                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><label id='ornLabel'>ORN</label></div></td>
+                      <td><div class='noWrap2'><label id='ornTime'></label></div></td>
+                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><label id='oroLabel'>ORO</label></div></td>
+                      <td><div class='noWrap2'><label id='oroTime'></label></div></td>
+                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><label id='antLabel'>ANT</label></div></td>
+                      <td><div class='noWrap2'><label id='antTime'></label></div></td>
+                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><label id='norLabel'>NOR</label></div></td>
+                      <td><div class='noWrap2'><label id='norTime'></label></div></td>
+                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><label id='xorLabel'>XOR</label></div></td>
+                      <td><div class='noWrap2'><label id='xorTime'></label></div></td>
+                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><label id='equLabel'>EQU</label></div></td>
+                      <td><div class='noWrap2'><label id='equTime'></label></div></td>
+                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <label id='dnaLabel'></label>
+              </div>
+              <div id="popStats4grid">
+                <div class='popStatsTitle'>
+                  <label id='popStat'>Population Statistics</label>
+                </div>
+                <div class='popStatsTablePop'>
+                  <table id='popsTopTable' class='topPopTable'>
+                    <tbody>
+                    <tr>
+                      <td><div class='noWrapL'>Size (# of organisms):&nbsp;</div></td>
+                      <td><div class='noWrapW'><label id='popSizeLabel'>&nbsp;&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;</div></td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrapL'>Avg. Fitness:&nbsp;</div></td>
+                      <td><div class='noWrapN'><label id='aFitLabel'></label></div></td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrapL'>Avg. Energy Acq. Rate:&nbsp;</div></td>
+                      <td><div class='noWrapN'><label id='aEnergyAcqRateLabel'></label></div></td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrapL'>Avg. Offspring Cost:&nbsp;</div></td>
+                      <td><div class='noWrap'><label id='aOffspringCostLabel'></label></div></td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap'>Avg. Age (updates):&nbsp;</div></td>
+                      <td><div class='noWrap'><label id='aAgeLabel'></label></div></td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap'># Ancestor(s) at start:&nbsp;</div></td>
+                      <!-- <td><div class='noWrap'># w/ picked functions:&nbsp;</div></td>   -->
+                      <td><div class='noWrap'><label id='parentNumLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap'># of viable organisms:&nbsp;</div></td>
+                      <td><div class='noWrap'><label id='viableNumLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class=popB style="background-color: white;">
+                  <table id='popsBotTable' class='botPopTable'>
+                    <tbody>
+                    <tr>
+                      <th><div class='noWrapF'><label id='psFn'>Function&nbsp;&nbsp;</label></div></th>
+                      <th colspan='2' style='min-width: 100px; background-color: #fff'>
+                        <div class='noWrapN'><label id='psNumOrg'># of Organisms</label></div></th>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><button id='notButton' class='bitButtonOff'>NOT</button></div></td>
+                      <td><div class='noWrap2r'><label id='notPop'></label></div></td>
+                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><button id='nanButton' class='bitButtonOff'>NAN</button></div></td>
+                      <td><div class='noWrap2r'><label id='nanPop'></label></div></td>
+                      <td><div class='noWrapTitle'><label id='logTit1' /></div></td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><button id='andButton' class='bitButtonOff'>AND</button></div></td>
+                      <td><div class='noWrap2r'><label id='andPop'></label></div></td>
+                      <td><div class='noWrapTitle'><label id='logTit2' /></div></td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><button id='ornButton' class='bitButtonOff'>ORN</button></div></td>
+                      <td><div class='noWrap2r'><label id='ornPop'></label></div></td>
+                      <td><div class='noWrapTitle'><label id='logTit3' /></div></td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><button id='oroButton' class='bitButtonOff'>ORO</button></div></td>
+                      <td><div class='noWrap2r'><label id='oroPop'></label></div></td>
+                      <td><div class='noWrapTitle'><label id='logTit4' /></div></td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><button id='antButton' class='bitButtonOff'>ANT</button></div></td>
+                      <td><div class='noWrap2r'><label id='antPop'></label></div></td>
+                      <td><div class='noWrapTitle'><label id='logTit5' /></div></td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><button id='norButton' class='bitButtonOff'>NOR</button></div></td>
+                      <td><div class='noWrap2r'><label id='norPop'></label></div></td>
+                      <td><div class='noWrapTitle'><label id='logTit6' /></div></td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><button id='xorButton' class='bitButtonOff'>XOR</button></div></td>
+                      <td><div class='noWrap2r'><label id='xorPop'></label></div></td>
+                      <td><div style='text-align: center'><label id='numLog' /></div></td>
+                    </tr>
+                    <tr>
+                      <td><div class='noWrap1'><button id='equButton' class='bitButtonOff'>EQU</button></div></td>
+                      <td><div class='noWrap2r'><label id='equPop'></label></div></td>
+                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div> <span comment="end of Statistics"></span>
+	  				<div id="popChrtHolder">
+              <div id='popChart'></div>
+            </div>
+  					<div id="miniChartYaxis">
+              <label id='yaxisLabel'>Y-axis</label>
+              <select data-dojo-type='dijit/form/Select' id='yaxis' data-dojo-props='name: "yyAxis"'>
+                <option value='Average Fitness' selected='selected'>Average Fitness</option>
+                <option value='Average Offspring Cost'>Average Offspring Cost</option>
+                <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
+                <option value='Number of Organisms'>Number of Organisms</option>
+                <option value='Number Viable'>Number Viable</option>
+                <option value='None'>None</option>
+              </select>
+            </div> 
+          </div>  <span comment="end of labInfoBlock"></span>
+          
+          <div id="setupBlock" class="labInfoClass">
             <form id='setupForm'>
               <label>Environmental Settings</label>
 
@@ -400,218 +612,7 @@
               </span>
             </form>            
           </div><span comment="end of labInfoPopSetup"></span>
-          <div class="labInfoBlock" id="labInfoPopData" >
-            <div id="Statistics">
-              <div id="Selected">
-                <div class='popStatsTitle'>
-                  <label id='sotLabel'>Selected Organism Type</label>
-                </div>
-                <table id='sotTopTable' class='topSotTable'>
-                  <tbody>
-                    <tr>
-                      <td><div class='sotL'>Name:&nbsp;<canvas id='sotColor' width='10' height='10'></canvas></div></td>
-                      <td colspan='2'><div class='noWrapR'><label id='nameLabel'></label></div></td>
-                    </tr>
-                    <tr>
-                      <td><div class='sotL'>Fitness:&nbsp;</div></td>
-                      <td><div class='sotR'><label id='fitLabel'></label></div></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td><div class='sotL'>Energy Acq. Rate:&nbsp;</div></td>
-                      <td><div class='sotR'><label id='energyAcqRateLabel'></label></div></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td><div class='sotL'>Offspring Cost:&nbsp;</div></td>
-                      <td><div class='sotR'><label id='offspringCostLabel'></label></div></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td><div class='sotL'>Age (updates):&nbsp;</div></td>
-                      <td><div class='sotR'><label id='ageLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td><div class='sotL'>Ancestor:&nbsp;</div></td>
-                      <td colspan='2'><div class='noWrapR'><label id='ancestorLabel'></label></div></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class='sotL'>Viable:&nbsp;</div></td>
-                      <td colspan='2'><div class='noWrapR'><label id='viableLabel'></label></div></td>
-                    </tr>
-                  </tbody>
-                </table>
-                <table id='sotBotTable' class='botSotTable' style="background-color: white;">
-                  <tbody>
-                    <tr>
-                      <th>
-                        <div class='noWrapF'><label id='sotFn'>Function&nbsp;&nbsp;</label></div></th>
-                      <th colspan='2' style='min-width: 110px; background-color: #fff'><div class='noWrapN'><label id='sotTimes'>Times Performed</label></div></th>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><label id='notLabel'>NOT</label></div></td>
-                      <td><div class='noWrap2'><label id='notTime'></label></div></td>
-                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><label id='nanLabel'>NAN</label></div></td>
-                      <td><div class='noWrap2'><label id='nanTime'></label></div></td>
-                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><label id='andLabel'>AND</label></div></td>
-                      <td><div class='noWrap2'><label id='andTime'></label></div></td>
-                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><label id='ornLabel'>ORN</label></div></td>
-                      <td><div class='noWrap2'><label id='ornTime'></label></div></td>
-                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><label id='oroLabel'>ORO</label></div></td>
-                      <td><div class='noWrap2'><label id='oroTime'></label></div></td>
-                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><label id='antLabel'>ANT</label></div></td>
-                      <td><div class='noWrap2'><label id='antTime'></label></div></td>
-                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><label id='norLabel'>NOR</label></div></td>
-                      <td><div class='noWrap2'><label id='norTime'></label></div></td>
-                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><label id='xorLabel'>XOR</label></div></td>
-                      <td><div class='noWrap2'><label id='xorTime'></label></div></td>
-                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><label id='equLabel'>EQU</label></div></td>
-                      <td><div class='noWrap2'><label id='equTime'></label></div></td>
-                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <label id='dnaLabel'></label>
-              </div>
-              <div id="popStats">
-                <div class='popStatsTitle'>
-                  <label id='popStat'>Population Statistics</label>
-                </div>
-                <div class='popStatsTablePop'>
-                  <table id='popsTopTable' class='topPopTable'>
-                    <tbody>
-                    <tr>
-                      <td><div class='noWrapL'>Size (# of organisms):&nbsp;</div></td>
-                      <td><div class='noWrapW'><label id='popSizeLabel'>&nbsp;&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;</div></td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrapL'>Avg. Fitness:&nbsp;</div></td>
-                      <td><div class='noWrapN'><label id='aFitLabel'></label></div></td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrapL'>Avg. Energy Acq. Rate:&nbsp;</div></td>
-                      <td><div class='noWrapN'><label id='aEnergyAcqRateLabel'></label></div></td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrapL'>Avg. Offspring Cost:&nbsp;</div></td>
-                      <td><div class='noWrap'><label id='aOffspringCostLabel'></label></div></td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap'>Avg. Age (updates):&nbsp;</div></td>
-                      <td><div class='noWrap'><label id='aAgeLabel'></label></div></td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap'># Ancestor(s) at start:&nbsp;</div></td>
-                      <!-- <td><div class='noWrap'># w/ picked functions:&nbsp;</div></td>   -->
-                      <td><div class='noWrap'><label id='parentNumLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap'># of viable organisms:&nbsp;</div></td>
-                      <td><div class='noWrap'><label id='viableNumLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class=popB style="background-color: white;">
-                  <table id='popsBotTable' class='botPopTable'>
-                    <tbody>
-                    <tr>
-                      <th><div class='noWrapF'><label id='psFn'>Function&nbsp;&nbsp;</label></div></th>
-                      <th colspan='2' style='min-width: 100px; background-color: #fff'>
-                        <div class='noWrapN'><label id='psNumOrg'># of Organisms</label></div></th>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><button id='notButton' class='bitButtonOff'>NOT</button></div></td>
-                      <td><div class='noWrap2r'><label id='notPop'></label></div></td>
-                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><button id='nanButton' class='bitButtonOff'>NAN</button></div></td>
-                      <td><div class='noWrap2r'><label id='nanPop'></label></div></td>
-                      <td><div class='noWrapTitle'><label id='logTit1' /></div></td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><button id='andButton' class='bitButtonOff'>AND</button></div></td>
-                      <td><div class='noWrap2r'><label id='andPop'></label></div></td>
-                      <td><div class='noWrapTitle'><label id='logTit2' /></div></td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><button id='ornButton' class='bitButtonOff'>ORN</button></div></td>
-                      <td><div class='noWrap2r'><label id='ornPop'></label></div></td>
-                      <td><div class='noWrapTitle'><label id='logTit3' /></div></td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><button id='oroButton' class='bitButtonOff'>ORO</button></div></td>
-                      <td><div class='noWrap2r'><label id='oroPop'></label></div></td>
-                      <td><div class='noWrapTitle'><label id='logTit4' /></div></td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><button id='antButton' class='bitButtonOff'>ANT</button></div></td>
-                      <td><div class='noWrap2r'><label id='antPop'></label></div></td>
-                      <td><div class='noWrapTitle'><label id='logTit5' /></div></td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><button id='norButton' class='bitButtonOff'>NOR</button></div></td>
-                      <td><div class='noWrap2r'><label id='norPop'></label></div></td>
-                      <td><div class='noWrapTitle'><label id='logTit6' /></div></td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><button id='xorButton' class='bitButtonOff'>XOR</button></div></td>
-                      <td><div class='noWrap2r'><label id='xorPop'></label></div></td>
-                      <td><div style='text-align: center'><label id='numLog' /></div></td>
-                    </tr>
-                    <tr>
-                      <td><div class='noWrap1'><button id='equButton' class='bitButtonOff'>EQU</button></div></td>
-                      <td><div class='noWrap2r'><label id='equPop'></label></div></td>
-                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div> <span comment="end of Statistics"></span>
-	  				<div id="popChrtHolder">
-              <div id='popChart'></div>
-            </div>
-  					<div id="miniChartYaxis">
-              <label id='yaxisLabel'>Y-axis</label>
-              <select data-dojo-type='dijit/form/Select' id='yaxis' data-dojo-props='name: "yyAxis"'>
-                <option value='Average Fitness' selected='selected'>Average Fitness</option>
-                <option value='Average Offspring Cost'>Average Offspring Cost</option>
-                <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
-                <option value='Number of Organisms'>Number of Organisms</option>
-                <option value='Number Viable'>Number Viable</option>
-                <option value='None'>None</option>
-              </select>
-            </div> 
-          </div>  <span comment="end of labInfoBlock"></span>
+          
 				</div>  <span comment="end of popInfo"></span>
       </div>  <span title="mainBlockClassRow id=populationBlock"></span>
 
@@ -722,7 +723,7 @@
       </div><span title="mainBlockClassRow id=organismBlock"></span>
       
       <div class="analysisArea" id="analysisBlock">
-        <div class="anaTop" id='organismCanvasHolder' comment="anaChrtHolder">
+        <div class="anaTop" id='anaChrtHolder'>
           <div id='anlDndChart' style='height: 100%; width: 100%;'>
         </div>
         <div class="anaBot">

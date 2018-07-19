@@ -1,6 +1,8 @@
 //set cursor shape -----------------------------------------------------------------------------------------------------
 // Dad and kid are on the population page
 // Mom and Son are on the Individual Organism page
+av = av || {};  //incase av already exists
+
 
 //get domID list for freezer; just organism section
 av.mouse.frzOrgCurserSet = function(state) {
@@ -34,7 +36,7 @@ av.mouse.setCursorStyle = function (shape, nodeList) {
     //console.log(nodeList[ii]);
     document.getElementById(nodeList[ii]).style.cursor = shape;
   }
-}
+};
 
 av.mouse.selectedDadMouseStyle = function () {
   'use strict';

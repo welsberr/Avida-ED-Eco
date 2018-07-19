@@ -10,6 +10,9 @@
 //---------------------------------- Call to selecct the Default workspace ---------------------------------------------
 // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Sending_and_Receiving_Binary_Data
 //https://thiscouldbebetter.wordpress.com/2013/08/06/reading-zip-files-in-javascript-using-jszip/
+
+var av = av || {};  //incase av already exists
+
 av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
   if (av.debug.fio) console.log('zipFileName', zipFileName, '; loadConfigFlag=', loadConfigFlag);
   'use strict';
@@ -68,6 +71,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
       else av.fio.anID = av.fio.fName;
       //console.log('nameOfFileContainedInZipFile=', nameOfFileContainedInZipFile,';___fName=',av.fio.fName, '; ___zipPathRoot=', av.fio.zipPathRoot, '; ____anID=',av.fio.anID);
       //console.log('fName=',av.fio.fName, '; ____anID=',av.fio.anID);
+      console.log('loadConfigFlag=',loadConfigFlag);
       if (3 < av.fio.fName.length) av.fio.processFiles(loadConfigFlag);  //do not load configfile
     }
     //note setup form is updated when the files are read.
@@ -101,8 +105,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
       alert('Unable to open file. Please check the file and try again or contact Avida-ED-development@googlegroups.com for help');
       av.debug.log += '\nworkspace fileReader error:' + err;
     }
-
-
+    console.log('fileLoadedEvent=',fileLoadedEvent);
     fileReader.onloadend = function(fileLoadedEvent)
     {
       try {
