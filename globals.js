@@ -300,7 +300,7 @@ av.ui.autoStopFlag = false;
 av.ui.autoStopValue = 987654321;
 //used in adjusting size of areas on population page
 av.ui.gridHolderSideBuffer = 0;
-av.ui.popBotWdMin = 430;
+av.ui.popGridCtlWdMin = 430;
 av.ui.popBotHtMin = 90;
 
 //not really ui, but not sure where to put them
