@@ -1,3 +1,5 @@
+var av = av || {};  //incase av already exists
+
 av.mouse.downOrganCanvasFn = function(evt) {
   av.mouse.DnOrganPos = [evt.offsetX, evt.offsetY];
   av.mouse.Dn = true;
@@ -99,8 +101,7 @@ av.mouse.downGridCanvasFn = function (evt) {
     av.grd.flagSelected = true;
     if (av.debug.mouse) console.log('ongrid', av.grd.selectedNdx);
     av.post.addUser('Click on grid cell with index: ' + av.grd.selectedNdx + '');
-    //console.log('before call av.grd.drawGridSetupFn');
-    av.grd.drawGridSetupFn();
+    av.grd.drawGridSetupFn('av.mouse.downGridCanvasFn in grid');
 
     //In the grid and selected. Now look to see contents of cell are dragable.
     av.mouse.ParentNdx = -1; //index into parents array if parent selected else -1;
@@ -149,6 +150,6 @@ av.mouse.downGridCanvasFn = function (evt) {
     dijit.byId('mnCnOrganismTrace').attr('disabled', true);
     dijit.byId('mnFzOrganism').attr('disabled', true);
   }
-  av.grd.drawGridSetupFn();
+  av.grd.drawGridSetupFn('av.mouse.downGridCanvasFn outside grid?');
 }
 

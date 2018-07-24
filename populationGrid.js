@@ -326,9 +326,9 @@ av.grd.findGridSize = function (){
   }
 
   //Determine new size of grid
-    av.grd.CanvasGrid.width = av.grd.sizeX;
+    av.dom.gridCanvas.width = av.grd.sizeX;
     av.grd.xOffset = 0;
-    av.grd.CanvasGrid.height = av.grd.sizeY;
+    av.dom.gridCanvas.height = av.grd.sizeY;
     av.grd.yOffset = 0;
 }
 av.grd.drawGridUpdate = function () {
@@ -371,10 +371,10 @@ av.grd.drawGridBackground = function () {
   'use strict';
   // Use the identity matrix while clearing the canvas    http://stackoverflow.com/questions/2142535/how-to-clear-the-canvas-for-redrawing
   av.grd.cntx.setTransform(1, 0, 0, 1, 0, 0);
-  av.grd.cntx.clearRect(0, 0, av.grd.CanvasGrid.width, av.grd.CanvasGrid.height); //to clear canvas see http://stackoverflow.com/questions/2142535/how-to-clear-the-canvas-for-redrawing
+  av.grd.cntx.clearRect(0, 0, av.dom.gridCanvas.width, av.dom.gridCanvas.height); //to clear canvas see http://stackoverflow.com/questions/2142535/how-to-clear-the-canvas-for-redrawing
   //draw grey rectangle as back ground
   av.grd.cntx.fillStyle = av.color.names['ltGrey'];
-  av.grd.cntx.fillRect(0, 0, av.grd.CanvasGrid.width, av.grd.CanvasGrid.height);
+  av.grd.cntx.fillRect(0, 0, av.dom.gridCanvas.width, av.dom.gridCanvas.height);
 
   //av.grd.cntx.translate(av.grd.xOffset, av.grd.yOffset);
   av.grd.cntx.fillStyle = av.color.names['Black'];
@@ -387,7 +387,7 @@ av.grd.drawGridBackground = function () {
 //Draws the color and name of each Ancestor (parent) organism
 //to lay out the legend we need the width of the longest name and we
 //allow for the width of the color box to see how many columns fit across
-//the width of av.grd.CanvasScale. We will need to increase the size of the
+//the width of av.dom.CanvasScale. We will need to increase the size of the
 //legend box by the height of a line for each additional line.
 av.grd.drawLegend = function () {
   'use strict';
@@ -409,7 +409,7 @@ av.grd.drawLegend = function () {
       maxWide = txtWide
     }
   }
-  legendCols = Math.floor((av.grd.CanvasScale.width - leftPad) / (maxWide + colorWide + legendPad));  //was trunc
+  legendCols = Math.floor((av.dom.CanvasScale.width - leftPad) / (maxWide + colorWide + legendPad));  //was trunc
   if (Math.floor(av.parents.name.length / legendCols) == av.parents.name.length / legendCols) {          //was trunc
     var legendRows = Math.floor(av.parents.name.length / legendCols);
   }
@@ -417,10 +417,10 @@ av.grd.drawLegend = function () {
     legendRows = Math.floor(av.parents.name.length / legendCols) + 1;    //was trunc
   }
   //set canvas height based on space needed
-  av.grd.CanvasScale.height = RowHt * legendRows;
+  av.dom.CanvasScale.height = RowHt * legendRows;
   av.grd.sCtx.fillStyle = av.color.names["ltGrey"];
-  av.grd.sCtx.fillRect(0, 0, av.grd.CanvasScale.width, av.grd.CanvasScale.height);
-  var colWide = (av.grd.CanvasScale.width - leftPad) / legendCols
+  av.grd.sCtx.fillRect(0, 0, av.dom.CanvasScale.width, av.dom.CanvasScale.height);
+  var colWide = (av.dom.CanvasScale.width - leftPad) / legendCols
   var col = 0;
   var row = 0;
   lngth = av.parents.name.length;
@@ -442,11 +442,11 @@ av.grd.drawLegend = function () {
 av.grd.gradientScale = function () {
   'use strict';
   //console.log('gradientScale')
-  av.grd.CanvasScale.height = 30;
+  av.dom.CanvasScale.height = 30;
   av.grd.sCtx.fillStyle = av.color.names["ltGrey"];
-  av.grd.sCtx.fillRect(0, 0, av.grd.CanvasScale.width, av.grd.CanvasScale.height);
+  av.grd.sCtx.fillRect(0, 0, av.dom.CanvasScale.width, av.dom.CanvasScale.height);
   var xStart = 15;
-  var xEnd = av.grd.CanvasScale.width - 2.5 * xStart;
+  var xEnd = av.dom.CanvasScale.width - 2.5 * xStart;
   var gradWidth = xEnd - xStart
   var grad = av.grd.sCtx.createLinearGradient(xStart + 2, 0, xEnd - 2, 0)
   var legendHt = 15;
@@ -465,7 +465,7 @@ av.grd.gradientScale = function () {
     grad.addColorStop(ii / (av.grd.cmap.length - 1), av.grd.cmap[ii]);
   }
   av.grd.sCtx.fillStyle = grad;
-  av.grd.sCtx.fillRect(xStart, legendHt, gradWidth, av.grd.CanvasScale.height - legendHt);
+  av.grd.sCtx.fillRect(xStart, legendHt, gradWidth, av.dom.CanvasScale.height - legendHt);
   //Draw Values if run started
   //console.log('GradientScale runState = ',av.grd.runState);
   if ('prepping' !== av.grd.runState) {
@@ -499,8 +499,8 @@ av.grd.gradientScale = function () {
    av.grd.sCtx.stroke();
    av.grd.sCtx.beginPath();
    av.grd.sCtx.strokeStyle = '#44FFFF';
-   av.grd.sCtx.moveTo(xStart, av.grd.CanvasScale.height - 1);
-   av.grd.sCtx.lineTo(xStart + gradWidth, av.grd.CanvasScale.height - 1);
+   av.grd.sCtx.moveTo(xStart, av.dom.CanvasScale.height - 1);
+   av.grd.sCtx.lineTo(xStart + gradWidth, av.dom.CanvasScale.height - 1);
    av.grd.sCtx.stroke();
    console.log('Take out after color test');
    */

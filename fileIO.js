@@ -78,7 +78,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
     //console.log('after read loop: fzr', av.fzr);
     av.fio.fileReadingDone = true;
     //console.log('before DrawGridSetup')
-    av.grd.drawGridSetupFn();
+    av.grd.drawGridSetupFn('av.fio.readZipWS');
     av.fzr.cNum++;  //now the Num value refer to the next (new) item to be put in the freezer.
     av.fzr.gNum++;
     av.fzr.wNum++;
@@ -146,7 +146,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
         }
         console.log('av.fzr.file', av.fzr);
         console.log('cNum=',av.fzr.cNum, '; gNum=', av.fzr.gNum, '; wNum', av.fzr.wNum);
-        if ('populationBlock' === av.ui.page) av.grd.drawGridSetupFn();
+        if ('populationBlock' === av.ui.page) av.grd.drawGridSetupFn('av.fio.userPickZipRead');
         av.fzr.cNum++;  //now the Num value refer to the next (new) item to be put in the freezer.
         av.fzr.gNum++;
         av.fzr.wNum++;
@@ -217,7 +217,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
         }
         //console.log('freezer', av.fzr);
         av.fio.fixFname();
-        if ('populationBlock' === av.ui.page) av.grd.drawGridSetupFn();
+        if ('populationBlock' === av.ui.page) av.grd.drawGridSetupFn('av.fio.importZipRead');
       }
       catch (error) {
         alert('Unable to extract an Avida Freezer Item Zip file, please check the file and try again. If you continue to have trouble, use "Report Problem" in the help menu');

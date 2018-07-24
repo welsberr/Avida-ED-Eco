@@ -92,13 +92,13 @@
     background-color: peachpuff;
   }
 
-  #spopInfo {
+  #popInfo {
     flex: 0 1 344px;          /* flex: 0 1 344px; is fixed in that dimension */
     border: 1px solid black;
     background: beige;
   }
 
-  #labInfoBlock {
+  #labInfoBlockOld {
     flex: 0 1 344px;          /* flex: 0 1 344px; is fixed in that dimension */
     border: 1px solid black;
     background: beige;
@@ -132,7 +132,7 @@
     resize: vertical;
     overflow: auto;
   }
-  #Selected{
+  #selected{
     flex: 0 1 170;
     border: 1px solid red;
     resize: horizontal;

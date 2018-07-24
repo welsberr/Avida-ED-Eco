@@ -400,8 +400,7 @@ av.mouse.arrowKeysOnGrid = function (event) {
         dijit.byId("mnCnOrganismTrace").attr("disabled", false);
       }
     }
-    //console.log('before call av.grd.drawGridSetupFn');
-    av.grd.drawGridSetupFn();
+    av.grd.drawGridSetupFn('av.mouse.arrowKeysOnGrid');
   }
 }
 

@@ -11,6 +11,7 @@ Number.prototype.pad = function(size) {
 
 //av.debug flags
 av.debug = {};
+av.debug.userMsg = false; //debug of user messages.
 av.debug.root = false;  //statements that look for failiers when the code executes outside of functions
 av.debug.bool = false;  //av.debug statements that look for errors outlining logic functions
 av.debug.mouse = false;  //av.debug statements about non-dojo drag and drop

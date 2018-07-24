@@ -1,3 +1,5 @@
+var av = av || {};  //incase av already exists
+
 //global definitions based dom that involve DND
 
 //functions used to process events that happen when a dojo drag and drop lands on the particular dnd 'target'.
@@ -199,7 +201,7 @@ av.dnd.lndActiveConfig = function (move) {
       str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual'];
       av.fio.handAncestorLoad(str);
     }
-    if ('map' == av.ui.subpage) {av.grd.drawGridSetupFn();} //draw grid
+    av.grd.drawGridSetupFn(av.dnd.lndActiveConfig); //draw grid
   }
   else if ('fzWorld' === move.source.node.id) {
     av.fzr.actConfig.type = 'w';
@@ -824,7 +826,7 @@ av.dnd.FzAddExperimentFn = function (fzSection, target, type) {
     else if (('fzConfig' == fzSection || 'fzWorld' == fzSection) && 'activeConfig' == target) added = av.dnd.lndActiveConfig(av.dnd.move);
     else if ('anlDndChart' == target && 'fzWorld' == fzSection) added = av.dnd.lndAnlDndChart(av.dnd.move);
 
-    if (av.dom.popSetupButton.textContent === 'Setup' && added) av.grd.drawGridSetupFn();
+    if (av.dom.popSetupButton.textContent === 'Setup' && added) av.grd.drawGridSetupFn('av.dnd.FzAddExperimentFn');
   }
   else {
     switch(fzSection) {

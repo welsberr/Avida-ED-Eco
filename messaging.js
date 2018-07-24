@@ -1,8 +1,12 @@
+var av = av || {};  //incase av already exists
+
 av.msg.readMsg = function (ee) {
   'use strict';
+
   var stub = '';
   var msg = ee.data;  //passed as object rather than string so JSON.parse is not needed.
   //console.log('msg', msg);
+  
   if ('data' == msg.type) {
     if (av.debug.userMsg) userMsgLabel.textContent = 'Avida type:data; name:' + msg.name;
     switch (msg.name) {
@@ -69,7 +73,7 @@ av.msg.readMsg = function (ee) {
         stub = 'name: webGridData; type: ' + msg.type.toString() + '; update:' + msg.update;  //may not display anyway
         av.debug.log += '\n--Aui:  ' + stub;
         //av.msg.sync('webGridData:' + msg.update.toString());
-        av.grd.drawGridSetupFn();  //needs to be called always as some calculations need to happen even if nothing is displayed (for logic data)
+        av.grd.drawGridSetupFn('av.msg.readMsg: case=webGridData');  //needs to be called always as some calculations need to happen even if nothing is displayed (for logic data)
         //av.debug.log += '\n - - end webGridData: update:' + av.grd.msg.update;
         break;
       case 'webOrgDataByCellID':

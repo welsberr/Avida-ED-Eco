@@ -177,26 +177,37 @@ require([
 
   av.dom.load = function () {
     'use strict';
+    //Menu
     //av.dom.mnCnPopRun = document.getElementById('mnCnPopRun');
     
-    av.dom.popChart = document.getElementById('popChart');  //easier handle for div with chart
-    av.dom.popChrtHolder = document.getElementById('popChrtHolder');
-    //av.dom.anlChrtSpace = document.getElementById('anlChrtSpace');  //easier handle for div with chart
-    av.dom.anlChrtSpace = document.getElementById('anlDndChart');  //easier handle for div with chart
-    av.dom.anlDndChart = document.getElementById('anlDndChart');
-    av.dom.anaChrtHolder = document.getElementById('anaChrtHolder');
-    av.dom.graphPop0 = document.getElementById('graphPop0');
-    av.dom.graphPop1 = document.getElementById('graphPop1');
-    av.dom.graphPop2 = document.getElementById('graphPop2');
-
+    //main area
     av.dom.userMsgLabel = document.getElementById('userMsgLabel');
     av.dom.wsSavedMsg = document.getElementById('wsSavedMsg');
 
-    //Population Page
+    av.dom.populationButton = document.getElementById('populationButton');
+    av.dom.freezeButton = document.getElementById('freezeButton');
+    av.dom.populationBlock = document.getElementById('populationBlock');
+    av.dom.organismBlock = document.getElementById('organismBlock');
+    av.dom.analysisBlock = document.getElementById('analysisBlock');
+
+      //Population Page
+    av.dom.popChart = document.getElementById('popChart');  //easier handle for div with chart
+    av.dom.popChrtHolder = document.getElementById('popChrtHolder');
+
     av.dom.runStopButton = document.getElementById('runStopButton');
     av.dom.oneUpdateButton = document.getElementById('oneUpdateButton');
     av.dom.newDishButton = document.getElementById('newDishButton');
-      
+        
+    av.dom.mapHolder = document.getElementById('mapHolder');
+    av.dom.mapBlock = document.getElementById('mapBlock');
+    av.dom.gridHolder = document.getElementById('gridHolder');
+    av.dom.gridCanvas = document.getElementById('gridCanvas');
+    av.dom.popInfo = document.getElementById('popInfo');
+    av.dom.popBot = document.getElementById('popBot');
+    av.dom.labInfoBlock = document.getElementById('labInfoBlock');
+    av.dom.selected = document.getElementById('selected');
+    av.dom.gridControlTable = document.getElementById('gridControlTable');
+    
     //Population Map Setup page
     av.dom.popSetupButton = document.getElementById('popSetupButton');
     av.dom.sizeCells = document.getElementById('sizeCells');
@@ -236,6 +247,15 @@ require([
     av.dom.sendLogPara = document.getElementById('sendLogPara');
     av.dom.sendLogTextarea = document.getElementById('sendLogTextarea');
 
+    //Analysis Page  
+    //av.dom.anlChrtSpace = document.getElementById('anlChrtSpace');  //easier handle for div with chart
+    av.dom.anlChrtSpace = document.getElementById('anlDndChart');  //easier handle for div with chart
+    av.dom.anlDndChart = document.getElementById('anlDndChart');
+    av.dom.anaChrtHolder = document.getElementById('anaChrtHolder');
+    av.dom.graphPop0 = document.getElementById('graphPop0');
+    av.dom.graphPop1 = document.getElementById('graphPop1');
+    av.dom.graphPop2 = document.getElementById('graphPop2');
+
     //post - send data to database
     av.dom.postLogTextarea = document.getElementById('postLogTextarea');
     av.dom.postLogPara = document.getElementById('postLogPara');
@@ -252,22 +272,6 @@ require([
     av.dom.postdTailTextarea = document.getElementById('postdTailTextarea');
     av.dom.postStatus = document.getElementById('postStatus');
 
-    av.dom.popBC = document.getElementById('popBC');
-    av.dom.mainBC = document.getElementById('mainBC');
-    av.dom.mapHolder = document.getElementById('mapHolder');
-    av.dom.mapBlock = document.getElementById('mapBlock');
-    av.dom.gridHolder = document.getElementById('gridHolder');
-    av.dom.gridCanvas = document.getElementById('gridCanvas');
-    av.dom.mapBC = document.getElementById('mapBC');
-    av.dom.popInfo = document.getElementById('popInfo');
-    av.dom.popBot = document.getElementById('popBot');
-    
-    av.dom.freezeButton = document.getElementById('freezeButton');
-    av.dom.populationBlock = document.getElementById('populationBlock');
-    av.dom.organismBlock = document.getElementById('organismBlock');
-    av.dom.analysisBlock = document.getElementById('analysisBlock');
-
-    av.dom.populationButton = document.getElementById('populationButton');
     
     av.dom.mnFlStandAloneApp = document.getElementById('mnFlStandAloneApp');
     av.dom.mnHpAbout = document.getElementById('mnHpAbout');
@@ -940,19 +944,20 @@ require([
 
   // called from script in html file as well as below
   av.ui.browserResizeEventHandler = function () {
-    if ('block' !== domStyle.get('analysisBlock', 'none')) {
+    if ('none' !== domStyle.get('analysisBlock', 'display')) {
       av.anl.AnaChartFn();
     }
-    if ('block' !== domStyle.get('populationBlock', 'none')) {
+    console.log('domStyle.get.populationblock', domStyle.get('populationBlock', 'display'));
+    if ('none' !== domStyle.get('populationBlock', 'display')) {
       console.log('av.grd.notInDrawingGrid=', av.grd.notInDrawingGrid);
       if (av.grd.notInDrawingGrid) {
         //av.ui.adjustpopInfoSize();  //commented out in Avida-ED 3.2.1
         av.grd.popChartFn();
         console.log('before call av.grd.drawGridSetupFn');
-        av.grd.drawGridSetupFn();
+        av.grd.drawGridSetupFn('av.ui.browserResizeEventHandler when pop=flex');
       }
     }
-    if ('block' !== domStyle.get('organismBlock', 'none')) {
+    if ('none' !== domStyle.get('organismBlock', 'display')) {
       var rd = $('#rightDetail').innerHeight();
       var height = ($('#rightDetail').innerHeight() - 395) / 2;  //was 375
       av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
@@ -997,9 +1002,34 @@ require([
   //});
 
   //Adjust Statistics area width based on gridholder size and shape. gridholder should be roughly square
-  av.ui.adjustpopInfoSize_ = function () {};
-  av.ui.adjustpopInfoSize = function () {
-    console.log('popInfo.offsetWidth=',av.dom.popInfo.offsetWidth);
+  av.ui.adjustpopInfoSize = function (from) {
+    console.log('av.ui.adjustpopInfoSize was called from: ', from);
+    console.log('popInfo.offsetWidth, clientwidth =',av.dom.popInfo.offsetWidth, av.dom.popInfo.clientWidth);
+    console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
+    console.log('selected.offsetWidth, clientwidth =',av.dom.selected.offsetWidth, av.dom.selected.clientWidth);
+    if (av.ui.popGridCtlWdMin > av.dom.gridHolder.offsetWidth) {
+      var extaWdNeeded = av.ui.popGridCtlWdMin - av.dom.gridHolder.offsetWidth;
+      var labInfoBlockWd = av.dom.labInfoBlock.offsetWidth - extaWdNeeded;
+      av.dom.labInfoBlock.style.width = labInfoBlockWd + 'px'; 
+      console.log('popInfo.offsetWidth, clientwidth =',av.dom.popInfo.offsetWidth, av.dom.popInfo.clientWidth);
+      console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
+      console.log('selected.offsetWidth, clientwidth =',av.dom.selected.offsetWidth, av.dom.selected.clientWidth);
+    }
+    console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+    console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+
+    av.dom.gridCanvas.width = av.dom.gridHolder.clientHeight-2;
+    av.dom.gridCanvas.height = av.dom.gridCanvas.width;
+    av.dom.gridHolder.width = av.dom.gridHolder.clientHeight-2;
+    av.dom.CanvasScale.width = av.dom.gridControlTable.clientWidth - 1;
+
+//  console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+//  console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+
+  };
+  av.ui.adjustpopInfoSize_ = function (from) {
+    console.log('av.ui.adjustpopInfoSize called from: ', from);
+    console.log('popInfo.offsetWidth, clientwidth =',av.dom.popInfo.offsetWidth, av.dom.popInfo.clientWidth);
     console.log('av.dom.gridHolder.clientWidth', av.dom.gridHolder.clientWidth, '; popInfo.clWd=',av.dom.popInfo.clientWidth, '; av.ui.popGridCtlWdMin=', av.ui.popGridCtlWdMin);
     console.log('popBot wd, ht', av.dom.popBot.clientWidth, av.dom.popBot.clientHeight, '; gridHolder.Ht', av.dom.gridHolder.clientHeight);
     if (av.ui.popGridCtlWdMin < av.dom.gridHolder.clientWidth) {
@@ -1070,7 +1100,7 @@ require([
     if ('gridCanvas' === target.node.id) {
       av.dnd.landGridCanvas(source, nodes, target);
       //console.log('before call av.grd.drawGridSetupFn');
-      av.grd.drawGridSetupFn();
+      av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
       //console.log('in gridCanvas.on');
     }
   });
@@ -1226,7 +1256,7 @@ require([
       registry.byId('sotPane').domNode.style.width = '150px';
       registry.byId('popInfo').domNode.style.width = '395px';
       registry.byId('mainBC').layout();
-      av.ui.adjustpopInfoSize();
+      av.ui.adjustpopInfoSize('av.ptd.popStatView');
       dijit.byId('popInfo').set('style', 'display: block; visibility: visible;');
 
     }
@@ -1536,13 +1566,13 @@ require([
   //if a cell is selected, arrow keys can move the selection
   $(document).keydown(function (event) {
     //av.post.addUser(' ');   //in av.mouse.arrowKeyOnGrid
-    av.mouse.arrowKeysOnGrid(event)
+    av.mouse.arrowKeysOnGrid(event);
   });
 
   //av.mouse down on the grid
   $(document.getElementById('gridCanvas')).on('mousedown', function (evt) {
     av.post.addUser('mousedown: gridCanvas('+evt.offsetX + ', ' + evt.offsetY + ')');
-    av.mouse.downGridCanvasFn(evt)  });
+    av.mouse.downGridCanvasFn(evt);  });
 
   //mouse move anywhere on screen - not currently in use.
   /*  $(document.getElementById('gridCanvas')).on('mousemove', function handler (evt) {
@@ -1582,7 +1612,7 @@ require([
       av.mouse.ParentMouse(evt, av);
       if ('gridCanvas' == evt.target.id || 'trashCanImage' == evt.target.id) {
         //console.log('before call av.grd.drawGridSetupFn');
-        av.grd.drawGridSetupFn();
+        av.grd.drawGridSetupFn('on mouseup where evt.target.id=gridCanvas or trashCanImage');
       }
       else if ('organIcon' == evt.target.id) {
         //Change to Organism Page
@@ -1632,27 +1662,25 @@ require([
   // *******************************************************************************************************************
 
   //Set up canvas objects
-  av.grd.CanvasScale = document.getElementById('scaleCanvas');  //tiba should change to av.dom.scaleCanvas
-  av.grd.sCtx = av.grd.CanvasScale.getContext('2d');
-  av.grd.CanvasGrid = document.getElementById('gridCanvas');
-  av.grd.cntx = av.grd.CanvasGrid.getContext('2d');
+  av.dom.CanvasScale = document.getElementById('scaleCanvas');  //tiba should change to av.dom.scaleCanvas
+  av.grd.sCtx = av.dom.CanvasScale.getContext('2d');
+  av.dom.gridCanvas = document.getElementById('gridCanvas');
+  av.grd.cntx = av.dom.gridCanvas.getContext('2d');
   av.grd.CanvasSelected = document.getElementById('sotColor');
   av.grd.selCtx = av.grd.CanvasSelected.getContext('2d');
   av.grd.SelectedWd = $('#sotColor').innerWidth();
   av.grd.SelectedHt = $('#sotColor').innerHeight();
 
-  av.grd.CanvasScale.width = document.getElementById('gridControlTable').clientWidth - 1;
-  av.grd.CanvasGrid.width = av.dom.gridHolder.clientHeight / 2;
-  av.grd.CanvasGrid.width = av.dom.gridHolder.clientWidth - 1; //?? may need to delete 
-  //av.grd.CanvasGrid.height = $('#gridHolder').innerHeight() - 16 - av.grd.CanvasScale.height;
-  av.grd.CanvasGrid.height = 15;
+  //av.dom.gridCanvas.height = $('#gridHolder').innerHeight() - 16 - av.dom.CanvasScale.height;
 
   //--------------------------------------------------------------------------------------------------------------------
   if (av.debug.root) console.log('before av.grd.drawGridSetupFn');
 
-  av.grd.drawGridSetupFn = function () {
+  av.grd.drawGridSetupFn = function (from) {
     'use strict';
+    console.log(from, ' called av.grd.drawGridSetupFn');
     console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+    console.log('_____av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
 
     if (undefined != av.grd.msg) {
       if ('prepping' != av.grd.runState && undefined != av.grd.msg.fitness) {
@@ -1666,7 +1694,7 @@ require([
         if (av.grd.newlyNone) {
           av.grd.newlyNone = false;
           av.grd.cntx.fillStyle = av.color.names['Black'];
-          av.grd.cntx.fillRect(1, 1, av.grd.CanvasGrid.width - 1, av.grd.CanvasGrid.height - 1);
+          av.grd.cntx.fillRect(1, 1, av.dom.gridCanvas.width - 1, av.dom.gridCanvas.height - 1);
         }
       }
       else {
@@ -1678,11 +1706,11 @@ require([
             //av.grd.findLogicOutline(); //needs to be done for all updates
           }
         }
-        console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+        //console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
 
               //figure out scale or legend
-        av.grd.CanvasScale.width = document.getElementById('gridControlTable').clientWidth - 2;
-        document.getElementById('popBot').style.height = '5px';
+        av.dom.CanvasScale.width = av.dom.gridControlTable.clientWidth - 2;
+        av.dom.popBot.style.height = '5px';
         if ('Ancestor Organism' == dijit.byId('colorMode').value) {
           av.grd.drawLegend();
         }
@@ -1692,25 +1720,30 @@ require([
         //console.log('after drawing scale or legend. update=',av.grd.oldUpdate);
 
         console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-        document.getElementById('popBot').style.height = document.getElementById('popBot').scrollHeight + 'px';
-        //dijit.byId('populationBlock').resize();
+        av.dom.popBot.style.height = av.dom.popBot.scrollHeight + 'px';
+        //dijit.byId('populationBlock').resize(); //not a dojo element
 
         var gridHolderHt = av.dom.gridHolder.clientHeight;
         av.ui.num = Math.floor(gridHolderHt / 4);
 
         console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-        console.log('av.grd.CanvasGrid.width ht =', av.grd.CanvasGrid.width, av.grd.CanvasGrid.height);
-        av.grd.CanvasGrid.width = av.dom.gridHolder.clientWidth - 1;  //was - 3
-        av.grd.CanvasGrid.height = gridHolderHt - 1;
-        av.grd.spaceX = av.grd.CanvasGrid.width;
-        av.grd.spaceY = av.grd.CanvasGrid.height;
+        console.log('    av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+        av.dom.gridCanvas.width = av.dom.gridHolder.clientWidth - 1;  //was - 3
+        if (av.dom.gridHolder.clientHeight < av.dom.gridHolder.clientWidth){
+          av.grd.canvasSize = av.dom.gridHolder.clientHeight - 1;
+        }
+        else {av.grd.canvasSize = av.dom.gridHolder.clientWidth - 1;}
+        av.dom.gridCanvas.width = av.grd.canvasSize + 'px';
+        av.dom.gridCanvas.height = av.grd.canvasSize + 'px';
+        av.grd.spaceX = av.grd.canvasSize;
+        av.grd.spaceY = av.grd.canvasSize;
         console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-        console.log('av.grd.CanvasGrid.width ht =', av.grd.CanvasGrid.width, av.grd.CanvasGrid.height);
+        console.log('    av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
 
         av.grd.findGridSize(av.grd, av.parents);
         if (av.dom.gridHolder.scrollHeight == av.dom.gridHolder.clientHeight + 17) {
           var numGH = av.dom.gridHolder.clientHeight;
-          av.grd.CanvasGrid.height = numGH - 6 - 17;
+          av.dom.gridCanvas.height = numGH - 6 - 17;
           av.grd.findGridSize(av.grd, av.parents);     //in populationGrid.js
           consold.log('inside DrawGridSetupFn in odd if statement ----------------------------------');
         }
@@ -1733,7 +1766,7 @@ require([
     var scaleType = dijit.byId('colorMode').value;
     //Redraw Grid;
     //console.log('before call av.grd.drawGridSetupFn');
-    av.grd.drawGridSetupFn();
+    av.grd.drawGridSetupFn('digit.byId(colorMode)');
   });
 
   // Zoom slide - display only not avida
@@ -1748,8 +1781,7 @@ require([
     onChange: function (value) {
       av.grd.zoom = value;
       //console.log('zoomSlide', av.grd.zoom);
-      //console.log('before call av.grd.drawGridSetupFn');
-      av.grd.drawGridSetupFn();
+      av.grd.drawGridSetupFn('av.grd.zoomSlide');
     }
   }, 'zoomSlide');
 
@@ -1762,8 +1794,7 @@ require([
     dijit.byId('mnGnuplot2').attr('disabled', false);
     dijit.byId('mnViridis').attr('disabled', true);
     av.grd.colorMap = 'Viridis';
-    //console.log('before call av.grd.drawGridSetupFn');
-    av.grd.drawGridSetupFn();
+    av.grd.drawGridSetupFn('digjit.byID(mnViridis');
   });
 
   dijit.byId('mnGnuplot2').on('Click', function () {
@@ -1772,8 +1803,7 @@ require([
     dijit.byId('mnGnuplot2').attr('disabled', true);
     dijit.byId('mnViridis').attr('disabled', false);
     av.grd.colorMap = 'Gnuplot2';
-    //console.log('before call av.grd.drawGridSetupFn');
-    av.grd.drawGridSetupFn();
+    av.grd.drawGridSetupFn('digit.byID(mnGnuplot2)');
   });
 
   dijit.byId('mnCubehelix').on('Click', function () {
@@ -1782,8 +1812,7 @@ require([
     dijit.byId('mnGnuplot2').attr('disabled', false);
     dijit.byId('mnViridis').attr('disabled', false);
     av.grd.colorMap = 'Cubehelix';
-    //console.log('before call av.grd.drawGridSetupFn');
-    av.grd.drawGridSetupFn();
+    av.grd.drawGridSetupFn('digit.byID(mnCubehelix)');
     av.post.addUser('Button: mnCubehelix pressed');
   });
 
@@ -2693,7 +2722,7 @@ require([
 
   // ------------------------ Population Page Statistics tables --------------------------------------------------------
 
-  av.ui.adjustpopInfoSize();
+  av.ui.adjustpopInfoSize('after page loaded, before chart is defined.');
 
   //used to set the height so the data just fits. Done because different monitor/browser combinations require a different height in pixels.
   //may need to take out as requires loading twice now.

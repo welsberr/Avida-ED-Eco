@@ -2,6 +2,8 @@
 //                                       Population page script
 // *********************************************************************************************************************
 // ptd = PeTri Dish
+var av = av || {};  //incase av already exists
+
 
 av.ptd.makePauseState = function () {
   dijit.byId('mnCnPause').attr('disabled', true);
@@ -31,7 +33,7 @@ av.ptd.popBoxSwap = function () {
     dijit.byId('setupBlock').set('style', 'display: none');
 
     av.grd.cellConflict(av.grd.cols, av.grd.rows);
-    av.grd.drawGridSetupFn();
+    av.grd.drawGridSetupFn('av.ptd.popBoxSwap');
     av.ui.subpage = 'Map';
     //var height = $('#mapBlock').innerHeight() - 6;
     //dijit.byId('mapBlock').set('style', 'display: block; height: ' + height + 'px');
@@ -483,7 +485,7 @@ av.ptd.bitToggle = function (button) {
     av.pch.logEar[ii] = null;
     av.pch.logNum[ii] = null;
   }
-  av.grd.drawGridSetupFn();
+  av.grd.drawGridSetupFn('av.ptd.bitToggle');
   av.grd.popChartFn();
   //console.log('bitToggle: av.grd.popStatsMsg.update', av.grd.popStatsMsg.update);
   av.ptd.updateLogicFn(av.grd.popStatsMsg.update);
@@ -540,7 +542,7 @@ av.ptd.resetDishFn = function (need2sendRest2avida) { //Need to reset all settin
 
   // re-write grid if that page is visible
   av.grd.popChartClear();
-  av.grd.drawGridSetupFn();
+  av.grd.drawGridSetupFn('av.ptd.resetDishFn');
 }
 
 //clear logic Buttons
