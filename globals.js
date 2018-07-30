@@ -25,6 +25,7 @@ av.debug.ind = false;  //oranism page
 av.debug.anl = false;  //analysis page
 av.debug.plotly = false;  //both popChart and analysis
 av.debug.usr = ''; //working on log for user actions.
+av.debug.uil = true; //user interface layout.
 
 av.post = {};
 av.post.addUser = function(addStr, comment) {
@@ -135,7 +136,7 @@ av.mouse.notDndPopList = ['colorMode'
   , 'mainButtons'
   , 'mainButtonTable'
   , 'popSetupButton'
-  , 'popStatsButton'
+  , 'infoShowHideButton'
   , 'populationButton'
   , 'organismButton'
   , 'analysisButton'
@@ -296,13 +297,15 @@ av.debug.log = '--hed: message and error log: version Beta Test ' + av.ui.versio
 av.debug.triggered = 'unknown';
 
 av.ui.page = 'populationBlock';
-av.ui.subpage = 'map';
+av.ui.subpage = 'Data';
 av.ui.autoStopFlag = false;
 av.ui.autoStopValue = 987654321;
 //used in adjusting size of areas on population page
 av.ui.gridHolderSideBuffer = 0;
-av.ui.popGridCtlWdMin = 430;
+av.ui.popGridCtlWdMin = 380;   //was 430
+av.ui.popInfoHolderMinWd = 338;
 av.ui.popBotHtMin = 90;
+av.ui.navColIdMinWd = 152;
 
 //not really ui, but not sure where to put them
 av.ui.num = 0;   //tenporary holder for a number;
@@ -513,6 +516,7 @@ av.ptd = {};  // on population page that are not part of the grid. (PeTri Dish)
 av.ptd.popStatFlag = true;  //flag that determines if the stats panel is visible.
 av.ptd.logicButtons = ['notButton', 'nanButton', 'andButton', 'ornButton', 'oroButton', 'antButton', 'norButton', 'xorButton', 'equButton'];
 av.ptd.logicNames = ['not', 'nan', 'and', 'orn', 'oro', 'ant', 'nor', 'xor', 'equ'];
+av.ptd.popInfoHolderWd = 395;
 
 av.grd = {};         //data about the grid canvas
 av.grd.popStatsMsg = {};

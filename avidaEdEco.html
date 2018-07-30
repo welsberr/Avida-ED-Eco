@@ -166,11 +166,11 @@
         <label id='wsSavedMsg' style='color: blue'>Workspace: default</label> | &nbsp;&nbsp;&nbsp;
         <span style='text-align: right'><label id='userMsgLabel' style='color: red; text-align: right'> </label></span>
 		</div>
-		<div id="rtPbuttonDiv">rt panel button</div>
+    <div id="rtPbuttonDiv"><button id='infoShowHideButton'>Info</button></div>
 	</div>
 
 	<div class="mainRow">
-		<div class="navCol">
+		<div class="navColClass" id="navColId">
 			<div class="mainPageButtons" id='mainButtons'>
 				<table id='mainButtonTable' style='border-collapse:collapse;table-layout:auto;width:100%;height:auto;' border='0'>
 					<tbody>
@@ -216,7 +216,7 @@
 			</div>
 			<div class="trash">
 				<span id='trashCan' class='container'>
-					<img id='trashCanImage' src='images/Avida-ED-trash-icon.png' style='width: 32px;' />
+					<img id='trashCanImage' src='images/Avida-ED-trash-icon.png' style='width: 32px;' alt='trash can' />
 				</span>
 			</div>
     </div><span comment="end of navCol"></span>
@@ -230,13 +230,12 @@
             <tbody>
             <tr style='vertical-align: middle; line-height: 25px'>
               <td style='vertical-align: top;'>
-                <div class='lftmargin'><img src='images/Avida-ED-dish-icon.png'></img></div>
+                <div class='lftmargin'><img src='images/Avida-ED-dish-icon.png' alt='Avida-ED dish icon'></div>
                 <div id='activeConfig' class='popContainer'></div>
               </td>
               <td><label id='altMsgLabel'></label></td>
               <td style='text-align: right;'>
                 <button id='popSetupButton'>Setup</button>
-                <button id='popStatsButton'>Stats</button>
               </td>
             </tr>
             </tbody>
@@ -283,10 +282,10 @@
           </div>
 				</div>
 
-        <div id="popInfo">   
+        <div id="popInfoHolder">   
           <div class="labInfoClass" id="labInfoBlock">
             <div id="popStatistics">
-              <div id="selected">
+              <div id="selOrgType">
                 <div class='popStatsTitle'>
                   <label id='sotLabel'>Selected Organism Type</label>
                 </div>
@@ -614,7 +613,7 @@
             </form>            
           </div><span comment="end of labInfoPopSetup"></span>
           
-				</div>  <span comment="end of popInfo"></span>
+				</div>  <span comment="end of popInfoHolder"></span>
       </div>  <span title="mainBlockClassRow id=populationBlock"></span>
 
       

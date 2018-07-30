@@ -43,10 +43,10 @@
     height: 100%;
     background-color: red;
   }
-  .navCol {
+  .navColClass {
     resize: horizontal;
     overflow: auto;
-    width: 220px;
+    width: 152px;        /*was 220 */
     display: flex;
     flex-direction: column;
     background-color: lavender;
@@ -92,16 +92,17 @@
     background-color: peachpuff;
   }
 
-  #popInfo {
+  #popInfoHolder {
     flex: 0 1 344px;          /* flex: 0 1 344px; is fixed in that dimension */
     border: 1px solid black;
     background: beige;
   }
 
-  #labInfoBlockOld {
-    flex: 0 1 344px;          /* flex: 0 1 344px; is fixed in that dimension */
-    border: 1px solid black;
-    background: beige;
+  #labInfoBlock{
+    display: flex;
+    flex-direction: column;
+    background-color: lightsteelblue;
+    height: 100%;
   }
   .labInfoClass{
     display: flex;
@@ -109,6 +110,7 @@
     background-color: lightsteelblue;
     height: 100%;
   }
+
   .labInfoTop {
     border: 1px solid black;
     flex:0 1 220px;
@@ -132,8 +134,8 @@
     resize: vertical;
     overflow: auto;
   }
-  #selected{
-    flex: 0 1 170;
+  #selOrgType{
+    flex: 0 1 164;        /*was 170 */
     border: 1px solid red;
     resize: horizontal;
     overflow: auto;

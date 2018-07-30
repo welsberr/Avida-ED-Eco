@@ -12,7 +12,7 @@ av.ptd.makePauseState = function () {
   //console.log('pauseState; button=run');
   av.dom.runStopButton.textContent = 'Run';
   av.dom.oneUpdateButton.disabled = false;
-}
+};
 
 av.ptd.makeRunState = function () {
   av.dom.runStopButton.textContent = 'Pause';
@@ -20,33 +20,24 @@ av.ptd.makeRunState = function () {
   dijit.byId('mnCnRun').attr('disabled', true);
   dijit.byId('mnCnOne').attr('disabled', true);
   av.dom.oneUpdateButton.disabled = true;
-}
+};
 
 // shifts the population page from Map (grid) view to setup parameters view and back again.
 av.ptd.popBoxSwap = function () {
   'use strict';
-  if ('Map' == popSetupButton.innerHTML) {
+  if ('Setup' != popSetupButton.innerHTML) {
     av.post.addUser('Button: popSetupButton became Setup');
-    document.getElementById('mapBlock').style.display = 'block';
-    //document.getElementById('popSetupButton').textContent = 'Setup';
+    av.dom.labInfoBlock.style.display = 'flex';
+    av.dom.setupBlock.style.display = 'none';
     av.dom.popSetupButton.textContent = 'Setup';
-    dijit.byId('setupBlock').set('style', 'display: none');
 
-    av.grd.cellConflict(av.grd.cols, av.grd.rows);
-    av.grd.drawGridSetupFn('av.ptd.popBoxSwap');
-    av.ui.subpage = 'Map';
-    //var height = $('#mapBlock').innerHeight() - 6;
-    //dijit.byId('mapBlock').set('style', 'display: block; height: ' + height + 'px');
-    //dijit.byId('mapBlock').set('style', 'display: block;');
-    //dijit.byId('mapBC').set('style', 'height: ' + height + 'px');
+    av.ui.subpage = 'Data';
   } else {
-    av.post.addUser('Button: popSetupButton became Map');
-    document.getElementById('mapBlock').style.display = 'none'
-    popSetupButton.textContent = 'Map';
-    dijit.byId('setupBlock').set('style', 'display: block;');
-
+    av.post.addUser('Button: popSetupButton became Data');
+    av.dom.labInfoBlock.style.display = 'none';
+    av.dom.setupBlock.style.display = 'flex';
+    av.dom.popSetupButton.textContent = 'Data';
     av.ui.subpage = 'setup';
-    //dijit.byId('mapBlock').set('style', 'display: none;');
   }
 }
 

@@ -184,6 +184,10 @@ require([
     av.dom.userMsgLabel = document.getElementById('userMsgLabel');
     av.dom.wsSavedMsg = document.getElementById('wsSavedMsg');
 
+    av.dom.allAvida = document.getElementById('allAvida');
+    av.dom.navColId = document.getElementById('navColId');
+    
+    av.dom.mapHolder = document.getElementById('mapHolder');
     av.dom.populationButton = document.getElementById('populationButton');
     av.dom.freezeButton = document.getElementById('freezeButton');
     av.dom.populationBlock = document.getElementById('populationBlock');
@@ -191,6 +195,10 @@ require([
     av.dom.analysisBlock = document.getElementById('analysisBlock');
 
       //Population Page
+    av.dom.popInfoHolder = document.getElementById('popInfoHolder');
+    av.dom.setupBlock = document.getElementById('setupBlock');
+    av.dom.labInfoBlock = document.getElementById('labInfoBlock');
+
     av.dom.popChart = document.getElementById('popChart');  //easier handle for div with chart
     av.dom.popChrtHolder = document.getElementById('popChrtHolder');
 
@@ -202,10 +210,8 @@ require([
     av.dom.mapBlock = document.getElementById('mapBlock');
     av.dom.gridHolder = document.getElementById('gridHolder');
     av.dom.gridCanvas = document.getElementById('gridCanvas');
-    av.dom.popInfo = document.getElementById('popInfo');
     av.dom.popBot = document.getElementById('popBot');
-    av.dom.labInfoBlock = document.getElementById('labInfoBlock');
-    av.dom.selected = document.getElementById('selected');
+    av.dom.selOrgType = document.getElementById('selOrgType');
     av.dom.gridControlTable = document.getElementById('gridControlTable');
     
     //Population Map Setup page
@@ -930,7 +936,8 @@ require([
     //console.log(from,'anlDndChart Ht client scroll', av.dom.anlDndChart.clientHeight, av.dom.anlDndChart.scrollHeight);
     //console.log(from,'anlChrtSpace Ht client scroll', av.dom.anlChrtSpace.clientHeight, av.dom.anlChrtSpace.scrollHeight);
 
-    if (av.debug.plotly) console.log('in av.anl.divSize from ', from);
+    //if (av.debug.plotly) 
+        console.log('in av.anl.divSize from ', from);
     console.log('av.dom.anaChrtHolder.clientWd, Ht=', av.dom.anaChrtHolder.clientWidth, av.dom.anaChrtHolder.clientHeight);
     av.anl.ht = av.dom.anaChrtHolder.clientHeight - 1;
     av.anl.wd = av.dom.anaChrtHolder.clientWidth - 1;
@@ -990,70 +997,124 @@ require([
     });
   });
 
-  //av.ui.popInfoOldwidth = 0;
-  //aspect.after(registry.byId('popInfo'), 'resize', function () {
-  //  if (registry.byId('popInfo').domNode.style.width !== av.ui.popInfoOldwidth) {
-  //    av.ui.popInfoOldwidth = registry.byId('popInfo').domNode.style.width;
-  //    var str = registry.byId('popInfo').domNode.style.width;
-  //    registry.byId('sotPane').domNode.style.width = Math.round((Number(str.substr(0, str.length - 2)) - 50) * 0.52) + 'px';
-  //    registry.byId('mainBC').layout();
-  //  }
-    //console.log('popBot ====', document.getElementById('popBot').style.width); //need abotu 430 px for button arrangement to look good.
-  //});
+  av.ui.adjustpopInfoWd = function(adjustGridWd) {
+    var popInfoHolderWd = av.dom.popInfoHolder.offsetWidth - adjustGridWd;  //adjustGridWd postive means Grid needs width
+    console.log('popInfoHolderWd=', popInfoHolderWd, '; av.ui.popInfoHolderMinWd', av.ui.popInfoHolderMinWd);
+    if (popInfoHolderWd < av.ui.popInfoHolderMinWd) {
+      var navColWd = av.dom.navColId.offsetWidth;
+      console.log("navColWd=",navColWd, '; popInfoHolderWd=', popInfoHolderWd, '');
+      navColWd = (.33*(navColWd + popInfoHolderWd)).toFixed(0);
+      popInfoHolderWd = navColWd*2;
+      av.dom.navColId.style.width = navColWd + 'px';
+      console.log('navColWd=', navColWd, '; popInfoHolderWd=', popInfoHolderWd, '; mapHolder=', av.dom.mapHolder.offsetWidth);
+    }
+    av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px'; 
+    av.dom.setupBlock.style.width = popInfoHolderWd + 'px'; 
+    av.dom.labInfoBlock.style.width = popInfoHolderWd + 'px';
+    popInfoHolderWd = (popInfoHolderWd/2).toFixed(0); //Math.round(popInfoHolder/2);
+    av.dom.selOrgType.style.width = popInfoHolderWd + 'px';
+    console.log('set selOrgType to ', popInfoHolderWd + 'px');
+    console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
+  }
 
+  // 
   //Adjust Statistics area width based on gridholder size and shape. gridholder should be roughly square
   av.ui.adjustpopInfoSize = function (from) {
+    var adjustGridWd = 0;
     console.log('av.ui.adjustpopInfoSize was called from: ', from);
-    console.log('popInfo.offsetWidth, clientwidth =',av.dom.popInfo.offsetWidth, av.dom.popInfo.clientWidth);
+    console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth);
+    console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, 
+                 '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
+    console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ', 
+           av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
+    console.log('popInfoHolder.offsetWidth, clientwidth =',av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
     console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
-    console.log('selected.offsetWidth, clientwidth =',av.dom.selected.offsetWidth, av.dom.selected.clientWidth);
-    if (av.ui.popGridCtlWdMin > av.dom.gridHolder.offsetWidth) {
-      var extaWdNeeded = av.ui.popGridCtlWdMin - av.dom.gridHolder.offsetWidth;
-      var labInfoBlockWd = av.dom.labInfoBlock.offsetWidth - extaWdNeeded;
-      av.dom.labInfoBlock.style.width = labInfoBlockWd + 'px'; 
-      console.log('popInfo.offsetWidth, clientwidth =',av.dom.popInfo.offsetWidth, av.dom.popInfo.clientWidth);
-      console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
-      console.log('selected.offsetWidth, clientwidth =',av.dom.selected.offsetWidth, av.dom.selected.clientWidth);
+    console.log('selOrgType.offsetWidth, clientwidth =',av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
+    console.log('av.ui.popGridCtlWdMin=',av.ui.popGridCtlWdMin, '; gridHolder.offsetWidt=', av.dom.gridHolder.offsetWidth);
+    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight){
+      adjustGridWd = av.dom.gridHolder.offsetHeight - av.dom.gridHolder.offsetWidth; //adjustGridWd negative means grid holder is too wide.
+      av.ui.adjustpopInfoWd(adjustGridWd);
     }
+    if (av.ui.popGridCtlWdMin > av.dom.gridHolder.offsetWidth) {
+      adjustGridWd = av.ui.popGridCtlWdMin - av.dom.gridHolder.offsetWidth;
+      av.ui.adjustpopInfoWd(adjustGridWd);
+    };
+    console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
+    console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, 
+                 '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
+    console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ', 
+           av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
+
+    console.log('popInfo.offsetWidth, clientwidth =',av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
+    console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
+    console.log('selOrgType.offsetWidth, clientwidth =',av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
+
+    av.dom.gridCanvas.style.width = (av.dom.gridHolder.clientHeight-2)+'px';
+    av.dom.gridCanvas.style.height = av.dom.gridCanvas.offsetWidth+'px';
+    av.dom.CanvasScale.style.width = (av.dom.gridControlTable.clientWidth-1) + 'px';
+    
     console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
     console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
-
-    av.dom.gridCanvas.width = av.dom.gridHolder.clientHeight-2;
-    av.dom.gridCanvas.height = av.dom.gridCanvas.width;
-    av.dom.gridHolder.width = av.dom.gridHolder.clientHeight-2;
-    av.dom.CanvasScale.width = av.dom.gridControlTable.clientWidth - 1;
-
-//  console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-//  console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
-
   };
+  
   av.ui.adjustpopInfoSize_ = function (from) {
+    var adjustGridWd = 0;
+    console.log('av.ui.adjustpopInfoSize was called from: ', from);
+    console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth);
+    console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, 
+                 '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
+    console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ', 
+           av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
+    console.log('popInfoHolder.offsetWidth, clientwidth =',av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
+    console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
+    console.log('selOrgType.offsetWidth, clientwidth =',av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
+    console.log('av.ui.popGridCtlWdMin=',av.ui.popGridCtlWdMin, '; gridHolder.offsetWidt=', av.dom.gridHolder.offsetWidth);
+    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight){
+      adjustGridWd = av.dom.gridHolder.offsetHeight - av.dom.gridHolder.offsetWidth; //adjustGridWd negative means grid holder is too wide.
+      av.ui.adjustpopInfoWd(adjustGridWd);
+    }
+    if (av.ui.popGridCtlWdMin > av.dom.gridHolder.offsetWidth) {
+      adjustGridWd = av.ui.popGridCtlWdMin - av.dom.gridHolder.offsetWidth;
+      av.ui.adjustpopInfoWd(adjustGridWd);
+    };
+    console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
+    console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, 
+                 '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
+    console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ', 
+           av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
+
+    console.log('popInfo.offsetWidth, clientwidth =',av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
+    console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
+    console.log('selOrgType.offsetWidth, clientwidth =',av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
+
+    av.dom.gridCanvas.style.width = (av.dom.gridHolder.clientHeight-2)+'px';
+    av.dom.gridCanvas.style.height = av.dom.gridCanvas.offsetWidth+'px';
+    av.dom.CanvasScale.style.width = (av.dom.gridControlTable.clientWidth-1) + 'px';
+    
+    console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+    console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+  };
+
+
+
+  av.ui.adjustpopInfoSize_oldest = function (from) {
     console.log('av.ui.adjustpopInfoSize called from: ', from);
-    console.log('popInfo.offsetWidth, clientwidth =',av.dom.popInfo.offsetWidth, av.dom.popInfo.clientWidth);
-    console.log('av.dom.gridHolder.clientWidth', av.dom.gridHolder.clientWidth, '; popInfo.clWd=',av.dom.popInfo.clientWidth, '; av.ui.popGridCtlWdMin=', av.ui.popGridCtlWdMin);
-    console.log('popBot wd, ht', av.dom.popBot.clientWidth, av.dom.popBot.clientHeight, '; gridHolder.Ht', av.dom.gridHolder.clientHeight);
     if (av.ui.popGridCtlWdMin < av.dom.gridHolder.clientWidth) {
       av.ui.gridHolderXtra = av.dom.gridHolder.clientWidth - (av.dom.gridHolder.clientHeight-av.ui.popBotHtMin);
       //av.ui.gridHolderXtra = av.ui.gridHolderWd - (av.dom.gridHolder.clientHeight);   //commented out in Avida-Ed 3.2
-      console.log('av.ui.gridHolderXtra',av.ui.gridHolderXtra);
       if (av.ui.gridHolderSideBuffer < av.ui.gridHolderXtra) {
         av.ui.gridHolderWdNew = av.dom.gridHolder.clientWidth - av.ui.gridHolderXtra + av.ui.gridHolderSideBuffer;
-        console.log('av.ui.gridHolderWdNew=',av.ui.gridHolderWdNew, '; gridHolderSideBuffer=', av.ui.gridHolderSideBuffer);
         if (av.ui.popGridCtlWdMin > av.ui.gridHolderWdNew) av.ui.gridHolderWdNew = av.ui.popGridCtlWdMin;
-        av.ui.popInfoWdNew = av.dom.popInfo.clientWidth + av.dom.gridHolder.clientWidth - av.ui.gridHolderWdNew;
-        console.log('av.ui.popInfoWd Old, New',document.getElementById('popInfo').clientWidth, av.ui.popInfoWdNew);
-        //av.ui.popInfoWdNew = av.dom.popInfo.clientWidth + av.ui.gridHolderXtra - av.ui.gridHolderSideBuffer;   //commented out in Avida-Ed 3.2
+        av.ui.popInfoWdNew = av.dom.popInfoHolder.clientWidth + av.dom.gridHolder.clientWidth - av.ui.gridHolderWdNew;
+        //av.ui.popInfoWdNew = av.dom.popInfoHolder.clientWidth + av.ui.gridHolderXtra - av.ui.gridHolderSideBuffer;   //commented out in Avida-Ed 3.2
         document.getElementById('popInfo').style.width = av.ui.popInfoWdNew + 'px';
       }
     }
     else {
       av.ui.gridHolderWdNew = av.ui.popGridCtlWdMin;
-      av.ui.popInfoWdNew = av.dom.popInfo.clientWidth + av.dom.gridHolder.clientWidth - av.ui.gridHolderWdNew;
-      console.log('av.ui.popInfoWd Old, New',av.dom.popInfo.clientWidth, av.ui.popInfoWdNew);
-      av.dom.popInfo.style.width = av.ui.popInfoWdNew + 'px';
+      av.ui.popInfoWdNew = av.dom.popInfoHolder.clientWidth + av.dom.gridHolder.clientWidth - av.ui.gridHolderWdNew;
+      av.dom.popInfoHolder.style.width = av.ui.popInfoWdNew + 'px';
     }
-    //console.log('popInfo', av.dom.popInfo.style.width, '; popBot wd, ht', av.dom.popBot.clientWidth, av.dom.popBot.clientHeight);
-    //console.log('gridHolder: wd, ht=', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
   };
 
   if (av.debug.root) console.log('before dnd triggers');
@@ -1236,35 +1297,30 @@ require([
 
 // shifts the population page from Map (grid) view to setup parameters view and back again.
   av.dom.popSetupButton.onclick = function () {
-    //av.post.addUser('Button: sendEmail');  //done in popBoxSwap
     av.ptd.popBoxSwap();   //in popControls.js
   };
 
   // hides and shows the population and selected organsim data on right of population page with 'Stats/mpa' button
-  av.ptd.popStatView = function () {
+  av.ptd.infoShowHideButton = function () {
     if (av.ptd.popStatFlag) {
-      av.post.addUser('Button: popStatsButton: start hidding stats');
+      av.post.addUser('Button: infoShowHideButton: start hidding stats');
       av.ptd.popStatFlag = false;
-      registry.byId('popInfo').domNode.style.width = '1px';
-      registry.byId('mainBC').layout();
-      dijit.byId('popInfo').set('style', 'display: block; visibility: hidden;');
-
+      av.ptd.popInfoHolderWd = av.dom.popInfoHolder.offsetWidth;
+      av.dom.popInfoHolder.style.display = 'none';
     }
     else {
-      av.post.addUser('Button: popStatsButton: start showing stats');
+      av.post.addUser('Button: infoShowHideButton: start showing stats');
       av.ptd.popStatFlag = true;
-      registry.byId('sotPane').domNode.style.width = '150px';
-      registry.byId('popInfo').domNode.style.width = '395px';
-      registry.byId('mainBC').layout();
-      av.ui.adjustpopInfoSize('av.ptd.popStatView');
-      dijit.byId('popInfo').set('style', 'display: block; visibility: visible;');
-
+      av.dom.popInfoHolder.style.display = 'flex';
+      //reset info pane dimensions. Try popInfoHolderWd = 395px; selOrgTypeWd = 150px
+      av.dom.popInfoHolder.style.width = av.ptd.popInfoHolderWd + 'px';
+      av.ui.adjustpopInfoSize('av.ptd.infoShowHideButton');
     }
   };
 
-  document.getElementById('popStatsButton').onclick = function () {
-    ///av.post.addUser('Button: popStatsButton');   //done in popStatView
-    av.ptd.popStatView();
+  document.getElementById('infoShowHideButton').onclick = function () {
+    ///av.post.addUser('Button: infoShowHideButton');   //done in popStatView
+    av.ptd.infoShowHideButton();
   };
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -2753,24 +2809,26 @@ require([
     //if the two heights are different then there is a scroll bar
     var ScrollDif = document.getElementById(scrollDiv).scrollHeight - document.getElementById(scrollDiv).clientHeight;
     var hasScrollbar = 0 < ScrollDif;
-    if (av.debug.root) console.log('scroll', scrollDiv, hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
+    if (av.debug.uil) console.log('scroll', scrollDiv, hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
       document.getElementById(scrollDiv).clientHeight, '; htChangeDiv=', document.getElementById(htChangeDiv).scrollHeight,
       document.getElementById(htChangeDiv).offsetHeight, document.getElementById(htChangeDiv).style.height);
 
-    var divHt = document.getElementById(htChangeDiv).style.height.match(/\d/g);  //get 0-9 globally in the string  //http://stackoverflow.com/questions/10003683/javascript-get-number-from-string
-    console.log('htChangeDiv is', htChangeDiv, '; divHt=', divHt);
-    if (null !== divHt) {
-      divHt = divHt.join(''); //converts array to string
-      var NewHt = Number(divHt) + 1 + + scrollSpace + ScrollDif;  //add the ht difference to the outer div that holds this one
-      //line below is where the height of the div actually changes
-      document.getElementById(htChangeDiv).style.height = NewHt + 'px';
-    }
-    //redraw the screen
-    //av.ui.mainBoxSwap(page);
-    if (av.debug.root) console.log('Afterscroll', hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
-      document.getElementById(scrollDiv).clientHeight, '; htChangeDiv=', document.getElementById(htChangeDiv).scrollHeight,
-      document.getElementById(htChangeDiv).offsetHeight, document.getElementById(htChangeDiv).style.height);
-  };
+    var divHt = document.getElementById(htChangeDiv).offsetHeight;
+    if (av.debug.uil) console.log('htChangeDiv is', htChangeDiv, '; divHt=', divHt);
+    if (hasScrollbar) {
+        if (null !== divHt) {
+          var NewHt = divHt + 1 + scrollSpace + ScrollDif;  //add the ht difference to the outer div that holds this one
+          //line below is where the height of the div actually changes
+          if (av.debug.uil) document.getElementById(htChangeDiv).style.height = NewHt + 'px';
+        }
+        //redraw the screen
+        //av.ui.mainBoxSwap(page);
+        //if (av.debug.root) 
+        console.log('Afterscroll', hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
+          document.getElementById(scrollDiv).clientHeight, '; htChangeDiv=', document.getElementById(htChangeDiv).scrollHeight,
+          document.getElementById(htChangeDiv).offsetHeight, document.getElementById(htChangeDiv).style.height);
+        }
+    };
 
   av.ui.removeVerticalScrollbar('popStats4grid', 'popStatistics');
   av.ui.removeVerticalScrollbar('popBot', 'popBot');

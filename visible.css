@@ -21,8 +21,13 @@ and open the template in the editor.
 #setupBlock{
   display: none;    
 }
-#labInfoPopSetup{    /* was called setupBlock */
-  display: flex;
+
+#labInfoBlock{       /* class is labinfoClass */
+  display: flex;    
+}
+
+#setupBlock{         /* class is labinfoClass */
+  display: none;    
 }
 
 #zoomSlide{display: none;}
