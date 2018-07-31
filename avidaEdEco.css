@@ -93,7 +93,7 @@
   }
 
   #popInfoHolder {
-    flex: 0 1 344px;          /* flex: 0 1 344px; is fixed in that dimension */
+    flex: 0 1 349px;          /* flex: 0 1 344px; is fixed in that dimension */
     border: 1px solid black;
     background: beige;
   }
@@ -111,26 +111,12 @@
     height: 100%;
   }
 
-  .labInfoTop {
-    border: 1px solid black;
-    flex:0 1 220px;
-    resize: vertical;     /* broken: resize is not working here */
-    overflow: auto;
-  }
-  .labInfoMid {
-    border: 1px solid black;
-    flex:1;
-  }
-  .labInfoBot {
-    flex: 0 1 20px;
-    border: 1px solid black;
-  }
   #popStatistics{
     display: flex;
     flex-direction: row;
     border: 1px solid purple;
     background-color: #F5F5F5;
-    height: 342px;
+    height: 280px;
     resize: vertical;
     overflow: auto;
   }

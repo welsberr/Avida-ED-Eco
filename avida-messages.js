@@ -22,7 +22,7 @@ var io = null;
   Try to import external socketio client
 */
 
-console.log('io=', io, '; enable_diagnostic_socket=', enable_diagnostic_socket, '; and=', io && enable_diagnostic_socket);
+//console.log('io=', io, '; enable_diagnostic_socket=', enable_diagnostic_socket, '; and=', io && enable_diagnostic_socket);
 if (enable_diagnostic_socket)
 {
    self.importScripts("https://cdn.socket.io/socket.io-1.4.5.js");
