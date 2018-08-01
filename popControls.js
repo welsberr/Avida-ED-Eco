@@ -6,9 +6,9 @@ var av = av || {};  //incase av already exists
 
 
 av.ptd.makePauseState = function () {
-  dijit.byId('mnCnPause').attr('disabled', true);
-  dijit.byId('mnCnRun').attr('disabled', false);
-  dijit.byId('mnCnOne').attr('disabled', false);
+  av.dom.mnCnPause.disabled = true;
+  av.dom.mnCnRun.disabled = false;
+  av.dom.mnCnOne.disabled = false;
   //console.log('pauseState; button=run');
   av.dom.runStopButton.textContent = 'Run';
   av.dom.oneUpdateButton.disabled = false;
@@ -16,9 +16,9 @@ av.ptd.makePauseState = function () {
 
 av.ptd.makeRunState = function () {
   av.dom.runStopButton.textContent = 'Pause';
-  dijit.byId('mnCnPause').attr('disabled', false);
-  dijit.byId('mnCnRun').attr('disabled', true);
-  dijit.byId('mnCnOne').attr('disabled', true);
+  av.dom.mnCnPause.disabled = false;
+  av.dom.mnCnRun.disabled = true;
+  av.dom.mnCnOne.disabled = true;
   av.dom.oneUpdateButton.disabled = true;
 };
 
@@ -56,12 +56,12 @@ av.ptd.popWorldStateUi = function () {
   av.dnd.fzWorld.accept['b'] = 1;
   av.dom.sizeCols.disabled = true;
   av.dom.sizeRows.disabled = true;
-  //dijit.byId('sizeRows').attr('disabled', true);
-  //dijit.byId('experimentRadio').attr('disabled', true);
-  //dijit.byId('demoRadio').attr('disabled', true);
+  //av.dom.sizeRows.disabled = true;
+  //av.dom.experimentRadio.disabled = true;
+  //av.dom.demoRadio.disabled = true;
 
   //there will be a population so it can now be frozen.
-  dijit.byId('mnFzPopulation').attr('disabled', false);
+  av.dom.mnFzPopulation.disabled = false;
 }
 
 av.ptd.popRunningStateUi = function () {
@@ -80,23 +80,26 @@ av.ptd.popRunningStateUi = function () {
   $('#muteSlide').slider({disabled: true});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
   av.dom.sizeCols.disabled = true;
   av.dom.sizeRows.disabled = true;
-  dijit.byId('muteInput').attr('disabled', true);
-  dijit.byId('childParentRadio').attr('disabled', true);
-  dijit.byId('childRandomRadio').attr('disabled', true);
-  dijit.byId('notose').attr('disabled', true);
-  dijit.byId('nanose').attr('disabled', true);
-  dijit.byId('andose').attr('disabled', true);
-  dijit.byId('ornose').attr('disabled', true);
-  dijit.byId('orose').attr('disabled', true);
-  dijit.byId('andnose').attr('disabled', true);
-  dijit.byId('norose').attr('disabled', true);
-  dijit.byId('xorose').attr('disabled', true);
-  dijit.byId('equose').attr('disabled', true);
-  dijit.byId('experimentRadio').attr('disabled', true);
-  dijit.byId('demoRadio').attr('disabled', true);
+  
+  av.dom.muteInput.disabled= true;
+
+  av.dom.muteInput.disabled = true;
+  av.dom.childParentRadio.disabled = true;
+  av.dom.childRandomRadio.disabled = true;
+  av.dom.notose.disabled = true;
+  av.dom.nanose.disabled = true;
+  av.dom.andose.disabled = true;
+  av.dom.ornose.disabled = true;
+  av.dom.orose.disabled = true;
+  av.dom.andnose.disabled = true;
+  av.dom.norose.disabled = true;
+  av.dom.xorose.disabled = true;
+  av.dom.equose.disabled = true;
+  av.dom.experimentRadio.disabled = true;
+  av.dom.demoRadio.disabled = true;
 
   //there will be a population so it can now be frozen.
-  dijit.byId('mnFzPopulation').attr('disabled', false);
+  av.dom.mnFzPopulation.disabled = false;
 }
 
 av.ptd.popNewExState = function () {
@@ -125,28 +128,28 @@ av.ptd.popNewExState = function () {
   $('#muteSlide').slider({disabled: false});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
   av.dom.sizeCols.disabled = false;
   av.dom.sizeRows.disabled = false;
-  //dijit.byId('sizeRows').attr('disabled', false);
-  dijit.byId('muteInput').attr('disabled', false);
-  dijit.byId('childParentRadio').attr('disabled', false);
-  dijit.byId('childRandomRadio').attr('disabled', false);
-  dijit.byId('notose').attr('disabled', false);
-  dijit.byId('nanose').attr('disabled', false);
-  dijit.byId('andose').attr('disabled', false);
-  dijit.byId('ornose').attr('disabled', false);
-  dijit.byId('orose').attr('disabled', false);
-  dijit.byId('andnose').attr('disabled', false);
-  dijit.byId('norose').attr('disabled', false);
-  dijit.byId('xorose').attr('disabled', false);
-  dijit.byId('equose').attr('disabled', false);
-  dijit.byId('experimentRadio').attr('disabled', false);
-  dijit.byId('demoRadio').attr('disabled', false);
+  //av.dom.sizeRows.disabled = false;
+  av.dom.muteInput.disabled = false;
+  av.dom.childParentRadio.disabled = false;
+  av.dom.childRandomRadio.disabled = false;
+  av.dom.notose.disabled = false;
+  av.dom.nanose.disabled = false;
+  av.dom.andose.disabled = false;
+  av.dom.ornose.disabled = false;
+  av.dom.orose.disabled = false;
+  av.dom.andnose.disabled = false;
+  av.dom.norose.disabled = false;
+  av.dom.xorose.disabled = false;
+  av.dom.equose.disabled = false;
+  av.dom.experimentRadio.disabled = false;
+  av.dom.demoRadio.disabled = false;
 
   //reset Ancestor Color stack
   //av.parents.Colors = av.color.parentColorList.slice();   //delete this later
   av.parents.Colors.reverse();
   //set run/stop and drop down menu to the 'stopped' state
-  dijit.byId('mnCnPause').attr('disabled', true);
-  dijit.byId('mnCnRun').attr('disabled', false);
+  av.dom.mnCnPause.disabled = true;
+  av.dom.mnCnRun.disabled = false;
   av.dom.runStopButton.innerHTML = 'Run';
   //console.log('pauseState; button=run in av.ptd.popNewExState');
 
@@ -222,18 +225,18 @@ av.ptd.popNewExState = function () {
   logTit5.textContent = '';
   logTit6.textContent = '';
   av.grd.flagSelected = false;
-  dijit.byId('mnFzOrganism').attr('disabled', true);
-  dijit.byId('mnCnOrganismTrace').attr('disabled', true);
+  av.dom.mnFzOrganism.disabled = true;
+  av.dom.mnCnOrganismTrace.disabled = true;
 }
 
 //after Run button pushed for population
 av.ptd.runPopFn = function () {
   'use strict';
-  //console.log('runPopFn runState', av.grd.runState);
+  //console.log('runPopFn runState = av.grd.runState);
   //check for ancestor organism in configuration data
-  //console.log('validGridSize=',av.ptd.validGridSize, '; popSetupButton.innerHTML=', popSetupButton.innerHTML, '; av.ui.page=',av.ui.page);
+  //console.log('validGridSize=',av.ptd.validGridSize, '; popSetupButton.innerHTML= = popSetupButton.innerHTML, '; av.ui.page=',av.ui.page);
   var namelist = dojo.query('> .dojoDndItem', 'ancestorBox');
-  //console.log('namelist', namelist);
+  //console.log('namelist = namelist);
   if (1 > namelist.length) {
     //console.log('about to call av.ptd.makePauseState()');
     av.ptd.makePauseState();
@@ -262,7 +265,7 @@ av.ptd.runPopFn = function () {
       }
       else {
         av.msg.importWorldExpr();
-        //console.log('parents.injected', av.parents.injected);
+        //console.log('parents.injected = av.parents.injected);
         //av.debug.log += '\nstart importWorld running-----------------------------------------\n'
         av.msg.injectAncestors();
       }
@@ -286,18 +289,18 @@ av.ptd.runPopFn = function () {
       console.log(av.pch.numDads, '; av.pch.dadFit=',av.pch.dadFit);
     }
 
-    if (dijit.byId('autoUpdateRadio').get('checked')) {
-      //av.msg.pause(dijit.byId('autoUpdateSpinner').get('value'));  //not used where there is handshaking (not used with av.msg.stepUpdate)
+    if (av.dom.autoUpdateRadio.checked) {
+      //av.msg.pause(av.dom.autoUpdateSpinner').get('value'));  //not used where there is handshaking (not used with av.msg.stepUpdate)
       av.ui.autoStopFlag = true;
-      av.ui.autoStopValue = dijit.byId('autoUpdateSpinner').get('value');
-      //console.log('stop at ', dijit.byId('autoUpdateSpinner').get('value'));
+      av.ui.autoStopValue = av.dom.autoUpdateSpinner.value;
+      //console.log('stop at  = av.dom.autoUpdateSpinner').get('value'));
     }
 
     av.ptd.makeRunState();
     av.msg.stepUpdate();   //av.msg.doRunPause(av.fio);
   }
   //update screen based on data from C++
-}
+};
 
 av.ptd.runStopFn = function () {
   if ('Run' == av.dom.runStopButton.innerHTML) {
@@ -308,7 +311,7 @@ av.ptd.runStopFn = function () {
     //av.debug.log += 'about to call av.ptd.makePauseState() in AvidaEd.js line 772 \n';
     av.ptd.makePauseState();
     //av.msg.doRunPause(av.fio);
-    //console.log('pop size ', av.pch.aveNum);
+    //console.log('pop size  = av.pch.aveNum);
   }
 };
 
@@ -323,7 +326,7 @@ av.ptd.FrOrganismFn = function (trigger) {
   var parentName = '';
   var gene;
   if ('selected' == trigger) {
-    fzName = prompt('Please name the selected organism', av.grd.kidName);
+    fzName = prompt('Please name the selected organism', 'av.grd.kidName');
     gene = av.grd.kidGenome;
   }
   else if ('offspring' == trigger) {
@@ -353,7 +356,7 @@ av.ptd.FrOrganismFn = function (trigger) {
     av.dnd.contextMenu(av.dnd.fzOrgan, domid);
     av.fzr.saveUpdateState('no');
   }
-}
+};
 
 av.ptd.FrConfigFn = function () {
   'use strict';
@@ -375,7 +378,7 @@ av.ptd.FrConfigFn = function () {
       av.fzr.saveUpdateState('no');
     }
   }
-}
+};
 
 //Save a populated dish
 av.ptd.FrPopulationFn = function () {
@@ -415,7 +418,7 @@ av.pch.processLogic = function() {
       }
     }
   }
-}
+};
 
 av.pch.bitTurnOn = function(button) {
   "use strict";
@@ -437,7 +440,7 @@ av.pch.bitTurnOn = function(button) {
   //console.log('av.grd.fnChosen = ', av.grd.fnChosen);
   //console.log('av.grd.selFnText =', av.grd.selFnText);
   //console.log('av.grd.selFnBinary =',av.grd.selFnBinary);
-}
+};
 
 av.ptd.bitToggle = function (button) {
   'use strict';
@@ -480,7 +483,7 @@ av.ptd.bitToggle = function (button) {
   av.grd.popChartFn();
   //console.log('bitToggle: av.grd.popStatsMsg.update', av.grd.popStatsMsg.update);
   av.ptd.updateLogicFn(av.grd.popStatsMsg.update);
-}
+};
 
 //reset values
 av.ptd.resetDishFn = function (need2sendRest2avida) { //Need to reset all settings to @default
@@ -495,8 +498,8 @@ av.ptd.resetDishFn = function (need2sendRest2avida) { //Need to reset all settin
   if (av.debug.grid) console.log('before calling av.grd.popChartInit');
   av.grd.popChartInit();
   av.grd.runState = 'prepping';
-  dijit.byId('mnCnOrganismTrace').attr('disabled', true);
-  dijit.byId('mnFzOrganism').attr('disabled', true);
+  av.dom.mnCnOrganismTrace.disabled = true;
+  av.dom.mnFzOrganism.disabled = true;
   //Enable the options on the Setup page
   av.ptd.popNewExState();
   //Clear grid settings
@@ -524,9 +527,9 @@ av.ptd.resetDishFn = function (need2sendRest2avida) { //Need to reset all settin
   if (av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg']) {av.fzr.actConfig.file['instset.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg'];}
 
     //Clear options that are not in the config files
-  dijit.byId('manualUpdateRadio').set('checked', true);
-  dijit.byId('autoUpdateRadio').set('checked', false);
-  dijit.byId('autoUpdateSpinner').set('value', av.ptd.autoPauseUpdate);
+  av.dom.manualUpdateRadio.checked = true;
+  av.dom.autoUpdateRadio.checked = false;
+  av.dom.autoUpdateSpinner.value = av.ptd.autoPauseUpdate;
 
   av.ptd.clearLogicButtons();
   //console.log('fzr.activeCon', av.fzr.actConfig);
@@ -534,7 +537,7 @@ av.ptd.resetDishFn = function (need2sendRest2avida) { //Need to reset all settin
   // re-write grid if that page is visible
   av.grd.popChartClear();
   av.grd.drawGridSetupFn('av.ptd.resetDishFn');
-}
+};
 
 //clear logic Buttons
 av.ptd.clearLogicButtons = function() {
@@ -544,7 +547,7 @@ av.ptd.clearLogicButtons = function() {
     document.getElementById(av.ptd.logicButtons[ii]).className = 'bitButtonOff';
     av.grd.fnChosen[av.ptd.logicButtons[ii]] = false;
   }
-}
+};
 
 //----------------------------------------------------------------------------------------------------------------------
 // code below this line is not in use tiba delete later
@@ -555,44 +558,44 @@ av.ptd.writeHardDefault = function (av) {
   'use strict';
   av.dom.sizeCols.value = av.dft.sizeCols;
   av.dom.sizeRows.value = av.dft.sizeRows;
-  //dijit.byId('sizeCols').set('value', av.dft.sizeCols);
-  //dijit.byId('sizeRows').set('value', av.dft.sizeRows);
+  //av.dom.sizeCols.value = av.dft.sizeCols;
+  //av.dom.sizeRows.value = av.dft.sizeRows;
   if ('childParentRadio'==av.dft.child) {
-    dijit.byId('childParentRadio').set('checked', true);
-    dijit.byId('childRandomRadio').set('checked', false);
+    av.dom.childParentRadio.checked = true;
+    av.dom.childRandomRadio.checked = false;
   }
   else {
-    dijit.byId('childParentRadio').set('checked', false);
-    dijit.byId('childRandomRadio').set('checked', true);
+    av.dom.childParentRadio.checked = false;
+    av.dom.childRandomRadio.checked = true;
   }
-  dijit.byId('notose').set('checked', av.dft.notose);
-  dijit.byId('nanose').set('checked', av.dft.nanose);
-  dijit.byId('andose').set('checked', av.dft.andose);
-  dijit.byId('ornose').set('checked', av.dft.ornose);
-  dijit.byId('orose').set('checked', av.dft.orose);
-  dijit.byId('andnose').set('checked', av.dft.andnose);
-  dijit.byId('norose').set('checked', av.dft.norose);
-  dijit.byId('xorose').set('checked', av.dft.xorose);
-  dijit.byId('equose').set('checked', av.dft.equose);
-  dijit.byId('experimentRadio').set('checked', true);
-  dijit.byId('manualUpdateRadio').set('checked', true);
+  av.dom.notose.checked = av.dft.notose;
+  av.dom.nanose.checked = av.dft.nanose;
+  av.dom.andose.checked = av.dft.andose;
+  av.dom.ornose.checked = av.dft.ornose;
+  av.dom.orose.checked = av.dft.orose;
+  av.dom.andnose.checked = av.dft.andnose;
+  av.dom.norose.checked = av.dft.norose;
+  av.dom.xorose.checked = av.dft.xorose;
+  av.dom.equose.checked = av.dft.equose;
+  av.dom.experimentRadio.checked = true;
+  av.dom.manualUpdateRadio.checked = true;
   if ('experimentRadio'==av.dft.repeat) {
-    dijit.byId('experimentRadio').set('checked', true);
-    dijit.byId('demoRadio').set('checked', false);
+    av.dom.experimentRadio.checked = true;
+    av.dom.demoRadio.checked = false;
   }
   else {
-    dijit.byId('experimentRadio').set('checked', false);
-    dijit.byId('demoRadio').set('checked', true);
+    av.dom.experimentRadio.checked = false;
+    av.dom.demoRadio.checked = true;
   }
   if ('manualUpdateRadio'==av.dft.pauseType) {
-    dijit.byId('manualUpdateRadio').set('checked', true);
-    dijit.byId('autoUpdateRadio').set('checked', false);
+    av.dom.manualUpdateRadio.checked = true;
+    av.dom.autoUpdateRadio.checked = false;
   }
   else {
-    dijit.byId('manualUpdateRadio').set('checked', false);
-    dijit.byId('autoUpdateRadio').set('checked', true);
+    av.dom.manualUpdateRadio.checked = false;
+    av.dom.autoUpdateRadio.checked = true;
   };
-}
+};
 
 // should really be in a ui code section
 // http://stackoverflow.com/questions/7125453/modifying-css-class-property-values-on-the-fly-with-javascript-jquery
@@ -611,7 +614,7 @@ av.ptd.setStyle = function (cssText) {
     if (isIE) sheet.styleSheet.cssText = wrapper.innerHTML;
     return node;
   })(cssText);
-}
+};
 
 //----------------------------------------------------------------------------------------------------------------------
 

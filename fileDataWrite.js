@@ -1,4 +1,5 @@
 //write file data
+var av = av || {};  //incase av already exists
 
 av.fwt.deleteFzrFile = function (fileId) {
   'use strict';
@@ -69,9 +70,9 @@ av.fwt.makeFzrAvidaCfg = function (idStr, actConfig) {
   txt += 'DIVIDE_DEL_PROB 0.0 \n';
   txt += 'OFFSPRING_SIZE_RANGE 1.0 \n';
   // parents (ancestors) are injected into avida separately.
-  if (dijit.byId('childParentRadio').get('checked')) txt += 'BIRTH_METHOD 0 \n';  //near parent
+  if (av.dom.childParentRadio.checked) txt += 'BIRTH_METHOD 0 \n';  //near parent
   else txt += 'BIRTH_METHOD 4 \n';   //anywhere randomly
-  if (dijit.byId('experimentRadio').get('checked')) txt += 'RANDOM_SEED -1 \n';
+  if (av.dom.experimentRadio.checked) txt += 'RANDOM_SEED -1 \n';
   else txt += 'RANDOM_SEED 100\n';
   //no longer in use; tiba delete later
   //txt += 'AVE_TIME_SLICE ' + dijit.byId('aveTimeSlice').get('value') + '\n';
@@ -87,7 +88,7 @@ av.fwt.makeFzrPauseRunAt = function (idStr, actConfig) {
   'use strict';
   var txt = dijit.byId('autoUpdateSpinner').get('value').toString();
   // Is auto Update Radio button checked?
-  if (dijit.byId('manualUpdateRadio').get('checked')) {  //manually pause population
+  if (av.dom.manualUpdateRadio.checked) {  //manually pause population
     txt = '-1';   //Manual Update
   }
   if (actConfig) {av.fwt.makeActConfigFile('pauseRunAt.txt', txt);}
@@ -98,7 +99,7 @@ av.fwt.makeFzrPauseRunAt = function (idStr, actConfig) {
 av.fwt.makeFzrConfigTxt = function (idStr, actConfig) {
   'use strict';
   var txt = 'update ';
-  if (dijit.byId('experimentRadio').get('checked')) txt += 'RANDOM_SEED -1 \n';
+  if (av.dom.experimentRadio').get('checked')) txt += 'RANDOM_SEED -1 \n';
   txt += dijit.byId('autoUpdateSpinner').get('value') + '\n';
   if (actConfig) {av.fwt.makeActConfigFile('avida.cfg', txt);}
   else {av.fwt.makeFzrFile(idStr+'/avida.cfg', txt);}
@@ -107,15 +108,15 @@ av.fwt.makeFzrConfigTxt = function (idStr, actConfig) {
 av.fwt.makeFzrEnvironmentCfg = function (idStr, actConfig) {
   'use strict';
   var txt = '';
-  if (dijit.byId('notose').get('checked')) txt += 'REACTION  NOT  not   process:value=1:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NOT  not   process:value=0:type=pow  requisite:max_count=1\n';
-  if (dijit.byId('nanose').get('checked')) txt += 'REACTION  NAND nand  process:value=1:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NAND nand  process:value=0:type=pow  requisite:max_count=1\n';
-  if (dijit.byId('andose').get('checked')) txt += 'REACTION  AND  and   process:value=2:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  AND  and   process:value=0:type=pow  requisite:max_count=1\n';
-  if (dijit.byId('ornose').get('checked')) txt += 'REACTION  ORN  orn   process:value=2:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  ORN  orn   process:value=0:type=pow  requisite:max_count=1\n';
-  if (dijit.byId('orose').get('checked'))  txt += 'REACTION  OR   or    process:value=3:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  OR   or    process:value=0:type=pow  requisite:max_count=1\n';
-  if (dijit.byId('andnose').get('checked')) txt += 'REACTION  ANDN andn  process:value=3:type=pow  requisite:max_count=1\n'; else txt += 'REACTION  ANDN andn  process:value=0:type=pow  requisite:max_count=1\n';
-  if (dijit.byId('norose').get('checked')) txt += 'REACTION  NOR  nor   process:value=4:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NOR  nor   process:value=0:type=pow  requisite:max_count=1\n';
-  if (dijit.byId('xorose').get('checked')) txt += 'REACTION  XOR  xor   process:value=4:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  XOR  xor   process:value=0:type=pow  requisite:max_count=1\n';
-  if (dijit.byId('equose').get('checked')) txt += 'REACTION  EQU  equ   process:value=5:type=pow  requisite:max_count=1';    else txt += 'REACTION  EQU  equ   process:value=0:type=pow  requisite:max_count=1';
+  if (av.dom.notose.checked) txt += 'REACTION  NOT  not   process:value=1:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NOT  not   process:value=0:type=pow  requisite:max_count=1\n';
+  if (av.dom.nanose.checked) txt += 'REACTION  NAND nand  process:value=1:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NAND nand  process:value=0:type=pow  requisite:max_count=1\n';
+  if (av.dom.andose.checked) txt += 'REACTION  AND  and   process:value=2:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  AND  and   process:value=0:type=pow  requisite:max_count=1\n';
+  if (av.dom.ornose.checked) txt += 'REACTION  ORN  orn   process:value=2:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  ORN  orn   process:value=0:type=pow  requisite:max_count=1\n';
+  if (av.dom.orose.checked)  txt += 'REACTION  OR   or    process:value=3:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  OR   or    process:value=0:type=pow  requisite:max_count=1\n';
+  if (av.dom.andnose.checked) txt += 'REACTION  ANDN andn  process:value=3:type=pow  requisite:max_count=1\n'; else txt += 'REACTION  ANDN andn  process:value=0:type=pow  requisite:max_count=1\n';
+  if (av.dom.norose.checked) txt += 'REACTION  NOR  nor   process:value=4:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NOR  nor   process:value=0:type=pow  requisite:max_count=1\n';
+  if (av.dom.xorose.checked) txt += 'REACTION  XOR  xor   process:value=4:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  XOR  xor   process:value=0:type=pow  requisite:max_count=1\n';
+  if (av.dom.equose.checked) txt += 'REACTION  EQU  equ   process:value=5:type=pow  requisite:max_count=1';    else txt += 'REACTION  EQU  equ   process:value=0:type=pow  requisite:max_count=1';
   if (actConfig) {av.fwt.makeActConfigFile('environment.cfg', txt);}
   else  { av.fwt.makeFzrFile(idStr+'/environment.cfg', txt);}
 }

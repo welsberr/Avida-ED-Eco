@@ -195,26 +195,20 @@
         <details open>
           <summary class="freezerSection">Configured Dishes</summary>
           <ul id='fzConfig' class='container'>
-            <li>config1</li>
-            <li>config2</li>
           </ul>
         </details>
         <details open>
           <summary class="freezerSection">Organsims</summary>
           <ul id='fzOrgan' class='container'>
-            <li>critter1</li>
-            <li>critter2</li>
           </ul>
         </details>
         <details open>
           <summary class="freezerSection">Populated Dishes</summary>
           <ul id='fzWorld' class='container'>
-            <li>pop1</li>
-            <li>pop2</li>
           </ul>
         </details>
 			</div>
-			<div class="trash">
+			<div id="trashDiv">
 				<span id='trashCan' class='container'>
 					<img id='trashCanImage' src='images/Avida-ED-trash-icon.png' style='width: 32px;' alt='trash can' />
 				</span>
@@ -619,7 +613,7 @@
       
       <div class="mainBlockClassRow" id="organismBlock">
         <div class="orgBenchCol">
-          <div class="orgBenchTopRow">
+          <div class="orgBenchTopRow" id="orgTopId">
             <div class="orgTopLt">
               <img src='images/Avida-ED-ancestor-icon.png' style='height: 32px;' id='actOrgImg' />
               <div id='activeOrgan' class='popContainer'></div>
@@ -633,7 +627,7 @@
             <canvas data-dojo-type='dojo.dnd.Target' id='organCanvas' width='100' height='100'
                     style='border:1px solid #000000;'></canvas>
           </div>
-          <div class="orgBot">
+          <div class="orgBotClass" id='orgBotId'>
             <div id='cycleSlider'></div><br />
             <div class='lftmargin'>Cycle:
               <input id='orgCycle' type='text' data-dojo-type='dijit/form/NumberTextBox' name='cycle'

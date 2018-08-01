@@ -4,6 +4,7 @@
   body {
     margin: 0;
     background-color: cyan;
+    padding: 0;
   }
   
   #allAvida{
@@ -163,7 +164,7 @@
   font-size: 130%;
   background-color: rgb(215, 215, 248);
 }
-.trash{
+#trashDiv{
   flex: 0 1 40px;
   border: 1px solid black;
 }

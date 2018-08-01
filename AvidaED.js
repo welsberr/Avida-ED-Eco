@@ -255,6 +255,10 @@ require([
     av.dom.sendLogPara = document.getElementById('sendLogPara');
     av.dom.sendLogTextarea = document.getElementById('sendLogTextarea');
 
+    //Organism Page
+    av.dom.orgBotId = document.getElementById('orgBotId');
+
+
     //Analysis Page  
     //av.dom.anlChrtSpace = document.getElementById('anlChrtSpace');  //easier handle for div with chart
     av.dom.anlChrtSpace = document.getElementById('anlDndChart');  //easier handle for div with chart
@@ -290,8 +294,9 @@ require([
     av.dom.mnHpDebug = document.getElementById('mnHpDebug');
 
     av.dom.mainButtons = document.getElementById('mainButtons');
-    av.dom.trashCP = document.getElementById('trashCP');
-    av.dom.orgTop = document.getElementById('orgTop');
+    av.dom.trashDiv = document.getElementById('trashDiv');
+
+    av.dom.orgTopId = document.getElementById('orgTopId');
     
     av.dom.ExecuteJust = document.getElementById('ExecuteJust');       //check for code repeats might be able to do a function and clean things tiba
     av.dom.ExecuteAbout = document.getElementById('ExecuteAbout');
@@ -404,6 +409,8 @@ require([
   av.fio.readZipWS(av.fio.defaultFname, true);
   //av.fio.loadDefaultConfig();
 
+  // can from here to dom.ready be functions only? 2018_0801
+  //
   //********************************************************************************************************************
   // Menu Buttons handling
   //********************************************************************************************s************************
@@ -846,38 +853,41 @@ require([
   //--------------------------------------------------------------------------------------------------------------------
   // main button scripts
   //--------------------------------------------------------------------------------------------------------------------
+    
+  if (av.debug.uil) console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight, 
+    document.documentElement.clientHeight);
+  if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
+    document.documentElement.style.height = document.documentElement.clientHeight + 'px';
+  }
 
   //initialize the ht for main buttons and trash can so there is no scroll bar
   if (av.dom.mainButtons.scrollHeight > av.dom.mainButtons.clientHeight) {
     av.dom.mainButtons.style.height = av.dom.mainButtons.scrollHeight + 'px';
   }
-//  if (av.dom.trashCP.scrollHeight > av.dom.trashCP.clientHeight) {
-//    av.dom.trashCP.style.height = av.dom.trashCP.scrollHeight + 'px';
-//  }
-//  if (av.dom.orgTop.scrollHeight > av.dom.orgTop.clientHeight) {
-//    av.dom.orgTop.style.height = av.dom.orgTop.scrollHeight + 'px';
-//  }
-  //console.log('orgBot', document.getElementById('organismBottom').scrollHeight, document.getElementById('organismBottom').clientHeight);
-//  if (document.getElementById('organismBottom').scrollHeight > document.getElementById('organismBottom').clientHeight) {
-//    av.ui.num = document.getElementById('organismBottom').scrollHeight + 9;
-//    document.getElementById('organismBottom').style.height = av.ui.num + 'px';
-//  }
+  if (av.debug.uil) console.log('av.dom.trashDiv=', av.dom.trashDiv);
+  if (av.dom.trashDiv.scrollHeight > av.dom.trashDiv.clientHeight) {
+    av.dom.trashDiv.style.height = av.dom.trashDiv.scrollHeight + 'px';
+  }
+  if (av.dom.orgTopId.scrollHeight > av.dom.orgTopId.clientHeight) {
+    av.dom.orgTopId.style.height = av.dom.orgTopId.scrollHeight + 'px';
+  }
+  if (av.debug.uil) console.log('orgBot Ht', av.dom.orgBotId.scrollHeight, av.dom.orgBotId.clientHeight);
+  if (av.dom.orgBotId.scrollHeight > av.dom.orgBotId.clientHeight) {
+    av.ui.num = av.dom.orgBotId.scrollHeight + 9;
+    av.dom.orgBotId.style.height = av.ui.num + 'px';
+  }
 
   //The style display: 'none' cannnot be used in the html during the initial load as the dijits won't work right
   //visibility:hidden can be used, but it leaves the white space and just does not display dijits.
   //So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
   //the default option.
-  //av.ui.mainBoxSwap('organismBlock');
-  //av.ui.mainBoxSwap('populationBlock');  //commented out here as it is called near the end of this file
-  document.getElementById("setupBlock").style.none;
-
   av.ui.mainBoxSwap = function (showBlock) {
-    av.ui.page = showBlock;
-    av.dom.populationBlock.style.none;
-    av.dom.organismBlock.style.none;
-    av.dom.analysisBlock.style.none;
     console.log('showBlock=', showBlock);
-    document.getElementById(showBlock).style.flex;
+    av.ui.page = showBlock;
+    av.dom.populationBlock.style.display = "none";
+    av.dom.organismBlock.style.display = "none";
+    av.dom.analysisBlock.style.display = "none";
+    document.getElementById(showBlock).style.display = "flex";
     
     //dijit.byId(showBlock).resize();
     //document.getElementById(showBlock).resize();
@@ -885,20 +895,24 @@ require([
     //disable menu options. they will be enabled when relevant canvas is drawn
     dijit.byId('mnFzOffspring').attr('disabled', true);
     dijit.byId('mnCnOffspringTrace').attr('disabled', true);
-    //console.log('end of mainBoxSwap');
+    console.log('end of mainBoxSwap');
   };
+    
+  //av.ui.mainBoxSwap('populationBlock');  //commented out here as it is called near the end of this file
+  av.dom.setupBlock.style.none;
 
   // Buttons that call MainBoxSwap
   document.getElementById('populationButton').onclick = function () {
     av.post.addUser('Button: populationButton');
     if (av.debug.dnd || av.debug.mouse) console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
     av.ui.mainBoxSwap('populationBlock');
+    console.log('after mainBoxSwap to populationBlock');
   };
 
   document.getElementById('organismButton').onclick = function () {
     av.post.addUser('Button: organismButton');
     av.ui.mainBoxSwap('organismBlock');
-    //console.log('after mainBoxSwap');
+    console.log('after mainBoxSwap to organismBlock');
     organismCanvasHolderSize();
     var height = ($('#rightDetail').innerHeight() - 395) / 2;
     av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
@@ -913,259 +927,8 @@ require([
   document.getElementById('analysisButton').onclick = function () {
     av.post.addUser('Button: analysisButton');
     av.ui.mainBoxSwap('analysisBlock');
+    console.log('after mainBoxSwap to analysisBlock');
     av.anl.AnaChartFn();
-  };
-
-  //********************************************************************************************************************
-  // Resize window helpers -------------------------------------------
-  //********************************************************************************************************************
-  if (av.debug.root) console.log('before Resize helpers');
-
-  av.pch.divSize = function(from) {
-    if (av.debug.plotly) console.log(from, 'called av.pch.divSize');
-    //console.log('av.dom.popChrtHolder.clientWd ht=', av.dom.popChrtHolder.clientWidth, av.dom.popChrtHolder.clientHeight);
-    av.pch.ht = av.dom.popChrtHolder.clientHeight - 3;
-    av.pch.wd = av.dom.popChrtHolder.clientWidth - 3;
-    av.dom.popChrtHolder.style.height = av.dom.popChrtHolder.clientHeight;
-    av.dom.popChart.style.height = av.pch.ht + 'px';
-    av.dom.popChart.style.width = av.pch.wd + 'px';
-    av.pch.layout.height = av.pch.ht;
-    av.pch.layout.width = av.pch.wd;
-  };
-
-  av.anl.divSize = function(from) {
-    console.log(from, 'called av.anl.divSize');
-    //console.log(from,'anaChrtHolder Ht client scroll ', av.dom.anaChrtHolder.clientHeight, av.dom.anaChrtHolder.scrollHeight);
-    //console.log(from,'anlDndChart Ht client scroll', av.dom.anlDndChart.clientHeight, av.dom.anlDndChart.scrollHeight);
-    //console.log(from,'anlChrtSpace Ht client scroll', av.dom.anlChrtSpace.clientHeight, av.dom.anlChrtSpace.scrollHeight);
-
-    console.log('av.dom.anaChrtHolder.clientWd, Ht=', av.dom.anaChrtHolder.clientWidth, av.dom.anaChrtHolder.clientHeight);
-    av.anl.ht = av.dom.anaChrtHolder.clientHeight - 1;
-    av.anl.wd = av.dom.anaChrtHolder.clientWidth - 1;
-    av.dom.anaChrtHolder.style.height = av.anl.ht + 'px';
-    av.anl.ht = av.dom.anaChrtHolder.clientHeight - 6;
-    av.dom.anlChrtSpace.style.height = av.anl.ht + 'px';
-    av.dom.anlChrtSpace.style.width = av.anl.wd + 'px';
-    av.anl.layout.height = av.anl.ht;
-    av.anl.layout.width = av.anl.wd;
-  };
-
-  // called from script in html file as well as below
-  av.ui.browserResizeEventHandler = function (from) {
-    console.log(from, 'called av.ui.browserResizeEventHandler');
-    if ('none' !== domStyle.get('analysisBlock', 'display')) {
-      av.anl.AnaChartFn();
-    }
-    if ('none' !== domStyle.get('populationBlock', 'display')) {
-      console.log('av.grd.canvasSize =', av.grd.canvasSize, '; av.dom.gridCanvas.width = ', av.dom.gridCanvas.width, 
-         '; av.dom.gridHolder.clientHeight=', av.dom.gridHolder.clientHeight);
-      //if (av.grd.need2DrawGrid) {
-      if (false) {
-        av.grd.popChartFn();
-        av.grd.drawGridSetupFn('av.ui.browserResizeEventHandler when pop=flex');
-      }
-    }
-    if ('none' !== domStyle.get('organismBlock', 'display')) {
-      var rd = $('#rightDetail').innerHeight();
-      var height = ($('#rightDetail').innerHeight() - 395) / 2;  //was 375
-      av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
-      av.dom.ExecuteAbout.style.height = height + 'px';
-      av.dom.ExecuteJust.style.width = '100%';
-      av.dom.ExecuteAbout.style.width = '100%';
-      //console.log('rightDetail', height, rd);
-      av.ind.updateOrgTrace();
-    }
-  };
-
-  //registry.byID seems to only work for dojo things
-  ready(function () {
-    //console.log('gridHolder=', registry.byId('gridHolder'));
-    //console.log('anaChrtHolder=', registry.byId('anaChrtHolder'));
-    //console.log('popChrtHolder=', registry.byId('popChrtHolder'));
-    //console.log('gorganismCanvasHolder=', registry.byId('organismCanvasHolder'));
-    aspect.after(registry.byId('gridHolder'), 'resize', function () {
-      av.ui.browserResizeEventHandler('ready, gridHolder');
-    });
-    //aspect.after(registry.byId('anaChrtHolder'), 'resize', function () {
-    //  av.anl.divSize('ready resize');
-    //});
-    //aspect.after(registry.byId('popChrtHolder'), 'resize', function () {
-    //  av.ui.browserResizeEventHandler();
-    //  av.pch.divSize('ready resize');
-    //});
-    aspect.after(registry.byId('organismCanvasHolder'), 'resize', function () {
-      av.ui.browserResizeEventHandler('ready, organsimCanvasHolder');
-    });
-  });
-
-  av.ui.initPopLayout = function(from) {
-    console.log(from, 'called av.ui.initPopLayout');
-    var extraGridWd =  0;  //positive there is extra to distribute; negative need more space.
-    var popSideWdSum = av.dom.navColId.offsetWidth + av.dom.popInfoHolder.offsetWidth;
-    av.ui.allAvidaWd = av.dom.allAvida.offsetWidth;
-    av.ui.navColIdWd = av.dom.navColId.offsetWidth;
-    av.ui.mapHolderWd = av.dom.mapHolder.offsetWidth;
-    av.ui.gridHolderWd = av.dom.gridHolder.offsetWidth;
-    av.ui.popInfoHolderWd = av.dom.popInfoHolder.offsetWidth;
-
-    av.ui.allAvidaHt = av.dom.allAvida.offsetHeight;
-    av.ui.mapHolderHd = av.dom.mapHolder.offsetHeight;
-    av.ui.popTopHd = av.dom.popTop.offsetHeight;
-    av.ui.gridHolderHd = av.dom.gridHolder.offsetHeight;
-    av.ui.popBotHd = av.dom.popBot.offsetHeight;
-    console.log('Wd: allAvida navColId mapHolder gridHolder popInfoHolder, sum', av.dom.allAvida.offsetWidth,
-      av.dom.navColId.offsetWidth, av.dom.mapHolder.offsetWidth, av.dom.popInfoHolder.offsetWidth, 
-      av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
-    console.log('Wd: labInfoBlock selDorgType sum', av.dom.labInfoBlock.offsetWidth, av.dom.selOrgType.clientWidth,
-      av.dom.labInfoBlock.offsetWidth + av.dom.selOrgType.clientWidth)
-    
-    console.log('Ht; allAvida, mapHolder, popTop, gridHolder, popBot sum', av.dom.allAvida.offsetHeight,
-      av.dom.mapHolder.offsetHeight, av.dom.popTop.offsetHeight, av.dom.gridHolder.offsetHeight,
-      av.dom.popBot.offsetHeight, av.dom.popTop.offsetHeight+av.dom.gridHolder.offsetHeight+av.dom.popBot.offsetHeight);
-    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight && av.dom.gridHolder.offsetWidth > av.ui.popGridCtlWdMin){
-      //set grid size based on height and distribute extra width.
-      extraGridWd = av.dom.gridHolder.offsetWidth - av.dom.gridHolder.offsetHeight;
-      popSideWdSum = popSideWdSum + extraGridWd;
-      console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-      av.dom.gridCanvas.width = av.dom.gridHolder.clientHeight;     //no style for canvas; style needed for div
-      av.dom.gridCanvas.height = av.dom.gridHolder.clientHeight;
-      console.log('av.dom.gridCanvas.wd ht', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
-      console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-      av.dom.navColId.style.width = (0.3*popSideWdSum) + 'px';
-      av.dom.labInfoBlock.style.width = (0.7*popSideWdSum) + 'px';
-      av.dom.selOrgType.style.width = (0.33*popSideWdSum) + 'px';
-    }
-    else  { 
-    // set grid size based on width
-    
-      
-    }
-  }
-
-  av.ui.chngPopWidth = function(adjustGridWd) {
-    av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px'; 
-    av.dom.setupBlock.style.width = popInfoHolderWd + 'px'; 
-    av.dom.labInfoBlock.style.width = popInfoHolderWd + 'px';
-    av.dom.selOrgType.style.width = ((popInfoHolderWd/2).toFixed(0)) + 'px';   
-  }
-  
-  av.ui.adjustpopInfoWd = function(adjustGridWd) {
-    var popInfoHolderWd = av.dom.popInfoHolder.offsetWidth - adjustGridWd;  //adjustGridWd postive means Grid needs width
-    console.log('popInfoHolderWd=', popInfoHolderWd, '; av.ui.popInfoHolderMinWd', av.ui.popInfoHolderMinWd);
-    if (popInfoHolderWd < av.ui.popInfoHolderMinWd) {
-      var navColWd = av.dom.navColId.offsetWidth;
-      console.log("navColWd=",navColWd, '; popInfoHolderWd=', popInfoHolderWd, '');
-      navColWd = (.33*(navColWd + popInfoHolderWd)).toFixed(0);
-      popInfoHolderWd = navColWd*2;
-      av.dom.navColId.style.width = navColWd + 'px';
-      console.log('navColWd=', navColWd, '; popInfoHolderWd=', popInfoHolderWd, '; mapHolder=', av.dom.mapHolder.offsetWidth);
-    }
-    av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px'; 
-    av.dom.setupBlock.style.width = popInfoHolderWd + 'px'; 
-    av.dom.labInfoBlock.style.width = popInfoHolderWd + 'px';
-    popInfoHolderWd = (popInfoHolderWd/2).toFixed(0); //Math.round(popInfoHolder/2);
-    av.dom.selOrgType.style.width = popInfoHolderWd + 'px';
-    console.log('set selOrgType to ', popInfoHolderWd + 'px');
-    console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
-  }
-
-  //Adjust Statistics area width based on gridholder size and shape. gridholder should be roughly square
-  av.ui.adjustpopInfoSize = function (from) {
-    var adjustGridWd = 0;
-    console.log('av.ui.adjustpopInfoSize was called from: ', from);
-    console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth);
-    console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, 
-                 '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
-    console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ', 
-           av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
-    console.log('popInfoHolder.offsetWidth, clientwidth =',av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
-    console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
-    console.log('selOrgType.offsetWidth, clientwidth =',av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
-    console.log('av.ui.popGridCtlWdMin=',av.ui.popGridCtlWdMin, '; gridHolder.offsetWidt=', av.dom.gridHolder.offsetWidth);
-    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight){
-      adjustGridWd = av.dom.gridHolder.offsetHeight - av.dom.gridHolder.offsetWidth; //adjustGridWd negative means grid holder is too wide.
-      av.ui.adjustpopInfoWd(adjustGridWd);
-    }
-    if (av.ui.popGridCtlWdMin > av.dom.gridHolder.offsetWidth) {
-      adjustGridWd = av.ui.popGridCtlWdMin - av.dom.gridHolder.offsetWidth;
-      av.ui.adjustpopInfoWd(adjustGridWd);
-    };
-    console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
-    console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, 
-                 '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
-    console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ', 
-           av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
-
-    console.log('popInfo.offsetWidth, clientwidth =',av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
-    console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
-    console.log('selOrgType.offsetWidth, clientwidth =',av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
-
-    av.dom.gridCanvas.style.width = (av.dom.gridHolder.clientHeight-2)+'px';
-    av.dom.gridCanvas.style.height = av.dom.gridCanvas.offsetWidth+'px';
-    av.dom.scaleCanvas.style.width = (av.dom.gridControlTable.clientWidth-1) + 'px';
-    
-    console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-    console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
-  };
-  
-  av.ui.adjustpopInfoSize_ = function (from) {
-    var adjustGridWd = 0;
-    console.log('av.ui.adjustpopInfoSize_ was called from: ', from);
-    console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth);
-    console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, 
-                 '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
-    console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ', 
-           av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
-    console.log('popInfoHolder.offsetWidth, clientwidth =',av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
-    console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
-    console.log('selOrgType.offsetWidth, clientwidth =',av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
-    console.log('av.ui.popGridCtlWdMin=',av.ui.popGridCtlWdMin, '; gridHolder.offsetWidt=', av.dom.gridHolder.offsetWidth);
-    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight){
-      adjustGridWd = av.dom.gridHolder.offsetHeight - av.dom.gridHolder.offsetWidth; //adjustGridWd negative means grid holder is too wide.
-      av.ui.adjustpopInfoWd(adjustGridWd);
-    }
-    if (av.ui.popGridCtlWdMin > av.dom.gridHolder.offsetWidth) {
-      adjustGridWd = av.ui.popGridCtlWdMin - av.dom.gridHolder.offsetWidth;
-      av.ui.adjustpopInfoWd(adjustGridWd);
-    };
-    console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
-    console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, 
-                 '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
-    console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ', 
-           av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
-
-    console.log('popInfo.offsetWidth, clientwidth =',av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
-    console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
-    console.log('selOrgType.offsetWidth, clientwidth =',av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
-
-    av.dom.gridCanvas.style.width = (av.dom.gridHolder.clientHeight-2)+'px';
-    av.dom.gridCanvas.style.height = av.dom.gridCanvas.offsetWidth+'px';
-    av.dom.scaleCanvas.style.width = (av.dom.gridControlTable.clientWidth-1) + 'px';
-    
-    console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-    console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
-  };
-
-
-
-  av.ui.adjustpopInfoSize_oldest = function (from) {
-    console.log('av.ui.adjustpopInfoSize_oldest called from: ', from);
-    if (av.ui.popGridCtlWdMin < av.dom.gridHolder.clientWidth) {
-      av.ui.gridHolderXtra = av.dom.gridHolder.clientWidth - (av.dom.gridHolder.clientHeight-av.ui.popBotHtMin);
-      //av.ui.gridHolderXtra = av.ui.gridHolderWd - (av.dom.gridHolder.clientHeight);   //commented out in Avida-Ed 3.2
-      if (av.ui.gridHolderSideBuffer < av.ui.gridHolderXtra) {
-        av.ui.gridHolderWdNew = av.dom.gridHolder.clientWidth - av.ui.gridHolderXtra + av.ui.gridHolderSideBuffer;
-        if (av.ui.popGridCtlWdMin > av.ui.gridHolderWdNew) av.ui.gridHolderWdNew = av.ui.popGridCtlWdMin;
-        av.ui.popInfoWdNew = av.dom.popInfoHolder.clientWidth + av.dom.gridHolder.clientWidth - av.ui.gridHolderWdNew;
-        //av.ui.popInfoWdNew = av.dom.popInfoHolder.clientWidth + av.ui.gridHolderXtra - av.ui.gridHolderSideBuffer;   //commented out in Avida-Ed 3.2
-        document.getElementById('popInfo').style.width = av.ui.popInfoWdNew + 'px';
-      }
-    }
-    else {
-      av.ui.gridHolderWdNew = av.ui.popGridCtlWdMin;
-      av.ui.popInfoWdNew = av.dom.popInfoHolder.clientWidth + av.dom.gridHolder.clientWidth - av.ui.gridHolderWdNew;
-      av.dom.popInfoHolder.style.width = av.ui.popInfoWdNew + 'px';
-    }
   };
 
   if (av.debug.root) console.log('before dnd triggers');
@@ -1783,9 +1546,18 @@ require([
 
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
-    console.log(from, ' called av.grd.drawGridSetupFn');
-    console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-    console.log('_____av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+    if (av.debug.uil) console.log(from, ' called av.grd.drawGridSetupFn');
+    
+    //about total window size
+    if (av.debug.uil) console.log('av.dom.allAvida.ht client, offset, scroll', av.dom.allAvida.clientHeight, 
+      av.dom.allAvida.offsetHeight, av.dom.allAvida.scrollHeight);
+    if (av.debug.uil) console.log('document.documentElement.clientHeight, offset, scroll =', document.documentElement.clientHeight, 
+      document.documentElement.offsetHeight, document.documentElement.scrollHeight);
+    if (av.debug.uil) console.log('document.body.wd client, offset, scroll', document.body.clientHeight, document.body.offsetHeight,
+      document.body.scrollHeight);
+
+    if (av.debug.uil) console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+    if (av.debug.uil) console.log('_____av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
 
     if (undefined != av.grd.msg) {
       if ('prepping' != av.grd.runState && undefined != av.grd.msg.fitness) {
@@ -1793,7 +1565,6 @@ require([
         av.grd.findLogicOutline();
       }
     }
-    av.grd.need2DrawGrid = false;
     if ('populationBlock' === av.ui.page) {
       if ('None' == dijit.byId('colorMode').value) {
         if (av.grd.newlyNone) {
@@ -1823,15 +1594,15 @@ require([
         }
         //console.log('after drawing scale or legend. update=',av.grd.oldUpdate);
 
-        console.log('av.dom.gridHolder.offsetWidth ht = ', av.dom.gridHolder.offsetWidth, av.dom.gridHolder.offsetHeight);
+        if (av.debug.uil) console.log('av.dom.gridHolder.offsetWidth ht = ', av.dom.gridHolder.offsetWidth, av.dom.gridHolder.offsetHeight);
         av.dom.popBot.style.height = av.dom.popBot.scrollHeight + 'px';
         //dijit.byId('populationBlock').resize(); //not a dojo element
 
         var gridHolderHt = av.dom.gridHolder.offsetHeight;
         av.ui.num = Math.floor(gridHolderHt / 4);
 
-        console.log('av.dom.gridHolder.offsetWidth ht = ', av.dom.gridHolder.offsetWidth, av.dom.gridHolder.offsetHeight);
-        console.log('    av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+        if (av.debug.uil) console.log('av.dom.gridHolder.offsetWidth ht = ', av.dom.gridHolder.offsetWidth, av.dom.gridHolder.offsetHeight);
+        if (av.debug.uil) console.log('    av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
         if (av.dom.gridHolder.style.height < av.dom.gridHolder.clientWidth){
           av.grd.canvasSize = av.dom.gridHolder.clientHeight;
         }
@@ -1842,8 +1613,8 @@ require([
         av.grd.spaceY = av.grd.canvasSize;
 
         av.grd.findGridSize(av.grd, av.parents);
-        console.log('av.dom.gridHolder.offsetWidth ht = ', av.dom.gridHolder.offsetWidth, av.dom.gridHolder.offsetHeight);
-        console.log('    av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+        if (av.debug.uil) console.log('av.dom.gridHolder.offsetWidth ht = ', av.dom.gridHolder.offsetWidth, av.dom.gridHolder.offsetHeight);
+        if (av.debug.uil) console.log('    av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
 
         //Need to fix for scrolling
         //if (av.dom.gridHolder.scrollHeight == av.dom.gridHolder.clientHeight + 17) {
@@ -1853,6 +1624,7 @@ require([
           av.grd.findGridSize(av.grd, av.parents);     //in populationGrid.js
           consold.log('inside DrawGridSetupFn in odd if statement ----------------------------------');
         }
+        if (av.debug.uil) console.log('before av.grd.drawGridUpdate');
         av.grd.drawGridUpdate();   //in populationGrid.js
 
         rescaleLabel.textContent = av.grd.fillRescale;       //Tiba look at later
@@ -2220,7 +1992,7 @@ require([
 
   av.ptd.muteInputChange = function() {
     var muteNum = Number(av.dom.muteInput.value);
-    console.log('muteNum=', muteNum);
+    if (av.debug.uil) console.log('muteNum=', muteNum);
     if (muteNum >= 0 && muteNum <= 100) {
       av.ptd.validMuteInuput=true;
       av.dom.muteError.style.color = 'black';
@@ -2268,17 +2040,17 @@ require([
   };
 
   av.ptd.rowChange = function(tmpval) {
-    console.log('rows=', av.dom.sizeRows.value);
+    if (av.debug.popCon) console.log('rows=', av.dom.sizeRows.value);
     var tmpNum = Number(av.dom.sizeRows.value);
-    console.log('num=', tmpNum);
+    if (av.debug.popCon) console.log('num=', tmpNum);
     if (tmpNum > 0 && tmpNum <= 100) {   //max number of columns
-      console.log('valid response');
+      if (av.debug.popCon) console.log('valid response');
       av.ptd.popSizeFn();
     }
     else {
       av.dom.sizeRows.style.color = 'red';
       av.dom.sizeCells.style.color = 'red';
-      console.log('not valid; tmpNum=', tmpNum);
+      if (av.debug.popCon) console.log('not valid; tmpNum=', tmpNum);
       if (tmpNum <= 0) { av.dom.sizeCells.innerHTML = 'Number of rows must be greater than zero'; console.log('<0');}
       if (tmpNum >= 100) { av.dom.sizeCells.innerHTML = 'Number of rows must be 100 or less'; console.log('>0');}
       if ( isNaN(tmpNum) ) {av.dom.sizeCells.innerHTML = 'Number of rows must be a valid number'; console.log('==NaN');}
@@ -2655,6 +2427,263 @@ require([
     }
   }, 'cycleSlider');
 
+  //********************************************************************************************************************
+  // Resize window helpers -------------------------------------------
+  //********************************************************************************************************************
+  if (av.debug.root) console.log('before Resize helpers');
+
+  av.pch.divSize = function(from) {
+    if (av.debug.plotly) console.log(from, 'called av.pch.divSize');
+    //console.log('av.dom.popChrtHolder.clientWd ht=', av.dom.popChrtHolder.clientWidth, av.dom.popChrtHolder.clientHeight);
+    av.pch.ht = av.dom.popChrtHolder.clientHeight - 3;
+    av.pch.wd = av.dom.popChrtHolder.clientWidth - 3;
+    av.dom.popChrtHolder.style.height = av.dom.popChrtHolder.clientHeight;
+    av.dom.popChart.style.height = av.pch.ht + 'px';
+    av.dom.popChart.style.width = av.pch.wd + 'px';
+    av.pch.layout.height = av.pch.ht;
+    av.pch.layout.width = av.pch.wd;
+  };
+
+  av.anl.divSize = function(from) {
+    if (av.debug.uil) console.log(from, 'called av.anl.divSize');
+    //console.log(from,'anaChrtHolder Ht client scroll ', av.dom.anaChrtHolder.clientHeight, av.dom.anaChrtHolder.scrollHeight);
+    //console.log(from,'anlDndChart Ht client scroll', av.dom.anlDndChart.clientHeight, av.dom.anlDndChart.scrollHeight);
+    //console.log(from,'anlChrtSpace Ht client scroll', av.dom.anlChrtSpace.clientHeight, av.dom.anlChrtSpace.scrollHeight);
+
+    if (av.debug.uil) console.log('av.dom.anaChrtHolder.clientWd, Ht=', av.dom.anaChrtHolder.clientWidth, av.dom.anaChrtHolder.clientHeight);
+    av.anl.ht = av.dom.anaChrtHolder.clientHeight - 1;
+    av.anl.wd = av.dom.anaChrtHolder.clientWidth - 1;
+    av.dom.anaChrtHolder.style.height = av.anl.ht + 'px';
+    av.anl.ht = av.dom.anaChrtHolder.clientHeight - 6;
+    av.dom.anlChrtSpace.style.height = av.anl.ht + 'px';
+    av.dom.anlChrtSpace.style.width = av.anl.wd + 'px';
+    av.anl.layout.height = av.anl.ht;
+    av.anl.layout.width = av.anl.wd;
+  };
+
+  // called from script in html file as well as below
+  av.ui.browserResizeEventHandler = function (from) {
+    if (av.debug.uil) console.log(from, 'called av.ui.browserResizeEventHandler');
+    if ('none' !== domStyle.get('analysisBlock', 'display')) {
+      av.anl.AnaChartFn();
+    }
+    if ('none' !== domStyle.get('populationBlock', 'display')) {
+      av.ui.initPopLayout('av.ui.browserResizeEventHandler popBlock');
+      if (av.debug.uil) console.log('av.grd.canvasSize =', av.grd.canvasSize, '; av.dom.gridCanvas.width = ', av.dom.gridCanvas.width, 
+         '; av.dom.gridHolder.clientHeight=', av.dom.gridHolder.clientHeight);
+      if (av.grd.need2DrawGrid) {
+        av.grd.popChartFn();
+        av.grd.drawGridSetupFn('av.ui.browserResizeEventHandler when pop=flex');
+      }
+    }
+    if ('none' !== domStyle.get('organismBlock', 'display')) {
+      var rd = $('#rightDetail').innerHeight();
+      var height = ($('#rightDetail').innerHeight() - 395) / 2;  //was 375
+      av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
+      av.dom.ExecuteAbout.style.height = height + 'px';
+      av.dom.ExecuteJust.style.width = '100%';
+      av.dom.ExecuteAbout.style.width = '100%';
+      //console.log('rightDetail', height, rd);
+      av.ind.updateOrgTrace();
+    }
+  };
+
+  //registry.byID seems to only work for dojo things
+  ready(function () {
+    //console.log('gridHolder=', registry.byId('gridHolder'));
+    //console.log('anaChrtHolder=', registry.byId('anaChrtHolder'));
+    //console.log('popChrtHolder=', registry.byId('popChrtHolder'));
+    //console.log('gorganismCanvasHolder=', registry.byId('organismCanvasHolder'));
+    $(window).resize(function(){
+      av.ui.initPopLayout('window.resize');
+    });   
+    if (av.ui.beginFlag){
+      av.ui.beginFlag = false;
+      
+      
+    }
+    
+    aspect.after(registry.byId('gridHolder'), 'resize', function () {
+      av.ui.browserResizeEventHandler('ready, gridHolder');
+    });
+    //aspect.after(registry.byId('anaChrtHolder'), 'resize', function () {
+    //  av.anl.divSize('ready resize');
+    //});
+    //aspect.after(registry.byId('popChrtHolder'), 'resize', function () {
+    //  av.ui.browserResizeEventHandler();
+    //  av.pch.divSize('ready resize');
+    //});
+    aspect.after(registry.byId('organismCanvasHolder'), 'resize', function () {
+      av.ui.browserResizeEventHandler('ready, organsimCanvasHolder');
+    });
+  });
+
+  av.ui.initPopLayout = function(from) {
+    if (av.debug.uil) console.log(from, 'called av.ui.initPopLayout');
+    var extraGridWd =  0;  //positive there is extra to distribute; negative need more space.
+    var popSideWdSum = av.dom.navColId.offsetWidth + av.dom.popInfoHolder.offsetWidth;
+    av.ui.allAvidaWd = av.dom.allAvida.offsetWidth;
+    av.ui.navColIdWd = av.dom.navColId.offsetWidth;
+    av.ui.mapHolderWd = av.dom.mapHolder.offsetWidth;
+    av.ui.gridHolderWd = av.dom.gridHolder.offsetWidth;
+    av.ui.popInfoHolderWd = av.dom.popInfoHolder.offsetWidth;
+
+    av.ui.allAvidaHt = av.dom.allAvida.offsetHeight;
+    av.ui.mapHolderHd = av.dom.mapHolder.offsetHeight;
+    av.ui.popTopHd = av.dom.popTop.offsetHeight;
+    av.ui.gridHolderHd = av.dom.gridHolder.offsetHeight;
+    av.ui.popBotHd = av.dom.popBot.offsetHeight;
+    if (av.debug.uil) console.log('Wd: allAvida navColId mapHolder gridHolder popInfoHolder, sum', av.dom.allAvida.offsetWidth,
+      av.dom.navColId.offsetWidth, av.dom.mapHolder.offsetWidth, av.dom.popInfoHolder.offsetWidth, 
+      av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
+    if (av.debug.uil) console.log('Wd: labInfoBlock selOrgType sum', av.dom.labInfoBlock.offsetWidth, av.dom.selOrgType.clientWidth,
+      av.dom.labInfoBlock.offsetWidth + av.dom.selOrgType.clientWidth);
+    
+    if (av.debug.uil) console.log('Ht; allAvida, mapHolder, popTop, gridHolder, popBot sum', av.dom.allAvida.offsetHeight,
+      av.dom.mapHolder.offsetHeight, av.dom.popTop.offsetHeight, av.dom.gridHolder.offsetHeight,
+      av.dom.popBot.offsetHeight, av.dom.popTop.offsetHeight+av.dom.gridHolder.offsetHeight+av.dom.popBot.offsetHeight);
+    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight && av.dom.gridHolder.offsetWidth > av.ui.popGridCtlWdMin){
+      //set grid size based on height and distribute extra width.
+      extraGridWd = av.dom.gridHolder.offsetWidth - av.dom.gridHolder.offsetHeight;
+      popSideWdSum = popSideWdSum + extraGridWd;
+      if (av.debug.uil) console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+      av.dom.gridCanvas.width = av.dom.gridHolder.clientHeight;     //no style for canvas; style needed for div
+      av.dom.gridCanvas.height = av.dom.gridHolder.clientHeight;
+      if (av.debug.uil) console.log('av.dom.gridCanvas.wd ht', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+      if (av.debug.uil) console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+      av.dom.navColId.style.width = (0.3*popSideWdSum) + 'px';
+      av.dom.labInfoBlock.style.width = (0.7*popSideWdSum) + 'px';
+      av.dom.selOrgType.style.width = (0.33*popSideWdSum) + 'px';
+    }
+    else  { 
+    // set grid size based on width   
+    }
+  }
+
+  av.ui.chngPopWidth = function(adjustGridWd) {
+    av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px'; 
+    av.dom.setupBlock.style.width = popInfoHolderWd + 'px'; 
+    av.dom.labInfoBlock.style.width = popInfoHolderWd + 'px';
+    av.dom.selOrgType.style.width = ((popInfoHolderWd/2).toFixed(0)) + 'px';   
+  }
+  
+  av.ui.adjustpopInfoWd = function(adjustGridWd) {
+    var popInfoHolderWd = av.dom.popInfoHolder.offsetWidth - adjustGridWd;  //adjustGridWd postive means Grid needs width
+    if (av.debug.uil) console.log('popInfoHolderWd=', popInfoHolderWd, '; av.ui.popInfoHolderMinWd', av.ui.popInfoHolderMinWd);
+    if (popInfoHolderWd < av.ui.popInfoHolderMinWd) {
+      var navColWd = av.dom.navColId.offsetWidth;
+      if (av.debug.uil) console.log("navColWd=",navColWd, '; popInfoHolderWd=', popInfoHolderWd, '');
+      navColWd = (.33*(navColWd + popInfoHolderWd)).toFixed(0);
+      popInfoHolderWd = navColWd*2;
+      av.dom.navColId.style.width = navColWd + 'px';
+      if (av.debug.uil) console.log('navColWd=', navColWd, '; popInfoHolderWd=', popInfoHolderWd, '; mapHolder=', av.dom.mapHolder.offsetWidth);
+    }
+    av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px'; 
+    av.dom.setupBlock.style.width = popInfoHolderWd + 'px'; 
+    av.dom.labInfoBlock.style.width = popInfoHolderWd + 'px';
+    popInfoHolderWd = (popInfoHolderWd/2).toFixed(0); //Math.round(popInfoHolder/2);
+    av.dom.selOrgType.style.width = popInfoHolderWd + 'px';
+    if (av.debug.uil) console.log('set selOrgType to ', popInfoHolderWd + 'px');
+    if (av.debug.uil) console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
+  }
+
+  //Adjust Statistics area width based on gridholder size and shape. gridholder should be roughly square
+  av.ui.adjustpopInfoSize = function (from) {
+    var adjustGridWd = 0;
+    if (av.debug.uil) console.log('av.ui.adjustpopInfoSize was called from: ', from);
+    if (av.debug.uil) console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth);
+    if (av.debug.uil) console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, 
+                 '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
+    if (av.debug.uil) console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ', 
+           av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
+    if (av.debug.uil) console.log('popInfoHolder.offsetWidth, clientwidth =',av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
+    if (av.debug.uil) console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
+    if (av.debug.uil) console.log('selOrgType.offsetWidth, clientwidth =',av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
+    if (av.debug.uil) console.log('av.ui.popGridCtlWdMin=',av.ui.popGridCtlWdMin, '; gridHolder.offsetWidt=', av.dom.gridHolder.offsetWidth);
+    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight){
+      adjustGridWd = av.dom.gridHolder.offsetHeight - av.dom.gridHolder.offsetWidth; //adjustGridWd negative means grid holder is too wide.
+      av.ui.adjustpopInfoWd(adjustGridWd);
+    }
+    if (av.ui.popGridCtlWdMin > av.dom.gridHolder.offsetWidth) {
+      adjustGridWd = av.ui.popGridCtlWdMin - av.dom.gridHolder.offsetWidth;
+      av.ui.adjustpopInfoWd(adjustGridWd);
+    };
+    if (av.debug.uil) console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
+    if (av.debug.uil) console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, 
+                 '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
+    if (av.debug.uil) console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ', 
+           av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
+
+    if (av.debug.uil) console.log('popInfo.offsetWidth, clientwidth =',av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
+    if (av.debug.uil) console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
+    if (av.debug.uil) console.log('selOrgType.offsetWidth, clientwidth =',av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
+
+    av.dom.gridCanvas.style.width = (av.dom.gridHolder.clientHeight-2)+'px';
+    av.dom.gridCanvas.style.height = av.dom.gridCanvas.offsetWidth+'px';
+    av.dom.scaleCanvas.style.width = (av.dom.gridControlTable.clientWidth-1) + 'px';
+    
+    if (av.debug.uil) console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+    if (av.debug.uil) console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+  };
+  
+  av.ui.adjustpopInfoSize_ = function (from) {
+    var adjustGridWd = 0;
+    if (av.debug.uil) console.log('av.ui.adjustpopInfoSize_ was called from: ', from);
+    if (av.debug.uil) console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth);
+    if (av.debug.uil) console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, 
+                 '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
+    if (av.debug.uil) console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ', 
+           av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
+    if (av.debug.uil) console.log('popInfoHolder.offsetWidth, clientwidth =',av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
+    if (av.debug.uil) console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
+    if (av.debug.uil) console.log('selOrgType.offsetWidth, clientwidth =',av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
+    if (av.debug.uil) console.log('av.ui.popGridCtlWdMin=',av.ui.popGridCtlWdMin, '; gridHolder.offsetWidt=', av.dom.gridHolder.offsetWidth);
+    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight){
+      adjustGridWd = av.dom.gridHolder.offsetHeight - av.dom.gridHolder.offsetWidth; //adjustGridWd negative means grid holder is too wide.
+      av.ui.adjustpopInfoWd(adjustGridWd);
+    }
+    if (av.ui.popGridCtlWdMin > av.dom.gridHolder.offsetWidth) {
+      adjustGridWd = av.ui.popGridCtlWdMin - av.dom.gridHolder.offsetWidth;
+      av.ui.adjustpopInfoWd(adjustGridWd);
+    };
+    if (av.debug.uil) console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
+    if (av.debug.uil) console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, 
+                 '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
+    if (av.debug.uil) console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ', 
+           av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
+
+    if (av.debug.uil) console.log('popInfo.offsetWidth, clientwidth =',av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
+    if (av.debug.uil) console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
+    if (av.debug.uil) console.log('selOrgType.offsetWidth, clientwidth =',av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
+
+    av.dom.gridCanvas.style.width = (av.dom.gridHolder.clientHeight-2)+'px';
+    av.dom.gridCanvas.style.height = av.dom.gridCanvas.offsetWidth+'px';
+    av.dom.scaleCanvas.style.width = (av.dom.gridControlTable.clientWidth-1) + 'px';
+    
+    if (av.debug.uil) console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+    if (av.debug.uil) console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+  };
+
+  av.ui.adjustpopInfoSize_oldest = function (from) {
+    if (av.debug.uil) console.log('av.ui.adjustpopInfoSize_oldest called from: ', from);
+    if (av.ui.popGridCtlWdMin < av.dom.gridHolder.clientWidth) {
+      av.ui.gridHolderXtra = av.dom.gridHolder.clientWidth - (av.dom.gridHolder.clientHeight-av.ui.popBotHtMin);
+      //av.ui.gridHolderXtra = av.ui.gridHolderWd - (av.dom.gridHolder.clientHeight);   //commented out in Avida-Ed 3.2
+      if (av.ui.gridHolderSideBuffer < av.ui.gridHolderXtra) {
+        av.ui.gridHolderWdNew = av.dom.gridHolder.clientWidth - av.ui.gridHolderXtra + av.ui.gridHolderSideBuffer;
+        if (av.ui.popGridCtlWdMin > av.ui.gridHolderWdNew) av.ui.gridHolderWdNew = av.ui.popGridCtlWdMin;
+        av.ui.popInfoWdNew = av.dom.popInfoHolder.clientWidth + av.dom.gridHolder.clientWidth - av.ui.gridHolderWdNew;
+        //av.ui.popInfoWdNew = av.dom.popInfoHolder.clientWidth + av.ui.gridHolderXtra - av.ui.gridHolderSideBuffer;   //commented out in Avida-Ed 3.2
+        document.getElementById('popInfo').style.width = av.ui.popInfoWdNew + 'px';
+      }
+    }
+    else {
+      av.ui.gridHolderWdNew = av.ui.popGridCtlWdMin;
+      av.ui.popInfoWdNew = av.dom.popInfoHolder.clientWidth + av.dom.gridHolder.clientWidth - av.ui.gridHolderWdNew;
+      av.dom.popInfoHolder.style.width = av.ui.popInfoWdNew + 'px';
+    }
+  };
+  
   // **************************************************************************************************************** */
   //                                                Analysis Page
   // **************************************************************************************************************** */
@@ -2875,7 +2904,7 @@ require([
         //redraw the screen
         //av.ui.mainBoxSwap(page);
         //if (av.debug.root) 
-        console.log('Afterscroll', hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
+        if (av.debug.uil) console.log('Afterscroll', hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
           document.getElementById(scrollDiv).clientHeight, '; htChangeDiv=', document.getElementById(htChangeDiv).scrollHeight,
           document.getElementById(htChangeDiv).offsetHeight, document.getElementById(htChangeDiv).style.height);
         }
@@ -2884,6 +2913,8 @@ require([
   //Tiba - put back soon
   //av.ui.removeVerticalScrollbar('popStats4grid', 'popStatistics');
   //av.ui.removeVerticalScrollbar('popBot', 'popBot');
+  
+  //
   //av.ui.removeVerticalScrollbar('popTop', 'popTop');
   //av.ui.mainBoxSwap('populationBlock');
 
@@ -2891,8 +2922,8 @@ require([
   //av.grd.drawGridSetupFn(); //Draw initial background
 
   //Safari 9 will not allow saving workspaces or freezer items.
-  if (av.brs.isSafari) {
-  //if (false) {
+  //if (av.brs.isSafari) {
+  if (false) {
     userMsgLabel.textContent = 'Safari 9 does not allow saving a workspace or freezer items. Please use Firefox or Chrome';
     dijit.byId('mnFlSaveWorkspace').attr('disabled', true);
     dijit.byId('mnFlSaveWorkspace').attr('disabled', true);
@@ -3037,3 +3068,18 @@ To make a gif using screen capture
  * scrollbarWidth = offsetWidth - clientWidth - getComputedStyle().borderLeftWidth - getComputedStyle().borderRightWidth
  *  
  */
+
+  // should this move to an init page ui function?
+  //get size of screen availbe for Avida-ED; used to keep on screen and get rid of scroll bars
+  //http://ryanve.com/lab/dimensions/
+  //https://andylangton.co.uk/blog/development/get-viewportwindow-size-width-and-height-javascript
+  //https://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
+  //window.screen.availWidth
+  //window.innerWidth    or    window.outerWidth
+  //console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight, 
+  //  document.documentElement.clientHeight);
+  //if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
+  //  document.documentElement.style.height = document.documentElement.clientHeight + 'px';
+  //}
+  //
+  // Targeting common screen sizes   https://www.websitedimensions.com/

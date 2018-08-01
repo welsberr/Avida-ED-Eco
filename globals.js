@@ -25,7 +25,7 @@ av.debug.ind = false;  //oranism page
 av.debug.anl = false;  //analysis page
 av.debug.plotly = false;  //both popChart and analysis
 av.debug.usr = ''; //working on log for user actions.
-av.debug.uil = true; //user interface layout.
+av.debug.uil = false; //user interface layout.
 
 av.post = {};
 av.post.addUser = function(addStr, comment) {
@@ -121,7 +121,8 @@ av.mouse.notDndPopList = ['colorMode'
   , 'setupBlock'
   , 'populationBlock'
   , 'scaleCanvas'
-  , 'trashCan'
+  , 'trashDiv'
+  , 'trashCanImage'
   , 'gridHolder'
   //freezer
   , 'fzOrgan'
@@ -290,6 +291,7 @@ av.msg.uiReqestedReset = false;
 // so use the below updated condition
 
 av.ui = {};  //user interface functions and variables
+av.ui.beginFlag = true;
 av.ui.oneUpdateFlag = false;
 av.ui.version = '2017_0323';
 av.debug.log = '';
