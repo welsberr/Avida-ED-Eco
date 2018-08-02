@@ -3,7 +3,7 @@
   }
   body {
     margin: 0;
-    background-color: cyan;
+    background-color: #F5F5F5; /* cyan; */
     padding: 0;
   }
   
@@ -13,7 +13,7 @@
     min-width: 100vw;
     flex-direction: column;
     margin: 0;
-    background-color: lightsalmon;
+    background-color:  #F5F5F5;   /* lightsalmon;  */
     align-items: stretch;      
   }
   .headerRow, .footerRow {
@@ -42,7 +42,7 @@
     flex-direction: row;
     align-items: stretch;
     height: 100%;
-    background-color: red;
+    background-color: #F5F5F5; /* red; */
   }
   .navColClass {
     resize: horizontal;
@@ -50,11 +50,11 @@
     width: 152px;        /*was 220 */
     display: flex;
     flex-direction: column;
-    background-color: lavender;
+    background-color: #F5F5F5; /* lavender; */
     border: 1px solid black;
   }
   .mainBlockHolder{
-    background-color: lightskyblue;
+    background-color: #F5F5F5; /* lightskyblue; */
     flex: 1;
     border: 1px solid black;
   }
@@ -63,10 +63,10 @@
     flex-direction: row;
     height: 100%;
     Width: 100%;
-    background-color: lightblue;
+    background-color: #F5F5F5; /* lightblue; */
   }
   .popBenchCol{
-    background-color: lightgoldenrodyellow;
+    background-color: #F5F5F5; /* lightgoldenrodyellow; */
     flex: 1;
     border: 1px solid black;
     display: flex;
@@ -80,17 +80,17 @@
     overflow: auto;
     display: flex;
     flex-direction: row;
-    background-color: lightblue;
+    background-color: #F5F5F5; /* lightblue;  */
   }
   .benchPopMid {
     border: 1px solid black;
     flex: 1;
-    background-color: blue;
+    background-color: #F5F5F5; /* blue; */
   }
   .benchPopBot{
     flex: 0 1 40px;
     border: 1px solid black;
-    background-color: peachpuff;
+    background-color: #F5F5F5; /* peachpuff;*/
   }
 
   #popInfoHolder {
@@ -102,13 +102,13 @@
   #labInfoBlock{
     display: flex;
     flex-direction: column;
-    background-color: lightsteelblue;
+    background-color: #F5F5F5; /* lightsteelblue; */
     height: 100%;
   }
   .labInfoClass{
     display: flex;
     flex-direction: column;
-    background-color: lightsteelblue;
+    background-color: #F5F5F5; /* lightsteelblue; */
     height: 100%;
   }
 
@@ -170,7 +170,7 @@
 }
 
   .orgBenchCol{
-    background-color: lightgoldenrodyellow;
+    background-color: #F5F5F5 /* lightgoldenrodyellow;*/
     flex: 1;
     border: 1px solid black;
     display: flex;
@@ -189,16 +189,16 @@
     flex: 1;  
     display: flex;
     flex-direction: row;
-    background-color: linen;
+    background-color: #F5F5F5; /* linen; */
   }
   #activeOrgan{
-    background-color: lawngreen;
+    background-color: #F5F5F5; /* lawngreen; */
     border: 1px solid red;
     width: 90%;
   }
   .orgTopRt{
     flex: 0 1 200 px;
-    background-color: paleturquoise;
+    background-color: #F5F5F5; /* paleturquoise; */
   }
   .orgMid {
     border: 1px solid black;
@@ -209,7 +209,7 @@
     border: 1px solid black;
   }
   #cycleSlider{
-    background-color: mediumpurple;
+    background-color: #F5F5F5; /* mediumpurple; */
   }
   .orgInfo {
     flex: 0 1 244px;          /* flex: 0 1 344px; is fixed in that dimension */
@@ -222,7 +222,7 @@
     flex-direction: column;
     width: 100%;
     height: 100%;
-    background-color: lightgray;
+    background-color: #F5F5F5; /* lightgray;  */
   }
   .anaTop{
     flex: 1;
@@ -234,14 +234,14 @@
     flex-direction: row;
     height: 100%;
     border: 1px solid black;
-    background-color: peachpuff;
+    background-color: #F5F5F5; /* peachpuff; */
   }
   .analegend{
     flex: 1;
     border: 1px solid black;
-    background-color: seashell;
+    background-color: #F5F5F5; /* seashell;  */
   }
   .anaYaxis{
     flex: 0 1 500px;
-    background-color: lavender;
+    background-color: #F5F5F5; /* lavender;  */
   }

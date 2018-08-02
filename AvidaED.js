@@ -2553,6 +2553,7 @@ require([
       if (av.debug.uil) console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
       av.dom.navColId.style.width = (0.3*popSideWdSum) + 'px';
       av.dom.labInfoBlock.style.width = (0.7*popSideWdSum) + 'px';
+      av.dom.setupBlock.style.width = (0.7*popSideWdSum) + 'px';
       av.dom.selOrgType.style.width = (0.33*popSideWdSum) + 'px';
     }
     else  { 
