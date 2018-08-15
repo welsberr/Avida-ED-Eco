@@ -32,7 +32,8 @@ and open the template in the editor.
 
 #zoomSlide{display: none;}
 .noSize{display: none}
-.notSeen{display: none;}
+
+.notSeen{margin: 0;}
 #splash{
   display: none;
   position: absolute; 

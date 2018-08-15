@@ -4,11 +4,10 @@
 // ptd = PeTri Dish
 var av = av || {};  //incase av already exists
 
-
 av.ptd.makePauseState = function () {
-  av.dom.mnCnPause.disabled = true;
-  av.dom.mnCnRun.disabled = false;
-  av.dom.mnCnOne.disabled = false;
+  dijit.byId('mnCnPause').attr('disabled', true);
+  dijit.byId('mnCnRun').attr('disabled', false);
+  dijit.byId('mnCnOne').attr('disabled', false);
   //console.log('pauseState; button=run');
   av.dom.runStopButton.textContent = 'Run';
   av.dom.oneUpdateButton.disabled = false;
@@ -16,9 +15,9 @@ av.ptd.makePauseState = function () {
 
 av.ptd.makeRunState = function () {
   av.dom.runStopButton.textContent = 'Pause';
-  av.dom.mnCnPause.disabled = false;
-  av.dom.mnCnRun.disabled = true;
-  av.dom.mnCnOne.disabled = true;
+  dijit.byId('mnCnPause').attr('disabled', false);
+  dijit.byId('mnCnRun').attr('disabled', true);
+  dijit.byId('mnCnOne').attr('disabled', true);
   av.dom.oneUpdateButton.disabled = true;
 };
 
@@ -39,10 +38,11 @@ av.ptd.popBoxSwap = function () {
     av.dom.popSetupButton.textContent = 'Data';
     av.ui.subpage = 'setup';
   }
-}
+};
 
-av.ptd.popWorldStateUi = function () {
+av.ptd.popWorldStateUi = function (from) {
   'use strict';
+  console.log(from, 'called av.ptd.popWorldStateUi');
   av.grd.runState = 'world';
   //Disable some of the options on the Setup page
   //av.dnd.ancestorBox.isSource = false;
@@ -61,8 +61,8 @@ av.ptd.popWorldStateUi = function () {
   //av.dom.demoRadio.disabled = true;
 
   //there will be a population so it can now be frozen.
-  av.dom.mnFzPopulation.disabled = false;
-}
+  dijit.byId('mnFzPopulation').attr('disabled', false);
+};
 
 av.ptd.popRunningStateUi = function () {
   'use strict';
@@ -99,8 +99,8 @@ av.ptd.popRunningStateUi = function () {
   av.dom.demoRadio.disabled = true;
 
   //there will be a population so it can now be frozen.
-  av.dom.mnFzPopulation.disabled = false;
-}
+  dijit.byId('mnFzPopulation').attr('disabled', false);
+};
 
 av.ptd.popNewExState = function () {
   'use strict';
@@ -240,7 +240,8 @@ av.ptd.runPopFn = function () {
   if (1 > namelist.length) {
     //console.log('about to call av.ptd.makePauseState()');
     av.ptd.makePauseState();
-    NeedAncestorDialog.show();
+    //NeedAncestorDialog.show();
+    av.dom.NeedAncestorModalID.style.display = "block";
   }
   else if (!av.ptd.validGridSize) {
     av.ptd.makePauseState();

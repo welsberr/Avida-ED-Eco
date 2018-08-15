@@ -538,32 +538,136 @@
                 <label>
                   What resources are available in the environment? (strength of energy reward shown in
                   parentheses)</label>
-                <div class="taskSets">
-                  <div id="taskEasy" class="taskLevel">
-                    Easy (x2)<br />
-                    <input type='checkbox' class='resourceButton' id='notose' label='notose' />&nbsp;notose<br />
-                    <input type='checkbox' class='resourceButton' id='nanose' label='nanose' />&nbsp;nanose
-                  </div>
-                  <div id="taskModerat" class="taskLevel">
-                    Moderate (x4)<br />
-                    <input type='checkbox' class='resourceButton' id='andose' label='andose'>&nbsp;andose<br />
-                    <input type='checkbox' class='resourceButton' id='ornose' label='ornose'>&nbsp;ornose
-                  </div>
-                  <div id="taskHard" class="taskLevel">
-                    Hard (x8)<br />
-                    <input type='checkbox' class='resourceButton' id='orose' label='orose'>&nbsp;orose<br>
-                    <input type='checkbox' class='resourceButton' id='andnose' label='andnose'>&nbsp;andnose
-                  </div>
-                  <div id="taskVeryHard" class="taskLevel">
-                    Very hard (x16)<br>
-                    <input type='checkbox' class='resourceButton' id='norose' label='norose'>&nbsp;norose<br>
-                    <input type='checkbox' class='resourceButton' id='equose' label='equose'>&nbsp;equose
-                  </div>
-                  <div id="taskBrutal" class="taskLevel">
-                    Brutal (x32)<br>
-                    <input type='checkbox' class='resourceButton' id='xorose' label='xorose'>&nbsp;xorose
-                  </div>
-                </div><span comment="taskSets" class='noSize'/>
+                <table border='0' id="resourceTable">
+                  <tbody> 
+                  <tr>
+                    <td>Easy (x2)</td>
+                    <td>Unlimited</td>
+                    <td class="TabSideBorder">Limited</td>
+                    <td>input amount</td>
+                    <td>Output rate</td>
+                    <td class="TabLftBorder">Constant</td>
+                    <td>Periodic</td>
+                    <td>Period (updates</td>
+                  </tr>
+                  <tr>
+                    <td><input type='checkbox' class='resourceButton' id='notose'
+                               label='notose'></button>notose
+                    </td>
+                    <td><input type="radio" name="nanLimit" value="Unlimited" checked></td>
+                    <td class="TabSideBorder"><input type="radio" name="nanLimit" value="Limited"></td>
+                    <td><input type='text'  name="nanInp" class="flowInput"></td>
+                    <td><input type='text'  name="nanOut" class="flowInput"></td>
+                    <td class="TabLftBorder"><input type="radio" name="nanPer" value="Constant" checked></td>
+                    <td><input type="radio" name="nanPer" value="Periodic"></td>
+                    <td><input type='text'  name="nanInp" class="flowInput"></td>
+                  </tr>
+                  <tr>
+                    <td><input type='checkbox' class='resourceButton' id='nanose'
+                               label='nanose'></button>nanose
+                    </td>
+                    <td><input type="radio" name="notLimit" value="Unlimited" checked></td>
+                    <td class="TabSideBorder"><input type="radio" name="notLimit" value="Limited"></td>
+                    <td><input type='text'  name="notInp" class="flowInput"></td>
+                    <td><input type='text'  name="notOut" class="flowInput"></td>
+                    <td class="TabLftBorder"><input type="radio" name="notPer" value="Constant" checked></td>
+                    <td><input type="radio" name="notPer" value="Periodic"></td>
+                    <td><input type='text'  name="notInp" class="flowInput"></td>
+                  </tr>
+                  <tr>
+                    <td>Moderate (x4)</td>
+                  </tr>
+                  <tr>
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='andose'
+                               label='andose'></button>andose
+                    </td> 
+                    <td><input type="radio" name="andLimit" value="Unlimited" checked></td>
+                    <td class="TabSideBorder"><input type="radio" name="andLimit" value="Limited"></td>
+                    <td><input type='text'  name="andInp" class="flowInput"></td>
+                    <td><input type='text'  name="andOut" class="flowInput"></td>
+                    <td class="TabLftBorder"><input type="radio" name="andPer" value="Constant" checked></td>
+                    <td><input type="radio" name="andPer" value="Periodic"></td>
+                    <td><input type='text'  name="andInp" class="flowInput"></td>
+                  </tr>
+                  <tr>
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='ornose'
+                               label='ornose'></button>ornose
+                    </td>                      <td><input type="radio" name="ornLimit" value="Unlimited" checked></td>
+                    <td class="TabSideBorder"><input type="radio" name="ornLimit" value="Limited"></td>
+                    <td><input type='text'  name="ornInp" class="flowInput"></td>
+                    <td><input type='text'  name="ornOut" class="flowInput"></td>
+                    <td class="TabLftBorder"><input type="radio" name="ornPer" value="Constant" checked></td>
+                    <td><input type="radio" name="ornPer" value="Periodic"></td>
+                    <td><input type='text'  name="ornInp" class="flowInput"></td>
+                  </tr>
+                  
+                  <tr>
+                    <td>Hard (x8)</td>
+                  </tr>
+                  <tr>
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='andnose'
+                               label='andnose'></button>andnose
+                    </td>
+                    <td><input type="radio" name="andLimit" value="Unlimited" checked></td>
+                    <td class="TabSideBorder"><input type="radio" name="andLimit" value="Limited"></td>
+                    <td><input type='text'  name="andInp" class="flowInput"></td>
+                    <td><input type='text'  name="andOut" class="flowInput"></td>
+                    <td class="TabLftBorder"><input type="radio" name="andPer" value="Constant" checked></td>
+                    <td><input type="radio" name="andPer" value="Periodic"></td>
+                    <td><input type='text'  name="andInp" class="flowInput"></td>                  </tr>
+                  <tr>
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='orose'
+                               label='orose'></button>orose
+                    </td>
+                    <td><input type="radio" name="oroLimit" value="Unlimited" checked></td>
+                    <td class="TabSideBorder"><input type="radio" name="oroLimit" value="Limited"></td>
+                    <td><input type='text'  name="oroInp" class="flowInput"></td>
+                    <td><input type='text'  name="oroOut" class="flowInput"></td>
+                    <td class="TabLftBorder"><input type="radio" name="oroPer" value="Constant" checked></td>
+                    <td><input type="radio" name="oroPer" value="Periodic"></td>
+                    <td><input type='text'  name="oroInp" class="flowInput"></td>                  </tr>
+                  <tr>
+                    <td>Very hard (x16)</td>
+                  </tr>
+                  <tr>
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='norose'
+                               label='norose'></button>norose
+                    </td>
+                    <td><input type="radio" name="norLimit" value="Unlimited" checked></td>
+                    <td class="TabSideBorder"><input type="radio" name="norLimit" value="Limited"></td>
+                    <td><input type='text'  name="norInp" class="flowInput"></td>
+                    <td><input type='text'  name="norOut" class="flowInput"></td>
+                    <td class="TabLftBorder"><input type="radio" name="norPer" value="Constant" checked></td>
+                    <td><input type="radio" name="norPer" value="Periodic"></td>
+                    <td><input type='text'  name="norInp" class="flowInput"></td>                  </tr>
+                  <tr>
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='xorose'
+                               label='xorose'></button>xorose
+                    </td>
+                    <td><input type="radio" name="xorLimit" value="Unlimited" checked></td>
+                    <td class="TabSideBorder"><input type="radio" name="xorLimit" value="Limited"></td>
+                    <td><input type='text'  name="xorInp" class="flowInput"></td>
+                    <td><input type='text'  name="xorOut" class="flowInput"></td>
+                    <td class="TabLftBorder"><input type="radio" name="xorPer" value="Constant" checked></td>
+                    <td><input type="radio" name="xorPer" value="Periodic"></td>
+                    <td><input type='text'  name="xorInp" class="flowInput"></td>                  </tr>
+                  <tr>
+                    <td>Brutal (x32)</td>
+                  </tr>
+                  <tr>
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='equose'
+                               label='equose'></button>equose
+                    </td>
+                    <td><input type="radio" name="equLimit" value="Unlimited" checked></td>
+                    <td class="TabSideBorder"><input type="radio" name="equLimit" value="Limited"></td>
+                    <td><input type='text'  name="equInp" class="flowInput"></td>
+                    <td><input type='text'  name="equOut" class="flowInput"></td>
+                    <td class="TabLftBorder"><input type="radio" name="equPer" value="Constant" checked></td>
+                    <td><input type="radio" name="equPer" value="Periodic"></td>
+                    <td><input type='text'  name="equInp" class="flowInput"></td>                  </tr>
+                  </tbody>
+                </table>
+
               </div>
               <div class='even'>
                 Repeatability Mode:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -876,17 +980,41 @@
   </div>
 </div>
 
-<span title="-------------------------------------------------------------------------------- Freezer Dialog box --"></span>
+<span title="---------------------------------------------------------------------------------- New button Modal --"></span>
+<div class="modal" id='newModalID'>
+
+  <!-- Modal content -->
+  <div class="modal-content" >
+    <div class="modal-header">
+      <h2>Would you like to save or discard the current petri dish before starting a new experiment?</h2>
+    </div>
+    <div class="modal-body">
+    <p>Configured Dish saves the experiment settings only.</p>
+    <p>Populated Dish saves organisms and experiment history.</p>
+    </div>
+    <div class="modal-footer">
+    <button id='newCancel'>Cancel</button>
+    <button id='newDiscard'>Discard</button>
+    <button id='newSaveConfig'>Save Configured Dish</button>
+    <button id='newSaveWorld'>Save Populated Dish</button>
+    </div>
+  </div>
+
+</div>
+
 <span title="--------------------------------------------------------------------------------- New button Dialog --"></span>
-<div  class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='newDialog'
+<div  data-dojo-type='dijit/Dialog' data-dojo-id='newDialogOld' id="newDialogID"
      title='Would you like to save or discard the current petri dish before starting a new experiment?'>
   <div class='dijitDialogPaneContentArea'>
     <p>Configured Dish saves the experiment settings only.</p>
     <p>Populated Dish saves organisms and experiment history.</p>
   </div>
   <div class='dijitDialogPaneActionBar'>
-    <button data-dojo-type='dijit/form/Button' type='button' data-dojo-props='onClick:function(){newDialog.hide();}'
-            id='newCancel'>Cancel
+    <button data-dojo-type='dijit/form/Button' id='newCancel' type='button' 
+            data-dojo-props="onClick:function() {
+               newDialog.hide(); 
+               dijit.byId('newDialog').set('style', 'display: none;');}"
+            >Cancel
     </button>
     <button data-dojo-type='dijit/form/Button' type='button' id='newDiscard'>Discard</button>
     <button data-dojo-type='dijit/form/Button' type='button' id='newSaveConfig'>Save Configured Dish</button>
@@ -930,7 +1058,25 @@
   </div>
 </div>
 
-<span title="------------------------------------------------------------------------------ Need Ancestor Dialog --"></span>
+<span title="------------------------------------------------------------------------------- Need Ancestor Modal --"></span>
+<div class="modal" id='NeedAncestorModalID'>
+
+  <!-- Modal content -->
+  <div class="modal-content" >
+    <div class="modal-header">
+      <h2>Would you like to save or discard the current petri dish before starting a new experiment?</h2>
+    </div>
+    <div class="modal-body">
+    <p>Please drag an organism from the freezer into the settings panel or the petri dish.</p>
+    </div>
+    <div class="modal-footer">
+    <button id='needAncestorCancel'>Ok</button>
+    </div>
+  </div>
+
+</div>
+
+<span title="-------------------------------Delete later ---------------------------------- Need Ancestor Dialog --"></span>
 <div class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='NeedAncestorDialog'
      title='Unable to resume experiment; there is no start organism in the petri dish.'>
   <div class='dijitDialogPaneContentArea'>

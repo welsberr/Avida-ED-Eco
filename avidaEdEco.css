@@ -123,7 +123,7 @@
   }
   #selOrgType{
     flex: 0 1 164;        /*was 170 */
-    border: 1px solid red;
+    border: 1px solid black;
     resize: horizontal;
     overflow: auto;
   }
@@ -152,10 +152,26 @@
   justify-content: space-evenly;
 }
 .taskLevel{
-  flex:0 1 8em;
+  flex:0 1 50em;             //0 1 8em;
   border: 1px solid #EEE;
   padding: 3px;
 }
+.foodAmount{
+  flex:0 1 8em;             //0 1 8em;
+  border: 1px solid #EEE;
+  padding: 3px;
+}
+.period{
+  flex:0 1 8em;             //0 1 8em;
+  border: 1px solid #EEE;
+  padding: 3px;
+}
+.flowInput{
+  width: 2em;      //4.5em
+  height:1.8em
+}
+
+
 .freezerClass{
   border: 1px solid black;
   flex:1;
@@ -193,7 +209,7 @@
   }
   #activeOrgan{
     background-color: #F5F5F5; /* lawngreen; */
-    border: 1px solid red;
+    border: 1px solid black;
     width: 90%;
   }
   .orgTopRt{
@@ -216,7 +232,20 @@
     border: 1px solid black;
     background: beige;
   }
-  
+  #resourceTable{
+   border: 1px solid grey;
+   table-layout: auto; 
+   width: 100%; 
+   height: auto; 
+   text-align:center;
+  }
+  .TabLftBorder{
+    border-left: 1px solid black;
+  }
+  .TabSideBorder{
+    border-left: 1px solid black;
+    border-right: 1px solid grey;
+  }
   .analysisArea{
     display: flex;
     flex-direction: column;
@@ -245,3 +274,42 @@
     flex: 0 1 500px;
     background-color: #F5F5F5; /* lavender;  */
   }
+  
+/**********************************************************************************************/
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.modal-header {
+    padding: 8px 8px;
+    background-color: lightgray;
+    color: black;
+}
+
+.modal-body {padding: 8px 8px;}
+
+.modal-footer {
+    padding: 8px 8px;
+    background-color: lightgray;
+    color: black;
+}

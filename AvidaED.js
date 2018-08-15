@@ -178,7 +178,15 @@ require([
   av.dom.load = function () {
     'use strict';
     //Menu
-    //av.dom.mnCnPopRun = document.getElementById('mnCnPopRun');
+    av.doj.mnCnPopRun = document.getElementById('mnCnPopRun');
+    
+    av.doj.mnFlStandAloneApp = document.getElementById('mnFlStandAloneApp');
+    av.doj.mnHpAbout = document.getElementById('mnHpAbout');
+    av.doj.mnHpManual = document.getElementById('mnHpManual');
+    av.doj.mnHpHardware = document.getElementById('mnHpHardware');
+    av.doj.mnHpInfo = document.getElementById('mnHpInfo');
+    av.doj.mnHpProblem = document.getElementById('mnHpProblem');
+    av.doj.mnHpDebug = document.getElementById('mnHpDebug');
     
     //main area
     av.dom.userMsgLabel = document.getElementById('userMsgLabel');
@@ -284,15 +292,6 @@ require([
     av.dom.postdTailTextarea = document.getElementById('postdTailTextarea');
     av.dom.postStatus = document.getElementById('postStatus');
 
-    
-    av.dom.mnFlStandAloneApp = document.getElementById('mnFlStandAloneApp');
-    av.dom.mnHpAbout = document.getElementById('mnHpAbout');
-    av.dom.mnHpManual = document.getElementById('mnHpManual');
-    av.dom.mnHpHardware = document.getElementById('mnHpHardware');
-    av.dom.mnHpInfo = document.getElementById('mnHpInfo');
-    av.dom.mnHpProblem = document.getElementById('mnHpProblem');
-    av.dom.mnHpDebug = document.getElementById('mnHpDebug');
-
     av.dom.mainButtons = document.getElementById('mainButtons');
     av.dom.trashDiv = document.getElementById('trashDiv');
 
@@ -303,6 +302,16 @@ require([
 
     av.dom.xorLabel = document.getElementById('xorLabel');          //used to toggle debug menu
 
+    //av.dom. = document.getElementById('');
+    // Modal Dialogs 
+    av.dom.newModalID = document.getElementById('newModalID');
+    av.dom.newCancel = document.getElementById('newCancel');
+    av.dom.newDiscard = document.getElementById('newDiscard');
+    av.dom.newSaveConfig = document.getElementById('newSaveConfig');
+    av.dom.newSaveWorld = document.getElementById('newSaveWorld');
+    av.dom.NeedAncestorModalID = document.getElementById('NeedAncestorModalID');
+    av.dom.needAncestorCancel = document.getElementById('needAncestorCancel');
+    
     //av.dom. = document.getElementById('');
   };
   av.dom.load();
@@ -398,6 +407,299 @@ require([
     av.msg.readMsg(ee)
   };  // in file messaging.js
 
+  if (av.debug.root) console.log('before dnd triggers');
+  //*******************************************************************************************************************
+  //       Dojo Dnd drop function - triggers for all dojo dnd drop events
+  //*******************************************************************************************************************
+  // Dojo DndDrop function triggers for drops in all locations (target or source). However not all the information is
+  // available unless the correct source/target name is in the event call. I had one event handler with calls to the
+  // different functions based on the target.node.id, but that did not work, for not all the information was available.
+  // It looks like it is there based on console.logging just the taret, but trying to access subdata results in a null.
+  // I don't think I would have written it this way had I known the single event handler would not work, but I had
+  // created the dojodnd.js file before I realized that I needed separate event handelers with the conditional.
+
+  av.dnd.activeConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
+    'use strict';
+    //console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id)
+    if ('activeConfig' === target.node.id) {
+      av.dnd.makeMove(source, nodes, target);
+    }
+  });
+
+  av.dnd.fzConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of fzConfig
+    if ('fzConfig' === target.node.id) {
+      av.ui.num = av.fzr.cNum;  //hold current cNum to see if it changes in av.dnd.landConfig
+      av.dnd.landFzConfig(source, nodes, target);  //needed as part of call to contextMenu
+      //if (av.ui.num !== av.fzr.cNum) { av.fwt.makeFzrConfig(av.fzr.cNum); }
+    }
+  });
+
+  av.dnd.fzOrgan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of fzOrgan
+    if ('fzOrgan' === target.node.id) {
+      av.dnd.landFzOrgan(source, nodes, target);
+    }
+  });
+
+  av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
+    if ('ancestorBox' === target.node.id) {
+      //console.log('ancestorBox=', target, av.dnd.ancestorBox);  //yes they are the same. could use in the above if statement.
+      av.dnd.makeMove(source, nodes, target);
+      }
+  });
+
+  av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of gridCanvas
+    if ('gridCanvas' === target.node.id) {
+      av.dnd.landGridCanvas(source, nodes, target);
+      //console.log('before call av.grd.drawGridSetupFn');
+      av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
+      //console.log('in gridCanvas.on');
+    }
+  });
+
+  av.dnd.organIcon.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of organIcon
+    //setTimeout(null,1000);
+    if ('organIcon' === target.node.id) {
+      if (av.debug.dnd) console.log('landOrganIcon: s, t', source, target);
+      av.dnd.landOrganIcon(source, nodes, target);
+      //Change to Organism Page
+      av.ui.mainBoxSwap('organismBlock');
+      organismCanvasHolderSize();
+      var height = ($('#rightDetail').innerHeight() - 375) / 2;
+      av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
+      av.dom.ExecuteAbout.style.height = height + 'px';
+      av.dom.ExecuteJust.style.width = '100%';
+      av.dom.ExecuteAbout.style.width = '100%';
+      av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+    }
+  });
+
+  av.dnd.activeOrgan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeOrgan
+    if ('activeOrgan' === target.node.id) {
+      if (av.debug.dnd) console.log('activeOrgan: s, t', source, target);
+      av.dnd.makeMove(source, nodes, target);
+      //av.dnd.landActiveOrgan(source, nodes, target);
+      av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+    }
+  });
+
+  av.dnd.organCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of organCanvas
+    if ('organCanvas' === target.node.id) {
+      if (av.debug.dnd) console.log('landorganCanvas: s, t', source, target);
+      av.dnd.landorganCanvas(source, nodes, target);
+      av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+    }
+  });
+
+  av.dnd.trashCan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of trashCan
+    if ('trashCan' === target.node.id) {
+      var remove = {};
+      remove.type = '';
+      remove.dir = '';
+      if (av.debug.dnd) console.log('trashCan: s, t', source, target);
+      remove = av.dnd.landTrashCan(source, nodes, target);
+      if ('' !== remove.type) {
+        //removeFzrItem(av.fzr, remove.dir, remove.type);
+        remove.dir = av.fzr.dir[remove.domid];
+        av.fwt.removeFzrItem(remove.dir, remove.type);
+      }
+    }
+  });
+
+  av.dnd.anlDndChart.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of graphPop0
+    if ('anlDndChart' === target.node.id) {
+      if (av.debug.dnd) console.log('anlDndChart: s, t', source, target);
+      av.dnd.landAnlDndChart(av.dnd, source, nodes, target);
+      av.anl.AnaChartFn();
+    }
+  });
+
+  av.dnd.graphPop0.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of graphPop0
+    if ('graphPop0' === target.node.id) {
+      if (av.debug.dnd) console.log('graphPop0: s, t', source, target);
+      av.dnd.landgraphPop0(av.dnd, source, nodes, target);
+      av.anl.AnaChartFn();
+    }
+  });
+
+  av.dnd.graphPop1.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of graphPop1
+    if ('graphPop1' === target.node.id) {
+      if (av.debug.dnd) console.log('graphPop1: s, t', source, target);
+      av.dnd.landgraphPop1(av.dnd, source, nodes, target);
+      av.anl.AnaChartFn();
+    }
+  });
+
+  av.dnd.graphPop2.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of graphPop2
+    if ('graphPop2' === target.node.id) {
+      if (av.debug.dnd) console.log('graphPop2: s, t', source, target);
+      av.dnd.landgraphPop2(av.dnd, source, nodes, target);
+      av.anl.AnaChartFn();
+    }
+  });
+
+  //need to figure out active configuration and active world
+  av.dnd.fzWorld.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
+    if ('fzWorld' === target.node.id) {
+      var pkg = {};
+      av.ui.num = av.fzr.wNum;
+      pkg.source = source;
+      pkg.nodes = nodes;
+      pkg.copy = copy;
+      pkg.target = target;
+      av.dnd.landFzWorldFn(pkg);
+      if (av.ui.num !== av.fzr.wNum) {
+        av.fwt.makeFzrWorld(av.ui.num);
+      } //tiba need to check this
+    }
+  });
+
+  av.dnd.graphPop0.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
+    //The following cases should never happen as they are defined as 'target' not as 'source' dnd types.
+    // The code is here in case the dnd type is changed to 'source'
+    switch (source.node.id) {
+      case 'graphPop0':
+        av.post.addUser('DnD: delete_from: graphPop0?');
+        av.anl.pop[0].left = [];       //remove lines from population 1
+        av.anl.pop[0].right = [];
+        av.anl.AnaChartFn();
+        break;
+      case 'graphPop1':
+        av.post.addUser('DnD: delete_from: graphPop1?');
+        av.anl.pop[1].left = [];       //remove lines from population 2
+        av.anl.pop[1].right = [];
+        av.anl.AnaChartFn();
+        break;
+      case 'graphPop2':
+        av.post.addUser('DnD: delete_from: graphPop2?');
+        av.anl.pop[2].left = [];       //remove lines from population 3
+        av.anl.pop[2].right = [];
+        av.anl.AnaChartFn();
+        break;
+    }
+  });
+
+  //----------------------------------------------------------------------------------------------------------------------
+  //                                    End of dojo based DND triggered functions
+  //----------------------------------------------------------------------------------------------------------------------
+
+  if (av.debug.root) console.log('before Error Logging');
+  //********************************************************************************************************************
+  // Error logging
+  //********************************************************************************************************************
+
+  //--------------------------------------------------------------------------------------------
+  //https://bugsnag.com/blog/js-stacktracess
+  //http://blog.bugsnag.com/js-stacktraces
+  window.onerror = function (message, file, line, col, error) {
+    console.log('in onError');
+    av.dom.runStopButton.innerHTML = 'Run';  //av.msg.pause('now');
+    av.debug.finalizeDtail();
+    av.debug.triggered = 'errorTriggered';
+    av.post.postLogPara = 'mares eat oats and does eat oats';
+    av.debug.sendLogPara = 'The error is the last line in the session log in the text below.';
+    av.debug.postEmailLabel = 'Please include your e-mail if you would like feed back or are willing to further assist in debug';
+    av.debug.postNoteLabel = 'Please include any additional comments in the field below.';
+    av.debug.postEmailLabel = 'Please include your e-mail for feedback or so we can discuss the problem further';
+    av.debug.error = 'Error: ' + message + ' from ' + file + ':' + line + ':' + col;
+    av.debug.sendLogTextarea = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail + '\n\n' + av.debug.error;
+
+    console.log('before call problemWindow');
+    av.ui.problemWindow();
+  };
+
+  window.addEventListener('error', function (evt) {
+    //console.log('event listener', evt);
+  });
+  //--------------------------------------------------------------------------------------------
+
+  on(document.getElementById('postPost'), 'click', function(){
+    av.post.addUser('Button: postPost');
+    //Data to send
+    av.debug.postData.email = av.dom.postEmailInput.value;
+    av.debug.postData.comment = av.dom.postComment.value;
+    console.log('postData=', av.debug.postData);
+
+    av.dom.postStatus.textContent = 'Sending';
+    av.dom.postProblemError.textContent = '';
+
+    //domConst.place('<p>sending message</p>', 'postStatus');
+    var hostname = 'https://avida-ed.msu.edu/developer/report/receive';
+
+    xhr.post(  //Post is a helper function to xhr, a more generic class
+      hostname,  //URL parameter
+      {  //Data and halding parameter
+        data: dojo.toJson(av.debug.postData),
+        headers: {'X-Requested-With':null}
+      }
+    ).then(function(received){ //Promise format; received data from request (first param of then)
+        av.dom.postStatus.textContent = 'Received';
+        //domConst.place('<p>Data received: <code>' + JSON.stringify(received) + '</code></p>', 'postStatus');
+      }, function(err){ //Error handling (second param of then)
+        av.dom.postStatus.textContent = 'Error';
+        av.dom.postProblemError.textContent = 'Please send an e-mail to '+av.fio.mailAddress + ' about the error sending a Problem Report';
+        av.dom.postProblemError.style.color = 'red';
+
+      //domConst.place('<p>Error: <code>' + JSON.stringify(err) + '</code></p>', 'postStatus');
+      }
+    ); // End then
+  }); // End on's function and on statement
+
+  //--------------------------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------
+  //More usefull websites to catch errors
+  // https://davidwalsh.name/javascript-stack-trace
+  // https://danlimerick.wordpress.com/2014/01/18/how-to-catch-javascript-errors-with-window-onerror-even-on-chrome-and-firefox/
+  //to send e-mail  http://stackoverflow.com/questions/7381150/how-to-send-an-email-from-javascript
+
+  // how to send e-mail
+  // http://www.codeproject.com/Questions/303284/How-to-send-email-in-HTML-or-Javascript
+
+  // selected text
+  // http://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
+  // http://www.javascriptkit.com/javatutors/copytoclipboard.shtml
+
+  //http://www.technicaladvices.com/2012/03/26/detecting-the-page-leave-event-in-javascript/
+  //Cannot get custom message in Firefox (or Safari for now)
+  window.onbeforeunload = function (event) {
+    if (!av.ui.sendEmailFlag) {
+      if ('no' === av.fzr.saveState || 'maybe' === av.fzr.saveState) {
+        return 'Your workspace may have changed sine you last saved. Do you want to save first?';
+
+        //e.stopPropagation works in Firefox.
+        if (event.stopPropagation) {
+          event.stopPropagation();
+          event.preventDefault();
+        };
+      };
+    };
+  };
+
+  /*
+   //http://stackoverflow.com/questions/20773306/mozilla-firefox-not-working-with-window-onbeforeunload
+   var myEvent = window.attachEvent || window.addEventListener;
+   var chkevent = window.attachEvent ? 'onbeforeunload' : 'beforeunload'; /// make IE7, IE8 compitable
+
+   myEvent(chkevent, function(e) { // For >=IE7, Chrome, Firefox
+   var confirmationMessage = 'Remember to save your workSpace before you leave Avida-ED';  // a space
+   (e || window.event).returnValue = confirmationMessage;
+   return confirmationMessage;
+   });
+
+   function goodbye(e) {
+   if(!e) e = window.event;
+   //e.cancelBubble is supported by IE - this will kill the bubbling process.
+   e.cancelBubble = true;
+   e.returnValue = 'Have you saved your workspace?'; //This is displayed on the dialog
+
+   //e.stopPropagation works in Firefox.
+   if (e.stopPropagation) {
+   e.stopPropagation();
+   e.preventDefault();
+   }
+   }
+   window.onbeforeunload=goodbye;
+   */
+  
   //********************************************************************************************************************
   //  Read Default Workspace as part of initialization
   // ********************************************************************************************************************
@@ -414,6 +716,8 @@ require([
   //********************************************************************************************************************
   // Menu Buttons handling
   //********************************************************************************************s************************
+
+  console.log('dijit test', dijit.byId('mnFlOpenDefaultWS'));
 
   dijit.byId('mnFlOpenDefaultWS').on('Click', function () {
     'use strict';
@@ -444,7 +748,7 @@ require([
       document.getElementById('putWS').click();  //to get user picked file
     }
   });
-
+  
   // open and read user picked file
   //--------------------------------------------------------------------------------------------------------------------
 
@@ -533,7 +837,7 @@ require([
 
   //------------- Testing only need to delete later.--------------------
 
-  av.dom.mnHpDebug.onclick = function () {
+  av.doj.mnHpDebug.onclick = function () {
     if ('visible' === document.getElementById('mnDebug').style.visibility) {
       document.getElementById('mnDebug').style.visibility = 'hidden';
       dijit.byId('mnHpDebug').set('label', 'Show debug menu');
@@ -733,126 +1037,10 @@ require([
     av.dom.sendLogTextarea.focus();
     av.dom.sendLogTextarea.select();  //https://css-tricks.com/snippets/javascript/auto-select-textarea-text/
   };
+
   //********************************************************************************************************************
-  // Error logging
-  //********************************************************************************************************************
-
-  //--------------------------------------------------------------------------------------------
-  //https://bugsnag.com/blog/js-stacktracess
-  //http://blog.bugsnag.com/js-stacktraces
-  window.onerror = function (message, file, line, col, error) {
-    console.log('in onError');
-    av.dom.runStopButton.innerHTML = 'Run';  //av.msg.pause('now');
-    av.debug.finalizeDtail();
-    av.debug.triggered = 'errorTriggered';
-    av.post.postLogPara = 'mares eat oats and does eat oats';
-    av.debug.sendLogPara = 'The error is the last line in the session log in the text below.';
-    av.debug.postEmailLabel = 'Please include your e-mail if you would like feed back or are willing to further assist in debug';
-    av.debug.postNoteLabel = 'Please include any additional comments in the field below.';
-    av.debug.postEmailLabel = 'Please include your e-mail for feedback or so we can discuss the problem further';
-    av.debug.error = 'Error: ' + message + ' from ' + file + ':' + line + ':' + col;
-    av.debug.sendLogTextarea = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail + '\n\n' + av.debug.error;
-
-    console.log('before call problemWindow');
-    av.ui.problemWindow();
-  };
-
-  window.addEventListener('error', function (evt) {
-    //console.log('event listener', evt);
-  });
-  //--------------------------------------------------------------------------------------------
-
-  on(document.getElementById('postPost'), 'click', function(){
-    av.post.addUser('Button: postPost');
-    //Data to send
-    av.debug.postData.email = av.dom.postEmailInput.value;
-    av.debug.postData.comment = av.dom.postComment.value;
-    console.log('postData=', av.debug.postData);
-
-    av.dom.postStatus.textContent = 'Sending';
-    av.dom.postProblemError.textContent = '';
-
-    //domConst.place('<p>sending message</p>', 'postStatus');
-    var hostname = 'https://avida-ed.msu.edu/developer/report/receive';
-
-    xhr.post(  //Post is a helper function to xhr, a more generic class
-      hostname,  //URL parameter
-      {  //Data and halding parameter
-        data: dojo.toJson(av.debug.postData),
-        headers: {'X-Requested-With':null}
-      }
-    ).then(function(received){ //Promise format; received data from request (first param of then)
-        av.dom.postStatus.textContent = 'Received';
-        //domConst.place('<p>Data received: <code>' + JSON.stringify(received) + '</code></p>', 'postStatus');
-      }, function(err){ //Error handling (second param of then)
-        av.dom.postStatus.textContent = 'Error';
-        av.dom.postProblemError.textContent = 'Please send an e-mail to '+av.fio.mailAddress + ' about the error sending a Problem Report';
-        av.dom.postProblemError.style.color = 'red';
-
-      //domConst.place('<p>Error: <code>' + JSON.stringify(err) + '</code></p>', 'postStatus');
-      }
-    ); // End then
-  }); // End on's function and on statement
-
-  //--------------------------------------------------------------------------------------------------------------------
-  //--------------------------------------------------------------------------------------------------------------------
-  //More usefull websites to catch errors
-  // https://davidwalsh.name/javascript-stack-trace
-  // https://danlimerick.wordpress.com/2014/01/18/how-to-catch-javascript-errors-with-window-onerror-even-on-chrome-and-firefox/
-  //to send e-mail  http://stackoverflow.com/questions/7381150/how-to-send-an-email-from-javascript
-
-  // how to send e-mail
-  // http://www.codeproject.com/Questions/303284/How-to-send-email-in-HTML-or-Javascript
-
-  // selected text
-  // http://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
-  // http://www.javascriptkit.com/javatutors/copytoclipboard.shtml
-
-  //http://www.technicaladvices.com/2012/03/26/detecting-the-page-leave-event-in-javascript/
-  //Cannot get custom message in Firefox (or Safari for now)
-  window.onbeforeunload = function (event) {
-    if (!av.ui.sendEmailFlag) {
-      if ('no' === av.fzr.saveState || 'maybe' === av.fzr.saveState) {
-        return 'Your workspace may have changed sine you last saved. Do you want to save first?';
-
-        //e.stopPropagation works in Firefox.
-        if (event.stopPropagation) {
-          event.stopPropagation();
-          event.preventDefault();
-        };
-      };
-    };
-  };
-
-  /*
-   //http://stackoverflow.com/questions/20773306/mozilla-firefox-not-working-with-window-onbeforeunload
-   var myEvent = window.attachEvent || window.addEventListener;
-   var chkevent = window.attachEvent ? 'onbeforeunload' : 'beforeunload'; /// make IE7, IE8 compitable
-
-   myEvent(chkevent, function(e) { // For >=IE7, Chrome, Firefox
-   var confirmationMessage = 'Remember to save your workSpace before you leave Avida-ED';  // a space
-   (e || window.event).returnValue = confirmationMessage;
-   return confirmationMessage;
-   });
-
-   function goodbye(e) {
-   if(!e) e = window.event;
-   //e.cancelBubble is supported by IE - this will kill the bubbling process.
-   e.cancelBubble = true;
-   e.returnValue = 'Have you saved your workspace?'; //This is displayed on the dialog
-
-   //e.stopPropagation works in Firefox.
-   if (e.stopPropagation) {
-   e.stopPropagation();
-   e.preventDefault();
-   }
-   }
-   window.onbeforeunload=goodbye;
-   */
-
-  //--------------------------------------------------------------------------------------------------------------------
   // main button scripts
-  //--------------------------------------------------------------------------------------------------------------------
+  //********************************************************************************************************************
     
   if (av.debug.uil) console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight, 
     document.documentElement.clientHeight);
@@ -931,180 +1119,6 @@ require([
     av.anl.AnaChartFn();
   };
 
-  if (av.debug.root) console.log('before dnd triggers');
-  //*******************************************************************************************************************
-  //       Dojo Dnd drop function - triggers for all dojo dnd drop events
-  //*******************************************************************************************************************
-  // Dojo DndDrop function triggers for drops in all locations (target or source). However not all the information is
-  // available unless the correct source/target name is in the event call. I had one event handler with calls to the
-  // different functions based on the target.node.id, but that did not work, for not all the information was available.
-  // It looks like it is there based on console.logging just the taret, but trying to access subdata results in a null.
-  // I don't think I would have written it this way had I known the single event handler would not work, but I had
-  // created the dojodnd.js file before I realized that I needed separate event handelers with the conditional.
-
-  av.dnd.activeConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
-    'use strict';
-    //console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id)
-    if ('activeConfig' === target.node.id) {
-      av.dnd.makeMove(source, nodes, target);
-    }
-  });
-
-  av.dnd.fzConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of fzConfig
-    if ('fzConfig' === target.node.id) {
-      av.ui.num = av.fzr.cNum;  //hold current cNum to see if it changes in av.dnd.landConfig
-      av.dnd.landFzConfig(source, nodes, target);  //needed as part of call to contextMenu
-      //if (av.ui.num !== av.fzr.cNum) { av.fwt.makeFzrConfig(av.fzr.cNum); }
-    }
-  });
-
-  av.dnd.fzOrgan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of fzOrgan
-    if ('fzOrgan' === target.node.id) {
-      av.dnd.landFzOrgan(source, nodes, target);
-    }
-  });
-
-  av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
-    if ('ancestorBox' === target.node.id) {
-      //console.log('ancestorBox=', target, av.dnd.ancestorBox);  //yes they are the same. could use in the above if statement.
-      av.dnd.makeMove(source, nodes, target);
-      }
-  });
-
-  av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of gridCanvas
-    if ('gridCanvas' === target.node.id) {
-      av.dnd.landGridCanvas(source, nodes, target);
-      //console.log('before call av.grd.drawGridSetupFn');
-      av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
-      //console.log('in gridCanvas.on');
-    }
-  });
-
-  av.dnd.organIcon.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of organIcon
-    //setTimeout(null,1000);
-    if ('organIcon' === target.node.id) {
-      if (av.debug.dnd) console.log('landOrganIcon: s, t', source, target);
-      av.dnd.landOrganIcon(source, nodes, target);
-      //Change to Organism Page
-      av.ui.mainBoxSwap('organismBlock');
-      organismCanvasHolderSize();
-      var height = ($('#rightDetail').innerHeight() - 375) / 2;
-      av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
-      av.dom.ExecuteAbout.style.height = height + 'px';
-      av.dom.ExecuteJust.style.width = '100%';
-      av.dom.ExecuteAbout.style.width = '100%';
-      av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-    }
-  });
-
-  av.dnd.activeOrgan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeOrgan
-    if ('activeOrgan' === target.node.id) {
-      if (av.debug.dnd) console.log('activeOrgan: s, t', source, target);
-      av.dnd.makeMove(source, nodes, target);
-      //av.dnd.landActiveOrgan(source, nodes, target);
-      av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-    }
-  });
-
-  av.dnd.organCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of organCanvas
-    if ('organCanvas' === target.node.id) {
-      if (av.debug.dnd) console.log('landorganCanvas: s, t', source, target);
-      av.dnd.landorganCanvas(source, nodes, target);
-      av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-    }
-  });
-
-  av.dnd.trashCan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of trashCan
-    if ('trashCan' === target.node.id) {
-      var remove = {};
-      remove.type = '';
-      remove.dir = '';
-      if (av.debug.dnd) console.log('trashCan: s, t', source, target);
-      remove = av.dnd.landTrashCan(source, nodes, target);
-      if ('' !== remove.type) {
-        //removeFzrItem(av.fzr, remove.dir, remove.type);
-        remove.dir = av.fzr.dir[remove.domid];
-        av.fwt.removeFzrItem(remove.dir, remove.type);
-      }
-    }
-  });
-
-  av.dnd.anlDndChart.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of graphPop0
-    if ('anlDndChart' === target.node.id) {
-      if (av.debug.dnd) console.log('anlDndChart: s, t', source, target);
-      av.dnd.landAnlDndChart(av.dnd, source, nodes, target);
-      av.anl.AnaChartFn();
-    }
-  });
-
-  av.dnd.graphPop0.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of graphPop0
-    if ('graphPop0' === target.node.id) {
-      if (av.debug.dnd) console.log('graphPop0: s, t', source, target);
-      av.dnd.landgraphPop0(av.dnd, source, nodes, target);
-      av.anl.AnaChartFn();
-    }
-  });
-
-  av.dnd.graphPop1.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of graphPop1
-    if ('graphPop1' === target.node.id) {
-      if (av.debug.dnd) console.log('graphPop1: s, t', source, target);
-      av.dnd.landgraphPop1(av.dnd, source, nodes, target);
-      av.anl.AnaChartFn();
-    }
-  });
-
-  av.dnd.graphPop2.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of graphPop2
-    if ('graphPop2' === target.node.id) {
-      if (av.debug.dnd) console.log('graphPop2: s, t', source, target);
-      av.dnd.landgraphPop2(av.dnd, source, nodes, target);
-      av.anl.AnaChartFn();
-    }
-  });
-
-  //need to figure out active configuration and active world
-  av.dnd.fzWorld.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
-    if ('fzWorld' === target.node.id) {
-      var pkg = {};
-      av.ui.num = av.fzr.wNum;
-      pkg.source = source;
-      pkg.nodes = nodes;
-      pkg.copy = copy;
-      pkg.target = target;
-      av.dnd.landFzWorldFn(pkg);
-      if (av.ui.num !== av.fzr.wNum) {
-        av.fwt.makeFzrWorld(av.ui.num);
-      } //tiba need to check this
-    }
-  });
-
-  av.dnd.graphPop0.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
-    //The following cases should never happen as they are defined as 'target' not as 'source' dnd types.
-    // The code is here in case the dnd type is changed to 'source'
-    switch (source.node.id) {
-      case 'graphPop0':
-        av.post.addUser('DnD: delete_from: graphPop0?');
-        av.anl.pop[0].left = [];       //remove lines from population 1
-        av.anl.pop[0].right = [];
-        av.anl.AnaChartFn();
-        break;
-      case 'graphPop1':
-        av.post.addUser('DnD: delete_from: graphPop1?');
-        av.anl.pop[1].left = [];       //remove lines from population 2
-        av.anl.pop[1].right = [];
-        av.anl.AnaChartFn();
-        break;
-      case 'graphPop2':
-        av.post.addUser('DnD: delete_from: graphPop2?');
-        av.anl.pop[2].left = [];       //remove lines from population 3
-        av.anl.pop[2].right = [];
-        av.anl.AnaChartFn();
-        break;
-    }
-  });
-
-  if (av.debug.root) console.log('before Population Page');
-//----------------------------------------------------------------------------------------------------------------------
-//                                    End of dojo based DND triggered functions
 //----------------------------------------------------------------------------------------------------------------------
 //                                             Population page Buttons
 //----------------------------------------------------------------------------------------------------------------------
@@ -1136,7 +1150,7 @@ require([
     ///av.post.addUser('Button: infoShowHideButton');   //done in popStatView
     av.ptd.infoShowHideButton();
   };
-
+  
   //--------------------------------------------------------------------------------------------------------------------
   ///   Map Grid buttons - New  Run/Pause Freeze
   //--------------------------------------------------------------------------------------------------------------------
@@ -1144,8 +1158,6 @@ require([
   //process the run/Stop Button - a separate function is used so it can be flipped if the message to avida is not successful.
   av.dom.runStopButton.onclick = function () {
     av.post.addUser('Button: runStopButton = ' + av.grd.updateNum, '=updateNum;  ' + av.grd.msg.update + '=msg.update;  ' + av.grd.popStatsMsg.update + '=popStatsMsg.update');
-    var upDate = av.msg.previousUpdate + 1;
-    //av.post.addUser('Button: runStopButton = ' + upDate);
     av.ptd.runStopFn();
   };
 
@@ -1156,26 +1168,6 @@ require([
     //av.debug.log += '______Debug Note: about to call av.ptd.makePauseState() in AvidaEd.js line 986 \n';
     av.ptd.makePauseState();
   });
-/*
-  //process run/Stop buttons as above but for drop down menu
-  dijit.byId('mnCnPopRun').on('Click', function () {
-    console.log('label=', dijit.byId('mnCnPopRun').get('value'));
-    if ('Population: Run' == dijit.byId('mnCnPopRun').get('value')) {
-      console.log('in Loop');
-      av.post.addUser('Button: mnCnPopRun');
-      av.ptd.makeRunState();
-      av.ptd.runPopFn();
-    }
-    else {
-      av.post.addUser('Button: mnCnPause');
-      //console.log('about to call av.ptd.makePauseState()');
-      av.msg.pause('now');
-      //av.debug.log += '______Debug Note: about to call av.ptd.makePauseState() in AvidaEd.js line 986 \n';
-      av.ptd.makePauseState();
-    }
-    //dijit.byId('mnCnPopRun').set('value', 'Population: change');
-  });
-*/
 
   //process run/Stop buttons as above but for drop down menu
   dijit.byId('mnCnRun').on('Click', function () {
@@ -1199,11 +1191,22 @@ require([
     av.ptd.runPopFn();
   };
 
+  //------------------------------------------------------------------------------------- modal dialog cancle buttons --
+
+  av.dom.needAncestorCancel.onclick = function () {
+    av.dom.NeedAncestorModalID.style.display = 'none';
+  };
+
+  av.dom.needAncestorCancel.onclick = function () {
+    av.dom.NeedAncestorModalID.style.display = 'none';
+  };
+
   /******************************************* New Button and new Dialog **********************************************/
 
   dijit.byId('newDiscard').on('Click', function () {
     av.post.addUser('Button: newDiscard');
     newDialog.hide();
+    dijit.byId('newDialog').set('style', 'display: none;');
     av.msg.reset();
     //av.ptd.resetDishFn(true); //Only do when get reset back from avida after sending reset
     //console.log('newDiscard click');
@@ -1213,6 +1216,7 @@ require([
     av.post.addUser('Button: newSaveWorld');
     av.ptd.FrPopulationFn();
     newDialog.hide();
+    dijit.byId('newDialog').set('style', 'display: none;');
     av.msg.reset();
     //av.ptd.resetDishFn(true); //Only do when get reset back from avida after sending reset
     //console.log('newSave click');
@@ -1222,20 +1226,25 @@ require([
     av.post.addUser('Button: newSaveConfig');
     av.ptd.FrConfigFn();
     newDialog.hide();
+    dijit.byId('newDialog').set('style', 'display: none;');
     av.msg.reset();
     //av.ptd.resetDishFn(true); //Only do when get reset back from avida after sending reset
     //console.log('newSave click');
   });
 
   function newButtonBoth() {
+    'use strict';
     if ('prepping' == av.grd.runState) {// reset petri dish
       av.msg.reset();
+      console.log('in prepping');
       //av.ptd.resetDishFn(true); //Only do when get reset back from avida after sending reset
     }
     else {// check to see about saving current population
       av.msg.pause('now');
       av.ptd.makePauseState();
-      newDialog.show();
+      console.log('before newDialog.show', dijit.byId('newDialog'));
+      av.dom.newModalID.style.display = "block";
+      //newDialog.show();
     }
   }
 
@@ -2088,6 +2097,9 @@ require([
       muteVal = parseFloat(this.value);
       slides.slider('value', muteVal);
       $('#mRate').val(muteVal);
+      
+      
+      //Not sure the section below does anything expcept example about debug data collection.
       av.post.data1 = {
         'changed' : 'muteInput',
         'muteInput': muteVal.formatNum(1)
@@ -2121,6 +2133,7 @@ require([
       av.post.addUser('muteInput =' + muteVal.formatNum(1), ' in AvidaED.js line 1865');
       av.post.usrOneline(av.post.data, 'in AvidaED.js line 1868');
       //console.log('in mute change');
+      
     });
   });
 
@@ -2931,6 +2944,8 @@ require([
     dijit.byId('mnFlSaveAs').attr('disabled', true);
   }
   
+  // 
+  
   // **************************************************************************************************************** */
   //                                          Useful Generic functions
   // **************************************************************************************************************** */
@@ -3084,3 +3099,7 @@ To make a gif using screen capture
   //}
   //
   // Targeting common screen sizes   https://www.websitedimensions.com/
+  
+  // looks like tool-tip
+  // https://www.w3schools.com/howto/howto_js_popup.asp
+  // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup

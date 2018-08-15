@@ -523,6 +523,7 @@ av.ptd.popInfoHolderWd = 395;
 av.grd = {};         //data about the grid canvas
 av.grd.popStatsMsg = {};
 av.dom = {};
+av.doj = {};
 
 av.grd.fnChosen = [];
 for (var ii = 0; ii < 9; ii++) { av.grd.fnChosen[av.ptd.logicButtons[ii]] = false; }

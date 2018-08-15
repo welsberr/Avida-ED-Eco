@@ -251,7 +251,7 @@ av.dnd.lndActiveConfig = function (move) {
     }
     av.parents.placeAncestors();
     //run status is no longer 'new' it is 'world'
-    av.ptd.popWorldStateUi();
+    av.ptd.popWorldStateUi('av.dnd.lndActiveConfig');
 
     //Load Time Recorder Data
     av.frd.loadTimeRecorderData(av.fzr.actConfig.dir);
