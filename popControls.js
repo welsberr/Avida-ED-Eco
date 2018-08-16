@@ -148,8 +148,8 @@ av.ptd.popNewExState = function () {
   //av.parents.Colors = av.color.parentColorList.slice();   //delete this later
   av.parents.Colors.reverse();
   //set run/stop and drop down menu to the 'stopped' state
-  av.dom.mnCnPause.disabled = true;
-  av.dom.mnCnRun.disabled = false;
+  dijit.byId('mnCnPause').attr('disabled', true);
+  dijit.byId('mnCnRun').attr('disabled', false);
   av.dom.runStopButton.innerHTML = 'Run';
   //console.log('pauseState; button=run in av.ptd.popNewExState');
 
@@ -225,9 +225,9 @@ av.ptd.popNewExState = function () {
   logTit5.textContent = '';
   logTit6.textContent = '';
   av.grd.flagSelected = false;
-  av.dom.mnFzOrganism.disabled = true;
-  av.dom.mnCnOrganismTrace.disabled = true;
-}
+  dijit.byId('mnCnOrganismTrace').attr('disabled', true);
+  dijit.byId('mnFzOrganism').attr('disabled', true);
+};
 
 //after Run button pushed for population
 av.ptd.runPopFn = function () {
@@ -241,7 +241,7 @@ av.ptd.runPopFn = function () {
     //console.log('about to call av.ptd.makePauseState()');
     av.ptd.makePauseState();
     //NeedAncestorDialog.show();
-    av.dom.NeedAncestorModalID.style.display = "block";
+    av.dom.needAncestorModalID.style.display = "block";
   }
   else if (!av.ptd.validGridSize) {
     av.ptd.makePauseState();
@@ -499,8 +499,8 @@ av.ptd.resetDishFn = function (need2sendRest2avida) { //Need to reset all settin
   if (av.debug.grid) console.log('before calling av.grd.popChartInit');
   av.grd.popChartInit();
   av.grd.runState = 'prepping';
-  av.dom.mnCnOrganismTrace.disabled = true;
-  av.dom.mnFzOrganism.disabled = true;
+  dijit.byId('mnCnOrganismTrace').attr('disabled', true);
+  dijit.byId('mnFzOrganism').attr('disabled', true);
   //Enable the options on the Setup page
   av.ptd.popNewExState();
   //Clear grid settings

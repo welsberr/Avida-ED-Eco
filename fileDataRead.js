@@ -20,9 +20,10 @@ av.fio.addFzItem = function(dndSection, name, type, fileNum) {
 //need to make sure freezer loaded first so not currently in use. Delete later if not used tiba
 av.fio.loadDefaultConfig = function() {
   'use strict';
-  console.log('');
+  console.log('beginning of av.fio.loadDefaultConfig');
   av.fzr.actConfig.name = av.fzr.file['c0/entryname.txt'];
   av.fzr.actConfig.type = 'c';
+  console.log('av.fzr.actConfig.name=', av.fzr.actConfig.name);
   av.dnd.activeConfig.selectAll().deleteSelectedNodes();
   av.dnd.activeConfig.insertNodes(false, [{data: av.fzr.actConfig.name, type: [av.fzr.actConfig.type]}]);
   av.dnd.activeConfig.sync();
@@ -35,6 +36,8 @@ av.fio.loadDefaultConfig = function() {
 };
 
 av.fio.setActiveConfig = function(dndSection, name, type){
+  'use strict';
+  console.log('name=', name);
   av.dnd.activeConfig.selectAll().deleteSelectedNodes();
   av.dnd.activeConfig.insertNodes(false, [{data: name, type: [type]}]);
   av.dnd.activeConfig.sync();
@@ -55,17 +58,17 @@ av.frd.add2freezerFromFile = function (loadConfigFlag) {
   var num = dir.substr(1, dir.length-1);
   var name, domid;
   //console.log('av.fio.thisfile.asText()', av.fio.thisfile.asText());
-  //console.log('av.fio.thisfile', av.fio.thisfile);
+  //console.log('av.fio.thisfile=', av.fio.thisfile);
   if (null === av.fio.thisfile.asText()) { name = av.fio.anID; }
   else { name = wsb('\n', av.fio.thisfile.asText()); }
 
-  //if (av.debug.fio) console.log('type ', type, '; dir', dir, '; num', num);
+  if (av.debug.fio) console.log('type ', type, '; dir', dir, '; num', num);
   switch (type) {
     case 'c':
       domid = av.fio.addFzItem(av.dnd.fzConfig, name, type, num);
       if (av.fzr.cNum < Number(num)) {av.fzr.cNum = Number(num); }
-      //console.log('c: num', num, '; name', name, 'flag', loadConfigFlag);
-      if (0 === num && loadConfigFlag) {var ConfigActiveDomID = av.fio.setActiveConfig(av.dnd.activeConfig, name, 'b');}
+      console.log('c: num', num, '; name', name, 'flag', loadConfigFlag);
+      if (0 == Number(num) && loadConfigFlag) {var ConfigActiveDomID = av.fio.setActiveConfig(av.dnd.activeConfig, name, 'b');}
       break;
     case 'g':
       domid = av.fio.addFzItem(av.dnd.fzOrgan, name, type, num);

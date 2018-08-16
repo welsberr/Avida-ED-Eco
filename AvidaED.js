@@ -309,7 +309,7 @@ require([
     av.dom.newDiscard = document.getElementById('newDiscard');
     av.dom.newSaveConfig = document.getElementById('newSaveConfig');
     av.dom.newSaveWorld = document.getElementById('newSaveWorld');
-    av.dom.NeedAncestorModalID = document.getElementById('NeedAncestorModalID');
+    av.dom.needAncestorModalID = document.getElementById('needAncestorModalID');
     av.dom.needAncestorCancel = document.getElementById('needAncestorCancel');
     
     //av.dom. = document.getElementById('');
@@ -1194,57 +1194,49 @@ require([
   //------------------------------------------------------------------------------------- modal dialog cancle buttons --
 
   av.dom.needAncestorCancel.onclick = function () {
-    av.dom.NeedAncestorModalID.style.display = 'none';
+    av.dom.needAncestorModalID.style.display = 'none';
   };
 
-  av.dom.needAncestorCancel.onclick = function () {
-    av.dom.NeedAncestorModalID.style.display = 'none';
+  av.dom.newCancel.onclick = function () {
+    av.dom.newModalID.style.display = 'none';
   };
 
   /******************************************* New Button and new Dialog **********************************************/
 
-  dijit.byId('newDiscard').on('Click', function () {
+  av.dom.newDiscard.onclick = function () {
     av.post.addUser('Button: newDiscard');
-    newDialog.hide();
-    dijit.byId('newDialog').set('style', 'display: none;');
+    av.dom.newModalID.style.display = 'none';
     av.msg.reset();
-    //av.ptd.resetDishFn(true); //Only do when get reset back from avida after sending reset
     //console.log('newDiscard click');
-  });
-
-  dijit.byId('newSaveWorld').on('Click', function () {
+  };
+  
+  av.dom.newSaveWorld.onclick = function () {
     av.post.addUser('Button: newSaveWorld');
     av.ptd.FrPopulationFn();
-    newDialog.hide();
-    dijit.byId('newDialog').set('style', 'display: none;');
+    av.dom.newModalID.style.display = 'none';
     av.msg.reset();
-    //av.ptd.resetDishFn(true); //Only do when get reset back from avida after sending reset
-    //console.log('newSave click');
-  });
+    //console.log('newSaveWorld click');
+  };
 
-  dijit.byId('newSaveConfig').on('Click', function () {
+  av.dom.newSaveConfig.onclick = function () {
     av.post.addUser('Button: newSaveConfig');
     av.ptd.FrConfigFn();
-    newDialog.hide();
-    dijit.byId('newDialog').set('style', 'display: none;');
+    av.dom.newModalID.style.display = 'none';
     av.msg.reset();
-    //av.ptd.resetDishFn(true); //Only do when get reset back from avida after sending reset
-    //console.log('newSave click');
-  });
+    //console.log('newSaveConfig click');
+  };
 
   function newButtonBoth() {
     'use strict';
     if ('prepping' == av.grd.runState) {// reset petri dish
       av.msg.reset();
       console.log('in prepping');
-      //av.ptd.resetDishFn(true); //Only do when get reset back from avida after sending reset
+      //av.ptd.resetDishFn(true); //Only do when get reset back from avida after sending reset, commented out in v3.0
     }
     else {// check to see about saving current population
       av.msg.pause('now');
       av.ptd.makePauseState();
-      console.log('before newDialog.show', dijit.byId('newDialog'));
       av.dom.newModalID.style.display = "block";
-      //newDialog.show();
     }
   }
 
@@ -3103,3 +3095,28 @@ To make a gif using screen capture
   // looks like tool-tip
   // https://www.w3schools.com/howto/howto_js_popup.asp
   // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup
+  
+  
+// Understanding offsetWidth, clientWidth, scrollWidth and -Height, respectively
+// https://stackoverflow.com/questions/21064101/understanding-offsetwidth-clientwidth-scrollwidth-and-height-respectively
+// has a nice diagram
+//
+// jQurey resize() Method
+// https://www.w3schools.com/jquery/event_resize.asp
+//
+// html reize element: 
+// https://codepen.io/sol0mka/pen/FnizC
+// 
+// Position relative to ancestor:
+// https://www.w3schools.com/cssref/pr_pos_right.asp
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Modal Dialog Popup
+// 
+// https://www.webdesignerdepot.com/2012/10/creating-a-modal-window-with-html5-and-css3/
+// http://webreference.com/js/column90/2.html
+// https://jqueryhouse.com/30-best-jquery-modal-dialog-boxes/
+// https://www.sitepoint.com/14-jquery-modal-dialog-boxes/
+// https://www.sitepoint.com/14-jquery-modal-dialog-boxes/
+// 
+//
