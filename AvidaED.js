@@ -1129,26 +1129,26 @@ require([
   };
 
   // hides and shows the population and selected organsim data on right of population page with 'Stats/mpa' button
-  av.ptd.infoShowHideButton = function () {
+  av.ptd.rtPnlButtonImg = function () {
     if (av.ptd.popStatFlag) {
-      av.post.addUser('Button: infoShowHideButton: start hidding stats');
+      av.post.addUser('Button: rtPnlButtonImg: start hidding stats');
       av.ptd.popStatFlag = false;
       av.ptd.popInfoHolderWd = av.dom.popInfoHolder.offsetWidth;
       av.dom.popInfoHolder.style.display = 'none';
     }
     else {
-      av.post.addUser('Button: infoShowHideButton: start showing stats');
+      av.post.addUser('Button: rtPnlButtonImg: start showing stats');
       av.ptd.popStatFlag = true;
       av.dom.popInfoHolder.style.display = 'flex';
       //reset info pane dimensions. Try popInfoHolderWd = 395px; selOrgTypeWd = 150px
       av.dom.popInfoHolder.style.width = av.ptd.popInfoHolderWd + 'px';
-      av.ui.adjustpopInfoSize('av.ptd.infoShowHideButton');
+      av.ui.adjustpopInfoSize('av.ptd.rtPnlButtonImg');
     }
   };
 
-  document.getElementById('infoShowHideButton').onclick = function () {
-    ///av.post.addUser('Button: infoShowHideButton');   //done in popStatView
-    av.ptd.infoShowHideButton();
+  document.getElementById('rtPnlButtonImg').onclick = function () {
+    ///av.post.addUser('Button: rtPnlButtonImg');   //done in popStatView
+    av.ptd.rtPnlButtonImg();
   };
   
   //--------------------------------------------------------------------------------------------------------------------

@@ -36,11 +36,11 @@
 	<link href='images/favicon.ico' rel='icon' type='image/x-icon' />
 	<link rel='stylesheet' href='lib/jquery-ui/themes/smoothness/jquery-ui.css'>
 	<style>
-		@import 'themes/claro/document.css';
-		@import 'themes/claro/claro.css';
 		@import 'AvidaED.css';
 		@import 'avidaEdEco.css';
 		@import 'visible.css';
+		@import 'themes/claro/document.css';
+		@import 'themes/claro/claro.css';
 	</style>
     <script>
     function avResize() {
@@ -69,7 +69,9 @@
 
   <div id='allAvida'>
 	<div class="headerRow">
-		<div id="lftPbuttonDiv">&nbsp;&nbsp;lft panel button</div>
+    <div id="lftPbuttonDiv" class="sidePnlBtnDiv">
+        <img id='lftPnlButtonImg' src='images/lftPnlBtn2.png'/>
+    </div>
 		<div id="mainMenu">
 
       <input id='putWS' type='file' style = 'display:none;' onchange='av.fio.userPickZipRead()' />
@@ -168,7 +170,9 @@
         <label id='wsSavedMsg' style='color: blue'>Workspace: default</label> | &nbsp;&nbsp;&nbsp;
         <span style='text-align: right'><label id='userMsgLabel' style='color: red; text-align: right'> </label></span>
 		</div>
-    <div id="rtPbuttonDiv"><button id='infoShowHideButton'>Info</button></div>
+    <div id="rtPbuttonDiv" class="sidePnlBtnDiv">
+      <img id='rtPnlButtonImg' src='images/rtPnlBtn2.png'/>
+    </div>
 	</div>
 
 	<div class="mainRow">

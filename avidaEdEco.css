@@ -17,21 +17,37 @@
     align-items: stretch;      
   }
   .headerRow, .footerRow {
-    flex: 0 1 20px;   /*sized to content */
-    background: yellowgreen;
+    flex: 0 1 25px;   /*sized to content   was 20*/
+    background: #ddd;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 1;
     border: 1px solid black;
   }
+  .sidePnlBtnDiv{
+    background-color: #eee;
+    padding: 2px 4px 2px 4px;    /* top right bottom left */   
+  }
   #lftPbuttonDiv{
-    flex: 0 1 100px;
+    flex: 0 1 50px;
   }
   #rtPbuttonDiv{
-    flex: 0 1 100px;
+    flex: 0 1 50px;
   }
-
+  #lftPnlButtonImg{
+    height: 20px;
+    border: 2px solid black;  
+    alt: 'button to open/close left panal'; 
+    float: left;
+  }
+  #rtPnlButtonImg{
+    height: 20px;
+    border: 2px solid black;  
+    alt: 'button to open/close right panal'; 
+    float: right;
+  }
+  
   #mainMenu{
     flex: 0 1 500px;
   }
