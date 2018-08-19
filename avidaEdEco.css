@@ -22,7 +22,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    border: 1px solid black;
+    border: 1px solid #AAA;
   }
   .sidePnlBtnDiv{
     /*background-color: #eee;      #eee; better color */
@@ -75,12 +75,12 @@
     display: flex;
     flex-direction: column;
     background-color: #F5F5F5; /* lavender; */
-    border: 1px solid black;
+    border: 1px solid #AAA;
   }
   .mainBlockHolder{
     background-color: #F5F5F5; /* lightskyblue; */
     flex: 1;
-    border: 1px solid black;
+    border: 1px solid #AAA;
   }
   .mainBlockClassRow {
     display: flex;
@@ -92,34 +92,34 @@
   .popBenchCol{
     background-color: #F5F5F5; /* lightgoldenrodyellow; */
     flex: 1;
-    border: 1px solid black;
+    border: 1px solid #AAA;
     display: flex;
     flex-direction: column;
     width: 100%;
   }
   .benchPopTopRow {
-    border: 1px solid black;
     flex:0 1 30px;
     resize: vertical;     /* broken: resize is not working here */
     overflow: auto;
     display: flex;
     flex-direction: row;
     background-color: #F5F5F5; /* lightblue;  */
+    border: 1px solid #AAA;
   }
   .benchPopMid {
-    border: 1px solid black;
+    border: 1px solid #AAA;
     flex: 1;
     background-color: #F5F5F5; /* blue; */
   }
   .benchPopBot{
     flex: 0 1 40px;
-    border: 1px solid black;
+    border: 1px solid #AAA;
     background-color: #F5F5F5; /* peachpuff;*/
   }
 
   #popInfoHolder {
     flex: 0 1 349px;          /* flex: 0 1 344px; is fixed in that dimension */
-    border: 1px solid black;
+    border: 1px solid #AAA;
     background: beige;
   }
 
@@ -139,7 +139,7 @@
   #popStatistics{
     display: flex;
     flex-direction: row;
-    border: 1px solid purple;
+    border: 1px solid #AAA;
     background-color: #F5F5F5;
     height: 280px;
     resize: vertical;
@@ -147,24 +147,24 @@
   }
   #selOrgType{
     flex: 0 1 164;        /*was 170 */
-    border: 1px solid black;
+    border: 1px solid #AAA;
     resize: horizontal;
     overflow: auto;
   }
   #popStats4grid{
     flex: 1;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
-    border: 1px solid green;
+    border: 1px solid #AAA;
   }
   #popChrtHolder{
     flex: 1;
-    border: 1px solid black;
+    border: 1px solid #AAA;
   }
   #miniChartYaxis{
     flex: 0 1 30px;
-    border: 1px solid black;
+    border: 1px solid #AAA;
   }
 .mainPageButtons{
-  border: 1px solid black;
+    border: 1px solid #AAA;
   flex:0 1 120px;
   resize: vertical;     /* broken: resize is not working here */
   overflow: auto;
@@ -197,7 +197,7 @@
 
 
 .freezerClass{
-  border: 1px solid black;
+  border: 1px solid #BABABA;
   flex:1;
 }
 .freezerSection{
@@ -206,19 +206,19 @@
 }
 #trashDiv{
   flex: 0 1 40px;
-  border: 1px solid black;
+    border: 1px solid #AAA;
 }
 
   .orgBenchCol{
     background-color: #F5F5F5 /* lightgoldenrodyellow;*/
     flex: 1;
-    border: 1px solid black;
+    border: 1px solid #AAA;
     display: flex;
     flex-direction: column;
     width: 100%;
   }
   .orgBenchTopRow{
-    border: 1px solid black;
+    border: 1px solid #AAA;
     flex:0 1 30px;
     resize: vertical;     /* broken: resize is not working here */
     overflow: auto;
@@ -233,7 +233,7 @@
   }
   #activeOrgan{
     background-color: #F5F5F5; /* lawngreen; */
-    border: 1px solid black;
+    border: 1px solid #AAA;
     width: 90%;
   }
   .orgTopRt{
@@ -241,34 +241,34 @@
     background-color: #F5F5F5; /* paleturquoise; */
   }
   .orgMid {
-    border: 1px solid black;
+    border: 1px solid #AAA;
     flex:1;
   }
   .orgBot {
     flex: 0 1 40px;
-    border: 1px solid black;
+    border: 1px solid #AAA;
   }
   #cycleSlider{
     background-color: #F5F5F5; /* mediumpurple; */
   }
   .orgInfo {
     flex: 0 1 244px;          /* flex: 0 1 344px; is fixed in that dimension */
-    border: 1px solid black;
+    border: 1px solid #AAA;
     background: beige;
   }
   #resourceTable{
-   border: 1px solid grey;
+    border: 1px solid #CCC;
    table-layout: auto; 
    width: 100%; 
    height: auto; 
    text-align:center;
   }
   .TabLftBorder{
-    border-left: 1px solid black;
+    border-left: 1px solid #AAA;
   }
   .TabSideBorder{
-    border-left: 1px solid black;
-    border-right: 1px solid grey;
+    border-left: 1px solid #AAA;
+    border-right: 1px solid #CCC;
   }
   .analysisArea{
     display: flex;
@@ -279,19 +279,19 @@
   }
   .anaTop{
     flex: 1;
-    border: 1px solid black;
+    border: 1px solid #AAA;
   }
   .anaBot {
     flex: 0 1 75px;
     display: flex;
     flex-direction: row;
     height: 100%;
-    border: 1px solid black;
+    border: 1px solid #AAA;
     background-color: #F5F5F5; /* peachpuff; */
   }
   .analegend{
     flex: 1;
-    border: 1px solid black;
+    border: 1px solid #AAA;
     background-color: #F5F5F5; /* seashell;  */
   }
   .anaYaxis{
