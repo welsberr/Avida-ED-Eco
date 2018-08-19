@@ -38,13 +38,13 @@
   #lftPnlButtonImg{
     height: 20px;
     border: 2px solid black;  
-    alt: 'button to open/close left panal'; 
+    alt: 'button to open/close left panel'; 
     float: left;
   }
   #rtPnlButtonImg{
     height: 20px;
     border: 2px solid black;  
-    alt: 'button to open/close right panal'; 
+    alt: 'button to open/close right panel'; 
     float: right;
   }
   

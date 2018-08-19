@@ -2203,7 +2203,7 @@ require([
   /* *************************************************************** */
   /* **** Organism Setup Dialog */
 
-  //process button to hide or show Organism detail panal.
+  //process button to hide or show Organism detail panel.
   var DetailsFlag = true;
   document.getElementById('OrgDetailsButton').onclick = function () {
     av.post.addUser('Button: OrgDetailsButton');

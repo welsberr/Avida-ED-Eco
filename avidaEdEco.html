@@ -40,8 +40,7 @@
 		@import 'avidaEdEco.css';
 		@import 'visible.css';
 		@import 'themes/claro/document.css';
-		@import 'themes/claro/claro.css';
-	</style>
+		@import 'themes/claro/claro.css';	</style>
     <script>
     function avResize() {
       //console.log('initial handler in html only');
@@ -73,11 +72,14 @@
         <img id='lftPnlButtonImg' src='images/lftPnlBtn2.png'/>
     </div>
 		<div id="mainMenu">
+      <!-- contentPane for top that contains main menu -->
+      <div data-dojo-type='dijit/layout/ContentPane' extractContent='false' preventCache='false' preload='false' id='dojoMenu'
+       refreshOnShow='false' region='top' splitter='false' maxSize='Infinity' doLayout='false' style='height:26px;'>
 
       <input id='putWS' type='file' style = 'display:none;' onchange='av.fio.userPickZipRead()' />
       <input id='importFzrItem' type='file' style = 'display:none' onchange='av.fio.importZipRead()' />
 
-      <input type='hidden' value='mymail@gmail.com' id='mailto' />
+      <input type='hidden' value='mymail@gmail.com' id='mailto' style='display:none'/>
         <span data-dojo-type='dijit/MenuBar' tabIndex='0'>
           <span data-dojo-type='dijit/PopupMenuBarItem' label='Avida-ED' iconClass='dijitNoIcon' id='mnAvidaEd'>
             <span data-dojo-type='dijit/Menu'>
@@ -164,7 +166,8 @@
             </span>
           </span>
         </span>
-    </div><span comment="end of mainMenu"></span>
+      </div>  <span title='end of dojoMenu'></span>
+    </div>  <span comment="end of mainMenu"></span>
     
 		<div id="headerMsg">
         <label id='wsSavedMsg' style='color: blue'>Workspace: default</label> | &nbsp;&nbsp;&nbsp;
