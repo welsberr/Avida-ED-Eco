@@ -36,12 +36,13 @@
 	<link href='images/favicon.ico' rel='icon' type='image/x-icon' />
 	<link rel='stylesheet' href='lib/jquery-ui/themes/smoothness/jquery-ui.css'>
 	<style>
+		@import 'themes/claro/document.css';
+		@import 'themes/claro/claro.css';	
 		@import 'AvidaED.css';
 		@import 'avidaEdEco.css';
 		@import 'visible.css';
-		@import 'themes/claro/document.css';
-		@import 'themes/claro/claro.css';	</style>
-    <script>
+  </style>
+  <script>
     function avResize() {
       //console.log('initial handler in html only');
       // av.ui.browserResizeEventHandler()  //gets an error on a fresh load
@@ -56,7 +57,9 @@
   </script>
 </head>
 
-<body onresize='avResize()'>
+<body data-maq-flow-layout='true' data-maq-comptype='desktop' class='claro' data-maq-ws='collapse'
+      data-maq-appstates='{}' id='myapp'
+      onresize='avResize()'>
   <span title="http://stackoverflow.com/questions/20828799/creating-a-splash-page-in-html5"></span>
   <div id='splash'>
     <div align='center'>
@@ -72,106 +75,103 @@
         <img id='lftPnlButtonImg' src='images/lftPnlBtn2.png'/>
     </div>
 		<div id="mainMenu">
-      <!-- contentPane for top that contains main menu -->
-      <div data-dojo-type='dijit/layout/ContentPane' extractContent='false' preventCache='false' preload='false' id='dojoMenu'
-       refreshOnShow='false' region='top' splitter='false' maxSize='Infinity' doLayout='false' style='height:26px;'>
-
       <input id='putWS' type='file' style = 'display:none;' onchange='av.fio.userPickZipRead()' />
       <input id='importFzrItem' type='file' style = 'display:none' onchange='av.fio.importZipRead()' />
 
-      <input type='hidden' value='mymail@gmail.com' id='mailto' style='display:none'/>
-        <span data-dojo-type='dijit/MenuBar' tabIndex='0'>
-          <span data-dojo-type='dijit/PopupMenuBarItem' label='Avida-ED' iconClass='dijitNoIcon' id='mnAvidaEd'>
-            <span data-dojo-type='dijit/Menu'>
-              <span data-dojo-type='dijit/MenuItem' id='mnAeAbout' label='About'></span>
-            </span>
-          </span>
-          <span data-dojo-type='dijit/PopupMenuBarItem' label='File' iconClass='dijitNoIcon' id='mnFile'>
-            <span data-dojo-type='dijit/Menu'>
-              <span data-dojo-type='dijit/MenuItem' id='mnFlSaveWorkspace' label='Save Current Workspace'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnFlSaveAs' label='Save Workspace As'></span>
-              <div data-dojo-type='dijit/MenuSeparator'></div>
-              <span data-dojo-type='dijit/MenuItem' id='mnFlOpenDefaultWS' label='Open Default Workspace'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnFlOpenWS' label='Open Workspace'></span>
-              <div data-dojo-type='dijit/MenuSeparator'></div>
-              <span data-dojo-type='dijit/MenuItem' id='mnFlFzItem' label='Import Freezer Item'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnFlExportData' label='Export Data'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnFlExportGraph' label='Export Graphics'></span>
-              <div data-dojo-type='dijit/MenuSeparator'></div>
-              <span data-dojo-type='dijit/MenuItem' id='mnFlStandAloneApp' label='Stand Alone Application'></span>
-            </span>
-          </span>
-          <span data-dojo-type='dijit/PopupMenuBarItem' label='Freezer' iconClass='dijitNoIcon' id='mnFreezer'>
-            <span data-dojo-type='dijit/Menu'>
-              <span data-dojo-type='dijit/MenuItem' id='mnFzConfig' label='Save Experiment Configuration to Freezer'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnFzPopulation' label='Save Current Population to Freezer'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnFzOrganism' label='Save Selected Organism to Freezer'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnFzOffspring' label='Save Offspring Organism to Freezer'></span>
-              <div data-dojo-type='dijit/MenuSeparator'></div>
-              <div data-dojo-type='dijit/MenuSeparator'></div>
-              <span data-dojo-type='dijit/MenuItem' id='mnFzAddConfigEx' label='Add Highlighted in Freezer to Configured Dish to Experiment'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnFzAddGenomeEx' label='Add Highlighted Organism in Freezer to Experiment'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnFzAddPopEx' label='Add Highlighted Populated Dish in Freezer to Experiment'></span>
-              <div data-dojo-type='dijit/MenuSeparator'></div>
-              <span data-dojo-type='dijit/MenuItem' id='mnFzAddGenomeView' label='Put Highlighted Organism from Freezer in Organism View'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnFzAddPopAnalysis' label='Put Highlighted Populated Dish from Freezer in Analysis'></span>
-            </span>
-          </span>
-          <span data-dojo-type='dijit/PopupMenuBarItem' label='Control' id='mnControl'>
-            <span data-dojo-type='dijit/Menu'>
-              <!--<span data-dojo-type='dijit/MenuItem' id='mnCnPopRun' label='Population: Run'></span>-->
-              <span data-dojo-type='dijit/MenuItem' id='mnCnRun' label='Run'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnCnPause' label='Pause'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnCnOne' label='Forward (Do one update)'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnCnNewpop' label='Start New Experiment'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnCnOrganismTrace' label='Put Selected Organism in Organism View'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnCnOffspringTrace' label='Put Offspring in Organism View'></span>
-            </span>
-          </span>
-          <span data-dojo-type='dijit/PopupMenuBarItem' label='Help' id='mnHelp'>
-            <span data-dojo-type='dijit/Menu'>
-              <span data-dojo-type='dijit/MenuItem' id='mnHpAbout' label='About'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnHpManual'>
-                <a href='images/Avida-ED_UserManualv3.0.pdf' target='_blank'>Quick Start Manual</a></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnHpHardware'>
-                <a href='cpu_tour.html' target='_blank'>Ancestor and Hardware</a></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnHpInfo'><a href='http://Avida-ED.msu.edu/' target='_blank'>more info about Avida-ED</a></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnHpProblem' label='Report Problem(s)'></span>
-              <div style='display: none'>
-              <span data-dojo-type='dijit/MenuItem' id='mnHpDebug' label='Toggle Debug Menu'></span>
-                <div data-dojo-type='dijit/MenuSeparator'></div>
-                <div data-dojo-type='dijit/PopupMenuItem'>
-                  <span>Color Gradient</span>
-                  <span data-dojo-type='dijit/Menu' id='mnHpColorGradient' label='Color'>
-                    <span data-dojo-type='dijit/MenuItem' id='mnViridis' label='Viridis'></span>
-                    <span data-dojo-type='dijit/MenuItem' id='mnCubehelix' label='Cubehelix'></span>
-                    <span data-dojo-type='dijit/MenuItem' id='mnGnuplot2' label='Gnuplot2'></span>
-                    <div data-dojo-type='dijit/MenuSeparator'></div>
-                  </span>
-                </div>
-              </div>
-            </span>
-          </span>
-          <span title="visibility: hidden/visible; display=block/flex/none"></span>
-          <span data-dojo-type='dijit/PopupMenuBarItem' label='Debug' id='mnDebug' style = 'visibility: hidden'> 
-            <span data-dojo-type='dijit/Menu'>
-              <span data-dojo-type='dijit/MenuItem' id='mnDbThrowError' label='Throw Error'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnDbThrowData' label='Send Data to console'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnDbLineLog' label='Add Line to Session Log'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnDbDiagnostic' label='Open Diagnostic Console'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnDbRestartAvida' label='Restart Avida WebWorker'></span>
-              <span data-dojo-type='dijit/MenuItem' id='fileDownloadButton' label='test fileDownload'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnDbSaveTxt' label='save Txt'></span>
-              <span data-dojo-type='dijit/MenuItem' id='mnFlOpenB64' label='Open a b64 Workspace'></span>
-            </span>
+      <input type='hidden' value='mymail@gmail.com' id='mailto' />
+    
+      <span data-dojo-type='dijit/MenuBar' tabIndex='0'>
+        <span data-dojo-type='dijit/PopupMenuBarItem' label='Avida-ED' iconClass='dijitNoIcon' id='mnAvidaEd'>
+          <span data-dojo-type='dijit/Menu'>
+            <span data-dojo-type='dijit/MenuItem' id='mnAeAbout' label='About'></span>
           </span>
         </span>
-      </div>  <span title='end of dojoMenu'></span>
+        <span data-dojo-type='dijit/PopupMenuBarItem' label='File' iconClass='dijitNoIcon' id='mnFile'>
+          <span data-dojo-type='dijit/Menu'>
+            <span data-dojo-type='dijit/MenuItem' id='mnFlSaveWorkspace' label='Save Current Workspace'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFlSaveAs' label='Save Workspace As'></span>
+            <div data-dojo-type='dijit/MenuSeparator'></div>
+            <span data-dojo-type='dijit/MenuItem' id='mnFlOpenDefaultWS' label='Open Default Workspace'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFlOpenWS' label='Open Workspace'></span>
+            <div data-dojo-type='dijit/MenuSeparator'></div>
+            <span data-dojo-type='dijit/MenuItem' id='mnFlFzItem' label='Import Freezer Item'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFlExportData' label='Export Data'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFlExportGraph' label='Export Graphics'></span>
+            <div data-dojo-type='dijit/MenuSeparator'></div>
+            <span data-dojo-type='dijit/MenuItem' id='mnFlStandAloneApp' label='Stand Alone Application'></span>
+          </span>
+        </span>
+        <span data-dojo-type='dijit/PopupMenuBarItem' label='Freezer' iconClass='dijitNoIcon' id='mnFreezer'>
+          <span data-dojo-type='dijit/Menu'>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzConfig' label='Save Experiment Configuration to Freezer'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzPopulation' label='Save Current Population to Freezer'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzOrganism' label='Save Selected Organism to Freezer'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzOffspring' label='Save Offspring Organism to Freezer'></span>
+            <div data-dojo-type='dijit/MenuSeparator'></div>
+            <div data-dojo-type='dijit/MenuSeparator'></div>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzAddConfigEx' label='Add Highlighted in Freezer to Configured Dish to Experiment'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzAddGenomeEx' label='Add Highlighted Organism in Freezer to Experiment'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzAddPopEx' label='Add Highlighted Populated Dish in Freezer to Experiment'></span>
+            <div data-dojo-type='dijit/MenuSeparator'></div>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzAddGenomeView' label='Put Highlighted Organism from Freezer in Organism View'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzAddPopAnalysis' label='Put Highlighted Populated Dish from Freezer in Analysis'></span>
+          </span>
+        </span>
+        <span data-dojo-type='dijit/PopupMenuBarItem' label='Control' id='mnControl'>
+          <span data-dojo-type='dijit/Menu'>
+            <!--<span data-dojo-type='dijit/MenuItem' id='mnCnPopRun' label='Population: Run'></span>-->
+            <span data-dojo-type='dijit/MenuItem' id='mnCnRun' label='Run'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnCnPause' label='Pause'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnCnOne' label='Forward (Do one update)'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnCnNewpop' label='Start New Experiment'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnCnOrganismTrace' label='Put Selected Organism in Organism View'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnCnOffspringTrace' label='Put Offspring in Organism View'></span>
+          </span>
+        </span>
+        <span data-dojo-type='dijit/PopupMenuBarItem' label='Help' id='mnHelp'>
+          <span data-dojo-type='dijit/Menu'>
+            <span data-dojo-type='dijit/MenuItem' id='mnHpAbout' label='About'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnHpManual'>
+              <a href='images/Avida-ED_UserManualv3.0.pdf' target='_blank'>Quick Start Manual</a></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnHpHardware'>
+              <a href='cpu_tour.html' target='_blank'>Ancestor and Hardware</a></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnHpInfo'><a href='http://Avida-ED.msu.edu/' target='_blank'>more info about Avida-ED</a></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnHpProblem' label='Report Problem(s)'></span>
+            <div style='display: none'>
+            <span data-dojo-type='dijit/MenuItem' id='mnHpDebug' label='Toggle Debug Menu'></span>
+              <div data-dojo-type='dijit/MenuSeparator'></div>
+              <div data-dojo-type='dijit/PopupMenuItem'>
+                <span>Color Gradient</span>
+                <span data-dojo-type='dijit/Menu' id='mnHpColorGradient' label='Color'>
+                  <span data-dojo-type='dijit/MenuItem' id='mnViridis' label='Viridis'></span>
+                  <span data-dojo-type='dijit/MenuItem' id='mnCubehelix' label='Cubehelix'></span>
+                  <span data-dojo-type='dijit/MenuItem' id='mnGnuplot2' label='Gnuplot2'></span>
+                  <div data-dojo-type='dijit/MenuSeparator'></div>
+                </span>
+              </div>
+            </div>
+          </span>
+        </span>
+        <span data-dojo-type='dijit/PopupMenuBarItem' label='Debug' id='mnDebug' style = 'visibility: hidden'> <!--visible/hidden-->
+          <span data-dojo-type='dijit/Menu'>
+            <span data-dojo-type='dijit/MenuItem' id='mnDbThrowError' label='Throw Error'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnDbThrowData' label='Send Data to console'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnDbLineLog' label='Add Line to Session Log'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnDbDiagnostic' label='Open Diagnostic Console'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnDbRestartAvida' label='Restart Avida WebWorker'></span>
+            <span data-dojo-type='dijit/MenuItem' id='fileDownloadButton' label='test fileDownload'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnDbSaveTxt' label='save Txt'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFlOpenB64' label='Open a b64 Workspace'></span>
+          </span>
+        </span>
+      </span>     
     </div>  <span comment="end of mainMenu"></span>
     
 		<div id="headerMsg">
-        <label id='wsSavedMsg' style='color: blue'>Workspace: default</label> | &nbsp;&nbsp;&nbsp;
+      <div id='msgHolder'>
+        <label id='wsSavedMsg'>Workspace: default</label> | &nbsp;&nbsp;&nbsp;
         <span style='text-align: right'><label id='userMsgLabel' style='color: red; text-align: right'> </label></span>
+      </div>
 		</div>
     <div id="rtPbuttonDiv" class="sidePnlBtnDiv">
       <img id='rtPnlButtonImg' src='images/rtPnlBtn2.png'/>
@@ -736,7 +736,7 @@
               <button id='OrgDetailsButton'>Details</button>
             </div>
           </div>
-          <div class="orgMid" id='organismCanvasHolder' data-dojo-type='dijit/layout/ContentPane'>
+          <div class="orgMid" id='organismCanvasHolder'>
             <canvas data-dojo-type='dojo.dnd.Target' id='organCanvas' width='100' height='100'
                     style='border:1px solid #000000;'></canvas>
           </div>

@@ -17,16 +17,15 @@
     align-items: stretch;      
   }
   .headerRow, .footerRow {
-    flex: 0 1 25px;   /*sized to content   was 20*/
-    background: #ddd;
+    flex: 0 1 30px;   /*sized to content   was 25  */
+    /* background: #ddd; */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 1;
     border: 1px solid black;
   }
   .sidePnlBtnDiv{
-    background-color: #eee;
+    /*background-color: #eee;      #eee; better color */
     padding: 2px 4px 2px 4px;    /* top right bottom left */   
   }
   #lftPbuttonDiv{
@@ -47,11 +46,20 @@
     alt: 'button to open/close right panel'; 
     float: right;
   }
-  
   #mainMenu{
-    flex: 0 1 500px;
+    flex: 0 1 300px;
   }
-
+  #headerMsg{
+    flex: 1 1 auto;                  /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
+  }
+  #msgHolder {
+    padding: 4px 4px 4px 8px;    /* top right bottom left */   
+    height: 100%;
+  }
+  #wsSavedMsg{
+    color: blue;
+  }
+  /*contains navigation column and pages (population, Organsims, Analysis) */
   .mainRow { 
     flex: 1 1 auto;                  /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
     display: flex;

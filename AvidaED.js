@@ -201,6 +201,9 @@ require([
     av.dom.populationBlock = document.getElementById('populationBlock');
     av.dom.organismBlock = document.getElementById('organismBlock');
     av.dom.analysisBlock = document.getElementById('analysisBlock');
+    
+    av.dom.lftPnlButtonImg = document.getElementById('lftPnlButtonImg');
+    av.dom.rtPnlButtonImg = document.getElementById('rtPnlButtonImg');
 
       //Population Page
     av.dom.popInfoHolder = document.getElementById('popInfoHolder');
@@ -265,6 +268,7 @@ require([
 
     //Organism Page
     av.dom.orgBotId = document.getElementById('orgBotId');
+    av.dom.organCanvas = document.getElementById("organCanvas");
 
 
     //Analysis Page  
@@ -1090,7 +1094,7 @@ require([
   av.dom.setupBlock.style.none;
 
   // Buttons that call MainBoxSwap
-  document.getElementById('populationButton').onclick = function () {
+  av.dom.populationButton.onclick = function () {
     av.post.addUser('Button: populationButton');
     if (av.debug.dnd || av.debug.mouse) console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
     av.ui.mainBoxSwap('populationBlock');
@@ -1117,6 +1121,27 @@ require([
     av.ui.mainBoxSwap('analysisBlock');
     console.log('after mainBoxSwap to analysisBlock');
     av.anl.AnaChartFn();
+  };
+
+//------------------------------------------------------------------------------------------show/hide left side panel --
+  av.ptd.lftPnlButtonImg = function () {
+    if (av.ui.lftSidePnlShowing) {
+      av.post.addUser('Button: lftPnlButtonImg: start hidding left side panel');
+      av.ui.lftSidePnlShowing = false;
+      av.ui.navColId = av.dom.navColId.offsetWidth;
+      av.dom.navColId.style.display = 'none';
+    }
+    else {
+      av.post.addUser('Button: lftPnlButtonImg: start showing left side panel');
+      av.ui.lftSidePnlShowing = true;
+      av.dom.navColId.style.display = 'flex';
+      av.dom.popInfoHolder.style.width = av.ui.navColId + 'px';
+    }
+  };
+
+  av.dom.lftPnlButtonImg.onclick = function () {
+    ///av.post.addUser('Button: lftPnlButtonImg');   //done in popStatView
+    av.ptd.lftPnlButtonImg();
   };
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -1146,7 +1171,7 @@ require([
     }
   };
 
-  document.getElementById('rtPnlButtonImg').onclick = function () {
+  av.dom.rtPnlButtonImg.onclick = function () {
     ///av.post.addUser('Button: rtPnlButtonImg');   //done in popStatView
     av.ptd.rtPnlButtonImg();
   };
@@ -2318,8 +2343,8 @@ require([
   av.gen = av.ind.clearGen(av.gen);
   //set canvas size; called from many places
   function organismCanvasHolderSize() {
-    av.ind.OrgCanvas.width = $('#organismCanvasHolder').innerWidth() - 6;
-    av.ind.OrgCanvas.height = $('#organismCanvasHolder').innerHeight() - 12;
+    av.dom.organCanvas.width = $('#organismCanvasHolder').innerWidth() - 6;
+    av.dom.organCanvas.height = $('#organismCanvasHolder').innerHeight() - 12;
   }
 
   av.ind.updateOrgTrace = function () {

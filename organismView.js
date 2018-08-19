@@ -43,8 +43,7 @@ av.ind.clearGen = function(gen) {
   av.ind.outputCvs = document.getElementById("output");
   av.ind.outputCtx = av.ind.outputCvs.getContext("2d");
   //av.ind.outputCtx.imageSmoothingEnabled= false;
-  av.ind.OrgCanvas = document.getElementById("organCanvas");
-  av.ind.ctx = av.ind.OrgCanvas.getContext("2d");
+  av.ind.ctx = av.dom.organCanvas.getContext("2d");
   av.ind.ctx.translate(0.5, 0.5);  //makes a crisper image  http://stackoverflow.com/questions/4261090/html5-canvas-and-anti-aliasing
   //av.ind.timeLineCanvas = document.getElementById("timeLine");
   //av.ind.tLctx = av.ind.timeLineCanvas.getContext("2d");
@@ -65,13 +64,13 @@ function DrawTimeline(obj, gen) {
   var dnTickSpaces = 24;
   var radius = 5;
 
-  lineY = av.ind.OrgCanvas.height - av.ind.TimeLineHeight / 2;
+  lineY = av.dom.organCanvas.height - av.ind.TimeLineHeight / 2;
   upTickY = lineY - tickLength;
   dnTickY = lineY + tickLength;
   upLabelY = lineY - upLabelYoffset;
   dnLabelY = lineY + dnLabelYoffset;
   startX = 26;                //The numbers are fudge factors to account for the end of the slider
-  endX = av.ind.OrgCanvas.width - 25;
+  endX = av.dom.organCanvas.width - 25;
   length = endX - startX;
   numCycles = obj.length - 1;
   //go through all numCycles comparing the current with the previous av.ind.cycle
@@ -344,14 +343,14 @@ av.ind.updateOrganTrace = function (obj, gen) {
   //Draw Timeline
   DrawTimeline(obj, gen);
   //Find radius and center of big circle for each genome
-  if (av.ind.OrgCanvas.height < .55 * (av.ind.OrgCanvas.width - av.ind.TimeLineHeight)) {
-    av.ind.bigR[av.ind.mom] = Math.round(0.43 * (av.ind.OrgCanvas.height - av.ind.TimeLineHeight))  //set size based on height
+  if (av.dom.organCanvas.height < .55 * (av.dom.organCanvas.width - av.ind.TimeLineHeight)) {
+    av.ind.bigR[av.ind.mom] = Math.round(0.43 * (av.dom.organCanvas.height - av.ind.TimeLineHeight))  //set size based on height
   }
   else {
-    av.ind.bigR[av.ind.mom] = Math.round(0.2 * av.ind.OrgCanvas.width) //set size based on width
+    av.ind.bigR[av.ind.mom] = Math.round(0.2 * av.dom.organCanvas.width) //set size based on width
   }
-  av.ind.cx[av.ind.mom] = av.ind.OrgCanvas.width / 2 - 1.2 * av.ind.bigR[av.ind.mom];        //center of 1st (parent) circle x
-  av.ind.cy[av.ind.mom] = 0.53 * (av.ind.OrgCanvas.height - av.ind.TimeLineHeight);  //center of 1st (parent) circle y
+  av.ind.cx[av.ind.mom] = av.dom.organCanvas.width / 2 - 1.2 * av.ind.bigR[av.ind.mom];        //center of 1st (parent) circle x
+  av.ind.cy[av.ind.mom] = 0.53 * (av.dom.organCanvas.height - av.ind.TimeLineHeight);  //center of 1st (parent) circle y
   // Draw parent (Mom) genome in a circle----------------------------------------
   av.ind.smallR = av.ind.bigR[av.ind.mom] * 2 * Math.PI / (2 * av.ind.size[av.ind.mom]); //radius of each small circle
   av.ind.tanR = av.ind.bigR[av.ind.mom] - av.ind.smallR;         //radius of circle tanget to inside of small circles
@@ -366,7 +365,7 @@ av.ind.updateOrganTrace = function (obj, gen) {
     av.ind.cy[av.ind.son] = av.ind.cy[av.ind.mom];
     av.ind.headR[av.ind.son] = av.ind.bigR[av.ind.son] - 2 * av.ind.smallR;      //radius of circle made by center of head positions.
     if (obj[av.ind.cycle].didDivide) {
-      av.ind.cx[av.ind.son] = av.ind.OrgCanvas.width / 2 + 1.2 * av.ind.bigR[av.ind.son];
+      av.ind.cx[av.ind.son] = av.dom.organCanvas.width / 2 + 1.2 * av.ind.bigR[av.ind.son];
       av.ind.rotate[av.ind.son] = 0;
       drawIcon(gen);
       //there is an offspring, so it can be saved in the freezer or fed back into Organism viewer

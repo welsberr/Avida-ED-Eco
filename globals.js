@@ -293,6 +293,7 @@ av.msg.uiReqestedReset = false;
 av.ui = {};  //user interface functions and variables
 av.ui.beginFlag = true;
 av.ui.oneUpdateFlag = false;
+av.ui.lftSidePnlShowing = true;
 av.ui.version = '2017_0323';
 av.debug.log = '';
 av.debug.log = '--hed: message and error log: version Beta Test ' + av.ui.version;
