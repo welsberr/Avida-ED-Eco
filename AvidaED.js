@@ -408,7 +408,8 @@ require([
   //process message from web worker
   if (av.debug.root) console.log('before fio.uiWorker on message');
   av.aww.uiWorker.onmessage = function (ee) {
-    av.msg.readMsg(ee)
+    //console.log('avida_ee', ee);
+    av.msg.readMsg(ee);
   };  // in file messaging.js
 
   if (av.debug.root) console.log('before dnd triggers');
@@ -1065,8 +1066,8 @@ require([
   }
   if (av.debug.uil) console.log('orgBot Ht', av.dom.orgBotId.scrollHeight, av.dom.orgBotId.clientHeight);
   if (av.dom.orgBotId.scrollHeight > av.dom.orgBotId.clientHeight) {
-    av.ui.num = av.dom.orgBotId.scrollHeight + 9;
-    av.dom.orgBotId.style.height = av.ui.num + 'px';
+    av.ui.orgBotIdNum = av.dom.orgBotId.scrollHeight + 9;
+    av.dom.orgBotId.style.height = av.ui.orgBotIdNum + 'px';
   }
 
   //The style display: 'none' cannnot be used in the html during the initial load as the dijits won't work right
@@ -1466,7 +1467,7 @@ require([
   });
 
   //av.mouse down on the grid
-  $(document.getElementById('gridCanvas')).on('mousedown', function (evt) {
+  $(av.dom.gridCanvas).on('mousedown', function (evt) {
     av.post.addUser('mousedown: gridCanvas('+evt.offsetX + ', ' + evt.offsetY + ')');
     av.mouse.downGridCanvasFn(evt);  });
 
@@ -1624,32 +1625,40 @@ require([
         av.dom.popBot.style.height = av.dom.popBot.scrollHeight + 'px';
         //dijit.byId('populationBlock').resize(); //not a dojo element
 
-        var gridHolderHt = av.dom.gridHolder.offsetHeight;
-        av.ui.num = Math.floor(gridHolderHt / 4);
+        console.log('4 Before: av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
 
-        if (av.debug.uil) console.log('av.dom.gridHolder.offsetWidth ht = ', av.dom.gridHolder.offsetWidth, av.dom.gridHolder.offsetHeight);
-        if (av.debug.uil) console.log('    av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+        console.log('  av.dom.gridHolder.scrollWidth ht = ', av.dom.gridHolder.scrollWidth, av.dom.gridHolder.scrollHeight);
+        console.log('  av.dom.gridHolder jQuery.outerWd ht = ', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight());
+        console.log('  av.dom.gridHolder.offsetWidth ht = ', av.dom.gridHolder.offsetWidth, av.dom.gridHolder.offsetHeight);
+        console.log('  av.dom.gridHolder jQuery.width ht = ', $("#gridHolder").width(), $("#gridHolder").height());
+        console.log('  av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+        console.log('  av.dom.gridHolder jQuery.innerWd ht = ', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight());
+        console.log('  av.dom.gridHolder jQuery.cssWd ht = ', $("#gridHolder").css('width'), $("#gridHolder").css('height'));
+        
         if (av.dom.gridHolder.style.height < av.dom.gridHolder.clientWidth){
-          av.grd.canvasSize = av.dom.gridHolder.clientHeight;
+          av.grd.canvasSize = $("#gridHolder").height();
         }
-        else {av.grd.canvasSize = av.dom.gridHolder.clientWidth;}
+        else {av.grd.canvasSize = $("#gridHolder").width();}
+        //av.dom.gridCanvas.width = $("#parent").width();
+        //av.dom.gridCanvas.height = $("#parent").height(); 
         av.dom.gridCanvas.width = av.grd.canvasSize;
         av.dom.gridCanvas.height = av.grd.canvasSize;
         av.grd.spaceX = av.grd.canvasSize;
         av.grd.spaceY = av.grd.canvasSize;
 
         av.grd.findGridSize(av.grd, av.parents);
-        if (av.debug.uil) console.log('av.dom.gridHolder.offsetWidth ht = ', av.dom.gridHolder.offsetWidth, av.dom.gridHolder.offsetHeight);
-        if (av.debug.uil) console.log('    av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+        console.log('After: av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+        console.log(' av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+        console.log('av.grd.spaceX='+av.grd.spaceX);
 
-        //Need to fix for scrolling
+        //Need to fix for scrolling   // This was commented out in Avida-ED 3.1
         //if (av.dom.gridHolder.scrollHeight == av.dom.gridHolder.clientHeight + 17) {
-        if (false) {
-          var numGH = av.dom.gridHolder.clientHeight;
-          av.dom.gridCanvas.height = numGH - 6 - 17;
-          av.grd.findGridSize(av.grd, av.parents);     //in populationGrid.js
-          consold.log('inside DrawGridSetupFn in odd if statement ----------------------------------');
-        }
+        //  var numGH = av.dom.gridHolder.clientHeight;
+        //  av.dom.gridCanvas.height = numGH - 6 - 17;
+        //  av.grd.findGridSize(av.grd, av.parents);     //in populationGrid.js
+        //  consold.log('inside DrawGridSetupFn in odd if statement ----------------------------------');
+        //}
+        
         if (av.debug.uil) console.log('before av.grd.drawGridUpdate');
         av.grd.drawGridUpdate();   //in populationGrid.js
 
@@ -1769,6 +1778,7 @@ require([
 
   // initialize needs to be in AvidaED.js
   av.grd.popChartInit = function () {
+    console.log('in av.grd.popChartInit');
     av.pch.clearPopChrt();
     av.pch.divSize('av.grd.popChartInit');
     var popData = av.pch.data;
@@ -1778,6 +1788,7 @@ require([
       av.debug.log += '\n     --uiD: Plotly.plot("popChart", popData, av.pch.layout, av.pch.widg) in AvidaED.js at 1565';
       av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'popData, av.pch.layout, av.pch.widg', [popData, av.pch.layout, av.pch.widg]);
       Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
+    console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
       if (av.debug.plotly) console.log('after plotly.plot in poChartInit');
     }
     else {
@@ -1786,6 +1797,7 @@ require([
       //  width: av.pch.wd,
       //  height: av.pch.ht
       //};
+      console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
       av.pch.update = {
         autorange: true,
         width: av.pch.wd,
@@ -1913,6 +1925,9 @@ require([
           //  width: av.pch.wd,
           //  height: av.pch.ht
           //};
+          console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
+          console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
+
           av.pch.update = {
             autorange: true,
             width: av.pch.wd,
@@ -2462,16 +2477,32 @@ require([
   //********************************************************************************************************************
   if (av.debug.root) console.log('before Resize helpers');
 
+  //on 2018_0823 this is where height gets messed up when loading the program. 
   av.pch.divSize = function(from) {
-    if (av.debug.plotly) console.log(from, 'called av.pch.divSize');
-    //console.log('av.dom.popChrtHolder.clientWd ht=', av.dom.popChrtHolder.clientWidth, av.dom.popChrtHolder.clientHeight);
-    av.pch.ht = av.dom.popChrtHolder.clientHeight - 3;
-    av.pch.wd = av.dom.popChrtHolder.clientWidth - 3;
-    av.dom.popChrtHolder.style.height = av.dom.popChrtHolder.clientHeight;
-    av.dom.popChart.style.height = av.pch.ht + 'px';
-    av.dom.popChart.style.width = av.pch.wd + 'px';
+    console.log(from, 'called av.pch.divSize');
+    console.log('popChrtHolder css.wd ht border padding margin=',  $("#popChrtHolder").css('width'), $("#popChrtHolder").css('height')
+      ,$("#popChrtHolder").css('border'), $("#popChrtHolder").css('padding'), $("#popChrtHolder").css('margin'));
+
+    console.log('av.dom.popChrtHolder.ht offset, client ht=', av.dom.popChrtHolder.offsetHeight, 
+       av.dom.popChrtHolder.clientHeight, '; parseInt(padding)=', parseInt($("#popChrtHolder").css('padding'),10));
+
+    av.pch.ht = av.dom.popChrtHolder.clientHeight - 2*parseInt($("#popChrtHolder").css('padding'),10);
+    av.pch.wd = av.dom.popChrtHolder.clientWidth - 2*parseInt($("#popChrtHolder").css('padding'),10);
     av.pch.layout.height = av.pch.ht;
     av.pch.layout.width = av.pch.wd;
+    console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
+    console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
+
+    //av.dom.popChrtHolder.style.width = av.dom.popChrtHolder.clientWidth + 'px';  //seems redundent  djb said to delete as of 2018_0827
+    //av.dom.popChrtHolder.style.height = av.dom.popChrtHolder.clientHeight + 'px';  //seems redundent djb said to delete as of 2018_0827
+    av.dom.popChart.style.height = av.pch.ht + 'px';
+    av.dom.popChart.style.width = av.pch.wd + 'px';
+    console.log('popChart css.wd, border, padding, margin=',  $("#popChart").css('width'), $("#popChart").css('height')
+      ,$("#popChart").css('border'), $("#popChart").css('padding'), $("#popChart").css('margin'));
+    console.log('av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight, 
+       av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'),10));
+    console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
+    console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
   };
 
   av.anl.divSize = function(from) {
@@ -2493,12 +2524,12 @@ require([
 
   // called from script in html file as well as below
   av.ui.browserResizeEventHandler = function (from) {
-    if (av.debug.uil) console.log(from, 'called av.ui.browserResizeEventHandler');
+    if (true) console.log(from, 'called av.ui.browserResizeEventHandler');
     if ('none' !== domStyle.get('analysisBlock', 'display')) {
       av.anl.AnaChartFn();
     }
     if ('none' !== domStyle.get('populationBlock', 'display')) {
-      av.ui.initPopLayout('av.ui.browserResizeEventHandler popBlock');
+      //av.ui.resizePopLayout('av.ui.browserResizeEventHandler popBlock');  //does not work
       if (av.debug.uil) console.log('av.grd.canvasSize =', av.grd.canvasSize, '; av.dom.gridCanvas.width = ', av.dom.gridCanvas.width, 
          '; av.dom.gridHolder.clientHeight=', av.dom.gridHolder.clientHeight);
       if (av.grd.need2DrawGrid) {
@@ -2518,23 +2549,23 @@ require([
     }
   };
 
-  //registry.byID seems to only work for dojo things
+  console.log('before ready function');
+  //registry.byID seems to only work for dojo things  
+  //the ready function below is a dojo function.
   ready(function () {
     //console.log('gridHolder=', registry.byId('gridHolder'));
     //console.log('anaChrtHolder=', registry.byId('anaChrtHolder'));
     //console.log('popChrtHolder=', registry.byId('popChrtHolder'));
     //console.log('gorganismCanvasHolder=', registry.byId('organismCanvasHolder'));
     $(window).resize(function(){
-      av.ui.initPopLayout('window.resize');
+     // av.ui.resizePopLayout('window.resize');    //does not work.
     });   
     if (av.ui.beginFlag){
       av.ui.beginFlag = false;
-      
-      
     }
     
     aspect.after(registry.byId('gridHolder'), 'resize', function () {
-      av.ui.browserResizeEventHandler('ready, gridHolder');
+      av.ui.browserResizeEventHandler('ready, aspect.after(gridHolder)');
     });
     //aspect.after(registry.byId('anaChrtHolder'), 'resize', function () {
     //  av.anl.divSize('ready resize');
@@ -2543,13 +2574,16 @@ require([
     //  av.ui.browserResizeEventHandler();
     //  av.pch.divSize('ready resize');
     //});
-    aspect.after(registry.byId('organismCanvasHolder'), 'resize', function () {
-      av.ui.browserResizeEventHandler('ready, organsimCanvasHolder');
-    });
+    
+    //only works if dojo div; not sure I want a dojo div here comment out for now
+    //aspect.after(registry.byId('organismCanvasHolder'), 'resize', function () {
+    //  av.ui.browserResizeEventHandler('ready, organsimCanvasHolder');
+    //s});
   });
 
-  av.ui.initPopLayout = function(from) {
-    if (av.debug.uil) console.log(from, 'called av.ui.initPopLayout');
+  //This function does not work. make grid get larger and larger
+  av.ui.resizePopLayout = function(from) {      
+    console.log(from, 'called av.ui.resizePopLayout');
     var extraGridWd =  0;  //positive there is extra to distribute; negative need more space.
     var popSideWdSum = av.dom.navColId.offsetWidth + av.dom.popInfoHolder.offsetWidth;
     av.ui.allAvidaWd = av.dom.allAvida.offsetWidth;
@@ -2563,6 +2597,10 @@ require([
     av.ui.popTopHd = av.dom.popTop.offsetHeight;
     av.ui.gridHolderHd = av.dom.gridHolder.offsetHeight;
     av.ui.popBotHd = av.dom.popBot.offsetHeight;
+
+    //https://stackoverflow.com/questions/590602/padding-or-margin-value-in-pixels-as-integer-using-jquery
+    console.log('gridHolder_margin' ,$("#gridHolder").css("margin"), '; popChart=', $("#popChart").css('margin'));
+
     if (av.debug.uil) console.log('Wd: allAvida navColId mapHolder gridHolder popInfoHolder, sum', av.dom.allAvida.offsetWidth,
       av.dom.navColId.offsetWidth, av.dom.mapHolder.offsetWidth, av.dom.popInfoHolder.offsetWidth, 
       av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
@@ -2577,8 +2615,11 @@ require([
       extraGridWd = av.dom.gridHolder.offsetWidth - av.dom.gridHolder.offsetHeight;
       popSideWdSum = popSideWdSum + extraGridWd;
       if (av.debug.uil) console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-      av.dom.gridCanvas.width = av.dom.gridHolder.clientHeight;     //no style for canvas; style needed for div
-      av.dom.gridCanvas.height = av.dom.gridHolder.clientHeight;
+      //av.dom.gridCanvas.width = av.dom.gridHolder.clientHeight;     //no style for canvas; style needed for div
+      //av.dom.gridCanvas.height = av.dom.gridHolder.clientHeight;
+      av.dom.gridCanvas.width = $("#gridHolder").height();     //no style for canvas; style needed for div
+      av.dom.gridCanvas.height = $("#gridHolder").height();
+      
       if (av.debug.uil) console.log('av.dom.gridCanvas.wd ht', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
       if (av.debug.uil) console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
       av.dom.navColId.style.width = (0.3*popSideWdSum) + 'px';
@@ -2588,15 +2629,17 @@ require([
     }
     else  { 
     // set grid size based on width   
+      av.dom.gridCanvas.width = $("#gridHolder").width();     //no style for canvas; style needed for div
+      av.dom.gridCanvas.height = $("#gridHolder").width();
     }
-  }
+  };
 
   av.ui.chngPopWidth = function(adjustGridWd) {
     av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px'; 
     av.dom.setupBlock.style.width = popInfoHolderWd + 'px'; 
     av.dom.labInfoBlock.style.width = popInfoHolderWd + 'px';
     av.dom.selOrgType.style.width = ((popInfoHolderWd/2).toFixed(0)) + 'px';   
-  }
+  };
   
   av.ui.adjustpopInfoWd = function(adjustGridWd) {
     var popInfoHolderWd = av.dom.popInfoHolder.offsetWidth - adjustGridWd;  //adjustGridWd postive means Grid needs width
@@ -2616,7 +2659,7 @@ require([
     av.dom.selOrgType.style.width = popInfoHolderWd + 'px';
     if (av.debug.uil) console.log('set selOrgType to ', popInfoHolderWd + 'px');
     if (av.debug.uil) console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
-  }
+  };
 
   //Adjust Statistics area width based on gridholder size and shape. gridholder should be roughly square
   av.ui.adjustpopInfoSize = function (from) {
@@ -2656,65 +2699,7 @@ require([
     if (av.debug.uil) console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
     if (av.debug.uil) console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
   };
-  
-  av.ui.adjustpopInfoSize_ = function (from) {
-    var adjustGridWd = 0;
-    if (av.debug.uil) console.log('av.ui.adjustpopInfoSize_ was called from: ', from);
-    if (av.debug.uil) console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth);
-    if (av.debug.uil) console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, 
-                 '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
-    if (av.debug.uil) console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ', 
-           av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
-    if (av.debug.uil) console.log('popInfoHolder.offsetWidth, clientwidth =',av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
-    if (av.debug.uil) console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
-    if (av.debug.uil) console.log('selOrgType.offsetWidth, clientwidth =',av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
-    if (av.debug.uil) console.log('av.ui.popGridCtlWdMin=',av.ui.popGridCtlWdMin, '; gridHolder.offsetWidt=', av.dom.gridHolder.offsetWidth);
-    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight){
-      adjustGridWd = av.dom.gridHolder.offsetHeight - av.dom.gridHolder.offsetWidth; //adjustGridWd negative means grid holder is too wide.
-      av.ui.adjustpopInfoWd(adjustGridWd);
-    }
-    if (av.ui.popGridCtlWdMin > av.dom.gridHolder.offsetWidth) {
-      adjustGridWd = av.ui.popGridCtlWdMin - av.dom.gridHolder.offsetWidth;
-      av.ui.adjustpopInfoWd(adjustGridWd);
-    };
-    if (av.debug.uil) console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
-    if (av.debug.uil) console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, 
-                 '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
-    if (av.debug.uil) console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ', 
-           av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
-
-    if (av.debug.uil) console.log('popInfo.offsetWidth, clientwidth =',av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
-    if (av.debug.uil) console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
-    if (av.debug.uil) console.log('selOrgType.offsetWidth, clientwidth =',av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
-
-    av.dom.gridCanvas.style.width = (av.dom.gridHolder.clientHeight-2)+'px';
-    av.dom.gridCanvas.style.height = av.dom.gridCanvas.offsetWidth+'px';
-    av.dom.scaleCanvas.style.width = (av.dom.gridControlTable.clientWidth-1) + 'px';
     
-    if (av.debug.uil) console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-    if (av.debug.uil) console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
-  };
-
-  av.ui.adjustpopInfoSize_oldest = function (from) {
-    if (av.debug.uil) console.log('av.ui.adjustpopInfoSize_oldest called from: ', from);
-    if (av.ui.popGridCtlWdMin < av.dom.gridHolder.clientWidth) {
-      av.ui.gridHolderXtra = av.dom.gridHolder.clientWidth - (av.dom.gridHolder.clientHeight-av.ui.popBotHtMin);
-      //av.ui.gridHolderXtra = av.ui.gridHolderWd - (av.dom.gridHolder.clientHeight);   //commented out in Avida-Ed 3.2
-      if (av.ui.gridHolderSideBuffer < av.ui.gridHolderXtra) {
-        av.ui.gridHolderWdNew = av.dom.gridHolder.clientWidth - av.ui.gridHolderXtra + av.ui.gridHolderSideBuffer;
-        if (av.ui.popGridCtlWdMin > av.ui.gridHolderWdNew) av.ui.gridHolderWdNew = av.ui.popGridCtlWdMin;
-        av.ui.popInfoWdNew = av.dom.popInfoHolder.clientWidth + av.dom.gridHolder.clientWidth - av.ui.gridHolderWdNew;
-        //av.ui.popInfoWdNew = av.dom.popInfoHolder.clientWidth + av.ui.gridHolderXtra - av.ui.gridHolderSideBuffer;   //commented out in Avida-Ed 3.2
-        document.getElementById('popInfo').style.width = av.ui.popInfoWdNew + 'px';
-      }
-    }
-    else {
-      av.ui.gridHolderWdNew = av.ui.popGridCtlWdMin;
-      av.ui.popInfoWdNew = av.dom.popInfoHolder.clientWidth + av.dom.gridHolder.clientWidth - av.ui.gridHolderWdNew;
-      av.dom.popInfoHolder.style.width = av.ui.popInfoWdNew + 'px';
-    }
-  };
-  
   // **************************************************************************************************************** */
   //                                                Analysis Page
   // **************************************************************************************************************** */
@@ -2886,10 +2871,10 @@ require([
   //Tasks that Need to be run when page is loaded but after chart is defined
   // **************************************************************************************************************** */
 
+  if (true) console.log('after chartt defined');
   // ------------------------ Population Page Statistics tables --------------------------------------------------------
 
-  av.ui.initPopLayout('after page loaded, before chart is defined.');
-  //av.ui.adjustpopInfoSize('after page loaded, before chart is defined.');  //one or the other not both
+  //av.ui.adjustpopInfoSize('after page loaded, before chart is defined.');  // djb might delete later; not using as of 2018_0827
 
   //used to set the height so the data just fits. Done because different monitor/browser combinations require a different height in pixels.
   //may need to take out as requires loading twice now.
@@ -2927,19 +2912,20 @@ require([
     var divHt = document.getElementById(htChangeDiv).offsetHeight;
     if (av.debug.uil) console.log('htChangeDiv is', htChangeDiv, '; divHt=', divHt);
     if (hasScrollbar) {
-        if (null !== divHt) {
-          var NewHt = divHt + 1 + scrollSpace + ScrollDif;  //add the ht difference to the outer div that holds this one
-          //line below is where the height of the div actually changes
-          if (av.debug.uil) document.getElementById(htChangeDiv).style.height = NewHt + 'px';
-        }
-        //redraw the screen
-        //av.ui.mainBoxSwap(page);
-        //if (av.debug.root) 
-        if (av.debug.uil) console.log('Afterscroll', hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
-          document.getElementById(scrollDiv).clientHeight, '; htChangeDiv=', document.getElementById(htChangeDiv).scrollHeight,
-          document.getElementById(htChangeDiv).offsetHeight, document.getElementById(htChangeDiv).style.height);
-        }
-    };
+      if (null !== divHt) {
+        var NewHt = divHt + 1 + scrollSpace + ScrollDif;  //add the ht difference to the outer div that holds this one
+        //line below is where the height of the div actually changes
+        if (av.debug.uil) document.getElementById(htChangeDiv).style.height = NewHt + 'px';
+      }
+      //redraw the screen
+      //av.ui.mainBoxSwap(page);
+      //if (av.debug.root) 
+      if (av.debug.uil) {console.log('Afterscroll', hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
+        document.getElementById(scrollDiv).clientHeight, '; htChangeDiv=', document.getElementById(htChangeDiv).scrollHeight,
+        document.getElementById(htChangeDiv).offsetHeight, document.getElementById(htChangeDiv).style.height);
+      };
+    }
+  };
 
   //Tiba - put back soon
   //av.ui.removeVerticalScrollbar('popStats4grid', 'popStatistics');
@@ -2982,7 +2968,7 @@ require([
     }
     return new_obj;
   };
-  });
+});
 
   //------- not in use = example
   //var hexColor = av.ui.invertHash(av.color.names);
@@ -3101,6 +3087,12 @@ To make a gif using screen capture
  * scrollbarWidth = offsetWidth - clientWidth - getComputedStyle().borderLeftWidth - getComputedStyle().borderRightWidth
  *  
  */
+// get css values
+//     //https://stackoverflow.com/questions/590602/padding-or-margin-value-in-pixels-as-integer-using-jquery
+// an example: the 10 at the end is to say base 10 rather than octal.
+//     console.log('av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight, 
+//       av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'),10));
+
 
   // should this move to an init page ui function?
   //get size of screen availbe for Avida-ED; used to keep on screen and get rid of scroll bars
@@ -3143,5 +3135,19 @@ To make a gif using screen capture
 // https://jqueryhouse.com/30-best-jquery-modal-dialog-boxes/
 // https://www.sitepoint.com/14-jquery-modal-dialog-boxes/
 // https://www.sitepoint.com/14-jquery-modal-dialog-boxes/
+// https://www.w3schools.com/howto/howto_css_modals.asp
 // 
+// other dialog boxes premade
+// https://www.w3schools.com/js/js_popup.asp
 //
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// User interface - Responsive Web design
+// 
+// https://www.smashingmagazine.com/2011/01/guidelines-for-responsive-web-design/
+// https://www.w3schools.com/css/css_rwd_intro.asp
+// https://www.w3schools.com/html/html_responsive.asp
+// 
+// very wordy https://alistapart.com/article/responsive-web-design
+// 
+// 

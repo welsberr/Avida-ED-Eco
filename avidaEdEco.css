@@ -7,6 +7,11 @@
     padding: 0;
   }
   
+  .thin{
+    margin: 0;
+    padding: 0;
+      }
+  
   #allAvida{
     display: flex;
     min-height: 100vh;
@@ -77,6 +82,9 @@
     background-color: #F5F5F5; /* lavender; */
     border: 1px solid #AAA;
   }
+  
+  
+  
   .mainBlockHolder{
     background-color: #F5F5F5; /* lightskyblue; */
     flex: 1;
@@ -111,6 +119,11 @@
     flex: 1;
     background-color: #F5F5F5; /* blue; */
   }
+  #gridHolder {
+    margin: 0px;
+    padding: 3px;
+    background-color: lemonchiffon;
+  }
   .benchPopBot{
     flex: 0 1 40px;
     border: 1px solid #AAA;
@@ -118,7 +131,7 @@
   }
 
   #popInfoHolder {
-    flex: 0 1 349px;          /* flex: 0 1 344px; is fixed in that dimension */
+    flex: 0 1 500px;          /* flex: 0 1 344px; is fixed in that dimension   was 349px*/
     border: 1px solid #AAA;
     background: beige;
   }
@@ -298,6 +311,7 @@
     flex: 0 1 500px;
     background-color: #F5F5F5; /* lavender;  */
   }
+  
   
 /**********************************************************************************************/
 /* The Modal (background) */

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
 	<title>Avida-ED Ecology</title>
 	<meta charset='utf-8' />
@@ -546,16 +546,32 @@
                   What resources are available in the environment? (strength of energy reward shown in
                   parentheses)</label>
                 <table border='0' id="resourceTable">
+                  <col style='width:99px'>
+                  <col>
+                  <col>
+                  <col>
+                  <col>
+                  <col>
+                  <col>
+                  <col>
                   <tbody> 
                   <tr>
-                    <td>Easy (x2)</td>
-                    <td>Unlimited</td>
-                    <td class="TabSideBorder">Limited</td>
-                    <td>input amount</td>
-                    <td>Output rate</td>
-                    <td class="TabLftBorder">Constant</td>
-                    <td>Periodic</td>
-                    <td>Period (updates</td>
+                    <td>Easy</td>
+                    <td colspan="2">Limited?</td>
+                    <td>input</td>
+                    <td>Output</td>
+                    <td colspan="2">Periodic?</td>
+                    <td>Period</td>
+                  </tr>
+                  <tr>
+                    <td>(x2)</td>
+                    <td>Yes</td>
+                    <td class="TabSideBorder">No</td>
+                    <td>amount</td>
+                    <td>rate</td>
+                    <td class="TabLftBorder">No</td>
+                    <td>Yes</td>
+                    <td>updates</td>
                   </tr>
                   <tr>
                     <td><input type='checkbox' class='resourceButton' id='notose'
@@ -688,11 +704,12 @@
                 <label id='demoLabel'>Demo</label>
               </div>
               <div class='odd'>
-                <label>Pause Run:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label>Pause Run:</label>&nbsp;&nbsp;&nbsp;&nbsp;
                 <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='manualUpdateRadio'
                        intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' checked
                        value='manual'>
-                <label id='ManLabel'>Manually</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label id='ManLabel'>Manually</label><br />
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='autoUpdateRadio'
                        intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' value='setupdate'>
                 <label id='updateLabel'>At update:</label>

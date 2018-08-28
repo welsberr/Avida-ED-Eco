@@ -302,11 +302,14 @@ av.grd.findGridSize = function (){
   // than the canvas, then the canvas is set to the size of the grid and the
   // offset in that direction goes to zero.
 
+  // no longer doing offsets inside the canvas - Need to get rid of offsets 
+  
+
   // First find sizes based on zoom
+  console.log('av.grd.zoom='+av.grd.zoom);
   av.grd.boxX = av.grd.zoom * av.grd.spaceX;
   av.grd.boxY = av.grd.zoom * av.grd.spaceY;
-  //get rows and cols based on user input form
-  //av.grd.cols = dijit.byId("sizeCols").get('value');
+  //get rows and cols based on user input 
   av.grd.cols = av.dom.sizeCols.value;
   av.grd.rows = av.dom.sizeRows.value;
   //max size of box based on width or height based on ratio of cols:rows and width:height
@@ -326,6 +329,9 @@ av.grd.findGridSize = function (){
   }
 
   //Determine new size of grid
+    console.log('av.dom.gridCanvas.width ht', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+    console.log('av.grd.sizeX, sizeY', av.grd.sizeX, av.grd.sizeY);
+  
     av.dom.gridCanvas.width = av.grd.sizeX;
     av.grd.xOffset = 0;
     av.dom.gridCanvas.height = av.grd.sizeY;

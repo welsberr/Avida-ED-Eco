@@ -85,6 +85,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
   };
   oReq.send();
   av.fzr.saveUpdateState('default');
+  console.log('default workspace loaded');
 };
 
   //------------------------------ call to read in a user selected Workspace -------------------------------------------
@@ -419,7 +420,7 @@ av.fio.fzSaveCurrentWorkspaceFn = function () {
 //    wsSavedMsg.textcontent = 'Workspace: default  ';
 av.fzr.saveUpdateState = function (newSaveState) {
   'use strict';
-  //console.log('oldState', av.fzr.saveState, '; newState', newSaveState);
+  console.log('oldState', av.fzr.saveState, '; newState', newSaveState);
   if ('maybe' === newSaveState) {
     //console.log('newSaveState', newSaveState)
     if ('no' === av.fzr.saveState) {
