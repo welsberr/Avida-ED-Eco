@@ -728,7 +728,6 @@ require([
     'use strict';
     av.post.addUser('Button: mnFlOpenDefaultWS');
     av.fio.useDefault = true;
-    av.fio.isB64 = false;
     if ('no' === av.fzr.saveState) sWSfDialog.show();  //Save WSfile Dialog box
     else {
       av.fio.readZipWS(av.fio.defaultFname, false);  //false = do not load config file
@@ -761,20 +760,9 @@ require([
     'use strict';
     av.post.addUser('Button: mnFlOpenWS');
     av.fio.useDefault = false;
-    av.fio.isB64 = false;
     if ('no' === av.fzr.saveState) sWSfDialog.show();   //Need to change to include might be saved tiba fix
     //else document.getElementById('inputFile').click();
     else document.getElementById('putWS').click();  // calls av.fio.userPickZipRead
-  });
-
-  dijit.byId('mnFlOpenB64').on('Click', function () {
-    'use strict';
-    av.post.addUser('Button: mnFlOpenB64');
-    av.fio.useDefault = false;
-    av.fio.isB64 = true;
-    if ('no' === av.fzr.saveState) sWSfDialog.show();
-    //else document.getElementById('inputFile').click();
-    else document.getElementById('putWS').click();   // call av.fio.userPickZipRead()
   });
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -865,41 +853,6 @@ require([
       av.post.addUser('Button: mnHpDebug: now visible');
     }
   };
-
-  //works saving text as an example -
-  document.getElementById('mnDbSaveTxt').onclick = function () {
-    av.post.addUser('Button: mnDbSaveTxt');
-    av.fio.userFname = 'junk.txt';
-    //av.fio.saveTxt();
-    av.fio.saveJson();
-  };
-
-  $(fileDownloadButton).click(function () {
-    console.log('inside fileDownButton')
-
-    if (0 === av.fio.userFname.length) av.fio.userFname = prompt('Choose a name for your Workspace', av.fio.defaultUserFname);
-    if (0 === av.fio.userFname.length) av.fio.userFname = av.fio.defaultUserFname;
-    var end = av.fio.userFname.substring(av.fio.userFname.length - 4);
-    if ('.zip' != end) av.fio.userFname = av.fio.userFname + '.zip';
-    //console.log('end', end, '; userFname', av.fio.userFname);
-    var WSzip = new av.fio.JSZip();
-    //console.log('number of files', av.utl.objectLength(av.fzr.file));
-    var numFiles = 0;
-    for (var fname in av.fzr.file) {
-      WSzip.file('av.avidaedworkspace/' + fname, av.fzr.file[fname]);
-      numFiles++;
-    }
-    var blob = WSzip.generate({type: 'blob'});
-    //console.log('wrote blob');
-    //var data = { x: 42, s: 'hello, world', d: new Date() };
-    //var json = JSON.stringify(data);
-    //var blob = new Blob([json], {type: 'octet/stream'});
-    var tmpUrl = window.URL.createObjectURL(blob);
-      //console.log('tmpURL=', tmpUrl);
-      av.fio.writeSafari(tmpUrl);
-      //window.URL.revokeObjectURL(tmpUrl);
-    //av.fwt.tryDown(blob);
-  });
 
   av.fwt.tryDown = function(blob) {
     var ab = document.createElement('a');
@@ -1413,10 +1366,6 @@ require([
   }
 
   //test - delete later ------------------------------------------------------------------------------------------------
-  document.getElementById('mnDbRestartAvida').onclick = function () {
-    av.post.addUser('Button: mnDbRestartAvida');
-    av.aww.restartAvidaFn();
-  }
 
   document.getElementById('mnDbDiagnostic').onclick = function () {
     av.post.addUser('Button: mnDbDiagnostic');

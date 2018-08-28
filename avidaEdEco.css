@@ -52,7 +52,7 @@
     float: right;
   }
   #mainMenu{
-    flex: 0 1 300px;
+    flex: 0 1 350px;
   }
   #headerMsg{
     flex: 1 1 auto;                  /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
