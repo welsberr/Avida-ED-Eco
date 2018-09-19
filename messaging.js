@@ -185,8 +185,9 @@ av.msg.stepUpdate = function () {
       av.debug.log += '\n\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; ' + av.utl.jsonStringifyOneLine(request);
     }
   }, 1);  //number is time in msec for a delay
-}
+};
 
+//------------------------------------------------------------------------------------------- av.msg.importConfigExpr --
 av.msg.importConfigExpr = function () {
   'use strict';
   var fList = ['avida.cfg'
@@ -216,7 +217,137 @@ av.msg.importConfigExpr = function () {
   if (av.debug.msg) console.log('importExpr', request);
   av.aww.uiWorker.postMessage(request);
   av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importConfigExpr';
+};
+
+//--------------------------------------------------------------------------------------- end av.msg.importConfigExpr --
+
+//--------------------------------------------------------------------------------------------- av.msg.makeTestDirMsg --
+av.msg.makeTestDirMsg = function () {
+  'use strict';
+  var fList = ['avida.cfg'
+    , 'clade.ssg'
+    , 'detail.spop'
+    , 'environment.cfg'
+    , 'events.cfg'
+    , 'instset.cfg'
+    , 'update'
+  ];
+  var request = {
+    'type': 'addEvent',
+    'name': 'importExpr',
+    'triggerType': 'immediate',
+    'files': [
+//      { 'name': 'avida.cfg', 'data': av.fzr.actConfig.file['avida.cfg'] },
+//      { 'name': 'environment.cfg', 'data': av.fzr.actConfig.file['environment.cfg'] }
+    ]
+  };
+  console.log('in av.msg.makeResReqMsg:');
+  var lngth = fList.length;
+  for (var ii = 0; ii < lngth; ii++) {
+    if (av.fzr.file[dir+'/'+fList[ii]]) {
+      request.files.push({ 'name': fList[ii], 'data': av.fzr.file[dir+'/'+fList[ii]] });
+      console.log('filename=', dir+'/'+fList[ii]);
+    }
+  }
+  if (av.debug.msg) console.log('importExpr-testDish', request);
+  av.aww.uiWorker.postMessage(request);
+  av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from av.msg.makeTestDirMsg';
+};
+
+//----------------------------------------------------------------------------------------- end av.msg.makeTestDirMsg --
+
+//---------------------------------------------------------------------------------------------- av.msg.makeResReqMsg --
+av.msg.makeResReqMsg = function (dir) {
+  'use strict';
+  var fList = ['avida.cfg'
+    , 'clade.ssg'
+    , 'detail.spop'
+    , 'environment.cfg'
+    , 'events.cfg'
+    , 'instset.cfg'
+    , 'update'
+  ];
+  var request = {
+    'type': 'addEvent',
+    'name': 'importExpr',
+    'triggerType': 'immediate',
+    'files': [
+//      { 'name': 'avida.cfg', 'data': av.fzr.actConfig.file['avida.cfg'] },
+//      { 'name': 'environment.cfg', 'data': av.fzr.actConfig.file['environment.cfg'] }
+    ]
+  };
+  console.log('in av.msg.makeResReqMsg:');
+  var lngth = fList.length;
+  for (var ii = 0; ii < lngth; ii++) {
+    if (av.fzr.file[dir+'/'+fList[ii]]) {
+      request.files.push({ 'name': fList[ii], 'data': av.fzr.file[dir+'/'+fList[ii]] });
+      console.log('filename=', dir+'/'+fList[ii]);
+    }
+  }
+  av.aww.uiWorker.postMessage(request);
+  if (av.debug.msg) console.log('av.msg.makeResReqMsg', request);
+
+  av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importPopExpr';
 }
+//------------------------------------------------------------------------------------------ end av.msg.makeResReqMsg --
+
+//---------------------------------------------------------------------------------------- av.msg.importMultiDishExpr --
+av.msg.importMultiDishExpr = function (dir) {
+  'use strict';
+  var fList = ['avida.cfg'
+    , 'clade.ssg'
+    , 'detail.spop'
+    , 'environment.cfg'
+    , 'events.cfg'
+    , 'instset.cfg'
+    , 'update'
+  ];
+  var request = {
+    'type': 'addEvent',
+    'name': 'importMultiDish',
+    'triggerType': 'immediate',
+    'amend': 'false',
+    'superDishFiles': [
+//      { 'name': 'avida.cfg', 'data': av.fzr.actConfig.file['avida.cfg'] },
+//      { 'name': 'environment.cfg', 'data': av.fzr.actConfig.file['environment.cfg'] }
+    ],
+    'subDishes': []
+  };
+  var subDish = {
+      'xpos': 0
+    , 'ypos': 0
+    , 'files':[
+//      { 'name': 'avida.cfg', 'data': av.fzr.actConfig.file['avida.cfg'] },
+//      { 'name': 'environment.cfg', 'data': av.fzr.actConfig.file['environment.cfg'] }
+    ]
+  }
+
+  //console.log('in av.msg.importMultiDishExpr:');
+  var lngth = fList.length;
+  for (var ii = 0; ii < lngth; ii++) {
+    if (av.fzr.file[dir+'/'+fList[ii]]) {request.superDishFiles.push({ 'name': fList[ii], 'data': av.fzr.file[dir+'/'+fList[ii]] }); }
+  }
+  var offset = [];
+  for (var key in av.fzr.mDish[dir].domid) {
+    subDish.files = [];
+    console.log('dir=', dir, '; key=', key);
+    offset = av.msg.getOffset(dir, key);
+    subDish.xpos = offset[0];
+    subDish.ypos = offset[1];
+    var lngth = fList.length;
+    for (var ii = 0; ii < lngth; ii++) {
+      if (av.fzr.file[dir+'/'+key+'/'+fList[ii]]) {
+        subDish.files.push({ 'name': fList[ii], 'data': av.fzr.file[dir+'/'+key+'/'+fList[ii]] });
+      }
+    }
+    request.subDishes.push(subDish);
+  }
+  if (av.debug.msg) console.log('importMultiDishExpr', request);
+  console.log('importMultiDishExpr', request);
+  av.aww.uiWorker.postMessage(request);
+  av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importPopExpr';
+}
+//------------------------------------------------------------------------------------ end av.msg.importMultiDishExpr --
 
 av.msg.importPopExpr = function () {
   'use strict';

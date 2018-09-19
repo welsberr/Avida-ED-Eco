@@ -88,9 +88,8 @@ clearmouse(av);
 //offspring on grid
 av.mouse.kidTarget = ['gridCanvas'   //canvas must be first in the list for conditional to work in av.mouse.kidMouse
   , 'organIcon'
+  , 'organismsFzSec'
   , 'fzOrgan'
-  , 'organismsFzr'
-  , 'organismsFzr_pane'
 ];
 
 //parent on grid
@@ -435,6 +434,10 @@ av.fzr.clearFzrFn = function () {
   av.fzr.item = {};
   av.fzr.mDish = {};
 
+  av.fzr.cNum = 0;  //value of the next configured dish (config) number
+  av.fzr.gNum = 0;  //value of the next organism (genome) number
+  av.fzr.mNum = 0;  //value of the next multi-dish (complex-populated dish) number
+  av.fzr.wNum = 0;  //value of the next world (populated dish) number
 
   //probably delete the next few lines
   av.fzr.mDish[0] = {};
@@ -447,10 +450,6 @@ av.fzr.clearFzrFn = function () {
   av.fzr.mDish[0].item = {};
   //to here
 
-  av.fzr.cNum = 0;  //value of the next configured dish (config) number
-  av.fzr.gNum = 0;  //value of the next organism (genome) number
-  av.fzr.mNum = 0;  //value of the next superdish number
-  av.fzr.wNum = 0;  //value of the next world (populated dish) number
   //hold genome for active organism in Organism View
   av.fzr.actOrgan = {'name': '', 'actDomid': '', 'fzDomid': '', 'genome': ''};
   //hold genome for active organism in Organism View
@@ -482,7 +481,7 @@ av.fzr.clearMainFzrFn = function () {
 
   av.fzr.cNum = 0;  //value of the next configured dish (config) number
   av.fzr.gNum = 0;  //value of the next organism (genome) number
-  av.fzr.mNum = 0;  //value of the next organism (genome) number
+  av.fzr.mNum = 0;  //value of the next multi-dish (complex-populated dish) number
   av.fzr.wNum = 0;  //value of the next world (populated dish) number
 
   //Clear each section of the freezer and active organism and ancestorBox
@@ -829,3 +828,15 @@ av.anl.clearChart = function () {
   }
 }
   av.anl.clearChart();
+
+//----------------------------------------------------------------------------------------------------------------------
+// Notes on page layout
+//----------------------------------------------------------------------------------------------------------------------
+// AllAvida: 937
+// Population page: Initial assume a square grid and both sidebars open. 
+// navColID or navColClass: wd = 152 includling 2px for a 1 px border. (minimum nice wd) about 84 too narrow, but works. 
+// mainBlockHolder: wd = 
+// popInfoHolder: mn wd = 500 inlcuding border
+// labInfoBlock: min wd = 364 no border. 
+// selOrgType: min wd = 164  (might make a tad smaller) includes 1 px border
+// popStats4grid: min wd = 176   (get left over)

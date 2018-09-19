@@ -152,11 +152,15 @@
             </div>
           </span>
         </span>
-        <span data-dojo-type='dijit/PopupMenuBarItem' label='Debug' id='mnDebug' style = 'visibility: hidden'> <!--visible/hidden-->
+        <span data-dojo-type='dijit/PopupMenuBarItem' label='Debug' id='mnDebug' style = 'visibility: visible'> <!--visible/hidden-->
           <span data-dojo-type='dijit/Menu'>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzAddResEx' label='Run Highlighted ResourceRequest'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzAddTestDish' label='Run Test Dish'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzAddMdishEx' label='Run Highlighted Mulit-Dish'></span>
             <span data-dojo-type='dijit/MenuItem' id='mnDbThrowError' label='Throw Error'></span>
             <span data-dojo-type='dijit/MenuItem' id='mnDbThrowData' label='Send Data to console'></span>
             <span data-dojo-type='dijit/MenuItem' id='mnDbLineLog' label='Add Line to Session Log'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnDbLoadProtoType' label='Load Selected ProtoType'></span>
           </span>
         </span>
       </span>     
@@ -197,18 +201,33 @@
         <h3>Freezer</h3>
         <span title="https://stackoverflow.com/questions/24977965/collapsible-lists-using-html-and-css"></span>
         <details open>
-          <summary class="freezerSection">Configured Dishes</summary>
+          <summary id='fzConfigureSec' class="freezerSection">Configured Dishes</summary>
           <ul id='fzConfig' class='container'>
           </ul>
         </details>
         <details open>
-          <summary class="freezerSection">Organsims</summary>
+          <summary id='organismsFzSec' class="freezerSection">Organisms</summary>
           <ul id='fzOrgan' class='container'>
           </ul>
         </details>
         <details open>
-          <summary class="freezerSection">Populated Dishes</summary>
+          <summary id='fzWorldSec' class="freezerSection">Populated Dishes</summary>
           <ul id='fzWorld' class='container'>
+          </ul>
+        </details>
+        <details>
+          <summary id='fzMdishSec' class="freezerSection">Multi-Dishes</summary>
+          <ul id='fzMdish' class='container'>
+          </ul>
+        </details>
+        <details open>
+          <summary id='fzTdishSec' class="freezerSection">Test Dishes</summary>
+          <ul id='fzTdish' class='container'>
+          </ul>
+        </details>
+        <details>
+          <summary id='fzRdishSec' class="freezerSection">Resource setup</summary>
+          <ul id='fzRdish' class='container'>
           </ul>
         </details>
 			</div>

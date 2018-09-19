@@ -347,6 +347,25 @@ require([
     copyOnly: true,
     selfAccept: false
   });
+  av.dnd.fzMdish = new dndSource('fzMdish', {  //Proto Types and TestDish or Tdish refer to the same thing
+    accept: ['b', 'm'],  //m=multidish
+    copyOnly: true,
+    singular: true,
+    selfAccept: false
+  });
+  av.dnd.fzRdish = new dndSource('fzRdish', {  //Proto Types and TestDish or Tdish refer to the same thing
+    accept: ['r'],  //t=resource display
+    copyOnly: true,
+    singular: true,
+    selfAccept: false
+  });
+  av.dnd.fzTdish = new dndSource('fzTdish', {  //Proto Types and TestDish or Tdish refer to the same thing
+    accept: ['t'],  //t=test dish
+    copyOnly: true,
+    singular: true,
+    selfAccept: false
+  });
+
   /*  //kept only as an example of how to programatically add data to a dnd container
    av.dnd.fzWorld.insertNodes(false, [
    {data: 'm2w30u1000nand', type: ['w']},
@@ -845,10 +864,16 @@ require([
   av.dom.xorLabel.onclick = function () {
     if ('visible' === document.getElementById('mnDebug').style.visibility) {
       document.getElementById('mnDebug').style.visibility = 'hidden';
+      document.getElementById('fzMdishSec').style.visibility = 'hidden';
+      document.getElementById('fzRdishSec').style.visibility = 'hidden';
+      document.getElementById('fzTdishSec').style.visibility = 'hidden';
       dijit.byId('mnHpDebug').set('label', 'Show debug menu');
       av.post.addUser('Button: mnHpDebug: now hidden');
     } else {
       document.getElementById('mnDebug').style.visibility = 'visible';
+      document.getElementById('fzMdishSec').style.visibility = 'visible';
+      document.getElementById('fzRdishSec').style.visibility = 'visible';
+      document.getElementById('fzTdishSec').style.visibility = 'visible';
       dijit.byId('mnHpDebug').set('label', 'Hide debug menu');
       av.post.addUser('Button: mnHpDebug: now visible');
     }
@@ -1305,8 +1330,43 @@ require([
     av.post.addUser('Button: mnFzAddPopEx');
     av.dnd.FzAddExperimentFn('fzWorld', 'activeConfig', 'w');
   });
+  
+  //Buttons on drop down menu to add looking at resourses to an experiment
+  dijit.byId('mnFzAddResEx').on('Click', function () {
+    av.post.addUser('Button: mnFzAddResEx');
+    //av.dnd.FzAddExperimentFn('fzConfig', 'activeConfig', 'm');
+    av.dnd.runResReqDish('fzConfig', 'activeConfig', 'c');
+    av.ptd.setAutoPausePop(true, 20);
+  });
 
-  //Buttons on drop down menu to put an organism in Organism Viewer
+  //------------ in debug menu for now ----------
+
+  //Buttons on drop down menu to add looking at test-dish to an experiment
+  dijit.byId('mnFzAddResEx').on('Click', function () {
+    av.post.addUser('Button: mnFzAddResEx');
+    //av.dnd.FzAddExperimentFn('fzConfig', 'activeConfig', 'm');
+    av.dnd.runResReqDish('fzConfig', 'activeConfig', 'c');
+    av.ptd.setAutoPausePop(true, 20);
+  });
+
+
+  //Buttons on drop down menu to add looking at resourses to an experiment
+  dijit.byId('mnFzAddResEx').on('Click', function () {
+    av.post.addUser('Button: mnFzAddResEx');
+    //av.dnd.FzAddExperimentFn('fzConfig', 'activeConfig', 'm');
+    av.dnd.runResReqDish('fzConfig', 'activeConfig', 'c');
+    av.ptd.setAutoPausePop(true, 20);
+  });
+
+  //Buttons on drop down menu to add Multi-Dish to an Experiment
+  dijit.byId('mnFzAddMdishEx').on('Click', function () {
+    av.post.addUser('Button: mnFzAddMdishEx');
+    //av.dnd.FzAddExperimentFn('fzMdish', 'activeConfig', 'm');
+    av.msg.runMultiDish('fzMdish', 'activeConfig', 'm');
+  });
+
+
+//Buttons on drop down menu to put an organism in Organism Viewer
   dijit.byId('mnFzAddGenomeView').on('Click', function () {
     av.post.addUser('Button: mnFzAddGenomeEx');
     av.dnd.FzAddExperimentFn('fzOrgan', 'activeOrgan', 'g');
@@ -1367,11 +1427,6 @@ require([
 
   //test - delete later ------------------------------------------------------------------------------------------------
 
-  document.getElementById('mnDbDiagnostic').onclick = function () {
-    av.post.addUser('Button: mnDbDiagnostic');
-    av.dcn.diagnosticConsoleFn();
-  }
-
   document.getElementById('mnDbThrowData').onclick = function () {
     'use strict';
     av.post.addUser('Button: mnDbThrowData');
@@ -1398,6 +1453,12 @@ require([
     'use strict';
     av.debug.log += '\n -----------------------------------------------------------------------------------------------\n';
   };
+  
+  document.getElementById('mnDbLoadProtoType').onclick = function () {
+    'use strict';
+    //code to load the files from the freezer into the space
+  };
+  
 
   //--------------------------------------------------------------------------------------------------------------------
   //    mouse DND functions
@@ -1574,15 +1635,15 @@ require([
         av.dom.popBot.style.height = av.dom.popBot.scrollHeight + 'px';
         //dijit.byId('populationBlock').resize(); //not a dojo element
 
-        console.log('4 Before: av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+        if (av.debug.uil) console.log('4 Before: av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
 
-        console.log('  av.dom.gridHolder.scrollWidth ht = ', av.dom.gridHolder.scrollWidth, av.dom.gridHolder.scrollHeight);
-        console.log('  av.dom.gridHolder jQuery.outerWd ht = ', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight());
-        console.log('  av.dom.gridHolder.offsetWidth ht = ', av.dom.gridHolder.offsetWidth, av.dom.gridHolder.offsetHeight);
-        console.log('  av.dom.gridHolder jQuery.width ht = ', $("#gridHolder").width(), $("#gridHolder").height());
-        console.log('  av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-        console.log('  av.dom.gridHolder jQuery.innerWd ht = ', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight());
-        console.log('  av.dom.gridHolder jQuery.cssWd ht = ', $("#gridHolder").css('width'), $("#gridHolder").css('height'));
+        if (av.debug.uil) console.log('  av.dom.gridHolder.scrollWidth ht = ', av.dom.gridHolder.scrollWidth, av.dom.gridHolder.scrollHeight);
+        if (av.debug.uil) console.log('  av.dom.gridHolder jQuery.outerWd ht = ', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight());
+        if (av.debug.uil) console.log('  av.dom.gridHolder.offsetWidth ht = ', av.dom.gridHolder.offsetWidth, av.dom.gridHolder.offsetHeight);
+        if (av.debug.uil) console.log('  av.dom.gridHolder jQuery.width ht = ', $("#gridHolder").width(), $("#gridHolder").height());
+        if (av.debug.uil) console.log('  av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+        if (av.debug.uil) console.log('  av.dom.gridHolder jQuery.innerWd ht = ', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight());
+        if (av.debug.uil) console.log('  av.dom.gridHolder jQuery.cssWd ht = ', $("#gridHolder").css('width'), $("#gridHolder").css('height'));
         
         if (av.dom.gridHolder.style.height < av.dom.gridHolder.clientWidth){
           av.grd.canvasSize = $("#gridHolder").height();
@@ -1596,9 +1657,9 @@ require([
         av.grd.spaceY = av.grd.canvasSize;
 
         av.grd.findGridSize(av.grd, av.parents);
-        console.log('After: av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
-        console.log(' av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-        console.log('av.grd.spaceX='+av.grd.spaceX);
+        if (av.debug.uil) console.log('After: av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+        if (av.debug.uil) console.log(' av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+        if (av.debug.uil) console.log('av.grd.spaceX='+av.grd.spaceX);
 
         //Need to fix for scrolling   // This was commented out in Avida-ED 3.1
         //if (av.dom.gridHolder.scrollHeight == av.dom.gridHolder.clientHeight + 17) {
@@ -1737,7 +1798,7 @@ require([
       av.debug.log += '\n     --uiD: Plotly.plot("popChart", popData, av.pch.layout, av.pch.widg) in AvidaED.js at 1565';
       av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'popData, av.pch.layout, av.pch.widg', [popData, av.pch.layout, av.pch.widg]);
       Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
-    console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
+      if (av.debug.uil) console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
       if (av.debug.plotly) console.log('after plotly.plot in poChartInit');
     }
     else {
@@ -2323,7 +2384,7 @@ require([
       av.ind.updateOrganTrace(av.traceObj, av.gen);
     }
     else av.ind.didDivide = false;
-  }
+  };
   /* ******************************************************************************************************************/
   /*                                 End of Canvas to draw genome and update details
   /* **************************************************************************************************************** */
@@ -2339,7 +2400,7 @@ require([
       ii--;
       dijit.byId('orgCycle').set('value', ii);
       av.ind.cycle = ii;
-      av.ind.updateOrgTrace()
+      av.ind.updateOrgTrace();
     }
     av.post.addUser('Button: orgBack; cycle = ' + ii);
   };
@@ -2351,7 +2412,7 @@ require([
       dijit.byId('orgCycle').set('value', ii);
       av.ind.cycle = ii;
       if (av.debug.ind) console.log('ii', ii, '; gen', av.gen);
-      av.ind.updateOrgTrace()
+      av.ind.updateOrgTrace();
     }
     av.post.addUser('Button: orgForward; cycle = ' + ii);
   };
@@ -2393,7 +2454,7 @@ require([
     dijit.byId('orgCycle').set('value', av.ind.cycleSlider.get('maximum'));
     av.ind.cycle = av.ind.cycleSlider.get('maximum');
     av.ind.updateOrgTrace();
-    av.ind.orgStopFn()
+    av.ind.orgStopFn();
   };
 
   dijit.byId('orgCycle').on('Change', function (value) {
@@ -2428,30 +2489,30 @@ require([
 
   //on 2018_0823 this is where height gets messed up when loading the program. 
   av.pch.divSize = function(from) {
-    console.log(from, 'called av.pch.divSize');
-    console.log('popChrtHolder css.wd ht border padding margin=',  $("#popChrtHolder").css('width'), $("#popChrtHolder").css('height')
+    if (av.debug.uil) console.log(from, 'called av.pch.divSize');
+    if (av.debug.uil) console.log('popChrtHolder css.wd ht border padding margin=',  $("#popChrtHolder").css('width'), $("#popChrtHolder").css('height')
       ,$("#popChrtHolder").css('border'), $("#popChrtHolder").css('padding'), $("#popChrtHolder").css('margin'));
 
-    console.log('av.dom.popChrtHolder.ht offset, client ht=', av.dom.popChrtHolder.offsetHeight, 
+    if (av.debug.uil) console.log('av.dom.popChrtHolder.ht offset, client ht=', av.dom.popChrtHolder.offsetHeight, 
        av.dom.popChrtHolder.clientHeight, '; parseInt(padding)=', parseInt($("#popChrtHolder").css('padding'),10));
 
     av.pch.ht = av.dom.popChrtHolder.clientHeight - 2*parseInt($("#popChrtHolder").css('padding'),10);
     av.pch.wd = av.dom.popChrtHolder.clientWidth - 2*parseInt($("#popChrtHolder").css('padding'),10);
     av.pch.layout.height = av.pch.ht;
     av.pch.layout.width = av.pch.wd;
-    console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
-    console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
+    if (av.debug.uil) console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
+    if (av.debug.uil) console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
 
     //av.dom.popChrtHolder.style.width = av.dom.popChrtHolder.clientWidth + 'px';  //seems redundent  djb said to delete as of 2018_0827
     //av.dom.popChrtHolder.style.height = av.dom.popChrtHolder.clientHeight + 'px';  //seems redundent djb said to delete as of 2018_0827
     av.dom.popChart.style.height = av.pch.ht + 'px';
     av.dom.popChart.style.width = av.pch.wd + 'px';
-    console.log('popChart css.wd, border, padding, margin=',  $("#popChart").css('width'), $("#popChart").css('height')
+    if (av.debug.uil) console.log('popChart css.wd, border, padding, margin=',  $("#popChart").css('width'), $("#popChart").css('height')
       ,$("#popChart").css('border'), $("#popChart").css('padding'), $("#popChart").css('margin'));
-    console.log('av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight, 
+    if (av.debug.uil) console.log('av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight, 
        av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'),10));
-    console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
-    console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
+    if (av.debug.uil) console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
+    if (av.debug.uil) console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
   };
 
   av.anl.divSize = function(from) {
@@ -2483,7 +2544,8 @@ require([
          '; av.dom.gridHolder.clientHeight=', av.dom.gridHolder.clientHeight);
       if (av.grd.need2DrawGrid) {
         av.grd.popChartFn();
-        av.grd.drawGridSetupFn('av.ui.browserResizeEventHandler when pop=flex');
+        console.log('av.grd.need2DrawGrid=',av.grd.need2DrawGrid);
+        //av.grd.drawGridSetupFn('av.ui.browserResizeEventHandler when pop=flex');
       }
     }
     if ('none' !== domStyle.get('organismBlock', 'display')) {
@@ -2499,36 +2561,10 @@ require([
   };
 
   console.log('before ready function');
-  //registry.byID seems to only work for dojo things  
-  //the ready function below is a dojo function.
-  ready(function () {
-    //console.log('gridHolder=', registry.byId('gridHolder'));
-    //console.log('anaChrtHolder=', registry.byId('anaChrtHolder'));
-    //console.log('popChrtHolder=', registry.byId('popChrtHolder'));
-    //console.log('gorganismCanvasHolder=', registry.byId('organismCanvasHolder'));
-    $(window).resize(function(){
+  $(window).resize(function(){
      // av.ui.resizePopLayout('window.resize');    //does not work.
-    });   
-    if (av.ui.beginFlag){
-      av.ui.beginFlag = false;
-    }
-    
-    aspect.after(registry.byId('gridHolder'), 'resize', function () {
-      av.ui.browserResizeEventHandler('ready, aspect.after(gridHolder)');
-    });
-    //aspect.after(registry.byId('anaChrtHolder'), 'resize', function () {
-    //  av.anl.divSize('ready resize');
-    //});
-    //aspect.after(registry.byId('popChrtHolder'), 'resize', function () {
-    //  av.ui.browserResizeEventHandler();
-    //  av.pch.divSize('ready resize');
-    //});
-    
-    //only works if dojo div; not sure I want a dojo div here comment out for now
-    //aspect.after(registry.byId('organismCanvasHolder'), 'resize', function () {
-    //  av.ui.browserResizeEventHandler('ready, organsimCanvasHolder');
-    //s});
-  });
+  });   
+
 
   //This function does not work. make grid get larger and larger
   av.ui.resizePopLayout = function(from) {      
@@ -2583,7 +2619,8 @@ require([
     }
   };
 
-  av.ui.chngPopWidth = function(adjustGridWd) {
+  av.ui.chngPopWidth = function(from) {
+    console.log(from, 'called av.ui.chngPopWidth');
     av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px'; 
     av.dom.setupBlock.style.width = popInfoHolderWd + 'px'; 
     av.dom.labInfoBlock.style.width = popInfoHolderWd + 'px';
@@ -3076,6 +3113,18 @@ To make a gif using screen capture
 // Position relative to ancestor:
 // https://www.w3schools.com/cssref/pr_pos_right.asp
 //
+// Document Ready Examples
+// https://www.sitepoint.com/types-document-ready/
+// 
+// Forcingn windows resize to fire
+// https://stackoverflow.com/questions/1861109/forcing-windows-resize-to-fire
+// https://stackoverflow.com/questions/23567483/jquery-fake-a-window-resize
+// https://stackoverflow.com/questions/277759/html-onresizeend-event-or-equivalent-way-to-detect-end-of-resize
+// https://stackoverflow.com/questions/2996431/detect-when-a-window-is-resized-using-javascript
+// https://stackoverflow.com/questions/14504079/jquery-trigger-function-above-a-certain-window-width
+// 
+// 
+// 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Modal Dialog Popup
 // 
@@ -3099,4 +3148,7 @@ To make a gif using screen capture
 // 
 // very wordy https://alistapart.com/article/responsive-web-design
 // 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  Git Hub
+// https://github.com/DBlackwood/av_ui/branches
 // 

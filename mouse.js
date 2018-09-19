@@ -32,8 +32,9 @@ av.mouse.setCursorStyle = function (shape, nodeList) {
   "use strict";
   //console.log(nodeList);
   var lnght = nodeList.length;
+  //console.log(lnght)
   for (var ii = 0; ii < lnght; ii++) {
-    //console.log(nodeList[ii]);
+    //console.log(ii, nodeList[ii]);
     document.getElementById(nodeList[ii]).style.cursor = shape;
   }
 };

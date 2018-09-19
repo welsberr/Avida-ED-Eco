@@ -106,7 +106,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
       alert('Unable to open file. Please check the file and try again or contact Avida-ED-development@googlegroups.com for help');
       av.debug.log += '\nworkspace fileReader error:' + err;
     }
-    console.log('fileLoadedEvent=',fileLoadedEvent);
+
     fileReader.onloadend = function(fileLoadedEvent)
     {
       try {
@@ -158,8 +158,9 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
           + 'If you continue to have propblem, ask your instructor or write Avida-ED-development@googlegroups.com');
       }
       catch (error) {
+        console.log('error:', error);
         av.debug.log += '\nworkspace jsZip error:' + error;
-        alert('Unable to extract an Avida Workspace Zip file, please check the file and try again. If you continue to have trouble, use "Report Problem" in the help menu');
+        alert('Unable to extract an Avida Workspace Zip file, please check the file and try again. If you continue to have trouble, use "Report Problem" in the help menu or contact Avida-ED-development@googlegroups.com');
       }
     };
     fileReader.readAsArrayBuffer(zipFileToLoad);  //calls function that reads the zip file

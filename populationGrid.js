@@ -1,3 +1,5 @@
+var av = av || {};  //because av already exists
+
 av.grd.backgroundSquares = function () {
   'use strict';
   var boxColor = '#111';
@@ -306,7 +308,7 @@ av.grd.findGridSize = function (){
   
 
   // First find sizes based on zoom
-  console.log('av.grd.zoom='+av.grd.zoom);
+  if (av.debug.uil) console.log('av.grd.zoom='+av.grd.zoom);
   av.grd.boxX = av.grd.zoom * av.grd.spaceX;
   av.grd.boxY = av.grd.zoom * av.grd.spaceY;
   //get rows and cols based on user input 
@@ -329,8 +331,8 @@ av.grd.findGridSize = function (){
   }
 
   //Determine new size of grid
-    console.log('av.dom.gridCanvas.width ht', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
-    console.log('av.grd.sizeX, sizeY', av.grd.sizeX, av.grd.sizeY);
+    if (av.debug.uil) console.log('av.dom.gridCanvas.width ht', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+    if (av.debug.uil) console.log('av.grd.sizeX, sizeY', av.grd.sizeX, av.grd.sizeY);
   
     av.dom.gridCanvas.width = av.grd.sizeX;
     av.grd.xOffset = 0;
