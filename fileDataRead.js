@@ -3,37 +3,46 @@ var av = av || {};  //incase av already exists
 
 av.fio.addFzItem = function(dndSection, name, type, fileNum) {
   'use strict';
-  dndSection.insertNodes(false, [{data: name, type: [type]}]);
-  dndSection.sync();
-  var mapItems = Object.keys(dndSection.map);
-  var domid  =  mapItems[mapItems.length - 1];
+  if (undefined != dndSection) {
+    dndSection.insertNodes(false, [{data: name, type: [type]}]);
+    dndSection.sync();
+    var mapItems = Object.keys(dndSection.map);
+    var domid = mapItems[mapItems.length - 1];
 
-  //create a right av.mouse-click context menu for the item just created.
-  if (av.debug.fio) console.log('fileNum', fileNum, '; name', name, '; Section', dndSection.node.id);
-  //console.log('fileNum', fileNum, '; name', name, '; Section', dndSection.node.id, '; type', type);
+    //create a right av.mouse-click context menu for the item just created.
+    if (av.debug.fio) console.log('fileNum', fileNum, '; name', name, '; Section', dndSection.node.id);
+    //console.log('fileNum', fileNum, '; name', name, '; Section', dndSection.node.id, '; type', type);
 
-  if (0 < fileNum) { av.dnd.contextMenu(dndSection, domid); }
-  //av.dnd.contextMenu(dndSection, domid);
-  return domid;
+    if (0 < fileNum) {
+      av.dnd.contextMenu(dndSection, domid);
+    }
+    //av.dnd.contextMenu(dndSection, domid);
+    return domid;
+  }
+  else {
+    console.log('dndSection=', dndSection, '; name=', name, '; type=', type, '; fileNum=', fileNum);
+    return 'dndSection is undefined';
+  }
 };
 
 //need to make sure freezer loaded first so not currently in use. Delete later if not used tiba
-av.fio.loadDefaultConfig = function() {
-  'use strict';
-  console.log('beginning of av.fio.loadDefaultConfig');
-  av.fzr.actConfig.name = av.fzr.file['c0/entryname.txt'];
-  av.fzr.actConfig.type = 'c';
-  console.log('av.fzr.actConfig.name=', av.fzr.actConfig.name);
-  av.dnd.activeConfig.selectAll().deleteSelectedNodes();
-  av.dnd.activeConfig.insertNodes(false, [{data: av.fzr.actConfig.name, type: [av.fzr.actConfig.type]}]);
-  av.dnd.activeConfig.sync();
-  var mapItems = Object.keys(av.dnd.activeConfig.map);
-  av.fzr.actConfig.actDomid = mapItems[mapItems.length - 1];  //domid from active config. Not sure if needed.
-  av.fzr.actConfig.fzDomid = av.fzr.domid['c0'];
-  if (av.debug.fio) console.log('avida.cfg', av.fzr.file['c0/avida.cfg']);
-  av.frd.avidaCFG2form(av.fzr.file['c0/avida.cfg']);
-  av.frd.environmentCFG2form(av.fzr.file['c0/environment.cfg']);
-};
+//av.fio.loadDefaultConfig = function() {
+//  'use strict';
+//  console.log('beginning of av.fio.loadDefaultConfig');
+//  av.fzr.actConfig.name = av.fzr.file['c0/entryname.txt'];
+//  av.fzr.actConfig.type = 'c';
+//  console.log('av.fzr.actConfig.name=', av.fzr.actConfig.name);
+//  av.dnd.activeConfig.selectAll().deleteSelectedNodes();
+//  av.dnd.activeConfig.insertNodes(false, [{data: av.fzr.actConfig.name, type: [av.fzr.actConfig.type]}]);
+//  av.dnd.activeConfig.sync();
+//  var mapItems = Object.keys(av.dnd.activeConfig.map);
+//  av.fzr.actConfig.actDomid = mapItems[mapItems.length - 1];  //domid from active config. Not sure if needed.
+//  av.fzr.actConfig.fzDomid = av.fzr.domid['c0'];
+//  if (av.debug.fio) console.log('avida.cfg', av.fzr.file['c0/avida.cfg']);
+//  av.frd.avidaCFG2form(av.fzr.file['c0/avida.cfg']);
+//  av.frd.environmentCFG2form(av.fzr.file['c0/environment.cfg']);
+//};
+
 
 av.fio.setActiveConfig = function(dndSection, name, type){
   'use strict';
@@ -58,69 +67,131 @@ av.frd.add2freezerFromFile = function (loadConfigFlag) {
   var num = dir.substr(1, dir.length-1);
   var name, domid;
   //console.log('av.fio.thisfile.asText()', av.fio.thisfile.asText());
-  //console.log('av.fio.thisfile=', av.fio.thisfile);
-  if (null === av.fio.thisfile.asText()) { name = av.fio.anID; }
+  //console.log('av.fio.thisfile', av.fio.thisfile);
+  if (null == av.fio.thisfile.asText()) { name = av.fio.anID; }
   else { name = wsb('\n', av.fio.thisfile.asText()); }
 
-  if (av.debug.fio) console.log('type ', type, '; dir', dir, '; num', num);
+  //if (av.debug.fio) console.log('type ', type, '; dir', dir, '; num', num);
   switch (type) {
     case 'c':
       domid = av.fio.addFzItem(av.dnd.fzConfig, name, type, num);
+      if ('dndSection is undefined' == domid) console.log('av.dnd.fzConfig is undefined');
       if (av.fzr.cNum < Number(num)) {av.fzr.cNum = Number(num); }
-      console.log('c: num', num, '; name', name, 'flag', loadConfigFlag);
-      if (0 == Number(num) && loadConfigFlag) {var ConfigActiveDomID = av.fio.setActiveConfig(av.dnd.activeConfig, name, 'b');}
+      //console.log('c: num', num, '; name', name, 'flag', loadConfigFlag);
+      if (0 == num && loadConfigFlag) {var ConfigActiveDomID = av.fio.setActiveConfig(av.dnd.activeConfig, name, 'b');}
       break;
     case 'g':
       domid = av.fio.addFzItem(av.dnd.fzOrgan, name, type, num);
+      if ('dndSection is undefined' == domid) console.log('av.dnd.fzOrgan is undefined');
       if (av.fzr.gNum < Number(num)) {av.fzr.gNum = Number(num); }
+      break;
+    case 'm':
+      domid = av.fio.addFzItem(av.dnd.fzMdish, name, type, num);
+      av.fzr.mDish[dir] = {};
+      av.fzr.mDish[dir].dir = {};
+      av.fzr.mDish[dir].domid = {};
+      av.fzr.mDish[dir].cNum = -1;
+      av.fzr.mDish[dir].wNum = -1;
+      if ('dndSection is undefined' == domid) console.log('av.dnd.fzMdish is undefined------------------------------');
+      if (av.fzr.mNum < Number(num)) {av.fzr.mNum = Number(num); }
       break;
     case 'w':
       domid = av.fio.addFzItem(av.dnd.fzWorld, name, type, num);
+      if ('dndSection is undefined' == domid) console.log('av.dnd.fzWorld is undefined');
       if (av.fzr.wNum < Number(num)) {av.fzr.wNum = Number(num); }
       break;
   }
   av.fzr.file[av.fio.anID] = name;
   av.fzr.domid[dir] = domid;
   av.fzr.dir[domid] = dir;
+}
+
+av.frd.add2multiDishFromFile = function(){
+  "use strict";
+  //console.log(from, ' called av.frd.add2multiDishFromFile');
+  console.log('av.fio.fName', av.fio.fName, '; av.fio.anID', av.fio.anID, '; av.fzr.fziType=',av.fzr.fziType);
+  var multiDish = wsb('/', av.fio.anID);
+  var superNum = multiDish.substr(1, multiDish.length-1);
+  var firstIndex = av.fio.anID.indexOf('/');
+  var lastIndex = av.fio.anID.lastIndexOf('/');
+  var length = lastIndex - firstIndex - 1;
+  console.log('firstI=', firstIndex, ';  lastI=', lastIndex);
+  var subDish = av.fio.anID.substr(firstIndex+1, length);
+  var type = subDish.substr(0,1);
+  var subNum = subDish.substr(1, subDish.length-1);
+  switch (type) {
+    case 'c':
+      if (av.fzr.mDish[multiDish].cNum < Number(subNum)) {av.fzr.mDish[multiDish].cNum = Number(subNum); }
+      break;
+    case 'w':
+      if (av.fzr.mDish[multiDish].wNum < Number(subNum)) {av.fzr.mDish[multiDish].wNum = Number(subNum); }
+      break;
+  }
+  av.fzr.mDish[multiDish].domid[subDish] = subNum;  //eventually subNum will be a domid, but we are not building the editing interface yet.
+  av.fzr.mDish[multiDish].dir[subNum] = subDish;
+
+  console.log('multiDish=', multiDish, '; superNum=', superNum, '; subDish=', subDish, '; subNum=', subNum, '; type=', type, 'wNum=', av.fzr.mDish[multiDish].wNum);
+};
+
+av.frd.processSubDish = function() {
+  "use strict";
+  console.log('SubDish:', av.fzr.fziType, ';  ID=', av.fio.anID);
 };
 
 av.fio.processFiles = function (loadConfigFlag){
   'use strict';
-  var fileType = wsa('/', av.fio.anID);
-  switch (fileType) {
-    case 'entryname.txt':
-      av.frd.add2freezerFromFile(loadConfigFlag);
-      av.fzr.usrFileLoaded = true;
-    case 'ancestors':
-    case 'ancestors_manual':
-    case 'avida.cfg':
-    case 'clade.ssg':
-    case 'detail.spop':
-    case 'environment.cfg':
-    case 'events.cfg':
-    case 'genome.seq':
-    case 'instset.cfg':
-    case 'timeRecorder.csv':
-    case 'tr0':
-    case 'tr1':
-    case 'tr2':
-    case 'tr3':
-    case 'tr4':
-    case 'update':
-      if (loadConfigFlag) {
-        if ('c0/avida.cfg' === av.fio.anID) {av.frd.avidaCFG2form(av.fio.thisfile.asText());}
-        if ('c0/environment.cfg' === av.fio.anID) {av.frd.environmentCFG2form(av.fio.thisfile.asText().trim());}
-      }
-      av.fzr.file[av.fio.anID] = av.fio.thisfile.asText().trim();
-      break;
-    default:
-      //if (av.debug.fio) console.log('undefined file type in zip: full ', av.fio.fName, '; id ', av.fio.anID, '; type ', fileType);
-      break;
+  var fileType = av.fio.anID;
+  if ('subDish' === av.fzr.fziType){
+    fileType = wsa('/', fileType);
+    //av.frd.processSubDish();
   }
-  //if (av.debug.fio) console.log('file type in zip: fname ', av.fio.fName, '; id ', av.fio.anID, '; type ', fileType);
-  //console.log('file type in zip: fname ', av.fio.fName, '; id ', av.fio.anID, '; type ', fileType);
-};
+  fileType = wsa('/', fileType);
+  //if (av.debug.fio) console.log('anID=', av.fio.anID, '; fileType=', fileType, '; fziType=', av.fzr.fziType);
+    switch (fileType) {
+      case 'entryname.txt':
+        if ('subDish' != av.fzr.fziType) {
+          av.frd.add2freezerFromFile(loadConfigFlag);
+          av.fzr.usrFileLoaded = true;
+        }
+        else {
+          av.frd.add2multiDishFromFile();
+        }
+      case 'ancestors':
+      case 'ancestors_manual':
+      case 'avida.cfg':
+      case 'clade.ssg':
+      case 'detail.spop':
+      case 'environment.cfg':
+      case 'events.cfg':
+      case 'genome.seq':
+      case 'instset.cfg':
+      case 'offset.txt':
+      case 'timeRecorder.csv':
+      case 'tr0':
+      case 'tr1':
+      case 'tr2':
+      case 'tr3':
+      case 'tr4':
+      case 'update':
+        if (loadConfigFlag) {
+          if ('c0/avida.cfg' == av.fio.anID) {
+            av.frd.avidaCFG2form(av.fio.thisfile.asText());
+          }
+          if ('c0/environment.cfg' == av.fio.anID) {
+            av.frd.environmentCFG2form(av.fio.thisfile.asText().trim());
+          }
+        }
+        av.fzr.file[av.fio.anID] = av.fio.thisfile.asText().trim();
+        //if (av.debug.fio) console.log('FileType is ', fileType, '; filepath = ', av.fio.anID);
+        break;
+      default:
+        //if (av.debug.fio) console.log('undefined file type in zip: full ', av.fio.fName, '; id ', av.fio.anID, '; type ', fileType);
+        break;
 
+    //if (av.debug.fio) console.log('file type in zip: fname ', av.fio.fName, '; id ', av.fio.anID, '; type ', fileType);
+    //console.log('file type in zip: fname ', av.fio.fName, '; id ', av.fio.anID, '; type ', fileType);
+  }
+};
 
 av.fio.processItemFiles = function (){
   'use strict';
@@ -151,11 +222,9 @@ av.fio.processItemFiles = function (){
   }
 };
 
-
 //---------------------------------- update config data from file data stored in freezer -------------------------------
 av.frd.updateSetup = function () {
   'use strict';
-
   var dir = av.fzr.actConfig.dir;
   var path = dir + '/avida.cfg';
   var doctext = av.fzr.file[path];
@@ -193,6 +262,7 @@ av.frd.environmentCFGparse = function (filestr) {
   var lngth = lines.length;
   for (var ii = 0; ii < lngth; ii++) {
     if (3 < lines[ii].length) {
+      //console.log("lines[", ii, "]=", lines[ii]);
       lineobj = av.frd.environmentCFGlineParse(lines[ii]);
       rslt[lineobj.name.toUpperCase()] = lineobj.value;
     }
@@ -213,8 +283,6 @@ av.frd.environmentCFG2form = function (fileStr) {
   av.dom.ornose.checked = dict.ORN;
   av.dom.andnose.checked = dict.ANDN;
   av.dom.xorose.checked = dict.XOR;
-
-  //dijit.byId('notose').set('checked', dict.NOT);
 };
 
 //----------------------------- section to put data from avida.cfg into setup form of population page ------------------
@@ -274,7 +342,7 @@ av.frd.avidaCFG2form = function (fileStr){
   //no longer in use; tiba delete later
   //dijit.byId('aveTimeSlice').set('value', dict.AVE_TIME_SLICE);
   //dijit.byId('sleepDelay').set('value', dict.SLEEP_DELAY);
-}
+};
 
 //--------------------- puts data from the av.frd.pauseRun.txt file into the setup form for the population page---------
 av.frd.pauseRunAtTXT2form = function (fileStr) {
@@ -290,7 +358,7 @@ av.frd.pauseRunAtTXT2form = function (fileStr) {
     dijit.byId('autoUpdateRadio').set('checked', false);
     dijit.byId('autoUpdateSpinner').set('value', '1000');
   }
-}
+};
 
 //----------------------- section to put data from ancestors file into ancestorBox and placeparents auto ---------------
 
@@ -382,7 +450,8 @@ av.fio.handAncestorParse = function (filestr) {
 // puts data from the ancestor into parents file by hand
 av.fio.handAncestorLoad = function(fileStr) {
   'use strict';
-  if (av.debug.fio) console.log('in av.fio.handAncestorLoad: fileStr', fileStr);
+  console.log('in av.fio.handAncestorLoad');
+  if (av.debug.fio || true) console.log('in av.fio.handAncestorLoad: fileStr', fileStr);
   var stuff = av.fio.handAncestorParse(fileStr);
   if (av.debug.fio) console.log('in av.fio.handAncestorLoad: stuff', stuff);
   //Now put in ancestors and place parents
@@ -404,7 +473,7 @@ av.fio.handAncestorLoad = function(fileStr) {
     av.parents.col[nn] = stuff.col[kk];
     av.parents.row[nn] = stuff.row[kk];
     av.parents.injected[nn] = false;
-    av.parents.AvidaNdx[nn] = av.parents.col[nn] + Number(av.parents.row[nn]) * Number(sizeCols.value);
+    av.parents.AvidaNdx[nn] = av.parents.col[nn] + Number(av.parents.row[nn]) * Number(av.dom.sizeCols.value);
     //av.parents.AvidaNdx[nn] = av.parents.col[nn] + Number(av.parents.row[nn]) * Number(dijit.byId('sizeCols').get('value'));
     //av.parents.AvidaNdx[av.parents.autoNdx[ii]] = av.parents.col[av.parents.autoNdx[ii]] + cols * av.parents.row[av.parents.autoNdx[ii]];
     if (av.debug.fio) console.log('av.parents:  name', av.parents.name[nn], '; domid', av.parents.domid[nn], '; gen', av.parents.genome[nn]);
@@ -452,7 +521,7 @@ av.fio.cladeSSG2parents = function (fileStr) {
   }
   av.dnd.ancestorBox.sync();
   //console.log('parents', av.parents);
-}
+};
 
 //----------------------- section to put data from timeRecorder.csv file into data from charts ----------------------
 
@@ -553,11 +622,6 @@ av.frd.loadTimeRecorderData = function(dir) {
     av.pch.logEar = av.utl.newFilledArray(lngth, null);
     av.pch.logNum = av.utl.newFilledArray(lngth, null);
     for (var ii = 0; ii < lngth; ii++) av.pch.xx[ii] = ii;
-    //console.log('tr length=', av.pch.aveFit.length, '; update=', av.fzr.actConfig.file['update'], '; oldUpdate=', av.grd.oldUpdate);
-    //console.log('aveFit', av.pch.aveFit);
-    //console.log('aveCst', av.pch.aveCst);
-    //console.log('aveEar', av.pch.aveEar);
-    //console.log('aveNum', av.pch.aveNum);
   }
   else {
     //console.log('av.fzr.file.' + dir + '/timeRecorder.csv=', av.fzr.file[dir + '/timeRecorder.csv']);
@@ -566,7 +630,7 @@ av.frd.loadTimeRecorderData = function(dir) {
     av.frd.timeRecorder2chart(av.fzr.file[dir+'/timeRecorder.csv']);
     console.log('av.pch.fnBinary = ', av.pch.fnBinary);
   }
-}
+};
 
 //----------------------- section to put data from time recorder (tr) files into data from charts ----------------------
 
@@ -594,7 +658,7 @@ av.fio.tr2chart = function (fileStr) {
   var data = [];
   if (undefined !== fileStr) { data = av.frd.tr2chartParse(fileStr); }
   return data;
-}
+};
 
 //nothing in this section works.
 //------------------------------------------------- rest may not be in use ---------------------------------------------

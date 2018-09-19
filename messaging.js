@@ -349,6 +349,22 @@ av.msg.importMultiDishExpr = function (dir) {
 }
 //------------------------------------------------------------------------------------ end av.msg.importMultiDishExpr --
 
+av.msg.getOffset = function (dir, key) {
+  "use strict";
+  var pair = [];
+  var filestr = av.fzr.file[dir+'/'+key+'/offset.txt'];
+  if (undefined != filestr) {
+    var lines = filestr.split('\n');
+    var pair = lines[0].split(',');
+    return pair;
+  }
+  else {
+    console.log('file ', dir+'/'+key+'/offset.txt', ' is missing.');
+    pair = [0, 0];
+    return;
+  }
+};
+
 av.msg.importPopExpr = function () {
   'use strict';
   var fList = ['avida.cfg'
