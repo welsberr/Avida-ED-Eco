@@ -30,6 +30,14 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
   if (av.debug.fio) console.log('before av.dnd.fzMdish.selectAll', av.dnd.fzMdish);
   av.dnd.fzMdish.selectAll().deleteSelectedNodes();
   av.dnd.fzMdish.sync();
+
+  if (av.debug.fio) console.log('before av.dnd.fzRdish.selectAll', av.dnd.fzMdish);
+  av.dnd.fzRdish.selectAll().deleteSelectedNodes();
+  av.dnd.fzRdish.sync();
+  if (av.debug.fio) console.log('before av.dnd.fzTdish.selectAll', av.dnd.fzMdish);
+  av.dnd.fzTdish.selectAll().deleteSelectedNodes();
+  av.dnd.fzTdish.sync();
+
   if (av.debug.fio) console.log('before av.dnd.fzWorld.selectAll', av.dnd.fzWorld);
   av.dnd.fzWorld.selectAll().deleteSelectedNodes();
   av.dnd.fzWorld.sync();
@@ -88,7 +96,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
     //if (av.debug.fio) console.log('after read loop: fzr', av.fzr);
     av.fio.fileReadingDone = true;
     //if (av.debug.fio) console.log('before DrawGridSetup')
-    av.grd.drawGridSetupFn();
+    av.grd.drawGridSetupFn('av.fio.readZipWS');
     av.fzr.cNum++;  //now the Num value refer to the next (new) item to be put in the freezer.
     av.fzr.gNum++;
     av.fzr.wNum++;
@@ -163,10 +171,12 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
           }
         }
         if (av.debug.fio) console.log('cNum=',av.fzr.cNum, '; gNum=', av.fzr.gNum, '; mNum', av.fzr.mNum, '; wNum', av.fzr.wNum);
-        if ('populationBlock' === av.ui.page) av.grd.drawGridSetupFn();
+        if ('populationBlock' === av.ui.page) av.grd.drawGridSetupFn('av.fio.userPickZipRead');
         av.fzr.cNum++;  //now the Num value refer to the next (new) item to be put in the freezer.
         av.fzr.gNum++;
         av.fzr.mNum++;
+        av.fzr.rNum++;
+        av.fzr.tNum++;
         av.fzr.wNum++;
         //tiba; will need to increment cNum and wNum for each superdish when userInterface is built.
         for (var key in av.fzr.mDish) {
@@ -360,7 +370,7 @@ av.fio.fzSaveCurrentWorkspaceFn = function () {
 //    wsSavedMsg.textcontent = 'Workspace: default  ';
 av.fzr.saveUpdateState = function (newSaveState) {
   'use strict';
-  console.log('oldState', av.fzr.saveState, '; newState', newSaveState);
+  //console.log('oldState', av.fzr.saveState, '; newState', newSaveState);
   if ('maybe' === newSaveState) {
     //console.log('newSaveState', newSaveState)
     if ('no' === av.fzr.saveState) {

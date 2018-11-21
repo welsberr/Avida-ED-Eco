@@ -201,7 +201,7 @@ av.dnd.lndActiveConfig = function (move) {
       str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual'];
       av.fio.handAncestorLoad(str);
     }
-    av.grd.drawGridSetupFn(av.dnd.lndActiveConfig); //draw grid
+    av.grd.drawGridSetupFn('av.dnd.lndActiveConfig'); //draw grid
   }
   else if ('fzWorld' === move.source.node.id) {
     av.fzr.actConfig.type = 'w';
@@ -264,7 +264,7 @@ av.dnd.lndActiveConfig = function (move) {
     //av.msg.requestPopStats();  //tiba last time this was on; data was all = 0, so confusing;
   }
   else console.log('fzr.activeCon - something strange happened', av.fzr.actConfig);
-}
+};
 
 //Process when an Configuration is added to the Freezer
 av.dnd.landFzConfig = function (source, nodes, target) {
@@ -310,7 +310,7 @@ av.dnd.landFzConfig = function (source, nodes, target) {
     av.dnd.fzConfig.deleteSelectedNodes();  //clear items
     av.dnd.fzConfig.sync();   //should be done after insertion or deletion
   }
-}
+};
 
 //----------------------------------------------------Organism dnd------------------------------------------------------
 //When something is added to the Organism Freezer
@@ -378,7 +378,7 @@ av.dnd.landFzOrgan = function (source, nodes, target) {
     if (av.debug.dnd) console.log('dojo dnd to Organ Freezer, not from Ancestor Box');
   }
   if (av.debug.dnd) console.log('End of av.dnd.landFzOrgan');
-}
+};
 
 //here the parameters are Dojo DND objects
 av.dnd.makeMove = function (source, nodes, target) {
@@ -527,7 +527,7 @@ av.dnd.updateFromFzrOrganism = function () {
   if (av.debug.dnd) console.log('fzr', av.fzr);
 
   if (av.debug.dnd) console.log('av.fzr.actOrgan', av.fzr.actOrgan);
-}
+};
 
 av.dnd.landOrganIcon = function (source, nodes, target) {
   //clear out the old data if an organism is already there
@@ -559,7 +559,7 @@ av.dnd.landOrganIcon = function (source, nodes, target) {
   //clear out av.dnd.organIcon as nothing is stored there - just moved on to OrganismCurrent
   av.dnd.organIcon.selectAll().deleteSelectedNodes();  //clear items
   av.dnd.organIcon.sync();   //should be done after insertion or deletion
-}
+};
 
 //Need to have only the most recent dropped organism in av.dnd.activeOrgan. Do this by deleting everything in activeOrgan
 //and reinserting the most resent one after a drop event.
@@ -583,7 +583,7 @@ av.dnd.lndActiveOrgan = function (move) {
     //if (av.debug.dnd) console.log('av.dnd.activeOrgan.map=', av.dnd.activeOrgan.map);
   }
   av.dnd.updateFromFzrOrganism();
-}
+};
 
 //Need to have only the most recent dropped organism in av.dnd.activeOrgan. Do this by deleting everything in activeOrgan
 //and reinserting the most resent one after a drop event.
@@ -606,7 +606,7 @@ av.dnd.landActiveOrgan = function (source, nodes, target) {
     //if (av.debug.dnd) console.log('av.dnd.activeOrgan.map=', av.dnd.activeOrgan.map);
   }
   av.dnd.updateFromFzrOrganism();
-}
+};
 
 //The variable organCanvas with the html tag organismCanvas will Not hold the organism. Anything dropped on the OrganismCanvas
 //will be put in av.dnd.activeOrgan.
@@ -631,7 +631,7 @@ av.dnd.landorganCanvas = function (source, nodes, target) {
   av.fzr.actOrgan.actDomid = Object.keys(av.dnd.activeOrgan.map)[0];
 
   if ('fzOrgan' == source.node.id) av.dnd.updateFromFzrOrganism();
-}
+};
 
 //------------------------------------------------- Populated Dishes DND -----------------------------------------------
 //Process when an World is added to the Freezer
@@ -743,6 +743,60 @@ av.dnd.landTrashCan = function (source, nodes, target) {
   return remove;
 };
 
+//----------------------------------------------------------------------------------------------- av.msg.runMultiDish --
+av.msg.runTestDish = function(fzSection, target, type) {
+  //console.log('fzrObject=', av.dnd[fzSection].getSelectedNodes()[0]);
+  //need to find selected item. looking for 'dojoDndItem dojoDndItemAnchor' might help
+  //console.log('fzOrgan selected keys', Object.keys(av.dnd.fzOrgan.selection)[0]);
+  //Object.keys(av.dnd.fzOrgan.selection)[0] and av.dnd.fzOrgan.getSelectedNodes()[0].id return the same thing
+
+  if (undefined != av.dnd[fzSection].getSelectedNodes()[0]) {
+    //This section partially puts the test-dish in the active area
+    av.msg.avidaTestRunFlag = true;   //Do not reload files from the active config freezer section
+                                      //Do not put data from files in the setup section. 
+    var nodeMv = av.dnd[fzSection].getSelectedNodes()[0].id;
+    console.log('fzSection=', fzSection, '; nodeMv=', nodeMv);
+    var added = false;
+    av.dnd.move.via = 'menu';
+    av.dnd.move.source = av.dnd[fzSection];
+    av.dnd.move.target = av.dnd[target];
+    av.dnd.move.type = type;
+    av.dnd.move.sourceDomId = nodeMv;
+    av.dnd.move.dir = av.fzr.dir[av.dnd.move.sourceDomId];
+    av.dnd.move.nodeName = av.fzr.file[av.dnd.move.dir + '/entryname.txt'];
+    av.dnd[target].insertNodes(false, [{data: av.dnd.move.nodeName, type: [type]}]);
+    av.dnd[target].sync();
+    var domIDs = Object.keys(av.dnd[target].map);
+    av.dnd.move.targetDomId = domIDs[domIDs.length - 1];
+    console.log('move', av.dnd.move);
+    added = av.dnd.lndActiveConfig(av.dnd.move);
+
+    //if (av.dom.popSetupButton.textContent === 'Setup' && added) av.grd.drawGridSetupFn('av.msg.runTestDish');
+
+    //Now actually load and run the multi-dish direcdtly from the freezer.
+    av.msg.importTestDishExpr(av.dnd.move.dir); //???????
+
+    //This only loads ancestors in the super dish.
+    //if (av.dom.popSetupButton.textContent === 'Setup' && added) av.grd.drawGridSetupFn();
+    var filename = av.dnd.move.dir +'/ancestors';
+    console.log('filename = ', filename, '=======================================================');
+    if (av.fzr.file[filename]) {
+      console.log('file ', filename, 'exists');
+      av.fio.autoAncestorLoad(av.fzr.file[filename]);
+    }
+    var filename = av.dnd.move.dir +'/ancestors_manual';
+    console.log('filename = ', filename, '=======================================================');
+    if (av.fzr.file[filename]) {
+      console.log('file ', filename, 'exists');
+      av.fio.handAncestorLoad(av.fzr.file[filename]);
+    }
+  }
+  else {
+    alert('You must select a test-dish first');
+  };
+};
+//------------------------------------------------------------------------------------------- end av.msg.runMultiDish --
+
 // multi-dish appears to load in the freezer, but does not yet actually run. error on C++ side
 // thinking of rewriteing parcer on javascript side since I need to do that anyway. 
 //----------------------------------------------------------------------------------------------- av.msg.runMultiDish --
@@ -774,7 +828,7 @@ av.msg.runMultiDish = function(fzSection, target, type) {
     //if (av.dom.popSetupButton.textContent === 'Setup' && added) av.grd.drawGridSetupFn();
 
     //Now actually load and run the multi-dish direcdtly from the freezer.
-    av.msg.importMultiDishExpr(av.dnd.move.dir)
+    av.msg.importMultiDishExpr(av.dnd.move.dir);
     av.msg.avidaTestRunFlag = true;   //Do not reload files from the active config freezer section
 
     //This only loads ancestors in the super dish.

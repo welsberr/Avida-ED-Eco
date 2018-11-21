@@ -347,13 +347,13 @@ require([
     copyOnly: true,
     selfAccept: false
   });
-  av.dnd.fzMdish = new dndSource('fzMdish', {  //Proto Types and TestDish or Tdish refer to the same thing
+  av.dnd.fzMdish = new dndSource('fzMdish', {  //multi-dsih
     accept: ['b', 'm'],  //m=multidish
     copyOnly: true,
     singular: true,
     selfAccept: false
   });
-  av.dnd.fzRdish = new dndSource('fzRdish', {  //Proto Types and TestDish or Tdish refer to the same thing
+  av.dnd.fzRdish = new dndSource('fzRdish', {  //Resources only version
     accept: ['r'],  //t=resource display
     copyOnly: true,
     singular: true,
@@ -741,7 +741,7 @@ require([
   // Menu Buttons handling
   //********************************************************************************************s************************
 
-  console.log('dijit test', dijit.byId('mnFlOpenDefaultWS'));
+  if (av.debug.fio) console.log('dijit test', dijit.byId('mnFlOpenDefaultWS'));
 
   dijit.byId('mnFlOpenDefaultWS').on('Click', function () {
     'use strict';
@@ -947,7 +947,7 @@ require([
       + '\n  gridCanvas.client wd Ht = ' + av.dom.gridCanvas.clientWidth + '  '  +  av.dom.gridCanvas.clientHeight
       + '\n  gridCanvas.scroll wd Ht = ' + av.dom.gridCanvas.scrollWidth + '  '  +  av.dom.gridCanvas.scrollHeight
       + '\n' + av.debug.dTail;
-  }
+  };
 
   //process problme pop-up window
   av.ui.problemWindow = function () {
@@ -1025,29 +1025,6 @@ require([
   // main button scripts
   //********************************************************************************************************************
     
-  if (av.debug.uil) console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight, 
-    document.documentElement.clientHeight);
-  if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
-    document.documentElement.style.height = document.documentElement.clientHeight + 'px';
-  }
-
-  //initialize the ht for main buttons and trash can so there is no scroll bar
-  if (av.dom.mainButtons.scrollHeight > av.dom.mainButtons.clientHeight) {
-    av.dom.mainButtons.style.height = av.dom.mainButtons.scrollHeight + 'px';
-  }
-  if (av.debug.uil) console.log('av.dom.trashDiv=', av.dom.trashDiv);
-  if (av.dom.trashDiv.scrollHeight > av.dom.trashDiv.clientHeight) {
-    av.dom.trashDiv.style.height = av.dom.trashDiv.scrollHeight + 'px';
-  }
-  if (av.dom.orgTopId.scrollHeight > av.dom.orgTopId.clientHeight) {
-    av.dom.orgTopId.style.height = av.dom.orgTopId.scrollHeight + 'px';
-  }
-  if (av.debug.uil) console.log('orgBot Ht', av.dom.orgBotId.scrollHeight, av.dom.orgBotId.clientHeight);
-  if (av.dom.orgBotId.scrollHeight > av.dom.orgBotId.clientHeight) {
-    av.ui.orgBotIdNum = av.dom.orgBotId.scrollHeight + 9;
-    av.dom.orgBotId.style.height = av.ui.orgBotIdNum + 'px';
-  }
-
   //The style display: 'none' cannnot be used in the html during the initial load as the dijits won't work right
   //visibility:hidden can be used, but it leaves the white space and just does not display dijits.
   //So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
@@ -1365,6 +1342,19 @@ require([
     av.msg.runMultiDish('fzMdish', 'activeConfig', 'm');
   });
 
+  //Buttons on drop down menu to add Resource-Dish to an Experiment
+  dijit.byId('mnFzAddRdishEx').on('Click', function () {
+    av.post.addUser('Button: mnFzAddRdishEx');
+    //av.dnd.FzAddExperimentFn('fzRdish', 'activeConfig', 'r');
+    //av.msg.runResourceDish('fzRdish', 'activeConfig', 'r');
+  });
+
+//Buttons on drop down menu to add Test-Dish to an Experiment
+  dijit.byId('mnFzAddTdishEx').on('Click', function () {
+    av.post.addUser('Button: mnFzAddTdishEx');
+    //av.dnd.FzAddExperimentFn('fzTdish', 'activeConfig', 't');
+    av.msg.runTestDish('fzTdish', 'activeConfig', 't');
+  });
 
 //Buttons on drop down menu to put an organism in Organism Viewer
   dijit.byId('mnFzAddGenomeView').on('Click', function () {
@@ -1518,7 +1508,6 @@ require([
       av.mouse.Picked = '';
       av.mouse.ParentMouse(evt, av);
       if ('gridCanvas' == evt.target.id || 'trashCanImage' == evt.target.id) {
-        //console.log('before call av.grd.drawGridSetupFn');
         av.grd.drawGridSetupFn('on mouseup where evt.target.id=gridCanvas or trashCanImage');
       }
       else if ('organIcon' == evt.target.id) {
@@ -1583,15 +1572,14 @@ require([
 
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
-    if (av.debug.uil) console.log(from, ' called av.grd.drawGridSetupFn');
+    if (av.debug.uil) console.log('av.grd.drawGridSetupFn called from ', from);
     
     //about total window size
-    if (av.debug.uil) console.log('av.dom.allAvida.ht client, offset, scroll', av.dom.allAvida.clientHeight, 
-      av.dom.allAvida.offsetHeight, av.dom.allAvida.scrollHeight);
-    if (av.debug.uil) console.log('document.documentElement.clientHeight, offset, scroll =', document.documentElement.clientHeight, 
-      document.documentElement.offsetHeight, document.documentElement.scrollHeight);
-    if (av.debug.uil) console.log('document.body.wd client, offset, scroll', document.body.clientHeight, document.body.offsetHeight,
-      document.body.scrollHeight);
+    av.dsz.windowWd = window.innerWidth || document.documentElement.clientWidth 
+                                        || document.body.clientWidth;
+    av.dsz.windowHd = window.innerHeight || document.documentElement.clientHeight
+                                         || document.body.clientHeight;
+    if (av.debug.uil) console.log(av.dsz.windowWd, av.dsz.windowHd, ' = window Wd Ht');
 
     if (av.debug.uil) console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
     if (av.debug.uil) console.log('_____av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
@@ -1935,8 +1923,8 @@ require([
           //  width: av.pch.wd,
           //  height: av.pch.ht
           //};
-          console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
-          console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
+          if (av.debug.uil) console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
+          if (av.debug.uil) console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
 
           av.pch.update = {
             autorange: true,
@@ -2145,25 +2133,25 @@ require([
       av.post.data1 = {
         'changed' : 'muteInput',
         'muteInput': muteVal.formatNum(1)
-      }
+      };
       av.post.data2 = {
         'operation' : 'assign',
         'object' : ['muteInput'],
         'value' : [muteVal.formatNum(1)]
-      }
+      };
       av.post.data = {
         'operation' : 'assign',
         'name' : 'muteInput',
         'vars' : ['muteInput', 'person'],
         'value' : [muteVal.formatNum(1), 'fred']
-      }
+      };
 
       av.post.data = {
         'operation' : 'button',
         'name' : 'runPause',
         'vars' : {'update': 5},
         'assumptions' : {'av.dom.runStopButton.textContent': 'Run'}
-      }
+      };
       av.post.data = {
         'operation' : 'DojoDnd',
         'name' : 'fz2Grid',
@@ -2487,6 +2475,31 @@ require([
   //********************************************************************************************************************
   if (av.debug.root) console.log('before Resize helpers');
 
+  av.removeVerticalScrollBars = function () {
+    if (av.debug.uil) console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight, 
+      document.documentElement.clientHeight);
+    if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
+      document.documentElement.style.height = document.documentElement.clientHeight + 'px';
+    };
+
+    //initialize the ht for main buttons and trash can so there is no scroll bar
+    if (av.dom.mainButtons.scrollHeight > av.dom.mainButtons.clientHeight) {
+      av.dom.mainButtons.style.height = av.dom.mainButtons.scrollHeight + 'px';
+    };
+    if (av.debug.uil) console.log('trashDivHt.client,scroll=', av.dom.trashDiv.clientHeight , av.dom.trashDiv.scrollHeight);
+    if (av.dom.trashDiv.scrollHeight > av.dom.trashDiv.clientHeight) {
+      av.dom.trashDiv.style.height = av.dom.trashDiv.scrollHeight + 'px';
+    };
+    if (av.dom.orgTopId.scrollHeight > av.dom.orgTopId.clientHeight) {
+      av.dom.orgTopId.style.height = av.dom.orgTopId.scrollHeight + 'px';
+    };
+    if (av.debug.uil) console.log('orgBot Ht', av.dom.orgBotId.scrollHeight, av.dom.orgBotId.clientHeight);
+    if (av.dom.orgBotId.scrollHeight > av.dom.orgBotId.clientHeight) {
+      av.ui.orgBotIdNum = av.dom.orgBotId.scrollHeight + 9;
+      av.dom.orgBotId.style.height = av.ui.orgBotIdNum + 'px';
+    };
+  };
+
   //on 2018_0823 this is where height gets messed up when loading the program. 
   av.pch.divSize = function(from) {
     if (av.debug.uil) console.log(from, 'called av.pch.divSize');
@@ -2516,12 +2529,12 @@ require([
   };
 
   av.anl.divSize = function(from) {
-    if (av.debug.uil) console.log(from, 'called av.anl.divSize');
+    if (av.debug.alo) console.log(from, 'called av.anl.divSize');
     //console.log(from,'anaChrtHolder Ht client scroll ', av.dom.anaChrtHolder.clientHeight, av.dom.anaChrtHolder.scrollHeight);
     //console.log(from,'anlDndChart Ht client scroll', av.dom.anlDndChart.clientHeight, av.dom.anlDndChart.scrollHeight);
     //console.log(from,'anlChrtSpace Ht client scroll', av.dom.anlChrtSpace.clientHeight, av.dom.anlChrtSpace.scrollHeight);
 
-    if (av.debug.uil) console.log('av.dom.anaChrtHolder.clientWd, Ht=', av.dom.anaChrtHolder.clientWidth, av.dom.anaChrtHolder.clientHeight);
+    if (av.debug.alo) console.log('av.dom.anaChrtHolder.clientWd, Ht=', av.dom.anaChrtHolder.clientWidth, av.dom.anaChrtHolder.clientHeight);
     av.anl.ht = av.dom.anaChrtHolder.clientHeight - 1;
     av.anl.wd = av.dom.anaChrtHolder.clientWidth - 1;
     av.dom.anaChrtHolder.style.height = av.anl.ht + 'px';
@@ -2560,7 +2573,7 @@ require([
     }
   };
 
-  console.log('before ready function');
+  console.log('before resize function');
   $(window).resize(function(){
      // av.ui.resizePopLayout('window.resize');    //does not work.
   });   
@@ -2797,7 +2810,7 @@ require([
     av.anl.clearWorldData(0);
     av.dnd.graphPop0.selectAll().deleteSelectedNodes();
     av.anl.AnaChartFn();
-  }
+  };
   document.getElementById('pop1delete').onclick = function () {
     av.post.addUser('Button: pop1delete');
     av.anl.hasPopData[1] = false;
@@ -2806,7 +2819,7 @@ require([
     av.anl.clearWorldData(1);
     av.dnd.graphPop1.selectAll().deleteSelectedNodes();
     av.anl.AnaChartFn();
-  }
+  };
   document.getElementById('pop2delete').onclick = function () {
     av.post.addUser('Button: pop2delete');
     av.anl.hasPopData[2] = false;
@@ -2815,7 +2828,7 @@ require([
     av.anl.clearWorldData(2);
     av.dnd.graphPop2.selectAll().deleteSelectedNodes();
     av.anl.AnaChartFn();
-  }
+  };
   dijit.byId('pop0color').on('Change', function () {
     av.anl.color[0] = av.color.names[dijit.byId('pop0color').value];
     av.post.addUser('Button: pop0color');
@@ -2857,7 +2870,7 @@ require([
   //Tasks that Need to be run when page is loaded but after chart is defined
   // **************************************************************************************************************** */
 
-  if (true) console.log('after chartt defined');
+  if (true) console.log('after chart defined for analysis page');
   // ------------------------ Population Page Statistics tables --------------------------------------------------------
 
   //av.ui.adjustpopInfoSize('after page loaded, before chart is defined.');  // djb might delete later; not using as of 2018_0827
@@ -2922,7 +2935,7 @@ require([
   //av.ui.mainBoxSwap('populationBlock');
 
   //av.grd.popChartFn();
-  //av.grd.drawGridSetupFn(); //Draw initial background
+  //av.grd.drawGridSetupFn('inital background'); //Draw initial background
 
   //Safari 9 will not allow saving workspaces or freezer items.
   //if (av.brs.isSafari) {
@@ -3065,8 +3078,8 @@ To make a gif using screen capture
  *       box (with actual content or guts
  * the size of stuff around the box gets added twice, once for each side
  * 
- * offsetWidth = box + 2*padding + 2*borders
- * clientWidth = box + 2*padding - scrollWidth    (not postive about scrollWidth
+ * offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
+ * clientWidth = box + 2*padding - scrollbar_width    
  * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
  * csssWidth = box only nothing else
  * 
@@ -3099,11 +3112,7 @@ To make a gif using screen capture
   // https://www.w3schools.com/howto/howto_js_popup.asp
   // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup
   
-  
-// Understanding offsetWidth, clientWidth, scrollWidth and -Height, respectively
-// https://stackoverflow.com/questions/21064101/understanding-offsetwidth-clientwidth-scrollwidth-and-height-respectively
-// has a nice diagram
-//
+  //
 // jQurey resize() Method
 // https://www.w3schools.com/jquery/event_resize.asp
 //
@@ -3116,7 +3125,7 @@ To make a gif using screen capture
 // Document Ready Examples
 // https://www.sitepoint.com/types-document-ready/
 // 
-// Forcingn windows resize to fire
+// Forcing windows resize to fire
 // https://stackoverflow.com/questions/1861109/forcing-windows-resize-to-fire
 // https://stackoverflow.com/questions/23567483/jquery-fake-a-window-resize
 // https://stackoverflow.com/questions/277759/html-onresizeend-event-or-equivalent-way-to-detect-end-of-resize

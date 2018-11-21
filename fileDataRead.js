@@ -10,7 +10,7 @@ av.fio.addFzItem = function(dndSection, name, type, fileNum) {
     var domid = mapItems[mapItems.length - 1];
 
     //create a right av.mouse-click context menu for the item just created.
-    if (av.debug.fio) console.log('fileNum', fileNum, '; name', name, '; Section', dndSection.node.id);
+    if (av.debug.fio) console.log('fileNum=', fileNum, '; name=', name, '; Section=', dndSection.node.id);
     //console.log('fileNum', fileNum, '; name', name, '; Section', dndSection.node.id, '; type', type);
 
     if (0 < fileNum) {
@@ -25,28 +25,9 @@ av.fio.addFzItem = function(dndSection, name, type, fileNum) {
   }
 };
 
-//need to make sure freezer loaded first so not currently in use. Delete later if not used tiba
-//av.fio.loadDefaultConfig = function() {
-//  'use strict';
-//  console.log('beginning of av.fio.loadDefaultConfig');
-//  av.fzr.actConfig.name = av.fzr.file['c0/entryname.txt'];
-//  av.fzr.actConfig.type = 'c';
-//  console.log('av.fzr.actConfig.name=', av.fzr.actConfig.name);
-//  av.dnd.activeConfig.selectAll().deleteSelectedNodes();
-//  av.dnd.activeConfig.insertNodes(false, [{data: av.fzr.actConfig.name, type: [av.fzr.actConfig.type]}]);
-//  av.dnd.activeConfig.sync();
-//  var mapItems = Object.keys(av.dnd.activeConfig.map);
-//  av.fzr.actConfig.actDomid = mapItems[mapItems.length - 1];  //domid from active config. Not sure if needed.
-//  av.fzr.actConfig.fzDomid = av.fzr.domid['c0'];
-//  if (av.debug.fio) console.log('avida.cfg', av.fzr.file['c0/avida.cfg']);
-//  av.frd.avidaCFG2form(av.fzr.file['c0/avida.cfg']);
-//  av.frd.environmentCFG2form(av.fzr.file['c0/environment.cfg']);
-//};
-
-
 av.fio.setActiveConfig = function(dndSection, name, type){
   'use strict';
-  console.log('name=', name);
+  if (av.debug.fio)  console.log('name=', name);
   av.dnd.activeConfig.selectAll().deleteSelectedNodes();
   av.dnd.activeConfig.insertNodes(false, [{data: name, type: [type]}]);
   av.dnd.activeConfig.sync();
@@ -94,6 +75,16 @@ av.frd.add2freezerFromFile = function (loadConfigFlag) {
       av.fzr.mDish[dir].wNum = -1;
       if ('dndSection is undefined' == domid) console.log('av.dnd.fzMdish is undefined------------------------------');
       if (av.fzr.mNum < Number(num)) {av.fzr.mNum = Number(num); }
+      break;
+    case 'r':
+      domid = av.fio.addFzItem(av.dnd.fzRdish, name, type, num);
+      if ('dndSection is undefined' == domid) console.log('av.dnd.fzrDish is undefined');
+      if (av.fzr.rNum < Number(num)) {av.fzr.rNum = Number(num); }
+      break;
+    case 't':
+      domid = av.fio.addFzItem(av.dnd.fzTdish, name, type, num);
+      if ('dndSection is undefined' == domid) console.log('av.dnd.fzTdish is undefined');
+      if (av.fzr.tNum < Number(num)) {av.fzr.tNum = Number(num); }
       break;
     case 'w':
       domid = av.fio.addFzItem(av.dnd.fzWorld, name, type, num);
@@ -231,7 +222,7 @@ av.frd.updateSetup = function () {
   //console.log('actConfig: path=', path);
   av.frd.avidaCFG2form(doctext);
   doctext = av.fzr.file[dir + '/environment.cfg'];
-  av.frd.environmentCFG2form(doctext);
+  if (!av.msg.avidaTestRunFlag) av.frd.environmentCFG2form(doctext);
   doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
   av.frd.pauseRunAtTXT2form(doctext);
 };
@@ -276,7 +267,7 @@ av.frd.environmentCFG2form = function (fileStr) {
   var dict = av.frd.environmentCFGparse(fileStr);
   av.dom.notose.checked = dict.NOT;
   av.dom.andose.checked = dict.AND;
-  av.dom.orose.checked = dict.OR
+  av.dom.orose.checked = dict.OR;
   av.dom.norose.checked = dict.NOR;
   av.dom.equose.checked = dict.EQU;
   av.dom.nanose.checked = dict.NAND;

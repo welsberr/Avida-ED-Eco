@@ -124,14 +124,6 @@ div.popStatsTablePop {
   text-align:center;
   font-weight: bold;
   max-height: 15px;
-  font-size: 1.2em;
-}
-
-.noWrapL {
-  max-height: 15px;
-  max-width: 99%;
-  overflow: hidden;
-  font-size: 1.2em;
 }
 
 .noWrapN {
@@ -140,7 +132,6 @@ div.popStatsTablePop {
   max-height: 15px;
   max-width: 99%;
   overflow: hidden;
-  font-size: 1.2em;
 }
 
 .sotL {
@@ -148,35 +139,27 @@ div.popStatsTablePop {
   max-height: 15px;
   max-width: 99%;
   overflow: hidden;
-  font-size: 1.2em;
 }
 
-.sotR {
+.noWrapRn {
   text-align:right;
   max-height: 15px;
   max-width: 99%;
   overflow: hidden;
   font-family: monospace;
   font-size: 1.2em;
+
 }
+
 .noWrap1 {
   text-align:center;
   max-height: 15px;
-  font-size: 1.2em;
 }
 
 .noWrapTitle {
   text-align:center;
   font-weight: bold;
   max-height: 15px;
-  font-size: 1.2em;
-}
-
-#gridCanvas{
-  margin: auto;
-  padding: 0;
-  border: 0px;
-  display: block;
 }
 
 #muteSlide {
@@ -229,8 +212,8 @@ button {display:inline;}
   text-align: center;
 }
 
-.resourceButton_oldDelete {
-  width: 13px
+.resourceButton {
+  width: 100px
 }
 
 .dojoDndItem {
@@ -307,6 +290,7 @@ button {display:inline;}
 }
 
 /* dojo css */
+
 .dijitBorderContainer {
   padding: 1px;
 }
@@ -325,15 +309,17 @@ table.topSotTable {
   border: 0;
   padding: 0;
   table-layout: auto;
-  background-color: #DDDDDD;
-  width: 100%;
 }
 .topSotTable th, .top td {  padding: 0px;  }
 .topTable tr *:nth-child(1) {
   text-align: right;
 }
+.topSotTable tr *:nth-child(2) {
+  width: 40px;
+}
 
 .topSotTable tr:nth-child(odd) {background: #D7D7D7}
+.topSotTable tr:nth-child(even) {background: #DDDDDD}
 
 table.topPopTable {
   border-collapse: collapse;
@@ -392,5 +378,3 @@ web pages about style sheets that are changed with javascript
 https://www.w3.org/wiki/Dynamic_style_-_manipulating_CSS_with_JavaScript
 http://www.shawnolson.net/a/503/altering_css_class_attributes_with_javascript.html  //confusing
 */
-
-}

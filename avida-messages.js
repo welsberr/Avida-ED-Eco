@@ -12,6 +12,8 @@
   be points to strings of JSON objects.
 */
 
+var show_msg = false;
+
 var avida_update = -1;  //Holds the current update as notified
 var msg_queue = [];     //Holds the current messages to send to avida
 var diagnostic_socket = null;  //Holds the diagnostic socket if available
@@ -72,8 +74,8 @@ function logCommand(cmd)
 onmessage = function(msg) {
     msg_queue.push(msg.data);
     sendDiagMsg('ui', 'in', msg.data);
-    logCommand(msg.data)
-}
+    logCommand(msg.data);
+};
 
 
 function doGetMessage() {
@@ -94,6 +96,7 @@ function doGetMessage() {
   pointer-to-string-to-json conversion occurs here.
 */
 function doPostMessage(msg_str) {
+  if (show_msg) console.log("doPostMessage: msg_str=", msg_str);
   var json_msg = JSON.parse(msg_str);
   switch(json_msg.type){
     case 'update':

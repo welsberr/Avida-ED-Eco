@@ -20,12 +20,13 @@ av.debug.msg = false;  //messages to and from avida
 av.debug.trace = false;  //organism page
 av.debug.grid = false;  //population grid
 av.debug.popCon = false;  //population Controls
-av.debug.fio = false;  // file io
+av.debug.fio = false;  // file input/output; fio, read, write
 av.debug.ind = false;  //oranism page
 av.debug.anl = false;  //analysis page
 av.debug.plotly = false;  //both popChart and analysis
 av.debug.usr = ''; //working on log for user actions.
-av.debug.uil = false; //user interface layout.
+av.debug.uil = true; //user interface layout.
+av.debug.alo = false; //analysis page layout
 
 av.post = {};
 av.post.addUser = function(addStr, comment) {
@@ -437,6 +438,8 @@ av.fzr.clearFzrFn = function () {
   av.fzr.cNum = 0;  //value of the next configured dish (config) number
   av.fzr.gNum = 0;  //value of the next organism (genome) number
   av.fzr.mNum = 0;  //value of the next multi-dish (complex-populated dish) number
+  av.fzr.rNum = 0;  //value of the next resource dish number
+  av.fzr.tNum = 0;  //value of the next test dish number
   av.fzr.wNum = 0;  //value of the next world (populated dish) number
 
   //probably delete the next few lines
@@ -482,6 +485,8 @@ av.fzr.clearMainFzrFn = function () {
   av.fzr.cNum = 0;  //value of the next configured dish (config) number
   av.fzr.gNum = 0;  //value of the next organism (genome) number
   av.fzr.mNum = 0;  //value of the next multi-dish (complex-populated dish) number
+  av.fzr.rNum = 0;  //value of the next resource dish number
+  av.fzr.tNum = 0;  //value of the next test dish number
   av.fzr.wNum = 0;  //value of the next world (populated dish) number
 
   //Clear each section of the freezer and active organism and ancestorBox
@@ -522,8 +527,9 @@ av.ptd.popInfoHolderWd = 395;
 
 av.grd = {};         //data about the grid canvas
 av.grd.popStatsMsg = {};
-av.dom = {};
-av.doj = {};
+av.dom = {};    //dom id shortcuts
+av.dsz = {};    //dom size of elements in the dom
+av.doj = {};    //dom dojo id shortcuts
 
 av.grd.fnChosen = [];
 for (var ii = 0; ii < 9; ii++) { av.grd.fnChosen[av.ptd.logicButtons[ii]] = false; }

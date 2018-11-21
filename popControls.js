@@ -232,30 +232,33 @@ av.ptd.popNewExState = function () {
 //after Run button pushed for population
 av.ptd.runPopFn = function () {
   'use strict';
-  //console.log('runPopFn runState = av.grd.runState);
+  console.log('in av.ptd.runPopFn: runPopFn runState =', av.grd.runState);
   //check for ancestor organism in configuration data
   //console.log('validGridSize=',av.ptd.validGridSize, '; popSetupButton.innerHTML= = popSetupButton.innerHTML, '; av.ui.page=',av.ui.page);
   var namelist = dojo.query('> .dojoDndItem', 'ancestorBox');
   //console.log('namelist = namelist);
   if (1 > namelist.length) {
-    //console.log('about to call av.ptd.makePauseState()');
+    console.log('about to call av.ptd.makePauseState()');
     av.ptd.makePauseState();
     //NeedAncestorDialog.show();
     av.dom.needAncestorModalID.style.display = "block";
   }
   else if (!av.ptd.validGridSize) {
+    console.log('not option: !av.ptd.validGridSize=', !av.ptd.validGridSize);
     av.ptd.makePauseState();
     av.dom.userMsgLabel.innerHTML = 'A valid grid size is required before Avida will run';
     if ('Setup' == popSetupButton.innerHTML) av.ptd.popBoxSwap();
     if ('populationBlock' !== av.ui.page) av.ui.mainBoxSwap('populationBlock');
   }
   else if (!av.ptd.validMuteInuput) {
+    console.log('Not option: av.ptd.validMuteInuput=',av.ptd.validMuteInuput);
     av.ptd.makePauseState();
     av.dom.userMsgLabel.innerHTML = 'A valid mutation rate is required before Avida will run';
     if ('Setup' == popSetupButton.innerHTML) av.ptd.popBoxSwap();
     if ('populationBlock' !== av.ui.page) av.ui.mainBoxSwap('populationBlock');
   }
   else { // setup for a new run by sending config data to avida
+    console.log('else: av.ptd.validMuteInuput=',av.ptd.validMuteInuput);
     av.dom.userMsgLabel.innerHTML = '';
     if ('started' !== av.grd.runState) {
       //collect setup data to send to avida.  Order matters. Files must be created first. Then files must be sent before some other stuff.
@@ -300,6 +303,7 @@ av.ptd.runPopFn = function () {
     av.ptd.makeRunState();
     av.msg.stepUpdate();   //av.msg.doRunPause(av.fio);
   }
+  console.log('end of av.ptd.runPopFn');
   //update screen based on data from C++
 };
 

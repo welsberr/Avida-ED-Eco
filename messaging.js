@@ -320,7 +320,7 @@ av.msg.importMultiDishExpr = function (dir) {
 //      { 'name': 'avida.cfg', 'data': av.fzr.actConfig.file['avida.cfg'] },
 //      { 'name': 'environment.cfg', 'data': av.fzr.actConfig.file['environment.cfg'] }
     ]
-  }
+  };
 
   //console.log('in av.msg.importMultiDishExpr:');
   var lngth = fList.length;
@@ -345,25 +345,45 @@ av.msg.importMultiDishExpr = function (dir) {
   if (av.debug.msg) console.log('importMultiDishExpr', request);
   console.log('importMultiDishExpr', request);
   av.aww.uiWorker.postMessage(request);
-  av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importPopExpr';
-}
+  av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importMultiDishExpr';
+};
 //------------------------------------------------------------------------------------ end av.msg.importMultiDishExpr --
 
-av.msg.getOffset = function (dir, key) {
-  "use strict";
-  var pair = [];
-  var filestr = av.fzr.file[dir+'/'+key+'/offset.txt'];
-  if (undefined != filestr) {
-    var lines = filestr.split('\n');
-    var pair = lines[0].split(',');
-    return pair;
+//----------------------------------------------------------------------------------------- av.msg.importTestDishExpr --
+av.msg.importTestDishExpr = function (dir) {
+  'use strict';
+  var fList = ['avida.cfg'
+    , 'clade.ssg'
+    , 'detail.spop'
+    , 'environment.cfg'
+    , 'events.cfg'
+    , 'instset.cfg'
+    , 'update'
+  ];
+  var request = {
+    'type': 'addEvent',
+    'name': 'importExpr',
+    'triggerType': 'immediate',
+    'amend': 'false',
+    'files': [
+//      { 'name': 'avida.cfg', 'data': av.fzr.actConfig.file['avida.cfg'] },
+//      { 'name': 'environment.cfg', 'data': av.fzr.actConfig.file['environment.cfg'] }
+    ]
+  };
+
+  //console.log('in av.msg.importTdishExpr:');
+  var lngth = fList.length;
+  for (var ii = 0; ii < lngth; ii++) {
+    if (av.fzr.file[dir+'/'+fList[ii]]) {request.files.push({ 'name': fList[ii], 'data': av.fzr.file[dir+'/'+fList[ii]] }); }
   }
-  else {
-    console.log('file ', dir+'/'+key+'/offset.txt', ' is missing.');
-    pair = [0, 0];
-    return;
-  }
+
+  if (av.debug.msg) console.log('importTestDishExpr', request);
+  console.log('importTestDishExpr', request);
+  console.log('\n--uiA: importExpr:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importTestDishExpr');
+  av.aww.uiWorker.postMessage(request);
+  av.debug.log += '\n--uiA: importExpr:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importTestDishExpr';
 };
+//------------------------------------------------------------------------------------- end av.msg.importTestDishExpr --
 
 av.msg.importPopExpr = function () {
   'use strict';
@@ -392,7 +412,7 @@ av.msg.importPopExpr = function () {
   if (av.debug.msg) console.log('importExpr', request);
   av.aww.uiWorker.postMessage(request);
   av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importPopExpr';
-}
+};
 
 av.msg.importWorldExpr = function () {
   'use strict';
@@ -417,7 +437,23 @@ av.msg.importWorldExpr = function () {
   if (av.debug.msg) console.log('importExpr', request);
   av.aww.uiWorker.postMessage(request);
   av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importWorldExpr';
-}
+};
+
+av.msg.getOffset = function (dir, key) {
+  "use strict";
+  var pair = [];
+  var filestr = av.fzr.file[dir+'/'+key+'/offset.txt'];
+  if (undefined != filestr) {
+    var lines = filestr.split('\n');
+    var pair = lines[0].split(',');
+    return pair;
+  }
+  else {
+    console.log('file ', dir+'/'+key+'/offset.txt', ' is missing.');
+    pair = [0, 0];
+    return;
+  }
+};
 
 av.msg.exportExpr = function (popName) {
   'use strict';
