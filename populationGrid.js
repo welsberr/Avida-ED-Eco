@@ -294,21 +294,19 @@ av.grd.drawCellOutline = function (lineThickness, color, xx, yy, wide, tall) {
   av.grd.cntx.strokeStyle = color;
   av.grd.cntx.lineWidth = lineThickness;
   av.grd.cntx.stroke();
-}
+};
 
 av.grd.findGridSize = function (){
   'use strict';
   // When zoom = 1x, set canvas size based on space available and cell size
   // based on rows and columns requested by the user. Zoom acts as a factor
-  // to multiply the size of each cell. When the size of the grid become larger
-  // than the canvas, then the canvas is set to the size of the grid and the
-  // offset in that direction goes to zero.
+  // to multiply the size of each cell. 
+  // Zoom does not work at this time and will be rebuilt later. 
 
   // no longer doing offsets inside the canvas - Need to get rid of offsets 
   
-
   // First find sizes based on zoom
-  if (av.debug.uil) console.log('av.grd.zoom='+av.grd.zoom);
+  if (av.debug.uil) console.log('av.grd.zoom=', av.grd.zoom);
   av.grd.boxX = av.grd.zoom * av.grd.spaceX;
   av.grd.boxY = av.grd.zoom * av.grd.spaceY;
   //get rows and cols based on user input 
@@ -331,14 +329,14 @@ av.grd.findGridSize = function (){
   }
 
   //Determine new size of grid
-    if (av.debug.uil) console.log('av.dom.gridCanvas.width ht', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
-    if (av.debug.uil) console.log('av.grd.sizeX, sizeY', av.grd.sizeX, av.grd.sizeY);
+    if (av.debug.uil) console.log('w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= In: av.dom.gridCanvas.width ht--');
   
     av.dom.gridCanvas.width = av.grd.sizeX;
-    av.grd.xOffset = 0;
     av.dom.gridCanvas.height = av.grd.sizeY;
+    av.grd.xOffset = 0;
     av.grd.yOffset = 0;
-}
+};
+
 av.grd.drawGridUpdate = function () {
   'use strict';
   //get cell size based on grid size and number of columns and rows
@@ -371,9 +369,9 @@ av.grd.drawGridUpdate = function () {
     av.grd.drawParent();
   }
   //Draw Selected as one of the last items to draw
-  if (av.grd.flagSelected) { av.grd.drawSelected() }
+  if (av.grd.flagSelected) { av.grd.drawSelected(); };
   if ('prepping' !== av.grd.runState) av.grd.DrawLogicSelected();
-}
+};
 
 av.grd.drawGridBackground = function () {
   'use strict';
@@ -414,7 +412,7 @@ av.grd.drawLegend = function () {
   for (var ii = 0; ii < lngth; ii++) {
     txtWide = av.grd.sCtx.measureText(av.parents.name[ii]).width;
     if (txtWide > maxWide) {
-      maxWide = txtWide
+      maxWide = txtWide;
     }
   }
   legendCols = Math.floor((av.dom.scaleCanvas.width - leftPad) / (maxWide + colorWide + legendPad));  //was trunc
@@ -428,7 +426,7 @@ av.grd.drawLegend = function () {
   av.dom.scaleCanvas.height = RowHt * legendRows;
   av.grd.sCtx.fillStyle = av.color.names["ltGrey"];
   av.grd.sCtx.fillRect(0, 0, av.dom.scaleCanvas.width, av.dom.scaleCanvas.height);
-  var colWide = (av.dom.scaleCanvas.width - leftPad) / legendCols
+  var colWide = (av.dom.scaleCanvas.width - leftPad) / legendCols;
   var col = 0;
   var row = 0;
   lngth = av.parents.name.length;
@@ -445,18 +443,19 @@ av.grd.drawLegend = function () {
     av.grd.sCtx.fillStyle = 'black';
     av.grd.sCtx.fillText(av.parents.name[ii], xx + colorWide + legendPad / 2, yy);
   }
-}
+};
 
 av.grd.gradientScale = function () {
   'use strict';
-  //console.log('gradientScale')
+  console.log('w:',av.dom.scaleCanvas.width, av.dom.scaleCanvas.height, '= scaleCanvas Wd Ht; start gradientScale ');
+  if (av.debug.uil) console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset; start gradientScale');
   av.dom.scaleCanvas.height = 30;
   av.grd.sCtx.fillStyle = av.color.names["ltGrey"];
   av.grd.sCtx.fillRect(0, 0, av.dom.scaleCanvas.width, av.dom.scaleCanvas.height);
   var xStart = 15;
   var xEnd = av.dom.scaleCanvas.width - 2.5 * xStart;
-  var gradWidth = xEnd - xStart
-  var grad = av.grd.sCtx.createLinearGradient(xStart + 2, 0, xEnd - 2, 0)
+  var gradWidth = xEnd - xStart;
+  var grad = av.grd.sCtx.createLinearGradient(xStart + 2, 0, xEnd - 2, 0);
   var legendHt = 15;
   switch (av.grd.colorMap) {
     case "Viridis":
@@ -499,19 +498,8 @@ av.grd.gradientScale = function () {
       av.grd.sCtx.fillText(txt, xx, legendHt - 2, maxTxtWd);
     }
   }
-  //part of colorTest, delete later
-  /*  av.grd.sCtx.beginPath();
-   av.grd.sCtx.strokeStyle = '#00FF00';
-   av.grd.sCtx.moveTo(xStart, legendHt);
-   av.grd.sCtx.lineTo(xStart + gradWidth, legendHt);
-   av.grd.sCtx.stroke();
-   av.grd.sCtx.beginPath();
-   av.grd.sCtx.strokeStyle = '#44FFFF';
-   av.grd.sCtx.moveTo(xStart, av.dom.scaleCanvas.height - 1);
-   av.grd.sCtx.lineTo(xStart + gradWidth, av.dom.scaleCanvas.height - 1);
-   av.grd.sCtx.stroke();
-   console.log('Take out after color test');
-   */
+  console.log('w:',av.dom.scaleCanvas.width, av.dom.scaleCanvas.height, '= scaleCanvas Wd Ht; end gradientScale ');
+  if (av.debug.uil) console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset; end gradientScale');
 }
 
 av.grd.cellFilled = function (AvNdx, ii) {
