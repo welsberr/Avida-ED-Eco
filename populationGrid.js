@@ -32,18 +32,27 @@ av.grd.setMapData = function () {
       av.grd.reScaleFit = 'rescaling';
     }
     else av.grd.reScaleFit = '';
+    
     if (av.grd.mxCost < av.grd.msg.gestation.maxVal || (1 - av.grd.rescaleTolerance) * av.grd.mxCost > av.grd.msg.gestation.maxVal) {
       av.grd.mxCost = av.grd.mxCost + ((1 + av.grd.rescaleTolerance) * av.grd.msg.gestation.maxVal - av.grd.mxCost) / av.grd.rescaleTimeConstant;
       if (1000 < av.grd.mxCost) av.grd.mxCost = 1000;
       av.grd.reScaleGest = 'rescaling';
     }
     else av.grd.reScaleGest = '';
+    
     if (av.grd.mxRate < av.grd.msg.metabolism.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRate > av.grd.msg.metabolism.maxVal)) {
       av.grd.mxRate = av.grd.mxRate + ((1 + av.grd.rescaleTolerance) * av.grd.msg.metabolism.maxVal - av.grd.mxRate) / av.grd.rescaleTimeConstant;
       av.grd.reScaleRate = 'rescaling';
     }
     else av.grd.reScaleRate = '';
 
+    if (av.grd.mxRsrc < av.grd.msg.resource.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRsrc > av.grd.msg.resource.maxVal)) {
+      av.grd.mxRsrc = av.grd.mxRsrc + ((1 + av.grd.rescaleTolerance) * av.grd.msg.resource.maxVal - av.grd.mxRsrc) / av.grd.rescaleTimeConstant;
+      av.grd.reScaleRate = 'rescaling';
+    }
+    else av.grd.reScaleRate = '';
+
+    console.log('dijit.byId("colorMode").value = ', dijit.byId("colorMode").value, '------------');
     switch (dijit.byId("colorMode").value) {
       case 'Fitness':
         av.grd.fill = av.grd.msg.fitness.data;
@@ -61,6 +70,12 @@ av.grd.setMapData = function () {
         av.grd.fill = av.grd.msg.metabolism.data;
         av.grd.fillmax = av.grd.mxRate;
         av.grd.fillmin = av.grd.msg.metabolism.minVal;
+        av.grd.fillRescale = av.grd.reScaleRate;
+        break;
+      case 'Resource':
+        av.grd.fill = av.grd.msg.resource.data;
+        av.grd.fillmax = av.grd.mxRsrc;
+        av.grd.fillmin = av.grd.msg.resource.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
         break;
       case 'Ancestor Organism':
@@ -113,7 +128,7 @@ av.grd.drawKids = function () {  //Draw the children of parents
       xx = av.grd.marginX + av.grd.xOffset + cc * av.grd.cellWd;
       yy = av.grd.marginY + av.grd.yOffset + rr * av.grd.cellHt;
       if (null === av.grd.fill[ii]) {
-        av.grd.cntx.fillStyle = '#000';
+        av.grd.cntx.fillStyle = '#000';  //no avidain is in this cell
       }
       else {
         ndx = av.parents.name.indexOf(av.grd.fill[ii]);
@@ -137,7 +152,7 @@ av.grd.drawKids = function () {  //Draw the children of parents
         if ('-' === av.grd.msg.ancestor.data[ii]) av.grd.cntx.fillStyle = '#000';  //not there
         else {
           av.grd.cntx.fillStyle = '#0B0';
-          console.log('fill[', ii, '] = ', av.grd.fill[ii], 'ancestor != -');
+          console.log('fill[', ii, '] = ', av.grd.fill[ii], 'ancestor != -;   =======================================');
         } //not viable
       }
       else if (0 == av.grd.fill[ii]) {
@@ -255,6 +270,28 @@ av.grd.cellConflict = function (NewCols, NewRows) {
   }
 }
 
+av.grd.DrawAvidaOutline = function () {
+  'use strict';
+  //console.log('DrawLogic', av.grd.logicOutline);
+  var cc, rr, xx, yy;
+  var inner = 0.08 * av.grd.cellWd; //how far inside the square to put the outline.
+  var thick = 0.1 * av.grd.cellWd; //thickness of line to draw
+  if (1 > inner) inner = 1;
+  if (1 > thick) thick = 1;
+  //console.log('=========================')
+  //console.log('logic', av.grd.logicOutline);
+  var lngth = av.grd.logicOutline.length;
+  for (var ii = 0; ii < lngth; ii++) {
+    if ('-' != av.grd.msg.ancestor.data[ii]) {
+      cc = ii % av.grd.cols;
+      rr = Math.floor(ii / av.grd.cols);  //was trunc
+      xx = av.grd.marginX + av.grd.xOffset + cc * av.grd.cellWd + inner;
+      yy = av.grd.marginY + av.grd.yOffset + rr * av.grd.cellHt + inner;
+      av.grd.drawCellOutline(thick, av.grd.cellOutline, xx, yy, av.grd.cellWd-2*inner, av.grd.cellHt-2*inner);
+    }
+  }  
+};
+
 av.grd.DrawLogicSelected = function () {
   'use strict';
   //console.log('DrawLogic', av.grd.logicOutline);
@@ -275,7 +312,7 @@ av.grd.DrawLogicSelected = function () {
       av.grd.drawCellOutline(thick, av.grd.LogicColor, xx, yy, av.grd.cellWd-2*inner, av.grd.cellHt-2*inner);
     }
   }
-}
+};
 
 //Draw Cell outline or including special case for Selected
 av.grd.drawSelected = function () {
@@ -342,7 +379,7 @@ av.grd.drawGridUpdate = function () {
   //get cell size based on grid size and number of columns and rows
   av.grd.cellWd = ((av.grd.sizeX - av.grd.marginX) / av.grd.cols);
   av.grd.cellHt = ((av.grd.sizeY - av.grd.marginY) / av.grd.rows);
-
+  if(av.debug.uil) console.log(av.grd.marginX, '= av.grd.marginX; ', av.grd.marginY, '= av.grd.marginY');
   //Find a reasonable maximum zoom for this grid and screen space for av.grd.zoomSlide
   /*
   var zMaxCells = Math.floor(av.grd.spaceCells / 25);  // at least 10 cells   was trunc
@@ -370,7 +407,10 @@ av.grd.drawGridUpdate = function () {
   }
   //Draw Selected as one of the last items to draw
   if (av.grd.flagSelected) { av.grd.drawSelected(); };
-  if ('prepping' !== av.grd.runState) av.grd.DrawLogicSelected();
+  if ('prepping' !== av.grd.runState) {
+    if ('Resource' == dijit.byId('colorMode').value) av.grd.DrawAvidaOutline();
+    av.grd.DrawLogicSelected();
+  }
 };
 
 av.grd.drawGridBackground = function () {

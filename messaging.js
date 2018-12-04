@@ -180,7 +180,7 @@ av.msg.stepUpdate = function () {
     //console.log('stepUpdate', runStopButton.textContent, '; previousUpdate', av.msg.previousUpdate, '; pop', av.grd.popStatsMsg.update);
     if ('Pause' == runStopButton.textContent) {
       av.msg.previousUpdate = av.grd.popStatsMsg.update;
-      var request = {'type': 'stepUpdate'}
+      var request = {'type': 'stepUpdate'};
       av.aww.uiWorker.postMessage(request);
       av.debug.log += '\n\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; ' + av.utl.jsonStringifyOneLine(request);
     }
@@ -190,33 +190,36 @@ av.msg.stepUpdate = function () {
 //------------------------------------------------------------------------------------------- av.msg.importConfigExpr --
 av.msg.importConfigExpr = function () {
   'use strict';
-  var fList = ['avida.cfg'
-    , 'clade.ssg'
-    , 'detail.spop'
-    , 'environment.cfg'
-    , 'events.cfg'
-    , 'instset.cfg'
-    , 'update'
-  ];
-  var request = {
-    'type': 'addEvent',
-    'name': 'importExpr',
-    'triggerType': 'immediate',
-    'files': [
+  if (av.msg.avidaTestRunFlag) av.msg.makeTestDirMsg;
+  else {
+    var fList = ['avida.cfg'
+      , 'clade.ssg'
+      , 'detail.spop'
+      , 'environment.cfg'
+      , 'events.cfg'
+      , 'instset.cfg'
+      , 'update'
+    ];
+    var request = {
+      'type': 'addEvent',
+      'name': 'importExpr',
+      'triggerType': 'immediate',
+      'files': [
 //      { 'name': 'avida.cfg', 'data': av.fzr.actConfig.file['avida.cfg'] },
 //      { 'name': 'environment.cfg', 'data': av.fzr.actConfig.file['environment.cfg'] }
-    ]
-  };
-  var lngth = fList.length;
-  for (var ii = 0; ii < lngth; ii++) {
-    //console.log('Config: file', ii, fList[ii])
-    if (av.fzr.actConfig.file[fList[ii]]) {
-      request.files.push({ 'name': fList[ii], 'data': av.fzr.actConfig.file[fList[ii]] });
+      ]
+    };
+    var lngth = fList.length;
+    for (var ii = 0; ii < lngth; ii++) {
+      //console.log('Config: file', ii, fList[ii])
+      if (av.fzr.actConfig.file[fList[ii]]) {
+        request.files.push({ 'name': fList[ii], 'data': av.fzr.actConfig.file[fList[ii]] });
+      }
     }
+    if (av.debug.msg) console.log('importExpr', request);
+    av.aww.uiWorker.postMessage(request);
+    av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importConfigExpr';
   }
-  if (av.debug.msg) console.log('importExpr', request);
-  av.aww.uiWorker.postMessage(request);
-  av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importConfigExpr';
 };
 
 //--------------------------------------------------------------------------------------- end av.msg.importConfigExpr --
@@ -241,7 +244,7 @@ av.msg.makeTestDirMsg = function () {
 //      { 'name': 'environment.cfg', 'data': av.fzr.actConfig.file['environment.cfg'] }
     ]
   };
-  console.log('in av.msg.makeResReqMsg:');
+  console.log('in av.msg.makeResReqMsg: undefined global var dir = ', dir);
   var lngth = fList.length;
   for (var ii = 0; ii < lngth; ii++) {
     if (av.fzr.file[dir+'/'+fList[ii]]) {

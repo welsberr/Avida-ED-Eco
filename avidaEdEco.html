@@ -221,7 +221,7 @@
           <ul id='fzTdish' class='container'>
           </ul>
         </details>
-        <details open>
+        <details>
           <summary id='fzMdishSec' class="freezerSection">Multi-Dishes</summary>
           <ul id='fzMdish' class='container'>
           </ul>
@@ -275,12 +275,13 @@
                   <button id='freezeButton'>Freeze</button>
                 </td>
                 <td style='text-align: center; min-width:166px'>
-                  Mode
+                  Mode:
                   <select data-dojo-type='dijit/form/Select' id='colorMode' data-dojo-props='name: "colorMode"'>
                     <option value='Fitness' selected='selected'>Fitness</option>
                     <option value='Offspring Cost'>Offspring Cost</option>
                     <option value='Energy Acq. Rate'>Energy Acq. Rate</option>
                     <option value='Ancestor Organism'>Ancestor Organism</option>
+                    <option value='Resource'>Resource</option>
                     <option value='None'>None</option>
                   </select><br/>
                   <button id='newDishButton'>New</button>

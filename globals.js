@@ -16,7 +16,7 @@ av.debug.root = false;  //statements that look for failiers when the code execut
 av.debug.bool = false;  //av.debug statements that look for errors outlining logic functions
 av.debug.mouse = false;  //av.debug statements about non-dojo drag and drop
 av.debug.dnd = false;  //debu statements about dojo dnd
-av.debug.msg = false;  //messages to and from avida
+av.debug.msg = true;  //messages to and from avida
 av.debug.trace = false;  //organism page
 av.debug.grid = false;  //population grid
 av.debug.popCon = false;  //population Controls
@@ -558,12 +558,14 @@ av.grd.clearGrd = function () {
   av.grd.msg = {};
   av.grd.mxFit = 1.0;   //store maximum fitness during an experiment
   av.grd.mxCost = 380;  //store maximum Offspring Cost during an experiment
-  av.grd.mxRate = 80;  //store maximum Energy Acq. Rate during an experiment
+  av.grd.mxRate = 80;   //store maximum Energy Acq. Rate during an experiment
+  av.grd.mxRsrc = 1.0;  //store maximum Resource in any cell during an experiment. 
 
   av.grd.rescaleTolerance = 0.1;
   av.grd.rescaleTimeConstant = 10;
   av.grd.SelectedColor = '#ffffff';
-  av.grd.LogicColor = '#00ff00';
+  av.grd.LogicColor = '#00ff00';   //color used to outline cells with avidians that can do the selected logic functions
+  av.grd.cellOutline = '#00aa00';  //color used to outline all cells with avidians 
   av.grd.kidStatus = '';
 
   av.grd.legendPad = 10;   //padding on left so it is not right at edge of canvas

@@ -1696,7 +1696,7 @@ require([
 
   // Get color map data from Avida and draw
   dijit.byId('colorMode').on('Change', function () {
-    var scaleType = dijit.byId('colorMode').value;
+    //var scaleType = dijit.byId('colorMode').value;
     //Redraw Grid;
     //console.log('before call av.grd.drawGridSetupFn');
     av.grd.drawGridSetupFn('digit.byId(colorMode)');
