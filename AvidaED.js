@@ -152,7 +152,7 @@ require([
   //av.mouse.getOriginalShapes(); only gets empty strings
 
   /********************************************************************************************************************/
-
+  console.log('avida-ED-ecoWeb - active pause');
   // -------------------------------------------------------------------------------------------------------------------
   // Initialize variables that depend on files loaded in requirement statement
   // -------------------------------------------------------------------------------------------------------------------
@@ -1618,8 +1618,12 @@ require([
           }
         }
 
-              //figure out scale or legend
-        av.dom.scaleCanvas.width = (av.dom.gridControlTable.clientWidth - 2);  //works for canvas; need to use .style for divs
+        //figure out scale or legend
+        if (av.dom.gridControlTable.clientWidth < $("#gridHolder").height() ) {
+          av.dom.scaleCanvas.width = (av.dom.gridControlTable.clientWidth - 22);  //works for canvas; need to use .style for divs
+        }
+        else
+          av.dom.scaleCanvas.width = $("#gridHolder").height() - 22;
 
         if ('Ancestor Organism' == dijit.byId('colorMode').value) {
           av.grd.drawLegend();
@@ -1651,11 +1655,14 @@ require([
         if (av.debug.uil) console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
         
         if (av.debug.uil) console.log('w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= Before: av.dom.gridCanvas.width ht____________');
-                
-        if (av.dom.gridHolder.style.height < av.dom.gridHolder.clientWidth){
+
+        //if (av.dom.gridHolder.style.height < av.dom.gridHolder.clientWidth){
+        //if (av.dom.gridHolder.style.height < av.dom.gridHolder.style.width){
+        if ($("#gridHolder").height() < $("#gridHolder").width() ){
           av.grd.canvasSize = $("#gridHolder").height()-2;
         }
         else {av.grd.canvasSize = $("#gridHolder").width()-2;}
+
         av.dom.gridCanvas.width = av.grd.canvasSize;
         av.dom.gridCanvas.height = av.grd.canvasSize;
         av.grd.spaceX = av.grd.canvasSize;

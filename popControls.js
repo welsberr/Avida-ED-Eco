@@ -232,7 +232,7 @@ av.ptd.popNewExState = function () {
 //after Run button pushed for population
 av.ptd.runPopFn = function () {
   'use strict';
-  console.log('in av.ptd.runPopFn: runPopFn runState =', av.grd.runState);
+  if (av.debug.popCon) console.log('in av.ptd.runPopFn: runPopFn runState =', av.grd.runState);
   //check for ancestor organism in configuration data
   //console.log('validGridSize=',av.ptd.validGridSize, '; popSetupButton.innerHTML= = popSetupButton.innerHTML, '; av.ui.page=',av.ui.page);
   var namelist = dojo.query('> .dojoDndItem', 'ancestorBox');
@@ -258,7 +258,7 @@ av.ptd.runPopFn = function () {
     if ('populationBlock' !== av.ui.page) av.ui.mainBoxSwap('populationBlock');
   }
   else { // setup for a new run by sending config data to avida
-    console.log('else: av.ptd.validMuteInuput=',av.ptd.validMuteInuput);
+    if (av.debug.popCon) console.log('else: av.ptd.validMuteInuput=',av.ptd.validMuteInuput);
     av.dom.userMsgLabel.innerHTML = '';
     if ('started' !== av.grd.runState) {
       //collect setup data to send to avida.  Order matters. Files must be created first. Then files must be sent before some other stuff.
@@ -303,7 +303,7 @@ av.ptd.runPopFn = function () {
     av.ptd.makeRunState();
     av.msg.stepUpdate();   //av.msg.doRunPause(av.fio);
   }
-  console.log('end of av.ptd.runPopFn');
+  if (av.debug.popCon) console.log('end of av.ptd.runPopFn');
   //update screen based on data from C++
 };
 

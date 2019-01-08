@@ -2,7 +2,7 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-	<title>Avida-ED Ecology</title>
+	<title>Avida-ED-ecoWeb pause</title>
 	<meta charset='utf-8' />
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<script type='text/javascript' src='lib/dojo/dojo.js' data-dojo-config="'parseOnLoad':false,'async':true,
@@ -278,17 +278,20 @@
                   Mode:
                   <select data-dojo-type='dijit/form/Select' id='colorMode' data-dojo-props='name: "colorMode"'>
                     <option value='Fitness' selected='selected'>Fitness</option>
+                    <option value='rnot'>Resource: NOT</option>
+                    <option value='rnan'>Resource: NAN</option>
+                    <option value='rand'>Resource: AND</option>
+                    <option value='rorn'>Resource: ORN</option>
                     <option value='Offspring Cost'>Offspring Cost</option>
                     <option value='Energy Acq. Rate'>Energy Acq. Rate</option>
                     <option value='Ancestor Organism'>Ancestor Organism</option>
-                    <option value='Resource'>Resource</option>
                     <option value='None'>None</option>
                   </select><br/>
                   <button id='newDishButton'>New</button>
                   <button id='runStopButton'>Run</button>
                   <button id='oneUpdateButton'>Forward</button>
                 </td>
-                <td style='text-align: right'>
+                <td style='text-align: right; min-width:100px'>
                   <label id='rescaleLabel'> </label><br />
                   <div id='zoomSlide'>
                     <!--<div data-dojo-type='dijit/form/HorizontalRule' container='bottomDecoration' style='height: 5px;'></div>-->

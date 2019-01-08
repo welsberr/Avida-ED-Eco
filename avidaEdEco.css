@@ -102,6 +102,7 @@
     flex: 1;
     border: 1px solid #AAA;
     display: flex;
+    overflow:auto;
     flex-direction: column;
     width: 100%;
   }
@@ -119,7 +120,9 @@
     flex: 1;
     background-color: #F5F5F5; /* blue; */
   }
-  #gridHolder {
+#gridHolder {
+    min-width: 200px;
+    overflow: auto;
     margin: 0px;
     padding: 3px;
     background-color: lemonchiffon;
@@ -127,6 +130,8 @@
   .benchPopBot{
     flex: 0 1 40px;
     border: 1px solid #AAA;
+    min-height: 69px;
+    overflow: auto;
     background-color: #F5F5F5; /* peachpuff;*/
   }
 
@@ -159,7 +164,7 @@
     overflow: auto;
   }
   #selOrgType{
-    flex: 0 1 164;        /*was 170 */
+    flex: 0 1 164px;        /*was 170 */
     border: 1px solid #AAA;
     resize: horizontal;
     overflow: auto;

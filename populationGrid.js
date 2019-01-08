@@ -14,7 +14,7 @@ av.grd.backgroundSquares = function () {
       av.grd.cntx.fillRect(xx, yy, av.grd.cellWd - 1, av.grd.cellHt - 1);
     }
   }
-}
+};
 
 /*
 s  scale set based on ancestor organsim as of 2016 summer
@@ -46,13 +46,30 @@ av.grd.setMapData = function () {
     }
     else av.grd.reScaleRate = '';
 
-    if (av.grd.mxRsrc < av.grd.msg.resource.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRsrc > av.grd.msg.resource.maxVal)) {
-      av.grd.mxRsrc = av.grd.mxRsrc + ((1 + av.grd.rescaleTolerance) * av.grd.msg.resource.maxVal - av.grd.mxRsrc) / av.grd.rescaleTimeConstant;
+    if (av.grd.mxRnot < av.grd.msg.rnot.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRnot > av.grd.msg.rnot.maxVal)) {
+      av.grd.mxRnot = av.grd.mxRnot + ((1 + av.grd.rescaleTolerance) * av.grd.msg.rnot.maxVal - av.grd.mxRnot) / av.grd.rescaleTimeConstant;
       av.grd.reScaleRate = 'rescaling';
     }
     else av.grd.reScaleRate = '';
 
-    console.log('dijit.byId("colorMode").value = ', dijit.byId("colorMode").value, '------------');
+    if (av.grd.mxRnan < av.grd.msg.rnan.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRnan > av.grd.msg.rnan.maxVal)) {
+      av.grd.mxRnan = av.grd.mxRnan + ((1 + av.grd.rescaleTolerance) * av.grd.msg.rnan.maxVal - av.grd.mxRnan) / av.grd.rescaleTimeConstant;
+      av.grd.reScaleRate = 'rescaling';
+    }
+    else av.grd.reScaleRate = '';
+    if (av.grd.mxRand < av.grd.msg.rand.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRand > av.grd.msg.rand.maxVal)) {
+      av.grd.mxRand = av.grd.mxRand + ((1 + av.grd.rescaleTolerance) * av.grd.msg.rand.maxVal - av.grd.mxRand) / av.grd.rescaleTimeConstant;
+      av.grd.reScaleRate =    'rescaling';
+    }
+    else av.grd.reScaleRate = '';
+
+    if (av.grd.mxRorn < av.grd.msg.rorn.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRorn > av.grd.msg.rorn.maxVal)) {
+      av.grd.mxRorn = av.grd.mxRorn + ((1 + av.grd.rescaleTolerance) * av.grd.msg.rorn.maxVal - av.grd.mxRorn) / av.grd.rescaleTimeConstant;
+      av.grd.reScaleRate = 'rescaling';
+    }
+    else av.grd.reScaleRate = '';
+
+    //console.log('dijit.byId("colorMode").value = ', dijit.byId("colorMode").value, '------------');
     switch (dijit.byId("colorMode").value) {
       case 'Fitness':
         av.grd.fill = av.grd.msg.fitness.data;
@@ -72,10 +89,28 @@ av.grd.setMapData = function () {
         av.grd.fillmin = av.grd.msg.metabolism.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
         break;
-      case 'Resource':
-        av.grd.fill = av.grd.msg.resource.data;
-        av.grd.fillmax = av.grd.mxRsrc;
-        av.grd.fillmin = av.grd.msg.resource.minVal;
+      case 'rnot':
+        av.grd.fill = av.grd.msg.rnot.data;
+        av.grd.fillmax = av.grd.mxRnot;
+        av.grd.fillmin = av.grd.msg.rnot.minVal;
+        av.grd.fillRescale = av.grd.reScaleRate;
+        break;
+      case 'rnan':
+        av.grd.fill = av.grd.msg.rnan.data;
+        av.grd.fillmax = av.grd.mxRnan;
+        av.grd.fillmin = av.grd.msg.rnan.minVal;
+        av.grd.fillRescale = av.grd.reScaleRate;
+        break;
+      case 'rand':
+        av.grd.fill = av.grd.msg.rand.data;
+        av.grd.fillmax = av.grd.mxRand;
+        av.grd.fillmin = av.grd.msg.rand.minVal;
+        av.grd.fillRescale = av.grd.reScaleRate;
+        break;
+      case 'rorn':
+        av.grd.fill = av.grd.msg.rorn.data;
+        av.grd.fillmax = av.grd.mxRorn;
+        av.grd.fillmin = av.grd.msg.rorn.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
         break;
       case 'Ancestor Organism':
@@ -90,7 +125,7 @@ av.grd.setMapData = function () {
   }
   //console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
   //console.log('fitmax',av.grd.msg.fitness.maxVal,'; Gest',av.grd.msg.gestation.maxVal,'; rate',av.grd.msg.metabolism.maxVal,'; fillmax',av.grd.fillmax);
-}
+};
 
 av.grd.drawParent = function () {
   'use strict';
@@ -270,6 +305,7 @@ av.grd.cellConflict = function (NewCols, NewRows) {
   }
 }
 
+//Draw the outline of all cells that contain avidians when a resource is the main information in the grid
 av.grd.DrawAvidaOutline = function () {
   'use strict';
   //console.log('DrawLogic', av.grd.logicOutline);
@@ -408,7 +444,7 @@ av.grd.drawGridUpdate = function () {
   //Draw Selected as one of the last items to draw
   if (av.grd.flagSelected) { av.grd.drawSelected(); };
   if ('prepping' !== av.grd.runState) {
-    if ('Resource' == dijit.byId('colorMode').value) av.grd.DrawAvidaOutline();
+    if ('r' == dijit.byId('colorMode').value.substring(0,1) ) av.grd.DrawAvidaOutline();
     av.grd.DrawLogicSelected();
   }
 };
@@ -487,7 +523,7 @@ av.grd.drawLegend = function () {
 
 av.grd.gradientScale = function () {
   'use strict';
-  console.log('w:',av.dom.scaleCanvas.width, av.dom.scaleCanvas.height, '= scaleCanvas Wd Ht; start gradientScale ');
+  if (av.debug.uil) console.log('w:',av.dom.scaleCanvas.width, av.dom.scaleCanvas.height, '= scaleCanvas Wd Ht; start gradientScale ');
   if (av.debug.uil) console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset; start gradientScale');
   av.dom.scaleCanvas.height = 30;
   av.grd.sCtx.fillStyle = av.color.names["ltGrey"];
@@ -525,10 +561,10 @@ av.grd.gradientScale = function () {
     var marks = 4;
     var txt = "";
     if (av.grd.fillmax > 1000) {
-      place = 0
+      place = 0;
     }
     else if (av.grd.fillmax > 100) {
-      place = 1
+      place = 1;
     }
     for (var ii = 0; ii <= marks; ii++) {
       xx = ii * av.grd.fillmax / marks;
@@ -538,9 +574,9 @@ av.grd.gradientScale = function () {
       av.grd.sCtx.fillText(txt, xx, legendHt - 2, maxTxtWd);
     }
   }
-  console.log('w:',av.dom.scaleCanvas.width, av.dom.scaleCanvas.height, '= scaleCanvas Wd Ht; end gradientScale ');
+  if (av.debug.uil) console.log('w:',av.dom.scaleCanvas.width, av.dom.scaleCanvas.height, '= scaleCanvas Wd Ht; end gradientScale ');
   if (av.debug.uil) console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset; end gradientScale');
-}
+};
 
 av.grd.cellFilled = function (AvNdx, ii) {
   var flag = false;
@@ -556,7 +592,7 @@ av.grd.cellFilled = function (AvNdx, ii) {
     }
   }
   return flag;
-}
+};
 
 /*how to center grid
 http://stackoverflow.com/questions/5127937/how-to-center-canvas-in-html5
