@@ -20,11 +20,11 @@ av.debug.msg = false;  //messages to and from avida
 av.debug.trace = false;  //organism page
 av.debug.grid = false;  //population grid
 av.debug.popCon = false;  //population Controls
-av.debug.fio = false;  // file input/output; fio, read, write
+av.debug.fio = true;  // file input/output; fio, read, write
 av.debug.ind = false;  //oranism page
 av.debug.anl = false;  //analysis page
 av.debug.plotly = false;  //both popChart and analysis
-av.debug.uil = true; //user interface layout.
+av.debug.uil = false; //user interface layout.
 av.debug.alo = false; //analysis page layout
 av.debug.usr = ''; //working on log for user actions.
 
@@ -136,7 +136,6 @@ av.mouse.notDndPopList = ['colorMode'
   //Buttons
   , 'mainButtons'
   , 'mainButtonTable'
-  , 'popSetupButton'
   , 'rtPnlButtonImg'
   , 'populationButton'
   , 'organismButton'

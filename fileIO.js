@@ -305,7 +305,7 @@ av.fio.fixFname = function() {
     av.fzr.dir[domid] = dir;
     //if (av.debug.fio) console.log('av.fzr', av.fzr);
   }
-}
+};
 
 //----------------------------------------- Save datarecorder info to a csv file ---------------------------------------
 av.fio.fzSaveCsvfn = function () {
@@ -353,9 +353,26 @@ av.fio.fzSaveCurrentWorkspaceFn = function () {
   var WSzip = new av.fio.JSZip();
   //console.log('number of files', av.utl.objectLength(av.fzr.file) );
   var numFiles = 0;
+  var aFolderName, itemName, itemNameContent;
+  var generalContent = 'AvidaED writes this file, but does not read it. \n'
+                      + 'Changing this file by hand will not change the entryname. \n'
+                      + 'You must change the file entryname.txt, to change the name within Avida-ED';
   if (av.fzr.file) {
     for (var fname in av.fzr.file) {
       WSzip.file(folderName + '.avidaedworkspace/' + fname, av.fzr.file[fname]);
+      
+      console.log('fname=', fname);
+      //The following way to create a file named after the entry name, will not work with multidishes because there is another level of folders in multidish
+      //Multidishes were not impliment when this was written
+      if ('entryname.txt' == wsa('/',fname) ) {
+      //if (false) {
+        aFolderName = wsb('/', fname);
+        itemName = aFolderName + '/' + makeFileName(av.fzr.file[fname]) + '.txt';
+        itemNameContent = itemName + '\n\n' + generalContent;
+        if (av.debug.fio) console.log('itemName=', itemName);
+        WSzip.file(folderName + '.avidaedworkspace/' + itemName, itemNameContent);        
+        numFiles++;
+      };
       numFiles++;
     }
   }

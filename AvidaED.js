@@ -208,6 +208,7 @@ require([
       //Population Page
     av.dom.popInfoHolder = document.getElementById('popInfoHolder');
     av.dom.setupBlock = document.getElementById('setupBlock');
+    av.dom.testSetupBlock = document.getElementById('testSetupBlock');
     av.dom.mapHolder = document.getElementById('mapHolder');
     av.dom.popTop = document.getElementById('popTop');
     av.dom.popBot = document.getElementById('popBot');
@@ -228,7 +229,6 @@ require([
     av.dom.gridControlTable = document.getElementById('gridControlTable');
     
     //Population Map Setup page
-    av.dom.popSetupButton = document.getElementById('popSetupButton');
     av.dom.sizeCells = document.getElementById('sizeCells');
     av.dom.sizeCols = document.getElementById('sizeCols');
     av.dom.sizeRows = document.getElementById('sizeRows');
@@ -262,7 +262,6 @@ require([
     av.dom.autoUpdateRadio = document.getElementById('autoUpdateRadio');
     av.dom.autoUpdateSpinner = document.getElementById('autoUpdateSpinner');
 
-    av.dom.sendLogTextarea = document.getElementById('sendLogTextarea');
     av.dom.sendLogPara = document.getElementById('sendLogPara');
     av.dom.sendLogTextarea = document.getElementById('sendLogTextarea');
 
@@ -1010,8 +1009,8 @@ require([
   };
 
   av.post.emailWindow = function() {
-    document.getElementById('sendLogTextarea').textContent = av.debug.sendLogTextarea;
-    document.getElementById('sendLogPara').textContent = av.debug.sendLogPara;
+    av.dom.sendLogTextarea.textContent = av.debug.sendLogTextarea;
+    av.dom.sendLogPara.textContent = av.debug.sendLogPara;
 
     //document.getElementById('postLogTextarea').textContent = av.debug.sendLogTextarea;
     //document.getElementById('postLogPara').textContent = av.debug.sendLogPara;
@@ -1104,12 +1103,22 @@ require([
 //                                             Population page Buttons
 //----------------------------------------------------------------------------------------------------------------------
 
-// shifts the population page from Map (grid) view to setup parameters view and back again.
-  av.dom.popSetupButton.onclick = function () {
-    av.ptd.popBoxSwap();   //in popControls.js
-  };
+av.ptd.openCity = function (evt, contentType) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("labInfoClass");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  console.log('contentType=',contentType,'; evt=', evt);  //keep because evt info looks useful for improving mouse code. 
+  document.getElementById(contentType).style.display = "flex";
+  evt.currentTarget.className += " active";
+};
 
-  // hides and shows the population and selected organsim data on right of population page with 'Stats/mpa' button
+// hides and shows the population and selected organsim data on right of population page with 'Stats/mpa' button
   av.ptd.rtPnlButtonImg = function () {
     if (av.ptd.popStatFlag) {
       av.post.addUser('Button: rtPnlButtonImg: start hidding stats');

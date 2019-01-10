@@ -167,6 +167,15 @@ var flexsplit = function (instr) {
   return str1;
 };
 
+//remove all commas; remove preceeding and trailing spaces; replace spaces with underbar; but underbar at start of string.
+var makeFileName = function (instr) {
+  'use strict';
+  var str1 = instr.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, '_');
+  str1 = '_' + str1;
+
+  return str1;
+};
+
 //**********************************************************************************************************************
 av.utl.dTailWrite = function (file, lineNum, nameStr, objAry) {
   av.debug.dTail = 'File=' + file + ': ' + lineNum;

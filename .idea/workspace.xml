@@ -2,23 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27852641-b354-42b1-945e-f8ca4d8f3ce7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/AvidaED.js" beforeDir="false" afterPath="$PROJECT_DIR$/AvidaED.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/avida.js" beforeDir="false" afterPath="$PROJECT_DIR$/avida.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/avida.js.mem" beforeDir="false" afterPath="$PROJECT_DIR$/avida.js.mem" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/avidaEdEco.css" beforeDir="false" afterPath="$PROJECT_DIR$/avidaEdEco.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/avidaEdEco.html" beforeDir="false" afterPath="$PROJECT_DIR$/avidaEdEco.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/avida_2018_0718.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/avida_2018_0718.js.mem" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/avida_2018_0718_noMsg.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/avida_2018_0718_noMsg.js.mem" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/avida_2018_verbose1.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/avida_2018_verbose1.js.mem" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/avida_resource-debug.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/avida_resource-debug.js.mem" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/globals.js" beforeDir="false" afterPath="$PROJECT_DIR$/globals.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/popControls.js" beforeDir="false" afterPath="$PROJECT_DIR$/popControls.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/populationGrid.js" beforeDir="false" afterPath="$PROJECT_DIR$/populationGrid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -33,7 +17,7 @@
     <session id="-1038066544">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="2" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.opened" value="2" />
@@ -106,7 +90,7 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/avidaEdEco.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="772">
@@ -133,10 +117,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AvidaED.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
+            <state relative-caret-position="31008">
               <caret line="1632" column="9" selection-start-line="1632" selection-start-column="9" selection-end-line="1632" selection-end-column="9" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -277,12 +261,12 @@
       <workItem from="1544807614253" duration="2886000" />
       <workItem from="1545364863254" duration="1455000" />
       <workItem from="1546911189634" duration="404000" />
-      <workItem from="1546914813672" duration="3325000" />
+      <workItem from="1546914813672" duration="3519000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8070000" />
+    <option name="totallyTimeSpent" value="8264000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="13" y="23" width="1592" height="1669" extended-state="0" />
@@ -357,16 +341,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AvidaED.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="1632" column="9" selection-start-line="1632" selection-start-column="9" selection-end-line="1632" selection-end-column="9" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/avidaEdEco.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="548">
@@ -378,6 +352,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="772">
           <caret line="134" selection-start-line="134" selection-end-line="134" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AvidaED.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="31008">
+          <caret line="1632" column="9" selection-start-line="1632" selection-start-column="9" selection-end-line="1632" selection-end-column="9" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

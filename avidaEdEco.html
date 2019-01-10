@@ -2,7 +2,7 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-	<title>Avida-ED-ecoWeb pause</title>
+	<title>Avida-ED-ecoWeb</title>
 	<meta charset='utf-8' />
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<script type='text/javascript' src='lib/dojo/dojo.js' data-dojo-config="'parseOnLoad':false,'async':true,
@@ -154,14 +154,14 @@
         </span>
         <span data-dojo-type='dijit/PopupMenuBarItem' label='Debug' id='mnDebug' style = 'visibility: visible'> <!--visible/hidden-->
           <span data-dojo-type='dijit/Menu'>
-            <span data-dojo-type='dijit/MenuItem' id='mnFzAddResEx' label='Run Highlighted ResourceRequest'></span>
-            <span data-dojo-type='dijit/MenuItem' id='mnFzAddMdishEx' label='Run Highlighted Mulit-Dish'></span>
-            <span data-dojo-type='dijit/MenuItem' id='mnFzAddRdishEx' label='Run Highlighted Resource-Dish'></span>
-            <span data-dojo-type='dijit/MenuItem' id='mnFzAddTdishEx' label='Run Highlighted Test-Dish'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzAddTdishEx' label='Load Highlighted Test-Dish'></span>
             <span data-dojo-type='dijit/MenuItem' id='mnDbThrowError' label='Throw Error'></span>
             <span data-dojo-type='dijit/MenuItem' id='mnDbThrowData' label='Send Data to console'></span>
             <span data-dojo-type='dijit/MenuItem' id='mnDbLineLog' label='Add Line to Session Log'></span>
-            <span data-dojo-type='dijit/MenuItem' id='mnDbLoadProtoType' label='Load Selected ProtoType'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnDbLoadProtoType' label='Load Selected ProtoType (not working)'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzAddResEx' label='Load Highlighted ResourceRequest (not working)'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzAddMdishEx' label='Load Highlighted Mulit-Dish (not working)'></span>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzAddRdishEx' label='Load Highlighted Resource-Dish (not working)'></span>
           </span>
         </span>
       </span>     
@@ -244,20 +244,11 @@
       <div class="mainBlockClassRow" id="populationBlock">
 				<div class="popBenchCol" id='mapHolder'>
           <div class="benchPopTopRow" id='popTop'>
-          <table border='0' style='border-collapse: collapse; table-layout: auto; width: 100%; height: auto;'>
-            <tbody>
-            <tr style='vertical-align: middle; line-height: 25px'>
-              <td style='vertical-align: top;'>
-                <div class='lftmargin'><img src='images/Avida-ED-dish-icon.png' alt='Avida-ED dish icon'></div>
-                <div id='activeConfig' class='popContainer'></div>
-              </td>
-              <td><label id='altMsgLabel'></label></td>
-              <td style='text-align: right;'>
-                <button id='popSetupButton'>Setup</button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
+            <div class='lftmargin'>
+              <img src='images/Avida-ED-dish-icon.png' alt='Avida-ED dish icon'>
+            </div>
+            <div id='activeConfig' class='popContainer'></div>
+            <label id='altMsgLabel'></label>
           </div>
           <div class="benchPopMid" id='gridHolder' data-dojo-type='dijit/layout/ContentPane'>
             <canvas data-dojo-type='dojo.dnd.Target' id='gridCanvas'></canvas>
@@ -304,7 +295,16 @@
           </div>
 				</div>
 
-        <div id="popInfoHolder">   
+        <div id="popInfoHolder"> 
+          <div id ="popInfoVert">
+          <div class="tabHolder">
+            <div class="tab">
+              <button class="tablinks active" id="dataTab" onclick="av.ptd.openCity(event, 'labInfoBlock')">Data</button>
+              <button class="tablinks" id="setupTab" onclick="av.ptd.openCity(event, 'setupBlock')">Setup</button>
+              <button class="tablinks" id="testTab" onclick="av.ptd.openCity(event, 'testSetupBlock')">Test Setup</button>
+            </div>
+          </div>
+          <div class="labInfoHolder">
           <div class="labInfoClass" id="labInfoBlock">
             <div id="popStatistics">
               <div id="selOrgType">
@@ -517,7 +517,19 @@
               </select>
             </div> 
           </div>  <span comment="end of labInfoBlock"></span>
-          
+          <div id="testSetupBlock" class="labInfoClass">
+            <form id="testSetupBlock">
+              Test Dish Environmental Settings<br><br>
+              <br>
+              for now the dish is always 30x30 and only settings in the environment file can be changed.
+              For more information go to  
+              <a href="https://github.com/devosoft/avida/wiki/Environment-file" target="_blank">
+                avida enviornment file
+              </a><br><br>
+              Please edit the environment configuration file below:<br>
+              <textarea id='environConfigEdit' cols='90' rows='25'></textarea><br />
+            </form>
+          </div>
           <div id="setupBlock" class="labInfoClass">
             <form id='setupForm'>
               <label>Environmental Settings</label>
@@ -755,7 +767,8 @@
               </span>
             </form>            
           </div><span comment="end of labInfoPopSetup"></span>
-          
+          </div><span comment="end of infoHolder"></span>
+          </div><span comment="end of popInfoVert"></span>
 				</div>  <span comment="end of popInfoHolder"></span>
       </div>  <span title="mainBlockClassRow id=populationBlock"></span>
 

@@ -10,7 +10,44 @@
   .thin{
     margin: 0;
     padding: 0;
-      }
+  }
+  
+  .tabHolder {
+    flex: 0 0 auto;
+  }
+  
+.tab {
+  overflow: hidden;
+  /*border: 1px solid #ccc; */
+  border: none;
+  background-color: inherit;
+  float:right;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: white;
+  float: left;
+  border: 1px black;
+  border-style: solid solid none;
+  border-radius: 9px 9px 0px 0px;
+  outline: none;
+  cursor: pointer;
+  padding: 2px 9px;
+  transition: 0.3s;
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
   
   #allAvida{
     display: flex;
@@ -108,8 +145,6 @@
   }
   .benchPopTopRow {
     flex:0 1 30px;
-    resize: vertical;     /* broken: resize is not working here */
-    overflow: auto;
     display: flex;
     flex-direction: row;
     background-color: #F5F5F5; /* lightblue;  */
@@ -119,6 +154,7 @@
     border: 1px solid #AAA;
     flex: 1;
     background-color: #F5F5F5; /* blue; */
+    overflow:auto;
   }
 #gridHolder {
     min-width: 200px;
@@ -141,6 +177,16 @@
     background: beige;
   }
 
+  #popInfoVert {
+    display: flex;
+    flex-direction: column;
+    background-color:#efe ;
+  }
+
+  .labInfoHolder {
+    flex: 1; 
+  }
+    
   #labInfoBlock{
     display: flex;
     flex-direction: column;
@@ -152,6 +198,11 @@
     flex-direction: column;
     background-color: #F5F5F5; /* lightsteelblue; */
     height: 100%;
+  }
+  
+  #environConfigEdit{
+    resize: vertical;
+    overflow: auto;
   }
 
   #popStatistics{
@@ -184,8 +235,6 @@
 .mainPageButtons{
     border: 1px solid #AAA;
   flex:0 1 120px;
-  resize: vertical;     /* broken: resize is not working here */
-  overflow: auto;
 }
 .taskSets{
   display: flex;

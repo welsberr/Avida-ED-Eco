@@ -771,13 +771,10 @@ av.msg.runTestDish = function(fzSection, target, type) {
     console.log('move', av.dnd.move);
     added = av.dnd.lndActiveConfig(av.dnd.move);
 
-    //if (av.dom.popSetupButton.textContent === 'Setup' && added) av.grd.drawGridSetupFn('av.msg.runTestDish');
-
     //Now actually load and run the multi-dish direcdtly from the freezer.
     av.msg.importTestDishExpr(av.dnd.move.dir); //???????
 
     //This only loads ancestors in the super dish.
-    //if (av.dom.popSetupButton.textContent === 'Setup' && added) av.grd.drawGridSetupFn();
     var filename = av.dnd.move.dir +'/ancestors';
     console.log('filename = ', filename, '=======================================================');
     if (av.fzr.file[filename]) {
@@ -832,7 +829,6 @@ av.msg.runMultiDish = function(fzSection, target, type) {
     av.msg.avidaTestRunFlag = true;   //Do not reload files from the active config freezer section
 
     //This only loads ancestors in the super dish.
-    //if (av.dom.popSetupButton.textContent === 'Setup' && added) av.grd.drawGridSetupFn();
     var filename = av.dnd.move.dir +'/ancestors';
     console.log('filename = ', filename, '=======================================================');
     if (av.fzr.file[filename]) {
@@ -879,7 +875,6 @@ av.dnd.runResReqDish = function(fzSection, target, type) {
     console.log('move', av.dnd.move);
     //added = av.dnd.lndActiveConfig(av.dnd.move);
 
-    //if (av.dom.popSetupButton.textContent === 'Setup' && added) av.grd.drawGridSetupFn();
     var filename = av.dnd.move.dir +'/ancestors';
     console.log('filename = ', filename, '=======================================================');
     if (av.fzr.file[filename]) {
@@ -927,7 +922,6 @@ av.dnd.runTestDish = function(fzSection, target, type) {
     console.log('move', av.dnd.move);
     //added = av.dnd.lndActiveConfig(av.dnd.move);
 
-    //if (av.dom.popSetupButton.textContent === 'Setup' && added) av.grd.drawGridSetupFn();
     var filename = av.dnd.move.dir +'/ancestors';
     console.log('filename = ', filename, '=======================================================');
     if (av.fzr.file[filename]) {
@@ -1034,7 +1028,7 @@ av.dnd.FzAddExperimentFn = function (fzSection, target, type) {
     else if (('fzConfig' == fzSection || 'fzWorld' == fzSection) && 'activeConfig' == target) added = av.dnd.lndActiveConfig(av.dnd.move);
     else if ('anlDndChart' == target && 'fzWorld' == fzSection) added = av.dnd.lndAnlDndChart(av.dnd.move);
 
-    if (av.dom.popSetupButton.textContent === 'Setup' && added) av.grd.drawGridSetupFn('av.dnd.FzAddExperimentFn');
+    if (added) av.grd.drawGridSetupFn('av.dnd.FzAddExperimentFn');
   }
   else {
     switch(fzSection) {

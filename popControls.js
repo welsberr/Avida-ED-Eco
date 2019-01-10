@@ -21,25 +21,6 @@ av.ptd.makeRunState = function () {
   av.dom.oneUpdateButton.disabled = true;
 };
 
-// shifts the population page from Map (grid) view to setup parameters view and back again.
-av.ptd.popBoxSwap = function () {
-  'use strict';
-  if ('Setup' != popSetupButton.innerHTML) {
-    av.post.addUser('Button: popSetupButton became Setup');
-    av.dom.labInfoBlock.style.display = 'flex';
-    av.dom.setupBlock.style.display = 'none';
-    av.dom.popSetupButton.textContent = 'Setup';
-
-    av.ui.subpage = 'Data';
-  } else {
-    av.post.addUser('Button: popSetupButton became Data');
-    av.dom.labInfoBlock.style.display = 'none';
-    av.dom.setupBlock.style.display = 'flex';
-    av.dom.popSetupButton.textContent = 'Data';
-    av.ui.subpage = 'setup';
-  }
-};
-
 av.ptd.popWorldStateUi = function (from) {
   'use strict';
   console.log(from, 'called av.ptd.popWorldStateUi');
@@ -234,7 +215,6 @@ av.ptd.runPopFn = function () {
   'use strict';
   if (av.debug.popCon) console.log('in av.ptd.runPopFn: runPopFn runState =', av.grd.runState);
   //check for ancestor organism in configuration data
-  //console.log('validGridSize=',av.ptd.validGridSize, '; popSetupButton.innerHTML= = popSetupButton.innerHTML, '; av.ui.page=',av.ui.page);
   var namelist = dojo.query('> .dojoDndItem', 'ancestorBox');
   //console.log('namelist = namelist);
   if (1 > namelist.length) {
@@ -247,14 +227,12 @@ av.ptd.runPopFn = function () {
     console.log('not option: !av.ptd.validGridSize=', !av.ptd.validGridSize);
     av.ptd.makePauseState();
     av.dom.userMsgLabel.innerHTML = 'A valid grid size is required before Avida will run';
-    if ('Setup' == popSetupButton.innerHTML) av.ptd.popBoxSwap();
     if ('populationBlock' !== av.ui.page) av.ui.mainBoxSwap('populationBlock');
   }
   else if (!av.ptd.validMuteInuput) {
     console.log('Not option: av.ptd.validMuteInuput=',av.ptd.validMuteInuput);
     av.ptd.makePauseState();
     av.dom.userMsgLabel.innerHTML = 'A valid mutation rate is required before Avida will run';
-    if ('Setup' == popSetupButton.innerHTML) av.ptd.popBoxSwap();
     if ('populationBlock' !== av.ui.page) av.ui.mainBoxSwap('populationBlock');
   }
   else { // setup for a new run by sending config data to avida
