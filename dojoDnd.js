@@ -787,6 +787,8 @@ av.msg.runTestDish = function(fzSection, target, type) {
       console.log('file ', filename, 'exists');
       av.fio.handAncestorLoad(av.fzr.file[filename]);
     }
+    console.log('av.dom.environConfigEdit=',av.dom.environConfigEdit);
+    av.dom.environConfigEdit.value = "some text";
   }
   else {
     alert('You must select a test-dish first');

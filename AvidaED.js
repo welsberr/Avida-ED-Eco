@@ -207,6 +207,9 @@ require([
 
       //Population Page
     av.dom.popInfoHolder = document.getElementById('popInfoHolder');
+    av.dom.dataTab = document.getElementById('dataTab');
+    av.dom.setupTab = document.getElementById('setupTab');
+    av.dom.testTab = document.getElementById('testTab');
     av.dom.setupBlock = document.getElementById('setupBlock');
     av.dom.testSetupBlock = document.getElementById('testSetupBlock');
     av.dom.mapHolder = document.getElementById('mapHolder');
@@ -261,6 +264,9 @@ require([
     av.dom.manualUpdateRadio = document.getElementById('manualUpdateRadio');
     av.dom.autoUpdateRadio = document.getElementById('autoUpdateRadio');
     av.dom.autoUpdateSpinner = document.getElementById('autoUpdateSpinner');
+    
+    //test dishes setup
+    av.dom.environConfigEdit = document.getElementById('environConfigEdit');
 
     av.dom.sendLogPara = document.getElementById('sendLogPara');
     av.dom.sendLogTextarea = document.getElementById('sendLogTextarea');
@@ -618,7 +624,7 @@ require([
     av.dom.runStopButton.innerHTML = 'Run';  //av.msg.pause('now');
     av.debug.finalizeDtail();
     av.debug.triggered = 'errorTriggered';
-    av.post.postLogPara = 'mares eat oats and does eat oats';
+    av.post.postLogPara = 'Please send the info below to help us make Avida-ED better by clicking on the [Send] button';
     av.debug.sendLogPara = 'The error is the last line in the session log in the text below.';
     av.debug.postEmailLabel = 'Please include your e-mail if you would like feed back or are willing to further assist in debug';
     av.debug.postNoteLabel = 'Please include any additional comments in the field below.';
@@ -1045,8 +1051,6 @@ require([
     console.log('end of mainBoxSwap');
   };
     
-  //av.ui.mainBoxSwap('populationBlock');  //commented out here as it is called near the end of this file
-  av.dom.setupBlock.style.none;
 
   // Buttons that call MainBoxSwap
   av.dom.populationButton.onclick = function () {
@@ -1078,6 +1082,28 @@ require([
     av.anl.AnaChartFn();
   };
 
+  av.ptd.processTab = function (evt, contentType) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("labInfoClass");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    console.log('contentType=',contentType,'; evt=', evt);  //keep because evt info looks useful for improving mouse code. 
+    document.getElementById(contentType).style.display = "flex";
+    evt.currentTarget.className += " active";
+  };
+
+  //av.ui.mainBoxSwap('populationBlock');  //commented out here as it is called near the end of this file
+  av.dom.setupBlock.style.none;
+  av.dom.testSetupBlock.style.none;
+  //console.log('av.dom.setupTab', av.dom.setupTab);
+  av.dom.setupTab.click();
+  av.dom.dataTab.click();
+
 //------------------------------------------------------------------------------------------show/hide left side panel --
   av.ptd.lftPnlButtonImg = function () {
     if (av.ui.lftSidePnlShowing) {
@@ -1102,21 +1128,6 @@ require([
 //----------------------------------------------------------------------------------------------------------------------
 //                                             Population page Buttons
 //----------------------------------------------------------------------------------------------------------------------
-
-av.ptd.openCity = function (evt, contentType) {
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("labInfoClass");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  console.log('contentType=',contentType,'; evt=', evt);  //keep because evt info looks useful for improving mouse code. 
-  document.getElementById(contentType).style.display = "flex";
-  evt.currentTarget.className += " active";
-};
 
 // hides and shows the population and selected organsim data on right of population page with 'Stats/mpa' button
   av.ptd.rtPnlButtonImg = function () {
@@ -2905,7 +2916,7 @@ av.ptd.openCity = function (evt, contentType) {
   });
 
   // **************************************************************************************************************** */
-  //Tasks that Need to be run when page is loaded but after chart is defined
+  //Tasks that Need to be run when page is loaded and after chart is defined
   // **************************************************************************************************************** */
 
   if (true) console.log('after chart defined for analysis page');
@@ -2970,7 +2981,7 @@ av.ptd.openCity = function (evt, contentType) {
   
   //
   //av.ui.removeVerticalScrollbar('popTop', 'popTop');
-  //av.ui.mainBoxSwap('populationBlock');
+  av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
 
   //av.grd.popChartFn();
   //av.grd.drawGridSetupFn('inital background'); //Draw initial background

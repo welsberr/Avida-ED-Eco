@@ -180,17 +180,17 @@
   #popInfoVert {
     display: flex;
     flex-direction: column;
-    background-color:#efe ;
+    height: 100%;
   }
 
   .labInfoHolder {
     flex: 1; 
+    height: 100%;
   }
     
   #labInfoBlock{
     display: flex;
     flex-direction: column;
-    background-color: #F5F5F5; /* lightsteelblue; */
     height: 100%;
   }
   .labInfoClass{
@@ -205,6 +205,10 @@
     overflow: auto;
   }
 
+  #popStatHolder{
+    flex: 1 1 280px;
+    height: 280px;
+  }
   #popStatistics{
     display: flex;
     flex-direction: row;
@@ -221,15 +225,16 @@
     overflow: auto;
   }
   #popStats4grid{
-    flex: 1;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
+    flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
     border: 1px solid #AAA;
   }
   #popChrtHolder{
-    flex: 1;
+    flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
     border: 1px solid #AAA;
+    height: 100%;
   }
   #miniChartYaxis{
-    flex: 0 1 30px;
+    flex: 0 0 30px;
     border: 1px solid #AAA;
   }
 .mainPageButtons{
@@ -261,7 +266,6 @@
   width: 2em;      //4.5em
   height:1.8em
 }
-
 
 .freezerClass{
   border: 1px solid #BABABA;

@@ -347,7 +347,7 @@ av.fio.fzSaveCurrentWorkspaceFn = function () {
   if ('.zip' != end) av.fio.userFname = av.fio.userFname + '.zip';
   console.log('userName=', av.fio.userFname);
   var folderName = wsb('.zip', av.fio.userFname);
-  console.log('end', end, '; userFname', av.fio.userFname, '; folderName', folderName);
+  if (av.debug.fio) console.log('end', end, '; userFname', av.fio.userFname, '; folderName', folderName);
 
   //make zipfile as a blob
   var WSzip = new av.fio.JSZip();
@@ -361,13 +361,11 @@ av.fio.fzSaveCurrentWorkspaceFn = function () {
     for (var fname in av.fzr.file) {
       WSzip.file(folderName + '.avidaedworkspace/' + fname, av.fzr.file[fname]);
       
-      console.log('fname=', fname);
-      //The following way to create a file named after the entry name, will not work with multidishes because there is another level of folders in multidish
-      //Multidishes were not impliment when this was written
-      if ('entryname.txt' == wsa('/',fname) ) {
-      //if (false) {
-        aFolderName = wsb('/', fname);
-        itemName = aFolderName + '/' + makeFileName(av.fzr.file[fname]) + '.txt';
+      if (av.debug.fio) console.log('fname=', fname);
+       //console.log('end of fname=', fname.substring(fname.length-13, fname.length), '; len=', fname.length-13);
+      if ('entryname.txt' == fname.substring(fname.length-13, fname.length) ) {
+        aFolderName = fname.substring(0,fname.length-13);
+        itemName = aFolderName + makeFileName(av.fzr.file[fname]) + '.txt';
         itemNameContent = itemName + '\n\n' + generalContent;
         if (av.debug.fio) console.log('itemName=', itemName);
         WSzip.file(folderName + '.avidaedworkspace/' + itemName, itemNameContent);        

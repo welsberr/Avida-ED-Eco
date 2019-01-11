@@ -299,13 +299,14 @@
           <div id ="popInfoVert">
           <div class="tabHolder">
             <div class="tab">
-              <button class="tablinks active" id="dataTab" onclick="av.ptd.openCity(event, 'labInfoBlock')">Data</button>
-              <button class="tablinks" id="setupTab" onclick="av.ptd.openCity(event, 'setupBlock')">Setup</button>
-              <button class="tablinks" id="testTab" onclick="av.ptd.openCity(event, 'testSetupBlock')">Test Setup</button>
+              <button class="tablinks active" id="dataTab" onclick="av.ptd.processTab(event, 'labInfoBlock')">Data</button>
+              <button class="tablinks" id="setupTab" onclick="av.ptd.processTab(event, 'setupBlock')">Setup</button>
+              <button class="tablinks" id="testTab" onclick="av.ptd.processTab(event, 'testSetupBlock')">Test Setup</button>
             </div>
           </div>
           <div class="labInfoHolder">
           <div class="labInfoClass" id="labInfoBlock">
+            <div id="popStatHolder">
             <div id="popStatistics">
               <div id="selOrgType">
                 <div class='popStatsTitle'>
@@ -501,7 +502,8 @@
                   </table>
                 </div>
               </div>
-            </div> <span comment="end of Statistics"></span>
+            </div> <span comment="end of popStatistics"></span>
+            </div><span comment="end of popStatHolder"></span>
 	  				<div id="popChrtHolder" data-dojo-type='dijit/layout/ContentPane'>
               <div id='popChart'></div>
             </div>
@@ -518,7 +520,7 @@
             </div> 
           </div>  <span comment="end of labInfoBlock"></span>
           <div id="testSetupBlock" class="labInfoClass">
-            <form id="testSetupBlock">
+            <form id="testSetupForm">
               Test Dish Environmental Settings<br><br>
               <br>
               for now the dish is always 30x30 and only settings in the environment file can be changed.
@@ -1554,7 +1556,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
           Please send the data below to help us make Avida-ED better by clicking on the [Send] button.&nbsp;
         </p>
         <br />
-        <label id='postEmailLabel'>Please include your e-mail so we can discuss your problem or suggeston further.</label><br />
+        <label id='postEmailLabel'>Please include your e-mail so we can discuss your problem or suggestion further.</label><br />
         <input type='text' id='postEmailInput' style='width: 40em' />
       </div>
       <div class='ritThin'>

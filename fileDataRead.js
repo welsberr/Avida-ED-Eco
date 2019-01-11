@@ -149,6 +149,8 @@ av.fio.processFiles = function (loadConfigFlag){
         }
       case 'ancestors':
       case 'ancestors_manual':
+      case 'ancestors.txt':
+      case 'ancestors_manual.txt':
       case 'avida.cfg':
       case 'clade.ssg':
       case 'detail.spop':
@@ -191,6 +193,8 @@ av.fio.processItemFiles = function (){
     case 'entrytype.txt':
     case 'ancestors':
     case 'ancestors_manual':
+    case 'ancestors.txt':
+    case 'ancestors_manual.txt':
     case 'avida.cfg':
     case 'clade.ssg':
     case 'detail.spop':
