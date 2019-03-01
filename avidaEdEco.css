@@ -201,7 +201,7 @@
   }
   
   #environConfigEdit{
-    resize: vertical;
+    resize: both;
     overflow: auto;
   }
 

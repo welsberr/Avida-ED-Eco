@@ -45,6 +45,31 @@ av.ptd.popWorldStateUi = function (from) {
   dijit.byId('mnFzPopulation').attr('disabled', false);
 };
 
+av.ptd.popTdishStateUi = function (from) {
+  'use strict';
+  console.log(from, 'called av.ptd.popTdishStateUi');
+  av.grd.runState = 'tDish';
+  //Disable normal Setup page and setup testDish setup Page   
+  //av.dnd.ancestorBox.isSource = false;
+  av.dnd.ancestorBox.copyOnly = true;
+  av.dnd.activeConfig.isSource = true;
+  //delete av.dnd.ancestorBox.accept['g'];
+  //delete av.dnd.gridCanvas.accept['g'];
+  delete av.dnd.activeConfig.accept['c'];
+  delete av.dnd.activeConfig.accept['w'];
+  av.dnd.fzWorld.accept['t'] = 1;
+  av.dnd.fzWorld.accept['b'] = 1;
+  av.dom.sizeCols.disabled = true;
+  av.dom.sizeRows.disabled = true;
+  //av.dom.sizeRows.disabled = true;
+  //av.dom.experimentRadio.disabled = true;
+  //av.dom.demoRadio.disabled = true;
+
+  //there will be a population so it can now be frozen.
+  dijit.byId('mnFzPopulation').attr('disabled', false);
+};
+
+
 av.ptd.popRunningStateUi = function () {
   'use strict';
   av.grd.runState = 'started';  //the run has now started
@@ -240,7 +265,7 @@ av.ptd.runPopFn = function () {
     av.dom.userMsgLabel.innerHTML = '';
     if ('started' !== av.grd.runState) {
       //collect setup data to send to avida.  Order matters. Files must be created first. Then files must be sent before some other stuff.
-      av.fwt.form2cfgFolder();          //fileDataWrite.js creates avida.cfg and environment.cfg and ancestor.txt and ancestor_manual.txt
+      av.fwt.form2cfgFolder();          //fileDataWrite.js creates avida.cfg and environment.cfg and ancestor.txt and ancestors_manual.txt
       if ('prepping' === av.grd.runState) {
         av.msg.importConfigExpr();
         av.msg.injectAncestors();
@@ -387,7 +412,7 @@ av.ptd.FrPopulationFn = function () {
       av.fzr.saveUpdateState('no');
     }
   }
-}
+};
 
 av.pch.processLogic = function() {
   "use strict";
@@ -496,12 +521,12 @@ av.ptd.resetDishFn = function (need2sendRest2avida) { //Need to reset all settin
   if (av.fzr.actConfig.file['clade.ssg']) {delete av.fzr.actConfig.file['clade.ssg'];}
   if (av.fzr.actConfig.file['detail.spop']) {delete av.fzr.actConfig.file['detail.spop'];}
   if (av.fzr.actConfig.file['update']) {delete av.fzr.actConfig.file['update'];}
-  if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors']) {
-    str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors'];
+  if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt']) {
+    str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt'];
     av.fio.autoAncestorLoad(str);
   }
-  if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual']) {
-    str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual'];
+  if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt']) {
+    str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt'];
     av.fio.handAncestorLoad(str);
   }
 

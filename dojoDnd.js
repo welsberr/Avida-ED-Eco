@@ -13,7 +13,7 @@ av.dnd.getAllItems = function (source) {
     return source.getItem(node.id);
   });
   return items;
-}
+};
 
 av.dnd.getDomId = function (name, target){
   'use strict';
@@ -44,7 +44,7 @@ av.dnd.getUniqueName = function(name, target) {
     for (var ii = 0; ii < lngth;  ii++) {
       //if (av.debug.dnd) console.log ('name ', namelist[ii].innerHTML);
       if (name == namelist[ii].textContent) {
-        name = prompt('Please give your item a unique name ', name + '_1')
+        name = prompt('Please give your item a unique name ', name + '_1');
         unique = true;
       }
     }
@@ -61,7 +61,7 @@ av.dnd.makeNameList = function (target) {
     listNames[ii] = namelist[ii].textContent;
   }
   return listNames;
-}
+};
 
 av.dnd.preTransferNameList = function(target, name) {
   'use strict';
@@ -71,7 +71,7 @@ av.dnd.preTransferNameList = function(target, name) {
   if (-1 < ndx) listFull.splice(ndx,1);
   //console.log('listFull', listFull);
   return listFull;
-}
+};
 
 av.dnd.nameNfrzItem = function (namelist, name, number) {
   var num = number + 1;
@@ -187,24 +187,34 @@ av.dnd.lndActiveConfig = function (move) {
   //console.log('before av.frd.updateSetup');
   av.frd.updateSetup();  //fileIO
   //console.log('after av.frd.updateSetup');
-  if ('fzConfig' === move.source.node.id) {
+  console.log('move.source.node.id=',move.source.node.id);
+  if ('fzConfig' === move.source.node.id || ('fzTdish' === move.source.node.id)) {
     av.fzr.actConfig.type = 'c';
     av.fzr.actConfig.file['events.cfg'] = ' ';
+    
+    //delete anyfiles in activeConfig part of freezer
     if (av.fzr.actConfig.file['clade.ssg']) {delete av.fzr.actConfig.file['clade.ssg'];}
     if (av.fzr.actConfig.file['detail.spop']) {delete av.fzr.actConfig.file['detail.spop'];}
     if (av.fzr.actConfig.file['update']) {delete av.fzr.actConfig.file['update'];}
-    if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors']) {
-      str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors'];
+    
+    //load ancestors if present.
+    if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt']) {
+      str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt'];
       av.fio.autoAncestorLoad(str);
-    }
-    if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual']) {
-      str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual'];
+    };
+    if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt']) {
+      str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt'];
       av.fio.handAncestorLoad(str);
-    }
+    };
     av.grd.drawGridSetupFn('av.dnd.lndActiveConfig'); //draw grid
   }
-  else if ('fzWorld' === move.source.node.id) {
-    av.fzr.actConfig.type = 'w';
+  else if (('fzWorld' === move.source.node.id) ) {
+    if ('fzWorld' === move.source.node.id) {
+      av.fzr.actConfig.type = 'w';
+    }
+    else {
+      av.fzr.actConfig.type = 't';
+    }
     av.fzr.actConfig.file['avida.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/avida.cfg'];
     av.fzr.actConfig.file['clade.ssg'] = av.fzr.file[av.fzr.actConfig.dir + '/clade.ssg'];
     av.fzr.actConfig.file['detail.spop'] = av.fzr.file[av.fzr.actConfig.dir + '/detail.spop'];
@@ -213,11 +223,14 @@ av.dnd.lndActiveConfig = function (move) {
     av.fzr.actConfig.file['update'] = av.fzr.file[av.fzr.actConfig.dir + '/update'];
     av.grd.oldUpdate = av.fzr.actConfig.file['update'];
     TimeLabel.textContent = av.grd.oldUpdate;
+    console.log('in dojo');
 
     //load parents from clade.ssg and ancestors.
     av.fio.cladeSSG2parents(av.fzr.file[av.fzr.actConfig.dir + '/clade.ssg']);
-    var handList = av.fio.handAncestorParse(av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual']);
-    var autoList = av.fio.autoAncestorParse(av.fzr.file[av.fzr.actConfig.dir + '/ancestors']);
+    var handList = av.fio.handAncestorParse(av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt']);
+    var autoList = av.fio.autoAncestorParse(av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt']);
+    console.log('handList=', handList);
+    console.log('autoList=', autoList);
     var ndx = 0;
     klen = av.parents.name.length;
     for (kk = 0; kk < klen; kk++) {
@@ -251,7 +264,15 @@ av.dnd.lndActiveConfig = function (move) {
     }
     av.parents.placeAncestors();
     //run status is no longer 'new' it is 'world'
-    av.ptd.popWorldStateUi('av.dnd.lndActiveConfig');
+    
+    if ('fzWorld' === move.source.node.id) {
+      av.fzr.actConfig.type = 'w';
+      av.ptd.popWorldStateUi('av.dnd.lndActiveConfig');
+    }
+    else {
+      av.fzr.actConfig.type = 't';
+      av.ptd.popTdishStateUi('av.dnd.lndActiveConfig');
+    }
 
     //Load Time Recorder Data
     av.frd.loadTimeRecorderData(av.fzr.actConfig.dir);
@@ -263,6 +284,7 @@ av.dnd.lndActiveConfig = function (move) {
     av.grd.popChartFn();
     //av.msg.requestPopStats();  //tiba last time this was on; data was all = 0, so confusing;
   }
+  
   else console.log('fzr.activeCon - something strange happened', av.fzr.actConfig);
 };
 
@@ -513,7 +535,7 @@ av.dnd.landGridCanvas = function (source, nodes, target) {
   av.dnd.gridCanvas.sync();
   
   if (av.debug.dnd) console.log('parents', av.parents);
-}
+};
 
 av.dnd.updateFromFzrOrganism = function () {
   'use strict';
@@ -770,25 +792,30 @@ av.msg.runTestDish = function(fzSection, target, type) {
     av.dnd.move.targetDomId = domIDs[domIDs.length - 1];
     console.log('move', av.dnd.move);
     added = av.dnd.lndActiveConfig(av.dnd.move);
-
-    //Now actually load and run the multi-dish direcdtly from the freezer.
-    av.msg.importTestDishExpr(av.dnd.move.dir); //???????
+    console.log('after added av.dnd.lndActiveConfig');
+    //Now actually load and run the test direcdtly from the freezer.
+    av.msg.importTestDishExpr(av.dnd.move.dir); 
 
     //This only loads ancestors in the super dish.
-    var filename = av.dnd.move.dir +'/ancestors';
-    console.log('filename = ', filename, '=======================================================');
-    if (av.fzr.file[filename]) {
-      console.log('file ', filename, 'exists');
-      av.fio.autoAncestorLoad(av.fzr.file[filename]);
-    }
-    var filename = av.dnd.move.dir +'/ancestors_manual';
-    console.log('filename = ', filename, '=======================================================');
-    if (av.fzr.file[filename]) {
-      console.log('file ', filename, 'exists');
-      av.fio.handAncestorLoad(av.fzr.file[filename]);
-    }
+    //seems to load ancestors in av.dnd.lndActiveConfig
+    //var filename = av.dnd.move.dir +'/ancestors.txt';
+    //console.log('filename = ', filename, '=======================================================');
+    //if (av.fzr.file[filename]) {
+    //  console.log('file ', filename, 'exists');
+    //  av.fio.autoAncestorLoad(av.fzr.file[filename]);
+    //}
+    //var filename = av.dnd.move.dir +'/ancestors_manual.txt'';
+    //console.log('filename = ', filename, '=======================================================');
+    //if (av.fzr.file[filename]) {
+    //  console.log('file ', filename, 'exists');
+    //  av.fio.handAncestorLoad(av.fzr.file[filename]);
+    //}
     console.log('av.dom.environConfigEdit=',av.dom.environConfigEdit);
-    av.dom.environConfigEdit.value = "some text";
+    //av.dom.environConfigEdit.value = "some text";
+    if (av.fzr.file[av.dnd.move.dir+'/'+ 'environment.cfg'] ) {
+      av.dom.environConfigEdit.value = av.fzr.file[av.dnd.move.dir+'/'+'environment.cfg'];
+    };
+
   }
   else {
     alert('You must select a test-dish first');
@@ -831,13 +858,13 @@ av.msg.runMultiDish = function(fzSection, target, type) {
     av.msg.avidaTestRunFlag = true;   //Do not reload files from the active config freezer section
 
     //This only loads ancestors in the super dish.
-    var filename = av.dnd.move.dir +'/ancestors';
+    var filename = av.dnd.move.dir +'/ancestors.txt';
     console.log('filename = ', filename, '=======================================================');
     if (av.fzr.file[filename]) {
       console.log('file ', filename, 'exists');
       av.fio.autoAncestorLoad(av.fzr.file[filename]);
     }
-    var filename = av.dnd.move.dir +'/ancestors_manual';
+    var filename = av.dnd.move.dir +'/ancestors_manual.txt';
     console.log('filename = ', filename, '=======================================================');
     if (av.fzr.file[filename]) {
       console.log('file ', filename, 'exists');
@@ -847,7 +874,7 @@ av.msg.runMultiDish = function(fzSection, target, type) {
   }
   else {
     alert('You must select a multi-dish first');
-  }
+  };
 };
 //------------------------------------------------------------------------------------------- end av.msg.runMultiDish --
 
@@ -877,13 +904,13 @@ av.dnd.runResReqDish = function(fzSection, target, type) {
     console.log('move', av.dnd.move);
     //added = av.dnd.lndActiveConfig(av.dnd.move);
 
-    var filename = av.dnd.move.dir +'/ancestors';
+    var filename = av.dnd.move.dir +'/ancestors.txt';
     console.log('filename = ', filename, '=======================================================');
     if (av.fzr.file[filename]) {
       console.log('file ', filename, 'exists');
       av.fio.autoAncestorLoad(av.fzr.file[filename]);
     }
-    var filename = av.dnd.move.dir +'/ancestors_manual';
+    var filename = av.dnd.move.dir +'/ancestors_manual.txt';
     console.log('filename = ', filename, '=======================================================');
     if (av.fzr.file[filename]) {
       console.log('file ', filename, 'exists');
@@ -924,13 +951,13 @@ av.dnd.runTestDish = function(fzSection, target, type) {
     console.log('move', av.dnd.move);
     //added = av.dnd.lndActiveConfig(av.dnd.move);
 
-    var filename = av.dnd.move.dir +'/ancestors';
+    var filename = av.dnd.move.dir +'/ancestors.txt';
     console.log('filename = ', filename, '=======================================================');
     if (av.fzr.file[filename]) {
       console.log('file ', filename, 'exists');
       av.fio.autoAncestorLoad(av.fzr.file[filename]);
     }
-    var filename = av.dnd.move.dir +'/ancestors_manual';
+    var filename = av.dnd.move.dir +'/ancestors_manual.txt';
     console.log('filename = ', filename, '=======================================================');
     if (av.fzr.file[filename]) {
       console.log('file ', filename, 'exists');
@@ -967,7 +994,7 @@ av.anl.clearWorldData = function (worldNum){
   av.fzr.pop[worldNum].met = [];
   av.fzr.pop[worldNum].num = [];
   av.fzr.pop[worldNum].via = [];
-}
+};
 
 //worldNum is a number 0-2 of the population loaded into analysis page
 av.anl.loadSelectedData = function (worldNum, axisSide, side) {
@@ -1064,7 +1091,7 @@ av.dnd.lndAnlDndChart = function (move) {
   //in all cases no population name is stored in the graph div
   av.dnd.anlDndChart.selectAll().deleteSelectedNodes();  //clear items
   av.dnd.anlDndChart.sync();   //should be done after insertion or deletion
-}
+};
 
 av.dnd.landAnlDndChart = function (dnd, source, nodes, target) {
   'use strict';
@@ -1082,7 +1109,7 @@ av.dnd.landAnlDndChart = function (dnd, source, nodes, target) {
   //in all cases no population name is stored in the graph div
   av.dnd.anlDndChart.selectAll().deleteSelectedNodes();  //clear items
   av.dnd.anlDndChart.sync();   //should be done after insertion or deletion
-}
+};
 
 av.dnd.putNslot = function (Num, source) {
   'use strict';
@@ -1090,16 +1117,16 @@ av.dnd.putNslot = function (Num, source) {
   console.log('source = ', source);
   console.log('source.selection=', source.selection);
   var domid = Object.keys(source.selection)[0];
-  var name = document.getElementById(domid).textContent
+  var name = document.getElementById(domid).textContent;
   var dir = av.fzr.dir[domid];
   //console.log('av.dnd.putNslot: Num', Num, '; name', name);
   //I tried putting av.dnd.graphPop0 as a parameter to be passed, but that did not work.
   av.dnd['graphPop'+Num].insertNodes(false, [{data: name, type: ['w']}]);
   av.dnd['graphPop'+Num].sync();
   av.anl.loadWorldData(Num, dir);
-  av.anl.loadSelectedData(Num, 'yLeftSelect', 'left')
-  av.anl.loadSelectedData(Num, 'yRightSelect', 'right')
-}
+  av.anl.loadSelectedData(Num, 'yLeftSelect', 'left');
+  av.anl.loadSelectedData(Num, 'yRightSelect', 'right');
+};
 
 av.dnd.landgraphPop0 = function (dnd, source, nodes, target) {
   'use strict';
@@ -1120,9 +1147,9 @@ av.dnd.landgraphPop0 = function (dnd, source, nodes, target) {
   var fzdomid = Object.keys(source.selection)[0];
   var dir = av.fzr.dir[fzdomid];
   av.anl.loadWorldData(0, dir);
-  av.anl.loadSelectedData(0, 'yLeftSelect', 'left')
-  av.anl.loadSelectedData(0, 'yRightSelect', 'right')
-}
+  av.anl.loadSelectedData(0, 'yLeftSelect', 'left');
+  av.anl.loadSelectedData(0, 'yRightSelect', 'right');
+};
 
 av.dnd.landgraphPop1 = function (dnd, source, nodes, target) {
   'use strict';
@@ -1143,9 +1170,9 @@ av.dnd.landgraphPop1 = function (dnd, source, nodes, target) {
   var fzdomid = Object.keys(source.selection)[0];
   var dir = av.fzr.dir[fzdomid];
   av.anl.loadWorldData(1, dir);
-  av.anl.loadSelectedData(1, 'yLeftSelect', 'left')
-  av.anl.loadSelectedData(1, 'yRightSelect', 'right')
-}
+  av.anl.loadSelectedData(1, 'yLeftSelect', 'left');
+  av.anl.loadSelectedData(1, 'yRightSelect', 'right');
+};
 
 av.dnd.landgraphPop2 = function (dnd, source, nodes, target) {
   'use strict';
@@ -1167,9 +1194,9 @@ av.dnd.landgraphPop2 = function (dnd, source, nodes, target) {
   var fzdomid = Object.keys(source.selection)[0];
   var dir = av.fzr.dir[fzdomid];
   av.anl.loadWorldData(2, dir);
-  av.anl.loadSelectedData(2, 'yLeftSelect', 'left')
-  av.anl.loadSelectedData(2, 'yRightSelect', 'right')
-}
+  av.anl.loadSelectedData(2, 'yLeftSelect', 'left');
+  av.anl.loadSelectedData(2, 'yRightSelect', 'right');
+};
 
 /* ********************************************************************** */
 /* Right Click Context Menu Freezer ************************************* */
@@ -1233,7 +1260,7 @@ av.dnd.contextMenu = function(target, fzItemID) {
           saveAs(content, zName);
         }
       }
-    }))
+    }));
   }
   aMenu.addChild(new dijit.MenuItem({
     label: 'delete',
@@ -1244,11 +1271,11 @@ av.dnd.contextMenu = function(target, fzItemID) {
         dir = av.fzr.dir[fzItemID];
         av.fzr.file[dir+'/entryname.txt'];
         if ('fzOrgan' == fzSection) {
-          av.fwt.removeFzrItem(dir, 'g')
+          av.fwt.removeFzrItem(dir, 'g');
         } else if ('fzConfig' == fzSection){
-          av.fwt.removeFzrItem(dir, 'c')
+          av.fwt.removeFzrItem(dir, 'c');
         } else if ('fzWorld' == fzSection){
-          av.fwt.removeFzrItem(dir, 'w')
+          av.fwt.removeFzrItem(dir, 'w');
         }
         target.selectNone();
         dojo.destroy(fzItemID);

@@ -2,7 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27852641-b354-42b1-945e-f8ca4d8f3ce7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvidaED.js" beforeDir="false" afterPath="$PROJECT_DIR$/AvidaED.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avida.js" beforeDir="false" afterPath="$PROJECT_DIR$/avida.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avida.js.mem" beforeDir="false" afterPath="$PROJECT_DIR$/avida.js.mem" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avidaEdEco.css" beforeDir="false" afterPath="$PROJECT_DIR$/avidaEdEco.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avidaEdEco.html" beforeDir="false" afterPath="$PROJECT_DIR$/avidaEdEco.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dojoDnd.js" beforeDir="false" afterPath="$PROJECT_DIR$/dojoDnd.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/globals.js" beforeDir="false" afterPath="$PROJECT_DIR$/globals.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/popControls.js" beforeDir="false" afterPath="$PROJECT_DIR$/popControls.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -17,10 +25,11 @@
     <session id="-1038066544">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.3" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.open.time.4" value="1" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -93,7 +102,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/avidaEdEco.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="772">
+            <state>
               <caret line="134" selection-start-line="134" selection-end-line="134" />
             </state>
           </provider>
@@ -102,7 +111,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/avidaEdEco.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="548">
+            <state>
               <caret line="264" column="29" selection-start-line="264" selection-start-column="29" selection-end-line="264" selection-end-column="29" />
             </state>
           </provider>
@@ -111,16 +120,16 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/globals.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
+            <state>
               <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AvidaED.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="31008">
+            <state relative-caret-position="-7">
               <caret line="1632" column="9" selection-start-line="1632" selection-start-column="9" selection-end-line="1632" selection-end-column="9" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -129,11 +138,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/messaging.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1349">
-              <caret line="71" column="25" selection-start-line="71" selection-start-column="25" selection-end-line="71" selection-end-column="25" />
+            <state relative-caret-position="332">
+              <caret line="55" column="44" lean-forward="true" selection-start-line="55" selection-start-column="44" selection-end-line="55" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -141,7 +150,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/populationGrid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2185">
+            <state>
               <caret line="115" selection-start-line="115" selection-end-line="115" />
             </state>
           </provider>
@@ -205,16 +214,17 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="13" />
-    <option name="y" value="23" />
-    <option name="width" value="1592" />
-    <option name="height" value="1669" />
+    <option name="x" value="-1081" />
+    <option name="y" value="-57" />
+    <option name="width" value="1080" />
+    <option name="height" value="1027" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -226,7 +236,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -262,17 +271,18 @@
       <workItem from="1545364863254" duration="1455000" />
       <workItem from="1546911189634" duration="404000" />
       <workItem from="1546914813672" duration="3519000" />
+      <workItem from="1550862497913" duration="457000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8264000" />
+    <option name="totallyTimeSpent" value="8721000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="13" y="23" width="1592" height="1669" extended-state="0" />
+    <frame x="-1081" y="-57" width="1080" height="1027" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12921706" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.12921706" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -320,48 +330,48 @@
     <entry file="file://$PROJECT_DIR$/AvidaED.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/messaging.js">
+    <entry file="file://$PROJECT_DIR$/avidaEdEco.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1349">
-          <caret line="71" column="25" selection-start-line="71" selection-start-column="25" selection-end-line="71" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/populationGrid.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2185">
-          <caret line="115" selection-start-line="115" selection-end-line="115" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/globals.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
+        <state>
+          <caret line="134" selection-start-line="134" selection-end-line="134" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/avidaEdEco.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="548">
+        <state>
           <caret line="264" column="29" selection-start-line="264" selection-start-column="29" selection-end-line="264" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/avidaEdEco.css">
+    <entry file="file://$PROJECT_DIR$/globals.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="772">
-          <caret line="134" selection-start-line="134" selection-end-line="134" />
+        <state>
+          <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/populationGrid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="115" selection-start-line="115" selection-end-line="115" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AvidaED.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="31008">
+        <state relative-caret-position="-7">
           <caret line="1632" column="9" selection-start-line="1632" selection-start-column="9" selection-end-line="1632" selection-end-column="9" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/messaging.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="55" column="44" lean-forward="true" selection-start-line="55" selection-start-column="44" selection-end-line="55" selection-end-column="44" />
         </state>
       </provider>
     </entry>

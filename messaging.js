@@ -899,9 +899,9 @@ av.msg.fillColorBlock = function (msg) {  //Draw the color block
         else av.grd.selCtx.fillStyle = '#888';
       }
       else if (0 == av.grd.fill[av.grd.selectedNdx]) av.grd.selCtx.fillStyle = av.color.defaultKidColor;
-      else {  //get_color0 = function(cmap, dx, d1, d2)
-        av.grd.selCtx.fillStyle = get_color0(av.grd.cmap, av.grd.fill[av.grd.selectedNdx], 0, av.grd.fillmax);
-        //console.log('fillStyle', get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax));
+      else {  //av.utl.get_color0 = function(cmap, dx, d1, d2)
+        av.grd.selCtx.fillStyle = av.utl.get_color0(av.grd.cmap, av.grd.fill[av.grd.selectedNdx], 0, av.grd.fillmax);
+        //console.log('fillStyle', av.utl.get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax));
       }
     }
     if (av.debug.msg) console.log('color', av.grd.selCtx.fillStyle);

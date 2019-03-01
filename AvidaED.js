@@ -2,6 +2,8 @@
 // python -m SimpleHTTPServer  in the folder with index.html to start a server for using pouchDB
 // python -m SimpleHTTPServer 8001  to put on 8001 instead of 8000
 // Then visit http://127.0.0.1:8000/avidaED.html
+// 
+//4814740943
 //
 // Git commands used to push
 // git add .
@@ -41,6 +43,7 @@
 // emacs home.html
 //
 
+console.log('version from Avida-ED-flex-active_2019_0125');
 var av = av || {};  //incase av already exists
 
 define.amd.jQuery = true;
@@ -352,6 +355,12 @@ require([
     copyOnly: true,
     selfAccept: false
   });
+  av.dnd.fzTdish = new dndSource('fzTdish', {
+    accept: ['b', 't'],   //b=both; w=world  //test dishes
+    singular: true,
+    copyOnly: true,
+    selfAccept: false
+  });
   av.dnd.fzMdish = new dndSource('fzMdish', {  //multi-dsih
     accept: ['b', 'm'],  //m=multidish
     copyOnly: true,
@@ -360,12 +369,6 @@ require([
   });
   av.dnd.fzRdish = new dndSource('fzRdish', {  //Resources only version
     accept: ['r'],  //t=resource display
-    copyOnly: true,
-    singular: true,
-    selfAccept: false
-  });
-  av.dnd.fzTdish = new dndSource('fzTdish', {  //Proto Types and TestDish or Tdish refer to the same thing
-    accept: ['t'],  //t=test dish
     copyOnly: true,
     singular: true,
     selfAccept: false
@@ -576,6 +579,22 @@ require([
       pkg.copy = copy;
       pkg.target = target;
       av.dnd.landFzWorldFn(pkg);
+      if (av.ui.num !== av.fzr.wNum) {
+        av.fwt.makeFzrWorld(av.ui.num);
+      } //tiba need to check this
+    }
+  });
+  
+  
+  av.dnd.fzTdish.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
+    if ('fzTdish' === target.node.id) {
+      var pkg = {};
+      av.ui.num = av.fzr.wNum;
+      pkg.source = source;
+      pkg.nodes = nodes;
+      pkg.copy = copy;
+      pkg.target = target;
+      av.dnd.landfzTdishFn(pkg);
       if (av.ui.num !== av.fzr.wNum) {
         av.fwt.makeFzrWorld(av.ui.num);
       } //tiba need to check this

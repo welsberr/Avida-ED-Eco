@@ -403,6 +403,15 @@ av.fio.mailAddress = 'Avida-ED-development@googlegroups.com';  //'mailto:diane.b
 av.dnd = {};  //details in AvidiaEd.js as it access the DOM
 av.dnd.move = {};  //used to hold data needed for dnd type move.
 
+av.ptd = {};  // on population page that are not part of the grid. (PeTri Dish)
+av.ptd.popStatFlag = true;  //flag that determines if the stats panel is visible.
+av.ptd.logicButtons = ['notButton', 'nanButton', 'andButton', 'ornButton', 'oroButton', 'antButton', 'norButton', 'xorButton', 'equButton'];
+av.ptd.logEdNames = ['0not', '1nan', '2and', '3orn', '4oro', '5ant', '6nor', '7xor', '8equ'];
+av.ptd.logicNames = ['not', 'nan', 'and', 'orn', 'oro', 'ant', 'nor', 'xor', 'equ'];
+av.ptd.reactValues = [ 1.0,   1.0,   2.0,   2.0,   3.0,   3.0,   4.0,   4.0,   5.0];
+av.ptd.logicVnames = ['not', 'nand', 'and', 'orn', 'or', 'andn', 'nor', 'xor', 'equ'];
+av.ptd.popInfoHolderWd = 395;
+
 //structure to hold list of ancestor organisms
 av.parents = {};
 //Clear parents/Ancestors
@@ -433,6 +442,7 @@ av.fzr.clearFzrFn = function () {
   av.fzr.file = {};
   av.fzr.item = {};
   av.fzr.mDish = {};
+  av.fzr.env = {};
 
   av.fzr.cNum = 0;  //value of the next configured dish (config) number
   av.fzr.gNum = 0;  //value of the next organism (genome) number
@@ -469,9 +479,103 @@ av.fzr.clearFzrFn = function () {
   }
   av.fzr.saveUpdateState('yes');
   av.fzr.subDishOrNot = 'none';
+  
+  // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
+  
+  av.fzr.env.rsrce = {};
+  av.fzr.env.react = {};
+  var len = av.ptd.logicNames.length;
+  for (var ii=0; ii< len; ii++) {
+    var enm = av.ptd.logEdNames[ii];   //puts names in order they are on avida-ed user interface
+    var lnm = av.ptd.logicNames[ii];
+    var vnm = av.ptd.logicVnames[ii];
+    av.fzr.env.rsrce[enm] = [];
+    av.fzr.env.react[enm] = [];
+    for (var jj=0; jj<4; jj++){
+      av.fzr.env.rsrce[enm][jj] = {};
+      av.fzr.env.rsrce[enm][jj].initial=1;
+      av.fzr.env.rsrce[enm][jj].inflow=0;
+      av.fzr.env.rsrce[enm][jj].inflowx1=0;
+      av.fzr.env.rsrce[enm][jj].inflowx2=0;
+      av.fzr.env.rsrce[enm][jj].inflowy1=0;
+      av.fzr.env.rsrce[enm][jj].inflowy2=0;
+      av.fzr.env.rsrce[enm][jj].outflow=0.0;
+      av.fzr.env.rsrce[enm][jj].outflowx1=0;
+      av.fzr.env.rsrce[enm][jj].outflowx2=0;
+      av.fzr.env.rsrce[enm][jj].outflowy1=0;
+      av.fzr.env.rsrce[enm][jj].outflowy2=0;
+      av.fzr.env.rsrce[enm][jj].xdiffuse=0;
+      av.fzr.env.rsrce[enm][jj].ydiffuse=0;
+      av.fzr.env.rsrce[enm][jj].xgravity=0;
+      av.fzr.env.rsrce[enm][jj].ygravity=0;
+      av.fzr.env.rsrce[enm][jj].boxflag=false;    //false no cellbox so resources can leave box; true = resources confined to box
+      av.fzr.env.rsrce[enm][jj].boxx=0;
+      av.fzr.env.rsrce[enm][jj].boxy=0;
+      av.fzr.env.rsrce[enm][jj].boxrow=1;
+      av.fzr.env.rsrce[enm][jj].boxcol=1;
+      //tend to be the same; put at end
+      av.fzr.env.rsrce[enm][jj].name = lnm + jj;
+      av.fzr.env.rsrce[enm][jj].geometry='grid';
+    
+      av.fzr.env.react[enm][jj] = {};
+      av.fzr.env.react[enm][jj].depletable = 0; //0 (infinate resource) does not consume any of the resource; 1 does consume resource
+      av.fzr.env.react[enm][jj].value = av.ptd.reactValues[ii];  //0=no reward; >0 is rewared to that power of 2
+      av.fzr.env.react[enm][jj].min = 0.5;      //The minimum amount of resource required. If less than this quantity is available, the reaction ceases to proceed.
+      av.fzr.env.react[enm][jj].max = 1;        //The maximum amount of the resource consumed per occurrence.
+      //tend to be the same; put at end
+      av.fzr.env.react[enm][jj].max_count = 1;
+      av.fzr.env.react[enm][jj].name = lnm + jj;
+      av.fzr.env.react[enm][jj].task = vnm;  //must use the variable length name for the logic function
+      av.fzr.env.react[enm][jj].resource = av.fzr.env.rsrce[enm][jj].name;
+      av.fzr.env.react[enm][jj].type = 'pow';
+    };
+  }; 
+  console.log('enviornment=', av.fzr.env);
+  
+  ////////// test versions
+  av.env0 = {};
+  av.env0.rsrce = {};
+  av.env0.react = {};
+  var len = av.ptd.logicNames.length;
+  for (var ii=0; ii< len; ii++) {
+    var enm = av.ptd.logEdNames[ii];   //puts names in order they are on avida-ed user interface
+    var lnm = av.ptd.logicNames[ii];
+    var vnm = av.ptd.logicVnames[ii];
+    console.log('ii=, ii');
+    av.env0.rsrce[enm] = [];
+    av.env0.react[enm] = [];
+    for (var jj=0; jj<4; jj++){
+      av.env0.react[enm][jj] = {};
+      av.env0.react[enm][jj] = av.fzr.makeReactArray(ii,jj);      
+    };
+  };
+  console.log('env0=',av.env0);
 };
 
+av.fzr.makeReactArray = function(ilog, cnt) {
+  var react = {};
+  var enm = av.ptd.logEdNames[ilog];
+  var lnm = av.ptd.logicNames[cnt];
+  var vnm = av.ptd.logicVnames[cnt];  
+  react[enm] = [];
+  react[enm][cnt]= {};
+  react[enm][cnt].depletable = 0; //0 (infinate resource) does not consume any of the resource; 1 does consume resource
+  react[enm][cnt].value = av.ptd.reactValues[cnt];  //0=no reward; >0 is rewared to that power of 2
+  react[enm][cnt].min = 0.5;      //The minimum amount of resource required. If less than this quantity is available, the reaction ceases to proceed.
+  react[enm][cnt].max = 1;        //The maximum amount of the resource consumed per occurrence.
+      //tend to be the same; put at end
+  react[enm][cnt].max_count = 1;
+  react[enm][cnt].name = lnm + cnt;
+  react[enm][cnt].task = vnm;  //must use the variable length name for the logic function
+  react[enm][cnt].resource = lnm + cnt;
+  react[enm][cnt].type = 'pow';
+  return react[enm][cnt];
+};
+
+
 av.fzr.saveState = 'default';
+av.fzr.workspaceName = 'default';
+
 
 av.fzr.clearMainFzrFn = function () {
   'use strict';
@@ -518,11 +622,6 @@ av.fzr.clearMainFzrFn = function () {
   if (av.debug.root) console.log('end of ClearMainFzrFn');
 };
 
-av.ptd = {};  // on population page that are not part of the grid. (PeTri Dish)
-av.ptd.popStatFlag = true;  //flag that determines if the stats panel is visible.
-av.ptd.logicButtons = ['notButton', 'nanButton', 'andButton', 'ornButton', 'oroButton', 'antButton', 'norButton', 'xorButton', 'equButton'];
-av.ptd.logicNames = ['not', 'nan', 'and', 'orn', 'oro', 'ant', 'nor', 'xor', 'equ'];
-av.ptd.popInfoHolderWd = 395;
 
 av.grd = {};         //data about the grid canvas
 av.grd.popStatsMsg = {};
@@ -562,6 +661,12 @@ av.grd.clearGrd = function () {
   av.grd.mxRnan = 1.0;  //store initial maximum nan Resource in any cell during an experiment.
   av.grd.mxRand = 1.0;  //store initial maximum and Resource in any cell during an experiment.
   av.grd.mxRorn = 1.0;  //store initial maximum orn Resource in any cell during an experiment.
+  av.grd.mxRoro = 1.0;  //store initial maximum oro Resource in any cell during an experiment.
+  av.grd.mxRant = 1.0;  //store initial maximum ant Resource in any cell during an experiment.
+  av.grd.mxRnor = 1.0;  //store initial maximum nor Resource in any cell during an experiment.
+  av.grd.mxRxor = 1.0;  //store initial maximum xor Resource in any cell during an experiment.
+  av.grd.mxRequ = 1.0;  //store initial maximum equ Resource in any cell during an experiment.
+  
 
   av.grd.rescaleTolerance = 0.1;
   av.grd.rescaleTimeConstant = 10;

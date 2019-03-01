@@ -7,8 +7,8 @@ av.grd.backgroundSquares = function () {
     var xx = av.grd.marginX + av.grd.xOffset + ii * av.grd.cellWd;
     for (var jj = 0; jj < av.grd.rows; jj++) {
       var yy = av.grd.marginY + av.grd.yOffset + jj * av.grd.cellHt;
-      //boxColor = get_color0(av.color.ViridisCmap, Math.random(), 0, 1);
-      //boxColor = get_color0(av.color.ViridisCmap, 0.5, 0, 1);
+      //boxColor = av.utl.get_color0(av.color.ViridisCmap, Math.random(), 0, 1);
+      //boxColor = av.utl.get_color0(av.color.ViridisCmap, 0.5, 0, 1);
       //console.log('color=', boxColor);
       av.grd.cntx.fillStyle = 'rgb(40, 40, 40)';
       av.grd.cntx.fillRect(xx, yy, av.grd.cellWd - 1, av.grd.cellHt - 1);
@@ -68,6 +68,7 @@ av.grd.setMapData = function () {
       av.grd.reScaleRate = 'rescaling';
     }
     else av.grd.reScaleRate = '';
+    console.log('update=',av.grd.msg.update,'; not=',av.grd.msg.not.maxVal,'; nan=',av.grd.msg.rnan.maxVal,'; and=',av.grd.msg.rand.maxVal,'; orn=',av.grd.msg.rorn.maxVal);
 
     //console.log('dijit.byId("colorMode").value = ', dijit.byId("colorMode").value, '------------');
     switch (dijit.byId("colorMode").value) {
@@ -198,9 +199,9 @@ av.grd.drawKids = function () {  //Draw the children of parents
         console.log('fill[', ii, '] = ', av.grd.fill[ii], 'fill out of bounds');
         av.grd.cntx.fillStyle = '#090';
       }
-      else {  //get_color0 = function(cmap, dx, d1, d2)
-        av.grd.cntx.fillStyle = get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax);
-        //console.log('fillStyle', get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax));
+      else {  //av.utl.get_color0 = function(cmap, dx, d1, d2)
+        av.grd.cntx.fillStyle = av.utl.get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax);
+        //console.log('fillStyle', av.utl.get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax));
       }
       av.grd.cntx.fillRect(xx, yy, av.grd.cellWd - 1, av.grd.cellHt - 1);
     }

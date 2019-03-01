@@ -5,13 +5,13 @@ av.fwt.deleteFzrFile = function (fileId) {
   'use strict';
   try { delete av.fzr.file[fileId];}
   catch(e) {av.fzr.file[fileId] = undefined; }
-}
+};
 
 av.fwt.deleteFzrItem = function (fileId) {
   'use strict';
   try { delete av.fzr.item[fileId];}
   catch(e) {av.fzr.item[fileId] = undefined; }
-}
+};
 
 av.fwt.makeEmDxFile = function (path, contents) {
   'use strict';
@@ -29,24 +29,24 @@ av.fwt.makeEmDxFile = function (path, contents) {
       console.log('Unable to add file, path',path, '; error', err);
     });
     */
-}
+};
 
 //kept this one line function in case we need to go to storing the workspace in a database instead of freezer memory
 av.fwt.makeFzrFile = function (fileId, text) {
   'use strict';
   av.fzr.file[fileId] = text;
-}
+};
 
 av.fwt.makeActConfigFile = function (fileId, text) {
   'use strict';
   av.fzr.actConfig.file[fileId] = text;
-}
+};
 
 // copy instruction set from default config.
 av.fwt.makeFzrInstsetCfg = function (idStr) {
   'use strict';
   av.fzr.file[idStr + '/instset.cfg'] = av.fzr.file['c0/instset.cfg'];
-}
+};
 
 av.fwt.makeFzrEventsCfgWorld = function (idStr, em) {
   'use strict';
@@ -54,7 +54,7 @@ av.fwt.makeFzrEventsCfgWorld = function (idStr, em) {
   txt += 'u begin LoadStructuredSystematicsGroup role=clade:filename=clade.ssg';
   if (em) {av.fwt.makeEmDxFile(idStr+'/events.cfg', txt);}
   else {av.fwt.makeFzrFile(idStr+'/events.cfg', txt);}
-}
+};
 
 av.fwt.makeFzrAvidaCfg = function (idStr, actConfig) {
   'use strict';
@@ -82,7 +82,7 @@ av.fwt.makeFzrAvidaCfg = function (idStr, actConfig) {
   txt += 'VERSION_ID 2.14.0 \n';
   if (actConfig) {av.fwt.makeActConfigFile('avida.cfg', txt);}  // always false for now 2017 July
   else {av.fwt.makeFzrFile(idStr+'/avida.cfg', txt);}
-}
+};
 
 av.fwt.makeFzrPauseRunAt = function (idStr, actConfig) {
   'use strict';
@@ -93,7 +93,7 @@ av.fwt.makeFzrPauseRunAt = function (idStr, actConfig) {
   }
   if (actConfig) {av.fwt.makeActConfigFile('pauseRunAt.txt', txt);}
   else {av.fwt.makeFzrFile(idStr+'/pauseRunAt.txt', txt);}
-}
+};
 
 /* Delete later tiba
 av.fwt.makeFzrConfigTxt = function (idStr, actConfig) {
@@ -119,7 +119,7 @@ av.fwt.makeFzrEnvironmentCfg = function (idStr, actConfig) {
   if (av.dom.equose.checked) txt += 'REACTION  EQU  equ   process:value=5:type=pow  requisite:max_count=1';    else txt += 'REACTION  EQU  equ   process:value=0:type=pow  requisite:max_count=1';
   if (actConfig) {av.fwt.makeActConfigFile('environment.cfg', txt);}
   else  { av.fwt.makeFzrFile(idStr+'/environment.cfg', txt);}
-}
+};
 
 av.fwt.makeFzrAncestorAuto = function (idStr, actConfig) {
   'use strict';
@@ -129,9 +129,9 @@ av.fwt.makeFzrAncestorAuto = function (idStr, actConfig) {
     txt += av.parents.name[av.parents.autoNdx[ii]] + '\n';
     txt += av.parents.genome[av.parents.autoNdx[ii]] + '\n';
   }
-  if (actConfig) {av.fwt.makeActConfigFile('ancestors', txt);}
-  else {av.fwt.makeFzrFile(idStr+'/ancestors', txt);}
-}
+  if (actConfig) {av.fwt.makeActConfigFile('ancestors.txt', txt);}
+  else {av.fwt.makeFzrFile(idStr+'/ancestors.txt', txt);}
+};
 
 av.fwt.makeFzrAncestorHand = function (idStr, actConfig) {
   'use strict';
@@ -142,9 +142,9 @@ av.fwt.makeFzrAncestorHand = function (idStr, actConfig) {
     txt += av.parents.genome[av.parents.handNdx[ii]] + '\n';
     txt += av.parents.col[av.parents.handNdx[ii]] + ',' + av.parents.row[av.parents.handNdx[ii]] + '\n';
   }
-  if (actConfig) {av.fwt.makeActConfigFile('ancestors_manual', txt);}
-  else {av.fwt.makeFzrFile(idStr+'/ancestors_manual', txt);}
-}
+  if (actConfig) {av.fwt.makeActConfigFile('ancestors_manual.txt', txt);}
+  else {av.fwt.makeFzrFile(idStr+'/ancestors_manual.txt', txt);}
+};
 
 av.fwt.makeFzrTRfile = function (path, data) {
   var text = '';
@@ -156,7 +156,7 @@ av.fwt.makeFzrTRfile = function (path, data) {
   text = pairs.join();
   //console.log(path, text);
   av.fwt.makeFzrFile(path, text);
-}
+};
 
 av.fwt.makeFzrTimeRecorder = function (fname, data) {
   var text='';
@@ -168,7 +168,7 @@ av.fwt.makeFzrTimeRecorder = function (fname, data) {
   lngth++;
   text += lngth + ':' + data[lngth];
   av.fwt.makeFzrTRfile(fname, text);
-}
+};
 
 // --------------------------------------------------- called by other files -------------------------------------------
 av.fwt.form2cfgFolder = function() {
@@ -178,7 +178,7 @@ av.fwt.form2cfgFolder = function() {
   av.fwt.makeFzrEnvironmentCfg('cfg', actConfig);
   av.fwt.makeFzrAncestorAuto('cfg', actConfig);
   av.fwt.makeFzrAncestorHand('cfg', actConfig);
-}
+};
 
 av.fwt.makeFzrConfig = function (num) {
   'use strict';
@@ -191,14 +191,14 @@ av.fwt.makeFzrConfig = function (num) {
   av.fwt.makeFzrAncestorAuto('c'+num, em);
   av.fwt.makeFzrAncestorHand('c'+num, em);
   av.fwt.makeFzrPauseRunAt('c'+num, em);
-}
+};
 
 av.fwt.makeFzrWorld = function (num) {
   'use strict';
   var em = false;
   av.fwt.makeFzrAvidaCfg('w'+num, em);
   av.fwt.makeFzrEnvironmentCfg('w'+num, em);
-  av.fwt.makeFzrEventsCfgWorld =('w'+num, em)
+  av.fwt.makeFzrEventsCfgWorld =('w'+num, em);
   //av.fwt.makeFzrFile('c'+num+'/entryname.txt', av.fzr.config[ndx].name);  // this was created in dnd menu code
   av.fwt.makeFzrInstsetCfg('w'+num);
   av.fwt.makeFzrAncestorAuto('w'+num, em);
@@ -211,7 +211,7 @@ av.fwt.makeFzrWorld = function (num) {
   av.fwt.makeFzrFile('w'+num + '/update', av.grd.updateNum.toString() );
   av.fwt.makeFzrCSV('w'+num, em);
   //there are more files needed to talk to Matt, tiba
-}
+};
 
 av.fwt.popExpWrite = function (msg) {
   'use strict';
@@ -229,15 +229,15 @@ av.fwt.popExpWrite = function (msg) {
         //console.log('ii', ii, '; name', msg.files[ii].name);
         av.fwt.makeFzrFile(msg.popName + '/' + msg.files[ii].name, msg.files[ii].data);
         break;
-    }
-  }
+    };
+  };
   //console.log('fzr', av.fzr.file);
-}
+};
 
 av.fwt.removeFzrConfig = function(dir) {
   'use strict';
-  av.fwt.deleteFzrFile(dir+'/ancestors');
-  av.fwt.deleteFzrFile(dir+'/ancestors_manual');
+  av.fwt.deleteFzrFile(dir+'/ancestors.txt');
+  av.fwt.deleteFzrFile(dir+'/ancestors_manual.txt');
   av.fwt.deleteFzrFile(dir+'/avida.cfg');
   av.fwt.deleteFzrFile(dir+'/environment.cfg');
   av.fwt.deleteFzrFile(dir+'/events.cfg');
@@ -256,12 +256,12 @@ av.fwt.removeFzrGenome = function (dir) {
   delete av.fzr.domid[dir];
   delete av.fzr.dir[domid];
   //console.log('after remove genome: dir', dir, '; av.fzr', av.fzr);
-}
+};
 
 av.fwt.removeFzrWorld = function (dir) {
   'use strict';
-  av.fwt.deleteFzrFile(dir+'/ancestors');
-  av.fwt.deleteFzrFile(dir+'/ancestors_manual');
+  av.fwt.deleteFzrFile(dir+'/ancestors.txt');
+  av.fwt.deleteFzrFile(dir+'/ancestors_manual.txt');
   av.fwt.deleteFzrFile(dir+'/avida.cfg');
   av.fwt.deleteFzrFile(dir+'/environment.cfg');
   av.fwt.deleteFzrFile(dir+'/events.cfg');
@@ -273,7 +273,7 @@ av.fwt.removeFzrWorld = function (dir) {
   delete av.fzr.dir[domid];
   //av.fwt.deleteFzrFile(dir+'/');
   //av.fwt.deleteFzrFile(dir+'/');
-}
+};
 
 av.fwt.removeFzrItem = function(dir, type){
   'use strict';
@@ -289,7 +289,7 @@ av.fwt.removeFzrItem = function(dir, type){
       av.fwt.removeFzrWorld(dir);
       break;
   }
-}
+};
 
 av.fwt.makeFzrCSV = function(idStr, em) {
   "use strict";
@@ -297,15 +297,18 @@ av.fwt.makeFzrCSV = function(idStr, em) {
   var fileNm = av.fzr.file[idStr + '/entryname.txt'];
   console.log('fileName = ', fileNm);
   av.fwt.makeCSV(fileNm);
-  if (em) {av.fwt.makeEmDxFile(idStr+'/timeRecorder.csv', txt);}
-  else {av.fwt.makeFzrFile(idStr+'/timeRecorder.csv', av.fwt.csvStrg);}
-}
+  if (em) {
+//    av.fwt.makeEmDxFile(idStr+'/timeRecorder.csv', txt);   //ther is no variable txt, so I'm guessong it should the the string 'txt'
+    av.fwt.makeEmDxFile(idStr+'/timeRecorder.csv', 'txt');
+  }
+  else {av.fwt.makeFzrFile(idStr+'/timeRecorder.csv', av.fwt.csvStrg);};
+};
 
 av.fwt.writeCurrentCSV = function(idStr) {  
   "use strict";
   av.fwt.makeCSV(idStr);
   av.fio.fzSaveCsvfn();
-}
+};
 
 av.fwt.makeCSV = function(fileNm) {
   'use strict';
@@ -327,8 +330,8 @@ av.fwt.makeCSV = function(fileNm) {
       + '# data type followed by _##; where the number with a leading zero is for each ancestor \n';
 
     for (var ii = 0; ii < av.pch.numDads; ii++) {
-      av.fwt.csvStrg += '# ancestor ' + (ii).pad() + ' is ' + av.parents.name[ii] + '\n'
-    }
+      av.fwt.csvStrg += '# ancestor ' + (ii).pad() + ' is ' + av.parents.name[ii] + '\n';
+    };
 
 
     av.fwt.csvStrg += 'Update,'
@@ -343,16 +346,16 @@ av.fwt.makeCSV = function(fileNm) {
       + 'NumF,';
 
     for (var ii = 0; ii < av.pch.numDads; ii++) {
-      //av.fwt.csvStrg += 'Fit_' + av.parents.name[ii] + ','
-      //av.fwt.csvStrg += 'Cst_' + av.parents.name[ii] + ','
-      //av.fwt.csvStrg += 'Ear_' + av.parents.name[ii] + ','
-      //av.fwt.csvStrg += 'Num_' + av.parents.name[ii] + ','
-      //av.fwt.csvStrg += 'Via_' + av.parents.name[ii] + ','
-      av.fwt.csvStrg += 'Fit_' + (ii).pad() + ','
-      av.fwt.csvStrg += 'Cst_' + (ii).pad() + ','
-      av.fwt.csvStrg += 'Ear_' + (ii).pad() + ','
-      av.fwt.csvStrg += 'Num_' + (ii).pad() + ','
-      av.fwt.csvStrg += 'Via_' + (ii).pad() + ','
+      //av.fwt.csvStrg += 'Fit_' + av.parents.name[ii] + ',';
+      //av.fwt.csvStrg += 'Cst_' + av.parents.name[ii] + ',';
+      //av.fwt.csvStrg += 'Ear_' + av.parents.name[ii] + ',';
+      //av.fwt.csvStrg += 'Num_' + av.parents.name[ii] + ',';
+      //av.fwt.csvStrg += 'Via_' + av.parents.name[ii] + ',';
+      av.fwt.csvStrg += 'Fit_' + (ii).pad() + ',';
+      av.fwt.csvStrg += 'Cst_' + (ii).pad() + ',';
+      av.fwt.csvStrg += 'Ear_' + (ii).pad() + ',';
+      av.fwt.csvStrg += 'Num_' + (ii).pad() + ',';
+      av.fwt.csvStrg += 'Via_' + (ii).pad() + ',';
     }
 
     var lngth = av.pch.aveFit.length;
@@ -376,10 +379,10 @@ av.fwt.makeCSV = function(fileNm) {
     av.fwt.csvStrg = 'Update';
     for (var ii = 0; ii < 3; ii++) {
       if (0 < document.getElementById('graphPop' + ii).textContent.length) {
-        av.fwt.csvStrg += ', "' + document.getElementById('graphPop' + ii).textContent + ' Ave Fitness' + '"'
-        av.fwt.csvStrg += ', "' + document.getElementById('graphPop' + ii).textContent + ' Ave Offspring Cost' + '"'
-        av.fwt.csvStrg += ', "' + document.getElementById('graphPop' + ii).textContent + ' Ave Energy Acq. Rate' + '"'
-        av.fwt.csvStrg += ', "' + document.getElementById('graphPop' + ii).textContent + ' Pop Size' + '"'
+        av.fwt.csvStrg += ', "' + document.getElementById('graphPop' + ii).textContent + ' Ave Fitness' + '"';
+        av.fwt.csvStrg += ', "' + document.getElementById('graphPop' + ii).textContent + ' Ave Offspring Cost' + '"';
+        av.fwt.csvStrg += ', "' + document.getElementById('graphPop' + ii).textContent + ' Ave Energy Acq. Rate' + '"';
+        av.fwt.csvStrg += ', "' + document.getElementById('graphPop' + ii).textContent + ' Pop Size' + '"';
         av.fwt.csvStrg += ', "' + document.getElementById('graphPop' + ii).textContent + ' Viable Size' + '"';
         if (longest < av.fzr.pop[ii].fit.length) longest = av.fzr.pop[ii].fit.length;
       }
@@ -400,7 +403,7 @@ av.fwt.makeCSV = function(fileNm) {
     }
   }
   //console.log(av.fwt.csvStrg);
-}
+};
 
 
 /***********************************************************************************************************************

@@ -365,7 +365,7 @@ av.fio.fzSaveCurrentWorkspaceFn = function () {
        //console.log('end of fname=', fname.substring(fname.length-13, fname.length), '; len=', fname.length-13);
       if ('entryname.txt' == fname.substring(fname.length-13, fname.length) ) {
         aFolderName = fname.substring(0,fname.length-13);
-        itemName = aFolderName + makeFileName(av.fzr.file[fname]) + '.txt';
+        itemName = aFolderName + av.utl.makeFileName(av.fzr.file[fname]) + '.txt';
         itemNameContent = itemName + '\n\n' + generalContent;
         if (av.debug.fio) console.log('itemName=', itemName);
         WSzip.file(folderName + '.avidaedworkspace/' + itemName, itemNameContent);        

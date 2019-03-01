@@ -2,7 +2,7 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-	<title>Avida-ED-ecoWeb</title>
+	<title>Avida-ED-ecoWeb active</title>
 	<meta charset='utf-8' />
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<script type='text/javascript' src='lib/dojo/dojo.js' data-dojo-config="'parseOnLoad':false,'async':true,
@@ -269,13 +269,18 @@
                   Mode:
                   <select data-dojo-type='dijit/form/Select' id='colorMode' data-dojo-props='name: "colorMode"'>
                     <option value='Fitness' selected='selected'>Fitness</option>
+                    <option value='Offspring Cost'>Offspring Cost</option>
+                    <option value='Energy Acq. Rate'>Energy Acq. Rate</option>
+                    <option value='Ancestor Organism'>Ancestor Organism</option>
                     <option value='rnot'>Resource: NOT</option>
                     <option value='rnan'>Resource: NAN</option>
                     <option value='rand'>Resource: AND</option>
                     <option value='rorn'>Resource: ORN</option>
-                    <option value='Offspring Cost'>Offspring Cost</option>
-                    <option value='Energy Acq. Rate'>Energy Acq. Rate</option>
-                    <option value='Ancestor Organism'>Ancestor Organism</option>
+                    <option value='roro'>Resource: ORO</option>
+                    <option value='rant'>Resource: ANT</option>
+                    <option value='rnor'>Resource: NOR</option>
+                    <option value='rxor'>Resource: XOR</option>
+                    <option value='requ'>Resource: EQU</option>
                     <option value='None'>None</option>
                   </select><br/>
                   <button id='newDishButton'>New</button>
@@ -302,6 +307,7 @@
               <button class="tablinks active" id="dataTab" onclick="av.ptd.processTab(event, 'labInfoBlock')">Data</button>
               <button class="tablinks" id="setupTab" onclick="av.ptd.processTab(event, 'setupBlock')">Setup</button>
               <button class="tablinks" id="testTab" onclick="av.ptd.processTab(event, 'testSetupBlock')">Test Setup</button>
+              <button class="tablinks" id="mockupTab" onclick="av.ptd.processTab(event, 'mockupBlock')">Mockup</button>
             </div>
           </div>
           <div class="labInfoHolder">
@@ -523,24 +529,25 @@
             <form id="testSetupForm">
               Test Dish Environmental Settings<br><br>
               <br>
-              for now the dish is always 30x30 and only settings in the environment file can be changed.
+              for now the dish is always 36x36 and only settings in the environment file can be changed.
               For more information go to  
               <a href="https://github.com/devosoft/avida/wiki/Environment-file" target="_blank">
                 avida enviornment file
               </a><br><br>
               Please edit the environment configuration file below:<br>
-              <textarea id='environConfigEdit' cols='90' rows='25'></textarea><br />
+              <textarea id='environConfigEdit' cols='100' rows='35'></textarea><br />
             </form>
           </div>
+          
           <div id="setupBlock" class="labInfoClass">
             <form id='setupForm'>
               <label>Environmental Settings</label>
 
               <div  class='odd'>
                 Dish Size:
-                <input id='sizeCols' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em'></input>
+                <input id='sizeCols' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' />
                 &nbsp; x &nbsp;
-                <input id='sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em'></input>
+                <input id='sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' />
                 cells&nbsp;<br />
                 <label id='sizeCells'>There are 900 cells by default</label>
               </div>
@@ -550,14 +557,13 @@
                     style='width:100px; display: inline-block; vertical-align: top; margin-left:20px; margin-right:20px'></span>
                 <!-- style done here for the slider; margin to keep it from overlapping;
                                       without width the slider is the full width of the browser window-->
-                <!--<input id='muteInput' type='text' style='width: 4em; height:1.8em'> -->
+                <!--<input id='muteInput' type='text' style='width: 4em; height:1.8em'></button> -->
                 <input id='muteInput' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' ;
                        data-dojo-props='constraints:{min:0, max:100},
                      invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                       style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value)'>
-                </button> %<br />
+                       style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value)'> %<br />
                 <!--; or the slider value is &nbsp;</div>
-                <input id='mRate' type='text' readonly style='width: 4em; height:1.8em'> -->
+                <input id='mRate' type='text' readonly style='width: 4em; height:1.8em'></button> -->
                 <label id='muteError'>Error place holder</label>
               </div>
               <div class='odd'>Ancestral Organism(s):
@@ -573,6 +579,140 @@
                        intermediateChanges='false'
                        iconClass='dijitNoIcon' name='child' checked value='random'>
                 <label id='childRandomLabel'>Anywhere, randomly</label>
+              </div>
+              <div class='odd'>
+                <label>
+                  What resources are available in the environment? (strength of energy reward shown in
+                  parentheses)</label>
+                <table border='0'
+                       style='border-collapse: collapse; table-layout: auto; width: 100%; height: auto; text-align: left'>
+                  <tbody>
+                  <tr>
+                    <td>Easy (x2)</td>
+                    <td>Moderate (x4)</td>
+                    <td>Hard (x8)</td>
+                    <td>Very hard (x16)</td>
+                    <td>Brutal (x32)</td>
+                  </tr>
+                  <tr>
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='notose'
+                               label='notose'>notose
+                    </td>
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='andose'
+                               label='andose'>andose
+                    </td>
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='orose'
+                               label='orose'>orose
+                    </td>
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='norose'
+                               label='norose'>norose
+                    </td>
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='equose'
+                               label='equose'>equose
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='nanose'
+                               label='nanose'>nanose
+                    </td>
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='ornose'
+                               label='ornose'>ornose
+                    </td>
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='andnose'
+                               label='andnose'>andnose
+                    </td>
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='xorose'
+                               label='xorose'>xorose
+                    </td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class='even'>
+                <label id='label_31'>Repeatability Mode:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='experimentRadio'
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='repeat'
+                       value='experimental'>
+                <label id='experimentLabel'>Experimental</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='demoRadio' checked
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='repeat' value='demo'>
+                <label id='demoLabel'>Demo</label>
+              </div>
+              <div class='odd'>
+                <label>Pause Run:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='manualUpdateRadio'
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' checked
+                       value='manual' />
+                <label id='ManLabel'>Manually</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='autoUpdateRadio'
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' value='setupdate' />
+                <label id='updateLabel'>At update:</label>
+                <input type='text' data-dojo-type='dijit/form/NumberSpinner' id='autoUpdateSpinner'
+                       intermediateChanges='false'
+                       trim='false' uppercase='false' lowercase='false' propercase='false' invalidMessage='$_unset_$'
+                       value='1000' data-dojo-props='smallDelta:100, constraints:{places:0}' style='width:80px'>
+              </div>
+              <span data-dojo-type='dijit/TitlePane' id='AdvancedSetup' title='Advanced Setup'
+                    extractContent='false' preventCache='false' preload='false' refreshOnShow='false' duration='200'
+                    open='false' style='min-width: 1px; width: 100%; height: auto; visibility: hidden'>
+                <div class='even'>
+                  time Slice:
+                  <input id='avetimeSlice' value='20'
+                         style='width: 3em; height:1.8em' />
+                  &nbsp;&nbsp;&nbsp;
+                  Update Delay:
+                  <input id='sleepDelay' type='text' data-dojo-type='dijit/form/NumberTextBox'
+                         required='true' value='50' data-dojo-props='constraints:{min:0, max:5000,places:0},
+                    invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid update Delay."'
+                         style='width:4em; height:1.8em'/>
+                  msecs<br />
+                </div>
+              </span>
+            </form>
+          </div>
+  
+          <div id="mockupBlock" class="labInfoClass">
+            <form id='mockupForm'>
+              <label>Mockup idea for Environmental Settings</label>
+
+              <div  class='odd'>
+                Dish Size:
+                <input id='sizeColsMock' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em'></input>
+                &nbsp; x &nbsp;
+                <input id='sizeRowsMock' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em'></input>
+                cells&nbsp;<br />
+                <label id='sizeCellsMock'>There are 900 cells by default</label>
+              </div>
+              <div class='even'>
+                <span class='lftmargin'>Per Site Mutation Rate:</span>
+              <span id='muteSlideMock'
+                    style='width:100px; display: inline-block; vertical-align: top; margin-left:20px; margin-right:20px'></span>
+                <!-- style done here for the slider; margin to keep it from overlapping;
+                                      without width the slider is the full width of the browser window-->
+                <!--<input id='muteInputMock' type='text' style='width: 4em; height:1.8em'> -->
+                <input id='muteInputMockMock' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' ;
+                       data-dojo-props='constraints:{min:0, max:100},
+                     invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
+                       style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value)'>
+                </button> %<br />
+                <!--; or the slider value is &nbsp;</div>
+                <input id='mRateMock' type='text' readonly style='width: 4em; height:1.8em'> -->
+                <label id='muteErrorMock'>Error place holder</label>
+              </div>
+              <div class='odd'>Ancestral Organism(s):
+                <div class='ancestorContainerMock' id='ancestorBoxMock'></div>
+              </div>
+              <div class='even'>
+                Place Offspring:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='childParentRadioMock'
+                       intermediateChanges='false'
+                       iconClass='dijitNoIcon' name='child' value='nearParent'>
+                <label id='childParentLabelMock'>Near their parent</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='childRandomRadioMock'
+                       intermediateChanges='false'
+                       iconClass='dijitNoIcon' name='child' checked value='random'>
+                <label id='childRandomLabelMock'>Anywhere, randomly</label>
               </div>
               <div class='odd'>
                 <label>
@@ -607,7 +747,7 @@
                     <td>updates</td>
                   </tr>
                   <tr>
-                    <td><input type='checkbox' class='resourceButton' id='notose'
+                    <td><input type='checkbox' class='resourceButton' id='notoseMock'
                                label='notose'></button>notose
                     </td>
                     <td><input type="radio" name="nanLimit" value="Unlimited" checked></td>
@@ -619,7 +759,7 @@
                     <td><input type='text'  name="nanInp" class="flowInput"></td>
                   </tr>
                   <tr>
-                    <td><input type='checkbox' class='resourceButton' id='nanose'
+                    <td><input type='checkbox' class='resourceButton' id='nanoseMock'
                                label='nanose'></button>nanose
                     </td>
                     <td><input type="radio" name="notLimit" value="Unlimited" checked></td>
@@ -634,7 +774,7 @@
                     <td>Moderate (x4)</td>
                   </tr>
                   <tr>
-                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='andose'
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='andoseMock'
                                label='andose'></button>andose
                     </td> 
                     <td><input type="radio" name="andLimit" value="Unlimited" checked></td>
@@ -646,7 +786,7 @@
                     <td><input type='text'  name="andInp" class="flowInput"></td>
                   </tr>
                   <tr>
-                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='ornose'
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='ornoseMock'
                                label='ornose'></button>ornose
                     </td>                      <td><input type="radio" name="ornLimit" value="Unlimited" checked></td>
                     <td class="TabSideBorder"><input type="radio" name="ornLimit" value="Limited"></td>
@@ -661,7 +801,7 @@
                     <td>Hard (x8)</td>
                   </tr>
                   <tr>
-                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='andnose'
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='andnoseMock'
                                label='andnose'></button>andnose
                     </td>
                     <td><input type="radio" name="andLimit" value="Unlimited" checked></td>
@@ -672,7 +812,7 @@
                     <td><input type="radio" name="andPer" value="Periodic"></td>
                     <td><input type='text'  name="andInp" class="flowInput"></td>                  </tr>
                   <tr>
-                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='orose'
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='oroseMock'
                                label='orose'></button>orose
                     </td>
                     <td><input type="radio" name="oroLimit" value="Unlimited" checked></td>
@@ -686,7 +826,7 @@
                     <td>Very hard (x16)</td>
                   </tr>
                   <tr>
-                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='norose'
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='noroseMock'
                                label='norose'></button>norose
                     </td>
                     <td><input type="radio" name="norLimit" value="Unlimited" checked></td>
@@ -697,7 +837,7 @@
                     <td><input type="radio" name="norPer" value="Periodic"></td>
                     <td><input type='text'  name="norInp" class="flowInput"></td>                  </tr>
                   <tr>
-                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='xorose'
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='xoroseMock'
                                label='xorose'></button>xorose
                     </td>
                     <td><input type="radio" name="xorLimit" value="Unlimited" checked></td>
@@ -711,7 +851,7 @@
                     <td>Brutal (x32)</td>
                   </tr>
                   <tr>
-                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='equose'
+                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='equoseMock'
                                label='equose'></button>equose
                     </td>
                     <td><input type="radio" name="equLimit" value="Unlimited" checked></td>
@@ -727,40 +867,40 @@
               </div>
               <div class='even'>
                 Repeatability Mode:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='experimentRadio'
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='experimentRadioMock'
                        intermediateChanges='false' iconClass='dijitNoIcon' name='repeat'
                        value='experimental'></ipnut>
               
-                <label id='experimentLabel'>Experimental</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='demoRadio' checked
+                <label id='experimentLabelMock'>Experimental</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='demoRadioMock' checked
                        intermediateChanges='false' iconClass='dijitNoIcon' name='repeat' value='demo'>
-                <label id='demoLabel'>Demo</label>
+                <label id='demoLabelMock'>Demo</label>
               </div>
               <div class='odd'>
                 <label>Pause Run:</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='manualUpdateRadio'
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='manualUpdateRadioMock'
                        intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' checked
                        value='manual'>
-                <label id='ManLabel'>Manually</label><br />
+                <label id='ManLabelMock'>Manually</label><br />
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='autoUpdateRadio'
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='autoUpdateRadioMock'
                        intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' value='setupdate'>
-                <label id='updateLabel'>At update:</label>
-                <input type='text' data-dojo-type='dijit/form/NumberSpinner' id='autoUpdateSpinner'
+                <label id='updateLabelMock'>At update:</label>
+                <input type='text' data-dojo-type='dijit/form/NumberSpinner' id='autoUpdateSpinnerMock'
                        intermediateChanges='false'
                        trim='false' uppercase='false' lowercase='false' propercase='false' invalidMessage='$_unset_$'
                        value='1000' data-dojo-props='smallDelta:100, constraints:{places:0}' style='width:80px'>
               </div>
-              <span data-dojo-type='dijit/TitlePane' id='AdvancedSetup' title='Advanced Setup'
+              <span data-dojo-type='dijit/TitlePane' id='AdvancedSetupMock' title='Advanced Setup'
                     extractContent='false' preventCache='false' preload='false' refreshOnShow='false' duration='200'
                     open='false' style='min-width: 1px; width: 100%; height: auto; visibility: hidden'>
                 <div class='even'>
                   time Slice:
-                  <input id='avetimeSlice' value='20'
+                  <input id='avetimeSliceMock' value='20'
                          style='width: 3em; height:1.8em' />
                   &nbsp;&nbsp;&nbsp;
                   Update Delay:
-                  <input id='sleepDelay' type='text' data-dojo-type='dijit/form/NumberTextBox'
+                  <input id='sleepDelayMock' type='text' data-dojo-type='dijit/form/NumberTextBox'
                          required='true' value='50' data-dojo-props='constraints:{min:0, max:5000,places:0},
                     invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid update Delay."'
                          style='width:4em; height:1.8em'/>
@@ -772,7 +912,7 @@
           </div><span comment="end of infoHolder"></span>
           </div><span comment="end of popInfoVert"></span>
 				</div>  <span comment="end of popInfoHolder"></span>
-      </div>  <span title="mainBlockClassRow id=populationBlock"></span>
+      </div>  <span title="mainBlockClassRow id=populationBlockMock"></span>
 
       
       <div class="mainBlockClassRow" id="organismBlock">

@@ -2,6 +2,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 //because IE does not understand var event = new Event('change'); in the file fileIO.js
 
+var av = av || {};  //incase av already exists
+
 //----------------------------------------------------------------------------------------------------------------------
 //http://stackoverflow.com/questions/1295584/most-efficient-way-to-create-a-zero-filled-javascript-array
 av.utl.newFilledArray = function (length, val) {
@@ -41,7 +43,7 @@ if (typeof(String.prototype.trim) === "undefined") {
  Function by Wesley R. Elsberry, based on
  1989 Turbo Pascal version.
  ---------------------------------------- */
-var linmap = function(dx, d1, d2, r1, r2){
+av.utl.linmap = function(dx, d1, d2, r1, r2){
   'use strict';
   var ddiff = d2 - d1 + 0.0;
   var rdiff = r2 - r1 + 0.0;
@@ -58,7 +60,7 @@ var linmap = function(dx, d1, d2, r1, r2){
   var rx = dscale * rdiff + r1;
 
   return rx;
-}
+};
 
 /* ----------------------------------------
  get_color
@@ -84,23 +86,23 @@ var linmap = function(dx, d1, d2, r1, r2){
  The color map can be of any length.
 
  ---------------------------------------- */
-var get_color0 = function(cmap, dx, d1, d2){
+av.utl.get_color0 = function(cmap, dx, d1, d2){
   'use strict';
-  var datacolorindex = Math.max(0,Math.min(cmap.length-1,Math.round(linmap(dx, d1, d2, 0, cmap.length-1))));
-  var datacolor = cmap[datacolorindex];
-  return datacolor;
-}
-
-var get_color1 = function(cmap, dx, d1, d2){
-  'use strict';
-  var datacolorindex = Math.max(0,Math.min(cmap.length-1,Math.round(linmap(dx, d1, d2, 1, cmap.length-1))));
+  var datacolorindex = Math.max(0,Math.min(cmap.length-1,Math.round(av.utl.linmap(dx, d1, d2, 0, cmap.length-1))));
   var datacolor = cmap[datacolorindex];
   return datacolor;
 };
 
-var get_color = function(cmap, dx, d1, d2, r1){
+av.utl.get_color1 = function(cmap, dx, d1, d2){
   'use strict';
-  var datacolorindex = Math.max(0,Math.min(cmap.length-1,Math.round(linmap(dx, d1, d2, r1, cmap.length-1))));
+  var datacolorindex = Math.max(0,Math.min(cmap.length-1,Math.round(av.utl.linmap(dx, d1, d2, 1, cmap.length-1))));
+  var datacolor = cmap[datacolorindex];
+  return datacolor;
+};
+
+av.utl.get_color2 = function(cmap, dx, d1, d2, r1){
+  'use strict';
+  var datacolorindex = Math.max(0,Math.min(cmap.length-1,Math.round(av.utl.linmap(dx, d1, d2, r1, cmap.length-1))));
   var datacolor = cmap[datacolorindex];
   return datacolor;
 };
@@ -160,7 +162,7 @@ function wsa(target, strng){
  */
 
 //remove all commas; remove preceeding and trailing spaces; replace spaces with comma
-var flexsplit = function (instr) {
+av.utl.flexsplit = function (instr) {
   'use strict';
   var str1 = instr.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
 
@@ -168,7 +170,7 @@ var flexsplit = function (instr) {
 };
 
 //remove all commas; remove preceeding and trailing spaces; replace spaces with underbar; but underbar at start of string.
-var makeFileName = function (instr) {
+av.utl.makeFileName = function (instr) {
   'use strict';
   var str1 = instr.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, '_');
   str1 = '_' + str1;
@@ -194,23 +196,23 @@ av.utl.dTailWrite = function (file, lineNum, nameStr, objAry) {
     }
   }
   //console.log('dTail = ', av.debug.dTail);
-}
+};
 
 //**********************************************************************************************************************
 av.utl.jsonStringify = function(jStr) {
-  'use strict'
+  'use strict';
   var str0 = JSON.stringify(jStr, null, 2);
   var str1 = '~|~' + str0.replace(/\\n/g, "\n") + '~.~';
   return str1;
-}
+};
 
 
 av.utl.jsonStringifyOneLine = function(jStr) {
-  'use strict'
+  'use strict';
   var str0 = JSON.stringify(jStr);
   var str1 = '~|~' + str0 + '~.~';
   return str1;
-}
+};
 
 // JSon to string  Should only be used to put statements from Avida into logs
 av.utl.json2stringFn = function (jStr) {
@@ -236,7 +238,7 @@ av.utl.json2stringFn = function (jStr) {
     else rstr += '  ' + ndx + ':' + jStr[ndx] + '\n';
   }
   return rstr + '~.~';
-}
+};
 
 //**********************************************************************************************************************
 // JSon to oneLine
@@ -263,7 +265,7 @@ av.utl.json2oneLine = function (jStr) {
     else rstr += ndx + ':' + jStr[ndx] + '; s';
   }
   return rstr;
-}
+};
 
 //number of items in an object
 //http://stackoverflow.com/questions/16976904/javascript-counting-number-of-objects-in-object

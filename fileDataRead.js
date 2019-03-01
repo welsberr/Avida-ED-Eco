@@ -174,6 +174,9 @@ av.fio.processFiles = function (loadConfigFlag){
             av.frd.environmentCFG2form(av.fio.thisfile.asText().trim());
           }
         }
+        if ('ancestors' == fileType ||'ancestors_manual' == fileType) {
+          av.fio.anID = av.fio.anID + '.txt';
+        }
         av.fzr.file[av.fio.anID] = av.fio.thisfile.asText().trim();
         //if (av.debug.fio) console.log('FileType is ', fileType, '; filepath = ', av.fio.anID);
         break;
@@ -209,6 +212,9 @@ av.fio.processItemFiles = function (){
     case 'tr3':
     case 'tr4':
     case 'update':
+      if ('ancestors' == av.fio.anID ||'ancestors_manual' == av.fio.anID) {
+        av.fio.anID = av.fio.anID + '.txt';
+      }
       av.fzr.item[av.fio.anID] = av.fio.thisfile.asText().trim();
       break;
     default:
@@ -231,13 +237,13 @@ av.frd.updateSetup = function () {
   av.frd.pauseRunAtTXT2form(doctext);
 };
 
-//----------------------- section to put data from environment.cfg into setup form of population page ------------------
+//--------------------------- section to put data from environment.cfg into setup traditional form of population page --
 
 av.frd.environmentCFGlineParse = function(instr){
   'use strict';
   var num = 0;
   var flag = true;
-  var cfgary = flexsplit(instr).split(',');      //replaces white space with a comma, then splits on comma
+  var cfgary = av.utl.flexsplit(instr).split(',');      //replaces white space with a comma, then splits on comma
   if (0 < cfgary[3].length) {num = wsb(':',wsa('=',cfgary[3]));}
   if (0 == num) {flag = false;} //use == in this case as they are of different type
   //if (av.debug.fio) console.log('flag', flag, '; num', num, '; cfgary', cfgary[3], '; instr', instr);
@@ -280,11 +286,60 @@ av.frd.environmentCFG2form = function (fileStr) {
   av.dom.xorose.checked = dict.XOR;
 };
 
-//----------------------------- section to put data from avida.cfg into setup form of population page ------------------
+//----------------------------------------------- section to put data from environment.cfg into environment Structure --
+
+av.frd.environmentLineParse = function(instr){
+  'use strict';
+  var num = 0;
+  var flag = true;
+  var cfgary = av.utl.flexsplit(instr).split(',');      //replaces white space with a comma, then splits on comma
+  if (0 < cfgary[3].length) {num = wsb(':',wsa('=',cfgary[3]));}
+  if (0 == num) {flag = false;} //use == in this case as they are of different type
+  //if (av.debug.fio) console.log('flag', flag, '; num', num, '; cfgary', cfgary[3], '; instr', instr);
+  var rslt = {
+    name : cfgary[1],
+    value : flag
+  };
+  return rslt;
+};
+
+// makes a dictionary out of a environment.cfg file
+av.frd.environmentParse = function (filestr) {
+  'use strict';
+  var rslt = {};
+  var lineobj;
+  var lines = filestr.split('\n');
+  var lngth = lines.length;
+  for (var ii = 0; ii < lngth; ii++) {
+    if (3 < lines[ii].length) {
+      //console.log("lines[", ii, "]=", lines[ii]);
+      lineobj = av.frd.environmentCFGlineParse(lines[ii]);
+      rslt[lineobj.name.toUpperCase()] = lineobj.value;
+    }
+  } // for
+  return rslt;
+};
+
+// puts data from the environment.cfg into the setup form for the population page
+av.frd.environment2struct = function (fileStr) {
+  'use strict';
+  var dict = av.frd.environmentCFGparse(fileStr);
+  av.dom.notose.checked = dict.NOT;
+  av.dom.andose.checked = dict.AND;
+  av.dom.orose.checked = dict.OR;
+  av.dom.norose.checked = dict.NOR;
+  av.dom.equose.checked = dict.EQU;
+  av.dom.nanose.checked = dict.NAND;
+  av.dom.ornose.checked = dict.ORN;
+  av.dom.andnose.checked = dict.ANDN;
+  av.dom.xorose.checked = dict.XOR;
+};
+
+//--------------------------------------------- section to put data from avida.cfg into setup form of population page --
 //makes a dictionary entry out of line if the key and value are the first two items.
 av.frd.avidaCFGlineParse = function(instr){
   'use strict';
-  var cfgary = flexsplit(instr).split(',');  //replaces white space with a comma, then splits on comma
+  var cfgary = av.utl.flexsplit(instr).split(',');  //replaces white space with a comma, then splits on comma
   var rslt = {
     name : cfgary[0],
     value : cfgary[1]
@@ -408,11 +463,12 @@ av.fio.autoAncestorLoad = function(fileStr) {
   }
 };
 
-//---------------- section to put data from ancestors_manual file into ancestorBox and placeparents hand ---------------
+//---------------- section to put data from ancestors_manual.txt' file into ancestorBox and placeparents hand ---------------
 
-// makes a listing out of a ancestors_manual file
+// makes a listing out of a ancestors_manual.txt' file
 av.fio.handAncestorParse = function (filestr) {
   'use strict';
+  console.log('filestr=', filestr);
   var rslt = {};
   rslt.nam = [];
   rslt.gen = [];
@@ -487,7 +543,7 @@ av.frd.cladeSSGparse = function (filestr) {
   var lngth = lines.length;
   for (var ii = 0; ii < lngth; ii++) {
     if (1 < lines[ii].length) {
-      cfgary = flexsplit(lines[ii]).split(',');   //replaces white space with a comma, then splits on comma
+      cfgary = av.utl.flexsplit(lines[ii]).split(',');   //replaces white space with a comma, then splits on comma
       name = cfgary[0];
       if ('#' != name[0]) {
         rslt.push(name);
