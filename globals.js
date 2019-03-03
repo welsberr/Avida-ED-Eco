@@ -281,6 +281,7 @@ av.aww = {}; //avida web worker
 
 av.msg = {}; //holds functions to send messages between the ui and Avida (web worker)
 av.msg.uiReqestedReset = false;
+av.msg.setupType = 'normal';
 
 //http://stackoverflow.com/questions/4565112/javascript-how-to-find-out-if-the-user-browser-is-chrome
 // please note,
@@ -694,6 +695,10 @@ av.grd.clearGrd = function () {
   av.ptd.validMuteInuput=true;
   av.grd.selFnText = 'none';
   av.grd.selFnBinary = '000000000';
+  
+  av.grd.gridWasCols = 20;
+  av.grd.gridWasRows = 20;
+
 };
 av.grd.clearGrd();
 

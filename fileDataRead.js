@@ -222,8 +222,9 @@ av.fio.processItemFiles = function (){
       break;
   }
 };
+//======================================================================================================================
 
-//---------------------------------- update config data from file data stored in freezer -------------------------------
+//------------------------------------------ update config data from file data stored in freezer = av.frd.updateSetup --
 av.frd.updateSetup = function () {
   'use strict';
   var dir = av.fzr.actConfig.dir;
@@ -232,13 +233,30 @@ av.frd.updateSetup = function () {
   //console.log('actConfig: path=', path);
   av.frd.avidaCFG2form(doctext);
   doctext = av.fzr.file[dir + '/environment.cfg'];
-  if (!av.msg.avidaTestRunFlag) av.frd.environmentCFG2form(doctext);
+  av.frd.environmentCFG2form(doctext);
   doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
   av.frd.pauseRunAtTXT2form(doctext);
 };
+//----------------------------------------------------------------------------------------- end of av.frd.updateSetup --
+
+//------------------------------------------- update config data from file data stored in freezer for test setup page --
+av.frd.updateTestSetup = function () {
+  'use strict';
+  var dir = av.fzr.actConfig.dir;
+  var path = dir + '/avida.cfg';
+  var doctext = av.fzr.file[path];
+  //console.log('actConfig: path=', path);
+  av.frd.avidaTestform(doctext);
+  doctext = av.fzr.file[dir + '/environment.cfg'];
+  av.frd.environmentTestform(doctext);
+  
+  //not sure about this one; may need a stest version of this one too
+  doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
+  av.frd.pauseRunAtTXT2form(doctext);
+};
+//------------------------------------------------------------------------------------- end of av.frd.updateTestSetup --
 
 //--------------------------- section to put data from environment.cfg into setup traditional form of population page --
-
 av.frd.environmentCFGlineParse = function(instr){
   'use strict';
   var num = 0;
@@ -275,16 +293,18 @@ av.frd.environmentCFGparse = function (filestr) {
 av.frd.environmentCFG2form = function (fileStr) {
   'use strict';
   var dict = av.frd.environmentCFGparse(fileStr);
-  av.dom.notose.checked = dict.NOT;
-  av.dom.andose.checked = dict.AND;
-  av.dom.orose.checked = dict.OR;
-  av.dom.norose.checked = dict.NOR;
-  av.dom.equose.checked = dict.EQU;
-  av.dom.nanose.checked = dict.NAND;
-  av.dom.ornose.checked = dict.ORN;
-  av.dom.andnose.checked = dict.ANDN;
-  av.dom.xorose.checked = dict.XOR;
+  console.log(fileStr,' called av.frd.environmentCFG2form; dict=',dict);
+  dijit.byId('notose').set('checked', dict.NOT);
+  dijit.byId('nanose').set('checked', dict.NAND);
+  dijit.byId('andose').set('checked', dict.AND);
+  dijit.byId('ornose').set('checked', dict.ORN);
+  dijit.byId('orose').set('checked', dict.OR);
+  dijit.byId('andnose').set('checked', dict.ANDN);
+  dijit.byId('norose').set('checked', dict.NOR);
+  dijit.byId('xorose').set('checked', dict.XOR);
+  dijit.byId('equose').set('checked', dict.EQU);
 };
+//--------------------- end ofsection to put data from environment.cfg into setup traditional form of population page --
 
 //----------------------------------------------- section to put data from environment.cfg into environment Structure --
 
@@ -324,6 +344,18 @@ av.frd.environmentParse = function (filestr) {
 av.frd.environment2struct = function (fileStr) {
   'use strict';
   var dict = av.frd.environmentCFGparse(fileStr);
+  console.log('in av.frd.environment2struct; dict=',dict);
+  dijit.byId('notose').set('checked', dict.NOT);
+  dijit.byId('nanose').set('checked', dict.NAND);
+  dijit.byId('andose').set('checked', dict.AND);
+  dijit.byId('ornose').set('checked', dict.ORN);
+  dijit.byId('orose').set('checked', dict.OR);
+  dijit.byId('andnose').set('checked', dict.ANDN);
+  dijit.byId('norose').set('checked', dict.NOR);
+  dijit.byId('xorose').set('checked', dict.XOR);
+  dijit.byId('equose').set('checked', dict.EQU);
+/*
+ * //for when NOT using digits. plain check boxes
   av.dom.notose.checked = dict.NOT;
   av.dom.andose.checked = dict.AND;
   av.dom.orose.checked = dict.OR;
@@ -333,6 +365,7 @@ av.frd.environment2struct = function (fileStr) {
   av.dom.ornose.checked = dict.ORN;
   av.dom.andnose.checked = dict.ANDN;
   av.dom.xorose.checked = dict.XOR;
+*/
 };
 
 //--------------------------------------------- section to put data from avida.cfg into setup form of population page --
@@ -364,10 +397,13 @@ av.frd.avidaCFGparse = function (filestr) {
 av.frd.avidaCFG2form = function (fileStr){
   'use strict';
   var dict = av.frd.avidaCFGparse(fileStr);
+  console.log(fileStr, ' called av.frd.avidaCFG2form; dict=', dict);
   av.dom.sizeCols.value = dict.WORLD_X;
+  av.grd.gridWasCols = dict.WORLD_X;  
   //dijit.byId('sizeCols').set('value', dict.WORLD_X);
   av.dom.sizeRows.value = dict.WORLD_Y;
   //dijit.byId('sizeRows').set('value', dict.WORLD_Y);
+  av.grd.gridWasRows = dict.WORLD_Y;
   document.getElementById('muteInput').value = dict.COPY_MUT_PROB*100;
   //var event = new Event('change');
   var event = new window.CustomEvent('change');
@@ -388,11 +424,42 @@ av.frd.avidaCFG2form = function (fileStr){
   else {
     dijit.byId('experimentRadio').set('checked', false);
     dijit.byId('demoRadio').set('checked', true);
-  }
-  //no longer in use; tiba delete later
-  //dijit.byId('aveTimeSlice').set('value', dict.AVE_TIME_SLICE);
-  //dijit.byId('sleepDelay').set('value', dict.SLEEP_DELAY);
+  };
 };
+//---------------------------------------------------------------------------------------------- av.frd.avidaTestform --
+av.frd.avidaTestform = function (fileStr){
+  'use strict';
+  var dict = av.frd.avidaCFGparse(fileStr);
+  console.log(fileStr, ' called aav.frd.avidaTestform; dict=', dict);
+  av.dom.tsizeCols.value = dict.WORLD_X;
+  av.grd.gridWasCols = dict.WORLD_X;
+  //dijit.byId('sizeCols').set('value', dict.WORLD_X);
+  av.dom.tsizeRows.value = dict.WORLD_Y;
+  av.grd.gridWasRows = dict.WORLD_Y;
+  //dijit.byId('sizeRows').set('value', dict.WORLD_Y);
+  document.getElementById('tmuteInput').value = dict.COPY_MUT_PROB*100;
+  //var event = new Event('change');
+  var event = new window.CustomEvent('change');
+  document.getElementById('tmuteInput').dispatchEvent(event);
+  if (0==dict.BIRTH_METHOD) {
+    dijit.byId('tchildParentRadio').set('checked', true);
+    dijit.byId('tchildRandomRadio').set('checked', false);
+  }
+  else {
+    dijit.byId('tchildParentRadio').set('checked', false);
+    dijit.byId('tchildRandomRadio').set('checked', true);
+  }
+
+  if (-1 == dict.RANDOM_SEED) {
+    dijit.byId('texperimentRadio').set('checked', true);
+    dijit.byId('tdemoRadio').set('checked', false);
+  }
+  else {
+    dijit.byId('texperimentRadio').set('checked', false);
+    dijit.byId('tdemoRadio').set('checked', true);
+  }
+};
+//------------------------------------------------------------------------------------------ end processing avida.cfg --
 
 //--------------------- puts data from the av.frd.pauseRun.txt file into the setup form for the population page---------
 av.frd.pauseRunAtTXT2form = function (fileStr) {

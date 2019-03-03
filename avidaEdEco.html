@@ -154,6 +154,7 @@
         </span>
         <span data-dojo-type='dijit/PopupMenuBarItem' label='Debug' id='mnDebug' style = 'visibility: visible'> <!--visible/hidden-->
           <span data-dojo-type='dijit/Menu'>
+            <span data-dojo-type='dijit/MenuItem' id='mnFzAddTeditEx' label='Pre-Load Highlighted Test-Dish (edit)'></span>
             <span data-dojo-type='dijit/MenuItem' id='mnFzAddTdishEx' label='Load Highlighted Test-Dish'></span>
             <span data-dojo-type='dijit/MenuItem' id='mnDbThrowError' label='Throw Error'></span>
             <span data-dojo-type='dijit/MenuItem' id='mnDbThrowData' label='Send Data to console'></span>
@@ -545,9 +546,9 @@
 
               <div  class='odd'>
                 Dish Size:
-                <input id='sizeCols' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' />
+                <input id='sizeCols' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '10';/>
                 &nbsp; x &nbsp;
-                <input id='sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' />
+                <input id='sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '10'/>
                 cells&nbsp;<br />
                 <label id='sizeCells'>There are 900 cells by default</label>
               </div>
@@ -748,7 +749,7 @@
                   </tr>
                   <tr>
                     <td><input type='checkbox' class='resourceButton' id='notoseMock'
-                               label='notose'></button>notose
+                               label='notoseMock'></button>notose
                     </td>
                     <td><input type="radio" name="nanLimit" value="Unlimited" checked></td>
                     <td class="TabSideBorder"><input type="radio" name="nanLimit" value="Limited"></td>
@@ -760,7 +761,7 @@
                   </tr>
                   <tr>
                     <td><input type='checkbox' class='resourceButton' id='nanoseMock'
-                               label='nanose'></button>nanose
+                               label='nanoseMock'></button>nanose
                     </td>
                     <td><input type="radio" name="notLimit" value="Unlimited" checked></td>
                     <td class="TabSideBorder"><input type="radio" name="notLimit" value="Limited"></td>
@@ -775,7 +776,7 @@
                   </tr>
                   <tr>
                     <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='andoseMock'
-                               label='andose'></button>andose
+                               label='andoseMock'></button>andose
                     </td> 
                     <td><input type="radio" name="andLimit" value="Unlimited" checked></td>
                     <td class="TabSideBorder"><input type="radio" name="andLimit" value="Limited"></td>
@@ -787,7 +788,7 @@
                   </tr>
                   <tr>
                     <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='ornoseMock'
-                               label='ornose'></button>ornose
+                               label='ornoseMock'></button>ornose
                     </td>                      <td><input type="radio" name="ornLimit" value="Unlimited" checked></td>
                     <td class="TabSideBorder"><input type="radio" name="ornLimit" value="Limited"></td>
                     <td><input type='text'  name="ornInp" class="flowInput"></td>
@@ -802,7 +803,7 @@
                   </tr>
                   <tr>
                     <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='andnoseMock'
-                               label='andnose'></button>andnose
+                               label='andnoseMock'></button>andnose
                     </td>
                     <td><input type="radio" name="andLimit" value="Unlimited" checked></td>
                     <td class="TabSideBorder"><input type="radio" name="andLimit" value="Limited"></td>
@@ -813,7 +814,7 @@
                     <td><input type='text'  name="andInp" class="flowInput"></td>                  </tr>
                   <tr>
                     <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='oroseMock'
-                               label='orose'></button>orose
+                               label='oroseMock'></button>orose
                     </td>
                     <td><input type="radio" name="oroLimit" value="Unlimited" checked></td>
                     <td class="TabSideBorder"><input type="radio" name="oroLimit" value="Limited"></td>
@@ -827,7 +828,7 @@
                   </tr>
                   <tr>
                     <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='noroseMock'
-                               label='norose'></button>norose
+                               label='noroseMock'></button>norose
                     </td>
                     <td><input type="radio" name="norLimit" value="Unlimited" checked></td>
                     <td class="TabSideBorder"><input type="radio" name="norLimit" value="Limited"></td>
@@ -838,7 +839,7 @@
                     <td><input type='text'  name="norInp" class="flowInput"></td>                  </tr>
                   <tr>
                     <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='xoroseMock'
-                               label='xorose'></button>xorose
+                               label='xoroseMock'></button>xorose
                     </td>
                     <td><input type="radio" name="xorLimit" value="Unlimited" checked></td>
                     <td class="TabSideBorder"><input type="radio" name="xorLimit" value="Limited"></td>
@@ -852,7 +853,7 @@
                   </tr>
                   <tr>
                     <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='equoseMock'
-                               label='equose'></button>equose
+                               label='equoseMock'></button>equose
                     </td>
                     <td><input type="radio" name="equLimit" value="Unlimited" checked></td>
                     <td class="TabSideBorder"><input type="radio" name="equLimit" value="Limited"></td>

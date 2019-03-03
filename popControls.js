@@ -37,7 +37,6 @@ av.ptd.popWorldStateUi = function (from) {
   av.dnd.fzWorld.accept['b'] = 1;
   av.dom.sizeCols.disabled = true;
   av.dom.sizeRows.disabled = true;
-  //av.dom.sizeRows.disabled = true;
   //av.dom.experimentRadio.disabled = true;
   //av.dom.demoRadio.disabled = true;
 
@@ -267,14 +266,15 @@ av.ptd.runPopFn = function () {
       //collect setup data to send to avida.  Order matters. Files must be created first. Then files must be sent before some other stuff.
       av.fwt.form2cfgFolder();          //fileDataWrite.js creates avida.cfg and environment.cfg and ancestor.txt and ancestors_manual.txt
       if ('prepping' === av.grd.runState) {
-        av.msg.importConfigExpr();
-        av.msg.injectAncestors();
+        av.msg.importConfigExpr(av.ptd.runPopFn);
+        console.log('after calling av.msg.importConfigExpr');
+        av.msg.injectAncestors('config');
       }
       else {
         av.msg.importWorldExpr();
         //console.log('parents.injected = av.parents.injected);
         //av.debug.log += '\nstart importWorld running-----------------------------------------\n'
-        av.msg.injectAncestors();
+        av.msg.injectAncestors('world');
       }
 
       //change ui parameters for the correct state when the avida population has started running
@@ -562,6 +562,7 @@ av.ptd.clearLogicButtons = function() {
 //writes data to Environmental Settings page based on the content of av.dnd.activeConfig
 //for now this is hard coded to what would be in @default. will need a way to request data from PouchDB
 //and read the returned JSON string.
+/*
 av.ptd.writeHardDefault = function (av) {
   'use strict';
   av.dom.sizeCols.value = av.dft.sizeCols;
@@ -604,6 +605,7 @@ av.ptd.writeHardDefault = function (av) {
     av.dom.autoUpdateRadio.checked = true;
   };
 };
+*/
 
 // should really be in a ui code section
 // http://stackoverflow.com/questions/7125453/modifying-css-class-property-values-on-the-fly-with-javascript-jquery

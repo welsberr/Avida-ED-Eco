@@ -1357,16 +1357,7 @@ require([
 
   //------------ in debug menu for now ----------
 
-  //Buttons on drop down menu to add looking at test-dish to an experiment
-  dijit.byId('mnFzAddResEx').on('Click', function () {
-    av.post.addUser('Button: mnFzAddResEx');
-    //av.dnd.FzAddExperimentFn('fzConfig', 'activeConfig', 'm');
-    av.dnd.runResReqDish('fzConfig', 'activeConfig', 'c');
-    av.ptd.setAutoPausePop(true, 20);
-  });
-
-
-  //Buttons on drop down menu to add looking at resourses to an experiment
+  //Buttons on drop down menu to add looking at resource dish to an experiment
   dijit.byId('mnFzAddResEx').on('Click', function () {
     av.post.addUser('Button: mnFzAddResEx');
     //av.dnd.FzAddExperimentFn('fzConfig', 'activeConfig', 'm');
@@ -1387,12 +1378,20 @@ require([
     //av.dnd.FzAddExperimentFn('fzRdish', 'activeConfig', 'r');
     //av.msg.runResourceDish('fzRdish', 'activeConfig', 'r');
   });
+mnFzAddTeditEx
+
+//Buttons on drop down menu to add Test-Dish to an Experiment
+  dijit.byId('mnFzAddTeditEx').on('Click', function () {
+    av.post.addUser('Button: mnFzAddTeditEx');
+    //av.dnd.FzAddExperimentFn('fzTdish', 'activeConfig', 't');
+    av.dnd.TestDishSetupPrep('fzTdish', 'activeConfig', 't');
+  });
 
 //Buttons on drop down menu to add Test-Dish to an Experiment
   dijit.byId('mnFzAddTdishEx').on('Click', function () {
     av.post.addUser('Button: mnFzAddTdishEx');
     //av.dnd.FzAddExperimentFn('fzTdish', 'activeConfig', 't');
-    av.msg.runTestDish('fzTdish', 'activeConfig', 't');
+    av.dnd.runTestDish('fzTdish', 'activeConfig', 't');
   });
 
 //Buttons on drop down menu to put an organism in Organism Viewer
@@ -2067,10 +2066,10 @@ require([
   av.grd.gridWasCols = Number(av.dom.sizeCols.value);
   av.grd.gridWasRows = Number(av.dom.sizeRows.value);
 
-  av.ptd.popSizeFn = function() {
-    //console.log('av.ptd.popSizeFn: should call if viable size');
+  av.ptd.popSizeFn = function(from) {
     var NewCols = Number(av.dom.sizeCols.value);
     var NewRows = Number(av.dom.sizeRows.value);
+    console.log(from, 'called av.ptd.popSizeFn: new col, row', NewCols, NewRows);
     //console.log('NewCols, Rows', NewCols, NewRows);
     av.dom.sizeCells.innerHTML = 'for a total of ' + NewCols * NewRows + ' cells';
     //av.dom.sizeCells.text = 'for a total of ' + NewCols * NewRows + ' cells';
@@ -2081,13 +2080,13 @@ require([
     if (undefined != av.parents.handNdx) {
       var lngth = av.parents.handNdx.length;
       for (var ii = 0; ii < lngth; ii++) {
-        //console.log('old cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
+        console.log('old cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
         av.parents.col[av.parents.handNdx[ii]] = Math.floor(NewCols * av.parents.col[av.parents.handNdx[ii]] / av.grd.gridWasCols);  //was trunc
         av.parents.row[av.parents.handNdx[ii]] = Math.floor(NewRows * av.parents.row[av.parents.handNdx[ii]] / av.grd.gridWasRows);  //was trunc
         av.parents.AvidaNdx[av.parents.handNdx[ii]] = av.parents.col[av.parents.handNdx[ii]] + NewCols * av.parents.row[av.parents.handNdx[ii]];
-        //console.log('New cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
+        console.log('New cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
       }
-    }
+    };
     av.grd.gridWasCols = Number(av.dom.sizeCols.value);
     av.grd.gridWasRows = Number(av.dom.sizeRows.value);
     //reset zoom power to 1
@@ -2095,7 +2094,8 @@ require([
     av.parents.placeAncestors();
     //are any parents on the same cell?
     av.grd.cellConflict(NewCols, NewRows);
-  }
+    av.grd.drawGridSetupFn('av.ptd.popSizeFn');
+  };
 
   av.ptd.muteInputChange = function() {
     var muteNum = Number(av.dom.muteInput.value);
@@ -2114,23 +2114,26 @@ require([
       if (muteNum <= 0) { av.dom.muteError.innerHTML += 'Mutation rate must be greater than zero percent. '; console.log('<0');}
       if (muteNum >= 100) { av.dom.muteError.innerHTML += 'Mutation rate must be 100% or less. '; console.log('>0');}
       if ( isNaN(muteNum) ) {av.dom.muteError.innerHTML += 'Mutation rate must be a valid number. '; console.log('==NaN');}
-    }
-  }
+    };
+  };
   
   av.ptd.gridChange = function(tmpval) {
+    console.log('in av.ptd.gridChange; ');
     var colNum = Number(av.dom.sizeCols.value);
     var rowNum = Number(av.dom.sizeRows.value);
     //console.log('col, row=', colNum, rowNum);
     if (colNum > 0 && colNum <= 100 && rowNum > 0 && rowNum <= 100) {   
       //console.log('valid response');
-      av.ptd.popSizeFn();
+      av.ptd.popSizeFn('gridChange');
       av.ptd.validGridSize = true;
       av.dom.userMsgLabel.innerHTML = '';
+      //redraw grid
+      av.grd.drawGridSetupFn('av.ptd.gridChange');
     }
     else {
       av.ptd.validGridSize = false;
       if (colNum > 0 && colNum <= 100) av.dom.sizeCols.style.color = 'black';
-      else av.dom.sizeCols.style.color = 'red'
+      else av.dom.sizeCols.style.color = 'red';
       if (rowNum > 0 && rowNum <= 100) av.dom.sizeRows.style.color = 'black';
       else av.dom.sizeRows.style.color = 'red';
       av.dom.sizeCells.style.color = 'red';
@@ -2146,13 +2149,15 @@ require([
     }
   };
 
+/*
+  //not in use delete later 
   av.ptd.rowChange = function(tmpval) {
     if (av.debug.popCon) console.log('rows=', av.dom.sizeRows.value);
     var tmpNum = Number(av.dom.sizeRows.value);
     if (av.debug.popCon) console.log('num=', tmpNum);
     if (tmpNum > 0 && tmpNum <= 100) {   //max number of columns
       if (av.debug.popCon) console.log('valid response');
-      av.ptd.popSizeFn();
+      av.ptd.popSizeFn('rowChange');
     }
     else {
       av.dom.sizeRows.style.color = 'red';
@@ -2163,7 +2168,7 @@ require([
       if ( isNaN(tmpNum) ) {av.dom.sizeCells.innerHTML = 'Number of rows must be a valid number'; console.log('==NaN');}
     }
   };
-
+*/
   $(function slidemute() {
     /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
     /* the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, */

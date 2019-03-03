@@ -188,9 +188,12 @@ av.msg.stepUpdate = function () {
 };
 
 //------------------------------------------------------------------------------------------- av.msg.importConfigExpr --
-av.msg.importConfigExpr = function () {
+av.msg.importConfigExpr = function (from) {
   'use strict';
-  if (av.msg.avidaTestRunFlag) av.msg.makeTestDirMsg;
+  console.log(from, 'called av.msg.importConfigExpr');
+  if ('test' == av.msg.setupType) {av.msg.makeTestDirMsg;}  //av.msg.avidaTestRunFlag
+//  if (av.msg.avidaMultiRunFlag) av.msg.makeMultiMsg;
+//  if (av.msg.ResourceRunFlag) av.msg.makeResourceMsg;
   else {
     var fList = ['avida.cfg'
       , 'clade.ssg'
@@ -217,6 +220,8 @@ av.msg.importConfigExpr = function () {
       }
     }
     if (av.debug.msg) console.log('importExpr', request);
+    console.log('importExpr', request);
+    console.log('\n--uiA: importExpr:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importTestDishExpr');
     av.aww.uiWorker.postMessage(request);
     av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importConfigExpr';
   }
@@ -498,7 +503,7 @@ av.msg.doOrgTrace = function () {
       av.msg.sendData();
     }
   }
-}
+};
 
 //request data from Avida to update SelectedOrganismType
 av.msg.doWebOrgDataByCell = function () {
@@ -511,12 +516,12 @@ av.msg.doWebOrgDataByCell = function () {
     'interval': 'always',
     'singleton': true,
     'args': av.grd.selectedNdx
-  }
+  };
   av.aww.uiWorker.postMessage(request);
   av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request);
   av.msg.sendData();
   //console.log('runStopButton',runStopButton.textContent);
-}
+};
 
 //fio.uiWorker function
 av.msg.requestPopStats = function () {
@@ -526,10 +531,10 @@ av.msg.requestPopStats = function () {
     'name': 'webPopulationStats',
     'start': 'now',
     'interval': 1
-  }
+  };
   av.aww.uiWorker.postMessage(request);
   av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request);
-}
+};
 
 av.msg.sync = function (trigger) {
   'use strict';
@@ -538,11 +543,11 @@ av.msg.sync = function (trigger) {
     'type': 'sync',
     'time': tmp,
     'args': trigger
-  }
+  };
   av.aww.uiWorker.postMessage(request);
   var stub = 'type:sync; args:' + trigger + '; time: ' + tmp;  //may not display anyway
   av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + ';  ' + stub;
-}
+};
 
 av.msg.requestGridData = function () {
   'use strict';
@@ -551,12 +556,12 @@ av.msg.requestGridData = function () {
     'name': 'webGridData',
     'start': 'begin',
     'interval': 1
-  }
+  };
   av.aww.uiWorker.postMessage(request);
   av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request);
-}
+};
 
-av.msg.sendData = function () {}
+av.msg.sendData = function () {};
 
 av.msg.sendData_real = function () {
   'use strict';
@@ -564,11 +569,11 @@ av.msg.sendData_real = function () {
   request = {'type': 'sendData'};
   av.aww.uiWorker.postMessage(request);
   av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request);
-}
+};
 
 //sends message to worker to tell Avida to run/pause as a toggle.
 //fio.uiWorker function
-av.msg.doRunPause = function () {}
+av.msg.doRunPause = function () {};
 /*
 av.msg.doRunPause = function () {
   'use strict';
@@ -585,6 +590,7 @@ av.msg.doRunPause = function () {
 //fio.uiWorker function
 av.msg.reset = function () {
   'use strict';
+  av.msg.setupType = 'normal';
   av.msg.uiReqestedReset = true;
   var request = {
     'type': 'addEvent',
@@ -594,10 +600,10 @@ av.msg.reset = function () {
   if (av.debug.userMsg) userMsgLabel.textContent = 'ui-->Avida: reset requested';
   av.aww.uiWorker.postMessage(request);
   av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request);
-}
+};
 
 //Not used when handshaking is used.
-av.msg.pause = function(update) {}
+av.msg.pause = function(update) {};
 /*
 av.msg.pause = function(update) {
   var request = {
@@ -609,8 +615,9 @@ av.msg.pause = function(update) {
 }
 */
 
-av.msg.injectAncestors = function () {
+av.msg.injectAncestors = function (from) {
   'use strict';
+  console.log(from, 'called av.msg.injectAncestors; parents=', av.parents);
   var request;
   var lngth = av.parents.name.length;
   for (var ii = 0; ii < lngth; ii++) {
@@ -624,7 +631,7 @@ av.msg.injectAncestors = function () {
         'genome': av.parents.genome[ii],
         'start_cell_id': av.parents.AvidaNdx[ii],
         'clade_name': av.parents.name[ii]
-      }
+      };
       av.aww.uiWorker.postMessage(request);
       av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request);
       //console.log('log', av.utl.json2stringFn(request));
@@ -632,7 +639,7 @@ av.msg.injectAncestors = function () {
       //console.log('parents.injected', av.parents.injected[ii]);
     }
   }
-}
+};
 
 //---------------------------------
 av.msg.updatePopStats = function (msg) {
@@ -763,7 +770,7 @@ av.ptd.updateLogicFn = function (mUpdate){
     av.pch.logEar[mUpdate] = av.pch.logEarFnd;
     av.pch.logNum[mUpdate] = av.pch.logNumFnd;
     numLog.textContent = av.pch.logNumFnd;
-  }
+  };
 
   if (av.pch.logFit[mUpdate] > av.pch.logMaxFit) av.pch.logMaxFit = av.pch.logFit[mUpdate];
   if (av.pch.logCst[mUpdate] > av.pch.logMaxCst) av.pch.logMaxCst = av.pch.logCst[mUpdate];

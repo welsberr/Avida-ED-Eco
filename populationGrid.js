@@ -68,7 +68,7 @@ av.grd.setMapData = function () {
       av.grd.reScaleRate = 'rescaling';
     }
     else av.grd.reScaleRate = '';
-    console.log('update=',av.grd.msg.update,'; not=',av.grd.msg.not.maxVal,'; nan=',av.grd.msg.rnan.maxVal,'; and=',av.grd.msg.rand.maxVal,'; orn=',av.grd.msg.rorn.maxVal);
+    console.log('update=',av.grd.msg.update,'; not=',av.grd.msg.rnot.maxVal,'; nan=',av.grd.msg.rnan.maxVal,'; and=',av.grd.msg.rand.maxVal,'; orn=',av.grd.msg.rorn.maxVal);
 
     //console.log('dijit.byId("colorMode").value = ', dijit.byId("colorMode").value, '------------');
     switch (dijit.byId("colorMode").value) {
