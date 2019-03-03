@@ -528,22 +528,76 @@
           </div>  <span comment="end of labInfoBlock"></span>
           <div id="testSetupBlock" class="labInfoClass">
             <form id="testSetupForm">
-              Test Dish Environmental Settings<br><br>
-              <br>
-              for now the dish is always 36x36 and only settings in the environment file can be changed.
+              <div  class='odd'>
+                Dish Size:
+                <input id='sizeColTest' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '10';/>
+                &nbsp; x &nbsp;
+                <input id='sizeRowTest' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '10'/>
+                cells&nbsp;<br />
+                <label id='sizeCellTest'>There are 900 cells by default</label>
+              </div>
+              <div class='even'>
+                <span class='lftmargin'>Per Site Mutation Rate:</span>
+                <input id='muteInpuTest' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' ;
+                       data-dojo-props='constraints:{min:0, max:100},
+                     invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
+                       style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value)'> %<br />
+                <!--; or the slider value is &nbsp;</div>
+                <input id='mRate' type='text' readonly style='width: 4em; height:1.8em'></button> -->
+                <label id='muteError'>Error place holder</label>
+              </div>
+              <div class='odd'>Ancestral Organism(s):
+                <div class='ancestorContainer' id='ancestorBoTest'></div>
+              </div>
+              <div class='even'>
+                Place Offspring:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='childParentRadiTest'
+                       intermediateChanges='false'
+                       iconClass='dijitNoIcon' name='child' value='nearParent'>
+                <label>Near their parent</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='childRandomRadiTest'
+                       intermediateChanges='false'
+                       iconClass='dijitNoIcon' name='child' checked value='random'>
+                <label>Anywhere, randomly</label>
+              </div>
+              <div class='odd'>Resources & Reaction(s):
               For more information go to  
               <a href="https://github.com/devosoft/avida/wiki/Environment-file" target="_blank">
                 avida enviornment file
               </a><br><br>
               Please edit the environment configuration file below:<br>
               <textarea id='environConfigEdit' cols='100' rows='35'></textarea><br />
+              </div>
+              <div class='even'>
+                Repeatability Mode:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='experimentRadiTest'
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='repeat'
+                       value='experimental'>
+                Experimental&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='demoRadiTest' checked
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='repeat' value='demo'>
+                Demo
+              </div>
+              <div class='odd'>
+                Pause Run:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='manualUpdateRadiTest'
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' checked
+                       value='manual' />
+                Manually:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='autoUpdateRadiTest'
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' value='setupdate' />
+                At update:
+                <input type='text' data-dojo-type='dijit/form/NumberSpinner' id='autoUpdateSpinneTest'
+                       intermediateChanges='false'
+                       trim='false' uppercase='false' lowercase='false' propercase='false' invalidMessage='$_unset_$'
+                       value='1000' data-dojo-props='smallDelta:100, constraints:{places:0}' style='width:80px'>
+              </div>              
             </form>
           </div>
           
           <div id="setupBlock" class="labInfoClass">
             <form id='setupForm'>
-              <label>Environmental Settings</label>
-
+              Environmental Settings
               <div  class='odd'>
                 Dish Size:
                 <input id='sizeCols' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '10';/>

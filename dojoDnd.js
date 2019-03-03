@@ -771,7 +771,7 @@ av.dnd.landTrashCan = function (source, nodes, target) {
 
 
 //------------------------------------------------------------------------------------------ av.msg.TestDishSetupPrep --
-av.msg.TestDishSetupPrep = function(fzSection, target, type) {
+av.dnd.TestDishSetupPrep = function(fzSection, target, type) {
   //console.log('fzrObject=', av.dnd[fzSection].getSelectedNodes()[0]);
   //need to find selected item. looking for 'dojoDndItem dojoDndItemAnchor' might help
   //console.log('fzOrgan selected keys', Object.keys(av.dnd.fzOrgan.selection)[0]);
