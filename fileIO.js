@@ -103,6 +103,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
   };
   oReq.send();
   av.fzr.saveUpdateState('default');
+  av.fzr.wsNameMsg = 'Default';
 };
 
   //------------------------------ call to read in a user selected Workspace -------------------------------------------
@@ -117,7 +118,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
       inputWSfile = document.getElementById('putWS');
       if (av.debug.fio) console.log('file to read=', inputWSfile);
       zipFileToLoad = inputWSfile.files[0];
-      if (av.debug.fio) console.log('zipFileToLoad= ', zipFileToLoad);
+      if (av.debug.fio) console.log('filename=',zipFileToLoad.name ,'; zipFileToLoad= ', zipFileToLoad);
       fileReader = new FileReader();
     }
     catch(err) {
@@ -146,6 +147,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
           //if (av.debug.fio) console.log('nameOfFileContainedInZipFile=', nameOfFileContainedInZipFile, '; fileContainedInZipFile.asText()=', fileContainedInZipFile.asText());
           //if (av.debug.fio) console.log('nameOfFileContainedInZipFile=', nameOfFileContainedInZipFile);
           if (null === av.fio.zipPathRoot) {
+            console.log('av.fio.zipPathRoot=',av.fio.zipPathRoot);
             //if (0 < nameOfFileContainedInZipFile.indexOf('avidaedworkspace') && 0 > nameOfFileContainedInZipFile.indexOf('MACOSX')) {
             if (0 > nameOfFileContainedInZipFile.indexOf('MACOSX')) {
               av.fio.zipPathRoot = wsb('/', nameOfFileContainedInZipFile);
@@ -185,6 +187,8 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
           av.fzr.mDish[key].wNum++;
           if (av.debug.fio) console.log('key=', key, '; cNum=', av.fzr.mDish[key].cNum, '; wNum=', av.fzr.mDish[key].cNum, '; dir=', av.fzr.mDish[key].dir);
         }
+        console.log('name=',zipFileToLoad.name);
+        wsNameMsg.textContent = zipFileToLoad.name;
         av.fzr.saveUpdateState('yes');
         if (av.debug.fio) console.log('av.fzr', av.fzr);
 
@@ -399,23 +403,23 @@ av.fzr.saveUpdateState = function (newSaveState) {
   }
   switch (av.fzr.saveState) {
     case 'yes':
-      wsSavedMsg.textContent = 'Workspace: is saved ';
+      wsSavedMsg.textContent = ' is saved ';
       wsSavedMsg.style.color = 'green';
       break;
     case 'maybe':
-      wsSavedMsg.textContent = 'Workspace: might be saved';
+      wsSavedMsg.textContent = ' might be saved';
       wsSavedMsg.style.color = 'orangered';
       break;
     case 'no':
-      wsSavedMsg.textContent = 'Workspace: is not saved';
+      wsSavedMsg.textContent = ' is not saved';
       wsSavedMsg.style.color = 'red';
       break;
     case 'default':
-      wsSavedMsg.textContent = 'Workspace: default  ';
+      wsSavedMsg.textContent = ' not changed ';
       wsSavedMsg.style.color = 'blue';
       break;
     default:
-      wsSavedMsg.textContent = 'Workspace: confused ';
+      wsSavedMsg.textContent = ' is confused ';
       wsSavedMsg.style.color = 'deeppink';
       break;
   }

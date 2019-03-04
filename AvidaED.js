@@ -194,6 +194,8 @@ require([
     //main area
     av.dom.userMsgLabel = document.getElementById('userMsgLabel');
     av.dom.wsSavedMsg = document.getElementById('wsSavedMsg');
+    av.dom.wsNameMsg = document.getElementById('wsNameMsg');
+   
 
     av.dom.allAvida = document.getElementById('allAvida');
     av.dom.navColId = document.getElementById('navColId');
@@ -385,11 +387,11 @@ require([
   av.dnd.organIcon = new dndTarget('organIcon', {accept: ['g'], selfAccept: false});
   av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
   av.dnd.gridCanvas = new dndTarget('gridCanvas', {accept: ['g']});
-  av.dnd.trashCan = new dndSource('trashCan', {accept: ['c', 'g', 'w'], singular: true});
+  av.dnd.trashCan = new dndSource('trashCan', {accept: ['c', 'g', 't', 'w'], singular: true});
   if (av.debug.root) console.log('after trashCan');
 
   av.dnd.activeConfig = new dndSource('activeConfig', {
-    accept: ['b', 'c', 'w'],  //b-both; c-configuration; w-world (populated dish
+    accept: ['b', 'c', 't', 'w'],  //b-both; c-configuration; w-world (populated dish; t-test
     singular: true,
     copyOnly: true,
     selfAccept: false
@@ -1378,7 +1380,7 @@ require([
     //av.dnd.FzAddExperimentFn('fzRdish', 'activeConfig', 'r');
     //av.msg.runResourceDish('fzRdish', 'activeConfig', 'r');
   });
-mnFzAddTeditEx
+//mnFzAddTeditEx   ???????????? not sure why this is here??? delete later? 
 
 //Buttons on drop down menu to add Test-Dish to an Experiment
   dijit.byId('mnFzAddTeditEx').on('Click', function () {
@@ -2097,23 +2099,23 @@ mnFzAddTeditEx
     av.grd.drawGridSetupFn('av.ptd.popSizeFn');
   };
 
-  av.ptd.muteInputChange = function() {
-    var muteNum = Number(av.dom.muteInput.value);
+  av.ptd.muteInputChange = function(value, muteInputName, muteErrorName) {
+    var muteNum = Number(value);
     if (av.debug.uil) console.log('muteNum=', muteNum);
     if (muteNum >= 0 && muteNum <= 100) {
       av.ptd.validMuteInuput=true;
-      av.dom.muteError.style.color = 'black';
-      av.dom.muteError.innerHTML = '';
-      av.dom.userMsgLabel.innerHTML = '';
+      document.getElementById(muteErrorName).style.color = 'black';
+      document.getElementById(muteErrorName).innerHTML = '';
+      document.getElementById(muteErrorName).innerHTML = '';
     }
     else {
       av.ptd.validMuteInuput=false;
-      av.dom.muteError.style.color = 'red';
-      av.dom.muteError.innerHTML = '';
+      document.getElementById(muteErrorName).style.color = 'red';
+      document.getElementById(muteErrorName).innerHTML = '';
       av.dom.userMsgLabel.innerHTML = '';
-      if (muteNum <= 0) { av.dom.muteError.innerHTML += 'Mutation rate must be greater than zero percent. '; console.log('<0');}
-      if (muteNum >= 100) { av.dom.muteError.innerHTML += 'Mutation rate must be 100% or less. '; console.log('>0');}
-      if ( isNaN(muteNum) ) {av.dom.muteError.innerHTML += 'Mutation rate must be a valid number. '; console.log('==NaN');}
+      if (muteNum <= 0) { document.getElementById(muteErrorName).innerHTML += 'Mutation rate must be greater than zero percent. '; console.log('<0');}
+      if (muteNum >= 100) { document.getElementById(muteErrorName).innerHTML += 'Mutation rate must be 100% or less. '; console.log('>0');}
+      if ( isNaN(muteNum) ) {document.getElementById(muteErrorName).innerHTML += 'Mutation rate must be a valid number. '; console.log('==NaN');}
     };
   };
   
@@ -2337,7 +2339,7 @@ mnFzAddTeditEx
     av.post.addUser('Button: OrgSetting');
     av.ind.settingsChanged = false;
     OrganSetupDialog.show();
-  }
+  };
 
   //If settings were changed then this will request new data when the settings dialog box is closed.
   OrganSetupDialog.connect(OrganSetupDialog, 'hide', function (e) {

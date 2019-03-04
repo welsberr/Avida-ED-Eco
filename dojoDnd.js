@@ -165,10 +165,11 @@ av.dnd.lndActiveConfig = function (move) {
     av.dnd.activeConfig.insertNodes(false, [item]);
   });
   var domid = Object.keys(av.dnd.activeConfig.map)[0];
-  move.target.map[domid].type[0] = 'b';
+  console.log('ldn.ActiveConfig: type=', move.target.map[domid].type[0] );
+  // The type assignment and .sync were done here in the past. I'm going to try moving this to just before clearing the ancestor box. 
+    //move.target.map[domid].type[0] = 'b';
   av.dnd.activeConfig.sync();
   console.log('data', move.target.map[domid].data, move.target.map[domid]);
-  console.log('type', move.target.map[domid].type[0]);
 
   av.fzr.actConfig.actDomid = domid;
   av.fzr.actConfig.name = document.getElementById(domid).textContent;
@@ -179,16 +180,24 @@ av.dnd.lndActiveConfig = function (move) {
   if (av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg']) {
     av.fzr.actConfig.file['instset.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg'];
   }
+  
+  //The types are reassigned to indicate that they might be the populated form of the dishes.
+  if ('c' == move.target.map[domid].type[0] || 'w == move.target.map[domid].type[0]') {
+    move.target.map[domid].type[0]= 'b';
+    av.frd.updateSetup();                  //call the avida-ED 3.0 style setup page
+  }
+  else {
+    move.target.map[domid].type[0] = 'v';   //type is test or populated test
+    av.frd.updateTestSetup('av.dnd.lndActiveConfig');               //call the test version of Setup
+    av.msg.setupType = 'test';
+  }
 
   //Clear ancestorBox
   av.dnd.ancestorBox.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
   av.dnd.ancestorBox.sync();   //should be done after insertion or deletion
 
   av.parents.clearParentsFn();
-  //console.log('before av.frd.updateSetup');
-  if ('test' == av.msg.setupType) {av.frd.updateTestSetup();}
-  else {av.frd.updateSetup();}  //fileIO
-  //console.log('after av.frd.updateSetup');
+
   console.log('move.source.node.id=',move.source.node.id);
   if ('fzConfig' === move.source.node.id || ('fzTdish' === move.source.node.id)) {
     av.fzr.actConfig.type = move.type;

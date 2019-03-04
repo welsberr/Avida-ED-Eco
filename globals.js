@@ -133,6 +133,7 @@ av.mouse.notDndPopList = ['colorMode'
   , 'mnHelp'
   , 'mnDebug'
   , 'wsSavedMsg'
+  , 'wsNameMsg'
   //Buttons
   , 'mainButtons'
   , 'mainButtonTable'

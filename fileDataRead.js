@@ -240,12 +240,12 @@ av.frd.updateSetup = function () {
 //----------------------------------------------------------------------------------------- end of av.frd.updateSetup --
 
 //------------------------------------------- update config data from file data stored in freezer for test setup page --
-av.frd.updateTestSetup = function () {
+av.frd.updateTestSetup = function (from) {
   'use strict';
   var dir = av.fzr.actConfig.dir;
+  console.log(from, ' called ', av.frd.updateTestSetup, '; dir=', dir);
   var path = dir + '/avida.cfg';
   var doctext = av.fzr.file[path];
-  //console.log('actConfig: path=', path);
   av.frd.avidaTestform(doctext);
   doctext = av.fzr.file[dir + '/environment.cfg'];
   av.frd.environmentTestform(doctext);
@@ -430,14 +430,15 @@ av.frd.avidaCFG2form = function (fileStr){
 av.frd.avidaTestform = function (fileStr){
   'use strict';
   var dict = av.frd.avidaCFGparse(fileStr);
-  console.log(fileStr, ' called aav.frd.avidaTestform; dict=', dict);
+  console.log('av.frd.avidaTestform; dict=', dict);
   av.dom.tsizeCols.value = dict.WORLD_X;
   av.grd.gridWasCols = dict.WORLD_X;
   //dijit.byId('sizeCols').set('value', dict.WORLD_X);
   av.dom.tsizeRows.value = dict.WORLD_Y;
   av.grd.gridWasRows = dict.WORLD_Y;
   //dijit.byId('sizeRows').set('value', dict.WORLD_Y);
-  document.getElementById('tmuteInput').value = dict.COPY_MUT_PROB*100;
+  
+  document.getElementById('muteInpuTest').value = dict.COPY_MUT_PROB*100;
   //var event = new Event('change');
   var event = new window.CustomEvent('change');
   document.getElementById('tmuteInput').dispatchEvent(event);

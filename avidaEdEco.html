@@ -170,7 +170,8 @@
     
 		<div id="headerMsg">
       <div id='msgHolder'>
-        <label id='wsSavedMsg'>Workspace: default</label> | &nbsp;&nbsp;&nbsp;
+        Workspace: <label id='wsNameMsg'>Default</label> &nbsp;&nbsp;&nbsp;|
+        <label id='wsSavedMsg'>saved</label> | &nbsp;&nbsp;&nbsp;
         <span style='text-align: right'><label id='userMsgLabel' style='color: red; text-align: right'> </label></span>
       </div>
 		</div>
@@ -541,10 +542,10 @@
                 <input id='muteInpuTest' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' ;
                        data-dojo-props='constraints:{min:0, max:100},
                      invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                       style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value)'> %<br />
+                       style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value, "muteInpuTest","muteErroTest" )'> %<br />
                 <!--; or the slider value is &nbsp;</div>
                 <input id='mRate' type='text' readonly style='width: 4em; height:1.8em'></button> -->
-                <label id='muteError'>Error place holder</label>
+                <label id='muteErroTest'>Error place holder</label>
               </div>
               <div class='odd'>Ancestral Organism(s):
                 <div class='ancestorContainer' id='ancestorBoTest'></div>
