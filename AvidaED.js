@@ -2079,12 +2079,12 @@ require([
   }
 
   av.ptd.popSizeFn = function(from) {
-    av.grd.Cols = Number(av.dom.sizeCols.value);
-    av.grd.Rows = Number(av.dom.sizeRows.value);
-    console.log(from, 'called av.ptd.popSizeFn: new col, row', av.grd.Cols, av.grd.Rows);
-    //console.log('av.grd.Cols, Rows', av.grd.Cols, av.grd.Rows);
-    av.dom.sizeCells.innerHTML = 'for a total of ' + av.grd.Cols * av.grd.Rows + ' cells';
-    //av.dom.sizeCells.text = 'for a total of ' + av.grd.Cols * av.grd.Rows + ' cells';
+    av.grd.setupCols = Number(av.dom.sizeCols.value);
+    av.grd.setupRows = Number(av.dom.sizeRows.value);
+    console.log(from, 'called av.ptd.popSizeFn: new col, row', av.grd.setupCols, av.grd.setupRows);
+    //console.log('av.grd.setupCols, Rows', av.grd.setupCols, av.grd.setupRows);
+    av.dom.sizeCells.innerHTML = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
+    //av.dom.sizeCells.text = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
     av.dom.sizeCols.style.color = 'black';
     av.dom.sizeRows.style.color = 'black';
     av.dom.sizeCells.style.color = 'black';
@@ -2093,9 +2093,9 @@ require([
       var lngth = av.parents.handNdx.length;
       for (var ii = 0; ii < lngth; ii++) {
         console.log('old cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
-        av.parents.col[av.parents.handNdx[ii]] = Math.floor(av.grd.Cols * av.parents.col[av.parents.handNdx[ii]] / av.grd.gridWasCols);  //was trunc
-        av.parents.row[av.parents.handNdx[ii]] = Math.floor(av.grd.Rows * av.parents.row[av.parents.handNdx[ii]] / av.grd.gridWasRows);  //was trunc
-        av.parents.AvidaNdx[av.parents.handNdx[ii]] = av.parents.col[av.parents.handNdx[ii]] + av.grd.Cols * av.parents.row[av.parents.handNdx[ii]];
+        av.parents.col[av.parents.handNdx[ii]] = Math.floor(av.grd.setupCols * av.parents.col[av.parents.handNdx[ii]] / av.grd.gridWasCols);  //was trunc
+        av.parents.row[av.parents.handNdx[ii]] = Math.floor(av.grd.setupRows * av.parents.row[av.parents.handNdx[ii]] / av.grd.gridWasRows);  //was trunc
+        av.parents.AvidaNdx[av.parents.handNdx[ii]] = av.parents.col[av.parents.handNdx[ii]] + av.grd.setupCols * av.parents.row[av.parents.handNdx[ii]];
         console.log('New cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
       }
     };
@@ -2105,17 +2105,17 @@ require([
     av.grd.zoomSlide.set('value', 1);
     av.parents.placeAncestors();
     //are any parents on the same cell?
-    av.grd.cellConflict(av.grd.Cols, av.grd.Rows);
+    av.grd.cellConflict(av.grd.setupCols, av.grd.setupRows);
     av.grd.drawGridSetupFn('av.ptd.popSizeFn');
   };
 
   av.ptd.popSizeFnTest = function(from) {
-    av.grd.Cols = Number(av.dom.sizeColTest.value);
-    av.grd.Rows = Number(av.dom.sizeRowTest.value);
-    console.log(from, 'called av.ptd.popSizeFnTest: new col, row', av.grd.Cols, av.grd.Rows);
-    //console.log('av.grd.Cols, Rows', av.grd.Cols, av.grd.Rows);
-    av.dom.sizeCellTest.innerHTML = 'for a total of ' + av.grd.Cols * av.grd.Rows + ' cells';
-    //av.dom.sizeCells.text = 'for a total of ' + av.grd.Cols * av.grd.Rows + ' cells';
+    av.grd.setupCols = Number(av.dom.sizeColTest.value);
+    av.grd.setupRows = Number(av.dom.sizeRowTest.value);
+    console.log(from, 'called av.ptd.popSizeFnTest: new col, row', av.grd.setupCols, av.grd.setupRows);
+    //console.log('av.grd.setupCols, Rows', av.grd.setupCols, av.grd.setupRows);
+    av.dom.sizeCellTest.innerHTML = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
+    //av.dom.sizeCells.text = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
     av.dom.sizeColTest.style.color = 'black';
     av.dom.sizeRowTest.style.color = 'black';
     av.dom.sizeCellTest.style.color = 'black';
@@ -2124,9 +2124,9 @@ require([
       var lngth = av.parents.handNdx.length;
       for (var ii = 0; ii < lngth; ii++) {
         console.log('old cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
-        av.parents.col[av.parents.handNdx[ii]] = Math.floor(av.grd.Cols * av.parents.col[av.parents.handNdx[ii]] / av.grd.gridWasCols);  //was trunc
-        av.parents.row[av.parents.handNdx[ii]] = Math.floor(av.grd.Rows * av.parents.row[av.parents.handNdx[ii]] / av.grd.gridWasRows);  //was trunc
-        av.parents.AvidaNdx[av.parents.handNdx[ii]] = av.parents.col[av.parents.handNdx[ii]] + av.grd.Cols * av.parents.row[av.parents.handNdx[ii]];
+        av.parents.col[av.parents.handNdx[ii]] = Math.floor(av.grd.setupCols * av.parents.col[av.parents.handNdx[ii]] / av.grd.gridWasCols);  //was trunc
+        av.parents.row[av.parents.handNdx[ii]] = Math.floor(av.grd.setupRows * av.parents.row[av.parents.handNdx[ii]] / av.grd.gridWasRows);  //was trunc
+        av.parents.AvidaNdx[av.parents.handNdx[ii]] = av.parents.col[av.parents.handNdx[ii]] + av.grd.setupCols * av.parents.row[av.parents.handNdx[ii]];
         console.log('New cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
       }
     };
@@ -2136,7 +2136,7 @@ require([
     av.grd.zoomSlide.set('value', 1);
     av.parents.placeAncestors();
     //are any parents on the same cell?
-    av.grd.cellConflict(av.grd.Cols, av.grd.Rows);
+    av.grd.cellConflict(av.grd.setupCols, av.grd.setupRows);
     av.grd.drawGridSetupFn('av.ptd.popSizeFn');
   };
 

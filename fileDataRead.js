@@ -410,12 +410,12 @@ av.frd.avidaCFG2form = function (fileStr){
   console.log('av.frd.avidaCFG2form; dict=', dict);
   av.dom.sizeCols.value = dict.WORLD_X;
   av.grd.gridWasCols = Number(dict.WORLD_X);  
-  av.grd.Cols = Number(dict.WORLD_X);  
+  av.grd.setupCols = Number(dict.WORLD_X);  
   //dijit.byId('sizeCols').set('value', dict.WORLD_X);
   av.dom.sizeRows.value = dict.WORLD_Y;
   //dijit.byId('sizeRows').set('value', dict.WORLD_Y);
   av.grd.gridWasRows = Number(dict.WORLD_Y);
-  av.grd.Rows = Number(dict.WORLD_Y);
+  av.grd.setupRows = Number(dict.WORLD_Y);
   document.getElementById('muteInput').value = dict.COPY_MUT_PROB*100;
   //var event = new Event('change');
   var event = new window.CustomEvent('change');
@@ -446,11 +446,11 @@ av.frd.avidaTestform = function (fileStr){
   document.getElementById('sizeColTest').value = dict.WORLD_X;
   av.grd.gridWasCols = dict.WORLD_X;
   av.grd.gridWasCols = Number(dict.WORLD_X);  
-  av.grd.Cols = Number(dict.WORLD_X);  
+  av.grd.setupCols = Number(dict.WORLD_X);  
   document.getElementById('sizeRowTest').value = dict.WORLD_Y;
   av.grd.gridWasRows = dict.WORLD_Y;
    av.grd.gridWasRows = Number(dict.WORLD_Y);
-  av.grd.Rows = Number(dict.WORLD_Y);
+  av.grd.setupRows = Number(dict.WORLD_Y);
  
   document.getElementById('muteInpuTest').value = dict.COPY_MUT_PROB*100;
   //var event = new Event('change');

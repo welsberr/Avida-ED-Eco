@@ -2,8 +2,8 @@
 
 //---------- set Ancestors ------------------/
 av.parents.placeAncestors = function () {
-  var cols = av.grd.Cols;
-  var rows = av.grd.Rows;
+  var cols = av.grd.setupCols;
+  var rows = av.grd.setupRows;
   var lngth;
   var cc, rr, ii;
   if (undefined != av.parents.autoNdx) {
