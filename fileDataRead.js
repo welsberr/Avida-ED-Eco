@@ -1,5 +1,7 @@
 //Read file data
 var av = av || {};  //incase av already exists
+var dijit = dijit || {};  //incase av already exists
+
 
 av.fio.addFzItem = function(dndSection, name, type, fileNum) {
   'use strict';
@@ -225,11 +227,12 @@ av.fio.processItemFiles = function (){
 //======================================================================================================================
 
 //------------------------------------------ update config data from file data stored in freezer = av.frd.updateSetup --
-av.frd.updateSetup = function () {
+av.frd.updateSetup = function(from) {
   'use strict';
   var dir = av.fzr.actConfig.dir;
   var path = dir + '/avida.cfg';
   var doctext = av.fzr.file[path];
+  console.log(from, 'called av.frd.updateSetup; dir=', av.fzr.actConfig.dir);
   //console.log('actConfig: path=', path);
   av.frd.avidaCFG2form(doctext);
   doctext = av.fzr.file[dir + '/environment.cfg'];
@@ -247,10 +250,15 @@ av.frd.updateTestSetup = function (from) {
   var path = dir + '/avida.cfg';
   var doctext = av.fzr.file[path];
   av.frd.avidaTestform(doctext);
+  //av.frd.environment2struct();      //will be called when we get a structure
+  //av.frd.environmentTestform(doctext);     //for now editing the whole file
+  console.log('av.dom.environConfigEdit=',av.dom.environConfigEdit);
+  if (av.fzr.file[av.dnd.move.dir+'/'+ 'environment.cfg'] ) {
+    av.dom.environConfigEdit.value = av.fzr.file[av.dnd.move.dir+'/'+'environment.cfg'];
+  };
   doctext = av.fzr.file[dir + '/environment.cfg'];
-  av.frd.environmentTestform(doctext);
   
-  //not sure about this one; may need a stest version of this one too
+  //not sure about this one; may need a test version of this one too
   doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
   av.frd.pauseRunAtTXT2form(doctext);
 };
@@ -261,6 +269,7 @@ av.frd.environmentCFGlineParse = function(instr){
   'use strict';
   var num = 0;
   var flag = true;
+  //console.log('instr', instr);
   var cfgary = av.utl.flexsplit(instr).split(',');      //replaces white space with a comma, then splits on comma
   if (0 < cfgary[3].length) {num = wsb(':',wsa('=',cfgary[3]));}
   if (0 == num) {flag = false;} //use == in this case as they are of different type
@@ -293,7 +302,7 @@ av.frd.environmentCFGparse = function (filestr) {
 av.frd.environmentCFG2form = function (fileStr) {
   'use strict';
   var dict = av.frd.environmentCFGparse(fileStr);
-  console.log(fileStr,' called av.frd.environmentCFG2form; dict=',dict);
+  console.log('av.frd.environmentCFG2form; dict=',dict);
   dijit.byId('notose').set('checked', dict.NOT);
   dijit.byId('nanose').set('checked', dict.NAND);
   dijit.byId('andose').set('checked', dict.AND);
@@ -312,6 +321,7 @@ av.frd.environmentLineParse = function(instr){
   'use strict';
   var num = 0;
   var flag = true;
+  console.log('instr', instr);
   var cfgary = av.utl.flexsplit(instr).split(',');      //replaces white space with a comma, then splits on comma
   if (0 < cfgary[3].length) {num = wsb(':',wsa('=',cfgary[3]));}
   if (0 == num) {flag = false;} //use == in this case as they are of different type
@@ -397,13 +407,15 @@ av.frd.avidaCFGparse = function (filestr) {
 av.frd.avidaCFG2form = function (fileStr){
   'use strict';
   var dict = av.frd.avidaCFGparse(fileStr);
-  console.log(fileStr, ' called av.frd.avidaCFG2form; dict=', dict);
+  console.log('av.frd.avidaCFG2form; dict=', dict);
   av.dom.sizeCols.value = dict.WORLD_X;
-  av.grd.gridWasCols = dict.WORLD_X;  
+  av.grd.gridWasCols = Number(dict.WORLD_X);  
+  av.grd.Cols = Number(dict.WORLD_X);  
   //dijit.byId('sizeCols').set('value', dict.WORLD_X);
   av.dom.sizeRows.value = dict.WORLD_Y;
   //dijit.byId('sizeRows').set('value', dict.WORLD_Y);
-  av.grd.gridWasRows = dict.WORLD_Y;
+  av.grd.gridWasRows = Number(dict.WORLD_Y);
+  av.grd.Rows = Number(dict.WORLD_Y);
   document.getElementById('muteInput').value = dict.COPY_MUT_PROB*100;
   //var event = new Event('change');
   var event = new window.CustomEvent('change');
@@ -431,33 +443,35 @@ av.frd.avidaTestform = function (fileStr){
   'use strict';
   var dict = av.frd.avidaCFGparse(fileStr);
   console.log('av.frd.avidaTestform; dict=', dict);
-  av.dom.tsizeCols.value = dict.WORLD_X;
+  document.getElementById('sizeColTest').value = dict.WORLD_X;
   av.grd.gridWasCols = dict.WORLD_X;
-  //dijit.byId('sizeCols').set('value', dict.WORLD_X);
-  av.dom.tsizeRows.value = dict.WORLD_Y;
+  av.grd.gridWasCols = Number(dict.WORLD_X);  
+  av.grd.Cols = Number(dict.WORLD_X);  
+  document.getElementById('sizeRowTest').value = dict.WORLD_Y;
   av.grd.gridWasRows = dict.WORLD_Y;
-  //dijit.byId('sizeRows').set('value', dict.WORLD_Y);
-  
+   av.grd.gridWasRows = Number(dict.WORLD_Y);
+  av.grd.Rows = Number(dict.WORLD_Y);
+ 
   document.getElementById('muteInpuTest').value = dict.COPY_MUT_PROB*100;
   //var event = new Event('change');
   var event = new window.CustomEvent('change');
-  document.getElementById('tmuteInput').dispatchEvent(event);
+  document.getElementById('muteInpuTest').dispatchEvent(event);
   if (0==dict.BIRTH_METHOD) {
-    dijit.byId('tchildParentRadio').set('checked', true);
-    dijit.byId('tchildRandomRadio').set('checked', false);
+    dijit.byId('childParentRadiTest').set('checked', true);
+    dijit.byId('childRandomRadiTest').set('checked', false);
   }
   else {
-    dijit.byId('tchildParentRadio').set('checked', false);
-    dijit.byId('tchildRandomRadio').set('checked', true);
+    dijit.byId('childParentRadiTest').set('checked', false);
+    dijit.byId('childRandomRadiTest').set('checked', true);
   }
 
   if (-1 == dict.RANDOM_SEED) {
-    dijit.byId('texperimentRadio').set('checked', true);
-    dijit.byId('tdemoRadio').set('checked', false);
+    dijit.byId('experimentRadiTest').set('checked', true);
+    dijit.byId('demoRadiTest').set('checked', false);
   }
   else {
-    dijit.byId('texperimentRadio').set('checked', false);
-    dijit.byId('tdemoRadio').set('checked', true);
+    dijit.byId('experimentRadiTest').set('checked', false);
+    dijit.byId('demoRadiTest').set('checked', true);
   }
 };
 //------------------------------------------------------------------------------------------ end processing avida.cfg --

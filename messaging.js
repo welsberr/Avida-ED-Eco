@@ -27,7 +27,7 @@ av.msg.readMsg = function (ee) {
         }
         break;
       case 'running':
-        av.ptd.makeRunState();
+        av.ptd.makeRunState('av.msg.readMsg msg.type=running');
         av.debug.log += '\n--Aui: \n' + av.utl.json2stringFn(msg);
         break;
       case 'runPause':
@@ -170,7 +170,7 @@ av.msg.check4anotherUpdate = function () {
     }
     else {av.msg.stepUpdate();}
   }
-}
+};
 
 av.msg.stepUpdate = function () {
   'use strict';
@@ -191,7 +191,8 @@ av.msg.stepUpdate = function () {
 av.msg.importConfigExpr = function (from) {
   'use strict';
   console.log(from, 'called av.msg.importConfigExpr');
-  if ('test' == av.msg.setupType) {av.msg.makeTestDirMsg;}  //av.msg.avidaTestRunFlag
+  if (false) console.log('this would not be executed');
+  //if ('test' == av.msg.setupType) {av.msg.makeTestDirMsg();}  //av.msg.avidaTestRunFlag
 //  if (av.msg.avidaMultiRunFlag) av.msg.makeMultiMsg;
 //  if (av.msg.ResourceRunFlag) av.msg.makeResourceMsg;
   else {
@@ -296,7 +297,7 @@ av.msg.makeResReqMsg = function (dir) {
   if (av.debug.msg) console.log('av.msg.makeResReqMsg', request);
 
   av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importPopExpr';
-}
+};
 //------------------------------------------------------------------------------------------ end av.msg.makeResReqMsg --
 
 //---------------------------------------------------------------------------------------- av.msg.importMultiDishExpr --
@@ -470,10 +471,10 @@ av.msg.exportExpr = function (popName) {
     'name': 'exportExpr',
     'popName': popName,
     'triggerType': 'immediate'
-  }
+  };
   av.aww.uiWorker.postMessage(request);
   av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request);
-}
+};
 
 //fio.uiWorker function
 av.msg.doOrgTrace = function () {

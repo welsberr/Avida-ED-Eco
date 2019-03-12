@@ -384,8 +384,8 @@ av.grd.findGridSize = function (){
   av.grd.boxX = av.grd.zoom * av.grd.spaceX;
   av.grd.boxY = av.grd.zoom * av.grd.spaceY;
   //get rows and cols based on user input 
-  av.grd.cols = av.dom.sizeCols.value;
-  av.grd.rows = av.dom.sizeRows.value;
+  av.grd.cols = av.grd.setupCols
+  av.grd.rows = av.grd.setupRows;
   //max size of box based on width or height based on ratio of cols:rows and width:height
   if (av.grd.spaceX / av.grd.spaceY > av.grd.cols / av.grd.rows) {
     //set based  on height as that is the limiting factor.

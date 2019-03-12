@@ -155,7 +155,6 @@ av.dnd.lndActiveConfig = function (move) {
   var klen = 0;
   var kk = 0;
   var str = '';
-  var dir = '';
   //there is always a node here, so it must always be cleared when adding a new one.
   av.dnd.activeConfig.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
   av.dnd.activeConfig.sync();   //should be done after insertion or deletion
@@ -182,9 +181,9 @@ av.dnd.lndActiveConfig = function (move) {
   }
   
   //The types are reassigned to indicate that they might be the populated form of the dishes.
-  if ('c' == move.target.map[domid].type[0] || 'w == move.target.map[domid].type[0]') {
+  if ('c' == move.target.map[domid].type[0] || 'w' == move.target.map[domid].type[0]) {
     move.target.map[domid].type[0]= 'b';
-    av.frd.updateSetup();                  //call the avida-ED 3.0 style setup page
+    av.frd.updateSetup('av.dnd.lndActiveConfig');                  //call the avida-ED 3.0 style setup page
   }
   else {
     move.target.map[domid].type[0] = 'v';   //type is test or populated test
@@ -202,6 +201,8 @@ av.dnd.lndActiveConfig = function (move) {
   if ('fzConfig' === move.source.node.id || ('fzTdish' === move.source.node.id)) {
     av.fzr.actConfig.type = move.type;
     //av.fzr.actConfig.type = 'c';
+    
+    //clear any old data files;
     av.fzr.actConfig.file['events.cfg'] = ' ';
     
     //delete anyfiles in activeConfig part of freezer
@@ -218,6 +219,14 @@ av.dnd.lndActiveConfig = function (move) {
       str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt'];
       av.fio.handAncestorLoad(str);
     };
+    
+    //load files from freezer
+    av.fzr.actConfig.file['avida.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/avida.cfg'];
+    av.fzr.actConfig.file['environment.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/environment.cfg'];
+    av.fzr.actConfig.file['events.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/events.cfg'];
+    av.fzr.actConfig.file['update'] = av.fzr.file[av.fzr.actConfig.dir + '/update'];
+
+    
     av.grd.drawGridSetupFn('av.dnd.lndActiveConfig'); //draw grid
   }
   else if (('fzWorld' === move.source.node.id) ) {
@@ -815,7 +824,6 @@ av.dnd.TestDishSetupPrep = function(fzSection, target, type) {
     console.log('after added av.dnd.lndActiveConfig, added=', added);
     
     console.log('av.dom.environConfigEdit=',av.dom.environConfigEdit);
-    //av.dom.environConfigEdit.value = "some text";
     if (av.fzr.file[av.dnd.move.dir+'/'+ 'environment.cfg'] ) {
       av.dom.environConfigEdit.value = av.fzr.file[av.dnd.move.dir+'/'+'environment.cfg'];
     };

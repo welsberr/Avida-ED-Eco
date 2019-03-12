@@ -3,6 +3,8 @@
 // *********************************************************************************************************************
 // ptd = PeTri Dish
 var av = av || {};  //incase av already exists
+var dojo = dojo || {};  //incase av already exists
+var dijit = dijit || {};  //incase av already exists
 
 av.ptd.makePauseState = function () {
   dijit.byId('mnCnPause').attr('disabled', true);
@@ -13,7 +15,8 @@ av.ptd.makePauseState = function () {
   av.dom.oneUpdateButton.disabled = false;
 };
 
-av.ptd.makeRunState = function () {
+av.ptd.makeRunState = function (from) {
+  console.log(from, ' called av.ptd.makeRunState');
   av.dom.runStopButton.textContent = 'Pause';
   dijit.byId('mnCnPause').attr('disabled', false);
   dijit.byId('mnCnRun').attr('disabled', true);
@@ -60,7 +63,6 @@ av.ptd.popTdishStateUi = function (from) {
   av.dnd.fzWorld.accept['b'] = 1;
   av.dom.sizeCols.disabled = true;
   av.dom.sizeRows.disabled = true;
-  //av.dom.sizeRows.disabled = true;
   //av.dom.experimentRadio.disabled = true;
   //av.dom.demoRadio.disabled = true;
 
@@ -133,7 +135,6 @@ av.ptd.popNewExState = function () {
   $('#muteSlide').slider({disabled: false});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
   av.dom.sizeCols.disabled = false;
   av.dom.sizeRows.disabled = false;
-  //av.dom.sizeRows.disabled = false;
   av.dom.muteInput.disabled = false;
   av.dom.childParentRadio.disabled = false;
   av.dom.childRandomRadio.disabled = false;
@@ -235,9 +236,9 @@ av.ptd.popNewExState = function () {
 };
 
 //after Run button pushed for population
-av.ptd.runPopFn = function () {
+av.ptd.runPopFn = function (from) {
   'use strict';
-  if (av.debug.popCon) console.log('in av.ptd.runPopFn: runPopFn runState =', av.grd.runState);
+  if (av.debug.popCon) console.log(from, 'called av.ptd.runPopFn: runPopFn runState =', av.grd.runState);
   //check for ancestor organism in configuration data
   var namelist = dojo.query('> .dojoDndItem', 'ancestorBox');
   //console.log('namelist = namelist);
@@ -263,10 +264,16 @@ av.ptd.runPopFn = function () {
     if (av.debug.popCon) console.log('else: av.ptd.validMuteInuput=',av.ptd.validMuteInuput);
     av.dom.userMsgLabel.innerHTML = '';
     if ('started' !== av.grd.runState) {
-      //collect setup data to send to avida.  Order matters. Files must be created first. Then files must be sent before some other stuff.
-      av.fwt.form2cfgFolder();          //fileDataWrite.js creates avida.cfg and environment.cfg and ancestor.txt and ancestors_manual.txt
+      if ('test' == av.msg.setupType) { 
+        console.log('still need scrap test form; not working yet');
+        //get original files. 
+      }
+      else {
+        //collect setup data to send to avida.  Order matters. Files must be created first. Then files must be sent before some other stuff.
+        av.fwt.form2cfgFolder();          //creates avida.cfg and environment.cfg and ancestor.txt and ancestors_manual.txt from form
+      }
       if ('prepping' === av.grd.runState) {
-        av.msg.importConfigExpr(av.ptd.runPopFn);
+        av.msg.importConfigExpr('av.ptd.runPopFn');
         console.log('after calling av.msg.importConfigExpr');
         av.msg.injectAncestors('config');
       }
@@ -303,7 +310,7 @@ av.ptd.runPopFn = function () {
       //console.log('stop at  = av.dom.autoUpdateSpinner').get('value'));
     }
 
-    av.ptd.makeRunState();
+    av.ptd.makeRunState('av.ptd.runPopFn');
     av.msg.stepUpdate();   //av.msg.doRunPause(av.fio);
   }
   if (av.debug.popCon) console.log('end of av.ptd.runPopFn');
@@ -312,8 +319,8 @@ av.ptd.runPopFn = function () {
 
 av.ptd.runStopFn = function () {
   if ('Run' == av.dom.runStopButton.innerHTML) {
-    av.ptd.makeRunState();
-    av.ptd.runPopFn();
+    av.ptd.makeRunState('av.ptd.runStopFn');
+    av.ptd.runPopFn('av.ptd.runStopFn');
   } else {
     //console.log('about to call av.ptd.makePauseState()');
     //av.debug.log += 'about to call av.ptd.makePauseState() in AvidaEd.js line 772 \n';
@@ -530,7 +537,7 @@ av.ptd.resetDishFn = function (need2sendRest2avida) { //Need to reset all settin
     av.fio.handAncestorLoad(str);
   }
 
-  av.frd.updateSetup();
+  av.frd.updateSetup('av.ptd.resetDishFn');
 
   if (av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg']) {av.fzr.actConfig.file['instset.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg'];}
 
@@ -556,56 +563,6 @@ av.ptd.clearLogicButtons = function() {
     av.grd.fnChosen[av.ptd.logicButtons[ii]] = false;
   }
 };
-
-//----------------------------------------------------------------------------------------------------------------------
-// code below this line is not in use tiba delete later
-//writes data to Environmental Settings page based on the content of av.dnd.activeConfig
-//for now this is hard coded to what would be in @default. will need a way to request data from PouchDB
-//and read the returned JSON string.
-/*
-av.ptd.writeHardDefault = function (av) {
-  'use strict';
-  av.dom.sizeCols.value = av.dft.sizeCols;
-  av.dom.sizeRows.value = av.dft.sizeRows;
-  //av.dom.sizeCols.value = av.dft.sizeCols;
-  //av.dom.sizeRows.value = av.dft.sizeRows;
-  if ('childParentRadio'==av.dft.child) {
-    av.dom.childParentRadio.checked = true;
-    av.dom.childRandomRadio.checked = false;
-  }
-  else {
-    av.dom.childParentRadio.checked = false;
-    av.dom.childRandomRadio.checked = true;
-  }
-  av.dom.notose.checked = av.dft.notose;
-  av.dom.nanose.checked = av.dft.nanose;
-  av.dom.andose.checked = av.dft.andose;
-  av.dom.ornose.checked = av.dft.ornose;
-  av.dom.orose.checked = av.dft.orose;
-  av.dom.andnose.checked = av.dft.andnose;
-  av.dom.norose.checked = av.dft.norose;
-  av.dom.xorose.checked = av.dft.xorose;
-  av.dom.equose.checked = av.dft.equose;
-  av.dom.experimentRadio.checked = true;
-  av.dom.manualUpdateRadio.checked = true;
-  if ('experimentRadio'==av.dft.repeat) {
-    av.dom.experimentRadio.checked = true;
-    av.dom.demoRadio.checked = false;
-  }
-  else {
-    av.dom.experimentRadio.checked = false;
-    av.dom.demoRadio.checked = true;
-  }
-  if ('manualUpdateRadio'==av.dft.pauseType) {
-    av.dom.manualUpdateRadio.checked = true;
-    av.dom.autoUpdateRadio.checked = false;
-  }
-  else {
-    av.dom.manualUpdateRadio.checked = false;
-    av.dom.autoUpdateRadio.checked = true;
-  };
-};
-*/
 
 // should really be in a ui code section
 // http://stackoverflow.com/questions/7125453/modifying-css-class-property-values-on-the-fly-with-javascript-jquery
