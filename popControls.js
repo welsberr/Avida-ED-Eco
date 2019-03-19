@@ -131,6 +131,7 @@ av.ptd.popNewExState = function () {
   av.dnd.gridCanvas.accept['g'] = 1;
   av.dnd.activeConfig.accept['c'] = 1;
   av.dnd.activeConfig.accept['b'] = 1;
+  av.dnd.activeConfig.accept['t'] = 1;
   av.dnd.activeConfig.accept['w'] = 1;
   av.dnd.fzWorld.accept['w'] = 0;
   av.dnd.fzWorld.accept['b'] = 0;
