@@ -56,6 +56,20 @@ av.fwt.makeFzrEventsCfgWorld = function (idStr, em) {
   else {av.fwt.makeFzrFile(idStr+'/events.cfg', txt);}
 };
 
+/*---------------------------------------------------------------------------------------- av.fwt.makeFzrPauseRunAt --*/
+
+av.fwt.makeFzrPauseRunAt = function (idStr, actConfig) {
+  'use strict';
+  var txt = dijit.byId('autoUpdateSpinner').get('value').toString();
+  // Is auto Update Radio button checked?
+  if (av.dom.manualUpdateRadio.checked) {  //manually pause population
+    txt = '-1';   //Manual Update
+  }
+  if (actConfig) {av.fwt.makeActConfigFile('pauseRunAt.txt', txt);}
+  else {av.fwt.makeFzrFile(idStr+'/pauseRunAt.txt', txt);}
+};
+
+
 av.fwt.makeFzrAvidaCfg = function (idStr, actConfig) {
   'use strict';
   //console.log('col; row', av.dom.sizeCols, av.dom.sizeRows);
@@ -84,27 +98,35 @@ av.fwt.makeFzrAvidaCfg = function (idStr, actConfig) {
   else {av.fwt.makeFzrFile(idStr+'/avida.cfg', txt);}
 };
 
-av.fwt.makeFzrPauseRunAt = function (idStr, actConfig) {
+/*----------------------------------------------------------------------------------------- av.fwt.makeFzrAvidaTest --*/
+av.fwt.makeFzrAvidaTest = function (idStr, actConfig) {
   'use strict';
-  var txt = dijit.byId('autoUpdateSpinner').get('value').toString();
-  // Is auto Update Radio button checked?
-  if (av.dom.manualUpdateRadio.checked) {  //manually pause population
-    txt = '-1';   //Manual Update
-  }
-  if (actConfig) {av.fwt.makeActConfigFile('pauseRunAt.txt', txt);}
-  else {av.fwt.makeFzrFile(idStr+'/pauseRunAt.txt', txt);}
+  var txt = 'WORLD_X ' + av.dom.sizeColTest.value + '\n';
+  txt += 'WORLD_Y ' + av.dom.sizeRowTest.value + '\n';
+  txt += 'WORLD_GEOMETRY 1 \n';
+  txt += 'COPY_MUT_PROB ' + document.getElementById('muteInpuTest').value/100 + '\n';
+  txt += 'DIVIDE_INS_PROB 0.0 \n';
+  txt += 'DIVIDE_DEL_PROB 0.0 \n';
+  txt += 'OFFSPRING_SIZE_RANGE 1.0 \n';
+  // parents (ancestors) are injected into avida separately.
+  if (av.dom.childParentRadiTest.checked) txt += 'BIRTH_METHOD 0 \n';  //near parent
+  else txt += 'BIRTH_METHOD 4 \n';   //anywhere randomly
+  if (av.dom.experimentRadiTest.checked) txt += 'RANDOM_SEED -1 \n';
+  else txt += 'RANDOM_SEED 100\n';
+  //no longer in use; tiba delete later
+  //txt += 'AVE_TIME_SLICE ' + dijit.byId('aveTimeSlice').get('value') + '\n';
+  //txt += 'SLEEP_DELAY ' + dijit.byId('sleepDelay').get('value') + '\n';
+  txt += '#include instset.cfg\n';
+  txt += 'PRECALC_PHENOTYPE 1\n';
+  txt += 'VERSION_ID 2.14.0 \n';
+  if (actConfig) {av.fwt.makeActConfigFile('avida.cfg', txt);}  // always false for now 2017 July
+  else {av.fwt.makeFzrFile(idStr+'/avida.cfg', txt);}
 };
 
-/* Delete later tiba
-av.fwt.makeFzrConfigTxt = function (idStr, actConfig) {
-  'use strict';
-  var txt = 'update ';
-  if (av.dom.experimentRadio').get('checked')) txt += 'RANDOM_SEED -1 \n';
-  txt += dijit.byId('autoUpdateSpinner').get('value') + '\n';
-  if (actConfig) {av.fwt.makeActConfigFile('avida.cfg', txt);}
-  else {av.fwt.makeFzrFile(idStr+'/avida.cfg', txt);}
-}
-*/
+/*---------------------------------------------------------------------------------- end of av.fwt.makeFzrAvidaTest --*/
+
+
+/*------------------------------------------------------------------------------------ av.fwt.makeFzrEnvironmentCfg --*/
 av.fwt.makeFzrEnvironmentCfg = function (idStr, actConfig) {
   'use strict';
   var txt = '';
@@ -117,6 +139,15 @@ av.fwt.makeFzrEnvironmentCfg = function (idStr, actConfig) {
   if (av.dom.norose.checked) txt += 'REACTION  NOR  nor   process:value=4:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NOR  nor   process:value=0:type=pow  requisite:max_count=1\n';
   if (av.dom.xorose.checked) txt += 'REACTION  XOR  xor   process:value=4:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  XOR  xor   process:value=0:type=pow  requisite:max_count=1\n';
   if (av.dom.equose.checked) txt += 'REACTION  EQU  equ   process:value=5:type=pow  requisite:max_count=1';    else txt += 'REACTION  EQU  equ   process:value=0:type=pow  requisite:max_count=1';
+  if (actConfig) {av.fwt.makeActConfigFile('environment.cfg', txt);}
+  else  { av.fwt.makeFzrFile(idStr+'/environment.cfg', txt);}
+};
+
+/*----------------------------------------------------------------------------------- av.fwt.makeFzrEnvironmentTest --*/
+av.fwt.makeFzrEnvironmentTest = function (idStr, actConfig) {
+  'use strict';
+  var txt = av.dom.environConfigEdit.value;
+  
   if (actConfig) {av.fwt.makeActConfigFile('environment.cfg', txt);}
   else  { av.fwt.makeFzrFile(idStr+'/environment.cfg', txt);}
 };
@@ -171,6 +202,7 @@ av.fwt.makeFzrTimeRecorder = function (fname, data) {
 };
 
 // --------------------------------------------------- called by other files -------------------------------------------
+//Setup to active folder just before sending to avida
 av.fwt.form2cfgFolder = function() {
   'use strict';
   var actConfig = true;
@@ -179,6 +211,17 @@ av.fwt.form2cfgFolder = function() {
   av.fwt.makeFzrAncestorAuto('cfg', actConfig);
   av.fwt.makeFzrAncestorHand('cfg', actConfig);
 };
+
+//test setup to active folder just before sending to avida
+av.fwt.testForm2folder = function() {
+  'use strict';
+  var actConfig = true;
+  av.fwt.makeFzrAvidaTest('cfg', actConfig);
+  av.fwt.makeFzrEnvironmentTest('cfg', actConfig);
+  av.fwt.makeFzrAncestorAuto('cfg', actConfig);
+  av.fwt.makeFzrAncestorHand('cfg', actConfig);  
+};
+
 
 av.fwt.makeFzrConfig = function (num) {
   'use strict';

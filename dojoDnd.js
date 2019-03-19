@@ -189,11 +189,13 @@ av.dnd.lndActiveConfig = function (move) {
     move.target.map[domid].type[0] = 'v';   //type is test or populated test
     av.frd.updateTestSetup('av.dnd.lndActiveConfig');               //call the test version of Setup
     av.msg.setupType = 'test';
-  }
+  };
 
   //Clear ancestorBox
   av.dnd.ancestorBox.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
   av.dnd.ancestorBox.sync();   //should be done after insertion or deletion
+  av.dnd.ancestorBoTest.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
+  av.dnd.ancestorBoTest.sync();   //should be done after insertion or deletion
 
   av.parents.clearParentsFn();
 
@@ -441,6 +443,9 @@ av.dnd.makeMove = function (source, nodes, target) {
     case av.dnd.ancestorBox:
       added = av.dnd.lndAncestorBox(av.dnd.move);
       break;
+    case av.dnd.ancestorBoTexs:
+      added = av.dnd.lndAncestorBoTest(av.dnd.move);
+      break;
     case av.dnd.activeConfig:
       added = av.dnd.lndActiveConfig(av.dnd.move);
       break;
@@ -451,6 +456,7 @@ av.dnd.makeMove = function (source, nodes, target) {
 };
 
 //av.post.data = { is defined as around avidaED.js 1950
+
 
 av.dnd.lndAncestorBox = function (move) {
   'use strict';
@@ -477,6 +483,41 @@ av.dnd.lndAncestorBox = function (move) {
     document.getElementById(move.targetDomId).textContent = newName;
     av.parents.howPlaced.push('auto');
     av.parents.domid.push(move.targetDomId); //domid in ancestorBox used to remove if square in grid moved to trashcan
+    //Find color of ancestor
+    if (0 < av.parents.Colors.length) { av.parents.color.push(av.parents.Colors.pop());}
+    else { av.parents.color.push(av.color.defaultParentColor); }
+    av.parents.placeAncestors();
+    if (av.debug.dnd) console.log('parents', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]);
+    return (true);
+  }
+  else return (false);
+};
+
+av.dnd.lndAncestorBoTest = function (move) {
+  'use strict';
+  var added;
+  //Do not copy parents if one is moved within Ancestor Box
+  if ('ancestorBoTest' != move.source.node.id) {
+    //av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
+    av.post.data = {
+      'operation' : 'DojoDnd',
+      'name' : 'av.dnd.lndAncestorBoTest',
+      //'vars' : {'source' : 'av.dnd.fzOrgan', 'nodeDir': move.dir, 'target': 'av.dnd.ancestorBoTest'},
+      'vars' : {'source' : move.source.node.id, 'nodeDir': move.dir, 'target': move.target.node.id, 'call': 'dnd.lndAncestorBoTest'},
+      'assumptions' : {'nodeName': move.nodeName, 'via': move.via}
+    };
+    av.post.usrOut(av.post.data, 'in dojoDND.js line 467');
+
+    //find genome by finding source
+    //console.log('seq=', av.fzr.file[move.dir+'/genome.seq']);
+    av.parents.genome.push(av.fzr.file[move.dir+'/genome.seq']);
+    var nn = av.parents.name.length;
+    av.parents.autoNdx.push(nn);
+    av.parents.injected.push(false);
+    var newName = av.dnd.nameParent(move.nodeName);
+    document.getElementById(move.targetDomId).textContent = newName;
+    av.parents.howPlaced.push('auto');
+    av.parents.domid.push(move.targetDomId); //domid in ancestorBoTest used to remove if square in grid moved to trashcan
     //Find color of ancestor
     if (0 < av.parents.Colors.length) { av.parents.color.push(av.parents.Colors.pop());}
     else { av.parents.color.push(av.color.defaultParentColor); }
@@ -768,21 +809,6 @@ av.dnd.landTrashCan = function (source, nodes, target) {
     source.sync();
     av.fzr.saveUpdateState('no');
   }
-  // Delete from Ancestor Box no longer allowed items from ancestor box require ancestor (parent) handling.
-/*  else if ('ancestorBox' == source.node.id) {
-    //find index into parents
-    if (av.debug.dnd) console.log('ancestorBox->trash; source', source.map);
-    //Find index into parent structure
-    var Ndx = av.parents.domid.indexOf(nodes[0].id);
-    if (av.debug.dnd) console.log('ancestorBox->trash, nodes[0].id', nodes[0].id);
-    if (av.debug.dnd) console.log('ancestorBox->trash, av.parents', av.parents.domid[0]);
-
-    if (av.debug.dnd) console.log('ancestorBox->trash; nodeId', nodes[0].id, '; Ndx', Ndx, '; av.parents.domid', av.parents.domid);
-    av.parents.removeParent(Ndx);
-    av.parents.placeAncestors();
-    if (av.debug.dnd) console.log('ancestorBox->trash, av.parents', av.parents);
-  }
-*/
   av.dnd.trashCan.selectAll().deleteSelectedNodes();  //in all cases, empty the av.dnd.trashCan
   return remove;
 };

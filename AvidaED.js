@@ -239,6 +239,12 @@ require([
     //Test setup page
     av.dom.sizeCellTest = document.getElementById('sizeCellTest');
     av.dom.sizeColTest = document.getElementById('sizeColTest');
+    av.dom.sizeRowTest = document.getElementById('sizeRowTest');
+    av.dom.childParentRadiTest = document.getElementById('childParentRadiTest');
+    av.dom.experimentRadiTest = document.getElementById('experimentRadiTest');
+    av.dom.manualUpdateRadiTest = document.getElementById('manualUpdateRadiTest');
+    //av.dom.Test = document.getElementById('Test');
+    //av.dom.Test = document.getElementById('Test');
     
     //Population Map Setup page
     av.dom.sizeCells = document.getElementById('sizeCells');
@@ -387,6 +393,9 @@ require([
    ]);
    */
 
+  av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
+
+
   if (av.debug.root) console.log('before organIcon');
   av.dnd.organIcon = new dndTarget('organIcon', {accept: ['g'], selfAccept: false});
   av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
@@ -436,7 +445,7 @@ require([
   }
   else {
     userMsgLabel.textContent = "Sorry, your browser does not support Web workers and Avida won't run";
-  }
+  };
 
   //process message from web worker
   if (av.debug.root) console.log('before fio.uiWorker on message');
@@ -478,6 +487,7 @@ require([
     }
   });
 
+  //console.log('av.dnd.ancestorBox', av.dnd.ancestorBox);
   av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
     if ('ancestorBox' === target.node.id) {
       //console.log('ancestorBox=', target, av.dnd.ancestorBox);  //yes they are the same. could use in the above if statement.
@@ -485,7 +495,13 @@ require([
       }
   });
 
-  av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of gridCanvas
+  av.dnd.ancestorBoTest.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
+    if ('ancestorBoTest' === target.node.id) {
+      av.dnd.makeMove(source, nodes, target);
+      }
+  });
+
+av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of gridCanvas
     if ('gridCanvas' === target.node.id) {
       av.dnd.landGridCanvas(source, nodes, target);
       //console.log('before call av.grd.drawGridSetupFn');
@@ -1341,7 +1357,7 @@ require([
     av.dnd.FzAddExperimentFn('fzConfig', 'activeConfig', 'c');
   });
 
-  //Buttons on drop down menu to add Organism to an Experiment
+  //Buttons on drop down menu to add Organism to an Experiment - does not work on Test
   dijit.byId('mnFzAddGenomeEx').on('Click', function () {
     av.post.addUser('Button: mnFzAddGenomeEx');
     av.dnd.FzAddExperimentFn('fzOrgan', 'ancestorBox', 'g');
@@ -1808,28 +1824,28 @@ require([
   //    av.post.addUser('Button: notButton');    //done in av.ptd.bitToggle
   document.getElementById('notButton').onclick = function () {
     av.ptd.bitToggle('notButton');
-  } //av.ptd.bitToggle in popControls.js
+  }; //av.ptd.bitToggle in popControls.js
   document.getElementById('nanButton').onclick = function () {
     av.ptd.bitToggle('nanButton');
-  }
+  };
   document.getElementById('andButton').onclick = function () {
     av.ptd.bitToggle('andButton');
-  }
+  };
   document.getElementById('ornButton').onclick = function () {
     av.ptd.bitToggle('ornButton');
-  }
+  };
   document.getElementById('oroButton').onclick = function () {
     av.ptd.bitToggle('oroButton');
-  }
+  };
   document.getElementById('antButton').onclick = function () {
     av.ptd.bitToggle('antButton');
-  }
+  };
   document.getElementById('norButton').onclick = function () {
     av.ptd.bitToggle('norButton');
-  }
+  };
   document.getElementById('xorButton').onclick = function () {
     av.ptd.bitToggle('xorButton');
-  }
+  };
   document.getElementById('equButton').onclick = function () {
     av.ptd.bitToggle('equButton');
   };
@@ -2140,7 +2156,7 @@ require([
     av.grd.drawGridSetupFn('av.ptd.popSizeFn');
   };
 
-av.ptd.muteInputChange = function(value, muteInputName, muteErrorName) {
+av.ptd.muteInputChange = function(value, muteErrorName) {
     var muteNum = Number(value);
     if (av.debug.uil) console.log('muteNum=', muteNum);
     if (muteNum >= 0 && muteNum <= 100) {
@@ -2363,6 +2379,23 @@ $(function slidemute() {
     //console.log('autoUpdateSpinner=', dijit.byId('autoUpdateSpinner').get('value'));
   });
 
+  dojo.connect(dijit.byId('manualUpdateRadiTest'), 'onClick', function () {
+    av.post.addUser('Button: manualUpdateRadiTest');
+    av.ui.autoStopFlag = false;
+  });
+
+  dojo.connect(dijit.byId('autoUpdateRadiTest'), 'onClick', function () {
+    av.post.addUser('Button: autoUpdateRadiTest');
+    av.ui.autoStopFlag = true;
+  });
+
+
+  dojo.connect(dijit.byId('autoUpdateSpinneTest'), 'onChange', function () {
+    av.post.addUser('Spinner: autoUpdateSpinner = ' + dijit.byId('autoUpdateSpinneTest').get('value'));
+    av.ui.autoStopValue = dijit.byId('autoUpdateSpinneTest').get('value');
+    //console.log('autoUpdateSpinner=', dijit.byId('autoUpdateSpinner').get('value'));
+  });
+
   /* *************************************************************** */
   /* Organism page script *********************************************/
   /* *************************************************************** */
@@ -2404,9 +2437,9 @@ $(function slidemute() {
     /* the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, */
     /* so I multiplied by 100,000 to get 100.000% to come out even. */
     //console.log('before defaultslide value');
-    var muteSlideDefault = 109861.
+    var muteSlideDefault = 109861.;
     /* results in 2% as a default */
-    var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3)
+    var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3);
     var slides = $('#orMuteSlide').slider({
       // range: 'min',   /*causes the left side of the scroll bar to be grey */
       value: muteSlideDefault,
@@ -2417,7 +2450,7 @@ $(function slidemute() {
         $('#orMuteInput').val((Math.pow(Math.E, (ui.value / 100000)) - 1).toFixed(3));
         /*put the value in the text box */
         av.ind.settingsChanged = true;
-        if (av.debug.trace) console.log('orSlide changed', av.ind.settingsChanged)
+        if (av.debug.trace) console.log('orSlide changed', av.ind.settingsChanged);
       }
     });
     /* initialize */
@@ -2428,7 +2461,7 @@ $(function slidemute() {
     $('#orMuteInput').change(function () {
       slides.slider('value', 100000.0 * Math.log(1 + (parseFloat(this.value))));
       av.ind.settingsChanged = true;
-      if (av.debug.trace) console.log('orMute changed', av.ind.settingsChanged)
+      if (av.debug.trace) console.log('orMute changed', av.ind.settingsChanged);
       //$( '#orMRate' ).val( 100000*Math.log(1+(parseFloat(this.value))) );
       //console.log('in mute change');
       av.post.addUser('muteInput =' + dijit.byId('orMuteInput').get('value')+'1949');

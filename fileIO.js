@@ -18,7 +18,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
   'use strict';
   if (loadConfigFlag) av.fzr.clearFzrFn();
   else av.fzr.clearMainFzrFn();  // clear freezer (globals.js)
-  //Clear each section of the freezer and active organism and ancestorBox
+  //Clear each section of the freezer
   if (av.debug.fio) console.log('before  av.dnd.fzConfig.selectAll');
   av.dnd.fzConfig.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
   if (av.debug.fio) console.log('before av.dnd.fzConfig.sync');

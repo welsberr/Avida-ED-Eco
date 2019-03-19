@@ -260,7 +260,7 @@ av.frd.updateTestSetup = function (from) {
   
   //not sure about this one; may need a test version of this one too
   doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
-  av.frd.pauseRunAtTXT2form(doctext);
+  av.frd.pauseRunAtTest2form(doctext);
 };
 //------------------------------------------------------------------------------------- end of av.frd.updateTestSetup --
 
@@ -477,6 +477,22 @@ av.frd.avidaTestform = function (fileStr){
 //------------------------------------------------------------------------------------------ end processing avida.cfg --
 
 //--------------------- puts data from the av.frd.pauseRun.txt file into the setup form for the population page---------
+av.frd.pauseRunAtTest2form = function (fileStr) {
+  'use strict';
+  var update = parseInt(fileStr);
+  if (0 < update) {
+    dijit.byId('manualUpdateRadiTest').set('checked', false);
+    dijit.byId('autoUpdateRadiTest').set('checked', true);
+    dijit.byId('autoUpdateSpinneTest').set('value', update);
+  }
+  else {
+    dijit.byId('manualUpdateRadiTest').set('checked', true);
+    dijit.byId('autoUpdateRadiTest').set('checked', false);
+    dijit.byId('autoUpdateSpinneTest').set('value', '1000');
+  }
+};
+
+//--------------------- puts data from the av.frd.pauseRun.txt file into the setup form for the population page---------
 av.frd.pauseRunAtTXT2form = function (fileStr) {
   'use strict';
   var update = parseInt(fileStr);
@@ -527,13 +543,21 @@ av.fio.autoAncestorLoad = function(fileStr) {
   //Now put in ancestors and place parents
   var lngth = rslt.nam.length;
   for (var ii = 0; ii < lngth; ii++) {
-    av.dnd.ancestorBox.insertNodes(false, [{data: rslt.nam[ii], type: ['g']}]);
-    av.dnd.ancestorBox.sync();
     av.parents.genome.push(rslt.gen[ii]);
     var nn = av.parents.name.length;
     av.parents.name.push(rslt.nam[ii]);
     av.parents.howPlaced.push('auto');
-    var domIds = Object.keys(av.dnd.ancestorBox.map);
+    var domIds;
+    if ('test' == av.msg.setupType) {
+      av.dnd.ancestorBoTest.insertNodes(false, [{data: rslt.nam[ii], type: ['g']}]);
+      av.dnd.ancestorBoTest.sync();
+      domIds = Object.keys(av.dnd.ancestorBoTest.map);
+    }
+    else {
+      av.dnd.ancestorBox.insertNodes(false, [{data: rslt.nam[ii], type: ['g']}]);
+      av.dnd.ancestorBox.sync();
+      domIds = Object.keys(av.dnd.ancestorBox.map);
+    }
     if (av.debug.fio) console.log('autoPlaceParent: domIds', domIds, '; length', domIds.length);
     av.parents.domid.push(domIds[domIds.length-1]); //domid in ancestorBox used to remove if square in grid moved to trashcan
     //Find color of ancestor
@@ -590,11 +614,19 @@ av.fio.handAncestorLoad = function(fileStr) {
   //Now put in ancestors and place parents
   var lngth = stuff.nam.length;
   for (var kk = 0; kk < lngth; kk++) {
-    av.dnd.ancestorBox.insertNodes(false, [{data: stuff.nam[kk], type: ['g']}]);
-    av.dnd.ancestorBox.sync();
     var nn = av.parents.name.length;
     av.parents.name.push(stuff.nam[kk]);
-    var domIds = Object.keys(av.dnd.ancestorBox.map);
+    var domIds;
+    if ('test' == av.msg.setupType) {
+      av.dnd.ancestorBoTest.insertNodes(false, [{data: stuff.nam[kk], type: ['g']}]);
+      av.dnd.ancestorBoTest.sync();
+      domIds = Object.keys(av.dnd.ancestorBoTest.map);
+    }
+    else {
+      av.dnd.ancestorBox.insertNodes(false, [{data: stuff.nam[kk], type: ['g']}]);
+      av.dnd.ancestorBox.sync();
+      domIds = Object.keys(av.dnd.ancestorBox.map);
+    }
     if (av.debug.fio) console.log('handAncestorLoad: domIds', domIds, '; length', domIds.length);
     av.parents.domid.push(domIds[domIds.length-1]); //domid in ancestorBox used to remove if square in grid moved to trashcan
     //Find color of ancestor

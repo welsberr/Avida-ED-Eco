@@ -31,6 +31,7 @@ av.ptd.popWorldStateUi = function (from) {
   //Disable some of the options on the Setup page
   //av.dnd.ancestorBox.isSource = false;
   av.dnd.ancestorBox.copyOnly = true;
+  av.dnd.ancestorBoTest.copyOnly = true;
   av.dnd.activeConfig.isSource = true;
   //delete av.dnd.ancestorBox.accept['g'];
   //delete av.dnd.gridCanvas.accept['g'];
@@ -54,6 +55,7 @@ av.ptd.popTdishStateUi = function (from) {
   //Disable normal Setup page and setup testDish setup Page   
   //av.dnd.ancestorBox.isSource = false;
   av.dnd.ancestorBox.copyOnly = true;
+  av.dnd.ancestorBoTest.copyOnly = true;
   av.dnd.activeConfig.isSource = true;
   //delete av.dnd.ancestorBox.accept['g'];
   //delete av.dnd.gridCanvas.accept['g'];
@@ -76,9 +78,11 @@ av.ptd.popRunningStateUi = function () {
   av.grd.runState = 'started';  //the run has now started
   //Disable some of the options on the Setup page
   av.dnd.ancestorBox.copyOnly = true;
+  av.dnd.ancestorBoTest.copyOnly = true;
   //av.dnd.ancestorBox.isSource = false;
   //av.dnd.activeConfig.isSource = false;
   delete av.dnd.ancestorBox.accept['g'];
+  delete av.dnd.ancestorBoTest.accept['g'];
   delete av.dnd.gridCanvas.accept['g'];
   delete av.dnd.activeConfig.accept['c'];
   delete av.dnd.activeConfig.accept['w'];
@@ -123,6 +127,7 @@ av.ptd.popNewExState = function () {
   av.fzr.actConfig._id = 'c0';
   // clear parents
   av.dnd.ancestorBox.accept['g'] = 1;
+  av.dnd.ancestorBoTest.accept['g'] = 1;
   av.dnd.gridCanvas.accept['g'] = 1;
   av.dnd.activeConfig.accept['c'] = 1;
   av.dnd.activeConfig.accept['b'] = 1;
@@ -131,6 +136,8 @@ av.ptd.popNewExState = function () {
   av.dnd.fzWorld.accept['b'] = 0;
   av.dnd.ancestorBox.isSource = true;
   av.dnd.ancestorBox.copyOnly = true;
+  av.dnd.ancestorBoTest.isSource = true;
+  av.dnd.ancestorBoTest.copyOnly = true;
   av.dnd.activeConfig.isSource = true;
   $('#muteSlide').slider({disabled: false});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
   av.dom.sizeCols.disabled = false;
@@ -173,6 +180,8 @@ av.ptd.popNewExState = function () {
   //av.frd.avidaCFG2form(fileStr);
   av.dnd.ancestorBox.selectAll().deleteSelectedNodes();
   av.dnd.ancestorBox.sync();
+  av.dnd.ancestorBoTest.selectAll().deleteSelectedNodes();
+  av.dnd.ancestorBoTest.sync();
   av.dnd.gridCanvas.selectAll().deleteSelectedNodes();
   av.dnd.gridCanvas.sync();
 
@@ -240,7 +249,11 @@ av.ptd.runPopFn = function (from) {
   'use strict';
   if (av.debug.popCon) console.log(from, 'called av.ptd.runPopFn: runPopFn runState =', av.grd.runState);
   //check for ancestor organism in configuration data
-  var namelist = dojo.query('> .dojoDndItem', 'ancestorBox');
+  var namelist
+  if ('test' == av.msg.setupType)
+    namelist = dojo.query('> .dojoDndItem', 'ancestorBoTest');    
+  else
+    namelist = dojo.query('> .dojoDndItem', 'ancestorBox');
   //console.log('namelist = namelist);
   if (1 > namelist.length) {
     console.log('about to call av.ptd.makePauseState()');
@@ -265,8 +278,9 @@ av.ptd.runPopFn = function (from) {
     av.dom.userMsgLabel.innerHTML = '';
     if ('started' !== av.grd.runState) {
       if ('test' == av.msg.setupType) { 
-        console.log('still need scrap test form; not working yet');
+        console.log('scrap test form; not completely working yet');
         //get original files. 
+        av.fwt.testForm2folder();
       }
       else {
         //collect setup data to send to avida.  Order matters. Files must be created first. Then files must be sent before some other stuff.

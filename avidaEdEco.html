@@ -542,7 +542,7 @@
                 <input id='muteInpuTest' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' ;
                        data-dojo-props='constraints:{min:0, max:100},
                      invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                       style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value, "muteInpuTest","muteErroTest" )'> %<br />
+                       style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value, "muteErroTest")'> %<br />
                 <!--; or the slider value is &nbsp;</div>
                 <input id='mRate' type='text' readonly style='width: 4em; height:1.8em'></button> -->
                 <label id='muteErroTest'>Error place holder</label>
@@ -617,7 +617,7 @@
                 <input id='muteInput' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' ;
                        data-dojo-props='constraints:{min:0, max:100},
                      invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                       style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value)'> %<br />
+                       style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value,"muteError")'> %<br />
                 <!--; or the slider value is &nbsp;</div>
                 <input id='mRate' type='text' readonly style='width: 4em; height:1.8em'></button> -->
                 <label id='muteError'>Error place holder</label>
@@ -750,7 +750,7 @@
                 <input id='muteInputMockMock' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' ;
                        data-dojo-props='constraints:{min:0, max:100},
                      invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                       style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value)'>
+                       style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value,"muteErrorMock")'>
                 </button> %<br />
                 <!--; or the slider value is &nbsp;</div>
                 <input id='mRateMock' type='text' readonly style='width: 4em; height:1.8em'> -->

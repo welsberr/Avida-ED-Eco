@@ -142,6 +142,7 @@
     overflow:auto;
     flex-direction: column;
     width: 100%;
+    /*max-width: 430px;   /* tiba; temp fix will need to change this later */
   }
   .benchPopTopRow {
     flex:0 1 30px;
