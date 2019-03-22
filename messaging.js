@@ -145,7 +145,7 @@ av.msg.readMsg = function (ee) {
 
 av.msg.check4anotherUpdate = function () {
   'use strict';
-  console.log('newUpdate? stopflag=', av.ui.autoStopFlag, '; bar=', av.ui.autoStopValue, '; update=',av.grd.popStatsMsg.update);
+  //console.log('newUpdate? stopflag=', av.ui.autoStopFlag, '; bar=', av.ui.autoStopValue, '; update=',av.grd.popStatsMsg.update);
   if (av.ui.autoStopFlag) {
     if (av.ui.autoStopValue <= av.grd.popStatsMsg.update) {
       //make pause state

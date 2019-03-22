@@ -238,6 +238,26 @@
     flex: 0 0 30px;
     border: 1px solid #AAA;
   }
+  #debugResource{
+    flex: 0 0 auto;
+    border: 1px solid #AAA;
+    width: 100%;
+  }
+  
+.grid-container {
+  display: inline-grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto;
+  background-color: #2196F3;
+  justify-content: space-evenly;
+}
+
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  text-align: center;
+  padding: 2px 5px;
+}
+  
 .mainPageButtons{
     border: 1px solid #AAA;
   flex:0 1 120px;
@@ -246,25 +266,25 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
 }
 .taskLevel{
-  flex:0 1 50em;             //0 1 8em;
+  flex:0 1 50em;             /* 0 1 8em; */
   border: 1px solid #EEE;
   padding: 3px;
 }
 .foodAmount{
-  flex:0 1 8em;             //0 1 8em;
+  flex:0 1 8em;              /*  0 1 8em; */
   border: 1px solid #EEE;
   padding: 3px;
 }
 .period{
-  flex:0 1 8em;             //0 1 8em;
+  flex:0 1 8em;             /*  0 1 8em; */
   border: 1px solid #EEE;
   padding: 3px;
 }
 .flowInput{
-  width: 2em;      //4.5em
+  width: 2em;      /*  4.5em */
   height:1.8em
 }
 

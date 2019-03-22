@@ -68,8 +68,53 @@ av.grd.setMapData = function () {
       av.grd.reScaleRate = 'rescaling';
     }
     else av.grd.reScaleRate = '';
-    console.log('update=',av.grd.msg.update,'; not=',av.grd.msg.rnot.maxVal,'; nan=',av.grd.msg.rnan.maxVal,'; and=',av.grd.msg.rand.maxVal,'; orn=',av.grd.msg.rorn.maxVal);
+    
+    if (av.grd.mxRoro < av.grd.msg.roro.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRoro > av.grd.msg.roro.maxVal)) {
+      av.grd.mxRoro = av.grd.mxRoro + ((1 + av.grd.rescaleTolerance) * av.grd.msg.roro.maxVal - av.grd.mxRoro) / av.grd.rescaleTimeConstant;
+      av.grd.reScaleRate = 'rescaling';
+    }
+    else av.grd.reScaleRate = '';
 
+    if (av.grd.mxRant < av.grd.msg.rant.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRant > av.grd.msg.rant.maxVal)) {
+      av.grd.mxRant = av.grd.mxRant + ((1 + av.grd.rescaleTolerance) * av.grd.msg.rant.maxVal - av.grd.mxRant) / av.grd.rescaleTimeConstant;
+      av.grd.reScaleRate = 'rescaling';
+    }
+    else av.grd.reScaleRate = '';
+
+    if (av.grd.mxRnor < av.grd.msg.rnor.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRnor > av.grd.msg.rnor.maxVal)) {
+      av.grd.mxRnor = av.grd.mxRnor + ((1 + av.grd.rescaleTolerance) * av.grd.msg.rnor.maxVal - av.grd.mxRnor) / av.grd.rescaleTimeConstant;
+      av.grd.reScaleRate = 'rescaling';
+    }
+    else av.grd.reScaleRate = '';
+
+    if (av.grd.mxRxor < av.grd.msg.rxor.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRxor > av.grd.msg.rxor.maxVal)) {
+      av.grd.mxRxor = av.grd.mxRxor + ((1 + av.grd.rescaleTolerance) * av.grd.msg.rxor.maxVal - av.grd.mxRxor) / av.grd.rescaleTimeConstant;
+      av.grd.reScaleRate = 'rescaling';
+    }
+    else av.grd.reScaleRate = '';
+
+    if (av.grd.mxRequ < av.grd.msg.requ.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRequ > av.grd.msg.requ.maxVal)) {
+      av.grd.mxRequ = av.grd.mxRequ + ((1 + av.grd.rescaleTolerance) * av.grd.msg.requ.maxVal - av.grd.mxRequ) / av.grd.rescaleTimeConstant;
+      av.grd.reScaleRate = 'rescaling';
+    }
+    else av.grd.reScaleRate = '';  
+    
+    //if (1> av.grd.msg.update) console.log('upate   not     nan     and     orn     ant     nor     xor     equ');
+    if (av.grd.msg.rnot.maxVal) mxNot.textContent = av.grd.msg.rnot.maxVal.formatNum(2);
+    if (av.grd.msg.rnan.maxVal) mxNan.textContent = av.grd.msg.rnot.maxVal.formatNum(2);
+    if (av.grd.msg.rand.maxVal) mxAnd.textContent = av.grd.msg.rnan.maxVal.formatNum(2);
+    if (av.grd.msg.rorn.maxVal) mxOrn.textContent = av.grd.msg.rorn.maxVal.formatNum(2);
+    if (av.grd.msg.roro.maxVal) mxOro.textContent = av.grd.msg.roro.maxVal.formatNum(2);
+    if (av.grd.msg.rant.maxVal) mxAnt.textContent = av.grd.msg.rant.maxVal.formatNum(2);
+    if (av.grd.msg.rnor.maxVal) mxNor.textContent = av.grd.msg.rnor.maxVal.formatNum(2);
+    if (av.grd.msg.rxor.maxVal) mxXor.textContent = av.grd.msg.rxor.maxVal.formatNum(2);
+    if (av.grd.msg.requ.maxVal) mxEqu.textContent = av.grd.msg.requ.maxVal.formatNum(2);
+    
+    if (false) {
+    console.log(av.grd.msg.update, av.grd.msg.rnot.maxVal.formatNum(1),av.grd.msg.rnan.maxVal.formatNum(1), av.grd.msg.rand.maxVal.formatNum(1)
+                                  ,av.grd.msg.rorn.maxVal.formatNum(1),av.grd.msg.roro.maxVal.formatNum(1), av.grd.msg.rant.maxVal.formatNum(1)
+                                  ,av.grd.msg.rnor.maxVal.formatNum(1),av.grd.msg.rxor.maxVal.formatNum(1), av.grd.msg.requ.maxVal.formatNum(1));
+                                }
     //console.log('dijit.byId("colorMode").value = ', dijit.byId("colorMode").value, '------------');
     switch (dijit.byId("colorMode").value) {
       case 'Fitness':
@@ -112,6 +157,36 @@ av.grd.setMapData = function () {
         av.grd.fill = av.grd.msg.rorn.data;
         av.grd.fillmax = av.grd.mxRorn;
         av.grd.fillmin = av.grd.msg.rorn.minVal;
+        av.grd.fillRescale = av.grd.reScaleRate;
+        break;
+      case 'roro':
+        av.grd.fill = av.grd.msg.roro.data;
+        av.grd.fillmax = av.grd.mxRoro;
+        av.grd.fillmin = av.grd.msg.roro.minVal;
+        av.grd.fillRescale = av.grd.reScaleRate;
+        break;
+      case 'rant':
+        av.grd.fill = av.grd.msg.rant.data;
+        av.grd.fillmax = av.grd.mxRant;
+        av.grd.fillmin = av.grd.msg.rant.minVal;
+        av.grd.fillRescale = av.grd.reScaleRate;
+        break;
+      case 'rnor':
+        av.grd.fill = av.grd.msg.rnor.data;
+        av.grd.fillmax = av.grd.mxRnor;
+        av.grd.fillmin = av.grd.msg.rnor.minVal;
+        av.grd.fillRescale = av.grd.reScaleRate;
+        break;
+      case 'rxor':
+        av.grd.fill = av.grd.msg.rxor.data;
+        av.grd.fillmax = av.grd.mxRxor;
+        av.grd.fillmin = av.grd.msg.rxor.minVal;
+        av.grd.fillRescale = av.grd.reScaleRate;
+        break;
+      case 'requ':
+        av.grd.fill = av.grd.msg.requ.data;
+        av.grd.fillmax = av.grd.mxRequ;
+        av.grd.fillmin = av.grd.msg.requ.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
         break;
       case 'Ancestor Organism':
@@ -157,57 +232,65 @@ av.grd.drawKids = function () {  //Draw the children of parents
   var cc, ii, rr, xx, yy, lngth, ndx;
   //console.log('mode', dijit.byId("colorMode").value, '; fill', av.grd.fill);
   lngth = av.grd.fill.length;
-  if ("Ancestor Organism" == dijit.byId("colorMode").value) {
-    for (ii = 0; ii < lngth; ii++) {
-      cc = ii % av.grd.cols;
-      rr = Math.floor(ii / av.grd.cols);       //floor was trunc
-      xx = av.grd.marginX + av.grd.xOffset + cc * av.grd.cellWd;
-      yy = av.grd.marginY + av.grd.yOffset + rr * av.grd.cellHt;
-      if (null === av.grd.fill[ii]) {
-        av.grd.cntx.fillStyle = '#000';  //no avidain is in this cell
+  console.log('av.grd.fill.length=',av.grd.fill.length);
+  if (0<av.grd.fill.length){
+    if ("Ancestor Organism" == dijit.byId("colorMode").value) {
+      for (ii = 0; ii < lngth; ii++) {
+        cc = ii % av.grd.cols;
+        rr = Math.floor(ii / av.grd.cols);       //floor was trunc
+        xx = av.grd.marginX + av.grd.xOffset + cc * av.grd.cellWd;
+        yy = av.grd.marginY + av.grd.yOffset + rr * av.grd.cellHt;
+        if (null === av.grd.fill[ii]) {
+          av.grd.cntx.fillStyle = '#000';  //no avidain is in this cell
+        }
+        else {
+          ndx = av.parents.name.indexOf(av.grd.fill[ii]);
+          if ('-' === av.grd.fill[ii]) {av.grd.cntx.fillStyle = 'black';}
+          else
+            av.grd.cntx.fillStyle = av.parents.color[ndx];
+          //av.grd.cntx.fillStyle = av.parents.color[av.grd.fill[ii]]
+          //console.log('ndx=', ndx, '; name', av.parents.name[av.grd.fill[ii]], '; color', av.parents.color[ndx]);
+        }
+        av.grd.cntx.fillRect(xx, yy, av.grd.cellWd - 1, av.grd.cellHt - 1);
       }
-      else {
-        ndx = av.parents.name.indexOf(av.grd.fill[ii]);
-        if ('-' === av.grd.fill[ii]) {av.grd.cntx.fillStyle = 'black';}
-        else
-          av.grd.cntx.fillStyle = av.parents.color[ndx];
-        //av.grd.cntx.fillStyle = av.parents.color[av.grd.fill[ii]]
-        //console.log('ndx=', ndx, '; name', av.parents.name[av.grd.fill[ii]], '; color', av.parents.color[ndx]);
+    }
+    else {
+      for (ii = 0; ii <  lngth; ii++) {
+        cc = ii % av.grd.cols;
+        rr = Math.floor(ii / av.grd.cols);     //was trunc
+        xx = av.grd.marginX + av.grd.xOffset + cc * av.grd.cellWd;
+        yy = av.grd.marginY + av.grd.yOffset + rr * av.grd.cellHt;
+
+        if (null === av.grd.fill[ii]) {
+          //console.log('ii', ii, '; msg.ancestor.data[ii]',av.grd.msg.ancestor.data[ii]);
+          if ('-' === av.grd.msg.ancestor.data[ii]) av.grd.cntx.fillStyle = '#000';  //not there
+          else {
+            av.grd.cntx.fillStyle = '#0B0';
+            console.log('fill[', ii, '] = ', av.grd.fill[ii], 'ancestor != -;   =======================================');
+          } //not viable
+        }
+        else if (0 == av.grd.fill[ii]) {
+          //console.log('fill[', ii, '] = ', av.grd.fill[ii], 'default kid color');
+          av.grd.cntx.fillStyle = av.color.defaultKidColor;
+        }
+        else if (0 > av.grd.fill[ii] || ('Offspring Cost' == dijit.byId("colorMode").value && 999 < av.grd.fill[ii])) {
+          console.log('fill[', ii, '] = ', av.grd.fill[ii], 'fill out of bounds');
+          av.grd.cntx.fillStyle = '#090';
+        }
+        else {  //av.utl.get_color0 = function(cmap, dx, d1, d2)
+          av.grd.cntx.fillStyle = av.utl.get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax);
+          //console.log('fillStyle', av.utl.get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax));
+        }
+        av.grd.cntx.fillRect(xx, yy, av.grd.cellWd - 1, av.grd.cellHt - 1);
       }
-      av.grd.cntx.fillRect(xx, yy, av.grd.cellWd - 1, av.grd.cellHt - 1);
     }
   }
-  else {
-    for (ii = 0; ii <  lngth; ii++) {
-      cc = ii % av.grd.cols;
-      rr = Math.floor(ii / av.grd.cols);     //was trunc
-      xx = av.grd.marginX + av.grd.xOffset + cc * av.grd.cellWd;
-      yy = av.grd.marginY + av.grd.yOffset + rr * av.grd.cellHt;
-      if (null === av.grd.fill[ii]) {
-        //console.log('ii', ii, '; msg.ancestor.data[ii]',av.grd.msg.ancestor.data[ii]);
-        if ('-' === av.grd.msg.ancestor.data[ii]) av.grd.cntx.fillStyle = '#000';  //not there
-        else {
-          av.grd.cntx.fillStyle = '#0B0';
-          console.log('fill[', ii, '] = ', av.grd.fill[ii], 'ancestor != -;   =======================================');
-        } //not viable
-      }
-      else if (0 == av.grd.fill[ii]) {
-        //console.log('fill[', ii, '] = ', av.grd.fill[ii], 'default kid color');
-        av.grd.cntx.fillStyle = av.color.defaultKidColor;
-      }
-      else if (0 > av.grd.fill[ii] || ('Offspring Cost' == dijit.byId("colorMode").value && 999 < av.grd.fill[ii])) {
-        console.log('fill[', ii, '] = ', av.grd.fill[ii], 'fill out of bounds');
-        av.grd.cntx.fillStyle = '#090';
-      }
-      else {  //av.utl.get_color0 = function(cmap, dx, d1, d2)
-        av.grd.cntx.fillStyle = av.utl.get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax);
-        //console.log('fillStyle', av.utl.get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax));
-      }
-      av.grd.cntx.fillRect(xx, yy, av.grd.cellWd - 1, av.grd.cellHt - 1);
-    }
+  else
+  {
+    console.log('need to draw a black square the size of the grid');
   }
   //console.log('end of drawKids update', av.grd.msg.update);
-}
+};
 
 av.grd.findLogicOutline = function () {
   'use strict';

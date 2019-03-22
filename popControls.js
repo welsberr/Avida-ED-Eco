@@ -16,7 +16,7 @@ av.ptd.makePauseState = function () {
 };
 
 av.ptd.makeRunState = function (from) {
-  console.log(from, ' called av.ptd.makeRunState');
+  //console.log(from, ' called av.ptd.makeRunState');
   av.dom.runStopButton.textContent = 'Pause';
   dijit.byId('mnCnPause').attr('disabled', false);
   dijit.byId('mnCnRun').attr('disabled', true);
