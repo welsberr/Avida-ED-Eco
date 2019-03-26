@@ -316,6 +316,7 @@ av.ui.num = 0;   //tenporary holder for a number;
 av.ui.numTxt = '';
 av.msg.avidaReady = false;
 av.ui.loadOK = false;  //av.ui.loadOK is set true when the application has been loaded.
+av.ui.showOutlineFlag = true;
 
 //----------------------------------------------- finding the browser and opperating system ----------------------------
 //http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser

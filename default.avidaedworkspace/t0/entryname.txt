@@ -1,2 +1,0 @@
-_res_whole_diffuse
-

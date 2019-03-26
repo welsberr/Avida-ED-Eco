@@ -528,7 +528,7 @@ av.grd.drawGridUpdate = function () {
   //Draw Selected as one of the last items to draw
   if (av.grd.flagSelected) { av.grd.drawSelected(); };
   if ('prepping' !== av.grd.runState) {
-    if ('r' == dijit.byId('colorMode').value.substring(0,1) ) av.grd.DrawAvidaOutline();
+    if ('r' == dijit.byId('colorMode').value.substring(0,1) && av.ui.showOutlineFlag ) av.grd.DrawAvidaOutline();
     av.grd.DrawLogicSelected();
   }
 };

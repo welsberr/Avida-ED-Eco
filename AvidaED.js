@@ -232,6 +232,8 @@ require([
     av.dom.runStopButton = document.getElementById('runStopButton');
     av.dom.oneUpdateButton = document.getElementById('oneUpdateButton');
     av.dom.newDishButton = document.getElementById('newDishButton');
+    av.dom.avidianOutline = document.getElementById('avidianOutline');
+    
         
     av.dom.selOrgType = document.getElementById('selOrgType');
     av.dom.gridControlTable = document.getElementById('gridControlTable');
@@ -1233,7 +1235,20 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.ptd.runPopFn('av.dom.oneUpdateButton.onclick');
   };
 
-  //------------------------------------------------------------------------------------- modal dialog cancle buttons --
+  av.dom.avidianOutline.onclick = function () {
+    av.post.addUser('Button: avidianOutline; av.ui.showOutlineFlag='+ av.ui.showOutlineFlag);
+    if ('Resources have Avidian Outline' == av.dom.avidianOutline.innerHTML) {
+      av.dom.avidianOutline.innerHTML = 'Resources without outline';
+      av.ui.showOutlineFlag = false;
+      console.log('av.ui.showOutlineFlag='+ av.ui.showOutlineFlag);
+    } else {
+      av.dom.avidianOutline.innerHTML = 'Resources have Avidian Outline';
+      console.log('av.ui.showOutlineFlag='+ av.ui.showOutlineFlag);
+    av.ui.showOutlineFlag = true;
+    }
+  };
+
+//------------------------------------------------------------------------------------- modal dialog cancle buttons --
 
   av.dom.needAncestorCancel.onclick = function () {
     av.dom.needAncestorModalID.style.display = 'none';
