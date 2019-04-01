@@ -819,27 +819,6 @@ av.grd.updateSelectedOrganismType = function (msg) {
   else ancestorLabel.textContent = msg.ancestor;
   //add + or - to text of logic function
   if (null != msg.tasks) {
-    // No longer using +/- in labels. Comment out now. Delete later
-/*
-    if (0 == msg.tasks.not) notLabel.textContent = 'NOT';
-    else notLabel.textContent = 'not+';
-    if (0 == msg.tasks.nand) nanLabel.textContent = 'NAN';
-    else nanLabel.textContent = 'nan+';
-    if (0 == msg.tasks.and) andLabel.textContent = 'AND';
-    else andLabel.textContent = 'and+';
-    if (0 == msg.tasks.orn) ornLabel.textContent = 'ORN';
-    else ornLabel.textContent = 'orn+';
-    if (0 == msg.tasks.or) oroLabel.textContent = 'ORO';
-    else oroLabel.textContent = 'oro+';
-    if (0 == msg.tasks.andn) antLabel.textContent = 'ANT';
-    else antLabel.textContent = 'ant+';
-    if (0 == msg.tasks.nor) norLabel.textContent = 'NOR';
-    else norLabel.textContent = 'nor+';
-    if (0 == msg.tasks.xor) xorLabel.textContent = 'XOR';
-    else xorLabel.textContent = 'xor+';
-    if (0 == msg.tasks.equ) equLabel.textContent = 'EQU';
-    else equLabel.textContent = 'equ+';
-    */
     //now put in the actual numbers
     notTime.textContent = msg.tasks.not;
     nanTime.textContent = msg.tasks.nand;

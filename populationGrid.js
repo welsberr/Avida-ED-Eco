@@ -1,4 +1,5 @@
 var av = av || {};  //because av already exists
+var dijit = dijit || {};
 
 av.grd.backgroundSquares = function () {
   'use strict';
@@ -110,11 +111,18 @@ av.grd.setMapData = function () {
     if (av.grd.msg.rxor.maxVal) mxXor.textContent = av.grd.msg.rxor.maxVal.formatNum(2);
     if (av.grd.msg.requ.maxVal) mxEqu.textContent = av.grd.msg.requ.maxVal.formatNum(2);
     
-    if (false) {
-    console.log(av.grd.msg.update, av.grd.msg.rnot.maxVal.formatNum(1),av.grd.msg.rnan.maxVal.formatNum(1), av.grd.msg.rand.maxVal.formatNum(1)
-                                  ,av.grd.msg.rorn.maxVal.formatNum(1),av.grd.msg.roro.maxVal.formatNum(1), av.grd.msg.rant.maxVal.formatNum(1)
-                                  ,av.grd.msg.rnor.maxVal.formatNum(1),av.grd.msg.rxor.maxVal.formatNum(1), av.grd.msg.requ.maxVal.formatNum(1));
-                                }
+    if (av.grd.selectedNdx) {
+      if (av.grd.msg.rnot.data[av.grd.selectedNdx]) cellNot.textContent = av.grd.msg.rnot.data[av.grd.selectedNdx].formatNum(2);
+      if (av.grd.msg.rnan.data[av.grd.selectedNdx]) cellNan.textContent = av.grd.msg.rnot.data[av.grd.selectedNdx].formatNum(2);
+      if (av.grd.msg.rand.data[av.grd.selectedNdx]) cellAnd.textContent = av.grd.msg.rnan.data[av.grd.selectedNdx].formatNum(2);
+      if (av.grd.msg.rorn.data[av.grd.selectedNdx]) cellOrn.innerHTML = av.grd.msg.rorn.data[av.grd.selectedNdx].formatNum(2);
+      if (av.grd.msg.roro.data[av.grd.selectedNdx]) cellOro.textContent = av.grd.msg.roro.data[av.grd.selectedNdx].formatNum(2);
+      if (av.grd.msg.rant.data[av.grd.selectedNdx]) cellAnt.textContent = av.grd.msg.rant.data[av.grd.selectedNdx].formatNum(2);
+      if (av.grd.msg.rnor.data[av.grd.selectedNdx]) cellNor.textContent = av.grd.msg.rnor.data[av.grd.selectedNdx].formatNum(2);
+      if (av.grd.msg.rxor.data[av.grd.selectedNdx]) cellXor.textContent = av.grd.msg.rxor.data[av.grd.selectedNdx].formatNum(2);
+      if (av.grd.msg.requ.data[av.grd.selectedNdx]) cellEqu.textContent = av.grd.msg.requ.data[av.grd.selectedNdx].formatNum(2);
+    };
+    
     //console.log('dijit.byId("colorMode").value = ', dijit.byId("colorMode").value, '------------');
     switch (dijit.byId("colorMode").value) {
       case 'Fitness':
@@ -232,7 +240,7 @@ av.grd.drawKids = function () {  //Draw the children of parents
   var cc, ii, rr, xx, yy, lngth, ndx;
   //console.log('mode', dijit.byId("colorMode").value, '; fill', av.grd.fill);
   lngth = av.grd.fill.length;
-  console.log('av.grd.fill.length=',av.grd.fill.length);
+  //console.log('av.grd.fill.length=',av.grd.fill.length);
   if (0<av.grd.fill.length){
     if ("Ancestor Organism" == dijit.byId("colorMode").value) {
       for (ii = 0; ii < lngth; ii++) {
@@ -441,8 +449,8 @@ av.grd.drawSelected = function () {
   if (1 > thick) thick = 1;
   av.grd.selectX = av.grd.marginX + av.grd.xOffset + av.grd.selectedCol * av.grd.cellWd;
   av.grd.selectY = av.grd.marginY + av.grd.yOffset + av.grd.selectedRow * av.grd.cellHt;
-  av.grd.drawCellOutline(thick, av.grd.SelectedColor, av.grd.selectX, av.grd.selectY, av.grd.cellWd, av.grd.cellHt)
-}
+  av.grd.drawCellOutline(thick, av.grd.SelectedColor, av.grd.selectX, av.grd.selectY, av.grd.cellWd, av.grd.cellHt);
+};
 
 av.grd.drawCellOutline = function (lineThickness, color, xx, yy, wide, tall) {
   'use strict';

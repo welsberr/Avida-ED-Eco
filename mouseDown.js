@@ -120,7 +120,7 @@ av.mouse.downGridCanvasFn = function (evt) {
       //if ancestor not null then there is a 'kid' there.
       //if (null != av.grd.msg.ancestor.data[av.grd.selectedNdx]) {
       if (av.grd.msg.ancestor) {
-        console.log('SelectedNdx', av.grd.selectedNdx, '; ancestor', av.grd.msg.ancestor.data[av.grd.selectedNdx]);
+        //console.log('SelectedNdx', av.grd.selectedNdx, '; ancestor', av.grd.msg.ancestor.data[av.grd.selectedNdx]);
         if ('-' == av.grd.msg.ancestor.data[av.grd.selectedNdx] || '-' == av.grd.msg.ancestor.data[av.grd.selectedNdx]) {
           dijit.byId('mnCnOrganismTrace').attr('disabled', true);
           dijit.byId('mnFzOrganism').attr('disabled', true);  //kid not selected, then it cannot be save via the menu

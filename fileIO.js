@@ -63,13 +63,13 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
     //if (av.debug.fio) console.log('before call procesfiles');
     av.fio.zipPathRoot = null;
     for (var nameOfFileContainedInZipFile in av.fio.zipfile.files) {
-      /*Mac generated workspaces have the string '.avidaedworkspace/' before the folders for each freezerItem.
+      /*Mac generated workspaces have the string '.avidaedworkspace/'  or '.avidaWs/' before the folders for each freezerItem.
        This prefix needs to be removed if present. av.fio.zipPathRoot will be assigned the beginning of the path name within the zip file.
        */
       //if (av.debug.fio) console.log('nameOfFileContainedInZipFile=', nameOfFileContainedInZipFile, '; fileContainedInZipFile.asText()=', fileContainedInZipFile.asText());
       //if (av.debug.fio) console.log('nameOfFileContainedInZipFile=', nameOfFileContainedInZipFile);
       if (null === av.fio.zipPathRoot) {
-        if (0 < nameOfFileContainedInZipFile.indexOf('avidaedworkspace') && 0 > nameOfFileContainedInZipFile.indexOf('MACOSX')) {
+        if (0 < nameOfFileContainedInZipFile.indexOf('avidaWs') && 0 > nameOfFileContainedInZipFile.indexOf('MACOSX')) {
           av.fio.zipPathRoot = wsb('/', nameOfFileContainedInZipFile);
         }
         else if (0 > nameOfFileContainedInZipFile.indexOf('MACOSX')) {av.fio.zipPathRoot='';}
@@ -363,7 +363,7 @@ av.fio.fzSaveCurrentWorkspaceFn = function () {
                       + 'You must change the file entryname.txt, to change the name within Avida-ED';
   if (av.fzr.file) {
     for (var fname in av.fzr.file) {
-      WSzip.file(folderName + '.avidaedworkspace/' + fname, av.fzr.file[fname]);
+      WSzip.file(folderName + '.avidaWs/' + fname, av.fzr.file[fname]);
       
       if (av.debug.fio) console.log('fname=', fname);
        //console.log('end of fname=', fname.substring(fname.length-13, fname.length), '; len=', fname.length-13);
@@ -372,7 +372,7 @@ av.fio.fzSaveCurrentWorkspaceFn = function () {
         itemName = aFolderName + av.utl.makeFileName(av.fzr.file[fname]) + '.txt';
         itemNameContent = itemName + '\n\n' + generalContent;
         if (av.debug.fio) console.log('itemName=', itemName);
-        WSzip.file(folderName + '.avidaedworkspace/' + itemName, itemNameContent);        
+        WSzip.file(folderName + '.avidaWs/' + itemName, itemNameContent);        
         numFiles++;
       };
       numFiles++;

@@ -403,7 +403,7 @@ av.mouse.arrowKeysOnGrid = function (event) {
     }
     av.grd.drawGridSetupFn('av.mouse.arrowKeysOnGrid');
   }
-}
+};
 
 //No longer in use delete later
 /*

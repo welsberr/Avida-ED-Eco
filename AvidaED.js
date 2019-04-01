@@ -863,7 +863,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     if (!av.brs.isSafari) {
     //if (true) {
       av.post.addUser('Button: mnFlSaveAs');
-      var suggest = 'avidaWS.avidaedworkspace.zip';
+      var suggest = 'avidaWS.avidaWs.zip';
       if (av.fio.userFname) {
         if (0 < av.fio.userFname.length) suggest = av.fio.userFname;
       }

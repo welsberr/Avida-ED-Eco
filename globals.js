@@ -16,7 +16,7 @@ av.debug.root = false;  //statements that look for failiers when the code execut
 av.debug.bool = false;  //av.debug statements that look for errors outlining logic functions
 av.debug.mouse = false;  //av.debug statements about non-dojo drag and drop
 av.debug.dnd = false;  //debu statements about dojo dnd
-av.debug.msg = true;  //messages to and from avida
+av.debug.msg = false;  //messages to and from avida
 av.debug.trace = false;  //organism page
 av.debug.grid = false;  //population grid
 av.debug.popCon = false;  //population Controls
@@ -276,7 +276,7 @@ av.ind = {};
 av.ind.cycle = 0;
 av.ind.update_timer = null;
 av.ind.labeled = [];
-for (ii=0; ii <101; ii++) { av.ind.labeled[ii] = false}
+for (ii=0; ii <101; ii++) { av.ind.labeled[ii] = false;}
 
 av.aww = {}; //avida web worker
 
@@ -393,11 +393,12 @@ av.frd = {}; // file data read
 av.fio = {}; //file input output data
 av.fio.dbName = 'wsdb';  //for workspace database
 //av.fio.wsdb = null;
-av.fio.defaultFname = 'default_Web.avidaedworkspace.zip';
-av.fio.defaultFname = 'default.avidaedworkspace.zip';
+av.fio.defaultFname = 'default.avidaWs.zip';
+//av.fio.defaultFname = 'default.avidaedworkspace.zip';
 av.aww.uiWorker = null;
 av.fio.fileReadingDone = false;
-av.fio.defaultUserFname = 'avidaWS.avidaedworkspace.zip';
+//av.fio.defaultUserFname = 'avidaWS.avidaedworkspace.zip';
+av.fio.defaultUserFname = 'avidaWS.avidaWs.zip';
 av.fio.userFname = av.fio.defaultUserFname;
 av.fio.csvFileName = 'avidaDataRecorder.csv';
 av.fio.useDefault = true;
@@ -660,15 +661,15 @@ av.grd.clearGrd = function () {
   av.grd.mxFit = 1.0;   //store initial maximum fitness during an experiment
   av.grd.mxCost = 380;  //store initial maximum Offspring Cost during an experiment
   av.grd.mxRate = 80;   //store initial maximum Energy Acq. Rate during an experiment
-  av.grd.mxRnot = 1.0;  //store initial maximum not Resource in any cell during an experiment.
-  av.grd.mxRnan = 1.0;  //store initial maximum nan Resource in any cell during an experiment.
-  av.grd.mxRand = 1.0;  //store initial maximum and Resource in any cell during an experiment.
-  av.grd.mxRorn = 1.0;  //store initial maximum orn Resource in any cell during an experiment.
-  av.grd.mxRoro = 1.0;  //store initial maximum oro Resource in any cell during an experiment.
-  av.grd.mxRant = 1.0;  //store initial maximum ant Resource in any cell during an experiment.
-  av.grd.mxRnor = 1.0;  //store initial maximum nor Resource in any cell during an experiment.
-  av.grd.mxRxor = 1.0;  //store initial maximum xor Resource in any cell during an experiment.
-  av.grd.mxRequ = 1.0;  //store initial maximum equ Resource in any cell during an experiment.
+  av.grd.mxRnot = 0.1;  //store initial maximum not Resource in any cell during an experiment.
+  av.grd.mxRnan = 0.1;  //store initial maximum nan Resource in any cell during an experiment.
+  av.grd.mxRand = 0.1;  //store initial maximum and Resource in any cell during an experiment.
+  av.grd.mxRorn = 0.1;  //store initial maximum orn Resource in any cell during an experiment.
+  av.grd.mxRoro = 0.1;  //store initial maximum oro Resource in any cell during an experiment.
+  av.grd.mxRant = 0.1;  //store initial maximum ant Resource in any cell during an experiment.
+  av.grd.mxRnor = 0.1;  //store initial maximum nor Resource in any cell during an experiment.
+  av.grd.mxRxor = 0.1;  //store initial maximum xor Resource in any cell during an experiment.
+  av.grd.mxRequ = 0.1;  //store initial maximum equ Resource in any cell during an experiment.
   
 
   av.grd.rescaleTolerance = 0.1;
