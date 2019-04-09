@@ -1237,12 +1237,12 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
 
   av.dom.avidianOutline.onclick = function () {
     av.post.addUser('Button: avidianOutline; av.ui.showOutlineFlag='+ av.ui.showOutlineFlag);
-    if ('Resources have Avidian Outline' == av.dom.avidianOutline.innerHTML) {
-      av.dom.avidianOutline.innerHTML = 'Resources without outline';
+    if ('Resource Mode: hide Avidian Outlines' == av.dom.avidianOutline.innerHTML) {
+      av.dom.avidianOutline.innerHTML = 'Resource Mode: show Avidian Outlines';
       av.ui.showOutlineFlag = false;
       console.log('av.ui.showOutlineFlag='+ av.ui.showOutlineFlag);
     } else {
-      av.dom.avidianOutline.innerHTML = 'Resources have Avidian Outline';
+      av.dom.avidianOutline.innerHTML = 'Resource Mode: hide Avidian Outlines';
       console.log('av.ui.showOutlineFlag='+ av.ui.showOutlineFlag);
     av.ui.showOutlineFlag = true;
     }
@@ -1879,8 +1879,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   });
 
   // initialize needs to be in AvidaED.js
-  av.grd.popChartInit = function () {
-    console.log('in av.grd.popChartInit');
+  av.grd.popChartInit = function (from) {
+    console.log(from, 'called av.grd.popChartInit');
     av.pch.clearPopChrt();
     av.pch.divSize('av.grd.popChartInit');
     var popData = av.pch.data;
@@ -1899,7 +1899,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       //  width: av.pch.wd,
       //  height: av.pch.ht
       //};
-      console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
+      //console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
       av.pch.update = {
         autorange: true,
         width: av.pch.wd,

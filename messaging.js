@@ -107,6 +107,7 @@ av.msg.readMsg = function (ee) {
         break;
       case 'notification':
         if (av.debug.msg) console.log('avida:notify: ',msg.message);
+        console.log('avida:notify: ',msg.message);
         if (av.debug.msg) userMsgLabel.textContent = 'Avidia notification: ' + msg.message; //with splash screen no longer need ready message
         // Worked on a better splash screen gif. Used licecap, an application on the Mac to record the gif.
         // Then used http://gifmaker.me/reverser/ to make a gif in reverse time order. Then Wesley used gifsicle
@@ -115,7 +116,7 @@ av.msg.readMsg = function (ee) {
         appReloadDialog.hide();
         av.ui.loadOK = true;
         if (av.debug.msg) console.log('before calling av.grd.popChartInit');
-        av.grd.popChartInit();
+        av.grd.popChartInit('notification');
         break;
       case 'warning':
         userMsgLabel.textContent = 'Avida warning at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);

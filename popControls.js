@@ -526,7 +526,7 @@ av.ptd.resetDishFn = function (need2sendRest2avida) { //Need to reset all settin
   av.ptd.makePauseState();
   av.grd.clearGrd();
   if (av.debug.grid) console.log('before calling av.grd.popChartInit');
-  av.grd.popChartInit();
+  av.grd.popChartInit('restDishFn');
   av.grd.runState = 'prepping';
   dijit.byId('mnCnOrganismTrace').attr('disabled', true);
   dijit.byId('mnFzOrganism').attr('disabled', true);
@@ -567,6 +567,27 @@ av.ptd.resetDishFn = function (need2sendRest2avida) { //Need to reset all settin
   // re-write grid if that page is visible
   av.grd.popChartClear();
   av.grd.drawGridSetupFn('av.ptd.resetDishFn');
+  
+  // reset debug values. 
+    mxNot.textContent = "";
+    mxNan.textContent = "";
+    mxAnd.textContent = "";
+    mxOrn.textContent = "";
+    mxOro.textContent = "";
+    mxAnt.textContent = "";
+    mxNor.textContent = "";
+    mxXor.textContent = "";
+    mxEqu.textContent = "";
+    
+    cellNot.textContent = "";
+    cellNan.textContent = "";
+    cellAnd.textContent = "";
+    cellOrn.textContent = "";
+    cellOro.textContent = "";
+    cellAnt.textContent = "";
+    cellNor.textContent = "";
+    cellXor.textContent = "";
+    cellEqu.textContent = "";
 };
 
 //clear logic Buttons

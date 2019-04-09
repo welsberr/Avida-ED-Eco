@@ -100,10 +100,9 @@ av.grd.setMapData = function () {
     }
     else av.grd.reScaleRate = '';  
     
-    //if (1> av.grd.msg.update) console.log('upate   not     nan     and     orn     ant     nor     xor     equ');
     if (av.grd.msg.rnot.maxVal) mxNot.textContent = av.grd.msg.rnot.maxVal.formatNum(2);
-    if (av.grd.msg.rnan.maxVal) mxNan.textContent = av.grd.msg.rnot.maxVal.formatNum(2);
-    if (av.grd.msg.rand.maxVal) mxAnd.textContent = av.grd.msg.rnan.maxVal.formatNum(2);
+    if (av.grd.msg.rnan.maxVal) mxNan.textContent = av.grd.msg.rnan.maxVal.formatNum(2);
+    if (av.grd.msg.rand.maxVal) mxAnd.textContent = av.grd.msg.rand.maxVal.formatNum(2);
     if (av.grd.msg.rorn.maxVal) mxOrn.textContent = av.grd.msg.rorn.maxVal.formatNum(2);
     if (av.grd.msg.roro.maxVal) mxOro.textContent = av.grd.msg.roro.maxVal.formatNum(2);
     if (av.grd.msg.rant.maxVal) mxAnt.textContent = av.grd.msg.rant.maxVal.formatNum(2);
@@ -112,15 +111,15 @@ av.grd.setMapData = function () {
     if (av.grd.msg.requ.maxVal) mxEqu.textContent = av.grd.msg.requ.maxVal.formatNum(2);
     
     if (av.grd.selectedNdx) {
-      if (av.grd.msg.rnot.data[av.grd.selectedNdx]) cellNot.textContent = av.grd.msg.rnot.data[av.grd.selectedNdx].formatNum(2);
-      if (av.grd.msg.rnan.data[av.grd.selectedNdx]) cellNan.textContent = av.grd.msg.rnot.data[av.grd.selectedNdx].formatNum(2);
-      if (av.grd.msg.rand.data[av.grd.selectedNdx]) cellAnd.textContent = av.grd.msg.rnan.data[av.grd.selectedNdx].formatNum(2);
-      if (av.grd.msg.rorn.data[av.grd.selectedNdx]) cellOrn.innerHTML = av.grd.msg.rorn.data[av.grd.selectedNdx].formatNum(2);
-      if (av.grd.msg.roro.data[av.grd.selectedNdx]) cellOro.textContent = av.grd.msg.roro.data[av.grd.selectedNdx].formatNum(2);
-      if (av.grd.msg.rant.data[av.grd.selectedNdx]) cellAnt.textContent = av.grd.msg.rant.data[av.grd.selectedNdx].formatNum(2);
-      if (av.grd.msg.rnor.data[av.grd.selectedNdx]) cellNor.textContent = av.grd.msg.rnor.data[av.grd.selectedNdx].formatNum(2);
-      if (av.grd.msg.rxor.data[av.grd.selectedNdx]) cellXor.textContent = av.grd.msg.rxor.data[av.grd.selectedNdx].formatNum(2);
-      if (av.grd.msg.requ.data[av.grd.selectedNdx]) cellEqu.textContent = av.grd.msg.requ.data[av.grd.selectedNdx].formatNum(2);
+      if (undefined !== av.grd.msg.rnot.data[av.grd.selectedNdx]) cellNot.textContent = av.grd.msg.rnot.data[av.grd.selectedNdx].formatNum(2);
+      if (undefined !== av.grd.msg.rnan.data[av.grd.selectedNdx]) cellNan.textContent = av.grd.msg.rnan.data[av.grd.selectedNdx].formatNum(2);
+      if (undefined !== av.grd.msg.rand.data[av.grd.selectedNdx]) cellAnd.textContent = av.grd.msg.rand.data[av.grd.selectedNdx].formatNum(2);
+      if (undefined !== av.grd.msg.rorn.data[av.grd.selectedNdx]) cellOrn.textContent = av.grd.msg.rorn.data[av.grd.selectedNdx].formatNum(2);
+      if (undefined !== av.grd.msg.roro.data[av.grd.selectedNdx]) cellOro.textContent = av.grd.msg.roro.data[av.grd.selectedNdx].formatNum(2);
+      if (undefined !== av.grd.msg.rant.data[av.grd.selectedNdx]) cellAnt.textContent = av.grd.msg.rant.data[av.grd.selectedNdx].formatNum(2);
+      if (undefined !== av.grd.msg.rnor.data[av.grd.selectedNdx]) cellNor.textContent = av.grd.msg.rnor.data[av.grd.selectedNdx].formatNum(2);
+      if (undefined !== av.grd.msg.rxor.data[av.grd.selectedNdx]) cellXor.textContent = av.grd.msg.rxor.data[av.grd.selectedNdx].formatNum(2);
+      if (undefined !== av.grd.msg.requ.data[av.grd.selectedNdx]) cellEqu.textContent = av.grd.msg.requ.data[av.grd.selectedNdx].formatNum(2);
     };
     
     //console.log('dijit.byId("colorMode").value = ', dijit.byId("colorMode").value, '------------');
@@ -231,7 +230,7 @@ av.grd.drawParent = function () {
       }
     }
   }
-}
+};
 
 //only one line changes between the two loops. Thought it would be faster to do the if outside the loop rather than
 //inside the loop. Need to time things to see if it makes a difference
@@ -277,12 +276,19 @@ av.grd.drawKids = function () {  //Draw the children of parents
             console.log('fill[', ii, '] = ', av.grd.fill[ii], 'ancestor != -;   =======================================');
           } //not viable
         }
-        else if (0 == av.grd.fill[ii]) {
+        else if (0 == av.grd.fill[ii] && 'Ancestor Organism' == dijit.byId("colorMode").value) {
           //console.log('fill[', ii, '] = ', av.grd.fill[ii], 'default kid color');
           av.grd.cntx.fillStyle = av.color.defaultKidColor;
         }
-        else if (0 > av.grd.fill[ii] || ('Offspring Cost' == dijit.byId("colorMode").value && 999 < av.grd.fill[ii])) {
-          console.log('fill[', ii, '] = ', av.grd.fill[ii], 'fill out of bounds');
+        else if (0 > av.grd.fill[ii]) {
+          //console.log('fill[', ii, '] = ', av.grd.fill[ii], '; type=',dijit.byId("colorMode").value,'; fill out of bounds');
+          console.log('fill out of bounds');
+          av.grd.fill[ii] = 0;
+          av.grd.cntx.fillStyle = av.utl.get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax);
+        }
+        else if ('Offspring Cost' == dijit.byId("colorMode").value && 999 < av.grd.fill[ii]) {
+          //console.log('fill[', ii, '] = ', av.grd.fill[ii], 'Offspring Cost out of bounds');
+          console.log('Offspring Cost out of bounds');
           av.grd.cntx.fillStyle = '#090';
         }
         else {  //av.utl.get_color0 = function(cmap, dx, d1, d2)
@@ -305,6 +311,7 @@ av.grd.findLogicOutline = function () {
   var ii, lngth;
   av.ptd.allOff = true;
   //console.log('not',av.grd.msg.not.data);
+  //Should there be error checking here. It indicates a problem with the envioronment.cfg file. 
   lngth = av.grd.msg.not.data.length;
   for (ii = 0; ii < lngth; ii++) {
     av.grd.logicOutline[ii] = 1;
@@ -383,8 +390,8 @@ av.grd.cellConflict = function (NewCols, NewRows) {
             flg = av.grd.cellFilled(avNdx, ii);
           }
           else {
-            flg = true
-          }
+            flg = true;
+          };
           if (!flg) {
             av.parents.col[av.parents.handNdx[ii]] = tryCol;
             av.parents.row[av.parents.handNdx[ii]] = tryRow;
@@ -395,7 +402,7 @@ av.grd.cellConflict = function (NewCols, NewRows) {
       }
     }
   }
-}
+};
 
 //Draw the outline of all cells that contain avidians when a resource is the main information in the grid
 av.grd.DrawAvidaOutline = function () {
