@@ -475,23 +475,9 @@ require([
       av.dnd.makeMove(source, nodes, target);
     }
   });
-
-  av.dnd.fzConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of fzConfig
-    if ('fzConfig' === target.node.id) {
-      av.ui.num = av.fzr.cNum;  //hold current cNum to see if it changes in av.dnd.landConfig
-      av.dnd.landFzConfig(source, nodes, target);  //needed as part of call to contextMenu
-      //if (av.ui.num !== av.fzr.cNum) { av.fwt.makeFzrConfig(av.fzr.cNum); }
-    }
-  });
-
-  av.dnd.fzOrgan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of fzOrgan
-    if ('fzOrgan' === target.node.id) {
-      av.dnd.landFzOrgan(source, nodes, target);
-    }
-  });
   
-  // based 
-  function sortDnD(dndSection){
+  // based on https://stackoverflow.com/questions/27529727/sorta-b-does-not-work-in-dojo-dnd-source
+  av.dnd.sortDnD = function (dndSection){
     // Input: dndSection = the text of the class os the Dojo DnD section with elements to be sorted
     // e.g., var dndSection = 'fzOrgan'; sortDnD(dndSection);
     // actually full class name is ".element dojoDndItem" to query
@@ -507,68 +493,80 @@ require([
         function(a, idx) { 
             dojo.byId(dndSection).insertBefore(a, dojo.byId(dndSection).childNodes[idx]);  
     });
-  }
+  };
   
   // Connect sections to sortDnD function
   // Section names: fcConfig, fzOrgan, fzWorld, fzTdish, fzMdish, fzRdish
   
-  // 2019-04-14: test grabbing organisms, dropping in grid, then from setup textbox to freezer, appears to work
-  dojo.connect( av.dnd.fzOrgan, "onDndDrop", function( source, nodes, copy, target ) {
-    if ('fzOrgan' === target.node.id) {
-      //console.log('source=',source,'; nodes=', nodes);
-      //console.log('; copy=', copy, '; target=', target);
-      //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
-      nodes.forEach(function(node) {
-           sortDnD('fzOrgan');
-      });
-    }
-  });
-  
     // 2019-04-14: test dragging @default in, then back to freeezer with name change; sort appears to work.
     dojo.connect( av.dnd.fzConfig, "onDndDrop", function( source, nodes, copy, target ) {
+    //This triggers for every dnd drop, not just those of fzConfig  
     if ('fzConfig' === target.node.id) {
-      //console.log('source=',source,'; nodes=', nodes);
+      console.log('fzConfig=', av.dnd.fzConfig);
+      console.log('.childNodes=', av.dnd.fzConfig.childNodes);
+      console.log('nodes=', nodes);
       //console.log('; copy=', copy, '; target=', target);
       //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
+      av.dnd.landFzConfig(source, nodes, target);  //needed as part of call to contextMenu
       nodes.forEach(function(node) {
-           sortDnD('fzConfig');
+      av.dnd.sortDnD('fzConfig');
       });
     }
   });
 
-    /* 2019-04-14: Test fails:
-     * postData= {version: "2017_0323", userInfo: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) Ap…ML, like Gecko) Chrome/73.0.3683.86 Safari/537.36", screenSize: "3008 x 1692", comment: "userComment", error: "Error: Uncaught TypeError: Cannot read property '0…rom http://localhost:8003/fileDataWrite.js:411:61", …}
-fileDataWrite.js:411 Uncaught TypeError: Cannot read property '0' of undefined
-    at Object.av.fwt.makeCSV (fileDataWrite.js:411)
-    at Object.av.fwt.makeFzrCSV (fileDataWrite.js:342)
-    at Object.av.fwt.makeFzrWorld (fileDataWrite.js:255)
-    at Object.av.dnd.landFzWorldFn (dojoDnd.js:750)
-    at Object.<anonymous> (AvidaED.js:708)
-    at Object._360 [as onDndDrop] (dojo.js:8)
-    at _34b.<anonymous> (dojo.js:8)
-    at _34b._360 [as on/dnd/drop] (dojo.js:8)
-    at Function.on.emit (dojo.js:8)
-    at Function.on.emit (dojo.js:8)
-     */
-    dojo.connect( av.dnd.fzWorld, "onDndDrop", function( source, nodes, copy, target ) {
-    if ('fzWorld' === target.node.id) {
-      //console.log('source=',source,'; nodes=', nodes);
-      //console.log('; copy=', copy, '; target=', target);
-      //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
+  // 2019-04-14: test grabbing organisms, dropping in grid, then from setup textbox to freezer, appears to work
+  dojo.connect( av.dnd.fzOrgan, "onDndDrop", function( source, nodes, copy, target ) {
+    //This triggers for every dnd drop, not just those of fzOrgan
+    if ('fzOrgan' === target.node.id) {
+      console.log('fzOrgan=', av.dnd.fzOrgan);
+      console.log('.childNodes=', av.dnd.fzOrgan.childNodes);
+      console.log('nodes=', nodes);
+      av.dnd.landFzOrgan(source, nodes, target);
       nodes.forEach(function(node) {
-           sortDnD('fzWorld');
+        av.dnd.sortDnD('fzOrgan');
       });
+    }
+  });
+  
+  dojo.connect( av.dnd.fzWorld, "onDndDrop", function( source, nodes, copy, target ) {
+    //This triggers for every dnd drop, not just those of activeConfig
+    if ('fzWorld' === target.node.id) {
+      var pkg = {};
+      av.ui.num = av.fzr.wNum;
+      pkg.source = source;
+      pkg.nodes = nodes;
+      pkg.copy = copy;
+      pkg.target = target;
+      av.dnd.landFzWorldFn(pkg);
+      nodes.forEach(function(node) {
+        av.dnd.sortDnD('fzWorld');
+      });
+      if (av.ui.num !== av.fzr.wNum) {
+        av.fwt.makeFzrWorld(av.ui.num);
+      } //tiba need to check this
+    }
+  });
+    
+  av.dnd.fzTdish.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
+    if ('fzTdish' === target.node.id) {
+      var pkg = {};
+      av.ui.num = av.fzr.wNum;
+      pkg.source = source;
+      pkg.nodes = nodes;
+      pkg.copy = copy;
+      pkg.target = target;
+      av.dnd.landfzTdishFn(pkg);
+      if (av.ui.num !== av.fzr.wNum) {
+        av.fwt.makeFzrWorld(av.ui.num);
+      } //tiba need to check this
     }
   });
 
     // 2019-04-14: Untested.
     dojo.connect( av.dnd.fzTdish, "onDndDrop", function( source, nodes, copy, target ) {
     if ('fzTdish' === target.node.id) {
-      //console.log('source=',source,'; nodes=', nodes);
-      //console.log('; copy=', copy, '; target=', target);
-      //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
       nodes.forEach(function(node) {
-           sortDnD('fzTdish');
+        av.dnd.sortDnD('fzTdish');
       });
     }
   });
@@ -576,11 +574,8 @@ fileDataWrite.js:411 Uncaught TypeError: Cannot read property '0' of undefined
     // 2019-04-14: Untested.
     dojo.connect( av.dnd.fzMdish, "onDndDrop", function( source, nodes, copy, target ) {
     if ('fzMdish' === target.node.id) {
-      //console.log('source=',source,'; nodes=', nodes);
-      //console.log('; copy=', copy, '; target=', target);
-      //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
       nodes.forEach(function(node) {
-           sortDnD('fzMdish');
+        av.dnd.sortDnD('fzMdish');
       });
     }
   });
@@ -588,17 +583,11 @@ fileDataWrite.js:411 Uncaught TypeError: Cannot read property '0' of undefined
     // 2019-04-14: Untested.
     dojo.connect( av.dnd.fzRdish, "onDndDrop", function( source, nodes, copy, target ) {
     if ('fzRdish' === target.node.id) {
-      //console.log('source=',source,'; nodes=', nodes);
-      //console.log('; copy=', copy, '; target=', target);
-      //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
       nodes.forEach(function(node) {
-           sortDnD('fzRdish');
+        av.dnd.sortDnD('fzRdish');
       });
     }
   });
-
-
-
 
   //console.log('av.dnd.ancestorBox', av.dnd.ancestorBox);
   av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
@@ -701,38 +690,6 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       if (av.debug.dnd) console.log('graphPop2: s, t', source, target);
       av.dnd.landgraphPop2(av.dnd, source, nodes, target);
       av.anl.AnaChartFn();
-    }
-  });
-
-  //need to figure out active configuration and active world
-  av.dnd.fzWorld.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
-    if ('fzWorld' === target.node.id) {
-      var pkg = {};
-      av.ui.num = av.fzr.wNum;
-      pkg.source = source;
-      pkg.nodes = nodes;
-      pkg.copy = copy;
-      pkg.target = target;
-      av.dnd.landFzWorldFn(pkg);
-      if (av.ui.num !== av.fzr.wNum) {
-        av.fwt.makeFzrWorld(av.ui.num);
-      } //tiba need to check this
-    }
-  });
-  
-  
-  av.dnd.fzTdish.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
-    if ('fzTdish' === target.node.id) {
-      var pkg = {};
-      av.ui.num = av.fzr.wNum;
-      pkg.source = source;
-      pkg.nodes = nodes;
-      pkg.copy = copy;
-      pkg.target = target;
-      av.dnd.landfzTdishFn(pkg);
-      if (av.ui.num !== av.fzr.wNum) {
-        av.fwt.makeFzrWorld(av.ui.num);
-      } //tiba need to check this
     }
   });
 

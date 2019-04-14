@@ -89,7 +89,10 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
         //console.log('av.fio.fName', av.fio.fName, '; av.fio.anID', av.fio.anID, '; tmpr=', tmpr, '; av.fzr.fziType=',av.fzr.fziType);
         av.fio.processFiles(loadConfigFlag);
       }  //do not load configfile
-    }
+    };
+    //want to sort TestDishes here
+    av.dnd.sortDnD('fzTdish');
+
     //note setup form is updated when the files are read.
     //if (av.debug.fio) console.log('after read loop: fzr', av.fzr);
     av.fio.fileReadingDone = true;
