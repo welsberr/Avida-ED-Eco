@@ -5,20 +5,41 @@ var dijit = dijit || {};  //incase av already exists
 
 av.fio.addFzItem = function(dndSection, name, type, fileNum) {
   'use strict';
+  var domid;
   if (undefined != dndSection) {
-    dndSection.insertNodes(false, [{data: name, type: [type]}]);
-    dndSection.sync();
-    var mapItems = Object.keys(dndSection.map);
-    var domid = mapItems[mapItems.length - 1];
+    //var items = av.dnd.getAllItems(av.dnd.activeOrgan);
+    //console.log('name=',name,'; items=',items);
+    //var nodes = dndSection.getAllNodes();
+    //console.log('name=',name,'; nodes=',nodes); 
+    var names = [];
+    var domItems = Object.keys(dndSection.map);
+    var lngth = domItems.length;
+    
+    if (false) {
+    //if (0 < lngth) {
+      //trying to figure out sorting 
+      for (var ii = 0; ii < lngth; ii++) {
+        names[ii] = dndSection.map[domItems[ii]].data;
+      };
+      
+    }
+    else {
+      dndSection.insertNodes(false, [{data: name, type: [type]}]);
+      dndSection.sync();
+      var mapItems = Object.keys(dndSection.map);
+      domid = mapItems[mapItems.length - 1];
+    };
+    
+    //var domID = av.dnd.getDomId(configName, target);
+    
 
-    //create a right av.mouse-click context menu for the item just created.
     if (av.debug.fio) console.log('fileNum=', fileNum, '; name=', name, '; Section=', dndSection.node.id);
     //console.log('fileNum', fileNum, '; name', name, '; Section', dndSection.node.id, '; type', type);
 
+    //create a right av.mouse-click context menu for the item just created.
     if (0 < fileNum) {
-      av.dnd.contextMenu(dndSection, domid);
+      av.dnd.contextMenu(dndSection, domid, 'av.fio.addFzItem');
     }
-    //av.dnd.contextMenu(dndSection, domid);
     return domid;
   }
   else {
@@ -55,6 +76,7 @@ av.frd.add2freezerFromFile = function (loadConfigFlag) {
   else { name = wsb('\n', av.fio.thisfile.asText()); }
 
   //if (av.debug.fio) console.log('type ', type, '; dir', dir, '; num', num);
+  
   switch (type) {
     case 'c':
       domid = av.fio.addFzItem(av.dnd.fzConfig, name, type, num);
@@ -142,6 +164,7 @@ av.fio.processFiles = function (loadConfigFlag){
   //if (av.debug.fio) console.log('anID=', av.fio.anID, '; fileType=', fileType, '; fziType=', av.fzr.fziType);
     switch (fileType) {
       case 'entryname.txt':
+        // only for dealing with the multi-dish section
         if ('subDish' != av.fzr.fziType) {
           av.frd.add2freezerFromFile(loadConfigFlag);
           av.fzr.usrFileLoaded = true;
@@ -168,6 +191,7 @@ av.fio.processFiles = function (loadConfigFlag){
       case 'tr3':
       case 'tr4':
       case 'update':
+        // deal with multidish 
         if (loadConfigFlag) {
           if ('c0/avida.cfg' == av.fio.anID) {
             av.frd.avidaCFG2form(av.fio.thisfile.asText());
@@ -176,9 +200,11 @@ av.fio.processFiles = function (loadConfigFlag){
             av.frd.environmentCFG2form(av.fio.thisfile.asText().trim());
           }
         }
+        //Process dishes with ancesotrs. 
         if ('ancestors' == fileType ||'ancestors_manual' == fileType) {
           av.fio.anID = av.fio.anID + '.txt';
         }
+        //put the text of the file in the freezer
         av.fzr.file[av.fio.anID] = av.fio.thisfile.asText().trim();
         //if (av.debug.fio) console.log('FileType is ', fileType, '; filepath = ', av.fio.anID);
         break;

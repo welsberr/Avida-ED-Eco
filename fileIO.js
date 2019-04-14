@@ -73,8 +73,6 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
           av.fio.zipPathRoot = wsb('/', nameOfFileContainedInZipFile);
         }
         else if (0 > nameOfFileContainedInZipFile.indexOf('MACOSX')) {av.fio.zipPathRoot='';}
-        //if (av.debug.fio) console.log('Path=', av.fio.zipPathRoot, '; __a=', nameOfFileContainedInZipFile.indexOf('.avidaedworkspace/'),
-        //  '; __b=',nameOfFileContainedInZipFile.indexOf('MACOSX'));
       }
       av.fio.thisfile = av.fio.zipfile.files[nameOfFileContainedInZipFile];
       av.fio.fName = nameOfFileContainedInZipFile;
@@ -258,6 +256,8 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
         }
         //console.log('freezer', av.fzr);
         av.fio.fixFname();
+        
+        
         if ('populationBlock' === av.ui.page) av.grd.drawGridSetupFn('av.fio.importZipRead');
       }
       catch (error) {
@@ -267,6 +267,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
     };
   };
 
+//
 av.fio.fixFname = function() {
   'use strict';
   var domid, name, type, dir;

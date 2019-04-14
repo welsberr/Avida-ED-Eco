@@ -184,7 +184,7 @@ av.dnd.lndActiveConfig = function (move) {
   if ('c' == move.target.map[domid].type[0] || 'w' == move.target.map[domid].type[0]) {
     move.target.map[domid].type[0]= 'b';
     av.frd.updateSetup('av.dnd.lndActiveConfig');                  //call the avida-ED 3.0 style setup page
-    av.msg.setupType = 'standard'
+    av.msg.setupType = 'standard';
   }
   else {
     move.target.map[domid].type[0] = 'v';   //type is test or populated test
@@ -344,7 +344,7 @@ av.dnd.landFzConfig = function (source, nodes, target) {
       av.fzr.cNum++;
 
       //create a right av.mouse-click context menu for the item just created.
-      av.dnd.contextMenu(target, domID);
+      av.dnd.contextMenu(target, domID, 'av.dnd.landFzConfig');
       av.fzr.saveUpdateState('no');
       if (av.debug.dnd) console.log('dir', av.fzr.dir[domID], '; configName', configName );
     }
@@ -408,7 +408,7 @@ av.dnd.landFzOrgan = function (source, nodes, target) {
       if (av.debug.dnd) console.log('fzOrgan', av.dnd.fzOrgan);
       //create a right av.mouse-click context menu for the item just created.
       if (av.debug.dnd) console.log('before context menu: target',target, '; domId', domid );
-      av.dnd.contextMenu(target, domid);
+      av.dnd.contextMenu(target, domid, 'av.dnd.landFzOrgan');
       av.fzr.saveUpdateState('no');
     }
     else { //Not given a name, so it should NOT be added to the freezer.
@@ -746,7 +746,7 @@ av.dnd.landFzWorldFn = function (pkg) {//source, pkg.nodes, pkg.target) {
       av.fzr.domid['w'+ av.fzr.wNum] = domID;
 
       //create a right av.mouse-click context menu for the item just created.
-      av.dnd.contextMenu(pkg.target, domID);
+      av.dnd.contextMenu(pkg.target, domID, 'av.dnd.landFzWorldFn');
       av.fwt.makeFzrWorld(av.fzr.wNum);
       av.msg.exportExpr('w' + av.fzr.wNum);
       av.msg.sendData();
@@ -1288,10 +1288,11 @@ av.dnd.landgraphPop2 = function (dnd, source, nodes, target) {
 /* ********************************************************************** */
 //used to re-name freezer items after they are created----------------
 //http://jsfiddle.net/bEurr/10/
-av.dnd.contextMenu = function(target, fzItemID) {
+av.dnd.contextMenu = function(target, fzItemID, from) {
   'use strict';
   var fzSection = target.node.id;
-  var dir;
+  console.log(from, 'called av.dnd.contextMenu; fzItemID=', fzItemID, '; fzSection=', fzSection);
+  var dir = '';
   if (av.debug.dnd) console.log('contextMenu; target.node.id=',target.node.id);
   if (av.debug.dnd) console.log('contextMenu; fzItemID=',fzItemID, ' fzSection=', fzSection);
   if (av.debug.dnd) console.log('contextMenu: fzr', av.fzr);

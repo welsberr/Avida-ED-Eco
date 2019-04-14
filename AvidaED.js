@@ -45,6 +45,7 @@
 
 console.log('version from Avida-ED-flex-active_2019_0125');
 var av = av || {};  //incase av already exists
+var dojo = dojo || {};
 
 define.amd.jQuery = true;
 require([
@@ -486,6 +487,41 @@ require([
   av.dnd.fzOrgan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of fzOrgan
     if ('fzOrgan' === target.node.id) {
       av.dnd.landFzOrgan(source, nodes, target);
+    }
+  });
+  
+  
+  function sortDnD(){
+    // actually full class name is ".element dojoDndItem" to query
+    console.log('inside sortDnD');
+    //dojo.query(".element",  dojo.byId("fzOrgan")).sort(
+    dojo.query(".dojoDndItem", "fzOrgan").sort(
+        function( a,b ) {
+            console.log('a=', a);
+            var divs_a = dojo.query('&gt; div.sequence', a);
+            console.log('divs_a=', divs_a);
+            console.log('b=', b);
+            var divs_b = dojo.query('&gt; div.sequence', b);
+            console.log('divs_b', divs_b);
+            //var diValue_b = divs_b[0].innerHTML;
+            //console.log('diValue_b', diValue_b);
+            //var diValue_a = divs_a[0].innerHTML;
+            return (divs_a == divs_b ? 0 : (a.divs_a > b.divs_b ? 1 : -1));
+        }
+    ).forEach(// fire bug debugging cursor move to this section
+        function(a, idx) { 
+            dojo.byId("fzOrgan").insertBefore(a, dojo.byId("fzOrgan").childNodes[idx]);  
+    });
+  }
+  
+  dojo.connect( av.dnd.fzOrgan, "onDndDrop", function( source, nodes, copy, target ) {
+    if ('fzOrgan' === target.node.id) {
+      console.log('source=',source,'; nodes=', nodes);
+      console.log('; copy=', copy, '; target=', target);
+      console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
+      nodes.forEach(function(node) {
+           sortDnD();
+      });
     }
   });
 
@@ -1134,7 +1170,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
+    };
     console.log('contentType=',contentType,'; evt=', evt);  //keep because evt info looks useful for improving mouse code. 
     document.getElementById(contentType).style.display = "flex";
     evt.currentTarget.className += " active";
@@ -1503,6 +1539,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     console.log('av.dnd.fzConfig', av.dnd.fzConfig);
     console.log('av.dnd.fzOrgan', av.dnd.fzOrgan);
     console.log('av.dnd.fzWorld', av.dnd.fzWorld);
+    console.log('av.dnd.fzTdish', av.dnd.fzTdish);
     console.log('av.dnd.activeConfig', av.dnd.activeConfig);
     console.log('av.dnd.activeOrgan', av.dnd.activeOrgan);
     console.log('av.dnd.ancestorBox', av.dnd.ancestorBox);

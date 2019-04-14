@@ -184,7 +184,7 @@ av.mouse.offspringMouse = function(evt, dnd, fio, fzr, gen) {
           if (av.debug.mouse) console.log('Offspring-->freezer, dir', gdir, 'fzr', fzr);
           //create a right mouse-click context menu for the item just created.
           if (av.debug.mouse) console.log('Offspring-->freezer; fzf', fzr);
-          av.dnd.contextMenu(dnd.fzOrgan, av.fzr.domid[gdir]);
+          av.dnd.contextMenu(dnd.fzOrgan, av.fzr.domid[gdir], 'av.mouse.offspringMouse');
         }
       }
     }
@@ -270,7 +270,7 @@ av.mouse.freezeTheKid = function () {
       if (av.debug.mouse) console.log('fzOrgan', av.dnd.fzOrgan);
       if (av.debug.mouse) console.log('Kid-->Snow: dir',gdir, '; fzr', fzr);
       //create a right mouse-click context menu for the item just created.
-      av.dnd.contextMenu(av.dnd.fzOrgan, av.fzr.domid[gdir]);
+      av.dnd.contextMenu(av.dnd.fzOrgan, av.fzr.domid[gdir], 'av.mouse.freezeTheKid');
       av.fzr.saveUpdateState('no');
     }
   }
