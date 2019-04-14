@@ -490,40 +490,115 @@ require([
     }
   });
   
-  
-  function sortDnD(){
+  // based 
+  function sortDnD(dndSection){
+    // Input: dndSection = the text of the class os the Dojo DnD section with elements to be sorted
+    // e.g., var dndSection = 'fzOrgan'; sortDnD(dndSection);
     // actually full class name is ".element dojoDndItem" to query
     console.log('inside sortDnD');
-    //dojo.query(".element",  dojo.byId("fzOrgan")).sort(
-    dojo.query(".dojoDndItem", "fzOrgan").sort(
+    //dojo.query(".element",  dojo.byId(dndSection)).sort(
+    dojo.query(".dojoDndItem", dndSection).sort(
         function( a,b ) {
-            console.log('a=', a);
-            var divs_a = dojo.query('&gt; div.sequence', a);
-            console.log('divs_a=', divs_a);
-            console.log('b=', b);
-            var divs_b = dojo.query('&gt; div.sequence', b);
-            console.log('divs_b', divs_b);
-            //var diValue_b = divs_b[0].innerHTML;
-            //console.log('diValue_b', diValue_b);
-            //var diValue_a = divs_a[0].innerHTML;
-            return (divs_a == divs_b ? 0 : (a.divs_a > b.divs_b ? 1 : -1));
+            var aih = a.innerHTML.toString().toLowerCase();
+            var bih = b.innerHTML.toString().toLowerCase();
+            return (aih == bih ? 0 : (aih > bih ? 1 : -1));
         }
     ).forEach(// fire bug debugging cursor move to this section
         function(a, idx) { 
-            dojo.byId("fzOrgan").insertBefore(a, dojo.byId("fzOrgan").childNodes[idx]);  
+            dojo.byId(dndSection).insertBefore(a, dojo.byId(dndSection).childNodes[idx]);  
     });
   }
   
+  // Connect sections to sortDnD function
+  // Section names: fcConfig, fzOrgan, fzWorld, fzTdish, fzMdish, fzRdish
+  
+  // 2019-04-14: test grabbing organisms, dropping in grid, then from setup textbox to freezer, appears to work
   dojo.connect( av.dnd.fzOrgan, "onDndDrop", function( source, nodes, copy, target ) {
     if ('fzOrgan' === target.node.id) {
-      console.log('source=',source,'; nodes=', nodes);
-      console.log('; copy=', copy, '; target=', target);
-      console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
+      //console.log('source=',source,'; nodes=', nodes);
+      //console.log('; copy=', copy, '; target=', target);
+      //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
       nodes.forEach(function(node) {
-           sortDnD();
+           sortDnD('fzOrgan');
       });
     }
   });
+  
+    // 2019-04-14: test dragging @default in, then back to freeezer with name change; sort appears to work.
+    dojo.connect( av.dnd.fzConfig, "onDndDrop", function( source, nodes, copy, target ) {
+    if ('fzConfig' === target.node.id) {
+      //console.log('source=',source,'; nodes=', nodes);
+      //console.log('; copy=', copy, '; target=', target);
+      //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
+      nodes.forEach(function(node) {
+           sortDnD('fzConfig');
+      });
+    }
+  });
+
+    /* 2019-04-14: Test fails:
+     * postData= {version: "2017_0323", userInfo: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) Ap…ML, like Gecko) Chrome/73.0.3683.86 Safari/537.36", screenSize: "3008 x 1692", comment: "userComment", error: "Error: Uncaught TypeError: Cannot read property '0…rom http://localhost:8003/fileDataWrite.js:411:61", …}
+fileDataWrite.js:411 Uncaught TypeError: Cannot read property '0' of undefined
+    at Object.av.fwt.makeCSV (fileDataWrite.js:411)
+    at Object.av.fwt.makeFzrCSV (fileDataWrite.js:342)
+    at Object.av.fwt.makeFzrWorld (fileDataWrite.js:255)
+    at Object.av.dnd.landFzWorldFn (dojoDnd.js:750)
+    at Object.<anonymous> (AvidaED.js:708)
+    at Object._360 [as onDndDrop] (dojo.js:8)
+    at _34b.<anonymous> (dojo.js:8)
+    at _34b._360 [as on/dnd/drop] (dojo.js:8)
+    at Function.on.emit (dojo.js:8)
+    at Function.on.emit (dojo.js:8)
+     */
+    dojo.connect( av.dnd.fzWorld, "onDndDrop", function( source, nodes, copy, target ) {
+    if ('fzWorld' === target.node.id) {
+      //console.log('source=',source,'; nodes=', nodes);
+      //console.log('; copy=', copy, '; target=', target);
+      //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
+      nodes.forEach(function(node) {
+           sortDnD('fzWorld');
+      });
+    }
+  });
+
+    // 2019-04-14: Untested.
+    dojo.connect( av.dnd.fzTdish, "onDndDrop", function( source, nodes, copy, target ) {
+    if ('fzTdish' === target.node.id) {
+      //console.log('source=',source,'; nodes=', nodes);
+      //console.log('; copy=', copy, '; target=', target);
+      //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
+      nodes.forEach(function(node) {
+           sortDnD('fzTdish');
+      });
+    }
+  });
+
+    // 2019-04-14: Untested.
+    dojo.connect( av.dnd.fzMdish, "onDndDrop", function( source, nodes, copy, target ) {
+    if ('fzMdish' === target.node.id) {
+      //console.log('source=',source,'; nodes=', nodes);
+      //console.log('; copy=', copy, '; target=', target);
+      //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
+      nodes.forEach(function(node) {
+           sortDnD('fzMdish');
+      });
+    }
+  });
+
+    // 2019-04-14: Untested.
+    dojo.connect( av.dnd.fzRdish, "onDndDrop", function( source, nodes, copy, target ) {
+    if ('fzRdish' === target.node.id) {
+      //console.log('source=',source,'; nodes=', nodes);
+      //console.log('; copy=', copy, '; target=', target);
+      //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
+      nodes.forEach(function(node) {
+           sortDnD('fzRdish');
+      });
+    }
+  });
+
+
+
 
   //console.log('av.dnd.ancestorBox', av.dnd.ancestorBox);
   av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
