@@ -328,7 +328,7 @@ av.frd.environmentCFGparse = function (filestr) {
 av.frd.environmentCFG2form = function (fileStr) {
   'use strict';
   var dict = av.frd.environmentCFGparse(fileStr);
-  console.log('av.frd.environmentCFG2form; dict=',dict);
+  //console.log('av.frd.environmentCFG2form; dict=',dict);
   dijit.byId('notose').set('checked', dict.NOT);
   dijit.byId('nanose').set('checked', dict.NAND);
   dijit.byId('andose').set('checked', dict.AND);
@@ -347,7 +347,7 @@ av.frd.environmentLineParse = function(instr){
   'use strict';
   var num = 0;
   var flag = true;
-  console.log('instr', instr);
+  //console.log('instr', instr);
   var cfgary = av.utl.flexsplit(instr).split(',');      //replaces white space with a comma, then splits on comma
   if (0 < cfgary[3].length) {num = wsb(':',wsa('=',cfgary[3]));}
   if (0 == num) {flag = false;} //use == in this case as they are of different type
@@ -433,7 +433,7 @@ av.frd.avidaCFGparse = function (filestr) {
 av.frd.avidaCFG2form = function (fileStr){
   'use strict';
   var dict = av.frd.avidaCFGparse(fileStr);
-  console.log('av.frd.avidaCFG2form; dict=', dict);
+  //console.log('av.frd.avidaCFG2form; dict=', dict);
   av.dom.sizeCols.value = dict.WORLD_X;
   av.grd.gridWasCols = Number(dict.WORLD_X);  
   av.grd.setupCols = Number(dict.WORLD_X);  

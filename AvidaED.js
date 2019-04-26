@@ -1146,7 +1146,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   //So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
   //the default option.
   av.ui.mainBoxSwap = function (showBlock) {
-    console.log('showBlock=', showBlock);
+    //console.log('showBlock=', showBlock);
     av.ui.page = showBlock;
     av.dom.populationBlock.style.display = "none";
     av.dom.organismBlock.style.display = "none";
@@ -1159,7 +1159,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     //disable menu options. they will be enabled when relevant canvas is drawn
     dijit.byId('mnFzOffspring').attr('disabled', true);
     dijit.byId('mnCnOffspringTrace').attr('disabled', true);
-    console.log('end of mainBoxSwap');
+    //console.log('end of mainBoxSwap');
   };
     
 
@@ -1168,13 +1168,13 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.post.addUser('Button: populationButton');
     if (av.debug.dnd || av.debug.mouse) console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
     av.ui.mainBoxSwap('populationBlock');
-    console.log('after mainBoxSwap to populationBlock');
+    //console.log('after mainBoxSwap to populationBlock');
   };
 
   document.getElementById('organismButton').onclick = function () {
     av.post.addUser('Button: organismButton');
     av.ui.mainBoxSwap('organismBlock');
-    console.log('after mainBoxSwap to organismBlock');
+    //console.log('after mainBoxSwap to organismBlock');
     organismCanvasHolderSize();
     var height = ($('#rightDetail').innerHeight() - 395) / 2;
     av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
@@ -1189,7 +1189,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   document.getElementById('analysisButton').onclick = function () {
     av.post.addUser('Button: analysisButton');
     av.ui.mainBoxSwap('analysisBlock');
-    console.log('after mainBoxSwap to analysisBlock');
+    //console.log('after mainBoxSwap to analysisBlock');
     av.anl.AnaChartFn();
   };
 
@@ -1203,7 +1203,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     };
-    console.log('contentType=',contentType,'; evt=', evt);  //keep because evt info looks useful for improving mouse code. 
+    //console.log('contentType=',contentType,'; evt=', evt);  //keep because evt info looks useful for improving mouse code. 
     document.getElementById(contentType).style.display = "flex";
     evt.currentTarget.className += " active";
   };
@@ -1949,7 +1949,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
 
   // initialize needs to be in AvidaED.js
   av.grd.popChartInit = function (from) {
-    console.log(from, 'called av.grd.popChartInit');
+    //console.log(from, 'called av.grd.popChartInit');
     av.pch.clearPopChrt();
     av.pch.divSize('av.grd.popChartInit');
     var popData = av.pch.data;
@@ -2331,7 +2331,7 @@ $(function slidemute() {
     var muteSlideDefault = 109861.;
     var muteVal;
     /* results in 2% as a default */
-    var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3)
+    var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3);
     var slides = $('#muteSlide').slider({
       // range: 'min',   /*causes the left side of the scroll bar to be grey */
       value: muteSlideDefault,
@@ -2344,7 +2344,7 @@ $(function slidemute() {
         $('#muteInput').val(muteVal);
         /*put the value in the text box */
       }
-    })
+    });
     /* initialize */
     //$( '#mRate' ).val( ($( '#muteSlide').slider( 'value' )));  //used in testing nonlinear scale
     $('#muteInput').val(muteDefault);
@@ -2817,7 +2817,7 @@ $(function slidemute() {
     }
   };
 
-  console.log('before resize function');
+  //console.log('before resize function');
   $(window).resize(function(){
      // av.ui.resizePopLayout('window.resize');    //does not work.
   });   
@@ -2825,7 +2825,7 @@ $(function slidemute() {
 
   //This function does not work. make grid get larger and larger
   av.ui.resizePopLayout = function(from) {      
-    console.log(from, 'called av.ui.resizePopLayout');
+    //console.log(from, 'called av.ui.resizePopLayout');
     var extraGridWd =  0;  //positive there is extra to distribute; negative need more space.
     var popSideWdSum = av.dom.navColId.offsetWidth + av.dom.popInfoHolder.offsetWidth;
     av.ui.allAvidaWd = av.dom.allAvida.offsetWidth;
@@ -2841,7 +2841,7 @@ $(function slidemute() {
     av.ui.popBotHd = av.dom.popBot.offsetHeight;
 
     //https://stackoverflow.com/questions/590602/padding-or-margin-value-in-pixels-as-integer-using-jquery
-    console.log('gridHolder_margin' ,$("#gridHolder").css("margin"), '; popChart=', $("#popChart").css('margin'));
+    //console.log('gridHolder_margin' ,$("#gridHolder").css("margin"), '; popChart=', $("#popChart").css('margin'));
 
     if (av.debug.uil) console.log('Wd: allAvida navColId mapHolder gridHolder popInfoHolder, sum', av.dom.allAvida.offsetWidth,
       av.dom.navColId.offsetWidth, av.dom.mapHolder.offsetWidth, av.dom.popInfoHolder.offsetWidth, 
@@ -3043,7 +3043,7 @@ $(function slidemute() {
         if (av.debug.plotly) console.log('after plot anlChrtSpace');
       }
     }
-  }
+  };
 
   /* Chart buttons ****************************************/
   document.getElementById('pop0delete').onclick = function () {
@@ -3114,7 +3114,7 @@ $(function slidemute() {
   //Tasks that Need to be run when page is loaded and after chart is defined
   // **************************************************************************************************************** */
 
-  if (true) console.log('after chart defined for analysis page');
+  //if (true) console.log('after chart defined for analysis page');
   // ------------------------ Population Page Statistics tables --------------------------------------------------------
 
   //av.ui.adjustpopInfoSize('after page loaded, before chart is defined.');  // djb might delete later; not using as of 2018_0827

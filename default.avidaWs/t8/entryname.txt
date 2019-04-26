@@ -1,1 +1,1 @@
-4ths_40x40_diffuse-opposite-outflow
+diffuseX-opposite-outflow_4ths_40sq

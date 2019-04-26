@@ -1291,7 +1291,7 @@ av.dnd.landgraphPop2 = function (dnd, source, nodes, target) {
 av.dnd.contextMenu = function(target, fzItemID, from) {
   'use strict';
   var fzSection = target.node.id;
-  console.log(from, 'called av.dnd.contextMenu; fzItemID=', fzItemID, '; fzSection=', fzSection);
+  //console.log(from, 'called av.dnd.contextMenu; fzItemID=', fzItemID, '; fzSection=', fzSection);
   var dir = '';
   if (av.debug.dnd) console.log('contextMenu; target.node.id=',target.node.id);
   if (av.debug.dnd) console.log('contextMenu; fzItemID=',fzItemID, ' fzSection=', fzSection);

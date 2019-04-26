@@ -1,2 +1,2 @@
-yGravity_2=start_outflow=bottom-only_notUseful
+yGravity_2=start_outflow-all-bottom-only
 

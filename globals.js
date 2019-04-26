@@ -489,6 +489,8 @@ av.fzr.clearFzrFn = function () {
   av.fzr.env.rsrce = {};
   av.fzr.env.react = {};
   var len = av.ptd.logicNames.length;
+  
+av.fzr.make_rsrce = function () {  
   for (var ii=0; ii< len; ii++) {
     var enm = av.ptd.logEdNames[ii];   //puts names in order they are on avida-ed user interface
     var lnm = av.ptd.logicNames[ii];
@@ -534,33 +536,72 @@ av.fzr.clearFzrFn = function () {
       av.fzr.env.react[enm][jj].type = 'pow';
     };
   }; 
-  console.log('enviornment=', av.fzr.env);
+};
+  av.fzr.make_rsrce();
+  //console.log('enviornment=', av.fzr.env);
   
   ////////// test versions
-  av.env0 = {};
-  av.env0.rsrce = {};
-  av.env0.react = {};
+  av.fzr.wrd = {};
+  av.fzr.wrd.rsrce = {};
+  av.fzr.wrd.react = {};
+  var len = av.ptd.logicNames.length;
+  for (var ii=0; ii< len; ii++) {
+    var enm = av.ptd.logEdNames[ii];   //puts names in order they are on avida-ed user interface
+    //console.log('ii=, ii');
+    av.fzr.wrd.rsrce[enm] = [];
+    av.fzr.wrd.react[enm] = [];
+    for (var jj=0; jj<4; jj++){
+      av.fzr.wrd.react[enm][jj] = {};
+      av.fzr.wrd.react[enm][jj] = av.fzr.makeReactArray(ii,jj);      
+    };
+  };
+  av.fzr.wrd.react['0not'][4] = av.fzr.makeReactArray(0, 4);
+  //av.fzr.wrd.react['0not'][5].name = 'fred';
+  console.log('av.fzr.wrd.react=',av.fzr.wrd.react);
+  
+  av.fzr.wr2 = {};
+  av.fzr.wr2.rsrce = {};
+  av.fzr.wr2.react = {};
   var len = av.ptd.logicNames.length;
   for (var ii=0; ii< len; ii++) {
     var enm = av.ptd.logEdNames[ii];   //puts names in order they are on avida-ed user interface
     var lnm = av.ptd.logicNames[ii];
-    var vnm = av.ptd.logicVnames[ii];
-    console.log('ii=, ii');
-    av.env0.rsrce[enm] = [];
-    av.env0.react[enm] = [];
-    for (var jj=0; jj<4; jj++){
-      av.env0.react[enm][jj] = {};
-      av.env0.react[enm][jj] = av.fzr.makeReactArray(ii,jj);      
+    var vnm = av.ptd.logicVnames[ii];  
+    av.fzr.wr2.rsrce[enm] = {};
+    av.fzr.wr2.react[enm] = {};
+    av.fzr.wr2.react[enm].depletable = [];
+    av.fzr.wr2.react[enm].value = [];
+    av.fzr.wr2.react[enm].min = [];
+    av.fzr.wr2.react[enm].max = [];
+    av.fzr.wr2.react[enm].max_count = [];
+    av.fzr.wr2.react[enm].name = [];
+    av.fzr.wr2.react[enm].task = [];
+    av.fzr.wr2.react[enm].resource = [];
+    av.fzr.wr2.react[enm].type = [];
+    for (var cnt=0; cnt<4; cnt++){
+      av.fzr.wr2.react[enm].depletable[cnt] = 0; //0 (infinate resource) does not consume any of the resource; 1 does consume resource
+      av.fzr.wr2.react[enm].value[cnt] = av.ptd.reactValues[cnt];  //0=no reward; >0 is rewared to that power of 2
+      av.fzr.wr2.react[enm].min[cnt] = 0.5;      //The minimum amount of resource required. If less than this quantity is available, the av.fzr.wr2.react[enm]ion ceases to proceed.
+      av.fzr.wr2.react[enm].max[cnt] = 1;        //The maximum amount of the resource consumed per occurrence.
+          //tend to be the same; put at end
+      av.fzr.wr2.react[enm].max_count[cnt] = 1;
+      av.fzr.wr2.react[enm].name[cnt] = lnm + cnt;     //do I need to put in leadingn zeros?? if so how?
+      av.fzr.wr2.react[enm].task[cnt] = vnm;           //must use the variable length name for the logic function
+      av.fzr.wr2.react[enm].resource[cnt] = lnm + cnt;  //do I need to put in leadingn zeros?? if so how?
+      av.fzr.wr2.react[enm].type[cnt] = 'pow';
     };
   };
-  console.log('env0=',av.env0);
+  console.log('av.fzr.wr2.react=',av.fzr.wr2.react);
+
 };
 
+
 av.fzr.makeReactArray = function(ilog, cnt) {
+  console.log('ilog=', ilog, '; cnt=', cnt);
   var react = {};
   var enm = av.ptd.logEdNames[ilog];
-  var lnm = av.ptd.logicNames[cnt];
-  var vnm = av.ptd.logicVnames[cnt];  
+  var lnm = av.ptd.logicNames[ilog];
+  var vnm = av.ptd.logicVnames[ilog];  
   react[enm] = [];
   react[enm][cnt]= {};
   react[enm][cnt].depletable = 0; //0 (infinate resource) does not consume any of the resource; 1 does consume resource
@@ -569,13 +610,12 @@ av.fzr.makeReactArray = function(ilog, cnt) {
   react[enm][cnt].max = 1;        //The maximum amount of the resource consumed per occurrence.
       //tend to be the same; put at end
   react[enm][cnt].max_count = 1;
-  react[enm][cnt].name = lnm + cnt;
+  react[enm][cnt].name = lnm + cnt;     //do I need to put in leadingn zeros?? if so how?
   react[enm][cnt].task = vnm;  //must use the variable length name for the logic function
-  react[enm][cnt].resource = lnm + cnt;
+  react[enm][cnt].resource = lnm + cnt;  //do I need to put in leadingn zeros?? if so how?
   react[enm][cnt].type = 'pow';
   return react[enm][cnt];
 };
-
 
 av.fzr.saveState = 'default';
 av.fzr.workspaceName = 'default';

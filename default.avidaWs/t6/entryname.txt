@@ -1,2 +1,2 @@
-x_diffuse_opposite_outflow
+diffuseX_opposite_outflow
 
