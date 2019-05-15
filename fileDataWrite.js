@@ -111,11 +111,10 @@ av.fwt.makeFzrAvidaTest = function (idStr, actConfig) {
   // parents (ancestors) are injected into avida separately.
   if (av.dom.childParentRadiTest.checked) txt += 'BIRTH_METHOD 0 \n';  //near parent
   else txt += 'BIRTH_METHOD 4 \n';   //anywhere randomly
-  if (av.dom.experimentRadiTest.checked) txt += 'RANDOM_SEED -1 \n';
-  else txt += 'RANDOM_SEED 100\n';
-  //no longer in use; tiba delete later
-  //txt += 'AVE_TIME_SLICE ' + dijit.byId('aveTimeSlice').get('value') + '\n';
-  //txt += 'SLEEP_DELAY ' + dijit.byId('sleepDelay').get('value') + '\n';
+  txt += 'RANDOM_SEED ' + av.dom.randInpuTest.value + '\n';
+  
+  //if (av.dom.experimentRadiTest.checked) txt += 'RANDOM_SEED -1 \n';
+  //else txt += 'RANDOM_SEED 100\n';
   txt += '#include instset.cfg\n';
   txt += 'PRECALC_PHENOTYPE 1\n';
   txt += 'VERSION_ID 2.14.0 \n';

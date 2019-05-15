@@ -1,1 +1,1 @@
-yGravity_all-outflow_4ths_40sq
+diffuseX-all-outflow_half_40sq

@@ -1,2 +1,1 @@
-yGravity_2=start_outflow-all-bottom-only
-
+solid-finite-NO-diffusion_4ths

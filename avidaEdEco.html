@@ -558,7 +558,7 @@
               </div>
               <div class='even'>
                 <span class='lftmargin'>Per Site Mutation Rate:</span>
-                <input id='muteInpuTest' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' ;
+                <input id='muteInpuTest' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' 
                        data-dojo-props='constraints:{min:0, max:100},
                      invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
                        style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value, "muteErroTest")'> %<br />
@@ -595,8 +595,13 @@
                        value='experimental'>
                 Experimental&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='demoRadiTest' checked
-                       intermediateChanges='false' iconClass='dijitNoIcon' name='repeat' value='demo'>
-                Demo
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='repeat' value='demo'>Demo<br>
+                
+                <input id='randInpuTest' type='text' data-dojo-type='dijit/form/NumberTextBox' value=-1 required='true' 
+                       data-dojo-props='constraints:{min:-1, max:100},
+                     invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid random seed."'
+                       style='width: 4.5em; height:1.8em' onchange='av.ptd.randInputChange(this.value, "randErroTest")'><br />                
+                <label id='randErroTest'>Error place holder</label>
               </div>
               <div class='odd'>
                 Pause Run:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

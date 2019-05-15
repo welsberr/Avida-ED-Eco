@@ -245,7 +245,8 @@ require([
     av.dom.sizeRowTest = document.getElementById('sizeRowTest');
     av.dom.childParentRadiTest = document.getElementById('childParentRadiTest');
     av.dom.experimentRadiTest = document.getElementById('experimentRadiTest');
-    av.dom.manualUpdateRadiTest = document.getElementById('manualUpdateRadiTest');
+    av.dom.randInpuTest = document.getElementById('randInpuTest');
+    av.dom.manualUpdateRadiTest = document.getElementById('manualUpdateRadiTest');    
     //av.dom.Test = document.getElementById('Test');
     //av.dom.Test = document.getElementById('Test');
     
@@ -2240,27 +2241,47 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.grd.drawGridSetupFn('av.ptd.popSizeFn');
   };
 
-av.ptd.muteInputChange = function(value, muteErrorName) {
+av.ptd.muteInputChange = function(value, muteErroTest) {
     var muteNum = Number(value);
     if (av.debug.uil) console.log('muteNum=', muteNum);
     if (muteNum >= 0 && muteNum <= 100) {
       av.ptd.validMuteInuput=true;
-      document.getElementById(muteErrorName).style.color = 'black';
-      document.getElementById(muteErrorName).innerHTML = '';
-      document.getElementById(muteErrorName).innerHTML = '';
+      document.getElementById(muteErroTest).style.color = 'black';
+      document.getElementById(muteErroTest).innerHTML = '';
+      document.getElementById(muteErroTest).innerHTML = '';
     }
     else {
       av.ptd.validMuteInuput=false;
-      document.getElementById(muteErrorName).style.color = 'red';
-      document.getElementById(muteErrorName).innerHTML = '';
+      document.getElementById(muteErroTest).style.color = 'red';
+      document.getElementById(muteErroTest).innerHTML = '';
       av.dom.userMsgLabel.innerHTML = '';
-      if (muteNum <= 0) { document.getElementById(muteErrorName).innerHTML += 'Mutation rate must be greater than zero percent. '; console.log('<0');}
-      if (muteNum >= 100) { document.getElementById(muteErrorName).innerHTML += 'Mutation rate must be 100% or less. '; console.log('>0');}
-      if ( isNaN(muteNum) ) {document.getElementById(muteErrorName).innerHTML += 'Mutation rate must be a valid number. '; console.log('==NaN');}
+      if (muteNum <= 0) { document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be >= than zero percent. '; console.log('<0');}
+      if (muteNum >= 100) { document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be 100% or less. '; console.log('>0');}
+      if ( isNaN(muteNum) ) {document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be a valid number. '; console.log('==NaN');}
     };
   };
   
-  av.ptd.gridChange = function(tmpval) {
+av.ptd.randInputChange = function(value, randErroTest) {
+    var randNum = Number(value);
+    if (av.debug.uil) console.log('randNum=', randNum);
+    if (randNum >= -1 && randNum <= 1000000) {
+      av.ptd.validMuteInuput=true;
+      document.getElementById(randErroTest).style.color = 'black';
+      document.getElementById(randErroTest).innerHTML = '';
+      document.getElementById(randErroTest).innerHTML = '';
+    }
+    else {
+      av.ptd.validMuteInuput=false;
+      document.getElementById(randErroTest).style.color = 'red';
+      document.getElementById(randErroTest).innerHTML = '';
+      av.dom.userMsgLabel.innerHTML = '';
+      if (randNum <= -1) { document.getElementById(randErroTest).innerHTML += 'Random Seed must be > -1. '; console.log('<0');}
+      if (randNum >= 1000000) { document.getElementById(randErroTest).innerHTML += 'Random Seed must be 1,000,000 or less. '; console.log('>0');}
+      if ( isNaN(randNum) ) {document.getElementById(randErroTest).innerHTML += 'Random Seed must be a valid number. '; console.log('==NaN');}
+    };
+  };
+
+av.ptd.gridChange = function(tmpval) {
     console.log('in av.ptd.gridChange; ');
     var colNum = Number(av.dom.sizeCols.value);
     var rowNum = Number(av.dom.sizeRows.value);

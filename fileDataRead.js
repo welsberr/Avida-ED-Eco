@@ -479,6 +479,7 @@ av.frd.avidaTestform = function (fileStr){
   av.grd.setupRows = Number(dict.WORLD_Y);
  
   document.getElementById('muteInpuTest').value = dict.COPY_MUT_PROB*100;
+ 
   //var event = new Event('change');
   var event = new window.CustomEvent('change');
   document.getElementById('muteInpuTest').dispatchEvent(event);
@@ -490,7 +491,8 @@ av.frd.avidaTestform = function (fileStr){
     dijit.byId('childParentRadiTest').set('checked', false);
     dijit.byId('childRandomRadiTest').set('checked', true);
   }
-
+  av.dom.manualUpdateRadiTest.value = dict.RANDOM_SEED;
+/*
   if (-1 == dict.RANDOM_SEED) {
     dijit.byId('experimentRadiTest').set('checked', true);
     dijit.byId('demoRadiTest').set('checked', false);
@@ -499,6 +501,7 @@ av.frd.avidaTestform = function (fileStr){
     dijit.byId('experimentRadiTest').set('checked', false);
     dijit.byId('demoRadiTest').set('checked', true);
   }
+  */
 };
 //------------------------------------------------------------------------------------------ end processing avida.cfg --
 
