@@ -272,7 +272,7 @@ av.frd.updateSetup = function(from) {
 av.frd.updateTestSetup = function (from) {
   'use strict';
   var dir = av.fzr.actConfig.dir;
-  console.log(from, ' called ', av.frd.updateTestSetup, '; dir=', dir);
+  console.log(from, ' called av.frd.updateTestSetup; dir=', dir);
   var path = dir + '/avida.cfg';
   var doctext = av.fzr.file[path];
   av.frd.avidaTestform(doctext);
