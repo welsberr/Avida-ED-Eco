@@ -275,10 +275,12 @@ av.frd.updateTestSetup = function (from) {
   console.log(from, ' called av.frd.updateTestSetup; dir=', dir);
   var path = dir + '/avida.cfg';
   var doctext = av.fzr.file[path];
-  av.frd.avidaTestform(doctext);
-  //av.frd.environment2struct();      //will be called when we get a structure
+  av.frd.avidaCFG2form(doctext);
+  path = dir + '/environment.cfg';
+  doctext = av.fzr.file[path];  
+  av.frd.environment2struct(doctext);      //will be called when we get a structure
   //av.frd.environmentTestform(doctext);     //for now editing the whole file
-  console.log('av.dom.environConfigEdit=',av.dom.environConfigEdit);
+  //console.log('av.dom.environConfigEdit=',av.dom.environConfigEdit);
   if (av.fzr.file[av.dnd.move.dir+'/'+ 'environment.cfg'] ) {
     av.dom.environConfigEdit.value = av.fzr.file[av.dnd.move.dir+'/'+'environment.cfg'];
   };
@@ -297,9 +299,11 @@ av.frd.environmentCFGlineParse = function(instr){
   var flag = true;
   //console.log('instr', instr);
   var cfgary = av.utl.flexsplit(instr).split(',');      //replaces white space with a comma, then splits on comma
+  //console.log('cfgary = ', cfgary);
   if (0 < cfgary[3].length) {num = wsb(':',wsa('=',cfgary[3]));}
   if (0 == num) {flag = false;} //use == in this case as they are of different type
   //if (av.debug.fio) console.log('flag', flag, '; num', num, '; cfgary', cfgary[3], '; instr', instr);
+  //console.log('flag', flag, '; num', num, '; cfgary', cfgary[3], '; instr', instr);
   var rslt = {
     name : cfgary[1],
     value : flag
@@ -343,17 +347,18 @@ av.frd.environmentCFG2form = function (fileStr) {
 
 //----------------------------------------------- section to put data from environment.cfg into environment Structure --
 
-av.frd.environmentLineParse = function(instr){
+
+av.frd.reactionLineParse = function(instr) {}
+
+av.frd.resourceLineParse = function(instr){
   'use strict';
   var num = 0;
   var flag = true;
-  //console.log('instr', instr);
+  console.log('instr', instr);
   var cfgary = av.utl.flexsplit(instr).split(',');      //replaces white space with a comma, then splits on comma
-  if (0 < cfgary[3].length) {num = wsb(':',wsa('=',cfgary[3]));}
-  if (0 == num) {flag = false;} //use == in this case as they are of different type
-  //if (av.debug.fio) console.log('flag', flag, '; num', num, '; cfgary', cfgary[3], '; instr', instr);
+  console.log('cfgary = ', cfgary);
   var rslt = {
-    name : cfgary[1],
+    name : 'string',
     value : flag
   };
   return rslt;
@@ -363,45 +368,58 @@ av.frd.environmentLineParse = function(instr){
 av.frd.environmentParse = function (filestr) {
   'use strict';
   var rslt = {};
+  var eolfound;
   var lineobj;
+  var matchComment, matchContinue;
+  var aline;
   var lines = filestr.split('\n');
   var lngth = lines.length;
-  for (var ii = 0; ii < lngth; ii++) {
-    if (3 < lines[ii].length) {
-      //console.log("lines[", ii, "]=", lines[ii]);
-      lineobj = av.frd.environmentCFGlineParse(lines[ii]);
-      rslt[lineobj.name.toUpperCase()] = lineobj.value;
-    }
-  } // for
+  var re_comment = /^(.*?)#.*$/;   //look at begining of the line and look until #; used to get the stuff before the #
+  var re_continue = /^(.*?)\\/;  //look for continuation line
+  var ii = 0;
+  while (ii < lngth) {
+    eolfound = false;
+    console.log("lines["+ii+"]=", lines[ii]);
+    matchComment = lines[ii].match(re_comment);
+    //console.log('matchComment=',matchComment);
+    if (null != matchComment) {aline = matchComment[1];}
+    else aline = lines[ii];
+    if (3 < aline.length) {
+      //console.log('aline.length=', aline.length,'; aline=', aline);
+      do {
+        //console.log('ii', ii, '; eolfound=', eolfound,'; aline=', aline);
+        if (ii+1 < lngth) {
+          matchContinue = aline.match(re_continue);
+          //console.log('matchContinue=',matchContinue);
+          if (null != matchContinue) {
+            ii++;
+            //console.log('ii=', ii);
+            matchComment = lines[ii].match(re_comment);
+            //console.log('matchComment=',matchComment);
+            if (null != matchComment) {aline = matchContinue[1]+matchComment[1];}
+            else aline = matchContinue[1]+lines[ii];
+          }
+          else eolfound = true;
+        }
+        else eolfound = true;
+        //console.log('ii', ii, '; eolfound=', eolfound,'; aline=', aline);
+      }
+      while (!eolfound)  //subloop for continuation lines
+      console.log('ii', ii, '; aline=', aline);
+      // look for valid starting keyword
+
+    }  //end of processing lines longer than 3 characters
+    ii++;
+  } // while that goes through lines in file. 
   return rslt;
 };
 
 // puts data from the environment.cfg into the setup form for the population page
 av.frd.environment2struct = function (fileStr) {
   'use strict';
-  var dict = av.frd.environmentCFGparse(fileStr);
-  console.log('in av.frd.environment2struct; dict=',dict);
-  dijit.byId('notose').set('checked', dict.NOT);
-  dijit.byId('nanose').set('checked', dict.NAND);
-  dijit.byId('andose').set('checked', dict.AND);
-  dijit.byId('ornose').set('checked', dict.ORN);
-  dijit.byId('orose').set('checked', dict.OR);
-  dijit.byId('andnose').set('checked', dict.ANDN);
-  dijit.byId('norose').set('checked', dict.NOR);
-  dijit.byId('xorose').set('checked', dict.XOR);
-  dijit.byId('equose').set('checked', dict.EQU);
-/*
- * //for when NOT using digits. plain check boxes
-  av.dom.notose.checked = dict.NOT;
-  av.dom.andose.checked = dict.AND;
-  av.dom.orose.checked = dict.OR;
-  av.dom.norose.checked = dict.NOR;
-  av.dom.equose.checked = dict.EQU;
-  av.dom.nanose.checked = dict.NAND;
-  av.dom.ornose.checked = dict.ORN;
-  av.dom.andnose.checked = dict.ANDN;
-  av.dom.xorose.checked = dict.XOR;
-*/
+  //console.log('in av.frd.environment2struct');
+  var dict = av.frd.environmentParse(fileStr);
+  //console.log('in av.frd.environment2struct; dict=',dict);
 };
 
 //--------------------------------------------- section to put data from avida.cfg into setup form of population page --
@@ -467,8 +485,8 @@ av.frd.avidaCFG2form = function (fileStr){
 //---------------------------------------------------------------------------------------------- av.frd.avidaTestform --
 av.frd.avidaTestform = function (fileStr){
   'use strict';
+  console.log('in av.frd.avidaTestform');
   var dict = av.frd.avidaCFGparse(fileStr);
-  console.log('av.frd.avidaTestform; dict=', dict);
   document.getElementById('sizeColTest').value = dict.WORLD_X;
   av.grd.gridWasCols = dict.WORLD_X;
   av.grd.gridWasCols = Number(dict.WORLD_X);  
@@ -677,7 +695,7 @@ av.fio.handAncestorLoad = function(fileStr) {
 
 //----------------------- section to put data from clade.ssg into parents ----------------------------------------------
 
-// makes a dictionary out of a environment.cfg file
+// makes a dictionary out of a clade.ssg file
 av.frd.cladeSSGparse = function (filestr) {
   'use strict';
   var rslt = [];
@@ -846,7 +864,7 @@ av.frd.tr2chartParse = function (filestr) {
   return rslt.data;
 };
 
-// puts data from the environment.cfg into the setup form for the Analysis Page
+// puts data from the time recorder data into the right format
 av.fio.tr2chart = function (fileStr) {
   'use strict';
   var data = [];

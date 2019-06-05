@@ -439,28 +439,6 @@ av.parents.clearParentsFn = function () {
 
 av.fzr = {};
 
-//-------------------------------------------------------------------------------------------- in av.fzr.clearFzrFn --//
-// only used in av.fzr.clearFn
-av.fzr.makeReactArray = function(ilog, cnt) {
-  //console.log('ilog=', ilog, '; cnt=', cnt);
-  var react = {};
-  var enm = av.ptd.logEdNames[ilog];
-  var lnm = av.ptd.logicNames[ilog];
-  var vnm = av.ptd.logicVnames[ilog];  
-  react[enm] = [];
-  react[enm][cnt]= {};
-  react[enm][cnt].depletable = 0; //0 (infinate resource) does not consume any of the resource; 1 does consume resource
-  react[enm][cnt].value = av.ptd.reactValues[cnt];  //0=no reward; >0 is rewared to that power of 2
-  react[enm][cnt].min = 0.5;      //The minimum amount of resource required. If less than this quantity is available, the reaction ceases to proceed.
-  react[enm][cnt].max = 1;        //The maximum amount of the resource consumed per occurrence.
-      //tend to be the same; put at end
-  react[enm][cnt].max_count = 1;
-  react[enm][cnt].name = lnm + cnt;     //do I need to put in leadingn zeros?? if so how?
-  react[enm][cnt].task = vnm;  //must use the variable length name for the logic function
-  react[enm][cnt].resource = lnm + cnt;  //do I need to put in leadingn zeros?? if so how?
-  react[enm][cnt].type = 'pow';
-  return react[enm][cnt];
-};
 
 av.fzr.make_rsrce = function () {  
   var len = av.ptd.logicNames.length;
@@ -514,6 +492,57 @@ av.fzr.make_rsrce = function () {
   
 };
 
+av.fzr.clearEnvironment = function() {
+    av.fzr.env = {};
+
+    // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
+  av.fzr.env.rsrce = {};
+  av.fzr.env.react = {};  
+  var len = av.ptd.logicNames.length;
+  for (var ii=0; ii< len; ii++) {
+    var enm = av.ptd.logEdNames[ii];   //puts names in order they are on avida-ed user interface
+    var lnm = av.ptd.logicNames[ii];
+    var vnm = av.ptd.logicVnames[ii];  
+    av.fzr.env.rsrce[enm] = {};    
+    av.fzr.env.rsrce[enm].initial=[];
+    av.fzr.env.rsrce[enm].inflow=[];
+    av.fzr.env.rsrce[enm].inflowx1=[];
+    av.fzr.env.rsrce[enm].inflowx2=[];
+    av.fzr.env.rsrce[enm].inflowy1=[];
+    av.fzr.env.rsrce[enm].inflowy2=[];
+    av.fzr.env.rsrce[enm].outflow=[];
+    av.fzr.env.rsrce[enm].outflowx1=[];
+    av.fzr.env.rsrce[enm].outflowx2=[];
+    av.fzr.env.rsrce[enm].outflowy1=[];
+    av.fzr.env.rsrce[enm].outflowy2=[];
+    av.fzr.env.rsrce[enm].xdiffuse=[];
+    av.fzr.env.rsrce[enm].ydiffuse=[];
+    av.fzr.env.rsrce[enm].xgravity=[];
+    av.fzr.env.rsrce[enm].ygravity=[];
+    av.fzr.env.rsrce[enm].boxflag=[];    //false no cellbox so resources can leave box; true = resources confined to box
+    av.fzr.env.rsrce[enm].boxx=[];
+    av.fzr.env.rsrce[enm].boxy=[];
+    av.fzr.env.rsrce[enm].boxrow=[];
+    av.fzr.env.rsrce[enm].boxcol=[];
+    av.fzr.env.rsrce[enm].name = [];
+    av.fzr.env.rsrce[enm].geometry=[];
+
+    av.fzr.env.react[enm] = {};
+    av.fzr.env.react[enm].depletable = [];
+    av.fzr.env.react[enm].value = [];
+    av.fzr.env.react[enm].min = [];
+    av.fzr.env.react[enm].max = [];
+    av.fzr.env.react[enm].max_count = [];
+    av.fzr.env.react[enm].name = [];
+    av.fzr.env.react[enm].task = [];
+    av.fzr.env.react[enm].resource = [];
+    av.fzr.env.react[enm].type = [];
+  };
+  console.log('av.fzr.env.react=',av.fzr.env.react);
+  console.log('av.fzr.env.rsrce=',av.fzr.env.rsrce);
+}
+
+//-------------------------------------------------------------------------------------------- in av.fzr.clearFzrFn --//
 av.fzr.clearFzrFn = function () {
   'use strict';
   av.fzr.dir = {};
@@ -521,7 +550,6 @@ av.fzr.clearFzrFn = function () {
   av.fzr.file = {};
   av.fzr.item = {};
   av.fzr.mDish = {};
-  av.fzr.env = {};
 
   av.fzr.cNum = 0;  //value of the next configured dish (config) number
   av.fzr.gNum = 0;  //value of the next organism (genome) number
@@ -558,235 +586,7 @@ av.fzr.clearFzrFn = function () {
   }
   av.fzr.saveUpdateState('yes');
   av.fzr.subDishOrNot = 'none';
-  
-  // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
-  
-  av.fzr.env.rsrce = {};
-  av.fzr.env.react = {};
-  
-  av.fzr.make_rsrce();
-  //console.log('enviornment=', av.fzr.env);
-  
-  ////////// test versions
-  av.fzr.wrd = {};
-  av.fzr.wrd.rsrce = {};
-  av.fzr.wrd.react = {};
-  var len = av.ptd.logicNames.length;
-  for (var ii=0; ii< len; ii++) {
-    var enm = av.ptd.logEdNames[ii];   //puts names in order they are on avida-ed user interface
-    //console.log('ii=, ii');
-    av.fzr.wrd.rsrce[enm] = [];
-    av.fzr.wrd.react[enm] = [];
-    for (var jj=0; jj<4; jj++){
-      av.fzr.wrd.react[enm][jj] = {};
-      av.fzr.wrd.react[enm][jj] = av.fzr.makeReactArray(ii,jj);      
-    };
-  };
-  av.fzr.wrd.react['0not'][4] = av.fzr.makeReactArray(0, 4);
-  //av.fzr.wrd.react['0not'][5].name = 'fred';
-  console.log('av.fzr.wrd.react=',av.fzr.wrd.react);
-  
-  av.fzr.wr2 = {};
-  av.fzr.wr2.rsrce = {};
-  av.fzr.wr2.react = {};
-  var len = av.ptd.logicNames.length;
-  for (var ii=0; ii< len; ii++) {
-    var enm = av.ptd.logEdNames[ii];   //puts names in order they are on avida-ed user interface
-    var lnm = av.ptd.logicNames[ii];
-    var vnm = av.ptd.logicVnames[ii];  
-    av.fzr.wr2.rsrce[enm] = {};    
-    av.fzr.wr2.rsrce[enm].initial=[];
-    av.fzr.wr2.rsrce[enm].inflow=[];
-    av.fzr.wr2.rsrce[enm].inflowx1=[];
-    av.fzr.wr2.rsrce[enm].inflowx2=[];
-    av.fzr.wr2.rsrce[enm].inflowy1=[];
-    av.fzr.wr2.rsrce[enm].inflowy2=[];
-    av.fzr.wr2.rsrce[enm].outflow=[];
-    av.fzr.wr2.rsrce[enm].outflowx1=[];
-    av.fzr.wr2.rsrce[enm].outflowx2=[];
-    av.fzr.wr2.rsrce[enm].outflowy1=[];
-    av.fzr.wr2.rsrce[enm].outflowy2=[];
-    av.fzr.wr2.rsrce[enm].xdiffuse=[];
-    av.fzr.wr2.rsrce[enm].ydiffuse=[];
-    av.fzr.wr2.rsrce[enm].xgravity=[];
-    av.fzr.wr2.rsrce[enm].ygravity=[];
-    av.fzr.wr2.rsrce[enm].boxflag=[];    //false no cellbox so resources can leave box; true = resources confined to box
-    av.fzr.wr2.rsrce[enm].boxx=[];
-    av.fzr.wr2.rsrce[enm].boxy=[];
-    av.fzr.wr2.rsrce[enm].boxrow=[];
-    av.fzr.wr2.rsrce[enm].boxcol=[];
-     //tend to be the same; put at end
-    av.fzr.wr2.rsrce[enm].name = [];
-    av.fzr.wr2.rsrce[enm].geometry=[];
-    av.fzr.wr2.react[enm] = {};
-    av.fzr.wr2.react[enm].depletable = [];
-    av.fzr.wr2.react[enm].value = [];
-    av.fzr.wr2.react[enm].min = [];
-    av.fzr.wr2.react[enm].max = [];
-    av.fzr.wr2.react[enm].max_count = [];
-    av.fzr.wr2.react[enm].name = [];
-    av.fzr.wr2.react[enm].task = [];
-    av.fzr.wr2.react[enm].resource = [];
-    av.fzr.wr2.react[enm].type = [];
-    
-    for (var cnt=0; cnt<12; cnt++){
-      av.fzr.wr2.react[enm].depletable[cnt] = 0; //0 (infinate resource) does not consume any of the resource; 1 does consume resource
-      av.fzr.wr2.react[enm].value[cnt] = av.ptd.reactValues[cnt];  //0=no reward; >0 is rewared to that power of 2
-      av.fzr.wr2.react[enm].min[cnt] = 0.5;      //The minimum amount of resource required. If less than this quantity is available, the av.fzr.wr2.react[enm]ion ceases to proceed.
-      av.fzr.wr2.react[enm].max[cnt] = 1;        //The maximum amount of the resource consumed per occurrence.
-          //tend to be the same; put at end
-      av.fzr.wr2.react[enm].max_count[cnt] = 1;
-      av.fzr.wr2.react[enm].name[cnt] = lnm + cnt;     //do I need to put in leadingn zeros?? if so how?
-      av.fzr.wr2.react[enm].task[cnt] = vnm;           //must use the variable length name for the logic function
-      av.fzr.wr2.react[enm].resource[cnt] = lnm + cnt;  //do I need to put in leadingn zeros?? if so how?
-      av.fzr.wr2.react[enm].type[cnt] = 'pow';
-      
-     av.fzr.wr2.rsrce[enm].initial[cnt] = 1;
-     av.fzr.wr2.rsrce[enm].inflow[cnt] = 0;
-     av.fzr.wr2.rsrce[enm].inflowx1[cnt] = 0;
-     av.fzr.wr2.rsrce[enm].inflowx2[cnt] = 0;
-     av.fzr.wr2.rsrce[enm].inflowy1[cnt] = 0;
-     av.fzr.wr2.rsrce[enm].inflowy2[cnt] = 0;
-     av.fzr.wr2.rsrce[enm].outflow[cnt] = 0.0;
-     av.fzr.wr2.rsrce[enm].outflowx1[cnt] = 0;
-     av.fzr.wr2.rsrce[enm].outflowx2[cnt] = 0;
-     av.fzr.wr2.rsrce[enm].outflowy1[cnt] = 0;
-     av.fzr.wr2.rsrce[enm].outflowy2[cnt] = 0;
-     av.fzr.wr2.rsrce[enm].xdiffuse[cnt] = 0;
-     av.fzr.wr2.rsrce[enm].ydiffuse[cnt] = 0;
-     av.fzr.wr2.rsrce[enm].xgravity[cnt] = 0;
-     av.fzr.wr2.rsrce[enm].ygravity[cnt] = 0;
-     av.fzr.wr2.rsrce[enm].boxflag[cnt] = false;    //false no cellbox so resources can leave box; true [cnt] =  resources confined to box
-     av.fzr.wr2.rsrce[enm].boxx[cnt] = 0;
-     av.fzr.wr2.rsrce[enm].boxy[cnt] = 0;
-     av.fzr.wr2.rsrce[enm].boxrow[cnt] = 1;
-     av.fzr.wr2.rsrce[enm].boxcol[cnt] = 1;
-      //tend to be the same; put at end
-     av.fzr.wr2.rsrce[enm].name [cnt] =  lnm + cnt;
-     av.fzr.wr2.rsrce[enm].geometry[cnt] = 'grid';
-    };
-  };
-  console.log('av.fzr.wr2.react=',av.fzr.wr2.react);
-  console.log('av.fzr.wr2.rsrce=',av.fzr.wr2.rsrce);
-
-  av.fzr.wr3 = {};
-  av.fzr.wr3.rsrce = {};
-    av.fzr.wr3.rsrce.initial = {};
-    av.fzr.wr3.rsrce.inflow = {};
-    av.fzr.wr3.rsrce.inflowx1 = {};
-    av.fzr.wr3.rsrce.inflowx2 = {};
-    av.fzr.wr3.rsrce.inflowy1 = {};
-    av.fzr.wr3.rsrce.inflowy2 = {};
-    av.fzr.wr3.rsrce.outflow = {};
-    av.fzr.wr3.rsrce.outflowx1 = {};
-    av.fzr.wr3.rsrce.outflowx2 = {};
-    av.fzr.wr3.rsrce.outflowy1 = {};
-    av.fzr.wr3.rsrce.outflowy2 = {};
-    av.fzr.wr3.rsrce.xdiffuse = {};
-    av.fzr.wr3.rsrce.ydiffuse = {};
-    av.fzr.wr3.rsrce.xgravity = {};
-    av.fzr.wr3.rsrce.ygravity = {};
-    av.fzr.wr3.rsrce.boxflag = {};    //false no cellbox so resources can leave box; true = resources confined to box
-    av.fzr.wr3.rsrce.boxx = {};
-    av.fzr.wr3.rsrce.boxy = {};
-    av.fzr.wr3.rsrce.boxrow = {};
-    av.fzr.wr3.rsrce.boxcol = {};
-    //tend to be the same; put at end
-    av.fzr.wr3.rsrce.name = {};;
-    av.fzr.wr3.rsrce.geometry = {};;
-  av.fzr.wr3.react = {};;
-    av.fzr.wr3.react.depletable = {};
-    av.fzr.wr3.react.value = {};
-    av.fzr.wr3.react.min = {};
-    av.fzr.wr3.react.max = {};
-    av.fzr.wr3.react.max_count = {};
-    av.fzr.wr3.react.name = {};
-    av.fzr.wr3.react.task = {};
-    av.fzr.wr3.react.resource = {};
-    av.fzr.wr3.react.type = {};
-
-  var len = av.ptd.logicNames.length;
-  for (var ii=0; ii< len; ii++) {
-    var enm = av.ptd.logEdNames[ii];   //puts names in order they are on avida-ed user interface
-    var lnm = av.ptd.logicNames[ii];
-    var vnm = av.ptd.logicVnames[ii];  
-    //resource
-    av.fzr.wr3.rsrce.initial[enm] = [];
-    av.fzr.wr3.rsrce.inflow[enm] = [];
-    av.fzr.wr3.rsrce.inflowx1[enm] = [];
-    av.fzr.wr3.rsrce.inflowx2[enm] = [];
-    av.fzr.wr3.rsrce.inflowy1[enm] = [];
-    av.fzr.wr3.rsrce.inflowy2[enm] = [];
-    av.fzr.wr3.rsrce.outflow[enm] = [];
-    av.fzr.wr3.rsrce.outflowx1[enm] = [];
-    av.fzr.wr3.rsrce.outflowx2[enm] = [];
-    av.fzr.wr3.rsrce.outflowy1[enm] = [];
-    av.fzr.wr3.rsrce.outflowy2[enm] = [];
-    av.fzr.wr3.rsrce.xdiffuse[enm] = [];
-    av.fzr.wr3.rsrce.ydiffuse[enm] = [];
-    av.fzr.wr3.rsrce.xgravity[enm] = [];
-    av.fzr.wr3.rsrce.ygravity[enm] = [];
-    av.fzr.wr3.rsrce.boxflag[enm] = [];    //false no cellbox so resources can leave box; true = resources confined to box
-    av.fzr.wr3.rsrce.boxx[enm] = [];
-    av.fzr.wr3.rsrce.boxy[enm] = [];
-    av.fzr.wr3.rsrce.boxrow[enm] = [];
-    av.fzr.wr3.rsrce.boxcol[enm] = [];
-     //tend to be the same; put at end
-    av.fzr.wr3.rsrce.name[enm] = [];
-    av.fzr.wr3.rsrce.geometry[enm] = [];
-    
-    //reaction
-    av.fzr.wr3.react.depletable[enm] = [];
-    av.fzr.wr3.react.value[enm] = [];
-    av.fzr.wr3.react.min[enm] = [];
-    av.fzr.wr3.react.max[enm] = [];
-    av.fzr.wr3.react.max_count[enm] = [];
-    av.fzr.wr3.react.name[enm] = [];
-    av.fzr.wr3.react.task[enm] = [];
-    av.fzr.wr3.react.resource[enm] = [];
-    av.fzr.wr3.react.type[enm] = [];
-    
-    for (var cnt=0; cnt<12; cnt++){
-      av.fzr.wr3.react.depletable[enm][cnt] = 0; //0 (infinate resource) does not consume any of the resource; 1 does consume resource
-      av.fzr.wr3.react.value[enm][cnt] = av.ptd.reactValues[cnt];  //0=no reward; >0 is rewared to that power of 2
-      av.fzr.wr3.react.min[enm][cnt] = 0.5;      //The minimum amount of resource required. If less than this quantity is available, the av.fzr.wr3.react[enm]ion ceases to proceed.
-      av.fzr.wr3.react.max[enm][cnt] = 1;        //The maximum amount of the resource consumed per occurrence.
-          //tend to be the same; put at end
-      av.fzr.wr3.react.max_count[enm][cnt] = 1;
-      av.fzr.wr3.react.name[enm][cnt] = lnm + cnt;     //do I need to put in leadingn zeros?? if so how?
-      av.fzr.wr3.react.task[enm][cnt] = vnm;           //must use the variable length name for the logic function
-      av.fzr.wr3.react.resource[enm][cnt] = lnm + cnt;  //do I need to put in leadingn zeros?? if so how?
-      av.fzr.wr3.react.type[enm][cnt] = 'pow';
-      
-     av.fzr.wr3.rsrce.initial[enm][cnt] = 1;
-     av.fzr.wr3.rsrce.inflow[enm][cnt] = 0;
-     av.fzr.wr3.rsrce.inflowx1[enm][cnt] = 0;
-     av.fzr.wr3.rsrce.inflowx2[enm][cnt] = 0;
-     av.fzr.wr3.rsrce.inflowy1[enm][cnt] = 0;
-     av.fzr.wr3.rsrce.inflowy2[enm][cnt] = 0;
-     av.fzr.wr3.rsrce.outflow[enm][cnt] = 0.0;
-     av.fzr.wr3.rsrce.outflowx1[enm][cnt] = 0;
-     av.fzr.wr3.rsrce.outflowx2[enm][cnt] = 0;
-     av.fzr.wr3.rsrce.outflowy1[enm][cnt] = 0;
-     av.fzr.wr3.rsrce.outflowy2[enm][cnt] = 0;
-     av.fzr.wr3.rsrce.xdiffuse[enm][cnt] = 0;
-     av.fzr.wr3.rsrce.ydiffuse[enm][cnt] = 0;
-     av.fzr.wr3.rsrce.xgravity[enm][cnt] = 0;
-     av.fzr.wr3.rsrce.ygravity[enm][cnt] = 0;
-     av.fzr.wr3.rsrce.boxflag[enm][cnt] = false;    //false no cellbox so resources can leave box; true  =  resources confined to box
-     av.fzr.wr3.rsrce.boxx[enm][cnt] = 0;
-     av.fzr.wr3.rsrce.boxy[enm][cnt] = 0;
-     av.fzr.wr3.rsrce.boxrow[enm][cnt] = 1;
-     av.fzr.wr3.rsrce.boxcol[enm][cnt] = 1;
-      //tend to be the same; put at end
-     av.fzr.wr3.rsrce.name [enm][cnt] =  lnm + cnt;
-     av.fzr.wr3.rsrce.geometry[enm][cnt] = 'grid';
-    };
-  };
-  console.log('av.fzr.wr3.react=',av.fzr.wr3.react);
-  console.log('av.fzr.wr3.rsrce=',av.fzr.wr3.rsrce);
-
-
+  av.fzr.clearEnvironment();
 };
 
 //------------------------------------------------------------------------------------------- end av.fzr.clearFzrFn --//
@@ -798,17 +598,7 @@ av.fzr.workspaceName = 'default';
 av.fzr.clearMainFzrFn = function () {
   'use strict';
   if (av.debug.root) console.log('in ClearMainFzrFn');
-  av.fzr.dir = {};
-  av.fzr.domid = {};
-  av.fzr.file = {};
-  av.fzr.mDish = {};
 
-  av.fzr.cNum = 0;  //value of the next configured dish (config) number
-  av.fzr.gNum = 0;  //value of the next organism (genome) number
-  av.fzr.mNum = 0;  //value of the next multi-dish (complex-populated dish) number
-  av.fzr.rNum = 0;  //value of the next resource dish number
-  av.fzr.tNum = 0;  //value of the next test dish number
-  av.fzr.wNum = 0;  //value of the next world (populated dish) number
 
   //Clear each section of the freezer and active organism and ancestorBox
   if (av.debug.root) console.log('before av.dnd.fzConfig.selectAll', av.dnd.fzConfig);

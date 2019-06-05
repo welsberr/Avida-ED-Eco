@@ -1537,7 +1537,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       if (null == av.aww.uiWorker) {
         av.aww.uiWorker = new Worker('avida.js');
         console.log('webworker recreated');
-        av.debug.log += '\nuiA: ui killed avida webworker and started a new webworker'
+        av.debug.log += '\nuiA: ui killed avida webworker and started a new webworker';
       }
     }
     else {
@@ -1547,17 +1547,17 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     //need to 'start new experiment'
     av.ptd.resetDishFn(false);  //do not send reset to avida; avida restarted
     restartAvidaDialog.hide();
-  }
+  };
 
   document.getElementById('restartAvidaNow').onclick = function () {
     av.post.addUser('Button: restartAvidaNow');
     av.ui.restartAvida();
-  }
+  };
 
   document.getElementById('restartAvidaFrzConfig').onclick = function () {
     av.post.addUser('Button: restartAvidaFzrConfig');
     av.ptd.FrConfigFn();
-  }
+  };
 
   //test - delete later ------------------------------------------------------------------------------------------------
 
