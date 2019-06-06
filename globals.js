@@ -439,7 +439,9 @@ av.parents.clearParentsFn = function () {
 
 av.fzr = {};
 
-
+//not in use, would make 4 entries with default values. No need, just for testing. 
+//Not using this format can delete
+/*
 av.fzr.make_rsrce = function () {  
   var len = av.ptd.logicNames.length;
   for (var ii=0; ii< len; ii++) {
@@ -487,23 +489,33 @@ av.fzr.make_rsrce = function () {
       av.fzr.env.react[enm][jj].type = 'pow';
     };
   }; 
-  
-  // other versions
-  
 };
+*/
 
 av.fzr.clearEnvironment = function() {
-    av.fzr.env = {};
+  av.fzr.env = {};
+  av.fzr.env.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', 'inflowy2', 'xdiffuse', 'ydiffuse'
+                           ,'outflow', 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2', 'xgravity', 'ygravity'
+                           ,'boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow', 'name', 'geometry'];
+  console.log('av.fzr.env.rsrce_param=',av.fzr.env.rsrce_param);
 
-    // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
+  av.fzr.env.react_param = ['depletable', 'value', 'min', 'max', 'max_count', 'name', 'task', 'resource', 'type'];                       
+
+  // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
   av.fzr.env.rsrce = {};
   av.fzr.env.react = {};  
-  var len = av.ptd.logicNames.length;
-  for (var ii=0; ii< len; ii++) {
+  var logiclen = av.ptd.logicNames.length;
+  var rsrcelen = av.fzr.env.rsrce_param.length; 
+  var reactlen = av.fzr.env.react_param.length;
+  for (var ii=0; ii< logiclen; ii++) {
     var enm = av.ptd.logEdNames[ii];   //puts names in order they are on avida-ed user interface
-    var lnm = av.ptd.logicNames[ii];
-    var vnm = av.ptd.logicVnames[ii];  
+    //var lnm = av.ptd.logicNames[ii];
+    //var vnm = av.ptd.logicVnames[ii];  
     av.fzr.env.rsrce[enm] = {};    
+    for (var jj=0; jj<rsrcelen; jj++){
+      av.fzr.env.rsrce[enm][av.fzr.env.rsrce_param[jj]] = [];
+    }
+    /*
     av.fzr.env.rsrce[enm].initial=[];
     av.fzr.env.rsrce[enm].inflow=[];
     av.fzr.env.rsrce[enm].inflowx1=[];
@@ -526,8 +538,13 @@ av.fzr.clearEnvironment = function() {
     av.fzr.env.rsrce[enm].boxcol=[];
     av.fzr.env.rsrce[enm].name = [];
     av.fzr.env.rsrce[enm].geometry=[];
-
+    */
     av.fzr.env.react[enm] = {};
+    for (var jj=0; jj<reactlen; jj++){
+      
+      av.fzr.env.react[enm][av.fzr.env.react_param[jj]] = [];
+    }
+    /*
     av.fzr.env.react[enm].depletable = [];
     av.fzr.env.react[enm].value = [];
     av.fzr.env.react[enm].min = [];
@@ -537,12 +554,14 @@ av.fzr.clearEnvironment = function() {
     av.fzr.env.react[enm].task = [];
     av.fzr.env.react[enm].resource = [];
     av.fzr.env.react[enm].type = [];
+    */
   };
   console.log('av.fzr.env.react=',av.fzr.env.react);
   console.log('av.fzr.env.rsrce=',av.fzr.env.rsrce);
-}
+};
 
 //-------------------------------------------------------------------------------------------- in av.fzr.clearFzrFn --//
+//cannot call av.fzr.clearFzrFn until after saveUpdateState is defined in fileIO.js
 av.fzr.clearFzrFn = function () {
   'use strict';
   av.fzr.dir = {};
@@ -588,6 +607,7 @@ av.fzr.clearFzrFn = function () {
   av.fzr.subDishOrNot = 'none';
   av.fzr.clearEnvironment();
 };
+
 
 //------------------------------------------------------------------------------------------- end av.fzr.clearFzrFn --//
 

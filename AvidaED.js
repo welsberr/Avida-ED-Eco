@@ -1,3 +1,5 @@
+/* global userMsgLabel */
+
 // need a server to run this. The one below works.
 // python -m SimpleHTTPServer  in the folder with index.html to start a server for using pouchDB
 // python -m SimpleHTTPServer 8001  to put on 8001 instead of 8000
