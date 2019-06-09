@@ -638,7 +638,7 @@ av.msg.injectAncestors = function (from) {
       };
       av.aww.uiWorker.postMessage(request);
       av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request);
-      //console.log('log', av.utl.json2stringFn(request));
+      console.log('log', av.utl.json2stringFn(request));
       av.parents.injected[ii] = true;
       //console.log('parents.injected', av.parents.injected[ii]);
     }

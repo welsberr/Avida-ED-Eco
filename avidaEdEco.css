@@ -241,8 +241,25 @@
     border: 1px solid #AAA;
     width: 100%;
   }
+  
+  .env-container {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #AAA;
+    background-color: #F5F5F5;    
+  }
+  
+  #envType {
+    flex: 0 1 200px;        
+    border: 1px solid #AAA;    
+  }
 
-.grid-container {
+  #envParam {
+    flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
+    border: 1px solid #AAA;    
+  }
+
+  .grid-container {
   display: inline-grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
   background-color: #2196F3;

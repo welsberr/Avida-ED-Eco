@@ -162,6 +162,14 @@ function wsa(target, strng){
  */
 
 //remove all commas; remove preceeding and trailing spaces; replace spaces with comma
+av.utl.spaceSplit = function (instr) {
+  'use strict';
+  var str1 = instr.replace(/,/g, '|').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, '~');
+
+  return str1;
+};
+
+//remove all commas; remove preceeding and trailing spaces; replace spaces with comma
 av.utl.flexsplit = function (instr) {
   'use strict';
   var str1 = instr.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
@@ -169,7 +177,7 @@ av.utl.flexsplit = function (instr) {
   return str1;
 };
 
-//remove all commas; remove preceeding and trailing spaces; replace spaces with underbar; but underbar at start of string.
+//remove all commas; remove preceeding and trailing spaces; replace spaces with underbar; put underbar at start of string.
 av.utl.makeFileName = function (instr) {
   'use strict';
   var str1 = instr.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, '_');

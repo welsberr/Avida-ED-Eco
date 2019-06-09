@@ -497,7 +497,7 @@ av.fzr.clearEnvironment = function() {
   av.fzr.env.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', 'inflowy2', 'xdiffuse', 'ydiffuse'
                            ,'outflow', 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2', 'xgravity', 'ygravity'
                            ,'boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow', 'name', 'geometry'];
-  console.log('av.fzr.env.rsrce_param=',av.fzr.env.rsrce_param);
+  //console.log('av.fzr.env.rsrce_param=',av.fzr.env.rsrce_param);
 
   av.fzr.env.react_param = ['depletable', 'value', 'min', 'max', 'max_count', 'name', 'task', 'resource', 'type'];                       
 
@@ -515,49 +515,14 @@ av.fzr.clearEnvironment = function() {
     for (var jj=0; jj<rsrcelen; jj++){
       av.fzr.env.rsrce[enm][av.fzr.env.rsrce_param[jj]] = [];
     }
-    /*
-    av.fzr.env.rsrce[enm].initial=[];
-    av.fzr.env.rsrce[enm].inflow=[];
-    av.fzr.env.rsrce[enm].inflowx1=[];
-    av.fzr.env.rsrce[enm].inflowx2=[];
-    av.fzr.env.rsrce[enm].inflowy1=[];
-    av.fzr.env.rsrce[enm].inflowy2=[];
-    av.fzr.env.rsrce[enm].outflow=[];
-    av.fzr.env.rsrce[enm].outflowx1=[];
-    av.fzr.env.rsrce[enm].outflowx2=[];
-    av.fzr.env.rsrce[enm].outflowy1=[];
-    av.fzr.env.rsrce[enm].outflowy2=[];
-    av.fzr.env.rsrce[enm].xdiffuse=[];
-    av.fzr.env.rsrce[enm].ydiffuse=[];
-    av.fzr.env.rsrce[enm].xgravity=[];
-    av.fzr.env.rsrce[enm].ygravity=[];
-    av.fzr.env.rsrce[enm].boxflag=[];    //false no cellbox so resources can leave box; true = resources confined to box
-    av.fzr.env.rsrce[enm].boxx=[];
-    av.fzr.env.rsrce[enm].boxy=[];
-    av.fzr.env.rsrce[enm].boxrow=[];
-    av.fzr.env.rsrce[enm].boxcol=[];
-    av.fzr.env.rsrce[enm].name = [];
-    av.fzr.env.rsrce[enm].geometry=[];
-    */
     av.fzr.env.react[enm] = {};
     for (var jj=0; jj<reactlen; jj++){
       
       av.fzr.env.react[enm][av.fzr.env.react_param[jj]] = [];
     }
-    /*
-    av.fzr.env.react[enm].depletable = [];
-    av.fzr.env.react[enm].value = [];
-    av.fzr.env.react[enm].min = [];
-    av.fzr.env.react[enm].max = [];
-    av.fzr.env.react[enm].max_count = [];
-    av.fzr.env.react[enm].name = [];
-    av.fzr.env.react[enm].task = [];
-    av.fzr.env.react[enm].resource = [];
-    av.fzr.env.react[enm].type = [];
-    */
   };
-  console.log('av.fzr.env.react=',av.fzr.env.react);
-  console.log('av.fzr.env.rsrce=',av.fzr.env.rsrce);
+  //console.log('av.fzr.env.react=',av.fzr.env.react);
+  //console.log('av.fzr.env.rsrce=',av.fzr.env.rsrce);
 };
 
 //-------------------------------------------------------------------------------------------- in av.fzr.clearFzrFn --//
