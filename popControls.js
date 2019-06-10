@@ -624,6 +624,19 @@ av.ptd.setStyle = function (cssText) {
 av.ptd.envobj2form = function(from) {
   console.log(from, 'called av.ptd.envobj2form');
   if ('Finite' == av.ui.envDistribute) {
+    console.log('av.dom.envInitial = '+ av.dom.envInitial);
     av.dom.envInitial.value  = 1;
+  }
+  else if ('Equilibrium' == av.ui.envDistribute) {
+    var inflow = 0.8
+    var outflow = 0.4
+    av.dom.envEqInflow.value = inflow;
+    av.dom.envEqOutflow.value = outflow;
+    av.dom.envEqual.innerHTML = inflow/outflow;
+  }
+  else if ('Gradient' == av.ui.envDistribute) {
+    av.dom.envGrInflow.value = 0.8;
+    av.dom.envGrOutflow.value = 0.4;
+    av.dom.envGrSide.value = 'left';
   }
 };

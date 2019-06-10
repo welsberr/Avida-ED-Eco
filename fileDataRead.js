@@ -255,14 +255,17 @@ av.fio.processItemFiles = function (){
 //------------------------------------------ update config data from file data stored in freezer = av.frd.updateSetup --
 av.frd.updateSetup = function(from) {
   'use strict';
+  console.log(from, 'called av.frd.updateSetup; dir=', av.fzr.actConfig.dir);
   var dir = av.fzr.actConfig.dir;
   var path = dir + '/avida.cfg';
   var doctext = av.fzr.file[path];
-  console.log(from, 'called av.frd.updateSetup; dir=', av.fzr.actConfig.dir);
   //console.log('actConfig: path=', path);
+  
   av.frd.avidaCFG2form(doctext);
   doctext = av.fzr.file[dir + '/environment.cfg'];
-  av.frd.environmentCFG2form(doctext);
+  //av.frd.environmentCFG2form(doctext);
+  av.frd.environment2struct(doctext);      //puts environment in a structure
+
   doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
   av.frd.pauseRunAtTXT2form(doctext);
 };
@@ -271,25 +274,28 @@ av.frd.updateSetup = function(from) {
 //------------------------------------------- update config data from file data stored in freezer for test setup page --
 av.frd.updateTestSetup = function (from) {
   'use strict';
-  var dir = av.fzr.actConfig.dir;
   //console.log(from, ' called av.frd.updateTestSetup; dir=', dir);
+  var dir = av.fzr.actConfig.dir;
   var path = dir + '/avida.cfg';
   var doctext = av.fzr.file[path];
-  //av.frd.avidaCFG2form(doctext);
-  av.frd.avidaTestform(doctext);
-  path = dir + '/environment.cfg';
-  doctext = av.fzr.file[path];  
-  av.frd.environment2struct(doctext);      //will be called when we get a structure
+  //console.log('actConfig: path=', path);
+  
+  av.frd.avidaTestform(doctext);         //av.frd.avidaCFG2form(doctext);
+  doctext = av.fzr.file[dir + '/environment.cfg'];
+  av.frd.environment2struct(doctext);     
   //av.frd.environmentTestform(doctext);     //for now editing the whole file
   //console.log('av.dom.environConfigEdit=',av.dom.environConfigEdit);
+
   if (av.fzr.file[av.dnd.move.dir+'/'+ 'environment.cfg'] ) {
     av.dom.environConfigEdit.value = av.fzr.file[av.dnd.move.dir+'/'+'environment.cfg'];
   };
-  doctext = av.fzr.file[dir + '/environment.cfg'];
+  
+  
+  //doctext = av.fzr.file[dir + '/environment.cfg'];
   
   //not sure about this one; may need a test version of this one too
-  doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
-  av.frd.pauseRunAtTest2form(doctext);
+  //doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
+  //av.frd.pauseRunAtTest2form(doctext);
 };
 //------------------------------------------------------------------------------------- end of av.frd.updateTestSetup --
 
@@ -628,11 +634,13 @@ av.frd.avidaCFG2form = function (fileStr){
   av.dom.sizeCols.value = dict.WORLD_X;
   av.grd.gridWasCols = Number(dict.WORLD_X);  
   av.grd.setupCols = Number(dict.WORLD_X);  
+  av.fzr.env.fileCols = Number(dict.WORLD_X);
   //dijit.byId('sizeCols').set('value', dict.WORLD_X);
   av.dom.sizeRows.value = dict.WORLD_Y;
   //dijit.byId('sizeRows').set('value', dict.WORLD_Y);
   av.grd.gridWasRows = Number(dict.WORLD_Y);
   av.grd.setupRows = Number(dict.WORLD_Y);
+  av.fzr.env.fileRows = Number(dict.WORLD_Y);
   document.getElementById('muteInput').value = dict.COPY_MUT_PROB*100;
   //var event = new Event('change');
   var event = new window.CustomEvent('change');
@@ -661,13 +669,16 @@ av.frd.avidaTestform = function (fileStr){
   console.log('in av.frd.avidaTestform');
   var dict = av.frd.avidaCFGparse(fileStr);
   document.getElementById('sizeColTest').value = dict.WORLD_X;
-  av.grd.gridWasCols = dict.WORLD_X;
+  //av.grd.gridWasCols = dict.WORLD_X;
   av.grd.gridWasCols = Number(dict.WORLD_X);  
-  av.grd.setupCols = Number(dict.WORLD_X);  
+  av.grd.setupCols = Number(dict.WORLD_X); 
+  av.fzr.env.fileCols = Number(dict.WORLD_X);
+  
   document.getElementById('sizeRowTest').value = dict.WORLD_Y;
-  av.grd.gridWasRows = dict.WORLD_Y;
+  //av.grd.gridWasRows = dict.WORLD_Y;
    av.grd.gridWasRows = Number(dict.WORLD_Y);
   av.grd.setupRows = Number(dict.WORLD_Y);
+  av.fzr.env.fileRows = Number(dict.WORLD_Y);
  
   document.getElementById('muteInpuTest').value = dict.COPY_MUT_PROB*100;
  

@@ -262,9 +262,16 @@ require([
     av.dom.childRandomRadio = document.getElementById('childRandomRadio');
     av.dom.envNone = document.getElementById('envNone');
     av.dom.envFinite = document.getElementById('envFinite');
-    av.dom.envCenterOut = document.getElementById('envCenterOut');
+    av.dom.envGradient = document.getElementById('envGradient');
     av.dom.envEquilibrium = document.getElementById('envEquilibrium'); 
-    //av.dom. = document.getElementById(''); 
+    av.dom.envInitial = document.getElementById('envInitial'); 
+    av.dom.envEqInflow = document.getElementById('envEqInflow'); 
+    av.dom.envEqOutflow = document.getElementById('envEqOutflow'); 
+    av.dom.envEqual = document.getElementById('envEqual'); 
+    av.dom.envGrSide = document.getElementById('envGrSide'); 
+    av.dom.envGrInflow = document.getElementById('envGrInflow'); 
+    av.dom.envGrOutflow = document.getElementById('envGrOutflow'); 
+    av.dom.env = document.getElementById(''); 
         
     av.dom.notose = document.getElementById('notose');
     av.dom.andose = document.getElementById('andose');
@@ -416,13 +423,20 @@ require([
   if (av.debug.root) console.log('after trashCan');
 
   av.dnd.activeConfig = new dndSource('activeConfig', {
-    accept: ['b', 'c', 't', 'w'],  //b-both; c-configuration; w-world (populated dish; t-test
+    accept: ['b', 'c', 't', 'w'],  //b-both; c-configuration; w-world (populated dish); t-test
     singular: true,
     copyOnly: true,
     selfAccept: false
   });
 
-  if (av.debug.root) console.log('before activeOrgan');
+  av.dnd.testConfig = new dndSource('testConfig', {
+    accept: ['b', 'c', 't', 'w'],  //b-both; c-configuration; w-world (populated dish); t-test
+    singular: true,
+    copyOnly: true,
+    selfAccept: false
+  });
+
+if (av.debug.root) console.log('before activeOrgan');
   //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
   av.dnd.activeOrgan = new dndSource('activeOrgan', {
     accept: ['g'],
@@ -479,13 +493,21 @@ require([
 
   av.dnd.activeConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
     'use strict';
-    //console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id)
+    console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id)
     if ('activeConfig' === target.node.id) {
       av.dnd.makeMove(source, nodes, target);
     }
   });
   
-  // based on https://stackoverflow.com/questions/27529727/sorta-b-does-not-work-in-dojo-dnd-source
+  av.dnd.testConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
+    'use strict';
+    console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id)
+    if ('testConfig' === target.node.id) {
+      av.dnd.makeMove(source, nodes, target);
+    }
+  });
+
+// based on https://stackoverflow.com/questions/27529727/sorta-b-does-not-work-in-dojo-dnd-source
   av.dnd.sortDnD = function (dndSection){
     // Input: dndSection = the text of the class os the Dojo DnD section with elements to be sorted
     // e.g., var dndSection = 'fzOrgan'; sortDnD(dndSection);
@@ -2293,7 +2315,7 @@ av.ptd.randInputChange = function(value, randErroTest) {
     av.dom.envNone.style.display = "none";
     av.dom.envFinite.style.display = "none";
     av.dom.envEquilibrium.style.display = "none";
-    av.dom.envCenterOut.style.display = "none";
+    av.dom.envGradient.style.display = "none";
     document.getElementById(showbox).style.display = "block";
   };
 
@@ -2307,14 +2329,15 @@ av.ptd.randInputChange = function(value, randErroTest) {
       case 'Equilibrium':
         av.ui.envBoxSwap('envEquilibrium'); 
         break;
-      case 'CenterOut':
-        av.ui.envBoxSwap('envCenterOut'); 
+      case 'Gradient':
+        av.ui.envBoxSwap('envGradient'); 
         break;
-      case 'none':
-      case 'infinite':
+      case 'None':
+      case 'Infinite':
         av.ui.envBoxSwap('envNone'); 
         break;
     }
+    av.ptd.envobj2form('envRegion.change');
   });
 
   dijit.byId('envRegion').on('Change', function () {
@@ -2323,7 +2346,7 @@ av.ptd.randInputChange = function(value, randErroTest) {
   });
 
   dijit.byId('envTask').on('Change', function () {
-    av.ui.envRegion = dijit.byId('envTask').value;
+    av.ui.envTask = dijit.byId('envTask').value;
     av.ptd.envobj2form('fenvTask.change');
   });
 

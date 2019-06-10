@@ -254,6 +254,8 @@
               <img src='images/Avida-ED-dish-icon.png' alt='Avida-ED dish icon'>
             </div>
             <div id='activeConfig' class='popContainer'></div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;test 
+            <div id='testConfig' class='popContainer'></div>
             <label id='altMsgLabel'></label>
           </div>
           <div class="benchPopMid" id='gridHolder' data-dojo-type='dijit/layout/ContentPane'>
@@ -688,7 +690,7 @@
                       <option value='Infinite' selected='selected'>Infinite</option>
                       <option value='Finite'>Finite</option>
                       <option value='Equilibrium'>Equilibrium</option>
-                      <option value='CenterOut'>CenterOut</option>
+                      <option value='Gradient'>Gradient</option>
                     </select><br />
                   </div>
                   <div id='envParam'>
@@ -696,20 +698,22 @@
                          &nbsp;
                     </div>
                     <div id='envFinite'>
-                      <input name='envInitial' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.8em' value = '100'/>
+                      <input id='envInitial' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.8em' value = '100'/>
                       &nbsp;Amount of resource per cell
                     </div>
                     <div id='envEquilibrium'>
-                      <input name='envEqInflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.6em' value = '1'/> 
+                      <input id='envEqInflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.6em' value = '1'/> 
                       Inflow per cell <br>
-                      <input name='envEqOutflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.6em' value = '0.1'/>
+                      <input id='envEqOutflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.6em' value = '0.1'/>
                       Outflow fraction (0 < outflow <= 1) <br>
                       <p><label id='envEqual'>10</label> is the equilibrium if nothing eats the resource</p>
                     </div>
-                    <div id='envCenterOut'>
-                      Inflow per cell <input name='envInflow' type='text'  value = '1'/>
+                    <div id='envGradient'>
+                      Inflow side <input id='envGrSide' type='text'  value = 'top'/>
+                      <br />
+                      Inflow per cell <input id='envGrInflow' type='text'  value = '1'/>
                       <br/>
-                      Outflow fraction<input name='envOutflow' />
+                      Outflow fraction<input id='envGrOutflow' />
                     </div>
                     
                   </div>
