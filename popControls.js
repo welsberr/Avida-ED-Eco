@@ -621,3 +621,9 @@ av.ptd.setStyle = function (cssText) {
 
 //----------------------------------------------------------------------------------------------------------------------
 
+av.ptd.envobj2form = function(from) {
+  console.log(from, 'called av.ptd.envobj2form');
+  if ('Finite' == av.ui.envDistribute) {
+    av.dom.envInitial.value  = 1;
+  }
+};

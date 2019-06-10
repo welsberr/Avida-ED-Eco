@@ -683,26 +683,33 @@
                       <option value='rxor'>xorose: Very hard (x16)</option>
                       <option value='requ'>equose: Brutal (x32)</option>
                     </select><br />
-                    Distribution Type <select data-dojo-type='dijit/form/Select' id='envRsrcType' data-dojo-props='name: "envRsrcType"'>
-                      <option value='none'>None</option>
-                      <option value='infinite' selected='selected'>Infinite</option>
-                      <option value='Finite'>Equilibrium</option>
+                    Distribution Type <select data-dojo-type='dijit/form/Select' id='envDistribute' data-dojo-props='name: "envDistribute"'>
+                      <option value='None'>None</option>
+                      <option value='Infinite' selected='selected'>Infinite</option>
+                      <option value='Finite'>Finite</option>
                       <option value='Equilibrium'>Equilibrium</option>
-                      <option value='CenterOut'>Equilibrium</option>
+                      <option value='CenterOut'>CenterOut</option>
                     </select><br />
                   </div>
                   <div id='envParam'>
-                    <div id='envFinite'>
-                      <input id='sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '100'/>
-                         Amount of resource per cell&nbsp;<br />
+                    <div id='envNone'>
+                         &nbsp;
                     </div>
                     <div id='envFinite'>
-                      <input id='sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '100'/>
-                         Amount of resource per cell&nbsp;<br />
+                      <input name='envInitial' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.8em' value = '100'/>
+                      &nbsp;Amount of resource per cell
+                    </div>
+                    <div id='envEquilibrium'>
+                      <input name='envEqInflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.6em' value = '1'/> 
+                      Inflow per cell <br>
+                      <input name='envEqOutflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.6em' value = '0.1'/>
+                      Outflow fraction (0 < outflow <= 1) <br>
+                      <p><label id='envEqual'>10</label> is the equilibrium if nothing eats the resource</p>
                     </div>
                     <div id='envCenterOut'>
-                      <input id='sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '100'/>
-                         Amount of resource per cell&nbsp;<br />
+                      Inflow per cell <input name='envInflow' type='text'  value = '1'/>
+                      <br/>
+                      Outflow fraction<input name='envOutflow' />
                     </div>
                     
                   </div>

@@ -260,6 +260,12 @@ require([
     av.dom.muteError = document.getElementById('muteError');
     av.dom.childParentRadio = document.getElementById('childParentRadio');
     av.dom.childRandomRadio = document.getElementById('childRandomRadio');
+    av.dom.envNone = document.getElementById('envNone');
+    av.dom.envFinite = document.getElementById('envFinite');
+    av.dom.envCenterOut = document.getElementById('envCenterOut');
+    av.dom.envEquilibrium = document.getElementById('envEquilibrium'); 
+    //av.dom. = document.getElementById(''); 
+        
     av.dom.notose = document.getElementById('notose');
     av.dom.andose = document.getElementById('andose');
     av.dom.orose = document.getElementById('orose');
@@ -2283,6 +2289,44 @@ av.ptd.randInputChange = function(value, randErroTest) {
     };
   };
 
+  av.ui.envBoxSwap = function (showbox) {
+    av.dom.envNone.style.display = "none";
+    av.dom.envFinite.style.display = "none";
+    av.dom.envEquilibrium.style.display = "none";
+    av.dom.envCenterOut.style.display = "none";
+    document.getElementById(showbox).style.display = "block";
+  };
+
+  dijit.byId('envDistribute').on('Change', function () {
+    //console.log ('in envDistribute =', dijit.byId('envDistribute').value);
+    av.ui.envDistribute = dijit.byId('envDistribute').value;
+    switch (dijit.byId('envDistribute').value) {
+      case 'Finite':
+        av.ui.envBoxSwap('envFinite'); 
+        break;
+      case 'Equilibrium':
+        av.ui.envBoxSwap('envEquilibrium'); 
+        break;
+      case 'CenterOut':
+        av.ui.envBoxSwap('envCenterOut'); 
+        break;
+      case 'none':
+      case 'infinite':
+        av.ui.envBoxSwap('envNone'); 
+        break;
+    }
+  });
+
+  dijit.byId('envRegion').on('Change', function () {
+    av.ui.envRegion = dijit.byId('envRegion').value;
+    av.ptd.envobj2form('envRegion.change');
+  });
+
+  dijit.byId('envTask').on('Change', function () {
+    av.ui.envRegion = dijit.byId('envTask').value;
+    av.ptd.envobj2form('fenvTask.change');
+  });
+
 av.ptd.gridChange = function(tmpval) {
     console.log('in av.ptd.gridChange; ');
     var colNum = Number(av.dom.sizeCols.value);
@@ -3197,10 +3241,12 @@ $(function slidemute() {
   //av.ui.removeVerticalScrollbar('popStats4grid', 'popStatistics');
   //av.ui.removeVerticalScrollbar('popBot', 'popBot');
   
-  //
+  // **************************************************************************************************************** */
+  //                                          Last things done
+  // **************************************************************************************************************** */
   //av.ui.removeVerticalScrollbar('popTop', 'popTop');
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
-
+  av.ui.envBoxSwap('envNone');  
   //av.grd.popChartFn();
   //av.grd.drawGridSetupFn('inital background'); //Draw initial background
 
