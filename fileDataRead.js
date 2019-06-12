@@ -423,6 +423,7 @@ av.frd.reactionLineParse = function(lnArray) {
         }
         else {
           if ('cellbox' == pear[0].toLowerCase()) {
+            console.log('cellbox is not a reacion; this should never write')
             cellboxdata = pear[1].split('|');
             //console.log('cellboxdata=',cellboxdata);
             //envobj.boxflag[ndx] = true;
@@ -437,7 +438,7 @@ av.frd.reactionLineParse = function(lnArray) {
           }
         }
       }
-    }
+    };
     //console.log('logtype=', logtype,'ndx=',ndx,'envobj=', envobj);
   }  
   // valid logic name not found;
@@ -456,6 +457,7 @@ av.frd.resourceLineParse = function(lnArray){
   var pear = [];
   var cellboxdata = [];
   var nn;
+  var codes;  
   //console.log('pairArray=', pairArray);
   //find logic type
   var logicindex = av.ptd.logicNames.indexOf( pairArray[0].substring(0,3) );
@@ -464,7 +466,7 @@ av.frd.resourceLineParse = function(lnArray){
     var logtype = av.ptd.logEdNames[logicindex];
     // Checking for a resource tag
     var envobj = av.fzr.env.rsrce[logtype];
-    //console.log('envobj=', envobj);
+    //console.log('logtype='+logtype,'; envobj=', envobj);
     var ndx = av.frd.rNameIndex(envobj, pairArray[0]);
     //console.log('ndx=',ndx);
     //assin the name of the resource. 
@@ -472,11 +474,13 @@ av.frd.resourceLineParse = function(lnArray){
     // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file witha few exceptions
     // boxflag is false indicating there are no box values. 
     // in Avida-ED, geometry=grid; 
+    //console.log('av.fzr.env=', av.fzr.env);
+    //console.log('envobj=', envobj);
     envobj.boxflag[ndx] = false;
     envobj.inflow[ndx] = 0;
     envobj.outflow[ndx] = 0;
     envobj.initial[ndx] = 0;
-    envobj.geometry[ndx] = "gid";
+    envobj.geometry[ndx] = "grid";
     envobj.inflowx1[ndx] = 0;                     //techincally should be rand between 0 and cols-1
     envobj.inflowx2[ndx] = envobj.inflowx1[ndx]; 
     envobj.inflowy1[ndx] = 0;                     //techincally should be rand between 0 and rows-1
@@ -489,6 +493,11 @@ av.frd.resourceLineParse = function(lnArray){
     envobj.ydiffuse[ndx] = 1;
     envobj.xgravity[ndx] = 0;
     envobj.ygravity[ndx] = 0;
+    envobj.type[ndx] = 'inf';
+    envobj.region[ndx] = 'ed';
+    envobj.side[ndx] = 'lf';
+    
+    //process all data pairs
     var len = pairArray.length;
     //console.log('len=',len,'; pairArray=',pairArray);
     for (var ii=1; ii < len; ii++) {
@@ -514,7 +523,35 @@ av.frd.resourceLineParse = function(lnArray){
         }
       }
     };
-    //console.log('logtype=', logtype,'ndx=',ndx,'envobj=', envobj);
+    // Assign layout parameters based on the resource name
+    // If there is a number, then 0 = entire dish; 1=upper left; 2=upper right; 3=lower left; 4= lower right
+    // if there is a letter combination with underbars those split out. 
+    //var re_num = '^\d{1,9}$';
+    //var matchNum = envobj.name[ndx].match(re_num);
+    //console.log('envobj.name[ndx]=', envobj.name[ndx],'; matchNum=', matchNum);
+    var matchNum = av.fzr.env.regionNum.indexOf( envobj.name[ndx].substring(3).toString() );
+    console.log('av.fzr.env.regionNum=', av.fzr.env.regionNum,'; envobj.name[ndx].substring(3)=',envobj.name[ndx].substring(3),'; matchNum=', matchNum);
+    //console.log('matchNum=', matchNum);
+    if (-1 < matchNum) {
+      //console.log('matchNum=', matchNum, '; av.fzr.env.region[matchNum]' = av.fzr.env.region[matchNum]);
+      envobj.region[ndx] = av.fzr.env.region[matchNum];
+      if (0 < envobj.initial[ndx]) envobj.type[ndx] = 'fin';
+      if (0 < envobj.inflow[ndx]) envobj.type[ndx] = 'equ';      
+      envobj.side[ndx] = 'un';
+    }
+    else {
+      codes = envobj.name[ndx].split('_');  //task_region_type_side  with side optional
+      console.log('codes=', codes);
+      envobj.region[ndx] = codes[1];
+      envobj.type[ndx] = codes[2];
+      envobj.side[ndx] = codes[3];
+      matchNum = av.fzr.env.region.indexOf(codes[1]);
+    };
+    console.log('matchNum=', matchNum, '; region=', envobj.region[ndx]);
+      //now assign an index to the region list. 
+    envobj.regionList[matchNum] = ndx;
+
+    console.log('matchNum=', matchNum,'; logtype=', logtype,'ndx=',ndx,'av.fzr.env.rsrce['+logtype+'].regionList=', av.fzr.env.rsrce[logtype].regionList);
   }  
   // valid logic name not found;
   else {lineErrors = 'resource,'+pairArray[0].substring(0,3)+' not found in av.ptd.logicNames';}
@@ -589,6 +626,7 @@ av.frd.environmentParse = function (filestr) {
     }  //end of processing lines longer than 3 characters
     ii++;
   } // while that goes through lines in file. 
+  console.log('----------------------------------------------------------------------------------------------------');
   console.log('av.fzr.env=', av.fzr.env);
   return errors;
 };
@@ -599,6 +637,38 @@ av.frd.environment2struct = function (fileStr) {
   //console.log('in av.frd.environment2struct');
   var errors = av.frd.environmentParse(fileStr);
   if (1 < errors.length) console.log('errors=', errors);
+  av.ptd.showEnv('av.frd.environment2struct');
+  /*
+  var rndx;
+  var tmpTxt = '';
+  //put data from structure into form
+  var len = av.ptd.logicNames.length;
+  var showRegion = dijit.byId('envShowRegion').value;
+  var regionNdx = av.fzr.env.region.indexOf(showRegion);
+  
+  
+  console.log('showRegion = ', showRegion, '; len=', len, '; regionNdx=', regionNdx, '; av.fzr.env.region=', av.fzr.env.region);
+  for (var ii = 0; ii < len; ii++) {
+    tmpTxt = '';
+    var tmpobj = av.fzr.env.rsrce[av.ptd.logEdNames[ii]];
+    console.log('av.fzr.env.rsrce['+av.ptd.logEdNames[ii]+'].regionList=', tmpobj.regionList);
+    if (undefined != tmpobj) {
+      if (0 < tmpobj.regionList.length) {
+        rndx = tmpobj.regionList[regionNdx];
+        console.log('rndx=', rndx, 'av.ptd.logicNames[ii]+"Type"', av.ptd.logicNames[ii]+'Type');
+        if (undefined != rndx) {
+          console.log('tmpobj=', tmpobj);
+          if (undefined != tmpobj.type[rndx]) {
+            document.getElementById(av.ptd.logicNames[ii]+'Type').innerHTML = av.fzr.env.rsrce[av.ptd.logEdNames[ii]].type[rndx];
+            document.getElementById(av.ptd.logicNames[ii]+'In').innerHTML = av.fzr.env.rsrce[av.ptd.logEdNames[ii]].inflow[rndx];
+            document.getElementById(av.ptd.logicNames[ii]+'Out').innerHTML = av.fzr.env.rsrce[av.ptd.logEdNames[ii]].outflow[rndx];
+          }
+        }    
+      }
+    }
+    console.log('av.fzr.env.rsrce['+av.ptd.logEdNames[ii]+'].type['+rndx+']=', av.fzr.env.rsrce[av.ptd.logEdNames[ii]].type[rndx]);
+  };
+  */
 };
 
 //--------------------------------------------- section to put data from avida.cfg into setup form of population page --

@@ -241,6 +241,11 @@
     border: 1px solid #AAA;
     width: 100%;
   }
+  #showResource{
+    flex: 0 0 auto;
+    border: 1px solid #AAA;
+    width: 100%;
+  }
   
   .env-container {
     display: flex;
@@ -257,26 +262,26 @@
   #envParam {
     flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
     border: 1px solid #AAA;    
-    background-color: skyblue;
+    background-color: #F5F5F5;
   }
   
   #envNone{
     display: block;
     height: 100%;
     width: 100%;
-    background-color: palegoldenrod;
+    background-color: #F5F5F5;
   }
   #envFinite{
     display:block;
     height: 100%;
     width: 100%;
-    background-color: palegoldenrod;
+    background-color: #F5F5F5;
   }
   #envEquilibrium{
     display: block;
     height: 100%;
     width: 100%;
-    background-color: palegoldenrod;
+    background-color: #F5F5F5;
   }
   #envGradient{
     display: block;
@@ -299,9 +304,23 @@
   text-align: center;
   padding: 2px 3px;
 }
-  
+
+  .grid-containerEnv {
+  display: inline-grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+  background-color: #2196F3;
+  width: 100%;
+}
+
+.grid-itemEnv {
+  background-color: #F5F5F5;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  text-align: center;
+  padding: 2px 3px;
+}
+
 .mainPageButtons{
-    border: 1px solid #AAA;
+  border: 1px solid #AAA;
   flex:0 1 120px;
 }
 .taskSets{

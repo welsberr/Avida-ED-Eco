@@ -283,6 +283,7 @@ require([
     av.dom.andnose = document.getElementById('andnose');
     av.dom.xorose = document.getElementById('xorose');
 
+
     av.dom.notButton = document.getElementById('notButton');
     av.dom.andButton = document.getElementById('andButton');
     av.dom.orButton = document.getElementById('orButton');
@@ -292,6 +293,36 @@ require([
     av.dom.ornButton = document.getElementById('ornButton');
     av.dom.andnButton = document.getElementById('andnButton');
     av.dom.xorButton = document.getElementById('xorButton');
+
+    av.dom.notType = document.getElementById('notType');
+    av.dom.andType = document.getElementById('andType');
+    av.dom.oroType = document.getElementById('oroType');
+    av.dom.norType = document.getElementById('norType');
+    av.dom.equType = document.getElementById('equType'); 
+    av.dom.nanType = document.getElementById('nanType');
+    av.dom.ornType = document.getElementById('ornType');
+    av.dom.antType = document.getElementById('antType');
+    av.dom.xorType = document.getElementById('xorType');
+    
+    av.dom.notIn = document.getElementById('notIn');
+    av.dom.andIn = document.getElementById('andIn');
+    av.dom.oroIn = document.getElementById('oroIn');
+    av.dom.norIn = document.getElementById('norIn');
+    av.dom.equIn = document.getElementById('equIn'); 
+    av.dom.nanIn = document.getElementById('nanIn');
+    av.dom.ornIn = document.getElementById('ornIn');
+    av.dom.antIn = document.getElementById('antIn');
+    av.dom.xorIn = document.getElementById('xorIn');
+
+    av.dom.notOut = document.getElementById('notOut');
+    av.dom.andOut = document.getElementById('andOut');
+    av.dom.oroOut = document.getElementById('oroOut');
+    av.dom.norOut = document.getElementById('norOut');
+    av.dom.equOut = document.getElementById('equOut'); 
+    av.dom.nanOut = document.getElementById('nanOut');
+    av.dom.ornOut = document.getElementById('ornOut');
+    av.dom.antOut = document.getElementById('antOut');
+    av.dom.xorOut = document.getElementById('xorOut');
 
     av.dom.experimentRadio = document.getElementById('experimentRadio');
     av.dom.demoRadio = document.getElementById('demoRadio');
@@ -1237,6 +1268,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     //console.log('contentType=',contentType,'; evt=', evt);  //keep because evt info looks useful for improving mouse code. 
     document.getElementById(contentType).style.display = "flex";
     evt.currentTarget.className += " active";
+    document.getElementById('mockupBlock').style.display = "none";
+    document.getElementById('mockupTab').style.display = "none";
   };
 
   //av.ui.mainBoxSwap('populationBlock');  //commented out here as it is called near the end of this file
@@ -2317,6 +2350,9 @@ av.ptd.randInputChange = function(value, randErroTest) {
     av.dom.envEquilibrium.style.display = "none";
     av.dom.envGradient.style.display = "none";
     document.getElementById(showbox).style.display = "block";
+    av.ui.envRegion = dijit.byId('envRegion').value;
+    av.ui.envTask = dijit.byId('envTask').value;
+    av.ui.envDistribute = dijit.byId('envDistribute').value;
   };
 
   dijit.byId('envDistribute').on('Change', function () {
@@ -2349,6 +2385,12 @@ av.ptd.randInputChange = function(value, randErroTest) {
     av.ui.envTask = dijit.byId('envTask').value;
     av.ptd.envobj2form('fenvTask.change');
   });
+  
+  dijit.byId('envShowRegion').on('Change', function () {
+    av.ui.envTask = dijit.byId('envShowRegion').value;
+    av.ptd.showEnv('envShowRegion.change');
+  });
+  
 
 av.ptd.gridChange = function(tmpval) {
     console.log('in av.ptd.gridChange; ');

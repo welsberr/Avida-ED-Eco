@@ -316,7 +316,7 @@
               <button class="tablinks active" id="dataTab" onclick="av.ptd.processTab(event, 'labInfoBlock')">Data</button>
               <button class="tablinks" id="setupTab" onclick="av.ptd.processTab(event, 'setupBlock')">Setup</button>
               <button class="tablinks" id="testTab" onclick="av.ptd.processTab(event, 'testSetupBlock')">Test Setup</button>
-              <button class="tablinks" id="mockupTab" onclick="av.ptd.processTab(event, 'mockupBlock')">Mockup</button>
+              <button class="tablinks" id="mockupTab" onclick="av.ptd.processTab(event, 'mockupBlock')" style="diplsay:none">Mockup</button>
             </div>
           </div>
           <div class="labInfoHolder">
@@ -669,28 +669,28 @@
                   <div id='envType'>
                     Region of Dish <select data-dojo-type='dijit/form/Select' id='envRegion' data-dojo-props='name: "envRegion"'>
                       <option value='Entire Dish' selected='selected'>Entire Dish</option>
-                      <option value='upper left'>upper left</option>
-                      <option value='upper right'>upper right</option>
-                      <option value='lower left'>lower left</option>
-                      <option value='lower right'>lower right</option>
+                      <option value='Upper Left'>upper left</option>
+                      <option value='Upper Right'>upper right</option>
+                      <option value='Lower Left'>lower left</option>
+                      <option value='Lower Right'>lower right</option>
                     </select><br />
                     Task <select data-dojo-type='dijit/form/Select' id='envTask' data-dojo-props='name: "envTask"'>
-                      <option value='rnot' selected='selected'>notose: Easy (x2)</option>
-                      <option value='rnan'>nanose: Easy (x2)</option>
-                      <option value='rand'>andose: Moderate (x4)</option>
-                      <option value='rorn'>ornose: Moderate (x4)</option>
-                      <option value='roro'>orose: Hard (x8)</option>
-                      <option value='rant'>andnose: Hard (x8)</option>
-                      <option value='rnor'>norose: Very hard (x16)</option>
-                      <option value='rxor'>xorose: Very hard (x16)</option>
-                      <option value='requ'>equose: Brutal (x32)</option>
+                      <option value='not' selected='selected'>notose: Easy (x2)</option>
+                      <option value='nan'>nanose: Easy (x2)</option>
+                      <option value='and'>andose: Moderate (x4)</option>
+                      <option value='orn'>ornose: Moderate (x4)</option>
+                      <option value='oro'>orose: Hard (x8)</option>
+                      <option value='ant'>andnose: Hard (x8)</option>
+                      <option value='nor'>norose: Very hard (x16)</option>
+                      <option value='xor'>xorose: Very hard (x16)</option>
+                      <option value='equ'>equose: Brutal (x32)</option>
                     </select><br />
                     Distribution Type <select data-dojo-type='dijit/form/Select' id='envDistribute' data-dojo-props='name: "envDistribute"'>
-                      <option value='None'>None</option>
-                      <option value='Infinite' selected='selected'>Infinite</option>
-                      <option value='Finite'>Finite</option>
-                      <option value='Equilibrium'>Equilibrium</option>
-                      <option value='Gradient'>Gradient</option>
+                      <option value='None'>(N)one</option>
+                      <option value='Infinite' selected='selected'>(I)nfinite</option>
+                      <option value='Finite'>(F)inite</option>
+                      <option value='Equilibrium'>(E)quilibrium</option>
+                      <option value='Gradient'>(G)radient</option>
                     </select><br />
                   </div>
                   <div id='envParam'>
@@ -718,6 +718,35 @@
                     
                   </div>
                 </div>
+                
+                <div id="showResource" class="showR">
+                  <div class="grid-containerEnv">
+                    <div class="grid-itemEnv">NOT<br /><label id="notType"> </label><br /><label id="notIn"></label><br /><label id="notOut"></label></div>
+                    <div class="grid-itemEnv">NAN<br /><label id="nanType"> </label><br /><label id="nanIn"></label><br /><label id="nanOut"></label></div>
+                    <div class="grid-itemEnv">AND<br /><label id="andType"> </label><br /><label id="andIn"></label><br /><label id="andOut"></label></div>  
+                    <div class="grid-itemEnv">ORN<br /><label id="ornType"> </label><br /><label id="ornIn"></label><br /><label id="ornOut"></label></div>
+                    <div class="grid-itemEnv">ORO<br /><label id="oroType"> </label><br /><label id="oroIn"></label><br /><label id="oroOut"></label></div>
+                    <div class="grid-itemEnv">ANT<br /><label id="antType"> </label><br /><label id="antIn"></label><br /><label id="antOut"></label></div>  
+                    <div class="grid-itemEnv">NOR<br /><label id="norType"> </label><br /><label id="norIn"></label><br /><label id="norOut"></label></div>
+                    <div class="grid-itemEnv">XOR<br /><label id="xorType"> </label><br /><label id="xorIn"></label><br /><label id="xorOut"></label></div>
+                    <div class="grid-itemEnv">EQU<br /><label id="equType"> </label><br /><label id="equIn"></label><br /><label id="equOut"></label></div>  
+                    <div class="grid-itemEnv">
+                      <select data-dojo-type='dijit/form/Select' id='envShowRegion' data-dojo-props='name: "envShowRegion"'>
+                        <option value='ed' selected='selected'>Entire Dish</option>
+                        <option value='ul'>upper left</option>
+                        <option value='ur'>upper right</option>
+                        <option value='ll'>lower left</option>
+                        <option value='lr'>lower right</option>
+                        <option value='up'>upper half</option>
+                        <option value='lo'>lower half</option>
+                      </select><br />Type<br />Initial/Input<br />Output
+                      
+                    </div>  
+                  </div>
+                </div>
+
+                
+                
                 <table border='0'
                        style='border-collapse: collapse; table-layout: auto; width: 100%; height: auto; text-align: left'>
                   <tbody>

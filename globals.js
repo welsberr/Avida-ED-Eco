@@ -409,11 +409,12 @@ av.dnd.move = {};  //used to hold data needed for dnd type move.
 
 av.ptd = {};  // on population page that are not part of the grid. (PeTri Dish)
 av.ptd.popStatFlag = true;  //flag that determines if the stats panel is visible.
+av.ptd.regionNames = ['Entire Dish', 'Upper Left', 'Upper Right', 'Lower Left', 'Lower Right'];
 av.ptd.logicButtons = ['notButton', 'nanButton', 'andButton', 'ornButton', 'oroButton', 'antButton', 'norButton', 'xorButton', 'equButton'];
 av.ptd.logEdNames = ['0not', '1nan', '2and', '3orn', '4oro', '5ant', '6nor', '7xor', '8equ'];
 av.ptd.logicNames = ['not', 'nan', 'and', 'orn', 'oro', 'ant', 'nor', 'xor', 'equ'];
-av.ptd.reactValues = [ 1.0,   1.0,   2.0,   2.0,   3.0,   3.0,   4.0,   4.0,   5.0];
 av.ptd.logicVnames = ['not', 'nand', 'and', 'orn', 'or', 'andn', 'nor', 'xor', 'equ'];
+av.ptd.reactValues = [ 1.0,   1.0,   2.0,   2.0,   3.0,   3.0,   4.0,   4.0,   5.0];
 av.ptd.popInfoHolderWd = 395;
 
 //structure to hold list of ancestor organisms
@@ -439,67 +440,22 @@ av.parents.clearParentsFn = function () {
 
 av.fzr = {};
 
-//not in use, would make 4 entries with default values. No need, just for testing. 
-//Not using this format can delete
-/*
-av.fzr.make_rsrce = function () {  
-  var len = av.ptd.logicNames.length;
-  for (var ii=0; ii< len; ii++) {
-    var enm = av.ptd.logEdNames[ii];   //puts names in order they are on avida-ed user interface
-    var lnm = av.ptd.logicNames[ii];
-    var vnm = av.ptd.logicVnames[ii];
-    av.fzr.env.rsrce[enm] = [];
-    av.fzr.env.react[enm] = [];
-    for (var jj=0; jj<4; jj++){
-      av.fzr.env.rsrce[enm][jj] = {};
-      av.fzr.env.rsrce[enm][jj].initial=1;
-      av.fzr.env.rsrce[enm][jj].inflow=0;
-      av.fzr.env.rsrce[enm][jj].inflowx1=0;
-      av.fzr.env.rsrce[enm][jj].inflowx2=0;
-      av.fzr.env.rsrce[enm][jj].inflowy1=0;
-      av.fzr.env.rsrce[enm][jj].inflowy2=0;
-      av.fzr.env.rsrce[enm][jj].outflow=0.0;
-      av.fzr.env.rsrce[enm][jj].outflowx1=0;
-      av.fzr.env.rsrce[enm][jj].outflowx2=0;
-      av.fzr.env.rsrce[enm][jj].outflowy1=0;
-      av.fzr.env.rsrce[enm][jj].outflowy2=0;
-      av.fzr.env.rsrce[enm][jj].xdiffuse=0;
-      av.fzr.env.rsrce[enm][jj].ydiffuse=0;
-      av.fzr.env.rsrce[enm][jj].xgravity=0;
-      av.fzr.env.rsrce[enm][jj].ygravity=0;
-      av.fzr.env.rsrce[enm][jj].boxflag=false;    //false no cellbox so resources can leave box; true = resources confined to box
-      av.fzr.env.rsrce[enm][jj].boxx=0;
-      av.fzr.env.rsrce[enm][jj].boxy=0;
-      av.fzr.env.rsrce[enm][jj].boxrow=1;
-      av.fzr.env.rsrce[enm][jj].boxcol=1;
-      //tend to be the same; put at end
-      av.fzr.env.rsrce[enm][jj].name = lnm + jj;
-      av.fzr.env.rsrce[enm][jj].geometry='grid';
-    
-      av.fzr.env.react[enm][jj] = {};
-      av.fzr.env.react[enm][jj].depletable = 0; //0 (infinate resource) does not consume any of the resource; 1 does consume resource
-      av.fzr.env.react[enm][jj].value = av.ptd.reactValues[ii];  //0=no reward; >0 is rewared to that power of 2
-      av.fzr.env.react[enm][jj].min = 0.5;      //The minimum amount of resource required. If less than this quantity is available, the reaction ceases to proceed.
-      av.fzr.env.react[enm][jj].max = 1;        //The maximum amount of the resource consumed per occurrence.
-      //tend to be the same; put at end
-      av.fzr.env.react[enm][jj].max_count = 1;
-      av.fzr.env.react[enm][jj].name = lnm + jj;
-      av.fzr.env.react[enm][jj].task = vnm;  //must use the variable length name for the logic function
-      av.fzr.env.react[enm][jj].resource = av.fzr.env.rsrce[enm][jj].name;
-      av.fzr.env.react[enm][jj].type = 'pow';
-    };
-  }; 
-};
-*/
-
 av.fzr.clearEnvironment = function() {
   av.fzr.env = {};
   av.fzr.env.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', 'inflowy2', 'xdiffuse', 'ydiffuse'
                            ,'outflow', 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2', 'xgravity', 'ygravity'
-                           ,'boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow', 'name', 'geometry'];
+                           ,'boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow', 'name', 'geometry', 'type', 'region', 'side', 'regionList'];
+                         //regionList is an index into the array that contains data about that region. 
   //console.log('av.fzr.env.rsrce_param=',av.fzr.env.rsrce_param);
 
-  av.fzr.env.react_param = ['depletable', 'value', 'min', 'max', 'max_count', 'name', 'task', 'resource', 'type'];                       
+  av.fzr.env.react_param = ['depletable', 'value', 'min', 'max', 'max_count', 'name', 'task', 'resource', 'type']; 
+  av.fzr.env.r
+  //Regtion List: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
+  av.fzr.env.region =    ['ed', 'ul', 'ur', 'll', 'lr', 'up', 'lo', 'lf', 'rt'];
+  av.fzr.env.regionNum = [ '0',  '1',  '2',  '3',  '4', '12', '34', '13', '24'];     
+  av.fzr.env.type =  ['non', 'inf', 'fin', 'equ', 'grd'];  //none, infinite, finite, equilibrium, gradient
+  av.fzr.env.typeLetter = ['N'  , 'I'  , 'F'  , 'E'  , 'G'  ];
+  av.fzr.env.side = ['lf', 'rt', 'tp', 'bt', 'cn', 'ot', 'un']; //left, right, top, bottom, center, outer, unknown
 
   // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
   av.fzr.env.rsrce = {};
