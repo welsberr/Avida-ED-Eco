@@ -90,6 +90,7 @@ av.frd.add2freezerFromFile = function (loadConfigFlag) {
       if ('dndSection is undefined' == domid) console.log('av.dnd.fzOrgan is undefined');
       if (av.fzr.gNum < Number(num)) {av.fzr.gNum = Number(num); }
       break;
+/*
     case 'm':
       domid = av.fio.addFzItem(av.dnd.fzMdish, name, type, num);
       av.fzr.mDish[dir] = {};
@@ -105,6 +106,7 @@ av.frd.add2freezerFromFile = function (loadConfigFlag) {
       if ('dndSection is undefined' == domid) console.log('av.dnd.fzrDish is undefined');
       if (av.fzr.rNum < Number(num)) {av.fzr.rNum = Number(num); }
       break;
+*/
     case 't':
       domid = av.fio.addFzItem(av.dnd.fzTdish, name, type, num);
       if ('dndSection is undefined' == domid) console.log('av.dnd.fzTdish is undefined');
@@ -638,37 +640,6 @@ av.frd.environment2struct = function (fileStr) {
   var errors = av.frd.environmentParse(fileStr);
   if (1 < errors.length) console.log('errors=', errors);
   av.ptd.showEnv('av.frd.environment2struct');
-  /*
-  var rndx;
-  var tmpTxt = '';
-  //put data from structure into form
-  var len = av.ptd.logicNames.length;
-  var showRegion = dijit.byId('envShowRegion').value;
-  var regionNdx = av.fzr.env.region.indexOf(showRegion);
-  
-  
-  console.log('showRegion = ', showRegion, '; len=', len, '; regionNdx=', regionNdx, '; av.fzr.env.region=', av.fzr.env.region);
-  for (var ii = 0; ii < len; ii++) {
-    tmpTxt = '';
-    var tmpobj = av.fzr.env.rsrce[av.ptd.logEdNames[ii]];
-    console.log('av.fzr.env.rsrce['+av.ptd.logEdNames[ii]+'].regionList=', tmpobj.regionList);
-    if (undefined != tmpobj) {
-      if (0 < tmpobj.regionList.length) {
-        rndx = tmpobj.regionList[regionNdx];
-        console.log('rndx=', rndx, 'av.ptd.logicNames[ii]+"Type"', av.ptd.logicNames[ii]+'Type');
-        if (undefined != rndx) {
-          console.log('tmpobj=', tmpobj);
-          if (undefined != tmpobj.type[rndx]) {
-            document.getElementById(av.ptd.logicNames[ii]+'Type').innerHTML = av.fzr.env.rsrce[av.ptd.logEdNames[ii]].type[rndx];
-            document.getElementById(av.ptd.logicNames[ii]+'In').innerHTML = av.fzr.env.rsrce[av.ptd.logEdNames[ii]].inflow[rndx];
-            document.getElementById(av.ptd.logicNames[ii]+'Out').innerHTML = av.fzr.env.rsrce[av.ptd.logEdNames[ii]].outflow[rndx];
-          }
-        }    
-      }
-    }
-    console.log('av.fzr.env.rsrce['+av.ptd.logEdNames[ii]+'].type['+rndx+']=', av.fzr.env.rsrce[av.ptd.logEdNames[ii]].type[rndx]);
-  };
-  */
 };
 
 //--------------------------------------------- section to put data from avida.cfg into setup form of population page --

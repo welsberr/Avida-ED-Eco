@@ -304,6 +304,7 @@ av.msg.makeResReqMsg = function (dir) {
 //------------------------------------------------------------------------------------------ end av.msg.makeResReqMsg --
 
 //---------------------------------------------------------------------------------------- av.msg.importMultiDishExpr --
+/*
 av.msg.importMultiDishExpr = function (dir) {
   'use strict';
   var fList = ['avida.cfg'
@@ -359,6 +360,7 @@ av.msg.importMultiDishExpr = function (dir) {
   av.aww.uiWorker.postMessage(request);
   av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importMultiDishExpr';
 };
+*/
 //------------------------------------------------------------------------------------ end av.msg.importMultiDishExpr --
 
 //----------------------------------------------------------------------------------------- av.msg.importTestDishExpr --

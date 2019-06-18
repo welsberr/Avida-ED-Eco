@@ -100,26 +100,80 @@ av.grd.setMapData = function () {
     }
     else av.grd.reScaleRate = '';  
     
-    if (av.grd.msg.rnot.maxVal) mxNot.textContent = av.grd.msg.rnot.maxVal.formatNum(2);
-    if (av.grd.msg.rnan.maxVal) mxNan.textContent = av.grd.msg.rnan.maxVal.formatNum(2);
-    if (av.grd.msg.rand.maxVal) mxAnd.textContent = av.grd.msg.rand.maxVal.formatNum(2);
-    if (av.grd.msg.rorn.maxVal) mxOrn.textContent = av.grd.msg.rorn.maxVal.formatNum(2);
-    if (av.grd.msg.roro.maxVal) mxOro.textContent = av.grd.msg.roro.maxVal.formatNum(2);
-    if (av.grd.msg.rant.maxVal) mxAnt.textContent = av.grd.msg.rant.maxVal.formatNum(2);
-    if (av.grd.msg.rnor.maxVal) mxNor.textContent = av.grd.msg.rnor.maxVal.formatNum(2);
-    if (av.grd.msg.rxor.maxVal) mxXor.textContent = av.grd.msg.rxor.maxVal.formatNum(2);
-    if (av.grd.msg.requ.maxVal) mxEqu.textContent = av.grd.msg.requ.maxVal.formatNum(2);
+    if (av.grd.msg.rnot.maxVal) {
+      if (100 < av.grd.msg.rnot.maxVal) mxNot.textContent = av.grd.msg.rnot.maxVal.formatNum(1);
+      else mxNot.textContent = av.grd.msg.rnot.maxVal.formatNum(2);
+    };
+    if (av.grd.msg.rnan.maxVal) {
+      if (100 < av.grd.msg.rnan.maxVal) mxNan.textContent = av.grd.msg.rnan.maxVal.formatNum(1);
+      else mxNan.textContent = av.grd.msg.rnan.maxVal.formatNum(2);
+    };
+    if (av.grd.msg.rand.maxVal) {
+      if (100 < av.grd.msg.rand.maxVal) mxAnd.textContent = av.grd.msg.rand.maxVal.formatNum(1);
+      else mxAnd.textContent = av.grd.msg.rand.maxVal.formatNum(2);
+    };
+    if (av.grd.msg.rorn.maxVal) {
+      if (100 < av.grd.msg.rorn.maxVal) mxOrn.textContent = av.grd.msg.rorn.maxVal.formatNum(1);
+      else mxOrn.textContent = av.grd.msg.rorn.maxVal.formatNum(2);
+    };
+    if (av.grd.msg.roro.maxVal) {
+      if (100 < av.grd.msg.roro.maxVal) mxOro.textContent = av.grd.msg.roro.maxVal.formatNum(1);
+      else mxOro.textContent = av.grd.msg.roro.maxVal.formatNum(2);
+    };
+    if (av.grd.msg.rant.maxVal) {
+      if (100 < av.grd.msg.rant.maxVal) mxAnt.textContent = av.grd.msg.rant.maxVal.formatNum(1);
+      else mxAnt.textContent = av.grd.msg.rant.maxVal.formatNum(2);
+    };
+    if (av.grd.msg.rnor.maxVal) {
+      if (100 < av.grd.msg.rnor.maxVal) mxNor.textContent = av.grd.msg.rnor.maxVal.formatNum(1);
+      else mxNor.textContent = av.grd.msg.rnor.maxVal.formatNum(2);
+    };
+    if (av.grd.msg.rxor.maxVal) {
+      if (100 < av.grd.msg.rxor.maxVal) mxXor.textContent = av.grd.msg.rxor.maxVal.formatNum(1);
+      else mxXor.textContent = av.grd.msg.rxor.maxVal.formatNum(2);
+    };
+    if (av.grd.msg.requ.maxVal) {
+      if (100 < av.grd.msg.requ.maxVal) mxEqu.textContent = av.grd.msg.requ.maxVal.formatNum(1);
+      else mxEqu.textContent = av.grd.msg.requ.maxVal.formatNum(2);
+    };
     
     if (av.grd.selectedNdx) {
-      if (undefined !== av.grd.msg.rnot.data[av.grd.selectedNdx]) cellNot.textContent = av.grd.msg.rnot.data[av.grd.selectedNdx].formatNum(2);
-      if (undefined !== av.grd.msg.rnan.data[av.grd.selectedNdx]) cellNan.textContent = av.grd.msg.rnan.data[av.grd.selectedNdx].formatNum(2);
-      if (undefined !== av.grd.msg.rand.data[av.grd.selectedNdx]) cellAnd.textContent = av.grd.msg.rand.data[av.grd.selectedNdx].formatNum(2);
-      if (undefined !== av.grd.msg.rorn.data[av.grd.selectedNdx]) cellOrn.textContent = av.grd.msg.rorn.data[av.grd.selectedNdx].formatNum(2);
-      if (undefined !== av.grd.msg.roro.data[av.grd.selectedNdx]) cellOro.textContent = av.grd.msg.roro.data[av.grd.selectedNdx].formatNum(2);
-      if (undefined !== av.grd.msg.rant.data[av.grd.selectedNdx]) cellAnt.textContent = av.grd.msg.rant.data[av.grd.selectedNdx].formatNum(2);
-      if (undefined !== av.grd.msg.rnor.data[av.grd.selectedNdx]) cellNor.textContent = av.grd.msg.rnor.data[av.grd.selectedNdx].formatNum(2);
-      if (undefined !== av.grd.msg.rxor.data[av.grd.selectedNdx]) cellXor.textContent = av.grd.msg.rxor.data[av.grd.selectedNdx].formatNum(2);
-      if (undefined !== av.grd.msg.requ.data[av.grd.selectedNdx]) cellEqu.textContent = av.grd.msg.requ.data[av.grd.selectedNdx].formatNum(2);
+      if (undefined !== av.grd.msg.rnot.data[av.grd.selectedNdx]) {
+        if (100 < av.grd.msg.rnot.data[av.grd.selectedNdx]) cellNot.textContent = av.grd.msg.rnot.data[av.grd.selectedNdx].formatNum(1);
+        else cellNot.textContent = av.grd.msg.rnot.data[av.grd.selectedNdx].formatNum(2);
+      };
+      if (undefined !== av.grd.msg.rnan.data[av.grd.selectedNdx]) {
+        if (100 < av.grd.msg.rnan.data[av.grd.selectedNdx]) cellNan.textContent = av.grd.msg.rnan.data[av.grd.selectedNdx].formatNum(1);
+        else cellNan.textContent = av.grd.msg.rnan.data[av.grd.selectedNdx].formatNum(2);
+      };
+      if (undefined !== av.grd.msg.rand.data[av.grd.selectedNdx]) {
+        if (100 < av.grd.msg.rand.data[av.grd.selectedNdx]) cellAnd.textContent = av.grd.msg.rand.data[av.grd.selectedNdx].formatNum(1);
+        else cellAnd.textContent = av.grd.msg.rand.data[av.grd.selectedNdx].formatNum(2);
+      };
+      if (undefined !== av.grd.msg.rorn.data[av.grd.selectedNdx]) {
+        if (100 < av.grd.msg.rorn.data[av.grd.selectedNdx]) cellOrn.textContent = av.grd.msg.rorn.data[av.grd.selectedNdx].formatNum(1);
+        else cellOrn.textContent = av.grd.msg.rorn.data[av.grd.selectedNdx].formatNum(2);
+      };
+      if (undefined !== av.grd.msg.roro.data[av.grd.selectedNdx]) {
+        if (100 < av.grd.msg.roro.data[av.grd.selectedNdx]) cellOro.textContent = av.grd.msg.roro.data[av.grd.selectedNdx].formatNum(1);
+        else cellOro.textContent = av.grd.msg.roro.data[av.grd.selectedNdx].formatNum(2);
+      };
+      if (undefined !== av.grd.msg.rant.data[av.grd.selectedNdx]) {
+        if (100 < av.grd.msg.rant.data[av.grd.selectedNdx]) cellAnt.textContent = av.grd.msg.rant.data[av.grd.selectedNdx].formatNum(1);
+        else cellAnt.textContent = av.grd.msg.rant.data[av.grd.selectedNdx].formatNum(2);
+      };
+      if (undefined !== av.grd.msg.rnor.data[av.grd.selectedNdx]) {
+        if (100 < av.grd.msg.rnor.data[av.grd.selectedNdx]) cellNor.textContent = av.grd.msg.rnor.data[av.grd.selectedNdx].formatNum(1);
+        else cellNor.textContent = av.grd.msg.rnor.data[av.grd.selectedNdx].formatNum(2);
+      };
+      if (undefined !== av.grd.msg.rxor.data[av.grd.selectedNdx]) {
+        if (100 < av.grd.msg.rxor.data[av.grd.selectedNdx]) cellXor.textContent = av.grd.msg.rxor.data[av.grd.selectedNdx].formatNum(1);
+        else cellXor.textContent = av.grd.msg.rxor.data[av.grd.selectedNdx].formatNum(2);
+      };
+      if (undefined !== av.grd.msg.requ.data[av.grd.selectedNdx]) {
+        if (100 < av.grd.msg.requ.data[av.grd.selectedNdx]) cellEqu.textContent = av.grd.msg.requ.data[av.grd.selectedNdx].formatNum(1);
+        else cellEqu.textContent = av.grd.msg.requ.data[av.grd.selectedNdx].formatNum(2);
+      };
     };
     
     //console.log('dijit.byId("colorMode").value = ', dijit.byId("colorMode").value, '------------');

@@ -163,10 +163,6 @@
             <span data-dojo-type='dijit/MenuItem' id='mnDbThrowError' label='Throw Error'></span>
             <span data-dojo-type='dijit/MenuItem' id='mnDbThrowData' label='Send Data to console'></span>
             <span data-dojo-type='dijit/MenuItem' id='mnDbLineLog' label='Add Line to Session Log'></span>
-            <span data-dojo-type='dijit/MenuItem' id='mnDbLoadProtoType' label='Load Selected ProtoType (not working)'></span>
-            <span data-dojo-type='dijit/MenuItem' id='mnFzAddResEx' label='Load Highlighted ResourceRequest (not working)'></span>
-            <span data-dojo-type='dijit/MenuItem' id='mnFzAddMdishEx' label='Load Highlighted Mulit-Dish (not working)'></span>
-            <span data-dojo-type='dijit/MenuItem' id='mnFzAddRdishEx' label='Load Highlighted Resource-Dish (not working)'></span>
           </span>
         </span>
       </span>     
@@ -222,21 +218,11 @@
           <ul id='fzWorld' class='container'>
           </ul>
         </details>
-        <details open>
+        <details open  class='debugDetails' id='fzTdishDetails'>
           <summary id='fzTdishSec' class="freezerSection">Test Dishes</summary>
           <ul id='fzTdish' class='container'>
           </ul>
-        </details>
-        <details>
-          <summary id='fzMdishSec' class="freezerSection">Multi-Dishes</summary>
-          <ul id='fzMdish' class='container'>
-          </ul>
-        </details>
-        <details>
-          <summary id='fzRdishSec' class="freezerSection">Resource setup</summary>
-          <ul id='fzRdish' class='container'>
-          </ul>
-        </details>
+        </details >
 			</div>
 			<div id="trashDiv">
 				<span id='trashCan' class='container'>
@@ -739,7 +725,7 @@
                         <option value='lr'>lower right</option>
                         <option value='up'>upper half</option>
                         <option value='lo'>lower half</option>
-                      </select><br />Type<br />Initial/Input<br />Output
+                      </select><br />Type<br /><label id='envIn'>Initial/Input</label><br />Output
                       
                     </div>  
                   </div>

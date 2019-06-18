@@ -160,7 +160,7 @@
     overflow: auto;
     margin: 0px;
     padding: 3px;
-    background-color: lemonchiffon;
+    background-color: darkgrey;
   }
   .benchPopBot{
     flex: 0 1 40px;
@@ -220,7 +220,7 @@
   #selOrgType{
     flex: 0 1 164px;        /*was 170 */
     border: 1px solid #AAA;
-    resize: horizontal;
+/*    resize: horizontal;  */
     overflow: auto;
   }
   #popStats4grid{
@@ -293,8 +293,8 @@
   .grid-container {
   display: inline-grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
-  background-color: #2196F3;
-  justify-content: space-evenly;
+  background-color: #F5F5F5;     /* #2196F3;  blue */
+/*  justify-content: space-evenly;  */
   width: 100%;
 }
 
@@ -308,7 +308,7 @@
   .grid-containerEnv {
   display: inline-grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
-  background-color: #2196F3;
+  background-color: #F5F5F5;  /* #2196F3;  paple blue */
   width: 100%;
 }
 

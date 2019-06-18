@@ -423,6 +423,8 @@ require([
     copyOnly: true,
     selfAccept: false
   });
+  
+  /*
   av.dnd.fzMdish = new dndSource('fzMdish', {  //multi-dsih
     accept: ['b', 'm'],  //m=multidish
     copyOnly: true,
@@ -435,6 +437,7 @@ require([
     singular: true,
     selfAccept: false
   });
+*/
 
   /*  //kept only as an example of how to programatically add data to a dnd container
    av.dnd.fzWorld.insertNodes(false, [
@@ -634,6 +637,7 @@ if (av.debug.root) console.log('before activeOrgan');
   });
 
     // 2019-04-14: Untested.
+    /*
     dojo.connect( av.dnd.fzMdish, "onDndDrop", function( source, nodes, copy, target ) {
     if ('fzMdish' === target.node.id) {
       nodes.forEach(function(node) {
@@ -650,6 +654,7 @@ if (av.debug.root) console.log('before activeOrgan');
       });
     }
   });
+*/
 
   //console.log('av.dnd.ancestorBox', av.dnd.ancestorBox);
   av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
@@ -1042,16 +1047,16 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   av.dom.xorLabel.onclick = function () {
     if ('visible' === document.getElementById('mnDebug').style.visibility) {
       document.getElementById('mnDebug').style.visibility = 'hidden';
-      document.getElementById('fzMdishSec').style.visibility = 'hidden';
-      document.getElementById('fzRdishSec').style.visibility = 'hidden';
-      document.getElementById('fzTdishSec').style.visibility = 'hidden';
+      //document.getElementById('fzMdishDetails').style.visibility = 'hidden';
+      //document.getElementById('fzRdishDetails').style.visibility = 'hidden';
+      document.getElementById('fzTdishDetails').style.visibility = 'hidden';
       dijit.byId('mnHpDebug').set('label', 'Show debug menu');
       av.post.addUser('Button: mnHpDebug: now hidden');
     } else {
       document.getElementById('mnDebug').style.visibility = 'visible';
-      document.getElementById('fzMdishSec').style.visibility = 'visible';
-      document.getElementById('fzRdishSec').style.visibility = 'visible';
-      document.getElementById('fzTdishSec').style.visibility = 'visible';
+      //document.getElementById('fzMdishDetails').style.visibility = 'visible';
+      //document.getElementById('fzRdishDetails').style.visibility = 'visible';
+      document.getElementById('fzTdishDetails').style.visibility = 'visible';
       dijit.byId('mnHpDebug').set('label', 'Hide debug menu');
       av.post.addUser('Button: mnHpDebug: now visible');
     }
@@ -1516,24 +1521,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.dnd.FzAddExperimentFn('fzWorld', 'activeConfig', 'w');
   });
   
-  //Buttons on drop down menu to add looking at resourses to an experiment
-  dijit.byId('mnFzAddResEx').on('Click', function () {
-    av.post.addUser('Button: mnFzAddResEx');
-    //av.dnd.FzAddExperimentFn('fzConfig', 'activeConfig', 'm');
-    av.dnd.runResReqDish('fzConfig', 'activeConfig', 'c');
-    av.ptd.setAutoPausePop(true, 20);
-  });
-
-  //------------ in debug menu for now ----------
-
-  //Buttons on drop down menu to add looking at resource dish to an experiment
-  dijit.byId('mnFzAddResEx').on('Click', function () {
-    av.post.addUser('Button: mnFzAddResEx');
-    //av.dnd.FzAddExperimentFn('fzConfig', 'activeConfig', 'm');
-    av.dnd.runResReqDish('fzConfig', 'activeConfig', 'c');
-    av.ptd.setAutoPausePop(true, 20);
-  });
-
+/*
   //Buttons on drop down menu to add Multi-Dish to an Experiment
   dijit.byId('mnFzAddMdishEx').on('Click', function () {
     av.post.addUser('Button: mnFzAddMdishEx');
@@ -1541,13 +1529,6 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.msg.runMultiDish('fzMdish', 'activeConfig', 'm');
   });
 
-  //Buttons on drop down menu to add Resource-Dish to an Experiment
-  dijit.byId('mnFzAddRdishEx').on('Click', function () {
-    av.post.addUser('Button: mnFzAddRdishEx');
-    //av.dnd.FzAddExperimentFn('fzRdish', 'activeConfig', 'r');
-    //av.msg.runResourceDish('fzRdish', 'activeConfig', 'r');
-  });
-//mnFzAddTeditEx   ???????????? not sure why this is here??? delete later? 
 
 //Buttons on drop down menu to add Test-Dish to an Experiment
   dijit.byId('mnFzAddTeditEx').on('Click', function () {
@@ -3539,3 +3520,19 @@ To make a gif using screen capture
 //  Git Hub
 // https://github.com/DBlackwood/av_ui/branches
 // 
+/* Bits of html that I might use later. Stored here because comments are not as reliable in html as they are in javacript 
+ * 
+ 
+         <details class='debugDetails' id='fzMdishDetails'>
+          <summary id='fzMdishSec' class="freezerSection">Multi-Dishes</summary>
+          <ul id='fzMdish' class='container'>
+          </ul>
+        </details>
+        <details class='debugDetails' id='fzRdishDetails'>
+          <summary id='fzRdishSec' class="freezerSection">Resource setup</summary>
+          <ul id='fzRdish' class='container'>
+          </ul>
+        </details>
+
+ *
+ */

@@ -551,11 +551,12 @@ av.fzr.clearMainFzrFn = function () {
   if (av.debug.root) console.log('before av.dnd.fzOrgan.sync');
   av.dnd.fzOrgan.sync();
 
+/*
   if (av.debug.root) console.log('before av.dnd.fzMdish.selectAll=', av.dnd.fzMdish);
-
   av.dnd.fzMdish.selectAll().deleteSelectedNodes();
   if (av.debug.root) console.log('before av.dnd.fzMdish.sync');
   av.dnd.fzMdish.sync();
+*/
 
   if (av.debug.root) console.log('before av.dnd.fzWorld.selectAll=', av.dnd.fzWorld);
   av.dnd.fzWorld.selectAll().deleteSelectedNodes();

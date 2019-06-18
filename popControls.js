@@ -672,12 +672,13 @@ av.ptd.showEnv = function(from) {
   var len = av.ptd.logicNames.length;
   var showRegion = dijit.byId('envShowRegion').value;
   var regionNdx = av.fzr.env.region.indexOf(showRegion);
-  var txtType, txtIn, txtOut;
+  var txtType, txtInit, txtInflo, txtOut;
 
   console.log('showRegion = ', showRegion, '; len=', len, '; regionNdx=', regionNdx, '; av.fzr.env.region=', av.fzr.env.region);
   for (var ii = 0; ii < len; ii++) {
     txtType = '';
-    txtIn = '';
+    txtInflo = '';
+    txtInit = '';
     txtOut = '';
     var tmpobj = av.fzr.env.rsrce[av.ptd.logEdNames[ii]];
     console.log('av.fzr.env.rsrce['+av.ptd.logEdNames[ii]+'].regionList=', tmpobj.regionList);
@@ -689,15 +690,23 @@ av.ptd.showEnv = function(from) {
           console.log('tmpobj=', tmpobj);
           if (undefined != tmpobj.type[rndx]) {
             txtType = av.fzr.env.rsrce[av.ptd.logEdNames[ii]].type[rndx];
-            txtIn = av.fzr.env.rsrce[av.ptd.logEdNames[ii]].inflow[rndx];
+            txtInit = av.fzr.env.rsrce[av.ptd.logEdNames[ii]].initial[rndx];
+            txtInflo = av.fzr.env.rsrce[av.ptd.logEdNames[ii]].inflow[rndx];
             txtOut = av.fzr.env.rsrce[av.ptd.logEdNames[ii]].outflow[rndx];
           }
         }    
       }
     }
-    console.log('txtType=', txtType, '; txtIn=', txtIn, '; txtOut=', txtOut);
+    console.log('txtType=', txtType, '; txtInit=', txtInit, '; txtOut=', txtOut);
     document.getElementById(av.ptd.logicNames[ii]+'Type').innerHTML = txtType;
-    document.getElementById(av.ptd.logicNames[ii]+'In').innerHTML = txtIn;
+    if ('fin' == txtType) { 
+      document.getElementById(av.ptd.logicNames[ii]+'In').innerHTML = txtInit;
+      document.getElementById('envIn').innerHTML = 'Initial';
+    }
+    else {
+      document.getElementById(av.ptd.logicNames[ii]+'In').innerHTML = txtInflo;
+      document.getElementById('envIn').innerHTML = 'Inflow';
+    }
     document.getElementById(av.ptd.logicNames[ii]+'Out').innerHTML = txtOut;
     console.log('av.fzr.env.rsrce['+av.ptd.logEdNames[ii]+'].type['+rndx+']=', av.fzr.env.rsrce[av.ptd.logEdNames[ii]].type[rndx],'--------------------------');
   };

@@ -27,6 +27,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
   av.dnd.fzOrgan.selectAll().deleteSelectedNodes();
   if (av.debug.fio) console.log('before av.dnd.fzOrgan.sync');
   av.dnd.fzOrgan.sync();
+  /*
   if (av.debug.fio) console.log('before av.dnd.fzMdish.selectAll', av.dnd.fzMdish);
   av.dnd.fzMdish.selectAll().deleteSelectedNodes();
   av.dnd.fzMdish.sync();
@@ -34,6 +35,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
   if (av.debug.fio) console.log('before av.dnd.fzRdish.selectAll', av.dnd.fzMdish);
   av.dnd.fzRdish.selectAll().deleteSelectedNodes();
   av.dnd.fzRdish.sync();
+  */
   if (av.debug.fio) console.log('before av.dnd.fzTdish.selectAll', av.dnd.fzMdish);
   av.dnd.fzTdish.selectAll().deleteSelectedNodes();
   av.dnd.fzTdish.sync();

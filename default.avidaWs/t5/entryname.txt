@@ -1,1 +1,1 @@
-diffuseX-all-outflow_half_40sq
+solid-finite-NO-diffusion_4ths
