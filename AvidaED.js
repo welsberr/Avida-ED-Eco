@@ -1049,14 +1049,14 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       document.getElementById('mnDebug').style.visibility = 'hidden';
       //document.getElementById('fzMdishDetails').style.visibility = 'hidden';
       //document.getElementById('fzRdishDetails').style.visibility = 'hidden';
-      document.getElementById('fzTdishDetails').style.visibility = 'hidden';
+      document.getElementById('fzTdishSec').style.visibility = 'hidden';
       dijit.byId('mnHpDebug').set('label', 'Show debug menu');
       av.post.addUser('Button: mnHpDebug: now hidden');
     } else {
       document.getElementById('mnDebug').style.visibility = 'visible';
       //document.getElementById('fzMdishDetails').style.visibility = 'visible';
       //document.getElementById('fzRdishDetails').style.visibility = 'visible';
-      document.getElementById('fzTdishDetails').style.visibility = 'visible';
+      document.getElementById('fzTdishSec').style.visibility = 'visible';
       dijit.byId('mnHpDebug').set('label', 'Hide debug menu');
       av.post.addUser('Button: mnHpDebug: now visible');
     }
@@ -1528,7 +1528,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     //av.dnd.FzAddExperimentFn('fzMdish', 'activeConfig', 'm');
     av.msg.runMultiDish('fzMdish', 'activeConfig', 'm');
   });
-
+*/
 
 //Buttons on drop down menu to add Test-Dish to an Experiment
   dijit.byId('mnFzAddTeditEx').on('Click', function () {
@@ -1633,11 +1633,12 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.debug.log += '\n -----------------------------------------------------------------------------------------------\n';
   };
   
+  /*
   document.getElementById('mnDbLoadProtoType').onclick = function () {
     'use strict';
     //code to load the files from the freezer into the space
   };
-  
+  */
 
   //--------------------------------------------------------------------------------------------------------------------
   //    mouse DND functions
