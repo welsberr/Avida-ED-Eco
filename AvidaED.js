@@ -271,7 +271,7 @@ require([
     av.dom.envGrSide = document.getElementById('envGrSide'); 
     av.dom.envGrInflow = document.getElementById('envGrInflow'); 
     av.dom.envGrOutflow = document.getElementById('envGrOutflow'); 
-    av.dom.env = document.getElementById(''); 
+    //av.dom.env = document.getElementById(''); 
         
     av.dom.notose = document.getElementById('notose');
     av.dom.andose = document.getElementById('andose');
