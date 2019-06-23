@@ -203,7 +203,7 @@ av.fio.processFiles = function (loadConfigFlag){
           }
         }
         //Process dishes with ancesotrs. 
-        if ('ancestors' == fileType ||'ancestors_manual' == fileType) {
+        if ('ancestors' == fileType || 'ancestors_manual' == fileType) {
           av.fio.anID = av.fio.anID + '.txt';
         }
         //put the text of the file in the freezer
@@ -609,7 +609,7 @@ av.frd.environmentParse = function (filestr) {
       while (!eolfound)  //end of subloop for continuation lines
       //console.log('ii', ii, '; aline=', aline);
       // look for valid starting keyword
-      lineArray = av.utl.spaceSplit(aline).split('~');      //replaces white space with a comma, then splits on comma
+      lineArray = av.utl.spaceSplit(aline).split('~');      //change , to !; remove leading and trailing space and replaces white space with a ~, then splits on ~
       //console.log('lineArray=', lineArray);
       matchResult = lineArray[0].match(re_REACTION);
       //console.log('matchReaction=', matchResult);

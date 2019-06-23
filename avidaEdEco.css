@@ -113,7 +113,7 @@
   .navColClass {
     resize: horizontal;
     overflow: auto;
-    width: 340px;        /*was 152 */
+    width: 280px;        /*was 152   340px*/
     display: flex;
     flex-direction: column;
     background-color: #F5F5F5; /* lavender; */
@@ -171,7 +171,7 @@
   }
 
   #popInfoHolder {
-    flex: 0 1 500px;          /* flex: 0 1 344px; is fixed in that dimension   was 349px*/
+    flex: 0 1 380px;          /* flex: 0 1 344px; is fixed in that dimension   was 349px  was 500px*/
     border: 1px solid #AAA;
     background: beige;
   }
@@ -218,7 +218,7 @@
     overflow: auto;
   }
   #selOrgType{
-    flex: 0 1 164px;        /*was 170 */
+    flex: 0 1 170px;        /*was 170 */
     border: 1px solid #AAA;
 /*    resize: horizontal;  */
     overflow: auto;
@@ -305,9 +305,23 @@
   padding: 2px 3px;
 }
 
-  .grid-containerEnv {
+  .grid-container9Env {
   display: inline-grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+  background-color: #F5F5F5;  /* #2196F3;  paple blue */
+  width: 100%;
+}
+
+.grid-item9Env {
+  background-color: #F5F5F5;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  text-align: center;
+  padding: 2px 3px;
+}
+
+  .grid-containerEnv {
+  display: inline-grid;
+  grid-template-columns: auto auto;
   background-color: #F5F5F5;  /* #2196F3;  paple blue */
   width: 100%;
 }
@@ -318,6 +332,7 @@
   text-align: center;
   padding: 2px 3px;
 }
+
 
 .mainPageButtons{
   border: 1px solid #AAA;

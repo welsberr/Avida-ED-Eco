@@ -1,1 +1,1 @@
-solid-finite-diffusion_4ths
+solid-finite-NO-diffusion_whole50

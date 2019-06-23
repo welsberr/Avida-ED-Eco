@@ -1273,8 +1273,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     //console.log('contentType=',contentType,'; evt=', evt);  //keep because evt info looks useful for improving mouse code. 
     document.getElementById(contentType).style.display = "flex";
     evt.currentTarget.className += " active";
-    document.getElementById('mockupBlock').style.display = "none";
-    document.getElementById('mockupTab').style.display = "none";
+    //document.getElementById('mockupBlock').style.display = "none";
+    //document.getElementById('mockupTab').style.display = "none";
   };
 
   //av.ui.mainBoxSwap('populationBlock');  //commented out here as it is called near the end of this file

@@ -52,8 +52,8 @@ av.post.usrOut = function (jStr, comment) {
 
 //default values - these are not in use; the values now come from the file system
 av.dft = {};
-av.dft.sizeCols = 30;
-av.dft.sizeRows = 30;
+av.dft.sizeCols = 100;
+av.dft.sizeRows = 100;
 av.dft.muteInput = 2;   //percent
 av.dft.child = 'childParentRadio';  //alternate = childRandomRadio
 av.dft.nearParent = true;

@@ -1,0 +1,1 @@
+diffuse_edge_in_20sq-40sq this dish is 40x40 diffusion

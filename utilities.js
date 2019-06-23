@@ -161,7 +161,7 @@ function wsa(target, strng){
  var genome = wsa(",", wsa(",", genplus));
  */
 
-//remove all commas; remove preceeding and trailing spaces; replace spaces with comma
+//replaces , with a !; remove preceeding and trailing spaces; replace spaces with ~
 av.utl.spaceSplit = function (instr) {
   'use strict';
   var str1 = instr.replace(/,/g, '|').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, '~');
