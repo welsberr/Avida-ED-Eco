@@ -367,6 +367,7 @@
 .freezerClass{
   border: 1px solid #BABABA;
   flex:1;
+  max-height: 400px;
 }
 .freezerSection{
   font-size: 130%;
