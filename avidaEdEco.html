@@ -302,7 +302,8 @@
               <button class="tablinks active" id="dataTab" onclick="av.ptd.processTab(event, 'labInfoBlock')">Data</button>
               <button class="tablinks" id="setupTab" onclick="av.ptd.processTab(event, 'setupBlock')">Setup</button>
               <button class="tablinks" id="testTab" onclick="av.ptd.processTab(event, 'testSetupBlock')">Test Setup</button>
-              <button class="tablinks" id="mockupTab" onclick="av.ptd.processTab(event, 'mockupBlock')" style="diplsay:none">Mockup</button>
+              <button class="tablinks" id="ex1Tab" onclick="av.ptd.processTab(event, 'ex1setupBlock')">Example 1</button>
+              <button class="tablinks" id="mockupTab" onclick="av.ptd.processTab(event, 'mockupBlock')">Mockup</button> 
             </div>
           </div>
           <div class="labInfoHolder">
@@ -534,79 +535,6 @@
               </select>
             </div> 
           </div>  <span comment="end of labInfoBlock"></span>
-          <div id="testSetupBlock" class="labInfoClass">
-            <form id="testSetupForm">
-              <div  class='odd'>
-                Dish Size:
-                <input id='sizeColTest' type='text' onchange='av.ptd.gridChangTest(this.value)' style='width: 4.5em; height:1.8em' value = '10';/>
-                &nbsp; x &nbsp;
-                <input id='sizeRowTest' type='text' onchange='av.ptd.gridChangTest(this.value)' style='width: 4.5em; height:1.8em' value = '10'/>
-                cells&nbsp;<br />
-                <label id='sizeCellTest'>There are 900 cells by default</label>
-              </div>
-              <div class='even'>
-                <span class='lftmargin'>Per Site Mutation Rate:</span>
-                <input id='muteInpuTest' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' 
-                       data-dojo-props='constraints:{min:0, max:100},
-                     invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                       style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value, "muteErroTest")'> %<br />
-                <!--; or the slider value is &nbsp;</div>
-                <input id='mRate' type='text' readonly style='width: 4em; height:1.8em'></button> -->
-                <label id='muteErroTest'>Error place holder</label>
-              </div>
-              <div class='odd'>Ancestral Organism(s):
-                <div class='ancestorContainer' id='ancestorBoTest'></div>
-              </div>
-              <div class='even'>
-                Place Offspring:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='childParentRadiTest'
-                       intermediateChanges='false'
-                       iconClass='dijitNoIcon' name='child' value='nearParent'>
-                <label>Near their parent</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='childRandomRadiTest'
-                       intermediateChanges='false'
-                       iconClass='dijitNoIcon' name='child' checked value='random'>
-                <label>Anywhere, randomly</label>
-              </div>
-              <div class='odd'>Resources & Reaction(s):
-              For more information go to  
-              <a href="https://github.com/devosoft/avida/wiki/Environment-file" target="_blank">
-                avida enviornment file
-              </a><br><br>
-              Please edit the environment configuration file below:<br>
-              <textarea id='environConfigEdit' cols='100' rows='15'></textarea><br />
-              </div>
-              <div class='even'>
-                Repeatability Mode:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='experimentRadiTest'
-                       intermediateChanges='false' iconClass='dijitNoIcon' name='repeat'
-                       value='experimental'>
-                Experimental&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='demoRadiTest' checked
-                       intermediateChanges='false' iconClass='dijitNoIcon' name='repeat' value='demo'>Demo<br>
-                
-                <input id='randInpuTest' type='text' data-dojo-type='dijit/form/NumberTextBox' value=-1 required='true' 
-                       data-dojo-props='constraints:{min:-1, max:100},
-                     invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid random seed."'
-                       style='width: 4.5em; height:1.8em' onchange='av.ptd.randInputChange(this.value, "randErroTest")'><br />                
-                <label id='randErroTest'>Error place holder</label>
-              </div>
-              <div class='odd'>
-                Pause Run:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='manualUpdateRadiTest'
-                       intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' checked
-                       value='manual' />
-                Manually:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='autoUpdateRadiTest'
-                       intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' value='setupdate' />
-                At update:
-                <input type='text' data-dojo-type='dijit/form/NumberSpinner' id='autoUpdateSpinneTest'
-                       intermediateChanges='false'
-                       trim='false' uppercase='false' lowercase='false' propercase='false' invalidMessage='$_unset_$'
-                       value='1000' data-dojo-props='smallDelta:100, constraints:{places:0}' style='width:80px'>
-              </div>              
-            </form>
-          </div>
           
           <div id="setupBlock" class="labInfoClass">
             <form id='setupForm'>
@@ -654,7 +582,8 @@
                 <div class='env-container'>
                   <div id='envType'>
                     Region of Dish <select data-dojo-type='dijit/form/Select' id='envRegion' data-dojo-props='name: "envRegion"'>
-                      <option value='Entire Dish' selected='selected'>Entire Dish</option>
+                      <option value='Global' selected='selected'>Global</option>
+                      <option value='All Spacial'>All Spacial</option>
                       <option value='Upper Left'>upper left</option>
                       <option value='Upper Right'>upper right</option>
                       <option value='Lower Left'>lower left</option>
@@ -671,11 +600,12 @@
                       <option value='xor'>xorose: Very hard (x16)</option>
                       <option value='equ'>equose: Brutal (x32)</option>
                     </select><br />
-                    Distribution Type <select data-dojo-type='dijit/form/Select' id='envDistribute' data-dojo-props='name: "envDistribute"'>
+                    Distribution <select data-dojo-type='dijit/form/Select' id='envDistribute' data-dojo-props='name: "envDistribute"'>
                       <option value='None'>(N)one</option>
                       <option value='Infinite' selected='selected'>(I)nfinite</option>
                       <option value='Finite'>(F)inite</option>
                       <option value='Equilibrium'>(E)quilibrium</option>
+                      <option value='Source/Sink'>(S)ource/Sink</option>
                       <option value='Gradient'>(G)radient</option>
                     </select><br />
                   </div>
@@ -684,22 +614,43 @@
                          &nbsp;
                     </div>
                     <div id='envFinite'>
-                      <input id='envInitial' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.8em' value = '100'/>
+                      <input id='envInitial' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 2.5em; height:1.8em' value = '100'/>
                       &nbsp;Amount of resource per cell
                     </div>
                     <div id='envEquilibrium'>
-                      <input id='envEqInflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.6em' value = '1'/> 
-                      Inflow per cell <br>
-                      <input id='envEqOutflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.6em' value = '0.1'/>
-                      Outflow fraction (0 < outflow <= 1) <br>
-                      <p><label id='envEqual'>10</label> is the equilibrium if nothing eats the resource</p>
+                      <input id='envEqInflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 2.5em; height:1.6em' value = '1'/> 
+                      &nbsp;Inflow per cell <br>
+                      <input id='envEqOutflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 2.5em; height:1.6em' value = '0.1'/>
+                      &nbsp;Outflow fraction<br>
+                      <p><label id='envEqual'>10</label> = equilibrium</p>
+                    </div>
+                    <div id='envSourceSink'>
+                      <select data-dojo-type='dijit/form/Select' id='envSsSide' data-dojo-props='name: "envSsSide"'>
+                        <option value='left' selected='selected'>(L)eft</option>
+                        <option value='right'>(R)ight</option>
+                        <option value='top'>(T)op</option>
+                        <option value='bottom'>(B)ottom</option>
+                        <option value='center'>(C)enter</option>
+                        <option value='edge'>(E)dge</option>
+                      </select>&nbsp;Side
+                      <br />
+                      <input id='envSsInflow' type='text'  value = '1'/> Inflow per cell 
+                      <br/>
+                      <input id='envSsOutflow' /> Outflow fraction
                     </div>
                     <div id='envGradient'>
-                      Inflow side <input id='envGrSide' type='text'  value = 'top'/>
+                      <select data-dojo-type='dijit/form/Select' id='envGrSide' data-dojo-props='name: "envGrSide"'>
+                        <option value='left' selected='selected'>(L)eft</option>
+                        <option value='right'>(R)ight</option>
+                        <option value='top'>(T)op</option>
+                        <option value='bottom'>(B)ottom</option>
+                        <option value='center'>(C)enter</option>
+                        <option value='edge'>(E)dge</option>
+                      </select>&nbsp;Side
                       <br />
-                      Inflow per cell <input id='envGrInflow' type='text'  value = '1'/>
+                      <input id='envGrInflow' type='text'  value = '1'/> Inflow per cell 
                       <br/>
-                      Outflow fraction<input id='envGrOutflow' />
+                      <input id='envGrOutflow' /> Outflow fraction
                     </div>
                     
                   </div>
@@ -718,7 +669,8 @@
                     <div class="grid-item9Env">EQU<br /><label id="equType"> </label><br /><label id="equIn"></label><br /><label id="equOut"></label></div>  
                     <div class="grid-item9Env">
                       <select data-dojo-type='dijit/form/Select' id='envShowRegion' data-dojo-props='name: "envShowRegion"'>
-                        <option value='ed' selected='selected'>Entire Dish</option>
+                        <option value='gl' selected='selected'>global</option>
+                        <option value='ed'>all spacial</option>
                         <option value='ul'>upper left</option>
                         <option value='ur'>upper right</option>
                         <option value='ll'>lower left</option>
@@ -799,7 +751,7 @@
                 <label id='updateLabel'>At update:</label>
                 <input type='text' data-dojo-type='dijit/form/NumberSpinner' id='autoUpdateSpinner'
                        intermediateChanges='false'
-                       trim='false' uppercase='false' lowercase='false' propercase='false' invalidMessage='$_unset_$'
+                       trim='false' uppercase='festalse' lowercase='false' propercase='false' invalidMessage='$_unset_$'
                        value='1000' data-dojo-props='smallDelta:100, constraints:{places:0}' style='width:80px'>
               </div>
               <span data-dojo-type='dijit/TitlePane' id='AdvancedSetup' title='Advanced Setup'
@@ -820,10 +772,253 @@
               </span>
             </form>
           </div>
-  
+          
+          <div id="testSetupBlock" class="labInfoClass">
+            <form id="testSetupForm">
+              Test Setup section - this section will be debug only
+              <div  class='odd'>
+                Dish Size:
+                <input id='sizeColTest' type='text' onchange='av.ptd.gridChangTest(this.value)' style='width: 4.5em; height:1.8em' value = '10';/>
+                &nbsp; x &nbsp;
+                <input id='sizeRowTest' type='text' onchange='av.ptd.gridChangTest(this.value)' style='width: 4.5em; height:1.8em' value = '10'/>
+                cells&nbsp;<br />
+                <label id='sizeCellTest'>There are 900 cells by default</label>
+              </div>
+              <div class='even'>
+                <span class='lftmargin'>Per Site Mutation Rate:</span>
+                <input id='muteInpuTest' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true'
+                       data-dojo-props='constraints:{min:0, max:100},
+                               invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
+                       style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value, "muteErroTest")'> %<br />
+                <!--; or the slider value is &nbsp;</div>
+                <input id='mRate' type='text' readonly style='width: 4em; height:1.8em'></button> -->
+                <label id='muteErroTest'>Error place holder</label>
+              </div>
+              <div class='odd'>Ancestral Organism(s):
+                <div class='ancestorContainer' id='ancestorBoTest'></div>
+              </div>
+              <div class='even'>
+                Place Offspring:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='childParentRadiTest'
+                       intermediateChanges='false'
+                       iconClass='dijitNoIcon' name='child' value='nearParent'>
+                <label>Near their parent</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='childRandomRadiTest'
+                       intermediateChanges='false'
+                       iconClass='dijitNoIcon' name='child' checked value='random'>
+                <label>Anywhere, randomly</label>
+              </div>
+              <div class='odd'>Resources & Reaction(s):
+                For more information go to
+                <a href="https://github.com/devosoft/avida/wiki/Environment-file" target="_blank">
+                  avida enviornment file
+                </a><br><br>
+                Please edit the environment configuration file below:<br>
+                <textarea id='environConfigEdit' cols='100' rows='15'></textarea><br />
+              </div>
+              <div class='even'>
+                Repeatability Mode:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='experimentRadiTest'
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='repeat'
+                       value='experimental'>
+                Experimental&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='demoRadiTest' checked
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='repeat' value='demo'>Demo<br>
+
+                <input id='randInpuTest' type='text' data-dojo-type='dijit/form/NumberTextBox' value=-1 required='true'
+                       data-dojo-props='constraints:{min:-1, max:100},
+                               invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid random seed."'
+                       style='width: 4.5em; height:1.8em' onchange='av.ptd.randInputChange(this.value, "randErroTest")'><br />
+                <label id='randErroTest'>Error place holder</label>
+              </div>
+              <div class='odd'>
+                Pause Run:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='manualUpdateRadiTest'
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' checked
+                       value='manual' />
+                Manually:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='autoUpdateRadiTest'
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' value='setupdate' />
+                At update:
+                <input type='text' data-dojo-type='dijit/form/NumberSpinner' id='autoUpdateSpinneTest'
+                       intermediateChanges='false'
+                       trim='false' uppercase='false' lowercase='false' propercase='false' invalidMessage='$_unset_$'
+                       value='1000' data-dojo-props='smallDelta:100, constraints:{places:0}' style='width:80px'>
+              </div>
+            </form>
+          </div>
+
+          <div id='ex1setupBlock' class="labInfoClass">
+            <form id='ex1setupForm'>
+              Environmental Settings
+              <div  class='odd'>
+                Dish Size:
+                <input id='ex1sizeCols' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '10';/>
+                &nbsp; x &nbsp;
+                <input id='ex1sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '10'/>
+                cells&nbsp;<br />
+                <label id='ex1sizeCells'>There are 900 cells by default</label>
+              </div>
+              <div class='even'>
+                <span class='lftmargin'>Per Site Mutation Rate:</span>
+                <span id='ex1muteSlide'
+                      style='width:100px; display: inline-block; vertical-align: top; margin-left:20px; margin-right:20px'></span>
+                <!-- style done here for the slider; margin to keep it from overlapping;
+                                      without width the slider is the full width of the browser window-->
+                <!--<input id='ex1muteInput' type='text' style='width: 4em; height:1.8em'></button> -->
+                <input id='ex1muteInput' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' ;
+                       data-dojo-props='constraints:{min:0, max:100},
+                               invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
+                       style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value,"muteError")'> %<br />
+                <!--; or the slider value is &nbsp;</div>
+                <input id='ex1mRate' type='text' readonly style='width: 4em; height:1.8em'></button> -->
+                <label id='ex1muteError'>Error place holder</label>
+              </div>
+              <div class='odd'>Ancestral Organism(s):
+                <div class='ancestorContainer' id='ex1ancestorBox'></div>
+              </div>
+              <div class='even'>
+                Place Offspring:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='ex1childParentRadio'
+                       intermediateChanges='false'
+                       iconClass='dijitNoIcon' name='child' value='nearParent'>
+                <label id='ex1childParentLabel'>Near their parent</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='ex1childRandomRadio'
+                       intermediateChanges='false'
+                       iconClass='dijitNoIcon' name='child' checked value='random'>
+                <label id='ex1childRandomLabel'>Anywhere, randomly</label>
+              </div>
+              <div class='odd'>
+                <label>What resources are available in the environment? (strength of energy reward shown in parentheses)</label>
+                <br />
+                <div class='env-container'>
+                  <div id='ex1envType'>
+                    Task <select data-dojo-type='dijit/form/Select' id='ex1envTask' data-dojo-props='name: "envTask"'>
+                    <option value='not' selected='selected'>notose: Easy (x2)</option>
+                    <option value='nan'>nanose: Easy (x2)</option>
+                    <option value='and'>andose: Moderate (x4)</option>
+                    <option value='orn'>ornose: Moderate (x4)</option>
+                    <option value='oro'>orose: Hard (x8)</option>
+                    <option value='ant'>andnose: Hard (x8)</option>
+                    <option value='nor'>norose: Very hard (x16)</option>
+                    <option value='xor'>xorose: Very hard (x16)</option>
+                    <option value='equ'>equose: Brutal (x32)</option>
+                  </select><br />
+                    Region of Dish <select data-dojo-type='dijit/form/Select' id='ex1envRegion' data-dojo-props='name: "envRegion"'>
+                    <option value='Entire Dish' selected='selected'>Entire Dish</option>
+                    <option value='Upper Left'>upper left</option>
+                    <option value='Upper Right'>upper right</option>
+                    <option value='Lower Left'>lower left</option>
+                    <option value='Lower Right'>lower right</option>
+                  </select><br />
+                    Distribution <select data-dojo-type='dijit/form/Select' id='ex1envDistribute' data-dojo-props='name: "envDistribute"'>
+                    <option value='None'>(N)one</option>
+                    <option value='Infinite' selected='selected'>(I)nfinite</option>
+                    <option value='Finite'>(F)inite</option>
+                    <option value='Equilibrium'>(E)quilibrium</option>
+                    <option value='Source/Sink'>(S)orce/Sink</option>
+                    <option value='Gradient'>(G)radient</option>
+                  </select><br />
+                  </div>
+                  <div id='ex1envParam'>
+                    <div id='ex1envNone'>
+                      &nbsp;
+                    </div>
+                    <div id='ex1envFinite'>
+                      <input id='ex1envInitial' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.8em' value = '100'/>
+                      &nbsp;Amount of resource per cell
+                    </div>
+                    <div id='ex1envEquilibrium'>
+                      <input id='ex1envEqInflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.6em' value = '1'/>
+                      Inflow per cell <br>
+                      <input id='ex1envEqOutflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.6em' value = '0.1'/>
+                      Outflow fraction<br>
+                      <p><label id='ex1envEqual'>10</label> is the equilibrium with no organisms</p>
+                    </div>
+                    <div id='ex1envGradient'>
+                      Inflow side <input id='ex1envGrSide' type='text'  value = 'top'/>
+                      <br />
+                      Inflow per cell <input id='ex1envGrInflow' type='text'  value = '1'/>
+                      <br/>
+                      Outflow fraction<input id='ex1envGrOutflow' />
+                    </div>
+
+                  </div>
+                </div>
+
+                <div id='ex1showResource' class='showR'>
+                  <div class='grid-container9Env'>
+                    <div class='grid-item9Env'>NOT<br /><label id='ex1notType'> </label><br /><label id='ex1notIn'></label><br /><label id='ex1notOut'></label></div>
+                    <div class='grid-item9Env'>NAN<br /><label id='ex1nanType'> </label><br /><label id='ex1nanIn'></label><br /><label id='ex1nanOut'></label></div>
+                    <div class='grid-item9Env'>AND<br /><label id='ex1andType'> </label><br /><label id='ex1andIn'></label><br /><label id='ex1andOut'></label></div>
+                    <div class='grid-item9Env'>ORN<br /><label id='ex1ornType'> </label><br /><label id='ex1ornIn'></label><br /><label id='ex1ornOut'></label></div>
+                    <div class='grid-item9Env'>ORO<br /><label id='ex1oroType'> </label><br /><label id='ex1oroIn'></label><br /><label id='ex1oroOut'></label></div>
+                    <div class='grid-item9Env'>ANT<br /><label id='ex1antType'> </label><br /><label id='ex1antIn'></label><br /><label id='ex1antOut'></label></div>
+                    <div class='grid-item9Env'>NOR<br /><label id='ex1norType'> </label><br /><label id='ex1norIn'></label><br /><label id='ex1norOut'></label></div>
+                    <div class='grid-item9Env'>XOR<br /><label id='ex1xorType'> </label><br /><label id='ex1xorIn'></label><br /><label id='ex1xorOut'></label></div>
+                    <div class='grid-item9Env'>EQU<br /><label id='ex1equType'> </label><br /><label id='ex1equIn'></label><br /><label id='ex1equOut'></label></div>
+                    <div class='grid-item9Env'>
+                      <select data-dojo-type='dijit/form/Select' id='ex1envShowRegion' data-dojo-props='name: "envShowRegion"'>
+                        <option value='ed' selected='selected'>Entire Dish</option>
+                        <option value='ul'>upper left</option>
+                        <option value='ur'>upper right</option>
+                        <option value='ll'>lower left</option>
+                        <option value='lr'>lower right</option>
+                        <option value='up'>upper half</option>
+                        <option value='lo'>lower half</option>
+                      </select><br />Type<br /><label id='ex1envIn'>Initial/Input</label><br />Output
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class='even'>
+                <label id='ex1label_31'>Repeatability Mode:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='ex1experimentRadio'
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='repeat'
+                       value='experimental'>
+                <label id='ex1experimentLabel'>Experimental</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='ex1demoRadio' checked
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='repeat' value='demo'>
+                <label id='ex1demoLabel'>Demo</label>
+              </div>
+              <div class='odd'>
+                <label>Pause Run:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='ex1manualUpdateRadio'
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' checked
+                       value='manual' />
+                <label id='ex1ManLabel'>Manually</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='ex1autoUpdateRadio'
+                       intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' value='setupdate' />
+                <label id='ex1updateLabel'>At update:</label>
+                <input type='text' data-dojo-type='dijit/form/NumberSpinner' id='ex1autoUpdateSpinner'
+                       intermediateChanges='false'
+                       trim='false' uppercase='false' lowercase='false' propercase='false' invalidMessage='$_unset_$'
+                       value='1000' data-dojo-props='smallDelta:100, constraints:{places:0}' style='width:80px'>
+              </div>
+              <span data-dojo-type='dijit/TitlePane' id='ex1AdvancedSetup' title='Advanced Setup'
+                    extractContent='false' preventCache='false' preload='false' refreshOnShow='false' duration='200'
+                    open='false' style='min-width: 1px; width: 100%; height: auto; visibility: hidden'>
+                <div class='even'>
+                  time Slice:
+                  <input id='ex1avetimeSlice' value='20'
+                         style='width: 3em; height:1.8em' />
+                  &nbsp;&nbsp;&nbsp;
+                  Update Delay:
+                  <input id='ex1sleepDelay' type='text' data-dojo-type='dijit/form/NumberTextBox'
+                         required='true' value='50' data-dojo-props='constraints:{min:0, max:5000,places:0},
+                    invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid update Delay."'
+                         style='width:4em; height:1.8em'/>
+                  msecs<br />
+                </div>
+              </span>
+            </form>
+          </div>    
+
           <div id="mockupBlock" class="labInfoClass">
             <form id='mockupForm'>
-              <label>Mockup idea for Environmental Settings</label>
+              <label>Mockup idea for Environmental Settings</label> this section will eventually go away
 
               <div  class='odd'>
                 Dish Size:
