@@ -286,6 +286,40 @@
     width: 100%;
     background-color: #F5F5F5;
   }
+
+  #ex2envParam {
+    flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
+    border: 1px solid #AAA;    
+    background-color: #F5F5F5;
+  }
+  
+  #ex2envNone{
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-color: #F5F5F5;
+    min-width: 200px;
+  }
+  #ex2envFinite{
+    display:block;
+    height: 100%;
+    width: 100%;
+    background-color: #F5F5F5;
+  }
+  #ex2envEquilibrium{
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-color: #F5F5F5;
+  }
+  #ex2envGradient{
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-color: #F5F5F5;
+  }
+
+
   
 .grid-env1row-container {
   display: inline-grid;

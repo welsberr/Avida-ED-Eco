@@ -1274,8 +1274,6 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     //console.log('contentType=',contentType,'; evt=', evt);  //keep because evt info looks useful for improving mouse code. 
     document.getElementById(contentType).style.display = "flex";
     evt.currentTarget.className += " active";
-    //document.getElementById('mockupBlock').style.display = "none";
-    //document.getElementById('mockupTab').style.display = "none";
   };
 
   //av.ui.mainBoxSwap('populationBlock');  //commented out here as it is called near the end of this file
@@ -1815,8 +1813,6 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
         }
         else
           av.dom.scaleCanvas.width = $("#gridHolder").height() - 22;
-
-        console.log('why crash');
         if ('Ancestor Organism' == document.getElementById('colorMode').value) {
         //if ('Ancestor Organism' == getElementById('colorMode').value) {
           av.grd.drawLegend();
@@ -2408,7 +2404,46 @@ av.ptd.randInputChange = function(value, randErroTest) {
     //av.ptd.envobj2form('envRegion.change');
   };
 
-// end of ex1 page stuff
+av.ui.ex2envBoxSwap = function (showbox) {
+    document.getElementById('ex2envNone').style.display = "none";
+    document.getElementById('ex2envFinite').style.display = "none";
+    document.getElementById('ex2envEquilibrium').style.display = "none";
+    document.getElementById('ex2envSourceSink').style.display = "none";
+    document.getElementById('ex2envGradient').style.display = "none";
+
+    document.getElementById(showbox).style.display = "block";
+    av.ui.ex2envRegion = document.getElementById('ex2envRegion').value;
+    av.ui.ex2envTask = document.getElementById('ex2envTask').value;
+    av.ui.ex2envDistribute = document.getElementById('ex2envDistribute').value;
+    console.log('in av.ui.ex2envBoxSwap; showbox = ', showbox);
+  };
+
+  document.getElementById('ex2envDistribute').onchange = function() {
+    av.ui.envDistribute = document.getElementById('ex2envDistribute').value;
+    console.log ('in ex2envDistribute =', av.ui.ex2envDistribute);
+    switch (document.getElementById('ex2envDistribute').value) {
+      case 'Finite':
+        av.ui.ex2envBoxSwap('ex2envFinite'); 
+        break;
+      case 'Equilibrium':
+        av.ui.ex2envBoxSwap('ex2envEquilibrium'); 
+        break;
+      case 'Gradient':
+        av.ui.ex2envBoxSwap('ex2envGradient'); 
+        break;
+      case 'Source/Sink':
+        av.ui.ex2envBoxSwap('ex2envSourceSink'); 
+        break;
+      case 'None':
+      case 'Infinite':
+        av.ui.ex2envBoxSwap('ex2envNone'); 
+        break;
+    }
+    //av.ptd.envobj2form('envRegion.change');
+  };
+
+
+// end of ex1 and ex2 page stuff
 
 document.getElementById('envRegion').onchange = function() {
 //dijit.byId('envRegion').on('Change', function () {
@@ -3362,6 +3397,7 @@ $(function slidemute() {
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
   av.ui.envBoxSwap('envNone');  
   av.ui.ex1envBoxSwap('ex1envNone');    //delete later
+  av.ui.ex2envBoxSwap('ex2envNone');    //delete later
   //av.grd.popChartFn();
   //av.grd.drawGridSetupFn('inital background'); //Draw initial background
 
