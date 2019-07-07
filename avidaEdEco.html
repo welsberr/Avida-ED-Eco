@@ -261,7 +261,7 @@
                 </td>
                 <td style='text-align: center; min-width:166px'>
                   Mode:
-                  <select data-dojo-type='dijit/form/Select' id='colorMode' data-dojo-props='name: "colorMode"'>
+                  <select  id='colorMode'>
                     <option value='Fitness' selected='selected'>Fitness</option>
                     <option value='Offspring Cost'>Offspring Cost</option>
                     <option value='Energy Acq. Rate'>Energy Acq. Rate</option>
@@ -525,7 +525,7 @@
             </div>
   					<div id="miniChartYaxis">
               <label id='yaxisLabel'>Y-axis</label>
-              <select data-dojo-type='dijit/form/Select' id='yaxis' data-dojo-props='name: "yyAxis"'>
+              <select  id='yaxis'>
                 <option value='Average Fitness' selected='selected'>Average Fitness</option>
                 <option value='Average Offspring Cost'>Average Offspring Cost</option>
                 <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
@@ -579,9 +579,9 @@
               <div class='odd'>
                 <label>What resources are available in the environment? (strength of energy reward shown in parentheses)</label>
                 <br />
-                <div class='env-container'>
-                  <div id='envType'>
-                    Region of Dish <select data-dojo-type='dijit/form/Select' id='envRegion' data-dojo-props='name: "envRegion"'>
+                <div class='grid-env1row-container'>
+                  <div class='grid-env1row-c1-item'>
+                    Region of Dish <select  id='envRegion'>
                       <option value='Global' selected='selected'>Global</option>
                       <option value='All Spacial'>All Spacial</option>
                       <option value='Upper Left'>upper left</option>
@@ -589,7 +589,7 @@
                       <option value='Lower Left'>lower left</option>
                       <option value='Lower Right'>lower right</option>
                     </select><br />
-                    Task <select data-dojo-type='dijit/form/Select' id='envTask' data-dojo-props='name: "envTask"'>
+                    Task <select  id='envTask'>
                       <option value='not' selected='selected'>notose: Easy (x2)</option>
                       <option value='nan'>nanose: Easy (x2)</option>
                       <option value='and'>andose: Moderate (x4)</option>
@@ -600,7 +600,7 @@
                       <option value='xor'>xorose: Very hard (x16)</option>
                       <option value='equ'>equose: Brutal (x32)</option>
                     </select><br />
-                    Distribution <select data-dojo-type='dijit/form/Select' id='envDistribute' data-dojo-props='name: "envDistribute"'>
+                    Distribution <select  id='envDistribute'>
                       <option value='None'>(N)one</option>
                       <option value='Infinite' selected='selected'>(I)nfinite</option>
                       <option value='Finite'>(F)inite</option>
@@ -609,7 +609,7 @@
                       <option value='Gradient'>(G)radient</option>
                     </select><br />
                   </div>
-                  <div id='envParam'>
+                  <div id='envParam' class='grid-env1row-c2-item'>
                     <div id='envNone'>
                          &nbsp;
                     </div>
@@ -625,52 +625,53 @@
                       <p><label id='envEqual'>10</label> = equilibrium</p>
                     </div>
                     <div id='envSourceSink'>
-                      <select data-dojo-type='dijit/form/Select' id='envSsSide' data-dojo-props='name: "envSsSide"'>
+                      <select  id='envSsSide'>
                         <option value='left' selected='selected'>(L)eft</option>
                         <option value='right'>(R)ight</option>
                         <option value='top'>(T)op</option>
                         <option value='bottom'>(B)ottom</option>
                         <option value='center'>(C)enter</option>
                         <option value='edge'>(E)dge</option>
-                      </select>&nbsp;Side
+                      </select>&nbsp;Source Side
                       <br />
-                      <input id='envSsInflow' type='text'  value = '1'/> Inflow per cell 
+                      <input id='envSsInflow' type='text' style='width: 2.5em; height:1.6em' value = '1'/> Inflow per cell 
                       <br/>
-                      <input id='envSsOutflow' /> Outflow fraction
+                      <input id='envSsOutflow'  style='width: 2.5em; height:1.6em' /> Outflow fraction
                     </div>
                     <div id='envGradient'>
-                      <select data-dojo-type='dijit/form/Select' id='envGrSide' data-dojo-props='name: "envGrSide"'>
+                      <select  id='envGrSide'>
                         <option value='left' selected='selected'>(L)eft</option>
                         <option value='right'>(R)ight</option>
                         <option value='top'>(T)op</option>
                         <option value='bottom'>(B)ottom</option>
                         <option value='center'>(C)enter</option>
                         <option value='edge'>(E)dge</option>
-                      </select>&nbsp;Side
-                      <br />
-                      <input id='envGrInflow' type='text'  value = '1'/> Inflow per cell 
-                      <br/>
-                      <input id='envGrOutflow' /> Outflow fraction
+                      </select>
+                      &nbsp;Hi Side<br />
+                      <input id='envGrHiInitial' type='text' style='width: 2.5em; height:1.6em'/>
+                      &nbsp;Hi Side Initial per cell<br />
+                      <input id='envGrLoInitial' style='width: 2.5em; height:1.6em'/>
+                      &nbsp;Lo Side Initial per cell
                     </div>
                     
                   </div>
                 </div>
                 
                 <div id="showResource" class="showR">
-                  <div class="grid-container9Env">
-                    <div class="grid-item9Env">NOT<br /><label id="notType"> </label><br /><label id="notIn"></label><br /><label id="notOut"></label></div>
-                    <div class="grid-item9Env">NAN<br /><label id="nanType"> </label><br /><label id="nanIn"></label><br /><label id="nanOut"></label></div>
-                    <div class="grid-item9Env">AND<br /><label id="andType"> </label><br /><label id="andIn"></label><br /><label id="andOut"></label></div>  
-                    <div class="grid-item9Env">ORN<br /><label id="ornType"> </label><br /><label id="ornIn"></label><br /><label id="ornOut"></label></div>
-                    <div class="grid-item9Env">ORO<br /><label id="oroType"> </label><br /><label id="oroIn"></label><br /><label id="oroOut"></label></div>
-                    <div class="grid-item9Env">ANT<br /><label id="antType"> </label><br /><label id="antIn"></label><br /><label id="antOut"></label></div>  
-                    <div class="grid-item9Env">NOR<br /><label id="norType"> </label><br /><label id="norIn"></label><br /><label id="norOut"></label></div>
-                    <div class="grid-item9Env">XOR<br /><label id="xorType"> </label><br /><label id="xorIn"></label><br /><label id="xorOut"></label></div>
-                    <div class="grid-item9Env">EQU<br /><label id="equType"> </label><br /><label id="equIn"></label><br /><label id="equOut"></label></div>  
-                    <div class="grid-item9Env">
-                      <select data-dojo-type='dijit/form/Select' id='envShowRegion' data-dojo-props='name: "envShowRegion"'>
+                  <div class="grid-9env-container">
+                    <div class="grid-9env-item">NOT<br /><label id="notType"> </label><br /><label id="notIn"></label><br /><label id="notOut"></label></div>
+                    <div class="grid-9env-item">NAN<br /><label id="nanType"> </label><br /><label id="nanIn"></label><br /><label id="nanOut"></label></div>
+                    <div class="grid-9env-item">AND<br /><label id="andType"> </label><br /><label id="andIn"></label><br /><label id="andOut"></label></div>  
+                    <div class="grid-9env-item">ORN<br /><label id="ornType"> </label><br /><label id="ornIn"></label><br /><label id="ornOut"></label></div>
+                    <div class="grid-9env-item">ORO<br /><label id="oroType"> </label><br /><label id="oroIn"></label><br /><label id="oroOut"></label></div>
+                    <div class="grid-9env-item">ANT<br /><label id="antType"> </label><br /><label id="antIn"></label><br /><label id="antOut"></label></div>  
+                    <div class="grid-9env-item">NOR<br /><label id="norType"> </label><br /><label id="norIn"></label><br /><label id="norOut"></label></div>
+                    <div class="grid-9env-item">XOR<br /><label id="xorType"> </label><br /><label id="xorIn"></label><br /><label id="xorOut"></label></div>
+                    <div class="grid-9env-item">EQU<br /><label id="equType"> </label><br /><label id="equIn"></label><br /><label id="equOut"></label></div>  
+                    <div class="grid-9env-item">
+                      <select id='envShowRegion'>
                         <option value='gl' selected='selected'>global</option>
-                        <option value='ed'>all spacial</option>
+                        <option value='ed'>all spatial</option>
                         <option value='ul'>upper left</option>
                         <option value='ur'>upper right</option>
                         <option value='ll'>lower left</option>
@@ -683,53 +684,7 @@
                   </div>
                 </div>
 
-                
-                
-                <table border='0'
-                       style='border-collapse: collapse; table-layout: auto; width: 100%; height: auto; text-align: left'>
-                  <tbody>
-                  <tr>
-                    <td>Easy (x2)</td>
-                    <td>Moderate (x4)</td>
-                    <td>Hard (x8)</td>
-                    <td>Very hard (x16)</td>
-                    <td>Brutal (x32)</td>
-                  </tr>
-                  <tr>
-                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='notose'
-                               label='notose'>notose
-                    </td>
-                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='andose'
-                               label='andose'>andose
-                    </td>
-                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='orose'
-                               label='orose'>orose
-                    </td>
-                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='norose'
-                               label='norose'>norose
-                    </td>
-                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='equose'
-                               label='equose'>equose
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='nanose'
-                               label='nanose'>nanose
-                    </td>
-                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='ornose'
-                               label='ornose'>ornose
-                    </td>
-                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='andnose'
-                               label='andnose'>andnose
-                    </td>
-                    <td><input type='checkbox' data-dojo-type='dijit/form/CheckBox' class='resourceButton' id='xorose'
-                               label='xorose'>xorose
-                    </td>
-                    <td>&nbsp;</td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
+              </div> <span tag='end of odd'>
               <div class='even'>
                 <label id='label_31'>Repeatability Mode:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='experimentRadio'
@@ -891,9 +846,9 @@
               <div class='odd'>
                 <label>What resources are available in the environment? (strength of energy reward shown in parentheses)</label>
                 <br />
-                <div class='env-container'>
-                  <div id='ex1envType'>
-                    Task <select data-dojo-type='dijit/form/Select' id='ex1envTask' data-dojo-props='name: "envTask"'>
+                <div class='grid-env1row-container'>
+                  <div class='grid-env1row-c1-item'>
+                    Task <select id='ex1envTask'>
                     <option value='not' selected='selected'>notose: Easy (x2)</option>
                     <option value='nan'>nanose: Easy (x2)</option>
                     <option value='and'>andose: Moderate (x4)</option>
@@ -904,23 +859,23 @@
                     <option value='xor'>xorose: Very hard (x16)</option>
                     <option value='equ'>equose: Brutal (x32)</option>
                   </select><br />
-                    Region of Dish <select data-dojo-type='dijit/form/Select' id='ex1envRegion' data-dojo-props='name: "envRegion"'>
+                    Region of Dish <select id='ex1envRegion'>
                     <option value='Entire Dish' selected='selected'>Entire Dish</option>
                     <option value='Upper Left'>upper left</option>
                     <option value='Upper Right'>upper right</option>
                     <option value='Lower Left'>lower left</option>
                     <option value='Lower Right'>lower right</option>
                   </select><br />
-                    Distribution <select data-dojo-type='dijit/form/Select' id='ex1envDistribute' data-dojo-props='name: "envDistribute"'>
-                    <option value='None'>(N)one</option>
-                    <option value='Infinite' selected='selected'>(I)nfinite</option>
+                    Distribution <select id='ex1envDistribute'>
+                    <option value='None' selected='selected'>(N)one</option>
+                    <option value='Infinite'>(I)nfinite</option>
                     <option value='Finite'>(F)inite</option>
                     <option value='Equilibrium'>(E)quilibrium</option>
                     <option value='Source/Sink'>(S)orce/Sink</option>
                     <option value='Gradient'>(G)radient</option>
                   </select><br />
                   </div>
-                  <div id='ex1envParam'>
+                  <div id='ex1envParam' class='grid-env1row-c2-item'>
                     <div id='ex1envNone'>
                       &nbsp;
                     </div>
@@ -936,29 +891,52 @@
                       <p><label id='ex1envEqual'>10</label> is the equilibrium with no organisms</p>
                     </div>
                     <div id='ex1envGradient'>
-                      Inflow side <input id='ex1envGrSide' type='text'  value = 'top'/>
-                      <br />
-                      Inflow per cell <input id='ex1envGrInflow' type='text'  value = '1'/>
-                      <br/>
-                      Outflow fraction<input id='ex1envGrOutflow' />
+                      <select  id='ex1envGrSide'>
+                        <option value='left' selected='selected'>(L)eft</option>
+                        <option value='right'>(R)ight</option>
+                        <option value='top'>(T)op</option>
+                        <option value='bottom'>(B)ottom</option>
+                        <option value='center'>(C)enter</option>
+                        <option value='edge'>(E)dge</option>
+                      </select>
+                      &nbsp;Hi Side<br />
+                      <input id='ex1envGrHiInitial' type='text' style='width: 2.5em; height:1.6em'/>
+                      &nbsp;Hi Side Initial per cell<br />
+                      <input id='ex1envGrLoInitial' style='width: 2.5em; height:1.6em'/>
+                      &nbsp;Lo Side Initial per cell
+                    </div>
+                    <div id='ex1envSourceSink'>
+                      <select  id='ex1envSsSide'>
+                        <option value='left' selected='selected'>(L)eft</option>
+                        <option value='right'>(R)ight</option>
+                        <option value='top'>(T)op</option>
+                        <option value='bottom'>(B)ottom</option>
+                        <option value='center'>(C)enter</option>
+                        <option value='edge'>(E)dge</option>
+                      </select>
+                      &nbsp;Input Side<br />                         
+                      <input id='ex1envSsInflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.6em' value = '1'/>
+                      Inflow per cell <br>
+                      <input id='ex1envSsOutflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.6em' value = '0.1'/>
+                      Outflow fraction<br>
                     </div>
 
                   </div>
                 </div>
 
                 <div id='ex1showResource' class='showR'>
-                  <div class='grid-container9Env'>
-                    <div class='grid-item9Env'>NOT<br /><label id='ex1notType'> </label><br /><label id='ex1notIn'></label><br /><label id='ex1notOut'></label></div>
-                    <div class='grid-item9Env'>NAN<br /><label id='ex1nanType'> </label><br /><label id='ex1nanIn'></label><br /><label id='ex1nanOut'></label></div>
-                    <div class='grid-item9Env'>AND<br /><label id='ex1andType'> </label><br /><label id='ex1andIn'></label><br /><label id='ex1andOut'></label></div>
-                    <div class='grid-item9Env'>ORN<br /><label id='ex1ornType'> </label><br /><label id='ex1ornIn'></label><br /><label id='ex1ornOut'></label></div>
-                    <div class='grid-item9Env'>ORO<br /><label id='ex1oroType'> </label><br /><label id='ex1oroIn'></label><br /><label id='ex1oroOut'></label></div>
-                    <div class='grid-item9Env'>ANT<br /><label id='ex1antType'> </label><br /><label id='ex1antIn'></label><br /><label id='ex1antOut'></label></div>
-                    <div class='grid-item9Env'>NOR<br /><label id='ex1norType'> </label><br /><label id='ex1norIn'></label><br /><label id='ex1norOut'></label></div>
-                    <div class='grid-item9Env'>XOR<br /><label id='ex1xorType'> </label><br /><label id='ex1xorIn'></label><br /><label id='ex1xorOut'></label></div>
-                    <div class='grid-item9Env'>EQU<br /><label id='ex1equType'> </label><br /><label id='ex1equIn'></label><br /><label id='ex1equOut'></label></div>
-                    <div class='grid-item9Env'>
-                      <select data-dojo-type='dijit/form/Select' id='ex1envShowRegion' data-dojo-props='name: "envShowRegion"'>
+                  <div class='grid-9env-container'>
+                    <div class='grid-9env-item'>NOT<br /><label id='ex1notType'> </label><br /><label id='ex1notIn'></label><br /><label id='ex1notOut'></label></div>
+                    <div class='grid-9env-item'>NAN<br /><label id='ex1nanType'> </label><br /><label id='ex1nanIn'></label><br /><label id='ex1nanOut'></label></div>
+                    <div class='grid-9env-item'>AND<br /><label id='ex1andType'> </label><br /><label id='ex1andIn'></label><br /><label id='ex1andOut'></label></div>
+                    <div class='grid-9env-item'>ORN<br /><label id='ex1ornType'> </label><br /><label id='ex1ornIn'></label><br /><label id='ex1ornOut'></label></div>
+                    <div class='grid-9env-item'>ORO<br /><label id='ex1oroType'> </label><br /><label id='ex1oroIn'></label><br /><label id='ex1oroOut'></label></div>
+                    <div class='grid-9env-item'>ANT<br /><label id='ex1antType'> </label><br /><label id='ex1antIn'></label><br /><label id='ex1antOut'></label></div>
+                    <div class='grid-9env-item'>NOR<br /><label id='ex1norType'> </label><br /><label id='ex1norIn'></label><br /><label id='ex1norOut'></label></div>
+                    <div class='grid-9env-item'>XOR<br /><label id='ex1xorType'> </label><br /><label id='ex1xorIn'></label><br /><label id='ex1xorOut'></label></div>
+                    <div class='grid-9env-item'>EQU<br /><label id='ex1equType'> </label><br /><label id='ex1equIn'></label><br /><label id='ex1equOut'></label></div>
+                    <div class='grid-9env-item'>
+                      <select id='ex1envShowRegion'>
                         <option value='ed' selected='selected'>Entire Dish</option>
                         <option value='ul'>upper left</option>
                         <option value='ur'>upper right</option>
@@ -972,7 +950,108 @@
                   </div>
                 </div>
 
-              </div>
+                <div class='sugarOnOffGrid'>
+                  <div class='grid-sugarOnOff-item'>Easy (x2)</div>
+                  <div class='grid-sugarOnOff-item'>Moderate (x4)</div>
+                  <div class='grid-sugarOnOff-item'>Hard (x8)</div>
+                  <div class='grid-sugarOnOff-item'>Very hard (x16)</div>
+                  <div class='grid-sugarOnOff-item'>Brutal (x32)</div>
+
+                  <div class='grid-sugarOnOff-item'>
+                    notose<br>
+                      <select id='notSugarDrop'>
+                        <option value='notNone'>(N)one</option>
+                        <option value='notInfinite' selected='selected'>(I)nfinite</option>
+                        <option value='notFinite'>(F)inite</option>
+                        <option value='notEquilibrium'>(E)quilibrium</option>
+                      </select>                    
+                  </div>
+                  <div class='grid-sugarOnOff-item'>
+                     andose
+                      <select id='andSugarDrop'>
+                        <option value='andNone'>(N)one</option>
+                        <option value='andInfinite' selected='selected'>(I)nfinite</option>
+                        <option value='andFinite'>(F)inite</option>
+                        <option value='andEquilibrium'>(E)quilibrium</option>
+                      </select>                    
+                  </div>
+                  <div class='grid-sugarOnOff-item'>
+                    orose
+                      <select id='oroSugarDrop'>
+                        <option value='oroNone'>(N)one</option>
+                        <option value='oroInfinite' selected='selected'>(I)nfinite</option>
+                        <option value='oroFinite'>(F)inite</option>
+                        <option value='oroEquilibrium'>(E)quilibrium</option>
+                      </select>                    
+                  </div>
+                  <div class='grid-sugarOnOff-item'>
+                    norose
+                      <select id='norSugarDrop'>
+                        <option value='norNone'>(N)one</option>
+                        <option value='norInfinite' selected='selected'>(I)nfinite</option>
+                        <option value='norFinite'>(F)inite</option>
+                        <option value='norEquilibrium'>(E)quilibrium</option>
+                      </select>                    
+                  </div>
+                  <div class='grid-sugarOnOff-item'>
+                    equose
+                      <select id='equSugarDrop'>
+                        <option value='equNone'>(N)one</option>
+                        <option value='equInfinite' selected='selected'>(I)nfinite</option>
+                        <option value='equFinite'>(F)inite</option>
+                        <option value='equEquilibrium'>(E)quilibrium</option>
+                      </select>                    
+                  </div>
+
+                  <div class='grid-sugarOnOff-item'>
+                    nanose
+                      <select id='nanSugarDrop'>
+                        <option value='nanNone'>(N)one</option>
+                        <option value='nanInfinite' selected='selected'>(I)nfinite</option>
+                        <option value='nanFinite'>(F)inite</option>
+                        <option value='nanEquilibrium'>(E)quilibrium</option>
+                      </select>                    
+                  </div>
+                  <div class='grid-sugarOnOff-item'>
+                    ornose
+                      <select id='ornSugarDrop'>
+                        <option value='ornNone'>(N)one</option>
+                        <option value='ornInfinite' selected='selected'>(I)nfinite</option>
+                        <option value='ornFinite'>(F)inite</option>
+                        <option value='ornEquilibrium'>(E)quilibrium</option>
+                      </select>                    
+                  </div>
+                  <div class='grid-sugarOnOff-item'>
+                    andnose
+                      <select id='antSugarDrop'>
+                        <option value='antNone'>(N)one</option>
+                        <option value='antInfinite' selected='selected'>(I)nfinite</option>
+                        <option value='antFinite'>(F)inite</option>
+                        <option value='antEquilibrium'>(E)quilibrium</option>
+                      </select>                    
+                  </div>
+                  <div class='grid-sugarOnOff-item'>
+                    xorose
+                      <select id='xorSugarDrop' data-dojo-props='name: "allSugar"'>
+                        <option value='xorNone'>(N)one</option>
+                        <option value='xorInfinite' selected='selected'>(I)nfinite</option>
+                        <option value='xorFinite'>(F)inite</option>
+                        <option value='xorEquilibrium'>(E)quilibrium</option>
+                      </select>                    
+                  </div>
+                  <div class='grid-sugarOnOff-item'>
+                      <select id='allSugarDrop' data-dojo-props='name: "allSugar"'>
+                        <option value='allon'>All</option>
+                        <option value='alloff'>None</option>
+                        <option value='allFinite'>(F)inite</option>
+                        <option value='allEquilibrium'>(E)quilibrium</option>
+                        <option value='allNeutral' selected='selected'>----</option>
+                      </select>                    
+                  </div>
+                </div> <span class="end Sugar onOff grid"></span>
+                
+                
+              </div> <span class="end odd"></span>
               <div class='even'>
                 <label id='ex1label_31'>Repeatability Mode:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='ex1experimentRadio'
@@ -1373,7 +1452,7 @@
             <div class='lftmargin'>
               <button id='pop0delete'>X</button>
             </div>
-            <select data-dojo-type='dijit/form/Select' id='pop0color' data-dojo-props='name: "color"' class='fltLeft'>
+            <select  id='pop0color'>
               <option value='Red' selected='selected'>Red</option>
               <option value='Blue'>Blue</option>
               <option value='Green'>Green</option>
@@ -1389,7 +1468,7 @@
             <div class='lftmargin'>
               <button id='pop1delete'>X</button>
             </div>
-            <select data-dojo-type='dijit/form/Select' id='pop1color' data-dojo-props='name: "color"' class='fltLeft'>
+            <select  id='pop1color'>
               <option value='Red'>Red</option>
               <option value='Blue' selected='selected'>Blue</option>
               <option value='Green'>Green</option>
@@ -1403,7 +1482,7 @@
             <div id='graphPop1' class='popContainer'></div>
             <div class='lftmargin'>
               <button id='pop2delete'>X</button>
-              <select data-dojo-type='dijit/form/Select' id='pop2color' data-dojo-props='name: "color"'>
+              <select  id='pop2color'>
                 <option value='Red'>Red</option>
                 <option value='Blue'>Blue</option>
                 <option value='Green'>Green</option>
@@ -1418,7 +1497,7 @@
             <div id='graphPop2' class='popContainer'></div>
           </div><span value="analegend"></span>
           <div class="anaYaxis">
-              <select data-dojo-type='dijit/form/Select' id='yLeftSelect' data-dojo-props='name: "yyaxis"'>
+              <select  id='yLeftSelect'>
                 <option value='None'>None</option>
                 <option value='Average Fitness' selected='selected'>Average Fitness</option>
                 <option value='Average Offspring Cost'>Average Offspring Cost</option>
@@ -1427,7 +1506,7 @@
                 <option value='Number Viable'>Number Viable</option>
               </select> Thicker line; left y-axis
               <br></br>
-              <select data-dojo-type='dijit/form/Select' id='yRightSelect' data-dojo-props='name: "yyaxis"'>
+              <select  id='yRightSelect'>
                 <option value='None'>None</option>
                 <option value='Average Fitness'>Average Fitness</option>
                 <option value='Average Offspring Cost' selected='selected'>Average Offspring Cost</option>

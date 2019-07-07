@@ -175,11 +175,11 @@ require([
   //dijit.byId('mnFzAddPopAnalysis').attr('disabled', true);
 
   // for analyze page
-  av.anl.color[0] = av.color.names[dijit.byId('pop0color').value];
-  av.anl.color[1] = av.color.names[dijit.byId('pop1color').value];
-  av.anl.color[2] = av.color.names[dijit.byId('pop2color').value];
-  av.anl.yLeftTitle = dijit.byId('yLeftSelect').value;
-  av.anl.yRightTitle = dijit.byId('yRightSelect').value;
+  av.anl.color[0] = av.color.names[document.getElementById('pop0color').value];
+  av.anl.color[1] = av.color.names[document.getElementById('pop1color').value];
+  av.anl.color[2] = av.color.names[document.getElementById('pop2color').value];
+  av.anl.yLeftTitle = document.getElementById('yLeftSelect').value;
+  av.anl.yRightTitle = document.getElementById('yRightSelect').value;
 
   av.dom.load = function () {
     'use strict';
@@ -264,6 +264,7 @@ require([
     av.dom.envFinite = document.getElementById('envFinite');
     av.dom.envGradient = document.getElementById('envGradient');
     av.dom.envEquilibrium = document.getElementById('envEquilibrium'); 
+    av.dom.envSourceSink = document.getElementById('envSourceSink'); 
     av.dom.envInitial = document.getElementById('envInitial'); 
     av.dom.envEqInflow = document.getElementById('envEqInflow'); 
     av.dom.envEqOutflow = document.getElementById('envEqOutflow'); 
@@ -1791,7 +1792,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     }
     if ('populationBlock' === av.ui.page) {
       // Does not seem to change wd/ht of gridHolder
-      if ('None' == dijit.byId('colorMode').value) {
+      if ('None' == document.getElementById('colorMode').value) {
         if (av.grd.newlyNone) {
           av.grd.newlyNone = false; 
           av.grd.cntx.fillStyle = av.color.names['Black'];
@@ -1815,7 +1816,9 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
         else
           av.dom.scaleCanvas.width = $("#gridHolder").height() - 22;
 
-        if ('Ancestor Organism' == dijit.byId('colorMode').value) {
+        console.log('why crash');
+        if ('Ancestor Organism' == document.getElementById('colorMode').value) {
+        //if ('Ancestor Organism' == getElementById('colorMode').value) {
           av.grd.drawLegend();
         }
         else {
@@ -1892,12 +1895,13 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   // *******************************************************************************************************************
 
   // Get color map data from Avida and draw
-  dijit.byId('colorMode').on('Change', function () {
+  //dijit.byId('colorMode').on('Change', function () {
+  document.getElementById('colorMode').onchange = function() {
     //var scaleType = dijit.byId('colorMode').value;
     //Redraw Grid;
     //console.log('before call av.grd.drawGridSetupFn');
     av.grd.drawGridSetupFn('digit.byId(colorMode)');
-  });
+  };
 
   // Zoom slide - display only not avida
   av.grd.zoomSlide = new HorizontalSlider({
@@ -1986,12 +1990,13 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
 
   // Chart control on population page
   //Set Y-axis title and choose the correct array to plot
-  dijit.byId('yaxis').on('Change', function () {
+  //dijit.byId('yaxis').on('Change', function () {
+  document.getElementById('yaxis').onchange = function() {
     av.grd.ytitle = dijit.byId('yaxis').value;
     //need to get correct array to plot from freezer
     //console.log('changeyaxis popChartFn');
     av.grd.popChartFn();
-  });
+  };
 
   // initialize needs to be in AvidaED.js
   av.grd.popChartInit = function (from) {
@@ -2327,20 +2332,22 @@ av.ptd.randInputChange = function(value, randErroTest) {
   };
 
   av.ui.envBoxSwap = function (showbox) {
+    console.log('in av.ui.envBoxSwap; showbox = ', showbox);
     av.dom.envNone.style.display = "none";
     av.dom.envFinite.style.display = "none";
     av.dom.envEquilibrium.style.display = "none";
+    av.dom.envSourceSink.style.display = "none";
     av.dom.envGradient.style.display = "none";
     document.getElementById(showbox).style.display = "block";
-    av.ui.envRegion = dijit.byId('envRegion').value;
-    av.ui.envTask = dijit.byId('envTask').value;
-    av.ui.envDistribute = dijit.byId('envDistribute').value;
+    av.ui.envRegion = document.getElementById('envRegion').value;
+    av.ui.envTask = document.getElementById('envTask').value;
+    av.ui.envDistribute = document.getElementById('envDistribute').value;
   };
 
-  dijit.byId('envDistribute').on('Change', function () {
-    //console.log ('in envDistribute =', dijit.byId('envDistribute').value);
-    av.ui.envDistribute = dijit.byId('envDistribute').value;
-    switch (dijit.byId('envDistribute').value) {
+  document.getElementById('envDistribute').onchange = function() {
+    av.ui.envDistribute = document.getElementById('envDistribute').value;
+    console.log ('in envDistribute =', av.ui.envDistribute);
+    switch (document.getElementById('envDistribute').value) {
       case 'Finite':
         av.ui.envBoxSwap('envFinite'); 
         break;
@@ -2350,29 +2357,83 @@ av.ptd.randInputChange = function(value, randErroTest) {
       case 'Gradient':
         av.ui.envBoxSwap('envGradient'); 
         break;
+      case 'Source/Sink':
+        av.ui.envBoxSwap('envSourceSink'); 
+        break;
       case 'None':
       case 'Infinite':
         av.ui.envBoxSwap('envNone'); 
         break;
     }
     av.ptd.envobj2form('envRegion.change');
-  });
+  };
 
-  dijit.byId('envRegion').on('Change', function () {
-    av.ui.envRegion = dijit.byId('envRegion').value;
+
+// delete later
+  av.ui.ex1envBoxSwap = function (showbox) {
+    document.getElementById('ex1envNone').style.display = "none";
+    document.getElementById('ex1envFinite').style.display = "none";
+    document.getElementById('ex1envEquilibrium').style.display = "none";
+    document.getElementById('ex1envSourceSink').style.display = "none";
+    document.getElementById('ex1envGradient').style.display = "none";
+
+    document.getElementById(showbox).style.display = "block";
+    av.ui.ex1envRegion = document.getElementById('ex1envRegion').value;
+    av.ui.ex1envTask = document.getElementById('ex1envTask').value;
+    av.ui.ex1envDistribute = document.getElementById('ex1envDistribute').value;
+    console.log('in av.ui.ex1envBoxSwap; showbox = ', showbox);
+  };
+
+  document.getElementById('ex1envDistribute').onchange = function() {
+    av.ui.envDistribute = document.getElementById('ex1envDistribute').value;
+    console.log ('in ex1envDistribute =', av.ui.ex1envDistribute);
+    switch (document.getElementById('ex1envDistribute').value) {
+      case 'Finite':
+        av.ui.ex1envBoxSwap('ex1envFinite'); 
+        break;
+      case 'Equilibrium':
+        av.ui.ex1envBoxSwap('ex1envEquilibrium'); 
+        break;
+      case 'Gradient':
+        av.ui.ex1envBoxSwap('ex1envGradient'); 
+        break;
+      case 'Source/Sink':
+        av.ui.ex1envBoxSwap('ex1envSourceSink'); 
+        break;
+      case 'None':
+      case 'Infinite':
+        av.ui.ex1envBoxSwap('ex1envNone'); 
+        break;
+    }
+    //av.ptd.envobj2form('envRegion.change');
+  };
+
+// end of ex1 page stuff
+
+document.getElementById('envRegion').onchange = function() {
+//dijit.byId('envRegion').on('Change', function () {
+    av.ui.envRegion = document.getElementById('envRegion').value;
     av.ptd.envobj2form('envRegion.change');
-  });
+  };
 
-  dijit.byId('envTask').on('Change', function () {
-    av.ui.envTask = dijit.byId('envTask').value;
-    av.ptd.envobj2form('fenvTask.change');
-  });
+  document.getElementById('envTask').onchange = function() {
+  //dijit.byId('envTask').on('Change', function () {
+    av.ui.envTask = document.getElementById('envTask').value;
+    av.ptd.envobj2form('envTask.change');
+  };
   
-  dijit.byId('envShowRegion').on('Change', function () {
-    av.ui.envTask = dijit.byId('envShowRegion').value;
+  //Opens envShowRegion dialog box
+  document.getElementById('envShowRegion').onclick = function () {
+    av.ui.envTask = document.getElementById('envShowRegion').value;
     av.ptd.showEnv('envShowRegion.change');
-  });
-  
+  };
+
+  document.getElementById('allSugarDrop').onchange = function() {    
+  //dijit.byId('allSugarDrop').on('Change', function () {
+    var allSugar = document.getElementById('allSugarDrop').value;
+    av.ptd.allSugar(allSugar);
+    dijit.byId('allSugarDrop').set('value', 'allNeutral');
+  };
 
 av.ptd.gridChange = function(tmpval) {
     console.log('in av.ptd.gridChange; ');
@@ -3187,24 +3248,28 @@ $(function slidemute() {
     av.dnd.graphPop2.selectAll().deleteSelectedNodes();
     av.anl.AnaChartFn();
   };
-  dijit.byId('pop0color').on('Change', function () {
+  //dijit.byId('pop0color').on('Change', function () {
+  document.getElementById('pop0color').onclick = function () {
     av.anl.color[0] = av.color.names[dijit.byId('pop0color').value];
     av.post.addUser('Button: pop0color');
     av.anl.AnaChartFn();
-  });
-  dijit.byId('pop1color').on('Change', function () {
+  };
+  //dijit.byId('pop1color').on('Change', function () {
+  document.getElementById('pop1color').onclick = function () {
     av.post.addUser('Button: pop1color');
     av.anl.color[1] = av.color.names[dijit.byId('pop1color').value];
     av.anl.AnaChartFn();
-  });
-  dijit.byId('pop2color').on('Change', function () {
+  };
+  //dijit.byId('pop2color').on('Change', function () {
+  document.getElementById('pop2color').onclick = function () {
     av.post.addUser('Button: pop2color');
     av.anl.color[2] = av.color.names[dijit.byId('pop2color').value];
     av.anl.AnaChartFn();
-  });
+  };
 
   //Set Y-axis title and choose the correct array to plot
-  dijit.byId('yLeftSelect').on('Change', function () {
+  //dijit.byId('yLeftSelect').on('Change', function () {
+  document.getElementById('yLeftSelect').onclick = function () {
     av.post.addUser('Button: yLeftSelect = ' + dijit.byId('yLeftSelect').value);
     av.anl.yLeftTitle = dijit.byId('yLeftSelect').value;
     //need to get correct array to plot from freezer
@@ -3212,9 +3277,10 @@ $(function slidemute() {
     av.anl.loadSelectedData(1, 'yLeftSelect', 'left');
     av.anl.loadSelectedData(2, 'yLeftSelect', 'left');
     av.anl.AnaChartFn();
-  });
+  };
 
-  dijit.byId('yRightSelect').on('Change', function () {
+  //dijit.byId('yRightSelect').on('Change', function () {
+  document.getElementById('yRightSelect').onclick = function () {
     av.anl.yRightTitle = dijit.byId('yRightSelect').value;
     //need to get correct array to plot from freezer
     av.anl.loadSelectedData(0, 'yRightSelect', 'right');
@@ -3222,7 +3288,7 @@ $(function slidemute() {
     av.anl.loadSelectedData(2, 'yRightSelect', 'right');
     av.anl.AnaChartFn();
     av.post.addUser('Button: yRightSelect = '+dijit.byId('yRightSelect').value);
-  });
+  };
 
   // **************************************************************************************************************** */
   //Tasks that Need to be run when page is loaded and after chart is defined
@@ -3292,8 +3358,10 @@ $(function slidemute() {
   //                                          Last things done
   // **************************************************************************************************************** */
   //av.ui.removeVerticalScrollbar('popTop', 'popTop');
+  console.log('before mainBoxSwap');
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
   av.ui.envBoxSwap('envNone');  
+  av.ui.ex1envBoxSwap('ex1envNone');    //delete later
   //av.grd.popChartFn();
   //av.grd.drawGridSetupFn('inital background'); //Draw initial background
 
@@ -3315,7 +3383,7 @@ $(function slidemute() {
   //Modulo that is more accurate than %; Math.fmod(aa, bb);
   Math.fmod = function (aa, bb) {
     return Number((aa - (Math.floor(aa / bb) * bb)).toPrecision(8));
-  }
+  };
 
   //http://nelsonwells.net/2011/10/swap-object-key-and-values-in-javascript/
   av.ui.invertHash = function (obj) {

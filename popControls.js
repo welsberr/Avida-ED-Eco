@@ -600,6 +600,38 @@ av.ptd.clearLogicButtons = function() {
   }
 };
 
+av.ptd.allSugar = function (allmode) {
+  var onflag = true;
+  if ('allComp' == allmode) {
+    dijit.byId('notose').set('checked', !dijit.byId('notose').get('checked') );
+    dijit.byId('nanose').set('checked', !dijit.byId('nanose').get('checked') );
+    dijit.byId('andose').set('checked', !dijit.byId('andose').get('checked') );
+    dijit.byId('ornose').set('checked', !dijit.byId('ornose').get('checked') );
+    dijit.byId('orose').set('checked', !dijit.byId('orose').get('checked') );
+    dijit.byId('andnose').set('checked', !dijit.byId('andnose').get('checked') );
+    dijit.byId('norose').set('checked', !dijit.byId('norose').get('checked') );
+    dijit.byId('xorose').set('checked', !dijit.byId('xorose').get('checked') );
+    dijit.byId('equose').set('checked', !dijit.byId('equose').get('checked') );
+  }
+  else if ( ('allon' == allmode) || ('alloff' == allmode) ) {
+    if ('allon' == allmode) {
+      onflag = true;
+    }
+    else if ('alloff' == allmode) {
+      onflag = false;
+    };
+    dijit.byId('notose').set('checked', onflag);
+    dijit.byId('nanose').set('checked', onflag);
+    dijit.byId('andose').set('checked', onflag);
+    dijit.byId('ornose').set('checked', onflag);
+    dijit.byId('orose').set('checked', onflag);
+    dijit.byId('andnose').set('checked', onflag);
+    dijit.byId('norose').set('checked', onflag);
+    dijit.byId('xorose').set('checked', onflag);
+    dijit.byId('equose').set('checked', onflag);
+  };
+};
+
 // should really be in a ui code section
 // http://stackoverflow.com/questions/7125453/modifying-css-class-property-values-on-the-fly-with-javascript-jquery
 av.ptd.setStyle = function (cssText) {

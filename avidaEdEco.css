@@ -109,6 +109,8 @@
     align-items: stretch;
     height: 100%;
     background-color: #F5F5F5; /* red; */
+    max-height: 800px;
+    overflow:scroll;
   }
   .navColClass {
     resize: horizontal;
@@ -118,6 +120,8 @@
     flex-direction: column;
     background-color: #F5F5F5; /* lavender; */
     border: 1px solid #AAA;
+    max-height: 800px;
+    overflow:scroll;
   }
   
   .mainBlockHolder{
@@ -140,6 +144,8 @@
     overflow:auto;
     flex-direction: column;
     width: 100%;
+    max-height: 800px;
+    overflow:scroll;
     /*max-width: 430px;   /* tiba; temp fix will need to change this later */
   }
   .benchPopTopRow {
@@ -171,9 +177,11 @@
   }
 
   #popInfoHolder {
-    flex: 0 1 380px;          /* flex: 0 1 344px; is fixed in that dimension   was 349px  was 500px*/
+    flex: 0 1 420px;          /* flex: 0 1 344px; is fixed in that dimension   was 349px  was 500px*/
     border: 1px solid #AAA;
     background: beige;
+    max-height: 550px;
+    overflow:scroll;
   }
 
   #popInfoVert {
@@ -247,17 +255,59 @@
     width: 100%;
   }
   
-  .env-container {
-    display: flex;
-    flex-direction: row;
-    border: 1px solid #AAA;
-    background-color: #F5F5F5;    
+  #ex1envParam {
+    flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
+    border: 1px solid #AAA;    
+    background-color: #F5F5F5;
   }
   
-  #envType {
-    flex: 0 1 160px;        
-    border: 1px solid #AAA;    
+  #ex1envNone{
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-color: #F5F5F5;
+    min-width: 200px;
   }
+  #ex1envFinite{
+    display:block;
+    height: 100%;
+    width: 100%;
+    background-color: #F5F5F5;
+  }
+  #ex1envEquilibrium{
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-color: #F5F5F5;
+  }
+  #ex1envGradient{
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-color: #F5F5F5;
+  }
+  
+.grid-env1row-container {
+  display: inline-grid;
+  grid-template-columns: 184px auto;
+  background-color: #F5F5F5;  /* #2196F3;  paple blue */
+  width: 100%;
+}
+
+.grid-env1row-c1-item{
+  background-color: #F5F5F5;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  text-align: right;
+  padding: 2px 1px;
+  max-width: 182px;
+}
+
+.grid-env1row-c2-item {
+  background-color: #F5F5F5;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  text-align: left;
+  padding: 2px 1px;
+}
 
   #envParam {
     flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
@@ -269,7 +319,7 @@
     display: block;
     height: 100%;
     width: 100%;
-    background-color: #F5F5F5;
+    background-color: #F5F5F5;;
   }
   #envFinite{
     display:block;
@@ -283,14 +333,36 @@
     width: 100%;
     background-color: #F5F5F5;
   }
+  #envSourceSink{
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-color: #violet;
+  }
   #envGradient{
     display: block;
     height: 100%;
     width: 100%;
-    background-color: palegoldenrod;
+    background-color: #F5F5F5;;
   }
 
-  .grid-container {
+  
+  .sugarOnOffGrid {
+  display: inline-grid;
+  grid-template-columns: auto auto auto auto auto;
+  background-color: #F5F5F5;     /* #2196F3;  blue */
+/*  justify-content: space-evenly;  */
+  width: 100%;
+}
+
+.grid-sugarOnOff-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 0px;
+  text-align: left;
+  padding: 1px 1px;
+}
+  
+.grid-container {
   display: inline-grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
   background-color: #F5F5F5;     /* #2196F3;  blue */
@@ -305,34 +377,33 @@
   padding: 2px 3px;
 }
 
-  .grid-container9Env {
+  .grid-9env-container {
   display: inline-grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
   background-color: #F5F5F5;  /* #2196F3;  paple blue */
   width: 100%;
 }
 
-.grid-item9Env {
+.grid-9env-item {
   background-color: #F5F5F5;
   border: 1px solid rgba(0, 0, 0, 0.8);
   text-align: center;
   padding: 2px 3px;
 }
 
-  .grid-containerEnv {
+  .grid-eachSugar-container {
   display: inline-grid;
   grid-template-columns: auto auto;
   background-color: #F5F5F5;  /* #2196F3;  paple blue */
   width: 100%;
-}
-
-.grid-itemEnv {
+  }
+  
+  .grid-eachSugar-item {
   background-color: #F5F5F5;
   border: 1px solid rgba(0, 0, 0, 0.8);
   text-align: center;
-  padding: 2px 3px;
-}
-
+  padding: 1px 1px;
+  }
 
 .mainPageButtons{
   border: 1px solid #AAA;
@@ -367,7 +438,9 @@
 .freezerClass{
   border: 1px solid #BABABA;
   flex:1;
-  max-height: 400px;
+  overflow:scroll;
+  max-height: 600px;
+  overflow:scroll;
 }
 .freezerSection{
   font-size: 130%;
@@ -379,7 +452,7 @@
 }
 
   .orgBenchCol{
-    background-color: #F5F5F5 /* lightgoldenrodyellow;*/
+    background-color: #F5F5F5; /* lightgoldenrodyellow;*/
     flex: 1;
     border: 1px solid #AAA;
     display: flex;
