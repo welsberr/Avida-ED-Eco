@@ -603,15 +603,15 @@ av.ptd.clearLogicButtons = function() {
 av.ptd.allSugar = function (allmode) {
   var onflag = true;
   if ('allComp' == allmode) {
-    dijit.byId('notose').set('checked', !dijit.byId('notose').get('checked') );
-    dijit.byId('nanose').set('checked', !dijit.byId('nanose').get('checked') );
-    dijit.byId('andose').set('checked', !dijit.byId('andose').get('checked') );
-    dijit.byId('ornose').set('checked', !dijit.byId('ornose').get('checked') );
-    dijit.byId('orose').set('checked', !dijit.byId('orose').get('checked') );
-    dijit.byId('andnose').set('checked', !dijit.byId('andnose').get('checked') );
-    dijit.byId('norose').set('checked', !dijit.byId('norose').get('checked') );
-    dijit.byId('xorose').set('checked', !dijit.byId('xorose').get('checked') );
-    dijit.byId('equose').set('checked', !dijit.byId('equose').get('checked') );
+    document.getElementById('notose').checked =  !document.getElementById('notose').checked;
+    document.getElementById('nanose').checked =  !document.getElementById('nanose').checked;
+    document.getElementById('andose').checked =  !document.getElementById('andose').checked;
+    document.getElementById('ornose').checked =  !document.getElementById('ornose').checked;
+    document.getElementById('orose').checked =  !document.getElementById('orose').checked;
+    document.getElementById('andnose').checked =  !document.getElementById('andnose').checked;
+    document.getElementById('norose').checked =  !document.getElementById('norose').checked;
+    document.getElementById('xorose').checked =  !document.getElementById('xorose').checked;
+    document.getElementById('equose').checked =  !document.getElementById('equose').checked;
   }
   else if ( ('allon' == allmode) || ('alloff' == allmode) ) {
     if ('allon' == allmode) {
@@ -620,15 +620,15 @@ av.ptd.allSugar = function (allmode) {
     else if ('alloff' == allmode) {
       onflag = false;
     };
-    dijit.byId('notose').set('checked', onflag);
-    dijit.byId('nanose').set('checked', onflag);
-    dijit.byId('andose').set('checked', onflag);
-    dijit.byId('ornose').set('checked', onflag);
-    dijit.byId('orose').set('checked', onflag);
-    dijit.byId('andnose').set('checked', onflag);
-    dijit.byId('norose').set('checked', onflag);
-    dijit.byId('xorose').set('checked', onflag);
-    dijit.byId('equose').set('checked', onflag);
+    dijit.byId('notose').checked = onflag;
+    dijit.byId('nanose').checked = onflag;
+    dijit.byId('andose').checked = onflag;
+    dijit.byId('ornose').checked = onflag;
+    dijit.byId('orose').checked = onflag;
+    dijit.byId('andnose').checked = onflag;
+    dijit.byId('norose').checked = onflag;
+    dijit.byId('xorose').checked = onflag;
+    dijit.byId('equose').checked = onflag;
   };
 };
 
@@ -702,7 +702,7 @@ av.ptd.envobj2form = function(from) {
 av.ptd.showEnv = function(from) {
   console.log(from, 'called av.ptd.showEnv');
   var len = av.ptd.logicNames.length;
-  var showRegion = dijit.byId('envShowRegion').value;
+  var showRegion = document.getElementById('envShowRegion').value;
   var regionNdx = av.fzr.env.region.indexOf(showRegion);
   var txtType, txtInit, txtInflo, txtOut;
 

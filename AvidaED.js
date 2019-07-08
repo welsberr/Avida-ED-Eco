@@ -1893,10 +1893,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   // Get color map data from Avida and draw
   //dijit.byId('colorMode').on('Change', function () {
   document.getElementById('colorMode').onchange = function() {
-    //var scaleType = dijit.byId('colorMode').value;
-    //Redraw Grid;
-    //console.log('before call av.grd.drawGridSetupFn');
-    av.grd.drawGridSetupFn('digit.byId(colorMode)');
+    av.grd.drawGridSetupFn('colorMode_onchange');
   };
 
   // Zoom slide - display only not avida
@@ -1916,6 +1913,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   }, 'zoomSlide');
 
   av.grd.colorMap = 'Gnuplot2';
+/*
   dijit.byId('mnGnuplot2').attr('disabled', true);
 
   dijit.byId('mnViridis').on('Click', function () {
@@ -1945,7 +1943,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.grd.drawGridSetupFn('digit.byID(mnCubehelix)');
     av.post.addUser('Button: mnCubehelix pressed');
   });
-
+*/
   // *******************************************************************************************************************
   //    Buttons that select organisms that perform a logic function
   // *******************************************************************************************************************
@@ -1986,9 +1984,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
 
   // Chart control on population page
   //Set Y-axis title and choose the correct array to plot
-  //dijit.byId('yaxis').on('Change', function () {
   document.getElementById('yaxis').onchange = function() {
-    av.grd.ytitle = dijit.byId('yaxis').value;
+    av.grd.ytitle = document.getElementById('yaxis').value;
     //need to get correct array to plot from freezer
     //console.log('changeyaxis popChartFn');
     av.grd.popChartFn();
@@ -2046,7 +2043,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     }
     else {
       av.dom.popChart.style.visibility = 'visible';
-      if ('none' === dijit.byId('yaxis').value) {
+      if ('none' === document.getElementById('yaxis').value) {
         if (undefined !== av.dom.popChart.data) {
           console.log('before purge in popChartFn');
           av.debug.log += '\n     --uiD: Plotly: Plotly.deleteTraces(av.dom.popChart, [0, 1]) in AvidaED.js at 1621';
@@ -2059,14 +2056,14 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       else {
         av.pch.divSize('av.grd.popChartFn');
 
-        if (dijit.byId('yaxis').value === av.pch.yValue) av.pch.yChange = false;
+        if (document.getElementById('yaxis').value === av.pch.yValue) av.pch.yChange = false;
         else {
           av.pch.yChange = true;
-          av.pch.yValue = dijit.byId('yaxis').value;
+          av.pch.yValue = document.getElementById('yaxis').value;
         }
         //console.log('av.pch.maxFit=',av.pch.aveMaxFit, '; av.pch.logMaxFit=',av.pch.logMaxFit, '; av.pch.aveFit = ', av.pch.aveFit);
         //console.log('av.pch.logFit = ', av.pch.logFit);
-        if ('Average Fitness' === dijit.byId('yaxis').value) {
+        if ('Average Fitness' === document.getElementById('yaxis').value) {
           av.pch.popY = av.pch.aveFit;
           av.pch.logY = av.pch.logFit;
           //console.log('av.pch.maxFit=',av.pch.aveMaxFit, '; av.pch.logMaxFit=',av.pch.logMaxFit);
@@ -2075,22 +2072,22 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
           //console.log('aveFit', av.pch.aveFit);
           //console.log('logFit', av.pch.logFit);
         }
-        else if ('Average Offspring Cost' == dijit.byId('yaxis').value) {
+        else if ('Average Offspring Cost' == document.getElementById('yaxis').value) {
           av.pch.popY = av.pch.aveCst;
           av.pch.logY = av.pch.logCst;
           av.pch.maxY = (av.pch.aveMaxCst > av.pch.logMaxCst) ? av.pch.aveMaxCst : av.pch.logMaxCst;
         }
-        else if ('Average Energy Acq. Rate' == dijit.byId('yaxis').value) {
+        else if ('Average Energy Acq. Rate' == document.getElementById('yaxis').value) {
           av.pch.popY = av.pch.aveEar;
           av.pch.logY = av.pch.logEar;
           av.pch.maxY = (av.pch.aveMaxEar > av.pch.logMaxEar) ? av.pch.aveMaxEar : av.pch.logMaxEar;
         }
-        else if ('Number of Organisms' == dijit.byId('yaxis').value) {
+        else if ('Number of Organisms' == document.getElementById('yaxis').value) {
           av.pch.popY = av.pch.aveNum;
           av.pch.logY = av.pch.logNum;
           av.pch.maxY = (av.pch.aveMaxNum > av.pch.logMaxNum) ? av.pch.aveMaxNum : av.pch.logMaxNum;
         }
-        else if ('Number Viable' == dijit.byId('yaxis').value) {
+        else if ('Number Viable' == document.getElementById('yaxis').value) {
           av.pch.popY = av.pch.aveVia;
           av.pch.logY = av.pch.logNum;
           av.pch.maxY = (av.pch.aveMaxVia > av.pch.logMaxNum) ? av.pch.aveMaxVia : av.pch.logMaxNum;
@@ -2327,6 +2324,7 @@ av.ptd.randInputChange = function(value, randErroTest) {
     };
   };
 
+/*
   av.ui.envBoxSwap = function (showbox) {
     console.log('in av.ui.envBoxSwap; showbox = ', showbox);
     av.dom.envNone.style.display = "none";
@@ -2363,7 +2361,7 @@ av.ptd.randInputChange = function(value, randErroTest) {
     }
     av.ptd.envobj2form('envRegion.change');
   };
-
+*/
 
 // delete later
   av.ui.ex1envBoxSwap = function (showbox) {
@@ -2444,7 +2442,7 @@ av.ui.ex2envBoxSwap = function (showbox) {
 
 
 // end of ex1 and ex2 page stuff
-
+/*
 document.getElementById('envRegion').onchange = function() {
 //dijit.byId('envRegion').on('Change', function () {
     av.ui.envRegion = document.getElementById('envRegion').value;
@@ -2462,6 +2460,7 @@ document.getElementById('envRegion').onchange = function() {
     av.ui.envTask = document.getElementById('envShowRegion').value;
     av.ptd.showEnv('envShowRegion.change');
   };
+ */
 
   document.getElementById('allSugarDrop').onchange = function() {    
   //dijit.byId('allSugarDrop').on('Change', function () {
@@ -3239,8 +3238,8 @@ $(function slidemute() {
         av.anl.divSize('anaChartInit');
         av.anl.layout.height = av.anl.ht;
         av.anl.layout.width = av.anl.wd;
-        av.anl.layout.yaxis.title = dijit.byId('yLeftSelect').value;
-        av.anl.layout.yaxis2.title = dijit.byId('yRightSelect').value;
+        av.anl.layout.yaxis.title = document.getElementById('yLeftSelect').value;
+        av.anl.layout.yaxis2.title = document.getElementById('yRightSelect').value;
         if (av.debug.plotly) console.log('before purge in update');
         av.debug.log += '\n     --uiD: Plotly: Plotly.purge(av.dom.anlChrtSpace) in AvidaED.js at 2249';
         av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace', [av.dom.anlChrtSpace]);
@@ -3395,7 +3394,7 @@ $(function slidemute() {
   //av.ui.removeVerticalScrollbar('popTop', 'popTop');
   console.log('before mainBoxSwap');
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
-  av.ui.envBoxSwap('envNone');  
+  //av.ui.envBoxSwap('envNone');  
   av.ui.ex1envBoxSwap('ex1envNone');    //delete later
   av.ui.ex2envBoxSwap('ex2envNone');    //delete later
   //av.grd.popChartFn();

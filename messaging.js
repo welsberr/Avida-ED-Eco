@@ -870,16 +870,16 @@ av.grd.updateSelectedOrganismType = function (msg) {
     if (av.debug.msg) console.log('genome',av.grd.kidGenome, '-------------------');
     dijit.byId('mnCnOrganismTrace').attr('disabled', false);
   }
-}
+};
 
 av.msg.fillColorBlock = function (msg) {  //Draw the color block
     'use strict';
     if (av.debug.msg) console.log('in fillColorBlock');
     //if (av.debug.msg) console.log('ndx', av.grd.selectedNdx, '; msg.ancestor.data[ndx]',av.grd.msg.ancestor.data[av.grd.selectedNdx]);
     if (av.debug.msg) console.log('av.grd.fill[av.grd.selectedNdx]',av.grd.fill[av.grd.selectedNdx]);
-    if ('Ancestor Organism' == dijit.byId('colorMode').value) {
+    if ('Ancestor Organism' == document.getElementById('colorMode').value) {
       if (null === av.grd.fill[av.grd.selectedNdx]) {
-        av.grd.selCtx.fillStyle = '#000'
+        av.grd.selCtx.fillStyle = '#000';
       }
       else {
         av.grd.selCtx.fillStyle = av.parents.color[av.parents.name.indexOf(msg.ancestor)];
@@ -893,13 +893,14 @@ av.msg.fillColorBlock = function (msg) {  //Draw the color block
       else if (0 == av.grd.fill[av.grd.selectedNdx]) av.grd.selCtx.fillStyle = av.color.defaultKidColor;
       else {  //av.utl.get_color0 = function(cmap, dx, d1, d2)
         av.grd.selCtx.fillStyle = av.utl.get_color0(av.grd.cmap, av.grd.fill[av.grd.selectedNdx], 0, av.grd.fillmax);
-        //console.log('fillStyle', av.utl.get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax));
+        console.log('fillStyle', av.utl.get_color0(av.grd.cmap, av.grd.fill[av.grd.selectedNdx], 0, av.grd.fillmax));
       }
     }
     if (av.debug.msg) console.log('color', av.grd.selCtx.fillStyle);
+    //console.log('color', av.grd.selCtx.fillStyle);
     av.grd.selCtx.fillRect(0, 0, av.grd.SelectedWd, av.grd.SelectedHt);
 
-  }
+  };
 
 // ------------------------------------------------ not in use ---------------------------------------------------------
 /*

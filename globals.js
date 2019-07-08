@@ -588,6 +588,7 @@ av.grd.need2DrawGrid = true;
 av.grd.newlyNone = true;
 
 av.grd.clearGrd = function () {
+  av.grd.cmap = av.color.Gnuplot2cmap;  //default colormap
   av.grd.runState = 'prepping';  //'started'; 'world';
   av.grd.updateNum = 0;
   av.grd.selectedNdx = -1;

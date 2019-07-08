@@ -8,9 +8,6 @@ av.grd.backgroundSquares = function () {
     var xx = av.grd.marginX + av.grd.xOffset + ii * av.grd.cellWd;
     for (var jj = 0; jj < av.grd.rows; jj++) {
       var yy = av.grd.marginY + av.grd.yOffset + jj * av.grd.cellHt;
-      //boxColor = av.utl.get_color0(av.color.ViridisCmap, Math.random(), 0, 1);
-      //boxColor = av.utl.get_color0(av.color.ViridisCmap, 0.5, 0, 1);
-      //console.log('color=', boxColor);
       av.grd.cntx.fillStyle = 'rgb(40, 40, 40)';
       av.grd.cntx.fillRect(xx, yy, av.grd.cellWd - 1, av.grd.cellHt - 1);
     }
@@ -176,31 +173,35 @@ av.grd.setMapData = function () {
       };
     };
     
-    //console.log('dijit.byId("colorMode").value = ', dijit.byId("colorMode").value, '------------');
-    switch (dijit.byId("colorMode").value) {
+    av.grd.cmap = av.color.Gnuplot2cmap;  //for fitness, offspring cost and energy aquisition rate
+    switch (document.getElementById("colorMode").value) {
       case 'Fitness':
         av.grd.fill = av.grd.msg.fitness.data;
         av.grd.fillmax = av.grd.mxFit;
         av.grd.fillmin = av.grd.msg.fitness.minVal;
         av.grd.fillRescale = av.grd.reScaleFit;
+        av.grd.cmap = av.color.Gnuplot2cmap;  //for fitness, offspring cost and energy aquisition rate
         break;
       case 'Offspring Cost':
         av.grd.fill = av.grd.msg.gestation.data;
         av.grd.fillmax = av.grd.mxCost;
         av.grd.fillmin = av.grd.msg.gestation.minVal;
         av.grd.fillRescale = av.grd.reScaleGest;
+        av.grd.cmap = av.color.Gnuplot2cmap;  //for fitness, offspring cost and energy aquisition rate
         break;
       case 'Energy Acq. Rate':
         av.grd.fill = av.grd.msg.metabolism.data;
         av.grd.fillmax = av.grd.mxRate;
         av.grd.fillmin = av.grd.msg.metabolism.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
+        av.grd.cmap = av.color.Gnuplot2cmap;  //for fitness, offspring cost and energy aquisition rate
         break;
       case 'rnot':
         av.grd.fill = av.grd.msg.rnot.data;
         av.grd.fillmax = av.grd.mxRnot;
         av.grd.fillmin = av.grd.msg.rnot.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
+        av.grd.cmap = av.color.redCmap;
         break;
       case 'rnan':
         av.grd.fill = av.grd.msg.rnan.data;
@@ -273,7 +274,7 @@ av.grd.drawParent = function () {
       if (!av.parents.injected[ii]) {
         var xx = av.grd.marginX + av.grd.xOffset + av.parents.col[ii] * av.grd.cellWd;
         var yy = av.grd.marginY + av.grd.yOffset + av.parents.row[ii] * av.grd.cellHt;
-        if ("Ancestor Organism" == dijit.byId("colorMode").value) {
+        if ("Ancestor Organism" == document.getElementById("colorMode").value) {
           av.grd.cntx.fillStyle = av.parents.color[ii];
         }
         else {
@@ -291,11 +292,11 @@ av.grd.drawParent = function () {
 av.grd.drawKids = function () {  //Draw the children of parents
   'use strict';
   var cc, ii, rr, xx, yy, lngth, ndx;
-  //console.log('mode', dijit.byId("colorMode").value, '; fill', av.grd.fill);
+  //console.log('mode', document.getElementById("colorMode").value, '; fill', av.grd.fill);
   lngth = av.grd.fill.length;
   //console.log('av.grd.fill.length=',av.grd.fill.length);
   if (0<av.grd.fill.length){
-    if ("Ancestor Organism" == dijit.byId("colorMode").value) {
+    if ("Ancestor Organism" == document.getElementById("colorMode").value) {
       for (ii = 0; ii < lngth; ii++) {
         cc = ii % av.grd.cols;
         rr = Math.floor(ii / av.grd.cols);       //floor was trunc
@@ -330,17 +331,18 @@ av.grd.drawKids = function () {  //Draw the children of parents
             console.log('fill[', ii, '] = ', av.grd.fill[ii], 'ancestor != -;   =======================================');
           } //not viable
         }
-        else if (0 == av.grd.fill[ii] && 'Ancestor Organism' == dijit.byId("colorMode").value) {
+        else if (0 == av.grd.fill[ii] && 'Ancestor Organism' == document.getElementById("colorMode").value) {
           //console.log('fill[', ii, '] = ', av.grd.fill[ii], 'default kid color');
           av.grd.cntx.fillStyle = av.color.defaultKidColor;
         }
         else if (0 > av.grd.fill[ii]) {
-          //console.log('fill[', ii, '] = ', av.grd.fill[ii], '; type=',dijit.byId("colorMode").value,'; fill out of bounds');
+          //console.log('fill[', ii, '] = ', av.grd.fill[ii], '; type=',document.getElementById("colorMode").value,'; fill out of bounds');
           console.log('fill out of bounds');
           av.grd.fill[ii] = 0;
           av.grd.cntx.fillStyle = av.utl.get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax);
+          
         }
-        else if ('Offspring Cost' == dijit.byId("colorMode").value && 999 < av.grd.fill[ii]) {
+        else if ('Offspring Cost' == document.getElementById("colorMode").value && 999 < av.grd.fill[ii]) {
           //console.log('fill[', ii, '] = ', av.grd.fill[ii], 'Offspring Cost out of bounds');
           console.log('Offspring Cost out of bounds');
           av.grd.cntx.fillStyle = '#090';
@@ -597,7 +599,7 @@ av.grd.drawGridUpdate = function () {
   //Draw Selected as one of the last items to draw
   if (av.grd.flagSelected) { av.grd.drawSelected(); };
   if ('prepping' !== av.grd.runState) {
-    if ('r' == dijit.byId('colorMode').value.substring(0,1) && av.ui.showOutlineFlag ) av.grd.DrawAvidaOutline();
+    if ('r' == document.getElementById('colorMode').value.substring(0,1) && av.ui.showOutlineFlag ) av.grd.DrawAvidaOutline();
     av.grd.DrawLogicSelected();
   }
 };
@@ -686,6 +688,10 @@ av.grd.gradientScale = function () {
   var gradWidth = xEnd - xStart;
   var grad = av.grd.sCtx.createLinearGradient(xStart + 2, 0, xEnd - 2, 0);
   var legendHt = 15;
+        
+  //av.grd.cmap = av.color.Gnuplot2cmap;
+  //does not currently do anything because the only option is for Gnuplot2
+  /*
   switch (av.grd.colorMap) {
     case "Viridis":
       av.grd.cmap = av.color.ViridisCmap;
@@ -695,7 +701,8 @@ av.grd.gradientScale = function () {
       break;
     case 'Cubehelix':
       av.grd.cmap = av.color.cubehelixCmap;
-  }
+  };
+  */
   var lngth = av.grd.cmap.length;
   for (var ii = 0; ii < lngth; ii++) {
     grad.addColorStop(ii / (av.grd.cmap.length - 1), av.grd.cmap[ii]);
