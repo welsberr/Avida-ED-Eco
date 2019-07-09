@@ -416,6 +416,8 @@ av.ptd.logicNames = ['not', 'nan', 'and', 'orn', 'oro', 'ant', 'nor', 'xor', 'eq
 av.ptd.logicVnames = ['not', 'nand', 'and', 'orn', 'or', 'andn', 'nor', 'xor', 'equ'];
 av.ptd.reactValues = [ 1.0,   1.0,   2.0,   2.0,   3.0,   3.0,   4.0,   4.0,   5.0];
 av.ptd.popInfoHolderWd = 395;
+av.ptd.sugarColors = ['redvMap', 'orngMap', 'yllwMap', 'grenMap', 'cyanMap', 'cornMap', 'blueMap', 'purpMap', 'mgntMap'];
+av.ptd.sugarShade = 60;
 
 //structure to hold list of ancestor organisms
 av.parents = {};

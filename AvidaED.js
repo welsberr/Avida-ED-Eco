@@ -2324,6 +2324,7 @@ av.ptd.randInputChange = function(value, randErroTest) {
     };
   };
 
+/************************************************************************************ enviornment (sugar) settings ****/
 /*
   av.ui.envBoxSwap = function (showbox) {
     console.log('in av.ui.envBoxSwap; showbox = ', showbox);
@@ -2468,6 +2469,33 @@ document.getElementById('envRegion').onchange = function() {
     av.ptd.allSugar(allSugar);
     dijit.byId('allSugarDrop').set('value', 'allNeutral');
   };
+
+//------------------------------------------------------------------------------------------------- Sugar Accordion ----
+  document.getElementById('allSugarChange').onchange = function() {    
+  //dijit.byId('allSugarDrop').on('Change', function () {
+    var allSugar = document.getElementById('allSugarChange').value;
+    av.ptd.allSugarChange(allSugar);
+    av.ui.setSugarColors();
+    document.getElementById('allSugarChange').value = 'allNeutral';
+  };
+
+
+av.ui.setSugarColors = function() {
+  var sugarSection = ['notSection', 'nanSection', 'andSection', 'ornSection', 'oroSection', 'antSection', 'norSection', 'xorSection', 'equSection']; 
+  var len = av.ptd.sugarColors.length;
+  var ndx = av.ptd.sugarShade;
+  for (ii=0; ii<len; ii++) {
+    //console.log('ii=',ii,'SugarSection=', sugarSection[ii]);
+    if ('allSpatial' != document.getElementById('allSugarChange').value) {
+      document.getElementById(sugarSection[ii]).style.backgroundColor = av.color.greyMap[ndx];
+    }
+    else {
+      document.getElementById(sugarSection[ii]).style.backgroundColor = av.color[av.ptd.sugarColors[ii]][ndx];
+    }
+  }
+};
+
+/******************************************************************************** End enviornment (sugar) settings ****/
 
 av.ptd.gridChange = function(tmpval) {
     console.log('in av.ptd.gridChange; ');
@@ -3397,6 +3425,7 @@ $(function slidemute() {
   //av.ui.envBoxSwap('envNone');  
   av.ui.ex1envBoxSwap('ex1envNone');    //delete later
   av.ui.ex2envBoxSwap('ex2envNone');    //delete later
+  av.ui.setSugarColors();   //94
   //av.grd.popChartFn();
   //av.grd.drawGridSetupFn('inital background'); //Draw initial background
 

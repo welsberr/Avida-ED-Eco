@@ -600,6 +600,41 @@ av.ptd.clearLogicButtons = function() {
   }
 };
 
+av.ptd.allSugarChange = function (allmode) {
+  var onoff = 'None';
+  var spGl = 'Spatial';
+  console.log('allmode=', allmode);
+  if ( ('allon' == allmode) || ('alloff' == allmode) ) {
+    spGl = 'Global';
+    if ('allon' == allmode) {
+      onoff = 'Infinite';
+    }
+    else if ('alloff' == allmode) {
+      onoff = 'None';
+    };
+    document.getElementById('notGlobRsrcType').value = onoff;
+    //document.getElementById('nanGlobRsrcType').value = onoff;
+    //document.getElementById('andGlobRsrcType').value = onoff;
+    //document.getElementById('ornGlobRsrcType').value = onoff;
+    document.getElementById('oroGlobRsrcType').value = onoff;
+    document.getElementById('antGlobRsrcType').value = onoff;
+    document.getElementById('norGlobRsrcType').value = onoff;
+    document.getElementById('xorGlobRsrcType').value = onoff;
+    document.getElementById('equGlobRsrcType').value = onoff;
+
+    document.getElementById('notGlobSpat').value = spGl;
+    document.getElementById('nanGlobSpat').value = spGl;
+    document.getElementById('andGlobSpat').value = spGl;
+    document.getElementById('ornGlobSpat').value = spGl;
+    document.getElementById('oroGlobSpat').value = spGl;
+    document.getElementById('antGlobSpat').value = spGl;
+    document.getElementById('norGlobSpat').value = spGl;
+    document.getElementById('xorGlobSpat').value = spGl;
+    document.getElementById('equGlobSpat').value = spGl;
+  };
+};
+
+
 av.ptd.allSugar = function (allmode) {
   var onflag = true;
   if ('allComp' == allmode) {

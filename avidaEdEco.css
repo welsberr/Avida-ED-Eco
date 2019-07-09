@@ -475,29 +475,85 @@
   width: 100%;
   background: #fff;          /*cyan=0ff; yellow=ff0 magenta=f0f brightGreen=0f0 red=f00 blue=00f */
 }
-.sugarDetailSum{
-  border-top: 1px solid #fff;            /* darkslategray */
-}
+.sugarDetailSum{}
+
 .sugarSummary{
-  background: rgba(119,136,153, 0.23);   /*lightsteelblue; too ble=228, 241, 254 */
+  background: rgba(128, 128, 128, 0.2);   /*lightsteelblue; too ble=228, 241, 254 */
 }
 .sugarDetail{
-  background: #fff;    /* #7eAbCd*/
+  /* background: #fff;    /* #7eAbCd*/
 }
 
 .sugarTitle{
+  font-size: 110%;
+  font-weight: bolder;
+}
+.dishPartLabel{
   font-size: 100%;
-  font-weight: bold;
+  font-weight: bold;  
 }
 .evenSugar{ 
-  background: rgba(119,136,153, 0.4);  /*228, 241, 254, */
-  border-top: 1px #666;
+  background: rgba(128, 128, 128, 0.4);  /*228, 241, 254, */
+  border-top: 1px solid #444;
 }
 .oddSugar{
-  border-top: 1px #666;
-  background: rgba(119,136,153, 0.6);  /*LtSteelBlue=b0cedE=176, 196, 180 */
+  border-top: 1px solid #666;
+  background: rgba(128, 128, 128, 0.7);  /*LtSteelBlue=b0cedE=176, 196, 180 */
 }  /*#89a9d9;*/
 
+#notMedSection{
+  background: rgba(255,102,153, 1);
+}
+#nanMedSection{
+  background: rgba(255,178,102, 1);
+}
+#andMedSection{
+  background: rgba(255,255,102, 1);
+}
+#ornMedSection{
+  background: rgba(102,255,102, 1);
+}
+
+#notSection{
+  background: rgba(255,153,178, 1);
+}
+#nanSection{
+  background: rgba(255,204,153, 1);
+}
+#andSection{
+  background: rgba(255,255,153, 1);
+}
+#ornSection{
+  background: rgba(153,255,153, 1);
+}
+#oroSection{
+  background: rgba(153,255,153, 1);
+}
+#antSection{
+  background: rgba(153,255,153, 1);
+}
+#norSection{
+  background: rgba(153,255,153, 1);
+}
+#xorSection{
+  background: rgba(153,255,153, 1);
+}
+#equSection{
+  background: rgba(153,255,153, 1);
+}
+
+#notPaleSection{
+  background: rgba(255, 205,204, 1);
+}
+#nanPaleSection{
+  background: rgba(255,229,204, 1);
+}
+#andPaleSection{
+  background: rgba(255,255,204, 1);
+}
+#ornPaleSection{
+  background: rgba(204,255,204, 1);
+}
 /*********************************************************************** End Sugar Accordion using details and select */
   
   
