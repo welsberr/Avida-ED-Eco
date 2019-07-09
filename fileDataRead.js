@@ -535,8 +535,9 @@ av.frd.resourceLineParse = function(lnArray){
     //var re_num = '^\d{1,9}$';
     //var matchNum = envobj.name[ndx].match(re_num);
     //console.log('envobj.name[ndx]=', envobj.name[ndx],'; matchNum=', matchNum);
+    
     var matchNum = av.fzr.env.regionNum.indexOf( envobj.name[ndx].substring(3).toString() );
-    console.log('av.fzr.env.regionNum=', av.fzr.env.regionNum,'; envobj.name[ndx].substring(3)=',envobj.name[ndx].substring(3),'; matchNum=', matchNum);
+    //console.log('av.fzr.env.regionNum=', av.fzr.env.regionNum,'; envobj.name[ndx].substring(3)=',envobj.name[ndx].substring(3),'; matchNum=', matchNum);
     //console.log('matchNum=', matchNum);
     if (-1 < matchNum) {
       //console.log('matchNum=', matchNum, '; av.fzr.env.region[matchNum]' = av.fzr.env.region[matchNum]);
@@ -547,22 +548,22 @@ av.frd.resourceLineParse = function(lnArray){
     }
     else {
       codes = envobj.name[ndx].split('_');  //task_region_type_side  with side optional
-      console.log('codes=', codes);
+      //console.log('codes=', codes);
       envobj.region[ndx] = codes[1];
       envobj.type[ndx] = codes[2];
       envobj.side[ndx] = codes[3];
       matchNum = av.fzr.env.region.indexOf(codes[1]);
     };
-    console.log('matchNum=', matchNum, '; region=', envobj.region[ndx]);
+    //console.log('matchNum=', matchNum, '; region=', envobj.region[ndx]);
       //now assign an index to the region list. 
     envobj.regionList[matchNum] = ndx;
 
-    console.log('matchNum=', matchNum,'; logtype=', logtype,'ndx=',ndx,'av.fzr.env.rsrce['+logtype+'].regionList=', av.fzr.env.rsrce[logtype].regionList);
+    //console.log('matchNum=', matchNum,'; logtype=', logtype,'ndx=',ndx,'av.fzr.env.rsrce['+logtype+'].regionList=', av.fzr.env.rsrce[logtype].regionList);
   }  
   // valid logic name not found;
   else {lineErrors = 'resource,'+pairArray[0].substring(0,3)+' not found in av.ptd.logicNames';}
   
-  //console.log('lineErrors=', lineErrors);
+  //co/nsole.log('lineErrors=', lineErrors);
   return lineErrors;
 };
 
@@ -632,7 +633,7 @@ av.frd.environmentParse = function (filestr) {
     }  //end of processing lines longer than 3 characters
     ii++;
   } // while that goes through lines in file. 
-  console.log('----------------------------------------------------------------------------------------------------');
+  //console.log('----------------------------------------------------------------------------------------------------');
   console.log('av.fzr.env=', av.fzr.env);
   return errors;
 };
@@ -711,7 +712,7 @@ av.frd.avidaCFG2form = function (fileStr){
 //---------------------------------------------------------------------------------------------- av.frd.avidaTestform --
 av.frd.avidaTestform = function (fileStr){
   'use strict';
-  console.log('in av.frd.avidaTestform');
+  //console.log('in av.frd.avidaTestform');
   var dict = av.frd.avidaCFGparse(fileStr);
   document.getElementById('sizeColTest').value = dict.WORLD_X;
   //av.grd.gridWasCols = dict.WORLD_X;

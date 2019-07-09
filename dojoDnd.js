@@ -165,15 +165,15 @@ av.dnd.lndTestConfig = function (move) {
     av.dnd.testConfig.insertNodes(false, [item]);
   });
   var domid = Object.keys(av.dnd.testConfig.map)[0];
-  console.log('ldn.testConfig: type=', move.target.map[domid].type[0] );
+  //console.log('ldn.testConfig: type=', move.target.map[domid].type[0] );
   // The type assignment and .sync were done here in the past. I'm going to try moving this to just before clearing the ancestor box. 
     //move.target.map[domid].type[0] = 'b';
   av.dnd.testConfig.sync();
-  console.log('data', move.target.map[domid].data, move.target.map[domid]);
+  //console.log('data', move.target.map[domid].data, move.target.map[domid]);
 
   av.fzr.actConfig.actDomid = domid;
   av.fzr.actConfig.name = document.getElementById(domid).textContent;
-  console.log('New Config:', av.fzr.actConfig.name);
+  //console.log('New Config:', av.fzr.actConfig.name);
   av.fzr.actConfig.fzDomid = Object.keys(move.source.selection)[0];
   av.fzr.actConfig.dir = av.fzr.dir[av.fzr.actConfig.fzDomid];
   delete av.fzr.actConfig.file['instset.cfg'];

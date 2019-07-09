@@ -201,55 +201,63 @@ av.grd.setMapData = function () {
         av.grd.fillmax = av.grd.mxRnot;
         av.grd.fillmin = av.grd.msg.rnot.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
-        av.grd.cmap = av.color.redCmap;
+        av.grd.cmap = av.color.redvMap;
         break;
       case 'rnan':
         av.grd.fill = av.grd.msg.rnan.data;
         av.grd.fillmax = av.grd.mxRnan;
         av.grd.fillmin = av.grd.msg.rnan.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
+        av.grd.cmap = av.color.orngMap;
         break;
       case 'rand':
         av.grd.fill = av.grd.msg.rand.data;
         av.grd.fillmax = av.grd.mxRand;
         av.grd.fillmin = av.grd.msg.rand.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
+        av.grd.cmap = av.color.yllwMap;
         break;
       case 'rorn':
         av.grd.fill = av.grd.msg.rorn.data;
         av.grd.fillmax = av.grd.mxRorn;
         av.grd.fillmin = av.grd.msg.rorn.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
+        av.grd.cmap = av.color.grenMap;
         break;
       case 'roro':
         av.grd.fill = av.grd.msg.roro.data;
         av.grd.fillmax = av.grd.mxRoro;
         av.grd.fillmin = av.grd.msg.roro.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
+        av.grd.cmap = av.color.cyanMap;
         break;
       case 'rant':
         av.grd.fill = av.grd.msg.rant.data;
         av.grd.fillmax = av.grd.mxRant;
         av.grd.fillmin = av.grd.msg.rant.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
+        av.grd.cmap = av.color.cornMap;
         break;
       case 'rnor':
         av.grd.fill = av.grd.msg.rnor.data;
         av.grd.fillmax = av.grd.mxRnor;
         av.grd.fillmin = av.grd.msg.rnor.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
+        av.grd.cmap = av.color.blueMap;
         break;
       case 'rxor':
         av.grd.fill = av.grd.msg.rxor.data;
         av.grd.fillmax = av.grd.mxRxor;
         av.grd.fillmin = av.grd.msg.rxor.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
+        av.grd.cmap = av.color.purpMap;
         break;
       case 'requ':
         av.grd.fill = av.grd.msg.requ.data;
         av.grd.fillmax = av.grd.mxRequ;
         av.grd.fillmin = av.grd.msg.requ.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
+        av.grd.cmap = av.color.mgntMap;
         break;
       case 'Ancestor Organism':
         av.grd.fill = av.grd.msg.ancestor.data;
@@ -337,7 +345,7 @@ av.grd.drawKids = function () {  //Draw the children of parents
         }
         else if (0 > av.grd.fill[ii]) {
           //console.log('fill[', ii, '] = ', av.grd.fill[ii], '; type=',document.getElementById("colorMode").value,'; fill out of bounds');
-          console.log('fill out of bounds');
+          //console.log('fill out of bounds');
           av.grd.fill[ii] = 0;
           av.grd.cntx.fillStyle = av.utl.get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax);
           
@@ -680,12 +688,15 @@ av.grd.gradientScale = function () {
   'use strict';
   if (av.debug.uil) console.log('w:',av.dom.scaleCanvas.width, av.dom.scaleCanvas.height, '= scaleCanvas Wd Ht; start gradientScale ');
   if (av.debug.uil) console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset; start gradientScale');
+  
+  //finding the dimensions needed for the legend. 
   av.dom.scaleCanvas.height = 30;
   av.grd.sCtx.fillStyle = av.color.names["ltGrey"];
   av.grd.sCtx.fillRect(0, 0, av.dom.scaleCanvas.width, av.dom.scaleCanvas.height);
   var xStart = 15;
   var xEnd = av.dom.scaleCanvas.width - 2.5 * xStart;
   var gradWidth = xEnd - xStart;
+  //Set up gradient size
   var grad = av.grd.sCtx.createLinearGradient(xStart + 2, 0, xEnd - 2, 0);
   var legendHt = 15;
         
@@ -704,6 +715,7 @@ av.grd.gradientScale = function () {
   };
   */
   var lngth = av.grd.cmap.length;
+  //An html gradient can have as many colorstops as one wants. I did on for every point in the color map. 
   for (var ii = 0; ii < lngth; ii++) {
     grad.addColorStop(ii / (av.grd.cmap.length - 1), av.grd.cmap[ii]);
   }

@@ -2256,7 +2256,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   av.ptd.popSizeFnTest = function(from) {
     av.grd.setupCols = Number(av.dom.sizeColTest.value);
     av.grd.setupRows = Number(av.dom.sizeRowTest.value);
-    console.log(from, 'called av.ptd.popSizeFnTest: new col, row', av.grd.setupCols, av.grd.setupRows);
+    //console.log(from, 'called av.ptd.popSizeFnTest: new col, row', av.grd.setupCols, av.grd.setupRows);
     //console.log('av.grd.setupCols, Rows', av.grd.setupCols, av.grd.setupRows);
     av.dom.sizeCellTest.innerHTML = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
     //av.dom.sizeCells.text = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
@@ -2375,12 +2375,12 @@ av.ptd.randInputChange = function(value, randErroTest) {
     av.ui.ex1envRegion = document.getElementById('ex1envRegion').value;
     av.ui.ex1envTask = document.getElementById('ex1envTask').value;
     av.ui.ex1envDistribute = document.getElementById('ex1envDistribute').value;
-    console.log('in av.ui.ex1envBoxSwap; showbox = ', showbox);
+    //console.log('in av.ui.ex1envBoxSwap; showbox = ', showbox);
   };
 
   document.getElementById('ex1envDistribute').onchange = function() {
     av.ui.envDistribute = document.getElementById('ex1envDistribute').value;
-    console.log ('in ex1envDistribute =', av.ui.ex1envDistribute);
+    //console.log ('in ex1envDistribute =', av.ui.ex1envDistribute);
     switch (document.getElementById('ex1envDistribute').value) {
       case 'Finite':
         av.ui.ex1envBoxSwap('ex1envFinite'); 
@@ -2413,12 +2413,12 @@ av.ui.ex2envBoxSwap = function (showbox) {
     av.ui.ex2envRegion = document.getElementById('ex2envRegion').value;
     av.ui.ex2envTask = document.getElementById('ex2envTask').value;
     av.ui.ex2envDistribute = document.getElementById('ex2envDistribute').value;
-    console.log('in av.ui.ex2envBoxSwap; showbox = ', showbox);
+    //console.log('in av.ui.ex2envBoxSwap; showbox = ', showbox);
   };
 
   document.getElementById('ex2envDistribute').onchange = function() {
     av.ui.envDistribute = document.getElementById('ex2envDistribute').value;
-    console.log ('in ex2envDistribute =', av.ui.ex2envDistribute);
+    //console.log ('in ex2envDistribute =', av.ui.ex2envDistribute);
     switch (document.getElementById('ex2envDistribute').value) {
       case 'Finite':
         av.ui.ex2envBoxSwap('ex2envFinite'); 
@@ -3530,6 +3530,15 @@ To make a gif using screen capture
      http://osxdaily.com/2013/08/23/record-screen-animated-gif-mac-os-x/
  A web application reverses a GIF.
     http://gifmaker.me/reverser/
+ */
+
+/* Border order   
+ *  
+ *  border-color: red;  //all four borders are the same color taht is red
+ *  border-color: red blue;  //Top and bottom borders = red; left and right = blue
+ *  border-color: red blue green; //Top=red  left &  right = blue;   bottom = green
+ *  border-color: red blue green yellow //top=red;  right=blue;   bottom=green   left=yellow
+ * 
  */
 
 /* dom box model and size info   

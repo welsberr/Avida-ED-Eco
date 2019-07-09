@@ -58,9 +58,10 @@ av.utl.linmap = function(dx, d1, d2, r1, r2){
   var dscale = (doffs + 0.0) / ddiff;
 
   var rx = dscale * rdiff + r1;
-
+  
   return rx;
 };
+//when applying to excel dx = mod column; ddif is the divisor to get the mode; r1, r1 are numbers above and below. 
 
 /* ----------------------------------------
  get_color

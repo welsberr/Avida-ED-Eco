@@ -409,11 +409,13 @@ av.color.orgColorCodes = {};
     av.color.orgColorCodes['outline'] = '#666666'; //grey
     av.color.orgColorCodes['0'] = '#BBBBFF'; //lt blue
     av.color.orgColorCodes['1'] = '#F5FF00'; //color Meter yellow
+    
 av.color.headCodes = {};
     av.color.headCodes['READ'] = 'R';
     av.color.headCodes['WRITE'] = 'W';
     av.color.headCodes['FLOW'] = 'F';
     av.color.headCodes['IP'] = 'I';
+    
 av.color.InstDescribe = {};
     av.color.InstDescribe['a']='nop-A is a no-operation instruction, and will not do anything when executed. It can, however, modify the behavior of the instruction preceding it (by changing the CPU component that it affects; see also nop-register notation and nop-head notation) or act as part of a template to denote positions in the genome.';
     av.color.InstDescribe['b']='nop-B is a no-operation instruction, and will not do anything when executed. It can, however, modify the behavior of the instruction preceding it (by changing the CPU component that it affects; see also nop-register notation and nop-head notation) or act as part of a template to denote positions in the genome.';
