@@ -597,9 +597,9 @@
                               </select>&nbsp;
                               <select  id='notGlobRsrcType'>
                                 <option value='None'>(N)one</option>
-                                <option value='Infinite' selected='selected'>(I)nfinite</option>
-                                <option value='Finite'>(F)inite</option>
-                                <option value='Equilibrium'>(E)quilibrium</option>
+                                <option value='Infinite' selected='selected'>Infinite</option>
+                                <option value='Finite'>Finite</option>
+                                <option value='Equilibrium'>Equilibrium</option>
                               </select>                        
                             </summary>
                             <div id='notDetails' class='sugarDetail'>
@@ -623,10 +623,10 @@
                               <div id='nanPart1' class='oddSugar'>
                                 <label id='nan1Detail' class='dishPartLabel'>Entire Dish</label>
                                 <select  id='envDistribute'>
-                                  <option value='Finite'>(F)inite</option>
-                                  <option value='Equilibrium' selected='selected'>(E)quilibrium</option>
-                                  <option value='Source/Sink'>(S)ource/Sink</option>
-                                  <option value='Gradient'>(G)radient</option>
+                                  <option value='Finite'>Finite</option>
+                                  <option value='Equilibrium' selected='selected'>Equilibrium</option>
+                                  <option value='Source/Sink'>Source/Sink</option>
+                                  <option value='Gradient'>Gradient</option>
                                 </select>
                                 <span class='periodCheckbox' id='nan1periodHold'>
                                   <input type='checkbox' id='nan1periodCheck' checked>Periodic&nbsp;
@@ -661,10 +661,10 @@
                               <div id='nanPart1' class='oddSugar'>
                                 <label id='and1Detail' class='dishPartLabel'>Upper Left</label>
                                 <select  id='envDistribute'>
-                                  <option value='Finite'>(F)inite</option>
-                                  <option value='Equilibrium' selected='selected'>(E)quilibrium</option>
-                                  <option value='Source/Sink'>(S)ource/Sink</option>
-                                  <option value='Gradient'>(G)radient</option>
+                                  <option value='Finite'>Finite</option>
+                                  <option value='Equilibrium' selected='selected'>Equilibrium</option>
+                                  <option value='Source/Sink'>Source/Sink</option>
+                                  <option value='Gradient'>Gradient</option>
                                 </select>
                                 <span class='periodCheckbox' id='and1periodHold'>
                                   <input type='checkbox' id='and1periodCheck' checked>Periodic&nbsp;
@@ -682,10 +682,10 @@
                               <div id='nanPart2' class='evenSugar'>
                                 <label id='and2Detail' class='dishPartLabel'>Upper Right</label>
                                 <select  id='envDistribute'>
-                                  <option value='Finite'>(F)inite</option>
-                                  <option value='Equilibrium'>(E)quilibrium</option>
-                                  <option value='Source/Sink' selected='selected'>(S)ource/Sink</option>
-                                  <option value='Gradient'>(G)radient</option>
+                                  <option value='Finite'>Finite</option>
+                                  <option value='Equilibrium'>Equilibrium</option>
+                                  <option value='Source/Sink' selected='selected'>Source/Sink</option>
+                                  <option value='Gradient'>Gradient</option>
                                 </select>
                                 <span class='periodCheckbox' id='and1periodHold'>
                                   <input type='checkbox' id='and1periodCheck'>Periodic&nbsp;
@@ -693,11 +693,11 @@
                                 <br>
                                 <select  id='and2SsSide'>
                                   <option value='left' selected='selected'>(L)eft</option>
-                                  <option value='right'>(R)ight</option>
-                                  <option value='top'>(T)op</option>
-                                  <option value='bottom'>(B)ottom</option>
-                                  <option value='center'>(C)enter</option>
-                                  <option value='edge'>(E)dge</option>
+                                  <option value='right'>Right</option>
+                                  <option value='top'>Top</option>
+                                  <option value='bottom'>Bottom</option>
+                                  <option value='center'>Center</option>
+                                  <option value='edge'>Edge</option>
                                 </select>&nbsp;Source Side&nbsp;&nbsp;&nbsp;
                                 <input id='and2SsInflow' type='text' style='width: 2.5em; height:1.6em' value = '1'/> Inflow per cell&nbsp;&nbsp;&nbsp;
                                 <input id='and2EqOutflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 2.5em; height:1.6em' value = '0.1'/>
@@ -706,10 +706,10 @@
                               <div id='nanPart3' class='oddSugar'>
                                 <label id='and3Detail' class='dishPartLabel'>Lower Left</label>
                                 <select  id='envDistribute'>
-                                  <option value='Finite' selected='selected'>(F)inite</option>
-                                  <option value='Equilibrium'>(E)quilibrium</option>
-                                  <option value='Source/Sink'>(S)ource/Sink</option>
-                                  <option value='Gradient'>(G)radient</option>
+                                  <option value='Finite' selected='selected'>Finite</option>
+                                  <option value='Equilibrium'>Equilibrium</option>
+                                  <option value='Source/Sink'>Source/Sink</option>
+                                  <option value='Gradient'>Gradient</option>
                                 </select>
                                 <span class='periodCheckbox' id='and1periodHold'>
                                   <input type='checkbox' id='and3diffuse' checked>Diffusion&nbsp;
@@ -722,18 +722,18 @@
                               <div id='nanPart4' class='evenSugar'>
                                 <label id='and4Detail' class='dishPartLabel'>Lower Right</label>
                                 <select  id='envDistribute'>
-                                  <option value='Finite'>(F)inite</option>
-                                  <option value='Equilibrium' selected='selected'>(E)quilibrium</option>
-                                  <option value='Source/Sink'>(S)ource/Sink</option>
-                                  <option value='Gradient' selected='selected'>(G)radient</option>
+                                  <option value='Finite'>Finite</option>
+                                  <option value='Equilibrium' selected='selected'>Equilibrium</option>
+                                  <option value='Source/Sink'>Source/Sink</option>
+                                  <option value='Gradient' selected='selected'>Gradient</option>
                                 </select>
                                 <select  id='envGrSide'>
                                   <option value='left' selected='selected'>(L)eft</option>
-                                  <option value='right'>(R)ight</option>
-                                  <option value='top'>(T)op</option>
-                                  <option value='bottom'>(B)ottom</option>
-                                  <option value='center'>(C)enter</option>
-                                  <option value='edge'>(E)dge</option>
+                                  <option value='right'>Right</option>
+                                  <option value='top'>Top</option>
+                                  <option value='bottom'>Bottom</option>
+                                  <option value='center'>Center</option>
+                                  <option value='edge'>Edge</option>
                                 </select>
                                 &nbsp;Side with higher amount<br>
                                 Initial amount per cell:
@@ -754,9 +754,9 @@
                               </select>&nbsp;
                               <select  id='oroGlobRsrcType'>
                                 <option value='None'>(N)one</option>
-                                <option value='Infinite' selected='selected'>(I)nfinite</option>
-                                <option value='Finite'>(F)inite</option>
-                                <option value='Equilibrium'>(E)quilibrium</option>
+                                <option value='Infinite' selected='selected'>Infinite</option>
+                                <option value='Finite'>Finite</option>
+                                <option value='Equilibrium'>Equilibrium</option>
                               </select>                        
                             </summary>
                             <div id='ornDetails' class='sugarDetail'>
@@ -780,10 +780,10 @@
                               <div id='oroPart1' class='oddSugar'>
                                 <label id='oro1Detail' class='dishPartLabel'>Top</label>
                                 <select  id='oro1Distribute'>
-                                  <option value='Finite'>(F)inite</option>
-                                  <option value='Equilibrium' selected='selected'>(E)quilibrium</option>
-                                  <option value='Source/Sink'>(S)ource/Sink</option>
-                                  <option value='Gradient'>(G)radient</option>
+                                  <option value='Finite'>Finite</option>
+                                  <option value='Equilibrium' selected='selected'>Equilibrium</option>
+                                  <option value='Source/Sink'>Source/Sink</option>
+                                  <option value='Gradient'>Gradient</option>
                                 </select>
                                 <span class='periodCheckbox' id='oro1periodHold'>
                                   <input type='checkbox' id='and1periodCheck'>Periodic&nbsp;
@@ -795,13 +795,13 @@
                                 &nbsp;Outflow fraction&nbsp;&nbsp;&nbsp;
                                 <label id='and1Equal'>20</label> = equilibrium
                               </div>
-                              <div id='oroPart2' class='oddSugar'>
+                              <div id='oroPart2' class='evenSugar'>
                                 <label id='oro2Detail' class='dishPartLabel'>Bottom</label>
                                 <select  id='oro2Distribute'>
-                                  <option value='Finite'>(F)inite</option>
-                                  <option value='Equilibrium' selected='selected'>(E)quilibrium</option>
-                                  <option value='Source/Sink'>(S)ource/Sink</option>
-                                  <option value='Gradient'>(G)radient</option>
+                                  <option value='Finite'>Finite</option>
+                                  <option value='Equilibrium' selected='selected'>Equilibrium</option>
+                                  <option value='Source/Sink'>Source/Sink</option>
+                                  <option value='Gradient'>Gradient</option>
                                 </select>
                                 <span class='periodCheckbox' id='and1periodHold'>
                                   <input type='checkbox' id='and1periodCheck'>Periodic&nbsp;
@@ -824,9 +824,9 @@
                               </select>&nbsp;
                               <select  id='antGlobRsrcType'>
                                 <option value='None'>(N)one</option>
-                                <option value='Infinite' selected='selected'>(I)nfinite</option>
-                                <option value='Finite'>(F)inite</option>
-                                <option value='Equilibrium'>(E)quilibrium</option>
+                                <option value='Infinite' selected='selected'>Infinite</option>
+                                <option value='Finite'>Finite</option>
+                                <option value='Equilibrium'>Equilibrium</option>
                               </select>                        
                             </summary>
                             <div id='antDetails' class='sugarDetail'>
@@ -841,9 +841,9 @@
                               </select>&nbsp;
                               <select  id='NorGlobRsrcType'>
                                 <option value='None'>(N)one</option>
-                                <option value='Infinite' selected='selected'>(I)nfinite</option>
-                                <option value='Finite'>(F)inite</option>
-                                <option value='Equilibrium'>(E)quilibrium</option>
+                                <option value='Infinite' selected='selected'>Infinite</option>
+                                <option value='Finite'>Finite</option>
+                                <option value='Equilibrium'>Equilibrium</option>
                               </select>                        
                             </summary>
                             <div id='norDetails' class='sugarDetail'>
@@ -858,9 +858,9 @@
                               </select>&nbsp;
                               <select  id='xorGlobRsrcType'>
                                 <option value='None'>(N)one</option>
-                                <option value='Infinite'>(I)nfinite</option>
-                                <option value='Finite' selected='selected'>(F)inite</option>
-                                <option value='Equilibrium'>(E)quilibrium</option>
+                                <option value='Infinite'>Infinite</option>
+                                <option value='Finite' selected='selected'>Finite</option>
+                                <option value='Equilibrium'>Equilibrium</option>
                               </select>
                               <span>
                                 <input id='xorGlInital' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4em; height:1.8em' value = '500'/> 
@@ -879,8 +879,8 @@
                               </select>&nbsp;
                               <select  id='equGlobRsrcType'>
                                 <option value='None'  selected='selected'>(N)one</option>
-                                <option value='Infinite'>(I)nfinite</option>
-                                <option value='Finite'>(F)inite</option>
+                                <option value='Infinite'>Infinite</option>
+                                <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>(E)quilibrium</option>
                               </select>                        
                             </summary>
@@ -1113,7 +1113,7 @@
                               <option value='None' selected='selected'>(N)one</option>
                               <option value='Infinite'>(I)nfinite</option>
                               <option value='Finite'>(F)inite</option>
-                              <option value='Equilibrium'>(E)quilibrium</option>
+                              <option value='Equilibrium'>Equilibrium</option>
                               <option value='Source/Sink'>(S)orce/Sink</option>
                               <option value='Gradient'>(G)radient</option>
                             </select><br />
