@@ -471,16 +471,25 @@
 /*************************************************************************** Sugar Accordion using details and select */
 /* grid-container, grid-item and hidden sections also defined here */
 
+/*
+details > summary:first-of-type {
+    list-style-type: none;
+}
+*/
+details > summary:first-of-type#notSection{
+  list-style-type: none;
+}
+
 #sugarAccordion{
   width: 100%;
   background: #fff;          /*cyan=0ff; yellow=ff0 magenta=f0f brightGreen=0f0 red=f00 blue=00f */
 }
 .sugarDetailSum{
-  border-bottom: 1px solid #333;   /* #000 is black  */
+  border-bottom: 1px solid #222;   /* #000 is black  */
 }
 
 .sugarSummary{
-  background: rgba(128, 128, 128, 0.2);   
+  background: rgba(128, 128, 128, 0.1);   
 }
 .sugarDetail{
   /* background: #fff;    /* #7eAbCd*/
@@ -495,12 +504,12 @@
   font-weight: bold;  
 }
 .oddSugar{
-  border-top: 1px solid #666;
-  background: rgba(128, 128, 128, 0.1);  /*LtSteelBlue=b0cedE=176, 196, 180 */
+  border-top: 1px solid #888;
+  background: rgba(128, 128, 128, 0.2);  /*LtSteelBlue=b0cedE=176, 196, 180 */
 }  /*#89a9d9;*/
 .evenSugar{ 
   background: rgba(128, 128, 128, 0.4);  /*228, 241, 254, */
-  border-top: 1px solid #666    ;
+  border-top: 1px solid #888;
 }
 
 #notSection{
@@ -532,7 +541,82 @@
 }
 
 /*********************************************************************** End Sugar Accordion using details and select */
-  
+
+/********************************************************************************* End Custom Select/Options DropDown */
+/* Custon Select/Options to make grey drop down */
+
+/* -------------------- Select Box Styles: bavotasan.com Method (with special adaptations by ericrasch.com) */
+/* -------------------- Source: http://bavotasan.com/2011/style-select-box-using-only-css/ */
+.styled-select {
+   background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+   height: 29px;
+   overflow: hidden;
+   width: 240px;
+}
+
+.styled-select select {
+   background: transparent;
+   border: none;
+   font-size: 14px;
+   height: 29px;
+   padding: 5px; /* If you add too much padding here, the options won't show in IE */
+   width: 268px;
+}
+
+.styled-select.slate {
+   background: url(http://i62.tinypic.com/2e3ybe1.jpg) no-repeat right center;
+   height: 34px;
+   width: 240px;
+}
+
+.styled-select.slate select {
+   border: 1px solid #ccc;
+   font-size: 16px;
+   height: 34px;
+   width: 268px;
+}
+
+/* -------------------- Rounded Corners */
+.rounded {
+   -webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+   border-radius: 20px;
+}
+
+.semi-square {
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+}
+
+.semi-round {
+   -webkit-border-radius: 10px;
+   -moz-border-radius: 10px;
+   border-radius: 10px;
+}
+
+/* -------------------- Colors: Background */
+.slate   { background-color: #ddd; }
+.green   { background-color: #779126; }
+.blue    { background-color: #3b8ec2; }
+.yellow  { background-color: #fff; }
+.black   { background-color: #000; }
+
+/* -------------------- Colors: Text */
+.slate select   { color: #000; }
+.green select   { color: #fff; }
+.blue select    { color: #fff; }
+.yellow select  { color: #000; }
+.black select   { color: #fff; }
+
+
+/* -------------------- Select Box Styles: danielneumann.com Method */
+/* -------------------- Source: http://danielneumann.com/blog/how-to-style-dropdown-with-css-only/ */
+
+/* -------------------- Select Box Styles: stackoverflow.com Method */
+/* -------------------- Source: http://stackoverflow.com/a/5809186 */
+
+/********************************************************************************* End Custom Select/Options DropDown */
   
 .mainPageButtons{
   border: 1px solid #AAA;

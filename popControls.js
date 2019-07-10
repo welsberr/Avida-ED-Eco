@@ -618,7 +618,7 @@ av.ptd.allSugarChange = function (allmode) {
     //document.getElementById('ornGlobRsrcType').value = onoff;
     document.getElementById('oroGlobRsrcType').value = onoff;
     document.getElementById('antGlobRsrcType').value = onoff;
-    document.getElementById('norGlobRsrcType').value = onoff;
+    //document.getElementById('norGlobRsrcType').value = onoff;
     document.getElementById('xorGlobRsrcType').value = onoff;
     document.getElementById('equGlobRsrcType').value = onoff;
 
