@@ -616,6 +616,43 @@ details > summary:first-of-type#notSection{
 /* -------------------- Select Box Styles: stackoverflow.com Method */
 /* -------------------- Source: http://stackoverflow.com/a/5809186 */
 
+/* From  https://www.proy.info/style-select-dropdown-using-css/ */
+/* body select.select_box option */ 
+
+body select {
+  background: url("https://i.ibb.co/b7xjLrB/selectbox-arrow.png") right center no-repeat;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+}
+body select:hover{
+  cursor: pointer;
+  background-color: white;
+}
+body select:hover::after {
+  background-color:  #0f0;  //can't tell that this does anything'
+}
+
+body select:focus{
+  background-color: white;  //changes background off all the options not the one highlighted
+}
+
+body select:option { 
+    padding: 0 2px; 
+    background-color: #eee;
+} 
+/* for IE and Edge */ 
+select::-ms-expand { 
+    display: none; 
+} 
+select:disabled::-ms-expand { 
+    background: #fff; 
+}
+option[selected]{
+    background:#000;  /*does not seem to work */
+}  
+
 /********************************************************************************* End Custom Select/Options DropDown */
   
 .mainPageButtons{
