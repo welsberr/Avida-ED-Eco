@@ -2326,6 +2326,7 @@ av.ptd.randInputChange = function(value, randErroTest) {
 
 /************************************************************************************ enviornment (sugar) settings ****/
 /*
+
   av.ui.envBoxSwap = function (showbox) {
     console.log('in av.ui.envBoxSwap; showbox = ', showbox);
     av.dom.envNone.style.display = "none";
@@ -2494,6 +2495,7 @@ av.ui.setSugarColors = function() {
     }
   }
 };
+
 
 /******************************************************************************** End enviornment (sugar) settings ****/
 
