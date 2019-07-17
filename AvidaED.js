@@ -2366,7 +2366,7 @@ av.ptd.randInputChange = function(value, randErroTest) {
 */
 
 // delete later
-  av.ui.ex1envBoxSwap = function (showbox) {
+/*  av.ui.ex1envBoxSwap = function (showbox) {
     document.getElementById('ex1envNone').style.display = "none";
     document.getElementById('ex1envFinite').style.display = "none";
     document.getElementById('ex1envEquilibrium').style.display = "none";
@@ -2403,6 +2403,7 @@ av.ptd.randInputChange = function(value, randErroTest) {
     }
     //av.ptd.envobj2form('envRegion.change');
   };
+*/
 
 av.ui.ex2envBoxSwap = function (showbox) {
     document.getElementById('ex2envNone').style.display = "none";
@@ -2468,7 +2469,8 @@ document.getElementById('envRegion').onchange = function() {
   //dijit.byId('allSugarDrop').on('Change', function () {
     var allSugar = document.getElementById('allSugarDrop').value;
     av.ptd.allSugar(allSugar);
-    dijit.byId('allSugarDrop').set('value', 'allNeutral');
+    document.getElementById('allSugarDrop').value = 'allNeutral';
+    //dijit.byId('allSugarDrop').set('value', 'allNeutral');
   };
 
 //------------------------------------------------------------------------------------------------- Sugar Accordion ----
@@ -3425,7 +3427,7 @@ $(function slidemute() {
   console.log('before mainBoxSwap');
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
   //av.ui.envBoxSwap('envNone');  
-  av.ui.ex1envBoxSwap('ex1envNone');    //delete later
+  //av.ui.ex1envBoxSwap('ex1envNone');    //delete later
   av.ui.ex2envBoxSwap('ex2envNone');    //delete later
   av.ui.setSugarColors();   //94
   //av.grd.popChartFn();

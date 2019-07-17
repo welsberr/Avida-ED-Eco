@@ -255,8 +255,9 @@
     width: 100%;
   }
   
+  /*
   #ex1envParam {
-    flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
+    flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */ /*
     border: 1px solid #AAA;    
     background-color: #F5F5F5;
   }
@@ -286,7 +287,7 @@
     width: 100%;
     background-color: #F5F5F5;
   }
-
+*/
   #ex2envParam {
     flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
     border: 1px solid #AAA;    

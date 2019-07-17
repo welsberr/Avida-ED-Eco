@@ -634,7 +634,7 @@ av.ptd.allSugarChange = function (allmode) {
   };
 };
 
-
+//in ex2 page now
 av.ptd.allSugar = function (allmode) {
   var onflag = true;
   if ('allComp' == allmode) {
@@ -655,15 +655,15 @@ av.ptd.allSugar = function (allmode) {
     else if ('alloff' == allmode) {
       onflag = false;
     };
-    dijit.byId('notose').checked = onflag;
-    dijit.byId('nanose').checked = onflag;
-    dijit.byId('andose').checked = onflag;
-    dijit.byId('ornose').checked = onflag;
-    dijit.byId('orose').checked = onflag;
-    dijit.byId('andnose').checked = onflag;
-    dijit.byId('norose').checked = onflag;
-    dijit.byId('xorose').checked = onflag;
-    dijit.byId('equose').checked = onflag;
+    document.getElementById('notose').checked = onflag;
+    document.getElementById('nanose').checked = onflag;
+    document.getElementById('andose').checked = onflag;
+    document.getElementById('ornose').checked = onflag;
+    document.getElementById('orose').checked = onflag;
+    document.getElementById('andnose').checked = onflag;
+    document.getElementById('norose').checked = onflag;
+    document.getElementById('xorose').checked = onflag;
+    document.getElementById('equose').checked = onflag;
   };
 };
 
