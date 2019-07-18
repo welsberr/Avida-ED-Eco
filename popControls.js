@@ -634,6 +634,41 @@ av.ptd.allSugarChange = function (allmode) {
   };
 };
 
+av.ptd.ex1allSugarChange = function (allmode) {
+  var onoff = 'None';
+  var spGl = 'Spatial';
+  console.log('allmode=', allmode);
+  if ( ('allon' == allmode) || ('alloff' == allmode) ) {
+    spGl = 'Global';
+    if ('allon' == allmode) {
+      onoff = 'Infinite';
+    }
+    else if ('alloff' == allmode) {
+      onoff = 'None';
+    };
+    document.getElementById('ex1notGlobRsrcType').value = onoff;
+    //document.getElementById('ex1nanGlobRsrcType').value = onoff;
+    //document.getElementById('ex1andGlobRsrcType').value = onoff;
+    //document.getElementById('ex1ornGlobRsrcType').value = onoff;
+    document.getElementById('ex1oroGlobRsrcType').value = onoff;
+    document.getElementById('ex1antGlobRsrcType').value = onoff;
+    //document.getElementById('ex1norGlobRsrcType').value = onoff;
+    document.getElementById('ex1xorGlobRsrcType').value = onoff;
+    document.getElementById('ex1equGlobRsrcType').value = onoff;
+
+    document.getElementById('ex1notGlobSpat').value = spGl;
+    document.getElementById('ex1nanGlobSpat').value = spGl;
+    document.getElementById('ex1andGlobSpat').value = spGl;
+    document.getElementById('ex1ornGlobSpat').value = spGl;
+    document.getElementById('ex1oroGlobSpat').value = spGl;
+    document.getElementById('ex1antGlobSpat').value = spGl;
+    document.getElementById('ex1norGlobSpat').value = spGl;
+    document.getElementById('ex1xorGlobSpat').value = spGl;
+    document.getElementById('ex1equGlobSpat').value = spGl;
+  };
+};
+
+
 //in ex2 page now
 av.ptd.allSugar = function (allmode) {
   var onflag = true;

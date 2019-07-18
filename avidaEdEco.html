@@ -509,17 +509,17 @@
                       </div> <span comment="end of popStatistics"></span>
                     </div><span comment="end of popStatHolder"></span>
                     <div id="debugResource" class="debug">
-                      <div class="grid-container">
-                        <div class="grid-item">NOT<br /><label id="mxNot"> </label><br /><label id="cellNot"></label></div>
-                        <div class="grid-item">NAN<br /><label id="mxNan"> </label><br /><label id="cellNan"></label></div>
-                        <div class="grid-item">AND<br /><label id="mxAnd"> </label><br /><label id="cellAnd"></label></div>  
-                        <div class="grid-item">ORN<br /><label id="mxOrn"> </label><br /><label id="cellOrn"></label></div>
-                        <div class="grid-item">ORO<br /><label id="mxOro"> </label><br /><label id="cellOro"></label></div>
-                        <div class="grid-item">ANT<br /><label id="mxAnt"> </label><br /><label id="cellAnt"></label></div>  
-                        <div class="grid-item">NOR<br /><label id="mxNor"> </label><br /><label id="cellNor"></label></div>
-                        <div class="grid-item">XOR<br /><label id="mxXor"> </label><br /><label id="cellXor"></label></div>
-                        <div class="grid-item">EQU<br /><label id="mxEqu"> </label><br /><label id="cellEqu"></label></div>  
-                        <div class="grid-item"> = resource<br /> = highest<br /> = cell value</div>  
+                      <div class="grid-currentSugarAmount-container">
+                        <div class="grid-currentSugarAmount-item">NOT<br /><label id="mxNot"> </label><br /><label id="cellNot"></label></div>
+                        <div class="grid-currentSugarAmount-item">NAN<br /><label id="mxNan"> </label><br /><label id="cellNan"></label></div>
+                        <div class="grid-currentSugarAmount-item">AND<br /><label id="mxAnd"> </label><br /><label id="cellAnd"></label></div>  
+                        <div class="grid-currentSugarAmount-item">ORN<br /><label id="mxOrn"> </label><br /><label id="cellOrn"></label></div>
+                        <div class="grid-currentSugarAmount-item">ORO<br /><label id="mxOro"> </label><br /><label id="cellOro"></label></div>
+                        <div class="grid-currentSugarAmount-item">ANT<br /><label id="mxAnt"> </label><br /><label id="cellAnt"></label></div>  
+                        <div class="grid-currentSugarAmount-item">NOR<br /><label id="mxNor"> </label><br /><label id="cellNor"></label></div>
+                        <div class="grid-currentSugarAmount-item">XOR<br /><label id="mxXor"> </label><br /><label id="cellXor"></label></div>
+                        <div class="grid-currentSugarAmount-item">EQU<br /><label id="mxEqu"> </label><br /><label id="cellEqu"></label></div>  
+                        <div class="grid-currentSugarAmount-item"> = resource<br /> = highest<br /> = cell value</div>  
                       </div>
                     </div>
                     <div id="popChrtHolder" data-dojo-type='dijit/layout/ContentPane'>
@@ -578,56 +578,61 @@
                                iconClass='dijitNoIcon' name='child' checked value='random'>
                         <label id='childRandomLabel'>Anywhere, randomly</label>
                       </div>
+                      
                       <div class='odd'>
                         What resources are available in the environment? (strength of energy reward shown in parentheses)
                         <div><select id='allSugarChange'>
-                          <option value='allon'>All Infinite</option>
                           <option value='alloff'>All None</option>
-                          <option value='allSpatial'>Spatial &nbsp;&nbsp;</option>
+                          <option value='allon'>All Infinite</option>
+                          <option value='allFinite'>All Finite</option>
+                          <option value='alloff'>All Equilibrium &nbsp;&nbsp;</option>
+                          <option value='allSpatial'>Spatial</option>
                           <option value='allNeutral' selected='selected'>----</option>
                           </select></div>
                         <br />
                         <div id='sugarAccordion'>
-                          <details class='sugarDetailSum' id='notSection'>
+                          <details class='sugarAccordionSection' id='notSection'>
                             <summary class='sugarSummary'>
-                              <span class='sugarTitle'>Notose</span>&nbsp;
-                              <select  id='notGlobSpat'>
-                                <option value='Global' selected='selected'>Global</option>
-                                <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
-                              </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                              <select  id='notGlobRsrcType'>
-                                <option value='None'>(N)one</option>
-                                <option value='Infinite' selected='selected'>Infinite</option>
-                                <option value='Finite'>Finite</option>
-                                <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
-                              </select>                        
+                              <div id='notSum' class='sugarSummaryDiv'>
+                                <div class='sugarTitle'>Notose</div>&nbsp;
+                                <select  id='notGlobSpat'>
+                                  <option value='Global' selected='selected'>Global</option>
+                                  <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
+                                </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <select  id='not0Type'>
+                                  <option id='not0not0none' value='None'>None</option>
+                                  <option id='not0not0Infinite' value='Infinite' selected='selected'>Infinite</option>
+                                  <option id='not0Finite' value='Finite'>Finite</option>
+                                  <option id='not0Equilibrium' value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
+                                  <option id='not0SourceSink' value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
+                                  <option id='not0Gradient' value='Gradient'>Gradient</option>
+                                  </select>&nbsp;
+                                <div id='not0initialDiv' class='sugInitialDiv'>
+                                  <input class='sugInitialInput' id='not0initialInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>
+                                  &nbsp;Amount of resource per cell
+                                </div>
+                              </div>
                             </summary>
-                            <div id='notDetails' class='sugarDetail'>
+                            <div id='notDetails' class='grid-sugarDetail-container'>
+                              
                             </div>
                           </details>
-                          <details class='sugarDetailSum'  id='nanSection'>
+                          <details class='sugarAccordionSection'  id='nanSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Nanose</span>&nbsp;
                               <select  id='nanGlobSpat'>
                                 <option value='Global'>Global</option>
                                 <option value='Spatial' selected='selected'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
-                              <select  id='notSpatSplit'>
-                                <option value='EntireDish' selected='selected'>Entire Dish</option>
-                                <option value='TopBottom'>Halves Top/Bottom &nbsp;&nbsp;</option>
-                                <option value='LeftRite'>Halves Left/Right&nbsp;&nbsp;&nbsp;</option>
-                                <option value='Quarters'>Quarters</option>
-                              </select>                        
-                            </summary>
-                            <div id='nanDetails' class='sugarDetail'>
-                              <div id='nanPart1' class='oddSugar'>
-                                <label id='nan1Detail' class='dishPartLabel'>Entire Dish</label>
                                 <select  id='envDistribute'>
                                   <option value='Finite'>Finite</option>
                                   <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
                                   <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
                                   <option value='Gradient'>Gradient</option>
                                 </select>&nbsp;
+                            </summary>
+                            <div id='nanDetails' class='grid-sugarDetail-container'>
+                              <div id='nanPart1' class='oddSugar'>
                                 <span class='periodCheckbox' id='nan1periodHold'>
                                   <input type='checkbox' id='nan1periodCheck' checked>Periodic&nbsp;
                                   <span>
@@ -643,29 +648,22 @@
                               </div>
                             </div>
                           </details>
-                          <details class='sugarDetailSum'  id='andSection'>
+                          <details class='sugarAccordionSection'  id='andSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Andose</span>&nbsp;
                               <select  id='andGlobSpat'>
                                 <option value='Global'>Global</option>
                                 <option value='Spatial' selected='selected'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
-                              <select  id='notSpatSplit'>
-                                <option value='EntireDish'>Entire Dish</option>
-                                <option value='TopBottom'>Halves Top/Bottom &nbsp;&nbsp;</option>
-                                <option value='LeftRight'>Halves Left/Right</option>
-                                <option value='Quarters' selected='selected'>Quarters</option>
-                              </select>                        
+                              <select  id='envDistribute'>
+                                <option value='Finite'>Finite</option>
+                                <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
+                                <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
+                                <option value='Gradient'>Gradient</option>
+                              </select>&nbsp;
                             </summary>
-                            <div id='andDetails' class='sugarDetail'>
+                            <div id='andDetails' class='grid-sugarDetail-container'>
                               <div id='nanPart1' class='oddSugar'>
-                                <label id='and1Detail' class='dishPartLabel'>Upper Left</label>
-                                <select  id='envDistribute'>
-                                  <option value='Finite'>Finite</option>
-                                  <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
-                                  <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
-                                  <option value='Gradient'>Gradient</option>
-                                </select>&nbsp;
                                 <span class='periodCheckbox' id='and1periodHold'>
                                   <input type='checkbox' id='and1periodCheck' checked>Periodic&nbsp;
                                   <span>
@@ -679,73 +677,10 @@
                                 &nbsp;Outflow fraction&nbsp;&nbsp;&nbsp;
                                 <label id='and1Equal'>10</label> = equilibrium
                               </div>
-                              <div id='nanPart2' class='evenSugar'>
-                                <label id='and2Detail' class='dishPartLabel'>Upper Right</label>
-                                <select  id='envDistribute'>
-                                  <option value='Finite'>Finite</option>
-                                  <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
-                                  <option value='Source/Sink' selected='selected'>Source/Sink &nbsp;&nbsp;</option>
-                                  <option value='Gradient'>Gradient</option>
-                                </select>&nbsp;
-                                <span class='periodCheckbox' id='and1periodHold'>
-                                  <input type='checkbox' id='and1periodCheck'>Periodic&nbsp;
-                                </span>
-                                <br>
-                                <select  id='and2SsSide'>
-                                  <option value='left' selected='selected'>(L)eft</option>
-                                  <option value='right'>Right</option>
-                                  <option value='top'>Top</option>
-                                  <option value='bottom'>Bottom &nbsp;&nbsp;</option>
-                                  <option value='center'>Center</option>
-                                  <option value='edge'>Edge</option>
-                                </select>&nbsp;Source Side&nbsp;&nbsp;&nbsp;
-                                <input id='and2SsInflow' type='text' style='width: 2.5em; height:1.6em' value = '1'/> Inflow per cell&nbsp;&nbsp;&nbsp;
-                                <input id='and2EqOutflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3em; height:1.6em' value = '0.1'/>
-                                &nbsp;Outflow fraction
-                              </div>
-                              <div id='nanPart3' class='oddSugar'>
-                                <label id='and3Detail' class='dishPartLabel'>Lower Left</label>
-                                <select  id='envDistribute'>
-                                  <option value='Finite' selected='selected'>Finite</option>
-                                  <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
-                                  <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
-                                  <option value='Gradient'>Gradient</option>
-                                </select>&nbsp;
-                                <span class='periodCheckbox' id='and1periodHold'>
-                                  <input type='checkbox' id='and3diffuse' checked>Diffusion&nbsp;
-                                  <span>
-                                    <input id='nonEperiod' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4em; height:1.8em' value = '500'/> 
-                                    initial amount per cell
-                                  </span>
-                                </span>
-                              </div>
-                              <div id='nanPart4' class='evenSugar'>
-                                <label id='and4Detail' class='dishPartLabel'>Lower Right</label>
-                                <select  id='envDistribute'>
-                                  <option value='Finite'>Finite</option>
-                                  <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
-                                  <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
-                                  <option value='Gradient' selected='selected'>Gradient</option>
-                                </select>
-                                <select  id='envGrSide'>
-                                  <option value='left' selected='selected'>(L)eft</option>
-                                  <option value='right'>Right</option>
-                                  <option value='top'>Top</option>
-                                  <option value='bottom'>Bottom &nbsp;&nbsp;</option>
-                                  <option value='center'>Center</option>
-                                  <option value='edge'>Edge</option>
-                                </select>
-                                &nbsp;Side with higher amount<br>
-                                Initial amount per cell:
-                                <input id='envGrHiInitial' type='text' style='width: 2.5em; height:1.6em'/>
-                                 &nbsp;Hi Side &nbsp;&nbsp;
-                                <input id='envGrLoInitial' style='width: 2.5em; height:1.6em'/>
-                                &nbsp;Lo Side
-                              </div>
-
                             </div>
                           </details>
-                          <details class='sugarDetailSum' id='ornSection'>
+                          
+                          <details class='sugarAccordionSection' id='ornSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Ornose</span>&nbsp;
                               <select  id='ornGlobSpat'>
@@ -753,38 +688,32 @@
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='oroGlobRsrcType'>
-                                <option value='None'>(N)one</option>
+                                <option value='None'>None</option>
                                 <option value='Infinite' selected='selected'>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
                               </select>                        
                             </summary>
-                            <div id='ornDetails' class='sugarDetail'>
+                            <div id='ornDetails' class='grid-sugarDetail-container'>
                             </div>
                           </details>
-                          <details class='sugarDetailSum' id='oroSection'>
+                          <details class='sugarAccordionSection' id='oroSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Orose</span>&nbsp;
                               <select  id='oroGlobSpat'>
                                 <option value='Global'>Global</option>
                                 <option value='Spatial' selected='selected'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
-                              <select  id='oroSpatSplit'>
-                                <option value='EntireDish'>Entire Dish</option>
-                                <option value='TopBottom' selected='selected'>Halves Top/Bottom &nbsp;&nbsp;</option>
-                                <option value='LeftRight'>Halves Left/Right</option>
-                                <option value='Quarters'>Quarters</option>
-                              </select>
+                              <select  id='oro1Type'>
+                                <option value='Finite'>Finite</option>
+                                <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
+                                <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
+                                <option value='Gradient'>Gradient</option>
+                              </select>&nbsp;
                             </summary>
-                            <div id='oroDetails' class='sugarDetail'>
+                            <div id='oroDetails' class='grid-sugarDetail-container'>
                               <div id='oroPart1' class='oddSugar'>
                                 <label id='oro1Detail' class='dishPartLabel'>Top</label>
-                                <select  id='oro1Distribute'>
-                                  <option value='Finite'>Finite</option>
-                                  <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
-                                  <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
-                                  <option value='Gradient'>Gradient</option>
-                                </select>&nbsp;
                                 <span class='periodCheckbox' id='oro1periodHold'>
                                   <input type='checkbox' id='and1periodCheck'>Periodic&nbsp;
                                 </span>
@@ -795,27 +724,9 @@
                                 &nbsp;Outflow fraction&nbsp;&nbsp;&nbsp;
                                 <label id='and1Equal'>20</label> = equilibrium
                               </div>
-                              <div id='oroPart2' class='evenSugar'>
-                                <label id='oro2Detail' class='dishPartLabel'>Bottom</label>
-                                <select  id='oro2Distribute'>
-                                  <option value='Finite'>Finite</option>
-                                  <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
-                                  <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
-                                  <option value='Gradient'>Gradient</option>
-                                </select>&nbsp;
-                                <span class='periodCheckbox' id='and1periodHold'>
-                                  <input type='checkbox' id='and1periodCheck'>Periodic&nbsp;
-                                </span>
-                                <br>
-                                <input id='and1EqInflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3em; height:1.6em' value = '0.1'/> 
-                                &nbsp;Inflow per cell&nbsp;&nbsp;&nbsp;
-                                <input id='and1EqOutflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3em; height:1.6em' value = '0.01'/>
-                                &nbsp;Outflow fraction&nbsp;&nbsp;&nbsp;
-                                <label id='and1Equal'>10</label> = equilibrium
-                              </div>
                             </div>
                           </details>
-                          <details class='sugarDetailSum' id='antSection'>
+                          <details class='sugarAccordionSection' id='antSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Antnose</span>&nbsp;
                               <select  id='antGlobSpat'>
@@ -823,16 +734,16 @@
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='antGlobRsrcType'>
-                                <option value='None'>(N)one</option>
+                                <option value='None'>None</option>
                                 <option value='Infinite' selected='selected'>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
                               </select>                        
                             </summary>
-                            <div id='antDetails' class='sugarDetail'>
+                            <div id='antDetails' class='grid-sugarDetail-container'>
                             </div>
                           </details>
-                          <details class='sugarDetailSum' id='norSection'>
+                          <details class='sugarAccordionSection' id='norSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Norose</span>&nbsp;
                               <select  id='norGlobSpat'>
@@ -840,16 +751,16 @@
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='NorGlobRsrcType'>
-                                <option value='None'>(N)one</option>
+                                <option value='None'>None</option>
                                 <option value='Infinite' selected='selected'>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
                               </select>                        
                             </summary>
-                            <div id='norDetails' class='sugarDetail'>
+                            <div id='norDetails' class='grid-sugarDetail-container'>
                             </div>
                           </details>
-                          <details class='sugarDetailSum' id='xorSection'>
+                          <details class='sugarAccordionSection' id='xorSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Xorose</span>&nbsp;
                               <select  id='xorGlobSpat'>
@@ -857,7 +768,7 @@
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='xorGlobRsrcType'>
-                                <option value='None'>(N)one</option>
+                                <option value='None'>None</option>
                                 <option value='Infinite'>Infinite</option>
                                 <option value='Finite' selected='selected'>Finite</option>
                                 <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
@@ -867,10 +778,10 @@
                                 initial amount per cell
                               </span>
                             </summary>
-                            <div id='xorDetails' class='sugarDetail'>
+                            <div id='xorDetails' class='grid-sugarDetail-container'>
                             </div>
                           </details>
-                          <details class='sugarDetailSum' id='equSection'>
+                          <details class='sugarAccordionSection' id='equSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Equose</span>&nbsp;
                               <select  id='equGlobSpat'>
@@ -878,13 +789,13 @@
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='equGlobRsrcType'>
-                                <option value='None'  selected='selected'>(N)one</option>
+                                <option value='None'  selected='selected'>None</option>
                                 <option value='Infinite'>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>(E)quilibrium</option>
                               </select>                        
                             </summary>
-                            <div id='equDetails' class='sugarDetail'>
+                            <div id='equDetails' class='grid-sugarDetail-container'>
                             </div>
                           </details>                
                         </div><span id='sugarAccordionEnd'></span>
@@ -915,8 +826,17 @@
                             </div>  
                           </div>
                         </div><span id='end_showResource'></span>
+                        
+                        
+                        
+                        
+                        
+                        
 
-                      </div> <span tag='end of odd'>
+                      </div> <span tag='end of odd'></span>
+                        
+                        
+                        
                         <div class='even'>
                           <label id='label_31'>Repeatability Mode:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='experimentRadio'
@@ -1076,16 +996,347 @@
                         <label id='ex1childRandomLabel'>Anywhere, randomly</label>
                       </div>
                       
-                      
-                      
-                      
                       <div class='odd'>
+                        What resources are available in the environment? (strength of energy reward shown in parentheses)
+                        <div><select id='ex1allSugarChange'>
+                          <option value='allon'>All Infinite</option>
+                          <option value='alloff'>All None</option>
+                          <option value='allSpatial'>Spatial &nbsp;&nbsp;</option>
+                          <option value='allNeutral' selected='selected'>----</option>
+                          </select></div>
+                        <br />
+                        <div id='ex1sugarAccordion'>
+                          <details class='ex1sugarAccordionSection' id='ex1notSection'>
+                            <summary class='ex1sugarSummary'>
+                              <span class='ex1sugarTitle'>Notose</span>&nbsp;
+                              <select  id='ex1notGlobSpat'>
+                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
+                              </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                              <select  id='ex1notGlobRsrcType'>
+                                <option value='None'>(N)one</option>
+                                <option value='Infinite' selected='selected'>Infinite</option>
+                                <option value='Finite'>Finite</option>
+                                <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
+                              </select>                        
+                            </summary>
+                            <div id='ex1notDetails' class='ex1sugarDetail'>
+                            </div>
+                          </details>
+                          <details class='ex1sugarAccordionSection'  id='ex1nanSection'>
+                            <summary class='ex1sugarSummary'>
+                              <span class='ex1sugarTitle'>Nanose</span>&nbsp;
+                              <select  id='ex1nanGlobSpat'>
+                                <option value='Global'>Global</option>
+                                <option value='Spatial' selected='selected'>Spatial &nbsp;&nbsp;</option>
+                              </select>&nbsp;
+                              <select  id='ex1notSpatSplit'>
+                                <option value='EntireDish' selected='selected'>Entire Dish</option>
+                                <option value='TopBottom'>Halves Top/Bottom &nbsp;&nbsp;</option>
+                                <option value='LeftRite'>Halves Left/Right&nbsp;&nbsp;&nbsp;</option>
+                                <option value='Quarters'>Quarters</option>
+                              </select>                        
+                            </summary>
+                            <div id='ex1nanDetails' class='ex1sugarDetail'>
+                              <div id='ex1nanPart1' class='ex1oddSugarPart'>
+                                <label id='ex1nan1Detail' class='ex1dishPartLabel'>Entire Dish</label>
+                                <select  id='ex1envDistribute'>
+                                  <option value='Finite'>Finite</option>
+                                  <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
+                                  <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
+                                  <option value='Gradient'>Gradient</option>
+                                </select>&nbsp;
+                                <span class='ex1periodCheckbox' id='ex1nan1periodHold'>
+                                  <input type='checkbox' id='ex1nan1periodCheck' checked>Periodic&nbsp;
+                                  <span>
+                                    <input id='ex1nonEperiod' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '1000'/> Period (updates)
+                                  </span>
+                                </span>
+                                <br>
+                                <input id='ex1nan1EqInflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3em; height:1.6em' value = '1'/> 
+                                &nbsp;Inflow per cell&nbsp;&nbsp;&nbsp;
+                                <input id='ex1nan1EqOutflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3em; height:1.6em' value = '0.1'/>
+                                &nbsp;Outflow fraction&nbsp;&nbsp;&nbsp;
+                                <label id='ex1nan1Equal'>10</label> = equilibrium
+                              </div>
+                            </div>
+                          </details>
+                          <details class='ex1sugarAccordionSection'  id='ex1andSection'>
+                            <summary class='ex1sugarSummary'>
+                              <span class='ex1sugarTitle'>Andose</span>&nbsp;
+                              <select  id='ex1andGlobSpat'>
+                                <option value='Global'>Global</option>
+                                <option value='Spatial' selected='selected'>Spatial &nbsp;&nbsp;</option>
+                              </select>&nbsp;
+                              <select  id='ex1notSpatSplit'>
+                                <option value='EntireDish'>Entire Dish</option>
+                                <option value='TopBottom'>Halves Top/Bottom &nbsp;&nbsp;</option>
+                                <option value='LeftRight'>Halves Left/Right</option>
+                                <option value='Quarters' selected='selected'>Quarters</option>
+                              </select>                        
+                            </summary>
+                            <div id='ex1andDetails' class='ex1sugarDetail'>
+                              <div id='ex1nanPart1' class='ex1oddSugarPart'>
+                                <label id='ex1and1Detail' class='ex1dishPartLabel'>Upper Left</label>
+                                <select  id='ex1envDistribute'>
+                                  <option value='Finite'>Finite</option>
+                                  <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
+                                  <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
+                                  <option value='Gradient'>Gradient</option>
+                                </select>&nbsp;
+                                <span class='ex1periodCheckbox' id='ex1and1periodHold'>
+                                  <input type='checkbox' id='ex1and1periodCheck' checked>Periodic&nbsp;
+                                  <span>
+                                    <input id='ex1nan1period' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '1000'/> Period (updates)
+                                  </span>
+                                </span>
+                                <br>
+                                <input id='ex1and1EqInflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3em; height:1.6em' value = '1'/> 
+                                &nbsp;Inflow per cell&nbsp;&nbsp;&nbsp;
+                                <input id='ex1and1EqOutflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3em; height:1.6em' value = '0.1'/>
+                                &nbsp;Outflow fraction&nbsp;&nbsp;&nbsp;
+                                <label id='ex1and1Equal'>10</label> = equilibrium
+                              </div>
+                              <div id='ex1nanPart2' class='ex1evenSugar'>
+                                <label id='ex1and2Detail' class='ex1dishPartLabel'>Upper Right</label>
+                                <select  id='ex1envDistribute'>
+                                  <option value='Finite'>Finite</option>
+                                  <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
+                                  <option value='Source/Sink' selected='selected'>Source/Sink &nbsp;&nbsp;</option>
+                                  <option value='Gradient'>Gradient</option>
+                                </select>&nbsp;
+                                <span class='ex1periodCheckbox' id='ex1and1periodHold'>
+                                  <input type='checkbox' id='ex1and1periodCheck'>Periodic&nbsp;
+                                </span>
+                                <br>
+                                <select  id='ex1and2SsSide'>
+                                  <option value='left' selected='selected'>(L)eft</option>
+                                  <option value='right'>Right</option>
+                                  <option value='top'>Top</option>
+                                  <option value='bottom'>Bottom &nbsp;&nbsp;</option>
+                                  <option value='center'>Center</option>
+                                  <option value='edge'>Edge</option>
+                                </select>&nbsp;Source Side&nbsp;&nbsp;&nbsp;
+                                <input id='ex1and2SsInflow' type='text' style='width: 2.5em; height:1.6em' value = '1'/> Inflow per cell&nbsp;&nbsp;&nbsp;
+                                <input id='ex1and2EqOutflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3em; height:1.6em' value = '0.1'/>
+                                &nbsp;Outflow fraction
+                              </div>
+                              <div id='ex1nanPart3' class='ex1oddSugarPart'>
+                                <label id='ex1and3Detail' class='ex1dishPartLabel'>Lower Left</label>
+                                <select  id='ex1envDistribute'>
+                                  <option value='Finite' selected='selected'>Finite</option>
+                                  <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
+                                  <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
+                                  <option value='Gradient'>Gradient</option>
+                                </select>&nbsp;
+                                <span class='ex1periodCheckbox' id='ex1and1periodHold'>
+                                  <input type='checkbox' id='ex1and3diffuse' checked>Diffusion&nbsp;
+                                  <span>
+                                    <input id='ex1nonEperiod' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4em; height:1.8em' value = '500'/> 
+                                    initial amount per cell
+                                  </span>
+                                </span>
+                              </div>
+                              <div id='ex1nanPart4' class='ex1evenSugar'>
+                                <label id='ex1and4Detail' class='ex1dishPartLabel'>Lower Right</label>
+                                <select  id='ex1envDistribute'>
+                                  <option value='Finite'>Finite</option>
+                                  <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
+                                  <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
+                                  <option value='Gradient' selected='selected'>Gradient</option>
+                                </select>
+                                <select  id='ex1envGrSide'>
+                                  <option value='left' selected='selected'>(L)eft</option>
+                                  <option value='right'>Right</option>
+                                  <option value='top'>Top</option>
+                                  <option value='bottom'>Bottom &nbsp;&nbsp;</option>
+                                  <option value='center'>Center</option>
+                                  <option value='edge'>Edge</option>
+                                </select>
+                                &nbsp;Side with higher amount<br>
+                                Initial amount per cell:
+                                <input id='ex1envGrHiInitial' type='text' style='width: 2.5em; height:1.6em'/>
+                                 &nbsp;Hi Side &nbsp;&nbsp;
+                                <input id='ex1envGrLoInitial' style='width: 2.5em; height:1.6em'/>
+                                &nbsp;Lo Side
+                              </div>
 
+                            </div>
+                          </details>
+                          <details class='ex1sugarAccordionSection' id='ex1ornSection'>
+                            <summary class='ex1sugarSummary'>
+                              <span class='ex1sugarTitle'>Ornose</span>&nbsp;
+                              <select  id='ex1ornGlobSpat'>
+                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
+                              </select>&nbsp;
+                              <select  id='ex1oroGlobRsrcType'>
+                                <option value='None'>(N)one</option>
+                                <option value='Infinite' selected='selected'>Infinite</option>
+                                <option value='Finite'>Finite</option>
+                                <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
+                              </select>                        
+                            </summary>
+                            <div id='ex1ornDetails' class='ex1sugarDetail'>
+                            </div>
+                          </details>
+                          <details class='ex1sugarAccordionSection' id='ex1oroSection'>
+                            <summary class='ex1sugarSummary'>
+                              <span class='ex1sugarTitle'>Orose</span>&nbsp;
+                              <select  id='ex1oroGlobSpat'>
+                                <option value='Global'>Global</option>
+                                <option value='Spatial' selected='selected'>Spatial &nbsp;&nbsp;</option>
+                              </select>&nbsp;
+                              <select  id='ex1oroSpatSplit'>
+                                <option value='EntireDish'>Entire Dish</option>
+                                <option value='TopBottom' selected='selected'>Halves Top/Bottom &nbsp;&nbsp;</option>
+                                <option value='LeftRight'>Halves Left/Right</option>
+                                <option value='Quarters'>Quarters</option>
+                              </select>
+                            </summary>
+                            <div id='ex1oroDetails' class='ex1sugarDetail'>
+                              <div id='ex1oroPart1' class='ex1oddSugarPart'>
+                                <label id='ex1oro1Detail' class='ex1dishPartLabel'>Top</label>
+                                <select  id='ex1oro1Distribute'>
+                                  <option value='Finite'>Finite</option>
+                                  <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
+                                  <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
+                                  <option value='Gradient'>Gradient</option>
+                                </select>&nbsp;
+                                <span class='ex1periodCheckbox' id='ex1oro1periodHold'>
+                                  <input type='checkbox' id='ex1and1periodCheck'>Periodic&nbsp;
+                                </span>
+                                <br>
+                                <input id='ex1and1EqInflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3em; height:1.6em' value = '0.02'/> 
+                                &nbsp;Inflow per cell&nbsp;&nbsp;&nbsp;
+                                <input id='ex1and1EqOutflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3em; height:1.6em' value = '0.001'/>
+                                &nbsp;Outflow fraction&nbsp;&nbsp;&nbsp;
+                                <label id='ex1and1Equal'>20</label> = equilibrium
+                              </div>
+                              <div id='ex1oroPart2' class='ex1evenSugar'>
+                                <label id='ex1oro2Detail' class='ex1dishPartLabel'>Bottom</label>
+                                <select  id='ex1oro2Distribute'>
+                                  <option value='Finite'>Finite</option>
+                                  <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
+                                  <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
+                                  <option value='Gradient'>Gradient</option>
+                                </select>&nbsp;
+                                <span class='ex1periodCheckbox' id='ex1and1periodHold'>
+                                  <input type='checkbox' id='ex1and1periodCheck'>Periodic&nbsp;
+                                </span>
+                                <br>
+                                <input id='ex1and1EqInflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3em; height:1.6em' value = '0.1'/> 
+                                &nbsp;Inflow per cell&nbsp;&nbsp;&nbsp;
+                                <input id='ex1and1EqOutflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3em; height:1.6em' value = '0.01'/>
+                                &nbsp;Outflow fraction&nbsp;&nbsp;&nbsp;
+                                <label id='ex1and1Equal'>10</label> = equilibrium
+                              </div>
+                            </div>
+                          </details>
+                          <details class='ex1sugarAccordionSection' id='ex1antSection'>
+                            <summary class='ex1sugarSummary'>
+                              <span class='ex1sugarTitle'>Antnose</span>&nbsp;
+                              <select  id='ex1antGlobSpat'>
+                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
+                              </select>&nbsp;
+                              <select  id='ex1antGlobRsrcType'>
+                                <option value='None'>(N)one</option>
+                                <option value='Infinite' selected='selected'>Infinite</option>
+                                <option value='Finite'>Finite</option>
+                                <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
+                              </select>                        
+                            </summary>
+                            <div id='ex1antDetails' class='ex1sugarDetail'>
+                            </div>
+                          </details>
+                          <details class='ex1sugarAccordionSection' id='ex1norSection'>
+                            <summary class='ex1sugarSummary'>
+                              <span class='ex1sugarTitle'>Norose</span>&nbsp;
+                              <select  id='ex1norGlobSpat'>
+                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
+                              </select>&nbsp;
+                              <select  id='ex1NorGlobRsrcType'>
+                                <option value='None'>(N)one</option>
+                                <option value='Infinite' selected='selected'>Infinite</option>
+                                <option value='Finite'>Finite</option>
+                                <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
+                              </select>                        
+                            </summary>
+                            <div id='ex1norDetails' class='ex1sugarDetail'>
+                            </div>
+                          </details>
+                          <details class='ex1sugarAccordionSection' id='ex1xorSection'>
+                            <summary class='ex1sugarSummary'>
+                              <span class='ex1sugarTitle'>Xorose</span>&nbsp;
+                              <select  id='ex1xorGlobSpat'>
+                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
+                              </select>&nbsp;
+                              <select  id='ex1xorGlobRsrcType'>
+                                <option value='None'>(N)one</option>
+                                <option value='Infinite'>Infinite</option>
+                                <option value='Finite' selected='selected'>Finite</option>
+                                <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
+                              </select>
+                              <span>
+                                <input id='ex1xorGlInital' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4em; height:1.8em' value = '500'/> 
+                                initial amount per cell
+                              </span>
+                            </summary>
+                            <div id='ex1xorDetails' class='ex1sugarDetail'>
+                            </div>
+                          </details>
+                          <details class='ex1sugarAccordionSection' id='ex1equSection'>
+                            <summary class='ex1sugarSummary'>
+                              <span class='ex1sugarTitle'>Equose</span>&nbsp;
+                              <select  id='ex1equGlobSpat'>
+                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
+                              </select>&nbsp;
+                              <select  id='ex1equGlobRsrcType'>
+                                <option value='None'  selected='selected'>(N)one</option>
+                                <option value='Infinite'>Infinite</option>
+                                <option value='Finite'>Finite</option>
+                                <option value='Equilibrium'>(E)quilibrium</option>
+                              </select>                        
+                            </summary>
+                            <div id='ex1equDetails' class='ex1sugarDetail'>
+                            </div>
+                          </details>                
+                        </div><span id='ex1sugarAccordionEnd'></span>
+
+                        <div id="showResource" class="showR">
+                          <div class="grid-9env-container">
+                            <div class="grid-9env-item">NOT<br /><label id="notType"> </label><br /><label id="notIn"></label><br /><label id="notOut"></label></div>
+                            <div class="grid-9env-item">NAN<br /><label id="nanType"> </label><br /><label id="nanIn"></label><br /><label id="nanOut"></label></div>
+                            <div class="grid-9env-item">AND<br /><label id="andType"> </label><br /><label id="andIn"></label><br /><label id="andOut"></label></div>  
+                            <div class="grid-9env-item">ORN<br /><label id="ornType"> </label><br /><label id="ornIn"></label><br /><label id="ornOut"></label></div>
+                            <div class="grid-9env-item">ORO<br /><label id="oroType"> </label><br /><label id="oroIn"></label><br /><label id="oroOut"></label></div>
+                            <div class="grid-9env-item">ANT<br /><label id="antType"> </label><br /><label id="antIn"></label><br /><label id="antOut"></label></div>  
+                            <div class="grid-9env-item">NOR<br /><label id="norType"> </label><br /><label id="norIn"></label><br /><label id="norOut"></label></div>
+                            <div class="grid-9env-item">XOR<br /><label id="xorType"> </label><br /><label id="xorIn"></label><br /><label id="xorOut"></label></div>
+                            <div class="grid-9env-item">EQU<br /><label id="equType"> </label><br /><label id="equIn"></label><br /><label id="equOut"></label></div>  
+                            <div class="grid-9env-item">
+                              <select id='ex1envShowRegion'>
+                                <option value='gl' selected='selected'>global</option>
+                                <option value='ed'>all spatial</option>
+                                <option value='ul'>upper left</option>
+                                <option value='ur'>upper right &nbsp;&nbsp;</option>
+                                <option value='ll'>lower left</option>
+                                <option value='lr'>lower right &nbsp;&nbsp;</option>
+                                <option value='up'>upper half</option>
+                                <option value='lo'>lower half</option>
+                              </select><br />Type<br /><label id='ex1envIn'>Initial/Input</label><br />Output
+
+                            </div>  
+                          </div>
+                        </div><span id='ex1end_showResource'></span>
+
+                        
+                        
                       </div> <span class="end odd"></span>
-                      
-                      
-                      
-                      
                       
                       <div class='even'>
                         <label id='ex1label_31'>Repeatability Mode:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -1203,7 +1454,7 @@
                               <option value='Gradient'>(G)radient</option>
                             </select><br />
                           </div>
-                          <div id='ex2envParam' class='grid-env1row-c2-item'>
+                          <div id='ex2envParam' class='ex2grid-env1row-c2-item'>
                             <div id='ex2envNone'>
                               &nbsp;
                             </div>

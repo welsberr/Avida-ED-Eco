@@ -2498,7 +2498,29 @@ av.ui.setSugarColors = function() {
   }
 };
 
+  document.getElementById('ex1allSugarChange').onchange = function() {    
+  //dijit.byId('allSugarDrop').on('Change', function () {
+    var allSugar = document.getElementById('ex1allSugarChange').value;
+    av.ptd.allSugarChange(allSugar);
+    av.ui.ex1setSugarColors();
+    document.getElementById('ex1allSugarChange').value = 'allNeutral';
+  };
 
+
+av.ui.ex1setSugarColors = function() {
+  var sugarSection = ['ex1notSection', 'ex1nanSection', 'ex1andSection', 'ex1ornSection', 'ex1oroSection', 'ex1antSection', 'ex1norSection', 'ex1xorSection', 'ex1equSection']; 
+  var len = av.ptd.sugarColors.length;
+  var ndx = av.ptd.sugarShade;
+  for (ii=0; ii<len; ii++) {
+    //console.log('ii=',ii,'SugarSection=', sugarSection[ii]);
+    if ('allSpatial' != document.getElementById('ex1allSugarChange').value) {
+      document.getElementById(sugarSection[ii]).style.backgroundColor = av.color.greyMap[ndx];
+    }
+    else {
+      document.getElementById(sugarSection[ii]).style.backgroundColor = av.color[av.ptd.sugarColors[ii]][ndx];
+    }
+  }
+};
 /******************************************************************************** End enviornment (sugar) settings ****/
 
 av.ptd.gridChange = function(tmpval) {
@@ -3430,6 +3452,7 @@ $(function slidemute() {
   //av.ui.ex1envBoxSwap('ex1envNone');    //delete later
   av.ui.ex2envBoxSwap('ex2envNone');    //delete later
   av.ui.setSugarColors();   //94
+  av.ui.ex1setSugarColors();   //94
   //av.grd.popChartFn();
   //av.grd.drawGridSetupFn('inital background'); //Draw initial background
 

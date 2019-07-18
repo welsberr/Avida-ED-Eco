@@ -1,4 +1,4 @@
-* {
+/*one data tap of population page */* {
     box-sizing: border-box;  /* include padding and border in the elements width/size */
   }
   body {
@@ -177,7 +177,7 @@
   }
 
   #popInfoHolder {
-    flex: 0 1 420px;          /* flex: 0 1 344px; is fixed in that dimension   was 349px  was 500px*/
+    flex: 0 1 450px;          /* flex: 0 1 344px; is fixed in that dimension   was 349px  was 500px*/
     border: 1px solid #AAA;
     background: beige;
     max-height: 750px;
@@ -254,7 +254,301 @@
     border: 1px solid #AAA;
     width: 100%;
   }
-  
+    
+.grid-env1row-container {
+  display: inline-grid;
+  grid-template-columns: 184px auto;
+  background-color: #F5F5F5;  /* #2196F3;  paple blue */
+  width: 100%;
+}
+
+.grid-env1row-c1-item{
+  background-color: #F5F5F5;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  text-align: right;
+  padding: 2px 1px;
+  max-width: 182px;
+}
+
+.grid-currentSugarAmount-container {   /*on data tab of population page */
+  display: inline-grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+  background-color: #F5F5F5;     /* #2196F3;  blue */
+/*  justify-content: space-evenly;  */
+  width: 100%;
+}
+
+.grid-currentSugarAmount-item {          /*on data tab of population page */
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  text-align: center;
+  padding: 2px 3px;
+}
+
+  .grid-9env-container {         /*used in 'show resources' will probably delete later */
+  display: inline-grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+  background-color: #F5F5F5;  /* #2196F3;  paple blue */
+  width: 100%;
+}
+
+.grid-9env-item {                   /*used in 'show resources' will probably go away */
+  background-color: #F5F5F5;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  text-align: center;
+  padding: 2px 3px;
+}
+
+
+/*************************************************************************** Sugar Accordion using details and select */
+/* Accodion using details/summary and hidden sections also defined here */
+
+/*
+details > summary:first-of-type {
+    list-style-type: none;
+}
+
+details > summary:first-of-type#notSection{
+  list-style-type: none;
+}
+*/
+#sugarAccordion{
+  width: 100%;
+  background: #ff0; /* #fff;          /*cyan=0ff; yellow=ff0 magenta=f0f brightGreen=0f0 red=f00 blue=00f */
+}
+.sugarAccordionSection{
+  width: 100%;
+  background: palegoldenrod;
+  border-bottom: 1px solid #222;   /* #000 is black  */
+}
+
+#notSection{
+  background: rgba(255,153,178, 1);  /* bigger number is closer to white; 0,0,0 is black*/
+}
+#nanSection{
+  background: rgba(255,204,153, 1);
+}
+#andSection{
+  background: rgba(255,255,153, 1);
+}
+#ornSection{
+  background: rgba(153,255,153, 1);
+}
+#oroSection{
+  background: rgba(153,255,153, 1);
+}
+#antSection{
+  background: rgba(153,255,153, 1);
+}
+#norSection{
+  background: rgba(153,255,153, 1);
+}
+#xorSection{
+  background: rgba(153,255,153, 1);
+}
+#equSection{
+  background: rgba(153,255,153, 1);
+}
+
+/************************************************************************************************** Sugar grid layout */
+.sugarSummary{
+  background: lightgreen;       /* rgba(128, 128, 128, 0.1);  */
+  /*flex-flow: row;
+  display: flex;      /* if display is used then loose the triangels that indicated open/closed */
+  display: inline-block;
+  width: 100%;
+  /* also cannot seem to get the block to be the full width of the space available. */
+}     
+.sugarSummaryDiv{
+  background: pink;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.sugarTitle{
+  flex: 0 1 50px;
+  font-size: 100%;
+  font-weight: bold;
+}
+
+.sugInitialDiv{
+  flex: 0 1 auto;
+}
+.sugInitialInput{
+  width: 3.5em; height:1.8em;
+}
+
+
+.grid-sugarDetail-container {
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: darkslategray;     /* #2196F3;  blue */
+/*  justify-content: space-evenly;  */
+  width: 100%;
+}
+.grid-sugarDetail-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 0px solid #fff;
+  text-align: left;
+  padding: 1px 1px;
+}
+
+
+/*********************************************************************** End Sugar Accordion using details and select */
+
+/********************************************************************************* End Custom Select/Options DropDown */
+/* Custon Select/Options to make grey drop down */
+/* ---------------------------------------------------------------------------------------------- website not used -----
+/* -------------------- Select Box Styles: bavotasan.com Method (with special adaptations by ericrasch.com) */
+/* -------------------- Source: http://bavotasan.com/2011/style-select-box-using-only-css/ */
+/* play with select/option here https://codepen.io/dblackwood/pen/KjbGXo 
+/* Style a Select Box Using Only CSS. Inspired by: http://bavotasan.com/2011/style-select-box-using-only-css/
+/* fork from https://codepen.io/ericrasch/pen/zjDBx
+
+/* -------------------- Select Box Styles: danielneumann.com Method */
+/* -------------------- Source: http://danielneumann.com/blog/how-to-style-dropdown-with-css-only/ */
+
+/* -------------------- Select Box Styles: stackoverflow.com Method */
+/* -------------------- Source: http://stackoverflow.com/a/5809186 */
+/* ---------------------------------------------------------------------------------------------------------------------
+/* Another useful site https://www.filamentgroup.com/lab/select-css.html
+/* https://codepen.io/fabriceleven/pen/qOmNPG based on div around select
+
+/* if select in a div then content: '\25BC'; can be used in the div class css
+
+/* From  https://www.proy.info/style-select-dropdown-using-css/ */
+/* body select.select_box option */ 
+
+body select {
+/*  background: url("https://i.ibb.co/b7xjLrB/selectbox-arrow.png") right center no-repeat;  */
+  background: url('images/arrowDownBlackSmallMedOutlineMoreBackgnd.png') right center no-repeat;
+  background-size: 20px 20px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+body select:hover{
+  cursor: pointer;
+  background-color: white;
+  box-shadow:none;
+}
+body select:hover::after {
+  background-color:  #0f0;  //can't tell that this does anything'
+}
+
+body select:focus{
+  background-color: white;  //changes background off all the options not the one highlighted
+}
+
+body select:option { 
+    padding: 0 2px; 
+    background-color: #eee;
+} 
+/* for IE and Edge */ 
+select::-ms-expand { 
+    display: none; 
+} 
+select:disabled::-ms-expand { 
+    background: #fff; 
+}
+
+body option:hover{
+  background-color: yellow;
+}
+/*
+option[selected]{
+    background:#0F0;  /*does not seem to work 
+}  
+*/
+
+/* Checkbox next */
+
+input[type="checkbox"] {
+  box-shadow:none !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid black;
+  border-radius: 50%;
+  background: white;
+  margin: 0px 2px;
+  width: 1em;
+  height: 1em;
+  box-shadow:none;
+}
+input[type="checkbox"]:checked {
+  background: white;
+  border: 4px solid black;
+  box-shadow:none;
+}
+checkbox:focus {
+  box-shadow:none;
+}
+
+/********************************************************************************* End Custom Select/Options DropDown */
+
+/************************************************************************ used in examples will be deleted eventually */
+
+.ex1oddSugarPart{
+  border-top: 1px solid #888;
+  background: rgba(128, 128, 128, 0.2);  /*LtSteelBlue=b0cedE=176, 196, 180 */
+}  /*#89a9d9;*/
+.ex1evenSugar{ 
+  background: rgba(128, 128, 128, 0.4);  /*228, 241, 254, */
+  border-top: 1px solid #888;
+}
+
+.ex1sugarAccordionSection{
+  border-bottom: 1px solid #222;   /* #000 is black  */
+}
+
+.ex1sugarSummary{
+  background: rgba(128, 128, 128, 0.1);   
+}
+.ex1sugarDetail{
+  /* background: #fff;    /* #7eAbCd*/
+}
+
+.ex1sugarTitle{
+  font-size: 110%;
+  font-weight: bolder;
+}
+.ex1dishPartLabel{
+  font-size: 100%;
+  font-weight: bold;  
+}
+
+#ex1notSection{
+  background: rgba(255,153,178, 1);  /* bigger number is closer to white; 0,0,0 is black*/
+}
+#ex1nanSection{
+  background: rgba(255,204,153, 1);
+}
+#ex1andSection{
+  background: rgba(255,255,153, 1);
+}
+#ex1ornSection{
+  background: rgba(153,255,153, 1);
+}
+#ex1oroSection{
+  background: rgba(153,255,153, 1);
+}
+#ex1antSection{
+  background: rgba(153,255,153, 1);
+}
+#ex1norSection{
+  background: rgba(153,255,153, 1);
+}
+#ex1xorSection{
+  background: rgba(153,255,153, 1);
+}
+#ex1equSection{
+  background: rgba(153,255,153, 1);
+}
   /*
   #ex1envParam {
     flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */ /*
@@ -320,316 +614,20 @@
     background-color: #F5F5F5;
   }
 
-
-  
-.grid-env1row-container {
-  display: inline-grid;
-  grid-template-columns: 184px auto;
-  background-color: #F5F5F5;  /* #2196F3;  paple blue */
-  width: 100%;
-}
-
-.grid-env1row-c1-item{
-  background-color: #F5F5F5;
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  text-align: right;
-  padding: 2px 1px;
-  max-width: 182px;
-}
-
-.grid-env1row-c2-item {
+  .ex2grid-env1row-c2-item {
   background-color: #F5F5F5;
   border: 1px solid rgba(0, 0, 0, 0.8);
   text-align: left;
   padding: 2px 1px;
 }
 
-  #envParam {
-    flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
-    border: 1px solid #AAA;    
-    background-color: #F5F5F5;
-  }
-  
-  #envNone{
-    display: block;
-    height: 100%;
-    width: 100%;
-    background-color: #F5F5F5;;
-  }
-  #envFinite{
-    display:block;
-    height: 100%;
-    width: 100%;
-    background-color: #F5F5F5;
-  }
-  #envEquilibrium{
-    display: block;
-    height: 100%;
-    width: 100%;
-    background-color: #F5F5F5;
-  }
-  #envSourceSink{
+  #ex2envSourceSink{
     display: block;
     height: 100%;
     width: 100%;
     background-color: #violet;
   }
-  #envGradient{
-    display: block;
-    height: 100%;
-    width: 100%;
-    background-color: #F5F5F5;;
-  }
-
-
-.grid-sugars-container {
-  display: inline-grid;
-  grid-template-columns: auto auto;
-  background-color: darkslategray;     /* #2196F3;  blue */
-/*  justify-content: space-evenly;  */
-  width: 100%;
-}
-.grid-sugars-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 0px solid #fff;
-  text-align: left;
-  padding: 1px 1px;
-}
-.grid-sugars-2c-item {
-  grid-column: 1 / span 2;
-  background-color: #ddd;
-  border: 1px solid #111;
-  border-bottom: 0px none #fff;
-  text-align: center;
-  padding: 1px 1px;
-}
-
-.grid-sugarOnOff-item {
-  background-color: #ddd;
-  border: 1px solid #111;
-  text-align: left;
-  padding: 1px 1px;
-}
-
-.grid-sugarOnOff-container {
-  display: inline-grid;
-  grid-template-columns: auto auto auto auto auto;
-  background-color: #F5F5F5;     /* #2196F3;  blue */
-/*  justify-content: space-evenly;  */
-  width: 100%;
-}
-.grid-sugarOnOff-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 0px;
-  text-align: left;
-  padding: 1px 1px;
-}
-
-
-.grid-container {
-  display: inline-grid;
-  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
-  background-color: #F5F5F5;     /* #2196F3;  blue */
-/*  justify-content: space-evenly;  */
-  width: 100%;
-}
-
-.grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  text-align: center;
-  padding: 2px 3px;
-}
-
-  .grid-9env-container {
-  display: inline-grid;
-  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
-  background-color: #F5F5F5;  /* #2196F3;  paple blue */
-  width: 100%;
-}
-
-.grid-9env-item {
-  background-color: #F5F5F5;
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  text-align: center;
-  padding: 2px 3px;
-}
-
-  .grid-eachSugar-container {
-  display: inline-grid;
-  grid-template-columns: auto auto;
-  background-color: #F5F5F5;  /* #2196F3;  paple blue */
-  width: 100%;
-  }
-  
-  .grid-eachSugar-item {
-  background-color: #F5F5F5;
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  text-align: center;
-  padding: 1px 1px;
-  }
-
-/*************************************************************************** Sugar Accordion using details and select */
-/* grid-container, grid-item and hidden sections also defined here */
-
-/*
-details > summary:first-of-type {
-    list-style-type: none;
-}
-*/
-details > summary:first-of-type#notSection{
-  list-style-type: none;
-}
-
-#sugarAccordion{
-  width: 100%;
-  background: #fff;          /*cyan=0ff; yellow=ff0 magenta=f0f brightGreen=0f0 red=f00 blue=00f */
-}
-.sugarDetailSum{
-  border-bottom: 1px solid #222;   /* #000 is black  */
-}
-
-.sugarSummary{
-  background: rgba(128, 128, 128, 0.1);   
-}
-.sugarDetail{
-  /* background: #fff;    /* #7eAbCd*/
-}
-
-.sugarTitle{
-  font-size: 110%;
-  font-weight: bolder;
-}
-.dishPartLabel{
-  font-size: 100%;
-  font-weight: bold;  
-}
-.oddSugar{
-  border-top: 1px solid #888;
-  background: rgba(128, 128, 128, 0.2);  /*LtSteelBlue=b0cedE=176, 196, 180 */
-}  /*#89a9d9;*/
-.evenSugar{ 
-  background: rgba(128, 128, 128, 0.4);  /*228, 241, 254, */
-  border-top: 1px solid #888;
-}
-
-#notSection{
-  background: rgba(255,153,178, 1);  /* bigger number is closer to white; 0,0,0 is black*/
-}
-#nanSection{
-  background: rgba(255,204,153, 1);
-}
-#andSection{
-  background: rgba(255,255,153, 1);
-}
-#ornSection{
-  background: rgba(153,255,153, 1);
-}
-#oroSection{
-  background: rgba(153,255,153, 1);
-}
-#antSection{
-  background: rgba(153,255,153, 1);
-}
-#norSection{
-  background: rgba(153,255,153, 1);
-}
-#xorSection{
-  background: rgba(153,255,153, 1);
-}
-#equSection{
-  background: rgba(153,255,153, 1);
-}
-
-/*********************************************************************** End Sugar Accordion using details and select */
-
-/********************************************************************************* End Custom Select/Options DropDown */
-/* Custon Select/Options to make grey drop down */
-/* ---------------------------------------------------------------------------------------------- website not used -----
-/* -------------------- Select Box Styles: bavotasan.com Method (with special adaptations by ericrasch.com) */
-/* -------------------- Source: http://bavotasan.com/2011/style-select-box-using-only-css/ */
-/* play with select/option here https://codepen.io/dblackwood/pen/KjbGXo 
-/* Style a Select Box Using Only CSS. Inspired by: http://bavotasan.com/2011/style-select-box-using-only-css/
-/* fork from https://codepen.io/ericrasch/pen/zjDBx
-
-/* -------------------- Select Box Styles: danielneumann.com Method */
-/* -------------------- Source: http://danielneumann.com/blog/how-to-style-dropdown-with-css-only/ */
-
-/* -------------------- Select Box Styles: stackoverflow.com Method */
-/* -------------------- Source: http://stackoverflow.com/a/5809186 */
-/* ---------------------------------------------------------------------------------------------------------------------
-/* Another useful site https://www.filamentgroup.com/lab/select-css.html
-/* https://codepen.io/fabriceleven/pen/qOmNPG based on div around select
-
-/* if select in a div then content: '\25BC'; can be used in the div class css
-
-/* From  https://www.proy.info/style-select-dropdown-using-css/ */
-/* body select.select_box option */ 
-
-body select {
-/*  background: url("https://i.ibb.co/b7xjLrB/selectbox-arrow.png") right center no-repeat;  */
-  background: url('images/arrowDownBlackSmallMedOutlineMoreBackgnd.png') right center no-repeat;
-  background-size: 20px 20px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  -ms-appearance: none;
-  appearance: none;
-  border: 1px solid black;
-  border-radius: 5px;
-}
-body select:hover{
-  cursor: pointer;
-  background-color: white;
-}
-body select:hover::after {
-  background-color:  #0f0;  //can't tell that this does anything'
-}
-
-body select:focus{
-  background-color: white;  //changes background off all the options not the one highlighted
-}
-
-body select:option { 
-    padding: 0 2px; 
-    background-color: #eee;
-} 
-/* for IE and Edge */ 
-select::-ms-expand { 
-    display: none; 
-} 
-select:disabled::-ms-expand { 
-    background: #fff; 
-}
-
-body option:hover{
-  background-color: yellow;
-}
-/*
-option[selected]{
-    background:#0F0;  /*does not seem to work 
-}  
-*/
-
-/* Checkbox next */
-
-input[type="checkbox"] {
-  box-shadow:none !important;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border: 1px solid black;
-  border-radius: 50%;
-  background: white;
-  margin: 0px 2px;
-  width: 1em;
-  height: 1em;
-}
-input[type="checkbox"]:checked {
-  background: white;
-  border: 4px solid black;
-}
-
-/********************************************************************************* End Custom Select/Options DropDown */
+/******************************************************************** end used in examples will be deleted eventually */
   
 .mainPageButtons{
   border: 1px solid #AAA;
@@ -766,7 +764,20 @@ input[type="checkbox"]:checked {
     flex: 0 1 500px;
     background-color: #F5F5F5; /* lavender;  */
   }
-  
+  .grid-sugarOnOff-container {      /*on ex2 tab */
+  display: inline-grid;
+  grid-template-columns: auto auto auto auto auto;
+  background-color: #F5F5F5;     /* #2196F3;  blue */
+/*  justify-content: space-evenly;  */
+  width: 100%;
+}
+.grid-sugarOnOff-item {     /*on ex2 tab */
+  background-color: rgba(255, 255, 255, 0.8);    /* #ddd */
+  border: 0px;               /*1px solid #111 */
+  text-align: left;
+  padding: 1px 1px;
+}
+
   
 /**********************************************************************************************/
 /* The Modal (background) */
@@ -828,112 +839,3 @@ input[type="checkbox"]:checked {
 
 /*************************************************************************************************** no longer in use */
 
-/*********************************************************** Basic Accordion Styles - css accordion using check boxes */
-/* 
-.accordionSugar {
-
-.accordionSugar input[name="panel"] {
-  display: none;
-}
-.accordionSugar label {
-  position: relative;
-  display: block;
-  padding: 2px;
-  background-color: #ccc;
-  border-top: 1px solid #000;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.865, 0.14, 0.095, 0.87);
-}
-.accordionSugar label:after {
-  content: "+";
-  position: absolute;
-  right: 1em;
-  width: 1em;
-  height: 1em;
-  color: #eee;
-  text-align: center;
-  border-radius: 50%;
-  background: #2980b9;
-}
-.accordionSugar label:hover {
-  color: #2980b9;
-}
-.accordionSugar input:checked + label {
-  color: #2980b9;
-}
-.accordionSugar input:checked + label:after {
-  content: "-";           
-  line-height: 0.8em;   /* adjsut line-height to vertically center icon */  /*
-}
-.accordionSugar .accordionSugar__content {
-  overflow: hidden;
-  max-height: 0em;
-  position: relative;
-  padding: 0 2px;
-  background: #eee;
-  transition: all 0.4s cubic-bezier(0.865, 0.14, 0.095, 0.87);
-}
-.accordionSugar .accordionSugar__content:not(:last-of-type) {
-  box-shadow: inset 0 -2px 2px rgba(0, 0, 0, 0.25), inset 4px 0 0 0 #2980b9, inset 0 3px 6px rgba(0, 0, 0, 0.75);
-}
-.accordionSugar .accordionSugar__content .accordionSugar__header {
-  padding: 1px 0;
-}
-.accordionSugar .accordionSugar__content .accordionSugar__body {
-  padding: 0 0 1px;
-}
-
-input[name="panel"]:checked ~ .accordionSugar__content {
-  max-height: 50em;      /* Get this as close to what height you expect */   /*
-}
-
-/* example html that used this accordion 
-<div class="accordionSugar">
-
-  <!-- Panel 1 -->
-  <div>
-    <input type="checkbox" name="panel" id="panel-1">
-    <label for="panel-1">Panel 1 There can be more stuff here I think </label>
-    <div class="accordionSugar__content">
-                    line one
-    </div>
-  </div>
-
-  <!-- Panel 2 -->
-  <div>
-    <input type="checkbox" name="panel" id="panel-2">
-    <label for="panel-2">Panel 2</label>
-    <div class="accordionSugar__content">
-                    line one<br>
-                    line two
-    </div>
-  </div>
-
-  <!-- Panel 3 -->
-  <div>
-    <input type="checkbox" name="panel" id="panel-3">
-    <label for="panel-3">Panel 3</label>
-    <div class="accordionSugar__content">
-                    line one<br>
-                    line two<br>
-                    line three
-    </div>
-  </div>
-
-  <!-- Panel 4 -->
-  <div>
-    <input type="checkbox" name="panel" id="panel-4">
-    <label for="panel-4">Panel 4</label>
-    <div class="accordionSugar__content">
-      <h2 class="accordionSugar__header">Header</h2>
-                    line one<br>
-                    line two<br>
-                    line three<br>
-                    line four
-    </div>
-  </div>
-
-</div><!-- .accordionSugar -->
-*/
-/**************************************************** End of Basic Accordion Styles - css accordion using check boxes */
