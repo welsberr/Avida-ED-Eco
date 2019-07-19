@@ -177,7 +177,7 @@
   }
 
   #popInfoHolder {
-    flex: 0 1 450px;          /* flex: 0 1 344px; is fixed in that dimension   was 349px  was 500px*/
+    flex: 0 1 460px;          /* flex: 0 1 344px; is fixed in that dimension   was 349px  was 500px*/
     border: 1px solid #AAA;
     background: beige;
     max-height: 750px;
@@ -352,22 +352,21 @@ details > summary:first-of-type#notSection{
 
 /************************************************************************************************** Sugar grid layout */
 .sugarSummary{
-  background: lightgreen;       /* rgba(128, 128, 128, 0.1);  */
-  /*flex-flow: row;
+  background: rgba(128, 128, 128, 0.1); 
+  flex-flow: row;
   display: flex;      /* if display is used then loose the triangels that indicated open/closed */
   display: inline-block;
   width: 100%;
   /* also cannot seem to get the block to be the full width of the space available. */
 }     
 .sugarSummaryDiv{
-  background: pink;
   width: 100%;
   display: flex;
   flex-direction: row;
 }
 
 .sugarTitle{
-  flex: 0 1 50px;
+  width: 55px;
   font-size: 100%;
   font-weight: bold;
 }

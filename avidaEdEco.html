@@ -595,11 +595,11 @@
                             <summary class='sugarSummary'>
                               <div id='notSum' class='sugarSummaryDiv'>
                                 <div class='sugarTitle'>Notose</div>&nbsp;
-                                <select  id='notGlobSpat'>
+                                <select  id='notGlobSpat' class='globalSpatial'>
                                   <option value='Global' selected='selected'>Global</option>
                                   <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                                 </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <select  id='not0Type'>
+                                <select  id='not0Type' class='sugarType'>
                                   <option id='not0not0none' value='None'>None</option>
                                   <option id='not0not0Infinite' value='Infinite' selected='selected'>Infinite</option>
                                   <option id='not0Finite' value='Finite'>Finite</option>
@@ -614,8 +614,12 @@
                               </div>
                             </summary>
                             <div id='notDetails' class='grid-sugarDetail-container'>
-                              
-                            </div>
+                              <div id='not1initialDiv' class='sugInitialDiv'>
+                                <input class='sugInitialInput' id='not0initialInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>
+                                &nbsp;Amount of resource per cell
+                              </div>
+
+                            </div><span id='endNotDetails' class='end_grid-sugarDetail-container'></span>
                           </details>
                           <details class='sugarAccordionSection'  id='nanSection'>
                             <summary class='sugarSummary'>
