@@ -205,22 +205,22 @@
           <div class="freezerClass">
             <h3>Freezer</h3>
             <span title="https://stackoverflow.com/questions/24977965/collapsible-lists-using-html-and-css"></span>
-            <details open>
+            <details class='frzAccordion' open>
               <summary id='fzConfigureSec' class="freezerSection">Configured Dishes</summary>
               <ul id='fzConfig' class='container'>
               </ul>
             </details>
-            <details open>
+            <details class='frzAccordion' open>
               <summary id='organismsFzSec' class="freezerSection">Organisms</summary>
               <ul id='fzOrgan' class='container'>
               </ul>
             </details>
-            <details open>
+            <details class='frzAccordion' open>
               <summary id='fzWorldSec' class="freezerSection">Populated Dishes</summary>
               <ul id='fzWorld' class='container'>
               </ul>
             </details>
-            <details open  class='debugDetails' id='fzTdishDetails'>
+            <details class='frzAccordion' open  class='debugDetails' id='fzTdishDetails'>
               <summary id='fzTdishSec' class="freezerSection">Test Dishes</summary>
               <ul id='fzTdish' class='container'>
               </ul>
@@ -593,12 +593,11 @@
                         <div id='sugarAccordion'>
                           <details class='sugarAccordionSection' id='notSection'>
                             <summary class='sugarSummary'>
-                              <div id='notSum' class='sugarSummaryDiv'>
                                 <div class='sugarTitle'>Notose</div>&nbsp;
                                 <select  id='notGlobSpat' class='globalSpatial'>
                                   <option value='Global' selected='selected'>Global</option>
                                   <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
-                                </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                </select>&nbsp;&nbsp;&nbsp;
                                 <select  id='not0Type' class='sugarType'>
                                   <option id='not0not0none' value='None'>None</option>
                                   <option id='not0not0Infinite' value='Infinite' selected='selected'>Infinite</option>
@@ -606,21 +605,31 @@
                                   <option id='not0Equilibrium' value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
                                   <option id='not0SourceSink' value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
                                   <option id='not0Gradient' value='Gradient'>Gradient</option>
-                                  </select>&nbsp;
+                                  </select>&nbsp;&nbsp;&nbsp;
                                 <div id='not0initialDiv' class='sugInitialDiv'>
                                   <input class='sugInitialInput' id='not0initialInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>
-                                  &nbsp;Amount of resource per cell
+                                  &nbsp;Initial amount per cell 
                                 </div>
-                              </div>
                             </summary>
                             <div id='notDetails' class='grid-sugarDetail-container'>
-                              <div id='not1initialDiv' class='sugInitialDiv'>
+                              <div id='not1initialDiv' class='grid-sugarDetail-item'>
                                 <input class='sugInitialInput' id='not0initialInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>
-                                &nbsp;Amount of resource per cell
+                                &nbsp;Initial amount per cell 
                               </div>
+                              <select  id='not1sideSelect' class='grid-sugarDetail-item'>
+                                <option value='left' selected='selected'>(L)eft</option>
+                                <option value='right'>(R)ight</option>
+                                <option value='top'>(T)op</option>
+                                <option value='bottom'>(B)ottom</option>
+                                <option value='center'>(C)enter</option>
+                                <option value='edge'>(E)dge</option>
+                              </select>
+                              <div id='not1sideLabel'>side text</div>
 
-                            </div><span id='endNotDetails' class='end_grid-sugarDetail-container'></span>
+
+                            </div><span id='endNapDetails' class='end_grid-sugarDetail-container'></span>
                           </details>
+
                           <details class='sugarAccordionSection'  id='nanSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Nanose</span>&nbsp;

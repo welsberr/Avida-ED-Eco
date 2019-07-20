@@ -304,14 +304,30 @@
 /* Accodion using details/summary and hidden sections also defined here */
 
 /*
-details > summary:first-of-type {
-    list-style-type: none;
+summary::-webkit-details-marker {
+  display: none
 }
 
-details > summary:first-of-type#notSection{
-  list-style-type: none;
+summary > div {
+  width: calc(100% - 50px);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+details {
+}
+
+summary:before {
+  content: "►";
+  margin: 0px 10px 0 0;
+  width: 20px;
+}
+
+details[open] summary:before {
+  content: "▼";
 }
 */
+
 #sugarAccordion{
   width: 100%;
   background: #ff0; /* #fff;          /*cyan=0ff; yellow=ff0 magenta=f0f brightGreen=0f0 red=f00 blue=00f */
@@ -320,8 +336,28 @@ details > summary:first-of-type#notSection{
   width: 100%;
   background: palegoldenrod;
   border-bottom: 1px solid #222;   /* #000 is black  */
+  display: inline-block;
+}
+.sugarSummary{
+  background: rgba(128, 128, 128, 0.1); 
+  width: 100%;
 }
 
+.sugarTitle{
+  width: 57px;
+  font-size: 100%;
+  font-weight: bold;
+  display: inline-block;
+}
+.sugInitialArt{
+  display: inline-block;
+}
+.sugInitialDiv{
+  display: inline-block;
+}
+.sugInitialInput{
+  width: 3.5em; height:1.8em;
+}
 #notSection{
   background: rgba(255,153,178, 1);  /* bigger number is closer to white; 0,0,0 is black*/
 }
@@ -351,43 +387,16 @@ details > summary:first-of-type#notSection{
 }
 
 /************************************************************************************************** Sugar grid layout */
-.sugarSummary{
-  background: rgba(128, 128, 128, 0.1); 
-  flex-flow: row;
-  display: flex;      /* if display is used then loose the triangels that indicated open/closed */
-  display: inline-block;
-  width: 100%;
-  /* also cannot seem to get the block to be the full width of the space available. */
-}     
-.sugarSummaryDiv{
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-}
-
-.sugarTitle{
-  width: 55px;
-  font-size: 100%;
-  font-weight: bold;
-}
-
-.sugInitialDiv{
-  flex: 0 1 auto;
-}
-.sugInitialInput{
-  width: 3.5em; height:1.8em;
-}
-
 
 .grid-sugarDetail-container {
   display: inline-grid;
   grid-template-columns: 1fr 1fr;
-  background-color: darkslategray;     /* #2196F3;  blue */
+  background-color: rgba(128, 128, 128, 0.3);     /* #2196F3;  blue */
 /*  justify-content: space-evenly;  */
   width: 100%;
 }
 .grid-sugarDetail-item {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(128, 128, 128, 0.2);
   border: 0px solid #fff;
   text-align: left;
   padding: 1px 1px;
