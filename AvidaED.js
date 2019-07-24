@@ -2521,6 +2521,60 @@ av.ui.ex1setSugarColors = function() {
     }
   }
 };
+
+av.ptd.notTypeChange = function(type) {
+  console.log('notTypeChange=', type);
+  //console.log('not1initialHiDiv.className=',document.getElementById('not1initialHiDiv').className);
+  document.getElementById('not0initialDiv').style.display = "none";
+  document.getElementById('not1initialHiDiv').style.display = "none";
+  document.getElementById('not1initialLoDiv').style.display = "none";
+  document.getElementById('not1inflowDiv').style.display = "none";
+  document.getElementById('not1outflowDiv').style.display = "none";
+  document.getElementById('not1equalDiv').style.display = "none";
+  document.getElementById('not1sideDiv').style.display = "none";
+  switch (type) {
+    case 'None': 
+    case 'Infinite': 
+      break;
+    case 'Finite': 
+      document.getElementById('not0initialDiv').style.display = "inline-block";
+      break;
+    case 'Equilibrium':
+      document.getElementById('not1inflowDiv').style.display = "block";
+      document.getElementById('not1outflowDiv').style.display = "block";
+      document.getElementById('not1equalDiv').style.display = "block";
+      document.getElementById('notDetails').className = 'grid-sugarDetailEqual-container';
+      console.log('notDetails.class=', document.getElementById('notDetails').className);
+      break;
+    case 'SourceSink':
+      document.getElementById('not1sideLabel').innerHTML = 'inflow side; outlow will be everywhere or on the opposite side';
+      document.getElementById('not1inflowDiv').style.display = "block";
+      document.getElementById('not1outflowDiv').style.display = "block";
+      document.getElementById('not1sideDiv').style.display = "block";
+      document.getElementById('notDetails').className = 'grid-sugarDetailSourceSink-container';
+      console.log('notDetails.class=', document.getElementById('notDetails').className);
+      break;
+    case 'Gradient':
+      document.getElementById('not1sideDiv').style.display = "block";
+      document.getElementById('not1sideLabel').innerHTML = 'Side with a higher initial amount';
+      document.getElementById('not1initialHiDiv').style.display = "block";
+      document.getElementById('not1initialLoDiv').style.display = "block";
+      document.getElementById('notDetails').className = 'grid-sugarDetailGradient-container';
+      console.log('notDetails.class=', document.getElementById('notDetails').className);
+      break;
+    case 'All':
+      document.getElementById('not1sideDiv').style.display = "block";
+      document.getElementById('not1sideLabel').innerHTML = 'Side text describing what side means';
+      document.getElementById('not1initialHiDiv').style.display = "block";
+      document.getElementById('not1initialLoDiv').style.display = "block";
+      document.getElementById('not1inflowDiv').style.display = "block";
+      document.getElementById('not1outflowDiv').style.display = "block";
+      document.getElementById('not1equalDiv').style.display = "block";
+      document.getElementById('notDetails').className = 'grid-sugarDetailAll-container';
+      console.log('notDetails.class=', document.getElementById('notDetails').className);
+  }
+ 
+};
 /******************************************************************************** End enviornment (sugar) settings ****/
 
 av.ptd.gridChange = function(tmpval) {
@@ -3448,13 +3502,15 @@ $(function slidemute() {
   //av.ui.removeVerticalScrollbar('popTop', 'popTop');
   console.log('before mainBoxSwap');
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
+  av.ptd.notTypeChange('None');
+
   //av.ui.envBoxSwap('envNone');  
   //av.ui.ex1envBoxSwap('ex1envNone');    //delete later
   av.ui.ex2envBoxSwap('ex2envNone');    //delete later
   av.ui.setSugarColors();   //94
   av.ui.ex1setSugarColors();   //94
   //av.grd.popChartFn();
-  //av.grd.drawGridSetupFn('inital background'); //Draw initial background
+  //av.grd.drawGridSetupFn('initial background'); //Draw initial background
 
   //Safari 9 will not allow saving workspaces or freezer items.
   //if (av.brs.isSafari) {

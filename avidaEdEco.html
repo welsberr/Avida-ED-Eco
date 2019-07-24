@@ -264,7 +264,7 @@
                     <td style='text-align: center; min-width:166px'>
                       Mode:
                       <select  id='colorMode'>
-                        <option value='Fitness' selected='selected'>Fitness</option>
+                        <option value='Fitness' selected>Fitness</option>
                         <option value='Offspring Cost'>Offspring Cost</option>
                         <option value='Energy Acq. Rate'>Energy Acq. Rate</option>
                         <option value='Ancestor Organism'>Ancestor Organism &nbsp;&nbsp;</option>
@@ -528,7 +528,7 @@
                     <div id="miniChartYaxis">
                       <label id='yaxisLabel'>Y-axis</label>
                       <select  id='yaxis'>
-                        <option value='Average Fitness' selected='selected'>Average Fitness</option>
+                        <option value='Average Fitness' selected>Average Fitness</option>
                         <option value='Average Offspring Cost'>Average Offspring Cost</option>
                         <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
                         <option value='Number of Organisms'>Number of Organisms</option>
@@ -543,9 +543,9 @@
                       Environmental Settings
                       <div  class='odd'>
                         Dish Size:
-                        <input id='sizeCols' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '10';/>
+                        <input id='sizeCols' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '10';/>
                         &nbsp; x &nbsp;
-                        <input id='sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '10'/>
+                        <input id='sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '10'/>
                         cells&nbsp;<br />
                         <label id='sizeCells'>There are 900 cells by default</label>
                       </div>
@@ -555,13 +555,13 @@
                               style='width:100px; display: inline-block; vertical-align: top; margin-left:20px; margin-right:20px'></span>
                         <!-- style done here for the slider; margin to keep it from overlapping;
                                               without width the slider is the full width of the browser window-->
-                        <!--<input id='muteInput' type='text' style='width: 4em; height:1.8em'></button> -->
+                        <!--<input id='muteInput' type='text' style='width: 4em; height:1.6em'></button> -->
                         <input id='muteInput' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' ;
                                data-dojo-props='constraints:{min:0, max:100},
                                invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                               style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value, "muteError")'> %<br />
+                               style='width: 4.5em; height:1.6em' onchange='av.ptd.muteInputChange(this.value, "muteError")'> %<br />
                         <!--; or the slider value is &nbsp;</div>
-                        <input id='mRate' type='text' readonly style='width: 4em; height:1.8em'></button> -->
+                        <input id='mRate' type='text' readonly style='width: 4em; height:1.6em'></button> -->
                         <label id='muteError'>Error place holder</label>
                       </div>
                       <div class='odd'>Ancestral Organism(s):
@@ -587,7 +587,7 @@
                           <option value='allFinite'>All Finite</option>
                           <option value='alloff'>All Equilibrium &nbsp;&nbsp;</option>
                           <option value='allSpatial'>Spatial</option>
-                          <option value='allNeutral' selected='selected'>----</option>
+                          <option value='allNeutral' selected>----</option>
                           </select></div>
                         <br />
                         <div id='sugarAccordion'>
@@ -595,51 +595,78 @@
                             <summary class='sugarSummary'>
                                 <div class='sugarTitle'>Notose</div>&nbsp;
                                 <select  id='notGlobSpat' class='globalSpatial'>
-                                  <option value='Global' selected='selected'>Global</option>
+                                  <option value='Global' selected>Global</option>
                                   <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                                 </select>&nbsp;&nbsp;&nbsp;
-                                <select  id='not0Type' class='sugarType'>
+                                <select  id='not0Type' class='sugarType' onchange='av.ptd.notTypeChange(this.value)'>
                                   <option id='not0not0none' value='None'>None</option>
-                                  <option id='not0not0Infinite' value='Infinite' selected='selected'>Infinite</option>
+                                  <option id='not0not0Infinite' value='Infinite' selected>Infinite</option>
                                   <option id='not0Finite' value='Finite'>Finite</option>
                                   <option id='not0Equilibrium' value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
-                                  <option id='not0SourceSink' value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
+                                  <option id='not0SourceSink' value='SourceSink'>Source/Sink &nbsp;&nbsp;</option>
                                   <option id='not0Gradient' value='Gradient'>Gradient</option>
+                                  <option id='not0Gradient' value='All'>All debug only</option>
                                   </select>&nbsp;&nbsp;&nbsp;
                                 <div id='not0initialDiv' class='sugInitialDiv'>
                                   <input class='sugInitialInput' id='not0initialInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>
                                   &nbsp;Initial amount per cell 
                                 </div>
                             </summary>
-                            <div id='notDetails' class='grid-sugarDetail-container'>
-                              <div id='not1initialDiv' class='grid-sugarDetail-item'>
-                                <input class='sugInitialInput' id='not0initialInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>
-                                &nbsp;Initial amount per cell 
+                            <div id='notDetails' class='grid-sugarDetailAll-container'>
+                              <div id='not1initialHiDiv' class='grid-sugarDetail-item initialHi'>
+                                <input class='sugInitialHiInput' id='not1initialHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>
+                                &nbsp;High side initial amount per cell 
                               </div>
-                              <select  id='not1sideSelect' class='grid-sugarDetail-item'>
-                                <option value='left' selected='selected'>(L)eft</option>
-                                <option value='right'>(R)ight</option>
-                                <option value='top'>(T)op</option>
-                                <option value='bottom'>(B)ottom</option>
-                                <option value='center'>(C)enter</option>
-                                <option value='edge'>(E)dge</option>
-                              </select>
-                              <div id='not1sideLabel'>side text</div>
+                              <div id='not1initialLoDiv' class='grid-sugarDetail-item initialLo'>
+                                <input class='sugInitialLoInput' id='not1initialHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '10'/>
+                                &nbsp;Low side initial amount per cell 
+                              </div>
+                              <div id='not1inflowDiv' class='grid-sugarDetail-item inflow'>
+                                <input class='sugInflowInput' id='not1inflowInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '1'/>
+                                &nbsp;Inflow amount per cell
+                              </div>
+                              <div id='not1outflowDiv' class='grid-sugarDetail-item outflow'>
+                                <input class='sugOutflowInput' id='not1outflowInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.1'/>
+                                &nbsp;Outflow fraction per cell.  
+                              </div>
+                              <div id='not1equalDiv' class='grid-sugarDetail-item equilibrium'>
+                                <label id='not1equalLabel'>10</label> = equilibrium when no resource has been consumed. If resource is consumed then the resource will incrementally return to this value
+                              </div>
+                              <div id='not1sideDiv' class='grid-sugarDetail-item side'>
+                                <select  id='not1sideSelect' >
+                                  <option value='left' selected>(L)eft</option>
+                                  <option value='right'>(R)ight</option>
+                                  <option value='top'>(T)op</option>
+                                  <option value='bottom'>(B)ottom</option>
+                                  <option value='center'>(C)enter</option>
+                                  <option value='edge'>(E)dge</option>
+                                </select>
+                                <label id='not1sideLabel'>side text</label>
+                              </div>
 
 
                             </div><span id='endNapDetails' class='end_grid-sugarDetail-container'></span>
                           </details>
 
+                          
+                         
+                          
+                          
+                          
+                          
+                          
+                          
+                          
                           <details class='sugarAccordionSection'  id='nanSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Nanose</span>&nbsp;
                               <select  id='nanGlobSpat'>
                                 <option value='Global'>Global</option>
-                                <option value='Spatial' selected='selected'>Spatial &nbsp;&nbsp;</option>
+                                <option value='Spatial' selected>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                                 <select  id='envDistribute'>
                                   <option value='Finite'>Finite</option>
-                                  <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
+                                  <option value='Equilibrium' selected>Equilibrium &nbsp;&nbsp;</option>
                                   <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
                                   <option value='Gradient'>Gradient</option>
                                 </select>&nbsp;
@@ -649,7 +676,7 @@
                                 <span class='periodCheckbox' id='nan1periodHold'>
                                   <input type='checkbox' id='nan1periodCheck' checked>Periodic&nbsp;
                                   <span>
-                                    <input id='nonEperiod' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '1000'/> Period (updates)
+                                    <input id='nonEperiod' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '1000'/> Period (updates)
                                   </span>
                                 </span>
                                 <br>
@@ -666,11 +693,11 @@
                               <span class='sugarTitle'>Andose</span>&nbsp;
                               <select  id='andGlobSpat'>
                                 <option value='Global'>Global</option>
-                                <option value='Spatial' selected='selected'>Spatial &nbsp;&nbsp;</option>
+                                <option value='Spatial' selected>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='envDistribute'>
                                 <option value='Finite'>Finite</option>
-                                <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
+                                <option value='Equilibrium' selected>Equilibrium &nbsp;&nbsp;</option>
                                 <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
                                 <option value='Gradient'>Gradient</option>
                               </select>&nbsp;
@@ -680,7 +707,7 @@
                                 <span class='periodCheckbox' id='and1periodHold'>
                                   <input type='checkbox' id='and1periodCheck' checked>Periodic&nbsp;
                                   <span>
-                                    <input id='nan1period' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '1000'/> Period (updates)
+                                    <input id='nan1period' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '1000'/> Period (updates)
                                   </span>
                                 </span>
                                 <br>
@@ -697,12 +724,12 @@
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Ornose</span>&nbsp;
                               <select  id='ornGlobSpat'>
-                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Global' selected>Global</option>
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='oroGlobRsrcType'>
                                 <option value='None'>None</option>
-                                <option value='Infinite' selected='selected'>Infinite</option>
+                                <option value='Infinite' selected>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
                               </select>                        
@@ -715,11 +742,11 @@
                               <span class='sugarTitle'>Orose</span>&nbsp;
                               <select  id='oroGlobSpat'>
                                 <option value='Global'>Global</option>
-                                <option value='Spatial' selected='selected'>Spatial &nbsp;&nbsp;</option>
+                                <option value='Spatial' selected>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='oro1Type'>
                                 <option value='Finite'>Finite</option>
-                                <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
+                                <option value='Equilibrium' selected>Equilibrium &nbsp;&nbsp;</option>
                                 <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
                                 <option value='Gradient'>Gradient</option>
                               </select>&nbsp;
@@ -743,12 +770,12 @@
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Antnose</span>&nbsp;
                               <select  id='antGlobSpat'>
-                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Global' selected>Global</option>
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='antGlobRsrcType'>
                                 <option value='None'>None</option>
-                                <option value='Infinite' selected='selected'>Infinite</option>
+                                <option value='Infinite' selected>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
                               </select>                        
@@ -760,12 +787,12 @@
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Norose</span>&nbsp;
                               <select  id='norGlobSpat'>
-                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Global' selected>Global</option>
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='NorGlobRsrcType'>
                                 <option value='None'>None</option>
-                                <option value='Infinite' selected='selected'>Infinite</option>
+                                <option value='Infinite' selected>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
                               </select>                        
@@ -777,17 +804,17 @@
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Xorose</span>&nbsp;
                               <select  id='xorGlobSpat'>
-                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Global' selected>Global</option>
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='xorGlobRsrcType'>
                                 <option value='None'>None</option>
                                 <option value='Infinite'>Infinite</option>
-                                <option value='Finite' selected='selected'>Finite</option>
+                                <option value='Finite' selected>Finite</option>
                                 <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
                               </select>
                               <span>
-                                <input id='xorGlInital' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4em; height:1.8em' value = '500'/> 
+                                <input id='xorGlinitial' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4em; height:1.6em' value = '500'/> 
                                 initial amount per cell
                               </span>
                             </summary>
@@ -798,11 +825,11 @@
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Equose</span>&nbsp;
                               <select  id='equGlobSpat'>
-                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Global' selected>Global</option>
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='equGlobRsrcType'>
-                                <option value='None'  selected='selected'>None</option>
+                                <option value='None'  selected>None</option>
                                 <option value='Infinite'>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>(E)quilibrium</option>
@@ -826,7 +853,7 @@
                             <div class="grid-9env-item">EQU<br /><label id="equType"> </label><br /><label id="equIn"></label><br /><label id="equOut"></label></div>  
                             <div class="grid-9env-item">
                               <select id='envShowRegion'>
-                                <option value='gl' selected='selected'>global</option>
+                                <option value='gl' selected>global</option>
                                 <option value='ed'>all spatial</option>
                                 <option value='ul'>upper left</option>
                                 <option value='ur'>upper right &nbsp;&nbsp;</option>
@@ -880,13 +907,13 @@
                           <div class='even'>
                             time Slice:
                             <input id='avetimeSlice' value='20'
-                                   style='width: 3em; height:1.8em' />
+                                   style='width: 3em; height:1.6em' />
                             &nbsp;&nbsp;&nbsp;
                             Update Delay:
                             <input id='sleepDelay' type='text' data-dojo-type='dijit/form/NumberTextBox'
                                    required='true' value='50' data-dojo-props='constraints:{min:0, max:5000,places:0},
                                    invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid update Delay."'
-                                   style='width:4em; height:1.8em'/>
+                                   style='width:4em; height:1.6em'/>
                             msecs<br />
                           </div>
                         </span>
@@ -898,9 +925,9 @@
                       Test Setup section - this section will be debug only
                       <div  class='odd'>
                         Dish Size:
-                        <input id='sizeColTest' type='text' onchange='av.ptd.gridChangTest(this.value)' style='width: 4.5em; height:1.8em' value = '10';/>
+                        <input id='sizeColTest' type='text' onchange='av.ptd.gridChangTest(this.value)' style='width: 4.5em; height:1.6em' value = '10';/>
                         &nbsp; x &nbsp;
-                        <input id='sizeRowTest' type='text' onchange='av.ptd.gridChangTest(this.value)' style='width: 4.5em; height:1.8em' value = '10'/>
+                        <input id='sizeRowTest' type='text' onchange='av.ptd.gridChangTest(this.value)' style='width: 4.5em; height:1.6em' value = '10'/>
                         cells&nbsp;<br />
                         <label id='sizeCellTest'>There are 900 cells by default</label>
                       </div>
@@ -909,9 +936,9 @@
                         <input id='muteInpuTest' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true'
                                data-dojo-props='constraints:{min:0, max:100},
                                invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                               style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value, "muteErroTest")'> %<br />
+                               style='width: 4.5em; height:1.6em' onchange='av.ptd.muteInputChange(this.value, "muteErroTest")'> %<br />
                         <!--; or the slider value is &nbsp;</div>
-                        <input id='mRate' type='text' readonly style='width: 4em; height:1.8em'></button> -->
+                        <input id='mRate' type='text' readonly style='width: 4em; height:1.6em'></button> -->
                         <label id='muteErroTest'>Error place holder</label>
                       </div>
                       <div class='odd'>Ancestral Organism(s):
@@ -948,7 +975,7 @@
                         <input id='randInpuTest' type='text' data-dojo-type='dijit/form/NumberTextBox' value=-1 required='true'
                                data-dojo-props='constraints:{min:-1, max:100},
                                invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid random seed."'
-                               style='width: 4.5em; height:1.8em' onchange='av.ptd.randInputChange(this.value, "randErroTest")'><br />
+                               style='width: 4.5em; height:1.6em' onchange='av.ptd.randInputChange(this.value, "randErroTest")'><br />
                         <label id='randErroTest'>Error place holder</label>
                       </div>
                       <div class='odd'>
@@ -973,9 +1000,9 @@
                       Environmental Settings
                       <div  class='odd'>
                         Dish Size:
-                        <input id='ex1sizeCols' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '10';/>
+                        <input id='ex1sizeCols' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '10';/>
                         &nbsp; x &nbsp;
-                        <input id='ex1sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '10'/>
+                        <input id='ex1sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '10'/>
                         cells&nbsp;<br />
                         <label id='ex1sizeCells'>There are 900 cells by default</label>
                       </div>
@@ -985,13 +1012,13 @@
                               style='width:100px; display: inline-block; vertical-align: top; margin-left:20px; margin-right:20px'></span>
                         <!-- style done here for the slider; margin to keep it from overlapping;
                                               without width the slider is the full width of the browser window-->
-                        <!--<input id='ex1muteInput' type='text' style='width: 4em; height:1.8em'></button> -->
+                        <!--<input id='ex1muteInput' type='text' style='width: 4em; height:1.6em'></button> -->
                         <input id='ex1muteInput' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' ;
                                data-dojo-props='constraints:{min:0, max:100},
                                invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                               style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value, "muteError")'> %<br />
+                               style='width: 4.5em; height:1.6em' onchange='av.ptd.muteInputChange(this.value, "muteError")'> %<br />
                         <!--; or the slider value is &nbsp;</div>
-                        <input id='ex1mRate' type='text' readonly style='width: 4em; height:1.8em'></button> -->
+                        <input id='ex1mRate' type='text' readonly style='width: 4em; height:1.6em'></button> -->
                         <label id='ex1muteError'>Error place holder</label>
                       </div>
                       <div class='odd'>Ancestral Organism(s):
@@ -1015,7 +1042,7 @@
                           <option value='allon'>All Infinite</option>
                           <option value='alloff'>All None</option>
                           <option value='allSpatial'>Spatial &nbsp;&nbsp;</option>
-                          <option value='allNeutral' selected='selected'>----</option>
+                          <option value='allNeutral' selected>----</option>
                           </select></div>
                         <br />
                         <div id='ex1sugarAccordion'>
@@ -1023,12 +1050,12 @@
                             <summary class='ex1sugarSummary'>
                               <span class='ex1sugarTitle'>Notose</span>&nbsp;
                               <select  id='ex1notGlobSpat'>
-                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Global' selected>Global</option>
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;&nbsp;&nbsp;&nbsp;
                               <select  id='ex1notGlobRsrcType'>
                                 <option value='None'>(N)one</option>
-                                <option value='Infinite' selected='selected'>Infinite</option>
+                                <option value='Infinite' selected>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
                               </select>                        
@@ -1041,10 +1068,10 @@
                               <span class='ex1sugarTitle'>Nanose</span>&nbsp;
                               <select  id='ex1nanGlobSpat'>
                                 <option value='Global'>Global</option>
-                                <option value='Spatial' selected='selected'>Spatial &nbsp;&nbsp;</option>
+                                <option value='Spatial' selected>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='ex1notSpatSplit'>
-                                <option value='EntireDish' selected='selected'>Entire Dish</option>
+                                <option value='EntireDish' selected>Entire Dish</option>
                                 <option value='TopBottom'>Halves Top/Bottom &nbsp;&nbsp;</option>
                                 <option value='LeftRite'>Halves Left/Right&nbsp;&nbsp;&nbsp;</option>
                                 <option value='Quarters'>Quarters</option>
@@ -1055,14 +1082,14 @@
                                 <label id='ex1nan1Detail' class='ex1dishPartLabel'>Entire Dish</label>
                                 <select  id='ex1envDistribute'>
                                   <option value='Finite'>Finite</option>
-                                  <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
+                                  <option value='Equilibrium' selected>Equilibrium &nbsp;&nbsp;</option>
                                   <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
                                   <option value='Gradient'>Gradient</option>
                                 </select>&nbsp;
                                 <span class='ex1periodCheckbox' id='ex1nan1periodHold'>
                                   <input type='checkbox' id='ex1nan1periodCheck' checked>Periodic&nbsp;
                                   <span>
-                                    <input id='ex1nonEperiod' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '1000'/> Period (updates)
+                                    <input id='ex1nonEperiod' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '1000'/> Period (updates)
                                   </span>
                                 </span>
                                 <br>
@@ -1079,13 +1106,13 @@
                               <span class='ex1sugarTitle'>Andose</span>&nbsp;
                               <select  id='ex1andGlobSpat'>
                                 <option value='Global'>Global</option>
-                                <option value='Spatial' selected='selected'>Spatial &nbsp;&nbsp;</option>
+                                <option value='Spatial' selected>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='ex1notSpatSplit'>
                                 <option value='EntireDish'>Entire Dish</option>
                                 <option value='TopBottom'>Halves Top/Bottom &nbsp;&nbsp;</option>
                                 <option value='LeftRight'>Halves Left/Right</option>
-                                <option value='Quarters' selected='selected'>Quarters</option>
+                                <option value='Quarters' selected>Quarters</option>
                               </select>                        
                             </summary>
                             <div id='ex1andDetails' class='ex1sugarDetail'>
@@ -1093,14 +1120,14 @@
                                 <label id='ex1and1Detail' class='ex1dishPartLabel'>Upper Left</label>
                                 <select  id='ex1envDistribute'>
                                   <option value='Finite'>Finite</option>
-                                  <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
+                                  <option value='Equilibrium' selected>Equilibrium &nbsp;&nbsp;</option>
                                   <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
                                   <option value='Gradient'>Gradient</option>
                                 </select>&nbsp;
                                 <span class='ex1periodCheckbox' id='ex1and1periodHold'>
                                   <input type='checkbox' id='ex1and1periodCheck' checked>Periodic&nbsp;
                                   <span>
-                                    <input id='ex1nan1period' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '1000'/> Period (updates)
+                                    <input id='ex1nan1period' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '1000'/> Period (updates)
                                   </span>
                                 </span>
                                 <br>
@@ -1115,7 +1142,7 @@
                                 <select  id='ex1envDistribute'>
                                   <option value='Finite'>Finite</option>
                                   <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
-                                  <option value='Source/Sink' selected='selected'>Source/Sink &nbsp;&nbsp;</option>
+                                  <option value='Source/Sink' selected>Source/Sink &nbsp;&nbsp;</option>
                                   <option value='Gradient'>Gradient</option>
                                 </select>&nbsp;
                                 <span class='ex1periodCheckbox' id='ex1and1periodHold'>
@@ -1123,7 +1150,7 @@
                                 </span>
                                 <br>
                                 <select  id='ex1and2SsSide'>
-                                  <option value='left' selected='selected'>(L)eft</option>
+                                  <option value='left' selected>(L)eft</option>
                                   <option value='right'>Right</option>
                                   <option value='top'>Top</option>
                                   <option value='bottom'>Bottom &nbsp;&nbsp;</option>
@@ -1137,7 +1164,7 @@
                               <div id='ex1nanPart3' class='ex1oddSugarPart'>
                                 <label id='ex1and3Detail' class='ex1dishPartLabel'>Lower Left</label>
                                 <select  id='ex1envDistribute'>
-                                  <option value='Finite' selected='selected'>Finite</option>
+                                  <option value='Finite' selected>Finite</option>
                                   <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
                                   <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
                                   <option value='Gradient'>Gradient</option>
@@ -1145,7 +1172,7 @@
                                 <span class='ex1periodCheckbox' id='ex1and1periodHold'>
                                   <input type='checkbox' id='ex1and3diffuse' checked>Diffusion&nbsp;
                                   <span>
-                                    <input id='ex1nonEperiod' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4em; height:1.8em' value = '500'/> 
+                                    <input id='ex1nonEperiod' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4em; height:1.6em' value = '500'/> 
                                     initial amount per cell
                                   </span>
                                 </span>
@@ -1154,12 +1181,12 @@
                                 <label id='ex1and4Detail' class='ex1dishPartLabel'>Lower Right</label>
                                 <select  id='ex1envDistribute'>
                                   <option value='Finite'>Finite</option>
-                                  <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
+                                  <option value='Equilibrium' selected>Equilibrium &nbsp;&nbsp;</option>
                                   <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
-                                  <option value='Gradient' selected='selected'>Gradient</option>
+                                  <option value='Gradient' selected>Gradient</option>
                                 </select>
                                 <select  id='ex1envGrSide'>
-                                  <option value='left' selected='selected'>(L)eft</option>
+                                  <option value='left' selected>(L)eft</option>
                                   <option value='right'>Right</option>
                                   <option value='top'>Top</option>
                                   <option value='bottom'>Bottom &nbsp;&nbsp;</option>
@@ -1180,12 +1207,12 @@
                             <summary class='ex1sugarSummary'>
                               <span class='ex1sugarTitle'>Ornose</span>&nbsp;
                               <select  id='ex1ornGlobSpat'>
-                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Global' selected>Global</option>
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='ex1oroGlobRsrcType'>
                                 <option value='None'>(N)one</option>
-                                <option value='Infinite' selected='selected'>Infinite</option>
+                                <option value='Infinite' selected>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
                               </select>                        
@@ -1198,11 +1225,11 @@
                               <span class='ex1sugarTitle'>Orose</span>&nbsp;
                               <select  id='ex1oroGlobSpat'>
                                 <option value='Global'>Global</option>
-                                <option value='Spatial' selected='selected'>Spatial &nbsp;&nbsp;</option>
+                                <option value='Spatial' selected>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='ex1oroSpatSplit'>
                                 <option value='EntireDish'>Entire Dish</option>
-                                <option value='TopBottom' selected='selected'>Halves Top/Bottom &nbsp;&nbsp;</option>
+                                <option value='TopBottom' selected>Halves Top/Bottom &nbsp;&nbsp;</option>
                                 <option value='LeftRight'>Halves Left/Right</option>
                                 <option value='Quarters'>Quarters</option>
                               </select>
@@ -1212,7 +1239,7 @@
                                 <label id='ex1oro1Detail' class='ex1dishPartLabel'>Top</label>
                                 <select  id='ex1oro1Distribute'>
                                   <option value='Finite'>Finite</option>
-                                  <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
+                                  <option value='Equilibrium' selected>Equilibrium &nbsp;&nbsp;</option>
                                   <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
                                   <option value='Gradient'>Gradient</option>
                                 </select>&nbsp;
@@ -1230,7 +1257,7 @@
                                 <label id='ex1oro2Detail' class='ex1dishPartLabel'>Bottom</label>
                                 <select  id='ex1oro2Distribute'>
                                   <option value='Finite'>Finite</option>
-                                  <option value='Equilibrium' selected='selected'>Equilibrium &nbsp;&nbsp;</option>
+                                  <option value='Equilibrium' selected>Equilibrium &nbsp;&nbsp;</option>
                                   <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
                                   <option value='Gradient'>Gradient</option>
                                 </select>&nbsp;
@@ -1250,12 +1277,12 @@
                             <summary class='ex1sugarSummary'>
                               <span class='ex1sugarTitle'>Antnose</span>&nbsp;
                               <select  id='ex1antGlobSpat'>
-                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Global' selected>Global</option>
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='ex1antGlobRsrcType'>
                                 <option value='None'>(N)one</option>
-                                <option value='Infinite' selected='selected'>Infinite</option>
+                                <option value='Infinite' selected>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
                               </select>                        
@@ -1267,12 +1294,12 @@
                             <summary class='ex1sugarSummary'>
                               <span class='ex1sugarTitle'>Norose</span>&nbsp;
                               <select  id='ex1norGlobSpat'>
-                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Global' selected>Global</option>
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='ex1NorGlobRsrcType'>
                                 <option value='None'>(N)one</option>
-                                <option value='Infinite' selected='selected'>Infinite</option>
+                                <option value='Infinite' selected>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
                               </select>                        
@@ -1284,17 +1311,17 @@
                             <summary class='ex1sugarSummary'>
                               <span class='ex1sugarTitle'>Xorose</span>&nbsp;
                               <select  id='ex1xorGlobSpat'>
-                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Global' selected>Global</option>
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='ex1xorGlobRsrcType'>
                                 <option value='None'>(N)one</option>
                                 <option value='Infinite'>Infinite</option>
-                                <option value='Finite' selected='selected'>Finite</option>
+                                <option value='Finite' selected>Finite</option>
                                 <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
                               </select>
                               <span>
-                                <input id='ex1xorGlInital' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4em; height:1.8em' value = '500'/> 
+                                <input id='ex1xorGlinitial' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4em; height:1.6em' value = '500'/> 
                                 initial amount per cell
                               </span>
                             </summary>
@@ -1305,11 +1332,11 @@
                             <summary class='ex1sugarSummary'>
                               <span class='ex1sugarTitle'>Equose</span>&nbsp;
                               <select  id='ex1equGlobSpat'>
-                                <option value='Global' selected='selected'>Global</option>
+                                <option value='Global' selected>Global</option>
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
                               <select  id='ex1equGlobRsrcType'>
-                                <option value='None'  selected='selected'>(N)one</option>
+                                <option value='None'  selected>(N)one</option>
                                 <option value='Infinite'>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>(E)quilibrium</option>
@@ -1333,7 +1360,7 @@
                             <div class="grid-9env-item">EQU<br /><label id="equType"> </label><br /><label id="equIn"></label><br /><label id="equOut"></label></div>  
                             <div class="grid-9env-item">
                               <select id='ex1envShowRegion'>
-                                <option value='gl' selected='selected'>global</option>
+                                <option value='gl' selected>global</option>
                                 <option value='ed'>all spatial</option>
                                 <option value='ul'>upper left</option>
                                 <option value='ur'>upper right &nbsp;&nbsp;</option>
@@ -1381,13 +1408,13 @@
                         <div class='even'>
                           time Slice:
                           <input id='ex1avetimeSlice' value='20'
-                                 style='width: 3em; height:1.8em' />
+                                 style='width: 3em; height:1.6em' />
                           &nbsp;&nbsp;&nbsp;
                           Update Delay:
                           <input id='ex1sleepDelay' type='text' data-dojo-type='dijit/form/NumberTextBox'
                                  required='true' value='50' data-dojo-props='constraints:{min:0, max:5000,places:0},
                                  invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid update Delay."'
-                                 style='width:4em; height:1.8em'/>
+                                 style='width:4em; height:1.6em'/>
                           msecs<br />
                         </div>
                       </span>
@@ -1400,9 +1427,9 @@
                       Environmental Settings
                       <div  class='odd'>
                         Dish Size:
-                        <input id='ex2sizeCols' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '10';/>
+                        <input id='ex2sizeCols' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '10';/>
                         &nbsp; x &nbsp;
-                        <input id='ex2sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.8em' value = '10'/>
+                        <input id='ex2sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '10'/>
                         cells&nbsp;<br />
                         <label id='ex2sizeCells'>There are 900 cells by default</label>
                       </div>
@@ -1412,13 +1439,13 @@
                               style='width:100px; display: inline-block; vertical-align: top; margin-left:20px; margin-right:20px'></span>
                         <!-- style done here for the slider; margin to keep it from overlapping;
                                               without width the slider is the full width of the browser window-->
-                        <!--<input id='ex2muteInput' type='text' style='width: 4em; height:1.8em'></button> -->
+                        <!--<input id='ex2muteInput' type='text' style='width: 4em; height:1.6em'></button> -->
                         <input id='ex2muteInput' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' ;
                                data-dojo-props='constraints:{min:0, max:100},
                                invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                               style='width: 4.5em; height:1.8em' onchange='av.ptd.muteInputChange(this.value, "muteError")'> %<br />
+                               style='width: 4.5em; height:1.6em' onchange='av.ptd.muteInputChange(this.value, "muteError")'> %<br />
                         <!--; or the slider value is &nbsp;</div>
-                        <input id='ex2mRate' type='text' readonly style='width: 4em; height:1.8em'></button> -->
+                        <input id='ex2mRate' type='text' readonly style='width: 4em; height:1.6em'></button> -->
                         <label id='ex2muteError'>Error place holder</label>
                       </div>
                       <div class='odd'>Ancestral Organism(s):
@@ -1441,7 +1468,7 @@
                         <div class='grid-env1row-container'>
                           <div class='grid-env1row-c1-item'>
                             Task <select id='ex2envTask'>
-                              <option value='not' selected='selected'>notose: Easy (x2)</option>
+                              <option value='not' selected>notose: Easy (x2)</option>
                               <option value='nan'>nanose: Easy (x2)</option>
                               <option value='and'>andose: Moderate (x4)</option>
                               <option value='orn'>ornose: Moderate (x4)</option>
@@ -1452,14 +1479,14 @@
                               <option value='equ'>equose: Brutal (x32)</option>
                             </select><br />
                             Region of Dish <select id='ex2envRegion'>
-                              <option value='Entire Dish' selected='selected'>Entire Dish</option>
+                              <option value='Entire Dish' selected>Entire Dish</option>
                               <option value='Upper Left'>upper left</option>
                               <option value='Upper Right'>upper right &nbsp;&nbsp;</option>
                               <option value='Lower Left'>lower left</option>
                               <option value='Lower Right'>lower right &nbsp;&nbsp;</option>
                             </select><br />
                             Distribution <select id='ex2envDistribute'>
-                              <option value='None' selected='selected'>(N)one</option>
+                              <option value='None' selected>(N)one</option>
                               <option value='Infinite'>(I)nfinite</option>
                               <option value='Finite'>(F)inite</option>
                               <option value='Equilibrium'>(E)quilibrium</option>
@@ -1472,7 +1499,7 @@
                               &nbsp;
                             </div>
                             <div id='ex2envFinite'>
-                              <input id='ex2envInitial' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.8em' value = '100'/>
+                              <input id='ex2envInitial' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3.5em; height:1.6em' value = '100'/>
                               &nbsp;Amount of resource per cell
                             </div>
                             <div id='ex2envEquilibrium'>
@@ -1484,7 +1511,7 @@
                             </div>
                             <div id='ex2envGradient'>
                               <select  id='ex2envGrSide'>
-                                <option value='left' selected='selected'>(L)eft</option>
+                                <option value='left' selected>(L)eft</option>
                                 <option value='right'>(R)ight</option>
                                 <option value='top'>(T)op</option>
                                 <option value='bottom'>(B)ottom</option>
@@ -1499,7 +1526,7 @@
                             </div>
                             <div id='ex2envSourceSink'>
                               <select  id='ex2envSsSide'>
-                                <option value='left' selected='selected'>(L)eft</option>
+                                <option value='left' selected>(L)eft</option>
                                 <option value='right'>(R)ight</option>
                                 <option value='top'>(T)op</option>
                                 <option value='bottom'>(B)ottom</option>
@@ -1529,7 +1556,7 @@
                             <div class='grid-9env-item'>EQU<br /><label id='ex2equType'> </label><br /><label id='ex2equIn'></label><br /><label id='ex2equOut'></label></div>
                             <div class='grid-9env-item'>
                               <select id='ex2envShowRegion'>
-                                <option value='ed' selected='selected'>Entire Dish</option>
+                                <option value='ed' selected>Entire Dish</option>
                                 <option value='ul'>upper left</option>
                                 <option value='ur'>upper right &nbsp;&nbsp;</option>
                                 <option value='ll'>lower left</option>
@@ -1582,7 +1609,7 @@
                               <option value='allon'>All</option>
                               <option value='alloff'>None</option>
                               <option value='allComp'>Complement</option>
-                              <option value='allNeutral' selected='selected'>----</option>
+                              <option value='allNeutral' selected>----</option>
                             </select>
                           </div>
                         </div>
@@ -1598,7 +1625,7 @@
                             notose<br>
                             <select id='notSugarDropEx2'>
                               <option value='notNone'>(N)one</option>
-                              <option value='notInfinite' selected='selected'>(I)nfinite</option>
+                              <option value='notInfinite' selected>(I)nfinite</option>
                               <option value='notFinite'>(F)inite</option>
                               <option value='notEquilibrium'>(E)quilibrium</option>
                             </select>                    
@@ -1607,7 +1634,7 @@
                             andose
                             <select id='andSugarDropEx2'>
                               <option value='andNone'>(N)one</option>
-                              <option value='andInfinite' selected='selected'>(I)nfinite</option>
+                              <option value='andInfinite' selected>(I)nfinite</option>
                               <option value='andFinite'>(F)inite</option>
                               <option value='andEquilibrium'>(E)quilibrium</option>
                             </select>                    
@@ -1616,7 +1643,7 @@
                             orose
                             <select id='oroSugarDropEx2'>
                               <option value='oroNone'>(N)one</option>
-                              <option value='oroInfinite' selected='selected'>(I)nfinite</option>
+                              <option value='oroInfinite' selected>(I)nfinite</option>
                               <option value='oroFinite'>(F)inite</option>
                               <option value='oroEquilibrium'>(E)quilibrium</option>
                             </select>                    
@@ -1625,7 +1652,7 @@
                             norose
                             <select id='norSugarDropEx2'>
                               <option value='norNone'>(N)one</option>
-                              <option value='norInfinite' selected='selected'>(I)nfinite</option>
+                              <option value='norInfinite' selected>(I)nfinite</option>
                               <option value='norFinite'>(F)inite</option>
                               <option value='norEquilibrium'>(E)quilibrium</option>
                             </select>                    
@@ -1634,7 +1661,7 @@
                             equose
                             <select id='equSugarDropEx2'>
                               <option value='equNone'>(N)one</option>
-                              <option value='equInfinite' selected='selected'>(I)nfinite</option>
+                              <option value='equInfinite' selected>(I)nfinite</option>
                               <option value='equFinite'>(F)inite</option>
                               <option value='equEquilibrium'>(E)quilibrium</option>
                             </select>                    
@@ -1644,7 +1671,7 @@
                             nanose
                             <select id='nanSugarDropEx2'>
                               <option value='nanNone'>(N)one</option>
-                              <option value='nanInfinite' selected='selected'>(I)nfinite</option>
+                              <option value='nanInfinite' selected>(I)nfinite</option>
                               <option value='nanFinite'>(F)inite</option>
                               <option value='nanEquilibrium'>(E)quilibrium</option>
                             </select>                    
@@ -1653,7 +1680,7 @@
                             ornose
                             <select id='ornSugarDropEx2'>
                               <option value='ornNone'>(N)one</option>
-                              <option value='ornInfinite' selected='selected'>(I)nfinite</option>
+                              <option value='ornInfinite' selected>(I)nfinite</option>
                               <option value='ornFinite'>(F)inite</option>
                               <option value='ornEquilibrium'>(E)quilibrium</option>
                             </select>                    
@@ -1662,7 +1689,7 @@
                             andnose
                             <select id='antSugarDropEx2'>
                               <option value='antNone'>(N)one</option>
-                              <option value='antInfinite' selected='selected'>(I)nfinite</option>
+                              <option value='antInfinite' selected>(I)nfinite</option>
                               <option value='antFinite'>(F)inite</option>
                               <option value='antEquilibrium'>(E)quilibrium</option>
                             </select>                    
@@ -1671,7 +1698,7 @@
                             xorose
                             <select id='xorSugarDropEx2'>
                               <option value='xorNone'>(N)one</option>
-                              <option value='xorInfinite' selected='selected'>(I)nfinite</option>
+                              <option value='xorInfinite' selected>(I)nfinite</option>
                               <option value='xorFinite'>(F)inite</option>
                               <option value='xorEquilibrium'>(E)quilibrium</option>
                             </select>                    
@@ -1682,7 +1709,7 @@
                               <option value='alloff'>None</option>
                               <option value='allFinite'>(F)inite</option>
                               <option value='allEquilibrium'>(E)quilibrium</option>
-                              <option value='allNeutral' selected='selected'>----</option>
+                              <option value='allNeutral' selected>----</option>
                             </select>                    
                           </div>
                         </div> <span class="end Sugar onOff grid"></span>
@@ -1719,13 +1746,13 @@
                         <div class='even'>
                           time Slice:
                           <input id='ex2avetimeSlice' value='20'
-                                 style='width: 3em; height:1.8em' />
+                                 style='width: 3em; height:1.6em' />
                           &nbsp;&nbsp;&nbsp;
                           Update Delay:
                           <input id='ex2sleepDelay' type='text' data-dojo-type='dijit/form/NumberTextBox'
                                  required='true' value='50' data-dojo-props='constraints:{min:0, max:5000,places:0},
                                  invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid update Delay."'
-                                 style='width:4em; height:1.8em'/>
+                                 style='width:4em; height:1.6em'/>
                           msecs<br />
                         </div>
                       </span>
@@ -1760,7 +1787,7 @@
                   <input id='orgCycle' type='text' data-dojo-type='dijit/form/NumberTextBox' name='cycle'
                          required='true' value='0' data-dojo-props='constraints:{min:0, max:2000,places:0},
                          invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid cycle number."'
-                         style='width:3em; height:1.8em'/>
+                         style='width:3em; height:1.6em'/>
                 </div>
                 <div style='text-align:center'>
                   <button id='orgReset' disabled>Reset</button>
@@ -1853,7 +1880,7 @@
                     <button id='pop0delete'>X</button>
                   </div>
                   <select  id='pop0color'>
-                    <option value='Red' selected='selected'>Red</option>
+                    <option value='Red' selected>Red</option>
                     <option value='Blue'>Blue</option>
                     <option value='Green'>Green</option>
                     <option value='Yellow'>Yellow</option>
@@ -1870,7 +1897,7 @@
                   </div>
                   <select  id='pop1color'>
                     <option value='Red'>Red</option>
-                    <option value='Blue' selected='selected'>Blue</option>
+                    <option value='Blue' selected>Blue</option>
                     <option value='Green'>Green</option>
                     <option value='Yellow'>Yellow</option>
                     <option value='Orange'>Orange</option>
@@ -1891,7 +1918,7 @@
                       <option value='Purple'>Purple</option>
                       <option value='Cyan'>Cyan</option>
                       <option value='Magenta'>Magenta</option>
-                      <option value='Black' selected='selected'>Black</option>
+                      <option value='Black' selected>Black</option>
                     </select>
                   </div>
                   <div id='graphPop2' class='popContainer'></div>
@@ -1899,7 +1926,7 @@
                 <div class="anaYaxis">
                   <select  id='yLeftSelect'>
                     <option value='None'>None</option>
-                    <option value='Average Fitness' selected='selected'>Average Fitness</option>
+                    <option value='Average Fitness' selected>Average Fitness</option>
                     <option value='Average Offspring Cost'>Average Offspring Cost</option>
                     <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
                     <option value='Number of Organisms'>Number of Organisms</option>
@@ -1909,7 +1936,7 @@
                   <select  id='yRightSelect'>
                     <option value='None'>None</option>
                     <option value='Average Fitness'>Average Fitness</option>
-                    <option value='Average Offspring Cost' selected='selected'>Average Offspring Cost</option>
+                    <option value='Average Offspring Cost' selected>Average Offspring Cost</option>
                     <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
                     <option value='Number of Organisms'>Number of Organisms</option>
                     <option value='Number Viable'>Number Viable</option>
@@ -2053,14 +2080,14 @@
                   style='width:200px; display: inline-block; vertical-align: top; margin-left:20px; margin-right:20px'></span>
             <!-- style done here for the slider; margin to keep it from overlapping;
                                 without width the slider is the full width of the browser window-->
-            <!--<input id='orMuteInput' type='text' style='width: 4em; height:1.8em'></button>%-->
+            <!--<input id='orMuteInput' type='text' style='width: 4em; height:1.6em'></button>%-->
             <input id='orMuteInput' type='text' data-dojo-type='dijit/form/NumberTextBox' value=2.0 required='true' ;
                    data-dojo-props='constraints:{min:0, max:100},
                    invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                   style='width: 4.5em; height:1.8em'></button> %
+                   style='width: 4.5em; height:1.6em'></button> %
 
             <!--<div class='fltLeft'>%</div>
-            <input id='orMRate' type='text' readonly style='width: 4em; height:1.8em'></button>-->
+            <input id='orMRate' type='text' readonly style='width: 4em; height:1.6em'></button>-->
           </div>
           <h3>Repeatability Mode:</h3>
           <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganExperimentRadio'
@@ -2569,3 +2596,5 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
               <span title="---------------------------------------------------------------------------------- closing the file --"></span>
 
               </body>
+
+              

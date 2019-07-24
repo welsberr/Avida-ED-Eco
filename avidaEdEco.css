@@ -177,7 +177,7 @@
   }
 
   #popInfoHolder {
-    flex: 0 1 460px;          /* flex: 0 1 344px; is fixed in that dimension   was 349px  was 500px*/
+    flex: 0 1 560px;          /* flex: 0 1 344px; is fixed in that dimension   was 349px  was 500px*/
     border: 1px solid #AAA;
     background: beige;
     max-height: 750px;
@@ -303,43 +303,17 @@
 /*************************************************************************** Sugar Accordion using details and select */
 /* Accodion using details/summary and hidden sections also defined here */
 
-/*
-summary::-webkit-details-marker {
-  display: none
-}
-
-summary > div {
-  width: calc(100% - 50px);
-  display: inline-block;
-  vertical-align: middle;
-}
-
-details {
-}
-
-summary:before {
-  content: "►";
-  margin: 0px 10px 0 0;
-  width: 20px;
-}
-
-details[open] summary:before {
-  content: "▼";
-}
-*/
-
 #sugarAccordion{
   width: 100%;
-  background: #ff0; /* #fff;          /*cyan=0ff; yellow=ff0 magenta=f0f brightGreen=0f0 red=f00 blue=00f */
 }
 .sugarAccordionSection{
   width: 100%;
-  background: palegoldenrod;
   border-bottom: 1px solid #222;   /* #000 is black  */
   display: inline-block;
 }
 .sugarSummary{
   background: rgba(128, 128, 128, 0.1); 
+  height: 1.7em;
   width: 100%;
 }
 
@@ -349,14 +323,23 @@ details[open] summary:before {
   font-weight: bold;
   display: inline-block;
 }
-.sugInitialArt{
-  display: inline-block;
-}
 .sugInitialDiv{
   display: inline-block;
 }
 .sugInitialInput{
-  width: 3.5em; height:1.8em;
+  width: 3.5em; height:1.6em;
+}
+.sugInitialLoInput{
+  width: 3.5em; height:1.6em;
+}
+.sugInitialHiInput{
+  width: 3.5em; height:1.7em;
+}
+.sugInflowInput{
+  width: 3.5em; height:1.7em;
+}
+.sugOutflowInput{
+  width: 3.5em; height:1.7em;
 }
 #notSection{
   background: rgba(255,153,178, 1);  /* bigger number is closer to white; 0,0,0 is black*/
@@ -388,20 +371,51 @@ details[open] summary:before {
 
 /************************************************************************************************** Sugar grid layout */
 
-.grid-sugarDetail-container {
-  display: inline-grid;
-  grid-template-columns: 1fr 1fr;
-  background-color: rgba(128, 128, 128, 0.3);     /* #2196F3;  blue */
-/*  justify-content: space-evenly;  */
+.initialHi { grid-area: initialHi;}
+.initialLo { grid-area: initialLo;}
+.inflow { grid-area: inflow; }
+.outflow { grid-area: outflow; }
+.equilibrium { grid-area: equilibrium; }
+.side { grid-area: side; }
+
+.grid-sugarDetailAll-container {
+  display: grid;
+  grid-template-areas: 'side equilibrium'
+                       'inflow outflow'
+                       'initialLo initialHi';
+}
+.grid-sugarDetailEqual-container {
+  display: grid;
+  grid-template-areas: 'inflow outflow'
+                       'equilibrium equilibrium';
   width: 100%;
 }
-.grid-sugarDetail-item {
-  background-color: rgba(128, 128, 128, 0.2);
-  border: 0px solid #fff;
+.grid-sugarDetailSourceSink-container {
+  display: grid;
+  grid-template-areas: 'side side'
+                       'inflow outflow';
+  width: 100%;
+}
+.grid-sugarDetailGradient-container {
+  display: grid;
+  grid-template-areas: 'side side'
+                       'initialHi initialLo';
+  width: 100%;
+}
+.grid-sugarDetailAll-container {
+  display: grid;
+  grid-template-areas: 'side equilibrium'
+                       'inflow outflow'
+                       'initialHi initialLo';
+  width: 100%;
+}
+.grid-sugarDetail-item{
+  background-color: rgba(128, 128, 128, 0.2);    
+  border: 1px solid rgba(128, 128, 128, 0.6);
   text-align: left;
   padding: 1px 1px;
+  min-height: 22px;
 }
-
 
 /*********************************************************************** End Sugar Accordion using details and select */
 
@@ -428,7 +442,7 @@ details[open] summary:before {
 /* From  https://www.proy.info/style-select-dropdown-using-css/ */
 /* body select.select_box option */ 
 
-body select {
+select {
 /*  background: url("https://i.ibb.co/b7xjLrB/selectbox-arrow.png") right center no-repeat;  */
   background: url('images/arrowDownBlackSmallMedOutlineMoreBackgnd.png') right center no-repeat;
   background-size: 20px 20px;
@@ -438,21 +452,22 @@ body select {
   appearance: none;
   border: 1px solid black;
   border-radius: 5px;
+  margin-top: 2px;
 }
-body select:hover{
+select:hover{
   cursor: pointer;
   background-color: white;
   box-shadow:none;
 }
-body select:hover::after {
-  background-color:  #0f0;  //can't tell that this does anything'
+select:hover::after {
+  background-color:  #0f0;  /*can't tell that this does anything'*/
 }
 
-body select:focus{
-  background-color: white;  //changes background off all the options not the one highlighted
+select:focus{
+  background-color: white;  /*changes background off all the options not the one highlighted */
 }
 
-body select:option { 
+select:option { 
     padding: 0 2px; 
     background-color: #eee;
 } 
@@ -463,7 +478,6 @@ select::-ms-expand {
 select:disabled::-ms-expand { 
     background: #fff; 
 }
-
 body option:hover{
   background-color: yellow;
 }
@@ -515,7 +529,8 @@ checkbox:focus {
 }
 
 .ex1sugarSummary{
-  background: rgba(128, 128, 128, 0.1);   
+  background: rgba(128, 128, 128, 0.1);  
+  height: 22px;
 }
 .ex1sugarDetail{
   /* background: #fff;    /* #7eAbCd*/
@@ -664,7 +679,7 @@ checkbox:focus {
 }
 .flowInput{
   width: 2em;      /*  4.5em */
-  height:1.8em
+  height:1.6em
 }
 
 .freezerClass{
