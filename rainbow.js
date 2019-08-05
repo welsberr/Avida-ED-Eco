@@ -1,6 +1,6 @@
 var av = av || {};  //incase av already exists
 
-//Definition of Viridis and other dictionaries or color data sets
+//Definition of monochrome color sets
 av.color = av.color || {};
 
 av.color.reddMap =[
@@ -102,6 +102,7 @@ av.color.reddMap =[
     ,' rgb( 255 ,  104 ,  104 )'
     ,' rgb( 255 ,  102 ,  102 )'
     ,' rgb( 255 ,  100 ,  100 )'
+/*     
     ,' rgb( 255 ,  99 ,  99 )'
     ,' rgb( 255 ,  97 ,  97 )'
     ,' rgb( 255 ,  96 ,  96 )'
@@ -293,6 +294,63 @@ av.color.reddMap =[
     ,' rgb( 54 ,  0 ,  0 )'
     ,' rgb( 53 ,  0 ,  0 )'
     ,' rgb( 51 ,  0 ,  0 )'
+
+    ,' rgb( 50 ,  0 ,  0 )'
+    ,' rgb( 49 ,  0 ,  0 )'
+    ,' rgb( 48 ,  0 ,  0 )'
+    ,' rgb( 47 ,  0 ,  0 )'
+    ,' rgb( 46 ,  0 ,  0 )'
+    ,' rgb( 45 ,  0 ,  0 )'
+    ,' rgb( 44 ,  0 ,  0 )'
+    ,' rgb( 43 ,  0 ,  0 )'
+    ,' rgb( 42 ,  0 ,  0 )'
+    ,' rgb( 41 ,  0 ,  0 )'
+    ,' rgb( 40 ,  0 ,  0 )'
+    
+    ,' rgb( 39 ,  0 ,  0 )'
+    ,' rgb( 38 ,  0 ,  0 )'
+    ,' rgb( 37 ,  0 ,  0 )'
+    ,' rgb( 36 ,  0 ,  0 )'
+    ,' rgb( 35 ,  0 ,  0 )'
+    ,' rgb( 34 ,  0 ,  0 )'
+    ,' rgb( 33 ,  0 ,  0 )'
+    ,' rgb( 32 ,  0 ,  0 )'
+    ,' rgb( 31 ,  0 ,  0 )'
+    ,' rgb( 30 ,  0 ,  0 )'
+
+    ,' rgb( 29 ,  0 ,  0 )'
+    ,' rgb( 28 ,  0 ,  0 )'
+    ,' rgb( 27 ,  0 ,  0 )'
+    ,' rgb( 26 ,  0 ,  0 )'
+    ,' rgb( 25 ,  0 ,  0 )'
+    ,' rgb( 24 ,  0 ,  0 )'
+    ,' rgb( 23 ,  0 ,  0 )'
+    ,' rgb( 22 ,  0 ,  0 )'
+    ,' rgb( 21 ,  0 ,  0 )'
+    ,' rgb( 20 ,  0 ,  0 )'
+
+    ,' rgb( 19 ,  0 ,  0 )'
+    ,' rgb( 18 ,  0 ,  0 )'
+    ,' rgb( 17 ,  0 ,  0 )'
+    ,' rgb( 16 ,  0 ,  0 )'
+    ,' rgb( 15 ,  0 ,  0 )'
+    ,' rgb( 14 ,  0 ,  0 )'
+    ,' rgb( 13 ,  0 ,  0 )'
+    ,' rgb( 12 ,  0 ,  0 )'
+    ,' rgb( 11 ,  0 ,  0 )'
+    ,' rgb( 10 ,  0 ,  0 )'
+
+    ,' rgb( 9 ,  0 ,  0 )'
+    ,' rgb( 8 ,  0 ,  0 )'
+    ,' rgb( 7 ,  0 ,  0 )'
+    ,' rgb( 6 ,  0 ,  0 )'
+    ,' rgb( 5 ,  0 ,  0 )'
+    ,' rgb( 4 ,  0 ,  0 )'
+    ,' rgb( 3 ,  0 ,  0 )'
+    ,' rgb( 2 ,  0 ,  0 )'
+    ,' rgb( 1 ,  0 ,  0 )'
+    ,' rgb( 0 ,  0 ,  0 )'
+  */
 ];
 av.color.orngMap =[
      ' rgb( 255 ,  255 ,  255 )'

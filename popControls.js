@@ -461,7 +461,7 @@ av.pch.bitTurnOn = function(button) {
   av.grd.selFnBinary = '';
   for (var ii=0; ii<9; ii++) {
     if (av.grd.fnChosen[av.ptd.logicButtons[ii]]) {
-      av.grd.selFnText += av.ptd.logicNames[ii] + '.';
+      av.grd.selFnText += av.sgr.logicNames[ii] + '.';
       av.grd.selFnBinary += '1';
     }
     else av.grd.selFnBinary +='0';
@@ -491,7 +491,7 @@ av.ptd.bitToggle = function (button) {
   av.grd.selFnBinary = '';
   for (var ii=0; ii<9; ii++) {
     if (av.grd.fnChosen[av.ptd.logicButtons[ii]]) {
-      av.grd.selFnText += av.ptd.logicNames[ii] + '.';
+      av.grd.selFnText += av.sgr.logicNames[ii] + '.';
       av.grd.selFnBinary += '1';
     }
     else av.grd.selFnBinary +='0';
@@ -600,46 +600,81 @@ av.ptd.clearLogicButtons = function() {
   }
 };
 
-av.ptd.allSugarChange = function (allmode) {
-  var onoff = 'None';
-  var spGl = 'Spatial';
-  console.log('allmode=', allmode);
-  if ( ('allon' == allmode) || ('alloff' == allmode) ) {
-    spGl = 'Global';
-    if ('allon' == allmode) {
-      onoff = 'Infinite';
-    }
-    else if ('alloff' == allmode) {
-      onoff = 'None';
-    };
-    document.getElementById('notGlobRsrcType').value = onoff;
-    //document.getElementById('nanGlobRsrcType').value = onoff;
-    //document.getElementById('andGlobRsrcType').value = onoff;
-    //document.getElementById('ornGlobRsrcType').value = onoff;
-    document.getElementById('oroGlobRsrcType').value = onoff;
-    document.getElementById('antGlobRsrcType').value = onoff;
-    //document.getElementById('norGlobRsrcType').value = onoff;
-    document.getElementById('xorGlobRsrcType').value = onoff;
-    document.getElementById('equGlobRsrcType').value = onoff;
+//----------------------------------------------------------------------------------------------------------------------
 
-    document.getElementById('notGlobSpat').value = spGl;
-    document.getElementById('nanGlobSpat').value = spGl;
-    document.getElementById('andGlobSpat').value = spGl;
-    document.getElementById('ornGlobSpat').value = spGl;
-    document.getElementById('oroGlobSpat').value = spGl;
-    document.getElementById('antGlobSpat').value = spGl;
-    document.getElementById('norGlobSpat').value = spGl;
-    document.getElementById('xorGlobSpat').value = spGl;
-    document.getElementById('equGlobSpat').value = spGl;
-  };
+// should really be in a ui code section
+// http://stackoverflow.com/questions/7125453/modifying-css-class-property-values-on-the-fly-with-javascript-jquery
+  av.ptd.setStyle = function (cssText) {
+  var sheet = document.createElement('style'), isIE = false;
+    sheet.type = 'text/css';
+    /* Optional */ window.customSheet = sheet;
+    (document.head || document.getElementsByTagName('head')[0]).appendChild(sheet);
+    try{sheet.cloneNode(false).appendChild(document.createTextNode('')); }
+  catch (err){isIE = true; }
+  var wrapper = isIE ? document.createElement('div') : sheet;
+    return (setStyle = function(cssText, node) {
+    if (!node || node.parentNode !== wrapper)
+      node = wrapper.appendChild(document.createTextNode(cssText));
+      else node.nodeValue = cssText;
+      if (isIE) sheet.styleSheet.cssText = wrapper.innerHTML;
+      return node;
+    })(cssText);
+    };
+//----------------------------------------------------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------------------------------- sugars for Eco --
+
+//This does  not deal wtth complement, I'll do that later if asked. 
+av.sgr.ChangeAllGeo = function(selectedOption){
+  var endName = 'Geometry';   //nanGeometry
+  var idName = '';
+  var numtasks = av.sgr.logicNames.length;
+  for (var ii=0; ii< numtasks; ii++) {
+  //for (var ii=1; ii< 3; ii++) {
+    idName = av.sgr.logicNames[ii] + endName;
+    document.getElementById(idName).value = selectedOption;
+    console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption);
+  }
 };
 
+av.sgr.ChangeAllSugarType = function(selectedOption){
+  var endName = '0Type';   //nan0Type  the 0 is present because we were considering doing upto 4 hear and easier to take the 0 out later, than to put it in. 
+  console.log('endName=', endName, '; selectedOption=',selectedOption);
+  var domName = '';        
+  var numtasks = av.sgr.logicNames.length;
+  //for (var ii=0; ii< numtasks; ii++) {
+  for (var ii=2; ii< 3; ii++) {
+    domName = av.sgr.logicNames[ii] + endName;
+    document.getElementById(domName).value = selectedOption;
+  }
+};
+
+  av.sgr.setSugarColors = function() {
+  var sugarSection = ['notSection', 'nanSection', 'andSection', 'ornSection', 'oroSection', 'antSection', 'norSection', 'xorSection', 'equSection'];
+    var len = av.sgr.sugarColors.length;
+    var ndx = av.sgr.sugarShade;
+    for (ii = 0; ii < len; ii++) {
+      //console.log('ii=',ii,'SugarSection=', sugarSection[ii]);
+      if ('Spatial' != document.getElementById('allSugarGeometry').value) {
+        document.getElementById(sugarSection[ii]).style.backgroundColor = av.color.greyMap[ndx];
+      }
+      else {
+        document.getElementById(sugarSection[ii]).style.backgroundColor = av.color[av.sgr.sugarColors[ii]][ndx];
+      }
+    }
+  };
+
+//------------------------------------------------------------------------------------------------ end sugars for Eco --
+
+
+//------------------------------------------------------------------------------------------ ex1 and ex2 delete later --
+//in ex2 page now
 av.ptd.ex1allSugarChange = function (allmode) {
   var onoff = 'None';
-  var spGl = 'Spatial';
-  console.log('allmode=', allmode);
+  var geometry = 'Spatial';
+  console.log('ex1_allmode=', allmode);
   if ( ('allon' == allmode) || ('alloff' == allmode) ) {
-    spGl = 'Global';
+    geometry = 'Global';
     if ('allon' == allmode) {
       onoff = 'Infinite';
     }
@@ -656,21 +691,20 @@ av.ptd.ex1allSugarChange = function (allmode) {
     document.getElementById('ex1xorGlobRsrcType').value = onoff;
     document.getElementById('ex1equGlobRsrcType').value = onoff;
 
-    document.getElementById('ex1notGlobSpat').value = spGl;
-    document.getElementById('ex1nanGlobSpat').value = spGl;
-    document.getElementById('ex1andGlobSpat').value = spGl;
-    document.getElementById('ex1ornGlobSpat').value = spGl;
-    document.getElementById('ex1oroGlobSpat').value = spGl;
-    document.getElementById('ex1antGlobSpat').value = spGl;
-    document.getElementById('ex1norGlobSpat').value = spGl;
-    document.getElementById('ex1xorGlobSpat').value = spGl;
-    document.getElementById('ex1equGlobSpat').value = spGl;
+    document.getElementById('ex1notGeometry').value = geometry;
+    document.getElementById('ex1nanGeometry').value = geometry;
+    document.getElementById('ex1andGeometry').value = geometry;
+    document.getElementById('ex1ornGeometry').value = geometry;
+    document.getElementById('ex1oroGeometry').value = geometry;
+    document.getElementById('ex1antGeometry').value = geometry;
+    document.getElementById('ex1norGeometry').value = geometry;
+    document.getElementById('ex1xorGeometry').value = geometry;
+    document.getElementById('ex1equGeometry').value = geometry;
   };
 };
 
-
 //in ex2 page now
-av.ptd.allSugar = function (allmode) {
+av.ptd.allSugarCheckBox = function (allmode) {
   var onflag = true;
   if ('allComp' == allmode) {
     document.getElementById('notose').checked =  !document.getElementById('notose').checked;
@@ -702,40 +736,20 @@ av.ptd.allSugar = function (allmode) {
   };
 };
 
-// should really be in a ui code section
-// http://stackoverflow.com/questions/7125453/modifying-css-class-property-values-on-the-fly-with-javascript-jquery
-av.ptd.setStyle = function (cssText) {
-  var sheet = document.createElement('style'), isIE = false;
-  sheet.type = 'text/css';
-  /* Optional */ window.customSheet = sheet;
-  (document.head || document.getElementsByTagName('head')[0]).appendChild(sheet);
-  try{sheet.cloneNode(false).appendChild(document.createTextNode(''));}
-  catch(err){isIE = true;}
-  var wrapper = isIE ? document.createElement('div') : sheet;
-  return (setStyle = function(cssText, node) {
-    if(!node || node.parentNode !== wrapper)
-      node = wrapper.appendChild(document.createTextNode(cssText));
-    else node.nodeValue = cssText;
-    if (isIE) sheet.styleSheet.cssText = wrapper.innerHTML;
-    return node;
-  })(cssText);
-};
-
-//----------------------------------------------------------------------------------------------------------------------
-
+//for structure on ex2 tab; not currently called as of 2019 Aug 4
 av.ptd.envobj2form = function(from) {
   console.log(from, 'called av.ptd.envobj2form');
   console.log('av.ui.envRegion=',av.ui.envRegion, '; av.ui.envTask=', av.ui.envTask, '; av.ui.envDistribute=',av.ui.envDistribute);
   var task;
   var ndx = -1;
   var envobj;
-  var logicindex = av.ptd.logicNames.indexOf(av.ui.envTask);
+  var logicindex = av.sgr.logicNames.indexOf(av.ui.envTask);
   var regionindex = av.ptd.regionNames.indexOf(av.ui.envRegion);
   var ii=0;
   var found = false;
   var len;
   if (-1 < logicindex && -1 < regionindex) {
-    task = av.ptd.logEdNames[logicindex];
+    task = av.sgr.logEdNames[logicindex];
     envobj = av.fzr.env.rsrce[task];
     console.log('task='+task,'; av.fzr.env.rsrce[task] = ', av.fzr.env.rsrce[task]);
     len = envobj.name.length;
@@ -769,10 +783,11 @@ av.ptd.envobj2form = function(from) {
   else {console.log('Error in an environment indesx: av.ui.envRegion=',av.ui.envRegion, '; av.ui.envTask=', av.ui.envTask, '; av.ui.envDistribute=',av.ui.envDistribute);}
 };
 
+  //on ex1 tab
 av.ptd.showEnv = function(from) {
-  //console.log(from, 'called av.ptd.showEnv');
-  var len = av.ptd.logicNames.length;
-  var showRegion = document.getElementById('envShowRegion').value;
+  console.log(from, 'called av.ptd.showEnv');
+  var len = av.sgr.logicNames.length;
+  var showRegion = document.getElementById('ex1envShowRegion').value;
   var regionNdx = av.fzr.env.region.indexOf(showRegion);
   var txtType, txtInit, txtInflo, txtOut;
   
@@ -783,35 +798,35 @@ av.ptd.showEnv = function(from) {
       txtInflo = '';
       txtInit = '';
       txtOut = '';
-      var tmpobj = av.fzr.env.rsrce[av.ptd.logEdNames[ii]];
-      console.log('av.fzr.env.rsrce['+av.ptd.logEdNames[ii]+'].regionList=', tmpobj.regionList);
+      var tmpobj = av.fzr.env.rsrce[av.sgr.logEdNames[ii]];
+      console.log('av.fzr.env.rsrce['+av.sgr.logEdNames[ii]+'].regionList=', tmpobj.regionList);
       if (undefined != tmpobj) {
         if (0 < tmpobj.regionList.length) {
           rndx = tmpobj.regionList[regionNdx];
-          console.log('rndx=', rndx, 'av.ptd.logicNames[ii]+"Type"', av.ptd.logicNames[ii]+'Type');
+          console.log('rndx=', rndx, 'av.sgr.logicNames[ii]+"Type"', av.sgr.logicNames[ii]+'Type');
           if (undefined != rndx) {
             console.log('tmpobj=', tmpobj);
             if (undefined != tmpobj.type[rndx]) {
-              txtType = av.fzr.env.rsrce[av.ptd.logEdNames[ii]].type[rndx];
-              txtInit = av.fzr.env.rsrce[av.ptd.logEdNames[ii]].initial[rndx];
-              txtInflo = av.fzr.env.rsrce[av.ptd.logEdNames[ii]].inflow[rndx];
-              txtOut = av.fzr.env.rsrce[av.ptd.logEdNames[ii]].outflow[rndx];
+              txtType = av.fzr.env.rsrce[av.sgr.logEdNames[ii]].type[rndx];
+              txtInit = av.fzr.env.rsrce[av.sgr.logEdNames[ii]].initial[rndx];
+              txtInflo = av.fzr.env.rsrce[av.sgr.logEdNames[ii]].inflow[rndx];
+              txtOut = av.fzr.env.rsrce[av.sgr.logEdNames[ii]].outflow[rndx];
             }
           }    
         }
       }
       console.log('txtType=', txtType, '; txtInit=', txtInit, '; txtOut=', txtOut);
-      document.getElementById(av.ptd.logicNames[ii]+'Type').innerHTML = txtType;
+      document.getElementById(av.sgr.logicNames[ii]+'Type').innerHTML = txtType;
       if ('fin' == txtType) { 
-        document.getElementById(av.ptd.logicNames[ii]+'In').innerHTML = txtInit;
+        document.getElementById(av.sgr.logicNames[ii]+'In').innerHTML = txtInit;
         document.getElementById('envIn').innerHTML = 'Initial';
       }
       else {
-        document.getElementById(av.ptd.logicNames[ii]+'In').innerHTML = txtInflo;
+        document.getElementById(av.sgr.logicNames[ii]+'In').innerHTML = txtInflo;
         document.getElementById('envIn').innerHTML = 'Inflow';
       }
-      document.getElementById(av.ptd.logicNames[ii]+'Out').innerHTML = txtOut;
-      console.log('av.fzr.env.rsrce['+av.ptd.logEdNames[ii]+'].type['+rndx+']=', av.fzr.env.rsrce[av.ptd.logEdNames[ii]].type[rndx],'--------------------------');
+      document.getElementById(av.sgr.logicNames[ii]+'Out').innerHTML = txtOut;
+      console.log('av.fzr.env.rsrce['+av.sgr.logEdNames[ii]+'].type['+rndx+']=', av.fzr.env.rsrce[av.sgr.logEdNames[ii]].type[rndx],'--------------------------');
     };
   };
 };

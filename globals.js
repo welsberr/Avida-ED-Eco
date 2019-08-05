@@ -409,15 +409,16 @@ av.dnd.move = {};  //used to hold data needed for dnd type move.
 
 av.ptd = {};  // on population page that are not part of the grid. (PeTri Dish)
 av.ptd.popStatFlag = true;  //flag that determines if the stats panel is visible.
+av.sgr = {};   //specific to resource/reactions (sugars);
 av.ptd.regionNames = ['Entire Dish', 'Upper Left', 'Upper Right', 'Lower Left', 'Lower Right'];
 av.ptd.logicButtons = ['notButton', 'nanButton', 'andButton', 'ornButton', 'oroButton', 'antButton', 'norButton', 'xorButton', 'equButton'];
-av.ptd.logEdNames = ['0not', '1nan', '2and', '3orn', '4oro', '5ant', '6nor', '7xor', '8equ'];
-av.ptd.logicNames = ['not', 'nan', 'and', 'orn', 'oro', 'ant', 'nor', 'xor', 'equ'];
-av.ptd.logicVnames = ['not', 'nand', 'and', 'orn', 'or', 'andn', 'nor', 'xor', 'equ'];
-av.ptd.reactValues = [ 1.0,   1.0,   2.0,   2.0,   3.0,   3.0,   4.0,   4.0,   5.0];
+av.sgr.logEdNames = ['0not', '1nan', '2and', '3orn', '4oro', '5ant', '6nor', '7xor', '8equ'];
+av.sgr.logicNames = ['not', 'nan', 'and', 'orn', 'oro', 'ant', 'nor', 'xor', 'equ'];
+av.sgr.logicVnames = ['not', 'nand', 'and', 'orn', 'or', 'andn', 'nor', 'xor', 'equ'];
+av.sgr.reactValues = [ 1.0,   1.0,   2.0,   2.0,   3.0,   3.0,   4.0,   4.0,   5.0];
 av.ptd.popInfoHolderWd = 395;
-av.ptd.sugarColors = ['redvMap', 'orngMap', 'yllwMap', 'grenMap', 'cyanMap', 'cornMap', 'blueMap', 'purpMap', 'mgntMap'];
-av.ptd.sugarShade = 30;
+av.sgr.sugarColors = ['redvMap', 'orngMap', 'yllwMap', 'grenMap', 'cyanMap', 'cornMap', 'blueMap', 'purpMap', 'mgntMap'];
+av.sgr.sugarShade = 30;
 
 //structure to hold list of ancestor organisms
 av.parents = {};
@@ -451,7 +452,7 @@ av.fzr.clearEnvironment = function() {
   //console.log('av.fzr.env.rsrce_param=',av.fzr.env.rsrce_param);
 
   av.fzr.env.react_param = ['depletable', 'value', 'min', 'max', 'max_count', 'name', 'task', 'resource', 'type']; 
-  av.fzr.env.r
+  //av.fzr.env.r
   //Regtion List: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
   av.fzr.env.region =    ['ed', 'ul', 'ur', 'll', 'lr', 'up', 'lo', 'lf', 'rt'];
   av.fzr.env.regionNum = [ '0',  '1',  '2',  '3',  '4', '12', '34', '13', '24'];     
@@ -462,13 +463,13 @@ av.fzr.clearEnvironment = function() {
   // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
   av.fzr.env.rsrce = {};
   av.fzr.env.react = {};  
-  var logiclen = av.ptd.logicNames.length;
+  var logiclen = av.sgr.logicNames.length;
   var rsrcelen = av.fzr.env.rsrce_param.length; 
   var reactlen = av.fzr.env.react_param.length;
   for (var ii=0; ii< logiclen; ii++) {
-    var enm = av.ptd.logEdNames[ii];   //puts names in order they are on avida-ed user interface
-    //var lnm = av.ptd.logicNames[ii];
-    //var vnm = av.ptd.logicVnames[ii];  
+    var enm = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
+    //var lnm = av.sgr.logicNames[ii];
+    //var vnm = av.sgr.logicVnames[ii];  
     av.fzr.env.rsrce[enm] = {};    
     for (var jj=0; jj<rsrcelen; jj++){
       av.fzr.env.rsrce[enm][av.fzr.env.rsrce_param[jj]] = [];

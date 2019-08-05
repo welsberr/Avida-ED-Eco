@@ -313,7 +313,7 @@
 }
 .sugarSummary{
   background: rgba(128, 128, 128, 0.1); 
-  height: 1.7em;
+  min-height: 20px;
   width: 100%;
 }
 
@@ -323,23 +323,32 @@
   font-weight: bold;
   display: inline-block;
 }
-.sugInitialDiv{
+.sugarSummaryDiv{
   display: inline-block;
 }
 .sugInitialInput{
-  width: 3.5em; height:1.6em;
+  width: 3.5em; height:1.5em;
 }
-.sugInitialLoInput{
-  width: 3.5em; height:1.6em;
+.sugPeriodInput{
+  width: 3.5em; height:1.5em;
 }
 .sugInitialHiInput{
-  width: 3.5em; height:1.7em;
+  width: 3.5em; height:1.5em;
 }
-.sugInflowInput{
-  width: 3.5em; height:1.7em;
+.sugInitialLoInput{
+  width: 3.5em; height:1.5em;
 }
-.sugOutflowInput{
-  width: 3.5em; height:1.7em;
+.sugInflowHiInput{
+  width: 3.5em; height:1.5em;
+}
+.sugInflowLoInput{
+  width: 3.5em; height:1.5em;
+}
+.sugOutflowHiInput{
+  width: 3.5em; height:1.5em;
+}
+.sugOutflowLoInput{
+  width: 3.5em; height:1.5em;
 }
 #notSection{
   background: rgba(255,153,178, 1);  /* bigger number is closer to white; 0,0,0 is black*/
@@ -373,41 +382,47 @@
 
 .initialHi { grid-area: initialHi;}
 .initialLo { grid-area: initialLo;}
-.inflow { grid-area: inflow; }
-.outflow { grid-area: outflow; }
+.inflowHi { grid-area: inflow; }
+.inflowLo { grid-area: inflow; }
+.outflowHi { grid-area: outflow; }
+.outflowLo { grid-area: outflow; }
 .equilibrium { grid-area: equilibrium; }
+.equilBoth { grid-area: equilBoth; }
 .side { grid-area: side; }
+.periodTime { grid-area: periodTime; }
 
-.grid-sugarDetailAll-container {
-  display: grid;
-  grid-template-areas: 'side equilibrium'
-                       'inflow outflow'
-                       'initialLo initialHi';
-}
 .grid-sugarDetailEqual-container {
   display: grid;
-  grid-template-areas: 'inflow outflow'
+  grid-template-areas: 'inflowHi outflowHi'
                        'equilibrium equilibrium';
   width: 100%;
 }
 .grid-sugarDetailSourceSink-container {
   display: grid;
   grid-template-areas: 'side side'
-                       'inflow outflow';
+                       'inflowHi outflowHi';
   width: 100%;
 }
-.grid-sugarDetailGradient-container {
+.grid-sugarDetailFiniteGradient-container {
   display: grid;
   grid-template-areas: 'side side'
                        'initialHi initialLo';
   width: 100%;
 }
+.grid-sugarDetailFiniteGradient-container {
+  display: grid;
+  grid-template-areas: 'side side'
+                       'inflowHi inflowLo'
+                       'outflowHi outflowLo'
+                       'quilBoth quilBoth';
+  width: 100%;
+}
 .grid-sugarDetailAll-container {
   display: grid;
   grid-template-areas: 'side equilibrium'
-                       'inflow outflow'
-                       'initialHi initialLo';
-  width: 100%;
+                       'inflowHi outflowHi'
+                       'inflowLo outflowLo'
+                       'initialLo initialHi';
 }
 .grid-sugarDetail-item{
   background-color: rgba(128, 128, 128, 0.2);    
@@ -531,9 +546,6 @@ checkbox:focus {
 .ex1sugarSummary{
   background: rgba(128, 128, 128, 0.1);  
   height: 22px;
-}
-.ex1sugarDetail{
-  /* background: #fff;    /* #7eAbCd*/
 }
 
 .ex1sugarTitle{

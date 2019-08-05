@@ -2405,6 +2405,28 @@ av.ptd.randInputChange = function(value, randErroTest) {
   };
 */
 
+  av.ui.ex1setSugarColors = function () {
+    var sugarSection = ['ex1notSection', 'ex1nanSection', 'ex1andSection', 'ex1ornSection', 'ex1oroSection', 'ex1antSection', 'ex1norSection', 'ex1xorSection', 'ex1equSection'];
+    var len = av.sgr.sugarColors.length;
+    var ndx = av.sgr.sugarShade;
+    for (ii = 0; ii < len; ii++) {
+      //console.log('ii=',ii,'SugarSection=', sugarSection[ii]);
+      if ('allSpatial' != document.getElementById('ex1allSugarChange').value) {
+        document.getElementById(sugarSection[ii]).style.backgroundColor = av.color.greyMap[ndx];
+      } else {
+        document.getElementById(sugarSection[ii]).style.backgroundColor = av.color[av.sgr.sugarColors[ii]][ndx];
+      }
+    }
+    ;
+  };
+
+  document.getElementById('ex1allSugarChange').onchange = function() {    
+    var allSugar = document.getElementById('ex1allSugarChange').value;
+    av.ptd.ex1allSugarChange(allSugar);
+    av.ui.ex1setSugarColors();
+    document.getElementById('ex1allSugarChange').value = 'allNeutral';
+  };
+
 av.ui.ex2envBoxSwap = function (showbox) {
     document.getElementById('ex2envNone').style.display = "none";
     document.getElementById('ex2envFinite').style.display = "none";
@@ -2443,6 +2465,13 @@ av.ui.ex2envBoxSwap = function (showbox) {
     //av.ptd.envobj2form('envRegion.change');
   };
 
+//on ex2 tab
+  document.getElementById('allSugarDropCheckBox').onchange = function() {    
+    var allSugar = document.getElementById('allSugarDropCheckBox').value;
+    av.ptd.allSugarDropCheckBox(allSugar);
+    document.getElementById('allSugarDropCheckBox').value = 'allNeutral';
+  };
+
 
 // end of ex1 and ex2 page stuff
 /*
@@ -2458,6 +2487,7 @@ document.getElementById('envRegion').onchange = function() {
     av.ptd.envobj2form('envTask.change');
   };
   
+  on ex2, but not working.
   //Opens envShowRegion dialog box
   document.getElementById('envShowRegion').onclick = function () {
     av.ui.envTask = document.getElementById('envShowRegion').value;
@@ -2465,72 +2495,53 @@ document.getElementById('envRegion').onchange = function() {
   };
  */
 
-  document.getElementById('allSugarDrop').onchange = function() {    
-  //dijit.byId('allSugarDrop').on('Change', function () {
-    var allSugar = document.getElementById('allSugarDrop').value;
-    av.ptd.allSugar(allSugar);
-    document.getElementById('allSugarDrop').value = 'allNeutral';
-    //dijit.byId('allSugarDrop').set('value', 'allNeutral');
-  };
 
 //------------------------------------------------------------------------------------------------- Sugar Accordion ----
-  document.getElementById('allSugarChange').onchange = function() {    
-  //dijit.byId('allSugarDrop').on('Change', function () {
-    var allSugar = document.getElementById('allSugarChange').value;
-    av.ptd.allSugarChange(allSugar);
-    av.ui.setSugarColors();
-    document.getElementById('allSugarChange').value = 'allNeutral';
-  };
-
-
-av.ui.setSugarColors = function() {
-  var sugarSection = ['notSection', 'nanSection', 'andSection', 'ornSection', 'oroSection', 'antSection', 'norSection', 'xorSection', 'equSection']; 
-  var len = av.ptd.sugarColors.length;
-  var ndx = av.ptd.sugarShade;
-  for (ii=0; ii<len; ii++) {
-    //console.log('ii=',ii,'SugarSection=', sugarSection[ii]);
-    if ('allSpatial' != document.getElementById('allSugarChange').value) {
-      document.getElementById(sugarSection[ii]).style.backgroundColor = av.color.greyMap[ndx];
-    }
-    else {
-      document.getElementById(sugarSection[ii]).style.backgroundColor = av.color[av.ptd.sugarColors[ii]][ndx];
-    }
-  }
+//Global or Spatial in Ed speak = Global or Grid in Avida Environment file.
+av.sgr.allSugarGeometryChange = function(domObj){
+  var idx = domObj.selectedIndex;        // get the index of the selected option 
+  var which = domObj.options[idx].value;   // get the value of the selected option 
+  av.sgr.ChangeAllGeo(which);
+  av.sgr.setSugarColors();
+  document.getElementById('allSugarGeometry').value = 'Neutral';
 };
 
-  document.getElementById('ex1allSugarChange').onchange = function() {    
-  //dijit.byId('allSugarDrop').on('Change', function () {
-    var allSugar = document.getElementById('ex1allSugarChange').value;
-    av.ptd.allSugarChange(allSugar);
-    av.ui.ex1setSugarColors();
-    document.getElementById('ex1allSugarChange').value = 'allNeutral';
-  };
+av.sgr.allSugarTypeChange = function(domObj){
+  var idx = domObj.selectedIndex;        // get the index of the selected option 
+  var which = domObj.options[idx].value;   // get the value of the selected option 
+  av.sgr.ChangeAllSugarType(which);
+  document.getElementById('allSugarType').value = 'allNeutral';    
+};
 
+av.sgr.allSugarDetailsChange = function(domObj){
+  var idx = domObj.selectedIndex;        // get the index of the selected option 
+  var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
+  //av.sgr.ChangeAllSugarType(selectedOption);
+  document.getElementById('allSugarDetails').value = 'allNeutral';    
+};
 
-av.ui.ex1setSugarColors = function() {
-  var sugarSection = ['ex1notSection', 'ex1nanSection', 'ex1andSection', 'ex1ornSection', 'ex1oroSection', 'ex1antSection', 'ex1norSection', 'ex1xorSection', 'ex1equSection']; 
-  var len = av.ptd.sugarColors.length;
-  var ndx = av.ptd.sugarShade;
-  for (ii=0; ii<len; ii++) {
-    //console.log('ii=',ii,'SugarSection=', sugarSection[ii]);
-    if ('allSpatial' != document.getElementById('ex1allSugarChange').value) {
-      document.getElementById(sugarSection[ii]).style.backgroundColor = av.color.greyMap[ndx];
-    }
-    else {
-      document.getElementById(sugarSection[ii]).style.backgroundColor = av.color[av.ptd.sugarColors[ii]][ndx];
-    }
-  }
+av.ptd.geometryChange = function(selectObj){
+  var taskID = selectObj.id; 
+  var task = taskID.substring(0,3);
+  var idx = selectObj.selectedIndex;        // get the index of the selected option 
+  var which = selectObj.options[idx].value;   // get the value of the selected option 
+  console.log('id=', task, '; which=', which);
 };
 
 av.ptd.notTypeChange = function(type) {
   console.log('notTypeChange=', type);
   //console.log('not1initialHiDiv.className=',document.getElementById('not1initialHiDiv').className);
+  document.getElementById('not0periodCheckbox').style.display = "none";
+  document.getElementById('not1periodTime').style.display = "none";
+  document.getElementById('not0gradientCheckbox').style.display = "none";
   document.getElementById('not0initialDiv').style.display = "none";
   document.getElementById('not1initialHiDiv').style.display = "none";
   document.getElementById('not1initialLoDiv').style.display = "none";
-  document.getElementById('not1inflowDiv').style.display = "none";
-  document.getElementById('not1outflowDiv').style.display = "none";
-  document.getElementById('not1equalDiv').style.display = "none";
+  document.getElementById('not1inflowHiDiv').style.display = "none";
+  document.getElementById('not1inflowLoDiv').style.display = "none";
+  document.getElementById('not1outflowHiDiv').style.display = "none";
+  document.getElementById('not1outflowLoDiv').style.display = "none";
+  document.getElementById('not1equilibriumDiv').style.display = "none";
   document.getElementById('not1sideDiv').style.display = "none";
   switch (type) {
     case 'None': 
@@ -2540,16 +2551,18 @@ av.ptd.notTypeChange = function(type) {
       document.getElementById('not0initialDiv').style.display = "inline-block";
       break;
     case 'Equilibrium':
-      document.getElementById('not1inflowDiv').style.display = "block";
-      document.getElementById('not1outflowDiv').style.display = "block";
-      document.getElementById('not1equalDiv').style.display = "block";
+      document.getElementById('not0periodCheckbox').style.display = "inline-block";
+      document.getElementById('not1inflowHiDiv').style.display = "block";
+      document.getElementById('not1outflowHiDiv').style.display = "block";
+      document.getElementById('not1equilibriumDiv').style.display = "block";
       document.getElementById('notDetails').className = 'grid-sugarDetailEqual-container';
       console.log('notDetails.class=', document.getElementById('notDetails').className);
       break;
     case 'SourceSink':
+      document.getElementById('not0periodCheckbox').style.display = "inline-block";
       document.getElementById('not1sideLabel').innerHTML = 'inflow side; outlow will be everywhere or on the opposite side';
-      document.getElementById('not1inflowDiv').style.display = "block";
-      document.getElementById('not1outflowDiv').style.display = "block";
+      document.getElementById('not1inflowHiDiv').style.display = "block";
+      document.getElementById('not1outflowHiDiv').style.display = "block";
       document.getElementById('not1sideDiv').style.display = "block";
       document.getElementById('notDetails').className = 'grid-sugarDetailSourceSink-container';
       console.log('notDetails.class=', document.getElementById('notDetails').className);
@@ -2563,22 +2576,102 @@ av.ptd.notTypeChange = function(type) {
       console.log('notDetails.class=', document.getElementById('notDetails').className);
       break;
     case 'All':
+      document.getElementById('not0periodCheckbox').style.display = "inline-block";
       document.getElementById('not1sideDiv').style.display = "block";
       document.getElementById('not1sideLabel').innerHTML = 'Side text describing what side means';
       document.getElementById('not1initialHiDiv').style.display = "block";
       document.getElementById('not1initialLoDiv').style.display = "block";
-      document.getElementById('not1inflowDiv').style.display = "block";
-      document.getElementById('not1outflowDiv').style.display = "block";
-      document.getElementById('not1equalDiv').style.display = "block";
+      document.getElementById('not1inflowHiDiv').style.display = "block";
+      document.getElementById('not1outflowHiDiv').style.display = "block";
+      document.getElementById('not1equilibriumDiv').style.display = "block";
       document.getElementById('notDetails').className = 'grid-sugarDetailAll-container';
       console.log('notDetails.class=', document.getElementById('notDetails').className);
   }
  
 };
+
+av.ptd.nanTypeChange = function(type) {
+  console.log('nanTypeChange=', type);
+  //console.log('nan1initialHiDiv.className=',document.getElementById('nan1initialHiDiv').className);
+  document.getElementById('nan0periodCheckbox').style.display = "none";
+  document.getElementById('nan1periodTime').style.display = "none";
+  document.getElementById('nan0gradientCheckbox').style.display = "none";
+  document.getElementById('nan0initialDiv').style.display = "none";
+  document.getElementById('nan1initialHiDiv').style.display = "none";
+  document.getElementById('nan1initialLoDiv').style.display = "none";
+  document.getElementById('nan1inflowHiDiv').style.display = "none";
+  document.getElementById('nan1inflowLoDiv').style.display = "none";
+  document.getElementById('nan1outflowHiDiv').style.display = "none";
+  document.getElementById('nan1outflowLoDiv').style.display = "none";
+  document.getElementById('nan1equilibriumDiv').style.display = "none";
+  document.getElementById('nan1equilBothDiv').style.display = "none";
+  document.getElementById('nan1sideDiv').style.display = "none";
+  switch (type) {
+    case 'None': 
+    case 'Infinite': 
+      break;
+    case 'Finite': 
+      if ('checked' != document.getElementById('nan0gradientCheckbox').checked) {
+        document.getElementById('nan0initialDiv').style.display = "inline-block";
+      }
+      else {
+        document.getElementById('nan1sideDiv').style.display = "block";
+        document.getElementById('nan1sideLabel').innerHTML = 'Side with a higher initial amount';
+        document.getElementById('nan1initialHiDiv').style.display = "block";
+        document.getElementById('nan1initialLoDiv').style.display = "block";
+        document.getElementById('nanDetails').className = 'grid-sugarDetailFiniteGradient-container';
+        console.log('nanDetails.class=', document.getElementById('nanDetails').className);
+      }
+      break;
+    case 'Equilibrium':
+      console.log('nan0gradientCheckbox.checked=', document.getElementById('nan0gradientCheckbox').checked);
+      if ('checked' != document.getElementById('nan0gradientCheckbox').checked) {
+        document.getElementById('nan0periodCheckbox').style.display = "inline-block";
+        document.getElementById('nan0gradientCheckbox').style.display = "inline-block";
+        document.getElementById('nan1inflowHiDiv').style.display = "block";
+        document.getElementById('nan1outflowHiDiv').style.display = "block";
+        document.getElementById('nan1equilibriumDiv').style.display = "block";
+        document.getElementById('nanDetails').className = 'grid-sugarDetailEqual-container';
+        console.log('nanDetails.class=', document.getElementById('nanDetails').className);
+      }
+      else {
+        document.getElementById('nan1sideDiv').style.display = "block";
+        document.getElementById('nan1sideLabel').innerHTML = 'Side with a higher initial amount';
+        document.getElementById('nan1inflowHiDiv').style.display = "block";
+        document.getElementById('nan1inflowLoDiv').style.display = "block";
+        document.getElementById('nan1outflowHiDiv').style.display = "block";
+        document.getElementById('nan1outlowLoDiv').style.display = "block";
+        document.getElementById('nan1equilBothDiv').style.display = "block";
+        document.getElementById('nanDetails').className = 'grid-sugarDetailGradient-container';
+        console.log('nanDetails.class=', document.getElementById('nanDetails').className);
+      }
+      break;
+    case 'SourceSink':
+      document.getElementById('nan0periodCheckbox').style.display = "inline-block";
+      document.getElementById('nan1sideLabel').innerHTML = 'inflow side; outlow will be everywhere or on the opposite side';
+      document.getElementById('nan1inflowHiDiv').style.display = "block";
+      document.getElementById('nan1outflowHiDiv').style.display = "block";
+      document.getElementById('nan1sideDiv').style.display = "block";
+      document.getElementById('nanDetails').className = 'grid-sugarDetailSourceSink-container';
+      console.log('nanDetails.class=', document.getElementById('nanDetails').className);
+      break;
+    case 'All':
+      document.getElementById('nan0periodCheckbox').style.display = "inline-block";
+      document.getElementById('nan1sideDiv').style.display = "block";
+      document.getElementById('nan1sideLabel').innerHTML = 'Side text describing what side means';
+      document.getElementById('nan1initialHiDiv').style.display = "block";
+      document.getElementById('nan1initialLoDiv').style.display = "block";
+      document.getElementById('nan1inflowHiDiv').style.display = "block";
+      document.getElementById('nan1outflowHiDiv').style.display = "block";
+      document.getElementById('nan1equilibriumDiv').style.display = "block";
+      document.getElementById('nanDetails').className = 'grid-sugarDetailAll-container';
+      console.log('nanDetails.class=', document.getElementById('nanDetails').className);
+  }
+};
 /******************************************************************************** End enviornment (sugar) settings ****/
 
 av.ptd.gridChange = function(tmpval) {
-    console.log('in av.ptd.gridChange; ');
+    console.log('in av.ptd.gridChange; tmpval=', tmpval);
     var colNum = Number(av.dom.sizeCols.value);
     var rowNum = Number(av.dom.sizeRows.value);
     //console.log('col, row=', colNum, rowNum);
@@ -3503,11 +3596,12 @@ $(function slidemute() {
   console.log('before mainBoxSwap');
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
   av.ptd.notTypeChange('None');
+  av.ptd.nanTypeChange('None');
 
   //av.ui.envBoxSwap('envNone');  
   //av.ui.ex1envBoxSwap('ex1envNone');    //delete later
   av.ui.ex2envBoxSwap('ex2envNone');    //delete later
-  av.ui.setSugarColors();   //94
+  av.sgr.setSugarColors();   //94
   av.ui.ex1setSugarColors();   //94
   //av.grd.popChartFn();
   //av.grd.drawGridSetupFn('initial background'); //Draw initial background

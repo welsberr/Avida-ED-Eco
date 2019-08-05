@@ -580,24 +580,37 @@
                       </div>
                       
                       <div class='odd'>
-                        What resources are available in the environment? (strength of energy reward shown in parentheses)
-                        <div><select id='allSugarChange'>
-                          <option value='alloff'>All None</option>
-                          <option value='allon'>All Infinite</option>
-                          <option value='allFinite'>All Finite</option>
-                          <option value='alloff'>All Equilibrium &nbsp;&nbsp;</option>
-                          <option value='allSpatial'>Spatial</option>
-                          <option value='allNeutral' selected>----</option>
-                          </select></div>
-                        <br />
+                        What resources are available in the environment? (strength of energy reward shown in parentheses)<br>
+                        Set all sugars: 
+                        <div id="setAllSugars">
+                          <select id="allSugarGeometry" onchange='av.sgr.allSugarGeometryChange(this);'>
+                            <option value='Global'>All Global</option>
+                            <option value='Spatial'>All Spatial</option>
+                            <option value='Neutral' selected>----</option>                            
+                          </select>
+                          <select id='allSugarType' onchange='av.sgr.allSugarTypeChange(this);'>
+                            <option value='None'>All None</option>
+                            <option value='Infinte'>All Infinite</option>
+                            <option value='Finite'>All Finite</option>
+                            <option value='Chemostat'>All Chemostat &nbsp;&nbsp;</option>
+                            <option value='Neutral' selected>----</option>
+                          </select>
+                          <select id="allSugarDetails" onchange='av.sgr.allSugarDetailsChange(this);'>
+                            <option value='allOpen'>Open All</option>
+                            <option value='allClose'>Close All</option>
+                            <option value='allNeutral' selected>----</option>                            
+                          </select>
+                          
+                          
+                        </div>
                         <div id='sugarAccordion'>
                           <details class='sugarAccordionSection' id='notSection'>
                             <summary class='sugarSummary'>
                                 <div class='sugarTitle'>Notose</div>&nbsp;
-                                <select  id='notGlobSpat' class='globalSpatial'>
+                                <select  id='notGeometry' class='globalSpatial' onchange='av.ptd.geometryChange(this);'>
                                   <option value='Global' selected>Global</option>
                                   <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
-                                </select>&nbsp;&nbsp;&nbsp;
+                                </select>&nbsp;&nbsp;
                                 <select  id='not0Type' class='sugarType' onchange='av.ptd.notTypeChange(this.value)'>
                                   <option id='not0not0none' value='None'>None</option>
                                   <option id='not0not0Infinite' value='Infinite' selected>Infinite</option>
@@ -607,91 +620,149 @@
                                   <option id='not0Gradient' value='Gradient'>Gradient</option>
                                   <option id='not0Gradient' value='All'>All debug only</option>
                                   </select>&nbsp;&nbsp;&nbsp;
-                                <div id='not0initialDiv' class='sugInitialDiv'>
+                                <div id='not0initialDiv' class='sugarSummaryDiv'>
                                   <input class='sugInitialInput' id='not0initialInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>
                                   &nbsp;Initial amount per cell 
                                 </div>
+                                <div id='not0periodCheckbox' class='sugarSummaryDiv'>
+                                  <input type='checkbox' id='not0periodCheck'  checked>Periodic&nbsp;&nbsp;
+                                </div>
+                                <div id='not0gradientCheckbox' class='sugarSummaryDiv'>
+                                  <input type='checkbox' id='not0gradientCheck'  checked>Gradient&nbsp;&nbsp;
+                                </div>
+                                  
                             </summary>
                             <div id='notDetails' class='grid-sugarDetailAll-container'>
                               <div id='not1initialHiDiv' class='grid-sugarDetail-item initialHi'>
-                                <input class='sugInitialHiInput' id='not1initialHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>
-                                &nbsp;High side initial amount per cell 
+                                <input class='sugInitialHiInput' id='not1initialHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>&nbsp;
+                                High side initial amount per cell 
                               </div>
                               <div id='not1initialLoDiv' class='grid-sugarDetail-item initialLo'>
-                                <input class='sugInitialLoInput' id='not1initialHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '10'/>
-                                &nbsp;Low side initial amount per cell 
+                                <input class='sugInitialLoInput' id='not1initialHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '10'/>&nbsp;
+                                Low side initial amount per cell 
                               </div>
-                              <div id='not1inflowDiv' class='grid-sugarDetail-item inflow'>
-                                <input class='sugInflowInput' id='not1inflowInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '1'/>
-                                &nbsp;Inflow amount per cell
+                              <div id='not1inflowHiDiv' class='grid-sugarDetail-item inflow'>
+                                <input id='not1inflowHiInput' class='sugInflowInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '1'/>&nbsp;
+                                <label id='not1inflowHiLabel' class='sugOutflowLabel'>Inflow amount per cell</label>
                               </div>
-                              <div id='not1outflowDiv' class='grid-sugarDetail-item outflow'>
-                                <input class='sugOutflowInput' id='not1outflowInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.1'/>
-                                &nbsp;Outflow fraction per cell.  
+                              <div id='not1inflowLoDiv' class='grid-sugarDetail-item inflow'>
+                                <input id='not1inflowLoInput' class='sugInflowInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '1'/>&nbsp;
+                                <label id='not1inflowLoLabel' class='sugOutflowLabel'>Inflow amount per cell on low side</label>
                               </div>
-                              <div id='not1equalDiv' class='grid-sugarDetail-item equilibrium'>
-                                <label id='not1equalLabel'>10</label> = equilibrium when no resource has been consumed. If resource is consumed then the resource will incrementally return to this value
+                              <div id='not1outflowHiDiv' class='grid-sugarDetail-item outflow'>
+                                <input id='not1outflowHiInput' class='sugOutflowInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.1'/>&nbsp;
+                                <label id='not1outflowHiLabel' class='sugOutflowLabel'>Outflow fraction per cell.</label>
+                              </div>
+                              <div id='not1outflowLoDiv' class='grid-sugarDetail-item outflow'>
+                                <input id='not1outflowLoInput' class='sugOutflowInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.1'/>&nbsp;
+                                <label id='not1outflowLoLabel' class='sugOutflowLabel'>Outflow fraction per cell on low side.</label>
+                              </div>
+                              <div id='not1equilibriumDiv' class='grid-sugarDetail-item equilibrium'>
+                                <label id='not1equalLabel'>10</label> = equilibrium when no resource has been consumed.
                               </div>
                               <div id='not1sideDiv' class='grid-sugarDetail-item side'>
                                 <select  id='not1sideSelect' >
-                                  <option value='left' selected>(L)eft</option>
-                                  <option value='right'>(R)ight</option>
-                                  <option value='top'>(T)op</option>
-                                  <option value='bottom'>(B)ottom</option>
-                                  <option value='center'>(C)enter</option>
-                                  <option value='edge'>(E)dge</option>
+                                  <option value='left' selected>Left</option>
+                                  <option value='right'>Right</option>
+                                  <option value='top'>Top</option>
+                                  <option value='bottom'>Bottom</option>
+                                  <option value='center'>Center</option>
+                                  <option value='edge'>Edge</option>
                                 </select>
                                 <label id='not1sideLabel'>side text</label>
                               </div>
-
-
-                            </div><span id='endNapDetails' class='end_grid-sugarDetail-container'></span>
-                          </details>
-
-                          
-                         
-                          
-                          
-                          
-                          
-                          
-                          
-                          
-                          <details class='sugarAccordionSection'  id='nanSection'>
-                            <summary class='sugarSummary'>
-                              <span class='sugarTitle'>Nanose</span>&nbsp;
-                              <select  id='nanGlobSpat'>
-                                <option value='Global'>Global</option>
-                                <option value='Spatial' selected>Spatial &nbsp;&nbsp;</option>
-                              </select>&nbsp;
-                                <select  id='envDistribute'>
-                                  <option value='Finite'>Finite</option>
-                                  <option value='Equilibrium' selected>Equilibrium &nbsp;&nbsp;</option>
-                                  <option value='Source/Sink'>Source/Sink &nbsp;&nbsp;</option>
-                                  <option value='Gradient'>Gradient</option>
-                                </select>&nbsp;
-                            </summary>
-                            <div id='nanDetails' class='grid-sugarDetail-container'>
-                              <div id='nanPart1' class='oddSugar'>
-                                <span class='periodCheckbox' id='nan1periodHold'>
-                                  <input type='checkbox' id='nan1periodCheck' checked>Periodic&nbsp;
-                                  <span>
-                                    <input id='nonEperiod' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '1000'/> Period (updates)
-                                  </span>
-                                </span>
-                                <br>
-                                <input id='nan1EqInflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3em; height:1.6em' value = '1'/> 
-                                &nbsp;Inflow per cell&nbsp;&nbsp;&nbsp;
-                                <input id='nan1EqOutflow' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 3em; height:1.6em' value = '0.1'/>
-                                &nbsp;Outflow fraction&nbsp;&nbsp;&nbsp;
-                                <label id='nan1Equal'>10</label> = equilibrium
+                              <div id='not1periodTime' class='grid-sugarDetail-item periodTime'>
+                                <input class='sugPeriodInput' id='not0periodInput' type='text' onchange='av.ptd.gridChange(this.value)' /> Period (updates)
                               </div>
-                            </div>
+
+
+                            </div><span id='endNotDetails' class='end_grid-sugarDetail-container'></span>
                           </details>
+
+                          <details class='sugarAccordionSection' id='nanSection'>
+                            <summary class='sugarSummary'>
+                                <div class='sugarTitle'>Nanose</div>&nbsp;
+                                <select  id='nanGeometry' class='globalSpatial' onchange='av.ptd.geometryChange(this);'>
+                                  <option value='Global' selected>Global</option>
+                                  <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
+                                </select>&nbsp;&nbsp;&nbsp;
+                                <select  id='nan0Type' class='sugarType' onchange='av.ptd.nanTypeChange(this.value)'>
+                                  <option id='nan0none' value='None'>None</option>
+                                  <option id='nan0nan0Infinite' value='Infinite' selected>Infinite</option>
+                                  <option id='nan0Finite' value='Finite'>Finite</option>
+                                  <option id='nan0Chemostat' value='Chemostat'>Equilibrium &nbsp;&nbsp;</option>
+                                  <option id='nan0Flow'value='Flow'>Flow &nbsp;&nbsp;</option>
+                                  <option id='nan0All' value='All'>Alldebug only</option>
+                                  </select>&nbsp;&nbsp;&nbsp;
+                                <div id='nan0initialDiv' class='sugarSummaryDiv'>
+                                  <input class='sugInitialInput' id='nan0initialInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>
+                                  &nbsp;Initial amount per cell 
+                                </div>
+                                <div id='nan0periodCheckbox' class='sugarSummaryDiv'>
+                                  <input type='checkbox' id='nan0periodCheck'  checked>Periodic&nbsp;&nbsp;
+                                </div>
+                                <div id='nan0gradientCheckbox' class='sugarSummaryDiv'>
+                                  <input type='checkbox' id='nan0gradientCheck'  checked>Gradient&nbsp;&nbsp;
+                                </div>
+                                  
+                            </summary>
+                            <div id='nanDetails' class='grid-sugarDetailAll-container'>
+                              <div id='nan1initialHiDiv' class='grid-sugarDetail-item initialHi'>
+                                <input class='sugInitialHiInput' id='nan1initialHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>&nbsp;
+                                High side initial amount per cell 
+                              </div>
+                              <div id='nan1initialLoDiv' class='grid-sugarDetail-item initialLo'>
+                                <input class='sugInitialLoInput' id='nan1initialHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.9'/>&nbsp;
+                                Low side initial amount per cell 
+                              </div>
+                              <div id='nan1inflowHiDiv' class='grid-sugarDetail-item inflow'>
+                                <input id='nan1inflowHiInput' class='sugInflowInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.09'/>&nbsp;
+                                <label id='nan1inflowHiLabel' class='sugOutflowLabel'>Inflow amount per cell</label>
+                              </div>
+                              <div id='nan1inflowLoDiv' class='grid-sugarDetail-item inflow'>
+                                <input id='nan1inflowLoInput' class='sugInflowInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.01'/>&nbsp;
+                                <label id='nan1inflowLoLabel' class='sugOutflowLabel'>Inflow amount per cell on low side</label>
+                              </div>
+                              <div id='nan1outflowHiDiv' class='grid-sugarDetail-item outflow'>
+                                <input id='nan1outflowHiInput' class='sugOutflowInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.01'/>&nbsp;
+                                <label id='nan1outflowHiLabel' class='sugOutflowLabel'>Outflow fraction per cell.</label>
+                              </div>
+                              <div id='nan1outflowLoDiv' class='grid-sugarDetail-item outflow'>
+                                <input id='nan1outflowLoInput' class='sugOutflowInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.01'/>&nbsp;
+                                <label id='nan1outflowLoLabel' class='sugOutflowLabel'>Outflow fraction per cell on low side.</label>
+                              </div>
+                              <div id='nan1equilibriumDiv' class='grid-sugarDetail-item equilibrium'>
+                                <label id='nan1equalLabel'>9</label> = equilibrium when no resource has been consumed.
+                              </div>
+                              <div id='nan1equilBothDiv' class='grid-sugarDetail-item equilibrium'>
+                                <label id='nan1equalHi'>9</label> Hi side equilibrium 
+                                <label id='nan1equalLo'>1</label> Lo side (when no resource has been consumed.
+                              </div>
+                              <div id='nan1sideDiv' class='grid-sugarDetail-item side'>
+                                <select  id='nan1sideSelect' >
+                                  <option value='left' selected>Left</option>
+                                  <option value='right'>Right</option>
+                                  <option value='top'>Top</option>
+                                  <option value='bottom'>Bottom</option>
+                                  <option value='center'>Center</option>
+                                  <option value='edge'>Edge</option>
+                                </select>
+                                <label id='nan1sideLabel'>side text</label>
+                              </div>
+                              <div id='nan1periodTime' class='grid-sugarDetail-item periodTime'>
+                                <input class='sugPeriodInput' id='nan0periodInput' type='text' onchange='av.ptd.gridChange(this.value)' /> Period (updates)
+                              </div>
+
+
+                            </div><span id='endNanDetails' class='end_grid-sugarDetail-container'></span>
+                          </details>
+                          
+                          
+                          
                           <details class='sugarAccordionSection'  id='andSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Andose</span>&nbsp;
-                              <select  id='andGlobSpat'>
+                              <select  id='andGeometry'>
                                 <option value='Global'>Global</option>
                                 <option value='Spatial' selected>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
@@ -723,7 +794,7 @@
                           <details class='sugarAccordionSection' id='ornSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Ornose</span>&nbsp;
-                              <select  id='ornGlobSpat'>
+                              <select  id='ornGeometry'>
                                 <option value='Global' selected>Global</option>
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
@@ -732,6 +803,7 @@
                                 <option value='Infinite' selected>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>Equilibrium &nbsp;&nbsp;</option>
+                                <option value='Flow'>Flow</option>
                               </select>                        
                             </summary>
                             <div id='ornDetails' class='grid-sugarDetail-container'>
@@ -740,7 +812,7 @@
                           <details class='sugarAccordionSection' id='oroSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Orose</span>&nbsp;
-                              <select  id='oroGlobSpat'>
+                              <select  id='oroGeometry'>
                                 <option value='Global'>Global</option>
                                 <option value='Spatial' selected>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
@@ -769,7 +841,7 @@
                           <details class='sugarAccordionSection' id='antSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Antnose</span>&nbsp;
-                              <select  id='antGlobSpat'>
+                              <select  id='antGeometry'>
                                 <option value='Global' selected>Global</option>
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
@@ -786,7 +858,7 @@
                           <details class='sugarAccordionSection' id='norSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Norose</span>&nbsp;
-                              <select  id='norGlobSpat'>
+                              <select  id='norGeometry'>
                                 <option value='Global' selected>Global</option>
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
@@ -803,7 +875,7 @@
                           <details class='sugarAccordionSection' id='xorSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Xorose</span>&nbsp;
-                              <select  id='xorGlobSpat'>
+                              <select  id='xorGeometry'>
                                 <option value='Global' selected>Global</option>
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
@@ -824,7 +896,7 @@
                           <details class='sugarAccordionSection' id='equSection'>
                             <summary class='sugarSummary'>
                               <span class='sugarTitle'>Equose</span>&nbsp;
-                              <select  id='equGlobSpat'>
+                              <select  id='equGeometry'>
                                 <option value='Global' selected>Global</option>
                                 <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                               </select>&nbsp;
@@ -839,40 +911,6 @@
                             </div>
                           </details>                
                         </div><span id='sugarAccordionEnd'></span>
-
-                        <div id="showResource" class="showR">
-                          <div class="grid-9env-container">
-                            <div class="grid-9env-item">NOT<br /><label id="notType"> </label><br /><label id="notIn"></label><br /><label id="notOut"></label></div>
-                            <div class="grid-9env-item">NAN<br /><label id="nanType"> </label><br /><label id="nanIn"></label><br /><label id="nanOut"></label></div>
-                            <div class="grid-9env-item">AND<br /><label id="andType"> </label><br /><label id="andIn"></label><br /><label id="andOut"></label></div>  
-                            <div class="grid-9env-item">ORN<br /><label id="ornType"> </label><br /><label id="ornIn"></label><br /><label id="ornOut"></label></div>
-                            <div class="grid-9env-item">ORO<br /><label id="oroType"> </label><br /><label id="oroIn"></label><br /><label id="oroOut"></label></div>
-                            <div class="grid-9env-item">ANT<br /><label id="antType"> </label><br /><label id="antIn"></label><br /><label id="antOut"></label></div>  
-                            <div class="grid-9env-item">NOR<br /><label id="norType"> </label><br /><label id="norIn"></label><br /><label id="norOut"></label></div>
-                            <div class="grid-9env-item">XOR<br /><label id="xorType"> </label><br /><label id="xorIn"></label><br /><label id="xorOut"></label></div>
-                            <div class="grid-9env-item">EQU<br /><label id="equType"> </label><br /><label id="equIn"></label><br /><label id="equOut"></label></div>  
-                            <div class="grid-9env-item">
-                              <select id='envShowRegion'>
-                                <option value='gl' selected>global</option>
-                                <option value='ed'>all spatial</option>
-                                <option value='ul'>upper left</option>
-                                <option value='ur'>upper right &nbsp;&nbsp;</option>
-                                <option value='ll'>lower left</option>
-                                <option value='lr'>lower right &nbsp;&nbsp;</option>
-                                <option value='up'>upper half</option>
-                                <option value='lo'>lower half</option>
-                              </select><br />Type<br /><label id='envIn'>Initial/Input</label><br />Output
-
-                            </div>  
-                          </div>
-                        </div><span id='end_showResource'></span>
-                        
-                        
-                        
-                        
-                        
-                        
-
                       </div> <span tag='end of odd'></span>
                         
                         
@@ -1605,7 +1643,7 @@
                             <input type='checkbox' class='resourceButton' id='xorose'>xorose
                           </div>
                           <div class='grid-sugarOnOff-item'>
-                            <select id='allSugarDrop'>
+                            <select id='allSugarDropCheckBox'>
                               <option value='allon'>All</option>
                               <option value='alloff'>None</option>
                               <option value='allComp'>Complement</option>
@@ -1703,13 +1741,14 @@
                               <option value='xorEquilibrium'>(E)quilibrium</option>
                             </select>                    
                           </div>
-                          <div class='grid-sugarOnOff-item'>
+                          <div class='grid-sugarOnOff-item'>   
                             <select id='allSugarDropEx2'>
                               <option value='allon'>All</option>
                               <option value='alloff'>None</option>
                               <option value='allFinite'>(F)inite</option>
                               <option value='allEquilibrium'>(E)quilibrium</option>
-                              <option value='allNeutral' selected>----</option>
+                              <option value='allNeutral' selected>--</option>
+                              <option value='notDone' selected>NoCodeFor</option>
                             </select>                    
                           </div>
                         </div> <span class="end Sugar onOff grid"></span>

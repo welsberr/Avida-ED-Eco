@@ -393,10 +393,10 @@ av.frd.reactionLineParse = function(lnArray) {
   var nn;
   //find logic type
   //console.log('task = lnArray[2]=',lnArray[2]);
-  var logicindex = av.ptd.logicVnames.indexOf( lnArray[2] );   //task name
+  var logicindex = av.sgr.logicVnames.indexOf( lnArray[2] );   //task name
   //console.log('logicindex=',logicindex);
   if (-1 < logicindex) {
-    var logtype = av.ptd.logEdNames[logicindex];
+    var logtype = av.sgr.logEdNames[logicindex];
     // Checking for a resource tag
     //console.log('logtype=', logtype);
     var envobj = av.fzr.env.react[logtype];   //objec based on logic type and reaction;
@@ -449,7 +449,7 @@ av.frd.reactionLineParse = function(lnArray) {
   }  
   // valid logic name not found;
   else {
-    lnError = 'react task, '+ lnArray[2]+' not found in av.ptd.logicVnames';
+    lnError = 'react task, '+ lnArray[2]+' not found in av.sgr.logicVnames';
   };
     
   return lnError;
@@ -466,10 +466,10 @@ av.frd.resourceLineParse = function(lnArray){
   var codes;  
   //console.log('pairArray=', pairArray);
   //find logic type
-  var logicindex = av.ptd.logicNames.indexOf( pairArray[0].substring(0,3) );
+  var logicindex = av.sgr.logicNames.indexOf( pairArray[0].substring(0,3) );
   //console.log('logicindex=',logicindex);
   if (-1 < logicindex) {
-    var logtype = av.ptd.logEdNames[logicindex];
+    var logtype = av.sgr.logEdNames[logicindex];
     // Checking for a resource tag
     var envobj = av.fzr.env.rsrce[logtype];
     //console.log('logtype='+logtype,'; envobj=', envobj);
@@ -561,7 +561,7 @@ av.frd.resourceLineParse = function(lnArray){
     //console.log('matchNum=', matchNum,'; logtype=', logtype,'ndx=',ndx,'av.fzr.env.rsrce['+logtype+'].regionList=', av.fzr.env.rsrce[logtype].regionList);
   }  
   // valid logic name not found;
-  else {lineErrors = 'resource,'+pairArray[0].substring(0,3)+' not found in av.ptd.logicNames';}
+  else {lineErrors = 'resource,'+pairArray[0].substring(0,3)+' not found in av.sgr.logicNames';}
   
   //co/nsole.log('lineErrors=', lineErrors);
   return lineErrors;

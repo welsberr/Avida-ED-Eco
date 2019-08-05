@@ -490,7 +490,7 @@ av.msg.doOrgTrace = function () {
       if (av.debug.msg) console.log('doOrgTrace: fzr', av.fzr);
       var seed = 100 * Math.random();
       if (dijit.byId('OrganDemoRadio').get('checked', true)) {seed = 0;}
-      else {seed = -1}
+      else {seed = -1;}
       var request = {
         'type': 'addEvent',
         'name': 'webOrgTraceBySequence',
@@ -666,6 +666,10 @@ av.msg.updatePopStats = function (msg) {
       //console.log('msg.by_clade[av.parents.name[ii]]=',msg.by_clade[av.parents.name[ii]]);
       //console.log('msg.by_clade['+av.parents.name[ii]+'].fitness=', msg.by_clade[av.parents.name[ii]].fitness);
       if (undefined != msg.by_clade[av.parents.name[ii]]) {
+        //console.log('ii=',ii,'; msg.update=', msg.update)
+        //console.log('av.pch.dadFit=', av.pch.dadFit);
+        //console.log('av.parents.name', av.parents.name);
+        //console.log('msg.by_clade=', msg.by_clade);
         av.pch.dadFit[av.parents.name[ii]][msg.update] = msg.by_clade[av.parents.name[ii]].fitness;
         av.pch.dadCst[av.parents.name[ii]][msg.update] = msg.by_clade[av.parents.name[ii]].gestation;
         av.pch.dadEar[av.parents.name[ii]][msg.update] = msg.by_clade[av.parents.name[ii]].metabolism;
@@ -893,7 +897,9 @@ av.msg.fillColorBlock = function (msg) {  //Draw the color block
       else if (0 == av.grd.fill[av.grd.selectedNdx]) av.grd.selCtx.fillStyle = av.color.defaultKidColor;
       else {  //av.utl.get_color0 = function(cmap, dx, d1, d2)
         av.grd.selCtx.fillStyle = av.utl.get_color0(av.grd.cmap, av.grd.fill[av.grd.selectedNdx], 0, av.grd.fillmax);
-        console.log('fillStyle', av.utl.get_color0(av.grd.cmap, av.grd.fill[av.grd.selectedNdx], 0, av.grd.fillmax));
+        //console.log('av.grd.cmap=', av.grd.cmap);
+        //console.log('av.grd.fill=', av.grd.fill);
+        //console.log('av.grd.selectedNdx=',av.grd.selectedNdx,'; av.grd.fillmax',av.grd.fillmax,'; fillStyle', av.utl.get_color0(av.grd.cmap, av.grd.fill[av.grd.selectedNdx], 0, av.grd.fillmax));
       }
     }
     if (av.debug.msg) console.log('color', av.grd.selCtx.fillStyle);
