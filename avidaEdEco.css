@@ -306,6 +306,9 @@
 #sugarAccordion{
   width: 100%;
 }
+#setAllSugars{
+  display: inline-block;
+}
 .sugarAccordionSection{
   width: 100%;
   border-bottom: 1px solid #222;   /* #000 is black  */
@@ -395,6 +398,12 @@
   display: grid;
   grid-template-areas: 'inflowHi outflowHi'
                        'equilibrium equilibrium';
+  width: 100%;
+}
+.grid-sugarDetailEqualPeriod-container {
+  display: grid;
+  grid-template-areas: 'inflowHi outflowHi'
+                       'equilibrium periodTime';
   width: 100%;
 }
 .grid-sugarDetailSourceSink-container {

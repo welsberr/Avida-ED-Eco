@@ -587,19 +587,19 @@
                             <option value='Global'>All Global</option>
                             <option value='Spatial'>All Spatial</option>
                             <option value='Neutral' selected>----</option>                            
-                          </select>
+                          </select> Geometry &nbsp;&nbsp;
                           <select id='allSugarType' onchange='av.sgr.allSugarTypeChange(this);'>
                             <option value='None'>All None</option>
-                            <option value='Infinte'>All Infinite</option>
+                            <option value='Infinite'>All Infinite</option>
                             <option value='Finite'>All Finite</option>
                             <option value='Chemostat'>All Chemostat &nbsp;&nbsp;</option>
                             <option value='Neutral' selected>----</option>
-                          </select>
-                          <select id="allSugarDetails" onchange='av.sgr.allSugarDetailsChange(this);'>
-                            <option value='allOpen'>Open All</option>
-                            <option value='allClose'>Close All</option>
+                          </select> Supply type &nbsp;&nbsp;
+                          <select id="allSugarDetails" onchange='av.sgr.allSugarDetailsOpenClose(this);'>
+                            <option value='allOpen'>Show All</option>
+                            <option value='allClose'>Hide All</option>
                             <option value='allNeutral' selected>----</option>                            
-                          </select>
+                          </select> Show/Hide Details
                           
                           
                         </div>
@@ -607,7 +607,7 @@
                           <details class='sugarAccordionSection' id='notSection'>
                             <summary class='sugarSummary'>
                                 <div class='sugarTitle'>Notose</div>&nbsp;
-                                <select  id='notGeometry' class='globalSpatial' onchange='av.ptd.geometryChange(this);'>
+                                <select  id='notGeometry' class='globalSpatial' onchange='av.sgr.geometryChange(this);'>
                                   <option value='Global' selected>Global</option>
                                   <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                                 </select>&nbsp;&nbsp;
@@ -625,10 +625,13 @@
                                   &nbsp;Initial amount per cell 
                                 </div>
                                 <div id='not0periodCheckbox' class='sugarSummaryDiv'>
-                                  <input type='checkbox' id='not0periodCheck'  checked>Periodic&nbsp;&nbsp;
+                                  <input type='checkbox' id='not0periodCheck'>Periodic&nbsp;&nbsp;
                                 </div>
                                 <div id='not0gradientCheckbox' class='sugarSummaryDiv'>
                                   <input type='checkbox' id='not0gradientCheck'  checked>Gradient&nbsp;&nbsp;
+                                </div>
+                                <div id='not0diffuseCheckbox' class='sugarSummaryDiv'>
+                                  <input type='checkbox' id='not0diffuseCheck'>Diffusion&nbsp;&nbsp;
                                 </div>
                                   
                             </summary>
@@ -682,27 +685,29 @@
                           <details class='sugarAccordionSection' id='nanSection'>
                             <summary class='sugarSummary'>
                                 <div class='sugarTitle'>Nanose</div>&nbsp;
-                                <select  id='nanGeometry' class='globalSpatial' onchange='av.ptd.geometryChange(this);'>
+                                <select  id='nanGeometry' class='globalSpatial' onchange='av.sgr.geometryChange(this);'>
                                   <option value='Global' selected>Global</option>
                                   <option value='Spatial'>Spatial &nbsp;&nbsp;</option>
                                 </select>&nbsp;&nbsp;&nbsp;
-                                <select  id='nan0Type' class='sugarType' onchange='av.ptd.nanTypeChange(this.value)'>
+                                <select  id='nan0Type' class='sugarType' onchange='av.sgr.typeChange(this)'>
                                   <option id='nan0none' value='None'>None</option>
-                                  <option id='nan0nan0Infinite' value='Infinite' selected>Infinite</option>
+                                  <option id='nan0Infinite' value='Infinite' selected>Infinite</option>
                                   <option id='nan0Finite' value='Finite'>Finite</option>
-                                  <option id='nan0Chemostat' value='Chemostat'>Equilibrium &nbsp;&nbsp;</option>
-                                  <option id='nan0Flow'value='Flow'>Flow &nbsp;&nbsp;</option>
+                                  <option id='nan0Chemostat' value='Chemostat'>Chemostat&nbsp;&nbsp;</option>
                                   <option id='nan0All' value='All'>Alldebug only</option>
                                   </select>&nbsp;&nbsp;&nbsp;
                                 <div id='nan0initialDiv' class='sugarSummaryDiv'>
                                   <input class='sugInitialInput' id='nan0initialInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>
-                                  &nbsp;Initial amount per cell 
+                                  &nbsp;Initial amount per cell&nbsp;&nbsp;
                                 </div>
                                 <div id='nan0periodCheckbox' class='sugarSummaryDiv'>
-                                  <input type='checkbox' id='nan0periodCheck'  checked>Periodic&nbsp;&nbsp;
+                                  <input type='checkbox' id='nan0periodCheck'>Periodic&nbsp;&nbsp;
                                 </div>
                                 <div id='nan0gradientCheckbox' class='sugarSummaryDiv'>
-                                  <input type='checkbox' id='nan0gradientCheck'  checked>Gradient&nbsp;&nbsp;
+                                  <input type='checkbox' id='nan0gradientCheck'>Gradient&nbsp;&nbsp;
+                                </div>
+                                <div id='nan0diffuseCheckbox' class='sugarSummaryDiv'>
+                                  <input type='checkbox' id='nan0diffuseCheck'>Diffusion&nbsp;&nbsp;
                                 </div>
                                   
                             </summary>
@@ -732,7 +737,7 @@
                                 <label id='nan1outflowLoLabel' class='sugOutflowLabel'>Outflow fraction per cell on low side.</label>
                               </div>
                               <div id='nan1equilibriumDiv' class='grid-sugarDetail-item equilibrium'>
-                                <label id='nan1equalLabel'>9</label> = equilibrium when no resource has been consumed.
+                                <label id='nan1equalLabel'>9</label><span id='nan1equalText'> = equilibrium when no resource has been consumed.</span>
                               </div>
                               <div id='nan1equilBothDiv' class='grid-sugarDetail-item equilibrium'>
                                 <label id='nan1equalHi'>9</label> Hi side equilibrium 

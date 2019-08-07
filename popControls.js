@@ -633,8 +633,8 @@ av.sgr.ChangeAllGeo = function(selectedOption){
   //for (var ii=1; ii< 3; ii++) {
     idName = av.sgr.logicNames[ii] + endName;
     document.getElementById(idName).value = selectedOption;
-    console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption);
   }
+  console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption);
 };
 
 av.sgr.ChangeAllSugarType = function(selectedOption){
@@ -643,10 +643,12 @@ av.sgr.ChangeAllSugarType = function(selectedOption){
   var domName = '';        
   var numtasks = av.sgr.logicNames.length;
   //for (var ii=0; ii< numtasks; ii++) {
-  for (var ii=2; ii< 3; ii++) {
+  for (var ii=1; ii< 2; ii++) {
     domName = av.sgr.logicNames[ii] + endName;
     document.getElementById(domName).value = selectedOption;
+    av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], selectedOption, 'av.sgr.ChangeAllSugarType');
   }
+    console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
 };
 
   av.sgr.setSugarColors = function() {
@@ -663,6 +665,136 @@ av.sgr.ChangeAllSugarType = function(selectedOption){
       }
     }
   };
+
+av.sgr.OpenCloseAllSugarDetails = function(selectedOption, from){
+  var endName = 'Section';   //nanGeometry
+  var idName = '';
+  var openFlag = false;
+  var numtasks = av.sgr.logicNames.length;
+  if ('allOpen' == selectedOption) {openFlag = true;}
+  for (var ii=0; ii< numtasks; ii++) {
+  //for (var ii=1; ii< 3; ii++) {
+    idName = av.sgr.logicNames[ii] + endName;
+    document.getElementById(idName).open = openFlag;
+  }
+  console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption, '; openFlag=', openFlag, '; from=', from);
+};
+
+av.sgr.changeDetailsLayout = function(tsk, type, from) {
+  console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; type=', type);
+  var idx = document.getElementById(tsk+'Geometry').selectedIndex;
+  var geoOption = document.getElementById(tsk+'Geometry').options[idx].value;   // get the value of the selected option 
+
+  document.getElementById(tsk+'0periodCheckbox').style.display = "none";
+  document.getElementById(tsk+'1periodTime').style.display = "none";
+  document.getElementById(tsk+'0gradientCheckbox').style.display = "none";
+  document.getElementById(tsk+'0diffuseCheckbox').style.display = "none";
+  document.getElementById(tsk+'0initialDiv').style.display = "none";
+  document.getElementById(tsk+'1initialHiDiv').style.display = "none";
+  document.getElementById(tsk+'1initialLoDiv').style.display = "none";
+  document.getElementById(tsk+'1inflowHiDiv').style.display = "none";
+  document.getElementById(tsk+'1inflowLoDiv').style.display = "none";
+  document.getElementById(tsk+'1outflowHiDiv').style.display = "none";
+  document.getElementById(tsk+'1outflowLoDiv').style.display = "none";
+  document.getElementById(tsk+'1equilibriumDiv').style.display = "none";
+  document.getElementById(tsk+'1equilBothDiv').style.display = "none";
+  document.getElementById(tsk+'1sideDiv').style.display = "none";
+  if ('Global' == geoOption) {
+    document.getElementById(tsk+'Section').open = false;
+    switch (type) {
+      case 'None': 
+      case 'Infinite': 
+        break;
+      case 'Finite': 
+        document.getElementById(tsk+'0initialDiv').style.display = "inline-block";
+        break;
+      case 'Chemostat':
+        document.getElementById(tsk+'0periodCheckbox').style.display = "inline-block";
+        document.getElementById(tsk+'1inflowHiDiv').style.display = "block";
+        document.getElementById(tsk+'1outflowHiDiv').style.display = "block";
+        document.getElementById(tsk+'1equilibriumDiv').style.display = "block";
+        document.getElementById(tsk+'1equalText').innerHTML = ' = equilibrium when no resource has been consumed.';
+        document.getElementById(tsk+'Details').className = 'grid-sugarDetailEqual-container';
+        console.log('nanDetails.class=', document.getElementById(tsk+'Details').className);
+        console.log(tsk+'0periodCheckbox.checked=', document.getElementById(tsk+'0periodCheck').checked);
+        if (true == document.getElementById(tsk+'0periodCheck').checked) {
+          document.getElementById(tsk+'1periodTime').style.display = "block";
+          document.getElementById(tsk+'1equalText').innerHTML = ' = equilibrium if not consumed. ';
+          document.getElementById(tsk+'Details').className = 'grid-sugarDetailEqualPeriod-container';
+        };
+        document.getElementById(tsk+'Section').open = true;
+        break;
+    }    
+  }        // end global 
+  else {
+    switch (type) {    //for when geometery = spatial
+      case 'None': 
+      case 'Infinite': 
+        break;
+      case 'Finite': 
+      if ('checked' != document.getElementById(tsk+'0gradientCheckbox').checked) {
+        document.getElementById(tsk+'0initialDiv').style.display = "inline-block";
+      }
+      else {
+        document.getElementById(tsk+'1sideDiv').style.display = "block";
+        document.getElementById(tsk+'1sideLabel').innerHTML = 'Side with a higher initial amount';
+        document.getElementById(tsk+'1initialHiDiv').style.display = "block";
+        document.getElementById(tsk+'1initialLoDiv').style.display = "block";
+        document.getElementById(tsk+'Details').className = 'grid-sugarDetailFiniteGradient-container';
+        console.log('nanDetails.class=', document.getElementById(tsk+'Details').className);
+      }
+      break;
+      case 'Chemostat':
+        console.log('nan0gradientCheckbox.checked=', document.getElementById(tsk+'0gradientCheckbox').checked);
+        if (true != document.getElementById(tsk+'0gradientCheckbox').checked) {
+          document.getElementById(tsk+'0periodCheckbox').style.display = "inline-block";
+          document.getElementById(tsk+'0gradientCheckbox').style.display = "inline-block";
+          document.getElementById(tsk+'1inflowHiDiv').style.display = "block";
+          document.getElementById(tsk+'1outflowHiDiv').style.display = "block";
+          document.getElementById(tsk+'1equilibriumDiv').style.display = "block";
+          document.getElementById(tsk+'1equalText').innerHTML = ' = equilibrium when no resource has been consumed.';
+          document.getElementById(tsk+'Details').className = 'grid-sugarDetailEqual-container';
+          console.log('nanDetails.class=', document.getElementById(tsk+'Details').className);
+        }
+        else {
+          document.getElementById(tsk+'1sideDiv').style.display = "block";
+          document.getElementById(tsk+'1sideLabel').innerHTML = 'Side with a higher initial amount';
+          document.getElementById(tsk+'1inflowHiDiv').style.display = "block";
+          document.getElementById(tsk+'1inflowLoDiv').style.display = "block";
+          document.getElementById(tsk+'1outflowHiDiv').style.display = "block";
+          document.getElementById(tsk+'1outlowLoDiv').style.display = "block";
+          document.getElementById(tsk+'1equilBothDiv').style.display = "block";
+          document.getElementById(tsk+'Details').className = 'grid-sugarDetailGradient-container';
+          console.log('nanDetails.class=', document.getElementById(tsk+'Details').className);
+        }
+        break;
+        /*
+      case 'SourceSink':
+        document.getElementById(tsk+'0periodCheckbox').style.display = "inline-block";
+        document.getElementById(tsk+'1sideLabel').innerHTML = 'inflow side; outlow will be everywhere or on the opposite side';
+        document.getElementById(tsk+'1inflowHiDiv').style.display = "block";
+        document.getElementById(tsk+'1outflowHiDiv').style.display = "block";
+        document.getElementById(tsk+'1sideDiv').style.display = "block";
+        document.getElementById(tsk+'Details').className = 'grid-sugarDetailSourceSink-container';
+        console.log('nanDetails.class=', document.getElementById(tsk+'Details').className);
+        break;
+        */
+      case 'All':
+        document.getElementById(tsk+'0periodCheckbox').style.display = "inline-block";
+        document.getElementById(tsk+'1sideDiv').style.display = "block";
+        document.getElementById(tsk+'1sideLabel').innerHTML = 'Side text describing what side means';
+        document.getElementById(tsk+'1initialHiDiv').style.display = "block";
+        document.getElementById(tsk+'1initialLoDiv').style.display = "block";
+        document.getElementById(tsk+'1inflowHiDiv').style.display = "block";
+        document.getElementById(tsk+'1outflowHiDiv').style.display = "block";
+        document.getElementById(tsk+'1equilibriumDiv').style.display = "block";
+        document.getElementById(tsk+'Details').className = 'grid-sugarDetailAll-container';
+        console.log('nanDetails.class=', document.getElementById(tsk+'Details').className);
+        break;
+    }
+
+  }
+};
 
 //------------------------------------------------------------------------------------------------ end sugars for Eco --
 

@@ -2513,26 +2513,39 @@ av.sgr.allSugarTypeChange = function(domObj){
   document.getElementById('allSugarType').value = 'allNeutral';    
 };
 
-av.sgr.allSugarDetailsChange = function(domObj){
+av.sgr.allSugarDetailsOpenClose = function(domObj){
   var idx = domObj.selectedIndex;        // get the index of the selected option 
   var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
-  //av.sgr.ChangeAllSugarType(selectedOption);
-  document.getElementById('allSugarDetails').value = 'allNeutral';    
+  av.sgr.OpenCloseAllSugarDetails(selectedOption, 'av.sgr.allSugarDetailsOpenClose');
+  document.getElementById('allSugarDetails').value = 'Neutral';    
 };
 
-av.ptd.geometryChange = function(selectObj){
+av.sgr.geometryChange = function(selectObj){
   var taskID = selectObj.id; 
   var task = taskID.substring(0,3);
   var idx = selectObj.selectedIndex;        // get the index of the selected option 
   var which = selectObj.options[idx].value;   // get the value of the selected option 
   console.log('id=', task, '; which=', which);
+  
 };
 
+av.sgr.typeChange = function (domObj) {
+  var taskID = domObj.id; 
+  var task = taskID.substring(0,3);
+  var idx = domObj.selectedIndex;        // get the index of the selected option 
+  var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
+  console.log('id=', task, '; selectedOption=', selectedOption);
+  av.sgr.changeDetailsLayout(task, selectedOption, 'av.sgr.typeChange');
+};
+
+
+// ---------------------------------------------------------------------------- specific task functions will go away. --
 av.ptd.notTypeChange = function(type) {
   console.log('notTypeChange=', type);
   //console.log('not1initialHiDiv.className=',document.getElementById('not1initialHiDiv').className);
   document.getElementById('not0periodCheckbox').style.display = "none";
   document.getElementById('not1periodTime').style.display = "none";
+  document.getElementById('not0diffuseCheckbox').style.display = "none";
   document.getElementById('not0gradientCheckbox').style.display = "none";
   document.getElementById('not0initialDiv').style.display = "none";
   document.getElementById('not1initialHiDiv').style.display = "none";
@@ -2590,6 +2603,7 @@ av.ptd.notTypeChange = function(type) {
  
 };
 
+/*
 av.ptd.nanTypeChange = function(type) {
   console.log('nanTypeChange=', type);
   //console.log('nan1initialHiDiv.className=',document.getElementById('nan1initialHiDiv').className);
@@ -2668,6 +2682,7 @@ av.ptd.nanTypeChange = function(type) {
       console.log('nanDetails.class=', document.getElementById('nanDetails').className);
   }
 };
+*/
 /******************************************************************************** End enviornment (sugar) settings ****/
 
 av.ptd.gridChange = function(tmpval) {
@@ -3595,14 +3610,15 @@ $(function slidemute() {
   //av.ui.removeVerticalScrollbar('popTop', 'popTop');
   console.log('before mainBoxSwap');
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
-  av.ptd.notTypeChange('None');
-  av.ptd.nanTypeChange('None');
 
-  //av.ui.envBoxSwap('envNone');  
-  //av.ui.ex1envBoxSwap('ex1envNone');    //delete later
+  av.sgr.ChangeAllGeo('Global');
+  av.sgr.setSugarColors();
+  av.sgr.ChangeAllSugarType('Infinite');
+  av.sgr.OpenCloseAllSugarDetails('allClose', 'Last things done');  
+
   av.ui.ex2envBoxSwap('ex2envNone');    //delete later
-  av.sgr.setSugarColors();   //94
-  av.ui.ex1setSugarColors();   //94
+  av.ui.ex1setSugarColors();   //94     //delete later
+  av.ptd.notTypeChange('None');   //delete later
   //av.grd.popChartFn();
   //av.grd.drawGridSetupFn('initial background'); //Draw initial background
 
