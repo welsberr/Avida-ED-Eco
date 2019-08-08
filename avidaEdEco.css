@@ -315,11 +315,13 @@
   display: inline-block;
 }
 .sugarSummary{
-  background: rgba(128, 128, 128, 0.1); 
+  background: rgba(128, 128, 128, 0.0); 
   min-height: 20px;
   width: 100%;
 }
-
+.sugarDetailSection{
+  background: rgba(255, 255, 255, 0.0);   
+}
 .sugarTitle{
   width: 57px;
   font-size: 100%;
@@ -385,53 +387,77 @@
 
 .initialHi { grid-area: initialHi;}
 .initialLo { grid-area: initialLo;}
-.inflowHi { grid-area: inflow; }
-.inflowLo { grid-area: inflow; }
-.outflowHi { grid-area: outflow; }
-.outflowLo { grid-area: outflow; }
-.equilibrium { grid-area: equilibrium; }
-.equilBoth { grid-area: equilBoth; }
-.side { grid-area: side; }
+
+.inflowHi { grid-area: inflowHi; }
+.inflowLo { grid-area: inflowLo; }
+
+.outflowHi { grid-area: outflowHi; }
+.outflowLo { grid-area: outflowLo; }
+
+.equalHi { grid-area: equalHi; }
+.equalLo { grid-area: equalLo; }
+
+.sideTitleHi { grid-area: sideTitleHi; }
+.sideTitleLo { grid-area: sideTitleLo; }
+
+.sideInput { grid-area: sideInput; }
 .periodTime { grid-area: periodTime; }
 
+.grid-sugarDetailAll-container {
+  display: grid;
+  grid-template-areas: 'sideInput periodTime'
+                       'sideTitleHi sideTitleLo'   
+                       'initialHi initialLo'
+                       'inflowHi inflowLo'
+                       'outflowHi outflowLo'
+                       'equalHi equalLo';
+}
 .grid-sugarDetailEqual-container {
   display: grid;
-  grid-template-areas: 'inflowHi outflowHi'
-                       'equilibrium equilibrium';
+  grid-template-areas: 'inflowHi equalHi'
+                      'outflowHi equalHi';
   width: 100%;
 }
 .grid-sugarDetailEqualPeriod-container {
   display: grid;
-  grid-template-areas: 'inflowHi outflowHi'
-                       'equilibrium periodTime';
+  grid-template-areas: ' inflowHi periodTime'
+                       'outflowHi equalHi';
+  width: 100%;
+}
+.grid-sugarDetailEqualGradient-container {
+  display: grid;
+  grid-template-areas: 'sideInput sideInput'
+/*                     'sideTitleHi sideTitleLo'   */
+                       ' inflowHi  inflowLo'
+                       'outflowHi outflowLo'
+                       'equalHi equalLo';
+  width: 100%;
+}
+.grid-sugarDetailEqualGradientPeriod-container {
+  display: grid;
+  grid-template-areas: 'sideInput periodTime'
+/*                     'sideTitleHi sideTitleLo'   */
+                       ' inflowHi  inflowLo'
+                       'outflowHi outflowLo'
+                       'equalHi equalLo';
+  width: 100%;
+}
+.grid-sugarDetailFiniteSpatial-container {
+  display: grid;
+  grid-template-areas: 'initialHi';
+  width: 100%;
+}
+.grid-sugarDetailFiniteGradient-container {
+  display: grid;
+  grid-template-areas: 'sideInput sideInput'
+                       'initialHi initialLo';
   width: 100%;
 }
 .grid-sugarDetailSourceSink-container {
   display: grid;
-  grid-template-areas: 'side side'
+  grid-template-areas: 'sideInput sideInput'
                        'inflowHi outflowHi';
   width: 100%;
-}
-.grid-sugarDetailFiniteGradient-container {
-  display: grid;
-  grid-template-areas: 'side side'
-                       'initialHi initialLo';
-  width: 100%;
-}
-.grid-sugarDetailFiniteGradient-container {
-  display: grid;
-  grid-template-areas: 'side side'
-                       'inflowHi inflowLo'
-                       'outflowHi outflowLo'
-                       'quilBoth quilBoth';
-  width: 100%;
-}
-.grid-sugarDetailAll-container {
-  display: grid;
-  grid-template-areas: 'side equilibrium'
-                       'inflowHi outflowHi'
-                       'inflowLo outflowLo'
-                       'initialLo initialHi';
 }
 .grid-sugarDetail-item{
   background-color: rgba(128, 128, 128, 0.2);    
@@ -440,7 +466,18 @@
   padding: 1px 1px;
   min-height: 22px;
 }
-
+.sideTitleHi{
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  color: #666;
+}
+.sideTitleLo{
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  color: #666;   /* a nice dark grey for bold text that should not be as prominiate as black bold text */
+}
 /*********************************************************************** End Sugar Accordion using details and select */
 
 /********************************************************************************* End Custom Select/Options DropDown */

@@ -2510,7 +2510,7 @@ av.sgr.allSugarTypeChange = function(domObj){
   var idx = domObj.selectedIndex;        // get the index of the selected option 
   var which = domObj.options[idx].value;   // get the value of the selected option 
   av.sgr.ChangeAllSugarType(which);
-  document.getElementById('allSugarType').value = 'allNeutral';    
+  document.getElementById('allSugarType').value = 'Neutral';    
 };
 
 av.sgr.allSugarDetailsOpenClose = function(domObj){
@@ -2525,8 +2525,9 @@ av.sgr.geometryChange = function(selectObj){
   var task = taskID.substring(0,3);
   var idx = selectObj.selectedIndex;        // get the index of the selected option 
   var which = selectObj.options[idx].value;   // get the value of the selected option 
-  console.log('id=', task, '; which=', which);
-  
+  var selectedOption = document.getElementById(task + '0Type').value;
+  console.log('id=', task, '; which=', which, '; selectedOption=', selectedOption);
+  av.sgr.changeDetailsLayout(task, selectedOption, 'av.sgr.geometryChange');  
 };
 
 av.sgr.typeChange = function (domObj) {
@@ -2536,6 +2537,15 @@ av.sgr.typeChange = function (domObj) {
   var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
   console.log('id=', task, '; selectedOption=', selectedOption);
   av.sgr.changeDetailsLayout(task, selectedOption, 'av.sgr.typeChange');
+};
+
+av.sgr.eachSugarCheckBoxChange = function (domObj) {
+  var taskID = domObj.id; 
+  var task = taskID.substring(0,3);
+  var idx = document.getElementById(task + '0Type').selectedIndex;        // get the index of the selected option 
+  var selectedOption = document.getElementById(task + '0Type').options[idx].value;   // get the value of the selected option 
+  console.log('id=', task, '; selectedOption=', selectedOption, '; so=', document.getElementById(task + '0Type').value);
+  av.sgr.changeDetailsLayout(task, selectedOption, 'av.sgr.eachSugarCheckBoxChange');
 };
 
 
