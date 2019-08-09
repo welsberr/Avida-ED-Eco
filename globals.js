@@ -419,8 +419,13 @@ av.sgr.reactValues = [ 1.0,   1.0,   2.0,   2.0,   3.0,   3.0,   4.0,   4.0,   5
 av.ptd.popInfoHolderWd = 395;
 av.sgr.monoChromeMaps = ['reddMap', 'orngMap', 'yllwMap', 'lawnMap', 'grenMap', 'seagMap', 'cyanMap', 
                          'cornMap', 'blueMap', 'purpMap', 'mgntMap', 'pinkMap', 'redvMap', 'greyMap'];
-  av.sgr.sugarColors = ['purpMap', 'blueMap', 'cornMap', 'cyanMap', 'seagMap', 'lawnMap', 'yllwMap', 'orngMap', 'pinkMap'];
-//av.sgr.sugarColors = ['redvMap', 'orngMap', 'yllwMap', 'grenMap', 'cyanMap', 'cornMap', 'blueMap', 'purpMap', 'mgntMap'];
+//av.sgr.sugarColors = ['redvMap', 'orngMap',   'yllwMap', 'grenMap',   'cyanMap', 'cornMap',   'blueMap', 'purpMap', 'mgntMap'];
+//av.sgr.sugarColors = ['purpMap', 'blueMap',   'cornMap', 'cyanMap',   'seagMap', 'lawnMap',   'yllwMap', 'orngMap',  'pinkMap'];
+  av.sgr.sugarColors = ['blueMap', 'cornMap',   'cyanMap', 'grenMap',   'yllwMap', 'orngMap',   'reddMap', 'pinkMap',  'mgntMap'];
+  av.sgr.sugarColors = ['blueMap', 'cornMap',   'seagMap', 'lawnMap',   'yllwMap', 'orngMap',   'reddMap', 'pinkMap',  'mgntMap'];
+  av.sgr.sugarColors = ['blueMap', 'cornMap',   'seagMap', 'grenMap',   'yllwMap', 'orngMap',   'reddMap', 'mgntMap',  'purpMap'];
+  av.sgr.sugarColors = ['blueMap', 'cornMap',   'seagMap', 'grenMap',   'yllwMap', 'orngMap',   'redvMap', 'mgntMap',  'purpMap'];
+console.log('sugarColors=', av.sgr.sugarColors);
 av.sgr.sugarShade = 90;  //was 30
 av.sgr.sugarGreyShade = 20;
 

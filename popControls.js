@@ -637,7 +637,7 @@ av.sgr.ChangeAllGeo = function(selectedOption){
     typeName = av.sgr.logicNames[ii] + endType;
     document.getElementById(idName).value = selectedOption;
     
-    //av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], document.getElementById(typeName).value, 'av.sgr.ChangeAllGeo');
+    av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], document.getElementById(typeName).value, 'av.sgr.ChangeAllGeo');
   }
   console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption);
 };
@@ -686,9 +686,9 @@ av.sgr.OpenCloseAllSugarDetails = function(selectedOption, from){
 };
 
 av.sgr.changeDetailsLayout = function(tsk, type, from) {
-  if ('ant' != tsk) {return;}
+  //if ('ant' != tsk) {return;}   used in testing; should be deleted in 2019 Aug/Sept
   
-  console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; type=', type);
+  //console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; type=', type);
   var idx = document.getElementById(tsk+'Geometry').selectedIndex;
   var geoOption = document.getElementById(tsk+'Geometry').options[idx].value;   // get the value of the selected option 
 

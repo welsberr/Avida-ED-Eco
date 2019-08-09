@@ -174,6 +174,7 @@ av.grd.setMapData = function () {
     };
     
     av.grd.cmap = av.color.Gnuplot2cmap;  //for fitness, offspring cost and energy aquisition rate
+    var mapColor = 'greyMap';
     switch (document.getElementById("colorMode").value) {
       case 'Fitness':
         av.grd.fill = av.grd.msg.fitness.data;
@@ -201,69 +202,79 @@ av.grd.setMapData = function () {
         av.grd.fillmax = av.grd.mxRnot;
         av.grd.fillmin = av.grd.msg.rnot.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
-        av.grd.cmap = av.color.redvMap;
+        mapColor = av.sgr.sugarColors[0];
+        av.grd.cmap = av.color[mapColor];
         break;
       case 'rnan':
         av.grd.fill = av.grd.msg.rnan.data;
         av.grd.fillmax = av.grd.mxRnan;
         av.grd.fillmin = av.grd.msg.rnan.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
-        av.grd.cmap = av.color.orngMap;
+        mapColor = av.sgr.sugarColors[1];
+        av.grd.cmap = av.color[mapColor];
         break;
       case 'rand':
         av.grd.fill = av.grd.msg.rand.data;
         av.grd.fillmax = av.grd.mxRand;
         av.grd.fillmin = av.grd.msg.rand.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
-        av.grd.cmap = av.color.yllwMap;
+        mapColor = av.sgr.sugarColors[2];
+        av.grd.cmap = av.color[mapColor];
         break;
       case 'rorn':
         av.grd.fill = av.grd.msg.rorn.data;
         av.grd.fillmax = av.grd.mxRorn;
         av.grd.fillmin = av.grd.msg.rorn.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
-        av.grd.cmap = av.color.grenMap;
+        mapColor = av.sgr.sugarColors[3];
+        av.grd.cmap = av.color[mapColor];
         break;
       case 'roro':
         av.grd.fill = av.grd.msg.roro.data;
         av.grd.fillmax = av.grd.mxRoro;
         av.grd.fillmin = av.grd.msg.roro.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
-        av.grd.cmap = av.color.cyanMap;
+        mapColor = av.sgr.sugarColors[4];
+        av.grd.cmap = av.color[mapColor];
         break;
       case 'rant':
         av.grd.fill = av.grd.msg.rant.data;
         av.grd.fillmax = av.grd.mxRant;
         av.grd.fillmin = av.grd.msg.rant.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
-        av.grd.cmap = av.color.cornMap;
+        mapColor = av.sgr.sugarColors[5];
+        av.grd.cmap = av.color[mapColor];
         break;
       case 'rnor':
         av.grd.fill = av.grd.msg.rnor.data;
         av.grd.fillmax = av.grd.mxRnor;
         av.grd.fillmin = av.grd.msg.rnor.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
-        av.grd.cmap = av.color.blueMap;
+        mapColor = av.sgr.sugarColors[6];
+        av.grd.cmap = av.color[mapColor];
         break;
       case 'rxor':
         av.grd.fill = av.grd.msg.rxor.data;
         av.grd.fillmax = av.grd.mxRxor;
         av.grd.fillmin = av.grd.msg.rxor.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
-        av.grd.cmap = av.color.purpMap;
+        mapColor = av.sgr.sugarColors[7];
+        av.grd.cmap = av.color[mapColor];
         break;
       case 'requ':
         av.grd.fill = av.grd.msg.requ.data;
         av.grd.fillmax = av.grd.mxRequ;
         av.grd.fillmin = av.grd.msg.requ.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
-        av.grd.cmap = av.color.mgntMap;
+        mapColor = av.sgr.sugarColors[8];
+        av.grd.cmap = av.color[mapColor];
         break;
       case 'Ancestor Organism':
         av.grd.fill = av.grd.msg.ancestor.data;
         av.grd.fillRescale = '';
         break;
-    }
+    };
+    console.log('colorMdoe=',document.getElementById("colorMode").value, '; colorM=', mapColor);
     //console.log('av.grd.msg.anc.data', av.grd.msg.ancestor.data);
     //console.log('av.grd.msg.fit.data', av.grd.msg.fitness.data);
     //console.log('av.grd.msg.gen.data', av.grd.msg.gestation.data);
