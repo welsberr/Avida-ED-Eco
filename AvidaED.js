@@ -2474,27 +2474,6 @@ av.ui.ex2envBoxSwap = function (showbox) {
 
 
 // end of ex1 and ex2 page stuff
-/*
-document.getElementById('envRegion').onchange = function() {
-//dijit.byId('envRegion').on('Change', function () {
-    av.ui.envRegion = document.getElementById('envRegion').value;
-    av.ptd.envobj2form('envRegion.change');
-  };
-
-  document.getElementById('envTask').onchange = function() {
-  //dijit.byId('envTask').on('Change', function () {
-    av.ui.envTask = document.getElementById('envTask').value;
-    av.ptd.envobj2form('envTask.change');
-  };
-  
-  on ex2, but not working.
-  //Opens envShowRegion dialog box
-  document.getElementById('envShowRegion').onclick = function () {
-    av.ui.envTask = document.getElementById('envShowRegion').value;
-    av.ptd.showEnv('envShowRegion.change');
-  };
- */
-
 
 //------------------------------------------------------------------------------------------------- Sugar Accordion ----
 //Global or Spatial in Ed speak = Global or Grid in Avida Environment file.
