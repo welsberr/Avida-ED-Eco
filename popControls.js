@@ -250,7 +250,7 @@ av.ptd.runPopFn = function (from) {
   'use strict';
   if (av.debug.popCon) console.log(from, 'called av.ptd.runPopFn: runPopFn runState =', av.grd.runState);
   //check for ancestor organism in configuration data
-  var namelist
+  var namelist;
   if ('test' == av.msg.setupType)
     namelist = dojo.query('> .dojoDndItem', 'ancestorBoTest');    
   else
@@ -288,7 +288,7 @@ av.ptd.runPopFn = function (from) {
         av.fwt.form2cfgFolder();          //creates avida.cfg and environment.cfg and ancestor.txt and ancestors_manual.txt from form
       }
       if ('prepping' === av.grd.runState) {
-        av.msg.importConfigExpr('av.ptd.runPopFn');
+        av.msg.importConfigExpr('av.ptd.runPopFn ln291');
         console.log('after calling av.msg.importConfigExpr');
         av.msg.injectAncestors('config');
       }
@@ -319,16 +319,16 @@ av.ptd.runPopFn = function (from) {
     }
 
     if (av.dom.autoUpdateRadio.checked) {
-      //av.msg.pause(av.dom.autoUpdateSpinner').get('value'));  //not used where there is handshaking (not used with av.msg.stepUpdate)
+      //av.msg.pause(av.dom.autoUpdateOnce').get('value'));  //not used where there is handshaking (not used with av.msg.stepUpdate)
       av.ui.autoStopFlag = true;
-      av.ui.autoStopValue = av.dom.autoUpdateSpinner.value;
-      //console.log('stop at  = av.dom.autoUpdateSpinner').get('value'));
+      av.ui.autoStopValue = av.dom.autoUpdateOnce.value;
+      //console.log('stop at  = av.dom.autoUpdateOnce').get('value'));
     }
 
-    av.ptd.makeRunState('av.ptd.runPopFn');
+    av.ptd.makeRunState('av.ptd.runPopFn 328');
     av.msg.stepUpdate();   //av.msg.doRunPause(av.fio);
   }
-  if (av.debug.popCon) console.log('end of av.ptd.runPopFn');
+  if (av.debug.popCon) console.log('end of av.ptd.runPopFn 331');
   //update screen based on data from C++
 };
 
@@ -559,7 +559,7 @@ av.ptd.resetDishFn = function (need2sendRest2avida) { //Need to reset all settin
     //Clear options that are not in the config files
   av.dom.manualUpdateRadio.checked = true;
   av.dom.autoUpdateRadio.checked = false;
-  av.dom.autoUpdateSpinner.value = av.ptd.autoPauseUpdate;
+  av.dom.autoUpdateOnce.value = av.ptd.autoPauseUpdate;
 
   av.ptd.clearLogicButtons();
   //console.log('fzr.activeCon', av.fzr.actConfig);

@@ -1361,49 +1361,52 @@
                           
                         </div><span id='sugarAccordionEnd'></span>
                       </div> <span tag='end of odd'></span>
-                        
-                        
-                        
+
+                      <div class='even'>
+                        <label id='label_31'>Repeatability Mode:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='experimentRadio'
+                               intermediateChanges='false' iconClass='dijitNoIcon' name='repeat'
+                               value='experimental'>
+                        <label id='experimentLabel'>Experimental</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='demoRadio' checked
+                               intermediateChanges='false' iconClass='dijitNoIcon' name='repeat' value='demo'>
+                        <label id='demoLabel'>Demo</label>
+                      </div>
+                      <div class='odd'>
+                        <label>Pause Run:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='manualUpdateRadio'
+                               intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' checked
+                               value='manual' />
+                        <label id='ManLabel'>Manually</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='autoUpdateRadio'
+                               intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' value='setupdate' />
+                        <label id='updateLabel'>At update:</label>
+                        <input type='text' id='autoUpdateOnce' value='1000' style='width:80px'>
+                      </div>
+                      <div class='even'>
+                        <label id='Multi-Dish'>Multi-Dish:</label><br>
+                           Here or on a different tab?
+                      </div>
+                      
+                      
+                      
+                      
+                      <span data-dojo-type='dijit/TitlePane' id='AdvancedSetup' title='Advanced Setup'
+                            extractContent='false' preventCache='false' preload='false' refreshOnShow='false' duration='200'
+                            open='false' style='min-width: 1px; width: 100%; height: auto; visibility: hidden'>
                         <div class='even'>
-                          <label id='label_31'>Repeatability Mode:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='experimentRadio'
-                                 intermediateChanges='false' iconClass='dijitNoIcon' name='repeat'
-                                 value='experimental'>
-                          <label id='experimentLabel'>Experimental</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='demoRadio' checked
-                                 intermediateChanges='false' iconClass='dijitNoIcon' name='repeat' value='demo'>
-                          <label id='demoLabel'>Demo</label>
+                          time Slice:
+                          <input id='avetimeSlice' value='20'
+                                 style='width: 3em; height:1.6em' />
+                          &nbsp;&nbsp;&nbsp;
+                          Update Delay:
+                          <input id='sleepDelay' type='text' data-dojo-type='dijit/form/NumberTextBox'
+                                 required='true' value='50' data-dojo-props='constraints:{min:0, max:5000,places:0},
+                                 invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid update Delay."'
+                                 style='width:4em; height:1.6em'/>
+                          msecs<br />
                         </div>
-                        <div class='odd'>
-                          <label>Pause Run:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='manualUpdateRadio'
-                                 intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' checked
-                                 value='manual' />
-                          <label id='ManLabel'>Manually</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='autoUpdateRadio'
-                                 intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' value='setupdate' />
-                          <label id='updateLabel'>At update:</label>
-                          <input type='text' data-dojo-type='dijit/form/NumberSpinner' id='autoUpdateSpinner'
-                                 intermediateChanges='false'
-                                 trim='false' uppercase='festalse' lowercase='false' propercase='false' invalidMessage='$_unset_$'
-                                 value='1000' data-dojo-props='smallDelta:100, constraints:{places:0}' style='width:80px'>
-                        </div>
-                        <span data-dojo-type='dijit/TitlePane' id='AdvancedSetup' title='Advanced Setup'
-                              extractContent='false' preventCache='false' preload='false' refreshOnShow='false' duration='200'
-                              open='false' style='min-width: 1px; width: 100%; height: auto; visibility: hidden'>
-                          <div class='even'>
-                            time Slice:
-                            <input id='avetimeSlice' value='20'
-                                   style='width: 3em; height:1.6em' />
-                            &nbsp;&nbsp;&nbsp;
-                            Update Delay:
-                            <input id='sleepDelay' type='text' data-dojo-type='dijit/form/NumberTextBox'
-                                   required='true' value='50' data-dojo-props='constraints:{min:0, max:5000,places:0},
-                                   invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid update Delay."'
-                                   style='width:4em; height:1.6em'/>
-                            msecs<br />
-                          </div>
-                        </span>
+                      </span>                      
                     </form>
                   </div>
 

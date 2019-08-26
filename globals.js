@@ -68,7 +68,7 @@ av.dft.xorose = true;
 av.dft.equose = true;
 av.dft.repeat = 'experimentRadio';   //alternate = 'demoRadio'
 av.dft.pauseType = 'manualUpdateRadio';     //alternate = 'autoUpdateRadio'
-av.dft.autoUpdateSpinner = 1000;
+av.dft.autoUpdateOnce = 1000;
 
 av.mouse = {};
 
@@ -409,25 +409,8 @@ av.dnd.move = {};  //used to hold data needed for dnd type move.
 
 av.ptd = {};  // on population page that are not part of the grid. (PeTri Dish)
 av.ptd.popStatFlag = true;  //flag that determines if the stats panel is visible.
-av.sgr = {};   //specific to resource/reactions (sugars);
 av.ptd.regionNames = ['Entire Dish', 'Upper Left', 'Upper Right', 'Lower Left', 'Lower Right'];
 av.ptd.logicButtons = ['notButton', 'nanButton', 'andButton', 'ornButton', 'oroButton', 'antButton', 'norButton', 'xorButton', 'equButton'];
-av.sgr.logEdNames = ['0not', '1nan', '2and', '3orn', '4oro', '5ant', '6nor', '7xor', '8equ'];
-av.sgr.logicNames = ['not', 'nan', 'and', 'orn', 'oro', 'ant', 'nor', 'xor', 'equ'];
-av.sgr.logicVnames = ['not', 'nand', 'and', 'orn', 'or', 'andn', 'nor', 'xor', 'equ'];
-av.sgr.reactValues = [ 1.0,   1.0,   2.0,   2.0,   3.0,   3.0,   4.0,   4.0,   5.0];
-av.ptd.popInfoHolderWd = 395;
-av.sgr.monoChromeMaps = ['reddMap', 'orngMap', 'yllwMap', 'lawnMap', 'grenMap', 'seagMap', 'cyanMap', 
-                         'cornMap', 'blueMap', 'purpMap', 'mgntMap', 'pinkMap', 'redvMap', 'greyMap'];
-//av.sgr.sugarColors = ['redvMap', 'orngMap',   'yllwMap', 'grenMap',   'cyanMap', 'cornMap',   'blueMap', 'purpMap', 'mgntMap'];
-//av.sgr.sugarColors = ['purpMap', 'blueMap',   'cornMap', 'cyanMap',   'seagMap', 'lawnMap',   'yllwMap', 'orngMap',  'pinkMap'];
-  av.sgr.sugarColors = ['blueMap', 'cornMap',   'cyanMap', 'grenMap',   'yllwMap', 'orngMap',   'reddMap', 'pinkMap',  'mgntMap'];
-  av.sgr.sugarColors = ['blueMap', 'cornMap',   'seagMap', 'lawnMap',   'yllwMap', 'orngMap',   'reddMap', 'pinkMap',  'mgntMap'];
-  av.sgr.sugarColors = ['blueMap', 'cornMap',   'seagMap', 'grenMap',   'yllwMap', 'orngMap',   'reddMap', 'mgntMap',  'purpMap'];
-  av.sgr.sugarColors = ['blueMap', 'cornMap',   'seagMap', 'grenMap',   'yllwMap', 'orngMap',   'redvMap', 'mgntMap',  'purpMap'];
-console.log('sugarColors=', av.sgr.sugarColors);
-av.sgr.sugarShade = 90;  //was 30
-av.sgr.sugarGreyShade = 20;
 
 //structure to hold list of ancestor organisms
 av.parents = {};
@@ -452,6 +435,26 @@ av.parents.clearParentsFn = function () {
 
 av.fzr = {};
 
+av.sgr = {};   //specific to resource/reactions (sugars);
+av.sgr.logEdNames = ['0not', '1nan', '2and', '3orn', '4oro', '5ant', '6nor', '7xor', '8equ'];
+av.sgr.logicNames = ['not', 'nan', 'and', 'orn', 'oro', 'ant', 'nor', 'xor', 'equ'];
+av.sgr.logicVnames = ['not', 'nand', 'and', 'orn', 'or', 'andn', 'nor', 'xor', 'equ'];
+av.sgr.reactValues = [ 1.0,   1.0,   2.0,   2.0,   3.0,   3.0,   4.0,   4.0,   5.0];
+av.ptd.popInfoHolderWd = 395;
+av.sgr.monoChromeMaps = ['reddMap', 'orngMap', 'yllwMap', 'lawnMap',  'grenMap', 'seagMap', 'cyanMap', 
+                         'cornMap', 'blueMap', 'purpMap', 'mgntMap',  'pinkMap', 'redvMap', 'greyMap'];
+//av.sgr.sugarColors = ['redvMap', 'orngMap',  'yllwMap', 'grenMap',  'cyanMap', 'cornMap',  'blueMap', 'purpMap', 'mgntMap'];
+//av.sgr.sugarColors = ['purpMap', 'blueMap',  'cornMap', 'cyanMap',  'seagMap', 'lawnMap',  'yllwMap', 'orngMap',  'pinkMap'];
+  av.sgr.sugarColors = ['blueMap', 'cornMap',  'cyanMap', 'grenMap',  'yllwMap', 'orngMap',  'reddMap', 'pinkMap',  'mgntMap'];
+  av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'lawnMap',  'yllwMap', 'orngMap',  'reddMap', 'pinkMap',  'mgntMap'];
+  av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'grenMap',  'yllwMap', 'orngMap',  'reddMap', 'mgntMap',  'purpMap'];
+  av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'grenMap',  'yllwMap', 'orngMap',  'redvMap', 'mgntMap',  'purpMap'];
+  av.sgr.sugarColors = ['grenMap', 'seagMap',  'cornMap', 'blueMap',  'purpMap', 'mgntMap',  'redvMap', 'orngMap',  'yllwMap'];
+console.log('sugarColors=', av.sgr.sugarColors);
+av.sgr.sugarShade = 90;  //was 30
+av.sgr.sugarGreyShade = 20;
+
+
 av.fzr.clearEnvironment = function() {
   av.fzr.env = {};
   av.fzr.env.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', 'inflowy2', 'xdiffuse', 'ydiffuse'
@@ -472,25 +475,70 @@ av.fzr.clearEnvironment = function() {
   // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
   av.fzr.env.rsrce = {};
   av.fzr.env.react = {};  
+  av.fzr.env.dsh = [];              //subdishes;
+  av.fzr.env.subdish = [];
   var logiclen = av.sgr.logicNames.length;
   var rsrcelen = av.fzr.env.rsrce_param.length; 
   var reactlen = av.fzr.env.react_param.length;
+  var tsk;
+  var rnm;
+  var lnm;
+  var subdishL = av.fzr.env.subdish.length;
+   subdishL = 1;
+  for (var ii=0; ii< subdishL; ii++){
+    av.fzr.env.subdish[ii] = [];   
+    for (var jj=0; jj<rsrcelen; jj++){
+      rnm = av.fzr.env.rsrce_param[jj];
+      av.fzr.env.subdish[ii][rnm] = [];
+    };
+    for (var jj=0; jj<reactlen; jj++){
+      rnm = av.fzr.env.react_param[jj];
+      av.fzr.env.subdish[ii][rnm] = [];
+    };
+  };
+  console.log('av.fzr.env.subdish=',av.fzr.env.subdish);
+
   for (var ii=0; ii< logiclen; ii++) {
-    var enm = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
+    tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
     //var lnm = av.sgr.logicNames[ii];
     //var vnm = av.sgr.logicVnames[ii];  
-    av.fzr.env.rsrce[enm] = {};    
+    av.fzr.env.rsrce[tsk] = {};    
     for (var jj=0; jj<rsrcelen; jj++){
-      av.fzr.env.rsrce[enm][av.fzr.env.rsrce_param[jj]] = [];
+      av.fzr.env.rsrce[tsk][av.fzr.env.rsrce_param[jj]] = [];
     }
-    av.fzr.env.react[enm] = {};
+    av.fzr.env.react[tsk] = {};
     for (var jj=0; jj<reactlen; jj++){
-      
-      av.fzr.env.react[enm][av.fzr.env.react_param[jj]] = [];
+      rnm = av.fzr.env.react_param[jj];
+      av.fzr.env.react[tsk][rnm] = [];
     }
   };
-  //console.log('av.fzr.env.react=',av.fzr.env.react);
-  //console.log('av.fzr.env.rsrce=',av.fzr.env.rsrce);
+  console.log('av.fzr.env.react=',av.fzr.env.react);
+  console.log('av.fzr.env.rsrce=',av.fzr.env.rsrce);
+  
+/*        this should be deletec in fall 2019
+  av.fzr.ron = {};   //alternate environment settings built from parameters on settings tab.
+  av.fzr.ron.rsrce = {};
+  av.fzr.ron.react = {};    
+  for (var ii=1; ii< rsrcelen; ii++) {
+    rnm = av.fzr.env.rsrce_param[ii];
+    av.fzr.ron.rsrce[rnm] = [];
+    for (var jj=0; jj< logiclen; jj++) {
+      tsk = av.sgr.logEdNames[jj];   //puts names in order they are on avida-ed user interface
+      av.fzr.ron.rsrce[rnm][tsk] = [];      //the inner most array is for how many in a single dish. only one for now. 
+    }
+  };
+  for (var ii=1; ii< reactlen; ii++) {
+    rnm = av.fzr.env.react_param[ii];
+    av.fzr.ron.react[rnm] = [];
+    for (var jj=0; jj< logiclen; jj++) {
+      tsk = av.sgr.logEdNames[jj];   //puts names in order they are on avida-ed user interface
+      //av.fzr.ron.react[rnm][tsk] = [];      //the inner most array is for how many in a single dish. only one for now. 
+      av.fzr.ron.react[rnm][tsk] = rnm;
+    }
+  };
+  console.log('av.fzr.ron.react=',av.fzr.ron.react);
+  console.log('av.fzr.ron.rsrce=',av.fzr.ron.rsrce);
+  */
 };
 
 //-------------------------------------------------------------------------------------------- in av.fzr.clearFzrFn --//
@@ -540,7 +588,6 @@ av.fzr.clearFzrFn = function () {
   av.fzr.subDishOrNot = 'none';
   av.fzr.clearEnvironment();
 };
-
 
 //------------------------------------------------------------------------------------------- end av.fzr.clearFzrFn --//
 
@@ -907,8 +954,8 @@ av.anl.clearChart = function () {
       , 'hoverClosestCartesian'  //shows values as an (x,y) pair
       , 'hoverCompareCartesian'   //shows values (x at x axis) (y near y value)
     ]
-  }
-}
+  };
+};
   av.anl.clearChart();
 
 //----------------------------------------------------------------------------------------------------------------------

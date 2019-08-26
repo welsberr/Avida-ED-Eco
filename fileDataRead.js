@@ -776,12 +776,12 @@ av.frd.pauseRunAtTXT2form = function (fileStr) {
   if (0 < update) {
     dijit.byId('manualUpdateRadio').set('checked', false);
     dijit.byId('autoUpdateRadio').set('checked', true);
-    dijit.byId('autoUpdateSpinner').set('value', update);
+    dijit.byId('autoUpdateOnce').set('value', update);
   }
   else {
     dijit.byId('manualUpdateRadio').set('checked', true);
     dijit.byId('autoUpdateRadio').set('checked', false);
-    dijit.byId('autoUpdateSpinner').set('value', '1000');
+    dijit.byId('autoUpdateOnce').set('value', '1000');
   }
 };
 

@@ -158,7 +158,7 @@ require([
   //av.mouse.getOriginalShapes(); only gets empty strings
 
   /********************************************************************************************************************/
-  console.log('avida-ED-ecoWeb - active pause');
+  console.log('after splash screen code');
   // -------------------------------------------------------------------------------------------------------------------
   // Initialize variables that depend on files loaded in requirement statement
   // -------------------------------------------------------------------------------------------------------------------
@@ -329,7 +329,7 @@ require([
     av.dom.demoRadio = document.getElementById('demoRadio');
     av.dom.manualUpdateRadio = document.getElementById('manualUpdateRadio');
     av.dom.autoUpdateRadio = document.getElementById('autoUpdateRadio');
-    av.dom.autoUpdateSpinner = document.getElementById('autoUpdateSpinner');
+    av.dom.autoUpdateOnce = document.getElementById('autoUpdateOnce');
     
     //test dishes setup
     av.dom.environConfigEdit = document.getElementById('environConfigEdit');
@@ -2225,7 +2225,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   av.ptd.popSizeFn = function(from) {
     av.grd.setupCols = Number(av.dom.sizeCols.value);
     av.grd.setupRows = Number(av.dom.sizeRows.value);
-    console.log(from, 'called av.ptd.popSizeFn: new col, row', av.grd.setupCols, av.grd.setupRows);
+    //console.log(from, 'called av.ptd.popSizeFn: new col, row', av.grd.setupCols, av.grd.setupRows);
     //console.log('av.grd.setupCols, Rows', av.grd.setupCols, av.grd.setupRows);
     av.dom.sizeCells.innerHTML = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
     //av.dom.sizeCells.text = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
@@ -2552,7 +2552,7 @@ av.sgr.eachSugarCheckBoxChange = function (domObj) {
 /******************************************************************************** End enviornment (sugar) settings ****/
 
 av.ptd.gridChange = function(tmpval) {
-    console.log('in av.ptd.gridChange; tmpval=', tmpval);
+    //console.log('in av.ptd.gridChange; tmpval=', tmpval);
     var colNum = Number(av.dom.sizeCols.value);
     var rowNum = Number(av.dom.sizeRows.value);
     //console.log('col, row=', colNum, rowNum);
@@ -2748,10 +2748,10 @@ $(function slidemute() {
     av.ui.autoStopFlag = true;
   });
 
-  dojo.connect(dijit.byId('autoUpdateSpinner'), 'onChange', function () {
-    av.post.addUser('Spinner: autoUpdateSpinner = ' + dijit.byId('autoUpdateSpinner').get('value'));
-    av.ui.autoStopValue = dijit.byId('autoUpdateSpinner').get('value');
-    //console.log('autoUpdateSpinner=', dijit.byId('autoUpdateSpinner').get('value'));
+  dojo.connect(dijit.byId('autoUpdateOnce'), 'onChange', function () {
+    av.post.addUser('Spinner: autoUpdateOnce = ' + dijit.byId('autoUpdateOnce').get('value'));
+    av.ui.autoStopValue = dijit.byId('autoUpdateOnce').get('value');
+    //console.log('autoUpdateOnce=', dijit.byId('autoUpdateOnce').get('value'));
   });
 
   dojo.connect(dijit.byId('manualUpdateRadiTest'), 'onClick', function () {
@@ -2766,9 +2766,9 @@ $(function slidemute() {
 
 
   dojo.connect(dijit.byId('autoUpdateSpinneTest'), 'onChange', function () {
-    av.post.addUser('Spinner: autoUpdateSpinner = ' + dijit.byId('autoUpdateSpinneTest').get('value'));
+    av.post.addUser('Spinner: autoUpdateOnce = ' + dijit.byId('autoUpdateSpinneTest').get('value'));
     av.ui.autoStopValue = dijit.byId('autoUpdateSpinneTest').get('value');
-    //console.log('autoUpdateSpinner=', dijit.byId('autoUpdateSpinner').get('value'));
+    //console.log('autoUpdateOnce=', dijit.byId('autoUpdateOnce').get('value'));
   });
 
   /* *************************************************************** */

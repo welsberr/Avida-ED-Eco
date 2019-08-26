@@ -60,7 +60,7 @@ av.fwt.makeFzrEventsCfgWorld = function (idStr, em) {
 
 av.fwt.makeFzrPauseRunAt = function (idStr, actConfig) {
   'use strict';
-  var txt = dijit.byId('autoUpdateSpinner').get('value').toString();
+  var txt = dijit.byId('autoUpdateOnce').get('value').toString();
   // Is auto Update Radio button checked?
   if (av.dom.manualUpdateRadio.checked) {  //manually pause population
     txt = '-1';   //Manual Update
@@ -70,8 +70,9 @@ av.fwt.makeFzrPauseRunAt = function (idStr, actConfig) {
 };
 
 
-av.fwt.makeFzrAvidaCfg = function (idStr, actConfig) {
+av.fwt.makeFzrAvidaCfg = function (idStr, from) {
   'use strict';
+  if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrAvidaCfg', '; col, row = ', av.dom.sizeCols.value, av.dom.sizeRows.value);
   //console.log('col; row', av.dom.sizeCols, av.dom.sizeRows);
   //console.log('col; row - text', av.dom.sizeCols.text, av.dom.sizeRows.text);
   //console.log('col; row - value', av.dom.sizeCols.value, av.dom.sizeRows.value);
@@ -94,13 +95,14 @@ av.fwt.makeFzrAvidaCfg = function (idStr, actConfig) {
   txt += '#include instset.cfg\n';
   txt += 'PRECALC_PHENOTYPE 1\n';
   txt += 'VERSION_ID 2.14.0 \n';
-  if (actConfig) {av.fwt.makeActConfigFile('avida.cfg', txt);}  // always false for now 2017 July
+  if (true) av.fwt.makeActConfigFile('avida.cfg', txt);  // 
   else {av.fwt.makeFzrFile(idStr+'/avida.cfg', txt);}
 };
 
 /*----------------------------------------------------------------------------------------- av.fwt.makeFzrAvidaTest --*/
-av.fwt.makeFzrAvidaTest = function (idStr, actConfig) {
+av.fwt.makeFzrAvidaTest = function (idStr, from) {
   'use strict';
+  if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrAvidaTest', '; col, row = ', av.dom.sizeCols.value, av.dom.sizeRows.value);
   var txt = 'WORLD_X ' + av.dom.sizeColTest.value + '\n';
   txt += 'WORLD_Y ' + av.dom.sizeRowTest.value + '\n';
   txt += 'WORLD_GEOMETRY 1 \n';
@@ -118,7 +120,7 @@ av.fwt.makeFzrAvidaTest = function (idStr, actConfig) {
   txt += '#include instset.cfg\n';
   txt += 'PRECALC_PHENOTYPE 1\n';
   txt += 'VERSION_ID 2.14.0 \n';
-  if (actConfig) {av.fwt.makeActConfigFile('avida.cfg', txt);}  // always false for now 2017 July
+  if (true) {av.fwt.makeActConfigFile('avida.cfg', txt);}  // always false for now 2017 July
   else {av.fwt.makeFzrFile(idStr+'/avida.cfg', txt);}
 };
 
@@ -126,8 +128,9 @@ av.fwt.makeFzrAvidaTest = function (idStr, actConfig) {
 
 
 /*------------------------------------------------------------------------------------ av.fwt.makeFzrEnvironmentCfg --*/
-av.fwt.makeFzrEnvironmentCfg = function (idStr, actConfig) {
+av.fwt.makeFzrEnvironmentCfg = function (idStr, from) {
   'use strict';
+  if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrEnvironmentCfg');
   var txt = '';
   if (av.dom.notose.checked) txt += 'REACTION  NOT  not   process:value=1:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NOT  not   process:value=0:type=pow  requisite:max_count=1\n';
   if (av.dom.nanose.checked) txt += 'REACTION  NAND nand  process:value=1:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NAND nand  process:value=0:type=pow  requisite:max_count=1\n';
@@ -138,33 +141,39 @@ av.fwt.makeFzrEnvironmentCfg = function (idStr, actConfig) {
   if (av.dom.norose.checked) txt += 'REACTION  NOR  nor   process:value=4:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NOR  nor   process:value=0:type=pow  requisite:max_count=1\n';
   if (av.dom.xorose.checked) txt += 'REACTION  XOR  xor   process:value=4:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  XOR  xor   process:value=0:type=pow  requisite:max_count=1\n';
   if (av.dom.equose.checked) txt += 'REACTION  EQU  equ   process:value=5:type=pow  requisite:max_count=1';    else txt += 'REACTION  EQU  equ   process:value=0:type=pow  requisite:max_count=1';
-  if (actConfig) {av.fwt.makeActConfigFile('environment.cfg', txt);}
+  if (true) {av.fwt.makeActConfigFile('environment.cfg', txt);}
   else  { av.fwt.makeFzrFile(idStr+'/environment.cfg', txt);}
 };
 
 /*----------------------------------------------------------------------------------- av.fwt.makeFzrEnvironmentTest --*/
-av.fwt.makeFzrEnvironmentTest = function (idStr, actConfig) {
+av.fwt.makeFzrEnvironmentTest = function (idStr, from) {
   'use strict';
+  if (av.debug.fio) console.log(from, 'called av.fwt.makeFzrEnvironmentTest');
+ 
   var txt = av.dom.environConfigEdit.value;
   
-  if (actConfig) {av.fwt.makeActConfigFile('environment.cfg', txt);}
+  if (true) {av.fwt.makeActConfigFile('environment.cfg', txt);}
   else  { av.fwt.makeFzrFile(idStr+'/environment.cfg', txt);}
 };
 
-av.fwt.makeFzrAncestorAuto = function (idStr, actConfig) {
+/*----------------------------------------------------------------------------------- av.fwt.makeFzrEnvironmentTest --*/
+
+av.fwt.makeFzrAncestorAuto = function (idStr, from) {
   'use strict';
+  if (av.debug.fio) console.log(from, ' av.fwt.makeFzrAncestorAuto');
   var txt = '';
   var lngth = av.parents.autoNdx.length;
   for (var ii = 0; ii < lngth; ii++) {
     txt += av.parents.name[av.parents.autoNdx[ii]] + '\n';
     txt += av.parents.genome[av.parents.autoNdx[ii]] + '\n';
   }
-  if (actConfig) {av.fwt.makeActConfigFile('ancestors.txt', txt);}
+  if (true) {av.fwt.makeActConfigFile('ancestors.txt', txt);}
   else {av.fwt.makeFzrFile(idStr+'/ancestors.txt', txt);}
 };
 
-av.fwt.makeFzrAncestorHand = function (idStr, actConfig) {
+av.fwt.makeFzrAncestorHand = function (idStr, from) {
   'use strict';
+  if (av.debug.fio) console.log(from, ' av.fwt.makeFzrAncestorHand');
   var txt = '';
   var lngth = av.parents.handNdx.length;
   for (var ii = 0; ii < lngth; ii++) {
@@ -172,7 +181,7 @@ av.fwt.makeFzrAncestorHand = function (idStr, actConfig) {
     txt += av.parents.genome[av.parents.handNdx[ii]] + '\n';
     txt += av.parents.col[av.parents.handNdx[ii]] + ',' + av.parents.row[av.parents.handNdx[ii]] + '\n';
   }
-  if (actConfig) {av.fwt.makeActConfigFile('ancestors_manual.txt', txt);}
+  if (true) {av.fwt.makeActConfigFile('ancestors_manual.txt', txt);}
   else {av.fwt.makeFzrFile(idStr+'/ancestors_manual.txt', txt);}
 };
 
@@ -205,20 +214,20 @@ av.fwt.makeFzrTimeRecorder = function (fname, data) {
 av.fwt.form2cfgFolder = function() {
   'use strict';
   var actConfig = true;
-  av.fwt.makeFzrAvidaCfg('cfg', actConfig);
-  av.fwt.makeFzrEnvironmentCfg('cfg', actConfig);
-  av.fwt.makeFzrAncestorAuto('cfg', actConfig);
-  av.fwt.makeFzrAncestorHand('cfg', actConfig);
+  av.fwt.makeFzrAvidaCfg('cfg', 'av.fwt.form2cfgFolder');
+  av.fwt.makeFzrEnvironmentCfg('cfg', 'av.fwt.form2cfgFolder');
+  av.fwt.makeFzrAncestorAuto('cfg', 'av.fwt.form2cfgFolder');
+  av.fwt.makeFzrAncestorHand('cfg', 'av.fwt.form2cfgFolder');
 };
 
 //test setup to active folder just before sending to avida
 av.fwt.testForm2folder = function() {
   'use strict';
   var actConfig = true;
-  av.fwt.makeFzrAvidaTest('cfg', actConfig);
-  av.fwt.makeFzrEnvironmentTest('cfg', actConfig);
-  av.fwt.makeFzrAncestorAuto('cfg', actConfig);
-  av.fwt.makeFzrAncestorHand('cfg', actConfig);  
+  av.fwt.makeFzrAvidaTest('cfg', 'av.fwt.form2cfgFolder');
+  av.fwt.makeFzrEnvironmentTest('cfg', 'av.fwt.form2cfgFolder');
+  av.fwt.makeFzrAncestorAuto('cfg', 'av.fwt.form2cfgFolder');
+  av.fwt.makeFzrAncestorHand('cfg', 'av.fwt.form2cfgFolder');  
 };
 
 
