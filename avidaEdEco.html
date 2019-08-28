@@ -617,74 +617,92 @@
                                 <option id='not0Equilibrium' value='Equilibrium'>Equilibrium</option>
                                 <option id='not0All' value='All'>All debug only</option>
                               </select>&nbsp;&nbsp;&nbsp;
+                              <select  id='not0dishRegion' class='dishRegion' onchange='av.sgr.dishRegionChange(this)'>
+                                <option id='not0WholeDish' value='WholeDish selected'>Whole Dish</option>
+                                <option id='not0HalvesTopBottom' value='HalvesTopBottom'>Halves Top/Bottom</option>
+                                <option id='not0HalvesLeftRight' value='HalvesLeftRight'>Halves Left/Right</option>
+                                <option id='not0Quarters' value='Quarters'>Quarters</option>
+                              </select>&nbsp;&nbsp;&nbsp;
                               <div id='not0initialDiv' class='sugarSummaryDiv'>
                                 <input id='not0initialInput' class='sugInitialInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>
                                 &nbsp;Initial amount per cell&nbsp;&nbsp;
                               </div>
-                              <div id='not0periodCheckbox' class='sugarSummaryDiv' onchange='av.sgr.eachSugarCheckBoxChange(this)'>
-                                <input id='not0periodCheck' type='checkbox'>Periodic&nbsp;&nbsp;
-                              </div>
-                              <div id='not0gradientCheckbox' class='sugarSummaryDiv' onchange='av.sgr.eachSugarCheckBoxChange(this)'>
-                                <input id='not0gradientCheck' type='checkbox'>Gradient&nbsp;&nbsp;
-                              </div>
-                              <div id='not0diffuseCheckbox' class='sugarSummaryDiv'onchange='av.sgr.eachSugarCheckBoxChange(this)'>
-                                <input type='checkbox' id='not0diffuseCheck'>Diffusion&nbsp;&nbsp;
-                              </div>
-                            </summary>
+                           </summary>
                             <div id='notDetails' class='sugarDetailSection'>
-                              <div id='not1periodTime' class='grid-sugarDetail-item periodTime'>
-                                <input id='not0periodInput'  class='sugPeriodInput' type='text' onchange='av.ptd.gridChange(this.value)' /> Period (updates)
-                              </div>
-                              <div id='not1sideHiDiv' class='grid-sugarDetail-item sideTitleHi'>
-                                <label clase='sideTitle'>High Side</label>
-                              </div>
-                              <div id='not1sideLoDiv' class='grid-sugarDetail-item sideTitleLo'>
-                                <label clase='sideTitle'>Low Side</label>
-                              </div>                            
-                              <div id='not1initialHiDiv' class='grid-sugarDetail-item initialHi'>
-                                <input id='not1initialHiInput' class='sugInitialHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>&nbsp;
-                                <label id='not1initialHiLabel'>High side initial amount per cell </label>
-                              </div>
-                              <div id='not1initialLoDiv' class='grid-sugarDetail-item initialLo'>
-                                <input id='not1initialHiInput' class='sugInitialLoInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '90'/>&nbsp;
-                                Low side initial amount per cell 
-                              </div>
-                              <div id='not1inflowHiDiv' class='grid-sugarDetail-item inflowHi'>
-                                <input id='not1inflowHiInput' class='sugInflowHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.09'/>&nbsp;
-                                <label id='not1inflowHiLabel' class='sugOutflowLabel'>Inflow amount per cell</label>
-                              </div>
-                              <div id='not1inflowLoDiv' class='grid-sugarDetail-item inflowLo'>
-                                <input id='not1inflowLoInput' class='sugInflowLoInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.01'/>&nbsp;
-                                <label id='not1inflowLoLabel' class='sugOutflowLabel'>Inflow amount per cell on low side</label>
-                              </div>
-                              <div id='not1outflowHiDiv' class='grid-sugarDetail-item outflowHi'>
-                                <input id='not1outflowHiInput' class='sugOutflowHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.01'/>&nbsp;
-                                <label id='not1outflowHiLabel' class='sugOutflowLabel'>Outflow fraction per cell.</label>
-                              </div>
-                              <div id='not1outflowLoDiv' class='grid-sugarDetail-item outflowLo'>
-                                <input id='not1outflowLoInput' class='sugOutflowLoInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.01'/>&nbsp;
-                                <label id='not1outflowLoLabel' class='sugOutflowLabel'>Outflow fraction per cell on low side.</label>
-                              </div>
-                              <div id='not1equalHiDiv' class='grid-sugarDetail-item equalHi'>
-                                <label id='not1equalHiLabel'>9</label>
-                                <span id='not1equalHiText'> = equilibrium when no resource has been consumed</span>
-                              </div>
-                              <div id='not1equalLoDiv' class='grid-sugarDetail-item equalLo'>
-                                <label id='not1equalLoLabel'>1</label>
-                                <span id='not1equalLoText'> = equilibrium if not consumed</span>
-                              </div>
-                              <div id='not1sideDiv' class='grid-sugarDetail-item sideInput'>
-                                <select  id='not1sideSelect' >
-                                  <option value='left' selected>Left</option>
-                                  <option value='right'>Right</option>
-                                  <option value='top'>Top</option>
-                                  <option value='bottom'>Bottom</option>
-                                  <option value='center'>Center</option>
-                                  <option value='edge'>Edge</option>
-                                </select>
-                                <label id='not1sideLabel'>side text</label>
-                              </div>
-                            </div><span id='endNotDetails' class='end_grid-sugarDetail-container'></span>
+                              <div id='not1subSection' class='sugarDishSubsection'>
+                                <div id='not1TypeDiv' class='grid-sugarDetail-item typeInput'>
+                                  <select  id='not1Type' class='sugarType' onchange='av.sgr.typeChange(this)'>
+                                    <option id='not1none' value='None'>None</option>
+                                    <option id='not1Infinite' value='Infinite' selected>Infinite</option>
+                                    <option id='not1Finite' value='Finite'>Finite</option>
+                                    <option id='not1Equilibrium' value='Equilibrium'>Equilibrium</option>
+                                    <option id='not1All' value='All'>All debug only</option>
+                                  </select>&nbsp;&nbsp;&nbsp;
+                                </div>
+                                <div id='not1periodCheckbox' class='grid-sugarDetail-item periodCheckDiv' onchange='av.sgr.eachSugarCheckBoxChange(this)'>
+                                  <input id='not1periodCheck' type='checkbox'>Periodic&nbsp;&nbsp;
+                                </div>
+                                <div id='not1gradientCheckbox' class='grid-sugarDetail-item gradientCheckDiv' onchange='av.sgr.eachSugarCheckBoxChange(this)'>
+                                  <input id='not1gradientCheck' type='checkbox'>Gradient&nbsp;&nbsp;
+                                </div>
+                                <div id='not1diffuseCheckbox' class='grid-sugarDetail-item diffuseCheckDiv' onchange='av.sgr.eachSugarCheckBoxChange(this)'>
+                                  <input id='not1diffuseCheck' type='checkbox'>Diffusion&nbsp;&nbsp;
+                                </div>
+                                <div id='not1sideDiv' class='grid-sugarDetail-item sideInput'>
+                                  <select  id='not1sideSelect' >
+                                    <option value='left' selected>Left</option>
+                                    <option value='right'>Right</option>
+                                    <option value='top'>Top</option>
+                                    <option value='bottom'>Bottom</option>
+                                    <option value='center'>Center</option>
+                                    <option value='edge'>Edge</option>
+                                  </select>
+                                  <label id='not1sideLabel'>side text</label>
+                                </div>
+                                <div id='not1periodTime' class='grid-sugarDetail-item periodTime'>
+                                  <input id='not0periodInput'  class='sugPeriodInput' type='text' onchange='av.ptd.gridChange(this.value)' /> Period (updates)
+                                </div>
+                                <div id='not1sideHiDiv' class='grid-sugarDetail-item sideTitleHi'>
+                                  <label clase='sideTitle'>High Side</label>
+                                </div>
+                                <div id='not1sideLoDiv' class='grid-sugarDetail-item sideTitleLo'>
+                                  <label clase='sideTitle'>Low Side</label>
+                                </div>                            
+                                <div id='not1initialHiDiv' class='grid-sugarDetail-item initialHi'>
+                                  <input id='not1initialHiInput' class='sugInitialHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>&nbsp;
+                                  <label id='not1initialHiLabel'>High side initial amount per cell </label>
+                                </div>
+                                <div id='not1initialLoDiv' class='grid-sugarDetail-item initialLo'>
+                                  <input id='not1initialHiInput' class='sugInitialLoInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '90'/>&nbsp;
+                                  Low side initial amount per cell 
+                                </div>
+                                <div id='not1inflowHiDiv' class='grid-sugarDetail-item inflowHi'>
+                                  <input id='not1inflowHiInput' class='sugInflowHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.09'/>&nbsp;
+                                  <label id='not1inflowHiLabel' class='sugOutflowLabel'>Inflow amount per cell</label>
+                                </div>
+                                <div id='not1inflowLoDiv' class='grid-sugarDetail-item inflowLo'>
+                                  <input id='not1inflowLoInput' class='sugInflowLoInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.01'/>&nbsp;
+                                  <label id='not1inflowLoLabel' class='sugOutflowLabel'>Inflow amount per cell on low side</label>
+                                </div>
+                                <div id='not1outflowHiDiv' class='grid-sugarDetail-item outflowHi'>
+                                  <input id='not1outflowHiInput' class='sugOutflowHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.01'/>&nbsp;
+                                  <label id='not1outflowHiLabel' class='sugOutflowLabel'>Outflow fraction per cell.</label>
+                                </div>
+                                <div id='not1outflowLoDiv' class='grid-sugarDetail-item outflowLo'>
+                                  <input id='not1outflowLoInput' class='sugOutflowLoInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.01'/>&nbsp;
+                                  <label id='not1outflowLoLabel' class='sugOutflowLabel'>Outflow fraction per cell on low side.</label>
+                                </div>
+                                <div id='not1equalHiDiv' class='grid-sugarDetail-item equalHi'>
+                                  <label id='not1equalHiLabel'>9</label>
+                                  <span id='not1equalHiText'> = equilibrium when no resource has been consumed</span>
+                                </div>
+                                <div id='not1equalLoDiv' class='grid-sugarDetail-item equalLo'>
+                                  <label id='not1equalLoLabel'>1</label>
+                                  <span id='not1equalLoText'> = equilibrium if not consumed</span>
+                                </div>
+                                
+                              </div><span id='not1Section' class='endsugarDishSubsection'> </span>
+                            </div><span id='endNotDetails' class='end_sugarDetailSection_grid_container'></span>
                           </details>
 
                           <details id='nanSection' class='sugarAccordionSection'>

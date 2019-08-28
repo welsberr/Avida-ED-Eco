@@ -2474,7 +2474,6 @@ av.ui.ex2envBoxSwap = function (showbox) {
 
 
 // end of ex1 and ex2 page stuff
-
 //------------------------------------------------------------------------------------------------- Sugar Accordion ----
 //Global or Spatial in Ed speak = Global or Grid in Avida Environment file.
 av.sgr.allSugarGeometryChange = function(domObj){
@@ -2506,7 +2505,7 @@ av.sgr.geometryChange = function(selectObj){
   var which = selectObj.options[idx].value;   // get the value of the selected option 
   var selectedOption = document.getElementById(task + '0Type').value;
   console.log('id=', task, '; which=', which, '; selectedOption=', selectedOption);
-  av.sgr.changeDetailsLayout(task, selectedOption, 'av.sgr.geometryChange');  
+  av.sgr.changeDetailsLayout(task, selectedOption, 1, 'av.sgr.geometryChange');  
 };
 
 av.sgr.typeChange = function (domObj) {
@@ -2515,8 +2514,13 @@ av.sgr.typeChange = function (domObj) {
   var idx = domObj.selectedIndex;        // get the index of the selected option 
   var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
   console.log('id=', task, '; selectedOption=', selectedOption);
-  av.sgr.changeDetailsLayout(task, selectedOption, 'av.sgr.typeChange');
+  av.sgr.changeDetailsLayout(task, selectedOption, 1, 'av.sgr.typeChange');
 };
+
+av.sgr.dishRegionChange = function(domObj) {
+  console.log('av.sgr.dishRegionChange was called by', domObj);
+};
+
 
 av.sgr.eachSugarCheckBoxChange = function (domObj) {
   var taskID = domObj.id; 
@@ -2524,7 +2528,7 @@ av.sgr.eachSugarCheckBoxChange = function (domObj) {
   var idx = document.getElementById(task + '0Type').selectedIndex;        // get the index of the selected option 
   var selectedOption = document.getElementById(task + '0Type').options[idx].value;   // get the value of the selected option 
   console.log('id=', task, '; selectedOption=', selectedOption, '; so=', document.getElementById(task + '0Type').value);
-  av.sgr.changeDetailsLayout(task, selectedOption, 'av.sgr.eachSugarCheckBoxChange');
+  av.sgr.changeDetailsLayout(task, selectedOption, 1, 'av.sgr.eachSugarCheckBoxChange');
 };
 
 

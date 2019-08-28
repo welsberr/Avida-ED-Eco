@@ -324,9 +324,14 @@
 }
 .sugarTitle{
   width: 57px;
-  font-size: 100%;
+  font-size: 110%;
   font-weight: bold;
   display: inline-block;
+}
+.dishPartLabel{
+  font-size: 100%;
+  font-weight: bold;
+  color: #444;
 }
 .sugarSummaryDiv{
   display: inline-block;
@@ -400,12 +405,20 @@
 .sideTitleHi { grid-area: sideTitleHi; }
 .sideTitleLo { grid-area: sideTitleLo; }
 
+.typeInput { grid-area: typeInput; }
 .sideInput { grid-area: sideInput; }
+
+.periodCheckDiv { grid-area: periodCheckDiv; }
 .periodTime { grid-area: periodTime; }
+
+.gradientCheckDiv { grid-area: gradientCheckDiv; }
+.diffuseCheckDiv { grid-area: diffuseCheckDiv; }
 
 .grid-sugarDetailAll-container {
   display: grid;
-  grid-template-areas: 'sideInput periodTime'
+  grid-template-areas: 'typeInput sideInput'
+                       'periodCheckDiv periodTime'
+                       'gradientCheckDiv diffuseCheckDiv'
                        'sideTitleHi sideTitleLo'   
                        'initialHi initialLo'
                        'inflowHi inflowLo'
@@ -414,14 +427,14 @@
 }
 .grid-sugarDetailEqual-container {
   display: grid;
-  grid-template-areas: 'inflowHi equalHi'
+  grid-template-areas: 'inflowHi periodCheckDiv'
                       'outflowHi equalHi';
   width: 100%;
 }
 .grid-sugarDetailEqualPeriod-container {
   display: grid;
-  grid-template-areas: ' inflowHi periodTime'
-                       'outflowHi equalHi';
+  grid-template-areas: ' inflowHi periodCheckDiv periodTime'
+                       'outflowHi equalHi equalHi';
   width: 100%;
 }
 .grid-sugarDetailEqualGradient-container {
@@ -602,7 +615,8 @@ checkbox:focus {
 }
 .ex1dishPartLabel{
   font-size: 100%;
-  font-weight: bold;  
+  font-weight: bold;
+  color: #444;
 }
 
 #ex1notSection{

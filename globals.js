@@ -451,76 +451,96 @@ av.sgr.monoChromeMaps = ['reddMap', 'orngMap', 'yllwMap', 'lawnMap',  'grenMap',
   av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'grenMap',  'yllwMap', 'orngMap',  'redvMap', 'mgntMap',  'purpMap'];
   av.sgr.sugarColors = ['grenMap', 'seagMap',  'cornMap', 'blueMap',  'purpMap', 'mgntMap',  'redvMap', 'orngMap',  'yllwMap'];
 console.log('sugarColors=', av.sgr.sugarColors);
-av.sgr.sugarShade = 90;  //was 30
+av.sgr.sugarShade = 40;  //was 30
 av.sgr.sugarGreyShade = 20;
+  av.sgr.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', 'inflowy2', 'xdiffuse', 'ydiffuse'
+                           ,'outflow', 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2', 'xgravity', 'ygravity'
+                           ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow', 'name'
+                           , 'geometry', 'type', 'region', 'side', 'regionList'];   //will  geometry, may delete the others in this row later. 
+                         //name will be created from task, subdishnum, region, type and side
+  av.sgr.rsrce_fake = ['0', '3600', '0', '19', '20', '39', '1', '1'
+                           ,'.2', '0', '19', '20', '39', '0', '0'
+                           ,'true', '0', '20', '20', '20', 'not1'];
+  av.sgr.react_param = ['depletable', 'value', 'min', 'max', 'max_count', 'name', 'task', 'resource', 'type']; 
+                            //depletable = 1 = yes resources are eaten; 0 = no they are not eaten
+                            //type = pow always in Avida-ED
+                            //value = 1 through 5 based on number of nan gates needed to do the task. 
+                            //max_count = 1 always in Avida-ED
+                            //min will be a constant probably 0.9
+                            //max will be a constang probably 1.1
+                            
+  av.sgr.react_fake = ['1', '1', '0.99', '1.0', '1', 'not1', 'not', 'not1', 'pow']; 
+
+  //Regtion List: upper left, upper right, lower left, lower right, entire dish, upper half, lower half, left half, right half
+  av.sgr.region =    ['upL', 'upR', 'loL', 'loR', 'all', 'top', 'bot', 'lft', 'rit'];
+  av.sgr.regionNum = [ '0',  '1',  '2',  '3',  '4', '12', '34', '13', '24'];     
+  
+  // not in use on 2019 Aug 26
+  av.sgr.type =  ['non', 'inf', 'fin', 'equ'];  //none, infinite, finite, equilibrium, gradient
+  av.sgr.typeLetter = ['N'  , 'I'  , 'F'  , 'E'  , 'G'  ];
+  av.sgr.side = ['lf', 'rt', 'tp', 'bt', 'cn', 'ot', 'un']; //left, right, top, bottom, center, outer, unknown
 
 
 av.fzr.clearEnvironment = function() {
   av.fzr.env = {};
-  av.fzr.env.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', 'inflowy2', 'xdiffuse', 'ydiffuse'
-                           ,'outflow', 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2', 'xgravity', 'ygravity'
-                           ,'boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow', 'name', 'geometry', 'type', 'region', 'side', 'regionList'];
-                         //regionList is an index into the array that contains data about that region. 
-  //console.log('av.fzr.env.rsrce_param=',av.fzr.env.rsrce_param);
-
-  av.fzr.env.react_param = ['depletable', 'value', 'min', 'max', 'max_count', 'name', 'task', 'resource', 'type']; 
-  //av.fzr.env.r
-  //Regtion List: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
-  av.fzr.env.region =    ['ed', 'ul', 'ur', 'll', 'lr', 'up', 'lo', 'lf', 'rt'];
-  av.fzr.env.regionNum = [ '0',  '1',  '2',  '3',  '4', '12', '34', '13', '24'];     
-  av.fzr.env.type =  ['non', 'inf', 'fin', 'equ', 'grd'];  //none, infinite, finite, equilibrium, gradient
-  av.fzr.env.typeLetter = ['N'  , 'I'  , 'F'  , 'E'  , 'G'  ];
-  av.fzr.env.side = ['lf', 'rt', 'tp', 'bt', 'cn', 'ot', 'un']; //left, right, top, bottom, center, outer, unknown
+  av.fzr.sug = {};
 
   // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
   av.fzr.env.rsrce = {};
-  av.fzr.env.react = {};  
-  av.fzr.env.dsh = [];              //subdishes;
-  av.fzr.env.subdish = [];
+  av.fzr.env.react = {}; 
   var logiclen = av.sgr.logicNames.length;
-  var rsrcelen = av.fzr.env.rsrce_param.length; 
-  var reactlen = av.fzr.env.react_param.length;
+  var rsrcelen = av.sgr.rsrce_param.length; 
+  var reactlen = av.sgr.react_param.length;
   var tsk;
   var rnm;
-  var lnm;
-  var subdishL = av.fzr.env.subdish.length;
-   subdishL = 1;
-  for (var ii=0; ii< subdishL; ii++){
-    av.fzr.env.subdish[ii] = [];   
-    for (var jj=0; jj<rsrcelen; jj++){
-      rnm = av.fzr.env.rsrce_param[jj];
-      av.fzr.env.subdish[ii][rnm] = [];
-    };
-    for (var jj=0; jj<reactlen; jj++){
-      rnm = av.fzr.env.react_param[jj];
-      av.fzr.env.subdish[ii][rnm] = [];
-    };
-  };
-  console.log('av.fzr.env.subdish=',av.fzr.env.subdish);
-
-  for (var ii=0; ii< logiclen; ii++) {
+  
+  for (var ii=0; ii< logiclen; ii++) {      //9
     tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
-    //var lnm = av.sgr.logicNames[ii];
+    av.fzr.sug[tsk] = {};
+    av.fzr.sug[tsk].geometry = 'global';     //grid  is the only other one used in Avida-ED. Called spatial in user interface
+    av.fzr.sug[tsk].snumsubdish = 1;   // whole dish
+    av.fzr.sug[tsk].rsrcType = [];        //none, infinite, finite, equilibrium
+    av.fzr.sug[tsk].periodic = [];    //false = default;  else true.  
+    av.fzr.sug[tsk].periodTime = [];    //100,000 = defautl for now
+    av.fzr.sug[tsk].region = [];        //upLft upRit loLft loRit top bot Left Rite whole     or all
+    av.fzr.sug[tsk].side = [];
+    
+    av.fzr.sug[tsk]['resrc'] = {};
+    av.fzr.sug[tsk]['react'] = {};
+    for (var jj=0; jj<rsrcelen; jj++){
+      rnm = av.sgr.rsrce_param[jj];
+      av.fzr.sug[tsk]['resrc'][rnm] = [];
+    }
+    for (var jj=0; jj<reactlen; jj++){
+      rnm = av.sgr.react_param[jj];
+      av.fzr.sug[tsk]['react'][rnm] = [];
+    }
+  }
+  console.log('av.fzr.sug =',av.fzr.sug);
+  
+  
+  for (var ii=0; ii< logiclen; ii++) {      //9
+    tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
     //var vnm = av.sgr.logicVnames[ii];  
     av.fzr.env.rsrce[tsk] = {};    
     for (var jj=0; jj<rsrcelen; jj++){
-      av.fzr.env.rsrce[tsk][av.fzr.env.rsrce_param[jj]] = [];
+      av.fzr.env.rsrce[tsk][av.sgr.rsrce_param[jj]] = [];
     }
     av.fzr.env.react[tsk] = {};
     for (var jj=0; jj<reactlen; jj++){
-      rnm = av.fzr.env.react_param[jj];
+      rnm = av.sgr.react_param[jj];
       av.fzr.env.react[tsk][rnm] = [];
     }
   };
   console.log('av.fzr.env.react=',av.fzr.env.react);
   console.log('av.fzr.env.rsrce=',av.fzr.env.rsrce);
   
-/*        this should be deletec in fall 2019
+/*      this should be deletec in fall 2019
   av.fzr.ron = {};   //alternate environment settings built from parameters on settings tab.
   av.fzr.ron.rsrce = {};
   av.fzr.ron.react = {};    
   for (var ii=1; ii< rsrcelen; ii++) {
-    rnm = av.fzr.env.rsrce_param[ii];
+    rnm = av.sgr.rsrce_param[ii];
     av.fzr.ron.rsrce[rnm] = [];
     for (var jj=0; jj< logiclen; jj++) {
       tsk = av.sgr.logEdNames[jj];   //puts names in order they are on avida-ed user interface
@@ -528,7 +548,7 @@ av.fzr.clearEnvironment = function() {
     }
   };
   for (var ii=1; ii< reactlen; ii++) {
-    rnm = av.fzr.env.react_param[ii];
+    rnm = av.sgr.react_param[ii];
     av.fzr.ron.react[rnm] = [];
     for (var jj=0; jj< logiclen; jj++) {
       tsk = av.sgr.logEdNames[jj];   //puts names in order they are on avida-ed user interface
@@ -539,6 +559,40 @@ av.fzr.clearEnvironment = function() {
   console.log('av.fzr.ron.react=',av.fzr.ron.react);
   console.log('av.fzr.ron.rsrce=',av.fzr.ron.rsrce);
   */
+ 
+ /*  
+  // Another variation
+  // Chrome developer console only shows the first entries in the inner most array on one line. might as well be subdish. 
+  av.fzr.dsh={};
+  av.fzr.dsh.rsrce = {};
+  av.fzr.dsh.react = {}; 
+  var subdishlen = 4;  but it will only show 5 array items 
+  var sub; //subdish
+  for (var ii=0; ii< subdishlen; ii++) {      //4
+    sub = av.sgr.region[ii];   //puts names in order they are on avida-ed user interface
+    //var vnm = av.sgr.logicVnames[ii];  
+    av.fzr.dsh.rsrce[sub] = {};    
+    for (var jj=0; jj<rsrcelen; jj++){
+      av.fzr.dsh.rsrce[sub][av.sgr.rsrce_param[jj]] = [];
+      for (var kk=0; kk< logiclen; kk++) {
+        tsk = av.sgr.logEdNames[kk];
+        av.fzr.dsh.rsrce[sub][av.sgr.rsrce_param[jj]][tsk] = av.sgr.rsrce_fake[jj];
+      }
+    }
+    av.fzr.dsh.react[sub] = {};
+    for (var jj=0; jj<reactlen; jj++){
+      rnm = av.sgr.react_param[jj];
+      av.fzr.dsh.react[sub][rnm] = [];
+      for (var kk=0; kk< logiclen; kk++) {
+        tsk = av.sgr.logEdNames[kk];
+        av.fzr.dsh.react[sub][rnm][tsk] = av.sgr.react_fake[jj];
+      }
+    }
+  };
+  console.log('av.fzr.dsh.react=',av.fzr.dsh.react);
+  console.log('av.fzr.dsh.rsrce=',av.fzr.dsh.rsrce);
+*/
+
 };
 
 //-------------------------------------------------------------------------------------------- in av.fzr.clearFzrFn --//

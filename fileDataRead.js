@@ -423,9 +423,9 @@ av.frd.reactionLineParse = function(lnArray) {
       for (var ii=1; ii < len; ii++) {
         pear = pairArray[ii].split('=');
         //console.log('React: ii=',ii,'; pear', pear);
-        nn = av.fzr.env.react_param.indexOf(pear[0].toLowerCase());
+        nn = av.sgr.react_param.indexOf(pear[0].toLowerCase());
         if (-1 < nn) {
-          envobj[av.fzr.env.react_param[nn]][ndx] = pear[1];
+          envobj[av.sgr.react_param[nn]][ndx] = pear[1];
         }
         else {
           if ('cellbox' == pear[0].toLowerCase()) {
@@ -434,7 +434,7 @@ av.frd.reactionLineParse = function(lnArray) {
             //console.log('cellboxdata=',cellboxdata);
             //envobj.boxflag[ndx] = true;
             envobj.boxx[ndx] = cellboxdata[0];
-            envobj.boxy[ndx] = cellboxdata[1];
+            envobj.boyy[ndx] = cellboxdata[1];
             envobj.boxcol[ndx] = cellboxdata[2];
             envobj.boxrow[ndx] = cellboxdata[3];
           }
@@ -509,9 +509,9 @@ av.frd.resourceLineParse = function(lnArray){
     for (var ii=1; ii < len; ii++) {
       pear = pairArray[ii].split('=');
       //console.log('Resource: ii=',ii,'; pear', pear);
-      nn = av.fzr.env.rsrce_param.indexOf(pear[0].toLowerCase());
+      nn = av.sgr.rsrce_param.indexOf(pear[0].toLowerCase());
       if (-1 < nn) {
-        envobj[av.fzr.env.rsrce_param[nn]][ndx] = pear[1];
+        envobj[av.sgr.rsrce_param[nn]][ndx] = pear[1];
       }
       else {
         if ('cellbox' == pear[0].toLowerCase()) {
@@ -519,7 +519,7 @@ av.frd.resourceLineParse = function(lnArray){
           //console.log('cellboxdata=',cellboxdata);
           envobj.boxflag[ndx] = true;
           envobj.boxx[ndx] = cellboxdata[0];
-          envobj.boxy[ndx] = cellboxdata[1];
+          envobj.boyy[ndx] = cellboxdata[1];
           envobj.boxcol[ndx] = cellboxdata[2];
           envobj.boxrow[ndx] = cellboxdata[3];
         }
@@ -536,12 +536,12 @@ av.frd.resourceLineParse = function(lnArray){
     //var matchNum = envobj.name[ndx].match(re_num);
     //console.log('envobj.name[ndx]=', envobj.name[ndx],'; matchNum=', matchNum);
     
-    var matchNum = av.fzr.env.regionNum.indexOf( envobj.name[ndx].substring(3).toString() );
-    //console.log('av.fzr.env.regionNum=', av.fzr.env.regionNum,'; envobj.name[ndx].substring(3)=',envobj.name[ndx].substring(3),'; matchNum=', matchNum);
+    var matchNum = av.sgr.regionNum.indexOf( envobj.name[ndx].substring(3).toString() );
+    //console.log('av.sgr.regionNum=', av.sgr.regionNum,'; envobj.name[ndx].substring(3)=',envobj.name[ndx].substring(3),'; matchNum=', matchNum);
     //console.log('matchNum=', matchNum);
     if (-1 < matchNum) {
-      //console.log('matchNum=', matchNum, '; av.fzr.env.region[matchNum]' = av.fzr.env.region[matchNum]);
-      envobj.region[ndx] = av.fzr.env.region[matchNum];
+      //console.log('matchNum=', matchNum, '; av.sgr.region[matchNum]' = av.sgr.region[matchNum]);
+      envobj.region[ndx] = av.sgr.region[matchNum];
       if (0 < envobj.initial[ndx]) envobj.type[ndx] = 'fin';
       if (0 < envobj.inflow[ndx]) envobj.type[ndx] = 'equ';      
       envobj.side[ndx] = 'un';
@@ -552,7 +552,7 @@ av.frd.resourceLineParse = function(lnArray){
       envobj.region[ndx] = codes[1];
       envobj.type[ndx] = codes[2];
       envobj.side[ndx] = codes[3];
-      matchNum = av.fzr.env.region.indexOf(codes[1]);
+      matchNum = av.sgr.region.indexOf(codes[1]);
     };
     //console.log('matchNum=', matchNum, '; region=', envobj.region[ndx]);
       //now assign an index to the region list. 
