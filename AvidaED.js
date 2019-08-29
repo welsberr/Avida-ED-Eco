@@ -1784,7 +1784,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
 
     if (undefined != av.grd.msg) {
       if ('prepping' != av.grd.runState && undefined != av.grd.msg.fitness) {
-        //av.grd.setMapData();  //update color information for offpsring once run has started only if screen visable.
+        //av.grd.setMapData('av.grd.drawGridSetupFn');  //update color information for offpsring once run has started only if screen visable.
         av.grd.findLogicOutline();
       }
     }
@@ -1802,7 +1802,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
         // Does not seem to change wd/ht of gridHolder
         if (undefined != av.grd.msg) {
           if ('prepping' != av.grd.runState && undefined != av.grd.msg.fitness) {
-            av.grd.setMapData();  //update color information for offpsring once run has started
+            av.grd.setMapData('colorMode != none in av.grd.drawGridSetupFn');  //update color information for offpsring once run has started
             //av.grd.findLogicOutline(); //needs to be done for all updates
           }
         }
@@ -1814,11 +1814,11 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
         else
           av.dom.scaleCanvas.width = $("#gridHolder").height() - 22;
         if ('Ancestor Organism' == document.getElementById('colorMode').value) {
-        //if ('Ancestor Organism' == getElementById('colorMode').value) {
           av.grd.drawLegend();
         }
         else {
-          av.grd.gradientScale();
+          av.grd.setColorMapOnly('draw gradient scale in av.grd.drawGridSetupFn');  //to set color scales for resources
+          av.grd.gradientScale('av.grd.drawGridSetupFn');
         }
         //console.log('after drawing scale or legend. update=',av.grd.oldUpdate);
 
@@ -2408,7 +2408,7 @@ av.ptd.randInputChange = function(value, randErroTest) {
   av.ui.ex1setSugarColors = function () {
     var sugarSection = ['ex1notSection', 'ex1nanSection', 'ex1andSection', 'ex1ornSection', 'ex1oroSection', 'ex1antSection', 'ex1norSection', 'ex1xorSection', 'ex1equSection'];
     var len = av.sgr.sugarColors.length;
-    var ndx = av.sgr.sugarShade;
+    var ndx = av.sgr.sugarBackgroundShade;
     for (ii = 0; ii < len; ii++) {
       //console.log('ii=',ii,'SugarSection=', sugarSection[ii]);
       if ('allSpatial' != document.getElementById('ex1allSugarChange').value) {

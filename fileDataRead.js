@@ -372,7 +372,7 @@ av.frd.rNameIndex = function(avfzrenvLog, rtag) {
    * return its index if it exists
    * return length + 1 is it does not exist
    */
-  //console.log('avfzrenvLog=',avfzrenvLog);
+  //console.log('avfzrenvLog=',avfzrenvLog,'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
   var defaultindex = avfzrenvLog.name.length;
   //console.log('defaultindex='defaultindex);
   var found = avfzrenvLog.name.indexOf(rtag);
@@ -429,7 +429,7 @@ av.frd.reactionLineParse = function(lnArray) {
         }
         else {
           if ('cellbox' == pear[0].toLowerCase()) {
-            console.log('cellbox is not a reacion; this should never write')
+            console.log('cellbox is not a reacion; this should never write');
             cellboxdata = pear[1].split('|');
             //console.log('cellboxdata=',cellboxdata);
             //envobj.boxflag[ndx] = true;
@@ -500,8 +500,8 @@ av.frd.resourceLineParse = function(lnArray){
     envobj.xgravity[ndx] = 0;
     envobj.ygravity[ndx] = 0;
     envobj.type[ndx] = 'inf';
-    envobj.region[ndx] = 'ed';
-    envobj.side[ndx] = 'lf';
+    envobj.region[ndx] = 'all';
+    envobj.side[ndx] = 'unk';
     
     //process all data pairs
     var len = pairArray.length;
@@ -544,7 +544,7 @@ av.frd.resourceLineParse = function(lnArray){
       envobj.region[ndx] = av.sgr.region[matchNum];
       if (0 < envobj.initial[ndx]) envobj.type[ndx] = 'fin';
       if (0 < envobj.inflow[ndx]) envobj.type[ndx] = 'equ';      
-      envobj.side[ndx] = 'un';
+      envobj.side[ndx] = 'un_';
     }
     else {
       codes = envobj.name[ndx].split('_');  //task_region_type_side  with side optional
@@ -638,14 +638,311 @@ av.frd.environmentParse = function (filestr) {
   return errors;
 };
 
+//----------------------------------------------------------------------------------------- put in nutrient structure --
+
+av.frd.re_NameIndex = function(nutrientObj, rtag) {
+  /*
+   * 
+   * @param avfzrenv =  the suboabject of av.fzr.env that holds the arrays for logic9 type
+   * @param rtag       the string that we are looking for. If the string is found data will be over written. 
+   *                     if not, create a new entry in the arrays
+   * @returns {Int}
+   * 
+   * Look for rtag in structure
+   * return its index if it exists
+   * return length + 1 is it does not exist
+   */
+  console.log('nutrientObj=',nutrientObj,'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+  var defaultindex = nutrientObj.name.length;
+  console.log('defaultindex=',defaultindex);
+  var found = nutrientObj.name.indexOf(rtag);
+  
+  if (-1 < found) {
+    console.log('The name ', rtag, ' was found already in av.fzr.env subobject=',nutrientObj.name);
+    return found;
+  } 
+  
+  return defaultindex;  
+};
+
+av.frd.reactLineParse = function(lnArray) {
+  'use strict';
+  var lnError = 'none';     //was it a valid line wihtout errors
+  //console.log('lnArray = ', lnArray);
+  var pear = [];
+  var nn;
+  //find logic type
+  //console.log('task = lnArray[2]=',lnArray[2]);
+  var logicindex = av.sgr.logicVnames.indexOf( lnArray[2] );   //task name
+  console.log('logicindex=',logicindex);
+  if (-1 < logicindex) {
+    var logtype = av.sgr.logEdNames[logicindex];
+    // Checking for a resource tag
+    //console.log('logtype=', logtype);
+    var envobj = av.nut[logtype].react;   //objec based on logic type and reaction;
+    console.log('logtype=', logtype,'; envobj=', envobj);
+    var ndx = av.frd.re_NameIndex(envobj, lnArray[1]);
+    //assin the name of the resource. 
+    envobj.name[ndx] = lnArray[1];
+    // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file with constants for Avida-ED
+    envobj.depletable[ndx] = 0;
+    envobj.value[ndx] = 1;
+    envobj.min[ndx] = 0.9;
+    envobj.max[ndx] = 1.1;
+    envobj.max_count[ndx] = 1; 
+    envobj.task[ndx] = lnArray[2];
+    envobj.resource[ndx] = envobj.name[ndx];
+    envobj.type[ndx] = 'pow';
+ 
+    var len;
+    var lngth = lnArray.length;
+    //console.log('ndx=',ndx, '; name=lnArray[1]=',lnArray[1],'; task=',lnArray[2], '; logtype=', logtype, '; lnArray.length=', lnArray.length);
+    for (var jj=3; jj<lngth ;jj++) {
+      var pairArray = lnArray[jj].split(':');    //this should get process
+      len = pairArray.length;    
+      //console.log('len=',len,'; pairArray=',pairArray);
+      for (var ii=1; ii < len; ii++) {
+        pear = pairArray[ii].split('=');
+        //console.log('React: ii=',ii,'; pear', pear);
+        nn = av.sgr.react_param.indexOf(pear[0].toLowerCase());
+        if (-1 < nn) {
+          envobj[av.sgr.react_param[nn]][ndx] = pear[1];
+        }
+        else {
+          if ('cellbox' == pear[0].toLowerCase()) {
+            console.log('cellbox is not a reacion; this should never write')
+            cellboxdata = pear[1].split('|');
+            //console.log('cellboxdata=',cellboxdata);
+            //envobj.boxflag[ndx] = true;
+            envobj.boxx[ndx] = cellboxdata[0];
+            envobj.boyy[ndx] = cellboxdata[1];
+            envobj.boxcol[ndx] = cellboxdata[2];
+            envobj.boxrow[ndx] = cellboxdata[3];
+          }
+          else {
+            lnError = 'leftside, '+pear[0]+' is not a valid reaction keyword. lnArray = '+lnArray;
+            //console.log(lnError);
+          }
+        }
+      }
+    };
+    //console.log('logtype=', logtype,'ndx=',ndx,'envobj=', envobj);
+  }  
+  // valid logic name not found;
+  else {
+    lnError = 'react task, '+ lnArray[2]+' not found in av.sgr.logicVnames';
+    console.log(lnError);
+  };
+    
+  return lnError;
+};
+
+av.frd.resrcLineParse = function(lnArray){
+  'use strict';
+  var lineErrors = 'none';  //was it a valid line wihtout errors
+  //console.log('lnArray = ', lnArray);
+  var pairArray = lnArray[1].split(':');
+  var pear = [];
+  var cellboxdata = [];
+  var nn;
+  var codes;  
+  //console.log('pairArray=', pairArray);
+  //find logic type
+  var logicindex = av.sgr.logicNames.indexOf( pairArray[0].substring(0,3) );
+  //console.log('logicindex=',logicindex);
+  if (-1 < logicindex) {
+    var logtype = av.sgr.logEdNames[logicindex];
+    // Checking for a resource tag
+    var envobj = av.nut[logtype].resrc;
+    console.log('logtype='+logtype,'; envobj=', envobj);
+    var ndx = av.frd.re_NameIndex(envobj, pairArray[0]);
+    //console.log('ndx=',ndx);
+    //assin the name of the resource. 
+    envobj.name[ndx] = pairArray[0];
+    // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file witha few exceptions
+    // boxflag is false indicating there are no box values. 
+    // in Avida-ED, geometry=grid; 
+    //console.log('av.fzr.env=', av.fzr.env);
+    //console.log('envobj=', envobj);
+    envobj.boxflag[ndx] = false;
+    envobj.inflow[ndx] = 0;
+    envobj.outflow[ndx] = 0;
+    envobj.initial[ndx] = 0;
+    envobj.geometry[ndx] = "grid";
+    envobj.inflowx1[ndx] = 0;                     //techincally should be rand between 0 and cols-1
+    envobj.inflowx2[ndx] = envobj.inflowx1[ndx]; 
+    envobj.inflowy1[ndx] = 0;                     //techincally should be rand between 0 and rows-1
+    envobj.inflowy2[ndx] = envobj.inflowy1[ndx];
+    envobj.outflowx1[ndx] = 0;                     //techincally should be rand between 0 and cols-1
+    envobj.outflowx2[ndx] = envobj.inflowx1[ndx]; 
+    envobj.outflowy1[ndx] = 0;                     //techincally should be rand between 0 and rows-1
+    envobj.outflowy2[ndx] = envobj.inflowy1[ndx]; 
+    envobj.xdiffuse[ndx] = 1;
+    envobj.ydiffuse[ndx] = 1;
+    envobj.xgravity[ndx] = 0;
+    envobj.ygravity[ndx] = 0;
+    envobj.type[ndx] = 'inf';
+    envobj.region[ndx] = 'all';
+    envobj.side[ndx] = 'unk';
+    
+    //process all data pairs
+    var len = pairArray.length;
+    //console.log('len=',len,'; pairArray=',pairArray);
+    for (var ii=1; ii < len; ii++) {
+      pear = pairArray[ii].split('=');
+      //console.log('Resource: ii=',ii,'; pear', pear);
+      nn = av.sgr.rsrce_param.indexOf(pear[0].toLowerCase());
+      if (-1 < nn) {
+        envobj[av.sgr.rsrce_param[nn]][ndx] = pear[1];
+      }
+      else {
+        if ('cellbox' == pear[0].toLowerCase()) {
+          cellboxdata = pear[1].split('|');
+          //console.log('cellboxdata=',cellboxdata);
+          envobj.boxflag[ndx] = true;
+          envobj.boxx[ndx] = cellboxdata[0];
+          envobj.boyy[ndx] = cellboxdata[1];
+          envobj.boxcol[ndx] = cellboxdata[2];
+          envobj.boxrow[ndx] = cellboxdata[3];
+        }
+        else {
+          lineErrors = 'leftside, '+pear[0]+', not a valid resource keyword. lnArray = '+lnArray;
+          console.log(lineErrors);
+        }
+      }
+    };
+    // Assign layout parameters based on the resource name
+    // If there is a number, then 0 = entire dish; 1=upper left; 2=upper right; 3=lower left; 4= lower right
+    // if there is a letter combination with underbars those split out. 
+    //var re_num = '^\d{1,9}$';
+    //var matchNum = envobj.name[ndx].match(re_num);
+    //console.log('envobj.name[ndx]=', envobj.name[ndx],'; matchNum=', matchNum);
+    
+    var matchNum = av.sgr.regionNum.indexOf( envobj.name[ndx].substring(3).toString() );
+    console.log('av.sgr.regionNum=', av.sgr.regionNum,'; envobj.name[ndx].substring(3)=',envobj.name[ndx].substring(3),'; matchNum=', matchNum);
+    console.log('matchNum=', matchNum);
+    if (-1 < matchNum) {
+      console.log('matchNum=', matchNum, '; av.sgr.region[matchNum]=', av.sgr.region[matchNum]);
+      envobj.region[ndx] = av.sgr.region[matchNum];
+      if (0 < envobj.initial[ndx]) envobj.type[ndx] = 'fin';
+      if (0 < envobj.inflow[ndx]) envobj.type[ndx] = 'equ';      
+      envobj.side[ndx] = 'un~';
+    }
+    else {
+      codes = envobj.name[ndx].split('_');  //task_region_type_side  with side optional
+      console.log('codes=', codes);
+      envobj.region[ndx] = codes[1];
+      envobj.type[ndx] = codes[2];
+      envobj.side[ndx] = codes[3];
+      matchNum = av.sgr.region.indexOf(codes[1]);
+    };
+    console.log('matchNum=', matchNum, '; region=', envobj.region[ndx]);
+      //now assign an index to the region list. 
+    envobj.regionList[matchNum] = ndx;
+
+    console.log('matchNum=', matchNum,'; logtype=', logtype,'ndx=',ndx,'av.fzr.env.rsrce['+logtype+'].regionList=', av.fzr.env.rsrce[logtype].regionList);
+  }  
+  // valid logic name not found;
+  else {
+    lineErrors = 'resource,'+pairArray[0].substring(0,3)+' not found in av.sgr.logicNames';
+    console.log(lineErrors);
+  }
+  
+  //console.log('lineErrors=', lineErrors);
+  return lineErrors;
+};
+
+// Uses environment.cfg file to create a structure to hold environment variables. 
+av.frd.nutrientParse = function (filestr) {
+  'use strict';
+  var errors='';
+  var reacError, rsrcError;
+  var eolfound;
+  var lineobj;
+  var matchComment, matchContinue, matchResult;
+  var aline;
+  var lines = filestr.split('\n');
+  var lngth = lines.length;
+  var re_comment = /^(.*?)#.*$/;   //look at begining of the line and look until #; used to get the stuff before the #
+  var re_continue = /^(.*?)\\/;  //look for continuation line
+  var re_REACTION = /^(.*?)REACTION/i;
+  var re_RESOURCE = /RESOURCE/i;
+  var lineArray;
+  var ii = 0;
+  while (ii < lngth) {
+    eolfound = false;
+    //console.log("lines["+ii+"]=", lines[ii]);
+    matchComment = lines[ii].match(re_comment);
+    //console.log('matchComment=',matchComment);
+    if (null != matchComment) {aline = matchComment[1];}
+    else aline = lines[ii];
+    if (3 < aline.length) {
+      //console.log('aline.length=', aline.length,'; aline=', aline);
+      do {
+        //console.log('ii', ii, '; eolfound=', eolfound,'; aline=', aline);
+        if (ii+1 < lngth) {
+          matchContinue = aline.match(re_continue);
+          //console.log('matchContinue=',matchContinue);
+          if (null != matchContinue) {
+            ii++;
+            //console.log('ii=', ii);
+            matchComment = lines[ii].match(re_comment);
+            //console.log('matchComment=',matchComment);
+            if (null != matchComment) {aline = matchContinue[1]+matchComment[1];}
+            else aline = matchContinue[1]+lines[ii];
+          }
+          else eolfound = true;
+        }
+        else eolfound = true;
+        //console.log('ii', ii, '; eolfound=', eolfound,'; aline=', aline);
+      }
+      while (!eolfound)  //end of subloop for continuation lines
+      //console.log('ii', ii, '; aline=', aline);
+      // look for valid starting keyword
+      lineArray = av.utl.spaceSplit(aline).split('~');      //change , to !; remove leading and trailing space and replaces white space with a ~, then splits on ~
+      //console.log('lineArray=', lineArray);
+      matchResult = lineArray[0].match(re_REACTION);
+      //console.log('matchReaction=', matchResult);
+      if (null != matchResult) reacError = av.frd.reactLineParse(lineArray);
+      else {
+        reacError='none';
+        //console.log('no matach on REACTION');
+      }
+      
+      matchResult = lineArray[0].match(re_RESOURCE);
+      //consolen('matchResource=', matchResult);
+      if (null != matchResult) rsrcError = av.frd.resrcLineParse(lineArray);
+      else {rsrcError = 'none';}
+      
+      if ('none' != rsrcError || 'none' != reacError) {
+        //console.log('errors in line: ii=', ii, '; aline=', aline);
+        errors += 'ii='+ii+'; rsrcError='+rsrcError+'; reacError='+reacError+'\n';
+      }
+    }  //end of processing lines longer than 3 characters
+    ii++;
+  } // while that goes through lines in file. 
+  //console.log('----------------------------------------------------------------------------------------------------');
+  console.log('av.nut=', av.nut);
+  return errors;
+};
+
+
+
+//-------------------------------------------------------------------------------------------------------------- both --
 // puts data from the environment.cfg into the setup form for the population page
 av.frd.environment2struct = function (fileStr) {
   'use strict';
   //console.log('in av.frd.environment2struct');
+  av.frd.nutrientParse(fileStr);
   var errors = av.frd.environmentParse(fileStr);
   if (1 < errors.length) console.log('errors=', errors);
   av.ptd.showEnv('av.frd.environment2struct');
 };
+
+
+
+//--------------------------------------- end of  section to put data from environment.cfg into environment Structure --
+
 
 //--------------------------------------------- section to put data from avida.cfg into setup form of population page --
 //makes a dictionary entry out of line if the key and value are the first two items.
@@ -681,12 +978,14 @@ av.frd.avidaCFG2form = function (fileStr){
   av.grd.gridWasCols = Number(dict.WORLD_X);  
   av.grd.setupCols = Number(dict.WORLD_X);  
   av.fzr.env.fileCols = Number(dict.WORLD_X);
+  av.nut.fileCols = Number(dict.WORLD_X);
   //dijit.byId('sizeCols').set('value', dict.WORLD_X);
   av.dom.sizeRows.value = dict.WORLD_Y;
   //dijit.byId('sizeRows').set('value', dict.WORLD_Y);
   av.grd.gridWasRows = Number(dict.WORLD_Y);
   av.grd.setupRows = Number(dict.WORLD_Y);
   av.fzr.env.fileRows = Number(dict.WORLD_Y);
+  av.nut.fileRows = Number(dict.WORLD_Y);
   document.getElementById('muteInput').value = dict.COPY_MUT_PROB*100;
   //var event = new Event('change');
   var event = new window.CustomEvent('change');

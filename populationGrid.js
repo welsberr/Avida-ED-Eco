@@ -18,9 +18,59 @@ av.grd.backgroundSquares = function () {
 s  scale set based on ancestor organsim as of 2016 summer
  */
 
+av.grd.setColorMapOnly = function(from) {
+  av.grd.cmap = av.color.Gnuplot2cmap;  //for fitness, offspring cost and energy aquisition rate
+  var mapColor = 'greyMap';
+  console.log(from, 'called av.grd.setColorMapOnly: colorMode = ', document.getElementById("colorMode").value);
+  switch (document.getElementById("colorMode").value) {
+    case 'rnot':
+      mapColor = av.sgr.sugarColors[0];
+      av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
+      break;
+    case 'rnan':
+      mapColor = av.sgr.sugarColors[1];
+      av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
+      break;
+    case 'rand':
+      mapColor = av.sgr.sugarColors[2];
+      av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
+      break;
+    case 'rorn':
+      mapColor = av.sgr.sugarColors[3];
+      av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
+      break;
+    case 'roro':
+      mapColor = av.sgr.sugarColors[4];
+      av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
+      break;
+    case 'rant':
+      mapColor = av.sgr.sugarColors[5];
+      av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
+      break;
+    case 'rnor':
+      mapColor = av.sgr.sugarColors[6];
+      av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
+      break;
+    case 'rxor':
+      mapColor = av.sgr.sugarColors[7];
+      av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
+      break;
+    case 'requ':
+      mapColor = av.sgr.sugarColors[8];
+      av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
+      break;
+    case 'Ancestor Organism':
+      av.grd.fill = av.grd.msg.ancestor.data;
+      av.grd.fillRescale = '';
+      break;
+  };
+  console.log('colorMdoe=',document.getElementById("colorMode").value, '; colorM=', mapColor, '; length = ', av.grd.cmap.length);
+};
+
 //Sets scale and puts the user selected data type in the grid array. Rob wants the scale to be different at the beginning of a run 
-av.grd.setMapData = function () {
+av.grd.setMapData = function (from) {
   'use strict';
+  console.log(from, 'called av.grd.setMapData: av.grd.msg.fitness=',av.grd.msg.fitness);
   if (undefined != av.grd.msg.fitness) {
     //console.log('av.grd.msg', av.grd.msg);
     //console.log('av.grd.mxFit', av.grd.mxFit, '; av.grd.msg.fitness.maxVal', av.grd.msg.fitness.maxVal, '; limit',
@@ -173,7 +223,7 @@ av.grd.setMapData = function () {
       };
     };
     
-    av.grd.cmap = av.color.Gnuplot2cmap;  //for fitness, offspring cost and energy aquisition rate
+    //av.grd.cmap = av.color.Gnuplot2cmap;  //for fitness, offspring cost and energy aquisition rate
     var mapColor = 'greyMap';
     switch (document.getElementById("colorMode").value) {
       case 'Fitness':
@@ -203,7 +253,7 @@ av.grd.setMapData = function () {
         av.grd.fillmin = av.grd.msg.rnot.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
         mapColor = av.sgr.sugarColors[0];
-        av.grd.cmap = av.color[mapColor];
+        av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
         break;
       case 'rnan':
         av.grd.fill = av.grd.msg.rnan.data;
@@ -211,7 +261,7 @@ av.grd.setMapData = function () {
         av.grd.fillmin = av.grd.msg.rnan.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
         mapColor = av.sgr.sugarColors[1];
-        av.grd.cmap = av.color[mapColor];
+        av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
         break;
       case 'rand':
         av.grd.fill = av.grd.msg.rand.data;
@@ -219,7 +269,7 @@ av.grd.setMapData = function () {
         av.grd.fillmin = av.grd.msg.rand.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
         mapColor = av.sgr.sugarColors[2];
-        av.grd.cmap = av.color[mapColor];
+        av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
         break;
       case 'rorn':
         av.grd.fill = av.grd.msg.rorn.data;
@@ -227,7 +277,7 @@ av.grd.setMapData = function () {
         av.grd.fillmin = av.grd.msg.rorn.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
         mapColor = av.sgr.sugarColors[3];
-        av.grd.cmap = av.color[mapColor];
+        av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
         break;
       case 'roro':
         av.grd.fill = av.grd.msg.roro.data;
@@ -235,14 +285,14 @@ av.grd.setMapData = function () {
         av.grd.fillmin = av.grd.msg.roro.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
         mapColor = av.sgr.sugarColors[4];
-        av.grd.cmap = av.color[mapColor];
+        av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
         break;
       case 'rant':
         av.grd.fill = av.grd.msg.rant.data;
         av.grd.fillmax = av.grd.mxRant;
         av.grd.fillmin = av.grd.msg.rant.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
-        mapColor = av.sgr.sugarColors[5];
+        mapColor = av.sgr.sugarColors[5].slice(0,av.sgr.darkEnd);
         av.grd.cmap = av.color[mapColor];
         break;
       case 'rnor':
@@ -251,7 +301,7 @@ av.grd.setMapData = function () {
         av.grd.fillmin = av.grd.msg.rnor.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
         mapColor = av.sgr.sugarColors[6];
-        av.grd.cmap = av.color[mapColor];
+        av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
         break;
       case 'rxor':
         av.grd.fill = av.grd.msg.rxor.data;
@@ -259,7 +309,7 @@ av.grd.setMapData = function () {
         av.grd.fillmin = av.grd.msg.rxor.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
         mapColor = av.sgr.sugarColors[7];
-        av.grd.cmap = av.color[mapColor];
+        av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
         break;
       case 'requ':
         av.grd.fill = av.grd.msg.requ.data;
@@ -267,7 +317,7 @@ av.grd.setMapData = function () {
         av.grd.fillmin = av.grd.msg.requ.minVal;
         av.grd.fillRescale = av.grd.reScaleRate;
         mapColor = av.sgr.sugarColors[8];
-        av.grd.cmap = av.color[mapColor];
+        av.grd.cmap = av.color[mapColor].slice(0,av.sgr.darkEnd);
         break;
       case 'Ancestor Organism':
         av.grd.fill = av.grd.msg.ancestor.data;
@@ -695,9 +745,9 @@ av.grd.drawLegend = function () {
   }
 };
 
-av.grd.gradientScale = function () {
+av.grd.gradientScale = function (from) {
   'use strict';
-  if (av.debug.uil) console.log('w:',av.dom.scaleCanvas.width, av.dom.scaleCanvas.height, '= scaleCanvas Wd Ht; start gradientScale ');
+  if (av.debug.uil) console.log(from, 'called av.grd.gradientScale. w:',av.dom.scaleCanvas.width, av.dom.scaleCanvas.height, '= scaleCanvas Wd Ht; start gradientScale ');
   if (av.debug.uil) console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset; start gradientScale');
   
   //finding the dimensions needed for the legend. 

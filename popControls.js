@@ -658,15 +658,18 @@ av.sgr.ChangeAllSugarType = function(selectedOption){
 
   av.sgr.setSugarColors = function() {
   var sugarSection = ['notSection', 'nanSection', 'andSection', 'ornSection', 'oroSection', 'antSection', 'norSection', 'xorSection', 'equSection'];
+  var sugarTitle = ['notTitle', 'nanTitle', 'andTitle', 'ornTitle', 'oroTitle', 'antTitle', 'norTitle', 'xorTitle', 'equTitle'];
     var len = av.sgr.sugarColors.length;
-    var ndx = av.sgr.sugarShade;
     for (ii = 0; ii < len; ii++) {
       //if ('Spatial' == document.getElementById('allSugarGeometry').value) {
       if (true) {
-        document.getElementById(sugarSection[ii]).style.backgroundColor = av.color[av.sgr.sugarColors[ii]][ndx];
+        document.getElementById(sugarSection[ii]).style.backgroundColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarBackgroundShade];
+        document.getElementById(sugarTitle[ii]).style.color = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade];
+        
       }
       else {
         document.getElementById(sugarSection[ii]).style.backgroundColor = av.color.greyMap[av.sgr.sugarGreyShade];
+        document.getElementById(sugarTitle[ii]).style.color = 'Black';
       }
     }
   };

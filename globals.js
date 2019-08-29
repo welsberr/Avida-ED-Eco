@@ -451,39 +451,50 @@ av.sgr.monoChromeMaps = ['reddMap', 'orngMap', 'yllwMap', 'lawnMap',  'grenMap',
   av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'grenMap',  'yllwMap', 'orngMap',  'redvMap', 'mgntMap',  'purpMap'];
   av.sgr.sugarColors = ['grenMap', 'seagMap',  'cornMap', 'blueMap',  'purpMap', 'mgntMap',  'redvMap', 'orngMap',  'yllwMap'];
 console.log('sugarColors=', av.sgr.sugarColors);
-av.sgr.sugarShade = 40;  //was 30
+av.sgr.sugarBackgroundShade = 40;  //was 30
+av.sgr.sugarNameShade = 340;   //was 365   265 too light for yellow&greens; 300 green ok; yellow still too light
+av.sgr.monoColormaplength = av.color.reddMap.length;
+av.sgr.darkEnd = av.sgr.monoColormaplength-30;          //last color used in the the array for color scale
 av.sgr.sugarGreyShade = 20;
-  av.sgr.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', 'inflowy2', 'xdiffuse', 'ydiffuse'
-                           ,'outflow', 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2', 'xgravity', 'ygravity'
-                           ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow', 'name'
-                           , 'geometry', 'type', 'region', 'side', 'regionList'];   //will  geometry, may delete the others in this row later. 
-                         //name will be created from task, subdishnum, region, type and side
-  av.sgr.rsrce_fake = ['0', '3600', '0', '19', '20', '39', '1', '1'
+console.log('full mono colorMap length =', av.sgr.monoColormaplength, '; greyMap length =', av.color.greyMap.length
+     , '; darkEnd =', av.sgr.darkEnd, '; sugarBackgroundShade', av.sgr.sugarBackgroundShade, '; sugarNameShade=', av.sgr.sugarNameShade);
+
+av.sgr.rsrce_fake = ['0', '3600', '0', '19', '20', '39', '1', '1'
                            ,'.2', '0', '19', '20', '39', '0', '0'
                            ,'true', '0', '20', '20', '20', 'not1'];
-  av.sgr.react_param = ['depletable', 'value', 'min', 'max', 'max_count', 'name', 'task', 'resource', 'type']; 
+                            
+av.sgr.react_fake = ['1', '1', '0.99', '1.0', '1', 'not1', 'not', 'not1', 'pow']; 
+
+av.sgr.react_param = ['depletable', 'value', 'min', 'max', 'max_count', 'name', 'task', 'resource', 'type']; 
                             //depletable = 1 = yes resources are eaten; 0 = no they are not eaten
                             //type = pow always in Avida-ED
                             //value = 1 through 5 based on number of nan gates needed to do the task. 
                             //max_count = 1 always in Avida-ED
                             //min will be a constant probably 0.9
                             //max will be a constang probably 1.1
-                            
-  av.sgr.react_fake = ['1', '1', '0.99', '1.0', '1', 'not1', 'not', 'not1', 'pow']; 
+av.sgr.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', 'inflowy2', 'xdiffuse', 'ydiffuse'
+                           ,'outflow', 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2', 'xgravity', 'ygravity'
+                           ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow', 'name'
+                           , 'geometry', 'type', 'region', 'side', 'regionList'];   
+                         //name will be created from task, subdishnum, region, type and side
+                         // 
+                         // region list was used to state the index into the array of data that goes with the region in the regionlis. 
+                         // so the region lisst for quarters is [empty, 0, 1, 2, 3]
+                         // the retion list for top bottom would be [empty, empty, empty, empty, empty, 0, 1]
 
-  //Regtion List: upper left, upper right, lower left, lower right, entire dish, upper half, lower half, left half, right half
-  av.sgr.region =    ['upL', 'upR', 'loL', 'loR', 'all', 'top', 'bot', 'lft', 'rit'];
-  av.sgr.regionNum = [ '0',  '1',  '2',  '3',  '4', '12', '34', '13', '24'];     
+  //Regtion List: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
+  av.sgr.region =    ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];
+  av.sgr.regionNum = [  '0',   '1',   '2',   '3',   '4',  '12',  '34',  '13',  '24'];   //These numbers go with the regions above
   
-  // not in use on 2019 Aug 26
+  // need to figure out how to assign when reading environment.cfg
   av.sgr.type =  ['non', 'inf', 'fin', 'equ'];  //none, infinite, finite, equilibrium, gradient
-  av.sgr.typeLetter = ['N'  , 'I'  , 'F'  , 'E'  , 'G'  ];
-  av.sgr.side = ['lf', 'rt', 'tp', 'bt', 'cn', 'ot', 'un']; //left, right, top, bottom, center, outer, unknown
+  av.sgr.typeLetter = ['N'  , 'I'  , 'F'  , 'E'];
+  av.sgr.side = ['lft', 'rit', 'top', 'bot', 'cen', 'out', 'unk']; //left, right, top, bottom, center, outer, unknown
 
 
 av.fzr.clearEnvironment = function() {
   av.fzr.env = {};
-  av.fzr.sug = {};
+  av.nut = {};
 
   // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
   av.fzr.env.rsrce = {};
@@ -496,27 +507,27 @@ av.fzr.clearEnvironment = function() {
   
   for (var ii=0; ii< logiclen; ii++) {      //9
     tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
-    av.fzr.sug[tsk] = {};
-    av.fzr.sug[tsk].geometry = 'global';     //grid  is the only other one used in Avida-ED. Called spatial in user interface
-    av.fzr.sug[tsk].snumsubdish = 1;   // whole dish
-    av.fzr.sug[tsk].rsrcType = [];        //none, infinite, finite, equilibrium
-    av.fzr.sug[tsk].periodic = [];    //false = default;  else true.  
-    av.fzr.sug[tsk].periodTime = [];    //100,000 = defautl for now
-    av.fzr.sug[tsk].region = [];        //upLft upRit loLft loRit top bot Left Rite whole     or all
-    av.fzr.sug[tsk].side = [];
+    av.nut[tsk] = {};
+    av.nut[tsk].geometry = 'global';     //grid  is the only other one used in Avida-ED. Called spatial in user interface
+    av.nut[tsk].numsubdish = 1;   // whole dish
+    av.nut[tsk].rsrcType = [];        //none, infinite, finite, equilibrium
+    av.nut[tsk].periodic = [];    //false = default;  else true.  
+    av.nut[tsk].periodTime = [];    //100,000 = defautl for now
+    av.nut[tsk].region = [];        //upLft upRit loLft loRit top bot Left Rite whole     or all
+    av.nut[tsk].side = [];
     
-    av.fzr.sug[tsk]['resrc'] = {};
-    av.fzr.sug[tsk]['react'] = {};
+    av.nut[tsk]['resrc'] = {};
+    av.nut[tsk]['react'] = {};
     for (var jj=0; jj<rsrcelen; jj++){
       rnm = av.sgr.rsrce_param[jj];
-      av.fzr.sug[tsk]['resrc'][rnm] = [];
+      av.nut[tsk]['resrc'][rnm] = [];
     }
     for (var jj=0; jj<reactlen; jj++){
       rnm = av.sgr.react_param[jj];
-      av.fzr.sug[tsk]['react'][rnm] = [];
+      av.nut[tsk]['react'][rnm] = [];
     }
   }
-  console.log('av.fzr.sug =',av.fzr.sug);
+  console.log('av.nut =',av.nut);
   
   
   for (var ii=0; ii< logiclen; ii++) {      //9
