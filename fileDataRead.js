@@ -201,6 +201,9 @@ av.fio.processFiles = function (loadConfigFlag){
           if ('c0/environment.cfg' == av.fio.anID) {
             av.frd.environmentCFG2form(av.fio.thisfile.asText().trim());
           }
+          if ('c0/events.cfg' == av.fio.anID) {
+            av.frd.eventsCFG2form(av.fio.thisfile.asText().trim());
+          }
         }
         //Process dishes with ancesotrs. 
         if ('ancestors' == fileType || 'ancestors_manual' == fileType) {
@@ -499,7 +502,7 @@ av.frd.resourceLineParse = function(lnArray){
     envobj.ydiffuse[ndx] = 1;
     envobj.xgravity[ndx] = 0;
     envobj.ygravity[ndx] = 0;
-    envobj.type[ndx] = 'inf';
+    envobj.foodType[ndx] = 'inf';
     envobj.region[ndx] = 'all';
     envobj.side[ndx] = 'unk';
     
@@ -542,15 +545,15 @@ av.frd.resourceLineParse = function(lnArray){
     if (-1 < matchNum) {
       //console.log('matchNum=', matchNum, '; av.sgr.region[matchNum]' = av.sgr.region[matchNum]);
       envobj.region[ndx] = av.sgr.region[matchNum];
-      if (0 < envobj.initial[ndx]) envobj.type[ndx] = 'fin';
-      if (0 < envobj.inflow[ndx]) envobj.type[ndx] = 'equ';      
+      if (0 < envobj.initial[ndx]) envobj.foodType[ndx] = 'fin';
+      if (0 < envobj.inflow[ndx]) envobj.foodType[ndx] = 'equ';      
       envobj.side[ndx] = 'un_';
     }
     else {
       codes = envobj.name[ndx].split('_');  //task_region_type_side  with side optional
       //console.log('codes=', codes);
       envobj.region[ndx] = codes[1];
-      envobj.type[ndx] = codes[2];
+      envobj.foodType[ndx] = codes[2];
       envobj.side[ndx] = codes[3];
       matchNum = av.sgr.region.indexOf(codes[1]);
     };
@@ -763,7 +766,7 @@ av.frd.resrcLineParse = function(lnArray){
     // boxflag is false indicating there are no box values. 
     // in Avida-ED, geometry=grid; 
     //console.log('av.fzr.env=', av.fzr.env);
-    //console.log('envobj=', envobj);
+    console.log('envobj=', envobj);
     envobj.boxflag[ndx] = false;
     envobj.inflow[ndx] = 0;
     envobj.outflow[ndx] = 0;
@@ -781,7 +784,7 @@ av.frd.resrcLineParse = function(lnArray){
     envobj.ydiffuse[ndx] = 1;
     envobj.xgravity[ndx] = 0;
     envobj.ygravity[ndx] = 0;
-    envobj.type[ndx] = 'inf';
+    envobj.foodType[ndx] = 'inf';
     envobj.region[ndx] = 'all';
     envobj.side[ndx] = 'unk';
     
@@ -824,15 +827,15 @@ av.frd.resrcLineParse = function(lnArray){
     if (-1 < matchNum) {
       console.log('matchNum=', matchNum, '; av.sgr.region[matchNum]=', av.sgr.region[matchNum]);
       envobj.region[ndx] = av.sgr.region[matchNum];
-      if (0 < envobj.initial[ndx]) envobj.type[ndx] = 'fin';
-      if (0 < envobj.inflow[ndx]) envobj.type[ndx] = 'equ';      
+      if (0 < envobj.initial[ndx]) envobj.foodType[ndx] = 'fin';
+      if (0 < envobj.inflow[ndx]) envobj.foodType[ndx] = 'equ';      
       envobj.side[ndx] = 'un~';
     }
     else {
       codes = envobj.name[ndx].split('_');  //task_region_type_side  with side optional
       console.log('codes=', codes);
       envobj.region[ndx] = codes[1];
-      envobj.type[ndx] = codes[2];
+      envobj.foodType[ndx] = codes[2];
       envobj.side[ndx] = codes[3];
       matchNum = av.sgr.region.indexOf(codes[1]);
     };
@@ -922,8 +925,13 @@ av.frd.nutrientParse = function (filestr) {
     ii++;
   } // while that goes through lines in file. 
   //console.log('----------------------------------------------------------------------------------------------------');
-  console.log('av.nut=', av.nut);
-  return errors;
+  
+  
+  //find some summary info about nutrients. Need to look at each task separately. 
+  //av.nut.numsubdish = av.nut.react.name.length;
+  //if (0  < av.nut.resrc.name.length)     av.nut[tsk].geometry = av.nut.resrc.geometry;
+  //console.log('av.nut=', av.nut);
+  //return errors;
 };
 
 
@@ -942,6 +950,109 @@ av.frd.environment2struct = function (fileStr) {
 
 
 //--------------------------------------- end of  section to put data from environment.cfg into environment Structure --
+
+
+//-------------------------------------------------------------------------- get needed events out of events.cfg file --
+
+av.frd.eventsLineParse = function (cfgary) {
+  'use strict';
+  console.log('line array = ', cfgary);
+  var eventType;
+  var tmpStr;
+  var start;
+  var period;
+  var end;
+  var rslt = {
+    eventType : cfgary[0],
+    timeing : cfgary[1],
+    event : cfgary[2]
+  };
+  eventType = cfgary[0];
+  var ndx = cfgary[1].indexOf(':');
+  if (0 > ndx) {
+    start = cfgary[1];
+  }
+  else {
+    start = cfgary[1].substr(0,ndx);
+    tmpStr = cfgary[1].substr(ndx);
+    ndx = tmpStr.indexOf(':');
+    if (0 > ndx) {
+      period = tmpStr;
+    }
+    else {
+      period = tmpStr.substr(0,ndx);
+      end = tmpStr.substr(ndx);
+    };
+  };
+  var eventName = cfgary[2];
+  var resrcName = cfgary[3];
+  var cosStep = cfgary[4];
+  console.log(eventType, start, period, end, eventName, resrcName, cosStep);
+  return rslt;
+ };
+
+av.eventsCFGparse = function (filestr) {
+    var matchComment, matchContinue, matchResult;
+  var aline;
+  var lines = filestr.split('\n');
+  var lngth = lines.length;       //number of lines in file. 
+  var re_comment = /^(.*?)#.*$/;   //look at begining of the line and look until #; used to get the stuff before the #
+  var re_continue = /^(.*?)\\/;  //look for continuation line
+  var re_SetPeriodicResourceInflow = /^(.*?)SetPeriodicResourceInflow/i;
+  var re_SETPERIODICRESOURCEINFLOW = /^(.*?)SETPERIODICRESOURCEINFLOW/i;
+  var lineArray;
+  var ii = 0;
+  while (ii < lngth) {
+    eolfound = false;
+    //console.log("lines["+ii+"]=", lines[ii]);
+    matchComment = lines[ii].match(re_comment);
+    //console.log('matchComment=',matchComment);
+    if (null != matchComment) {aline = matchComment[1];}
+    else aline = lines[ii];
+    if (3 < aline.length) {
+      //console.log('aline.length=', aline.length,'; aline=', aline);
+      do {
+        //console.log('ii', ii, '; eolfound=', eolfound,'; aline=', aline);
+        if (ii+1 < lngth) {
+          matchContinue = aline.match(re_continue);
+          //console.log('matchContinue=',matchContinue);
+          if (null != matchContinue) {
+            ii++;
+            //console.log('ii=', ii);
+            matchComment = lines[ii].match(re_comment);
+            //console.log('matchComment=',matchComment);
+            if (null != matchComment) {aline = matchContinue[1]+matchComment[1];}
+            else aline = matchContinue[1]+lines[ii];
+          }
+          else eolfound = true;
+        }
+        else eolfound = true;
+        //console.log('ii', ii, '; eolfound=', eolfound,'; aline=', aline);
+      }
+      while (!eolfound)  //end of subloop for continuation lines
+      //console.log('ii', ii, '; aline=', aline);
+      // look for valid starting keyword
+      lineArray = av.utl.spaceSplit(aline).split('~');      //change , to !; remove leading and trailing space and replaces white space with a ~, then splits on ~
+      //console.log('lineArray=', lineArray);
+      if (2 < lineArray.length) {
+        matchResult = lineArray[2].toUpperCase().match(re_SETPERIODICRESOURCEINFLOW);
+        //console.log('matchReaction=', matchResult);
+        if (null != matchResult) av.frd.setPeriodicInflowLineParse(lineArray);
+      }  //end of checking that line has at least 3 'words'
+    }  //end of processing lines longer than 3 characters
+    ii++;
+  } // while that goes through lines in file. 
+  //console.log('----------------------------------------------------------------------------------------------------');
+};
+
+av.frd.eventsCFG2form = function(fileStr){
+  'use strict';
+  av.eventsCFGparse(fileStr);
+};
+
+
+
+
 
 
 //--------------------------------------------- section to put data from avida.cfg into setup form of population page --

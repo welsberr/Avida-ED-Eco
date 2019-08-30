@@ -475,7 +475,7 @@ av.sgr.react_param = ['depletable', 'value', 'min', 'max', 'max_count', 'name', 
 av.sgr.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', 'inflowy2', 'xdiffuse', 'ydiffuse'
                            ,'outflow', 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2', 'xgravity', 'ygravity'
                            ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow', 'name'
-                           , 'geometry', 'type', 'region', 'side', 'regionList'];   
+                           , 'geometry', 'foodType', 'region', 'side', 'regionList'];   
                          //name will be created from task, subdishnum, region, type and side
                          // 
                          // region list was used to state the index into the array of data that goes with the region in the regionlis. 
@@ -495,6 +495,7 @@ av.sgr.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', '
 av.fzr.clearEnvironment = function() {
   av.fzr.env = {};
   av.nut = {};
+  av.event = {};
 
   // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
   av.fzr.env.rsrce = {};
@@ -508,13 +509,15 @@ av.fzr.clearEnvironment = function() {
   for (var ii=0; ii< logiclen; ii++) {      //9
     tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
     av.nut[tsk] = {};
-    av.nut[tsk].geometry = 'global';     //grid  is the only other one used in Avida-ED. Called spatial in user interface
     av.nut[tsk].numsubdish = 1;   // whole dish
-    av.nut[tsk].rsrcType = [];        //none, infinite, finite, equilibrium
+    av.nut[tsk].regionLayout = 'all';  // all, 4ths, topbot, lftrit
+    av.nut[tsk].geometry = 'global';
+    //av.nut[tsk].foodType = [];        //none, infinite, finite, equilibrium
+    //av.nut[tsk].side = [];
+    
+    //from event file
     av.nut[tsk].periodic = [];    //false = default;  else true.  
     av.nut[tsk].periodTime = [];    //100,000 = defautl for now
-    av.nut[tsk].region = [];        //upLft upRit loLft loRit top bot Left Rite whole     or all
-    av.nut[tsk].side = [];
     
     av.nut[tsk]['resrc'] = {};
     av.nut[tsk]['react'] = {};
