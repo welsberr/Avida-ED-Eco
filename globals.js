@@ -475,22 +475,43 @@ av.sgr.react_param = ['depletable', 'value', 'min', 'max', 'max_count', 'name', 
 av.sgr.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', 'inflowy2', 'xdiffuse', 'ydiffuse'
                            ,'outflow', 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2', 'xgravity', 'ygravity'
                            ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow', 'name'
-                           , 'geometry', 'foodType', 'region', 'side', 'regionList'];   
-                         //name will be created from task, subdishnum, region, type and side
+                           , 'geometry', 'supply', 'region', 'side', 'grdNum', 'regionCode','regionList'];       
+                         //
+                         //region list does not work at this time. It was to create a way to fill out on the data ofr all tasks based on region. 
+                         //     I don't think we need it now. It should go away  when that part of ex1 goes away. 
+                         //name will be created from task, subdishnum or region, type and side
                          // 
                          // region list was used to state the index into the array of data that goes with the region in the regionlis. 
                          // so the region lisst for quarters is [empty, 0, 1, 2, 3]
                          // the retion list for top bottom would be [empty, empty, empty, empty, empty, 0, 1]
 
   //Regtion List: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
-  av.sgr.region =    ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];
-  av.sgr.regionNum = [  '0',   '1',   '2',   '3',   '4',  '12',  '34',  '13',  '24'];   //These numbers go with the regions above
+  av.sgr.region3char =    ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];
+  av.sgr.regionCode = [  '00',   '01',   '02',   '03',   '04',  '12',  '34',  '13',  '24'];   //These numbers go with the regions above
   
   // need to figure out how to assign when reading environment.cfg
-  av.sgr.type =  ['non', 'inf', 'fin', 'equ'];  //none, infinite, finite, equilibrium, gradient
-  av.sgr.typeLetter = ['N'  , 'I'  , 'F'  , 'E'];
-  av.sgr.side = ['lft', 'rit', 'top', 'bot', 'cen', 'out', 'unk']; //left, right, top, bottom, center, outer, unknown
+  av.sgr.supply3 =  ['non', 'inf',  'fin',  'equ',  'poi', 'flo' ];  //none, infinite, finite, equilibrium, poison
+  av.sgr.supply4 = ['none', 'infn', 'fint', 'equl', 'pois', 'flow'];
+  av.sgr.supply  = ['None', 'Infinite', 'Finite', 'Equilibrium', 'Poison','Flow'];    //only using the first four for now
+  //Flow would be from the source in a diffrent place fromt he sink: that is input x,y coordinaes are different from those of output. 
+  av.sgr.supplyLetter = ['N'  , 'I'  , 'F'  , 'E', 'P', 'S'];   
+  av.sgr.side3 = ['lft', 'rit', 'top', 'bot', 'cen', 'edg', 'unk']; //left, right, top, bottom, center, edge, unknown
+  av.sgr.side = ['left', 'rite', 'top', 'bottom', 'center', 'edges', 'unknown'];
 
+//Need a resource naming convention. Or a set of #comments. 
+//
+//#comment option
+//#!arguments name:not34g87 region:all side:none supply:finite gradient:false
+//region options are in av.sgr.region above.   or regionNum could be used. 
+//supply optoins are in av.sgr.supply 
+//side options are in av.sgr.side3
+//gradient options are false/true
+//
+//Name ideas. not01g00 to 99  for gradients   leading zeros by using padStart
+//
+
+var num = 34;
+console.log('testing padStart:', num.toString().padStart(2,'0'));
 
 av.fzr.clearEnvironment = function() {
   av.fzr.env = {};
@@ -512,8 +533,6 @@ av.fzr.clearEnvironment = function() {
     av.nut[tsk].numsubdish = 1;   // whole dish
     av.nut[tsk].regionLayout = 'all';  // all, 4ths, topbot, lftrit
     av.nut[tsk].geometry = 'global';
-    //av.nut[tsk].foodType = [];        //none, infinite, finite, equilibrium
-    //av.nut[tsk].side = [];
     
     //from event file
     av.nut[tsk].periodic = [];    //false = default;  else true.  

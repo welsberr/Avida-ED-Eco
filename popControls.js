@@ -1004,11 +1004,11 @@ av.ptd.showEnv = function(from) {
   console.log(from, 'called av.ptd.showEnv');
   var len = av.sgr.logicNames.length;
   var showRegion = document.getElementById('ex1envShowRegion').value;
-  var regionNdx = av.sgr.region.indexOf(showRegion);
+  var regionNdx = av.sgr.regionCode.indexOf(showRegion);
   var txtType, txtInit, txtInflo, txtOut;
   
   if (-1< regionNdx) {
-    console.log('showRegion = ', showRegion, '; len=', len, '; regionNdx=', regionNdx, '; av.sgr.region=', av.sgr.region);
+    console.log('showRegion = ', showRegion, '; len=', len, '; regionNdx=', regionNdx, '; av.sgr.regionCode=', av.sgr.regionCode);
     for (var ii = 0; ii < len; ii++) {
       txtType = '';
       txtInflo = '';

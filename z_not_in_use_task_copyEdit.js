@@ -5,7 +5,7 @@
                                   <option value='Global' selected>Global</option>
                                   <option value='Spatial'>Spatial</option>
                                 </select>&nbsp;&nbsp;&nbsp;
-                                <select  id='equ0Type' class='sugarType' onchange='av.sgr.typeChange(this)'>
+                                <select  id='equ0Type' class='sugarType' onchange='av.sgr.supplyChange(this)'>
                                   <option id='equ0none' value='None'>None</option>
                                   <option id='equ0Infinite' value='Infinite' selected>Infinite</option>
                                   <option id='equ0Finite' value='Finite'>Finite</option>

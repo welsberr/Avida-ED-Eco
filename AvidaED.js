@@ -528,7 +528,7 @@ if (av.debug.root) console.log('before activeOrgan');
 
   av.dnd.activeConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
     'use strict';
-    console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id)
+    //console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id);
     if ('activeConfig' === target.node.id) {
       av.dnd.makeMove(source, nodes, target);
     }
@@ -536,7 +536,7 @@ if (av.debug.root) console.log('before activeOrgan');
   
   av.dnd.testConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
     'use strict';
-    console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id)
+    //console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id);
     if ('testConfig' === target.node.id) {
       av.dnd.makeMove(source, nodes, target);
     }
@@ -2508,13 +2508,13 @@ av.sgr.geometryChange = function(selectObj){
   av.sgr.changeDetailsLayout(task, selectedOption, 1, 'av.sgr.geometryChange');  
 };
 
-av.sgr.typeChange = function (domObj) {
+av.sgr.supplyChange = function (domObj) {
   var taskID = domObj.id; 
   var task = taskID.substring(0,3);
   var idx = domObj.selectedIndex;        // get the index of the selected option 
   var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
   console.log('id=', task, '; selectedOption=', selectedOption);
-  av.sgr.changeDetailsLayout(task, selectedOption, 1, 'av.sgr.typeChange');
+  av.sgr.changeDetailsLayout(task, selectedOption, 1, 'av.sgr.supplyChange');
 };
 
 av.sgr.dishRegionChange = function(domObj) {
