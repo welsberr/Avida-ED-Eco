@@ -319,10 +319,10 @@ av.ptd.runPopFn = function (from) {
     }
 
     if (av.dom.autoUpdateRadio.checked) {
-      //av.msg.pause(av.dom.autoUpdateOnce').get('value'));  //not used where there is handshaking (not used with av.msg.stepUpdate)
+      //av.msg.pause(av.dom.autoUpdateOnce.value);  //not used where there is handshaking (not used with av.msg.stepUpdate)
       av.ui.autoStopFlag = true;
       av.ui.autoStopValue = av.dom.autoUpdateOnce.value;
-      //console.log('stop at  = av.dom.autoUpdateOnce').get('value'));
+      //console.log('stop at  = av.dom.autoUpdateOnce.value;
     }
 
     av.ptd.makeRunState('av.ptd.runPopFn 328');

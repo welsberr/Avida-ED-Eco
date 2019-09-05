@@ -475,7 +475,7 @@ av.sgr.react_param = ['depletable', 'value', 'min', 'max', 'max_count', 'name', 
 av.sgr.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', 'inflowy2', 'xdiffuse', 'ydiffuse'
                            ,'outflow', 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2', 'xgravity', 'ygravity'
                            ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow', 'name'
-                           , 'geometry', 'supply', 'region', 'side', 'grdNum', 'regionCode','regionList'];       
+                           , 'geometry', 'region', 'grdNum', 'regionCode','regionList'];       
                          //
                          //region list does not work at this time. It was to create a way to fill out on the data ofr all tasks based on region. 
                          //     I don't think we need it now. It should go away  when that part of ex1 goes away. 
@@ -492,16 +492,17 @@ av.sgr.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', '
   // need to figure out how to assign when reading environment.cfg
   av.sgr.supply3 =  ['non', 'inf',  'fin',  'equ',  'poi', 'flo' ];  //none, infinite, finite, equilibrium, poison
   av.sgr.supply4 = ['none', 'infn', 'fint', 'equl', 'pois', 'flow'];
-  av.sgr.supply  = ['None', 'Infinite', 'Finite', 'Equilibrium', 'Poison','Flow'];    //only using the first four for now
+  av.sgr.supply  = ['None', 'Infinite', 'Finite', 'Equilibrium', 'Flow'];    //only using the first four for now; 
   //Flow would be from the source in a diffrent place fromt he sink: that is input x,y coordinaes are different from those of output. 
   av.sgr.supplyLetter = ['N'  , 'I'  , 'F'  , 'E', 'P', 'S'];   
+  av.sgr.side1 = ['L', 'R', 'T', 'B', 'C', 'E', 'U'];
   av.sgr.side3 = ['lft', 'rit', 'top', 'bot', 'cen', 'edg', 'unk']; //left, right, top, bottom, center, edge, unknown
   av.sgr.side = ['left', 'rite', 'top', 'bottom', 'center', 'edges', 'unknown'];
 
-//Need a resource naming convention. Or a set of #comments. 
+//Commments 
 //
-//#comment option
-//#!arguments name:not34g87 region:all side:none supply:finite gradient:false
+//#comment options
+//#!xor not34 region=all:side=none:supply=finite:gradient=false
 //region options are in av.sgr.region above.   or regionNum could be used. 
 //supply optoins are in av.sgr.supply 
 //side options are in av.sgr.side3
@@ -530,9 +531,11 @@ av.fzr.clearEnvironment = function() {
   for (var ii=0; ii< logiclen; ii++) {      //9
     tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
     av.nut[tsk] = {};
-    av.nut[tsk].numsubdish = 1;   // whole dish
+    av.nut[tsk].numsubdish = 0;   // whole dish
     av.nut[tsk].regionLayout = 'all';  // all, 4ths, topbot, lftrit
     av.nut[tsk].geometry = 'global';
+    av.nut[tsk].supply = [];     // default is  'Infinite';]
+    av.nut[tsk].side = [];     //default is unknown
     
     //from event file
     av.nut[tsk].periodic = [];    //false = default;  else true.  
@@ -558,7 +561,9 @@ av.fzr.clearEnvironment = function() {
     av.fzr.env.rsrce[tsk] = {};    
     for (var jj=0; jj<rsrcelen; jj++){
       av.fzr.env.rsrce[tsk][av.sgr.rsrce_param[jj]] = [];
-    }
+    };
+    av.fzr.env.rsrce[tsk].side = [];
+    av.fzr.env.rsrce[tsk].supply = [];
     av.fzr.env.react[tsk] = {};
     for (var jj=0; jj<reactlen; jj++){
       rnm = av.sgr.react_param[jj];

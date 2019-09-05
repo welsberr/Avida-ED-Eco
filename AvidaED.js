@@ -2731,11 +2731,12 @@ $(function slidemute() {
     av.ui.autoStopFlag = true;
   });
 
-  dojo.connect(dijit.byId('autoUpdateOnce'), 'onChange', function () {
-    av.post.addUser('Spinner: autoUpdateOnce = ' + dijit.byId('autoUpdateOnce').get('value'));
-    av.ui.autoStopValue = dijit.byId('autoUpdateOnce').get('value');
-    //console.log('autoUpdateOnce=', dijit.byId('autoUpdateOnce').get('value'));
-  });
+  av.dom.autoUpdateOnce.onchange = function() {
+    av.post.addUser('Spinner: autoUpdateOnce = ' + av.dom.autoUpdateOnce.value);
+    av.ui.autoStopValue = av.dom.autoUpdateOnce.value;
+    //console.log('autoUpdateOnce=', av.dom.autoUpdateOnce.value);
+  };
+
 
   dojo.connect(dijit.byId('manualUpdateRadiTest'), 'onClick', function () {
     av.post.addUser('Button: manualUpdateRadiTest');
@@ -2749,9 +2750,9 @@ $(function slidemute() {
 
 
   dojo.connect(dijit.byId('autoUpdateSpinneTest'), 'onChange', function () {
-    av.post.addUser('Spinner: autoUpdateOnce = ' + dijit.byId('autoUpdateSpinneTest').get('value'));
+    av.post.addUser('Spinner: autoUpdateOnce = ' + av.dom.autoUpdateOnce.value);
     av.ui.autoStopValue = dijit.byId('autoUpdateSpinneTest').get('value');
-    //console.log('autoUpdateOnce=', dijit.byId('autoUpdateOnce').get('value'));
+    //console.log('autoUpdateOnce=', av.dom.autoUpdateOnce.value);
   });
 
   /* *************************************************************** */

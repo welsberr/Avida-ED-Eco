@@ -60,7 +60,7 @@ av.fwt.makeFzrEventsCfgWorld = function (idStr, em) {
 
 av.fwt.makeFzrPauseRunAt = function (idStr, actConfig) {
   'use strict';
-  var txt = dijit.byId('autoUpdateOnce').get('value').toString();
+  var txt = av.dom.autoUpdateOnce.value.toString();
   // Is auto Update Radio button checked?
   if (av.dom.manualUpdateRadio.checked) {  //manually pause population
     txt = '-1';   //Manual Update

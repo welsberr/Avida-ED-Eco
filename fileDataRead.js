@@ -465,13 +465,13 @@ av.frd.reactLineParse = function(lnArray) {
       
       av.nut[edTsk].geometry = 'global';             /// will be grid if it a subdish. I need to wrk on this
       if (0 < envobj.value[ndx]) {
-        av.nut[edTsk].resrc.supply[ndx] = 'infinite';
+        av.nut[edTsk].supply[ndx] = 'infinite';
       }
       if (0 > envobj.value[ndx]) {
-        av.nut[edTsk].resrc.supply[ndx] = 'poison';   //poison or damage. does not kill, but hurts energy aquisition rate (ear). 
+        av.nut[edTsk].supply[ndx] = 'poison';   //poison or damage. does not kill, but hurts energy aquisition rate (ear). 
       }
       else {
-        av.nut[edTsk].resrc.supply[ndx] = 'none';
+        av.nut[edTsk].supply[ndx] = 'none';
       }
     }
     
@@ -497,7 +497,9 @@ av.frd.resrcLineParse = function(lnArray){
   var cellboxdata = [];
   var matchTaskRegion;
   var nn; var matchGradient;
-  var codes;  
+  var edTsk;
+  var envobj;
+  var ndx;
   //var re_num0 = /(\d+)(.*$)/;    //older versions  /^\D+(\d+)(.*$)/
   var re_region = /(\D+)(\d+)(.*$)/;    // match array = whole line? , task, region number, gradient data if it exists, else NULL
   var re_gradient = /(\D+)(\d+)(.*$)/;  // match array = whole line? , 'gradient side', gradient line number, rest if string if any exists. 
@@ -512,85 +514,74 @@ av.frd.resrcLineParse = function(lnArray){
   var tsk =  matchTaskRegion[1];
   var logicindex = av.sgr.logicNames.indexOf( tsk );
   if (-1 < logicindex) {
-    var edTsk = av.sgr.logEdNames[logicindex];
+    edTsk = av.sgr.logEdNames[logicindex];
     // Checking for a resource tag
-    var envobj = av.nut[edTsk].resrc;
+    envobj = av.nut[edTsk].resrc;
     //console.log('edTsk='+edTsk,'; envobj=', envobj);
 
     // check to make sure name is unqiue. If it is not unique then overright the previous data. 
-    var ndx = av.frd.findNameIndex(envobj, pairArray[0]);   // index into all the arrays that hold resource/reaction parameters; The name should be unique for all arrays in the object. 
+    ndx = av.frd.findNameIndex(envobj, pairArray[0]);   // index into all the arrays that hold resource/reaction parameters; The name should be unique for all arrays in the object. 
     //console.log('ndx=',ndx);
-    envobj.name[ndx] = pairArray[0];    //assin the name of the resource statement. 
-    envobj.regionCode[ndx] = matchTaskRegion[2];   //This is a one or two digit string. 
-  
-    if (0 < matchTaskRegion[3].length){
-      matchGradient = matchTaskRegion[3].match(re_gradient);
-      console.log('re_gradient=', re_gradient, '; matchGradient=', matchGradient);
-      envobj.side[ndx] = matchGradient[1];
-      envobj.grdNum[ndx] = matchGradient[2];
-    };
-    
-    // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file witha few exceptions
-    // boxflag is false indicating there are no box values. 
-    // in Avida-ED, geometry=grid or global;
-    envobj.boxflag[ndx] = false;
-    envobj.inflow[ndx] = 0;
-    envobj.outflow[ndx] = 0;
-    envobj.initial[ndx] = 0;
-    envobj.geometry[ndx] = "grid";
-    envobj.inflowx1[ndx] = 0;                     //techincally should be rand between 0 and cols-1
-    envobj.inflowx2[ndx] = envobj.inflowx1[ndx]; 
-    envobj.inflowy1[ndx] = 0;                     //techincally should be rand between 0 and rows-1
-    envobj.inflowy2[ndx] = envobj.inflowy1[ndx];
-    envobj.outflowx1[ndx] = 0;                     //techincally should be rand between 0 and cols-1
-    envobj.outflowx2[ndx] = envobj.inflowx1[ndx]; 
-    envobj.outflowy1[ndx] = 0;                     //techincally should be rand between 0 and rows-1
-    envobj.outflowy2[ndx] = envobj.inflowy1[ndx]; 
-    envobj.xdiffuse[ndx] = 1;
-    envobj.ydiffuse[ndx] = 1;
-    envobj.xgravity[ndx] = 0;
-    envobj.ygravity[ndx] = 0;
-    envobj.side[ndx] = 'unk';
-    envobj.supply[ndx] = 'Infinite';
-    
-    //console.log('edTsk=', edTsk, '; ndx=', ndx ,'; av.nut[edTsk]=', av.nut[edTsk]);
-    //av.nut[edTsk]['supply'][ndx] = 'Infinite';
-    
-    //process all data pairs
-    var len = pairArray.length;
-    //console.log('len=',len,'; pairArray=',pairArray);
-    for (var ii=1; ii < len; ii++) {
-      pear = pairArray[ii].split('=');
-      //console.log('Resource: ii=',ii,'; pear', pear);
-      nn = av.sgr.rsrce_param.indexOf(pear[0].toLowerCase());
-      if (-1 < nn) {
-        envobj[av.sgr.rsrce_param[nn]][ndx] = pear[1];
-      }
-      else {
-        if ('cellbox' == pear[0].toLowerCase()) {
-          cellboxdata = pear[1].split('|');
-          //console.log('cellboxdata=',cellboxdata);
-          envobj.boxflag[ndx] = true;
-          envobj.boxx[ndx] = cellboxdata[0];
-          envobj.boyy[ndx] = cellboxdata[1];
-          envobj.boxcol[ndx] = cellboxdata[2];
-          envobj.boxrow[ndx] = cellboxdata[3];
+    if (-1 < ndx) {
+      envobj.name[ndx] = pairArray[0];    //assin the name of the resource statement. 
+      envobj.regionCode[ndx] = matchTaskRegion[2];   //This is a one or two digit string. 
+
+      if (0 < matchTaskRegion[3].length){
+        matchGradient = matchTaskRegion[3].match(re_gradient);
+        console.log('re_gradient=', re_gradient, '; matchGradient=', matchGradient);
+        envobj.side[ndx] = matchGradient[1];
+        envobj.grdNum[ndx] = matchGradient[2];
+      };
+
+
+      //console.log('edTsk=', edTsk, '; ndx=', ndx ,'; av.nut[edTsk]=', av.nut[edTsk]);
+
+      //process all data pairs
+      var len = pairArray.length;
+      //console.log('len=',len,'; pairArray=',pairArray);
+      for (var ii=1; ii < len; ii++) {
+        pear = pairArray[ii].split('=');
+        //console.log('Resource: ii=',ii,'; pear', pear);
+        nn = av.sgr.rsrce_param.indexOf(pear[0].toLowerCase());
+        if (-1 < nn) {
+          envobj[av.sgr.rsrce_param[nn]][ndx] = pear[1];
         }
         else {
-          lineErrors = 'leftside, '+pear[0]+', not a valid resource keyword. lnArray = '+lnArray;
-          console.log(lineErrors);
+          if ('cellbox' == pear[0].toLowerCase()) {
+            cellboxdata = pear[1].split('|');
+            //console.log('cellboxdata=',cellboxdata);
+            envobj.boxflag[ndx] = true;
+            envobj.boxx[ndx] = cellboxdata[0];
+            envobj.boyy[ndx] = cellboxdata[1];
+            envobj.boxcol[ndx] = cellboxdata[2];
+            envobj.boxrow[ndx] = cellboxdata[3];
+          }
+          else {
+            lineErrors = 'leftside, '+pear[0]+', not a valid resource keyword. lnArray = '+lnArray;
+            console.log(lineErrors);
+          }
         }
-      }
-    };
+      };
 
-    //Find the supply type
-    if (0 < envobj.initial[ndx]) 
-      envobj.supply[ndx] = 'Finite';
-    if (0 < envobj.inflow[ndx]) 
-      envobj.supply[ndx] = 'Equilibrium';     
-    if (0 == envobj.initial[ndx] && 0 == envobj.inflow[ndx]) 
-      envobj.supply[ndx] = 'None';
-    
+      //console.log('edTsk=', edTsk, '; av.nut[edTsk]=', av.nut[edTsk]);
+
+      //console.log('envobj.geometry=', envobj.geometry);
+      //onsole.log('ndx=',ndx,'envobj.geometry[ndx]=', envobj.geometry[ndx]);
+      av.nut[edTsk].geometry = envobj.geometry[ndx];
+      console.log('edTsk=', edTsk,'; av.nut[edTsk].geometry=', av.nut[edTsk].geometry);
+
+      //Find the supply type
+      if (0 < envobj.initial[ndx]) 
+        av.nut[edTsk].supply[ndx] = 'Finite';
+      if (0 < envobj.inflow[ndx]) {
+        if (envobj.inflowx1==envobj.outflowx1 && envobj.inflowx2==envobj.outflowx2 && envobj.inflowy1==envobj.outflowy1 && envobj.inflowy2==envobj.outflowy2) {
+          av.nut[edTsk].supply[ndx] = 'Equilibrium';           
+        }
+        else av.nut[edTsk].supply[ndx] = 'Flow'; 
+      }
+      if (0 == envobj.initial[ndx] && 0 == envobj.inflow[ndx]) 
+        av.nut[edTsk].supply[ndx] = 'None';
+    }   //end of valid ndx found.
   }  
   // valid logic name not found;
   else {
@@ -680,25 +671,27 @@ av.frd.nutrientParse = function (filestr) {
   //console.log('----------------------------------------------------------------------------------------------------');
   
   var tsk;
-  var len = av.sgr.logEdNames.length;
+  var len = av.sgr.logEdNames.length;   //9
   var numRegions;
   
-  //go thru all tasks
+  //find some summary info about nutrients. Need to look at each task separately. 
   for (var ii=0; ii< len; ii++) {
     tsk = av.sgr.logEdNames[ii];
     numRegions = av.nut[tsk].resrc.geometry.length;
-    if (0 < numRegions) {
-      av.nut[tsk].geometry = av.nut[tsk].resrc.geometry[1]; 
-      console.log('task='+tsk,'; av.nut[tsk].geometry=', av.nut[tsk].geometry);
+    
+    if (1 < numRegions) {
+      av.nut[tsk].geometry = 'spatial';
     }
-    else {
-      av.nut[tsk].geometry = 'global';
+    else if (0 == numRegions) {
+      if (undefined != av.nut[tsk].resrc.geometry[1]) 
+        av.nut.tsk.geometry = av.nut[tsk].resrc.geometry[1];
+      else
+        //console.log('tsk=', tsk, '; len=', len, '; numRegions=', numRegions);
+        av.nut[tsk].geometry = "global";
     }
+    else console.log('condused as not sure how length can be negative');
   };
-  //find some summary info about nutrients. Need to look at each task separately. 
-  //av.nut.numsubdish = av.nut.react.name.length;
-  //if (0  < av.nut.resrc.name.length)     av.nut[tsk].geometry = av.nut.resrc.geometry;
-  //console.log('av.nut=', av.nut);
+  //av.nut[tsk].numsubdish = av.nut[tsk].length;    Must do somethging with regionCode
   //return errors;
 };
 
@@ -980,23 +973,11 @@ av.frd.reactionLineParse = function(lnArray) {
           envobj[av.sgr.react_param[nn]][ndx] = pear[1];
         }
         else {
-          if ('cellbox' == pear[0].toLowerCase()) {
-            console.log('cellbox is not a reacion; this should never write');
-            cellboxdata = pear[1].split('|');
-            //console.log('cellboxdata=',cellboxdata);
-            //envobj.boxflag[ndx] = true;
-            envobj.boxx[ndx] = cellboxdata[0];
-            envobj.boyy[ndx] = cellboxdata[1];
-            envobj.boxcol[ndx] = cellboxdata[2];
-            envobj.boxrow[ndx] = cellboxdata[3];
-          }
-          else {
-            lnError = 'leftside, '+pear[0]+' is not a valid reaction keyword. lnArray = '+lnArray;
-            //console.log(lnError);
-          }
-        }
-      }
-    };
+          lnError = 'pear[0]=, '+pear[0]+' is not a valid reaction keyword. lnArray = '+lnArray;
+          //console.log(lnError);
+        };
+      };  //completed going thru pair arrays
+    };  //completed loop to processs lnArray
     //console.log('edTsk=', edTsk,'ndx=',ndx,'envobj=', envobj);
   }  
   // valid logic name not found;
@@ -1015,7 +996,6 @@ av.frd.resourceLineParse = function(lnArray){
   var pear = [];
   var cellboxdata = [];
   var nn;
-  var codes;  
   //console.log('pairArray=', pairArray);
   //find logic type
   var logicindex = av.sgr.logicNames.indexOf( pairArray[0].substring(0,3) );
@@ -1052,9 +1032,9 @@ av.frd.resourceLineParse = function(lnArray){
     envobj.ydiffuse[ndx] = 1;
     envobj.xgravity[ndx] = 0;
     envobj.ygravity[ndx] = 0;
-    envobj.supply[ndx] = 'inf';
     envobj.region[ndx] = 'all';
-    envobj.side[ndx] = 'unk';
+    //envobj.side[ndx] = 'unk';
+    av.fzr.env.rsrce[edTsk][ndx] = 'unk';
     
     //process all data pairs
     var len = pairArray.length;
@@ -1077,7 +1057,7 @@ av.frd.resourceLineParse = function(lnArray){
           envobj.boxrow[ndx] = cellboxdata[3];
         }
         else {
-          lineErrors = 'leftside, '+pear[0]+', not a valid resource keyword. lnArray = '+lnArray;
+          lineErrors = 'pear[0]=, '+pear[0]+', not a valid resource keyword. lnArray = '+lnArray;
           //console.log(lineErrors);
         }
       }
@@ -1087,10 +1067,10 @@ av.frd.resourceLineParse = function(lnArray){
     var subCode =  envobj.name[ndx].substring(3).toString();
     envobj.region[ndx] = subCode;
     envobj.regionList[subCode] = ndx;
-
-    if (0 < envobj.initial[ndx]) envobj.supply[ndx] = 'fin';
-    if (0 < envobj.inflow[ndx]) envobj.supply[ndx] = 'equ';      
-    envobj.side[ndx] = 'un_';
+    
+    if (0 < envobj.initial[ndx]) av.fzr.env.rsrce[edTsk].supply[ndx] = 'fin';
+    if (0 < envobj.inflow[ndx]) av.fzr.env.rsrce[edTsk].supply[ndx] = 'equ';      
+    av.fzr.env.rsrce[edTsk].hiSide[ndx] = 'un_';
     //now assign an index to the region list. 
 
     //console.log('matchNum=', matchNum,'; edTsk=', edTsk,'ndx=',ndx,'av.fzr.env.rsrce['+edTsk+'].regionList=', av.fzr.env.rsrce[edTsk].regionList);
@@ -1316,12 +1296,12 @@ av.frd.pauseRunAtTXT2form = function (fileStr) {
   if (0 < update) {
     dijit.byId('manualUpdateRadio').set('checked', false);
     dijit.byId('autoUpdateRadio').set('checked', true);
-    dijit.byId('autoUpdateOnce').set('value', update);
+    av.dom.autoUpdateOnce.value = update;
   }
   else {
     dijit.byId('manualUpdateRadio').set('checked', true);
     dijit.byId('autoUpdateRadio').set('checked', false);
-    dijit.byId('autoUpdateOnce').set('value', '1000');
+    av.dom.autoUpdateOnce.value = '1000';
   }
 };
 
