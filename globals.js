@@ -475,7 +475,7 @@ av.sgr.react_param = ['depletable', 'value', 'min', 'max', 'max_count', 'name', 
 av.sgr.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', 'inflowy2', 'xdiffuse', 'ydiffuse'
                            ,'outflow', 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2', 'xgravity', 'ygravity'
                            ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow', 'name'
-                           , 'geometry', 'region', 'grdNum', 'regionCode','regionList'];       
+                           , 'geometry', 'region', 'side', 'grdNum', 'regionCode','regionList'];       
                          //
                          //region list does not work at this time. It was to create a way to fill out on the data ofr all tasks based on region. 
                          //     I don't think we need it now. It should go away  when that part of ex1 goes away. 
@@ -488,7 +488,8 @@ av.sgr.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', '
   //Regtion List: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
   av.sgr.region3char =    ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];
   av.sgr.regionCode = [  '00',   '01',   '02',   '03',   '04',  '12',  '34',  '13',  '24'];   //These numbers go with the regions above
-  
+  av.sgr.regionNames =  ['Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
+  av.sgr.regionLayout = ['Global Dish', 'Whole Dish', 'Halves', '3-sections', 'Quarters'];
   // need to figure out how to assign when reading environment.cfg
   av.sgr.supply3 =  ['non', 'inf',  'fin',  'equ',  'poi', 'flo' ];  //none, infinite, finite, equilibrium, poison
   av.sgr.supply4 = ['none', 'infn', 'fint', 'equl', 'pois', 'flow'];
@@ -496,12 +497,12 @@ av.sgr.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', '
   //Flow would be from the source in a diffrent place fromt he sink: that is input x,y coordinaes are different from those of output. 
   av.sgr.supplyLetter = ['N'  , 'I'  , 'F'  , 'E', 'P', 'S'];   
   av.sgr.side1 = ['L', 'R', 'T', 'B', 'C', 'E', 'U'];
-  av.sgr.side3 = ['lft', 'rit', 'top', 'bot', 'cen', 'edg', 'unk']; //left, right, top, bottom, center, edge, unknown
+  av.sgr.side3 = ['Lft', 'Rit', 'Top', 'Bot', 'Cen', 'Edg', 'Unk']; //left, right, top, bottom, center, edge, unknown
   av.sgr.side = ['left', 'rite', 'top', 'bottom', 'center', 'edges', 'unknown'];
 
 //Commments 
 //
-//#comment options
+//#comment option
 //#!xor not34 region=all:side=none:supply=finite:gradient=false
 //region options are in av.sgr.region above.   or regionNum could be used. 
 //supply optoins are in av.sgr.supply 
@@ -522,6 +523,7 @@ av.fzr.clearEnvironment = function() {
   // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
   av.fzr.env.rsrce = {};
   av.fzr.env.react = {}; 
+  av.fzr.env.supply = {};
   var logiclen = av.sgr.logicNames.length;
   var rsrcelen = av.sgr.rsrce_param.length; 
   var reactlen = av.sgr.react_param.length;
@@ -535,7 +537,6 @@ av.fzr.clearEnvironment = function() {
     av.nut[tsk].regionLayout = 'all';  // all, 4ths, topbot, lftrit
     av.nut[tsk].geometry = 'global';
     av.nut[tsk].supply = [];     // default is  'Infinite';]
-    av.nut[tsk].side = [];     //default is unknown
     
     //from event file
     av.nut[tsk].periodic = [];    //false = default;  else true.  
@@ -558,12 +559,11 @@ av.fzr.clearEnvironment = function() {
   for (var ii=0; ii< logiclen; ii++) {      //9
     tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
     //var vnm = av.sgr.logicVnames[ii];  
+    av.fzr.env.supply[tsk] = [];
     av.fzr.env.rsrce[tsk] = {};    
     for (var jj=0; jj<rsrcelen; jj++){
       av.fzr.env.rsrce[tsk][av.sgr.rsrce_param[jj]] = [];
-    };
-    av.fzr.env.rsrce[tsk].side = [];
-    av.fzr.env.rsrce[tsk].supply = [];
+    }
     av.fzr.env.react[tsk] = {};
     for (var jj=0; jj<reactlen; jj++){
       rnm = av.sgr.react_param[jj];
@@ -572,6 +572,7 @@ av.fzr.clearEnvironment = function() {
   };
   console.log('av.fzr.env.react=',av.fzr.env.react);
   console.log('av.fzr.env.rsrce=',av.fzr.env.rsrce);
+  console.log('av.fzr.env=', av.fzr.env);
   
 /*      this should be deletec in fall 2019
   av.fzr.ron = {};   //alternate environment settings built from parameters on settings tab.

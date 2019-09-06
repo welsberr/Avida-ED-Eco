@@ -419,8 +419,8 @@ av.frd.reactLineParse = function(lnArray) {
     // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file with constants for Avida-ED
     envobj.depletable[ndx] = 0;
     envobj.value[ndx] = 1;
-    envobj.min[ndx] = 0.9;
-    envobj.max[ndx] = 1.1;
+    envobj.min[ndx] = 0.99;
+    envobj.max[ndx] = 1.0;
     envobj.max_count[ndx] = 1; 
     envobj.task[ndx] = lnArray[2];
     envobj.resource[ndx] = "missing";  //if resoucre = missing, no resource was stated and the reaction is global and either none or infinite
@@ -441,39 +441,28 @@ av.frd.reactLineParse = function(lnArray) {
           envobj[av.sgr.react_param[nn]][ndx] = pear[1];
         }
         else {
-          if ('cellbox' == pear[0].toLowerCase()) {
-            console.log('cellbox is not a reacion; this should never write');
-            cellboxdata = pear[1].split('|');
-            //console.log('cellboxdata=',cellboxdata);
-            //envobj.boxflag[ndx] = true;
-            envobj.boxx[ndx] = cellboxdata[0];
-            envobj.boyy[ndx] = cellboxdata[1];
-            envobj.boxcol[ndx] = cellboxdata[2];
-            envobj.boxrow[ndx] = cellboxdata[3];
-          }
-          else {
             lnError = ' '+pear[0]+' is not a valid reaction keyword. lnArray = '+lnArray;
             //console.log(lnError);
-          }
         }
       }
     };
     //There are older environment.cfg files that do not include a resource in the reaction statement. 
     // All of those will be considered to have global resources and they will typically be infinite or none.
     if ('missing' == envobj.resource[ndx]) {
-      console.log('task = lnArray[2]=',lnArray[2]);
       
-      av.nut[edTsk].geometry = 'global';             /// will be grid if it a subdish. I need to wrk on this
-      if (0 < envobj.value[ndx]) {
+      av.nut[edTsk].geometry = 'global';            //grid (if 1 < subdish)
+      
+      if (0 < +envobj.value[ndx]) {
         av.nut[edTsk].supply[ndx] = 'infinite';
       }
-      if (0 > envobj.value[ndx]) {
+      else if (0 > +envobj.value[ndx])  {
         av.nut[edTsk].supply[ndx] = 'poison';   //poison or damage. does not kill, but hurts energy aquisition rate (ear). 
       }
       else {
         av.nut[edTsk].supply[ndx] = 'none';
       }
-    }
+      console.log('edTsk=', edTsk, '; ndx=', ndx, '; av.nut[edTsk].supply[ndx]=', av.nut[edTsk].supply[ndx]);
+    };
     
     
     //console.log('edTsk=', edTsk,'ndx=',ndx,'envobj=', envobj);
@@ -496,13 +485,21 @@ av.frd.resrcLineParse = function(lnArray){
   var pear = [];
   var cellboxdata = [];
   var matchTaskRegion;
-  var nn; var matchGradient;
+  var matchSide;
+  var matchgradientNdx;
+  var nn; 
   var edTsk;
   var envobj;
+  var regionStr;
   var ndx;
   //var re_num0 = /(\d+)(.*$)/;    //older versions  /^\D+(\d+)(.*$)/
-  var re_region = /(\D+)(\d+)(.*$)/;    // match array = whole line? , task, region number, gradient data if it exists, else NULL
-  var re_gradient = /(\D+)(\d+)(.*$)/;  // match array = whole line? , 'gradient side', gradient line number, rest if string if any exists. 
+  var re_region = /(\D+)(\d+)(.*$)/;    // match array = whole line? , task, region number, data about things with a side (gradient, flow), else NULL
+  var re_side = /(\D+)(.*$)/;      // applied to the last element of the result if finding task and region above to get side. 
+  var re_gradientNdx = /(\d+)(.*$)/;     //applied to the last element if text for a side is found
+  //var re_gradientNdx = /(\d+)/;     //applied to the last element if text for a side is found
+  
+  //not using since I'm leaving the option for enviornemtns that flow (input and output xy coordinates are not identiacal
+  //var re_gradient = /(\D+)(\d+)(.*$)/;  // match array = whole line? , 'gradient side', gradient line number, rest if string if any exists. 
                                         // match.input = initial string
                                         // match.length is the length of the array, including null elements 
   
@@ -524,17 +521,53 @@ av.frd.resrcLineParse = function(lnArray){
     //console.log('ndx=',ndx);
     if (-1 < ndx) {
       envobj.name[ndx] = pairArray[0];    //assin the name of the resource statement. 
-      envobj.regionCode[ndx] = matchTaskRegion[2];   //This is a one or two digit string. 
 
+      // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file witha few exceptions
+      // boxflag is false indicating there are no box values. 
+      // in Avida-ED, geometry=grid or global;
+      envobj.boxflag[ndx] = false;
+      envobj.inflow[ndx] = 0;
+      envobj.outflow[ndx] = 0;
+      envobj.initial[ndx] = 0;
+      envobj.geometry[ndx] = "grid";
+      envobj.inflowx1[ndx] = 0;                     //techincally should be rand between 0 and cols-1
+      envobj.inflowx2[ndx] = envobj.inflowx1[ndx]; 
+      envobj.inflowy1[ndx] = 0;                     //techincally should be rand between 0 and rows-1
+      envobj.inflowy2[ndx] = envobj.inflowy1[ndx];
+      envobj.outflowx1[ndx] = 0;                     //techincally should be rand between 0 and cols-1
+      envobj.outflowx2[ndx] = envobj.inflowx1[ndx]; 
+      envobj.outflowy1[ndx] = 0;                     //techincally should be rand between 0 and rows-1
+      envobj.outflowy2[ndx] = envobj.inflowy1[ndx]; 
+      envobj.xdiffuse[ndx] = 1;
+      envobj.ydiffuse[ndx] = 1;
+      envobj.xgravity[ndx] = 0;
+      envobj.ygravity[ndx] = 0;
+      envobj.region[ndx] = '';
+      envobj.side[ndx] = '';
+
+      //find region listed in user interface?
+      envobj.regionCode[ndx] = matchTaskRegion[2];   //This is a one or two digit string.
+      regionStr = ('000'+ matchTaskRegion[2]).slice(-2);               //to add a leading zero if needed.
+      var tmpndx = av.sgr.regionCode.indexOf(regionStr);
+      envobj.region[ndx] = av.sgr.regionNames[tmpndx];
+      
       if (0 < matchTaskRegion[3].length){
-        matchGradient = matchTaskRegion[3].match(re_gradient);
-        console.log('re_gradient=', re_gradient, '; matchGradient=', matchGradient);
-        envobj.side[ndx] = matchGradient[1];
-        envobj.grdNum[ndx] = matchGradient[2];
+        matchSide = matchTaskRegion[3].match(re_side);
+        console.log('re_side=', re_side, '; matchSide=', matchSide);
+        envobj.side[ndx] = matchSide[1];
+        if (0 < matchSide[2].length){
+          envobj.grdNum[ndx] = matchSide[2];
+          console.log('ndx=', ndx ,'; envobj.grdNum=', envobj.grdNum, 'envobj.grdNum[ndx]=', envobj.grdNum[ndx]);
+          // this does not work get Wesley to help
+          matchgradientNdx = matchSide[2].match(re_gradientNdx);
+          //matchgradientNdx = '00'.match(re_gradientNdx);
+          
+          console.log('re_gradientNdx=', re_gradientNdx, '; matchSide[2]=', matchSide[2], re_gradientNdx, '; matchgradientNdx=', matchgradientNdx);
+          console.log('result=', matchSide[2].match[re_gradientNdx]);
+          envobj.grdNum[ndx] = matchgradientNdx[1];
+          if (0 < matchgradientNdx[2].length) console.log('The name should not have anymore to it ,but here it is ', matchgradientNdx[2]);
+        };
       };
-
-
-      //console.log('edTsk=', edTsk, '; ndx=', ndx ,'; av.nut[edTsk]=', av.nut[edTsk]);
 
       //process all data pairs
       var len = pairArray.length;
@@ -574,7 +607,8 @@ av.frd.resrcLineParse = function(lnArray){
       if (0 < envobj.initial[ndx]) 
         av.nut[edTsk].supply[ndx] = 'Finite';
       if (0 < envobj.inflow[ndx]) {
-        if (envobj.inflowx1==envobj.outflowx1 && envobj.inflowx2==envobj.outflowx2 && envobj.inflowy1==envobj.outflowy1 && envobj.inflowy2==envobj.outflowy2) {
+        if (envobj.inflowx1[ndx]==envobj.outflowx1[ndx] && envobj.inflowx2[ndx]==envobj.outflowx2[ndx] && 
+            envobj.inflowy1[ndx]==envobj.outflowy1[ndx] && envobj.inflowy2[ndx]==envobj.outflowy2[ndx] ) {
           av.nut[edTsk].supply[ndx] = 'Equilibrium';           
         }
         else av.nut[edTsk].supply[ndx] = 'Flow'; 
@@ -590,7 +624,6 @@ av.frd.resrcLineParse = function(lnArray){
   }
   
   //console.log('lineErrors=', lineErrors);
-  console.log('------------------------------------------------------------------------------------');
   return lineErrors;
 };
 
@@ -619,7 +652,6 @@ av.frd.nutrientParse = function (filestr) {
     matchComment = lines[ii].match(re_comment);
     if (null != metaData) { 
       console.log('metaData=', metaData);
-      console.log('matchComment=',matchComment);
     }
     if (null != matchComment) {aline = matchComment[1];}
     else aline = lines[ii];
@@ -665,37 +697,37 @@ av.frd.nutrientParse = function (filestr) {
         //console.log('errors in line: ii=', ii, '; aline=', aline);
         errors += 'ii='+ii+'; rsrcError='+rsrcError+'; reacError='+reacError+'\n';
       }
+    console.log('----------------------------------------------------------------------------------------------------');
     }  //end of processing lines longer than 3 characters
     ii++;
   } // while that goes through lines in file. 
-  //console.log('----------------------------------------------------------------------------------------------------');
   
   var tsk;
   var len = av.sgr.logEdNames.length;   //9
-  var numRegions;
-  
+  var geoLen;
+  var distinctRegions;
   //find some summary info about nutrients. Need to look at each task separately. 
   for (var ii=0; ii< len; ii++) {
     tsk = av.sgr.logEdNames[ii];
-    numRegions = av.nut[tsk].resrc.geometry.length;
-    
-    if (1 < numRegions) {
-      av.nut[tsk].geometry = 'spatial';
+    distinctRegions = [...new Set(av.nut[tsk].resrc.regionCode)];
+    av.nut[tsk].numsubdish = distinctRegions.length;
+    av.nut[tsk].regionLayout = av.sgr.regionLayout[av.nut[tsk].numsubdish];
+ 
+    geoLen = av.nut[tsk].resrc.geometry.length;
+    if (1 < geoLen) {
+      av.nut[tsk].geometry = 'grid';
     }
-    else if (0 == numRegions) {
+    else if (-1 < geoLen) {
       if (undefined != av.nut[tsk].resrc.geometry[1]) 
         av.nut.tsk.geometry = av.nut[tsk].resrc.geometry[1];
       else
-        //console.log('tsk=', tsk, '; len=', len, '; numRegions=', numRegions);
+        //console.log('tsk=', tsk, '; len=', len, '; geoLen=', geoLen);
         av.nut[tsk].geometry = "global";
     }
-    else console.log('condused as not sure how length can be negative');
-  };
-  //av.nut[tsk].numsubdish = av.nut[tsk].length;    Must do somethging with regionCode
+    else console.log('confused as not sure how length can be negative');
+  };  // end of logtic task loops
   //return errors;
 };
-
-
 
 //-------------------------------------------------------------------------------------------------------------- both --
 // puts data from the environment.cfg into the setup form for the population page
@@ -706,9 +738,9 @@ av.frd.environment2struct = function (fileStr) {
   var errors = av.frd.environmentParse(fileStr);
   if (1 < errors.length) console.log('errors=', errors);
   av.ptd.showEnv('av.frd.environment2struct');
+  console.log('----------------------------------------------------------------------------------------------------');
+
 };
-
-
 
 //--------------------------------------- end of  section to put data from environment.cfg into environment Structure --
 
@@ -1033,8 +1065,8 @@ av.frd.resourceLineParse = function(lnArray){
     envobj.xgravity[ndx] = 0;
     envobj.ygravity[ndx] = 0;
     envobj.region[ndx] = 'all';
-    //envobj.side[ndx] = 'unk';
-    av.fzr.env.rsrce[edTsk][ndx] = 'unk';
+    envobj.side[ndx] = 'unk';
+    //av.fzr.env.rsrce[edTsk][ndx] = 'unk';
     
     //process all data pairs
     var len = pairArray.length;
@@ -1068,9 +1100,15 @@ av.frd.resourceLineParse = function(lnArray){
     envobj.region[ndx] = subCode;
     envobj.regionList[subCode] = ndx;
     
-    if (0 < envobj.initial[ndx]) av.fzr.env.rsrce[edTsk].supply[ndx] = 'fin';
-    if (0 < envobj.inflow[ndx]) av.fzr.env.rsrce[edTsk].supply[ndx] = 'equ';      
-    av.fzr.env.rsrce[edTsk].hiSide[ndx] = 'un_';
+    if (0 < envobj.initial[ndx]) {
+      av.fzr.env.supply[edTsk][ndx] = 'fin';
+      //av.fzr.env.rsrce[edTsk].supply[ndx] = 'fin';
+    }
+    else if (0 < envobj.inflow[ndx]) {
+      av.fzr.env.supply[edTsk][ndx] = 'equ';
+      //av.fzr.env.rsrce[edTsk].supply[ndx] = 'equ';
+    }
+  
     //now assign an index to the region list. 
 
     //console.log('matchNum=', matchNum,'; edTsk=', edTsk,'ndx=',ndx,'av.fzr.env.rsrce['+edTsk+'].regionList=', av.fzr.env.rsrce[edTsk].regionList);
@@ -1719,3 +1757,11 @@ var re_number0more = /[0-9]*/;   // zero or more of characters in the group 0 to
 
 
 
+///----------------------------------------------------------------------------------------- convert string to number --
+      //ways to convert from string to number. 
+      //console.log('envobj.value[ndx]=', envobj.value[ndx], '; +envobj.value[ndx]=', +envobj.value[ndx],'; task = lnArray[2]=',lnArray[2]);
+      //var valueNumber = Number(envobj.value[ndx]);             //if there are characters other than [0-9] or white_space it returns NaN
+      //var plusValue = +envobj.value[ndx];
+      //var parseIntValue = parseInt(envobj.value[ndx], 10);   // the second pareameter is the radix or base, ignores non [0-9] after the number part of the string
+      //var parseFloatValue = parseFloat(envobj.value[ndx]);   //ignores non [0-9] after the number part of the string
+      //console.log('valueNumber=', valueNumber, '; plusValue=',plusValue,'; parseIntValue=', parseIntValue, '; parseFloatValue=', parseFloatValue);

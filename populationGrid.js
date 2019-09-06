@@ -21,7 +21,7 @@ s  scale set based on ancestor organsim as of 2016 summer
 av.grd.setColorMapOnly = function(from) {
   av.grd.cmap = av.color.Gnuplot2cmap;  //for fitness, offspring cost and energy aquisition rate
   var mapColor = 'greyMap';
-  console.log(from, 'called av.grd.setColorMapOnly: colorMode = ', document.getElementById("colorMode").value);
+  //console.log(from, 'called av.grd.setColorMapOnly: colorMode = ', document.getElementById("colorMode").value);
   switch (document.getElementById("colorMode").value) {
     case 'rnot':
       mapColor = av.sgr.sugarColors[0];
@@ -64,13 +64,13 @@ av.grd.setColorMapOnly = function(from) {
       av.grd.fillRescale = '';
       break;
   };
-  console.log('colorMdoe=',document.getElementById("colorMode").value, '; colorM=', mapColor, '; length = ', av.grd.cmap.length);
+  //console.log('colorMdoe=',document.getElementById("colorMode").value, '; colorM=', mapColor, '; length = ', av.grd.cmap.length);
 };
 
 //Sets scale and puts the user selected data type in the grid array. Rob wants the scale to be different at the beginning of a run 
 av.grd.setMapData = function (from) {
   'use strict';
-  console.log(from, 'called av.grd.setMapData: av.grd.msg.fitness=',av.grd.msg.fitness);
+  //console.log(from, 'called av.grd.setMapData: av.grd.msg.fitness=',av.grd.msg.fitness);
   if (undefined != av.grd.msg.fitness) {
     //console.log('av.grd.msg', av.grd.msg);
     //console.log('av.grd.mxFit', av.grd.mxFit, '; av.grd.msg.fitness.maxVal', av.grd.msg.fitness.maxVal, '; limit',
@@ -324,7 +324,7 @@ av.grd.setMapData = function (from) {
         av.grd.fillRescale = '';
         break;
     };
-    console.log('colorMdoe=',document.getElementById("colorMode").value, '; colorM=', mapColor);
+    //console.log('colorMdoe=',document.getElementById("colorMode").value, '; colorM=', mapColor);
     //console.log('av.grd.msg.anc.data', av.grd.msg.ancestor.data);
     //console.log('av.grd.msg.fit.data', av.grd.msg.fitness.data);
     //console.log('av.grd.msg.gen.data', av.grd.msg.gestation.data);
