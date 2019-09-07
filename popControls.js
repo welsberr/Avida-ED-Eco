@@ -700,6 +700,7 @@ av.sgr.changeDetailsLayout = function(tsk, type, sub, from) {
   document.getElementById(tsk+'0dishRegion').style.display = 'none';
   document.getElementById(tsk+'0initialDiv').style.display = 'none';
   document.getElementById(tsk+sub+'TypeDiv').style.display = 'none';
+  document.getElementById(tsk+sub+'Title').style.display = 'none';      
   document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
   document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'none';
   document.getElementById(tsk+sub+'periodCheckbox').style.display = 'none';
@@ -768,13 +769,14 @@ av.sgr.changeDetailsLayout = function(tsk, type, sub, from) {
   else {
     document.getElementById(tsk+'0dishRegion').style.display = 'inline-block';
     document.getElementById(tsk+sub+'TypeDiv').style.display = 'block';
+    document.getElementById(tsk+sub+'Title').style.display = 'block';      
     switch (type) {    //for when geometery = spatial
       case 'None': 
       case 'Infinite': 
         break;
       case 'Finite':   //spatial
-        document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
-        document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'inline-block';
+        document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'block';
+        document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'block';
         document.getElementById(tsk+'Section').open = true;
         console.log('task=',tsk, '; sub=', sub, '; gradientCheck.checked=', document.getElementById(tsk+sub+'gradientCheck').checked);
         if (true == document.getElementById(tsk+sub+'gradientCheck').checked) {  

@@ -490,7 +490,8 @@ av.sgr.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', '
   av.sgr.regionCode = [  '00',   '01',   '02',   '03',   '04',  '12',  '34',  '13',  '24'];   //These numbers go with the regions above
   av.sgr.regionNames =  ['Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
   av.sgr.regionLayout = ['Global Dish', 'Whole Dish', 'Halves', '3-sections', 'Quarters'];
-  // need to figure out how to assign when reading environment.cfg
+  
+// need to figure out how to assign when reading environment.cfg
   av.sgr.supply3 =  ['non', 'inf',  'fin',  'equ',  'poi', 'flo' ];  //none, infinite, finite, equilibrium, poison
   av.sgr.supply4 = ['none', 'infn', 'fint', 'equl', 'pois', 'flow'];
   av.sgr.supply  = ['None', 'Infinite', 'Finite', 'Equilibrium', 'Flow'];    //only using the first four for now; 
@@ -533,7 +534,7 @@ av.fzr.clearEnvironment = function() {
   for (var ii=0; ii< logiclen; ii++) {      //9
     tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
     av.nut[tsk] = {};
-    av.nut[tsk].numsubdish = 0;   // whole dish
+    av.nut[tsk].numsubdish = 1;   // whole dish
     av.nut[tsk].regionLayout = 'all';  // all, 4ths, topbot, lftrit
     av.nut[tsk].geometry = 'global';
     av.nut[tsk].supply = [];     // default is  'Infinite';]

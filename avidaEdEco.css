@@ -408,6 +408,8 @@
 .typeInput { grid-area: typeInput; }
 .sideInput { grid-area: sideInput; }
 
+.subSectionTitle { grid-area: subSectionTitle; }
+
 .periodCheckDiv { grid-area: periodCheckDiv; }
 .periodTime { grid-area: periodTime; }
 
@@ -416,7 +418,8 @@
 
 .grid-sugarDetailAll-container {
   display: grid;
-  grid-template-areas: 'typeInput sideInput'
+  grid-template-areas: 'subSectionTitle subSectionTitle'
+                       'typeInput sideInput'
                        'periodCheckDiv periodTime'
                        'gradientCheckDiv diffuseCheckDiv'
                        'sideTitleHi sideTitleLo'   
@@ -424,6 +427,12 @@
                        'inflowHi inflowLo'
                        'outflowHi outflowLo'
                        'equalHi equalLo';
+  width: 100%;
+}
+.grid-sugarDetailFinite-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle typeInput initialHi';
+  width: 100%;
 }
 .grid-sugarDetailEqual-container {
   display: grid;
@@ -491,6 +500,20 @@
   font-weight: bold;
   color: #666;   /* a nice dark grey for bold text that should not be as prominiate as black bold text */
 }
+
+  /*** old grid layouts **/
+  .grid-sugarDetailAll-containerOld {
+  display: grid;
+  grid-template-areas: 'typeInput sideInput'
+                       'periodCheckDiv periodTime'
+                       'gradientCheckDiv diffuseCheckDiv'
+                       'sideTitleHi sideTitleLo'   
+                       'initialHi initialLo'
+                       'inflowHi inflowLo'
+                       'outflowHi outflowLo'
+                       'equalHi equalLo';
+}
+
 /*********************************************************************** End Sugar Accordion using details and select */
 
 /********************************************************************************* End Custom Select/Options DropDown */

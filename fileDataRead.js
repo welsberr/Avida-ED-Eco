@@ -449,7 +449,7 @@ av.frd.reactLineParse = function(lnArray) {
     //There are older environment.cfg files that do not include a resource in the reaction statement. 
     // All of those will be considered to have global resources and they will typically be infinite or none.
     if ('missing' == envobj.resource[ndx]) {
-      
+      av.nut[edTsk].numsubdish = 1;                 //reaction but no resource so it must be global and none or infinite
       av.nut[edTsk].geometry = 'global';            //grid (if 1 < subdish)
       
       if (0 < +envobj.value[ndx]) {
@@ -461,7 +461,7 @@ av.frd.reactLineParse = function(lnArray) {
       else {
         av.nut[edTsk].supply[ndx] = 'none';
       }
-      console.log('edTsk=', edTsk, '; ndx=', ndx, '; av.nut[edTsk].supply[ndx]=', av.nut[edTsk].supply[ndx]);
+      console.log('edTsk=', edTsk, '; ndx=', ndx, '; av.nut[edTsk].supply[ndx]=', av.nut[edTsk].supply[ndx], '; av.nut[edTsk].numsubdish=', av.nut[edTsk].numsubdish);
     };
     
     
@@ -550,7 +550,7 @@ av.frd.resrcLineParse = function(lnArray){
       regionStr = ('000'+ matchTaskRegion[2]).slice(-2);               //to add a leading zero if needed.
       var tmpndx = av.sgr.regionCode.indexOf(regionStr);
       envobj.region[ndx] = av.sgr.regionNames[tmpndx];
-      
+      console.log('ndx=',ndx, '; envobj.regionCode[ndx]=',envobj.regionCode[ndx],'; envobj.region[ndx]=',envobj.region[ndx]);
       if (0 < matchTaskRegion[3].length){
         matchSide = matchTaskRegion[3].match(re_side);
         console.log('re_side=', re_side, '; matchSide=', matchSide);
@@ -709,22 +709,29 @@ av.frd.nutrientParse = function (filestr) {
   //find some summary info about nutrients. Need to look at each task separately. 
   for (var ii=0; ii< len; ii++) {
     tsk = av.sgr.logEdNames[ii];
-    distinctRegions = [...new Set(av.nut[tsk].resrc.regionCode)];
-    av.nut[tsk].numsubdish = distinctRegions.length;
-    av.nut[tsk].regionLayout = av.sgr.regionLayout[av.nut[tsk].numsubdish];
- 
-    geoLen = av.nut[tsk].resrc.geometry.length;
-    if (1 < geoLen) {
-      av.nut[tsk].geometry = 'grid';
-    }
-    else if (-1 < geoLen) {
-      if (undefined != av.nut[tsk].resrc.geometry[1]) 
-        av.nut.tsk.geometry = av.nut[tsk].resrc.geometry[1];
-      else
-        //console.log('tsk=', tsk, '; len=', len, '; geoLen=', geoLen);
-        av.nut[tsk].geometry = "global";
-    }
-    else console.log('confused as not sure how length can be negative');
+    console.log('av.nut[tsk].react.resource=',av.nut[tsk].react.resource);
+    
+    // is the conde word 'missing' is the listed as the name of the resource than there is not resource specified and 
+    // the reaction can only act as if the resource for that task is none or infinite and it must be global. 
+    if ('missing' != av.nut[tsk].react.resource[0]) {  
+      distinctRegions = [...new Set(av.nut[tsk].resrc.regionCode)];
+      av.nut[tsk].numsubdish = distinctRegions.length;
+      av.nut[tsk].regionLayout = av.sgr.regionLayout[av.nut[tsk].numsubdish];
+
+      geoLen = av.nut[tsk].resrc.geometry.length;
+      if (1 < geoLen) {
+        av.nut[tsk].geometry = 'grid';
+      }
+      else if (-1 < geoLen) {    
+        console.log('av.nut[tsk].resrc.geometry=', av.nut[tsk].resrc.geometry);
+        if (undefined != av.nut[tsk].resrc.geometry[0]) 
+          av.nut[tsk].geometry = av.nut[tsk].resrc.geometry[0];
+        else
+          //console.log('tsk=', tsk, '; len=', len, '; geoLen=', geoLen);
+          av.nut[tsk].geometry = "global";
+      }
+      else console.log('confused as not sure how length can be negative');
+    };  // a resource was defined so it could be grid or global
   };  // end of logtic task loops
   //return errors;
 };
