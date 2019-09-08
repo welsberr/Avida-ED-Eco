@@ -390,6 +390,16 @@ require([
     //av.dom. = document.getElementById('');
   };
   av.dom.load();
+  
+  av.sgr.supplyChange = function (domObj) {
+    var taskID = domObj.id; 
+    var task = taskID.substring(0,3);
+    var sub = taskID.substring(3,1);
+    console.log('tst=', task, '; subsection=', sub);
+    sub = 1; //only whole dish  for now
+    av.sgr.changeDetailsLayout(task, 'deleteLater', sub, 'av.sgr.supplyChange');
+  };
+
 
   if (av.debug.root) console.log('before dnd definitions');
   /********************************************************************************************************************/
@@ -2499,22 +2509,22 @@ av.sgr.allSugarDetailsOpenClose = function(domObj){
 };
 
 av.sgr.geometryChange = function(selectObj){
+  //need to find subregion Number in the future - set to 1 for now. 
   var taskID = selectObj.id; 
   var task = taskID.substring(0,3);
-  var idx = selectObj.selectedIndex;        // get the index of the selected option 
-  var which = selectObj.options[idx].value;   // get the value of the selected option 
-  var selectedOption = document.getElementById(task + '0Type').value;
-  console.log('id=', task, '; which=', which, '; selectedOption=', selectedOption);
-  av.sgr.changeDetailsLayout(task, selectedOption, 1, 'av.sgr.geometryChange');  
+  var sub = taskID.substring(3,1);
+  console.log('tst=', task, '; subsection=', sub);
+  sub = 1;  
+  av.sgr.changeDetailsLayout(task, 'deleteLater' , sub, 'av.sgr.geometryChange');  
 };
 
-av.sgr.supplyChange = function (domObj) {
+av.sgr.supplyChange_placeholder = function (domObj) {
   var taskID = domObj.id; 
   var task = taskID.substring(0,3);
-  var idx = domObj.selectedIndex;        // get the index of the selected option 
-  var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
-  console.log('id=', task, '; selectedOption=', selectedOption);
-  av.sgr.changeDetailsLayout(task, selectedOption, 1, 'av.sgr.supplyChange');
+  var sub = taskID.substring(3,1);
+  console.log('tst=', task, '; subsection=', sub);
+  sub = 1; //only whole dish  for now
+  av.sgr.changeDetailsLayout(task, 'deleteLater', sub, 'av.sgr.supplyChange');
 };
 
 av.sgr.dishRegionChange = function(domObj) {
@@ -2524,11 +2534,12 @@ av.sgr.dishRegionChange = function(domObj) {
 
 av.sgr.eachSugarCheckBoxChange = function (domObj) {
   var taskID = domObj.id; 
-  var task = taskID.substring(0,3);
-  var idx = document.getElementById(task + '0Type').selectedIndex;        // get the index of the selected option 
-  var selectedOption = document.getElementById(task + '0Type').options[idx].value;   // get the value of the selected option 
-  console.log('id=', task, '; selectedOption=', selectedOption, '; so=', document.getElementById(task + '0Type').value);
-  av.sgr.changeDetailsLayout(task, selectedOption, 1, 'av.sgr.eachSugarCheckBoxChange');
+  var task = taskID.substring(0,3);  
+  var sub = taskID.substring(3,1);
+  console.log('tst=', task, '; subsection=', sub);
+  if (1<sub) sub = 1;
+  sub = 1; //only whole dish  for now
+  av.sgr.changeDetailsLayout(task, 'deleteLater', sub, 'av.sgr.eachSugarCheckBoxChange');
 };
 
 

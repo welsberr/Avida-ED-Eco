@@ -613,9 +613,9 @@
                               <select  id='not0Type' class='sugarType' onchange='av.sgr.supplyChange(this)'>
                                 <option id='not0none' value='None'>None</option>
                                 <option id='not0Infinite' value='Infinite' selected>Infinite</option>
-                                <option id='not0Finite' value='Finite'>Finite</option>
-                                <option id='not0Equilibrium' value='Equilibrium'>Equilibrium</option>
-                                <option id='not0All' value='All'>All debug only</option>
+                                <option id='not0Finite' class='globalFinite' value='Finite'>Finite</option>
+                                <option id='not0Equilibrium' class='globalEquilibrium' value='Equilibrium'>Equilibrium</option>
+                                <option id='not0All' class='globalAll' value='All'>All debug only</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select  id='not0dishRegion' class='dishRegion' onchange='av.sgr.dishRegionChange(this)'>
                                 <option id='not0WholeDish' value='WholeDish selected'>Whole Dish</option>
@@ -630,14 +630,14 @@
                            </summary>
                             <div id='notDetails' class='sugarDetailSection'>
                               <div id='not1subSection' class='sugarDishSubsection'>
-                                <div id='not1Title' class='subSectionTitle'>Whole Dish</div>
+                                <div id='not1Title' class='grid-sugarDetail-item subSectionTitle'>Whole Dish</div>
                                 <div id='not1TypeDiv' class='grid-sugarDetail-item typeInput'>
                                   <select  id='not1Type' class='sugarType' onchange='av.sgr.supplyChange(this)'>
                                     <option id='not1none' value='None'>None</option>
                                     <option id='not1Infinite' value='Infinite' selected>Infinite</option>
-                                    <option id='not1Finite' value='Finite'>Finite</option>
-                                    <option id='not1Equilibrium' value='Equilibrium'>Equilibrium</option>
-                                    <option id='not1All' value='All'>All debug only</option>
+                                    <option id='not1Finite' class='localFinite' value='Finite'>Finite</option>
+                                    <option id='not1Equilibrium' class='localEquilibrium' value='Equilibrium'>Equilibrium</option>
+                                    <option id='not1All' class='localAll' value='All'>All debug only</option>
                                   </select>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 <div id='not1periodCheckbox' class='grid-sugarDetail-item periodCheckDiv' onchange='av.sgr.eachSugarCheckBoxChange(this)'>

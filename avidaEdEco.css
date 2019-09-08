@@ -319,6 +319,24 @@
   min-height: 20px;
   width: 100%;
 }
+
+.globalFinite{
+  display: inline;
+}
+.globalEquilibrium{
+  display: inline-block;
+}
+.globalAll{
+  display:none;
+}
+.localEquilibrium{
+  display: inline-block;
+}
+.localAll{
+  display:none;
+}
+
+
 .sugarDetailSection{
   background: rgba(255, 255, 255, 0.0);   
 }
@@ -429,55 +447,94 @@
                        'equalHi equalLo';
   width: 100%;
 }
-.grid-sugarDetailFinite-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle typeInput initialHi';
-  width: 100%;
-}
-.grid-sugarDetailEqual-container {
+.grid-sugarDetail-globalEqual-container {
   display: grid;
   grid-template-areas: 'inflowHi periodCheckDiv'
-                      'outflowHi equalHi';
+                       'outflowHi equalHi';
   width: 100%;
 }
-.grid-sugarDetailEqualPeriod-container {
+.grid-sugarDetail-globalEqualPeriod-container {
   display: grid;
-  grid-template-areas: ' inflowHi periodCheckDiv periodTime'
+  grid-template-areas: 'inflowHi periodCheckDiv periodTime'
                        'outflowHi equalHi equalHi';
   width: 100%;
 }
-.grid-sugarDetailEqualGradient-container {
+.grid-sugarDetail-None-container {
   display: grid;
-  grid-template-areas: 'sideInput sideInput'
+  grid-template-areas: 'subSectionTitle typeInput';
+  width: 100%;
+}
+
+.grid-sugarDetail-Finite-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
+                       'initialHi  initialHi initialHi initialHi';
+  width: 100%;
+}
+.grid-sugarDetail-FiniteGradient-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
+                       'sideInput sideInput sideInput sideInput'
+                       'initialHi  initialHi initialLo initialLo';
+  width: 100%;
+}
+
+.grid-sugarDetail-FiniteGradient-container_md {
+  display: grid;
+  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv'
+                       'initialLo initialLo sideInput'
+                       'initialHi  initialHi gradientCheckDiv';
+  width: 100%;
+}
+
+.grid-sugarDetail-FiniteGradient-container_old {
+  display: grid;
+  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv'
+                       'sideInput sideInput sideInput gradientCheckDiv'
+                       'initialHi initialHi initialLo initialLo';
+  width: 100%;
+}
+
+.grid-sugarDetail-Equal-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
+                       'inflowHi inflowHi periodCheckDiv periodCheckDiv'
+                       'outflowHi outflowHi equalHi equalHi';
+  width: 100%;
+}
+.grid-sugarDetail-EqualPeriod-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
+                       'inflowHi inflowHi periodCheckDiv periodTime'
+                       'outflowHi outflowHi equalHi equalHi';
+  width: 100%;
+}
+
+.grid-sugarDetail-EqualGradient-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
+                       'sideInput sideInput sideInput      periodCheckDiv'
 /*                     'sideTitleHi sideTitleLo'   */
-                       ' inflowHi  inflowLo'
-                       'outflowHi outflowLo'
-                       'equalHi equalLo';
+                       'inflowHi inflowHi    inflowLo inflowLo'
+                       'outflowHi outflowHi  outflowLo outflowLo'
+                       'equalHi equalHi      equalLo equalLo';
   width: 100%;
+  color: black;
 }
-.grid-sugarDetailEqualGradientPeriod-container {
+.grid-sugarDetail-EqualGradientPeriod-container {
   display: grid;
-  grid-template-areas: 'sideInput periodTime'
+  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
+                       'sideInput sideInput       periodTime periodCheckDiv'
 /*                     'sideTitleHi sideTitleLo'   */
-                       ' inflowHi  inflowLo'
-                       'outflowHi outflowLo'
-                       'equalHi equalLo';
+                       'inflowHi inflowHi    inflowLo inflowLo'
+                       'outflowHi outflowHi  outflowLo outflowLo'
+                       'equalHi equalHi      equalLo equalLo';
   width: 100%;
 }
-.grid-sugarDetailFiniteSpatial-container {
+.grid-sugarDetail-Flow-container {
   display: grid;
-  grid-template-areas: 'initialHi';
-  width: 100%;
-}
-.grid-sugarDetailFiniteGradient-container {
-  display: grid;
-  grid-template-areas: 'sideInput sideInput'
-                       'initialHi initialLo';
-  width: 100%;
-}
-.grid-sugarDetailSourceSink-container {
-  display: grid;
-  grid-template-areas: 'sideInput sideInput'
+  grid-template-areas: 'subSectionTitle typeInput'
+                       'sideInput sideInput'
                        'inflowHi outflowHi';
   width: 100%;
 }
@@ -488,6 +545,14 @@
   padding: 1px 1px;
   min-height: 22px;
 }
+
+.subSectionTitle{
+  text-align: left;
+  font-weight: bold;
+  font-size: 110%;
+  color: black;
+}
+
 .sideTitleHi{
   display: block;
   text-align: center;
@@ -499,19 +564,6 @@
   text-align: center;
   font-weight: bold;
   color: #666;   /* a nice dark grey for bold text that should not be as prominiate as black bold text */
-}
-
-  /*** old grid layouts **/
-  .grid-sugarDetailAll-containerOld {
-  display: grid;
-  grid-template-areas: 'typeInput sideInput'
-                       'periodCheckDiv periodTime'
-                       'gradientCheckDiv diffuseCheckDiv'
-                       'sideTitleHi sideTitleLo'   
-                       'initialHi initialLo'
-                       'inflowHi inflowLo'
-                       'outflowHi outflowLo'
-                       'equalHi equalLo';
 }
 
 /*********************************************************************** End Sugar Accordion using details and select */
