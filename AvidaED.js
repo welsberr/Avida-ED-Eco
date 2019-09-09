@@ -1055,8 +1055,6 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       av.post.addUser('Button: mnHpDebug: now visible');
     }
   };
-  
-  
 
   av.ui.toggleDevelopentDisplays = function () {
     console.log('display of test details = ', document.getElementById('testDishDetailDiv').style.display);
@@ -1070,8 +1068,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       document.getElementById('testDishDetailDiv').style.display = 'none';
       document.getElementById('testConfigLableHolder').style.display = 'none';
       document.getElementById('testConfig').style.display = 'none';
-      document.getElementById('popRightSideControlHolder').style.display = 'inline-block';
-      document.getElementById('popTopRightArrow').style.display = 'block';
+      document.getElementById('popRightSideControlHolder').style.display = 'flex';
+      document.getElementById('popRightSideArrow').style.display = 'block';
       
       av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.dom.xorLabel.onclick_hide');
       
@@ -1094,10 +1092,10 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
       document.getElementById('fzTdishSec').style.visibility = 'visible';
       document.getElementById('testDishDetailDiv').style.display = 'block';
-      document.getElementById('testConfigLableHolder').style.display = 'inline';
-      document.getElementById('testConfig').style.display = 'inline';
+      document.getElementById('testConfigLableHolder').style.display = 'flex';
+      document.getElementById('testConfig').style.display = 'flex';
       document.getElementById('popRightSideControlHolder').style.display = 'none';
-      document.getElementById('popTopRightArrow').style.display = 'none';
+      document.getElementById('popRightSideArrow').style.display = 'none';
       
       len = av.sgr.hideFlgNames.length;
       for (var jj = 0; jj< len; jj++) {
