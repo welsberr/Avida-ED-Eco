@@ -193,6 +193,7 @@ require([
     av.doj.mnHpInfo = document.getElementById('mnHpInfo');
     av.doj.mnHpProblem = document.getElementById('mnHpProblem');
     av.doj.mnHpDebug = document.getElementById('mnHpDebug');
+    av.doj.mnDebug = document.getElementById('mnDebug');
     
     //main area
     av.dom.userMsgLabel = document.getElementById('userMsgLabel');
@@ -221,7 +222,7 @@ require([
     av.dom.setupBlock = document.getElementById('setupBlock');
     av.dom.testSetupBlock = document.getElementById('testSetupBlock');
     av.dom.mapHolder = document.getElementById('mapHolder');
-    av.dom.popTop = document.getElementById('popTop');
+    av.dom.popTopRw = document.getElementById('popTopRw');
     av.dom.popBot = document.getElementById('popBot');
     av.dom.gridHolder = document.getElementById('gridHolder');
     av.dom.gridCanvas = document.getElementById('gridCanvas');
@@ -1044,34 +1045,79 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   //------------- Testing only need to delete later.--------------------
 
   av.doj.mnHpDebug.onclick = function () {
-    if ('visible' === document.getElementById('mnDebug').style.visibility) {
-      document.getElementById('mnDebug').style.visibility = 'hidden';
+    if ('visible' === av.doj.mnDebug.style.visibility) {
+      av.doj.mnDebug.style.visibility = 'hidden';
       dijit.byId('mnHpDebug').set('label', 'Show debug menu');
       av.post.addUser('Button: mnHpDebug: now hidden');
     } else {
-      document.getElementById('mnDebug').style.visibility = 'visible';
+      av.doj.mnDebug.style.visibility = 'visible';
       dijit.byId('mnHpDebug').set('label', 'Hide debug menu');
       av.post.addUser('Button: mnHpDebug: now visible');
     }
   };
+  
+  
 
-  av.dom.xorLabel.onclick = function () {
-    if ('visible' === document.getElementById('mnDebug').style.visibility) {
-      document.getElementById('mnDebug').style.visibility = 'hidden';
-      //document.getElementById('fzMdishDetails').style.visibility = 'hidden';
-      //document.getElementById('fzRdishDetails').style.visibility = 'hidden';
+  av.ui.toggleDevelopentDisplays = function () {
+    console.log('display of test details = ', document.getElementById('testDishDetailDiv').style.display);
+    var len, tsk, sub; 
+    var flgs = [];
+    if ('visible' === av.doj.mnDebug.style.visibility) {
+      av.doj.mnDebug.style.visibility = 'hidden';
+      
+      document.getElementById('popInfoTabHolder').className = 'tabHolderHide';
       document.getElementById('fzTdishSec').style.visibility = 'hidden';
+      document.getElementById('testDishDetailDiv').style.display = 'none';
+      document.getElementById('testConfigLableHolder').style.display = 'none';
+      document.getElementById('testConfig').style.display = 'none';
+      
+      av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.dom.xorLabel.onclick_hide');
+      
+      console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
+      len = document.getElementsByClassName('globalEquilibrium').length;
+      for (ii=0; ii< len; ii++) {
+        document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'none';
+        document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
+        document.getElementsByClassName('globalAll')[ii].style.display = 'none';
+        document.getElementsByClassName('localEquilibrium')[ii].style.display = 'none';
+        document.getElementsByClassName('localAll')[ii].style.display = 'none';
+      }
       dijit.byId('mnHpDebug').set('label', 'Show debug menu');
+      tsk = 'not'; sub=1;
+      document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
+
       av.post.addUser('Button: mnHpDebug: now hidden');
     } else {
-      document.getElementById('mnDebug').style.visibility = 'visible';
-      //document.getElementById('fzMdishDetails').style.visibility = 'visible';
-      //document.getElementById('fzRdishDetails').style.visibility = 'visible';
+      av.doj.mnDebug.style.visibility = 'visible';
+      document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
       document.getElementById('fzTdishSec').style.visibility = 'visible';
+      document.getElementById('testDishDetailDiv').style.display = 'block';
+      document.getElementById('testConfigLableHolder').style.display = 'inline';
+      document.getElementById('testConfig').style.display = 'inline';
+      
+      len = av.sgr.hideFlgNames.length;
+      for (var jj = 0; jj< len; jj++) {
+        flgs[jj] = false;
+      };
+      av.sgr.processHideFlags(flgs, 'av.dom.xorLabel.onclick_show');
+      
+      len = document.getElementsByClassName('globalEquilibrium').length;
+      for (ii=0; ii< len; ii++) {      
+        document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'inline';
+        document.getElementsByClassName('globalFinite')[ii].style.display = 'inline';
+        document.getElementsByClassName('globalAll')[ii].style.display = 'inline';
+        document.getElementsByClassName('localEquilibrium')[ii].style.display = 'inline';
+        document.getElementsByClassName('localAll')[ii].style.display = 'inline';
+      }
       dijit.byId('mnHpDebug').set('label', 'Hide debug menu');
+      tsk = 'not'; sub=1;
+      document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
+      
       av.post.addUser('Button: mnHpDebug: now visible');
     }
   };
+  
+  av.dom.xorLabel.onclick = function () {av.ui.toggleDevelopentDisplays(); };
 
   av.fwt.tryDown = function(blob) {
     var ab = document.createElement('a');
@@ -1539,19 +1585,6 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   });
 */
 
-//Buttons on drop down menu to add Test-Dish to an Experiment
-  dijit.byId('mnFzAddTeditEx').on('Click', function () {
-    av.post.addUser('Button: mnFzAddTeditEx');
-    //av.dnd.FzAddExperimentFn('fzTdish', 'activeConfig', 't');
-    av.dnd.TestDishSetupPrep('fzTdish', 'activeConfig', 't');
-  });
-
-//Buttons on drop down menu to add Test-Dish to an Experiment
-  dijit.byId('mnFzAddTdishEx').on('Click', function () {
-    av.post.addUser('Button: mnFzAddTdishEx');
-    //av.dnd.FzAddExperimentFn('fzTdish', 'activeConfig', 't');
-    av.dnd.runTestDish('fzTdish', 'activeConfig', 't');
-  });
 
 //Buttons on drop down menu to put an organism in Organism Viewer
   dijit.byId('mnFzAddGenomeView').on('Click', function () {
@@ -3122,7 +3155,7 @@ $(function slidemute() {
 
     av.ui.allAvidaHt = av.dom.allAvida.offsetHeight;
     av.ui.mapHolderHd = av.dom.mapHolder.offsetHeight;
-    av.ui.popTopHd = av.dom.popTop.offsetHeight;
+    av.ui.popTopHd = av.dom.popTopRw.offsetHeight;
     av.ui.gridHolderHd = av.dom.gridHolder.offsetHeight;
     av.ui.popBotHd = av.dom.popBot.offsetHeight;
 
@@ -3135,9 +3168,9 @@ $(function slidemute() {
     if (av.debug.uil) console.log('Wd: labInfoBlock selOrgType sum', av.dom.labInfoBlock.offsetWidth, av.dom.selOrgType.clientWidth,
       av.dom.labInfoBlock.offsetWidth + av.dom.selOrgType.clientWidth);
     
-    if (av.debug.uil) console.log('Ht; allAvida, mapHolder, popTop, gridHolder, popBot sum', av.dom.allAvida.offsetHeight,
-      av.dom.mapHolder.offsetHeight, av.dom.popTop.offsetHeight, av.dom.gridHolder.offsetHeight,
-      av.dom.popBot.offsetHeight, av.dom.popTop.offsetHeight+av.dom.gridHolder.offsetHeight+av.dom.popBot.offsetHeight);
+    if (av.debug.uil) console.log('Ht; allAvida, mapHolder, popTopRw, gridHolder, popBot sum', av.dom.allAvida.offsetHeight,
+      av.dom.mapHolder.offsetHeight, av.dom.popTopRw.offsetHeight, av.dom.gridHolder.offsetHeight,
+      av.dom.popBot.offsetHeight, av.dom.popTopRw.offsetHeight+av.dom.gridHolder.offsetHeight+av.dom.popBot.offsetHeight);
     if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight && av.dom.gridHolder.offsetWidth > av.ui.popGridCtlWdMin){
       //set grid size based on height and distribute extra width.
       extraGridWd = av.dom.gridHolder.offsetWidth - av.dom.gridHolder.offsetHeight;
@@ -3468,7 +3501,7 @@ $(function slidemute() {
   // **************************************************************************************************************** */
   //                                          Last things done
   // **************************************************************************************************************** */
-  //av.ui.removeVerticalScrollbar('popTop', 'popTop');
+  //av.ui.removeVerticalScrollbar('popTopRw', 'popTopRw');
   console.log('before mainBoxSwap');
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
 
@@ -3479,7 +3512,15 @@ $(function slidemute() {
 
   av.ui.ex2envBoxSwap('ex2envNone');    //delete later
   av.ui.ex1setSugarColors();   //94     //delete later
-  //
+  
+  // Avida-ED 4.0.0 Alpha Testing fix this too. 
+  //true when diane is working; false for all production releases even in alpha testsing.  
+  if (true) {
+    console.log('testing mode; remove before putting on server for Avida-ED 4.0.0 Alpha Testing. ');
+    av.dom.xorLabel.onclick();
+  }  
+  
+  // May need to do some things here to get the app to look right on the screen. 
   //av.grd.popChartFn();
   //av.grd.drawGridSetupFn('initial background'); //Draw initial background
 
@@ -3731,4 +3772,14 @@ To make a gif using screen capture
         </details>
 
  *
+ */
+
+//Tabs could be used in the header row for the page buttons. Formated like the tabs on the info pannel for populaton page
+/*
+         <div id='headerTabs'>
+          <span>Population Tab</span>
+          <span>Organism Tab</span>
+          <span>Analysis Tab</span>
+         </div>
+
  */

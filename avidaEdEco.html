@@ -64,7 +64,7 @@
     <span title="http://stackoverflow.com/questions/20828799/creating-a-splash-page-in-html5"></span>
     <div id='splash'>
       <div align='center'>
-        <h1 style='color:whitesmoke'>Avida-ED 3.2.0 is loading . . .</h1>
+        <h1 style='color:whitesmoke'>Avida-ED 4.0.0 Alpha Testing is loading . . .</h1>
         <img src='images/Avida-ED-icon.png' /><br />
         <img src='images/AvidaGrid.gif' />
       </div>
@@ -158,10 +158,8 @@
 
               </span>
             </span>
-            <span data-dojo-type='dijit/PopupMenuBarItem' label='Debug' id='mnDebug' style = 'visibility: visible'> <!--visible/hidden-->
+            <span data-dojo-type='dijit/PopupMenuBarItem' label='Debug' id='mnDebug' style = 'visibility: none'> <!--visible/hidden-->
               <span data-dojo-type='dijit/Menu'>
-                <span data-dojo-type='dijit/MenuItem' id='mnFzAddTeditEx' label='Pre-Load Highlighted Test-Dish (edit) Broken'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnFzAddTdishEx' label='Load Highlighted Test-Dish - Broken'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnDbThrowError' label='Throw Error'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnDbThrowData' label='Send Data to console'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnDbLineLog' label='Add Line to Session Log'></span>
@@ -203,7 +201,7 @@
             </table>
           </div>
           <div class="freezerClass">
-            <h3>Freezer</h3>
+            <div id='FreezerTitle' onclick='av.ui.toggleDevelopentDisplays();' >Freezer</div>
             <span title="https://stackoverflow.com/questions/24977965/collapsible-lists-using-html-and-css"></span>
             <details class='frzAccordion' open>
               <summary id='fzConfigureSec' class="freezerSection">Configured Dishes</summary>
@@ -222,8 +220,10 @@
             </details>
             <details class='frzAccordion debugDetails' id='fzTdishDetails' open>
               <summary id='fzTdishSec' class="freezerSection">Test Dishes</summary>
-              <ul id='fzTdish' class='container'>
-              </ul>
+              <div id='testDishDetailDiv'>
+                <ul id='fzTdish' class='container'>
+                </ul>
+              </div>
             </details >
           </div>
           <div id="trashDiv">
@@ -231,21 +231,36 @@
               <img id='trashCanImage' src='images/Avida-ED-trash-icon.png' style='width: 32px;' alt='trash can' />
             </span>
           </div>
-        </div><span comment="end of navCol"></span>
+        </div><span id="end_of_navCol"></span>
 
         <div class="mainBlockHolder">
 
           <div class="mainBlockClassRow" id="populationBlock">
             <div class="popBenchCol" id='mapHolder'>
-              <div class="benchPopTopRow" id='popTop'>
+              
+              <div class="benchPopTopRow" id='popTopRw'>
                 <div class='lftmargin'>
                   <img src='images/Avida-ED-dish-icon.png' alt='Avida-ED dish icon'>
                 </div>
                 <div id='activeConfig' class='popContainer'></div>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;test 
-                <div id='testConfig' class='popContainer'></div>
-                <label id='altMsgLabel'></label>
+                <div id='testConfigLableHolder'>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;test 
+                </div>
+                <div id='testConfig' class='testDojoDNDcontainer'></div>
+                <div id='popTopMsgSpace'>
+                  <label id='altMsgLabel'></label>
+                </div>
+                <div id='popRightSideControlHolder' class='popTopRwRight ritThin'>
+                  <select id='popRightSideSelect'>
+                    <option value='Stats' selected>Stats</option>
+                    <option value='Setup'>Setup</option>
+                  </select>
+                </div>
+                
+                
               </div>
+              
+              
               <div class="benchPopMid" id='gridHolder' data-dojo-type='dijit/layout/ContentPane'>
                 <canvas data-dojo-type='dojo.dnd.Target' id='gridCanvas'></canvas>
               </div>
@@ -299,7 +314,7 @@
 
             <div id="popInfoHolder"> 
               <div id ="popInfoVert">
-                <div class="tabHolder">
+                <div id='popInfoTabHolder' class="tabHolder">
                   <div class="tab">
                     <button class="tablinks active" id="dataTab" onclick="av.ptd.processTab(event, 'labInfoBlock')">Data</button>
                     <button class="tablinks" id="setupTab" onclick="av.ptd.processTab(event, 'setupBlock')">Setup</button>
@@ -670,7 +685,7 @@
                                   <label clase='sideTitle'>Low Side</label>
                                 </div>                            
                                 <div id='not1initialHiDiv' class='grid-sugarDetail-item initialHi'>
-                                  <input id='not1initialHiInput' class='sugInitialHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>&nbsp;
+                                  <input id='not1initialHiInput' class='sugInitialHiInput' type='text' onchange='av.sgr.gridChange(this.value)' value = '100'/>&nbsp;
                                   <label id='not1initialHiLabel'>High side initial amount per cell </label>
                                 </div>
                                 <div id='not1initialLoDiv' class='grid-sugarDetail-item initialLo'>
@@ -2499,12 +2514,12 @@
 
     <span title="--------------------------------------------------------------------- Export Stand Alone Dialog box --"></span>
     <div class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='mnFlStandAloneAppDialog'
-         title='Stand alone version of Avida-ED 3.2.0'>
+         title='Stand alone version of Avida-ED 4.0.0 Alpha Testing'>
       <div class='dijitDialogPaneContentArea'>
         <h3>For working where there is no internet access</h3>
         <ul>
           <li class="slim"><a href="pkgs/Avida-ED-Web-PC_2016_0918.exe" target='_blank'>Avida-ED Windows installer for self-hosted version 2016_0918</a></li>
-          <li><a href="pkgs/Avida-ED_Server_3.0.0.app.zip" target='_blank'>Avida-ED 3.2.0 for Mac OS 10.6 and above</a></li>
+          <li><a href="pkgs/Avida-ED_Server_3.0.0.app.zip" target='_blank'>Avida-ED 4.0.0 Alpha Testing for Mac OS 10.6 and above</a></li>
           <ul>
             <li>Unzip the file once it is downloaded</li>
             <li>Move the file ‘Avida-ED Web.app’ to the Applications Folder</li>
@@ -2656,7 +2671,7 @@
         <p>An educational artificial life plateform developed at Michigan State University for <br />
           learning evolution and the nature of science using digital organisms.</p>
         <br />
-        <strong>Avida-ED 3.2.0</strong><br />
+        <strong>Avida-ED 4.0.0 Alpha Testing</strong><br />
         <strong>2008-2016<br />http://Avida-ED.msu.edu/</strong><br />
         <br />
         <p>Developed under NSF Grant #0341484,<br />

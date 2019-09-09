@@ -12,8 +12,13 @@
     padding: 0;
   }
   
-  .tabHolder {
+  .tabHolderShow {
     flex: 0 0 auto;
+    display: block;
+  }
+  .tabHolderHide {
+    flex: 0 0 auto;
+    display: none;
   }
   
 .tab {
@@ -152,9 +157,43 @@
     flex:0 1 30px;
     display: flex;
     flex-direction: row;
+    /* justify-content:space-between;  */
     background-color: #F5F5F5; /* lightblue;  */
     border: 1px solid #AAA;
   }
+  #popTopDishIcon{
+    flex: 0 1 58px;
+  }
+  #activeConfig {
+    flex: 0 1 120px;
+  }
+  #testConfigLableHolder {
+    flex; 0 1 40;
+  }
+  #testConfig {
+    flex; 0 1 80;
+  }
+  .popTopMsgSpace {
+    flex: 0 1 auto;
+  }
+  .popTopRwRight{
+    flex: 0 1 60px;
+  }
+  .testDojoDNDcontainer {
+  min-height: 1.6em;
+  min-width: 6em;
+  border: 1px solid #CCCCCC;
+  display: inline-block;
+  overflow: visible;
+}
+popTopRwRight{
+  float: right;
+  min-height: 1.6em;
+  min-width: 6em;
+  display: inline-block;
+}
+  
+  
   .benchPopMid {
     border: 1px solid #AAA;
     flex: 1;
@@ -335,7 +374,13 @@
 .localAll{
   display:none;
 }
-
+/*  might not work; need away to replace one debug class with the other without chainging the other classes */
+.debugInlineBlock{
+  display:inline-block;
+}
+.debugNone{
+  display: none;
+}
 
 .sugarDetailSection{
   background: rgba(255, 255, 255, 0.0);   
@@ -830,7 +875,11 @@ checkbox:focus {
   width: 2em;      /*  4.5em */
   height:1.6em
 }
-
+#FreezerTitle {
+  font-size: 190%;
+  text-align:  center;
+  font-weight: normal;
+}
 .freezerClass{
   border: 1px solid #BABABA;
   flex:1;
@@ -840,7 +889,7 @@ checkbox:focus {
 }
 .freezerSection{
   font-size: 130%;
-  background-color: #ddd;
+  background-color: #EEE;
 }
 #trashDiv{
   flex: 0 1 40px;

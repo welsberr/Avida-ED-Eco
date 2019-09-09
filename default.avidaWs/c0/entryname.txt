@@ -1,1 +1,1 @@
-@default100
+@default40sq

@@ -819,7 +819,8 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
         document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
         document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'inline-block';
         document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
-        if (true == document.getElementById(tsk+sub+'gradientCheck').checked) {
+        console.log(tsk+sub+'gradientCheck', document.getElementById(tsk+sub+'gradientCheck').checked, '; av.sgr.hideFlgNames.gradient=', av.sgr.hideFlgNames.gradient);
+        if (true == document.getElementById(tsk+sub+'gradientCheck').checked && !av.sgr.hideFlgNames.gradient) {
           //gradient
           document.getElementById(tsk+sub+'sideDiv').style.display = 'block';
           document.getElementById(tsk+sub+'sideLabel').innerHTML = 'Side with a higher amount';

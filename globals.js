@@ -500,6 +500,9 @@ av.sgr.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', '
   av.sgr.side1 = ['L', 'R', 'T', 'B', 'C', 'E', 'U'];
   av.sgr.side3 = ['Lft', 'Rit', 'Top', 'Bot', 'Cen', 'Edg', 'Unk']; //left, right, top, bottom, center, edge, unknown
   av.sgr.side = ['left', 'rite', 'top', 'bottom', 'center', 'edges', 'unknown'];
+  
+  av.sgr.hideFlgNames = ['gradient', 'periodic'];
+  av.sgr.hideFlagInit = [true, true];
 
 //Commments 
 //
@@ -513,13 +516,28 @@ av.sgr.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', '
 //Name ideas. not01g00 to 99  for gradients   leading zeros by using padStart
 //
 
-var num = 34;
-console.log('testing padStart:', num.toString().padStart(2,'0'));
+av.sgr.processHideFlags = function(boolArry, from) {
+  console.log(from+' called av.sgr.processHideFlags: boolArry=', boolArry);
+  if (undefined != boolArry) {
+    if (boolArry.length < av.sgr.hideFlgNames.length) {
+      boolArry = av.sgr.hideFlagInit;
+    }
+  }
+  else boolArry = av.sgr.hideFlagInit;
+  var len = av.sgr.hideFlgNames.length;
+  for (var ii=0; ii < len; ii++) {
+    av.nut.hideFlags[av.sgr.hideFlgNames[ii]] = boolArry;
+  };
+};
+
 
 av.fzr.clearEnvironment = function() {
+  av.event = {};
   av.fzr.env = {};
   av.nut = {};
-  av.event = {};
+  av.nut.hideFlags = {};
+  av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.fzr.clearEnvironment');
+  
 
   // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
   av.fzr.env.rsrce = {};
@@ -575,63 +593,6 @@ av.fzr.clearEnvironment = function() {
   console.log('av.fzr.env.rsrce=',av.fzr.env.rsrce);
   console.log('av.fzr.env=', av.fzr.env);
   
-/*      this should be deletec in fall 2019
-  av.fzr.ron = {};   //alternate environment settings built from parameters on settings tab.
-  av.fzr.ron.rsrce = {};
-  av.fzr.ron.react = {};    
-  for (var ii=1; ii< rsrcelen; ii++) {
-    rnm = av.sgr.rsrce_param[ii];
-    av.fzr.ron.rsrce[rnm] = [];
-    for (var jj=0; jj< logiclen; jj++) {
-      tsk = av.sgr.logEdNames[jj];   //puts names in order they are on avida-ed user interface
-      av.fzr.ron.rsrce[rnm][tsk] = [];      //the inner most array is for how many in a single dish. only one for now. 
-    }
-  };
-  for (var ii=1; ii< reactlen; ii++) {
-    rnm = av.sgr.react_param[ii];
-    av.fzr.ron.react[rnm] = [];
-    for (var jj=0; jj< logiclen; jj++) {
-      tsk = av.sgr.logEdNames[jj];   //puts names in order they are on avida-ed user interface
-      //av.fzr.ron.react[rnm][tsk] = [];      //the inner most array is for how many in a single dish. only one for now. 
-      av.fzr.ron.react[rnm][tsk] = rnm;
-    }
-  };
-  console.log('av.fzr.ron.react=',av.fzr.ron.react);
-  console.log('av.fzr.ron.rsrce=',av.fzr.ron.rsrce);
-  */
- 
- /*  
-  // Another variation
-  // Chrome developer console only shows the first entries in the inner most array on one line. might as well be subdish. 
-  av.fzr.dsh={};
-  av.fzr.dsh.rsrce = {};
-  av.fzr.dsh.react = {}; 
-  var subdishlen = 4;  but it will only show 5 array items 
-  var sub; //subdish
-  for (var ii=0; ii< subdishlen; ii++) {      //4
-    sub = av.sgr.region[ii];   //puts names in order they are on avida-ed user interface
-    //var vnm = av.sgr.logicVnames[ii];  
-    av.fzr.dsh.rsrce[sub] = {};    
-    for (var jj=0; jj<rsrcelen; jj++){
-      av.fzr.dsh.rsrce[sub][av.sgr.rsrce_param[jj]] = [];
-      for (var kk=0; kk< logiclen; kk++) {
-        tsk = av.sgr.logEdNames[kk];
-        av.fzr.dsh.rsrce[sub][av.sgr.rsrce_param[jj]][tsk] = av.sgr.rsrce_fake[jj];
-      }
-    }
-    av.fzr.dsh.react[sub] = {};
-    for (var jj=0; jj<reactlen; jj++){
-      rnm = av.sgr.react_param[jj];
-      av.fzr.dsh.react[sub][rnm] = [];
-      for (var kk=0; kk< logiclen; kk++) {
-        tsk = av.sgr.logEdNames[kk];
-        av.fzr.dsh.react[sub][rnm][tsk] = av.sgr.react_fake[jj];
-      }
-    }
-  };
-  console.log('av.fzr.dsh.react=',av.fzr.dsh.react);
-  console.log('av.fzr.dsh.rsrce=',av.fzr.dsh.rsrce);
-*/
 
 };
 
@@ -911,9 +872,7 @@ av.pch.clearPopChrt = function () {
     ,showLink: false               // link to edit image of graph - this is an edit link outside of the modebar
     ,sendData: true                // if we show a link, does it contain data or just link to a plotly file?
     ,staticPlot: false             // no interactivity, for export or image generation
-    ,displaylogo: false            // hides plotly logo
-    ,doubleClick: 'reset+autosize'
-    ,displayModeBar: false       // display the mode bar (true, false, or 'hover')
+    ,displaylogo: false            // hides plotly logo    ,displayModeBar: false       // display the mode bar (true, false, or 'hover')
     ,modeBarButtonsToRemove: [     // https://github.com/plotly/plotly.js/blob/master/src/components/modebar/buttons.js
       'toImage'           //makes png file
       ,'sendDataToCloud'  //sends data to plotly web editor workspace
@@ -1032,7 +991,6 @@ av.anl.clearChart = function () {
     , sendData: true                // if we show a link, does it contain data or just link to a plotly file?
     , staticPlot: false             // no interactivity, for export or image generation
     , displaylogo: false            // hides plotly logo
-    , doubleClick: 'reset+autosize'
     , displayModeBar: 'hover'       // display the mode bar (true, false, or 'hover')
     , modeBarButtonsToRemove: [     // https://github.com/plotly/plotly.js/blob/master/src/components/modebar/buttons.js
        'toImage'           //makes png file
