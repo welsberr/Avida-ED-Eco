@@ -250,17 +250,14 @@
                 <div id='popTopMsgSpace'></div>
                 <div id='popRightSideControlHolder' class='ritThin'>
                   <div id='popRightSideSelectHolder'>
-                    <select id='popRightSideSelect'>
+                    <select id='popRightSideSelect' onchange='av.ptd.popRightInfoPanel(this)'>
                       <option value='Stats' selected>Stats</option>
                       <option value='Setup'>Setup</option>
                     </select>
                   </div>
                   <div id='popRightSideArrow'>--></div>
                 </div>
-                
-                
               </div>
-              
               
               <div class="benchPopMid" id='gridHolder' data-dojo-type='dijit/layout/ContentPane'>
                 <canvas data-dojo-type='dojo.dnd.Target' id='gridCanvas'></canvas>
@@ -317,11 +314,11 @@
               <div id ="popInfoVert">
                 <div id='popInfoTabHolder' class="tabHolder">
                   <div class="tab">
-                    <button class="tablinks active" id="dataTab" onclick="av.ptd.processTab(event, 'labInfoBlock')">Data</button>
+                    <button class="tablinks active" id="statsTab" onclick="av.ptd.processTab(event, 'labInfoBlock')">Data</button>
                     <button class="tablinks" id="setupTab" onclick="av.ptd.processTab(event, 'setupBlock')">Setup</button>
                     <button class="tablinks" id="testTab" onclick="av.ptd.processTab(event, 'testSetupBlock')">Test Setup</button>
                     <button class="tablinks" id="ex1Tab" onclick="av.ptd.processTab(event, 'ex1setupBlock')">Example 1</button>
-                    <button class="tablinks" id="ex2Tab" onclick="av.ptd.processTab(event, 'ex2setupBlock')">Example 2</button> 
+                    <button class="tablinks" id="ex2Tab" onclick="av.ptd.processTab(event, 'ex2setupBlock')">Example 2</button>
                   </div>
                 </div>
                 <div class="labInfoHolder">

@@ -216,7 +216,7 @@ require([
 
       //Population Page
     av.dom.popInfoHolder = document.getElementById('popInfoHolder');
-    av.dom.dataTab = document.getElementById('dataTab');
+    av.dom.statsTab = document.getElementById('statsTab');
     av.dom.setupTab = document.getElementById('setupTab');
     av.dom.testTab = document.getElementById('testTab');
     av.dom.setupBlock = document.getElementById('setupBlock');
@@ -1094,7 +1094,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       document.getElementById('testDishDetailDiv').style.display = 'block';
       document.getElementById('testConfigLableHolder').style.display = 'flex';
       document.getElementById('testConfig').style.display = 'flex';
-      document.getElementById('popRightSideControlHolder').style.display = 'none';
+      document.getElementById('popRightSideControlHolder').style.display = 'none';   //leave both up for a bit
       document.getElementById('popRightSideArrow').style.display = 'none';
       
       len = av.sgr.hideFlgNames.length;
@@ -1319,9 +1319,34 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.anl.AnaChartFn();
   };
 
+  // ------------------ two controls for the same purpose; took work to get tabs to look right so I'm keeping for now --
+  av.ptd.popRightInfoPanel = function (domObj) {
+    console.log('domObj.value=', domObj.value);
+    var tablinks = document.getElementsByClassName("tablinks");
+    for (var ii = 0; ii < tablinks.length; ii++) {
+      tablinks[ii].className = tablinks[ii].className.replace(" active", "");
+    };
+    av.dom.testSetupBlock.display = 'none';
+    document.getElementById('ex1setupBlock').style.display = 'none';
+    document.getElementById('ex2setupBlock').style.display = 'none';
+
+    if ('Setup' == domObj.value) {
+      av.dom.labInfoBlock.style.display = 'none';
+      av.dom.setupBlock.style.display = 'flex';
+      av.dom.setupTab.className += " active";
+    }
+    else {
+      av.dom.setupBlock.style.display = 'none';
+      av.dom.labInfoBlock.style.display = 'flex';
+      av.dom.statsTab.className += " active";
+    };
+  };
+
+  //Development section
   av.ptd.processTab = function (evt, contentType) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("labInfoClass");
+    console.log('tabcontent=', tabcontent);
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
     }
@@ -1329,7 +1354,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     };
-    //console.log('contentType=',contentType,'; evt=', evt);  //keep because evt info looks useful for improving mouse code. 
+    //console.log('contentType=',contentType,'; evt=', evt);  //keep because evt info looks useful for improving mouse code.
     document.getElementById(contentType).style.display = "flex";
     evt.currentTarget.className += " active";
   };
@@ -1339,7 +1364,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   av.dom.testSetupBlock.style.none;
   //console.log('av.dom.setupTab', av.dom.setupTab);
   av.dom.setupTab.click();
-  av.dom.dataTab.click();
+  av.dom.statsTab.click();
+  // ------------enf of two controls for the same purpose; took work to get tabs to look right so I'm keeping for now --
 
 //------------------------------------------------------------------------------------------show/hide left side panel --
   av.ptd.lftPnlButtonImg = function () {
