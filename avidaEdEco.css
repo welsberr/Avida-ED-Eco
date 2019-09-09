@@ -168,6 +168,7 @@
     flex: 0 1 120px;
   }
   #testConfigLableHolder {
+    margin: 5px;
     flex; 0 1 40;
   }
   #testConfig {
@@ -192,7 +193,11 @@ popTopRwRight{
   min-width: 6em;
   display: inline-block;
 }
-  
+#popRightSideSelect{
+  margin: 5px;
+  height: 20px;
+  display: inline-block;
+}  
   
   .benchPopMid {
     border: 1px solid #AAA;

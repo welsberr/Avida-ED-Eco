@@ -1070,6 +1070,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       document.getElementById('testDishDetailDiv').style.display = 'none';
       document.getElementById('testConfigLableHolder').style.display = 'none';
       document.getElementById('testConfig').style.display = 'none';
+      document.getElementById('popRightSideControlHolder').style.display = 'inline-block';
+      document.getElementById('popTopRightArrow').style.display = 'block';
       
       av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.dom.xorLabel.onclick_hide');
       
@@ -1094,6 +1096,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       document.getElementById('testDishDetailDiv').style.display = 'block';
       document.getElementById('testConfigLableHolder').style.display = 'inline';
       document.getElementById('testConfig').style.display = 'inline';
+      document.getElementById('popRightSideControlHolder').style.display = 'none';
+      document.getElementById('popTopRightArrow').style.display = 'none';
       
       len = av.sgr.hideFlgNames.length;
       for (var jj = 0; jj< len; jj++) {
