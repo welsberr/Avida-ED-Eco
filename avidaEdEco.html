@@ -175,31 +175,35 @@
             <span style='text-align: right'><label id='userMsgLabel' style='color: red; text-align: right'> </label></span>
           </div>
         </div>
+        <div id='RtSideSelectHolder'>
+          <select id='RtSideSelect' onchange='av.ptd.RtInfoPanel(this)'>
+            <option value='Stats' selected>Stats</option>
+            <option value='Setup'>Setup</option>
+          </select>
+        </div>
         <div id="rtPbuttonDiv" class="sidePnlBtnDiv">
           <img id='rtPnlButtonImg' src='images/rtPnlBtn2.png'/>
         </div>
       </div>
 
       <div class="mainRow">
-        <div class="navColClass" id="navColId">
-          <div class="mainPageButtons" id='mainButtons'>
-            <table id='mainButtonTable' style='border-collapse:collapse;table-layout:auto;width:100%;height:auto;' border='0'>
-              <tbody>
-                <tr>
-                  <td><img src='images/Avida-ED-population-icon.png' style='width: 32px; height: 32px;' /></td>
-                  <td><input type='button' id='populationButton' intermediateChanges='false' value='Population' iconClass='dijitNoIcon' /></td>
-                </tr>
-                <tr>
-                  <td><img src='images/Avida-ED-organism-icon.png' style='width: 32px; height: 32px;' id='organIcon' /></td>
-                  <td><input type='button' id='organismButton' intermediateChanges='false' value='Organism' iconClass='dijitNoIcon' /></td>
-                </tr>
-                <tr>
-                  <td><img src='images/Avida-ED-analysis-icon.png' style='width: 32px; height: 32px;' /></td>
-                  <td><input type='button' id='analysisButton' intermediateChanges='false' value='Analysis' iconClass='dijitNoIcon' /></td>
-                </tr>
-              </tbody>
-            </table>
+        <div id="navColId" class="navColClass">
+          
+          <div id='mainButtons' class="mainPageButtons">
+            <div id='popPageHuttonHolder' class='PageButtonHolder'>
+              <div class='pageImgDiv'><img src='images/Avida-ED-population-icon.png' class='pageButtonImg' /></div>
+              <div class='pageButtonDiv'><input type='button' id='populationButton' class='pageButton' value='Population'/></div>
+            </div>
+            <div id='orgPageButtonHolder' class='PageButtonHolder'>
+              <div class='pageImgDiv'><img src='images/Avida-ED-organism-icon.png' class='pageButtonImg' id='organIcon' /></div>
+              <div class='pageButtonDiv'><input type='button' id='organismButton' class='pageButton' value='Organism'/></div>
+            </div>
+            <div  id='anaPageButtonHolder' class='PageButtonHolder'>
+              <div class='pageImgDiv'><img src='images/Avida-ED-analysis-icon.png' class='pageButtonImg' /></div>
+              <div class='pageButtonDiv'><input type='button' id='analysisButton' class='pageButton' value='Analysis'/></div>
+            </div>
           </div>
+          
           <div class="freezerClass">
             <div id='FreezerTitle' onclick='av.ui.toggleDevelopentDisplays();' >Freezer</div>
             <span title="https://stackoverflow.com/questions/24977965/collapsible-lists-using-html-and-css"></span>

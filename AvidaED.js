@@ -1320,6 +1320,31 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   };
 
   // ------------------ two controls for the same purpose; took work to get tabs to look right so I'm keeping for now --
+
+  av.ptd.RtInfoPanel = function (domObj) {
+    console.log('domObj.value=', domObj.value);
+    //for tab system.
+    var tablinks = document.getElementsByClassName("tablinks");
+    for (var ii = 0; ii < tablinks.length; ii++) {
+      tablinks[ii].className = tablinks[ii].className.replace(" active", "");
+    };
+    av.dom.testSetupBlock.display = 'none';
+    document.getElementById('ex1setupBlock').style.display = 'none';
+    document.getElementById('ex2setupBlock').style.display = 'none';
+
+    //for select/option control
+    if ('Setup' == domObj.value) {
+      av.dom.labInfoBlock.style.display = 'none';
+      av.dom.setupBlock.style.display = 'flex';
+      av.dom.setupTab.className += " active";
+    }
+    else {
+      av.dom.setupBlock.style.display = 'none';
+      av.dom.labInfoBlock.style.display = 'flex';
+      av.dom.statsTab.className += " active";
+    };
+  };
+
   av.ptd.popRightInfoPanel = function (domObj) {
     console.log('domObj.value=', domObj.value);
     var tablinks = document.getElementsByClassName("tablinks");
