@@ -136,7 +136,6 @@ av.mouse.notDndPopList = ['colorMode'
   , 'wsNameMsg'
   //Buttons
   , 'mainButtons'
-  , 'mainButtonTable'
   , 'rtPnlButtonImg'
   , 'populationButton'
   , 'organismButton'

@@ -191,10 +191,6 @@
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bab1ba', endColorstr='#ededed',GradientType=0);
     background-color:#bab1ba;
   }
-  .pageButton:active {
-    position:relative;
-    top:1px;
-  }
 
 
 .mainBlockHolder{
