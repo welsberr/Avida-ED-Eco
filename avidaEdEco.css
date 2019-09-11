@@ -366,6 +366,7 @@
     border: 1px solid #AAA;
   }
   #debugResource{
+    display: flex;
     flex: 0 0 auto;
     border: 1px solid #AAA;
     width: 100%;

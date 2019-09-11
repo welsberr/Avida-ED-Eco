@@ -1042,7 +1042,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     mnFlStandAloneAppDialog.show();
   });
 
-  //------------- Testing only need to delete later.--------------------
+  //------------- Testing & Development Tools. Hide from User .--------------------
 
   av.doj.mnHpDebug.onclick = function () {
     if ('visible' === av.doj.mnDebug.style.visibility) {
@@ -1069,7 +1069,9 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       document.getElementById('testConfigLableHolder').style.display = 'none';
       document.getElementById('testConfig').style.display = 'none';
       document.getElementById('popRightSideControlHolder').style.display = 'flex';
-      document.getElementById('popRightSideArrow').style.display = 'block';
+      //document.getElementById('popRightSideArrow').style.display = 'block';            //as of 2019_0909 I think this can be deleted.
+      document.getElementById('debugResource').style.display = 'none';
+
       
       av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.dom.xorLabel.onclick_hide');
       
@@ -1087,16 +1089,19 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
 
       av.post.addUser('Button: mnHpDebug: now hidden');
-    } else {
+    } else
+    {       // development sectiomn can be seen.
       av.doj.mnDebug.style.visibility = 'visible';
+
       document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
       document.getElementById('fzTdishSec').style.visibility = 'visible';
       document.getElementById('testDishDetailDiv').style.display = 'block';
       document.getElementById('testConfigLableHolder').style.display = 'flex';
       document.getElementById('testConfig').style.display = 'flex';
-      document.getElementById('popRightSideControlHolder').style.display = 'none';   //leave both up for a bit
-      document.getElementById('popRightSideArrow').style.display = 'none';
-      
+      document.getElementById('popRightSideControlHolder').style.display = 'none';
+      //document.getElementById('popRightSideArrow').style.display = 'none';        //as of 2019_0909 I think this can be deleted.
+      document.getElementById('debugResource').style.display = 'flex';
+
       len = av.sgr.hideFlgNames.length;
       for (var jj = 0; jj< len; jj++) {
         flgs[jj] = false;
@@ -1319,7 +1324,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.anl.AnaChartFn();
   };
 
-  // ------------------ two controls for the same purpose; took work to get tabs to look right so I'm keeping for now --
+  // ------------------ three controls for the same purpose; took work to get tabs to look right so I'm keeping for now --
 
   av.ptd.RtInfoPanel = function (domObj) {
     console.log('domObj.value=', domObj.value);
@@ -1334,11 +1339,13 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
 
     //for select/option control
     if ('Setup' == domObj.value) {
+      document.getElementById('popRightSideSelect').value = 'Setup';
       av.dom.labInfoBlock.style.display = 'none';
       av.dom.setupBlock.style.display = 'flex';
       av.dom.setupTab.className += " active";
     }
     else {
+      document.getElementById('popRightSideSelect').value = 'Stats';
       av.dom.setupBlock.style.display = 'none';
       av.dom.labInfoBlock.style.display = 'flex';
       av.dom.statsTab.className += " active";
@@ -1356,11 +1363,13 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     document.getElementById('ex2setupBlock').style.display = 'none';
 
     if ('Setup' == domObj.value) {
+      document.getElementById('RtSideSelect').value = 'Setup';
       av.dom.labInfoBlock.style.display = 'none';
       av.dom.setupBlock.style.display = 'flex';
       av.dom.setupTab.className += " active";
     }
     else {
+      document.getElementById('RtSideSelect').value = 'Stats';
       av.dom.setupBlock.style.display = 'none';
       av.dom.labInfoBlock.style.display = 'flex';
       av.dom.statsTab.className += " active";

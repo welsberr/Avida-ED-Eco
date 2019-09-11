@@ -525,6 +525,7 @@
                         </div>
                       </div> <span comment="end of popStatistics"></span>
                     </div><span comment="end of popStatHolder"></span>
+                    
                     <div id="debugResource" class="debug">
                       <div class="grid-currentSugarAmount-container">
                         <div class="grid-currentSugarAmount-item">NOT<br /><label id="mxNot"> </label><br /><label id="cellNot"></label></div>
@@ -539,7 +540,8 @@
                         <div class="grid-currentSugarAmount-item"> = resource<br /> = highest<br /> = cell value</div>  
                       </div>
                     </div>
-                    <div id="popChrtHolder" data-dojo-type='dijit/layout/ContentPane'>
+                    
+                    <div id="popChrtHolder">
                       <div id='popChart'></div>
                     </div>
                     <div id="miniChartYaxis">
@@ -552,7 +554,28 @@
                         <option value='Number Viable'>Number Viable</option>
                         <option value='None'>None</option>
                       </select>
-                    </div> 
+                    </div>
+  
+                    <div id='pauseOptions'>
+                      <label>Pause Run:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='manualUpdateRadio'
+                             intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' checked
+                             value='manual' />
+                      <label id='ManLabel'>Manually</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='autoUpdateRadio'
+                             intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' value='setupdate' />
+                      <label id='updateLabel'>At update:</label>
+                      <input type='text' id='autoUpdateOnce' value='1000' style='width:80px'>
+                    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                   </div>  <span comment="end of labInfoBlock"></span>
 
                   <div id="setupBlock" class="labInfoClass">
@@ -1408,41 +1431,7 @@
                                intermediateChanges='false' iconClass='dijitNoIcon' name='repeat' value='demo'>
                         <label id='demoLabel'>Demo</label>
                       </div>
-                      <div class='odd'>
-                        <label>Pause Run:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='manualUpdateRadio'
-                               intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' checked
-                               value='manual' />
-                        <label id='ManLabel'>Manually</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='autoUpdateRadio'
-                               intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' value='setupdate' />
-                        <label id='updateLabel'>At update:</label>
-                        <input type='text' id='autoUpdateOnce' value='1000' style='width:80px'>
-                      </div>
-                      <div class='even'>
-                        <label id='Multi-Dish'>Multi-Dish:</label><br>
-                           Here or on a different tab?
-                      </div>
                       
-                      
-                      
-                      
-                      <span data-dojo-type='dijit/TitlePane' id='AdvancedSetup' title='Advanced Setup'
-                            extractContent='false' preventCache='false' preload='false' refreshOnShow='false' duration='200'
-                            open='false' style='min-width: 1px; width: 100%; height: auto; visibility: hidden'>
-                        <div class='even'>
-                          time Slice:
-                          <input id='avetimeSlice' value='20'
-                                 style='width: 3em; height:1.6em' />
-                          &nbsp;&nbsp;&nbsp;
-                          Update Delay:
-                          <input id='sleepDelay' type='text' data-dojo-type='dijit/form/NumberTextBox'
-                                 required='true' value='50' data-dojo-props='constraints:{min:0, max:5000,places:0},
-                                 invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid update Delay."'
-                                 style='width:4em; height:1.6em'/>
-                          msecs<br />
-                        </div>
-                      </span>                      
                     </form>
                   </div>
 

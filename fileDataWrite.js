@@ -89,9 +89,6 @@ av.fwt.makeFzrAvidaCfg = function (idStr, from) {
   else txt += 'BIRTH_METHOD 4 \n';   //anywhere randomly
   if (av.dom.experimentRadio.checked) txt += 'RANDOM_SEED -1 \n';
   else txt += 'RANDOM_SEED 100\n';
-  //no longer in use; tiba delete later
-  //txt += 'AVE_TIME_SLICE ' + dijit.byId('aveTimeSlice').get('value') + '\n';
-  //txt += 'SLEEP_DELAY ' + dijit.byId('sleepDelay').get('value') + '\n';
   txt += '#include instset.cfg\n';
   txt += 'PRECALC_PHENOTYPE 1\n';
   txt += 'VERSION_ID 2.14.0 \n';
