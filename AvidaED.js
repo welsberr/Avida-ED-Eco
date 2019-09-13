@@ -2098,8 +2098,9 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.grd.popChartFn();
   };
 
+  av.grd.popChartInit = function (from) {}
   // initialize needs to be in AvidaED.js
-  av.grd.popChartInit = function (from) {
+  av.grd.popChartInit_real = function (from) {
     //console.log(from, 'called av.grd.popChartInit');
     av.pch.clearPopChrt();
     av.pch.divSize('av.grd.popChartInit');
@@ -2130,7 +2131,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       //Plotly.purge(av.dom.popChart);      //does not seem to work once plotly.animate has been used
       //console.log('data=', av.dom.popChart.data);
       if (undefined != av.dom.popChart.data[0]) {
-        av.debug.log += '\n     --uiD: Plotly: Plotly.deleteTraces(av.dom.popChart, [0, 1]) in AvidaED.js at 1599';
+        av.debug.log += '\n     --uiD: Plotly: Plotly.deleteTraces(av.dom.popChart, [0, 1]) in AvidaED.js at 2133';
         av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart', [av.dom.popChart]);
         Plotly.deleteTraces(av.dom.popChart, [0, 1]);
         av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in av.grd.popChartInit in AvidaED.js at 1589';
@@ -2142,7 +2143,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     //console.log('layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width);
   };
 
-  av.grd.popChartFn = function () {
+av.grd.popChartFn = function () {};
+  av.grd.popChartFn_real = function () {
     'use strict';
     //console.log('av.grd.runState = ', av.grd.runState);
     if ('prepping' === av.grd.runState) {   //values can be prepping, started, or world
@@ -2293,7 +2295,14 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
               av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in AvidaED.js at 1750';
               av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
               //console.log('av.dom.popChart=',av.dom.popChart);
-              //console.log('av.pch.update=', av.pch.update);   // should look like av.pch.update= {autorange: true, width: 544, height: 236}
+              console.log('av.pch.update=', av.pch.update);   // should look like av.pch.update= {autorange: true, width: 544, height: 236}
+              if (undefined == av.pch.update) {
+                av.pch.update = {
+                  autorange: true,
+                  width: av.pch.wd,
+                  height: av.pch.ht
+                };                
+              }
               Plotly.relayout(av.dom.popChart, av.pch.update);
               //console.log('after relayout in update grid chart');
               if (av.debug.plotly) console.log('popData', popData);
@@ -2598,8 +2607,8 @@ av.sgr.eachSugarCheckBoxChange = function (domObj) {
 
 /******************************************************************************** End enviornment (sugar) settings ****/
 
-av.ptd.gridChange = function(tmpval) {
-    //console.log('in av.ptd.gridChange; tmpval=', tmpval);
+av.ptd.gridChange = function(domObj) {
+    console.log('in av.ptd.gridChange; domObj.id =', domObj.id);
     var colNum = Number(av.dom.sizeCols.value);
     var rowNum = Number(av.dom.sizeRows.value);
     //console.log('col, row=', colNum, rowNum);

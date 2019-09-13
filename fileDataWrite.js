@@ -125,76 +125,120 @@ av.fwt.makeFzrAvidaTest = function (idStr, from) {
 /*---------------------------------------------------------------------------------- end of av.fwt.makeFzrAvidaTest --*/
 
 /*------------------------------------------------------------------------------------ av.fwt.makeFzrEnvironmentCfg --*/
-av.fwt.loadDefaults = function (geometry, ndx, etsk) {
+// might not use
+av.fwt.loadEnvDefaults = function (geometry, ndx, etsk) {
   var len; //var tmp;
   len = av.sgr.react_argu.length;
   for (var ii=0; ii< len; ii++) {
     av.nut[etsk].react[av.sgr.react_argu[ii]][ndx] = av.sgr.reacDefaultValu[ii];
   };
   if ('global' == geometry) {
-    len = av.sgr.resrcAvidaDefaultGlobalArgu.length;
+    len = av.sgr.resrcAvidaDefaultArgu.length;
     for (var ii=0; ii< len; ii++) {
-      av.nut[etsk].resrc[av.sgr.resrcAvidaDefaultGlobalArgu[ii]][ndx] = av.sgr.resrcAvidaDefaultGlobalValu[ii];
+      av.nut[etsk].resrc[av.sgr.resrcAvidaDefaultArgu[ii]][ndx] = av.sgr.resrcAvidaDefaultGlobalValu[ii];
     };
   } // now for the 'grid' defaults
   else {
-    
+      av.nut[etsk].resrc[av.sgr.resrcAvidaDefaultLocalArgu[ii]][ndx] = av.sgr.resrcAvidaDefaultLocallValu[ii];    
   };
 };
 
+av.fwt.form2NutrientStruct = function () {
+        //console.log('etsk=', etsk, '; ndx=', ndx, '; av.nut[etsk].resrc=', av.nut[etsk].resrc);
+      //av.fwt.loadEnvDefaults('global', ndx, etsk);
+
+};
 
 
-av.fwt.form2struct = function (from) {
-  console.log(from + ' called av.fwt.form2struct');
-  av.fzr.clearEnvironment('av.fwt.form2struct');
+av.fwt.form2NutrientTxt = function (from) {
+  console.log(from + ' called av.fwt.form2NutrientTxt');
+  av.fzr.clearEnvironment('av.fwt.form2NutrientTxt');
   var endName = 'Geometry';
-  var domName; var tsk; var etsk;
-  var ndx = 0;
-  var domRegionnum =1;   //region number up to four regions. Some global paramenters use a regNAum = 0;
+  var domName; 
+  var geometry = 'Global';
+  var ndx = 0;           //Only whole dish for now; will need to change later
+  var tsk; var etsk; var atsk;
+  var regionCode = '';
+  var rname = 'unk';
+  var supplyType = 'Infinite';
+  var domRegionNum =1;   //region number up to four regions. Some global paramenters use a regNAum = 0;
   var numtasks = av.sgr.logEdNames.length;
   var txt = '';
-  regionCode = '';
-  /*
-  //for (var ii=0; ii< numtasks; ii++) {
-  for (var ii=0; ii< 1; ii++) {
+  var cols = 1 ; var rows = 1; var numCells = 1; var sgrPerCell=0.314; var regionInit = 23.2323;
+  //av.fwt.form2NutrientStruct('av.fwt.form2NutrientTxt');
+  
+  //Find grid size;
+  cols = Number(av.dom.sizeCols.value);
+  rows = Number(av.dom.sizeRows.value);
+  numCells = cols * rows; 
+  console.log('cols=', av.dom.sizeCols.value, '; rows=', av.dom.sizeRows.value, '; numDCells=',  numCells);
+
+  
+  for (var ii=0; ii< numtasks; ii++) {
+  //for (var ii=0; ii< 0; ii++) {
     etsk = av.sgr.logEdNames[ii];
     tsk = av.sgr.logicNames[ii];
     atsk = av.sgr.logicVnames[ii];
-    value = 
     domName = tsk + endName;
-    //console.log('domName=', domName, '; document.getElementById(domName)=', document.getElementById(domName));
+    domName = 'not' + endName;         //remove when other tasks are ready
+    geometry = document.getElementById(domName).value;
+    console.log('domName=', domName, '; value=', geometry);
     if ('Global' == document.getElementById(domName).value) {
       ndx = 0;
-      domRegionnum = 0;
-      regionCode = av.sgr.regionCode[ndx];
-      av.sgr.regionCode[ndx];
-      console.log('etsk=', etsk, '; ndx=', ndx, '; av.nut[etsk].resrc=', av.nut[etsk].resrc);
-      av.fwt.loadDefaults('global', ndx, etsk);
+      domRegionNum = 0;
+      regionCode = av.sgr.regionCode[0];  //hard coded now; need to fix later. 
+      rname = tsk + regionCode;
       
-      switch (document.getElementById(tsk+'0SupplyType').value) {
-        case 'none':
-          txt = 'REACTION ' + 'etst' + 'atsk' + 'process:value=0:type=pow  requisite:max_count=1\n'
+      console.log("document.getElementById('not'+'0SupplyType').value=",document.getElementById('not'+'0SupplyType').value );      
+      //switch (document.getElementById(tsk +'0SupplyType').value) {
+      switch (document.getElementById('not'+'0SupplyType').value) {
+        case 'None':
+          txt += 'REACTION ' + rname + ' ' + atsk + ' process:value=0:type=pow  requisite:max_count=1\n';
           break;
-        case 'infinite':
-          txt = 'REACTION ' + 'etst' + 'atsk' + 'process:value=' :type=pow  requisite:max_count=1\n'
+        case 'Infinite':
+          txt += 'REACTION ' + rname + ' ' + atsk + ' process:value=' + av.sgr.reactValues[ii] + ':type=pow  requisite:max_count=1\n';
           break;
-      }
-      
+      } // end of glbal switch
     }
-    else {   // local
+    else {   // local   using avida defaults for now will separate out diffusion later.
+      ndx = 0;
+      domRegionNum = 0;
+      regionCode = av.sgr.regionCode[0];  //hard coded now; need to fix later. 
+      rname = tsk + regionCode;
+      supplyType = document.getElementById('not'+'1SupplyType').value;   //hard coded to not, will need to change
+      console.log('supplyType=', supplyType);         
+      switch (supplyType) {
+        case 'None':
+          txt += 'RESOURCE ' + rname + ':geometry=grid:initial = 502.4';  //=16000 * 0.314
+          txt +=  + ' \n';
+          txt += 'REACTION ' + rname + ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:max=1:min=0.99  requisite:max_count=1 \n';
+          break;
+        case 'Infinite':
+          txt += 'RESOURCE ' + rname + ':geometry=grid:initial=' + numCells + ' \n';   //cells should have one, but not depleat any
+          txt += 'REACTION ' + rname +  ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:depletable=0 requisite:max_count=1 \n';
+          break;
+        case 'Finite':
+          // later will get from av.nut
+          sgrPerCell = Number(document.getElementById('not1initialHiInput').value);
+          regionInit = numCells * sgrPerCell;
+          txt += 'RESOURCE ' + rname + ':geometry=grid:initial=' + regionInit + ' \n';
+          txt += 'REACTION ' + rname +  ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:max=1:min=0.999 requisite:max_count=1 \n';
+          break;
+      };  // end of LOCAL swtich
     };
     
   }// end of loop to go thru all the logic functions. Only NOT works for now.
-  */
+  console.log('txt=', txt);
   console.log('av.oldnut=',av.oldnut);
   console.log('av.nut=',av.nut);
+  av.fwt.makeActConfigFile('environment.cfg', txt);
 };
 
 
 av.fwt.makeFzrEnvironmentCfg = function (idStr, from) {
   'use strict';
   if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrEnvironmentCfg');
-  av.fwt.form2struct('av.fwt.makeFzrEnvironmentCfg');
+  av.fwt.form2NutrientTxt('av.fwt.makeFzrEnvironmentCfg');
 };
 
 /*--------------------------------------------------------------------------------- av.fwt.makeFzrOldEnvironmentCfg --*/

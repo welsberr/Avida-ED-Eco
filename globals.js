@@ -487,6 +487,13 @@ av.sgr.resrc_argu = ['name', 'initial', 'inflow', 'outflow', 'geometry'         
                             , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'
                             ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow',     //theste are new for Avida-ED and not in the wiki. 
                             , 'region', 'side', 'grdNum', 'regionCode','regionList'];  // this last row is not in the argurments for avida; used for 'multi-dish'
+
+//Avida resource Arguments that have Defaults I will probably use. If they are the default, they do not need to be in the Environment.cfg file
+av.sgr.resrcAvidaDefaultGlobalArgu = [ 'initial', 'inflow', 'outflow', 'geometry'   
+                                    , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'];
+av.sgr.resrcAvidaDefaultGlobalValu =  [ 0, 0, 0.0, 'global', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
+
+av.sgr.resrcAvidaDefaultLocalValu =  [ 0, 0, 0.0, 'grid', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
                           
 av.sgr.supply_argu = ['region', 'side', 'grdNum', 'regionCode','regionList'];           //each is an array for region
 
@@ -497,11 +504,6 @@ av.sgr.layout3 = ['glob', 'all', 'haf', 'three', '4th'];
 av.sgr.layout = ['Global Dish', 'Whole Dish', 'Halves', '3-sections', 'Quarters'];
 av.sgr.layoutMany = ['glob', 'all', 'halfLR', 'halfTB', '3top1', '3bot1', '3lft1', '3Rit1', '3book', '3stack', '4th', ];
                          
-//Avida resource Arguments that have Defaults I will probably use. If they are the default, they do not need to be in the Environment.cfg file
-av.sgr.resrcAvidaDefaultGlobalArgu = [ 'initial', 'inflow', 'outflow', 'geometry'   
-                                    , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'];
-av.sgr.junk = 1; 
-av.sgr.resrcAvidaDefaultGlobalValu =  [ 0, 0, 0.0, 'global', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
 
 av.sgr.resrcAvidaDefaultGridArgu = [  'initial', 'inflow', 'outflow', 'geometry'   
                                   ,  'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'    // not used when geometry = global
@@ -806,6 +808,8 @@ av.grd.clearGrd();
 av.pch = {};   // related to the chart on the population page
 av.pch.dadMax = 16;
 av.pch.clearPopChrt = function () {
+  av.pch.ht = 10;
+  av.pch.wd = 10; 
   av.pch.yValue = 'new';
   av.pch.yChange = 'false';
   av.pch.popY = [];
