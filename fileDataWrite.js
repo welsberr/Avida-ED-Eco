@@ -198,7 +198,7 @@ av.fwt.form2NutrientTxt = function (from) {
         case 'Infinite':
           txt += 'REACTION ' + rname + ' ' + atsk + ' process:value=' + av.sgr.reactValues[ii] + ':type=pow  requisite:max_count=1\n';
           break;
-      } // end of glbal switch
+      }; // end of glbal switch
     }
     else {   // local   using avida defaults for now will separate out diffusion later.
       ndx = 0;
@@ -209,9 +209,9 @@ av.fwt.form2NutrientTxt = function (from) {
       console.log('supplyType=', supplyType);         
       switch (supplyType) {
         case 'None':
-          txt += 'RESOURCE ' + rname + ':geometry=grid:initial = 502.4';  //=16000 * 0.314
-          txt +=  + ' \n';
-          txt += 'REACTION ' + rname + ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:max=1:min=0.99  requisite:max_count=1 \n';
+          txt += 'RESOURCE ' + rname + ':geometry=grid:initial=0';  //=16000 * 0.314
+          txt += ' \n';
+          txt += 'REACTION ' + rname + ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:max=1:min=1  requisite:max_count=1 \n';
           break;
         case 'Infinite':
           txt += 'RESOURCE ' + rname + ':geometry=grid:initial=' + numCells + ' \n';   //cells should have one, but not depleat any
@@ -222,7 +222,7 @@ av.fwt.form2NutrientTxt = function (from) {
           sgrPerCell = Number(document.getElementById('not1initialHiInput').value);
           regionInit = numCells * sgrPerCell;
           txt += 'RESOURCE ' + rname + ':geometry=grid:initial=' + regionInit + ' \n';
-          txt += 'REACTION ' + rname +  ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:max=1:min=0.999 requisite:max_count=1 \n';
+          txt += 'REACTION ' + rname +  ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:max=1:min=1 requisite:max_count=1 \n';
           break;
       };  // end of LOCAL swtich
     };

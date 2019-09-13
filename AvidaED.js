@@ -1058,6 +1058,9 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     }
   };
 
+  av.ui.where = function(domobj) {
+    console.log('domobj=', domobj);
+  };
   av.ui.toggleDevelopentDisplays = function () {
     console.log('display of test details = ', document.getElementById('testDishDetailDiv').style.display);
     var len, tsk, sub; 
