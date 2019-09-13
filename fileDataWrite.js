@@ -58,14 +58,15 @@ av.fwt.makeFzrEventsCfgWorld = function (idStr, em) {
 
 /*---------------------------------------------------------------------------------------- av.fwt.makeFzrPauseRunAt --*/
 
-av.fwt.makeFzrPauseRunAt = function (idStr, actConfig) {
+av.fwt.makeFzrPauseRunAt = function (idStr, from) {
   'use strict';
+  console.log(from + ' called av.fwt.makeFzrPauseRunAt');
   var txt = av.dom.autoUpdateOnce.value.toString();
   // Is auto Update Radio button checked?
   if (av.dom.manualUpdateRadio.checked) {  //manually pause population
     txt = '-1';   //Manual Update
   }
-  if (actConfig) {av.fwt.makeActConfigFile('pauseRunAt.txt', txt);}
+  if (false) {av.fwt.makeActConfigFile('pauseRunAt.txt', txt);}
   else {av.fwt.makeFzrFile(idStr+'/pauseRunAt.txt', txt);}
 };
 
@@ -123,11 +124,83 @@ av.fwt.makeFzrAvidaTest = function (idStr, from) {
 
 /*---------------------------------------------------------------------------------- end of av.fwt.makeFzrAvidaTest --*/
 
-
 /*------------------------------------------------------------------------------------ av.fwt.makeFzrEnvironmentCfg --*/
+av.fwt.loadDefaults = function (geometry, ndx, etsk) {
+  var len; //var tmp;
+  len = av.sgr.react_argu.length;
+  for (var ii=0; ii< len; ii++) {
+    av.nut[etsk].react[av.sgr.react_argu[ii]][ndx] = av.sgr.reacDefaultValu[ii];
+  };
+  if ('global' == geometry) {
+    len = av.sgr.resrcAvidaDefaultGlobalArgu.length;
+    for (var ii=0; ii< len; ii++) {
+      av.nut[etsk].resrc[av.sgr.resrcAvidaDefaultGlobalArgu[ii]][ndx] = av.sgr.resrcAvidaDefaultGlobalValu[ii];
+    };
+  } // now for the 'grid' defaults
+  else {
+    
+  };
+};
+
+
+
+av.fwt.form2struct = function (from) {
+  console.log(from + ' called av.fwt.form2struct');
+  av.fzr.clearEnvironment('av.fwt.form2struct');
+  var endName = 'Geometry';
+  var domName; var tsk; var etsk;
+  var ndx = 0;
+  var domRegionnum =1;   //region number up to four regions. Some global paramenters use a regNAum = 0;
+  var numtasks = av.sgr.logEdNames.length;
+  var txt = '';
+  regionCode = '';
+  /*
+  //for (var ii=0; ii< numtasks; ii++) {
+  for (var ii=0; ii< 1; ii++) {
+    etsk = av.sgr.logEdNames[ii];
+    tsk = av.sgr.logicNames[ii];
+    atsk = av.sgr.logicVnames[ii];
+    value = 
+    domName = tsk + endName;
+    //console.log('domName=', domName, '; document.getElementById(domName)=', document.getElementById(domName));
+    if ('Global' == document.getElementById(domName).value) {
+      ndx = 0;
+      domRegionnum = 0;
+      regionCode = av.sgr.regionCode[ndx];
+      av.sgr.regionCode[ndx];
+      console.log('etsk=', etsk, '; ndx=', ndx, '; av.nut[etsk].resrc=', av.nut[etsk].resrc);
+      av.fwt.loadDefaults('global', ndx, etsk);
+      
+      switch (document.getElementById(tsk+'0SupplyType').value) {
+        case 'none':
+          txt = 'REACTION ' + 'etst' + 'atsk' + 'process:value=0:type=pow  requisite:max_count=1\n'
+          break;
+        case 'infinite':
+          txt = 'REACTION ' + 'etst' + 'atsk' + 'process:value=' :type=pow  requisite:max_count=1\n'
+          break;
+      }
+      
+    }
+    else {   // local
+    };
+    
+  }// end of loop to go thru all the logic functions. Only NOT works for now.
+  */
+  console.log('av.oldnut=',av.oldnut);
+  console.log('av.nut=',av.nut);
+};
+
+
 av.fwt.makeFzrEnvironmentCfg = function (idStr, from) {
   'use strict';
   if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrEnvironmentCfg');
+  av.fwt.form2struct('av.fwt.makeFzrEnvironmentCfg');
+};
+
+/*--------------------------------------------------------------------------------- av.fwt.makeFzrOldEnvironmentCfg --*/
+av.fwt.makeFzrOldEnvironmentCfg = function (idStr, from) {
+  'use strict';
+  if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrOldEnvironmentCfg');
   var txt = '';
   if (av.dom.notose.checked) txt += 'REACTION  NOT  not   process:value=1:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NOT  not   process:value=0:type=pow  requisite:max_count=1\n';
   if (av.dom.nanose.checked) txt += 'REACTION  NAND nand  process:value=1:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NAND nand  process:value=0:type=pow  requisite:max_count=1\n';
@@ -210,7 +283,6 @@ av.fwt.makeFzrTimeRecorder = function (fname, data) {
 //Setup to active folder just before sending to avida
 av.fwt.form2cfgFolder = function() {
   'use strict';
-  var actConfig = true;
   av.fwt.makeFzrAvidaCfg('cfg', 'av.fwt.form2cfgFolder');
   av.fwt.makeFzrEnvironmentCfg('cfg', 'av.fwt.form2cfgFolder');
   av.fwt.makeFzrAncestorAuto('cfg', 'av.fwt.form2cfgFolder');
@@ -231,26 +303,26 @@ av.fwt.testForm2folder = function() {
 av.fwt.makeFzrConfig = function (num) {
   'use strict';
   var em = false;
-  av.fwt.makeFzrAvidaCfg('c'+num, em);
-  av.fwt.makeFzrEnvironmentCfg('c'+num, em);
+  av.fwt.makeFzrAvidaCfg('c'+num, 'av.fwt.makeFzrConfig');
+  av.fwt.makeFzrEnvironmentCfg('c'+num, 'av.fwt.makeFzrConfig');
   av.fwt.makeFzrFile('c'+num+'/events.cfg', '');
   //av.fwt.makeFzrFile('c'+num+'/entryname.txt', av.fzr.config[ndx].name);  // this was created in dnd menu code
   av.fwt.makeFzrInstsetCfg('c'+num);
-  av.fwt.makeFzrAncestorAuto('c'+num, em);
-  av.fwt.makeFzrAncestorHand('c'+num, em);
-  av.fwt.makeFzrPauseRunAt('c'+num, em);
+  av.fwt.makeFzrAncestorAuto('c'+num, 'av.fwt.makeFzrConfig');
+  av.fwt.makeFzrAncestorHand('c'+num, 'av.fwt.makeFzrConfig');
+  av.fwt.makeFzrPauseRunAt('c'+num, 'av.fwt.makeFzrConfig');
 };
 
 av.fwt.makeFzrWorld = function (num) {
   'use strict';
   var em = false;
-  av.fwt.makeFzrAvidaCfg('w'+num, em);
-  av.fwt.makeFzrEnvironmentCfg('w'+num, em);
+  av.fwt.makeFzrAvidaCfg('w'+num, 'av.fwt.makeFzrWorld');
+  av.fwt.makeFzrEnvironmentCfg('w'+num, 'av.fwt.makeFzrConfig');
   av.fwt.makeFzrEventsCfgWorld =('w'+num, em);
   //av.fwt.makeFzrFile('c'+num+'/entryname.txt', av.fzr.config[ndx].name);  // this was created in dnd menu code
   av.fwt.makeFzrInstsetCfg('w'+num);
-  av.fwt.makeFzrAncestorAuto('w'+num, em);
-  av.fwt.makeFzrAncestorHand('w'+num, em);
+  av.fwt.makeFzrAncestorAuto('w'+num, 'av.fwt.makeFzrConfig');
+  av.fwt.makeFzrAncestorHand('w'+num, 'av.fwt.makeFzrConfig');
   av.fwt.makeFzrTRfile('w'+num+'/tr0', av.pch.aveFit);
   av.fwt.makeFzrTRfile('w'+num+'/tr1', av.pch.aveCst);
   av.fwt.makeFzrTRfile('w'+num+'/tr2', av.pch.aveEar);
@@ -345,11 +417,8 @@ av.fwt.makeFzrCSV = function(idStr, em) {
   var fileNm = av.fzr.file[idStr + '/entryname.txt'];
   console.log('fileName = ', fileNm);
   av.fwt.makeCSV(fileNm);
-  if (em) {
-//    av.fwt.makeEmDxFile(idStr+'/timeRecorder.csv', txt);   //ther is no variable txt, so I'm guessong it should the the string 'txt'
-    av.fwt.makeEmDxFile(idStr+'/timeRecorder.csv', 'txt');
-  }
-  else {av.fwt.makeFzrFile(idStr+'/timeRecorder.csv', av.fwt.csvStrg);};
+  if (true) {av.fwt.makeActConfigFile('/timeRecorder.csv', av.fwt.csvStrg);}
+  else {av.fwt.makeFzrFile(idStr+'/timeRecorder.csv', av.fwt.csvStrg);}
 };
 
 av.fwt.writeCurrentCSV = function(idStr) {  
@@ -380,7 +449,6 @@ av.fwt.makeCSV = function(fileNm) {
     for (var ii = 0; ii < av.pch.numDads; ii++) {
       av.fwt.csvStrg += '# ancestor ' + (ii).pad() + ' is ' + av.parents.name[ii] + '\n';
     };
-
 
     av.fwt.csvStrg += 'Update,'
       + 'FitP,'

@@ -97,6 +97,7 @@ av.ptd.popRunningStateUi = function () {
   av.dom.muteInput.disabled = true;
   av.dom.childParentRadio.disabled = true;
   av.dom.childRandomRadio.disabled = true;
+  /*
   av.dom.notose.disabled = true;
   av.dom.nanose.disabled = true;
   av.dom.andose.disabled = true;
@@ -106,6 +107,7 @@ av.ptd.popRunningStateUi = function () {
   av.dom.norose.disabled = true;
   av.dom.xorose.disabled = true;
   av.dom.equose.disabled = true;
+  */
   av.dom.experimentRadio.disabled = true;
   av.dom.demoRadio.disabled = true;
 
@@ -640,8 +642,8 @@ av.sgr.ChangeAllGeo = function(selectedOption){
   console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption);
 };
 
-av.sgr.ChangeAllSugarType = function(selectedOption) {
-  var endName = 'Type';   //nan0Type  the 0 is present because we were considering doing upto 4 hear and easier to take the 0 out later, than to put it in. 
+av.sgr.ChangeAllsugarSupplyType = function(selectedOption) {
+  var endName = 'SupplyType';   //nan0SupplyType  the 0 is present because we were considering doing upto 4 hear and easier to take the 0 out later, than to put it in. 
   console.log('endName=', endName, '; selectedOption=',selectedOption);
   var domName = '';        
   var numtasks = av.sgr.logicNames.length;
@@ -650,7 +652,7 @@ av.sgr.ChangeAllSugarType = function(selectedOption) {
       domName = av.sgr.logicNames[ii] + jj + endName;
       document.getElementById(domName).value = selectedOption;
     }
-    av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], 'deleteSupplyType', 1, 'av.sgr.ChangeAllSugarType');
+    av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], 'deleteSupplyType', 1, 'av.sgr.ChangeAllsugarSupplyType');
   }
     console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
 };
@@ -698,10 +700,10 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
   var geometry = document.getElementById(tsk+'Geometry').value;
   console.log('geometry=', geometry, '; geoOption=', geoOption);
   if ('global' == geometry.toLowerCase()) {
-    supplyType = document.getElementById(tsk + '0Type').value;
+    supplyType = document.getElementById(tsk + '0SupplyType').value;
   }
   else {
-    supplyType = document.getElementById(tsk + sub + 'Type').value;
+    supplyType = document.getElementById(tsk + sub + 'SupplyType').value;
     
   }
   console.log('tsk=', tsk, '; geometry=', geometry, '; supplyType =', supplyType );
@@ -710,10 +712,10 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
   
   console.log(tsk+'0dishRegion=', document.getElementById(tsk+'0dishRegion').value );
 
-  document.getElementById(tsk+'0Type').style.display = 'none';      
+  document.getElementById(tsk+'0SupplyType').style.display = 'none';      
   document.getElementById(tsk+'0dishRegion').style.display = 'none';
   document.getElementById(tsk+'0initialDiv').style.display = 'none';
-  document.getElementById(tsk+sub+'TypeDiv').style.display = 'none';
+  document.getElementById(tsk+sub+'SupplyTypeDiv').style.display = 'none';
   document.getElementById(tsk+sub+'Title').style.display = 'none';      
   document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
   document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'none';
@@ -731,7 +733,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
   document.getElementById(tsk+sub+'equalHiDiv').style.display = 'none';
   document.getElementById(tsk+sub+'equalLoDiv').style.display = 'none';
   if ('Global' == geoOption) {
-    document.getElementById(tsk+'0Type').style.display = 'inline-block';      
+    document.getElementById(tsk+'0SupplyType').style.display = 'inline-block';      
     switch (supplyType) {
       case 'None': 
       case 'Infinite': 
@@ -783,7 +785,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
   }        // end global 
   else {
     document.getElementById(tsk+'0dishRegion').style.display = 'inline-block';
-    document.getElementById(tsk+sub+'TypeDiv').style.display = 'block';
+    document.getElementById(tsk+sub+'SupplyTypeDiv').style.display = 'block';
     document.getElementById(tsk+sub+'Title').style.display = 'block';    
     document.getElementById(tsk+'Section').open = true;
 
@@ -1020,50 +1022,3 @@ av.ptd.envobj2form = function(from) {
   else {console.log('Error in an environment indesx: av.ui.envRegion=',av.ui.envRegion, '; av.ui.envTask=', av.ui.envTask, '; av.ui.envDistribute=',av.ui.envDistribute);}
 };
 
-  //on ex1 tab
-av.ptd.showEnv = function(from) {
-  console.log(from, 'called av.ptd.showEnv');
-  var len = av.sgr.logicNames.length;
-  var showRegion = document.getElementById('ex1envShowRegion').value;
-  var regionNdx = av.sgr.regionCode.indexOf(showRegion);
-  var txtType, txtInit, txtInflo, txtOut;
-  
-  if (-1< regionNdx) {
-    console.log('showRegion = ', showRegion, '; len=', len, '; regionNdx=', regionNdx, '; av.sgr.regionCode=', av.sgr.regionCode);
-    for (var ii = 0; ii < len; ii++) {
-      txtType = '';
-      txtInflo = '';
-      txtInit = '';
-      txtOut = '';
-      var tmpobj = av.fzr.env.rsrce[av.sgr.logEdNames[ii]];
-      console.log('av.fzr.env.rsrce['+av.sgr.logEdNames[ii]+'].regionList=', tmpobj.regionList);
-      if (undefined != tmpobj) {
-        if (0 < tmpobj.regionList.length) {
-          rndx = tmpobj.regionList[regionNdx];
-          console.log('rndx=', rndx, 'av.sgr.logicNames[ii]+"Type"', av.sgr.logicNames[ii]+'Type');
-          if (undefined != rndx) {
-            console.log('tmpobj=', tmpobj);
-            if (undefined != tmpobj.type[rndx]) {
-              txtType = av.fzr.env.rsrce[av.sgr.logEdNames[ii]].type[rndx];
-              txtInit = av.fzr.env.rsrce[av.sgr.logEdNames[ii]].initial[rndx];
-              txtInflo = av.fzr.env.rsrce[av.sgr.logEdNames[ii]].inflow[rndx];
-              txtOut = av.fzr.env.rsrce[av.sgr.logEdNames[ii]].outflow[rndx];
-            }
-          }    
-        }
-      }
-      console.log('txtType=', txtType, '; txtInit=', txtInit, '; txtOut=', txtOut);
-      document.getElementById(av.sgr.logicNames[ii]+'Type').innerHTML = txtType;
-      if ('fin' == txtType) { 
-        document.getElementById(av.sgr.logicNames[ii]+'In').innerHTML = txtInit;
-        document.getElementById('envIn').innerHTML = 'Initial';
-      }
-      else {
-        document.getElementById(av.sgr.logicNames[ii]+'In').innerHTML = txtInflo;
-        document.getElementById('envIn').innerHTML = 'Inflow';
-      }
-      document.getElementById(av.sgr.logicNames[ii]+'Out').innerHTML = txtOut;
-      console.log('av.fzr.env.rsrce['+av.sgr.logEdNames[ii]+'].type['+rndx+']=', av.fzr.env.rsrce[av.sgr.logEdNames[ii]].type[rndx],'--------------------------');
-    };
-  };
-};

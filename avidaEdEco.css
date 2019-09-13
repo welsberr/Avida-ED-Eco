@@ -371,13 +371,8 @@
     border: 1px solid #AAA;
     width: 100%;
   }
-  #showResource{
-    flex: 0 0 auto;
-    border: 1px solid #AAA;
-    width: 100%;
-  }
     
-.grid-env1row-container {
+.grid-env1row-container {      /*delete */
   display: inline-grid;
   grid-template-columns: 184px auto;
   background-color: #F5F5F5;  /* #2196F3;  paple blue */
@@ -407,14 +402,14 @@
   padding: 2px 3px;
 }
 
-  .grid-9env-container {         /*used in 'show resources' will probably delete later */
+  .grid-9env-container {         /*used in 'show resources' will probably delete later */ /*delete */
   display: inline-grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
   background-color: #F5F5F5;  /* #2196F3;  paple blue */
   width: 100%;
 }
 
-.grid-9env-item {                   /*used in 'show resources' will probably go away */
+.grid-9env-item {                   /*used in 'show resources' will probably go away */ /*delete */
   background-color: #F5F5F5;
   border: 1px solid rgba(0, 0, 0, 0.8);
   text-align: center;

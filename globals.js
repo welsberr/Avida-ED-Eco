@@ -26,6 +26,11 @@ av.debug.anl = false;  //analysis page
 av.debug.plotly = false;  //both popChart and analysis
 av.debug.uil = false; //user interface layout.
 av.debug.alo = false; //analysis page layout
+
+av.dbg = {};
+av.dbg.flg = {}; 
+av.dbg.flg.nut = false;
+
 av.debug.usr = ''; //working on log for user actions.
 
 av.post = {};
@@ -464,18 +469,52 @@ av.sgr.rsrce_fake = ['0', '3600', '0', '19', '20', '39', '1', '1'
                             
 av.sgr.react_fake = ['1', '1', '0.99', '1.0', '1', 'not1', 'not', 'not1', 'pow']; 
 
-av.sgr.react_param = ['depletable', 'value', 'min', 'max', 'max_count', 'name', 'task', 'resource', 'type']; 
+av.sgr.react_argu = ['depletable', 'value', 'min', 'max', 'max_count', 'name', 'task', 'resource', 'type']; 
+av.sgr.reacDefaultValu = [ 1,                0,  0.99,    1,            1,     '',     '',  'missing', 'pow'];
                             //depletable = 1 = yes resources are eaten; 0 = no they are not eaten
                             //type = pow always in Avida-ED
                             //value = 1 through 5 based on number of nan gates needed to do the task. 
                             //max_count = 1 always in Avida-ED
                             //min will be a constant probably 0.9
                             //max will be a constang probably 1.1
-av.sgr.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', 'inflowy2', 'xdiffuse', 'ydiffuse'
-                           ,'outflow', 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2', 'xgravity', 'ygravity'
-                           ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow', 'name'
-                           , 'geometry', 'region', 'side', 'grdNum', 'regionCode','regionList'];       
-                         //
+av.sgr.resrc_argu_old = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'xdiffuse', 'ydiffuse'
+                           , 'outflow', 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2', 'xgravity', 'ygravity'
+                           , 'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow', 'name'
+                           , 'geometry', 'region', 'side', 'grdNum', 'regionCode','regionList'];  
+av.sgr.resrc_argu = ['name', 'initial', 'inflow', 'outflow', 'geometry'           //technically name is not an argument, but it starts the list. 
+                            ,  'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'  
+                            , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'
+                            , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'
+                            ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow',     //theste are new for Avida-ED and not in the wiki. 
+                            , 'region', 'side', 'grdNum', 'regionCode','regionList'];  // this last row is not in the argurments for avida; used for 'multi-dish'
+                          
+av.sgr.supply_argu = ['region', 'side', 'grdNum', 'regionCode','regionList'];           //each is an array for region
+
+//number of subdishis is useful, especially if we only allow one layout per number of subdishes. 
+//geometry is always the same for all regions, but also part of the avida arguments for resource. 
+//Different ways to discribe layout, only one desciptor needed per task
+av.sgr.layout3 = ['glob', 'all', 'haf', 'three', '4th'];
+av.sgr.layout = ['Global Dish', 'Whole Dish', 'Halves', '3-sections', 'Quarters'];
+av.sgr.layoutMany = ['glob', 'all', 'halfLR', 'halfTB', '3top1', '3bot1', '3lft1', '3Rit1', '3book', '3stack', '4th', ];
+                         
+//Avida resource Arguments that have Defaults I will probably use. If they are the default, they do not need to be in the Environment.cfg file
+av.sgr.resrcAvidaDefaultGlobalArgu = [ 'initial', 'inflow', 'outflow', 'geometry'   
+                                    , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'];
+av.sgr.junk = 1; 
+av.sgr.resrcAvidaDefaultGlobalValu =  [ 0, 0, 0.0, 'global', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
+
+av.sgr.resrcAvidaDefaultGridArgu = [  'initial', 'inflow', 'outflow', 'geometry'   
+                                  ,  'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'    // not used when geometry = global
+                                  , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'    // not used when geometry = global
+                                  ,  'xdiffuse',  'ydiffuse',  'xgravity',  'ygravity'];
+av.sgr.resrcAvidaDefaultGridValu =  [ 0, 0, 0.0, 'global'
+                                      , 0, 0, 0, 0    //technically deterministic, but Avida-ED is using 0;
+                                      , 0, 0, 0, 0    //unset with the second parametner set equal to the first; again Avida-ED uses 0; 
+                                      , 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
+av.sgr.boxArguments = ['boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow']; //flag is true if in use; false if these arguments are not included. 
+                      //boxx and boxy are the upper left corner positions of the region in Avida-ED
+                      //boxcol and boxrow is the size of the box, so the lower right corner is (boxx+boxcol-1, boxy+boxrow-1]
+                         
                          //region list does not work at this time. It was to create a way to fill out on the data ofr all tasks based on region. 
                          //     I don't think we need it now. It should go away  when that part of ex1 goes away. 
                          //name will be created from task, subdishnum or region, type and side
@@ -488,7 +527,6 @@ av.sgr.rsrce_param = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'inflowy1', '
   av.sgr.region3char =    ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];
   av.sgr.regionCode = [  '00',   '01',   '02',   '03',   '04',  '12',  '34',  '13',  '24'];   //These numbers go with the regions above
   av.sgr.regionNames =  ['Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
-  av.sgr.regionLayout = ['Global Dish', 'Whole Dish', 'Halves', '3-sections', 'Quarters'];
   
 // need to figure out how to assign when reading environment.cfg
   av.sgr.supply3 =  ['non', 'inf',  'fin',  'equ',  'poi', 'flo' ];  //none, infinite, finite, equilibrium, poison
@@ -529,10 +567,12 @@ av.sgr.processHideFlags = function(boolArry, from) {
   };
 };
 
-
-av.fzr.clearEnvironment = function() {
+av.nut = {};
+av.fzr.clearEnvironment = function(from) {
+  console.log(from + ' called av.fzr.clearEnvironment');
   av.event = {};
   av.fzr.env = {};
+  av.oldnut = av.nut;
   av.nut = {};
   av.nut.hideFlags = {};
   av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.fzr.clearEnvironment');
@@ -543,8 +583,8 @@ av.fzr.clearEnvironment = function() {
   av.fzr.env.react = {}; 
   av.fzr.env.supply = {};
   var logiclen = av.sgr.logicNames.length;
-  var rsrcelen = av.sgr.rsrce_param.length; 
-  var reactlen = av.sgr.react_param.length;
+  var rsrcelen = av.sgr.resrc_argu.length; 
+  var reactlen = av.sgr.react_argu.length;
   var tsk;
   var rnm;
   
@@ -563,11 +603,11 @@ av.fzr.clearEnvironment = function() {
     av.nut[tsk]['resrc'] = {};
     av.nut[tsk]['react'] = {};
     for (var jj=0; jj<rsrcelen; jj++){
-      rnm = av.sgr.rsrce_param[jj];
+      rnm = av.sgr.resrc_argu[jj];
       av.nut[tsk]['resrc'][rnm] = [];
     }
     for (var jj=0; jj<reactlen; jj++){
-      rnm = av.sgr.react_param[jj];
+      rnm = av.sgr.react_argu[jj];
       av.nut[tsk]['react'][rnm] = [];
     }
   }
@@ -580,19 +620,17 @@ av.fzr.clearEnvironment = function() {
     av.fzr.env.supply[tsk] = [];
     av.fzr.env.rsrce[tsk] = {};    
     for (var jj=0; jj<rsrcelen; jj++){
-      av.fzr.env.rsrce[tsk][av.sgr.rsrce_param[jj]] = [];
+      av.fzr.env.rsrce[tsk][av.sgr.resrc_argu[jj]] = [];
     }
     av.fzr.env.react[tsk] = {};
     for (var jj=0; jj<reactlen; jj++){
-      rnm = av.sgr.react_param[jj];
+      rnm = av.sgr.react_argu[jj];
       av.fzr.env.react[tsk][rnm] = [];
     }
   };
   console.log('av.fzr.env.react=',av.fzr.env.react);
   console.log('av.fzr.env.rsrce=',av.fzr.env.rsrce);
   console.log('av.fzr.env=', av.fzr.env);
-  
-
 };
 
 //-------------------------------------------------------------------------------------------- in av.fzr.clearFzrFn --//
@@ -640,7 +678,7 @@ av.fzr.clearFzrFn = function () {
   }
   av.fzr.saveUpdateState('yes');
   av.fzr.subDishOrNot = 'none';
-  av.fzr.clearEnvironment();
+  av.fzr.clearEnvironment('av.fzr.clearFzrFn');
 };
 
 //------------------------------------------------------------------------------------------- end av.fzr.clearFzrFn --//
@@ -648,7 +686,7 @@ av.fzr.clearFzrFn = function () {
 av.fzr.saveState = 'default';
 av.fzr.workspaceName = 'default';
 
-
+// Does not clear the active config data
 av.fzr.clearMainFzrFn = function () {
   'use strict';
   if (av.debug.root) console.log('in ClearMainFzrFn');
@@ -782,7 +820,7 @@ av.pch.clearPopChrt = function () {
   av.pch.aveNum = [0];
   av.pch.logNum = [0];
   av.pch.aveVia = [0];
-  av.pch.nUpdate = [];    //not sure if this is needed.
+  av.pch.nUpdate = [];    //not sure if this is needed.  
   av.pch.aveMaxFit = 0.1;
   av.pch.aveMaxCst = 0.1;
   av.pch.aveMaxEar = 0.1;

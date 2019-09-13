@@ -295,7 +295,9 @@ require([
     av.dom.ornButton = document.getElementById('ornButton');
     av.dom.andnButton = document.getElementById('andnButton');
     av.dom.xorButton = document.getElementById('xorButton');
-
+/*
+ * Not in use any longer; might use to create new vars
+ * 
     av.dom.notType = document.getElementById('notType');
     av.dom.andType = document.getElementById('andType');
     av.dom.oroType = document.getElementById('oroType');
@@ -325,7 +327,7 @@ require([
     av.dom.ornOut = document.getElementById('ornOut');
     av.dom.antOut = document.getElementById('antOut');
     av.dom.xorOut = document.getElementById('xorOut');
-
+*/
     av.dom.experimentRadio = document.getElementById('experimentRadio');
     av.dom.demoRadio = document.getElementById('demoRadio');
     av.dom.manualUpdateRadio = document.getElementById('manualUpdateRadio');
@@ -1380,7 +1382,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   av.ptd.processTab = function (evt, contentType) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("labInfoClass");
-    console.log('tabcontent=', tabcontent);
+    //console.log('tabcontent=', tabcontent);
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
     }
@@ -2290,6 +2292,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
               //Plotly.restyle(av.dom.popChart, av.pch.trace1, [1]);
               av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in AvidaED.js at 1750';
               av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
+              //console.log('av.dom.popChart=',av.dom.popChart);
+              //console.log('av.pch.update=', av.pch.update);   // should look like av.pch.update= {autorange: true, width: 544, height: 236}
               Plotly.relayout(av.dom.popChart, av.pch.update);
               //console.log('after relayout in update grid chart');
               if (av.debug.plotly) console.log('popData', popData);
@@ -2532,52 +2536,6 @@ av.ptd.randInputChange = function(value, randErroTest) {
     document.getElementById('ex1allSugarChange').value = 'allNeutral';
   };
 
-av.ui.ex2envBoxSwap = function (showbox) {
-    document.getElementById('ex2envNone').style.display = "none";
-    document.getElementById('ex2envFinite').style.display = "none";
-    document.getElementById('ex2envEquilibrium').style.display = "none";
-    document.getElementById('ex2envSourceSink').style.display = "none";
-    document.getElementById('ex2envGradient').style.display = "none";
-
-    document.getElementById(showbox).style.display = "block";
-    av.ui.ex2envRegion = document.getElementById('ex2envRegion').value;
-    av.ui.ex2envTask = document.getElementById('ex2envTask').value;
-    av.ui.ex2envDistribute = document.getElementById('ex2envDistribute').value;
-    //console.log('in av.ui.ex2envBoxSwap; showbox = ', showbox);
-  };
-
-  document.getElementById('ex2envDistribute').onchange = function() {
-    av.ui.envDistribute = document.getElementById('ex2envDistribute').value;
-    //console.log ('in ex2envDistribute =', av.ui.ex2envDistribute);
-    switch (document.getElementById('ex2envDistribute').value) {
-      case 'Finite':
-        av.ui.ex2envBoxSwap('ex2envFinite'); 
-        break;
-      case 'Equilibrium':
-        av.ui.ex2envBoxSwap('ex2envEquilibrium'); 
-        break;
-      case 'Gradient':
-        av.ui.ex2envBoxSwap('ex2envGradient'); 
-        break;
-      case 'Source/Sink':
-        av.ui.ex2envBoxSwap('ex2envSourceSink'); 
-        break;
-      case 'None':
-      case 'Infinite':
-        av.ui.ex2envBoxSwap('ex2envNone'); 
-        break;
-    }
-    //av.ptd.envobj2form('envRegion.change');
-  };
-
-//on ex2 tab
-  document.getElementById('allSugarDropCheckBox').onchange = function() {    
-    var allSugar = document.getElementById('allSugarDropCheckBox').value;
-    av.ptd.allSugarDropCheckBox(allSugar);
-    document.getElementById('allSugarDropCheckBox').value = 'allNeutral';
-  };
-
-
 // end of ex1 and ex2 page stuff
 //------------------------------------------------------------------------------------------------- Sugar Accordion ----
 //Global or Spatial in Ed speak = Global or Grid in Avida Environment file.
@@ -2589,11 +2547,11 @@ av.sgr.allSugarGeometryChange = function(domObj){
   document.getElementById('allSugarGeometry').value = 'Neutral';
 };
 
-av.sgr.allSugarTypeChange = function(domObj){
+av.sgr.allsugarSupplyTypeChange = function(domObj){
   var idx = domObj.selectedIndex;        // get the index of the selected option 
   var which = domObj.options[idx].value;   // get the value of the selected option 
-  av.sgr.ChangeAllSugarType(which);
-  document.getElementById('allSugarType').value = 'Neutral';    
+  av.sgr.ChangeAllsugarSupplyType(which);
+  document.getElementById('allsugarSupplyType').value = 'Neutral';    
 };
 
 av.sgr.allSugarDetailsOpenClose = function(domObj){
@@ -3569,10 +3527,10 @@ $(function slidemute() {
 
   av.sgr.ChangeAllGeo('Global');
   av.sgr.setSugarColors();
-  av.sgr.ChangeAllSugarType('Infinite');
+  av.sgr.ChangeAllsugarSupplyType('Infinite');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last things done');  
 
-  av.ui.ex2envBoxSwap('ex2envNone');    //delete later
+  //av.ui.ex2envBoxSwap('ex2envNone');    //delete later
   av.ui.ex1setSugarColors();   //94     //delete later
   
   // Avida-ED 4.0.0 Alpha Testing fix this too. 

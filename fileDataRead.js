@@ -121,7 +121,7 @@ av.frd.add2freezerFromFile = function (loadConfigFlag) {
   av.fzr.file[av.fio.anID] = name;
   av.fzr.domid[dir] = domid;
   av.fzr.dir[domid] = dir;
-}
+};
 
 av.frd.add2multiDishFromFile = function(){
   "use strict";
@@ -436,9 +436,9 @@ av.frd.reactLineParse = function(lnArray) {
       for (var ii=1; ii < len; ii++) {
         pear = pairArray[ii].split('=');
         //console.log('React: ii=',ii,'; pear', pear);
-        nn = av.sgr.react_param.indexOf(pear[0].toLowerCase());
+        nn = av.sgr.react_argu.indexOf(pear[0].toLowerCase());
         if (-1 < nn) {
-          envobj[av.sgr.react_param[nn]][ndx] = pear[1];
+          envobj[av.sgr.react_argu[nn]][ndx] = pear[1];
         }
         else {
             lnError = ' '+pear[0]+' is not a valid reaction keyword. lnArray = '+lnArray;
@@ -503,10 +503,10 @@ av.frd.resrcLineParse = function(lnArray){
                                         // match.input = initial string
                                         // match.length is the length of the array, including null elements 
   
-  console.log('pairArray=', pairArray);
+  if (av.dbg.flg.nut) console.log('pairArray=', pairArray);
   //find logic type
   matchTaskRegion = pairArray[0].match(re_region);  // Matches using re_num0 pattern.
-  console.log('re_region=', re_region, ', matchTaskRegion=', matchTaskRegion);
+  if (av.dbg.flg.nut) console.log('re_region=', re_region, ', matchTaskRegion=', matchTaskRegion);
   
   var tsk =  matchTaskRegion[1];
   var logicindex = av.sgr.logicNames.indexOf( tsk );
@@ -550,20 +550,23 @@ av.frd.resrcLineParse = function(lnArray){
       regionStr = ('000'+ matchTaskRegion[2]).slice(-2);               //to add a leading zero if needed.
       var tmpndx = av.sgr.regionCode.indexOf(regionStr);
       envobj.region[ndx] = av.sgr.regionNames[tmpndx];
-      console.log('ndx=',ndx, '; envobj.regionCode[ndx]=',envobj.regionCode[ndx],'; envobj.region[ndx]=',envobj.region[ndx]);
+      if (av.dbg.flg.nut) console.log('ndx=',ndx, '; envobj.regionCode[ndx]=',envobj.regionCode[ndx],'; envobj.region[ndx]=',envobj.region[ndx]);
+      envobj.regionList[envobj.regionCode[ndx]] = ndx;
+      
+      // look for a side if it is flow or gradient
       if (0 < matchTaskRegion[3].length){
         matchSide = matchTaskRegion[3].match(re_side);
-        console.log('re_side=', re_side, '; matchSide=', matchSide);
+        if (av.dbg.flg.nut) console.log('re_side=', re_side, '; matchSide=', matchSide);
         envobj.side[ndx] = matchSide[1];
         if (0 < matchSide[2].length){
           envobj.grdNum[ndx] = matchSide[2];
-          console.log('ndx=', ndx ,'; envobj.grdNum=', envobj.grdNum, 'envobj.grdNum[ndx]=', envobj.grdNum[ndx]);
+          if (av.dbg.flg.nut) console.log('ndx=', ndx ,'; envobj.grdNum=', envobj.grdNum, 'envobj.grdNum[ndx]=', envobj.grdNum[ndx]);
           // this does not work get Wesley to help
           matchgradientNdx = matchSide[2].match(re_gradientNdx);
           //matchgradientNdx = '00'.match(re_gradientNdx);
           
-          console.log('re_gradientNdx=', re_gradientNdx, '; matchSide[2]=', matchSide[2], re_gradientNdx, '; matchgradientNdx=', matchgradientNdx);
-          console.log('result=', matchSide[2].match[re_gradientNdx]);
+          if (av.dbg.flg.nut) console.log('re_gradientNdx=', re_gradientNdx, '; matchSide[2]=', matchSide[2], re_gradientNdx, '; matchgradientNdx=', matchgradientNdx);
+          if (av.dbg.flg.nut) console.log('result=', matchSide[2].match[re_gradientNdx]);
           envobj.grdNum[ndx] = matchgradientNdx[1];
           if (0 < matchgradientNdx[2].length) console.log('The name should not have anymore to it ,but here it is ', matchgradientNdx[2]);
         };
@@ -575,9 +578,9 @@ av.frd.resrcLineParse = function(lnArray){
       for (var ii=1; ii < len; ii++) {
         pear = pairArray[ii].split('=');
         //console.log('Resource: ii=',ii,'; pear', pear);
-        nn = av.sgr.rsrce_param.indexOf(pear[0].toLowerCase());
+        nn = av.sgr.resrc_argu.indexOf(pear[0].toLowerCase());
         if (-1 < nn) {
-          envobj[av.sgr.rsrce_param[nn]][ndx] = pear[1];
+          envobj[av.sgr.resrc_argu[nn]][ndx] = pear[1];
         }
         else {
           if ('cellbox' == pear[0].toLowerCase()) {
@@ -597,11 +600,16 @@ av.frd.resrcLineParse = function(lnArray){
       };
 
       //console.log('edTsk=', edTsk, '; av.nut[edTsk]=', av.nut[edTsk]);
+      //tsk
+      //var subCode =  envobj.name[ndx].substring(3).toString();
+      //envobj.region[ndx] = subCode;
+      //envobj.regionList[subCode] = ndx;
+      
 
       //console.log('envobj.geometry=', envobj.geometry);
       //onsole.log('ndx=',ndx,'envobj.geometry[ndx]=', envobj.geometry[ndx]);
       av.nut[edTsk].geometry = envobj.geometry[ndx];
-      console.log('edTsk=', edTsk,'; av.nut[edTsk].geometry=', av.nut[edTsk].geometry);
+      if (av.dbg.flg.nut) console.log('edTsk=', edTsk,'; av.nut[edTsk].geometry=', av.nut[edTsk].geometry);
 
       //Find the supply type
       if (0 < envobj.initial[ndx]) 
@@ -650,9 +658,7 @@ av.frd.nutrientParse = function (filestr) {
     eolfound = false;
     metaData = lines[ii].match(re_metaData);        //console.log("lines["+ii+"]=", lines[ii]);
     matchComment = lines[ii].match(re_comment);
-    if (null != metaData) { 
-      console.log('metaData=', metaData);
-    }
+    //if (null != metaData) {  console.log('metaData=', metaData);  }   // not useing metadata, hope there is no neeed
     if (null != matchComment) {aline = matchComment[1];}
     else aline = lines[ii];
     if (3 < aline.length) {
@@ -697,7 +703,7 @@ av.frd.nutrientParse = function (filestr) {
         //console.log('errors in line: ii=', ii, '; aline=', aline);
         errors += 'ii='+ii+'; rsrcError='+rsrcError+'; reacError='+reacError+'\n';
       }
-    console.log('----------------------------------------------------------------------------------------------------');
+    if (av.dbg.flg.nut) console.log('----------------------------------------------------------------------------------------------------');
     }  //end of processing lines longer than 3 characters
     ii++;
   } // while that goes through lines in file. 
@@ -709,21 +715,21 @@ av.frd.nutrientParse = function (filestr) {
   //find some summary info about nutrients. Need to look at each task separately. 
   for (var ii=0; ii< len; ii++) {
     tsk = av.sgr.logEdNames[ii];
-    console.log('av.nut[tsk].react.resource=',av.nut[tsk].react.resource);
+    //console.log('av.nut[tsk].react.resource=',av.nut[tsk].react.resource);
     
     // is the conde word 'missing' is the listed as the name of the resource than there is not resource specified and 
     // the reaction can only act as if the resource for that task is none or infinite and it must be global. 
     if ('missing' != av.nut[tsk].react.resource[0]) {  
       distinctRegions = [...new Set(av.nut[tsk].resrc.regionCode)];
       av.nut[tsk].numsubdish = distinctRegions.length;
-      av.nut[tsk].regionLayout = av.sgr.regionLayout[av.nut[tsk].numsubdish];
+      av.nut[tsk].regionLayout = av.sgr.layout[av.nut[tsk].numsubdish];  //av.sgr.layout 
 
       geoLen = av.nut[tsk].resrc.geometry.length;
       if (1 < geoLen) {
         av.nut[tsk].geometry = 'grid';
       }
       else if (-1 < geoLen) {    
-        console.log('av.nut[tsk].resrc.geometry=', av.nut[tsk].resrc.geometry);
+        if (av.dbg.flg.nut) console.log('av.nut[tsk].resrc.geometry=', av.nut[tsk].resrc.geometry);
         if (undefined != av.nut[tsk].resrc.geometry[0]) 
           av.nut[tsk].geometry = av.nut[tsk].resrc.geometry[0];
         else
@@ -742,9 +748,9 @@ av.frd.environment2struct = function (fileStr) {
   'use strict';
   //console.log('in av.frd.environment2struct');
   av.frd.nutrientParse(fileStr);
+  console.log('av.nut=', av.nut);
   var errors = av.frd.environmentParse(fileStr);
   if (1 < errors.length) console.log('errors=', errors);
-  av.ptd.showEnv('av.frd.environment2struct');
   console.log('----------------------------------------------------------------------------------------------------');
 
 };
@@ -1007,9 +1013,9 @@ av.frd.reactionLineParse = function(lnArray) {
       for (var ii=1; ii < len; ii++) {
         pear = pairArray[ii].split('=');
         //console.log('React: ii=',ii,'; pear', pear);
-        nn = av.sgr.react_param.indexOf(pear[0].toLowerCase());
+        nn = av.sgr.react_argu.indexOf(pear[0].toLowerCase());
         if (-1 < nn) {
-          envobj[av.sgr.react_param[nn]][ndx] = pear[1];
+          envobj[av.sgr.react_argu[nn]][ndx] = pear[1];
         }
         else {
           lnError = 'pear[0]=, '+pear[0]+' is not a valid reaction keyword. lnArray = '+lnArray;
@@ -1081,9 +1087,9 @@ av.frd.resourceLineParse = function(lnArray){
     for (var ii=1; ii < len; ii++) {
       pear = pairArray[ii].split('=');
       //console.log('Resource: ii=',ii,'; pear', pear);
-      nn = av.sgr.rsrce_param.indexOf(pear[0].toLowerCase());
+      nn = av.sgr.resrc_argu.indexOf(pear[0].toLowerCase());
       if (-1 < nn) {
-        envobj[av.sgr.rsrce_param[nn]][ndx] = pear[1];
+        envobj[av.sgr.resrc_argu[nn]][ndx] = pear[1];
       }
       else {
         if ('cellbox' == pear[0].toLowerCase()) {
@@ -1101,7 +1107,6 @@ av.frd.resourceLineParse = function(lnArray){
         }
       }
     };
-    
     
     var subCode =  envobj.name[ndx].substring(3).toString();
     envobj.region[ndx] = subCode;
