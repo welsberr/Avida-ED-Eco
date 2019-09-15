@@ -148,15 +148,8 @@ av.ptd.popNewExState = function () {
   av.dom.muteInput.disabled = false;
   av.dom.childParentRadio.disabled = false;
   av.dom.childRandomRadio.disabled = false;
-  av.dom.notose.disabled = false;
-  av.dom.nanose.disabled = false;
-  av.dom.andose.disabled = false;
-  av.dom.ornose.disabled = false;
-  av.dom.orose.disabled = false;
-  av.dom.andnose.disabled = false;
-  av.dom.norose.disabled = false;
-  av.dom.xorose.disabled = false;
-  av.dom.equose.disabled = false;
+  console.log('Avida-ED4: need to reset defaults on new Environmental seettings.');
+  
   av.dom.experimentRadio.disabled = false;
   av.dom.demoRadio.disabled = false;
 
@@ -281,7 +274,7 @@ av.ptd.runPopFn = function (from) {
     av.dom.userMsgLabel.innerHTML = '';
     if ('started' !== av.grd.runState) {
       if ('test' == av.msg.setupType) { 
-        console.log('scrap test form; not completely working yet');
+        console.log('test files just allow edits directly to the environment file so rest of form is ignored');
         //get original files. 
         av.fwt.testForm2folder();
       }
@@ -317,18 +310,21 @@ av.ptd.runPopFn = function (from) {
         av.pch.dadNum[av.parents.name[ii]] = [];
         av.pch.dadVia[av.parents.name[ii]] = [];
       }
-      console.log(av.pch.numDads, '; av.pch.dadFit=',av.pch.dadFit);
-    }
+      //console.log('numver of ancestors =',av.pch.numDads, '; av.pch.dadFit=',av.pch.dadFit);
+    };
 
+    // auto update will need to be redone. for avida 4.0 
     if (av.dom.autoUpdateRadio.checked) {
       //av.msg.pause(av.dom.autoUpdateOnce.value);  //not used where there is handshaking (not used with av.msg.stepUpdate)
       av.ui.autoStopFlag = true;
       av.ui.autoStopValue = av.dom.autoUpdateOnce.value;
       //console.log('stop at  = av.dom.autoUpdateOnce.value;
-    }
-
+    };
+    console.log('before call av.ptd.makeRunState');
     av.ptd.makeRunState('av.ptd.runPopFn 328');
+    console.log('after call av.ptd.makeRunState');
     av.msg.stepUpdate();   //av.msg.doRunPause(av.fio);
+    console.log('after av.msg.stepUpdate');
   }
   if (av.debug.popCon) console.log('end of av.ptd.runPopFn 331');
   //update screen based on data from C++
@@ -512,7 +508,7 @@ av.ptd.bitToggle = function (button) {
     av.pch.logNum[ii] = null;
   }
   av.grd.drawGridSetupFn('av.ptd.bitToggle');
-  av.grd.popChartFn();
+  av.grd.popChartFn('av.ptd.bitToggle');
   //console.log('bitToggle: av.grd.popStatsMsg.update', av.grd.popStatsMsg.update);
   av.ptd.updateLogicFn(av.grd.popStatsMsg.update);
 };
@@ -523,7 +519,7 @@ av.ptd.resetDishFn = function (need2sendRest2avida) { //Need to reset all settin
   // send reset to Avida adaptor
   //if (need2sendRest2avida) {av.msg.reset();} //Take this out if we only reset when avida resets After sending a request for reset.
 
-  //console.log('in resetDishFn');
+  console.log('in resetDishFn');
   av.msg.pause('now');
   av.ptd.makePauseState();
   av.grd.clearGrd();

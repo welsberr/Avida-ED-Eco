@@ -454,14 +454,14 @@ av.sgr.monoChromeMaps = ['reddMap', 'orngMap', 'yllwMap', 'lawnMap',  'grenMap',
   av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'grenMap',  'yllwMap', 'orngMap',  'reddMap', 'mgntMap',  'purpMap'];
   av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'grenMap',  'yllwMap', 'orngMap',  'redvMap', 'mgntMap',  'purpMap'];
   av.sgr.sugarColors = ['grenMap', 'seagMap',  'cornMap', 'blueMap',  'purpMap', 'mgntMap',  'redvMap', 'orngMap',  'yllwMap'];
-console.log('sugarColors=', av.sgr.sugarColors);
+//console.log('sugarColors=', av.sgr.sugarColors);
 av.sgr.sugarBackgroundShade = 40;  //was 30
 av.sgr.sugarNameShade = 340;   //was 365   265 too light for yellow&greens; 300 green ok; yellow still too light
 av.sgr.monoColormaplength = av.color.reddMap.length;
 av.sgr.darkEnd = av.sgr.monoColormaplength-30;          //last color used in the the array for color scale
 av.sgr.sugarGreyShade = 20;
-console.log('full mono colorMap length =', av.sgr.monoColormaplength, '; greyMap length =', av.color.greyMap.length
-     , '; darkEnd =', av.sgr.darkEnd, '; sugarBackgroundShade', av.sgr.sugarBackgroundShade, '; sugarNameShade=', av.sgr.sugarNameShade);
+//console.log('full mono colorMap length =', av.sgr.monoColormaplength, '; greyMap length =', av.color.greyMap.length
+//     , '; darkEnd =', av.sgr.darkEnd, '; sugarBackgroundShade', av.sgr.sugarBackgroundShade, '; sugarNameShade=', av.sgr.sugarNameShade);
 
 av.sgr.rsrce_fake = ['0', '3600', '0', '19', '20', '39', '1', '1'
                            ,'.2', '0', '19', '20', '39', '0', '0'
@@ -571,7 +571,7 @@ av.sgr.processHideFlags = function(boolArry, from) {
 
 av.nut = {};
 av.fzr.clearEnvironment = function(from) {
-  console.log(from + ' called av.fzr.clearEnvironment');
+  //console.log(from + ' called av.fzr.clearEnvironment');
   av.event = {};
   av.fzr.env = {};
   av.oldnut = av.nut;
@@ -612,10 +612,10 @@ av.fzr.clearEnvironment = function(from) {
       rnm = av.sgr.react_argu[jj];
       av.nut[tsk]['react'][rnm] = [];
     }
-  }
-  console.log('av.nut =',av.nut);
-  
-  
+  };
+  //console.log('av.nut =',av.nut);
+  console.log('av =',av);
+    
   for (var ii=0; ii< logiclen; ii++) {      //9
     tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
     //var vnm = av.sgr.logicVnames[ii];  
@@ -630,9 +630,9 @@ av.fzr.clearEnvironment = function(from) {
       av.fzr.env.react[tsk][rnm] = [];
     }
   };
-  console.log('av.fzr.env.react=',av.fzr.env.react);
-  console.log('av.fzr.env.rsrce=',av.fzr.env.rsrce);
-  console.log('av.fzr.env=', av.fzr.env);
+  //console.log('av.fzr.env.react=',av.fzr.env.react);
+  //console.log('av.fzr.env.rsrce=',av.fzr.env.rsrce);
+  //console.log('av.fzr.env=', av.fzr.env);
 };
 
 //-------------------------------------------------------------------------------------------- in av.fzr.clearFzrFn --//
@@ -810,6 +810,7 @@ av.pch.dadMax = 16;
 av.pch.clearPopChrt = function () {
   av.pch.ht = 10;
   av.pch.wd = 10; 
+  console.log('av.pch.wd', av.pch.wd);    //
   av.pch.yValue = 'new';
   av.pch.yChange = 'false';
   av.pch.popY = [];

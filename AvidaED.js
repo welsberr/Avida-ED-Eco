@@ -92,8 +92,8 @@ require([
   'dojo/ready',
   'jquery',
   'jquery-ui',
-  //'lib/plotly-latest.min.js',
-  'lib/plotly.js',
+  //'lib/plotly-latest.min.js',   //updatd to plotly_v1.44.3.js on 2018_0915
+  'lib/plotly.js',                        //version  plotly_v1.44.3   as of 2018
   //'lib/jquery.fileDownload.js',
   //'lib/Blob',
   'lib/jszip.min.js',
@@ -927,7 +927,6 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   av.fio.JSZip = JSZip;  //to allow other required files to be able to use JSZip
   av.fio.FileSaver = FileSaver;
   av.pch.Plotly = Plotly;
-  av.pch.Plotly.aminate = Plotly.animate;
 
   av.fio.readZipWS(av.fio.defaultFname, true);
   //av.fio.loadDefaultConfig();
@@ -1061,6 +1060,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   av.ui.where = function(domobj) {
     console.log('domobj=', domobj);
   };
+  
   av.ui.toggleDevelopentDisplays = function () {
     console.log('display of test details = ', document.getElementById('testDishDetailDiv').style.display);
     var len, tsk, sub; 
@@ -1077,7 +1077,6 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       //document.getElementById('popRightSideArrow').style.display = 'block';            //as of 2019_0909 I think this can be deleted.
       document.getElementById('debugResource').style.display = 'none';
 
-      
       av.sgr.processHideFlags(av.sgr.hideFlagInit, showDevelopment,'av.ui.toggleDevelopentDisplays');
       
       console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
@@ -1130,7 +1129,14 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     }
   };
   
-  av.dom.xorLabel.onclick = function () {av.ui.toggleDevelopentDisplays(); };
+  av.dom.xorLabel.onclick = function () {
+    if ('none === ') {
+      document.getElementById('debugResource').style.display = 'flex';
+    }
+    else {
+      document.getElementById('debugResource').style.display = 'none';
+    }
+  };
 
   av.fwt.tryDown = function(blob) {
     var ab = document.createElement('a');
@@ -1489,7 +1495,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   });
 
   av.dom.oneUpdateButton.onclick = function () {
-    av.post.addUser('Button: oneUpdateButton');
+    av.post.addUser('Button: oneUpdateButton',   '=updateNum; ' + av.grd.msg.update + '=msg.update;  ' + av.grd.popStatsMsg.update + '=popStatsMsg.update');
     av.ui.oneUpdateFlag = true;
     av.ptd.makeRunState('av.dom.oneUpdateButton.onclick');
     av.ptd.runPopFn('av.dom.oneUpdateButton.onclick');
@@ -1945,7 +1951,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
         //if (av.debug.uil) console.log('w:', av.dom.gridHolder.offsetWidth, av.dom.gridHolder.offsetHeight, '= av.dom.gridHolder.offsetWidth ht');
         //if (av.debug.uil) console.log('w:', parseInt($("#gridHolder").css('width')), parseInt($("#gridHolder").css('height')),'= av.dom.gridHolder jQuery.cssWd ht ~ outer ~ offset');
 
-        //av.dsz.gridHolderWd = parseInt($("#gridHolder").css("width"));   //this seems to match offset width ht
+        //av.dsz.gridHolderWd = parseInt($("#gridHolder").css("width"));   //this seems to match offsetht
         //av.dsz.gridHolderHt = parseInt($("#gridHolder").css("height"));
         //if (av.debug.uil) console.log('w:',av.dsz.gridHolderWd,av.dsz.gridHolderHt, '= gridHolder jQuery.width ht ~ outer ~ css ~ offset');
 
@@ -2099,10 +2105,9 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.grd.ytitle = document.getElementById('yaxis').value;
     //need to get correct array to plot from freezer
     //console.log('changeyaxis popChartFn');
-    av.grd.popChartFn();
+    av.grd.popChartFn('av.dom.yaxis. onchange');
   };
 
-  av.grd.popChartInit_empty = function (from) {}
   // initialize needs to be in AvidaED.js
   av.grd.popChartInit = function (from) {
     //console.log(from, 'called av.grd.popChartInit');
@@ -2147,10 +2152,10 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     //console.log('layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width);
   };
 
-av.grd.popChartFn_empty = function () {};
-  av.grd.popChartFn = function () {
+  av.grd.popChartFn = function (from) {
     'use strict';
-    //console.log('av.grd.runState = ', av.grd.runState);
+    console.log(from + ' called av.grd.popChartFn');
+    console.log('av.grd.runState = ', av.grd.runState);
     if ('prepping' === av.grd.runState) {   //values can be prepping, started, or world
       av.dom.popChart.style.visibility = 'hidden';
     }
@@ -2296,26 +2301,30 @@ av.grd.popChartFn_empty = function () {};
               //Plotly.restyle(graphDiv, update, [1, 2]);
               //Plotly.restyle(av.dom.popChart, av.pch.trace0, [0]);
               //Plotly.restyle(av.dom.popChart, av.pch.trace1, [1]);
-              av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in AvidaED.js at 1750';
+              av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in AvidaED.js at 2304';
               av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
-              console.log('av.dom.popChart=',av.dom.popChart);
-              console.log('av.pch.update=', av.pch.update);   // should look like av.pch.update= {autorange: true, width: 544, height: 236}
               if (undefined == av.pch.update) {
                 av.pch.update = {
                   autorange: true,
                   width: av.pch.wd,
                   height: av.pch.ht
                 };                
-              }
+              };
+              console.log('av.debug.log = ', av.debug);
+              console.log('av.dom.popChart=',av.dom.popChart);
+              console.log('av.pch.update=', av.pch.update);   // should look like av.pch.update= {autorange: true, width: 544, height: 236}
+              console.log('av=', av);
+              //next line crashes ------------------
               Plotly.relayout(av.dom.popChart, av.pch.update);
               //console.log('after relayout in update grid chart');
+              //Error: Uncaught TypeError: Cannot read property 'width' of undefined from 
+              //http://localhost:8003/lib/plotly.js:114473:53
+              
               if (av.debug.plotly) console.log('popData', popData);
               //Plotly.animate('popChart', {popData});
-              av.debug.log += '\n     --uiD: Plotly.aminate("popChart", {popData}) in AvidaED.js at 1757';
+              av.debug.log += '\n     --uiD: Plotly.animate("popChart", {popData}) in AvidaED.js at 1757';
               av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'popData', [popData]);
-              Plotly.aminate('popChart', {popData});
-              //Plotly.aminate('popChart', popData);
-              //av.pch.Plotly.aminate('popChart', {popData});
+              Plotly.animate('popChart', {popData});
               if (av.debug.plotly) console.log('after animate in update grid chart');
             }
           }
@@ -3098,7 +3107,8 @@ $(function slidemute() {
 
   //on 2018_0823 this is where height gets messed up when loading the program. 
   av.pch.divSize = function(from) {
-    if (av.debug.uil) console.log(from, 'called av.pch.divSize');
+    console.log(from, 'called av.pch.divSize');
+    av.debug.uil = true;
     if (av.debug.uil) console.log('popChrtHolder css.wd ht border padding margin=',  $("#popChrtHolder").css('width'), $("#popChrtHolder").css('height')
       ,$("#popChrtHolder").css('border'), $("#popChrtHolder").css('padding'), $("#popChrtHolder").css('margin'));
 
@@ -3107,6 +3117,7 @@ $(function slidemute() {
 
     av.pch.ht = av.dom.popChrtHolder.clientHeight - 2*parseInt($("#popChrtHolder").css('padding'),10);
     av.pch.wd = av.dom.popChrtHolder.clientWidth - 2*parseInt($("#popChrtHolder").css('padding'),10);
+    console.log('av.pch.wd=', av.pch.wd, '; av.pch.ht=', av.pch.ht);
     av.pch.layout.height = av.pch.ht;
     av.pch.layout.width = av.pch.wd;
     if (av.debug.uil) console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
@@ -3122,6 +3133,7 @@ $(function slidemute() {
        av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'),10));
     if (av.debug.uil) console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
     if (av.debug.uil) console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
+    av.debug.uil = false;
   };
 
   av.anl.divSize = function(from) {
@@ -3152,7 +3164,7 @@ $(function slidemute() {
       if (av.debug.uil) console.log('av.grd.canvasSize =', av.grd.canvasSize, '; av.dom.gridCanvas.width = ', av.dom.gridCanvas.width, 
          '; av.dom.gridHolder.clientHeight=', av.dom.gridHolder.clientHeight);
       if (av.grd.need2DrawGrid) {
-        av.grd.popChartFn();
+        av.grd.popChartFn('av.ui.browserResizeEventHandler');
         console.log('av.grd.need2DrawGrid=',av.grd.need2DrawGrid);
         //av.grd.drawGridSetupFn('av.ui.browserResizeEventHandler when pop=flex');
       }
@@ -3546,13 +3558,18 @@ $(function slidemute() {
   //av.ui.ex2envBoxSwap('ex2envNone');    //delete later
   av.ui.ex1setSugarColors();   //94     //delete later
   
+  av.doj.mnDebug.style.visibility = 'visible';   // set visiable so that av.ui.toggleDevelopentDisplays will hide debuts stuff
+  
   // Avida-ED 4.0.0 Alpha Testing fix this too. 
   //true when diane is working; false for all production releases even in alpha testsing.  
-  if (true) {
+  if (false) {
     console.log('testing mode; remove before putting on server for Avida-ED 4.0.0 Alpha Testing. ');
-    av.dom.xorLabel.onclick();
+    //av.dom.xorLabel.onclick();   now only turns grid resource value table on and off
+    //
+    //set mmDebug to hidden so that when toggle called it will show the development sections 
+    av.doj.mnDebug.style.visibility = 'hidden';   //visible
   }  
-  
+  av.ui.toggleDevelopentDisplays();
   // May need to do some things here to get the app to look right on the screen. 
   //av.grd.popChartFn();
   //av.grd.drawGridSetupFn('initial background'); //Draw initial background

@@ -307,7 +307,7 @@ av.dnd.lndTestConfig = function (move) {
     av.msg.importPopExpr();
     av.msg.requestGridData();
     av.msg.sendData();
-    av.grd.popChartFn();
+    av.grd.popChartFn('av.dnd.lndTestConfig');
     //av.msg.requestPopStats();  //tiba last time this was on; data was all = 0, so confusing;
   }
   
@@ -316,8 +316,9 @@ av.dnd.lndTestConfig = function (move) {
 //------------------------------------------------------------------------------------------ end av.dnd.lndtestConfig --
 
 //-------------------------------------------------------------------------------------- start av.dnd.lndActiveConfig --
-av.dnd.lndActiveConfig = function (move) {
+av.dnd.lndActiveConfig = function (move, from) {
   'use strict';
+  console.log(from, 'called av.dnd.lndActiveConfig');
   av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
   var ndx = -1;
   var klen = 0;
@@ -481,7 +482,7 @@ av.dnd.lndActiveConfig = function (move) {
     av.msg.importPopExpr();
     av.msg.requestGridData();
     av.msg.sendData();
-    av.grd.popChartFn();
+    av.grd.popChartFn('av.dnd.lndActiveConfig');
     //av.msg.requestPopStats();  //tiba last time this was on; data was all = 0, so confusing;
   }
   
@@ -626,7 +627,7 @@ av.dnd.makeMove = function (source, nodes, target) {
       added = av.dnd.lndAncestorBoTest(av.dnd.move);
       break;
     case av.dnd.activeConfig:
-      added = av.dnd.lndActiveConfig(av.dnd.move);
+      added = av.dnd.lndActiveConfig(av.dnd.move, 'av.dnd.makeMove');
       break;
     case av.dnd.activeOrgan:
       added = av.dnd.lndActiveOrgan(av.dnd.move);
@@ -1028,7 +1029,7 @@ av.dnd.TestDishSetupPrep = function(fzSection, target, type) {
     var domIDs = Object.keys(av.dnd[target].map);
     av.dnd.move.targetDomId = domIDs[domIDs.length - 1];
     console.log('move', av.dnd.move);
-    added = av.dnd.lndActiveConfig(av.dnd.move);
+    added = av.dnd.lndActiveConfig(av.dnd.move, 'av.dnd.TestDishSetupPrep');
     console.log('after added av.dnd.lndActiveConfig, added=', added);
     
     console.log('av.dom.environConfigEdit=',av.dom.environConfigEdit);
@@ -1119,7 +1120,7 @@ av.dnd.runTestDish2 = function(fzSection, target, type) {
     var domIDs = Object.keys(av.dnd[target].map);
     av.dnd.move.targetDomId = domIDs[domIDs.length - 1];
     console.log('move', av.dnd.move);
-    added = av.dnd.lndActiveConfig(av.dnd.move);
+    added = av.dnd.lndActiveConfig(av.dnd.move, 'av.dnd.runTestDish2');
     console.log('after added av.dnd.lndActiveConfig, added=', added);
     
     //Now actually load and run the test direcdtly from the freezer.
@@ -1135,109 +1136,6 @@ av.dnd.runTestDish2 = function(fzSection, target, type) {
   else {
     alert('You must select a test-dish first');
   };
-};
-//------------------------------------------------------------------------------------------- end av.dnd.runTestDish --
-
-// multi-dish appears to load in the freezer, but does not yet actually run. error on C++ side
-// thinking of rewriteing parcer on javascript side since I need to do that anyway. 
-//----------------------------------------------------------------------------------------------- av.dnd.runMultiDish --
-av.dnd.runMultiDish = function(fzSection, target, type) {
-  //console.log('fzrObject=', av.dnd[fzSection].getSelectedNodes()[0]);
-  //need to find selected item. looking for 'dojoDndItem dojoDndItemAnchor' might help
-  //console.log('fzOrgan selected keys', Object.keys(av.dnd.fzOrgan.selection)[0]);
-  //Object.keys(av.dnd.fzOrgan.selection)[0] and av.dnd.fzOrgan.getSelectedNodes()[0].id return the same thing
-
-  if (undefined != av.dnd[fzSection].getSelectedNodes()[0]) {
-    //This section partially puts the multi-dish in the active area
-    var nodeMv = av.dnd[fzSection].getSelectedNodes()[0].id;
-    console.log('fzSection=', fzSection, '; nodeMv=', nodeMv);
-    var added = false;
-    av.dnd.move.via = 'menu';
-    av.dnd.move.source = av.dnd[fzSection];
-    av.dnd.move.target = av.dnd[target];
-    av.dnd.move.type = type;
-    av.dnd.move.sourceDomId = nodeMv;
-    av.dnd.move.dir = av.fzr.dir[av.dnd.move.sourceDomId];
-    av.dnd.move.nodeName = av.fzr.file[av.dnd.move.dir + '/entryname.txt'];
-    av.dnd[target].insertNodes(false, [{data: av.dnd.move.nodeName, type: [type]}]);
-    av.dnd[target].sync();
-    var domIDs = Object.keys(av.dnd[target].map);
-    av.dnd.move.targetDomId = domIDs[domIDs.length - 1];
-    console.log('move', av.dnd.move);
-    added = av.dnd.lndActiveConfig(av.dnd.move);
-
-    //if (av.dom.popSetupButton.textContent === 'Setup' && added) av.grd.drawGridSetupFn();
-
-    //Now actually load and run the multi-dish direcdtly from the freezer.
-    av.msg.importMultiDishExpr(av.dnd.move.dir);
-    av.msg.avidaMultiRunFlag = true;   //Do not reload files from the active config freezer section
-
-    //This only loads ancestors in the super dish.
-    var filename = av.dnd.move.dir +'/ancestors.txt';
-    console.log('filename = ', filename, '=======================================================');
-    if (av.fzr.file[filename]) {
-      console.log('file ', filename, 'exists');
-      av.fio.autoAncestorLoad(av.fzr.file[filename]);
-    }
-    var filename = av.dnd.move.dir +'/ancestors_manual.txt';
-    console.log('filename = ', filename, '=======================================================');
-    if (av.fzr.file[filename]) {
-      console.log('file ', filename, 'exists');
-      av.fio.handAncestorLoad(av.fzr.file[filename]);
-    }
-
-  }
-  else {
-    alert('You must select a multi-dish first');
-  };
-};
-//------------------------------------------------------------------------------------------- end av.dnd.runMultiDish --
-
-//---------------------------------------------------------------------------------------------- av.dnd.runResReqDish --
-av.dnd.runResReqDish = function(fzSection, target, type) {
-  //console.log('fzrObject=', av.dnd[fzSection].getSelectedNodes()[0]);
-  //need to find selected item. looking for 'dojoDndItem dojoDndItemAnchor' might help
-  //console.log('fzOrgan selected keys', Object.keys(av.dnd.fzOrgan.selection)[0]);
-  //Object.keys(av.dnd.fzOrgan.selection)[0] and av.dnd.fzOrgan.getSelectedNodes()[0].id return the same thing
-
-  if (undefined != av.dnd[fzSection].getSelectedNodes()[0]) {
-    //This section partially puts the multi-dish in the active area
-    var nodeMv = av.dnd[fzSection].getSelectedNodes()[0].id;
-    console.log('fzSection=', fzSection, '; nodeMv=', nodeMv);
-    var added = false;
-    av.dnd.move.via = 'menu';
-    av.dnd.move.source = av.dnd[fzSection];
-    av.dnd.move.target = av.dnd[target];
-    av.dnd.move.type = type;
-    av.dnd.move.sourceDomId = nodeMv;
-    av.dnd.move.dir = av.fzr.dir[av.dnd.move.sourceDomId];
-    av.dnd.move.nodeName = av.fzr.file[av.dnd.move.dir + '/entryname.txt'];
-    av.dnd[target].insertNodes(false, [{data: av.dnd.move.nodeName, type: [type]}]);
-    av.dnd[target].sync();
-    var domIDs = Object.keys(av.dnd[target].map);
-    av.dnd.move.targetDomId = domIDs[domIDs.length - 1];
-    console.log('move', av.dnd.move);
-    //added = av.dnd.lndActiveConfig(av.dnd.move);
-
-    var filename = av.dnd.move.dir +'/ancestors.txt';
-    console.log('filename = ', filename, '=======================================================');
-    if (av.fzr.file[filename]) {
-      console.log('file ', filename, 'exists');
-      av.fio.autoAncestorLoad(av.fzr.file[filename]);
-    }
-    var filename = av.dnd.move.dir +'/ancestors_manual.txt';
-    console.log('filename = ', filename, '=======================================================');
-    if (av.fzr.file[filename]) {
-      console.log('file ', filename, 'exists');
-      av.fio.handAncestorLoad(av.fzr.file[filename]);
-    }
-    //Now actually load resreq direcdtly from the freezer.
-    av.msg.makeResReqMsg(av.dnd.move.dir);
-    av.msg.avidaResourceRunFlag = true;   //Do not reload files from the active config freezer section
-  }
-  else {
-    alert('You must select a resource dish first');
-  }
 };
 
 //--------------------------------------------------------------------------------------------------------------------//

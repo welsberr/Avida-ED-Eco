@@ -5,7 +5,7 @@ av.msg.readMsg = function (ee) {
 
   var stub = '';
   var msg = ee.data;  //passed as object rather than string so JSON.parse is not needed.
-  //console.log('msg', msg);
+  console.log('av.msg.readMsg: msg', msg);
   
   if ('data' == msg.type) {
     if (av.debug.userMsg) userMsgLabel.textContent = 'Avida type:data; name:' + msg.name;
@@ -58,7 +58,8 @@ av.msg.readMsg = function (ee) {
           av.grd.oldUpdate = msg.update;
           av.msg.updatePopStats(av.grd.popStatsMsg);
           //av.msg.sync('webPopulationStats-update:' + msg.update.toString());
-          av.grd.popChartFn();
+          console.log('stub=', stub);
+          av.grd.popChartFn('av.msg.readMsg');
         }
         else {
           //console.log('Repeat so webPopulationStats and chart not redrawn');
