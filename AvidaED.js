@@ -1064,10 +1064,10 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   av.ui.toggleDevelopentDisplays = function () {
     console.log('display of test details = ', document.getElementById('testDishDetailDiv').style.display);
     var len, tsk, sub; 
+    var showDevelopment = false;
     var flgs = [];
     if ('visible' === av.doj.mnDebug.style.visibility) {
       av.doj.mnDebug.style.visibility = 'hidden';
-      
       document.getElementById('popInfoTabHolder').className = 'tabHolderHide';
       document.getElementById('fzTdishSec').style.visibility = 'hidden';
       document.getElementById('testDishDetailDiv').style.display = 'none';
@@ -1078,7 +1078,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       document.getElementById('debugResource').style.display = 'none';
 
       
-      av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.dom.xorLabel.onclick_hide');
+      av.sgr.processHideFlags(av.sgr.hideFlagInit, showDevelopment,'av.ui.toggleDevelopentDisplays');
       
       console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
       len = document.getElementsByClassName('globalEquilibrium').length;
@@ -1097,6 +1097,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     } else
     {       // development sectiomn can be seen.
       av.doj.mnDebug.style.visibility = 'visible';
+      showDevelopment = true;
 
       document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
       document.getElementById('fzTdishSec').style.visibility = 'visible';
@@ -1111,7 +1112,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       for (var jj = 0; jj< len; jj++) {
         flgs[jj] = false;
       };
-      av.sgr.processHideFlags(flgs, 'av.dom.xorLabel.onclick_show');
+      av.sgr.processHideFlags(flgs, 'av.ui.toggleDevelopentDisplays.onclick_show');
       
       len = document.getElementsByClassName('globalEquilibrium').length;
       for (ii=0; ii< len; ii++) {      
@@ -2101,9 +2102,9 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.grd.popChartFn();
   };
 
-  av.grd.popChartInit = function (from) {}
+  av.grd.popChartInit_empty = function (from) {}
   // initialize needs to be in AvidaED.js
-  av.grd.popChartInit_real = function (from) {
+  av.grd.popChartInit = function (from) {
     //console.log(from, 'called av.grd.popChartInit');
     av.pch.clearPopChrt();
     av.pch.divSize('av.grd.popChartInit');
@@ -2146,8 +2147,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     //console.log('layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width);
   };
 
-av.grd.popChartFn = function () {};
-  av.grd.popChartFn_real = function () {
+av.grd.popChartFn_empty = function () {};
+  av.grd.popChartFn = function () {
     'use strict';
     //console.log('av.grd.runState = ', av.grd.runState);
     if ('prepping' === av.grd.runState) {   //values can be prepping, started, or world
@@ -2297,7 +2298,7 @@ av.grd.popChartFn = function () {};
               //Plotly.restyle(av.dom.popChart, av.pch.trace1, [1]);
               av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in AvidaED.js at 1750';
               av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
-              //console.log('av.dom.popChart=',av.dom.popChart);
+              console.log('av.dom.popChart=',av.dom.popChart);
               console.log('av.pch.update=', av.pch.update);   // should look like av.pch.update= {autorange: true, width: 544, height: 236}
               if (undefined == av.pch.update) {
                 av.pch.update = {
