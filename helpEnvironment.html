@@ -132,7 +132,7 @@ REACTION  NAND nand process:resource=nan1:value=1.0:type=pow:depletable=0 requis
 #   where n is the number of cells in the dish   
 #
 #----------------------------------------------------------------------------------
-# Examples with limited spatial resources and reactions with the whole dish. 
+# Examples with limited Local resources and reactions with the whole dish. 
 #----------------------------------------------------------------------------------
 #
 # from x_diffuse_opposite_outflow
@@ -173,7 +173,7 @@ outflowX1=16:outflowY1=0:outflowX2=39:outflowY2=39
 REACTION  ORN  orn process:resource=orn1:value=2.0:type=pow:max=1:min=0.5  requisite:max_count=1
 
 #----------------------------------------------------------------------------------
-# Examples with limited spatial resources and reactions in quarters of the dish
+# Examples with limited Local resources and reactions in quarters of the dish
 #----------------------------------------------------------------------------------
 #
 # with diffusion from 4ths_solid-diffusion
@@ -242,7 +242,7 @@ REACTION ANDN3 andn process:resource=ant3:value=1.0:type=pow:min=0.9:max=1 requi
 REACTION ANDN4 andn process:resource=ant4:value=1.0:type=pow:min=0.9:max=1 requisite:max_count=1
 
 #----------------------------------------------------------------------------------
-# Examples with limited spatial resources and reactions in quarters of the dish
+# Examples with limited Local resources and reactions in quarters of the dish
 #----------------------------------------------------------------------------------
 # Horizontal diffusion from 4ths_40x40_diffuse-opposite-outflow
 # inflow at left or right side; out flow at opposite edge.

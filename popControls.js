@@ -658,7 +658,7 @@ av.sgr.ChangeAllsugarSupplyType = function(selectedOption) {
   var sugarTitle = ['notTitle', 'nanTitle', 'andTitle', 'ornTitle', 'oroTitle', 'antTitle', 'norTitle', 'xorTitle', 'equTitle'];
     var len = av.sgr.sugarColors.length;
     for (ii = 0; ii < len; ii++) {
-      //if ('Spatial' == document.getElementById('allSugarGeometry').value) {
+      //if ('Local' == document.getElementById('allSugarGeometry').value) {
       if (true) {
         document.getElementById(sugarSection[ii]).style.backgroundColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarBackgroundShade];
         document.getElementById(sugarTitle[ii]).style.color = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade];
@@ -790,7 +790,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
       case 'Infinite': 
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-None-container';
         break;
-      case 'Finite':   //spatial
+      case 'Finite':   //Local
         document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'block';
         document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'block';
         console.log('task=',tsk, '; sub=', sub, '; gradientCheck.checked=', document.getElementById(tsk+sub+'gradientCheck').checked);
@@ -805,7 +805,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
           console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
         }
         else {
-          //not-gradient; spatial
+          //not-gradient; Local
           document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';
           document.getElementById(tsk+sub+'initialHiLabel').innerHTML = 'Inital amount in each cell';
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-container';
@@ -844,7 +844,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
           }
         }
         else {
-          //not-gradient; spatial          
+          //not-gradient; Local          
           document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
           document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
           document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
@@ -906,7 +906,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
 //in ex2 page now
 av.ptd.ex1allSugarChange = function (allmode) {
   var onoff = 'None';
-  var geometry = 'Spatial';
+  var geometry = 'Local';
   console.log('ex1_allmode=', allmode);
   if ( ('allon' == allmode) || ('alloff' == allmode) ) {
     geometry = 'Global';

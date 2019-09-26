@@ -45,6 +45,9 @@
 // emacs home.html
 //
 
+// Curent things broken:
+// the avidaDataRecorder.csv is broken
+
 console.log('version from Avida-ED-flex-active_2019_0125');
 var av = av || {};  //incase av already exists
 var dojo = dojo || {};
@@ -560,7 +563,7 @@ if (av.debug.root) console.log('before activeOrgan');
     // Input: dndSection = the text of the class os the Dojo DnD section with elements to be sorted
     // e.g., var dndSection = 'fzOrgan'; sortDnD(dndSection);
     // actually full class name is ".element dojoDndItem" to query
-    console.log('inside sortDnD');
+   // console.log('inside sortDnD');
     //dojo.query(".element",  dojo.byId(dndSection)).sort(
     dojo.query(".dojoDndItem", dndSection).sort(
         function( a,b ) {
@@ -581,9 +584,9 @@ if (av.debug.root) console.log('before activeOrgan');
     dojo.connect( av.dnd.fzConfig, "onDndDrop", function( source, nodes, copy, target ) {
     //This triggers for every dnd drop, not just those of fzConfig  
     if ('fzConfig' === target.node.id) {
-      console.log('fzConfig=', av.dnd.fzConfig);
-      console.log('.childNodes=', av.dnd.fzConfig.childNodes);
-      console.log('nodes=', nodes);
+      //console.log('fzConfig=', av.dnd.fzConfig);
+      //console.log('.childNodes=', av.dnd.fzConfig.childNodes);
+      //console.log('nodes=', nodes);
       //console.log('; copy=', copy, '; target=', target);
       //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
       av.dnd.landFzConfig(source, nodes, target);  //needed as part of call to contextMenu
@@ -597,8 +600,8 @@ if (av.debug.root) console.log('before activeOrgan');
   dojo.connect( av.dnd.fzOrgan, "onDndDrop", function( source, nodes, copy, target ) {
     //This triggers for every dnd drop, not just those of fzOrgan
     if ('fzOrgan' === target.node.id) {
-      console.log('fzOrgan=', av.dnd.fzOrgan);
-      console.log('.childNodes=', av.dnd.fzOrgan.childNodes);
+      //console.log('fzOrgan=', av.dnd.fzOrgan);
+      //console.log('.childNodes=', av.dnd.fzOrgan.childNodes);
       console.log('nodes=', nodes);
       av.dnd.landFzOrgan(source, nodes, target);
       nodes.forEach(function(node) {
@@ -812,7 +815,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   //https://bugsnag.com/blog/js-stacktracess
   //http://blog.bugsnag.com/js-stacktraces
   window.onerror = function (message, file, line, col, error) {
-    console.log('in onError');
+    //console.log('in onError');
     av.dom.runStopButton.innerHTML = 'Run';  //av.msg.pause('now');
     av.debug.finalizeDtail();
     av.debug.triggered = 'errorTriggered';
@@ -1058,11 +1061,12 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   };
 
   av.ui.where = function(domobj) {
-    console.log('domobj=', domobj);
+    // placeholder that was to return the cell ID in the grid perhaps never done. 
+    //console.log('domobj=', domobj);
   };
   
   av.ui.toggleDevelopentDisplays = function () {
-    console.log('display of test details = ', document.getElementById('testDishDetailDiv').style.display);
+    //console.log('display of test details = ', document.getElementById('testDishDetailDiv').style.display);
     var len, tsk, sub; 
     var showDevelopment = false;
     var flgs = [];
@@ -2154,7 +2158,15 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
 
   av.grd.popChartFn = function (from) {
     'use strict';
-    console.log(from + ' called av.grd.popChartFn');
+    
+    //Do not display chart if the chart is not on the screen. I do need some data updating so this is only a quick patch;
+    //console.log('av.dom.labInfoBlock.style.display =', av.dom.labInfoBlock.style.display, '; av.ui.page=', av.ui.page);
+    if ('flex' != av.dom.labInfoBlock.style.display || ('populationBlock' !== av.ui.page) ) {
+      // the avidaDataRecorder.csv is broken
+      return;
+    };
+   
+    console.log(from + ' called av.grd.popChartFn'); 
     console.log('av.grd.runState = ', av.grd.runState);
     if ('prepping' === av.grd.runState) {   //values can be prepping, started, or world
       av.dom.popChart.style.visibility = 'hidden';

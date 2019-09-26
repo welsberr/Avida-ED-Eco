@@ -1,9 +1,9 @@
                           <details id='equSection' class='sugarAccordionSection'>
                             <summary class='sugarSummary'>
                                 <div class='sugarTitle'>Equose</div>&nbsp;
-                                <select  id='equGeometry' class='globalSpatial' onchange='av.sgr.geometryChange(this);'>
+                                <select  id='equGeometry' class='globalLocal' onchange='av.sgr.geometryChange(this);'>
                                   <option value='Global' selected>Global</option>
-                                  <option value='Spatial'>Spatial</option>
+                                  <option value='Local'>Local</option>
                                 </select>&nbsp;&nbsp;&nbsp;
                                 <select  id='equ0Type' class='sugarType' onchange='av.sgr.supplyChange(this)'>
                                   <option id='equ0none' value='None'>None</option>
