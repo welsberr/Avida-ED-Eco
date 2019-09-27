@@ -2554,7 +2554,7 @@ av.ptd.randInputChange = function(value, randErroTest) {
     var ndx = av.sgr.sugarBackgroundShade;
     for (ii = 0; ii < len; ii++) {
       //console.log('ii=',ii,'SugarSection=', sugarSection[ii]);
-      if ('allSpatial' != document.getElementById('ex1allSugarChange').value) {
+      if ('allLocal' != document.getElementById('ex1allSugarChange').value) {
         document.getElementById(sugarSection[ii]).style.backgroundColor = av.color.greyMap[ndx];
       } else {
         document.getElementById(sugarSection[ii]).style.backgroundColor = av.color[av.sgr.sugarColors[ii]][ndx];
@@ -2572,7 +2572,7 @@ av.ptd.randInputChange = function(value, randErroTest) {
 
 // end of ex1 and ex2 page stuff
 //------------------------------------------------------------------------------------------------- Sugar Accordion ----
-//Global or Spatial in Ed speak = Global or Grid in Avida Environment file.
+//Global or Local in Ed speak = Global or Grid in Avida Environment file.
 av.sgr.allSugarGeometryChange = function(domObj){
   var idx = domObj.selectedIndex;        // get the index of the selected option 
   var which = domObj.options[idx].value;   // get the value of the selected option 
@@ -2629,6 +2629,41 @@ av.sgr.eachSugarCheckBoxChange = function (domObj) {
   av.sgr.changeDetailsLayout(task, 'deleteLater', sub, 'av.sgr.eachSugarCheckBoxChange');
 };
 
+av.sgr.periodChange = function(domObj) {
+  console.log('av.sgr.periodChange domObj=', domObj);
+  console.log('domObj.value=', domObj.value);
+};
+
+av.sgr.initialChange = function(domObj) {
+  console.log('av.sgr.initialChange domObj=', domObj);
+  console.log('domObj.value=', domObj.value);
+  var ndx = domObj.id.indexOf('Input');
+  var id = domObj.id.substring(0,ndx) + 'Text';
+  console.log('new id=', id);
+  console.log('Number(domObj.value)=',Number(domObj.value));
+  if (isNaN(Number(domObj.value))) {
+    document.getElementById(id).innerHTML = 'inital amount must be a number';
+    document.getElementById(id).style.color = 'red';
+  }
+  else if (0 > domObj.value) {
+    document.getElementById(id).innerHTML = 'inital amount must be > 0';
+    document.getElementById(id).style.color = 'red';
+  }
+  else {
+    document.getElementById(id).innerHTML = 'inital amount per cell';
+    document.getElementById(id).style.color = 'black';    
+  }
+};
+
+av.sgr.inflowChange = function(domObj) {
+  console.log('av.sgr.inflowChange domObj=', domObj);
+  console.log('domObj.value=', domObj.value);
+};
+
+av.sgr.outflowChange= function(domObj) {
+  console.log('av.sgr.outflowChange domObj=', domObj);
+  console.log('domObj.value=', domObj.value);
+};
 
 /******************************************************************************** End enviornment (sugar) settings ****/
 

@@ -703,16 +703,14 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
     
   }
   console.log('tsk=', tsk, '; geometry=', geometry, '; supplyType =', supplyType );
-
-  
-  
   console.log(tsk+'0dishRegion=', document.getElementById(tsk+'0dishRegion').value );
 
   document.getElementById(tsk+'0SupplyType').style.display = 'none';      
   document.getElementById(tsk+'0dishRegion').style.display = 'none';
   document.getElementById(tsk+'0initialDiv').style.display = 'none';
   document.getElementById(tsk+sub+'SupplyTypeDiv').style.display = 'none';
-  document.getElementById(tsk+sub+'Title').style.display = 'none';      
+  document.getElementById(tsk+sub+'Title').style.display = 'none';
+  document.getElementById(tsk+sub+'Blank').style.display = 'none';      
   document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
   document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'none';
   document.getElementById(tsk+sub+'periodCheckbox').style.display = 'none';
@@ -743,8 +741,8 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
         document.getElementById(tsk+sub+'periodCheckbox').style.display = 'block';
         document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
         document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
-        document.getElementById(tsk+sub+'inflowHiLabel').innerHTML = 'Inflow amount per cell';
-        document.getElementById(tsk+sub+'outflowHiLabel').innerHTML = 'Outflow fraction per cell';
+        document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount per cell';
+        document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction per cell';
         document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
         document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium when no resource has been consumed';
         document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-globalEqual-container';
@@ -773,7 +771,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
         document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
         document.getElementById(tsk+sub+'equalLoDiv').style.display = 'block';
         document.getElementById(tsk+sub+'sideDiv').style.display = 'block';
-        document.getElementById(tsk+sub+'sideLabel').innerHTML = 'Side text describing what side means';
+        document.getElementById(tsk+sub+'sideText').innerHTML = 'Side text describing what side means';
         document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetailAll-container';
         console.log(tsk+'Details.class=', document.getElementById(tsk+'Details').className);
         break;
@@ -786,8 +784,9 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
     document.getElementById(tsk+'Section').open = true;
 
     switch (supplyType) {    //for when geometery = local
-      case 'None':         
+      case 'None':
       case 'Infinite': 
+          document.getElementById(tsk+sub+'Blank').style.display = 'block';      
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-None-container';
         break;
       case 'Finite':   //Local
@@ -797,8 +796,8 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
         if (true == document.getElementById(tsk+sub+'gradientCheck').checked) {  
           //gradient
           document.getElementById(tsk+sub+'sideDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'sideLabel').innerHTML = 'Choose the side to have the a higher initla amount';
-          document.getElementById(tsk+sub+'initialHiLabel').innerHTML = 'High side initial amount per cell';
+          document.getElementById(tsk+sub+'sideText').innerHTML = 'Choose the side to have the a higher initla amount';
+          document.getElementById(tsk+sub+'initialHiText').innerHTML = 'High side initial amount per cell';
           document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';
           document.getElementById(tsk+sub+'initialLoDiv').style.display = 'block';
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-FiniteGradient-container';
@@ -807,7 +806,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
         else {
           //not-gradient; Local
           document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'initialHiLabel').innerHTML = 'Inital amount in each cell';
+          document.getElementById(tsk+sub+'initialHiText').innerHTML = 'Inital amount in each cell';
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-container';
           console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
         }
@@ -821,7 +820,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
         if (true == document.getElementById(tsk+sub+'gradientCheck').checked && !av.sgr.hideFlgNames.gradient) {
           //gradient
           document.getElementById(tsk+sub+'sideDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'sideLabel').innerHTML = 'Side with a higher amount';
+          document.getElementById(tsk+sub+'sideText').innerHTML = 'Side with a higher amount';
 //          document.getElementById(tsk+sub+'sideHiDiv').style.display = 'block';   //put in to make high and low side more obvious, but I don't think I need it
 //          document.getElementById(tsk+sub+'sideLoDiv').style.display = 'block';   //put in to make high and low side more obvious, but I don't think I need it
           document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
@@ -832,13 +831,13 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
           document.getElementById(tsk+sub+'equalLoDiv').style.display = 'block';
           document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium on high side.';
           document.getElementById(tsk+sub+'equalLoText').innerHTML = ' = equilibrium on Low side';
-          document.getElementById(tsk+sub+'inflowHiLabel').innerHTML = 'Inflow amount per cell on high side.';
-          document.getElementById(tsk+sub+'outflowHiLabel').innerHTML = 'Outflow fraction per cell on high side';
+          document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount per cell on high side.';
+          document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction per cell on high side';
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualGradient-container';
           console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
           if (true == document.getElementById(tsk+sub+'periodCheck').checked) {
             document.getElementById(tsk+sub+'periodTime').style.display = 'block';
-            document.getElementById(tsk+sub+'sideLabel').innerHTML = 'Side with a higher amount';
+            document.getElementById(tsk+sub+'sideText').innerHTML = 'Side with a higher amount';
             document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualGradientPeriod-container';            
             console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
           }
@@ -849,8 +848,8 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
           document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
           document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
           document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'inflowHiLabel').innerHTML = 'Inflow amount per cell';
-          document.getElementById(tsk+sub+'outflowHiLabel').innerHTML = 'Outflow fraction per cell';
+          document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount per cell';
+          document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction per cell';
           document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
           document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium if not consumed.';
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Equal-container';
@@ -866,7 +865,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
         /*
       case 'SourceSink':        //or should this be flow as it must have diffusion and/or gravity ??
         document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
-        document.getElementById(tsk+sub+'sideLabel').innerHTML = 'inflow side; outlow will be everywhere or on the opposite side';
+        document.getElementById(tsk+sub+'sideText').innerHTML = 'inflow side; outlow will be everywhere or on the opposite side';
         document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
         document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
         document.getElementById(tsk+sub+'sideDiv').style.display = 'block';
@@ -881,7 +880,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
         document.getElementById(tsk+'0initialDiv').style.display = 'inline-block';
         document.getElementById(tsk+sub+'periodTime').style.display = 'block';
         document.getElementById(tsk+sub+'sideDiv').style.display = 'block';
-        document.getElementById(tsk+sub+'sideLabel').innerHTML = 'Side text describing what side means';
+        document.getElementById(tsk+sub+'sideText').innerHTML = 'Side text describing what side means';
         document.getElementById(tsk+sub+'sideHiDiv').style.display = 'block';   //put in to make high and low side more obvious, but I don't think I need it
         document.getElementById(tsk+sub+'sideLoDiv').style.display = 'block';   //put in to make high and low side more obvious, but I don't think I need it
         document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';

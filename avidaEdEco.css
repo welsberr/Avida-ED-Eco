@@ -550,6 +550,7 @@
 .sideInput { grid-area: sideInput; }
 
 .subSectionTitle { grid-area: subSectionTitle; }
+.sgrBlank { grid-area: sgrBlank; }
 
 .periodCheckDiv { grid-area: periodCheckDiv; }
 .periodTime { grid-area: periodTime; }
@@ -559,8 +560,8 @@
 
 .grid-sugarDetailAll-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle subSectionTitle'
-                       'typeInput sideInput'
+  grid-template-areas: 'subSectionTitle typeInput'
+                       'sideInput sideInput'
                        'periodCheckDiv periodTime'
                        'gradientCheckDiv diffuseCheckDiv'
                        'sideTitleHi sideTitleLo'   
@@ -584,10 +585,16 @@
 }
 .grid-sugarDetail-None-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput';
+  grid-template-areas: 'subSectionTitle typeInput sgrBlank sgrBlank sgrBlank sgrBlank';
   width: 100%;
 }
 
+.grid-sugarDetail-Finite-nogradCheckbox-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
+                       'initialHi  initialHi initialHi initialHi';
+  width: 100%;
+}
 .grid-sugarDetail-Finite-container {
   display: grid;
   grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'

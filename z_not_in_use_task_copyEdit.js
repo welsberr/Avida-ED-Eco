@@ -38,7 +38,7 @@
                               </div>                            
                               <div id='equ1initialHiDiv' class='grid-sugarDetail-item initialHi'>
                                 <input id='equ1initialHiInput' class='sugInitialHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '100'/>&nbsp;
-                                <label id='equ1initialHiLabel'>High side initial amount per cell </label>
+                                <label id='equ1initialHiText'>High side initial amount per cell </label>
                               </div>
                               <div id='equ1initialLoDiv' class='grid-sugarDetail-item initialLo'>
                                 <input id='equ1initialHiInput' class='sugInitialLoInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '90'/>&nbsp;
@@ -46,19 +46,19 @@
                               </div>
                               <div id='equ1inflowHiDiv' class='grid-sugarDetail-item inflowHi'>
                                 <input id='equ1inflowHiInput' class='sugInflowHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.09'/>&nbsp;
-                                <label id='equ1inflowHiLabel' class='sugOutflowLabel'>Inflow amount per cell</label>
+                                <label id='equ1inflowHiText' class='sugOutflowLabel'>Inflow amount per cell</label>
                               </div>
                               <div id='equ1inflowLoDiv' class='grid-sugarDetail-item inflowLo'>
                                 <input id='equ1inflowLoInput' class='sugInflowLoInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.01'/>&nbsp;
-                                <label id='equ1inflowLoLabel' class='sugOutflowLabel'>Inflow amount per cell on low side</label>
+                                <label id='equ1inflowLoText' class='sugOutflowLabel'>Inflow amount per cell on low side</label>
                               </div>
                               <div id='equ1outflowHiDiv' class='grid-sugarDetail-item outflowHi'>
                                 <input id='equ1outflowHiInput' class='sugOutflowHiInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.01'/>&nbsp;
-                                <label id='equ1outflowHiLabel' class='sugOutflowLabel'>Outflow fraction per cell.</label>
+                                <label id='equ1outflowHiText' class='sugOutflowLabel'>Outflow fraction per cell.</label>
                               </div>
                               <div id='equ1outflowLoDiv' class='grid-sugarDetail-item outflowLo'>
                                 <input id='equ1outflowLoInput' class='sugOutflowLoInput' type='text' onchange='av.ptd.gridChange(this.value)' value = '0.01'/>&nbsp;
-                                <label id='equ1outflowLoLabel' class='sugOutflowLabel'>Outflow fraction per cell on low side.</label>
+                                <label id='equ1outflowLoText' class='sugOutflowLabel'>Outflow fraction per cell on low side.</label>
                               </div>
                               <div id='equ1equalHiDiv' class='grid-sugarDetail-item equalHi'>
                                 <label id='equ1equalHiLabel'>9</label>
@@ -77,7 +77,7 @@
                                   <option value='center'>Center</option>
                                   <option value='edge'>Edge</option>
                                 </select>
-                                <label id='equ1sideLabel'>side text</label>
+                                <label id='equ1sideText'>side text</label>
                               </div>
                             </div><span id='endEquDetails' class='end_grid-sugarDetail-container'></span>
                           </details>
