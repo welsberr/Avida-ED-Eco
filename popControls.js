@@ -689,6 +689,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
   if ('not' != tsk) {return;}   //used in testing; should be deleted in 2019 Aug/Sept
   
   console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; delete this =', deleteLater, '; sub=', sub);
+  console.log('av.nut.hideFlags=', av.nut.hideFlags);
   
   var supplyType;
   var idx = document.getElementById(tsk+'Geometry').selectedIndex;
@@ -790,6 +791,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-None-container';
         break;
       case 'Finite':   //Local
+        console.log('av.nut.hideFlags.gradient=',av.nut.hideFlags.gradient);
         document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'block';
         document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'block';
         console.log('task=',tsk, '; sub=', sub, '; gradientCheck.checked=', document.getElementById(tsk+sub+'gradientCheck').checked);
@@ -808,14 +810,18 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
           document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';
           document.getElementById(tsk+sub+'initialHiText').innerHTML = 'Inital amount in each cell';
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-container';
+          if (av.nut.hideFlags.gradient) {
+            document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
+            document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-noGridCheckbox-container';
+          }
           console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
         }
         break;
       case 'Equilibrium':
         console.log(tsk,'0gradientCheckbox.checked=', document.getElementById(tsk+sub+'gradientCheck').checked);
-        document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
+        if (!av.nut.hideFlags.gradient) document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
+        if (!av.nut.hideFlags.periodic) document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
         document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'inline-block';
-        document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
         console.log(tsk+sub+'gradientCheck', document.getElementById(tsk+sub+'gradientCheck').checked, '; av.sgr.hideFlgNames.gradient=', av.sgr.hideFlgNames.gradient);
         if (true == document.getElementById(tsk+sub+'gradientCheck').checked && !av.sgr.hideFlgNames.gradient) {
           //gradient
@@ -835,7 +841,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
           document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction per cell on high side';
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualGradient-container';
           console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
-          if (true == document.getElementById(tsk+sub+'periodCheck').checked) {
+          if (true == document.getElementById(tsk+sub+'periodCheck').checked && !av.sgr.hideFlgNames.periodic) {
             document.getElementById(tsk+sub+'periodTime').style.display = 'block';
             document.getElementById(tsk+sub+'sideText').innerHTML = 'Side with a higher amount';
             document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualGradientPeriod-container';            
@@ -854,7 +860,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
           document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium if not consumed.';
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Equal-container';
           console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
-          if (true == document.getElementById(tsk+sub+'periodCheck').checked) {
+          if (true == document.getElementById(tsk+sub+'periodCheck').checked  && !av.sgr.hideFlgNames.periodic) {
             document.getElementById(tsk+sub+'periodTime').style.display = 'block';
             document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium when no resource has been consumed';
             document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualPeriod-container';            

@@ -1066,24 +1066,22 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   };
   
   av.ui.toggleDevelopentDisplays = function () {
-    //console.log('display of test details = ', document.getElementById('testDishDetailDiv').style.display);
-    var len, tsk, sub; 
-    var showDevelopment = false;
-    var flgs = [];
+    var len, tsk, sub;
     if ('visible' === av.doj.mnDebug.style.visibility) {
-      av.doj.mnDebug.style.visibility = 'hidden';
+      av.ui.hideDevelopment = true;
+      av.doj.mnDebug.style.visibility = 'hidden';    
       document.getElementById('popInfoTabHolder').className = 'tabHolderHide';
       document.getElementById('fzTdishSec').style.visibility = 'hidden';
       document.getElementById('testDishDetailDiv').style.display = 'none';
       document.getElementById('testConfigLableHolder').style.display = 'none';
       document.getElementById('testConfig').style.display = 'none';
-      document.getElementById('popRightSideControlHolder').style.display = 'flex';
-      //document.getElementById('popRightSideArrow').style.display = 'block';            //as of 2019_0909 I think this can be deleted.
+      document.getElementById('avidianOutline').style.display = 'none';
+      document.getElementById('popRightSideControlHolder').style.display = 'none';
       document.getElementById('debugResource').style.display = 'none';
 
-      av.sgr.processHideFlags(av.sgr.hideFlagInit, showDevelopment,'av.ui.toggleDevelopentDisplays');
+      av.sgr.processHideFlags(av.sgr.hideFlagInit,'av.ui.toggleDevelopentDisplays');
       
-      console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
+      //console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
       len = document.getElementsByClassName('globalEquilibrium').length;
       for (ii=0; ii< len; ii++) {
         document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'none';
@@ -1099,23 +1097,21 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       av.post.addUser('Button: mnHpDebug: now hidden');
     } else
     {       // development sectiomn can be seen.
+      av.ui.hideDevelopment = false;
       av.doj.mnDebug.style.visibility = 'visible';
-      showDevelopment = true;
 
       document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
       document.getElementById('fzTdishSec').style.visibility = 'visible';
       document.getElementById('testDishDetailDiv').style.display = 'block';
       document.getElementById('testConfigLableHolder').style.display = 'flex';
       document.getElementById('testConfig').style.display = 'flex';
-      document.getElementById('popRightSideControlHolder').style.display = 'none';
-      //document.getElementById('popRightSideArrow').style.display = 'none';        //as of 2019_0909 I think this can be deleted.
+      document.getElementById('avidianOutline').style.display = 'inline-block';
+      document.getElementById('popRightSideControlHolder').style.display = 'flex';
+      //document.getElementById('popRightSideArrow').style.display = 'none';        // as of 2019_0909 I think this can be deleted. 
+      //                                                                            // inside popRightSideControlHolder
       document.getElementById('debugResource').style.display = 'flex';
 
-      len = av.sgr.hideFlgNames.length;
-      for (var jj = 0; jj< len; jj++) {
-        flgs[jj] = false;
-      };
-      av.sgr.processHideFlags(flgs, 'av.ui.toggleDevelopentDisplays.onclick_show');
+      av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopentDisplays.onclick_show');
       
       len = document.getElementsByClassName('globalEquilibrium').length;
       for (ii=0; ii< len; ii++) {      
@@ -1131,10 +1127,12 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       
       av.post.addUser('Button: mnHpDebug: now visible');
     }
+    console.log('in av.ui.hideDevelopment=', av.ui.hideDevelopment, 'at end of function');
   };
-  
+
+  //toggles showing resource data in right info panel (Stats window) in Populaton View
   av.dom.xorLabel.onclick = function () {
-    if ('none === ') {
+    if ('none' === document.getElementById('debugResource').style.display) {
       document.getElementById('debugResource').style.display = 'flex';
     }
     else {
@@ -1505,7 +1503,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.ptd.runPopFn('av.dom.oneUpdateButton.onclick');
   };
 
-  av.dom.avidianOutline.onclick = function () {
+//  av.dom.avidianOutline.onclick = function () {
+  av.ui.avidianOutlineOnclick = function(domObj) {
     av.post.addUser('Button: avidianOutline; av.ui.showOutlineFlag='+ av.ui.showOutlineFlag);
     if ('Resource Mode: hide Avidian Outlines' == av.dom.avidianOutline.innerHTML) {
       av.dom.avidianOutline.innerHTML = 'Resource Mode: show Avidian Outlines';

@@ -258,8 +258,8 @@
                       <option value='Stats' selected>Stats</option>
                       <option value='Setup'>Setup</option>
                     </select>
+                    <span id='popRightSideArrow'>--></span>
                   </div>
-                  <div id='popRightSideArrow'>--></div>
                 </div>
               </div>
               
@@ -299,7 +299,7 @@
                       <button id='newDishButton'>New</button>
                       <button id='runStopButton'>Run</button>
                       <button id='oneUpdateButton'>Forward</button>
-                      <button id="avidianOutline">Resource Mode: show Avidian Outlines</button>
+                      <button id='avidianOutline' onclick='av.ui.avidianOutlineOnclick(this);'>Resource Mode: show Avidian Outlines</button>
                     </td>
                     <td style='text-align: right; min-width:100px'>
                       <label id='rescaleLabel'> </label><br />

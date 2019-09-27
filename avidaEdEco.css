@@ -298,7 +298,7 @@
 
 /* right informaton pannel on the populatoin page */
   #popInfoHolder {
-    flex: 0 1 560px;          /* flex: 0 1 344px; is fixed in that dimension   was 349px  was 500px*/
+    flex: 0 1 500px;          /* flex: 0 1 344px; is fixed in that dimension   was 349px  was 560px*/
     border: 1px solid #AAA;
     background: beige;
     max-height: 750px;
@@ -589,10 +589,10 @@
   width: 100%;
 }
 
-.grid-sugarDetail-Finite-nogradCheckbox-container {
+.grid-sugarDetail-Finite-noGridCheckbox-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
-                       'initialHi  initialHi initialHi initialHi';
+  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv'
+                       'initialHi       initialHi initialHi';
   width: 100%;
 }
 .grid-sugarDetail-Finite-container {

@@ -540,10 +540,11 @@ av.sgr.boxArguments = ['boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow']; //flag is
   av.sgr.side3 = ['Lft', 'Rit', 'Top', 'Bot', 'Cen', 'Edg', 'Unk']; //left, right, top, bottom, center, edge, unknown
   av.sgr.side = ['left', 'rite', 'top', 'bottom', 'center', 'edges', 'unknown'];
   
-  av.sgr.hideFlgNames = ['gradient', 'periodic'];
-  av.sgr.hideFlagInit = [true, true];
-
-//Commments 
+  av.sgr.hideFlgNames = ['gradient', 'periodic'];  
+  av.sgr.hideFlagInit = [true, true];  //true is to hide when areas underdevelopment are hidden. 
+  av.sgr.flagInitOpposite = [false, false];  //false in this case is to NOT hide as develpment sections shown.
+      
+//Commments in the environment.cfg file?
 //
 //#comment option
 //#!xor not34 region=all:side=none:supply=finite:gradient=false
@@ -555,18 +556,32 @@ av.sgr.boxArguments = ['boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow']; //flag is
 //Name ideas. not01g00 to 99  for gradients   leading zeros by using padStart
 //
 
+//Flags for fields not yet implemented. 
 av.sgr.processHideFlags = function(boolArry, from) {
-  console.log(from+' called av.sgr.processHideFlags: boolArry=', boolArry);
+  //console.log(from+' called av.sgr.processHideFlags: hideDevelopment=', av.ui.hideDevelopment, '; boolArry=', boolArry);
+  //showDevelopment is a flag, when true show parts still under development or debug
   if (undefined != boolArry) {
+    // it is defined so use it
     if (boolArry.length < av.sgr.hideFlgNames.length) {
-      boolArry = av.sgr.hideFlagInit;
+      // but it is too short so fill out with the end of initialized array
+      for (var ii=boolArry.length; ii < av.sgr.hideFlgNames.length; ii++) {
+        boolArry[ii] = av.sgr.hideFlagInit[ii];
+      };
+      //console.log('boolArry=', boolArry);
     }
   }
-  else boolArry = av.sgr.hideFlagInit;
+  //not defined so use initialized array if we are hiding development, and the comp[lement if showing development
+  else {
+    if (av.ui.hideDevelopment) boolArry = av.sgr.hideFlagInit;
+    else boolArry = av.sgr.flagInitOpposite;
+    //console.log('av.ui.hideDevelopment=', av.ui.hideDevelopment,'; boolArry=', boolArry);    
+  };
+  //now finally change the flags as needed.
   var len = av.sgr.hideFlgNames.length;
   for (var ii=0; ii < len; ii++) {
-    av.nut.hideFlags[av.sgr.hideFlgNames[ii]] = boolArry;
+    av.nut.hideFlags[av.sgr.hideFlgNames[ii]] = boolArry[ii];
   };
+  console.log('av.nut.hideFlags=',av.nut.hideFlags);
 };
 
 av.nut = {};
