@@ -207,7 +207,8 @@
   }
   .popBenchCol{
     background-color: #F5F5F5; /* lightgoldenrodyellow; */
-    flex: 1;
+    flex: 1;             //not quite sure what this does as only on of three parameters is there
+    //flex: 0 1 auto;       //should scale with window size, but does not do what I want????
     border: 1px solid #AAA;
     display: flex;
     overflow:auto;
@@ -260,12 +261,11 @@
       padding-left: 4px;
       margin: auto;
     }
-  #popRightSideControlHolder{
-    flex: 0 1 90px;
+  #popRightSideControlHolder{      /*in top row of center column in popultation that holds grid one place we tried putting the controls for what is in the right info panel  */
+    flex: 0 1 90px;              
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: right;
+    //align-items: flex-end;
   }
     #popRightSideSelectHolder{
       height: 20px;
@@ -298,10 +298,11 @@
 
 /* right informaton pannel on the populatoin page */
   #popInfoHolder {
-    flex: 0 1 500px;          /* flex: 0 1 344px; is fixed in that dimension   was 349px  was 560px*/
-    border: 1px solid #AAA;
+    flex: 0 1 440px;          /* flex: 0 1 344px width I think; is fixed in that dimension   was 349px  was 560px*/
+    border: 1px solid #AAA;      /*sot stat = 190;  popstat =234  for  424 */
     background: beige;
     max-height: 750px;
+    min-width: 440px;
     overflow:scroll;
   }
 
@@ -335,7 +336,7 @@
 
   #popStatHolder{
     flex: 1 1 280px;
-    height: 280px;
+    min-height: 280px;
   }
   #popStatistics{
     display: flex;
@@ -347,7 +348,7 @@
     overflow: auto;
   }
   #selOrgType{
-    flex: 0 1 170px;        /*was 170 */
+    flex: 0 1 190px;        /*was 170 */
     border: 1px solid #AAA;
 /*    resize: horizontal;  */
     overflow: auto;
@@ -452,6 +453,17 @@
 .localAll{
   display:none;
 }
+
+.HalfLftRit{
+  display: inline-block;  
+}
+.TopLftRit{
+  display: inline-block;  
+}
+.Quarters{
+  display: inline-block;  
+}
+
 /*  might not work; need away to replace one debug class with the other without chainging the other classes */
 .debugInlineBlock{
   display:inline-block;
@@ -884,46 +896,46 @@ checkbox:focus {
     background-color: #F5F5F5;
   }
 */
-  #ex2envParam {
+  #tst2envParam {
     flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
     border: 1px solid #AAA;    
     background-color: #F5F5F5;
   }
   
-  #ex2envNone{
+  #tst2envNone{
     display: block;
     height: 100%;
     width: 100%;
     background-color: #F5F5F5;
     min-width: 200px;
   }
-  #ex2envFinite{
+  #tst2envFinite{
     display:block;
     height: 100%;
     width: 100%;
     background-color: #F5F5F5;
   }
-  #ex2envEquilibrium{
+  #tst2envEquilibrium{
     display: block;
     height: 100%;
     width: 100%;
     background-color: #F5F5F5;
   }
-  #ex2envGradient{
+  #tst2envGradient{
     display: block;
     height: 100%;
     width: 100%;
     background-color: #F5F5F5;
   }
 
-  .ex2grid-env1row-c2-item {
+  .tst2grid-env1row-c2-item {
   background-color: #F5F5F5;
   border: 1px solid rgba(0, 0, 0, 0.8);
   text-align: left;
   padding: 2px 1px;
 }
 
-  #ex2envSourceSink{
+  #tst2envSourceSink{
     display: block;
     height: 100%;
     width: 100%;
@@ -1066,14 +1078,14 @@ checkbox:focus {
     flex: 0 1 500px;
     background-color: #F5F5F5; /* lavender;  */
   }
-  .grid-sugarOnOff-container {      /*on ex2 tab */
+  .grid-sugarOnOff-container {      /*on tst2 tab */
   display: inline-grid;
   grid-template-columns: auto auto auto auto auto;
   background-color: #F5F5F5;     /* #2196F3;  blue */
 /*  justify-content: space-evenly;  */
   width: 100%;
 }
-.grid-sugarOnOff-item {     /*on ex2 tab */
+.grid-sugarOnOff-item {     /*on tst2 tab */
   background-color: rgba(255, 255, 255, 0.8);    /* #ddd */
   border: 0px;               /*1px solid #111 */
   text-align: left;

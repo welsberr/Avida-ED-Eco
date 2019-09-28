@@ -239,10 +239,10 @@
 
         <div class="mainBlockHolder">
 
-          <div class="mainBlockClassRow" id="populationBlock">
-            <div class="popBenchCol" id='mapHolder'>
+          <div id="populationBlock" class="mainBlockClassRow">
+            <div id='mapHolder' class="popBenchCol">
               
-              <div class="benchPopTopRow" id='popTopRw'>
+              <div id='popTopRw' class="benchPopTopRow">
                 <div id='activeConfigHolder'>
                   <div class='lftmargin'>
                     <img src='images/Avida-ED-dish-icon.png' alt='Avida-ED dish icon'>
@@ -258,8 +258,8 @@
                       <option value='Stats' selected>Stats</option>
                       <option value='Setup'>Setup</option>
                     </select>
-                    <span id='popRightSideArrow'>--></span>
                   </div>
+                  <div id='popRightSideArrow'>--></div>
                 </div>
               </div>
               
@@ -322,11 +322,11 @@
                     <button class="tablinks" id="setupTab" onclick="av.ptd.processTab(event, 'setupBlock')">Setup</button>
                     <button class="tablinks" id="testTab" onclick="av.ptd.processTab(event, 'testSetupBlock')">Test Setup</button>
                     <button class="tablinks" id="ex1Tab" onclick="av.ptd.processTab(event, 'ex1setupBlock')">Example 1</button>
-                    <button class="tablinks" id="ex2Tab" onclick="av.ptd.processTab(event, 'ex2setupBlock')">Example 2</button>
+                    <button class="tablinks" id="tst2Tab" onclick="av.ptd.processTab(event, 'tst2setupBlock')">Test 2</button>
                   </div>
                 </div>
                 <div class="labInfoHolder">
-                  <div class="labInfoClass" id="labInfoBlock">
+                  <div id="labInfoBlock" class="labInfoClass">
                     <div id="popStatHolder">
                       <div id="popStatistics">
                         <div id="selOrgType">
@@ -622,8 +622,9 @@
                           <select id='allsugarSupplyType' onchange='av.sgr.allsugarSupplyTypeChange(this);'>
                             <option value='None'>All None</option>
                             <option value='Infinite'>All Infinite</option>
-                            <option value='Finite'>All Finite</option>
-                            <option value='Equilibrium'>All Equilibrium</option>
+                            <option value='Finite' class='globalFinite'>All Finite</option>
+                            <option value='Equilibrium' class='globalEquilibrium'>All Equilibrium</option>
+                            <option value='All' class='globalAll'>All debug only</option>
                             <option value='Neutral' selected>----</option>
                           </select> Supply type &nbsp;&nbsp;
                           <select id="allSugarDetails" onchange='av.sgr.allSugarDetailsOpenClose(this);'>
@@ -632,7 +633,7 @@
                             <option value='Neutral' selected>----</option>                            
                           </select> Show/Hide Details
                         </div>
-                                                                           
+
                         <div id='sugarAccordion'>
 
                           <details id='notSection' class='sugarAccordionSection'>
@@ -651,9 +652,9 @@
                               </select>&nbsp;&nbsp;&nbsp;
                               <select  id='not0dishRegion' class='dishRegion' onchange='av.sgr.dishRegionChange(this)'>
                                 <option id='not0WholeDish' value='WholeDish selected'>Whole Dish</option>
-                                <option id='not0HalvesLeftRight' value='HalvesLeftRight'>Halves Left/Right</option>
-                                <option id='not0TopLeftRight' value='ThirdsTopLeftRight'>Top/Bottom(L/R)</option>
-                                <option id='not0Quarters' value='Quarters'>Quarters</option>
+                                <option id='not0HalvesLeftRight' class='HalfLftRit' value='HalvesLeftRight'>Halves Left/Right</option>
+                                <option id='not0TopLeftRight' class='TopLftRit' value='ThirdsTopLeftRight'>Top/Bottom(L/R)</option>
+                                <option id='not0Quarters' class='Quarters' value='Quarters'>Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id='not0initialDiv' class='sugarSummaryDiv'>
                                 <label><input id='not0initialInput' class='sugInitialInput' type='text' onchange='av.sgr.initialChange(this);'/>
@@ -664,7 +665,7 @@
                               
                               <div id='not1subSection' class='sugarDishSubsection'>
                                 <div id='not1Title' class='grid-sugarDetail-item subSectionTitle'>Whole Dish</div>
-                                <div id='not1SupplyTypeDiv' class='grid-sugarDetail-item typeInput'>
+                                <div id='not1supplyTypeSelectHolder' class='grid-sugarDetail-item typeInput'>
                                   <select  id='not1SupplyType' class='sugarSupplyType' onchange='av.sgr.supplyChange(this);'>
                                     <option id='not1none' value='None'>None</option>
                                     <option id='not1Infinite' value='Infinite' selected>Infinite</option>
@@ -682,7 +683,7 @@
                                 <div id='not1diffuseCheckbox' class='grid-sugarDetail-item diffuseCheckDiv' onchange='av.sgr.eachSugarCheckBoxChange(this);'>
                                   <label><input id='not1diffuseCheck' type='checkbox'>Diffusion&nbsp;&nbsp;</label>
                                 </div>
-                                <div id='not1sideDiv' class='grid-sugarDetail-item sideInput'>
+                                <div id='not1hiSideSelectHolder' class='grid-sugarDetail-item sideInput'>
                                   <label><select  id='not1sideSelect'>
                                     <option value='left' selected>Left</option>
                                     <option value='right'>Right</option>
@@ -691,14 +692,14 @@
                                     <option value='center'>Center</option>
                                     <option value='edge'>Edge</option>
                                   </select>
-                                    <span id='not1sideText'>side text</span></label>
+                                    <span id='not1sideText'>side text to describe what side means</span></label>
                                 </div>
                                 <div id='not1periodTime' class='grid-sugarDetail-item periodTime'>
                                   <label><input id='not0periodInput'  class='sugPeriodInput' type='text' onchange='av.sgr.periodChange(this);'/> Period (updates)</label>
                                 </div>
-                                <div id='not1sideHiDiv' class='grid-sugarDetail-item sideTitleHi'>High Side</div>
-                                <div id='not1sideLoDiv' class='grid-sugarDetail-item sideTitleLo'>Low Side</div>
-                                <div id='not1Blank' class='grid-sugarDetail-item sgrBlank'>&nbsp;&nbsp;&nbsp;&nbsp;</div>  
+                                <div id='not1sideHiText' class='grid-sugarDetail-item sideTitleHi'>High Side</div>
+                                <div id='not1sideLoText' class='grid-sugarDetail-item sideTitleLo'>Low Side</div>
+                                <div id='not1blank' class='grid-sugarDetail-item sgrBlank'>&nbsp;&nbsp;&nbsp;&nbsp;</div>  
 
                                 <div id='not1initialHiDiv' class='grid-sugarDetail-item initialHi'>
                                   <label><input id='not1initialHiInput' class='sugInitialHiInput' type='text' onchange='av.sgr.initialChange(this);'/>&nbsp;
@@ -732,13 +733,20 @@
                                   <span id='not1equalLoValue'></span>
                                   <span id='not1equalLoText'> = equilibrium if not consumed</span>
                                 </div>
-                              </div><span id='endNot1Section' class='endsugarDishSubsection'> </span>
-                              
-                            </div><span id='endNotDetails' class='end_sugarDetailSection_grid_container'></span>
-                          </details>
+                              </div><span id='not1SectionEnd' class='endsugarDishSubsection'> </span>
 
-                          
-                          
+                              <div id='not2subSection' class='sugarDishSubsection'>
+                              </div><span id='not2SectionEnd' class='endsugarDishSubsection'> </span>
+                              
+                              <div id='not3subSection' class='sugarDishSubsection'>
+                              </div><span id='not3SectionEnd' class='endsugarDishSubsection'> </span>
+                              
+                              <div id='not4subSection' class='sugarDishSubsection'>
+                              </div><span id='not4SectionEnd' class='endsugarDishSubsection'> </span>
+                              
+                            </div><span id='notDetailsEnd' class='end_sugarDetailSection_grid_container'></span>
+                          </details>
+                                                    
                           <details id='nanSection' class='sugarAccordionSection'>
                             <summary class='sugarSummary'>
                                 <div id='nanTitle' class='sugarTitle'>Nanose</div>&nbsp;
@@ -809,7 +817,7 @@
                                 <label id='nan1equalLoLabel'>1</label>
                                 <span id='nan1equalLoText'> = equilibrium if not consumed</span>
                               </div>
-                              <div id='nan1sideDiv' class='grid-sugarDetail-item sideInput'>
+                              <div id='nan1hiSideSelectHolder' class='grid-sugarDetail-item sideInput'>
                                 <select  id='nan1sideSelect' >
                                   <option value='left' selected>Left</option>
                                   <option value='right'>Right</option>
@@ -820,7 +828,7 @@
                                 </select>
                                 <label id='nan1sideText'>side text</label>
                               </div>
-                            </div><span id='endNanDetails' class='end_grid-sugarDetail-container'></span>
+                            </div><span id='nanDetailsEnd' class='end_grid-sugarDetail-container'></span>
                           </details>
 
                           <details id='andSection' class='sugarAccordionSection'>
@@ -893,7 +901,7 @@
                                 <label id='and1equalLoLabel'>1</label>
                                 <span id='and1equalLoText'> = equilibrium if not consumed</span>
                               </div>
-                              <div id='and1sideDiv' class='grid-sugarDetail-item sideInput'>
+                              <div id='and1hiSideSelectHolder' class='grid-sugarDetail-item sideInput'>
                                 <select  id='and1sideSelect' >
                                   <option value='left' selected>Left</option>
                                   <option value='right'>Right</option>
@@ -977,7 +985,7 @@
                                 <label id='orn1equalLoLabel'>1</label>
                                 <span id='orn1equalLoText'> = equilibrium if not consumed</span>
                               </div>
-                              <div id='orn1sideDiv' class='grid-sugarDetail-item sideInput'>
+                              <div id='orn1hiSideSelectHolder' class='grid-sugarDetail-item sideInput'>
                                 <select  id='orn1sideSelect' >
                                   <option value='left' selected>Left</option>
                                   <option value='right'>Right</option>
@@ -1061,7 +1069,7 @@
                                 <label id='oro1equalLoLabel'>1</label>
                                 <span id='oro1equalLoText'> = equilibrium if not consumed</span>
                               </div>
-                              <div id='oro1sideDiv' class='grid-sugarDetail-item sideInput'>
+                              <div id='oro1hiSideSelectHolder' class='grid-sugarDetail-item sideInput'>
                                 <select  id='oro1sideSelect' >
                                   <option value='left' selected>Left</option>
                                   <option value='right'>Right</option>
@@ -1145,7 +1153,7 @@
                                 <label id='ant1equalLoLabel'>1</label>
                                 <span id='ant1equalLoText'> = equilibrium if not consumed</span>
                               </div>
-                              <div id='ant1sideDiv' class='grid-sugarDetail-item sideInput'>
+                              <div id='ant1hiSideSelectHolder' class='grid-sugarDetail-item sideInput'>
                                 <select  id='ant1sideSelect' >
                                   <option value='left' selected>Left</option>
                                   <option value='right'>Right</option>
@@ -1229,7 +1237,7 @@
                                 <label id='nor1equalLoLabel'>1</label>
                                 <span id='nor1equalLoText'> = equilibrium if not consumed</span>
                               </div>
-                              <div id='nor1sideDiv' class='grid-sugarDetail-item sideInput'>
+                              <div id='nor1hiSideSelectHolder' class='grid-sugarDetail-item sideInput'>
                                 <select  id='nor1sideSelect' >
                                   <option value='left' selected>Left</option>
                                   <option value='right'>Right</option>
@@ -1240,7 +1248,7 @@
                                 </select>
                                 <label id='nor1sideText'>side text</label>
                               </div>
-                            </div><span id='endNorDetails' class='end_grid-sugarDetail-container'></span>
+                            </div><span id='norDetailsEnd' class='end_grid-sugarDetail-container'></span>
                           </details>
                           
                           <details id='xorSection' class='sugarAccordionSection'>
@@ -1313,7 +1321,7 @@
                                 <label id='xor1equalLoLabel'>1</label>
                                 <span id='xor1equalLoText'> = equilibrium if not consumed</span>
                               </div>
-                              <div id='xor1sideDiv' class='grid-sugarDetail-item sideInput'>
+                              <div id='xor1hiSideSelectHolder' class='grid-sugarDetail-item sideInput'>
                                 <select  id='xor1sideSelect' >
                                   <option value='left' selected>Left</option>
                                   <option value='right'>Right</option>
@@ -1397,7 +1405,7 @@
                                 <label id='equ1equalLoLabel'>1</label>
                                 <span id='equ1equalLoText'> = equilibrium if not consumed</span>
                               </div>
-                              <div id='equ1sideDiv' class='grid-sugarDetail-item sideInput'>
+                              <div id='equ1hiSideSelectHolder' class='grid-sugarDetail-item sideInput'>
                                 <select  id='equ1sideSelect' >
                                   <option value='left' selected>Left</option>
                                   <option value='right'>Right</option>
@@ -1901,95 +1909,19 @@
                   </div> <span id='end of Experiment 1'></span>  
 
 
-                  <div id='ex2setupBlock' class="labInfoClass">
-                    <form id='ex2setupForm'>
+                  <div id='tst2setupBlock' class="labInfoClass">
+                    a line just to see what it does
+                    <form id='tst2setupForm'>
                       Environmental Settings
                       <div  class='odd'>
-                        Dish Size:
-                        <input id='ex2sizeCols' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '10';/>
-                        &nbsp; x &nbsp;
-                        <input id='ex2sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '10'/>
-                        cells&nbsp;<br />
-                        <label id='ex2sizeCells'>There are 900 cells by default</label>
-                      </div>
-                      <div class='even'>
-                        <span class='lftmargin'>Per Site Mutation Rate:</span>
-                        <span id='ex2muteSlide'
-                              style='width:100px; display: inline-block; vertical-align: top; margin-left:20px; margin-right:20px'></span>
-                        <!-- style done here for the slider; margin to keep it from overlapping;
-                                              without width the slider is the full width of the browser window-->
-                        <!--<input id='ex2muteInput' type='text' style='width: 4em; height:1.6em'></button> -->
-                        <input id='ex2muteInput' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' ;
-                               data-dojo-props='constraints:{min:0, max:100},
-                               invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                               style='width: 4.5em; height:1.6em' onchange='av.ptd.muteInputChange(this.value, "muteError")'> %<br />
-                        <!--; or the slider value is &nbsp;</div>
-                        <input id='ex2mRate' type='text' readonly style='width: 4em; height:1.6em'></button> -->
-                        <label id='ex2muteError'>Error place holder</label>
-                      </div>
-                      <div class='odd'>Ancestral Organism(s):
-                        <div class='ancestorContainer' id='ex2ancestorBox'></div>
-                      </div>
-                      <div class='even'>
-                        Place Offspring:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='ex2childParentRadio'
-                               intermediateChanges='false'
-                               iconClass='dijitNoIcon' name='child' value='nearParent'>
-                        <label id='ex2childParentLabel'>Near their parent</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='ex2childRandomRadio'
-                               intermediateChanges='false'
-                               iconClass='dijitNoIcon' name='child' checked value='random'>
-                        <label id='ex2childRandomLabel'>Anywhere, randomly</label>
-                      </div>
-                      <div class='odd'>
-                        <label>What resources are available in the environment? (strength of energy reward shown in parentheses)</label>
-                        <br />
+                        Text Area to show long text strings:<br />
+                        Shows the html created for the User Interface for environment.cfg file
+                        <div>
+                        <textarea id='tst2textarea' cols='150' rows='100'></textarea><br />
 
-                      </div> <span class="end odd"></span>
-
-
-
-
-                      <div class='even'>
-                        <label id='ex2label_31'>Repeatability Mode:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='ex2experimentRadio'
-                               intermediateChanges='false' iconClass='dijitNoIcon' name='repeat'
-                               value='experimental'>
-                        <label id='ex2experimentLabel'>Experimental</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='ex2demoRadio' checked
-                               intermediateChanges='false' iconClass='dijitNoIcon' name='repeat' value='demo'>
-                        <label id='ex2demoLabel'>Demo</label>
-                      </div>
-                      <div class='odd'>
-                        <label>Pause Run:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='ex2manualUpdateRadio'
-                               intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' checked
-                               value='manual' />
-                        <label id='ex2ManLabel'>Manually</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='ex2autoUpdateRadio'
-                               intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' value='setupdate' />
-                        <label id='ex2updateLabel'>At update:</label>
-                        <input type='text' data-dojo-type='dijit/form/NumberSpinner' id='ex2autoUpdateSpinner'
-                               intermediateChanges='false'
-                               trim='false' uppercase='false' lowercase='false' propercase='false' invalidMessage='$_unset_$'
-                               value='1000' data-dojo-props='smallDelta:100, constraints:{places:0}' style='width:80px'>
-                      </div>
-                      <span data-dojo-type='dijit/TitlePane' id='ex2AdvancedSetup' title='Advanced Setup'
-                            extractContent='false' preventCache='false' preload='false' refreshOnShow='false' duration='200'
-                            open='false' style='min-width: 1px; width: 100%; height: auto; visibility: hidden'>
-                        <div class='even'>
-                          time Slice:
-                          <input id='ex2avetimeSlice' value='20'
-                                 style='width: 3em; height:1.6em' />
-                          &nbsp;&nbsp;&nbsp;
-                          Update Delay:
-                          <input id='ex2sleepDelay' type='text' data-dojo-type='dijit/form/NumberTextBox'
-                                 required='true' value='50' data-dojo-props='constraints:{min:0, max:5000,places:0},
-                                 invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid update Delay."'
-                                 style='width:4em; height:1.6em'/>
-                          msecs<br />
                         </div>
-                      </span>
+                      </div>
+
                     </form>
                   </div> <span id='end of Experiment 2'></span>  
 
@@ -1999,9 +1931,9 @@
           </div>  <span title="mainBlockClassRow id=populationBlock"></span>
 
 
-          <div class="mainBlockClassRow" id="organismBlock">
+          <div id="organismBlock" class="mainBlockClassRow">
             <div class="orgBenchCol">
-              <div class="orgBenchTopRow" id="orgTopId">
+              <div id="orgTopId" class="orgBenchTopRow">
                 <div class="orgTopLt">
                   <img src='images/Avida-ED-ancestor-icon.png' style='height: 32px;' id='actOrgImg' />
                   <div id='activeOrgan' class='popContainer'></div>

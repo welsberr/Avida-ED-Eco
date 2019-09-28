@@ -207,7 +207,6 @@ require([
     av.dom.allAvida = document.getElementById('allAvida');
     av.dom.navColId = document.getElementById('navColId');
     
-    av.dom.mapHolder = document.getElementById('mapHolder');
     av.dom.populationButton = document.getElementById('populationButton');
     av.dom.freezeButton = document.getElementById('freezeButton');
     av.dom.populationBlock = document.getElementById('populationBlock');
@@ -298,6 +297,9 @@ require([
     av.dom.ornButton = document.getElementById('ornButton');
     av.dom.andnButton = document.getElementById('andnButton');
     av.dom.xorButton = document.getElementById('xorButton');
+    
+    av.dom.sugarAccordion = document.getElementById('sugarAccordion');
+    
 /*
  * Not in use any longer; might use to create new vars
  * 
@@ -338,7 +340,8 @@ require([
     av.dom.autoUpdateOnce = document.getElementById('autoUpdateOnce');
     
     //test dishes setup
-    av.dom.environConfigEdit = document.getElementById('environConfigEdit');
+    av.dom.environConfigEdit = document.getElementById('environConfigEdit');  
+    av.dom.tst2textarea = document.getElementById('tst2textarea');  
 
     av.dom.sendLogPara = document.getElementById('sendLogPara');
     av.dom.sendLogTextarea = document.getElementById('sendLogTextarea');
@@ -1082,14 +1085,19 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       av.sgr.processHideFlags(av.sgr.hideFlagInit,'av.ui.toggleDevelopentDisplays');
       
       //console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
-      len = document.getElementsByClassName('globalEquilibrium').length;
+      len = document.getElementsByClassName('localEquilibrium').length;
       for (ii=0; ii< len; ii++) {
         document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'none';
         document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
         document.getElementsByClassName('globalAll')[ii].style.display = 'none';
         document.getElementsByClassName('localEquilibrium')[ii].style.display = 'none';
         document.getElementsByClassName('localAll')[ii].style.display = 'none';
-      }
+      };
+      len = document.getElementsByClassName('globalEquilibrium').length - 1;
+      document.getElementsByClassName('globalEquilibrium')[len].style.display = 'none';
+      document.getElementsByClassName('globalFinite')[len].style.display = 'none';
+      document.getElementsByClassName('globalAll')[len].style.display = 'none';
+      
       dijit.byId('mnHpDebug').set('label', 'Show debug menu');
       tsk = 'not'; sub=1;
       document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
@@ -1113,18 +1121,24 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
 
       av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopentDisplays.onclick_show');
       
-      len = document.getElementsByClassName('globalEquilibrium').length;
+      //show environment options sill under development.
+      len = document.getElementsByClassName('localEquilibrium').length;
       for (ii=0; ii< len; ii++) {      
         document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'inline';
         document.getElementsByClassName('globalFinite')[ii].style.display = 'inline';
         document.getElementsByClassName('globalAll')[ii].style.display = 'inline';
         document.getElementsByClassName('localEquilibrium')[ii].style.display = 'inline';
         document.getElementsByClassName('localAll')[ii].style.display = 'inline';
-      }
-      dijit.byId('mnHpDebug').set('label', 'Hide debug menu');
+      };
+      len = document.getElementsByClassName('globalEquilibrium').length - 1;
+      document.getElementsByClassName('globalEquilibrium')[len].style.display = 'inline';
+      document.getElementsByClassName('globalFinite')[len].style.display = 'inline';
+      document.getElementsByClassName('globalAll')[len].style.display = 'inline';
       tsk = 'not'; sub=1;
       document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
       
+      //Show debug on dropdown menu
+      dijit.byId('mnHpDebug').set('label', 'Hide debug menu');      
       av.post.addUser('Button: mnHpDebug: now visible');
     }
     console.log('in av.ui.hideDevelopment=', av.ui.hideDevelopment, 'at end of function');
@@ -1139,6 +1153,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       document.getElementById('debugResource').style.display = 'none';
     }
   };
+
+
 
   av.fwt.tryDown = function(blob) {
     var ab = document.createElement('a');
@@ -1349,7 +1365,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     };
     av.dom.testSetupBlock.display = 'none';
     document.getElementById('ex1setupBlock').style.display = 'none';
-    document.getElementById('ex2setupBlock').style.display = 'none';
+    document.getElementById('tst2setupBlock').style.display = 'none';
 
     //for select/option control
     if ('Setup' == domObj.value) {
@@ -1374,7 +1390,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     };
     av.dom.testSetupBlock.display = 'none';
     document.getElementById('ex1setupBlock').style.display = 'none';
-    document.getElementById('ex2setupBlock').style.display = 'none';
+    document.getElementById('tst2setupBlock').style.display = 'none';
 
     if ('Setup' == domObj.value) {
       document.getElementById('RtSideSelect').value = 'Setup';
@@ -2467,85 +2483,6 @@ av.ptd.randInputChange = function(value, randErroTest) {
   };
 
 /************************************************************************************ enviornment (sugar) settings ****/
-/*
-
-  av.ui.envBoxSwap = function (showbox) {
-    console.log('in av.ui.envBoxSwap; showbox = ', showbox);
-    av.dom.envNone.style.display = "none";
-    av.dom.envFinite.style.display = "none";
-    av.dom.envEquilibrium.style.display = "none";
-    av.dom.envSourceSink.style.display = "none";
-    av.dom.envGradient.style.display = "none";
-    document.getElementById(showbox).style.display = "block";
-    av.ui.envRegion = document.getElementById('envRegion').value;
-    av.ui.envTask = document.getElementById('envTask').value;
-    av.ui.envDistribute = document.getElementById('envDistribute').value;
-  };
-
-  document.getElementById('envDistribute').onchange = function() {
-    av.ui.envDistribute = document.getElementById('envDistribute').value;
-    console.log ('in envDistribute =', av.ui.envDistribute);
-    switch (document.getElementById('envDistribute').value) {
-      case 'Finite':
-        av.ui.envBoxSwap('envFinite'); 
-        break;
-      case 'Equilibrium':
-        av.ui.envBoxSwap('envEquilibrium'); 
-        break;
-      case 'Gradient':
-        av.ui.envBoxSwap('envGradient'); 
-        break;
-      case 'Source/Sink':
-        av.ui.envBoxSwap('envSourceSink'); 
-        break;
-      case 'None':
-      case 'Infinite':
-        av.ui.envBoxSwap('envNone'); 
-        break;
-    }
-    av.ptd.envobj2form('envRegion.change');
-  };
-*/
-
-// delete later
-/*  av.ui.ex1envBoxSwap = function (showbox) {
-    document.getElementById('ex1envNone').style.display = "none";
-    document.getElementById('ex1envFinite').style.display = "none";
-    document.getElementById('ex1envEquilibrium').style.display = "none";
-    document.getElementById('ex1envSourceSink').style.display = "none";
-    document.getElementById('ex1envGradient').style.display = "none";
-
-    document.getElementById(showbox).style.display = "block";
-    av.ui.ex1envRegion = document.getElementById('ex1envRegion').value;
-    av.ui.ex1envTask = document.getElementById('ex1envTask').value;
-    av.ui.ex1envDistribute = document.getElementById('ex1envDistribute').value;
-    //console.log('in av.ui.ex1envBoxSwap; showbox = ', showbox);
-  };
-
-  document.getElementById('ex1envDistribute').onchange = function() {
-    av.ui.envDistribute = document.getElementById('ex1envDistribute').value;
-    //console.log ('in ex1envDistribute =', av.ui.ex1envDistribute);
-    switch (document.getElementById('ex1envDistribute').value) {
-      case 'Finite':
-        av.ui.ex1envBoxSwap('ex1envFinite'); 
-        break;
-      case 'Equilibrium':
-        av.ui.ex1envBoxSwap('ex1envEquilibrium'); 
-        break;
-      case 'Gradient':
-        av.ui.ex1envBoxSwap('ex1envGradient'); 
-        break;
-      case 'Source/Sink':
-        av.ui.ex1envBoxSwap('ex1envSourceSink'); 
-        break;
-      case 'None':
-      case 'Infinite':
-        av.ui.ex1envBoxSwap('ex1envNone'); 
-        break;
-    }
-    //av.ptd.envobj2form('envRegion.change');
-  };
-*/
 
   av.ui.ex1setSugarColors = function () {
     var sugarSection = ['ex1notSection', 'ex1nanSection', 'ex1andSection', 'ex1ornSection', 'ex1oroSection', 'ex1antSection', 'ex1norSection', 'ex1xorSection', 'ex1equSection'];
@@ -2569,7 +2506,7 @@ av.ptd.randInputChange = function(value, randErroTest) {
     document.getElementById('ex1allSugarChange').value = 'allNeutral';
   };
 
-// end of ex1 and ex2 page stuff
+// end of ex1 and tst2 page stuff
 //------------------------------------------------------------------------------------------------- Sugar Accordion ----
 //Global or Local in Ed speak = Global or Grid in Avida Environment file.
 av.sgr.allSugarGeometryChange = function(domObj){
@@ -3601,14 +3538,13 @@ $(function slidemute() {
   av.sgr.ChangeAllsugarSupplyType('Infinite');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last things done');  
 
-  //av.ui.ex2envBoxSwap('ex2envNone');    //delete later
   av.ui.ex1setSugarColors();   //94     //delete later
   
   av.doj.mnDebug.style.visibility = 'visible';   // set visiable so that av.ui.toggleDevelopentDisplays will hide debuts stuff
   
   // Avida-ED 4.0.0 Alpha Testing fix this too. 
   //true when diane is working; false for all production releases even in alpha testsing.  
-  if (false) {
+  if (false) {  
     console.log('testing mode; remove before putting on server for Avida-ED 4.0.0 Alpha Testing. ');
     //av.dom.xorLabel.onclick();   now only turns grid resource value table on and off
     //
@@ -3620,7 +3556,7 @@ $(function slidemute() {
   //av.grd.popChartFn();
   //av.grd.drawGridSetupFn('initial background'); //Draw initial background
 
-  //Safari 9 will not allow saving workspaces or freezer items.
+  //Safari 9 will not allow saving workspaces or freezer items.  This is old from when Safari did not allow saving.
   //if (av.brs.isSafari) {
   if (false) {
     userMsgLabel.textContent = 'Safari 9 does not allow saving a workspace or freezer items. Please use Firefox or Chrome';

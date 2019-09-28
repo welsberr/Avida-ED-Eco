@@ -700,7 +700,13 @@ av.msg.updatePopStats = function (msg) {
   av.grd.updateNum = msg.update;
   popSizeLabel.textContent = msg.organisms.formatNum(0);
   aFitLabel.textContent = msg.ave_fitness.formatNum(place);
-  aEnergyAcqRateLabel.textContent = msg.ave_metabolic_rate.formatNum(place);
+  
+    if (987654321 < Number(msg.ave_metabolic_rate)){
+      aEnergyAcqRateLabel.textContent = msg.ave_metabolic_rate.formatNum(0);
+    }
+    else {
+      aEnergyAcqRateLabel.textContent = msg.ave_metabolic_rate.formatNum(place);
+    }
   if (0 < msg.ave_gestation_time) {aOffspringCostLabel.textContent = msg.ave_gestation_time.formatNum(place);}
   else {aOffspringCostLabel.textContent = 'non-viable';}
     aAgeLabel.textContent = msg.ave_age.formatNum(place);
@@ -808,7 +814,14 @@ av.grd.updateSelectedOrganismType = function (msg) {
   if (null === msg.fitness) fitLabel.textContent = ' ';
   else fitLabel.textContent = prefix + msg.fitness.formatNum(2);
   if (null === msg.metabolism) energyAcqRateLabel.textContent = ' ';
-  else energyAcqRateLabel.textContent = prefix + msg.metabolism.formatNum(2);
+  else {
+    if (987654321 < Number(msg.metabolism)){
+      energyAcqRateLabel.textContent = prefix + msg.metabolism.formatNum(0);
+    }
+    else {
+      energyAcqRateLabel.textContent = prefix + msg.metabolism.formatNum(2);
+    }
+  }
   if (null === msg.gestation) offspringCostLabel.textContent = ' ';
   else if (0 < msg.gestation) {offspringCostLabel.textContent = prefix + msg.gestation.formatNum(2);}
   else {offspringCostLabel.textContent = 'non-viable';}

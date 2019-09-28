@@ -1,0 +1,118 @@
+                        <div id='sugarAccordion'>
+
+                          <details id='t5k0Section' class='sugarAccordionSection'>
+                            <summary class='sugarSummary'>
+                              <div id='t5k0Title' class='sugarTitle'>t5kose</div>&nbsp;
+                              <select  id='t5k0Geometry' class='globalLocal' onchange='av.sgr.geometryChange(this);'>
+                                <option value='Global' selected>Global</option>
+                                <option value='Local'>Local</option>
+                              </select>&nbsp;&nbsp;&nbsp;
+                              <select  id='t5k0SupplyType' class='sugarSupplyType' onchange='av.sgr.supplyChange(this)'>
+                                <option id='t5k0none' value='None'>None</option>
+                                <option id='t5k0Infinite' value='Infinite' selected>Infinite</option>
+                                <option id='t5k0Finite' class='globalFinite' value='Finite'>Finite</option>
+                                <option id='t5k0Equilibrium' class='globalEquilibrium' value='Equilibrium'>Equilibrium</option>
+                                <option id='t5k0All' class='globalAll' value='All'>All debug only</option>
+                              </select>&nbsp;&nbsp;&nbsp;
+                              <select  id='t5k0dishRegion' class='dishRegion' onchange='av.sgr.dishRegionChange(this)'>
+                                <option id='t5k0WholeDish' value='WholeDish selected'>Whole Dish</option>
+                                <option id='t5k0HalvesLeftRight' class='HalfLftRit' value='HalvesLeftRight'>Halves Left/Right</option>
+                                <option id='t5k0TopLeftRight' class='TopLftRit' value='ThirdsTopLeftRight'>Top/Bottom(L/R)</option>
+                                <option id='t5k0Quarters' class='Quarters' value='Quarters'>Quarters</option>
+                              </select>&nbsp;&nbsp;&nbsp;
+                              <div id='t5k0initialDiv' class='sugarSummaryDiv'>
+                                <label><input id='t5k0initialInput' class='sugInitialInput' type='text' onchange='av.sgr.initialChange(this);'/>
+                                &nbsp;Initial amount per cell&nbsp;&nbsp;</label>
+                              </div>
+                            </summary>
+
+                            <div id='t5k0Details' class='sugarDetailSection'>
+                              
+                              <div id='t5k1subSection' class='sugarDishSubsection'>
+                                <div id='t5k1Title' class='grid-sugarDetail-item subSectionTitle'>Whole Dish</div>
+                                <div id='t5k1supplyTypeSelectHolder' class='grid-sugarDetail-item typeInput'>
+                                  <select  id='t5k1SupplyType' class='sugarSupplyType' onchange='av.sgr.supplyChange(this);'>
+                                    <option id='t5k1none' value='None'>None</option>
+                                    <option id='t5k1Infinite' value='Infinite' selected>Infinite</option>
+                                    <option id='t5k1Finite' class='localFinite' value='Finite'>Finite</option>
+                                    <option id='t5k1Equilibrium' class='localEquilibrium' value='Equilibrium'>Equilibrium</option>
+                                    <option id='t5k1All' class='localAll' value='All'>All debug only</option>
+                                  </select>&nbsp;&nbsp;&nbsp;
+                                </div>
+                                <div id='t5k1periodCheckbox' class='grid-sugarDetail-item periodCheckDiv' onchange='av.sgr.eachSugarCheckBoxChange(this);'>
+                                  <label><input id='t5k1periodCheck' type='checkbox'>Periodic&nbsp;&nbsp;</label>
+                                </div>
+                                <div id='t5k1gradientCheckbox' class='grid-sugarDetail-item gradientCheckDiv' onchange='av.sgr.eachSugarCheckBoxChange(this);'>
+                                  <label><input id='t5k1gradientCheck' type='checkbox'>Gradient&nbsp;&nbsp;</label>
+                                </div>
+                                <div id='t5k1diffuseCheckbox' class='grid-sugarDetail-item diffuseCheckDiv' onchange='av.sgr.eachSugarCheckBoxChange(this);'>
+                                  <label><input id='t5k1diffuseCheck' type='checkbox'>Diffusion&nbsp;&nbsp;</label>
+                                </div>
+                                <div id='t5k1hiSideSelectHolder' class='grid-sugarDetail-item sideInput'>
+                                  <label><select  id='t5k1sideSelect'>
+                                    <option value='left' selected>Left</option>
+                                    <option value='right'>Right</option>
+                                    <option value='top'>Top</option>
+                                    <option value='bottom'>Bottom</option>
+                                    <option value='center'>Center</option>
+                                    <option value='edge'>Edge</option>
+                                  </select>
+                                    <span id='t5k1sideText'>side text to describe what side means</span></label>
+                                </div>
+                                <div id='t5k1periodTime' class='grid-sugarDetail-item periodTime'>
+                                  <label><input id='t5k1periodInput'  class='sugPeriodInput' type='text' onchange='av.sgr.periodChange(this);'/> Period (updates)</label>
+                                </div>
+                                <div id='t5k1sideHiText' class='grid-sugarDetail-item sideTitleHi'>High Side</div>
+                                <div id='t5k1sideLoText' class='grid-sugarDetail-item sideTitleLo'>Low Side</div>
+                                <div id='t5k1Blank' class='grid-sugarDetail-item sgrBlank'>&nbsp;&nbsp;&nbsp;&nbsp;</div>  
+
+                                <div id='t5k1initialHiDiv' class='grid-sugarDetail-item initialHi'>
+                                  <label><input id='t5k1initialHiInput' class='sugInitialHiInput' type='text' onchange='av.sgr.initialChange(this);'/>&nbsp;
+                                    <span id='t5k1initialHiText'>High side initial amount per cell </span></label>
+                                </div>
+                                <div id='t5k1initialLoDiv' class='grid-sugarDetail-item initialLo'>
+                                  <label><input id='t5k1initialHiInput' class='sugInitialLoInput' type='text' onchange='av.sgr.initialChange(this);'/>&nbsp;
+                                    <span id='t5k1initialLoText'>Low side initial amount per cell</span></label>
+                                </div>
+                                <div id='t5k1inflowHiDiv' class='grid-sugarDetail-item inflowHi'>
+                                  <label><input id='t5k1inflowHiInput' class='sugInflowHiInput' type='text' onchange='av.sgr.inflowChange(this);'/>&nbsp;
+                                    <span id='t5k1inflowHiText' class='sugOutflowLabel'>Inflow amount per cell</span></label>
+                                </div>
+                                <div id='t5k1inflowLoDiv' class='grid-sugarDetail-item inflowLo'>
+                                  <label><input id='t5k1inflowLoInput' class='sugInflowLoInput' type='text' onchange='av.sgr.inflowChange(this);'/>&nbsp;
+                                  <span id='t5k1inflowLoText' class='sugOutflowLabel'>Inflow amount per cell on low side</span></label>
+                                </div>
+                                <div id='t5k1outflowHiDiv' class='grid-sugarDetail-item outflowHi'>
+                                  <label><input id='t5k1outflowHiInput' class='sugOutflowHiInput' type='text' onchange='av.sgr.outflowChange(this);'/>&nbsp;
+                                  <span id='t5k1outflowHiText' class='sugOutflowLabel'>Outflow fraction per cell.</span></label>
+                                </div>
+                                <div id='t5k1outflowLoDiv' class='grid-sugarDetail-item outflowLo'>
+                                  <label><input id='t5k1outflowLoInput' class='sugOutflowLoInput' type='text' onchange='av.sgr.outflowChange(this);'/>&nbsp;
+                                    <span id='t5k1outflowLoText' class='sugOutflowLabel'>Outflow fraction per cell on low side.</span></label>
+                                </div>
+                                <div id='t5k1equalHiDiv' class='grid-sugarDetail-item equalHi'>
+                                  <span id='t5k1equalHiValue'></span>
+                                  <span id='t5k1equalHiText'> = equilibrium when no resource has been consumed</span>
+                                </div>
+                                <div id='t5k1equalLoDiv' class='grid-sugarDetail-item equalLo'>
+                                  <span id='t5k1equalLoValue'></span>
+                                  <span id='t5k1equalLoText'> = equilibrium if not consumed</span>
+                                </div>
+                              </div><span id='t5k1SectionEnd' class='endsugarDishSubsection'> </span>
+
+                              <div id='t5k2subSection' class='sugarDishSubsection'>
+                              </div><span id='t5k2SectionEnd' class='endsugarDishSubsection'> </span>
+                              
+                              <div id='t5k3subSection' class='sugarDishSubsection'>
+                              </div><span id='t5k3SectionEnd' class='endsugarDishSubsection'> </span>
+                              
+                              <div id='t5k4subSection' class='sugarDishSubsection'>
+                              </div><span id='t5k4SectionEnd' class='endsugarDishSubsection'> </span>
+                              
+                            </div><span id='t5k0DetailsEnd' class='end_sugarDetailSection_grid_container'></span>
+                          </details>
+                          
+                          
+                        </div><span id='sugarAccordionEnd'></span>
+
+
