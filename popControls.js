@@ -931,16 +931,20 @@ av.ptd.ex1allSugarChange = function (allmode) {
     document.getElementById('ex1xorGlobRsrcType').value = onoff;
     document.getElementById('ex1equGlobRsrcType').value = onoff;
 
-    document.getElementById('ex1notGeometry').value = geometry;
-    document.getElementById('ex1nanGeometry').value = geometry;
-    document.getElementById('ex1andGeometry').value = geometry;
-    document.getElementById('ex1ornGeometry').value = geometry;
-    document.getElementById('ex1oroGeometry').value = geometry;
-    document.getElementById('ex1antGeometry').value = geometry;
-    document.getElementById('ex1norGeometry').value = geometry;
-    document.getElementById('ex1xorGeometry').value = geometry;
-    document.getElementById('ex1equGeometry').value = geometry;
-  };
+    document.getElementById('ex1notGlobalLocal').value = geometry;
+    document.getElementById('ex1nanGlobalLocal').value = geometry;
+    document.getElementById('ex1andGlobalLocal').value = geometry;
+    document.getElementById('ex1ornGlobalLocal').value = geometry;
+    document.getElementById('ex1oroGlobalLocal').value = geometry;
+    document.getElementById('ex1antGlobalLocal').value = geometry;
+    document.getElementById('ex1norGlobalLocal').value = geometry;
+    document.getElementById('ex1xorGlobalLocal').value = geometry;
+    document.getElementById('ex1equGlobalLocal').value = geometry;
+  }
+  else if ('allLocal' == allmode){
+    //local was picked
+    //would change to grey if this part was implemented 
+  }
 };
 
 //in tst2 page now
