@@ -106,13 +106,14 @@ require([
   'fileDataRead.js',
   'fileDataWrite.js',
   'fileIO.js',
-
+  
   'populationGrid.js',
   'organismView.js',
   'dojoDnd.js',
   'popControls.js',
   'mouse.js',
   'mouseDown.js',
+  'sugar_ui.js',
   //'restartAvida.js',
   //'diagnosticconsole.js',
   'dojo/domReady!'
@@ -212,6 +213,8 @@ require([
     av.dom.populationBlock = document.getElementById('populationBlock');
     av.dom.organismBlock = document.getElementById('organismBlock');
     av.dom.analysisBlock = document.getElementById('analysisBlock');
+    av.dom.showTextBlock = document.getElementById('showTextBlock'); 
+    av.dom.allAvida = document.getElementById('allAvida');
     
     av.dom.lftPnlButtonImg = document.getElementById('lftPnlButtonImg');
     av.dom.rtPnlButtonImg = document.getElementById('rtPnlButtonImg');
@@ -299,6 +302,12 @@ require([
     av.dom.xorButton = document.getElementById('xorButton');
     
     av.dom.sugarAccordion = document.getElementById('sugarAccordion');
+    av.dom.orn0section = document.getElementById('orn0section'); 
+    av.dom.orn0summary = document.getElementById('orn0summary'); 
+    av.dom.orn0title = document.getElementById('orn0title'); 
+    av.dom.orn0Details = document.getElementById('orn0Details'); 
+    av.dom.orn1subSection = document.getElementById('orn1subSection'); 
+    av.dom.showTextarea = document.getElementById('showTextarea'); 
     
 /*
  * Not in use any longer; might use to create new vars
@@ -1072,7 +1081,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     var len, tsk, sub;
     if ('visible' === av.doj.mnDebug.style.visibility) {
       av.ui.hideDevelopment = true;
-      av.doj.mnDebug.style.visibility = 'hidden';    
+      av.doj.mnDebug.style.visibility = 'hidden';   
+      document.getElementById('showTextButton').style.display = 'none';
       document.getElementById('popInfoTabHolder').className = 'tabHolderHide';
       document.getElementById('fzTdishSec').style.visibility = 'hidden';
       document.getElementById('testDishDetailDiv').style.display = 'none';
@@ -1099,7 +1109,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       document.getElementsByClassName('globalAll')[len].style.display = 'none';
       
       dijit.byId('mnHpDebug').set('label', 'Show debug menu');
-      tsk = 'not'; sub=1;
+      tsk = 'orn'; sub=1;
       document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
 
       av.post.addUser('Button: mnHpDebug: now hidden');
@@ -1107,6 +1117,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     {       // development sectiomn can be seen.
       av.ui.hideDevelopment = false;
       av.doj.mnDebug.style.visibility = 'visible';
+      document.getElementById('showTextButton').style.display = 'flex';
 
       document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
       document.getElementById('fzTdishSec').style.visibility = 'visible';
@@ -1134,7 +1145,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       document.getElementsByClassName('globalEquilibrium')[len].style.display = 'inline';
       document.getElementsByClassName('globalFinite')[len].style.display = 'inline';
       document.getElementsByClassName('globalAll')[len].style.display = 'inline';
-      tsk = 'not'; sub=1;
+      tsk = 'orn'; sub=1;
       document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
       
       //Show debug on dropdown menu
@@ -1312,6 +1323,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.dom.populationBlock.style.display = "none";
     av.dom.organismBlock.style.display = "none";
     av.dom.analysisBlock.style.display = "none";
+    av.dom.showTextBlock.style.display = "none";
     document.getElementById(showBlock).style.display = "flex";
     
     //dijit.byId(showBlock).resize();
@@ -1354,6 +1366,10 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.anl.AnaChartFn();
   };
 
+  document.getElementById('showTextButton').onclick = function () {
+    av.post.addUser('Button: showTextButton');
+    av.ui.mainBoxSwap('showTextBlock');
+  };
   // ------------------ three controls for the same purpose; took work to get tabs to look right so I'm keeping for now --
 
   av.ptd.RtInfoPanel = function (domObj) {
@@ -2513,7 +2529,7 @@ av.sgr.allSugarGeometryChange = function(domObj){
   var idx = domObj.selectedIndex;        // get the index of the selected option 
   var which = domObj.options[idx].value;   // get the value of the selected option 
   av.sgr.ChangeAllGeo(which);
-  av.sgr.setSugarColors();
+  av.sgr.setSugarColors(true);  //true is to turn colors on;
   document.getElementById('allSugarGeometry').value = 'Neutral';
 };
 
@@ -3529,16 +3545,20 @@ $(function slidemute() {
   // **************************************************************************************************************** */
   //                                          Last things done
   // **************************************************************************************************************** */
+  // Do this after all other is done
+  
   //av.ui.removeVerticalScrollbar('popTopRw', 'popTopRw');
   console.log('before mainBoxSwap');
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
 
-  av.sgr.ChangeAllGeo('Global');
-  av.sgr.setSugarColors();
-  av.sgr.ChangeAllsugarSupplyType('Infinite');
+  //must create the rest of the resource/reaction user interface before calling av.sgr.ChangeAllGeo('Global');
+  av.sgr.buildHtml();
+  //av.sgr.ChangeAllGeo('Global');
+  av.sgr.setSugarColors(true);  //true is to turn colors on;
+  //av.sgr.ChangeAllsugarSupplyType('Infinite');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last things done');  
 
-  av.ui.ex1setSugarColors();   //94     //delete later
+  av.ui.ex1setSugarColors();   //example 1     //delete later
   
   av.doj.mnDebug.style.visibility = 'visible';   // set visiable so that av.ui.toggleDevelopentDisplays will hide debuts stuff
   

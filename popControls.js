@@ -639,7 +639,7 @@ av.sgr.ChangeAllGeo = function(selectedOption){
 };
 
 av.sgr.ChangeAllsugarSupplyType = function(selectedOption) {
-  var endName = 'SupplyType';   //nan0SupplyType  the 0 is present because we were considering doing upto 4 hear and easier to take the 0 out later, than to put it in. 
+  var endName = 'SupplyType';   //nan0supplyType  the 0 is present because we were considering doing upto 4 hear and easier to take the 0 out later, than to put it in. 
   console.log('endName=', endName, '; selectedOption=',selectedOption);
   var domName = '';        
   var numtasks = av.sgr.logicNames.length;
@@ -653,13 +653,14 @@ av.sgr.ChangeAllsugarSupplyType = function(selectedOption) {
     console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
 };
 
-  av.sgr.setSugarColors = function() {
-  var sugarSection = ['notSection', 'nanSection', 'andSection', 'ornSection', 'oroSection', 'antSection', 'norSection', 'xorSection', 'equSection'];
-  var sugarTitle = ['notTitle', 'nanTitle', 'andTitle', 'ornTitle', 'oroTitle', 'antTitle', 'norTitle', 'xorTitle', 'equTitle'];
+  av.sgr.setSugarColors = function(colorFlg) {
+  var sugarSection = ['not0section', 'nan0section', 'and0section', 'orn0section', 'oro0section', 'ant0section', 'nor0section', 'xor0section', 'equ0section'];
+  var sugarTitle = ['not0title', 'nan0title', 'and0title', 'orn0title', 'oro0title', 'ant0title', 'nor0title', 'xor0title', 'equ0title'];
     var len = av.sgr.sugarColors.length;
     for (ii = 0; ii < len; ii++) {
       //if ('Local' == document.getElementById('allSugarGeometry').value) {
-      if (true) {
+      if (colorFlg) {
+        //console.log('sugarSection[ii]', sugarSection[ii]);
         document.getElementById(sugarSection[ii]).style.backgroundColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarBackgroundShade];
         document.getElementById(sugarTitle[ii]).style.color = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade];
         
@@ -672,7 +673,7 @@ av.sgr.ChangeAllsugarSupplyType = function(selectedOption) {
   };
 
 av.sgr.OpenCloseAllSugarDetails = function(selectedOption, from){
-  var endName = 'Section';   //nanGeometry
+  var endName = '0section';   //nanGeometry
   var idName = '';
   var openFlag = false;
   var numtasks = av.sgr.logicNames.length;
@@ -686,7 +687,7 @@ av.sgr.OpenCloseAllSugarDetails = function(selectedOption, from){
 };
 
 av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
-  if ('not' != tsk) {return;}   //used in testing; should be deleted in 2019 Aug/Sept
+  if ('orn' != tsk) {return;}   //used in testing; should be deleted in 2019 Aug/Sept
   
   console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; delete this =', deleteLater, '; sub=', sub);
   console.log('av.nut.hideFlags=', av.nut.hideFlags);
@@ -697,7 +698,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
   var geometry = document.getElementById(tsk+'Geometry').value;
   console.log('geometry=', geometry, '; geoOption=', geoOption);
   if ('global' == geometry.toLowerCase()) {
-    supplyType = document.getElementById(tsk + '0SupplyType').value;
+    supplyType = document.getElementById(tsk + '0supplyType').value;
   }
   else {
     supplyType = document.getElementById(tsk + sub + 'SupplyType').value;
@@ -706,7 +707,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
   console.log('tsk=', tsk, '; geometry=', geometry, '; supplyType =', supplyType );
   console.log(tsk+'0dishRegion=', document.getElementById(tsk+'0dishRegion').value );
 
-  document.getElementById(tsk+'0SupplyType').style.display = 'none';      
+  document.getElementById(tsk+'0supplyType').style.display = 'none';      
   document.getElementById(tsk+'0dishRegion').style.display = 'none';
   document.getElementById(tsk+'0initialDiv').style.display = 'none';
   document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'none';
@@ -728,15 +729,15 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
   document.getElementById(tsk+sub+'equalHiDiv').style.display = 'none';
   document.getElementById(tsk+sub+'equalLoDiv').style.display = 'none';
   if ('Global' == geoOption) {
-    document.getElementById(tsk+'0SupplyType').style.display = 'inline-block';      
+    document.getElementById(tsk+'0supplyType').style.display = 'inline-block';      
     switch (supplyType) {
       case 'None': 
       case 'Infinite': 
-        document.getElementById(tsk+'Section').open = false;
+        document.getElementById(tsk+'0section').open = false;
         break;
       case 'Finite': 
         document.getElementById(tsk+'0initialDiv').style.display = 'inline-block';
-        document.getElementById(tsk+'Section').open = false;
+        document.getElementById(tsk+'0section').open = false;
         break;
       case 'Equilibrium':
         document.getElementById(tsk+sub+'periodCheckbox').style.display = 'block';
@@ -754,10 +755,10 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
           document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium when no resource has been consumed';
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-globalEqualPeriod-container';
         };
-        document.getElementById(tsk+'Section').open = true;
+        document.getElementById(tsk+'0section').open = true;
         break;
       case 'All':
-        document.getElementById(tsk+'Section').open = true;
+        document.getElementById(tsk+'0section').open = true;
         document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
         document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
         document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'inline-block';
@@ -782,7 +783,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
     document.getElementById(tsk+'0dishRegion').style.display = 'inline-block';
     document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'block';
     document.getElementById(tsk+sub+'Title').style.display = 'block';    
-    document.getElementById(tsk+'Section').open = true;
+    document.getElementById(tsk+'0section').open = true;
 
     switch (supplyType) {    //for when geometery = local
       case 'None':

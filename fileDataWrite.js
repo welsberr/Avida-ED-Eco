@@ -180,7 +180,7 @@ av.fwt.form2NutrientTxt = function (from) {
     tsk = av.sgr.logicNames[ii];
     atsk = av.sgr.logicVnames[ii];
     domName = tsk + endName;
-    domName = 'not' + endName;         //remove when other tasks are ready
+    domName = 'orn' + endName;         //remove when other tasks are ready
     geometry = document.getElementById(domName).value;
     console.log('domName=', domName, '; value=', geometry);
     if ('Global' == document.getElementById(domName).value) {
@@ -189,9 +189,9 @@ av.fwt.form2NutrientTxt = function (from) {
       regionCode = av.sgr.regionCode[0];  //hard coded now; need to fix later. 
       rname = tsk + regionCode;
       
-      console.log("document.getElementById('not'+'0SupplyType').value=",document.getElementById('not'+'0SupplyType').value );      
-      //switch (document.getElementById(tsk +'0SupplyType').value) {
-      switch (document.getElementById('not'+'0SupplyType').value) {
+      console.log("document.getElementById('not'+'0supplyType').value=",document.getElementById('not'+'0supplyType').value );      
+      //switch (document.getElementById(tsk +'0supplyType').value) {
+      switch (document.getElementById('not'+'0supplyType').value) {
         case 'None':
           txt += 'REACTION ' + rname + ' ' + atsk + ' process:value=0:type=pow  requisite:max_count=1\n';
           break;

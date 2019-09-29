@@ -73,6 +73,7 @@ function DrawTimeline(obj, gen) {
   endX = av.dom.organCanvas.width - 25;
   length = endX - startX;
   numCycles = obj.length - 1;
+  
   //go through all numCycles comparing the current with the previous av.ind.cycle
   //Start with comparing av.ind.cycle 1 to av.ind.cycle 0 since there are no negative numCycles.
   var lngth = obj.length;
