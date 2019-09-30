@@ -624,50 +624,60 @@ av.ptd.clearLogicButtons = function() {
 
 //This does  not deal wtth complement, I'll do that later if asked. 
 av.sgr.ChangeAllGeo = function(selectedOption){
-  var endName = 'Geometry';   //nanGeometry
   var sub = 1;  //need to figure out subsections later
   var idName = '';
   var numtasks = av.sgr.logicNames.length;
   for (var ii=0; ii< numtasks; ii++) {
   //for (var ii=1; ii< 3; ii++) {
-    idName = av.sgr.logicNames[ii] + endName;
+    idName = av.sgr.logicNames[ii] + '0geometry';   //nan0geometry
     document.getElementById(idName).value = selectedOption;
     
-    av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], 'deletefromGeo', sub, 'av.sgr.ChangeAllGeo');
+    av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllGeo');
   }
-  console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption);
+  //console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption);
 };
 
 av.sgr.ChangeAllsugarSupplyType = function(selectedOption) {
-  var endName = 'SupplyType';   //nan0supplyType  the 0 is present because we were considering doing upto 4 hear and easier to take the 0 out later, than to put it in. 
-  console.log('endName=', endName, '; selectedOption=',selectedOption);
+  var endName = 'supplyType';   //nan0supplyType  the 0 is present because we were considering doing upto 4 hear and easier to take the 0 out later, than to put it in. 
+  //console.log('endName=', endName, '; selectedOption=',selectedOption);
   var domName = '';        
   var numtasks = av.sgr.logicNames.length;
-  for (var ii=0; ii< numtasks; ii++) {
-    for (var jj=0; ii< 2; ii++) {
+  // all tasks
+  for (var ii=0; ii< numtasks; ii++) {  
+    //change glabal and all subsections  (only 1 sub secton for now) - this may need to change later; but only allowing None and Infinte for now, so ok.
+    for (var jj=0; jj< 2; jj++) {
       domName = av.sgr.logicNames[ii] + jj + endName;
       document.getElementById(domName).value = selectedOption;
     }
-    av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], 'deleteSupplyType', 1, 'av.sgr.ChangeAllsugarSupplyType');
+    av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], 1, 'av.sgr.ChangeAllsugarSupplyType');
   }
-    console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
+    //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
 };
 
   av.sgr.setSugarColors = function(colorFlg) {
-  var sugarSection = ['not0section', 'nan0section', 'and0section', 'orn0section', 'oro0section', 'ant0section', 'nor0section', 'xor0section', 'equ0section'];
-  var sugarTitle = ['not0title', 'nan0title', 'and0title', 'orn0title', 'oro0title', 'ant0title', 'nor0title', 'xor0title', 'equ0title'];
+    var idname;
+    var backgndColor = av.color.greyMap[av.sgr.sugarGreyShade];
+    var nameColor = 'Black';
+    var darkColor = '#eee';
     var len = av.sgr.sugarColors.length;
     for (ii = 0; ii < len; ii++) {
-      //if ('Local' == document.getElementById('allSugarGeometry').value) {
+      //need to think this thru as eventually there will be up to 4 subsections. Just one for now.
+      idname = av.sgr.logicNames[ii]+'0section';
+      //if ('Local' == document.getElementById('allSugarGeometry').value) {    //when determined by local vs global 
       if (colorFlg) {
-        //console.log('sugarSection[ii]', sugarSection[ii]);
-        document.getElementById(sugarSection[ii]).style.backgroundColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarBackgroundShade];
-        document.getElementById(sugarTitle[ii]).style.color = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade];
-        
+        backgndColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarBackgroundShade];
+        nameColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade]; 
+        darkColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade+10]; 
       }
-      else {
-        document.getElementById(sugarSection[ii]).style.backgroundColor = av.color.greyMap[av.sgr.sugarGreyShade];
-        document.getElementById(sugarTitle[ii]).style.color = 'Black';
+      idname = av.sgr.logicNames[ii]+'0section';
+      document.getElementById(idname).style.backgroundColor = backgndColor;
+      idname = av.sgr.logicNames[ii]+'0title';
+      //console.log('idname=',idname);
+      document.getElementById(idname).style.color = nameColor;  
+      // eventually there will be up to 4 subsections. deal with that later.
+      for (var jj=1; jj < 2; jj++) {
+        idname = av.sgr.logicNames[ii]+jj+'title';
+        document.getElementById(idname).style.color = darkColor;  
       }
     }
   };
@@ -686,32 +696,37 @@ av.sgr.OpenCloseAllSugarDetails = function(selectedOption, from){
   console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption, '; openFlag=', openFlag, '; from=', from);
 };
 
-av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
-  if ('orn' != tsk) {return;}   //used in testing; should be deleted in 2019 Aug/Sept
-  
-  console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; delete this =', deleteLater, '; sub=', sub);
-  console.log('av.nut.hideFlags=', av.nut.hideFlags);
+av.sgr.changeDetailsLayout = function(tsk, sub, from) {
+  //these are not as usefull, turn on the one after the first if ('global' statement if problems
+  //console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; sub=', sub);
+  //console.log('av.nut.hideFlags=', av.nut.hideFlags);
   
   var supplyType;
-  var idx = document.getElementById(tsk+'Geometry').selectedIndex;
-  var geoOption = document.getElementById(tsk+'Geometry').options[idx].value;   // get the value of the selected option   
-  var geometry = document.getElementById(tsk+'Geometry').value;
-  console.log('geometry=', geometry, '; geoOption=', geoOption);
+  
+  // one line method to get value of select/option struture. 
+  var geometry = document.getElementById(tsk+'0geometry').value;
+  
+  //this 2 line method woks to get the value of the option in the select structure, but so does the one line method;
+  //var idx = document.getElementById(tsk+'0geometry').selectedIndex;
+  //var geoOption = document.getElementById(tsk+'0geometry').options[idx].value;   // get the value of the selected option   
+  // console log just hows that the two methods to get the selected option get the same answer
+  //console.log('geometry=', geometry, '; geoOption=', geoOption);
+  
   if ('global' == geometry.toLowerCase()) {
-    supplyType = document.getElementById(tsk + '0supplyType').value;
+    supplyType = document.getElementById(tsk + '0supplyType').value.toLowerCase();
   }
   else {
-    supplyType = document.getElementById(tsk + sub + 'SupplyType').value;
+    supplyType = document.getElementById(tsk + sub + 'supplyType').value.toLowerCase();
     
-  }
-  console.log('tsk=', tsk, '; geometry=', geometry, '; supplyType =', supplyType );
-  console.log(tsk+'0dishRegion=', document.getElementById(tsk+'0dishRegion').value );
-
+  };
+  //console.log('tsk=', tsk, 'sub=', sub, '; geometry=', geometry, '; supplyType =', supplyType, ' ' ,tsk+'0dishRegion=', document.getElementById(tsk+'0dishRegion').value );
+  
+  //hide everything. Display parts based on what is selected
   document.getElementById(tsk+'0supplyType').style.display = 'none';      
   document.getElementById(tsk+'0dishRegion').style.display = 'none';
   document.getElementById(tsk+'0initialDiv').style.display = 'none';
   document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'none';
-  document.getElementById(tsk+sub+'Title').style.display = 'none';
+  document.getElementById(tsk+sub+'title').style.display = 'none';
   document.getElementById(tsk+sub+'blank').style.display = 'none';      
   document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
   document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'none';
@@ -728,18 +743,18 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
   document.getElementById(tsk+sub+'outflowLoDiv').style.display = 'none';
   document.getElementById(tsk+sub+'equalHiDiv').style.display = 'none';
   document.getElementById(tsk+sub+'equalLoDiv').style.display = 'none';
-  if ('Global' == geoOption) {
+  if ('global' == geometry.toLowerCase()) {
     document.getElementById(tsk+'0supplyType').style.display = 'inline-block';      
     switch (supplyType) {
-      case 'None': 
-      case 'Infinite': 
+      case 'none': 
+      case 'infinite': 
         document.getElementById(tsk+'0section').open = false;
         break;
-      case 'Finite': 
+      case 'finite': 
         document.getElementById(tsk+'0initialDiv').style.display = 'inline-block';
         document.getElementById(tsk+'0section').open = false;
         break;
-      case 'Equilibrium':
+      case 'equilibrium':
         document.getElementById(tsk+sub+'periodCheckbox').style.display = 'block';
         document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
         document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
@@ -757,7 +772,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
         };
         document.getElementById(tsk+'0section').open = true;
         break;
-      case 'All':
+      case 'all':
         document.getElementById(tsk+'0section').open = true;
         document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
         document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
@@ -782,20 +797,20 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
   else {
     document.getElementById(tsk+'0dishRegion').style.display = 'inline-block';
     document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'block';
-    document.getElementById(tsk+sub+'Title').style.display = 'block';    
+    document.getElementById(tsk+sub+'title').style.display = 'block';    
     document.getElementById(tsk+'0section').open = true;
 
     switch (supplyType) {    //for when geometery = local
-      case 'None':
-      case 'Infinite': 
+      case 'none':
+      case 'infinite': 
           document.getElementById(tsk+sub+'blank').style.display = 'block';      
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-None-container';
         break;
-      case 'Finite':   //Local
-        console.log('av.nut.hideFlags.gradient=',av.nut.hideFlags.gradient);
+      case 'finite':   //Local
+        //console.log('av.nut.hideFlags.gradient=',av.nut.hideFlags.gradient);
         document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'block';
         document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'block';
-        console.log('task=',tsk, '; sub=', sub, '; gradientCheck.checked=', document.getElementById(tsk+sub+'gradientCheck').checked);
+        //console.log('task=',tsk, '; sub=', sub, '; gradientCheck.checked=', document.getElementById(tsk+sub+'gradientCheck').checked);
         if (true == document.getElementById(tsk+sub+'gradientCheck').checked) {  
           //gradient
           document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'block';
@@ -815,10 +830,10 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
             document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
             document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-noGridCheckbox-container';
           }
-          console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
+          //console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
         }
         break;
-      case 'Equilibrium':
+      case 'equilibrium':
         console.log(tsk,'0gradientCheckbox.checked=', document.getElementById(tsk+sub+'gradientCheck').checked);
         if (!av.nut.hideFlags.gradient) document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
         if (!av.nut.hideFlags.periodic) document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
@@ -870,7 +885,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
         }
         break;
         /*
-      case 'SourceSink':        //or should this be flow as it must have diffusion and/or gravity ??
+      case 'SourceSink':        //or should this be 'flow' as it must have diffusion and/or gravity ??
         document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
         document.getElementById(tsk+sub+'sideText').innerHTML = 'inflow side; outlow will be everywhere or on the opposite side';
         document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
@@ -880,7 +895,7 @@ av.sgr.changeDetailsLayout = function(tsk, deleteLater, sub, from) {
         console.log('nanDetails.class=', document.getElementById(tsk+'Details').className);
         break;
         */
-      case 'All':
+      case 'all':
         document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
         document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
         document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'inline-block';

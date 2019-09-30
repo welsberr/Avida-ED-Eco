@@ -48,7 +48,7 @@
 // Curent things broken:
 // the avidaDataRecorder.csv is broken
 
-console.log('version from Avida-ED-flex-active_2019_0125');
+console.log('version from Avida-ED-flex-active_2019_0929');
 var av = av || {};  //incase av already exists
 var dojo = dojo || {};
 
@@ -409,16 +409,6 @@ require([
   };
   av.dom.load();
   
-  av.sgr.supplyChange = function (domObj) {
-    var taskID = domObj.id; 
-    var task = taskID.substring(0,3);
-    var sub = taskID.substring(3,1);
-    console.log('tst=', task, '; subsection=', sub);
-    sub = 1; //only whole dish  for now
-    av.sgr.changeDetailsLayout(task, 'deleteLater', sub, 'av.sgr.supplyChange');
-  };
-
-
   if (av.debug.root) console.log('before dnd definitions');
   /********************************************************************************************************************/
   /******************************************* Dojo Drag N Drop Initialization ****************************************/
@@ -1325,13 +1315,18 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.dom.analysisBlock.style.display = "none";
     av.dom.showTextBlock.style.display = "none";
     document.getElementById(showBlock).style.display = "flex";
-    
     //dijit.byId(showBlock).resize();
     //document.getElementById(showBlock).resize();
     
     //disable menu options. they will be enabled when relevant canvas is drawn
     dijit.byId('mnFzOffspring').attr('disabled', true);
     dijit.byId('mnCnOffspringTrace').attr('disabled', true);
+
+    // if the miniplot on the populaton page needs to be initiated call that funciton.
+    if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+      av.grd.popChartInit('av.ui.mainBoxSwap');
+    };
+
     //console.log('end of mainBoxSwap');
   };
     
@@ -1395,6 +1390,10 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       av.dom.setupBlock.style.display = 'none';
       av.dom.labInfoBlock.style.display = 'flex';
       av.dom.statsTab.className += " active";
+      // if the miniplot on the populaton page needs to be initiated call that funciton.
+      if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+        av.grd.popChartInit('av.ptd.RtInfoPanel');
+      };      
     };
   };
 
@@ -1419,6 +1418,10 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       av.dom.setupBlock.style.display = 'none';
       av.dom.labInfoBlock.style.display = 'flex';
       av.dom.statsTab.className += " active";
+      // if the miniplot on the populaton page needs to be initiated call that funciton.
+      if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+        av.grd.popChartInit('av.ptd.popRightInfoPanel');
+      };      
     };
   };
 
@@ -2143,9 +2146,16 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.grd.popChartFn('av.dom.yaxis. onchange');
   };
 
-  // initialize needs to be in AvidaED.js
+  // initialize needs to be in AvidaED.js; cannot be run when mini-graph is not visible. 
+  // Should be done before av.grd.popChartFn is run.
   av.grd.popChartInit = function (from) {
-    //console.log(from, 'called av.grd.popChartInit');
+    console.log(from, 'called av.grd.popChartInit');  
+    //looke to see if poplulation page mini-chart is showing
+    if ('flex' != av.dom.labInfoBlock.style.display || ('populationBlock' !== av.ui.page) ) {
+      av.pch.needInit = true;
+      return;
+    };
+
     av.pch.clearPopChrt();
     av.pch.divSize('av.grd.popChartInit');
     var popData = av.pch.data;
@@ -2178,27 +2188,35 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
         av.debug.log += '\n     --uiD: Plotly: Plotly.deleteTraces(av.dom.popChart, [0, 1]) in AvidaED.js at 2133';
         av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart', [av.dom.popChart]);
         Plotly.deleteTraces(av.dom.popChart, [0, 1]);
-        av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in av.grd.popChartInit in AvidaED.js at 1589';
+        av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in av.grd.popChartInit in AvidaED.js at 2182';
         av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
         Plotly.relayout(av.dom.popChart, av.pch.update);
       }
     }
     av.dom.popChart.style.visibility='hidden';
     //console.log('layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width);
+    av.pch.needInit = false;
   };
 
   av.grd.popChartFn = function (from) {
     'use strict';
+    if (av.pch.needInit) {
+      console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, ' should not be here'); 
+      // if the miniplot on the populaton page needs to be initiated call that funciton.
+      if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+        av.grd.popChartInit('av.grd.popChartFn');
+      };
+    }
+    else  //console.log('av.grd.runState = ', av.grd.runState);
     
-    //Do not display chart if the chart is not on the screen. I do need some data updating so this is only a quick patch;
-    //console.log('av.dom.labInfoBlock.style.display =', av.dom.labInfoBlock.style.display, '; av.ui.page=', av.ui.page);
+    // Do not display chart if the chart is not on the screen. Data seems to be getting updated. need to verify this.
+    // console.log('av.dom.labInfoBlock.style.display =', av.dom.labInfoBlock.style.display, '; av.ui.page=', av.ui.page);
     if ('flex' != av.dom.labInfoBlock.style.display || ('populationBlock' !== av.ui.page) ) {
       // the avidaDataRecorder.csv is broken
       return;
     };
-   
-    console.log(from + ' called av.grd.popChartFn'); 
-    console.log('av.grd.runState = ', av.grd.runState);
+    
+    //console.log('av.grd.runState = ', av.grd.runState);
     if ('prepping' === av.grd.runState) {   //values can be prepping, started, or world
       av.dom.popChart.style.visibility = 'hidden';
     }
@@ -2353,10 +2371,12 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
                   height: av.pch.ht
                 };                
               };
-              console.log('av.debug.log = ', av.debug);
-              console.log('av.dom.popChart=',av.dom.popChart);
-              console.log('av.pch.update=', av.pch.update);   // should look like av.pch.update= {autorange: true, width: 544, height: 236}
-              console.log('av=', av);
+              //trying to figure out why plotly crashed. 
+              //When these were added 2019_08, plotly crased because div holding plotly was not being displayed
+              //console.log('av.debug.log = ', av.debug);
+              //console.log('av.dom.popChart=',av.dom.popChart);
+              //console.log('av.pch.update=', av.pch.update);   // should look like av.pch.update= {autorange: true, width: 544, height: 236}
+              //console.log('av=', av);
               //next line crashes ------------------
               Plotly.relayout(av.dom.popChart, av.pch.update);
               //console.log('after relayout in update grid chart');
@@ -2554,45 +2574,55 @@ av.sgr.geometryChange = function(selectObj){
   var sub = taskID.substring(3,1);
   console.log('tst=', task, '; subsection=', sub);
   sub = 1;  
-  av.sgr.changeDetailsLayout(task, 'deleteLater' , sub, 'av.sgr.geometryChange');  
+  av.sgr.changeDetailsLayout(task, sub, 'av.sgr.geometryChange');  
 };
 
 av.sgr.supplyChange_placeholder = function (domObj) {
   var taskID = domObj.id; 
   var task = taskID.substring(0,3);
   var sub = taskID.substring(3,1);
-  console.log('tst=', task, '; subsection=', sub);
+  console.log('taskID=', taskID, 'tst=', task, '; subsection=', sub);
   sub = 1; //only whole dish  for now
-  av.sgr.changeDetailsLayout(task, 'deleteLater', sub, 'av.sgr.supplyChange');
+  av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
 };
 
 av.sgr.dishRegionChange = function(domObj) {
   console.log('av.sgr.dishRegionChange was called by', domObj);
 };
 
+  av.sgr.supplyChange = function (domObj) {
+    var taskID = domObj.id; 
+    var task = taskID.substring(0,3);
+    var sub = taskID.substr(4,1);
+    console.log('taskID=', taskID,'; tst=', task, '; subsection=', sub); // this is wrong on 2019
+    sub = 1; //only whole dish  for now
+    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
+  };
 
 av.sgr.eachSugarCheckBoxChange = function (domObj) {
+  var re_region = /(\D+)(\d+)(.*$)/;
   var taskID = domObj.id; 
-  var task = taskID.substring(0,3);  
-  var sub = taskID.substring(3,1);
-  console.log('tst=', task, '; subsection=', sub);
+  var matchTaskRegion = taskID.match(re_region);
+  var task = matchTaskRegion[1];      //taskID.substring(0,3);  
+  var sub = matchTaskRegion[2];       //taskID.substring(3,1);   did not work
+  console.log('taskID=', taskID,'tst=', task, '; subsection=', sub);
   if (1<sub) sub = 1;
   sub = 1; //only whole dish  for now
-  av.sgr.changeDetailsLayout(task, 'deleteLater', sub, 'av.sgr.eachSugarCheckBoxChange');
+  av.sgr.changeDetailsLayout(task, sub, 'av.sgr.eachSugarCheckBoxChange');
 };
 
 av.sgr.periodChange = function(domObj) {
-  console.log('av.sgr.periodChange domObj=', domObj);
-  console.log('domObj.value=', domObj.value);
+  //console.log('av.sgr.periodChange domObj=', domObj);
+  console.log('id=', domObj.id, '; domObj.value=', domObj.value);
 };
 
 av.sgr.initialChange = function(domObj) {
-  console.log('av.sgr.initialChange domObj=', domObj);
+  //console.log('av.sgr.initialChange domObj=', domObj);
   console.log('domObj.value=', domObj.value);
   var ndx = domObj.id.indexOf('Input');
   var id = domObj.id.substring(0,ndx) + 'Text';
-  console.log('new id=', id);
-  console.log('Number(domObj.value)=',Number(domObj.value));
+  //console.log('new id=', id, '; old id=', domObj.id);
+  //console.log('Number(domObj.value)=',Number(domObj.value));
   if (isNaN(Number(domObj.value))) {
     document.getElementById(id).innerHTML = 'inital amount must be a number';
     document.getElementById(id).style.color = 'red';
@@ -2609,12 +2639,12 @@ av.sgr.initialChange = function(domObj) {
 
 av.sgr.inflowChange = function(domObj) {
   console.log('av.sgr.inflowChange domObj=', domObj);
-  console.log('domObj.value=', domObj.value);
+  console.log('id=', domObj.id, '; domObj.value=', domObj.value);
 };
 
 av.sgr.outflowChange= function(domObj) {
   console.log('av.sgr.outflowChange domObj=', domObj);
-  console.log('domObj.value=', domObj.value);
+  console.log('id=', domObj.id, '; domObj.value=', domObj.value);
 };
 
 /******************************************************************************** End enviornment (sugar) settings ****/
@@ -3106,8 +3136,8 @@ $(function slidemute() {
 
   //on 2018_0823 this is where height gets messed up when loading the program. 
   av.pch.divSize = function(from) {
-    console.log(from, 'called av.pch.divSize');
-    av.debug.uil = true;
+    //console.log(from, 'called av.pch.divSize');
+    //av.debug.uil = true;
     if (av.debug.uil) console.log('popChrtHolder css.wd ht border padding margin=',  $("#popChrtHolder").css('width'), $("#popChrtHolder").css('height')
       ,$("#popChrtHolder").css('border'), $("#popChrtHolder").css('padding'), $("#popChrtHolder").css('margin'));
 
@@ -3116,7 +3146,7 @@ $(function slidemute() {
 
     av.pch.ht = av.dom.popChrtHolder.clientHeight - 2*parseInt($("#popChrtHolder").css('padding'),10);
     av.pch.wd = av.dom.popChrtHolder.clientWidth - 2*parseInt($("#popChrtHolder").css('padding'),10);
-    console.log('av.pch.wd=', av.pch.wd, '; av.pch.ht=', av.pch.ht);
+    console.log(from, 'called av.pch.divSize:','av.pch.wd=', av.pch.wd, '; av.pch.ht=', av.pch.ht);
     av.pch.layout.height = av.pch.ht;
     av.pch.layout.width = av.pch.wd;
     if (av.debug.uil) console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
@@ -3132,7 +3162,7 @@ $(function slidemute() {
        av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'),10));
     if (av.debug.uil) console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
     if (av.debug.uil) console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
-    av.debug.uil = false;
+    //av.debug.uil = false;
   };
 
   av.anl.divSize = function(from) {
@@ -3545,7 +3575,7 @@ $(function slidemute() {
   // **************************************************************************************************************** */
   //                                          Last things done
   // **************************************************************************************************************** */
-  // Do this after all other is done
+  // Do this after all other is done; end of file
   
   //av.ui.removeVerticalScrollbar('popTopRw', 'popTopRw');
   console.log('before mainBoxSwap');
@@ -3553,9 +3583,9 @@ $(function slidemute() {
 
   //must create the rest of the resource/reaction user interface before calling av.sgr.ChangeAllGeo('Global');
   av.sgr.buildHtml();
-  //av.sgr.ChangeAllGeo('Global');
+  av.sgr.ChangeAllGeo('Global');
   av.sgr.setSugarColors(true);  //true is to turn colors on;
-  //av.sgr.ChangeAllsugarSupplyType('Infinite');
+  av.sgr.ChangeAllsugarSupplyType('Infinite');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last things done');  
 
   av.ui.ex1setSugarColors();   //example 1     //delete later

@@ -108,9 +108,10 @@ av.utl.get_color2 = function(cmap, dx, d1, d2, r1){
   return datacolor;
 };
 
+// No longer using. Now using a subset of toLocalString
 //from http://stackoverflow.com/questions/149055/how-can-i-format-numbers-as-money-in-javascript
 //formats numbers with commas c=number of decimal places; d = 3-digit separator, t = decimal point indicator
-Number.prototype.formatNum = function(c, d, t){
+/* original   Number.prototype.formatNum = function(c, d, t){
   'use strict';
   var n = this,
     c = isNaN(c = Math.abs(c)) ? 2 : c,
@@ -121,6 +122,18 @@ Number.prototype.formatNum = function(c, d, t){
     j = (j = i.length) > 3 ? j % 3 : 0;
   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
+original */
+
+//siplified form of toLocalString
+Number.prototype.formatNum = function(fracDigits, location){
+  'use strict';
+  var num = this;
+  var digits = isNaN(fracDigits = Math.abs(fracDigits)) ? 1 : fracDigits;
+  var local = location;  //if missing then local should also be undefined. 
+  return num.toLocaleString(local, {minimumFractionDigits: digits, maximumFractionDigits: digits});
+};
+
+
 
 /*
  wsb(target, thestring)

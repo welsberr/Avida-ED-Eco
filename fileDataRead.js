@@ -492,7 +492,6 @@ av.frd.resrcLineParse = function(lnArray){
   var envobj;
   var regionStr;
   var ndx;
-  //var re_num0 = /(\d+)(.*$)/;    //older versions  /^\D+(\d+)(.*$)/
   var re_region = /(\D+)(\d+)(.*$)/;    // match array = whole line? , task, region number, data about things with a side (gradient, flow), else NULL
   var re_side = /(\D+)(.*$)/;      // applied to the last element of the result if finding task and region above to get side. 
   var re_gradientNdx = /(\d+)(.*$)/;     //applied to the last element if text for a side is found
@@ -548,7 +547,7 @@ av.frd.resrcLineParse = function(lnArray){
       //find region listed in user interface?
       envobj.regionCode[ndx] = matchTaskRegion[2];   //This is a one or two digit string.
       regionStr = ('000'+ matchTaskRegion[2]).slice(-2);               //to add a leading zero if needed.
-      var tmpndx = av.sgr.regionCode.indexOf(regionStr);
+      var tmpndx = av.sgr.regionCodes.indexOf(regionStr);
       envobj.region[ndx] = av.sgr.regionNames[tmpndx];
       if (av.dbg.flg.nut) console.log('ndx=',ndx, '; envobj.regionCode[ndx]=',envobj.regionCode[ndx],'; envobj.region[ndx]=',envobj.region[ndx]);
       envobj.regionList[envobj.regionCode[ndx]] = ndx;

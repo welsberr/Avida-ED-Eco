@@ -18,39 +18,38 @@
 var av = av || {};  //incase av already exists
 
 av.sgr.buildHtml = function() {
-  console.log('in av.sgr.buildHtml');
-  var summaryStr = '';
-  var subSectionStr = av.dom.orn1subSection.innterHTML;   //later there will be 4 of these for each sugar/task
-  av.dom.tst2textarea.value = subSectionStr;
-  console.log('subSectionStr=', subSectionStr);
-  console.log('av.dom.orn1subSection=', av.dom.orn1subSection);
+  //console.log('in av.sgr.buildHtml');
+  var tskSectionStr = '';
+  //var subSectionStr = av.dom.orn1subSection.innterHTML;   //later there will be 4 of these for each sugar/task
   var newstr = '';
   //var pattren = 'orn';
   var pattern0 = 'orn0';  
   var pattern1 = 'orn1';
   var sgrNum = '';
   var len = av.sgr.logicNames.length;
-  console.log('len=', len);
   for (ii=0; ii<len; ii++) {
     if ('orn' != av.sgr.logicNames[ii]) {
-      summaryStr = av.dom.orn0section.innerHTML;
+      tskSectionStr = av.dom.orn0section.innerHTML;
       sgrNum = av.sgr.logicNames[ii] + '0';
-      console.log('ii=', ii, '; sgrNum=',sgrNum);
-      summaryStr = summaryStr.replaceAll(pattern0, sgrNum);
-      console.log('summaryStr=', summaryStr);
-      av.dom.showTextarea.value = summaryStr;
-      document.getElementById(av.sgr.logicNames[ii]+'0summary').innerHTML = summaryStr;
+      //console.log('ii=', ii, '; sgrNum=',sgrNum);
+      tskSectionStr = tskSectionStr.replaceAll(pattern0, sgrNum);
+      //console.log('tskSectionStr=', tskSectionStr);
+      
+      //av.dom.showTextarea.value = tskSectionStr;
+      document.getElementById(av.sgr.logicNames[ii]+'0section').innerHTML = tskSectionStr;
       document.getElementById(av.sgr.logicNames[ii]+'0title').innerHTML = av.sgr.oseNames[ii];
-      av.dom.tst2textarea.value = document.getElementById(av.sgr.logicNames[ii]+'0summary').innerHTML;
         
       newstr = av.dom.orn0Details.innerHTML;
       sgrNum = av.sgr.logicNames[ii] + '1';
       newstr = newstr.replaceAll(pattern1, sgrNum);
       document.getElementById(av.sgr.logicNames[ii]+'0Details').innerHTML = newstr;
-      av.dom.showTextarea.value = newstr;
     }
   };
-  
-  
-  
-}
+    //console.log('av.dom.orn0section.innerHTML=', av.dom.orn0section.innerHTML);
+    //av.dom.tst2textarea.value = document.getElementById('equ0Details').innerHTML;
+    av.dom.tst2textarea.value = tskSectionStr;
+    
+    av.dom.showTextarea.value = av.dom.sugarAccordion.innerHTML;  
+    //av.dom.showTextarea.value = document.getElementById('not0Details');  
+    //av.dom.showTextarea.value = newstr;
+};

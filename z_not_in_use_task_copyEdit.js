@@ -3,11 +3,11 @@
                           <details id='xor0Section' class='sugarAccordionSection'>
                             <summary class='sugarSummary'>
                               <div id='xor0Title' class='sugarTitle'>xorose</div>&nbsp;
-                              <select  id='xor0Geometry' class='globalLocal' onchange='av.sgr.geometryChange(this);'>
+                              <select  id='xor0geometry' class='globalLocal' onchange='av.sgr.geometryChange(this);'>
                                 <option value='Global' selected>Global</option>
                                 <option value='Local'>Local</option>
                               </select>&nbsp;&nbsp;&nbsp;
-                              <select  id='xor0SupplyType' class='sugarSupplyType' onchange='av.sgr.supplyChange(this)'>
+                              <select  id='xor0supplyType' class='sugarSupplyType' onchange='av.sgr.supplyChange(this)'>
                                 <option id='xor0none' value='None'>None</option>
                                 <option id='xor0Infinite' value='Infinite' selected>Infinite</option>
                                 <option id='xor0Finite' class='globalFinite' value='Finite'>Finite</option>
@@ -29,9 +29,9 @@
                             <div id='xor0Details' class='sugarDetailSection'>
                               
                               <div id='xor1subSection' class='sugarDishSubsection'>
-                                <div id='xor1Title' class='grid-sugarDetail-item subSectionTitle'>Whole Dish</div>
+                                <div id='xor1title' class='grid-sugarDetail-item subSectionTitle'>Whole Dish</div>
                                 <div id='xor1supplyTypeSelectHolder' class='grid-sugarDetail-item typeInput'>
-                                  <select  id='xor1SupplyType' class='sugarSupplyType' onchange='av.sgr.supplyChange(this);'>
+                                  <select  id='xor1supplyType' class='sugarSupplyType' onchange='av.sgr.supplyChange(this);'>
                                     <option id='xor1none' value='None'>None</option>
                                     <option id='xor1Infinite' value='Infinite' selected>Infinite</option>
                                     <option id='xor1Finite' class='localFinite' value='Finite'>Finite</option>

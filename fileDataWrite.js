@@ -153,25 +153,27 @@ av.fwt.form2NutrientStruct = function () {
 av.fwt.form2NutrientTxt = function (from) {
   console.log(from + ' called av.fwt.form2NutrientTxt');
   av.fzr.clearEnvironment('av.fwt.form2NutrientTxt');
-  var endName = 'Geometry';
-  var domName; 
   var geometry = 'Global';
-  var ndx = 0;           //Only whole dish for now; will need to change later
-  var tsk; var etsk; var atsk;
-  var regionCode = '';
-  var rname = 'unk';
   var supplyType = 'Infinite';
-  var domRegionNum =1;   //region number up to four regions. Some global paramenters use a regNAum = 0;
+  var ndx = 1;           // only using the first subsection for now
+  var tsk; var etsk; var atsk;
+  var regionCode = '00';
+  var regionName = 'Whole Dish';
+  var region_ndx = 1;
+  var domName; 
+  var sgrPerCell =1;
+  var regionInit = 1;
+  var rname = 'unk';
   var numtasks = av.sgr.logEdNames.length;
   var txt = '';
-  var cols = 1 ; var rows = 1; var numCells = 1; var sgrPerCell=0.314; var regionInit = 23.2323;
+  var cols = 1 ; var rows = 1; var numCells = 1; 
   //av.fwt.form2NutrientStruct('av.fwt.form2NutrientTxt');
   
   //Find grid size;
   cols = Number(av.dom.sizeCols.value);
   rows = Number(av.dom.sizeRows.value);
   numCells = cols * rows; 
-  console.log('cols=', av.dom.sizeCols.value, '; rows=', av.dom.sizeRows.value, '; numDCells=',  numCells);
+  //console.log('cols=', av.dom.sizeCols.value, '; rows=', av.dom.sizeRows.value, '; numDCells=',  numCells);
 
   
   for (var ii=0; ii< numtasks; ii++) {
@@ -179,48 +181,47 @@ av.fwt.form2NutrientTxt = function (from) {
     etsk = av.sgr.logEdNames[ii];
     tsk = av.sgr.logicNames[ii];
     atsk = av.sgr.logicVnames[ii];
-    domName = tsk + endName;
-    domName = 'orn' + endName;         //remove when other tasks are ready
+    domName = tsk + '0geometry';
     geometry = document.getElementById(domName).value;
-    console.log('domName=', domName, '; value=', geometry);
-    if ('Global' == document.getElementById(domName).value) {
-      ndx = 0;
-      domRegionNum = 0;
-      regionCode = av.sgr.regionCode[0];  //hard coded now; need to fix later. 
+    //console.log('domName=', domName, '; value=', geometry);
+    if ('global' == geometry.toLowerCase()) {
+      regionName = 'Whole Dish';           //alway the case for global.
+      region_ndx = av.sgr.regionCodes.indexOf(regionName);
+      regionCode = '00';
       rname = tsk + regionCode;
-      
-      console.log("document.getElementById('not'+'0supplyType').value=",document.getElementById('not'+'0supplyType').value );      
-      //switch (document.getElementById(tsk +'0supplyType').value) {
-      switch (document.getElementById('not'+'0supplyType').value) {
-        case 'None':
+      supplyType = document.getElementById(tsk+'0supplyType').value.toLowerCase();
+      //console.log('regionCode=', regionCode, '; regionName=', regionName, '; rname=', rname, '; suppplyType=', supplyType);      
+      switch (supplyType) {
+        case 'none':
           txt += 'REACTION ' + rname + ' ' + atsk + ' process:value=0:type=pow  requisite:max_count=1\n';
           break;
-        case 'Infinite':
+        case 'infinite':
           txt += 'REACTION ' + rname + ' ' + atsk + ' process:value=' + av.sgr.reactValues[ii] + ':type=pow  requisite:max_count=1\n';
           break;
       }; // end of glbal switch
     }
-    else {   // local   using avida defaults for now will separate out diffusion later.
-      ndx = 0;
-      domRegionNum = 0;
-      regionCode = av.sgr.regionCode[0];  //hard coded now; need to fix later. 
+    else {   // local   using avida defaults for now will separate out diffusion later.    
+      ndx = 1;   // only doing the first subsection for now
+      regionName = document.getElementById(tsk+ndx+'title').textContent;
+      region_ndx = av.sgr.regionNames.indexOf(regionName);
+      regionCode = av.sgr.regionCodes[region_ndx];
       rname = tsk + regionCode;
-      supplyType = document.getElementById('not'+'1SupplyType').value;   //hard coded to not, will need to change
-      console.log('supplyType=', supplyType);         
+      supplyType = document.getElementById(tsk+ndx+'supplyType').value.toLowerCase();
+      //console.log('regionCode=', regionCode, '; regionName=', regionName, '; rname=', rname, '; suppplyType=', supplyType);
       switch (supplyType) {
-        case 'None':
-          txt += 'RESOURCE ' + rname + ':geometry=grid:initial=0';  //=16000 * 0.314
-          txt += ' \n';
+        case 'none':
+          txt += 'RESOURCE ' + rname + ':geometry=grid:initial=0' + ' \n';
           txt += 'REACTION ' + rname + ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:max=1:min=1  requisite:max_count=1 \n';
           break;
-        case 'Infinite':
-          txt += 'RESOURCE ' + rname + ':geometry=grid:initial=' + numCells + ' \n';   //cells should have one, but not depleat any
+        case 'infinite':
+          txt += 'RESOURCE ' + rname + ':geometry=grid:initial=' + numCells + ' \n';   //cells should have one, but not deplete any
           txt += 'REACTION ' + rname +  ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:depletable=0 requisite:max_count=1 \n';
           break;
-        case 'Finite':
+        case 'finite':
           // later will get from av.nut
-          sgrPerCell = Number(document.getElementById('not1initialHiInput').value);
+          sgrPerCell = Number(document.getElementById(tsk+ndx+'initialHiInput').value);
           regionInit = numCells * sgrPerCell;
+          console.log('tsk=',tsk,'; ndx=',ndx,'; sgrPerCell=', sgrPerCell, '; diffusion checkbox = ', document.getElementById(tsk+ndx+'diffuseCheck').checked );
           txt += 'RESOURCE ' + rname + ':geometry=grid:initial=' + regionInit + ' \n';
           txt += 'REACTION ' + rname +  ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:max=1:min=1 requisite:max_count=1 \n';
           break;

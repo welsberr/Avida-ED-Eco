@@ -446,7 +446,7 @@ av.parents.clearParentsFn = function () {
 av.fzr = {};
 
 av.sgr = {};   //specific to resource/reactions (sugars);
-av.sgr.oseNames = ['notose', 'nanose', 'andose', 'ornose', 'orose', 'antose', 'norose', 'xorose', 'equose'];
+av.sgr.oseNames = ['Notose', 'Nanose', 'Andose', 'Ornose', 'Orose', 'Antose', 'Norose', 'Xorose', 'Equose'];
 av.sgr.logEdNames = ['0not', '1nan', '2and', '3orn', '4oro', '5ant', '6nor', '7xor', '8equ'];
 av.sgr.logicNames = ['not', 'nan', 'and', 'orn', 'oro', 'ant', 'nor', 'xor', 'equ'];
 av.sgr.logicVnames = ['not', 'nand', 'and', 'orn', 'or', 'andn', 'nor', 'xor', 'equ'];
@@ -462,7 +462,7 @@ av.sgr.monoChromeMaps = ['reddMap', 'orngMap', 'yllwMap', 'lawnMap',  'grenMap',
   av.sgr.sugarColors = ['grenMap', 'seagMap',  'cornMap', 'blueMap',  'purpMap', 'mgntMap',  'redvMap', 'orngMap',  'yllwMap'];
 //console.log('sugarColors=', av.sgr.sugarColors);
 av.sgr.sugarBackgroundShade = 40;  //was 30
-av.sgr.sugarNameShade = 340;   //was 365   265 too light for yellow&greens; 300 green ok; yellow still too light
+av.sgr.sugarNameShade = 345;   //was 365   265 too light for yellow&greens; 300 green ok; yellow still too light (Rob liked 340)
 av.sgr.monoColormaplength = av.color.reddMap.length;
 av.sgr.darkEnd = av.sgr.monoColormaplength-30;          //last color used in the the array for color scale
 av.sgr.sugarGreyShade = 20;
@@ -508,7 +508,7 @@ av.sgr.supply_argu = ['region', 'side', 'grdNum', 'regionCode','regionList'];   
 //Different ways to discribe layout, only one desciptor needed per task
 av.sgr.layout3 = ['glob', 'all', 'haf', 'three', '4th'];
 av.sgr.layout = ['Global Dish', 'Whole Dish', 'Halves', '3-sections', 'Quarters'];
-av.sgr.layoutMany = ['glob', 'all', 'halfLR', 'halfTB', '3top1', '3bot1', '3lft1', '3Rit1', '3book', '3stack', '4th', ];
+av.sgr.layoutMany = ['glob', 'all', 'halfLR', 'halfTB', '3top1', '3bot1', '3lft1', '3Rit1', '3book', '3stack', '4th'];
                          
 
 av.sgr.resrcAvidaDefaultGridArgu = [  'initial', 'inflow', 'outflow', 'geometry'   
@@ -533,9 +533,9 @@ av.sgr.boxArguments = ['boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow']; //flag is
 
   //Regtion List: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
   av.sgr.region3char =    ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];
-  av.sgr.regionCode = [  '00',   '01',   '02',   '03',   '04',  '12',  '34',  '13',  '24'];   //These numbers go with the regions above
+  av.sgr.regionCodes =   [  '00',   '01',   '02',   '03',   '04',  '12',  '34',  '13',  '24'];   //These numbers go with the regions above
   av.sgr.regionNames =  ['Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
-  av.ptd.regionNames = ['Entire Dish', 'Upper Left', 'Upper Right', 'Lower Left', 'Lower Right'];  //not in use as of 2019 Aug
+  av.sgr.regionNamesLower =  ['whole dish', 'upper left', 'upper right', 'lower left', 'lower right', 'top', 'bottom', 'left', 'right']; 
   
 // need to figure out how to assign when reading environment.cfg
   av.sgr.supply3 =  ['non', 'inf',  'fin',  'equ',  'poi', 'flo' ];  //none, infinite, finite, equilibrium, poison
@@ -635,8 +635,8 @@ av.fzr.clearEnvironment = function(from) {
       av.nut[tsk]['react'][rnm] = [];
     }
   };
-  //console.log('av.nut =',av.nut);
-  console.log('av =',av);
+  console.log('av.nut =',av.nut);
+  //console.log('av =',av);
     
   for (var ii=0; ii< logiclen; ii++) {      //9
     tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
@@ -832,7 +832,7 @@ av.pch.dadMax = 16;
 av.pch.clearPopChrt = function () {
   av.pch.ht = 10;
   av.pch.wd = 10; 
-  console.log('av.pch.wd', av.pch.wd);    //
+  //console.log('av.pch.wd', av.pch.wd);    // when duging why plotly crashed; turned out plotly crashs if div holding plot is not displayed
   av.pch.yValue = 'new';
   av.pch.yChange = 'false';
   av.pch.popY = [];
