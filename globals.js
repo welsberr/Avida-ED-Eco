@@ -1,4 +1,8 @@
-//***************************************
+//
+// change color and change data line select/item don't work in Analysis page
+//
+//
+////***************************************
 // Defaults and Constants
 // one global to hold them all.
 var av = av || {};  //incase av already exists

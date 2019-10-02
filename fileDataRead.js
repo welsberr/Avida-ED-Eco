@@ -751,7 +751,10 @@ av.frd.environment2struct = function (fileStr) {
   var errors = av.frd.environmentParse(fileStr);
   if (1 < errors.length) console.log('errors=', errors);
   console.log('----------------------------------------------------------------------------------------------------');
-
+  
+  // Now put into the user interface
+  
+  
 };
 
 //--------------------------------------- end of  section to put data from environment.cfg into environment Structure --
@@ -1204,12 +1207,6 @@ av.frd.environmentParse = function (filestr) {
   return errors;
 };
 // will delete later - end of section to put data from environment.cfg into av.fzr.env.react & av.fzr.rsrce Structure --
-
-
-
-
-
-
 
 
 

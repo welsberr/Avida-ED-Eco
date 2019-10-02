@@ -284,15 +284,6 @@ button {display:inline;}
   background-color: white;
 }
 
-.popContainer {
-  float: left;
-  min-height: 1.6em;
-  min-width: 6em;
-  border: 1px solid #CCCCCC;
-  display: block;
-  overflow: visible;
-}
-
 /* dojo css */
 
 .dijitBorderContainer {

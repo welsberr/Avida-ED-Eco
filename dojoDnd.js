@@ -1163,23 +1163,24 @@ av.anl.clearWorldData = function (worldNum){
 //worldNum is a number 0-2 of the population loaded into analysis page
 av.anl.loadSelectedData = function (worldNum, axisSide, side) {
   'use strict';
-  switch(dijit.byId(axisSide).value) {
-    case 'None':
+  var dataType = document.getElementById(axisSide).value.toLowerCase();
+  switch(dataType) {
+    case 'none':
       av.anl.pop[worldNum][side] = [];
       break;
-    case 'Average Fitness':
+    case 'average fitness':
       av.anl.pop[worldNum][side] = av.fzr.pop[worldNum].fit;
       break;
-    case 'Average Offspring Cost':
+    case 'average offspring cost':
       av.anl.pop[worldNum][side] = av.fzr.pop[worldNum].ges;
       break;
-    case 'Average Energy Acq. Rate':
+    case 'average energy acq. rate':
       av.anl.pop[worldNum][side] = av.fzr.pop[worldNum].met;
       break;
-    case 'Number of Organisms':
+    case 'number of organisms':
       av.anl.pop[worldNum][side] = av.fzr.pop[worldNum].num;
       break;
-    case 'Number Viable':
+    case 'number viable':
       av.anl.pop[worldNum][side] = av.fzr.pop[worldNum].via;
       break;
   }
@@ -1242,13 +1243,13 @@ av.dnd.FzAddExperimentFn = function (fzSection, target, type) {
 av.dnd.lndAnlDndChart = function (move) {
   'use strict';
   console.log('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
-  var items = av.dnd.getAllItems(av.dnd.graphPop0);
+  var items = av.dnd.getAllItems(av.dnd.popDish0);
   if (0 === items.length) { av.dnd.putNslot(0, move.source); }
   else {
-    items = av.dnd.getAllItems(av.dnd.graphPop1);
+    items = av.dnd.getAllItems(av.dnd.popDish1);
     if (0 === items.length) { av.dnd.putNslot(1, move.source); }
     else {
-      items = av.dnd.getAllItems(av.dnd.graphPop2);
+      items = av.dnd.getAllItems(av.dnd.popDish2);
       if (0 === items.length) { av.dnd.putNslot(2, move.source);}
     }
   }
@@ -1260,13 +1261,13 @@ av.dnd.lndAnlDndChart = function (move) {
 av.dnd.landAnlDndChart = function (dnd, source, nodes, target) {
   'use strict';
   av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
-  var items = av.dnd.getAllItems(av.dnd.graphPop0);
+  var items = av.dnd.getAllItems(av.dnd.popDish0);
   if (0 === items.length) { av.dnd.putNslot(0, source); }
   else {
-    items = av.dnd.getAllItems(av.dnd.graphPop1);
+    items = av.dnd.getAllItems(av.dnd.popDish1);
     if (0 === items.length) { av.dnd.putNslot(1, source); }
     else {
-      items = av.dnd.getAllItems(av.dnd.graphPop2);
+      items = av.dnd.getAllItems(av.dnd.popDish2);
       if (0 === items.length) { av.dnd.putNslot(2, source);}
     }
   }
@@ -1277,36 +1278,38 @@ av.dnd.landAnlDndChart = function (dnd, source, nodes, target) {
 
 av.dnd.putNslot = function (Num, source) {
   'use strict';
-  //get the data for the new organism
-  console.log('source = ', source);
-  console.log('source.selection=', source.selection);
+  //the console.log get the data one way, the codes gets the same data another way. 
+  console.log('sourceContainer=', source.parent.id, '; world domID=', source.anchor.id, '; world Name=', source.anchor.textContent);
   var domid = Object.keys(source.selection)[0];
   var name = document.getElementById(domid).textContent;
   var dir = av.fzr.dir[domid];
-  //console.log('av.dnd.putNslot: Num', Num, '; name', name);
-  //I tried putting av.dnd.graphPop0 as a parameter to be passed, but that did not work.
-  av.dnd['graphPop'+Num].insertNodes(false, [{data: name, type: ['w']}]);
-  av.dnd['graphPop'+Num].sync();
+
+  //I tried putting av.dnd.popDish+Num as a parameter to be passed, but that did not work.
+  av.dnd['popDish'+Num].insertNodes(false, [{data: name, type: ['w']}]);
+  av.dnd['popDish'+Num].sync();
   av.anl.loadWorldData(Num, dir);
   av.anl.loadSelectedData(Num, 'yLeftSelect', 'left');
   av.anl.loadSelectedData(Num, 'yRightSelect', 'right');
 };
 
-av.dnd.landgraphPop0 = function (dnd, source, nodes, target) {
+// should be able to combine the following three functions, but hope to get rid of dojo dnd someday. 
+// only called from  av.dnd.popDish0.on('DndDrop', function (source, nodes, copy, target)
+// tried to put in a separate file at one time and at that time it did not work. 
+av.dnd.landpopDish0 = function (dnd, source, nodes, target) {
   'use strict';
   av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
-  var items = av.dnd.getAllItems(av.dnd.graphPop0);
+  var items = av.dnd.getAllItems(av.dnd.popDish0);
   //if there is an existing item, need to clear all nodes and assign most recent to item 0
   if (0 < items.length) {
     //clear out the old data
-    av.dnd.graphPop0.selectAll().deleteSelectedNodes();  //clear items
-    av.dnd.graphPop0.sync();   //should be done after insertion or deletion
+    av.dnd.popDish0.selectAll().deleteSelectedNodes();  //clear items
+    av.dnd.popDish0.sync();   //should be done after insertion or deletion
 
     //get the data for the new organism
     av.dnd.fzWorld.forInSelectedItems(function (item, id) {
-      av.dnd.graphPop0.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
+      av.dnd.popDish0.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
     });
-    av.dnd.graphPop0.sync();
+    av.dnd.popDish0.sync();
   }
   var fzdomid = Object.keys(source.selection)[0];
   var dir = av.fzr.dir[fzdomid];
@@ -1315,21 +1318,21 @@ av.dnd.landgraphPop0 = function (dnd, source, nodes, target) {
   av.anl.loadSelectedData(0, 'yRightSelect', 'right');
 };
 
-av.dnd.landgraphPop1 = function (dnd, source, nodes, target) {
+av.dnd.landpopDish1 = function (dnd, source, nodes, target) {
   'use strict';
   av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
-  var items = av.dnd.getAllItems(av.dnd.graphPop1);
+  var items = av.dnd.getAllItems(av.dnd.popDish1);
   //if there is an existing item, need to clear all nodes and assign most recent to item 0
   if (0 < items.length) {
     //clear out the old data
-    av.dnd.graphPop1.selectAll().deleteSelectedNodes();  //clear items
-    av.dnd.graphPop1.sync();   //should be done after insertion or deletion
+    av.dnd.popDish1.selectAll().deleteSelectedNodes();  //clear items
+    av.dnd.popDish1.sync();   //should be done after insertion or deletion
 
     //get the data for the new organism
     av.dnd.fzWorld.forInSelectedItems(function (item, id) {
-      av.dnd.graphPop1.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
+      av.dnd.popDish1.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
     });
-    av.dnd.graphPop1.sync();
+    av.dnd.popDish1.sync();
   }
   var fzdomid = Object.keys(source.selection)[0];
   var dir = av.fzr.dir[fzdomid];
@@ -1338,22 +1341,22 @@ av.dnd.landgraphPop1 = function (dnd, source, nodes, target) {
   av.anl.loadSelectedData(1, 'yRightSelect', 'right');
 };
 
-av.dnd.landgraphPop2 = function (dnd, source, nodes, target) {
+av.dnd.landpopDish2 = function (dnd, source, nodes, target) {
   'use strict';
   av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
-  var items = av.dnd.getAllItems(av.dnd.graphPop2);
+  var items = av.dnd.getAllItems(av.dnd.popDish2);
   //if there is an existing item, need to clear all nodes and assign most recent to item 0
   if (0 < items.length) {
     //clear out the old data
-    av.dnd.graphPop2.selectAll().deleteSelectedNodes();  //clear items
-    av.dnd.graphPop2.sync();   //should be done after insertion or deletion
+    av.dnd.popDish2.selectAll().deleteSelectedNodes();  //clear items
+    av.dnd.popDish2.sync();   //should be done after insertion or deletion
 
     //get the data for the new organism
     av.dnd.fzWorld.forInSelectedItems(function (item, id) {
-      av.dnd.graphPop2.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
+      av.dnd.popDish2.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
     });
-    av.dnd.graphPop2.sync();
-    //if (av.debug.dnd) console.log('graphPop2.map=', graphPop2.map);
+    av.dnd.popDish2.sync();
+    //if (av.debug.dnd) console.log('popDish2.map=', popDish2.map);
   }
   var fzdomid = Object.keys(source.selection)[0];
   var dir = av.fzr.dir[fzdomid];

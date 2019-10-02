@@ -233,6 +233,7 @@ av.fwt.form2NutrientTxt = function (from) {
   console.log('av.oldnut=',av.oldnut);
   console.log('av.nut=',av.nut);
   av.fwt.makeActConfigFile('environment.cfg', txt);
+  console.log('av.fzr=', av.fzr);
 };
 
 
@@ -350,6 +351,7 @@ av.fwt.makeFzrConfig = function (num) {
   var em = false;
   av.fwt.makeFzrAvidaCfg('c'+num, 'av.fwt.makeFzrConfig');
   av.fwt.makeFzrEnvironmentCfg('c'+num, 'av.fwt.makeFzrConfig');
+  console.log('after av.fwt.makeFzrEnvironmentCfg in av.fwt.makeFzrConfig');
   av.fwt.makeFzrFile('c'+num+'/events.cfg', '');
   //av.fwt.makeFzrFile('c'+num+'/entryname.txt', av.fzr.config[ndx].name);  // this was created in dnd menu code
   av.fwt.makeFzrInstsetCfg('c'+num);
@@ -389,9 +391,9 @@ av.fwt.popExpWrite = function (msg) {
       case 'detail.spop':
       case 'instset.cfg':
       case 'events.cfg':
-      //case 'environment.cfg':
-      //case 'avida.cfg':
-        //console.log('ii', ii, '; name', msg.files[ii].name);
+      case 'environment.cfg':
+      case 'avida.cfg':
+        console.log('ii', ii, '; name', msg.files[ii].name);
         av.fwt.makeFzrFile(msg.popName + '/' + msg.files[ii].name, msg.files[ii].data);
         break;
     };
@@ -539,19 +541,19 @@ av.fwt.makeCSV = function(fileNm) {
     var longest = 0;
     av.fwt.csvStrg = 'Update';
     for (var ii = 0; ii < 3; ii++) {
-      if (0 < document.getElementById('graphPop' + ii).textContent.length) {
-        av.fwt.csvStrg += ', "' + document.getElementById('graphPop' + ii).textContent + ' Ave Fitness' + '"';
-        av.fwt.csvStrg += ', "' + document.getElementById('graphPop' + ii).textContent + ' Ave Offspring Cost' + '"';
-        av.fwt.csvStrg += ', "' + document.getElementById('graphPop' + ii).textContent + ' Ave Energy Acq. Rate' + '"';
-        av.fwt.csvStrg += ', "' + document.getElementById('graphPop' + ii).textContent + ' Pop Size' + '"';
-        av.fwt.csvStrg += ', "' + document.getElementById('graphPop' + ii).textContent + ' Viable Size' + '"';
+      if (0 < document.getElementById('popDish' + ii).textContent.length) {
+        av.fwt.csvStrg += ', "' + document.getElementById('popDish' + ii).textContent + ' Ave Fitness' + '"';
+        av.fwt.csvStrg += ', "' + document.getElementById('popDish' + ii).textContent + ' Ave Offspring Cost' + '"';
+        av.fwt.csvStrg += ', "' + document.getElementById('popDish' + ii).textContent + ' Ave Energy Acq. Rate' + '"';
+        av.fwt.csvStrg += ', "' + document.getElementById('popDish' + ii).textContent + ' Pop Size' + '"';
+        av.fwt.csvStrg += ', "' + document.getElementById('popDish' + ii).textContent + ' Viable Size' + '"';
         if (longest < av.fzr.pop[ii].fit.length) longest = av.fzr.pop[ii].fit.length;
       }
     }
     for (var ii = 0; ii < longest; ii++) {
       av.fwt.csvStrg += '\n' + ii;
       for (var jj = 0; jj < 3; jj++)
-      if (0 < document.getElementById('graphPop' + jj).textContent.length) {
+      if (0 < document.getElementById('popDish' + jj).textContent.length) {
         if (ii < av.fzr.pop[jj].fit.length) {
           av.fwt.csvStrg += ', ' + av.fzr.pop[jj].fit[ii]
                           + ', ' + av.fzr.pop[jj].ges[ii]

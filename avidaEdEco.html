@@ -136,13 +136,18 @@
                   <a href='images/Avida-ED_UserManualv3.0.pdf' target='_blank'>Quick Start Manual</a></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnHpHardware'>
                   <a href='cpu_tour.html' target='_blank'>Ancestor and Hardware</a></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnHpInfo'><a href='http://Avida-ED.msu.edu/' target='_blank'>more info about Avida-ED</a></span>
-
+                <span data-dojo-type='dijit/MenuItem' id='mnHpInfo'>
+                  <a href='http://Avida-ED.msu.edu/' target='_blank'>more info about Avida-ED
+                  </a></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnHpEnvironment'>
-                  <a href='https://docs.google.com/document/d/1si3tVEjo2A_1PSvFosNPxk-_Qio00uvmwokQLEpdB-E/' target='_blank'>Environment file Help</a></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnHpProblem' label='Report Problem(s)'></span>  
+                  <a href='https://docs.google.com/document/d/1si3tVEjo2A_1PSvFosNPxk-_Qio00uvmwokQLEpdB-E/' target='_blank'>Environment file Help</a>
+                </span>
+                <span data-dojo-type='dijit/MenuItem' id='mnHpProblem' label='Report Problem(s)'></span>
+                <span data-dojo-type='dijit/MenuItem' id='mnHpEmail'>
+                   <a href="mailto:Avida-ED-development@googlegroups.com?subject=Avida-ED Problem(s)/Question(s)">email: questions/comments</a>
+               </span>  
 
-                <div style='display: none'>
+                <div id='hide_menu_lines_for_development' style='display: none'>
                   <span data-dojo-type='dijit/MenuItem' id='mnHpDebug' label='Toggle Debug Menu'></span>
                   <div data-dojo-type='dijit/MenuSeparator'></div>
                   <div data-dojo-type='dijit/PopupMenuItem'>
@@ -154,7 +159,7 @@
                       <div data-dojo-type='dijit/MenuSeparator'></div>
                     </span>
                   </div>
-                </div>
+                </div><span id='end_hide_menu_lines_for_development'></span>
 
               </span>
             </span>
@@ -1321,7 +1326,7 @@
               <div id="orgTopId" class="orgBenchTopRow">
                 <div class="orgTopLt">
                   <img src='images/Avida-ED-ancestor-icon.png' style='height: 32px;' id='actOrgImg' />
-                  <div id='activeOrgan' class='popContainer'></div>
+                  <div id='activeOrgan' class='popDishClass'></div>
                 </div>
                 <div class="orgTopRt">
                   <button id='OrgSetting'>Settings</button>&nbsp;
@@ -1418,19 +1423,21 @@
                 <p>About to Execute:</p>
                 <textarea type='text' id='ExecuteAbout' readonly style='height: 50px; width: 100%;'></textarea>
               </span>
-            </div><span title="end of orgInfo"></span>
-          </div><span title="mainBlockClassRow id=organismBlock"></span>
+            </div><span id="end_orgInfo"></span>
+          </div><span id="end_organismBlock_n_mainBlockClassRow"></span>
 
           <div id="analysisBlock" class="analysisArea">
-            <div class="anaTop" id='anaChrtHolder' data-dojo-type='dijit/layout/ContentPane'>
-              <div id='anlDndChart' style='height: 100%; width: 100%;'>
-              </div>
-              <div class="anaBot">
-                <div class="analegend">
-                  <div class='lftmargin'>
-                    <button id='pop0delete'>X</button>
-                  </div>
-                  <select  id='pop0color'>
+            <div id='anaChrtHolder' class="anaTop" >
+              <div id='anlDndChart'></div>
+            </div>
+            
+            <div class="anaBot">
+              <div class="analegend">
+                <div id='pop0deleteDiv' class='anaDeleteButtonDiv'>
+                  <button id='pop0delete' class='anaDeleteButton'>X</button>&nbsp;&nbsp;
+                </div>
+                <div id='pop0colorDiv' class='anaColorLineDiv'>
+                  <select  id='pop0color' onclick='av.popColorOnClick(this);'>
                     <option value='Red' selected>Red</option>
                     <option value='Blue'>Blue</option>
                     <option value='Green'>Green</option>
@@ -1441,12 +1448,16 @@
                     <option value='Magenta'>Magenta</option>
                     <option value='Black'>Black</option>
                   </select>
-                  <div id='graphPop0' class='popContainer'></div>
+                </div>
+                <div id='popDish0Div' class='popDishHolder'>
+                  <div id='popDish0' class='popDishClass'></div>
+                </div>
 
-                  <div class='lftmargin'>
-                    <button id='pop1delete'>X</button>
-                  </div>
-                  <select  id='pop1color'>
+                <div id='pop1deleteDiv' class='anaDeleteButtonDiv'>
+                  <button id='pop1delete' class='anaDeleteButton'>X</button>&nbsp;&nbsp;
+                </div>
+                <div id='pop1colorDiv' class='anaColorLineDiv'>
+                  <select  id='pop1color' class='anaColorLine' onclick='av.popColorOnClick(this);'>
                     <option value='Red'>Red</option>
                     <option value='Blue' selected>Blue</option>
                     <option value='Green'>Green</option>
@@ -1457,44 +1468,52 @@
                     <option value='Magenta'>Magenta</option>
                     <option value='Black'>Black</option>
                   </select>
-                  <div id='graphPop1' class='popContainer'></div>
-                  <div class='lftmargin'>
-                    <button id='pop2delete'>X</button>
-                    <select  id='pop2color'>
-                      <option value='Red'>Red</option>
-                      <option value='Blue'>Blue</option>
-                      <option value='Green'>Green</option>
-                      <option value='Yellow'>Yellow</option>
-                      <option value='Orange'>Orange</option>
-                      <option value='Purple'>Purple</option>
-                      <option value='Cyan'>Cyan</option>
-                      <option value='Magenta'>Magenta</option>
-                      <option value='Black' selected>Black</option>
-                    </select>
-                  </div>
-                  <div id='graphPop2' class='popContainer'></div>
-                </div><span value="analegend"></span>
-                <div class="anaYaxis">
-                  <select  id='yLeftSelect'>
-                    <option value='None'>None</option>
-                    <option value='Average Fitness' selected>Average Fitness</option>
-                    <option value='Average Offspring Cost'>Average Offspring Cost</option>
-                    <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
-                    <option value='Number of Organisms'>Number of Organisms</option>
-                    <option value='Number Viable'>Number Viable</option>
-                  </select> Thicker line; left y-axis
-                  <br></br>
-                  <select  id='yRightSelect'>
-                    <option value='None'>None</option>
-                    <option value='Average Fitness'>Average Fitness</option>
-                    <option value='Average Offspring Cost' selected>Average Offspring Cost</option>
-                    <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
-                    <option value='Number of Organisms'>Number of Organisms</option>
-                    <option value='Number Viable'>Number Viable</option>
-                  </select> Thinner line; right y-axis
-                </div><span value="anaYaxis"></span>
-              </div><span value="anaBot"></span>
-            </div>
+                </div>
+                <div id='popDish1Div' class='popDishHolder'>
+                  <div id='popDish1' class='popDishClass'></div>
+                </div>
+                
+                <div id='pop2deleteDiv' class='anaDeleteButtonDiv'>
+                  <button id='pop2delete' class='anaDeleteButton'>X</button>&nbsp;&nbsp;
+                </div>
+                <div id='pop2colorDiv' class='anaColorLineDiv'>
+                  <select  id='pop2color' onclick='av.popColorOnClick(this);'>
+                    <option value='Red'>Red</option>
+                    <option value='Blue'>Blue</option>
+                    <option value='Green'>Green</option>
+                    <option value='Yellow'>Yellow</option>
+                    <option value='Orange'>Orange</option>
+                    <option value='Purple'>Purple</option>
+                    <option value='Cyan'>Cyan</option>
+                    <option value='Magenta'>Magenta</option>
+                    <option value='Black' selected>Black</option>
+                  </select>
+                </div>
+                <div id='popDish2Div' class='popDishHolder'>
+                  <div id='popDish2' class='popDishClass'></div>
+                </div>
+              </div><span value="analegend"></span>
+              
+              <div class="anaYaxis">
+                <select  id='yLeftSelect'>
+                  <option value='None'>None</option>
+                  <option value='Average Fitness' selected>Average Fitness</option>
+                  <option value='Average Offspring Cost'>Average Offspring Cost</option>
+                  <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
+                  <option value='Number of Organisms'>Number of Organisms</option>
+                  <option value='Number Viable'>Number Viable</option>
+                </select> Thicker line; left y-axis
+                <br></br>
+                <select  id='yRightSelect'>
+                  <option value='None'>None</option>
+                  <option value='Average Fitness'>Average Fitness</option>
+                  <option value='Average Offspring Cost' selected>Average Offspring Cost</option>
+                  <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
+                  <option value='Number of Organisms'>Number of Organisms</option>
+                  <option value='Number Viable'>Number Viable</option>
+                </select> Thinner line; right y-axis
+              </div><span value="anaYaxis"></span>
+            </div><span value="anaBot"></span>
           </div> <span comment="end_analysisBlock"></span>
           
           <div id='showTextBlock' class="analysisArea">
@@ -1613,7 +1632,7 @@
 
     </div>
 
-    <span title="--------------------------------------------------------------------------------- New button Dialog --"></span>
+    <span title="-This-is-the-dojo-version._The-nonDojo-version-uses-class=modal-------------------- New button Dialog --"></span>
     <div  data-dojo-type='dijit/Dialog' data-dojo-id='newDialogOld' id="newDialogID"
           title='Would you like to save or discard the current petri dish before starting a new experiment?'>
       <div class='dijitDialogPaneContentArea'>
@@ -1706,11 +1725,13 @@
          title='Avida-ED: written in javascript with Avida in C++ via Emscripten'>
       <div class='dijitDialogPaneContentArea' align='center'>
         <img src='images/Avida-ED-logo.png' />
-        <p>An educational artificial life plateform developed at Michigan State University for <br />
+        <p>An educational artificial life platform developed at Michigan State University for <br />
           learning evolution and the nature of science using digital organisms.</p>
         <br />
         <strong>Avida-ED 4.0.0 Alpha Testing</strong><br />
         <strong>2008-2016<br />http://Avida-ED.msu.edu/</strong><br />
+        Send mail to: avida-ed-development@googlegroups.com<br />
+        for bug reports or for questions about program function<br />
         <br />
         <p>Developed under NSF Grant #0341484,<br />
           Cooperative Agreement DBI-093945 and <br />

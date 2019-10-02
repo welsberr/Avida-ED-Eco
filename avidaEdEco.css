@@ -38,7 +38,7 @@
   border-radius: 9px 9px 0px 0px;
   outline: none;
   cursor: pointer;
-  padding: 2px 9px;
+  padding: 2px 9px;   
   transition: 0.3s;
   font-size: 11px;
   margin-top: 5px;
@@ -97,7 +97,7 @@
     flex: 0 1 350px;
   }
   #headerMsg{
-    flex: 1 1 auto;                  /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
+    flex: 1 1 auto;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
   }
   #msgHolder {
     padding: 4px 4px 4px 8px;    /* top right bottom left */   
@@ -113,7 +113,7 @@
 
 /*contains navigation column and pages (population, Organsims, Analysis) */
   .mainRow { 
-    flex: 1 1 auto;                  /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
+    flex: 1 1 auto;          /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
     display: flex;
     flex-direction: row;
     align-items: stretch;
@@ -141,7 +141,7 @@
   .PageButtonHolder {
     display: flex;
     flex-direction: row;
-    justify-content: left;
+    justify-content: flex-start;
     align-items: center;
   }
   .pageImgDiv{
@@ -195,7 +195,7 @@
 
 .mainBlockHolder{
     background-color: #F5F5F5; /* lightskyblue; */
-    flex: 1;
+    flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
     border: 1px solid #AAA;
   }
   .mainBlockClassRow {
@@ -207,7 +207,7 @@
   }
   .popBenchCol{
     background-color: #F5F5F5; /* lightgoldenrodyellow; */
-    flex: 1;             //not quite sure what this does as only on of three parameters is there
+    flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
     //flex: 0 1 auto;       //should scale with window size, but does not do what I want????
     border: 1px solid #AAA;
     display: flex;
@@ -256,7 +256,7 @@
       overflow: visible;
     }
     #popTopMsgSpace {
-      flex: 1 1 auto;
+      flex: 1 1 auto;          /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
       text-align: left;
       padding-left: 4px;
       margin: auto;
@@ -277,7 +277,7 @@
     }
 .benchPopMid {
   border: 1px solid #AAA;
-  flex: 1;
+  flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
   background-color: #F5F5F5; /* blue; */
   overflow:auto;
 }
@@ -313,7 +313,7 @@
   }
 
   .labInfoHolder {
-    flex: 1; 
+    flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
     height: 100%;
   }
     
@@ -354,11 +354,11 @@
     overflow: auto;
   }
   #popStats4grid{
-    flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
+    flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
     border: 1px solid #AAA;
   }
   #popChrtHolder{
-    flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
+    flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
     border: 1px solid #AAA;
     height: 100%;
   }
@@ -863,84 +863,7 @@ checkbox:focus {
 #ex1equSection{
   background: rgba(153,255,153, 1);
 }
-  /*
-  #ex1envParam {
-    flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */ /*
-    border: 1px solid #AAA;    
-    background-color: #F5F5F5;
-  }
-  
-  #ex1envNone{
-    display: block;
-    height: 100%;
-    width: 100%;
-    background-color: #F5F5F5;
-    min-width: 200px;
-  }
-  #ex1envFinite{
-    display:block;
-    height: 100%;
-    width: 100%;
-    background-color: #F5F5F5;
-  }
-  #ex1envEquilibrium{
-    display: block;
-    height: 100%;
-    width: 100%;
-    background-color: #F5F5F5;
-  }
-  #ex1envGradient{
-    display: block;
-    height: 100%;
-    width: 100%;
-    background-color: #F5F5F5;
-  }
-*/
-  #tst2envParam {
-    flex: 1 1 auto;        /* fills remaining space; flex: 1 1 auto = flex: 1; prevents resize */
-    border: 1px solid #AAA;    
-    background-color: #F5F5F5;
-  }
-  
-  #tst2envNone{
-    display: block;
-    height: 100%;
-    width: 100%;
-    background-color: #F5F5F5;
-    min-width: 200px;
-  }
-  #tst2envFinite{
-    display:block;
-    height: 100%;
-    width: 100%;
-    background-color: #F5F5F5;
-  }
-  #tst2envEquilibrium{
-    display: block;
-    height: 100%;
-    width: 100%;
-    background-color: #F5F5F5;
-  }
-  #tst2envGradient{
-    display: block;
-    height: 100%;
-    width: 100%;
-    background-color: #F5F5F5;
-  }
 
-  .tst2grid-env1row-c2-item {
-  background-color: #F5F5F5;
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  text-align: left;
-  padding: 2px 1px;
-}
-
-  #tst2envSourceSink{
-    display: block;
-    height: 100%;
-    width: 100%;
-    background-color: #violet;
-  }
 /******************************************************************** end used in examples will be deleted eventually */
   
 .taskSets{
@@ -975,7 +898,7 @@ checkbox:focus {
 }
 .freezerClass{
   border: 1px solid #BABABA;
-  flex:1;
+  flex: 1;                /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
   overflow:scroll;
   max-height: 600px;
   overflow:scroll;
@@ -991,7 +914,7 @@ checkbox:focus {
 
   .orgBenchCol{
     background-color: #F5F5F5; /* lightgoldenrodyellow;*/
-    flex: 1;
+    flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
     border: 1px solid #AAA;
     display: flex;
     flex-direction: column;
@@ -1006,7 +929,7 @@ checkbox:focus {
     flex-direction: row;
   }
   .orgTopLt{
-    flex: 1;  
+    flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
     display: flex;
     flex-direction: row;
     background-color: #F5F5F5; /* linen; */
@@ -1017,12 +940,12 @@ checkbox:focus {
     width: 90%;
   }
   .orgTopRt{
-    flex: 0 1 200 px;
+    flex: 0 1 200px;
     background-color: #F5F5F5; /* paleturquoise; */
   }
   .orgMid {
     border: 1px solid #AAA;
-    flex:1;
+    flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
   }
   .orgBot {
     flex: 0 1 40px;
@@ -1036,64 +959,96 @@ checkbox:focus {
     border: 1px solid #AAA;
     background: beige;
   }
-  #resourceTable{
-    border: 1px solid #CCC;
-   table-layout: auto; 
-   width: 100%; 
-   height: auto; 
-   text-align:center;
-  }
-  .TabLftBorder{
-    border-left: 1px solid #AAA;
-  }
-  .TabSideBorder{
-    border-left: 1px solid #AAA;
-    border-right: 1px solid #CCC;
-  }
   .analysisArea{
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
-    background-color: #F5F5F5; /* lightgray;  */
+    background-color: #F5F5F5;  lightgray;  */
   }
   .anaTop{
-    flex: 1;
+    flex: 1;            /* does this fill the rest of the space like {flex:1} or {flex:1 1 auto;} ? */
     border: 1px solid #AAA;
+  }
+  #anlDndChart{
+    width: 100%;
+    height: 100%;
+    background-color: #F5F5F5;  /*lavender;*/
   }
   .anaBot {
     flex: 0 1 75px;
     display: flex;
     flex-direction: row;
-    height: 100%;
+    /* justify-content: space-around; */
     border: 1px solid #AAA;
-    background-color: #F5F5F5; /* peachpuff; */
+    background-color: #F5F5F5; /* #F5F5F5; /* peachpuff; */
   }
-  .analegend{
-    flex: 1;
-    border: 1px solid #AAA;
-    background-color: #F5F5F5; /* seashell;  */
-  }
-  .anaYaxis{
-    flex: 0 1 500px;
-    background-color: #F5F5F5; /* lavender;  */
-  }
-  .grid-sugarOnOff-container {      /*on tst2 tab */
-  display: inline-grid;
-  grid-template-columns: auto auto auto auto auto;
-  background-color: #F5F5F5;     /* #2196F3;  blue */
-/*  justify-content: space-evenly;  */
-  width: 100%;
-}
-.grid-sugarOnOff-item {     /*on tst2 tab */
-  background-color: rgba(255, 255, 255, 0.8);    /* #ddd */
-  border: 0px;               /*1px solid #111 */
-  text-align: left;
-  padding: 1px 1px;
-}
-
   
-/**********************************************************************************************/
+  .analegend{
+    flex: 0 1 50%;
+    border: 1px solid #AAA;
+    background-color: #F5F5F5;  /* #F5F5F5; /* seashell;  */
+    min-width: 250px;
+    display: grid;
+    align-items: center;   /* up down */
+    grid-template-columns: 35px 60px auto;
+    grid-template-rows: 25px 25px 25px;
+    grid-column-gap: 10px;
+    /* grid-row-gap: 5px; */
+    grid-template-areas: 'pop0delete pop0color popDish0'
+                         'pop1delete pop1color popDish1'
+                         'pop2delete pop2color popDish2';
+    
+  }
+    #pop0deleteDiv { grid-area: pop0delete;}
+    #pop1deleteDiv { grid-area: pop1delete;}
+    #pop2deleteDiv { grid-area: pop2delete;}
+    #pop0colorDiv { grid-area: pop0color;}
+    #pop1colorDiv { grid-area: pop1color;}
+    #pop2colorDiv { grid-area: pop2color;}
+    #popDish0Div { grid-area: popDish0;}
+    #popDish1Div { grid-area: popDish1;}
+    #popDish2Div { grid-area: popDish2;}
+    
+    .anaDeleteButtonDiv{
+      padding: 2px 4px;  /*top/bottom  left/right  */
+    }
+    .anaDeleteButton{
+      margin: 2px;
+    };
+    .anaColorLineDiv{
+      padding: 2px 4px;  /*top/bottom  left/right  */
+      width: 100%; 
+      background-color: #F5F5F5;   /*lightblue; */
+    }
+    .anaColorLine{
+      height: 17px;
+      min-width: 50px;
+      margin: auto;
+    }
+    .popDishHolder{
+      padding 3px;
+      background-color: #F5F5F5;  /*lemonchiffon; */
+    }
+    .popDishClass {
+      min-height: 1.6em;
+      padding: 5px;
+      margin: 2px;
+      border: 1px solid #CCCCCC;
+      display: block;
+      overflow: visible;
+    }
+
+  .anaYaxis{
+    flex: 0 1 50%;       /* need a way to put drop down description on another line if screen is narrow */
+    min-width: 350px;
+    background-color: #F5F5F5;/* #F5F5F5; /* pink ;  */
+    margin: 10px 2px 5px 10px;    /* top right bottom left */
+  }
+  
+/**********************************************************************************************************************/
+/* the class model is used to create dialog boxes without dojo                                                        */
+/**********************************************************************************************************************/
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -1131,25 +1086,7 @@ checkbox:focus {
     background-color: lightgray;
     color: black;
 }
-
-.hp_inflow {
-  background-color: yellow;
-}
-
-.hp_outflow {
-  background-color: palegoldenrod;
-}
-
-.hp_xdiffuse {
-  background-color: greenyellow;
-}
-
-.hp_xdiffuse {
-  background-color: palegreen;
-}
-.hp_minMax {
-  background-color: skyblue;
-}
+/************************************************************************************************* end of model class */                                                                         */
 
 /*************************************************************************************************** no longer in use */
 

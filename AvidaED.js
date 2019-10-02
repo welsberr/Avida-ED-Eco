@@ -95,8 +95,8 @@ require([
   'dojo/ready',
   'jquery',
   'jquery-ui',
-  //'lib/plotly-latest.min.js',   //updatd to plotly_v1.44.3.js on 2018_0915
-  'lib/plotly.js',                        //version  plotly_v1.44.3   as of 2018
+  'lib/plotly-latest.min.js',   //updatd to plotly_v1.44.3.js on 2018_0915
+  //'lib/plotly.js',               //version  plotly_v1.44.3   as of 2018
   //'lib/jquery.fileDownload.js',
   //'lib/Blob',
   'lib/jszip.min.js',
@@ -106,7 +106,7 @@ require([
   'fileDataRead.js',
   'fileDataWrite.js',
   'fileIO.js',
-  
+
   'populationGrid.js',
   'organismView.js',
   'dojoDnd.js',
@@ -118,16 +118,16 @@ require([
   //'diagnosticconsole.js',
   'dojo/domReady!'
 ], function (space, AppStates, dijit, registry,
-             Button, Select,
-             HorizontalSlider, HorizontalRule, HorizontalRuleLabels, RadioButton, NumberSpinner, ComboButton,
-             DropDownButton, ComboBox, Textarea,
-             Dialog,
-             BorderContainer, ContentPane, MenuBar, PopupMenuBarItem, MenuItem, Menu,
-             TitlePane, parser, declare, query, nodelistTraverse,
-             dndSource, dndManager, dndSelector, dndTarget, domGeometry, domStyle, dom, domConst,
-             aspect, on, xhr,
-             ready, $, jqueryui, Plotly, //fileDownload,  //Blob.js,
-             JSZip, FileSaver) {
+  Button, Select,
+  HorizontalSlider, HorizontalRule, HorizontalRuleLabels, RadioButton, NumberSpinner, ComboButton,
+  DropDownButton, ComboBox, Textarea,
+  Dialog,
+  BorderContainer, ContentPane, MenuBar, PopupMenuBarItem, MenuItem, Menu,
+  TitlePane, parser, declare, query, nodelistTraverse,
+  dndSource, dndManager, dndSelector, dndTarget, domGeometry, domStyle, dom, domConst,
+  aspect, on, xhr,
+  ready, $, jqueryui, Plotly, //fileDownload,  //Blob.js,
+  JSZip, FileSaver) {
   'use strict';
   if (typeof $ != 'undefined') {
     // jQuery is loaded => print the version
@@ -189,7 +189,7 @@ require([
     'use strict';
     //Menu
     av.doj.mnCnPopRun = document.getElementById('mnCnPopRun');
-    
+
     av.doj.mnFlStandAloneApp = document.getElementById('mnFlStandAloneApp');
     av.doj.mnHpAbout = document.getElementById('mnHpAbout');
     av.doj.mnHpManual = document.getElementById('mnHpManual');
@@ -198,28 +198,28 @@ require([
     av.doj.mnHpProblem = document.getElementById('mnHpProblem');
     av.doj.mnHpDebug = document.getElementById('mnHpDebug');
     av.doj.mnDebug = document.getElementById('mnDebug');
-    
+
     //main area
     av.dom.userMsgLabel = document.getElementById('userMsgLabel');
     av.dom.wsSavedMsg = document.getElementById('wsSavedMsg');
     av.dom.wsNameMsg = document.getElementById('wsNameMsg');
-   
+
 
     av.dom.allAvida = document.getElementById('allAvida');
     av.dom.navColId = document.getElementById('navColId');
-    
+
     av.dom.populationButton = document.getElementById('populationButton');
     av.dom.freezeButton = document.getElementById('freezeButton');
     av.dom.populationBlock = document.getElementById('populationBlock');
     av.dom.organismBlock = document.getElementById('organismBlock');
     av.dom.analysisBlock = document.getElementById('analysisBlock');
-    av.dom.showTextBlock = document.getElementById('showTextBlock'); 
+    av.dom.showTextBlock = document.getElementById('showTextBlock');
     av.dom.allAvida = document.getElementById('allAvida');
-    
+
     av.dom.lftPnlButtonImg = document.getElementById('lftPnlButtonImg');
     av.dom.rtPnlButtonImg = document.getElementById('rtPnlButtonImg');
 
-      //Population Page
+    //Population Page
     av.dom.popInfoHolder = document.getElementById('popInfoHolder');
     av.dom.statsTab = document.getElementById('statsTab');
     av.dom.setupTab = document.getElementById('setupTab');
@@ -231,7 +231,7 @@ require([
     av.dom.popBot = document.getElementById('popBot');
     av.dom.gridHolder = document.getElementById('gridHolder');
     av.dom.gridCanvas = document.getElementById('gridCanvas');
-    av.dom.scaleCanvas = document.getElementById('scaleCanvas');  
+    av.dom.scaleCanvas = document.getElementById('scaleCanvas');
     av.dom.popBot = document.getElementById('popBot');
     av.dom.labInfoBlock = document.getElementById('labInfoBlock');
 
@@ -242,11 +242,11 @@ require([
     av.dom.oneUpdateButton = document.getElementById('oneUpdateButton');
     av.dom.newDishButton = document.getElementById('newDishButton');
     av.dom.avidianOutline = document.getElementById('avidianOutline');
-    
-        
+
+
     av.dom.selOrgType = document.getElementById('selOrgType');
     av.dom.gridControlTable = document.getElementById('gridControlTable');
-    
+
     //Test setup page
     av.dom.sizeCellTest = document.getElementById('sizeCellTest');
     av.dom.sizeColTest = document.getElementById('sizeColTest');
@@ -254,10 +254,10 @@ require([
     av.dom.childParentRadiTest = document.getElementById('childParentRadiTest');
     av.dom.experimentRadiTest = document.getElementById('experimentRadiTest');
     av.dom.randInpuTest = document.getElementById('randInpuTest');
-    av.dom.manualUpdateRadiTest = document.getElementById('manualUpdateRadiTest');    
+    av.dom.manualUpdateRadiTest = document.getElementById('manualUpdateRadiTest');
     //av.dom.Test = document.getElementById('Test');
     //av.dom.Test = document.getElementById('Test');
-    
+
     //Population Map Setup page
     av.dom.sizeCells = document.getElementById('sizeCells');
     av.dom.sizeCols = document.getElementById('sizeCols');
@@ -269,17 +269,17 @@ require([
     av.dom.envNone = document.getElementById('envNone');
     av.dom.envFinite = document.getElementById('envFinite');
     av.dom.envGradient = document.getElementById('envGradient');
-    av.dom.envEquilibrium = document.getElementById('envEquilibrium'); 
-    av.dom.envSourceSink = document.getElementById('envSourceSink'); 
-    av.dom.envInitial = document.getElementById('envInitial'); 
-    av.dom.envEqInflow = document.getElementById('envEqInflow'); 
-    av.dom.envEqOutflow = document.getElementById('envEqOutflow'); 
-    av.dom.envEqual = document.getElementById('envEqual'); 
-    av.dom.envGrSide = document.getElementById('envGrSide'); 
-    av.dom.envGrInflow = document.getElementById('envGrInflow'); 
-    av.dom.envGrOutflow = document.getElementById('envGrOutflow'); 
+    av.dom.envEquilibrium = document.getElementById('envEquilibrium');
+    av.dom.envSourceSink = document.getElementById('envSourceSink');
+    av.dom.envInitial = document.getElementById('envInitial');
+    av.dom.envEqInflow = document.getElementById('envEqInflow');
+    av.dom.envEqOutflow = document.getElementById('envEqOutflow');
+    av.dom.envEqual = document.getElementById('envEqual');
+    av.dom.envGrSide = document.getElementById('envGrSide');
+    av.dom.envGrInflow = document.getElementById('envGrInflow');
+    av.dom.envGrOutflow = document.getElementById('envGrOutflow');
     //av.dom.env = document.getElementById(''); 
-        
+
     av.dom.notose = document.getElementById('notose');
     av.dom.andose = document.getElementById('andose');
     av.dom.orose = document.getElementById('orose');
@@ -300,57 +300,57 @@ require([
     av.dom.ornButton = document.getElementById('ornButton');
     av.dom.andnButton = document.getElementById('andnButton');
     av.dom.xorButton = document.getElementById('xorButton');
-    
-    av.dom.sugarAccordion = document.getElementById('sugarAccordion');
-    av.dom.orn0section = document.getElementById('orn0section'); 
-    av.dom.orn0summary = document.getElementById('orn0summary'); 
-    av.dom.orn0title = document.getElementById('orn0title'); 
-    av.dom.orn0Details = document.getElementById('orn0Details'); 
-    av.dom.orn1subSection = document.getElementById('orn1subSection'); 
-    av.dom.showTextarea = document.getElementById('showTextarea'); 
-    
-/*
- * Not in use any longer; might use to create new vars
- * 
-    av.dom.notType = document.getElementById('notType');
-    av.dom.andType = document.getElementById('andType');
-    av.dom.oroType = document.getElementById('oroType');
-    av.dom.norType = document.getElementById('norType');
-    av.dom.equType = document.getElementById('equType'); 
-    av.dom.nanType = document.getElementById('nanType');
-    av.dom.ornType = document.getElementById('ornType');
-    av.dom.antType = document.getElementById('antType');
-    av.dom.xorType = document.getElementById('xorType');
-    
-    av.dom.notIn = document.getElementById('notIn');
-    av.dom.andIn = document.getElementById('andIn');
-    av.dom.oroIn = document.getElementById('oroIn');
-    av.dom.norIn = document.getElementById('norIn');
-    av.dom.equIn = document.getElementById('equIn'); 
-    av.dom.nanIn = document.getElementById('nanIn');
-    av.dom.ornIn = document.getElementById('ornIn');
-    av.dom.antIn = document.getElementById('antIn');
-    av.dom.xorIn = document.getElementById('xorIn');
 
-    av.dom.notOut = document.getElementById('notOut');
-    av.dom.andOut = document.getElementById('andOut');
-    av.dom.oroOut = document.getElementById('oroOut');
-    av.dom.norOut = document.getElementById('norOut');
-    av.dom.equOut = document.getElementById('equOut'); 
-    av.dom.nanOut = document.getElementById('nanOut');
-    av.dom.ornOut = document.getElementById('ornOut');
-    av.dom.antOut = document.getElementById('antOut');
-    av.dom.xorOut = document.getElementById('xorOut');
-*/
+    av.dom.sugarAccordion = document.getElementById('sugarAccordion');
+    av.dom.orn0section = document.getElementById('orn0section');
+    av.dom.orn0summary = document.getElementById('orn0summary');
+    av.dom.orn0title = document.getElementById('orn0title');
+    av.dom.orn0Details = document.getElementById('orn0Details');
+    av.dom.orn1subSection = document.getElementById('orn1subSection');
+    av.dom.showTextarea = document.getElementById('showTextarea');
+
+    /*
+     * Not in use any longer; might use to create new vars
+     * 
+     av.dom.notType = document.getElementById('notType');
+     av.dom.andType = document.getElementById('andType');
+     av.dom.oroType = document.getElementById('oroType');
+     av.dom.norType = document.getElementById('norType');
+     av.dom.equType = document.getElementById('equType'); 
+     av.dom.nanType = document.getElementById('nanType');
+     av.dom.ornType = document.getElementById('ornType');
+     av.dom.antType = document.getElementById('antType');
+     av.dom.xorType = document.getElementById('xorType');
+     
+     av.dom.notIn = document.getElementById('notIn');
+     av.dom.andIn = document.getElementById('andIn');
+     av.dom.oroIn = document.getElementById('oroIn');
+     av.dom.norIn = document.getElementById('norIn');
+     av.dom.equIn = document.getElementById('equIn'); 
+     av.dom.nanIn = document.getElementById('nanIn');
+     av.dom.ornIn = document.getElementById('ornIn');
+     av.dom.antIn = document.getElementById('antIn');
+     av.dom.xorIn = document.getElementById('xorIn');
+     
+     av.dom.notOut = document.getElementById('notOut');
+     av.dom.andOut = document.getElementById('andOut');
+     av.dom.oroOut = document.getElementById('oroOut');
+     av.dom.norOut = document.getElementById('norOut');
+     av.dom.equOut = document.getElementById('equOut'); 
+     av.dom.nanOut = document.getElementById('nanOut');
+     av.dom.ornOut = document.getElementById('ornOut');
+     av.dom.antOut = document.getElementById('antOut');
+     av.dom.xorOut = document.getElementById('xorOut');
+     */
     av.dom.experimentRadio = document.getElementById('experimentRadio');
     av.dom.demoRadio = document.getElementById('demoRadio');
     av.dom.manualUpdateRadio = document.getElementById('manualUpdateRadio');
     av.dom.autoUpdateRadio = document.getElementById('autoUpdateRadio');
     av.dom.autoUpdateOnce = document.getElementById('autoUpdateOnce');
-    
+
     //test dishes setup
-    av.dom.environConfigEdit = document.getElementById('environConfigEdit');  
-    av.dom.tst2textarea = document.getElementById('tst2textarea');  
+    av.dom.environConfigEdit = document.getElementById('environConfigEdit');
+    av.dom.tst2textarea = document.getElementById('tst2textarea');
 
     av.dom.sendLogPara = document.getElementById('sendLogPara');
     av.dom.sendLogTextarea = document.getElementById('sendLogTextarea');
@@ -365,9 +365,9 @@ require([
     av.dom.anlChrtSpace = document.getElementById('anlDndChart');  //easier handle for div with chart
     av.dom.anlDndChart = document.getElementById('anlDndChart');
     av.dom.anaChrtHolder = document.getElementById('anaChrtHolder');
-    av.dom.graphPop0 = document.getElementById('graphPop0');
-    av.dom.graphPop1 = document.getElementById('graphPop1');
-    av.dom.graphPop2 = document.getElementById('graphPop2');
+    av.dom.popDish0 = document.getElementById('popDish0');
+    av.dom.popDish1 = document.getElementById('popDish1');
+    av.dom.popDish2 = document.getElementById('popDish2');
 
     //post - send data to database
     av.dom.postLogTextarea = document.getElementById('postLogTextarea');
@@ -389,7 +389,7 @@ require([
     av.dom.trashDiv = document.getElementById('trashDiv');
 
     av.dom.orgTopId = document.getElementById('orgTopId');
-    
+
     av.dom.ExecuteJust = document.getElementById('ExecuteJust');       //check for code repeats might be able to do a function and clean things tiba
     av.dom.ExecuteAbout = document.getElementById('ExecuteAbout');
 
@@ -404,12 +404,13 @@ require([
     av.dom.newSaveWorld = document.getElementById('newSaveWorld');
     av.dom.needAncestorModalID = document.getElementById('needAncestorModalID');
     av.dom.needAncestorCancel = document.getElementById('needAncestorCancel');
-    
+
     //av.dom. = document.getElementById('');
   };
   av.dom.load();
-  
-  if (av.debug.root) console.log('before dnd definitions');
+
+  if (av.debug.root)
+    console.log('before dnd definitions');
   /********************************************************************************************************************/
   /******************************************* Dojo Drag N Drop Initialization ****************************************/
   /********************************************************************************************************************/
@@ -417,19 +418,21 @@ require([
    when I've tried putting them in another file it does not work */
 
   av.dnd.fzConfig = new dndSource('fzConfig', {
-    accept: ['b', 'c'],  //b=both; c=config
+    accept: ['b', 'c'], //b=both; c=config
     copyOnly: true,
     singular: true,
     selfAccept: false
   });
-  if (av.debug.root) console.log('before fzOrgan');
+  if (av.debug.root)
+    console.log('before fzOrgan');
   av.dnd.fzOrgan = new dndSource('fzOrgan', {
-    accept: ['g'],  //g=genome
+    accept: ['g'], //g=genome
     copyOnly: true,
     singular: true,
     selfAccept: false
   });
-  if (av.debug.root) console.log('before fzWorld');
+  if (av.debug.root)
+    console.log('before fzWorld');
   av.dnd.fzWorld = new dndSource('fzWorld', {
     //accept: ['b', 'w'],   //b=both; w=world  //only after the population started running
     singular: true,
@@ -437,26 +440,26 @@ require([
     selfAccept: false
   });
   av.dnd.fzTdish = new dndSource('fzTdish', {
-    accept: ['b', 't'],   //b=both; w=world  //test dishes
+    accept: ['b', 't'], //b=both; w=world  //test dishes
     singular: true,
     copyOnly: true,
     selfAccept: false
   });
-  
+
   /*
-  av.dnd.fzMdish = new dndSource('fzMdish', {  //multi-dsih
-    accept: ['b', 'm'],  //m=multidish
-    copyOnly: true,
-    singular: true,
-    selfAccept: false
-  });
-  av.dnd.fzRdish = new dndSource('fzRdish', {  //Resources only version
-    accept: ['r'],  //t=resource display
-    copyOnly: true,
-    singular: true,
-    selfAccept: false
-  });
-*/
+   av.dnd.fzMdish = new dndSource('fzMdish', {  //multi-dsih
+   accept: ['b', 'm'],  //m=multidish
+   copyOnly: true,
+   singular: true,
+   selfAccept: false
+   });
+   av.dnd.fzRdish = new dndSource('fzRdish', {  //Resources only version
+   accept: ['r'],  //t=resource display
+   copyOnly: true,
+   singular: true,
+   selfAccept: false
+   });
+   */
 
   /*  //kept only as an example of how to programatically add data to a dnd container
    av.dnd.fzWorld.insertNodes(false, [
@@ -468,28 +471,31 @@ require([
   av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
 
 
-  if (av.debug.root) console.log('before organIcon');
+  if (av.debug.root)
+    console.log('before organIcon');
   av.dnd.organIcon = new dndTarget('organIcon', {accept: ['g'], selfAccept: false});
   av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
   av.dnd.gridCanvas = new dndTarget('gridCanvas', {accept: ['g']});
   av.dnd.trashCan = new dndSource('trashCan', {accept: ['c', 'g', 't', 'w'], singular: true});
-  if (av.debug.root) console.log('after trashCan');
+  if (av.debug.root)
+    console.log('after trashCan');
 
   av.dnd.activeConfig = new dndSource('activeConfig', {
-    accept: ['b', 'c', 't', 'w'],  //b-both; c-configuration; w-world (populated dish); t-test
+    accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
     singular: true,
     copyOnly: true,
     selfAccept: false
   });
 
   av.dnd.testConfig = new dndSource('testConfig', {
-    accept: ['b', 'c', 't', 'w'],  //b-both; c-configuration; w-world (populated dish); t-test
+    accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
     singular: true,
     copyOnly: true,
     selfAccept: false
   });
 
-if (av.debug.root) console.log('before activeOrgan');
+  if (av.debug.root)
+    console.log('before activeOrgan');
   //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
   av.dnd.activeOrgan = new dndSource('activeOrgan', {
     accept: ['g'],
@@ -500,9 +506,9 @@ if (av.debug.root) console.log('before activeOrgan');
   av.dnd.organCanvas = new dndSource('organCanvas', {accept: ['g'], singular: true, selfAccept: false});
   //Targets only accept object, source can do both
   av.dnd.anlDndChart = new dndTarget('anlDndChart', {accept: ['w'], singular: true});
-  av.dnd.graphPop0 = new dndTarget('graphPop0', {accept: ['w'], singular: true});
-  av.dnd.graphPop1 = new dndTarget('graphPop1', {accept: ['w'], singular: true});
-  av.dnd.graphPop2 = new dndTarget('graphPop2', {accept: ['w'], singular: true});
+  av.dnd.popDish0 = new dndTarget('popDish0', {accept: ['w'], singular: true});
+  av.dnd.popDish1 = new dndTarget('popDish1', {accept: ['w'], singular: true});
+  av.dnd.popDish2 = new dndTarget('popDish2', {accept: ['w'], singular: true});
 
   av.parents.clearParentsFn();
 
@@ -511,29 +517,32 @@ if (av.debug.root) console.log('before activeOrgan');
   //**************************************************************************************************/
 
   //Avida as a web worker
-  if (av.debug.root) console.log('before call avida');
+  if (av.debug.root)
+    console.log('before call avida');
   //console.log('typeof(av.aww.uiWorker', typeof(av.aww.uiWorker));
-  if (typeof(Worker) !== 'undefined') {
+  if (typeof (Worker) !== 'undefined') {
     //console.log('Worker type is not undefined');
     if (null === av.aww.uiWorker) {
       av.aww.uiWorker = new Worker('avida.js');
       //console.log('webworker created');
       av.debug.log += '\n     --note: av.aww.uiWorker was null, started a new webworker';
-    }
-    else console.log('av.aww.uiWorker is not null');
-  }
-  else {
+    } else
+      console.log('av.aww.uiWorker is not null');
+  } else {
     userMsgLabel.textContent = "Sorry, your browser does not support Web workers and Avida won't run";
-  };
+  }
+  ;
 
   //process message from web worker
-  if (av.debug.root) console.log('before fio.uiWorker on message');
+  if (av.debug.root)
+    console.log('before fio.uiWorker on message');
   av.aww.uiWorker.onmessage = function (ee) {
     //console.log('avida_ee', ee);
     av.msg.readMsg(ee);
   };  // in file messaging.js
 
-  if (av.debug.root) console.log('before dnd triggers');
+  if (av.debug.root)
+    console.log('before dnd triggers');
   //*******************************************************************************************************************
   //       Dojo Dnd drop function - triggers for all dojo dnd drop events
   //*******************************************************************************************************************
@@ -551,7 +560,7 @@ if (av.debug.root) console.log('before activeOrgan');
       av.dnd.makeMove(source, nodes, target);
     }
   });
-  
+
   av.dnd.testConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
     'use strict';
     //console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id);
@@ -561,29 +570,29 @@ if (av.debug.root) console.log('before activeOrgan');
   });
 
 // based on https://stackoverflow.com/questions/27529727/sorta-b-does-not-work-in-dojo-dnd-source
-  av.dnd.sortDnD = function (dndSection){
+  av.dnd.sortDnD = function (dndSection) {
     // Input: dndSection = the text of the class os the Dojo DnD section with elements to be sorted
     // e.g., var dndSection = 'fzOrgan'; sortDnD(dndSection);
     // actually full class name is ".element dojoDndItem" to query
-   // console.log('inside sortDnD');
+    // console.log('inside sortDnD');
     //dojo.query(".element",  dojo.byId(dndSection)).sort(
     dojo.query(".dojoDndItem", dndSection).sort(
-        function( a,b ) {
-            var aih = a.innerHTML.toString().toLowerCase();
-            var bih = b.innerHTML.toString().toLowerCase();
-            return (aih == bih ? 0 : (aih > bih ? 1 : -1));
-        }
+      function (a, b) {
+        var aih = a.innerHTML.toString().toLowerCase();
+        var bih = b.innerHTML.toString().toLowerCase();
+        return (aih == bih ? 0 : (aih > bih ? 1 : -1));
+      }
     ).forEach(// fire bug debugging cursor move to this section
-        function(a, idx) { 
-            dojo.byId(dndSection).insertBefore(a, dojo.byId(dndSection).childNodes[idx]);  
-    });
+      function (a, idx) {
+        dojo.byId(dndSection).insertBefore(a, dojo.byId(dndSection).childNodes[idx]);
+      });
   };
-  
+
   // Connect sections to sortDnD function
   // Section names: fcConfig, fzOrgan, fzWorld, fzTdish, fzMdish, fzRdish
-  
-    // 2019-04-14: test dragging @default in, then back to freeezer with name change; sort appears to work.
-    dojo.connect( av.dnd.fzConfig, "onDndDrop", function( source, nodes, copy, target ) {
+
+  // 2019-04-14: test dragging @default in, then back to freeezer with name change; sort appears to work.
+  dojo.connect(av.dnd.fzConfig, "onDndDrop", function (source, nodes, copy, target) {
     //This triggers for every dnd drop, not just those of fzConfig  
     if ('fzConfig' === target.node.id) {
       //console.log('fzConfig=', av.dnd.fzConfig);
@@ -592,27 +601,27 @@ if (av.debug.root) console.log('before activeOrgan');
       //console.log('; copy=', copy, '; target=', target);
       //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
       av.dnd.landFzConfig(source, nodes, target);  //needed as part of call to contextMenu
-      nodes.forEach(function(node) {
-      av.dnd.sortDnD('fzConfig');
+      nodes.forEach(function (node) {
+        av.dnd.sortDnD('fzConfig');
       });
     }
   });
 
   // 2019-04-14: test grabbing organisms, dropping in grid, then from setup textbox to freezer, appears to work
-  dojo.connect( av.dnd.fzOrgan, "onDndDrop", function( source, nodes, copy, target ) {
+  dojo.connect(av.dnd.fzOrgan, "onDndDrop", function (source, nodes, copy, target) {
     //This triggers for every dnd drop, not just those of fzOrgan
     if ('fzOrgan' === target.node.id) {
       //console.log('fzOrgan=', av.dnd.fzOrgan);
       //console.log('.childNodes=', av.dnd.fzOrgan.childNodes);
       console.log('nodes=', nodes);
       av.dnd.landFzOrgan(source, nodes, target);
-      nodes.forEach(function(node) {
+      nodes.forEach(function (node) {
         av.dnd.sortDnD('fzOrgan');
       });
     }
   });
-  
-  dojo.connect( av.dnd.fzWorld, "onDndDrop", function( source, nodes, copy, target ) {
+
+  dojo.connect(av.dnd.fzWorld, "onDndDrop", function (source, nodes, copy, target) {
     //This triggers for every dnd drop, not just those of activeConfig
     if ('fzWorld' === target.node.id) {
       var pkg = {};
@@ -622,7 +631,7 @@ if (av.debug.root) console.log('before activeOrgan');
       pkg.copy = copy;
       pkg.target = target;
       av.dnd.landFzWorldFn(pkg);
-      nodes.forEach(function(node) {
+      nodes.forEach(function (node) {
         av.dnd.sortDnD('fzWorld');
       });
       if (av.ui.num !== av.fzr.wNum) {
@@ -630,7 +639,7 @@ if (av.debug.root) console.log('before activeOrgan');
       } //tiba need to check this
     }
   });
-    
+
   av.dnd.fzTdish.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
     if ('fzTdish' === target.node.id) {
       var pkg = {};
@@ -646,50 +655,50 @@ if (av.debug.root) console.log('before activeOrgan');
     }
   });
 
-    // 2019-04-14: Untested.
-    dojo.connect( av.dnd.fzTdish, "onDndDrop", function( source, nodes, copy, target ) {
+  // 2019-04-14: Untested.
+  dojo.connect(av.dnd.fzTdish, "onDndDrop", function (source, nodes, copy, target) {
     if ('fzTdish' === target.node.id) {
-      nodes.forEach(function(node) {
+      nodes.forEach(function (node) {
         av.dnd.sortDnD('fzTdish');
       });
     }
   });
 
-    // 2019-04-14: Untested.
-    /*
-    dojo.connect( av.dnd.fzMdish, "onDndDrop", function( source, nodes, copy, target ) {
-    if ('fzMdish' === target.node.id) {
-      nodes.forEach(function(node) {
-        av.dnd.sortDnD('fzMdish');
-      });
-    }
-  });
-
-    // 2019-04-14: Untested.
-    dojo.connect( av.dnd.fzRdish, "onDndDrop", function( source, nodes, copy, target ) {
-    if ('fzRdish' === target.node.id) {
-      nodes.forEach(function(node) {
-        av.dnd.sortDnD('fzRdish');
-      });
-    }
-  });
-*/
+  // 2019-04-14: Untested.
+  /*
+   dojo.connect( av.dnd.fzMdish, "onDndDrop", function( source, nodes, copy, target ) {
+   if ('fzMdish' === target.node.id) {
+   nodes.forEach(function(node) {
+   av.dnd.sortDnD('fzMdish');
+   });
+   }
+   });
+   
+   // 2019-04-14: Untested.
+   dojo.connect( av.dnd.fzRdish, "onDndDrop", function( source, nodes, copy, target ) {
+   if ('fzRdish' === target.node.id) {
+   nodes.forEach(function(node) {
+   av.dnd.sortDnD('fzRdish');
+   });
+   }
+   });
+   */
 
   //console.log('av.dnd.ancestorBox', av.dnd.ancestorBox);
   av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
     if ('ancestorBox' === target.node.id) {
       //console.log('ancestorBox=', target, av.dnd.ancestorBox);  //yes they are the same. could use in the above if statement.
       av.dnd.makeMove(source, nodes, target);
-      }
+    }
   });
 
   av.dnd.ancestorBoTest.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
     if ('ancestorBoTest' === target.node.id) {
       av.dnd.makeMove(source, nodes, target);
-      }
+    }
   });
 
-av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of gridCanvas
+  av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of gridCanvas
     if ('gridCanvas' === target.node.id) {
       av.dnd.landGridCanvas(source, nodes, target);
       //console.log('before call av.grd.drawGridSetupFn');
@@ -701,7 +710,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   av.dnd.organIcon.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of organIcon
     //setTimeout(null,1000);
     if ('organIcon' === target.node.id) {
-      if (av.debug.dnd) console.log('landOrganIcon: s, t', source, target);
+      if (av.debug.dnd)
+        console.log('landOrganIcon: s, t', source, target);
       av.dnd.landOrganIcon(source, nodes, target);
       //Change to Organism Page
       av.ui.mainBoxSwap('organismBlock');
@@ -717,7 +727,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
 
   av.dnd.activeOrgan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeOrgan
     if ('activeOrgan' === target.node.id) {
-      if (av.debug.dnd) console.log('activeOrgan: s, t', source, target);
+      if (av.debug.dnd)
+        console.log('activeOrgan: s, t', source, target);
       av.dnd.makeMove(source, nodes, target);
       //av.dnd.landActiveOrgan(source, nodes, target);
       av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
@@ -726,7 +737,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
 
   av.dnd.organCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of organCanvas
     if ('organCanvas' === target.node.id) {
-      if (av.debug.dnd) console.log('landorganCanvas: s, t', source, target);
+      if (av.debug.dnd)
+        console.log('landorganCanvas: s, t', source, target);
       av.dnd.landorganCanvas(source, nodes, target);
       av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
     }
@@ -737,7 +749,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       var remove = {};
       remove.type = '';
       remove.dir = '';
-      if (av.debug.dnd) console.log('trashCan: s, t', source, target);
+      if (av.debug.dnd)
+        console.log('trashCan: s, t', source, target);
       remove = av.dnd.landTrashCan(source, nodes, target);
       if ('' !== remove.type) {
         //removeFzrItem(av.fzr, remove.dir, remove.type);
@@ -747,56 +760,60 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     }
   });
 
-  av.dnd.anlDndChart.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of graphPop0
+  av.dnd.anlDndChart.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of anlDndChart
     if ('anlDndChart' === target.node.id) {
-      if (av.debug.dnd) console.log('anlDndChart: s, t', source, target);
+      if (av.debug.dnd)
+        console.log('anlDndChart: s, t', source, target);
       av.dnd.landAnlDndChart(av.dnd, source, nodes, target);
       av.anl.AnaChartFn();
     }
   });
 
-  av.dnd.graphPop0.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of graphPop0
-    if ('graphPop0' === target.node.id) {
-      if (av.debug.dnd) console.log('graphPop0: s, t', source, target);
-      av.dnd.landgraphPop0(av.dnd, source, nodes, target);
+  av.dnd.popDish0.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of popDish0
+    if ('popDish0' === target.node.id) {
+      if (av.debug.dnd)
+        console.log('popDish0: s, t', source, target);
+      av.dnd.landpopDish0(av.dnd, source, nodes, target);
       av.anl.AnaChartFn();
     }
   });
 
-  av.dnd.graphPop1.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of graphPop1
-    if ('graphPop1' === target.node.id) {
-      if (av.debug.dnd) console.log('graphPop1: s, t', source, target);
-      av.dnd.landgraphPop1(av.dnd, source, nodes, target);
+  av.dnd.popDish1.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of popDish1
+    if ('popDish1' === target.node.id) {
+      if (av.debug.dnd)
+        console.log('popDish1: s, t', source, target);
+      av.dnd.landpopDish1(av.dnd, source, nodes, target);
       av.anl.AnaChartFn();
     }
   });
 
-  av.dnd.graphPop2.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of graphPop2
-    if ('graphPop2' === target.node.id) {
-      if (av.debug.dnd) console.log('graphPop2: s, t', source, target);
-      av.dnd.landgraphPop2(av.dnd, source, nodes, target);
+  av.dnd.popDish2.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of popDish2
+    if ('popDish2' === target.node.id) {
+      if (av.debug.dnd)
+        console.log('popDish2: s, t', source, target);
+      av.dnd.landpopDish2(av.dnd, source, nodes, target);
       av.anl.AnaChartFn();
     }
   });
 
-  av.dnd.graphPop0.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
+  av.dnd.popDish0.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
     //The following cases should never happen as they are defined as 'target' not as 'source' dnd types.
     // The code is here in case the dnd type is changed to 'source'
     switch (source.node.id) {
-      case 'graphPop0':
-        av.post.addUser('DnD: delete_from: graphPop0?');
+      case 'popDish0':
+        av.post.addUser('DnD: delete_from: popDish0?');
         av.anl.pop[0].left = [];       //remove lines from population 1
         av.anl.pop[0].right = [];
         av.anl.AnaChartFn();
         break;
-      case 'graphPop1':
-        av.post.addUser('DnD: delete_from: graphPop1?');
+      case 'popDish1':
+        av.post.addUser('DnD: delete_from: popDish1?');
         av.anl.pop[1].left = [];       //remove lines from population 2
         av.anl.pop[1].right = [];
         av.anl.AnaChartFn();
         break;
-      case 'graphPop2':
-        av.post.addUser('DnD: delete_from: graphPop2?');
+      case 'popDish2':
+        av.post.addUser('DnD: delete_from: popDish2?');
         av.anl.pop[2].left = [];       //remove lines from population 3
         av.anl.pop[2].right = [];
         av.anl.AnaChartFn();
@@ -808,7 +825,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   //                                    End of dojo based DND triggered functions
   //----------------------------------------------------------------------------------------------------------------------
 
-  if (av.debug.root) console.log('before Error Logging');
+  if (av.debug.root)
+    console.log('before Error Logging');
   //********************************************************************************************************************
   // Error logging
   //********************************************************************************************************************
@@ -838,7 +856,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   });
   //--------------------------------------------------------------------------------------------
 
-  on(document.getElementById('postPost'), 'click', function(){
+  on(document.getElementById('postPost'), 'click', function () {
     av.post.addUser('Button: postPost');
     //Data to send
     av.debug.postData.email = av.dom.postEmailInput.value;
@@ -851,22 +869,22 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     //domConst.place('<p>sending message</p>', 'postStatus');
     var hostname = 'https://avida-ed.msu.edu/developer/report/receive';
 
-    xhr.post(  //Post is a helper function to xhr, a more generic class
-      hostname,  //URL parameter
-      {  //Data and halding parameter
+    xhr.post(//Post is a helper function to xhr, a more generic class
+      hostname, //URL parameter
+      {//Data and halding parameter
         data: dojo.toJson(av.debug.postData),
-        headers: {'X-Requested-With':null}
+        headers: {'X-Requested-With': null}
       }
-    ).then(function(received){ //Promise format; received data from request (first param of then)
-        av.dom.postStatus.textContent = 'Received';
-        //domConst.place('<p>Data received: <code>' + JSON.stringify(received) + '</code></p>', 'postStatus');
-      }, function(err){ //Error handling (second param of then)
-        av.dom.postStatus.textContent = 'Error';
-        av.dom.postProblemError.textContent = 'Please send an e-mail to '+av.fio.mailAddress + ' about the error sending a Problem Report';
-        av.dom.postProblemError.style.color = 'red';
+    ).then(function (received) { //Promise format; received data from request (first param of then)
+      av.dom.postStatus.textContent = 'Received';
+      //domConst.place('<p>Data received: <code>' + JSON.stringify(received) + '</code></p>', 'postStatus');
+    }, function (err) { //Error handling (second param of then)
+      av.dom.postStatus.textContent = 'Error';
+      av.dom.postProblemError.textContent = 'Please send an e-mail to ' + av.fio.mailAddress + ' about the error sending a Problem Report';
+      av.dom.postProblemError.style.color = 'red';
 
       //domConst.place('<p>Error: <code>' + JSON.stringify(err) + '</code></p>', 'postStatus');
-      }
+    }
     ); // End then
   }); // End on's function and on statement
 
@@ -895,28 +913,31 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
         if (event.stopPropagation) {
           event.stopPropagation();
           event.preventDefault();
-        };
-      };
-    };
+        }
+        ;
+      }
+      ;
+    }
+    ;
   };
 
   /*
    //http://stackoverflow.com/questions/20773306/mozilla-firefox-not-working-with-window-onbeforeunload
    var myEvent = window.attachEvent || window.addEventListener;
    var chkevent = window.attachEvent ? 'onbeforeunload' : 'beforeunload'; /// make IE7, IE8 compitable
-
+   
    myEvent(chkevent, function(e) { // For >=IE7, Chrome, Firefox
    var confirmationMessage = 'Remember to save your workSpace before you leave Avida-ED';  // a space
    (e || window.event).returnValue = confirmationMessage;
    return confirmationMessage;
    });
-
+   
    function goodbye(e) {
    if(!e) e = window.event;
    //e.cancelBubble is supported by IE - this will kill the bubbling process.
    e.cancelBubble = true;
    e.returnValue = 'Have you saved your workspace?'; //This is displayed on the dialog
-
+   
    //e.stopPropagation works in Firefox.
    if (e.stopPropagation) {
    e.stopPropagation();
@@ -925,7 +946,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
    }
    window.onbeforeunload=goodbye;
    */
-  
+
   //********************************************************************************************************************
   //  Read Default Workspace as part of initialization
   // ********************************************************************************************************************
@@ -942,13 +963,15 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   // Menu Buttons handling
   //********************************************************************************************s************************
 
-  if (av.debug.fio) console.log('dijit test', dijit.byId('mnFlOpenDefaultWS'));
+  if (av.debug.fio)
+    console.log('dijit test', dijit.byId('mnFlOpenDefaultWS'));
 
   dijit.byId('mnFlOpenDefaultWS').on('Click', function () {
     'use strict';
     av.post.addUser('Button: mnFlOpenDefaultWS');
     av.fio.useDefault = true;
-    if ('no' === av.fzr.saveState) sWSfDialog.show();  //Save WSfile Dialog box
+    if ('no' === av.fzr.saveState)
+      sWSfDialog.show();  //Save WSfile Dialog box
     else {
       av.fio.readZipWS(av.fio.defaultFname, false);  //false = do not load config file
     }
@@ -972,7 +995,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       document.getElementById('putWS').click();  //to get user picked file
     }
   });
-  
+
   // open and read user picked file
   //--------------------------------------------------------------------------------------------------------------------
 
@@ -980,9 +1003,11 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     'use strict';
     av.post.addUser('Button: mnFlOpenWS');
     av.fio.useDefault = false;
-    if ('no' === av.fzr.saveState) sWSfDialog.show();   //Need to change to include might be saved tiba fix
+    if ('no' === av.fzr.saveState)
+      sWSfDialog.show();   //Need to change to include might be saved tiba fix
     //else document.getElementById('inputFile').click();
-    else document.getElementById('putWS').click();  // calls av.fio.userPickZipRead
+    else
+      document.getElementById('putWS').click();  // calls av.fio.userPickZipRead
   });
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -999,7 +1024,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   // Save current workspace (mnFzSaveWorkspace)
   document.getElementById('mnFlSaveWorkspace').onclick = function () {
     if (!av.brs.isSafari) {
-    //if (true) {
+      //if (true) {
       av.post.addUser('Button: mnFlSaveWorkspace');
       av.fio.fzSaveCurrentWorkspaceFn();  //fileIO.js
     }
@@ -1014,11 +1039,12 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   // Save current workspace with a new name
   document.getElementById('mnFlSaveAs').onclick = function () {
     if (!av.brs.isSafari) {
-    //if (true) {
+      //if (true) {
       av.post.addUser('Button: mnFlSaveAs');
       var suggest = 'avidaWS.avidaWs.zip';
       if (av.fio.userFname) {
-        if (0 < av.fio.userFname.length) suggest = av.fio.userFname;
+        if (0 < av.fio.userFname.length)
+          suggest = av.fio.userFname;
       }
       av.fio.userFname = prompt('Choose a new name for your Workspace now', suggest);
       if (null !== av.fio.userFname) {
@@ -1062,16 +1088,16 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     }
   };
 
-  av.ui.where = function(domobj) {
+  av.ui.where = function (domobj) {
     // placeholder that was to return the cell ID in the grid perhaps never done. 
     //console.log('domobj=', domobj);
   };
-  
+
   av.ui.toggleDevelopentDisplays = function () {
     var len, tsk, sub;
     if ('visible' === av.doj.mnDebug.style.visibility) {
       av.ui.hideDevelopment = true;
-      av.doj.mnDebug.style.visibility = 'hidden';   
+      av.doj.mnDebug.style.visibility = 'hidden';
       document.getElementById('showTextButton').style.display = 'none';
       document.getElementById('popInfoTabHolder').className = 'tabHolderHide';
       document.getElementById('fzTdishSec').style.visibility = 'hidden';
@@ -1082,29 +1108,30 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       document.getElementById('popRightSideControlHolder').style.display = 'none';
       document.getElementById('debugResource').style.display = 'none';
 
-      av.sgr.processHideFlags(av.sgr.hideFlagInit,'av.ui.toggleDevelopentDisplays');
-      
+      av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopentDisplays');
+
       //console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
       len = document.getElementsByClassName('localEquilibrium').length;
-      for (ii=0; ii< len; ii++) {
+      for (ii = 0; ii < len; ii++) {
         document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'none';
         document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
         document.getElementsByClassName('globalAll')[ii].style.display = 'none';
         document.getElementsByClassName('localEquilibrium')[ii].style.display = 'none';
         document.getElementsByClassName('localAll')[ii].style.display = 'none';
-      };
+      }
+      ;
       len = document.getElementsByClassName('globalEquilibrium').length - 1;
       document.getElementsByClassName('globalEquilibrium')[len].style.display = 'none';
       document.getElementsByClassName('globalFinite')[len].style.display = 'none';
       document.getElementsByClassName('globalAll')[len].style.display = 'none';
-      
+
       dijit.byId('mnHpDebug').set('label', 'Show debug menu');
-      tsk = 'orn'; sub=1;
-      document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
+      tsk = 'orn';
+      sub = 1;
+      document.getElementById(tsk + sub + 'gradientCheckbox').style.display = 'none';
 
       av.post.addUser('Button: mnHpDebug: now hidden');
-    } else
-    {       // development sectiomn can be seen.
+    } else {       // development sectiomn can be seen.
       av.ui.hideDevelopment = false;
       av.doj.mnDebug.style.visibility = 'visible';
       document.getElementById('showTextButton').style.display = 'flex';
@@ -1121,25 +1148,27 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       document.getElementById('debugResource').style.display = 'flex';
 
       av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopentDisplays.onclick_show');
-      
+
       //show environment options sill under development.
       len = document.getElementsByClassName('localEquilibrium').length;
-      for (ii=0; ii< len; ii++) {      
+      for (ii = 0; ii < len; ii++) {
         document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'inline';
         document.getElementsByClassName('globalFinite')[ii].style.display = 'inline';
         document.getElementsByClassName('globalAll')[ii].style.display = 'inline';
         document.getElementsByClassName('localEquilibrium')[ii].style.display = 'inline';
         document.getElementsByClassName('localAll')[ii].style.display = 'inline';
-      };
+      }
+      ;
       len = document.getElementsByClassName('globalEquilibrium').length - 1;
       document.getElementsByClassName('globalEquilibrium')[len].style.display = 'inline';
       document.getElementsByClassName('globalFinite')[len].style.display = 'inline';
       document.getElementsByClassName('globalAll')[len].style.display = 'inline';
-      tsk = 'orn'; sub=1;
-      document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
-      
+      tsk = 'orn';
+      sub = 1;
+      document.getElementById(tsk + sub + 'gradientCheckbox').style.display = 'inline-block';
+
       //Show debug on dropdown menu
-      dijit.byId('mnHpDebug').set('label', 'Hide debug menu');      
+      dijit.byId('mnHpDebug').set('label', 'Hide debug menu');
       av.post.addUser('Button: mnHpDebug: now visible');
     }
     console.log('in av.ui.hideDevelopment=', av.ui.hideDevelopment, 'at end of function');
@@ -1149,29 +1178,29 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   av.dom.xorLabel.onclick = function () {
     if ('none' === document.getElementById('debugResource').style.display) {
       document.getElementById('debugResource').style.display = 'flex';
-    }
-    else {
+    } else {
       document.getElementById('debugResource').style.display = 'none';
     }
   };
 
 
 
-  av.fwt.tryDown = function(blob) {
+  av.fwt.tryDown = function (blob) {
     var ab = document.createElement('a');
-    ab.href     = 'data:attachment/csv;charset=utf-8,' + encodeURI(av.debug.log);
-    ab.target   = '_blank';
+    ab.href = 'data:attachment/csv;charset=utf-8,' + encodeURI(av.debug.log);
+    ab.target = '_blank';
     ab.download = 'testfile.txt';
     document.body.appendChild(ab);
     ab.click();
-    setTimeout(function(){
+    setTimeout(function () {
       document.body.removeChild(ab);
       window.URL.revokeObjectURL(ab.href);
     }, 100);
   };
   //------------- Testing only need to delete above later.--------------------
 
-  if (av.debug.root) console.log('before Help drop down menu');
+  if (av.debug.root)
+    console.log('before Help drop down menu');
   //--------------------------------------------------------------------------------------------------------------------
   // Help Drop down menu buttons
   //--------------------------------------------------------------------------------------------------------------------
@@ -1206,24 +1235,36 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.ui.sendEmailFlag = true;
     av.post.addUser('Button: sendEmail');
     var link = 'mailto:' + av.fio.mailAddress +
-        //'?cc=CCaddress@example.com' +
+      //'?cc=CCaddress@example.com' +
       '?subject=' + escape('Avida-ED session log') +
       '&body=' + escape(av.debug.log);
     window.location.href = link;
     av.ui.sendEmailFlag = false;
   });
 
-  av.debug.finalizeDtail = function (){
+  //http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
+  dijit.byId('sendEmail').on('Click', function () {
+    av.ui.sendEmailFlag = true;
+    av.post.addUser('Button: sendEmail');
+    var link = 'mailto:' + av.fio.mailAddress +
+      //'?cc=CCaddress@example.com' +
+      '?subject=' + escape('Avida-ED session log') +
+      '&body=' + escape(av.debug.log);
+    window.location.href = link;
+    av.ui.sendEmailFlag = false;
+  });
+
+  av.debug.finalizeDtail = function () {
     //finalize dTail
     //dom dimensions clientWidth clientHeight scrollWidth scrollHeight innerWidth innerHeight outerWidth outerHeight
     //assignment must have units and is a string style.width style.height
     av.debug.dTail = ''
-      + '\nmapHolder.client wd Ht = ' + av.dom.mapHolder.clientWidth + '  '  +  av.dom.mapHolder.clientHeight
-      + '\nmapHolder.scroll wd Ht = ' + av.dom.mapHolder.scrollWidth + '  '  +  av.dom.mapHolder.scrollHeight
-      + '\n  gridHolder.client wd Ht = ' + av.dom.gridHolder.clientWidth + '  '  +  av.dom.gridHolder.clientHeight
-      + '\n  gridHolder.scroll wd Ht = ' + av.dom.gridHolder.scrollWidth + '  '  +  av.dom.gridHolder.scrollHeight
-      + '\n  gridCanvas.client wd Ht = ' + av.dom.gridCanvas.clientWidth + '  '  +  av.dom.gridCanvas.clientHeight
-      + '\n  gridCanvas.scroll wd Ht = ' + av.dom.gridCanvas.scrollWidth + '  '  +  av.dom.gridCanvas.scrollHeight
+      + '\nmapHolder.client wd Ht = ' + av.dom.mapHolder.clientWidth + '  ' + av.dom.mapHolder.clientHeight
+      + '\nmapHolder.scroll wd Ht = ' + av.dom.mapHolder.scrollWidth + '  ' + av.dom.mapHolder.scrollHeight
+      + '\n  gridHolder.client wd Ht = ' + av.dom.gridHolder.clientWidth + '  ' + av.dom.gridHolder.clientHeight
+      + '\n  gridHolder.scroll wd Ht = ' + av.dom.gridHolder.scrollWidth + '  ' + av.dom.gridHolder.scrollHeight
+      + '\n  gridCanvas.client wd Ht = ' + av.dom.gridCanvas.clientWidth + '  ' + av.dom.gridCanvas.clientHeight
+      + '\n  gridCanvas.scroll wd Ht = ' + av.dom.gridCanvas.scrollWidth + '  ' + av.dom.gridCanvas.scrollHeight
       + '\n' + av.debug.dTail;
   };
 
@@ -1244,10 +1285,10 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       version: av.ui.version,
       userInfo: window.navigator.userAgent,
       screenSize: av.brs.userData.screen,
-      comment:'userComment',
-      error:av.debug.error,
-      email:'user email if provided',
-      triggered:av.debug.triggered,
+      comment: 'userComment',
+      error: av.debug.error,
+      email: 'user email if provided',
+      triggered: av.debug.triggered,
       logs: {
         details: av.debug.dTail,
         session: av.debug.log
@@ -1270,7 +1311,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       av.post.emailWindow();
     }
   };
-  
+
   av.post.sendWindow = function () {
     postLogDialog.show();  //textarea must be visable first
     av.dom.postLogPara.textContent = av.post.postLogPara;
@@ -1287,7 +1328,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.dom.postProblemError.textContent = '';
   };
 
-  av.post.emailWindow = function() {
+  av.post.emailWindow = function () {
     av.dom.sendLogTextarea.textContent = av.debug.sendLogTextarea;
     av.dom.sendLogPara.textContent = av.debug.sendLogPara;
 
@@ -1302,7 +1343,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   //********************************************************************************************************************
   // main button scripts
   //********************************************************************************************************************
-    
+
   //The style display: 'none' cannnot be used in the html during the initial load as the dijits won't work right
   //visibility:hidden can be used, but it leaves the white space and just does not display dijits.
   //So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
@@ -1317,7 +1358,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     document.getElementById(showBlock).style.display = "flex";
     //dijit.byId(showBlock).resize();
     //document.getElementById(showBlock).resize();
-    
+
     //disable menu options. they will be enabled when relevant canvas is drawn
     dijit.byId('mnFzOffspring').attr('disabled', true);
     dijit.byId('mnCnOffspringTrace').attr('disabled', true);
@@ -1325,16 +1366,18 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     // if the miniplot on the populaton page needs to be initiated call that funciton.
     if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
       av.grd.popChartInit('av.ui.mainBoxSwap');
-    };
+    }
+    ;
 
     //console.log('end of mainBoxSwap');
   };
-    
+
 
   // Buttons that call MainBoxSwap
   av.dom.populationButton.onclick = function () {
     av.post.addUser('Button: populationButton');
-    if (av.debug.dnd || av.debug.mouse) console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
+    if (av.debug.dnd || av.debug.mouse)
+      console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
     av.ui.mainBoxSwap('populationBlock');
     //console.log('after mainBoxSwap to populationBlock');
   };
@@ -1373,7 +1416,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     var tablinks = document.getElementsByClassName("tablinks");
     for (var ii = 0; ii < tablinks.length; ii++) {
       tablinks[ii].className = tablinks[ii].className.replace(" active", "");
-    };
+    }
+    ;
     av.dom.testSetupBlock.display = 'none';
     document.getElementById('ex1setupBlock').style.display = 'none';
     document.getElementById('tst2setupBlock').style.display = 'none';
@@ -1384,8 +1428,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       av.dom.labInfoBlock.style.display = 'none';
       av.dom.setupBlock.style.display = 'flex';
       av.dom.setupTab.className += " active";
-    }
-    else {
+    } else {
       document.getElementById('popRightSideSelect').value = 'Stats';
       av.dom.setupBlock.style.display = 'none';
       av.dom.labInfoBlock.style.display = 'flex';
@@ -1393,8 +1436,10 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       // if the miniplot on the populaton page needs to be initiated call that funciton.
       if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
         av.grd.popChartInit('av.ptd.RtInfoPanel');
-      };      
-    };
+      }
+      ;
+    }
+    ;
   };
 
   av.ptd.popRightInfoPanel = function (domObj) {
@@ -1402,7 +1447,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     var tablinks = document.getElementsByClassName("tablinks");
     for (var ii = 0; ii < tablinks.length; ii++) {
       tablinks[ii].className = tablinks[ii].className.replace(" active", "");
-    };
+    }
+    ;
     av.dom.testSetupBlock.display = 'none';
     document.getElementById('ex1setupBlock').style.display = 'none';
     document.getElementById('tst2setupBlock').style.display = 'none';
@@ -1412,8 +1458,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       av.dom.labInfoBlock.style.display = 'none';
       av.dom.setupBlock.style.display = 'flex';
       av.dom.setupTab.className += " active";
-    }
-    else {
+    } else {
       document.getElementById('RtSideSelect').value = 'Stats';
       av.dom.setupBlock.style.display = 'none';
       av.dom.labInfoBlock.style.display = 'flex';
@@ -1421,8 +1466,10 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       // if the miniplot on the populaton page needs to be initiated call that funciton.
       if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
         av.grd.popChartInit('av.ptd.popRightInfoPanel');
-      };      
-    };
+      }
+      ;
+    }
+    ;
   };
 
   //Development section
@@ -1436,7 +1483,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
-    };
+    }
+    ;
     //console.log('contentType=',contentType,'; evt=', evt);  //keep because evt info looks useful for improving mouse code.
     document.getElementById(contentType).style.display = "flex";
     evt.currentTarget.className += " active";
@@ -1457,8 +1505,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       av.ui.lftSidePnlShowing = false;
       av.ui.navColId = av.dom.navColId.offsetWidth;
       av.dom.navColId.style.display = 'none';
-    }
-    else {
+    } else {
       av.post.addUser('Button: lftPnlButtonImg: start showing left side panel');
       av.ui.lftSidePnlShowing = true;
       av.dom.navColId.style.display = 'flex';
@@ -1482,8 +1529,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       av.ptd.popStatFlag = false;
       av.ptd.popInfoHolderWd = av.dom.popInfoHolder.offsetWidth;
       av.dom.popInfoHolder.style.display = 'none';
-    }
-    else {
+    } else {
       av.post.addUser('Button: rtPnlButtonImg: start showing stats');
       av.ptd.popStatFlag = true;
       av.dom.popInfoHolder.style.display = 'flex';
@@ -1497,11 +1543,11 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     ///av.post.addUser('Button: rtPnlButtonImg');   //done in popStatView
     av.ptd.rtPnlButtonImg();
   };
-  
+
   //--------------------------------------------------------------------------------------------------------------------
   ///   Map Grid buttons - New  Run/Pause Freeze
   //--------------------------------------------------------------------------------------------------------------------
-  
+
   //process the run/Stop Button - a separate function is used so it can be flipped if the message to avida is not successful.
   av.dom.runStopButton.onclick = function () {
     av.post.addUser('Button: runStopButton = ' + av.grd.updateNum, '=updateNum;  ' + av.grd.msg.update + '=msg.update;  ' + av.grd.popStatsMsg.update + '=popStatsMsg.update');
@@ -1532,23 +1578,23 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   });
 
   av.dom.oneUpdateButton.onclick = function () {
-    av.post.addUser('Button: oneUpdateButton',   '=updateNum; ' + av.grd.msg.update + '=msg.update;  ' + av.grd.popStatsMsg.update + '=popStatsMsg.update');
+    av.post.addUser('Button: oneUpdateButton', '=updateNum; ' + av.grd.msg.update + '=msg.update;  ' + av.grd.popStatsMsg.update + '=popStatsMsg.update');
     av.ui.oneUpdateFlag = true;
     av.ptd.makeRunState('av.dom.oneUpdateButton.onclick');
     av.ptd.runPopFn('av.dom.oneUpdateButton.onclick');
   };
 
 //  av.dom.avidianOutline.onclick = function () {
-  av.ui.avidianOutlineOnclick = function(domObj) {
-    av.post.addUser('Button: avidianOutline; av.ui.showOutlineFlag='+ av.ui.showOutlineFlag);
+  av.ui.avidianOutlineOnclick = function (domObj) {
+    av.post.addUser('Button: avidianOutline; av.ui.showOutlineFlag=' + av.ui.showOutlineFlag);
     if ('Resource Mode: hide Avidian Outlines' == av.dom.avidianOutline.innerHTML) {
       av.dom.avidianOutline.innerHTML = 'Resource Mode: show Avidian Outlines';
       av.ui.showOutlineFlag = false;
-      console.log('av.ui.showOutlineFlag='+ av.ui.showOutlineFlag);
+      console.log('av.ui.showOutlineFlag=' + av.ui.showOutlineFlag);
     } else {
       av.dom.avidianOutline.innerHTML = 'Resource Mode: hide Avidian Outlines';
-      console.log('av.ui.showOutlineFlag='+ av.ui.showOutlineFlag);
-    av.ui.showOutlineFlag = true;
+      console.log('av.ui.showOutlineFlag=' + av.ui.showOutlineFlag);
+      av.ui.showOutlineFlag = true;
     }
   };
 
@@ -1570,7 +1616,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.msg.reset();
     //console.log('newDiscard click');
   };
-  
+
   av.dom.newSaveWorld.onclick = function () {
     av.post.addUser('Button: newSaveWorld');
     av.ptd.FrPopulationFn();
@@ -1593,8 +1639,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       av.msg.reset();
       console.log('in prepping');
       //av.ptd.resetDishFn(true); //Only do when get reset back from avida after sending reset, commented out in v3.0
-    }
-    else {// check to see about saving current population
+    } else {// check to see about saving current population
       av.msg.pause('now');
       av.ptd.makePauseState();
       av.dom.newModalID.style.display = "block";
@@ -1617,12 +1662,14 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   //Also creates context menu for all new freezer items.*/
   av.dom.freezeButton.onclick = function () {
     av.post.addUser('Button: freezeButton');
-    if ('prepping' == av.grd.runState) av.ptd.FrConfigFn();
+    if ('prepping' == av.grd.runState)
+      av.ptd.FrConfigFn();
     else {
       if (5 > av.msg.ByCellIDgenome.length) {
         document.getElementById('FzOrganismSpan').style.display = 'none';
       }  //block
-      else document.getElementById('FzOrganismSpan').style.display = 'inline';
+      else
+        document.getElementById('FzOrganismSpan').style.display = 'inline';
       fzDialog.show();
     }
   };
@@ -1687,15 +1734,15 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.post.addUser('Button: mnFzAddPopEx');
     av.dnd.FzAddExperimentFn('fzWorld', 'activeConfig', 'w');
   });
-  
-/*
-  //Buttons on drop down menu to add Multi-Dish to an Experiment
-  dijit.byId('mnFzAddMdishEx').on('Click', function () {
-    av.post.addUser('Button: mnFzAddMdishEx');
-    //av.dnd.FzAddExperimentFn('fzMdish', 'activeConfig', 'm');
-    av.msg.runMultiDish('fzMdish', 'activeConfig', 'm');
-  });
-*/
+
+  /*
+   //Buttons on drop down menu to add Multi-Dish to an Experiment
+   dijit.byId('mnFzAddMdishEx').on('Click', function () {
+   av.post.addUser('Button: mnFzAddMdishEx');
+   //av.dnd.FzAddExperimentFn('fzMdish', 'activeConfig', 'm');
+   av.msg.runMultiDish('fzMdish', 'activeConfig', 'm');
+   });
+   */
 
 
 //Buttons on drop down menu to put an organism in Organism Viewer
@@ -1731,14 +1778,13 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
 
     //console.log('just killed webWorker');
 
-    if (typeof(Worker) !== 'undefined') {
+    if (typeof (Worker) !== 'undefined') {
       if (null == av.aww.uiWorker) {
         av.aww.uiWorker = new Worker('avida.js');
         console.log('webworker recreated');
         av.debug.log += '\nuiA: ui killed avida webworker and started a new webworker';
       }
-    }
-    else {
+    } else {
       userMsgLabel.textContent = "Sorry, your browser does not support Web workers and Avida won't run";
     }
 
@@ -1786,13 +1832,13 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     'use strict';
     av.debug.log += '\n -----------------------------------------------------------------------------------------------\n';
   };
-  
+
   /*
-  document.getElementById('mnDbLoadProtoType').onclick = function () {
-    'use strict';
-    //code to load the files from the freezer into the space
-  };
-  */
+   document.getElementById('mnDbLoadProtoType').onclick = function () {
+   'use strict';
+   //code to load the files from the freezer into the space
+   };
+   */
 
   //--------------------------------------------------------------------------------------------------------------------
   //    mouse DND functions
@@ -1800,7 +1846,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
 
   //mouse click started on Organism Canvas - only offspring can be selected if present
   $(document.getElementById('organCanvas')).on('mousedown', function (evt) {
-    av.post.addUser('mousedown: organCanvas('+evt.offsetX + ', ' + evt.offsetY + ')');
+    av.post.addUser('mousedown: organCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
     av.mouse.downOrganCanvasFn(evt);
   });
 
@@ -1812,8 +1858,9 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
 
   //av.mouse down on the grid
   $(av.dom.gridCanvas).on('mousedown', function (evt) {
-    av.post.addUser('mousedown: gridCanvas('+evt.offsetX + ', ' + evt.offsetY + ')');
-    av.mouse.downGridCanvasFn(evt);  });
+    av.post.addUser('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
+    av.mouse.downGridCanvasFn(evt);
+  });
 
   //mouse move anywhere on screen - not currently in use.
   /*  $(document.getElementById('gridCanvas')).on('mousemove', function handler (evt) {
@@ -1832,19 +1879,22 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
    });
    */
 
-  $(document).on('pointerup', function(evt) {
+  $(document).on('pointerup', function (evt) {
     av.mouse.UpGridPos = [evt.originalEvent.offsetX, evt.originalEvent.offsetY];
   });
 
-    //When mouse button is released, return cursor to default values
+  //When mouse button is released, return cursor to default values
   $(document).on('mouseup', function (evt) {
     'use strict';
     var target = '';
-    if (av.debug.mouse) console.log('in mouseup target:', evt.target.id, '; event:', evt);
-    if (av.debug.mouse) console.log('in mouseup target:', evt.target.id);
+    if (av.debug.mouse)
+      console.log('in mouseup target:', evt.target.id, '; event:', evt);
+    if (av.debug.mouse)
+      console.log('in mouseup target:', evt.target.id);
     av.mouse.makeCursorDefault();
     av.mouse.UpGridPos = [evt.offsetX, evt.offsetY];
-    if (av.debug.mouse) console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
+    if (av.debug.mouse)
+      console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
     av.mouse.Dn = false;
 
     // --------- process if something picked to dnd ------------------
@@ -1853,8 +1903,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       av.mouse.ParentMouse(evt, av);
       if ('gridCanvas' == evt.target.id || 'trashCanImage' == evt.target.id) {
         av.grd.drawGridSetupFn('on mouseup where evt.target.id=gridCanvas or trashCanImage');
-      }
-      else if ('organIcon' == evt.target.id) {
+      } else if ('organIcon' == evt.target.id) {
         //Change to Organism Page
         av.ui.mainBoxSwap('organismBlock');
         organismCanvasHolderSize();
@@ -1863,19 +1912,19 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
         av.dom.ExecuteAbout.style.height = height + 'px';
         av.dom.ExecuteJust.style.width = '100%';
         av.dom.ExecuteAbout.style.width = '100%';
-        if (av.debug.mouse) console.log('from parent', av.parent, '; fzr', av.fzr);
+        if (av.debug.mouse)
+          console.log('from parent', av.parent, '; fzr', av.fzr);
         av.post.addUser('Dragged item to Organism Icon');
         av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
       }
-    }
-    else if ('offspring' == av.mouse.Picked) {
+    } else if ('offspring' == av.mouse.Picked) {
       target = av.mouse.offspringMouse(evt, av.dnd, av.fio, av.fzr, av.gen);
       av.mouse.Picked = '';
-    }
-    else if ('kid' == av.mouse.Picked) {
+    } else if ('kid' == av.mouse.Picked) {
       av.mouse.Picked = '';
       target = av.mouse.kidMouse(evt, av.dnd, av.fzr, av.grd);
-      if (av.debug.mouse) console.log('kidMouse: target', target, '===============', evt.target.id);
+      if (av.debug.mouse)
+        console.log('kidMouse: target', target, '===============', evt.target.id);
       if ('organIcon' == evt.target.id) {
         //Change to Organism Page
         av.ui.mainBoxSwap('organismBlock');
@@ -1912,30 +1961,38 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   //av.dom.gridCanvas.height = $('#gridHolder').innerHeight() - 16 - av.dom.scaleCanvas.height;
 
   //--------------------------------------------------------------------------------------------------------------------
-  if (av.debug.root) console.log('before av.grd.drawGridSetupFn');
+  if (av.debug.root)
+    console.log('before av.grd.drawGridSetupFn');
 
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
-    if (av.debug.uil) console.log(from, 'called av.grd.drawGridSetupFn');
+    if (av.debug.uil)
+      console.log(from, 'called av.grd.drawGridSetupFn');
     av.dom.popBot.style.height = '5px';
-    
+
     //size testing box = mainButtons
     av.dsz.mainButtonsWd = parseInt($("#mainButtons").css("width"));
     av.dsz.mainButtonsHt = parseInt($("#mainButtons").css("height"));
-    if (av.debug.uil) console.log('w:',av.dsz.mainButtonsWd,av.dsz.mainButtonsHt, '= mainButtons');
-    
+    if (av.debug.uil)
+      console.log('w:', av.dsz.mainButtonsWd, av.dsz.mainButtonsHt, '= mainButtons');
+
     //about total window size
-    av.dsz.windowWd = window.innerWidth || document.documentElement.clientWidth 
-                                        || document.body.clientWidth;
+    av.dsz.windowWd = window.innerWidth || document.documentElement.clientWidth
+      || document.body.clientWidth;
     av.dsz.windowHd = window.innerHeight || document.documentElement.clientHeight
-                                         || document.body.clientHeight;
-    if (av.debug.uil) console.log('w:',av.dsz.windowWd,av.dsz.windowHd, '= window');
-    
-    if (av.debug.uil) console.log('w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
-    if (av.debug.uil) console.log('w:', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight(), '= av.dom.gridHolder jQuery.innerWd ht');
-    if (av.debug.uil) console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
-   
-    if (av.debug.uil) console.log('w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= av.dom.gridCanvas.width ht____________');
+      || document.body.clientHeight;
+    if (av.debug.uil)
+      console.log('w:', av.dsz.windowWd, av.dsz.windowHd, '= window');
+
+    if (av.debug.uil)
+      console.log('w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
+    if (av.debug.uil)
+      console.log('w:', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight(), '= av.dom.gridHolder jQuery.innerWd ht');
+    if (av.debug.uil)
+      console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
+
+    if (av.debug.uil)
+      console.log('w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= av.dom.gridCanvas.width ht____________');
 
     if (undefined != av.grd.msg) {
       if ('prepping' != av.grd.runState && undefined != av.grd.msg.fitness) {
@@ -1947,12 +2004,11 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
       // Does not seem to change wd/ht of gridHolder
       if ('None' == document.getElementById('colorMode').value) {
         if (av.grd.newlyNone) {
-          av.grd.newlyNone = false; 
+          av.grd.newlyNone = false;
           av.grd.cntx.fillStyle = av.color.names['Black'];
           av.grd.cntx.fillRect(1, 1, av.dom.gridCanvas.width - 1, av.dom.gridCanvas.height - 1);
         }
-      }
-      else {
+      } else {
         av.grd.newlyNone = true;
         // Does not seem to change wd/ht of gridHolder
         if (undefined != av.grd.msg) {
@@ -1963,27 +2019,29 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
         }
 
         //figure out scale or legend
-        if (av.dom.gridControlTable.clientWidth < $("#gridHolder").height() ) {
+        if (av.dom.gridControlTable.clientWidth < $("#gridHolder").height()) {
           av.dom.scaleCanvas.width = (av.dom.gridControlTable.clientWidth - 22);  //works for canvas; need to use .style for divs
-        }
-        else
+        } else
           av.dom.scaleCanvas.width = $("#gridHolder").height() - 22;
         if ('Ancestor Organism' == document.getElementById('colorMode').value) {
           av.grd.drawLegend();
-        }
-        else {
+        } else {
           av.grd.setColorMapOnly('draw gradient scale in av.grd.drawGridSetupFn');  //to set color scales for resources
           av.grd.gradientScale('av.grd.drawGridSetupFn');
         }
         //console.log('after drawing scale or legend. update=',av.grd.oldUpdate);
 
-        if (av.debug.uil) console.log('w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
-        if (av.debug.uil) console.log('w:', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight(), '= av.dom.gridHolder jQuery.innerWd ht ~ client');
-        if (av.debug.uil) console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
+        if (av.debug.uil)
+          console.log('w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
+        if (av.debug.uil)
+          console.log('w:', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight(), '= av.dom.gridHolder jQuery.innerWd ht ~ client');
+        if (av.debug.uil)
+          console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
 
         av.dom.popBot.style.height = av.dom.popBot.scrollHeight + 'px';
-        if (av.debug.uil) console.log('change ht of popBot');
-        
+        if (av.debug.uil)
+          console.log('change ht of popBot');
+
         //if (av.debug.uil) console.log('w:', av.dom.gridHolder.scrollWidth, av.dom.gridHolder.scrollHeight, '= av.dom.gridHolder.scrollWidth ht');
         //if (av.debug.uil) console.log('w:', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight, '= av.dom.gridHolder.clientWidth ht');
         //if (av.debug.uil) console.log('w:', av.dom.gridHolder.offsetWidth, av.dom.gridHolder.offsetHeight, '= av.dom.gridHolder.offsetWidth ht');
@@ -1993,19 +2051,24 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
         //av.dsz.gridHolderHt = parseInt($("#gridHolder").css("height"));
         //if (av.debug.uil) console.log('w:',av.dsz.gridHolderWd,av.dsz.gridHolderHt, '= gridHolder jQuery.width ht ~ outer ~ css ~ offset');
 
-        
-        if (av.debug.uil) console.log('w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
-        if (av.debug.uil) console.log('w:', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight(), '= av.dom.gridHolder jQuery.innerWd ht ~ client');
-        if (av.debug.uil) console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
-        
-        if (av.debug.uil) console.log('w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= Before: av.dom.gridCanvas.width ht____________');
+
+        if (av.debug.uil)
+          console.log('w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
+        if (av.debug.uil)
+          console.log('w:', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight(), '= av.dom.gridHolder jQuery.innerWd ht ~ client');
+        if (av.debug.uil)
+          console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
+
+        if (av.debug.uil)
+          console.log('w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= Before: av.dom.gridCanvas.width ht____________');
 
         //if (av.dom.gridHolder.style.height < av.dom.gridHolder.clientWidth){
         //if (av.dom.gridHolder.style.height < av.dom.gridHolder.style.width){
-        if ($("#gridHolder").height() < $("#gridHolder").width() ){
-          av.grd.canvasSize = $("#gridHolder").height()-2;
+        if ($("#gridHolder").height() < $("#gridHolder").width()) {
+          av.grd.canvasSize = $("#gridHolder").height() - 2;
+        } else {
+          av.grd.canvasSize = $("#gridHolder").width() - 2;
         }
-        else {av.grd.canvasSize = $("#gridHolder").width()-2;}
 
         av.dom.gridCanvas.width = av.grd.canvasSize;
         av.dom.gridCanvas.height = av.grd.canvasSize;
@@ -2013,28 +2076,37 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
         av.grd.spaceY = av.grd.canvasSize;
 
         av.grd.findGridSize(av.grd, av.parents);
-        if (av.debug.uil) console.log('w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= After: av.dom.gridCanvas.width ht____________');
-        if (av.debug.uil) console.log('w:', $("#gridCanvas").outerWidth(), $("#gridCanvas").outerHeight(), '= After: gridCanvas jQuery.outerWd______________');
-        if (av.debug.uil) console.log('w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
-        if (av.debug.uil) console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
+        if (av.debug.uil)
+          console.log('w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= After: av.dom.gridCanvas.width ht____________');
+        if (av.debug.uil)
+          console.log('w:', $("#gridCanvas").outerWidth(), $("#gridCanvas").outerHeight(), '= After: gridCanvas jQuery.outerWd______________');
+        if (av.debug.uil)
+          console.log('w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
+        if (av.debug.uil)
+          console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
 
-         //Need to fix for scrolling   // This was commented out in Avida-ED 3.1
+        //Need to fix for scrolling   // This was commented out in Avida-ED 3.1
         //if (av.dom.gridHolder.scrollHeight == av.dom.gridHolder.clientHeight + 17) {
         //  var numGH = av.dom.gridHolder.clientHeight;
         //  av.dom.gridCanvas.height = numGH - 6 - 17;
         //  av.grd.findGridSize(av.grd, av.parents);     //in populationGrid.js
         //  consold.log('inside DrawGridSetupFn in odd if statement ----------------------------------');
         //}
-        
-        if (av.debug.uil) console.log('before av.grd.drawGridUpdate');
+
+        if (av.debug.uil)
+          console.log('before av.grd.drawGridUpdate');
         av.grd.drawGridUpdate();   //in populationGrid.js
 
         rescaleLabel.textContent = av.grd.fillRescale;       //Tiba look at later
         av.grd.need2DrawGrid = true;
-        if (av.debug.uil) console.log('w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= End: av.dom.gridCanvas.width ht____________');
-        if (av.debug.uil) console.log('w:', $("#gridCanvas").outerWidth(), $("#gridCanvas").outerHeight(), '= End: gridCanvas jQuery.outerWd______________');
-        if (av.debug.uil) console.log('w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
-        if (av.debug.uil) console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
+        if (av.debug.uil)
+          console.log('w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= End: av.dom.gridCanvas.width ht____________');
+        if (av.debug.uil)
+          console.log('w:', $("#gridCanvas").outerWidth(), $("#gridCanvas").outerHeight(), '= End: gridCanvas jQuery.outerWd______________');
+        if (av.debug.uil)
+          console.log('w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
+        if (av.debug.uil)
+          console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
       }
     }
   };
@@ -2047,7 +2119,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
 
   // Get color map data from Avida and draw
   //dijit.byId('colorMode').on('Change', function () {
-  document.getElementById('colorMode').onchange = function() {
+  document.getElementById('colorMode').onchange = function () {
     av.grd.drawGridSetupFn('colorMode_onchange');
   };
 
@@ -2068,41 +2140,42 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   }, 'zoomSlide');
 
   av.grd.colorMap = 'Gnuplot2';
-/*
-  dijit.byId('mnGnuplot2').attr('disabled', true);
-
-  dijit.byId('mnViridis').on('Click', function () {
-    av.post.addUser('Button: mnViridis');
-    dijit.byId('mnCubehelix').attr('disabled', false);
-    dijit.byId('mnGnuplot2').attr('disabled', false);
-    dijit.byId('mnViridis').attr('disabled', true);
-    av.grd.colorMap = 'Viridis';
-    av.grd.drawGridSetupFn('digjit.byID(mnViridis');
-  });
-
-  dijit.byId('mnGnuplot2').on('Click', function () {
-    av.post.addUser('Button: mnGnuplot2');
-    dijit.byId('mnCubehelix').attr('disabled', false);
-    dijit.byId('mnGnuplot2').attr('disabled', true);
-    dijit.byId('mnViridis').attr('disabled', false);
-    av.grd.colorMap = 'Gnuplot2';
-    av.grd.drawGridSetupFn('digit.byID(mnGnuplot2)');
-  });
-
-  dijit.byId('mnCubehelix').on('Click', function () {
-    av.post.addUser('Button: mnCubehelix');
-    dijit.byId('mnCubehelix').attr('disabled', true);
-    dijit.byId('mnGnuplot2').attr('disabled', false);
-    dijit.byId('mnViridis').attr('disabled', false);
-    av.grd.colorMap = 'Cubehelix';
-    av.grd.drawGridSetupFn('digit.byID(mnCubehelix)');
-    av.post.addUser('Button: mnCubehelix pressed');
-  });
-*/
+  /*
+   dijit.byId('mnGnuplot2').attr('disabled', true);
+   
+   dijit.byId('mnViridis').on('Click', function () {
+   av.post.addUser('Button: mnViridis');
+   dijit.byId('mnCubehelix').attr('disabled', false);
+   dijit.byId('mnGnuplot2').attr('disabled', false);
+   dijit.byId('mnViridis').attr('disabled', true);
+   av.grd.colorMap = 'Viridis';
+   av.grd.drawGridSetupFn('digjit.byID(mnViridis');
+   });
+   
+   dijit.byId('mnGnuplot2').on('Click', function () {
+   av.post.addUser('Button: mnGnuplot2');
+   dijit.byId('mnCubehelix').attr('disabled', false);
+   dijit.byId('mnGnuplot2').attr('disabled', true);
+   dijit.byId('mnViridis').attr('disabled', false);
+   av.grd.colorMap = 'Gnuplot2';
+   av.grd.drawGridSetupFn('digit.byID(mnGnuplot2)');
+   });
+   
+   dijit.byId('mnCubehelix').on('Click', function () {
+   av.post.addUser('Button: mnCubehelix');
+   dijit.byId('mnCubehelix').attr('disabled', true);
+   dijit.byId('mnGnuplot2').attr('disabled', false);
+   dijit.byId('mnViridis').attr('disabled', false);
+   av.grd.colorMap = 'Cubehelix';
+   av.grd.drawGridSetupFn('digit.byID(mnCubehelix)');
+   av.post.addUser('Button: mnCubehelix pressed');
+   });
+   */
   // *******************************************************************************************************************
   //    Buttons that select organisms that perform a logic function
   // *******************************************************************************************************************
-  if (av.debug.root) console.log('before logic buttons');
+  if (av.debug.root)
+    console.log('before logic buttons');
 
   //    av.post.addUser('Button: notButton');    //done in av.ptd.bitToggle
   document.getElementById('notButton').onclick = function () {
@@ -2139,7 +2212,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
 
   // Chart control on population page
   //Set Y-axis title and choose the correct array to plot
-  document.getElementById('yaxis').onchange = function() {
+  document.getElementById('yaxis').onchange = function () {
     av.grd.ytitle = document.getElementById('yaxis').value;
     //need to get correct array to plot from freezer
     //console.log('changeyaxis popChartFn');
@@ -2149,26 +2222,29 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   // initialize needs to be in AvidaED.js; cannot be run when mini-graph is not visible. 
   // Should be done before av.grd.popChartFn is run.
   av.grd.popChartInit = function (from) {
-    console.log(from, 'called av.grd.popChartInit');  
+    console.log(from, 'called av.grd.popChartInit');
     //looke to see if poplulation page mini-chart is showing
-    if ('flex' != av.dom.labInfoBlock.style.display || ('populationBlock' !== av.ui.page) ) {
+    if ('flex' != av.dom.labInfoBlock.style.display || ('populationBlock' !== av.ui.page)) {
       av.pch.needInit = true;
       return;
-    };
+    }
+    ;
 
     av.pch.clearPopChrt();
     av.pch.divSize('av.grd.popChartInit');
     var popData = av.pch.data;
 
     if (undefined == av.dom.popChart.data) {
-      if (av.debug.plotly) console.log('before plotly.plot in popChartInit');
+      if (av.debug.plotly)
+        console.log('before plotly.plot in popChartInit');
       av.debug.log += '\n     --uiD: Plotly.plot("popChart", popData, av.pch.layout, av.pch.widg) in AvidaED.js at 1565';
       av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'popData, av.pch.layout, av.pch.widg', [popData, av.pch.layout, av.pch.widg]);
       Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
-      if (av.debug.uil) console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
-      if (av.debug.plotly) console.log('after plotly.plot in poChartInit');
-    }
-    else {
+      if (av.debug.uil)
+        console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
+      if (av.debug.plotly)
+        console.log('after plotly.plot in poChartInit');
+    } else {
       //av.pch.update = {
       //  xaxis: {range: [0, 10]}, yaxis: {range: [0, 1]},
       //  width: av.pch.wd,
@@ -2181,7 +2257,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
         height: av.pch.ht
       };
 
-      if (av.debug.plotly) console.log('popData', popData);
+      if (av.debug.plotly)
+        console.log('popData', popData);
       //Plotly.purge(av.dom.popChart);      //does not seem to work once plotly.animate has been used
       //console.log('data=', av.dom.popChart.data);
       if (undefined != av.dom.popChart.data[0]) {
@@ -2193,7 +2270,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
         Plotly.relayout(av.dom.popChart, av.pch.update);
       }
     }
-    av.dom.popChart.style.visibility='hidden';
+    av.dom.popChart.style.visibility = 'hidden';
     //console.log('layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width);
     av.pch.needInit = false;
   };
@@ -2201,26 +2278,26 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   av.grd.popChartFn = function (from) {
     'use strict';
     if (av.pch.needInit) {
-      console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, ' should not be here'); 
+      console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, ' should not be here');
       // if the miniplot on the populaton page needs to be initiated call that funciton.
       if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
         av.grd.popChartInit('av.grd.popChartFn');
-      };
-    }
-    else  //console.log('av.grd.runState = ', av.grd.runState);
-    
+      }
+      ;
+    } else  //console.log('av.grd.runState = ', av.grd.runState);
+
     // Do not display chart if the chart is not on the screen. Data seems to be getting updated. need to verify this.
     // console.log('av.dom.labInfoBlock.style.display =', av.dom.labInfoBlock.style.display, '; av.ui.page=', av.ui.page);
-    if ('flex' != av.dom.labInfoBlock.style.display || ('populationBlock' !== av.ui.page) ) {
+    if ('flex' != av.dom.labInfoBlock.style.display || ('populationBlock' !== av.ui.page)) {
       // the avidaDataRecorder.csv is broken
       return;
-    };
-    
+    }
+    ;
+
     //console.log('av.grd.runState = ', av.grd.runState);
     if ('prepping' === av.grd.runState) {   //values can be prepping, started, or world
       av.dom.popChart.style.visibility = 'hidden';
-    }
-    else {
+    } else {
       av.dom.popChart.style.visibility = 'visible';
       if ('none' === document.getElementById('yaxis').value) {
         if (undefined !== av.dom.popChart.data) {
@@ -2231,11 +2308,11 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
           //Plotly.purge(av.dom.popChart);      //does not seem to work once plotly.animate has been used
           console.log('after purge in popChartFn');
         }
-      }
-      else {
+      } else {
         av.pch.divSize('av.grd.popChartFn');
 
-        if (document.getElementById('yaxis').value === av.pch.yValue) av.pch.yChange = false;
+        if (document.getElementById('yaxis').value === av.pch.yValue)
+          av.pch.yChange = false;
         else {
           av.pch.yChange = true;
           av.pch.yValue = document.getElementById('yaxis').value;
@@ -2250,28 +2327,23 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
           //console.log('aveMaxFit=', av.pch.aveMaxFit, '; logMaxFit=', av.pch.logMaxFit, '; maxY=', av.pch.maxY);
           //console.log('aveFit', av.pch.aveFit);
           //console.log('logFit', av.pch.logFit);
-        }
-        else if ('Average Offspring Cost' == document.getElementById('yaxis').value) {
+        } else if ('Average Offspring Cost' == document.getElementById('yaxis').value) {
           av.pch.popY = av.pch.aveCst;
           av.pch.logY = av.pch.logCst;
           av.pch.maxY = (av.pch.aveMaxCst > av.pch.logMaxCst) ? av.pch.aveMaxCst : av.pch.logMaxCst;
-        }
-        else if ('Average Energy Acq. Rate' == document.getElementById('yaxis').value) {
+        } else if ('Average Energy Acq. Rate' == document.getElementById('yaxis').value) {
           av.pch.popY = av.pch.aveEar;
           av.pch.logY = av.pch.logEar;
           av.pch.maxY = (av.pch.aveMaxEar > av.pch.logMaxEar) ? av.pch.aveMaxEar : av.pch.logMaxEar;
-        }
-        else if ('Number of Organisms' == document.getElementById('yaxis').value) {
+        } else if ('Number of Organisms' == document.getElementById('yaxis').value) {
           av.pch.popY = av.pch.aveNum;
           av.pch.logY = av.pch.logNum;
           av.pch.maxY = (av.pch.aveMaxNum > av.pch.logMaxNum) ? av.pch.aveMaxNum : av.pch.logMaxNum;
-        }
-        else if ('Number Viable' == document.getElementById('yaxis').value) {
+        } else if ('Number Viable' == document.getElementById('yaxis').value) {
           av.pch.popY = av.pch.aveVia;
           av.pch.logY = av.pch.logNum;
           av.pch.maxY = (av.pch.aveMaxVia > av.pch.logMaxNum) ? av.pch.aveMaxVia : av.pch.logMaxNum;
-        }
-        else {
+        } else {
           av.pch.yValue = 'none';
           av.pch.popY = [];
           av.pch.logY = [];
@@ -2312,15 +2384,16 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
           //Plotly.plot('popChart', popData, av.pch.layout);
           console.log('purge chart.popData=', av.dom.popChart.data);
           //console.log('purge chart.layout=', av.dom.popChart.layout);
-        }
-        else {
+        } else {
           //av.pch.update = {
           //  xaxis: {range: [0, av.pch.popY.length + 1]}, yaxis: {range: [0, 1.1 * av.pch.maxY]},
           //  width: av.pch.wd,
           //  height: av.pch.ht
           //};
-          if (av.debug.uil) console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
-          if (av.debug.uil) console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
+          if (av.debug.uil)
+            console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
+          if (av.debug.uil)
+            console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
 
           av.pch.update = {
             autorange: true,
@@ -2330,22 +2403,24 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
           //av.pch.update = {xaxis: {range: [0, av.pch.popY.length+1]}, yaxis: {range: [0, av.pch.maxY]}};
 
           //console.log('before relayout in update grid chart');
-          if (av.debug.plotly) console.log('av.pch.update', av.pch.update);
+          if (av.debug.plotly)
+            console.log('av.pch.update', av.pch.update);
 
           if (undefined == av.dom.popChart.data) {
-            if (av.debug.plotly) console.log('before plot');
+            if (av.debug.plotly)
+              console.log('before plot');
             av.debug.log += '\n     --uiD: Plotly: Plotly.plot("popChart", popData, av.pch.layout, av.pch.widg)  in AvidaED.js at 1714';
             av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'popData, av.pch.layout, av.pch.widg', [popData, av.pch.layout, av.pch.widg]);
             Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
-            if (av.debug.plotly) console.log('after plot');
-          }
-          else if (0 == av.dom.popChart.data.length) {
-            if (av.debug.plotly) console.log('before plot');
+            if (av.debug.plotly)
+              console.log('after plot');
+          } else if (0 == av.dom.popChart.data.length) {
+            if (av.debug.plotly)
+              console.log('before plot');
             av.debug.log += '\n     --uiD: Plotly: Plotly.plot("popChart", popData, av.pch.layout, av.pch.widg) in AvidaED.js at 1724';
             av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'popData, av.pch.layout, av.pch.widg', [popData, av.pch.layout, av.pch.widg]);
             Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
-          }
-          else {
+          } else {
             if (av.brs.isChrome) {
               av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", rstl0, [0]) at 1734';
               av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'rstl0', [rstl0]);
@@ -2356,8 +2431,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
               av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in AvidaED.js at 1741';
               av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
               Plotly.relayout(av.dom.popChart, av.pch.update);
-            }
-            else {
+            } else {
               //console.log('trace0', av.pch.trace0);
               //Plotly.restyle(graphDiv, update, [1, 2]);
               //Plotly.restyle(av.dom.popChart, av.pch.trace0, [0]);
@@ -2369,8 +2443,9 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
                   autorange: true,
                   width: av.pch.wd,
                   height: av.pch.ht
-                };                
-              };
+                };
+              }
+              ;
               //trying to figure out why plotly crashed. 
               //When these were added 2019_08, plotly crased because div holding plotly was not being displayed
               //console.log('av.debug.log = ', av.debug);
@@ -2382,17 +2457,21 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
               //console.log('after relayout in update grid chart');
               //Error: Uncaught TypeError: Cannot read property 'width' of undefined from 
               //http://localhost:8003/lib/plotly.js:114473:53
-              
-              if (av.debug.plotly) console.log('popData', popData);
+
+              if (av.debug.plotly)
+                console.log('popData', popData);
               //Plotly.animate('popChart', {popData});
               av.debug.log += '\n     --uiD: Plotly.animate("popChart", {popData}) in AvidaED.js at 1757';
               av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'popData', [popData]);
               Plotly.animate('popChart', {popData});
-              if (av.debug.plotly) console.log('after animate in update grid chart');
+              if (av.debug.plotly)
+                console.log('after animate in update grid chart');
             }
           }
-          if (av.debug.plotly) console.log('chart.popData=', av.dom.popChart.data);
-          if (av.debug.plotly) console.log('chart.layout=', av.dom.popChart.layout);
+          if (av.debug.plotly)
+            console.log('chart.popData=', av.dom.popChart.data);
+          if (av.debug.plotly)
+            console.log('chart.layout=', av.dom.popChart.layout);
         }
       }
     }
@@ -2409,14 +2488,13 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
   // **************************************************************************************************************** */
   if ('test' == av.msg.setupType) {
     av.grd.gridWasCols = Number(av.dom.sizeColTest.value);
-    av.grd.gridWasRows = Number(av.dom.sizeRowTest.value);    
-  }
-  else {
+    av.grd.gridWasRows = Number(av.dom.sizeRowTest.value);
+  } else {
     av.grd.gridWasCols = Number(av.dom.sizeCols.value);
     av.grd.gridWasRows = Number(av.dom.sizeRows.value);
   }
 
-  av.ptd.popSizeFn = function(from) {
+  av.ptd.popSizeFn = function (from) {
     av.grd.setupCols = Number(av.dom.sizeCols.value);
     av.grd.setupRows = Number(av.dom.sizeRows.value);
     //console.log(from, 'called av.ptd.popSizeFn: new col, row', av.grd.setupCols, av.grd.setupRows);
@@ -2436,7 +2514,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
         av.parents.AvidaNdx[av.parents.handNdx[ii]] = av.parents.col[av.parents.handNdx[ii]] + av.grd.setupCols * av.parents.row[av.parents.handNdx[ii]];
         console.log('New cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
       }
-    };
+    }
+    ;
     av.grd.gridWasCols = Number(av.dom.sizeCols.value);
     av.grd.gridWasRows = Number(av.dom.sizeRows.value);
     //reset zoom power to 1
@@ -2447,7 +2526,7 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.grd.drawGridSetupFn('av.ptd.popSizeFn');
   };
 
-  av.ptd.popSizeFnTest = function(from) {
+  av.ptd.popSizeFnTest = function (from) {
     av.grd.setupCols = Number(av.dom.sizeColTest.value);
     av.grd.setupRows = Number(av.dom.sizeRowTest.value);
     //console.log(from, 'called av.ptd.popSizeFnTest: new col, row', av.grd.setupCols, av.grd.setupRows);
@@ -2467,7 +2546,8 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
         av.parents.AvidaNdx[av.parents.handNdx[ii]] = av.parents.col[av.parents.handNdx[ii]] + av.grd.setupCols * av.parents.row[av.parents.handNdx[ii]];
         console.log('New cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
       }
-    };
+    }
+    ;
     av.grd.gridWasCols = Number(av.dom.sizeColTest.value);
     av.grd.gridWasRows = Number(av.dom.sizeRowTest.value);
     //reset zoom power to 1
@@ -2478,47 +2558,67 @@ av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This t
     av.grd.drawGridSetupFn('av.ptd.popSizeFn');
   };
 
-av.ptd.muteInputChange = function(value, muteErroTest) {
+  av.ptd.muteInputChange = function (value, muteErroTest) {
     var muteNum = Number(value);
-    if (av.debug.uil) console.log('muteNum=', muteNum);
+    if (av.debug.uil)
+      console.log('muteNum=', muteNum);
     if (muteNum >= 0 && muteNum <= 100) {
-      av.ptd.validMuteInuput=true;
+      av.ptd.validMuteInuput = true;
       document.getElementById(muteErroTest).style.color = 'black';
       document.getElementById(muteErroTest).innerHTML = '';
       document.getElementById(muteErroTest).innerHTML = '';
-    }
-    else {
-      av.ptd.validMuteInuput=false;
+    } else {
+      av.ptd.validMuteInuput = false;
       document.getElementById(muteErroTest).style.color = 'red';
       document.getElementById(muteErroTest).innerHTML = '';
       av.dom.userMsgLabel.innerHTML = '';
-      if (muteNum <= 0) { document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be >= than zero percent. '; console.log('<0');}
-      if (muteNum >= 100) { document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be 100% or less. '; console.log('>0');}
-      if ( isNaN(muteNum) ) {document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be a valid number. '; console.log('==NaN');}
-    };
+      if (muteNum <= 0) {
+        document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be >= than zero percent. ';
+        console.log('<0');
+      }
+      if (muteNum >= 100) {
+        document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be 100% or less. ';
+        console.log('>0');
+      }
+      if (isNaN(muteNum)) {
+        document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be a valid number. ';
+        console.log('==NaN');
+      }
+    }
+    ;
   };
-  
-av.ptd.randInputChange = function(value, randErroTest) {
+
+  av.ptd.randInputChange = function (value, randErroTest) {
     var randNum = Number(value);
-    if (av.debug.uil) console.log('randNum=', randNum);
+    if (av.debug.uil)
+      console.log('randNum=', randNum);
     if (randNum >= -1 && randNum <= 1000000) {
-      av.ptd.validMuteInuput=true;
+      av.ptd.validMuteInuput = true;
       document.getElementById(randErroTest).style.color = 'black';
       document.getElementById(randErroTest).innerHTML = '';
       document.getElementById(randErroTest).innerHTML = '';
-    }
-    else {
-      av.ptd.validMuteInuput=false;
+    } else {
+      av.ptd.validMuteInuput = false;
       document.getElementById(randErroTest).style.color = 'red';
       document.getElementById(randErroTest).innerHTML = '';
       av.dom.userMsgLabel.innerHTML = '';
-      if (randNum <= -1) { document.getElementById(randErroTest).innerHTML += 'Random Seed must be > -1. '; console.log('<0');}
-      if (randNum >= 1000000) { document.getElementById(randErroTest).innerHTML += 'Random Seed must be 1,000,000 or less. '; console.log('>0');}
-      if ( isNaN(randNum) ) {document.getElementById(randErroTest).innerHTML += 'Random Seed must be a valid number. '; console.log('==NaN');}
-    };
+      if (randNum <= -1) {
+        document.getElementById(randErroTest).innerHTML += 'Random Seed must be > -1. ';
+        console.log('<0');
+      }
+      if (randNum >= 1000000) {
+        document.getElementById(randErroTest).innerHTML += 'Random Seed must be 1,000,000 or less. ';
+        console.log('>0');
+      }
+      if (isNaN(randNum)) {
+        document.getElementById(randErroTest).innerHTML += 'Random Seed must be a valid number. ';
+        console.log('==NaN');
+      }
+    }
+    ;
   };
 
-/************************************************************************************ enviornment (sugar) settings ****/
+  /************************************************************************************ enviornment (sugar) settings ****/
 
   av.ui.ex1setSugarColors = function () {
     var sugarSection = ['ex1notSection', 'ex1nanSection', 'ex1andSection', 'ex1ornSection', 'ex1oroSection', 'ex1antSection', 'ex1norSection', 'ex1xorSection', 'ex1equSection'];
@@ -2535,7 +2635,7 @@ av.ptd.randInputChange = function(value, randErroTest) {
     ;
   };
 
-  document.getElementById('ex1allSugarChange').onchange = function() {    
+  document.getElementById('ex1allSugarChange').onchange = function () {
     var allSugar = document.getElementById('ex1allSugarChange').value;
     av.ptd.ex1allSugarChange(allSugar);
     av.ui.ex1setSugarColors();
@@ -2545,174 +2645,215 @@ av.ptd.randInputChange = function(value, randErroTest) {
 // end of ex1 and tst2 page stuff
 //------------------------------------------------------------------------------------------------- Sugar Accordion ----
 //Global or Local in Ed speak = Global or Grid in Avida Environment file.
-av.sgr.allSugarGeometryChange = function(domObj){
-  var idx = domObj.selectedIndex;        // get the index of the selected option 
-  var which = domObj.options[idx].value;   // get the value of the selected option 
-  av.sgr.ChangeAllGeo(which);
-  av.sgr.setSugarColors(true);  //true is to turn colors on;
-  document.getElementById('allSugarGeometry').value = 'Neutral';
-};
+  av.sgr.allSugarGeometryChange = function (domObj) {
+    var idx = domObj.selectedIndex;        // get the index of the selected option 
+    var which = domObj.options[idx].value;   // get the value of the selected option 
+    av.sgr.ChangeAllGeo(which);
+    av.sgr.setSugarColors(true);  //true is to turn colors on;
+    document.getElementById('allSugarGeometry').value = 'Neutral';
+  };
 
-av.sgr.allsugarSupplyTypeChange = function(domObj){
-  var idx = domObj.selectedIndex;        // get the index of the selected option 
-  var which = domObj.options[idx].value;   // get the value of the selected option 
-  av.sgr.ChangeAllsugarSupplyType(which);
-  document.getElementById('allsugarSupplyType').value = 'Neutral';    
-};
+  av.sgr.allsugarSupplyTypeChange = function (domObj) {
+    var idx = domObj.selectedIndex;        // get the index of the selected option 
+    var which = domObj.options[idx].value;   // get the value of the selected option 
+    av.sgr.ChangeAllsugarSupplyType(which);
+    document.getElementById('allsugarSupplyType').value = 'Neutral';
+  };
 
-av.sgr.allSugarDetailsOpenClose = function(domObj){
-  var idx = domObj.selectedIndex;        // get the index of the selected option 
-  var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
-  av.sgr.OpenCloseAllSugarDetails(selectedOption, 'av.sgr.allSugarDetailsOpenClose');
-  document.getElementById('allSugarDetails').value = 'Neutral';    
-};
+  av.sgr.allSugarDetailsOpenClose = function (domObj) {
+    var idx = domObj.selectedIndex;        // get the index of the selected option 
+    var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
+    av.sgr.OpenCloseAllSugarDetails(selectedOption, 'av.sgr.allSugarDetailsOpenClose');
+    document.getElementById('allSugarDetails').value = 'Neutral';
+  };
 
-av.sgr.geometryChange = function(selectObj){
-  //need to find subregion Number in the future - set to 1 for now. 
-  var taskID = selectObj.id; 
-  var task = taskID.substring(0,3);
-  var sub = taskID.substring(3,1);
-  console.log('tst=', task, '; subsection=', sub);
-  sub = 1;  
-  av.sgr.changeDetailsLayout(task, sub, 'av.sgr.geometryChange');  
-};
+  av.sgr.geometryChange = function (selectObj) {
+    //need to find subregion Number in the future - set to 1 for now. 
+    var taskID = selectObj.id;
+    var task = taskID.substring(0, 3);
+    var sub = taskID.substring(3, 1);
+    console.log('tst=', task, '; subsection=', sub);
+    sub = 1;
+    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.geometryChange');
+  };
 
-av.sgr.supplyChange_placeholder = function (domObj) {
-  var taskID = domObj.id; 
-  var task = taskID.substring(0,3);
-  var sub = taskID.substring(3,1);
-  console.log('taskID=', taskID, 'tst=', task, '; subsection=', sub);
-  sub = 1; //only whole dish  for now
-  av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
-};
-
-av.sgr.dishRegionChange = function(domObj) {
-  console.log('av.sgr.dishRegionChange was called by', domObj);
-};
-
-  av.sgr.supplyChange = function (domObj) {
-    var taskID = domObj.id; 
-    var task = taskID.substring(0,3);
-    var sub = taskID.substr(4,1);
-    console.log('taskID=', taskID,'; tst=', task, '; subsection=', sub); // this is wrong on 2019
+  av.sgr.supplyChange_placeholder = function (domObj) {
+    var taskID = domObj.id;
+    var task = taskID.substring(0, 3);
+    var sub = taskID.substring(3, 1);
+    console.log('taskID=', taskID, 'tst=', task, '; subsection=', sub);
     sub = 1; //only whole dish  for now
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
   };
 
-av.sgr.eachSugarCheckBoxChange = function (domObj) {
-  var re_region = /(\D+)(\d+)(.*$)/;
-  var taskID = domObj.id; 
-  var matchTaskRegion = taskID.match(re_region);
-  var task = matchTaskRegion[1];      //taskID.substring(0,3);  
-  var sub = matchTaskRegion[2];       //taskID.substring(3,1);   did not work
-  console.log('taskID=', taskID,'tst=', task, '; subsection=', sub);
-  if (1<sub) sub = 1;
-  sub = 1; //only whole dish  for now
-  av.sgr.changeDetailsLayout(task, sub, 'av.sgr.eachSugarCheckBoxChange');
-};
+  av.sgr.dishRegionChange = function (domObj) {
+    console.log('av.sgr.dishRegionChange was called by', domObj);
+  };
 
-av.sgr.periodChange = function(domObj) {
-  //console.log('av.sgr.periodChange domObj=', domObj);
-  console.log('id=', domObj.id, '; domObj.value=', domObj.value);
-};
+  av.sgr.supplyChange = function (domObj) {
+    var taskID = domObj.id;
+    var task = taskID.substring(0, 3);
+    var sub = taskID.substr(4, 1);
+    console.log('taskID=', taskID, '; tst=', task, '; subsection=', sub); // this is wrong on 2019
+    sub = 1; //only whole dish  for now
+    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
+  };
 
-av.sgr.initialChange = function(domObj) {
-  //console.log('av.sgr.initialChange domObj=', domObj);
-  console.log('domObj.value=', domObj.value);
-  var ndx = domObj.id.indexOf('Input');
-  var id = domObj.id.substring(0,ndx) + 'Text';
-  //console.log('new id=', id, '; old id=', domObj.id);
-  //console.log('Number(domObj.value)=',Number(domObj.value));
-  if (isNaN(Number(domObj.value))) {
-    document.getElementById(id).innerHTML = 'inital amount must be a number';
-    document.getElementById(id).style.color = 'red';
-  }
-  else if (0 > domObj.value) {
-    document.getElementById(id).innerHTML = 'inital amount must be > 0';
-    document.getElementById(id).style.color = 'red';
-  }
-  else {
-    document.getElementById(id).innerHTML = 'inital amount per cell';
-    document.getElementById(id).style.color = 'black';    
-  }
-};
+  av.sgr.eachSugarCheckBoxChange = function (domObj) {
+    var re_region = /(\D+)(\d+)(.*$)/;
+    var taskID = domObj.id;
+    var matchTaskRegion = taskID.match(re_region);
+    var task = matchTaskRegion[1];      //taskID.substring(0,3);  
+    var sub = matchTaskRegion[2];       //taskID.substring(3,1);   did not work
+    console.log('taskID=', taskID, 'tst=', task, '; subsection=', sub);
+    if (1 < sub)
+      sub = 1;
+    sub = 1; //only whole dish  for now
+    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.eachSugarCheckBoxChange');
+  };
 
-av.sgr.inflowChange = function(domObj) {
-  console.log('av.sgr.inflowChange domObj=', domObj);
-  console.log('id=', domObj.id, '; domObj.value=', domObj.value);
-};
+  av.sgr.periodChange = function (domObj) {
+    //console.log('av.sgr.periodChange domObj=', domObj);
+    console.log('id=', domObj.id, '; domObj.value=', domObj.value);
+  };
 
-av.sgr.outflowChange= function(domObj) {
-  console.log('av.sgr.outflowChange domObj=', domObj);
-  console.log('id=', domObj.id, '; domObj.value=', domObj.value);
-};
+  av.sgr.initialChange = function (domObj) {
+    //console.log('av.sgr.initialChange domObj=', domObj);
+    console.log('domObj.value=', domObj.value);
+    var ndx = domObj.id.indexOf('Input');
+    var id = domObj.id.substring(0, ndx) + 'Text';
+    //console.log('new id=', id, '; old id=', domObj.id);
+    //console.log('Number(domObj.value)=',Number(domObj.value));
+    if (isNaN(Number(domObj.value))) {
+      document.getElementById(id).innerHTML = 'inital amount must be a number';
+      document.getElementById(id).style.color = 'red';
+    } else if (0 > domObj.value) {
+      document.getElementById(id).innerHTML = 'inital amount must be > 0';
+      document.getElementById(id).style.color = 'red';
+    } else {
+      document.getElementById(id).innerHTML = 'inital amount per cell';
+      document.getElementById(id).style.color = 'black';
+    }
+  };
 
-/******************************************************************************** End enviornment (sugar) settings ****/
+  av.sgr.inflowChange = function (domObj) {
+    console.log('av.sgr.inflowChange domObj=', domObj);
+    console.log('id=', domObj.id, '; domObj.value=', domObj.value);
+  };
 
-av.ptd.gridChange = function(domObj) {
+  av.sgr.outflowChange = function (domObj) {
+    console.log('av.sgr.outflowChange domObj=', domObj);
+    console.log('id=', domObj.id, '; domObj.value=', domObj.value);
+  };
+
+  /******************************************************************************** End enviornment (sugar) settings ****/
+
+  av.ptd.gridChange = function (domObj) {
     console.log('in av.ptd.gridChange; domObj.id =', domObj.id);
     var colNum = Number(av.dom.sizeCols.value);
     var rowNum = Number(av.dom.sizeRows.value);
     //console.log('col, row=', colNum, rowNum);
-    if (colNum > 0 && colNum <= 100 && rowNum > 0 && rowNum <= 100) {   
+    if (colNum > 0 && colNum <= 100 && rowNum > 0 && rowNum <= 100) {
       //console.log('valid response');
       av.ptd.popSizeFn('gridChange');
       av.ptd.validGridSize = true;
       av.dom.userMsgLabel.innerHTML = '';
       //redraw grid
       av.grd.drawGridSetupFn('av.ptd.gridChange');
-    }
-    else {
+    } else {
       av.ptd.validGridSize = false;
-      if (colNum > 0 && colNum <= 100) av.dom.sizeCols.style.color = 'black';
-      else av.dom.sizeCols.style.color = 'red';
-      if (rowNum > 0 && rowNum <= 100) av.dom.sizeRows.style.color = 'black';
-      else av.dom.sizeRows.style.color = 'red';
+      if (colNum > 0 && colNum <= 100)
+        av.dom.sizeCols.style.color = 'black';
+      else
+        av.dom.sizeCols.style.color = 'red';
+      if (rowNum > 0 && rowNum <= 100)
+        av.dom.sizeRows.style.color = 'black';
+      else
+        av.dom.sizeRows.style.color = 'red';
       av.dom.sizeCells.style.color = 'red';
       console.log('not valid; col, row=', colNum, rowNum);
       av.dom.sizeCells.innerHTML = '';
       av.dom.userMsgLabel.innerHTML = '';
-      if (colNum <= 0) { av.dom.sizeCells.innerHTML += 'Number of columns must be greater than zero. '; console.log('<0');}
-      if (colNum >= 100) { av.dom.sizeCells.innerHTML += 'Number of columns must be 100 or less. '; console.log('>0');}
-      if ( isNaN(colNum) ) {av.dom.sizeCells.innerHTML += 'Number of columns must be a valid number. '; console.log('==NaN');}
-      if (rowNum <= 0) { av.dom.sizeCells.innerHTML += 'Number of rows must be greater than zero. '; console.log('<0');}
-      if (rowNum >= 100) { av.dom.sizeCells.innerHTML += 'Number of rows must be 100 or less. '; console.log('>0');}
-      if ( isNaN(rowNum) ) {av.dom.sizeCells.innerHTML += 'Number of rows must be a valid number. '; console.log('==NaN');}
+      if (colNum <= 0) {
+        av.dom.sizeCells.innerHTML += 'Number of columns must be greater than zero. ';
+        console.log('<0');
+      }
+      if (colNum >= 100) {
+        av.dom.sizeCells.innerHTML += 'Number of columns must be 100 or less. ';
+        console.log('>0');
+      }
+      if (isNaN(colNum)) {
+        av.dom.sizeCells.innerHTML += 'Number of columns must be a valid number. ';
+        console.log('==NaN');
+      }
+      if (rowNum <= 0) {
+        av.dom.sizeCells.innerHTML += 'Number of rows must be greater than zero. ';
+        console.log('<0');
+      }
+      if (rowNum >= 100) {
+        av.dom.sizeCells.innerHTML += 'Number of rows must be 100 or less. ';
+        console.log('>0');
+      }
+      if (isNaN(rowNum)) {
+        av.dom.sizeCells.innerHTML += 'Number of rows must be a valid number. ';
+        console.log('==NaN');
+      }
     }
   };
 
-  av.ptd.gridChangTest = function(from) {
+  av.ptd.gridChangTest = function (from) {
     console.log(from, 'called av.ptd.gridChangTest; ');
     var colNum = Number(av.dom.sizeColTest.value);
     var rowNum = Number(av.dom.sizeRowTest.value);
-    if (colNum > 0 && colNum <= 100 && rowNum > 0 && rowNum <= 100) {   
+    if (colNum > 0 && colNum <= 100 && rowNum > 0 && rowNum <= 100) {
       //console.log('valid response');
       av.ptd.popSizeFnTest('gridChangTest');
       av.ptd.validGridSizTest = true;
       av.dom.userMsgLabel.innerHTML = '';
       //redraw grid
       av.grd.drawGridSetupFn('av.ptd.gridChangTest');
-    }
-    else {
+    } else {
       av.ptd.validGridSizTest = false;
-      if (colNum > 0 && colNum <= 100) av.dom.sizeColTest.style.color = 'black';
-      else av.dom.sizeColTest.style.color = 'red';
-      if (rowNum > 0 && rowNum <= 100) av.dom.sizeRowTest.style.color = 'black';
-      else av.dom.sizeRowTest.style.color = 'red';
+      if (colNum > 0 && colNum <= 100)
+        av.dom.sizeColTest.style.color = 'black';
+      else
+        av.dom.sizeColTest.style.color = 'red';
+      if (rowNum > 0 && rowNum <= 100)
+        av.dom.sizeRowTest.style.color = 'black';
+      else
+        av.dom.sizeRowTest.style.color = 'red';
       av.dom.sizeCellTest.style.color = 'red';
       console.log('not valid; col, row=', colNum, rowNum);
       av.dom.sizeCellTest.innerHTML = '';
       av.dom.userMsgLabel.innerHTML = '';
-      if (colNum <= 0) { av.dom.sizeCellTest.innerHTML += 'Number of columns must be greater than zero. '; console.log('<0');}
-      if (colNum >= 100) { av.dom.sizeCellTest.innerHTML += 'Number of columns must be 100 or less. '; console.log('>0');}
-      if ( isNaN(colNum) ) {av.dom.sizeCellTest.innerHTML += 'Number of columns must be a valid number. '; console.log('==NaN');}
-      if (rowNum <= 0) { av.dom.sizeCellTest.innerHTML += 'Number of rows must be greater than zero. '; console.log('<0');}
-      if (rowNum >= 100) { av.dom.sizeCellTest.innerHTML += 'Number of rows must be 100 or less. '; console.log('>0');}
-      if ( isNaN(rowNum) ) {av.dom.sizeCellTest.innerHTML += 'Number of rows must be a valid number. '; console.log('==NaN');}
+      if (colNum <= 0) {
+        av.dom.sizeCellTest.innerHTML += 'Number of columns must be greater than zero. ';
+        console.log('<0');
+      }
+      if (colNum >= 100) {
+        av.dom.sizeCellTest.innerHTML += 'Number of columns must be 100 or less. ';
+        console.log('>0');
+      }
+      if (isNaN(colNum)) {
+        av.dom.sizeCellTest.innerHTML += 'Number of columns must be a valid number. ';
+        console.log('==NaN');
+      }
+      if (rowNum <= 0) {
+        av.dom.sizeCellTest.innerHTML += 'Number of rows must be greater than zero. ';
+        console.log('<0');
+      }
+      if (rowNum >= 100) {
+        av.dom.sizeCellTest.innerHTML += 'Number of rows must be 100 or less. ';
+        console.log('>0');
+      }
+      if (isNaN(rowNum)) {
+        av.dom.sizeCellTest.innerHTML += 'Number of rows must be a valid number. ';
+        console.log('==NaN');
+      }
     }
   };
 
-$(function slidemute() {
+  $(function slidemute() {
     /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
     /* the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, */
     /* so I multiplied by 100,000 to get 100.000% to come out even. */
@@ -2743,43 +2884,43 @@ $(function slidemute() {
       muteVal = parseFloat(this.value);
       slides.slider('value', muteVal);
       $('#mRate').val(muteVal);
-      
-      
+
+
       //Not sure the section below does anything expcept example about debug data collection.
       av.post.data1 = {
-        'changed' : 'muteInput',
+        'changed': 'muteInput',
         'muteInput': muteVal.formatNum(1)
       };
       av.post.data2 = {
-        'operation' : 'assign',
-        'object' : ['muteInput'],
-        'value' : [muteVal.formatNum(1)]
+        'operation': 'assign',
+        'object': ['muteInput'],
+        'value': [muteVal.formatNum(1)]
       };
       av.post.data = {
-        'operation' : 'assign',
-        'name' : 'muteInput',
-        'vars' : ['muteInput', 'person'],
-        'value' : [muteVal.formatNum(1), 'fred']
+        'operation': 'assign',
+        'name': 'muteInput',
+        'vars': ['muteInput', 'person'],
+        'value': [muteVal.formatNum(1), 'fred']
       };
 
       av.post.data = {
-        'operation' : 'button',
-        'name' : 'runPause',
-        'vars' : {'update': 5},
-        'assumptions' : {'av.dom.runStopButton.textContent': 'Run'}
+        'operation': 'button',
+        'name': 'runPause',
+        'vars': {'update': 5},
+        'assumptions': {'av.dom.runStopButton.textContent': 'Run'}
       };
       av.post.data = {
-        'operation' : 'DojoDnd',
-        'name' : 'fz2Grid',
-        'vars' : {'source' : 'av.dnd.fzOrgan', 'nodeDir': 'g0', 'target': 'av.dnd.popGrid', 'xGrid': 4, 'yGrid': 9},
+        'operation': 'DojoDnd',
+        'name': 'fz2Grid',
+        'vars': {'source': 'av.dnd.fzOrgan', 'nodeDir': 'g0', 'target': 'av.dnd.popGrid', 'xGrid': 4, 'yGrid': 9},
         //// need dom Id associated with @ancestor.
-        'assumptions' : {'nodeName': '@ancestor'}    //condition, constraint
+        'assumptions': {'nodeName': '@ancestor'}    //condition, constraint
       }
       //usr:
       av.post.addUser('muteInput =' + muteVal.formatNum(1), ' in AvidaED.js line 1865');
       av.post.usrOneline(av.post.data, 'in AvidaED.js line 1868');
       //console.log('in mute change');
-      
+
     });
   });
 
@@ -2846,7 +2987,7 @@ $(function slidemute() {
     av.ui.autoStopFlag = true;
   });
 
-  av.dom.autoUpdateOnce.onchange = function() {
+  av.dom.autoUpdateOnce.onchange = function () {
     av.post.addUser('Spinner: autoUpdateOnce = ' + av.dom.autoUpdateOnce.value);
     av.ui.autoStopValue = av.dom.autoUpdateOnce.value;
     //console.log('autoUpdateOnce=', av.dom.autoUpdateOnce.value);
@@ -2884,8 +3025,7 @@ $(function slidemute() {
       dijit.byId('rightDetail').set('style', 'display: none;');
       registry.byId('rightDetail').domNode.style.width = '1px';
       registry.byId('mainBC').layout();
-    }
-    else {
+    } else {
       DetailsFlag = true;
       dijit.byId('rightDetail').set('style', 'display: block; visibility: visible;');
       registry.byId('rightDetail').domNode.style.width = '180px';
@@ -2903,7 +3043,8 @@ $(function slidemute() {
   //If settings were changed then this will request new data when the settings dialog box is closed.
   OrganSetupDialog.connect(OrganSetupDialog, 'hide', function (e) {
     av.post.addUser('Button: hide Setting');
-    if (av.ind.settingsChanged) av.msg.doOrgTrace();
+    if (av.ind.settingsChanged)
+      av.msg.doOrgTrace();
   });
 
   $(function slideOrganism() {
@@ -2924,7 +3065,8 @@ $(function slidemute() {
         $('#orMuteInput').val((Math.pow(Math.E, (ui.value / 100000)) - 1).toFixed(3));
         /*put the value in the text box */
         av.ind.settingsChanged = true;
-        if (av.debug.trace) console.log('orSlide changed', av.ind.settingsChanged);
+        if (av.debug.trace)
+          console.log('orSlide changed', av.ind.settingsChanged);
       }
     });
     /* initialize */
@@ -2935,10 +3077,11 @@ $(function slidemute() {
     $('#orMuteInput').change(function () {
       slides.slider('value', 100000.0 * Math.log(1 + (parseFloat(this.value))));
       av.ind.settingsChanged = true;
-      if (av.debug.trace) console.log('orMute changed', av.ind.settingsChanged);
+      if (av.debug.trace)
+        console.log('orMute changed', av.ind.settingsChanged);
       //$( '#orMRate' ).val( 100000*Math.log(1+(parseFloat(this.value))) );
       //console.log('in mute change');
-      av.post.addUser('muteInput =' + dijit.byId('orMuteInput').get('value')+'1949');
+      av.post.addUser('muteInput =' + dijit.byId('orMuteInput').get('value') + '1949');
     });
   });
 
@@ -3004,12 +3147,12 @@ $(function slidemute() {
     if (!(undefined == av.traceObj || {} == av.traceObj || undefined == av.traceObj[av.ind.cycle])) {
       av.ind.didDivide = av.traceObj[av.ind.cycle].didDivide; //update global version of didDivide
       av.ind.updateOrganTrace(av.traceObj, av.gen);
-    }
-    else av.ind.didDivide = false;
+    } else
+      av.ind.didDivide = false;
   };
   /* ******************************************************************************************************************/
   /*                                 End of Canvas to draw genome and update details
-  /* **************************************************************************************************************** */
+   /* **************************************************************************************************************** */
 
   /* ************************************** Controls bottum of organism page ******************************************/
   function outputUpdate(vol) {
@@ -3033,7 +3176,8 @@ $(function slidemute() {
       ii++;
       dijit.byId('orgCycle').set('value', ii);
       av.ind.cycle = ii;
-      if (av.debug.ind) console.log('ii', ii, '; gen', av.gen);
+      if (av.debug.ind)
+        console.log('ii', ii, '; gen', av.gen);
       av.ind.updateOrgTrace();
     }
     av.post.addUser('Button: orgForward; cycle = ' + ii);
@@ -3053,8 +3197,7 @@ $(function slidemute() {
       av.ind.cycle++;
       dijit.byId('orgCycle').set('value', av.ind.cycle);
       av.ind.updateOrgTrace();
-    }
-    else {
+    } else {
       av.ind.orgStopFn();
     }
   };
@@ -3064,8 +3207,7 @@ $(function slidemute() {
       document.getElementById('orgRun').textContent = 'Stop';
       av.ind.update_timer = setInterval(av.ind.orgRunFn, 100);
       av.post.addUser('Button: orgRun = stop; cycle = ' + av.ind.cycleSlider.get('value'));
-    }
-    else {
+    } else {
       av.ind.orgStopFn();
       av.post.addUser('Button: orgRun = run; cycle = ' + av.ind.cycleSlider.get('value'));
     }
@@ -3107,71 +3249,90 @@ $(function slidemute() {
   //********************************************************************************************************************
   // Resize window helpers -------------------------------------------
   //********************************************************************************************************************
-  if (av.debug.root) console.log('before Resize helpers');
+  if (av.debug.root)
+    console.log('before Resize helpers');
 
   av.removeVerticalScrollBars = function () {
-    if (av.debug.uil) console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight, 
-      document.documentElement.clientHeight);
+    if (av.debug.uil)
+      console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight,
+        document.documentElement.clientHeight);
     if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
       document.documentElement.style.height = document.documentElement.clientHeight + 'px';
-    };
+    }
+    ;
 
     //initialize the ht for main buttons and trash can so there is no scroll bar
     if (av.dom.mainButtons.scrollHeight > av.dom.mainButtons.clientHeight) {
       av.dom.mainButtons.style.height = av.dom.mainButtons.scrollHeight + 'px';
-    };
-    if (av.debug.uil) console.log('trashDivHt.client,scroll=', av.dom.trashDiv.clientHeight , av.dom.trashDiv.scrollHeight);
+    }
+    ;
+    if (av.debug.uil)
+      console.log('trashDivHt.client,scroll=', av.dom.trashDiv.clientHeight, av.dom.trashDiv.scrollHeight);
     if (av.dom.trashDiv.scrollHeight > av.dom.trashDiv.clientHeight) {
       av.dom.trashDiv.style.height = av.dom.trashDiv.scrollHeight + 'px';
-    };
+    }
+    ;
     if (av.dom.orgTopId.scrollHeight > av.dom.orgTopId.clientHeight) {
       av.dom.orgTopId.style.height = av.dom.orgTopId.scrollHeight + 'px';
-    };
-    if (av.debug.uil) console.log('orgBot Ht', av.dom.orgBotId.scrollHeight, av.dom.orgBotId.clientHeight);
+    }
+    ;
+    if (av.debug.uil)
+      console.log('orgBot Ht', av.dom.orgBotId.scrollHeight, av.dom.orgBotId.clientHeight);
     if (av.dom.orgBotId.scrollHeight > av.dom.orgBotId.clientHeight) {
       av.ui.orgBotIdNum = av.dom.orgBotId.scrollHeight + 9;
       av.dom.orgBotId.style.height = av.ui.orgBotIdNum + 'px';
-    };
+    }
+    ;
   };
 
   //on 2018_0823 this is where height gets messed up when loading the program. 
-  av.pch.divSize = function(from) {
+  av.pch.divSize = function (from) {
     //console.log(from, 'called av.pch.divSize');
     //av.debug.uil = true;
-    if (av.debug.uil) console.log('popChrtHolder css.wd ht border padding margin=',  $("#popChrtHolder").css('width'), $("#popChrtHolder").css('height')
-      ,$("#popChrtHolder").css('border'), $("#popChrtHolder").css('padding'), $("#popChrtHolder").css('margin'));
+    if (av.debug.uil)
+      console.log('popChrtHolder css.wd ht border padding margin=', $("#popChrtHolder").css('width'), $("#popChrtHolder").css('height')
+        , $("#popChrtHolder").css('border'), $("#popChrtHolder").css('padding'), $("#popChrtHolder").css('margin'));
 
-    if (av.debug.uil) console.log('av.dom.popChrtHolder.ht offset, client ht=', av.dom.popChrtHolder.offsetHeight, 
-       av.dom.popChrtHolder.clientHeight, '; parseInt(padding)=', parseInt($("#popChrtHolder").css('padding'),10));
+    if (av.debug.uil)
+      console.log('av.dom.popChrtHolder.ht offset, client ht=', av.dom.popChrtHolder.offsetHeight,
+        av.dom.popChrtHolder.clientHeight, '; parseInt(padding)=', parseInt($("#popChrtHolder").css('padding'), 10));
 
-    av.pch.ht = av.dom.popChrtHolder.clientHeight - 2*parseInt($("#popChrtHolder").css('padding'),10);
-    av.pch.wd = av.dom.popChrtHolder.clientWidth - 2*parseInt($("#popChrtHolder").css('padding'),10);
-    console.log(from, 'called av.pch.divSize:','av.pch.wd=', av.pch.wd, '; av.pch.ht=', av.pch.ht);
+    av.pch.ht = av.dom.popChrtHolder.clientHeight - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
+    av.pch.wd = av.dom.popChrtHolder.clientWidth - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
+    console.log(from, 'called av.pch.divSize:', 'av.pch.wd=', av.pch.wd, '; av.pch.ht=', av.pch.ht);
     av.pch.layout.height = av.pch.ht;
     av.pch.layout.width = av.pch.wd;
-    if (av.debug.uil) console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
-    if (av.debug.uil) console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
+    if (av.debug.uil)
+      console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
+    if (av.debug.uil)
+      console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
 
     //av.dom.popChrtHolder.style.width = av.dom.popChrtHolder.clientWidth + 'px';  //seems redundent  djb said to delete as of 2018_0827
     //av.dom.popChrtHolder.style.height = av.dom.popChrtHolder.clientHeight + 'px';  //seems redundent djb said to delete as of 2018_0827
     av.dom.popChart.style.height = av.pch.ht + 'px';
     av.dom.popChart.style.width = av.pch.wd + 'px';
-    if (av.debug.uil) console.log('popChart css.wd, border, padding, margin=',  $("#popChart").css('width'), $("#popChart").css('height')
-      ,$("#popChart").css('border'), $("#popChart").css('padding'), $("#popChart").css('margin'));
-    if (av.debug.uil) console.log('av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight, 
-       av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'),10));
-    if (av.debug.uil) console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
-    if (av.debug.uil) console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
+    if (av.debug.uil)
+      console.log('popChart css.wd, border, padding, margin=', $("#popChart").css('width'), $("#popChart").css('height')
+        , $("#popChart").css('border'), $("#popChart").css('padding'), $("#popChart").css('margin'));
+    if (av.debug.uil)
+      console.log('av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight,
+        av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'), 10));
+    if (av.debug.uil)
+      console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
+    if (av.debug.uil)
+      console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
     //av.debug.uil = false;
   };
 
-  av.anl.divSize = function(from) {
-    if (av.debug.alo) console.log(from, 'called av.anl.divSize');
+  av.anl.divSize = function (from) {
+    if (av.debug.alo)
+      console.log(from, 'called av.anl.divSize');
     //console.log(from,'anaChrtHolder Ht client scroll ', av.dom.anaChrtHolder.clientHeight, av.dom.anaChrtHolder.scrollHeight);
     //console.log(from,'anlDndChart Ht client scroll', av.dom.anlDndChart.clientHeight, av.dom.anlDndChart.scrollHeight);
     //console.log(from,'anlChrtSpace Ht client scroll', av.dom.anlChrtSpace.clientHeight, av.dom.anlChrtSpace.scrollHeight);
 
-    if (av.debug.alo) console.log('av.dom.anaChrtHolder.clientWd, Ht=', av.dom.anaChrtHolder.clientWidth, av.dom.anaChrtHolder.clientHeight);
+    if (av.debug.alo)
+      console.log('av.dom.anaChrtHolder.clientWd, Ht=', av.dom.anaChrtHolder.clientWidth, av.dom.anaChrtHolder.clientHeight);
     av.anl.ht = av.dom.anaChrtHolder.clientHeight - 1;
     av.anl.wd = av.dom.anaChrtHolder.clientWidth - 1;
     av.dom.anaChrtHolder.style.height = av.anl.ht + 'px';
@@ -3184,17 +3345,19 @@ $(function slidemute() {
 
   // called from script in html file as well as below
   av.ui.browserResizeEventHandler = function (from) {
-    if (true) console.log(from, 'called av.ui.browserResizeEventHandler');
+    if (true)
+      console.log(from, 'called av.ui.browserResizeEventHandler');
     if ('none' !== domStyle.get('analysisBlock', 'display')) {
       av.anl.AnaChartFn();
     }
     if ('none' !== domStyle.get('populationBlock', 'display')) {
       //av.ui.resizePopLayout('av.ui.browserResizeEventHandler popBlock');  //does not work
-      if (av.debug.uil) console.log('av.grd.canvasSize =', av.grd.canvasSize, '; av.dom.gridCanvas.width = ', av.dom.gridCanvas.width, 
-         '; av.dom.gridHolder.clientHeight=', av.dom.gridHolder.clientHeight);
+      if (av.debug.uil)
+        console.log('av.grd.canvasSize =', av.grd.canvasSize, '; av.dom.gridCanvas.width = ', av.dom.gridCanvas.width,
+          '; av.dom.gridHolder.clientHeight=', av.dom.gridHolder.clientHeight);
       if (av.grd.need2DrawGrid) {
         av.grd.popChartFn('av.ui.browserResizeEventHandler');
-        console.log('av.grd.need2DrawGrid=',av.grd.need2DrawGrid);
+        console.log('av.grd.need2DrawGrid=', av.grd.need2DrawGrid);
         //av.grd.drawGridSetupFn('av.ui.browserResizeEventHandler when pop=flex');
       }
     }
@@ -3211,15 +3374,15 @@ $(function slidemute() {
   };
 
   //console.log('before resize function');
-  $(window).resize(function(){
-     // av.ui.resizePopLayout('window.resize');    //does not work.
-  });   
+  $(window).resize(function () {
+    // av.ui.resizePopLayout('window.resize');    //does not work.
+  });
 
 
   //This function does not work. make grid get larger and larger
-  av.ui.resizePopLayout = function(from) {      
+  av.ui.resizePopLayout = function (from) {
     //console.log(from, 'called av.ui.resizePopLayout');
-    var extraGridWd =  0;  //positive there is extra to distribute; negative need more space.
+    var extraGridWd = 0;  //positive there is extra to distribute; negative need more space.
     var popSideWdSum = av.dom.navColId.offsetWidth + av.dom.popInfoHolder.offsetWidth;
     av.ui.allAvidaWd = av.dom.allAvida.offsetWidth;
     av.ui.navColIdWd = av.dom.navColId.offsetWidth;
@@ -3236,106 +3399,133 @@ $(function slidemute() {
     //https://stackoverflow.com/questions/590602/padding-or-margin-value-in-pixels-as-integer-using-jquery
     //console.log('gridHolder_margin' ,$("#gridHolder").css("margin"), '; popChart=', $("#popChart").css('margin'));
 
-    if (av.debug.uil) console.log('Wd: allAvida navColId mapHolder gridHolder popInfoHolder, sum', av.dom.allAvida.offsetWidth,
-      av.dom.navColId.offsetWidth, av.dom.mapHolder.offsetWidth, av.dom.popInfoHolder.offsetWidth, 
-      av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
-    if (av.debug.uil) console.log('Wd: labInfoBlock selOrgType sum', av.dom.labInfoBlock.offsetWidth, av.dom.selOrgType.clientWidth,
-      av.dom.labInfoBlock.offsetWidth + av.dom.selOrgType.clientWidth);
-    
-    if (av.debug.uil) console.log('Ht; allAvida, mapHolder, popTopRw, gridHolder, popBot sum', av.dom.allAvida.offsetHeight,
-      av.dom.mapHolder.offsetHeight, av.dom.popTopRw.offsetHeight, av.dom.gridHolder.offsetHeight,
-      av.dom.popBot.offsetHeight, av.dom.popTopRw.offsetHeight+av.dom.gridHolder.offsetHeight+av.dom.popBot.offsetHeight);
-    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight && av.dom.gridHolder.offsetWidth > av.ui.popGridCtlWdMin){
+    if (av.debug.uil)
+      console.log('Wd: allAvida navColId mapHolder gridHolder popInfoHolder, sum', av.dom.allAvida.offsetWidth,
+        av.dom.navColId.offsetWidth, av.dom.mapHolder.offsetWidth, av.dom.popInfoHolder.offsetWidth,
+        av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.popInfoHolder.offsetWidth);
+    if (av.debug.uil)
+      console.log('Wd: labInfoBlock selOrgType sum', av.dom.labInfoBlock.offsetWidth, av.dom.selOrgType.clientWidth,
+        av.dom.labInfoBlock.offsetWidth + av.dom.selOrgType.clientWidth);
+
+    if (av.debug.uil)
+      console.log('Ht; allAvida, mapHolder, popTopRw, gridHolder, popBot sum', av.dom.allAvida.offsetHeight,
+        av.dom.mapHolder.offsetHeight, av.dom.popTopRw.offsetHeight, av.dom.gridHolder.offsetHeight,
+        av.dom.popBot.offsetHeight, av.dom.popTopRw.offsetHeight + av.dom.gridHolder.offsetHeight + av.dom.popBot.offsetHeight);
+    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight && av.dom.gridHolder.offsetWidth > av.ui.popGridCtlWdMin) {
       //set grid size based on height and distribute extra width.
       extraGridWd = av.dom.gridHolder.offsetWidth - av.dom.gridHolder.offsetHeight;
       popSideWdSum = popSideWdSum + extraGridWd;
-      if (av.debug.uil) console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+      if (av.debug.uil)
+        console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
       //av.dom.gridCanvas.width = av.dom.gridHolder.clientHeight;     //no style for canvas; style needed for div
       //av.dom.gridCanvas.height = av.dom.gridHolder.clientHeight;
       av.dom.gridCanvas.width = $("#gridHolder").height();     //no style for canvas; style needed for div
       av.dom.gridCanvas.height = $("#gridHolder").height();
-      
-      if (av.debug.uil) console.log('av.dom.gridCanvas.wd ht', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
-      if (av.debug.uil) console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-      av.dom.navColId.style.width = (0.3*popSideWdSum) + 'px';
-      av.dom.labInfoBlock.style.width = (0.7*popSideWdSum) + 'px';
-      av.dom.setupBlock.style.width = (0.7*popSideWdSum) + 'px';
-      av.dom.selOrgType.style.width = (0.33*popSideWdSum) + 'px';
-    }
-    else  { 
-    // set grid size based on width   
+
+      if (av.debug.uil)
+        console.log('av.dom.gridCanvas.wd ht', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+      if (av.debug.uil)
+        console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+      av.dom.navColId.style.width = (0.3 * popSideWdSum) + 'px';
+      av.dom.labInfoBlock.style.width = (0.7 * popSideWdSum) + 'px';
+      av.dom.setupBlock.style.width = (0.7 * popSideWdSum) + 'px';
+      av.dom.selOrgType.style.width = (0.33 * popSideWdSum) + 'px';
+    } else {
+      // set grid size based on width   
       av.dom.gridCanvas.width = $("#gridHolder").width();     //no style for canvas; style needed for div
       av.dom.gridCanvas.height = $("#gridHolder").width();
     }
   };
 
-  av.ui.chngPopWidth = function(from) {
+  av.ui.chngPopWidth = function (from) {
     console.log(from, 'called av.ui.chngPopWidth');
-    av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px'; 
-    av.dom.setupBlock.style.width = popInfoHolderWd + 'px'; 
+    av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px';
+    av.dom.setupBlock.style.width = popInfoHolderWd + 'px';
     av.dom.labInfoBlock.style.width = popInfoHolderWd + 'px';
-    av.dom.selOrgType.style.width = ((popInfoHolderWd/2).toFixed(0)) + 'px';   
+    av.dom.selOrgType.style.width = ((popInfoHolderWd / 2).toFixed(0)) + 'px';
   };
-  
-  av.ui.adjustpopInfoWd = function(adjustGridWd) {
+
+  av.ui.adjustpopInfoWd = function (adjustGridWd) {
     var popInfoHolderWd = av.dom.popInfoHolder.offsetWidth - adjustGridWd;  //adjustGridWd postive means Grid needs width
-    if (av.debug.uil) console.log('popInfoHolderWd=', popInfoHolderWd, '; av.ui.popInfoHolderMinWd', av.ui.popInfoHolderMinWd);
+    if (av.debug.uil)
+      console.log('popInfoHolderWd=', popInfoHolderWd, '; av.ui.popInfoHolderMinWd', av.ui.popInfoHolderMinWd);
     if (popInfoHolderWd < av.ui.popInfoHolderMinWd) {
       var navColWd = av.dom.navColId.offsetWidth;
-      if (av.debug.uil) console.log("navColWd=",navColWd, '; popInfoHolderWd=', popInfoHolderWd, '');
-      navColWd = (.33*(navColWd + popInfoHolderWd)).toFixed(0);
-      popInfoHolderWd = navColWd*2;
+      if (av.debug.uil)
+        console.log("navColWd=", navColWd, '; popInfoHolderWd=', popInfoHolderWd, '');
+      navColWd = (.33 * (navColWd + popInfoHolderWd)).toFixed(0);
+      popInfoHolderWd = navColWd * 2;
       av.dom.navColId.style.width = navColWd + 'px';
-      if (av.debug.uil) console.log('navColWd=', navColWd, '; popInfoHolderWd=', popInfoHolderWd, '; mapHolder=', av.dom.mapHolder.offsetWidth);
+      if (av.debug.uil)
+        console.log('navColWd=', navColWd, '; popInfoHolderWd=', popInfoHolderWd, '; mapHolder=', av.dom.mapHolder.offsetWidth);
     }
-    av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px'; 
-    av.dom.setupBlock.style.width = popInfoHolderWd + 'px'; 
+    av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px';
+    av.dom.setupBlock.style.width = popInfoHolderWd + 'px';
     av.dom.labInfoBlock.style.width = popInfoHolderWd + 'px';
-    popInfoHolderWd = (popInfoHolderWd/2).toFixed(0); //Math.round(popInfoHolder/2);
+    popInfoHolderWd = (popInfoHolderWd / 2).toFixed(0); //Math.round(popInfoHolder/2);
     av.dom.selOrgType.style.width = popInfoHolderWd + 'px';
-    if (av.debug.uil) console.log('set selOrgType to ', popInfoHolderWd + 'px');
-    if (av.debug.uil) console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
+    if (av.debug.uil)
+      console.log('set selOrgType to ', popInfoHolderWd + 'px');
+    if (av.debug.uil)
+      console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
   };
 
   //Adjust Statistics area width based on gridholder size and shape. gridholder should be roughly square
   av.ui.adjustpopInfoSize = function (from) {
     var adjustGridWd = 0;
-    if (av.debug.uil) console.log('av.ui.adjustpopInfoSize was called from: ', from);
-    if (av.debug.uil) console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth);
-    if (av.debug.uil) console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, 
-                 '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
-    if (av.debug.uil) console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ', 
-           av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
-    if (av.debug.uil) console.log('popInfoHolder.offsetWidth, clientwidth =',av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
-    if (av.debug.uil) console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
-    if (av.debug.uil) console.log('selOrgType.offsetWidth, clientwidth =',av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
-    if (av.debug.uil) console.log('av.ui.popGridCtlWdMin=',av.ui.popGridCtlWdMin, '; gridHolder.offsetWidt=', av.dom.gridHolder.offsetWidth);
-    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight){
+    if (av.debug.uil)
+      console.log('av.ui.adjustpopInfoSize was called from: ', from);
+    if (av.debug.uil)
+      console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth);
+    if (av.debug.uil)
+      console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth,
+        '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
+    if (av.debug.uil)
+      console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ',
+        av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.popInfoHolder.offsetWidth);
+    if (av.debug.uil)
+      console.log('popInfoHolder.offsetWidth, clientwidth =', av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
+    if (av.debug.uil)
+      console.log('labInfoBlock.offsetWidth, clientwidth =', av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
+    if (av.debug.uil)
+      console.log('selOrgType.offsetWidth, clientwidth =', av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
+    if (av.debug.uil)
+      console.log('av.ui.popGridCtlWdMin=', av.ui.popGridCtlWdMin, '; gridHolder.offsetWidt=', av.dom.gridHolder.offsetWidth);
+    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight) {
       adjustGridWd = av.dom.gridHolder.offsetHeight - av.dom.gridHolder.offsetWidth; //adjustGridWd negative means grid holder is too wide.
       av.ui.adjustpopInfoWd(adjustGridWd);
     }
     if (av.ui.popGridCtlWdMin > av.dom.gridHolder.offsetWidth) {
       adjustGridWd = av.ui.popGridCtlWdMin - av.dom.gridHolder.offsetWidth;
       av.ui.adjustpopInfoWd(adjustGridWd);
-    };
-    if (av.debug.uil) console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
-    if (av.debug.uil) console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, 
-                 '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
-    if (av.debug.uil) console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ', 
-           av.dom.navColId.offsetWidth+av.dom.mapHolder.offsetWidth+av.dom.popInfoHolder.offsetWidth);
+    }
+    ;
+    if (av.debug.uil)
+      console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
+    if (av.debug.uil)
+      console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth,
+        '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
+    if (av.debug.uil)
+      console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ',
+        av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.popInfoHolder.offsetWidth);
 
-    if (av.debug.uil) console.log('popInfo.offsetWidth, clientwidth =',av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
-    if (av.debug.uil) console.log('labInfoBlock.offsetWidth, clientwidth =',av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
-    if (av.debug.uil) console.log('selOrgType.offsetWidth, clientwidth =',av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
+    if (av.debug.uil)
+      console.log('popInfo.offsetWidth, clientwidth =', av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
+    if (av.debug.uil)
+      console.log('labInfoBlock.offsetWidth, clientwidth =', av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
+    if (av.debug.uil)
+      console.log('selOrgType.offsetWidth, clientwidth =', av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
 
-    av.dom.gridCanvas.style.width = (av.dom.gridHolder.clientHeight-2)+'px';
-    av.dom.gridCanvas.style.height = av.dom.gridCanvas.offsetWidth+'px';
-    av.dom.scaleCanvas.style.width = (av.dom.gridControlTable.clientWidth-1) + 'px';
-    
-    if (av.debug.uil) console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-    if (av.debug.uil) console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+    av.dom.gridCanvas.style.width = (av.dom.gridHolder.clientHeight - 2) + 'px';
+    av.dom.gridCanvas.style.height = av.dom.gridCanvas.offsetWidth + 'px';
+    av.dom.scaleCanvas.style.width = (av.dom.gridControlTable.clientWidth - 1) + 'px';
+
+    if (av.debug.uil)
+      console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+    if (av.debug.uil)
+      console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
   };
-    
+
   // **************************************************************************************************************** */
   //                                                Analysis Page
   // **************************************************************************************************************** */
@@ -3345,50 +3535,61 @@ $(function slidemute() {
     av.anl.divSize('anaChartInit');
 
     if (undefined !== av.dom.anlChrtSpace.data) {
-      if (av.debug.plotly) console.log('before purge in init');
+      if (av.debug.plotly)
+        console.log('before purge in init');
       av.debug.log += '\n     --uiD: Plotly: Plotly.purge(av.dom.anlChrtSpace) in AvidaED.js at 2168';
       av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace', [av.dom.anlChrtSpace]);
       Plotly.purge(av.dom.anlChrtSpace);
-      if (av.debug.plotly) console.log('after purge in init');
+      if (av.debug.plotly)
+        console.log('after purge in init');
     }
     //Comment out the next three lines later
     var anaData = av.anl.data;
-    if (av.debug.plotly) console.log('anlChrtPlotly in av.anl.anaChartInit');
+    if (av.debug.plotly)
+      console.log('anlChrtPlotly in av.anl.anaChartInit');
     //Plotly.plot('anlChrtSpace', anaData, av.anl.layout, av.anl.widg);
     av.debug.log += '\n     --uiD: Plotly: Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg) in AvidaED.js at 2157';
     av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg', [av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg]);
     Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg);
-    if (av.debug.plotly) console.log('after plot in av.anl.anaChartInit');
+    if (av.debug.plotly)
+      console.log('after plot in av.anl.anaChartInit');
 
     //console.log('layout=', av.dom.anlChrtSpace.layout);
-    av.dom.anlChrtSpace.style.visibility ='hidden';
+    av.dom.anlChrtSpace.style.visibility = 'hidden';
   };
   av.anl.anaChartInit();
 
   av.anl.AnaChartFn = function () {
     'use strict';
     var hasData = false;
-    for (var ii=0; ii < 3; ii++) {
-      if (0 < document.getElementById('graphPop'+ii).textContent.length) hasData = true;
+    var hideChart = true;
+    for (var ii = 0; ii < 3; ii++) {
+      if (0 < document.getElementById('popDish' + ii).textContent.length)
+        hasData = true;
     }
-    if (!hasData) av.dom.anlChrtSpace.style.visibility ='hidden';
+    if (!hasData)
+      av.dom.anlChrtSpace.style.visibility = 'hidden';
     else {
       av.dom.anlChrtSpace.style.visibility = 'visible';
-      dijit.byId('analysisBlock').resize();
-      //console.log('start av.anl.AnaChartFn-----------------------------------');
       //if ('populationBlock' === av.ui.page && av.ptd.popStatFlag && undefined !== av.anl.logFit[1]) {
-      if ('none' === dijit.byId('yLeftSelect').value && 'none' === dijit.byId('yRightSelect').value) {
-        if (av.debug.plotly) console.log('both axis set to none');
-        if (undefined !== av.dom.anlChrtSpace.data) {
+      if ('none' === document.getElementById('yLeftSelect').value && 'none' === document.getElementById('yRightSelect').value) {
+        if (av.debug.plotly)
+          console.log('both axis set to none');
+        // hide chart see if this will work instead of purging. 
+        if (hideChart) {
+          av.dom.anlChrtSpace.style.visibility = 'visible';
+        }
+        // purge chart this was the old way.
+        else if (undefined !== av.dom.anlChrtSpace.data) {
           console.log('before purge in anaChartFn');
           av.debug.log += '\n     --uiD: Plotly: Plotly.purge(av.dom.anlChrtSpace) in AvidaED.js at 2205';
           av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace', [av.dom.anlChrtSpace]);
           Plotly.purge(av.dom.anlChrtSpace);
           console.log('after purge in anaChartFn');
         }
-      }
-      else {
-        if (av.debug.plotly) console.log('in AnaChartFn');
+      } else {
+        if (av.debug.plotly)
+          console.log('in AnaChartFn');
         av.anl.trace0.x = av.anl.xx.slice(0, av.anl.pop[0].left.length);
         av.anl.trace1.x = av.anl.xx.slice(0, av.anl.pop[0].right.length);
         av.anl.trace2.x = av.anl.xx.slice(0, av.anl.pop[1].left.length);
@@ -3407,33 +3608,38 @@ $(function slidemute() {
         av.anl.trace3.line.color = av.anl.color[1];
         av.anl.trace4.line.color = av.anl.color[2];
         av.anl.trace5.line.color = av.anl.color[2];
-        av.anl.trace0.name = av.anl.abbreviate[dijit.byId('yLeftSelect').value] + '-' + document.getElementById('graphPop0').textContent;
-        av.anl.trace1.name = av.anl.abbreviate[dijit.byId('yRightSelect').value] + '-' + document.getElementById('graphPop0').textContent;
-        av.anl.trace2.name = av.anl.abbreviate[dijit.byId('yLeftSelect').value] + '-' + document.getElementById('graphPop1').textContent;
-        av.anl.trace3.name = av.anl.abbreviate[dijit.byId('yRightSelect').value] + '-' + document.getElementById('graphPop1').textContent;
-        av.anl.trace4.name = av.anl.abbreviate[dijit.byId('yLeftSelect').value] + '-' + document.getElementById('graphPop2').textContent;
-        av.anl.trace5.name = av.anl.abbreviate[dijit.byId('yRightSelect').value] + '-' + document.getElementById('graphPop2').textContent;
+        av.anl.trace0.name = av.anl.abbreviate[document.getElementById('yLeftSelect').value] + '-' + document.getElementById('popDish0').textContent;
+        av.anl.trace1.name = av.anl.abbreviate[document.getElementById('yRightSelect').value] + '-' + document.getElementById('popDish0').textContent;
+        av.anl.trace2.name = av.anl.abbreviate[document.getElementById('yLeftSelect').value] + '-' + document.getElementById('popDish1').textContent;
+        av.anl.trace3.name = av.anl.abbreviate[document.getElementById('yRightSelect').value] + '-' + document.getElementById('popDish1').textContent;
+        av.anl.trace4.name = av.anl.abbreviate[document.getElementById('yLeftSelect').value] + '-' + document.getElementById('popDish2').textContent;
+        av.anl.trace5.name = av.anl.abbreviate[document.getElementById('yRightSelect').value] + '-' + document.getElementById('popDish2').textContent;
 
         var anaData = [av.anl.trace0, av.anl.trace1, av.anl.trace2, av.anl.trace3, av.anl.trace4, av.anl.trace5];
 
-        if (av.debug.plotly) console.log('av.anl.xx', av.anl.xx);
-        if (av.debug.plotly) console.log('trace0', av.anl.trace0);
+        if (av.debug.plotly)
+          console.log('av.anl.xx', av.anl.xx);
+        if (av.debug.plotly)
+          console.log('trace0', av.anl.trace0);
 
         av.anl.divSize('anaChartInit');
         av.anl.layout.height = av.anl.ht;
         av.anl.layout.width = av.anl.wd;
         av.anl.layout.yaxis.title = document.getElementById('yLeftSelect').value;
         av.anl.layout.yaxis2.title = document.getElementById('yRightSelect').value;
-        if (av.debug.plotly) console.log('before purge in update');
+        if (av.debug.plotly)
+          console.log('before purge in update');
         av.debug.log += '\n     --uiD: Plotly: Plotly.purge(av.dom.anlChrtSpace) in AvidaED.js at 2249';
         av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace', [av.dom.anlChrtSpace]);
         Plotly.purge(av.dom.anlChrtSpace);
-        if (av.debug.plotly) console.log('after plot anlChrtSpace');
+        if (av.debug.plotly)
+          console.log('after plot anlChrtSpace');
         //Plotly.plot('anlChrtSpace', anaData, av.anl.layout, av.anl.widg);
         av.debug.log += '\n     --uiD: Plotly: Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg) in AvidaED.js at 2254';
         av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg', [av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg]);
         Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg);
-        if (av.debug.plotly) console.log('after plot anlChrtSpace');
+        if (av.debug.plotly)
+          console.log('after plot anlChrtSpace');
       }
     }
   };
@@ -3445,7 +3651,7 @@ $(function slidemute() {
     av.anl.pop[0].left = [];
     av.anl.pop[0].right = [];
     av.anl.clearWorldData(0);
-    av.dnd.graphPop0.selectAll().deleteSelectedNodes();
+    av.dnd.popDish0.selectAll().deleteSelectedNodes();
     av.anl.AnaChartFn();
   };
   document.getElementById('pop1delete').onclick = function () {
@@ -3454,7 +3660,7 @@ $(function slidemute() {
     av.anl.pop[1].left = [];
     av.anl.pop[1].right = [];
     av.anl.clearWorldData(1);
-    av.dnd.graphPop1.selectAll().deleteSelectedNodes();
+    av.dnd.popDish1.selectAll().deleteSelectedNodes();
     av.anl.AnaChartFn();
   };
   document.getElementById('pop2delete').onclick = function () {
@@ -3463,33 +3669,40 @@ $(function slidemute() {
     av.anl.pop[2].left = [];
     av.anl.pop[2].right = [];
     av.anl.clearWorldData(2);
-    av.dnd.graphPop2.selectAll().deleteSelectedNodes();
-    av.anl.AnaChartFn();
-  };
-  //dijit.byId('pop0color').on('Change', function () {
-  document.getElementById('pop0color').onclick = function () {
-    av.anl.color[0] = av.color.names[dijit.byId('pop0color').value];
-    av.post.addUser('Button: pop0color');
-    av.anl.AnaChartFn();
-  };
-  //dijit.byId('pop1color').on('Change', function () {
-  document.getElementById('pop1color').onclick = function () {
-    av.post.addUser('Button: pop1color');
-    av.anl.color[1] = av.color.names[dijit.byId('pop1color').value];
-    av.anl.AnaChartFn();
-  };
-  //dijit.byId('pop2color').on('Change', function () {
-  document.getElementById('pop2color').onclick = function () {
-    av.post.addUser('Button: pop2color');
-    av.anl.color[2] = av.color.names[dijit.byId('pop2color').value];
+    av.dnd.popDish2.selectAll().deleteSelectedNodes();
     av.anl.AnaChartFn();
   };
 
+
+  av.popColorOnClick = function (domObj) {
+    var ndx = Number(domObj.id.substr(3, 1));
+    console.log('domObj.id=', domObj.id, '; ndx=', ndx, '; domObj.value', domObj.value, '; av.color.names[]=', av.color.names[domObj.value]);
+    av.anl.color[ndx] = av.color.names[domObj.value];
+    av.post.addUser('Button:' + domObj.id);
+    console.log('av.anl.color[ndx]=', av.anl.color[ndx]);
+    av.anl.AnaChartFn();    //redraw chart which will get new color from dom
+  };
+  /*
+   document.getElementById('pop0color').onclick = function () {
+   av.anl.color[0] = av.color.names[document.getElementById('pop0color').value];
+   av.post.addUser('Button: pop0color');
+   av.anl.AnaChartFn();
+   };
+   document.getElementById('pop1color').onclick = function () {
+   av.post.addUser('Button: pop1color');
+   av.anl.color[1] = av.color.names[document.getElementById('pop1color').value];
+   av.anl.AnaChartFn();
+   };
+   document.getElementById('pop2color').onclick = function () {
+   av.post.addUser('Button: pop2color');
+   av.anl.color[2] = av.color.names[document.getElementById('pop2color').value];
+   av.anl.AnaChartFn();
+   };
+   */
   //Set Y-axis title and choose the correct array to plot
-  //dijit.byId('yLeftSelect').on('Change', function () {
   document.getElementById('yLeftSelect').onclick = function () {
-    av.post.addUser('Button: yLeftSelect = ' + dijit.byId('yLeftSelect').value);
-    av.anl.yLeftTitle = dijit.byId('yLeftSelect').value;
+    av.post.addUser('Button: yLeftSelect = ' + document.getElementById('yLeftSelect').value);
+    av.anl.yLeftTitle = document.getElementById('yLeftSelect').value;
     //need to get correct array to plot from freezer
     av.anl.loadSelectedData(0, 'yLeftSelect', 'left');  //numbers are world landing spots
     av.anl.loadSelectedData(1, 'yLeftSelect', 'left');
@@ -3499,13 +3712,13 @@ $(function slidemute() {
 
   //dijit.byId('yRightSelect').on('Change', function () {
   document.getElementById('yRightSelect').onclick = function () {
-    av.anl.yRightTitle = dijit.byId('yRightSelect').value;
+    av.anl.yRightTitle = document.getElementById('yRightSelect').value;
     //need to get correct array to plot from freezer
     av.anl.loadSelectedData(0, 'yRightSelect', 'right');
     av.anl.loadSelectedData(1, 'yRightSelect', 'right');
     av.anl.loadSelectedData(2, 'yRightSelect', 'right');
     av.anl.AnaChartFn();
-    av.post.addUser('Button: yRightSelect = '+dijit.byId('yRightSelect').value);
+    av.post.addUser('Button: yRightSelect = ' + document.getElementById('yRightSelect').value);
   };
 
   // **************************************************************************************************************** */
@@ -3519,64 +3732,71 @@ $(function slidemute() {
 
   //used to set the height so the data just fits. Done because different monitor/browser combinations require a different height in pixels.
   //may need to take out as requires loading twice now.
-  
+
   //setting row height to match on population page stats window
   //http://www.tek-tips.com/viewthread.cfm?qid=891026
   /*
-  Trying to dynamically set row ht in case it was different on differnt screens/opperationg systems, browsers.
-  Never got it working
-
-  var popsBotTblRows = document.getElementById('popsBotTable').rows;
-  var sotBotTbl = document.getElementById('sotBotTable').rows;
-  var ht = sotBotTbl[2].offsetHeight;
-  for (var ii = 1; ii < popsBotTblRows.length; ii++) {
-    //sotBotTbl[ii].offsetHeight = popsBotTblRows[ii].offsetHeight;  //can only get values not put them.
-    console.log('sot rowHt=',sotBotTbl[ii].offsetHeight, '; PopsrowHt=',popsBotTblRows[ii].offsetHeight );
-  }
-
-  var newCss = '.botTable td {  line-height: ' + ht + 'px;  }';
-  av.ptd.setStyle(newCss);
-  //stylesheet.insertRule('.botTable td {  line-height: ' + ht + 'px;  }', 265);
+   Trying to dynamically set row ht in case it was different on differnt screens/opperationg systems, browsers.
+   Never got it working
+   
+   var popsBotTblRows = document.getElementById('popsBotTable').rows;
+   var sotBotTbl = document.getElementById('sotBotTable').rows;
+   var ht = sotBotTbl[2].offsetHeight;
+   for (var ii = 1; ii < popsBotTblRows.length; ii++) {
+   //sotBotTbl[ii].offsetHeight = popsBotTblRows[ii].offsetHeight;  //can only get values not put them.
+   console.log('sot rowHt=',sotBotTbl[ii].offsetHeight, '; PopsrowHt=',popsBotTblRows[ii].offsetHeight );
+   }
+   
+   var newCss = '.botTable td {  line-height: ' + ht + 'px;  }';
+   av.ptd.setStyle(newCss);
+   //stylesheet.insertRule('.botTable td {  line-height: ' + ht + 'px;  }', 265);
    */
 
   av.ui.removeVerticalScrollbar = function (scrollDiv, htChangeDiv) {
     //https://tylercipriani.com/2014/07/12/crossbrowser-javascript-scrollbar-detection.html
     var scrollSpace = 0;
-    if (0 <= window.jscd.os.indexOf('Win')) {scrollSpace = 17;}
+    if (0 <= window.jscd.os.indexOf('Win')) {
+      scrollSpace = 17;
+    }
     //if the two heights are different then there is a scroll bar
     var ScrollDif = document.getElementById(scrollDiv).scrollHeight - document.getElementById(scrollDiv).clientHeight;
     var hasScrollbar = 0 < ScrollDif;
-    if (av.debug.uil) console.log('scroll', scrollDiv, hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
-      document.getElementById(scrollDiv).clientHeight, '; htChangeDiv=', document.getElementById(htChangeDiv).scrollHeight,
-      document.getElementById(htChangeDiv).offsetHeight, document.getElementById(htChangeDiv).style.height);
+    if (av.debug.uil)
+      console.log('scroll', scrollDiv, hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
+        document.getElementById(scrollDiv).clientHeight, '; htChangeDiv=', document.getElementById(htChangeDiv).scrollHeight,
+        document.getElementById(htChangeDiv).offsetHeight, document.getElementById(htChangeDiv).style.height);
 
     var divHt = document.getElementById(htChangeDiv).offsetHeight;
-    if (av.debug.uil) console.log('htChangeDiv is', htChangeDiv, '; divHt=', divHt);
+    if (av.debug.uil)
+      console.log('htChangeDiv is', htChangeDiv, '; divHt=', divHt);
     if (hasScrollbar) {
       if (null !== divHt) {
         var NewHt = divHt + 1 + scrollSpace + ScrollDif;  //add the ht difference to the outer div that holds this one
         //line below is where the height of the div actually changes
-        if (av.debug.uil) document.getElementById(htChangeDiv).style.height = NewHt + 'px';
+        if (av.debug.uil)
+          document.getElementById(htChangeDiv).style.height = NewHt + 'px';
       }
       //redraw the screen
       //av.ui.mainBoxSwap(page);
       //if (av.debug.root) 
-      if (av.debug.uil) {console.log('Afterscroll', hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
-        document.getElementById(scrollDiv).clientHeight, '; htChangeDiv=', document.getElementById(htChangeDiv).scrollHeight,
-        document.getElementById(htChangeDiv).offsetHeight, document.getElementById(htChangeDiv).style.height);
-      };
+      if (av.debug.uil) {
+        console.log('Afterscroll', hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
+          document.getElementById(scrollDiv).clientHeight, '; htChangeDiv=', document.getElementById(htChangeDiv).scrollHeight,
+          document.getElementById(htChangeDiv).offsetHeight, document.getElementById(htChangeDiv).style.height);
+      }
+      ;
     }
   };
 
   //Tiba - put back soon
   //av.ui.removeVerticalScrollbar('popStats4grid', 'popStatistics');
   //av.ui.removeVerticalScrollbar('popBot', 'popBot');
-  
+
   // **************************************************************************************************************** */
   //                                          Last things done
   // **************************************************************************************************************** */
   // Do this after all other is done; end of file
-  
+
   //av.ui.removeVerticalScrollbar('popTopRw', 'popTopRw');
   console.log('before mainBoxSwap');
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
@@ -3586,21 +3806,21 @@ $(function slidemute() {
   av.sgr.ChangeAllGeo('Global');
   av.sgr.setSugarColors(true);  //true is to turn colors on;
   av.sgr.ChangeAllsugarSupplyType('Infinite');
-  av.sgr.OpenCloseAllSugarDetails('allClose', 'Last things done');  
+  av.sgr.OpenCloseAllSugarDetails('allClose', 'Last things done');
 
   av.ui.ex1setSugarColors();   //example 1     //delete later
-  
+
   av.doj.mnDebug.style.visibility = 'visible';   // set visiable so that av.ui.toggleDevelopentDisplays will hide debuts stuff
-  
+
   // Avida-ED 4.0.0 Alpha Testing fix this too. 
   //true when diane is working; false for all production releases even in alpha testsing.  
-  if (false) {  
+  if (false) {
     console.log('testing mode; remove before putting on server for Avida-ED 4.0.0 Alpha Testing. ');
     //av.dom.xorLabel.onclick();   now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections 
     av.doj.mnDebug.style.visibility = 'hidden';   //visible
-  }  
+  }
   av.ui.toggleDevelopentDisplays();
   // May need to do some things here to get the app to look right on the screen. 
   //av.grd.popChartFn();
@@ -3614,9 +3834,9 @@ $(function slidemute() {
     dijit.byId('mnFlSaveWorkspace').attr('disabled', true);
     dijit.byId('mnFlSaveAs').attr('disabled', true);
   }
-  
+
   // 
-  
+
   // **************************************************************************************************************** */
   //                                          Useful Generic functions
   // **************************************************************************************************************** */
@@ -3638,72 +3858,72 @@ $(function slidemute() {
   };
 });
 
-  //------- not in use = example
-  //var hexColor = av.ui.invertHash(av.color.names);
-  //var theColor = hexColor['#000000'];  //This should get 'Black'
-  //console.log('theColor=', theColor);
+//------- not in use = example
+//var hexColor = av.ui.invertHash(av.color.names);
+//var theColor = hexColor['#000000'];  //This should get 'Black'
+//console.log('theColor=', theColor);
 
-  //--------------------------------------------------------------------------------------------------------------------
-  //Notes on things I learned writing this code, that is not directly used in the code
-  //use FileMerge to compare to versions of the same file on a Mac
-  //js fiddle of dragging image to cavans and dragging it around http://jsfiddle.net/XU2a3/41/
+//--------------------------------------------------------------------------------------------------------------------
+//Notes on things I learned writing this code, that is not directly used in the code
+//use FileMerge to compare to versions of the same file on a Mac
+//js fiddle of dragging image to cavans and dragging it around http://jsfiddle.net/XU2a3/41/
 
-  //Use Meld to compare two folders worth of stuff. Evoke from a terminal prompt. Does not seem to be be in applications folder
+//Use Meld to compare two folders worth of stuff. Evoke from a terminal prompt. Does not seem to be be in applications folder
 
-  //http://dojo-toolkit.33424.n3.nabble.com/dojo-dnd-problems-selection-object-from-nodes-etc-td3753366.html
-  //This is supposed to select a node; lists as selected programatically, but does not show up on screen.
+//http://dojo-toolkit.33424.n3.nabble.com/dojo-dnd-problems-selection-object-from-nodes-etc-td3753366.html
+//This is supposed to select a node; lists as selected programatically, but does not show up on screen.
 
-  //A method to distinguish a av.mouse click from a av.mouse drag
-  //http://stackoverflow.com/questions/6042202/how-to-distinguish-av.mouse-click-and-drag
+//A method to distinguish a av.mouse click from a av.mouse drag
+//http://stackoverflow.com/questions/6042202/how-to-distinguish-av.mouse-click-and-drag
 
-  //A method to get the data items in a dojo DND container in order
-  //av.dnd.fzConfig.on('DndDrop', function(source, nodes, copy, target){  //This triggers for every dnd drop, not just those of freezeConfigureNode
-  //http://stackoverflow.com/questions/5837558/dojo-drag-and-drop-how-to-retrieve-order-of-items
-  //var orderedDataItems = av.dnd.fzConfig.getAllNodes().map(function(node){
-  //  return av.dnd.fzConfig.getItem(node.id).data;
-  //});
-  //console.log('orderedDataItems', orderedDataItems);
-  /*
-  var matches = function (aa, bb) {
-    if (aa[0] == bb[0] && aa[1] == bb[1]) return true;
-    else return false;
-  }
-});
-*/
+//A method to get the data items in a dojo DND container in order
+//av.dnd.fzConfig.on('DndDrop', function(source, nodes, copy, target){  //This triggers for every dnd drop, not just those of freezeConfigureNode
+//http://stackoverflow.com/questions/5837558/dojo-drag-and-drop-how-to-retrieve-order-of-items
+//var orderedDataItems = av.dnd.fzConfig.getAllNodes().map(function(node){
+//  return av.dnd.fzConfig.getItem(node.id).data;
+//});
+//console.log('orderedDataItems', orderedDataItems);
+/*
+ var matches = function (aa, bb) {
+ if (aa[0] == bb[0] && aa[1] == bb[1]) return true;
+ else return false;
+ }
+ });
+ */
 
 // Web sites that looked useful for some task
 /* Capture Close event
  http://stackoverflow.com/questions/1631959/how-to-capture-the-browser-window-close-event
  http://stackoverflow.com/questions/5712195/js-listen-when-child-window-is-closed
-
+ 
  Single page app
  http://singlepageappbook.com/detail1.html
  */
 
 
 /* Charting packages
-
-Reviews
+ 
+ Reviews
  https://iprodev.com/39-javascript-chart-and-graph-libraries-for-developers/
  http://thenextweb.com/dd/2015/06/12/20-best-javascript-chart-libraries/#gref
  http://www.sitepoint.com/15-best-javascript-charting-libraries/
-
-Good zooming and point value pop-up
+ 
+ Good zooming and point value pop-up
  http://dygraphs.com/
  http://jsfiddle.net/eM2Mg/
-
+ 
  Charles likes -
  http://c3js.org/
  http://swizec.com/blog/quick-scatterplot-tutorial-for-d3-js/swizec/5337
  http://bl.ocks.org/peterssonjonas/4a0e7cb8d23231243e0e
-
-real time grapsh shift data over
+ 
+ real time grapsh shift data over
  https://square.github.io/cubism/
  https://bost.ocks.org/mike/cubism/intro/#10
-
-other
+ 
+ other
  http://www.flotcharts.org/flot/examples/
-
+ 
  */
 
 //http://maffelu.net/jquery-handle-left-click-right-click-and-double-click-at-the-same-time/
@@ -3728,14 +3948,14 @@ other
  */
 
 /*
-formating tables = http://www.the-art-of-web.com/html/table-markup/
+ formating tables = http://www.the-art-of-web.com/html/table-markup/
  */
 
 /* How to make a .gif file.
-To make a gif using screen capture
-     http://osxdaily.com/2013/08/23/record-screen-animated-gif-mac-os-x/
+ To make a gif using screen capture
+ http://osxdaily.com/2013/08/23/record-screen-animated-gif-mac-os-x/
  A web application reverses a GIF.
-    http://gifmaker.me/reverser/
+ http://gifmaker.me/reverser/
  */
 
 /* Border order   
@@ -3771,26 +3991,26 @@ To make a gif using screen capture
 //       av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'),10));
 
 
-  // should this move to an init page ui function?
-  //get size of screen availbe for Avida-ED; used to keep on screen and get rid of scroll bars
-  //http://ryanve.com/lab/dimensions/
-  //https://andylangton.co.uk/blog/development/get-viewportwindow-size-width-and-height-javascript
-  //https://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
-  //window.screen.availWidth
-  //window.innerWidth    or    window.outerWidth
-  //console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight, 
-  //  document.documentElement.clientHeight);
-  //if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
-  //  document.documentElement.style.height = document.documentElement.clientHeight + 'px';
-  //}
-  //
-  // Targeting common screen sizes   https://www.websitedimensions.com/
-  
-  // looks like tool-tip
-  // https://www.w3schools.com/howto/howto_js_popup.asp
-  // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup
-  
-  //
+// should this move to an init page ui function?
+//get size of screen availbe for Avida-ED; used to keep on screen and get rid of scroll bars
+//http://ryanve.com/lab/dimensions/
+//https://andylangton.co.uk/blog/development/get-viewportwindow-size-width-and-height-javascript
+//https://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
+//window.screen.availWidth
+//window.innerWidth    or    window.outerWidth
+//console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight, 
+//  document.documentElement.clientHeight);
+//if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
+//  document.documentElement.style.height = document.documentElement.clientHeight + 'px';
+//}
+//
+// Targeting common screen sizes   https://www.websitedimensions.com/
+
+// looks like tool-tip
+// https://www.w3schools.com/howto/howto_js_popup.asp
+// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup
+
+//
 // jQurey resize() Method
 // https://www.w3schools.com/jquery/event_resize.asp
 //
@@ -3842,26 +4062,26 @@ To make a gif using screen capture
 /* Bits of html that I might use later. Stored here because comments are not as reliable in html as they are in javacript 
  * 
  
-         <details class='debugDetails' id='fzMdishDetails'>
-          <summary id='fzMdishSec' class="freezerSection">Multi-Dishes</summary>
-          <ul id='fzMdish' class='container'>
-          </ul>
-        </details>
-        <details class='debugDetails' id='fzRdishDetails'>
-          <summary id='fzRdishSec' class="freezerSection">Resource setup</summary>
-          <ul id='fzRdish' class='container'>
-          </ul>
-        </details>
-
+ <details class='debugDetails' id='fzMdishDetails'>
+ <summary id='fzMdishSec' class="freezerSection">Multi-Dishes</summary>
+ <ul id='fzMdish' class='container'>
+ </ul>
+ </details>
+ <details class='debugDetails' id='fzRdishDetails'>
+ <summary id='fzRdishSec' class="freezerSection">Resource setup</summary>
+ <ul id='fzRdish' class='container'>
+ </ul>
+ </details>
+ 
  *
  */
 
 //Tabs could be used in the header row for the page buttons. Formated like the tabs on the info pannel for populaton page
 /*
-         <div id='headerTabs'>
-          <span>Population Tab</span>
-          <span>Organism Tab</span>
-          <span>Analysis Tab</span>
-         </div>
-
+ <div id='headerTabs'>
+ <span>Population Tab</span>
+ <span>Organism Tab</span>
+ <span>Analysis Tab</span>
+ </div>
+ 
  */
