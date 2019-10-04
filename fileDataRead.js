@@ -461,7 +461,7 @@ av.frd.reactLineParse = function(lnArray) {
       else {
         av.nut[edTsk].supply[ndx] = 'none';
       }
-      console.log('edTsk=', edTsk, '; ndx=', ndx, '; av.nut[edTsk].supply[ndx]=', av.nut[edTsk].supply[ndx], '; av.nut[edTsk].numsubdish=', av.nut[edTsk].numsubdish);
+      //console.log('edTsk=', edTsk, '; ndx=', ndx, '; av.nut[edTsk].supply[ndx]=', av.nut[edTsk].supply[ndx], '; av.nut[edTsk].numsubdish=', av.nut[edTsk].numsubdish);
     };
     
     

@@ -23,7 +23,22 @@
 // to thet the parse value go to the current version of avida folder and
 // git rev-parse --short HEAD
 //
-// on 2017_0927 switched to using new avida files with parse number  = 88746e4
+// Problems -------------------------------------------------------------------------------------------------------
+//  Fix av.anl.widg = {   statement on globals in Avida-ED 3.2 to match the one in Avida-ED-4 ecology
+//  
+//  fix color and data select/item buttons on Analysis page
+//  
+//  
+//
+//
+//
+// Versions -------------------------------------------------------------------------------------------------------
+// The main change are the limited Resources
+//
+//
+//
+//
+//
 //
 // Generic Notes -------------------------------------------------------------------------------------------------------
 //
@@ -622,7 +637,7 @@ require([
   });
 
   dojo.connect(av.dnd.fzWorld, "onDndDrop", function (source, nodes, copy, target) {
-    //This triggers for every dnd drop, not just those of activeConfig
+    //This triggers for every dnd drop, not just those of fzWorld
     if ('fzWorld' === target.node.id) {
       var pkg = {};
       av.ui.num = av.fzr.wNum;
@@ -635,7 +650,7 @@ require([
         av.dnd.sortDnD('fzWorld');
       });
       if (av.ui.num !== av.fzr.wNum) {
-        av.fwt.makeFzrWorld(av.ui.num);
+        av.fwt.makeFzrWorld(av.ui.num, 'dojo.connect');
       } //tiba need to check this
     }
   });
@@ -650,7 +665,7 @@ require([
       pkg.target = target;
       av.dnd.landfzTdishFn(pkg);
       if (av.ui.num !== av.fzr.wNum) {
-        av.fwt.makeFzrWorld(av.ui.num);
+        av.fwt.makeFzrWorld(av.ui.num, 'av.dnd.fzTdish.on');
       } //tiba need to check this
     }
   });
@@ -1627,7 +1642,7 @@ require([
 
   av.dom.newSaveConfig.onclick = function () {
     av.post.addUser('Button: newSaveConfig');
-    av.ptd.FrConfigFn();
+    av.ptd.FrConfigFn('av.dom.newSaveConfig.onclick');
     av.dom.newModalID.style.display = 'none';
     av.msg.reset();
     //console.log('newSaveConfig click');
@@ -1663,7 +1678,7 @@ require([
   av.dom.freezeButton.onclick = function () {
     av.post.addUser('Button: freezeButton');
     if ('prepping' == av.grd.runState)
-      av.ptd.FrConfigFn();
+      av.ptd.FrConfigFn('av.dom.freezeButton.onclick');
     else {
       if (5 > av.msg.ByCellIDgenome.length) {
         document.getElementById('FzOrganismSpan').style.display = 'none';
@@ -1677,13 +1692,13 @@ require([
   dijit.byId('FzConfigurationButton').on('Click', function () {
     av.post.addUser('Button: FzConfigurationButton');
     fzDialog.hide();
-    av.ptd.FrConfigFn();
+    av.ptd.FrConfigFn('FzConfigurationButton');
   });
 
   //Drop down menu to save a configuration item
   dijit.byId('mnFzConfig').on('Click', function () {
     av.post.addUser('Button: mnFzConfig');
-    av.ptd.FrConfigFn();
+    av.ptd.FrConfigFn('mnFzConfig');
   });
 
   //
@@ -1800,7 +1815,7 @@ require([
 
   document.getElementById('restartAvidaFrzConfig').onclick = function () {
     av.post.addUser('Button: restartAvidaFzrConfig');
-    av.ptd.FrConfigFn();
+    av.ptd.FrConfigFn('restartAvidaFrzConfig');
   };
 
   //test - delete later ------------------------------------------------------------------------------------------------
@@ -2693,7 +2708,7 @@ require([
   av.sgr.supplyChange = function (domObj) {
     var taskID = domObj.id;
     var task = taskID.substring(0, 3);
-    var sub = taskID.substr(4, 1);
+    var sub = taskID.substr(3, 1);
     console.log('taskID=', taskID, '; tst=', task, '; subsection=', sub); // this is wrong on 2019
     sub = 1; //only whole dish  for now
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
@@ -3299,7 +3314,7 @@ require([
 
     av.pch.ht = av.dom.popChrtHolder.clientHeight - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
     av.pch.wd = av.dom.popChrtHolder.clientWidth - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
-    console.log(from, 'called av.pch.divSize:', 'av.pch.wd=', av.pch.wd, '; av.pch.ht=', av.pch.ht);
+    //console.log(from, 'called av.pch.divSize:', 'av.pch.wd=', av.pch.wd, '; av.pch.ht=', av.pch.ht);
     av.pch.layout.height = av.pch.ht;
     av.pch.layout.width = av.pch.wd;
     if (av.debug.uil)

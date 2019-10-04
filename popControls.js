@@ -283,8 +283,8 @@ av.ptd.runPopFn = function (from) {
         av.fwt.form2cfgFolder();          //creates avida.cfg and environment.cfg and ancestor.txt and ancestors_manual.txt from form
       }
       if ('prepping' === av.grd.runState) {
-        av.msg.importConfigExpr('av.ptd.runPopFn ln291');
-        console.log('after calling av.msg.importConfigExpr');
+        av.msg.importConfigExpr('av.ptd.runPopFn ln291');   // send importExpr message to avida
+        //console.log('after calling av.msg.importConfigExpr');
         av.msg.injectAncestors('config');
       }
       else {
@@ -320,11 +320,11 @@ av.ptd.runPopFn = function (from) {
       av.ui.autoStopValue = av.dom.autoUpdateOnce.value;
       //console.log('stop at  = av.dom.autoUpdateOnce.value;
     };
-    console.log('before call av.ptd.makeRunState');
+    //console.log('before call av.ptd.makeRunState');
     av.ptd.makeRunState('av.ptd.runPopFn 328');
-    console.log('after call av.ptd.makeRunState');
+    //console.log('after call av.ptd.makeRunState');
     av.msg.stepUpdate();   //av.msg.doRunPause(av.fio);
-    console.log('after av.msg.stepUpdate');
+    //console.log('after av.msg.stepUpdate');
   }
   if (av.debug.popCon) console.log('end of av.ptd.runPopFn 331');
   //update screen based on data from C++
@@ -386,8 +386,10 @@ av.ptd.FrOrganismFn = function (trigger) {
   }
 };
 
-av.ptd.FrConfigFn = function () {
+//get a name for the new config file for the freezer
+av.ptd.FrConfigFn = function (from) {
   'use strict';
+  console.log(from, ' called av.ptd.FrConfigFn');
   var fzName = prompt('Please name the new configuration', 'newConfig');
   if (fzName) {
     //var namelist = dojo.query('> .dojoDndItem', 'fzConfig');  console.log('namelist', namelist); not in use, but does show another way to get data
@@ -399,7 +401,7 @@ av.ptd.FrConfigFn = function () {
       av.fzr.dir[domid] = 'c'+ av.fzr.cNum;
       av.fzr.domid['c'+ av.fzr.cNum] = domid;
       av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = fzName;
-      av.fwt.makeFzrConfig(av.fzr.cNum);
+      av.fwt.makeFzrConfig(av.fzr.cNum, 'av.ptd.FrConfigFn');
       av.fzr.cNum++;
       //Create context menu for right-click on this item
       av.dnd.contextMenu(av.dnd.fzConfig, domid, 'av.ptd.FrConfigFn');
@@ -425,7 +427,7 @@ av.ptd.FrPopulationFn = function () {
       av.fzr.dir[domid] = 'w'+ av.fzr.wNum;
       av.fzr.domid['w'+ av.fzr.wNum] = domid;
       av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = fzName;
-      av.fwt.makeFzrWorld(av.fzr.wNum);
+      av.fwt.makeFzrWorld(av.fzr.wNum, 'av.ptd.FrPopulationFn');
       av.fzr.wNum++;
       //Create context menu for right-click on this item
       av.dnd.contextMenu(av.dnd.fzWorld, domid, 'av.ptd.FrPopulationFn');

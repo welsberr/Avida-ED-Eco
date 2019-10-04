@@ -625,7 +625,7 @@ av.msg.pause = function(update) {
 
 av.msg.injectAncestors = function (from) {
   'use strict';
-  console.log(from, 'called av.msg.injectAncestors; parents=', av.parents);
+  //console.log(from, 'called av.msg.injectAncestors; parents=', av.parents);
   var request;
   var lngth = av.parents.name.length;
   for (var ii = 0; ii < lngth; ii++) {
@@ -642,11 +642,11 @@ av.msg.injectAncestors = function (from) {
       };
       av.aww.uiWorker.postMessage(request);
       av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request);
-      console.log('log', av.utl.json2stringFn(request));
+      //console.log('log', av.utl.json2stringFn(request));
       av.parents.injected[ii] = true;
       //console.log('parents.injected', av.parents.injected[ii]);
-    }
-  }
+    };
+  };
 };
 
 //---------------------------------

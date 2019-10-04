@@ -519,7 +519,7 @@ av.dnd.landFzConfig = function (source, nodes, target) {
       av.fzr.dir[domID] = 'c'+ av.fzr.cNum;
       av.fzr.domid['c'+ av.fzr.cNum] = domID;
       av.fzr.file[av.fzr.dir[domID]+'/entryname.txt'] = configName;
-      av.fwt.makeFzrConfig(av.fzr.cNum);
+      av.fwt.makeFzrConfig(av.fzr.cNum,'av.dnd.landFzConfig');
       av.fzr.cNum++;
 
       //create a right av.mouse-click context menu for the item just created.
@@ -929,7 +929,7 @@ av.dnd.landFzWorldFn = function (pkg) {//source, pkg.nodes, pkg.target) {
 
       //create a right av.mouse-click context menu for the item just created.
       av.dnd.contextMenu(pkg.target, domID, 'av.dnd.landFzWorldFn');
-      av.fwt.makeFzrWorld(av.fzr.wNum);
+      av.fwt.makeFzrWorld(av.fzr.wNum, 'av.dnd.landFzWorldFn');
       av.msg.exportExpr('w' + av.fzr.wNum);
       av.msg.sendData();
 

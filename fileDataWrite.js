@@ -32,13 +32,15 @@ av.fwt.makeEmDxFile = function (path, contents) {
 };
 
 //kept this one line function in case we need to go to storing the workspace in a database instead of freezer memory
-av.fwt.makeFzrFile = function (fileId, text) {
+av.fwt.makeFzrFile = function (fileId, text, from) {
   'use strict';
+  console.log(from, ' called av.fwt.makeFzrFile: fileID=',fileId);
   av.fzr.file[fileId] = text;
 };
 
-av.fwt.makeActConfigFile = function (fileId, text) {
+av.fwt.makeActConfigFile = function (fileId, text, from) {
   'use strict';
+  console.log(from, ' called av.fwt.makeActConfigFile: fileID=', fileId);
   av.fzr.actConfig.file[fileId] = text;
 };
 
@@ -48,12 +50,11 @@ av.fwt.makeFzrInstsetCfg = function (idStr) {
   av.fzr.file[idStr + '/instset.cfg'] = av.fzr.file['c0/instset.cfg'];
 };
 
-av.fwt.makeFzrEventsCfgWorld = function (idStr, em) {
+av.fwt.makeFzrEventsCfgWorld = function (idStr) {
   'use strict';
   var txt = 'u begin LoadPopulation detail.spop' + '\n';
   txt += 'u begin LoadStructuredSystematicsGroup role=clade:filename=clade.ssg';
-  if (em) {av.fwt.makeEmDxFile(idStr+'/events.cfg', txt);}
-  else {av.fwt.makeFzrFile(idStr+'/events.cfg', txt);}
+  av.fwt.makeFzrFile(idStr+'/events.cfg', txt, 'av.fwt.makeFzrEventsCfgWorld');
 };
 
 /*---------------------------------------------------------------------------------------- av.fwt.makeFzrPauseRunAt --*/
@@ -66,12 +67,12 @@ av.fwt.makeFzrPauseRunAt = function (idStr, from) {
   if (av.dom.manualUpdateRadio.checked) {  //manually pause population
     txt = '-1';   //Manual Update
   }
-  if (false) {av.fwt.makeActConfigFile('pauseRunAt.txt', txt);}
-  else {av.fwt.makeFzrFile(idStr+'/pauseRunAt.txt', txt);}
+  if (false) {av.fwt.makeActConfigFile('pauseRunAt.txt', txt, 'av.fwt.makeFzrPauseRunAt');}
+  else {av.fwt.makeFzrFile(idStr+'/pauseRunAt.txt', txt, 'av.fwt.makeFzrPauseRunAt');}
 };
 
 
-av.fwt.makeFzrAvidaCfg = function (idStr, from) {
+av.fwt.makeFzrAvidaCfg = function (idStr, toActiveConfigFlag, from) {
   'use strict';
   if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrAvidaCfg', '; col, row = ', av.dom.sizeCols.value, av.dom.sizeRows.value);
   //console.log('col; row', av.dom.sizeCols, av.dom.sizeRows);
@@ -93,12 +94,13 @@ av.fwt.makeFzrAvidaCfg = function (idStr, from) {
   txt += '#include instset.cfg\n';
   txt += 'PRECALC_PHENOTYPE 1\n';
   txt += 'VERSION_ID 2.14.0 \n';
-  if (true) av.fwt.makeActConfigFile('avida.cfg', txt);  // 
-  else {av.fwt.makeFzrFile(idStr+'/avida.cfg', txt);}
+  console.log(from, ' called av.fwt.makeFzrAvidaCfg; idStr=', idStr, '; toActiveConfigFlag=', toActiveConfigFlag);
+  if (toActiveConfigFlag) av.fwt.makeActConfigFile('avida.cfg', txt, 'av.fwt.makeFzrAvidaCfg');  // 
+  else {av.fwt.makeFzrFile(idStr+'/avida.cfg', txt, 'av.fwt.makeFzrAvidaCfg');}
 };
 
 /*----------------------------------------------------------------------------------------- av.fwt.makeFzrAvidaTest --*/
-av.fwt.makeFzrAvidaTest = function (idStr, from) {
+av.fwt.makeFzrAvidaTest = function (idStr, toActiveConfigFlag, from) {
   'use strict';
   if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrAvidaTest', '; col, row = ', av.dom.sizeCols.value, av.dom.sizeRows.value);
   var txt = 'WORLD_X ' + av.dom.sizeColTest.value + '\n';
@@ -118,8 +120,9 @@ av.fwt.makeFzrAvidaTest = function (idStr, from) {
   txt += '#include instset.cfg\n';
   txt += 'PRECALC_PHENOTYPE 1\n';
   txt += 'VERSION_ID 2.14.0 \n';
-  if (true) {av.fwt.makeActConfigFile('avida.cfg', txt);}  // always false for now 2017 July
-  else {av.fwt.makeFzrFile(idStr+'/avida.cfg', txt);}
+  console.log(from, ' called av.fwt.makeFzrAvidaTest', '; col, row = ', av.dom.sizeCols.value, av.dom.sizeRows.value, '; toActiveConfigFlag', toActiveConfigFlag);
+  if (toActiveConfigFlag) {av.fwt.makeActConfigFile('avida.cfg', txt, 'av.fwt.makeFzrAvidaTest');}  // always false for now 2017 July
+  else {av.fwt.makeFzrFile(idStr+'/avida.cfg', txt, 'av.fwt.makeFzrAvidaTest');}
 };
 
 /*---------------------------------------------------------------------------------- end of av.fwt.makeFzrAvidaTest --*/
@@ -145,14 +148,14 @@ av.fwt.loadEnvDefaults = function (geometry, ndx, etsk) {
 
 av.fwt.form2NutrientStruct = function () {
         //console.log('etsk=', etsk, '; ndx=', ndx, '; av.nut[etsk].resrc=', av.nut[etsk].resrc);
-      //av.fwt.loadEnvDefaults('global', ndx, etsk);
+        //av.fzr.clearEnvironment('av.fwt.form2NutrientStruct');
+        //av.fwt.loadEnvDefaults('global', ndx, etsk);
 
 };
 
 
-av.fwt.form2NutrientTxt = function (from) {
+av.fwt.form2NutrientTxt = function (idStr, toActiveConfigFlag, from) {
   console.log(from + ' called av.fwt.form2NutrientTxt');
-  av.fzr.clearEnvironment('av.fwt.form2NutrientTxt');
   var geometry = 'Global';
   var supplyType = 'Infinite';
   var ndx = 1;           // only using the first subsection for now
@@ -167,7 +170,6 @@ av.fwt.form2NutrientTxt = function (from) {
   var numtasks = av.sgr.logEdNames.length;
   var txt = '';
   var cols = 1 ; var rows = 1; var numCells = 1; 
-  //av.fwt.form2NutrientStruct('av.fwt.form2NutrientTxt');
   
   //Find grid size;
   cols = Number(av.dom.sizeCols.value);
@@ -229,18 +231,21 @@ av.fwt.form2NutrientTxt = function (from) {
     };
     
   }// end of loop to go thru all the logic functions. Only NOT works for now.
-  console.log('txt=', txt);
-  console.log('av.oldnut=',av.oldnut);
-  console.log('av.nut=',av.nut);
-  av.fwt.makeActConfigFile('environment.cfg', txt);
+  //console.log('txt=', txt);
+  //console.log('av.oldnut=',av.oldnut);
+  console.log('very tired: av.nut=',av.nut);
   console.log('av.fzr=', av.fzr);
+//  if ('cfg'==idStr) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');  // 
+  if (toActiveConfigFlag) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');  // 
+  else {av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.form2NutrientTxt');}
 };
 
 
-av.fwt.makeFzrEnvironmentCfg = function (idStr, from) {
+av.fwt.makeFzrEnvironmentCfg = function (idStr, toActiveConfigFlag, from) {
   'use strict';
-  if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrEnvironmentCfg');
-  av.fwt.form2NutrientTxt('av.fwt.makeFzrEnvironmentCfg');
+  if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrEnvironmentCfg; idStr=', idStr);
+  //av.fwt.form2NutrientStruct('av.fwt.makeFzrEnvironmentCfg');
+  av.fwt.form2NutrientTxt(idStr, toActiveConfigFlag, 'av.fwt.makeFzrEnvironmentCfg');  
 };
 
 /*--------------------------------------------------------------------------------- av.fwt.makeFzrOldEnvironmentCfg --*/
@@ -257,8 +262,8 @@ av.fwt.makeFzrOldEnvironmentCfg = function (idStr, from) {
   if (av.dom.norose.checked) txt += 'REACTION  NOR  nor   process:value=4:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NOR  nor   process:value=0:type=pow  requisite:max_count=1\n';
   if (av.dom.xorose.checked) txt += 'REACTION  XOR  xor   process:value=4:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  XOR  xor   process:value=0:type=pow  requisite:max_count=1\n';
   if (av.dom.equose.checked) txt += 'REACTION  EQU  equ   process:value=5:type=pow  requisite:max_count=1';    else txt += 'REACTION  EQU  equ   process:value=0:type=pow  requisite:max_count=1';
-  if (true) {av.fwt.makeActConfigFile('environment.cfg', txt);}
-  else  { av.fwt.makeFzrFile(idStr+'/environment.cfg', txt);}
+  if (true) {av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.makeFzrOldEnvironmentCfg');}
+  else  { av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.makeFzrOldEnvironmentCfg');}
 };
 
 /*----------------------------------------------------------------------------------- av.fwt.makeFzrEnvironmentTest --*/
@@ -268,28 +273,30 @@ av.fwt.makeFzrEnvironmentTest = function (idStr, from) {
  
   var txt = av.dom.environConfigEdit.value;
   
-  if (true) {av.fwt.makeActConfigFile('environment.cfg', txt);}
-  else  { av.fwt.makeFzrFile(idStr+'/environment.cfg', txt);}
+  if (true) {av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.makeFzrEnvironmentTest');}
+  else  { av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.makeFzrEnvironmentTest');}
 };
 
 /*----------------------------------------------------------------------------------- av.fwt.makeFzrEnvironmentTest --*/
 
-av.fwt.makeFzrAncestorAuto = function (idStr, from) {
+av.fwt.makeFzrAncestorAuto = function (idStr, toActiveConfigFlag, from) {
   'use strict';
   if (av.debug.fio) console.log(from, ' av.fwt.makeFzrAncestorAuto');
+  console.log(from, ' called av.fwt.makeFzrAncestorAuto: idStr=', idStr, '; toActiveConfigFlag=', toActiveConfigFlag);
   var txt = '';
   var lngth = av.parents.autoNdx.length;
   for (var ii = 0; ii < lngth; ii++) {
     txt += av.parents.name[av.parents.autoNdx[ii]] + '\n';
     txt += av.parents.genome[av.parents.autoNdx[ii]] + '\n';
   }
-  if (true) {av.fwt.makeActConfigFile('ancestors.txt', txt);}
-  else {av.fwt.makeFzrFile(idStr+'/ancestors.txt', txt);}
+  if (toActiveConfigFlag) {av.fwt.makeActConfigFile('ancestors.txt', txt, 'av.fwt.makeFzrAncestorAuto');}
+  else {av.fwt.makeFzrFile(idStr+'/ancestors.txt', txt), 'av.fwt.makeFzrAncestorAuto';}
 };
 
-av.fwt.makeFzrAncestorHand = function (idStr, from) {
+av.fwt.makeFzrAncestorHand = function (idStr, toActiveConfigFlag, from) {
   'use strict';
-  if (av.debug.fio) console.log(from, ' av.fwt.makeFzrAncestorHand');
+  //if (av.debug.fio) 
+    console.log(from, ' called av.fwt.makeFzrAncestorHand: idStr=', idStr, '; toActiveConfigFlag=', toActiveConfigFlag);
   var txt = '';
   var lngth = av.parents.handNdx.length;
   for (var ii = 0; ii < lngth; ii++) {
@@ -297,8 +304,8 @@ av.fwt.makeFzrAncestorHand = function (idStr, from) {
     txt += av.parents.genome[av.parents.handNdx[ii]] + '\n';
     txt += av.parents.col[av.parents.handNdx[ii]] + ',' + av.parents.row[av.parents.handNdx[ii]] + '\n';
   }
-  if (true) {av.fwt.makeActConfigFile('ancestors_manual.txt', txt);}
-  else {av.fwt.makeFzrFile(idStr+'/ancestors_manual.txt', txt);}
+  if (toActiveConfigFlag) {av.fwt.makeActConfigFile('ancestors_manual.txt', txt, 'av.fwt.makeFzrAncestorHand');}
+  else {av.fwt.makeFzrFile(idStr+'/ancestors_manual.txt', txt, 'av.fwt.makeFzrAncestorHand');}
 };
 
 av.fwt.makeFzrTRfile = function (path, data) {
@@ -310,9 +317,10 @@ av.fwt.makeFzrTRfile = function (path, data) {
   }
   text = pairs.join();
   //console.log(path, text);
-  av.fwt.makeFzrFile(path, text);
+  av.fwt.makeFzrFile(path, text, 'av.fwt.makeFzrTRfile');
 };
 
+//Never called as of 2019 Oct 2; Delete??
 av.fwt.makeFzrTimeRecorder = function (fname, data) {
   var text='';
   var lngth = data.length-1;
@@ -322,62 +330,68 @@ av.fwt.makeFzrTimeRecorder = function (fname, data) {
   }
   lngth++;
   text += lngth + ':' + data[lngth];
-  av.fwt.makeFzrTRfile(fname, text);
+  av.fwt.makeFzrTRfile(fname, text, 'av.fwt.makeFzrTimeRecorder');
 };
 
 // --------------------------------------------------- called by other files -------------------------------------------
 //Setup to active folder just before sending to avida
 av.fwt.form2cfgFolder = function() {
   'use strict';
-  av.fwt.makeFzrAvidaCfg('cfg', 'av.fwt.form2cfgFolder');
-  av.fwt.makeFzrEnvironmentCfg('cfg', 'av.fwt.form2cfgFolder');
-  av.fwt.makeFzrAncestorAuto('cfg', 'av.fwt.form2cfgFolder');
-  av.fwt.makeFzrAncestorHand('cfg', 'av.fwt.form2cfgFolder');
+  var toActiveConfigFlag = true; // true is to Config spot for experiment; false is to Freezer
+  av.fwt.makeFzrAvidaCfg('activeConfig', toActiveConfigFlag, 'av.fwt.form2cfgFolder');
+  av.fwt.makeFzrEnvironmentCfg('activeConfig', toActiveConfigFlag, 'av.fwt.form2cfgFolder');
+  av.fwt.makeFzrAncestorAuto('activeConfig', toActiveConfigFlag, 'av.fwt.form2cfgFolder');
+  av.fwt.makeFzrAncestorHand('activeConfig', toActiveConfigFlag, 'av.fwt.form2cfgFolder');
 };
 
 //test setup to active folder just before sending to avida
 av.fwt.testForm2folder = function() {
   'use strict';
-  var actConfig = true;
+  var toActiveConfigFlag = true; // true is to Config spot for experiment; false is to Freezer
   av.fwt.makeFzrAvidaTest('cfg', 'av.fwt.form2cfgFolder');
-  av.fwt.makeFzrEnvironmentTest('cfg', 'av.fwt.form2cfgFolder');
-  av.fwt.makeFzrAncestorAuto('cfg', 'av.fwt.form2cfgFolder');
-  av.fwt.makeFzrAncestorHand('cfg', 'av.fwt.form2cfgFolder');  
+  av.fwt.makeFzrEnvironmentTest('cfg', toActiveConfigFlag, 'av.fwt.form2cfgFolder');
+  av.fwt.makeFzrAncestorAuto('cfg', toActiveConfigFlag, 'av.fwt.form2cfgFolder');
+  av.fwt.makeFzrAncestorHand('cfg', toActiveConfigFlag, 'av.fwt.form2cfgFolder');  
 };
 
-
-av.fwt.makeFzrConfig = function (num) {
+//making a freezer file not an active file
+av.fwt.makeFzrConfig = function (num, from) {
   'use strict';
-  var em = false;
-  av.fwt.makeFzrAvidaCfg('c'+num, 'av.fwt.makeFzrConfig');
-  av.fwt.makeFzrEnvironmentCfg('c'+num, 'av.fwt.makeFzrConfig');
-  console.log('after av.fwt.makeFzrEnvironmentCfg in av.fwt.makeFzrConfig');
-  av.fwt.makeFzrFile('c'+num+'/events.cfg', '');
+  console.log(from, 'called av.fwt.makeFzrConfig');
+  var toActiveConfigFlag = false; // true is to Config spot for experiment; false is to Freezer
+  
+  // or should we just copy the files from Active Config to the the freezer index?
+  av.fwt.makeFzrAvidaCfg('c'+num, toActiveConfigFlag, 'av.fwt.makeFzrConfig');
+  av.fwt.makeFzrEnvironmentCfg('c'+num, toActiveConfigFlag, 'av.fwt.makeFzrConfig');
+
+  av.fwt.makeFzrFile('c'+num+'/events.cfg', '', 'av.fwt.makeFzrConfig');
   //av.fwt.makeFzrFile('c'+num+'/entryname.txt', av.fzr.config[ndx].name);  // this was created in dnd menu code
   av.fwt.makeFzrInstsetCfg('c'+num);
-  av.fwt.makeFzrAncestorAuto('c'+num, 'av.fwt.makeFzrConfig');
-  av.fwt.makeFzrAncestorHand('c'+num, 'av.fwt.makeFzrConfig');
+  av.fwt.makeFzrAncestorAuto('c'+num, toActiveConfigFlag, 'av.fwt.makeFzrConfig');
+  av.fwt.makeFzrAncestorHand('c'+num, toActiveConfigFlag, 'av.fwt.makeFzrConfig');
   av.fwt.makeFzrPauseRunAt('c'+num, 'av.fwt.makeFzrConfig');
 };
 
-av.fwt.makeFzrWorld = function (num) {
+av.fwt.makeFzrWorld = function (num, from) {
   'use strict';
-  var em = false;
-  av.fwt.makeFzrAvidaCfg('w'+num, 'av.fwt.makeFzrWorld');
-  av.fwt.makeFzrEnvironmentCfg('w'+num, 'av.fwt.makeFzrConfig');
-  av.fwt.makeFzrEventsCfgWorld =('w'+num, em);
+   var toActiveConfigFlag = false; // true is to Config spot for experiment; false is to Freezer
+
+  console.log(from, 'called av.fwt.makeFzrWorld');
+  av.fwt.makeFzrAvidaCfg('w'+num, toActiveConfigFlag, 'av.fwt.makeFzrWorld');
+  av.fwt.makeFzrEnvironmentCfg('w'+num, toActiveConfigFlag, 'av.fwt.makeFzrWorld');
+  //console.log('after av.fwt.makeFzrEnvironmentCfg in av.fwt.makeFzrWorld');
+  av.fwt.makeFzrEventsCfgWorld('w'+num);
   //av.fwt.makeFzrFile('c'+num+'/entryname.txt', av.fzr.config[ndx].name);  // this was created in dnd menu code
   av.fwt.makeFzrInstsetCfg('w'+num);
-  av.fwt.makeFzrAncestorAuto('w'+num, 'av.fwt.makeFzrConfig');
-  av.fwt.makeFzrAncestorHand('w'+num, 'av.fwt.makeFzrConfig');
+  av.fwt.makeFzrAncestorAuto('w'+num, toActiveConfigFlag, 'av.fwt.makeFzrWorld');
+  av.fwt.makeFzrAncestorHand('w'+num, toActiveConfigFlag, 'av.fwt.makeFzrWorld');
   av.fwt.makeFzrTRfile('w'+num+'/tr0', av.pch.aveFit);
   av.fwt.makeFzrTRfile('w'+num+'/tr1', av.pch.aveCst);
   av.fwt.makeFzrTRfile('w'+num+'/tr2', av.pch.aveEar);
   av.fwt.makeFzrTRfile('w'+num+'/tr3', av.pch.aveNum);
   av.fwt.makeFzrTRfile('w'+num+'/tr4', av.pch.aveVia);
-  av.fwt.makeFzrFile('w'+num + '/update', av.grd.updateNum.toString() );
-  av.fwt.makeFzrCSV('w'+num, em);
-  //there are more files needed to talk to Matt, tiba
+  av.fwt.makeFzrFile('w'+num + '/update', av.grd.updateNum.toString(), 'av.fwt.makeFzrWorld' );
+  av.fwt.makeFzrCSV('w'+num);
 };
 
 av.fwt.popExpWrite = function (msg) {
@@ -394,7 +408,7 @@ av.fwt.popExpWrite = function (msg) {
       case 'environment.cfg':
       case 'avida.cfg':
         console.log('ii', ii, '; name', msg.files[ii].name);
-        av.fwt.makeFzrFile(msg.popName + '/' + msg.files[ii].name, msg.files[ii].data);
+        av.fwt.makeFzrFile(msg.popName + '/' + msg.files[ii].name, msg.files[ii].data, 'av.fwt.popExpWrite');
         break;
     };
   };
@@ -455,17 +469,20 @@ av.fwt.removeFzrItem = function(dir, type){
     case 'w':
       av.fwt.removeFzrWorld(dir);
       break;
-  }
+  };
 };
 
-av.fwt.makeFzrCSV = function(idStr, em) {
+av.fwt.makeFzrCSV = function(idStr) {
   "use strict";
   console.log('name is ', idStr + '/entryname.txt');
   var fileNm = av.fzr.file[idStr + '/entryname.txt'];
-  console.log('fileName = ', fileNm);
+  console.log('fileName = ', fileNm, '; idStr=', idStr,'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
   av.fwt.makeCSV(fileNm);
-  if (true) {av.fwt.makeActConfigFile('/timeRecorder.csv', av.fwt.csvStrg);}
-  else {av.fwt.makeFzrFile(idStr+'/timeRecorder.csv', av.fwt.csvStrg);}
+  // only ever makes in the active Config area
+  if (false) {av.fwt.makeActConfigFile('/timeRecorder.csv', av.fwt.csvStrg, 'av.fwt.popExpWrite');}
+  else {av.fwt.makeFzrFile(idStr+'/timeRecorder.csv', av.fwt.csvStrg, 'av.fwt.popExpWrite');}  
+  //  av.fwt.makeFzrFile(path, text);
+
 };
 
 av.fwt.writeCurrentCSV = function(idStr) {  
