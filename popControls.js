@@ -797,9 +797,9 @@ av.sgr.changeDetailsLayout = function(tsk, sub, from) {
     }    
   }        // end global 
   else {
-    document.getElementById(tsk+'0dishRegion').style.display = 'inline-block';
+    //document.getElementById(tsk+'0dishRegion').style.display = 'inline-block';
     document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'block';
-    document.getElementById(tsk+sub+'title').style.display = 'block';    
+    //document.getElementById(tsk+sub+'title').style.display = 'block';    
     document.getElementById(tsk+'0section').open = true;
 
     switch (supplyType) {    //for when geometery = local
@@ -830,9 +830,11 @@ av.sgr.changeDetailsLayout = function(tsk, sub, from) {
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-container';
           if (av.nut.hideFlags.gradient) {
             document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
+            document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'none';
             document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-noGridCheckbox-container';
           }
-          //console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
+          console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
+          //console.log('subSection=', document.getElementById(tsk+sub+'subSection'));
         }
         break;
       case 'equilibrium':
@@ -920,6 +922,8 @@ av.sgr.changeDetailsLayout = function(tsk, sub, from) {
         break;
     };
   };
+  //console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
+
 };
 
 //------------------------------------------------------------------------------------------------ end sugars for Eco --

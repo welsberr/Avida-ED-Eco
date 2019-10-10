@@ -564,41 +564,9 @@
 .gradientCheckDiv { grid-area: gradientCheckDiv; }
 .diffuseCheckDiv { grid-area: diffuseCheckDiv; }
 
-.grid-sugarDetailAll-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle typeInput'
-                       'sideInput sideInput'
-                       'periodCheckDiv periodTime'
-                       'gradientCheckDiv diffuseCheckDiv'
-                       'sideTitleHi sideTitleLo'   
-                       'initialHi initialLo'
-                       'inflowHi inflowLo'
-                       'outflowHi outflowLo'
-                       'equalHi equalLo';
-  width: 100%;
-}
-.grid-sugarDetail-globalEqual-container {
-  display: grid;
-  grid-template-areas: 'inflowHi periodCheckDiv'
-                       'outflowHi equalHi';
-  width: 100%;
-}
-.grid-sugarDetail-globalEqualPeriod-container {
-  display: grid;
-  grid-template-areas: 'inflowHi periodCheckDiv periodTime'
-                       'outflowHi equalHi equalHi';
-  width: 100%;
-}
-.grid-sugarDetail-None-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle typeInput sgrBlank sgrBlank sgrBlank sgrBlank';
-  width: 100%;
-}
-
 .grid-sugarDetail-Finite-noGridCheckbox-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv'
-                       'initialHi       initialHi initialHi';
+  grid-template-areas: 'typeInput initialHi';
   width: 100%;
 }
 .grid-sugarDetail-Finite-container {
@@ -628,6 +596,37 @@
   grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv'
                        'sideInput sideInput sideInput gradientCheckDiv'
                        'initialHi initialHi initialLo initialLo';
+  width: 100%;
+}
+
+.grid-sugarDetailAll-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle typeInput'
+                       'sideInput sideInput'
+                       'periodCheckDiv periodTime'
+                       'gradientCheckDiv diffuseCheckDiv'
+                       'sideTitleHi sideTitleLo'   
+                       'initialHi initialLo'
+                       'inflowHi inflowLo'
+                       'outflowHi outflowLo'
+                       'equalHi equalLo';
+  width: 100%;
+}
+.grid-sugarDetail-globalEqual-container {
+  display: grid;
+  grid-template-areas: 'inflowHi periodCheckDiv'
+                       'outflowHi equalHi';
+  width: 100%;
+}
+.grid-sugarDetail-globalEqualPeriod-container {
+  display: grid;
+  grid-template-areas: 'inflowHi periodCheckDiv periodTime'
+                       'outflowHi equalHi equalHi';
+  width: 100%;
+}
+.grid-sugarDetail-None-container {
+  display: grid;
+  grid-template-areas: 'typeInput sgrBlank sgrBlank sgrBlank sgrBlank';
   width: 100%;
 }
 

@@ -617,7 +617,7 @@
                       </div>
                       
                       <div class='odd'>
-                        What resources are available in the environment? (strength of energy reward shown in parentheses)<br>
+                        What resources are available in the environment?<br>
                         Set all sugars: 
                         <div id="setAllSugars">
                           <select id="allSugarGeometry" onchange='av.sgr.allSugarGeometryChange(this);'>
@@ -689,7 +689,7 @@
                                 <option id='orn0Quarters' class='Quarters' value='Quarters'>Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id='orn0initialDiv' class='sugarSummaryDiv'>
-                                <label><input id='orn0initialInput' class='sugInitialInput' type='text' onchange='av.sgr.initialChange(this);'/>
+                                <label><input id='orn0initialInput' class='sugInitialInput' type='text' value='100' onchange='av.sgr.initialChange(this);'/>
                                 &nbsp;Initial amount per cell&nbsp;&nbsp;</label>
                               </div>
                             </summary>
@@ -735,11 +735,11 @@
                                 <div id='orn1blank' class='grid-sugarDetail-item sgrBlank'>&nbsp;&nbsp;&nbsp;&nbsp;</div>  
 
                                 <div id='orn1initialHiDiv' class='grid-sugarDetail-item initialHi'>
-                                  <label><input id='orn1initialHiInput' class='sugInitialHiInput' type='text' onchange='av.sgr.initialChange(this);'/>&nbsp;
+                                  <label><input id='orn1initialHiInput' class='sugInitialHiInput' type='text' value='100' onchange='av.sgr.initialChange(this);'/>&nbsp;
                                     <span id='orn1initialHiText'>High side initial amount per cell </span></label>
                                 </div>
                                 <div id='orn1initialLoDiv' class='grid-sugarDetail-item initialLo'>
-                                  <label><input id='orn1initialHiInput' class='sugInitialLoInput' type='text' onchange='av.sgr.initialChange(this);'/>&nbsp;
+                                  <label><input id='orn1initialHiInput' class='sugInitialLoInput' type='text' value='100' onchange='av.sgr.initialChange(this);'/>&nbsp;
                                     <span id='orn1initialLoText'>Low side initial amount per cell</span></label>
                                 </div>
                                 <div id='orn1inflowHiDiv' class='grid-sugarDetail-item inflowHi'>
