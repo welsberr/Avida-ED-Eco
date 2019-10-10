@@ -1002,6 +1002,7 @@ av.ptd.allSugarCheckBox = function (allmode) {
 av.ptd.envobj2form = function(from) {
   console.log(from, 'called av.ptd.envobj2form');
   console.log('av.ui.envRegion=',av.ui.envRegion, '; av.ui.envTask=', av.ui.envTask, '; av.ui.envDistribute=',av.ui.envDistribute);
+  if (true) return;
   var task;
   var ndx = -1;
   var envobj;
@@ -1010,12 +1011,14 @@ av.ptd.envobj2form = function(from) {
   var ii=0;
   var found = false;
   var len;
+  
   if (-1 < logicindex && -1 < regionindex) {
     task = av.sgr.logEdNames[logicindex];
     envobj = av.fzr.env.rsrce[task];
-    console.log('task='+task,'; av.fzr.env.rsrce[task] = ', av.fzr.env.rsrce[task]);
+    //console.log('task='+task,'; av.fzr.env.rsrce[task] = ', av.fzr.env.rsrce[task]);
     len = envobj.name.length;
-    console.log('len='+len, '; envobj.name=',envobj.name);
+    //console.log('len='+len, '; envobj.name=',envobj.name);
+    
     while(ii < len && !found) {
       console.log('ii='+ii,'; envobj.name[ii]='+envobj.name[ii],'; envobj.name[ii].substring(3,10)='+envobj.name[ii].substring(3,10)+'|');
       if (regionindex == envobj.name[ii].substring(3,10)) {
@@ -1043,5 +1046,6 @@ av.ptd.envobj2form = function(from) {
     }
   }
   else {console.log('Error in an environment indesx: av.ui.envRegion=',av.ui.envRegion, '; av.ui.envTask=', av.ui.envTask, '; av.ui.envDistribute=',av.ui.envDistribute);}
+
 };
 

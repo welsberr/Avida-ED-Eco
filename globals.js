@@ -607,6 +607,8 @@ av.fzr.clearEnvironment = function(from) {
   
 
   // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
+  // av.fzr.env is only used for Test Dishes. 
+  // av.nut    is used for normal runs. nut is for nutrients
   av.fzr.env.rsrce = {};
   av.fzr.env.react = {}; 
   av.fzr.env.supply = {};
@@ -641,7 +643,7 @@ av.fzr.clearEnvironment = function(from) {
   };
   console.log('av.nut =',av.nut);
   //console.log('av =',av);
-    
+   
   for (var ii=0; ii< logiclen; ii++) {      //9
     tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
     //var vnm = av.sgr.logicVnames[ii];  
@@ -659,6 +661,7 @@ av.fzr.clearEnvironment = function(from) {
   //console.log('av.fzr.env.react=',av.fzr.env.react);
   //console.log('av.fzr.env.rsrce=',av.fzr.env.rsrce);
   //console.log('av.fzr.env=', av.fzr.env);
+
 };
 
 //-------------------------------------------------------------------------------------------- in av.fzr.clearFzrFn --//
