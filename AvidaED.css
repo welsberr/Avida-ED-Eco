@@ -29,17 +29,18 @@
  *
  * [1] http://www.w3.org/TR/CSS21/cascade.html#cascade
  */
+
 html, body {
   height: 100%;
   width: 100%;
   margin: 0;
   padding:0;
+  background: #eee;
 }
 
-.bit32 {
+.bit32 {                       /* not in use */
   font-family: Courier New;
   font-size: .8em;
-  text-height: .2em;
 }
 
 p {
@@ -183,37 +184,42 @@ div.popStatsTablePop {
   float: left;
 }
 
-button {display:inline;}
+button {
+  border: 1px solid #aaa;
+  display:inline;
+  cursor:pointer;
+  border-radius: 5px;
+}
 
 .bitButtonOff {
   background-color: #fff;
   color: #000;
-  font: 11px sans-serif;
-  text-decoration: none;
-  border: 1px solid #000;
-  border-color: #aaa;
-  border-radius: 5px;
-  padding: 0px 00px 2px 0px;
+  border: 1px solid #aaa;
+  padding: 0px 0px 2px 0px;
   height: 15px;
   width: 45px;
   display: block;
   text-align: center;
+/*
+  font: 11px sans-serif;
+  text-decoration: none;
+*/
 }
 
 .bitButtonOn {
   background-color: #fff;
   color: #00f;
-  font: 11px sans-serif;
-  text-decoration: none;
   color: #00bb00;
-  border: 1px solid #000;
-  border-color: #00dd00;
-  border-radius: 5px;
-  padding: 0px 00px 2px 0px;
+  border: 1px solid #00dd00;
+  padding: 0px 0px 2px 0px;
   height: 15px;
   width: 45px;
   display: block;
   text-align: center;
+/*
+  font: 11px sans-serif;
+  text-decoration: none;
+*/
 }
 
 .resourceButton {

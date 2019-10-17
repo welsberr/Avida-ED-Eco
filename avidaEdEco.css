@@ -156,42 +156,12 @@
     flex: 0 1 auto;
     padding: 1px 1px;     /* top right bottom left  */   /*top left/right bottom */ /*top/bottom  left/right */
   }
-  /* from https://www.bestcssbuttongenerator.com/#/17 */
   .pageButton {
-    -moz-box-shadow: 5px 4px 7px 0px #899599;
-    -webkit-box-shadow: 5px 4px 7px 0px #899599;
-    box-shadow: 5px 4px 7px 0px #899599;
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #bab1ba));
-    background:-moz-linear-gradient(top, #ededed 5%, #bab1ba 100%);
-    background:-webkit-linear-gradient(top, #ededed 5%, #bab1ba 100%);
-    background:-o-linear-gradient(top, #ededed 5%, #bab1ba 100%);
-    background:-ms-linear-gradient(top, #ededed 5%, #bab1ba 100%);
-    background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#bab1ba',GradientType=0);
-    background-color:#ededed;
-    -moz-border-radius:6px;
-    -webkit-border-radius:6px;
-    border-radius:6px;
-    border:1px solid #d6bcd6;
-    display:inline-block;
-    cursor:pointer;
-    color:black;
-    font-family:Arial;
-    font-size:12px;
+    font-size: 13px;
     padding:4px 8px;
-    text-decoration:none;
+    border-radius: 5px;
+    min-width: 82px;
   }
-  .pageButton:hover {
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #bab1ba), color-stop(1, #ededed));
-    background:-moz-linear-gradient(top, #bab1ba 5%, #ededed 100%);
-    background:-webkit-linear-gradient(top, #bab1ba 5%, #ededed 100%);
-    background:-o-linear-gradient(top, #bab1ba 5%, #ededed 100%);
-    background:-ms-linear-gradient(top, #bab1ba 5%, #ededed 100%);
-    background:linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bab1ba', endColorstr='#ededed',GradientType=0);
-    background-color:#bab1ba;
-  }
-
 
 .mainBlockHolder{
     background-color: #F5F5F5; /* lightskyblue; */
@@ -366,29 +336,15 @@
     flex: 0 0 30px;
     border: 1px solid #AAA;
   }
-  #debugResource{
+
+  #displayGridResourceData{
     display: flex;
     flex: 0 0 auto;
     border: 1px solid #AAA;
     width: 100%;
   }
-    
-.grid-env1row-container {      /*delete */
-  display: inline-grid;
-  grid-template-columns: 184px auto;
-  background-color: #F5F5F5;  /* #2196F3;  paple blue */
-  width: 100%;
-}
-
-.grid-env1row-c1-item{
-  background-color: #F5F5F5;
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  text-align: right;
-  padding: 2px 1px;
-  max-width: 182px;
-}
-
-.grid-currentSugarAmount-container {   /*on data tab of population page */
+  
+  .grid-currentSugarAmount-container {   /*on stats tab of population page */
   display: inline-grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
   background-color: #F5F5F5;     /* #2196F3;  blue */
@@ -402,21 +358,6 @@
   text-align: center;
   padding: 2px 3px;
 }
-
-  .grid-9env-container {         /*used in 'show resources' will probably delete later */ /*delete */
-  display: inline-grid;
-  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
-  background-color: #F5F5F5;  /* #2196F3;  paple blue */
-  width: 100%;
-}
-
-.grid-9env-item {                   /*used in 'show resources' will probably go away */ /*delete */
-  background-color: #F5F5F5;
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  text-align: center;
-  padding: 2px 3px;
-}
-
 
 /*************************************************************************** Sugar Accordion using details and select */
 /* Accodion using details/summary and hidden sections also defined here */
@@ -534,8 +475,41 @@
 #equSection{
   background: rgba(153,255,153, 1);
 }
+/****************************************** layout for header area for Resource controls in Setup for Population Page */
+/* 
+    Deal with these later: now sure what we want yet.
+#sugarRewardStr { grid-area: rewardstr; }
+#sugarReward02x { grid-area: reward02x; }
+#sugarReward04x { grid-area: reward04x; }
+#sugarReward08x { grid-area: reward08x; }
+#sugarReward16x { grid-area: reward16x; }
+#sugarReward32x { grid-area: reward32x; }
+                          <div id='sugarRewardStr'>(strength of energy reward shown in parentheses)</div>
+                          <div id='sugarReward02x'>Easy (x2) notose/nanose</div>
+                          <div id='sugarReward04x'>Moderate (x4) andose/ornose</div>
+                          <div id='sugarReward08x'>Hard (x8) orose/antose</div>
+                          <div id='sugarReward16x'>Very Hard (x16) norose/xorose</div>
+                          <div id='sugarReward32x'>Brutal (x32) equose</div>
 
-/************************************************************************************************** Sugar grid layout */
+*/
+#sugarHeaderTitle { grid-area: headerTitle; }
+#sugarSettingTitle { grid-area:settingTitle ; }
+#allSugarGeometryDiv { grid-area:geometryDiv ; }
+#allsugarSupplyTypeDiv { grid-area:supplyType ; }
+#allSugarDetailsDiv { grid-area:detailDiv ; }
+#allSugarBlank { grid-area: allSugarBlank ; }
+/* # { grid-area: ; } */
+
+.resourceHeaderContainer {
+  display: grid;
+  grid-template-areas: 'headerTitle  headerTitle headerTitle'
+                       'settingTitle geometryDiv supplyType '
+                       'detailDiv    detailDiv   detailDiv';
+  width: 100%;
+
+}
+
+/************************* Sugar controls layout in 'deails' of detail/summary for each task-sugar in sugar according */
 
 .initialHi { grid-area: initialHi;}
 .initialLo { grid-area: initialLo;}
@@ -956,7 +930,7 @@ checkbox:focus {
   .orgInfo {
     flex: 0 1 244px;          /* flex: 0 1 344px; is fixed in that dimension */
     border: 1px solid #AAA;
-    background: beige;
+    background: 
   }
   .analysisArea{
     display: flex;
@@ -1089,43 +1063,39 @@ checkbox:focus {
 
 /*************************************************************************************************** no longer in use */
 
-/* from https://www.bestcssbuttongenerator.com/#/17 */
-.oldButton {
-  -moz-box-shadow: 3px 4px 0px 0px #899599;
-  -webkit-box-shadow: 3px 4px 0px 0px #899599;
-  box-shadow: 3px 4px 0px 0px #899599;
-  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #bab1ba));
-  background:-moz-linear-gradient(top, #ededed 5%, #bab1ba 100%);
-  background:-webkit-linear-gradient(top, #ededed 5%, #bab1ba 100%);
-  background:-o-linear-gradient(top, #ededed 5%, #bab1ba 100%);
-  background:-ms-linear-gradient(top, #ededed 5%, #bab1ba 100%);
-  background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#bab1ba',GradientType=0);
-  background-color:#ededed;
-  -moz-border-radius:15px;
-  -webkit-border-radius:15px;
-  border-radius:15px;
-  border:1px solid #d6bcd6;
-  display:inline-block;
-  cursor:pointer;
-  color:black;
-  font-family:Arial;
-  font-size:10px;
-  padding:3px 12px;
-  text-decoration:none;
-  text-shadow:0px 1px 0px #e1e2ed;
-}
-.oldButton:hover {
-  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #bab1ba), color-stop(1, #ededed));
-  background:-moz-linear-gradient(top, #bab1ba 5%, #ededed 100%);
-  background:-webkit-linear-gradient(top, #bab1ba 5%, #ededed 100%);
-  background:-o-linear-gradient(top, #bab1ba 5%, #ededed 100%);
-  background:-ms-linear-gradient(top, #bab1ba 5%, #ededed 100%);
-  background:linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bab1ba', endColorstr='#ededed',GradientType=0);
-  background-color:#bab1ba;
-}
-.oldButton:active {
-  position:relative;
-  top:1px;
-}
+//Not in use, but could be useful
+  /* from https://www.bestcssbuttongenerator.com/#/17 */
+  .fancyButton {
+    -moz-box-shadow: 5px 4px 7px 0px #899599;
+    -webkit-box-shadow: 5px 4px 7px 0px #899599;
+    box-shadow: 5px 4px 7px 0px #899599;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #bab1ba));
+    background:-moz-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+    background:-webkit-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+    background:-o-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+    background:-ms-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+    background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#bab1ba',GradientType=0);
+    background-color:#ededed;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:1px solid #d6bcd6;
+    display:inline-block;
+    cursor:pointer;
+    color:black;
+    font-family:Arial;
+    font-size:12px;
+    padding:4px 8px;
+    text-decoration:none;
+  }
+  .fancyButton:hover {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #bab1ba), color-stop(1, #ededed));
+    background:-moz-linear-gradient(top, #bab1ba 5%, #ededed 100%);
+    background:-webkit-linear-gradient(top, #bab1ba 5%, #ededed 100%);
+    background:-o-linear-gradient(top, #bab1ba 5%, #ededed 100%);
+    background:-ms-linear-gradient(top, #bab1ba 5%, #ededed 100%);
+    background:linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bab1ba', endColorstr='#ededed',GradientType=0);
+    background-color:#bab1ba;
+  }

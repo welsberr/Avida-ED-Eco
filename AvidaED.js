@@ -229,6 +229,10 @@ require([
     av.dom.organismBlock = document.getElementById('organismBlock');
     av.dom.analysisBlock = document.getElementById('analysisBlock');
     av.dom.showTextBlock = document.getElementById('showTextBlock');
+    av.dom.populationButton = document.getElementById('populationButton');
+    av.dom.organismButton = document.getElementById('organismButton');
+    av.dom.analysisButton = document.getElementById('analysisButton');
+    av.dom.showTextButton = document.getElementById('showTextButton');
     av.dom.allAvida = document.getElementById('allAvida');
 
     av.dom.lftPnlButtonImg = document.getElementById('lftPnlButtonImg');
@@ -1121,7 +1125,7 @@ require([
       document.getElementById('testConfig').style.display = 'none';
       document.getElementById('avidianOutline').style.display = 'none';
       document.getElementById('popRightSideControlHolder').style.display = 'none';
-      document.getElementById('debugResource').style.display = 'none';
+      document.getElementById('displayGridResourceData').style.display = 'none';
 
       av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopentDisplays');
 
@@ -1160,7 +1164,7 @@ require([
       document.getElementById('popRightSideControlHolder').style.display = 'flex';
       //document.getElementById('popRightSideArrow').style.display = 'none';        // as of 2019_0909 I think this can be deleted. 
       //                                                                            // inside popRightSideControlHolder
-      document.getElementById('debugResource').style.display = 'flex';
+      document.getElementById('displayGridResourceData').style.display = 'flex';
 
       av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopentDisplays.onclick_show');
 
@@ -1191,10 +1195,10 @@ require([
 
   //toggles showing resource data in right info panel (Stats window) in Populaton View
   av.dom.xorLabel.onclick = function () {
-    if ('none' === document.getElementById('debugResource').style.display) {
-      document.getElementById('debugResource').style.display = 'flex';
+    if ('none' === document.getElementById('displayGridResourceData').style.display) {
+      document.getElementById('displayGridResourceData').style.display = 'flex';
     } else {
-      document.getElementById('debugResource').style.display = 'none';
+      document.getElementById('displayGridResourceData').style.display = 'none';
     }
   };
 
@@ -1370,7 +1374,14 @@ require([
     av.dom.organismBlock.style.display = "none";
     av.dom.analysisBlock.style.display = "none";
     av.dom.showTextBlock.style.display = "none";
-    document.getElementById(showBlock).style.display = "flex";
+    av.dom.populationButton.style.background = 'white';
+    av.dom.organismButton.style.background = 'white';
+    av.dom.analysisButton.style.background = 'white';
+    av.dom.showTextButton.style.background = 'white';
+    document.getElementById(showBlock).style.display = "flex";   //orgPageButtonHolder
+    var showButton = showBlock.substring(0,showBlock.length-5)+'Button';
+    console.log('showButton=',showButton);
+    document.getElementById(showButton).style.background = '#DBDBDB'; 
     //dijit.byId(showBlock).resize();
     //document.getElementById(showBlock).resize();
 

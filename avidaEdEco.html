@@ -58,7 +58,7 @@
     </script>
   </head>
 
-  <body data-maq-flow-layout='true' data-maq-comptype='desktop' class='claro' data-maq-ws='collapse'
+  <body id='avidaED' data-maq-flow-layout='true' data-maq-comptype='desktop' class='claro' data-maq-ws='collapse'
         data-maq-appstates='{}' id='myapp'
         onresize='avResize()'>
     <span title="http://stackoverflow.com/questions/20828799/creating-a-splash-page-in-html5"></span>
@@ -532,7 +532,7 @@
                       </div> <span comment="end of popStatistics"></span>
                     </div><span comment="end of popStatHolder"></span>
                     
-                    <div id="debugResource" class="debug">
+                    <div id="displayGridResourceData" class="debug">
                       <div class="grid-currentSugarAmount-container">
                         <div class="grid-currentSugarAmount-item">NOT<br /><label id="mxNot"> </label><br /><label id="cellNot" onchange='av.ui.where(this)'></label></div>
                         <div class="grid-currentSugarAmount-item">NAN<br /><label id="mxNan"> </label><br /><label id="cellNan"></label></div>
@@ -617,29 +617,36 @@
                       </div>
                       
                       <div class='odd'>
-                        What resources are available in the environment?<br>
-                        Set all sugars: 
-                        <div id="setAllSugars">
-                          <select id="allSugarGeometry" onchange='av.sgr.allSugarGeometryChange(this);'>
-                            <option value='Global'>All Global</option>
-                            <option value='Local'>All Local</option>
-                            <option value='Neutral' selected>----</option>                            
-                          </select> Geometry &nbsp;&nbsp;
-                          <select id='allsugarSupplyType' onchange='av.sgr.allsugarSupplyTypeChange(this);'>
-                            <option value='None'>All None</option>
-                            <option value='Infinite'>All Infinite</option>
-                            <option value='Finite' class='globalFinite'>All Finite</option>
-                            <option value='Equilibrium' class='globalEquilibrium'>All Equilibrium</option>
-                            <option value='All' class='globalAll'>All debug only</option>
-                            <option value='Neutral' selected>----</option>
-                          </select> Supply type &nbsp;&nbsp;
-                          <select id="allSugarDetails" onchange='av.sgr.allSugarDetailsOpenClose(this);'>
-                            <option value='allOpen'>Show All</option>
-                            <option value='allClose'>Hide All</option>
-                            <option value='Neutral' selected>----</option>                            
-                          </select> Show/Hide Details
+                        <div id='sugarHeader' class='resourceHeaderContainer'>
+                          <div id='sugarHeaderTitle'>Resource Options: </div>
+                          <div id='sugarSettingTitle'>Set all sugars: </div>
+                          <div id="allSugarGeometryDiv">
+                            <select id="allSugarGeometry" onchange='av.sgr.allSugarGeometryChange(this);'>
+                              <option value='Global'>All Global</option>
+                              <option value='Local'>All Local</option>
+                              <option value='Neutral' selected>----</option>                            
+                            </select> Geometry &nbsp;&nbsp;
+                          </div>
+                          <div id='allsugarSupplyTypeDiv'>
+                            <select id='allsugarSupplyType' onchange='av.sgr.allsugarSupplyTypeChange(this);'>
+                              <option value='None'>All None</option>
+                              <option value='Infinite'>All Infinite</option>
+                              <option value='Finite' class='globalFinite'>All Finite</option>
+                              <option value='Equilibrium' class='globalEquilibrium'>All Equilibrium</option>
+                              <option value='All' class='globalAll'>All debug only</option>
+                              <option value='Neutral' selected>----</option>
+                            </select> Supply type &nbsp;&nbsp;
+                          </div>
+                          <div id='allSugarDetailsDiv'>
+                            <select id="allSugarDetails" onchange='av.sgr.allSugarDetailsOpenClose(this);'>
+                              <option value='allOpen'>Show All</option>
+                              <option value='allClose'>Hide All</option>
+                              <option value='Neutral' selected>----</option>                            
+                            </select> Show/Hide Details
+                          </div>
+                          <div id='allSugarBlank' class='AllsgrBlank'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
                         </div>
-
+                        
                         <div id='sugarAccordion'>
 
                           <details id='not0section' class='sugarAccordionSection'>
@@ -945,6 +952,7 @@
                       </div>
                       
                       <div class='odd'>
+                        <div id='ex1resourceHeader' class='ex1resourceHeaderClass'>
                         What resources are available in the environment? (strength of energy reward shown in parentheses)
                         <div><select id='ex1allSugarChange'>
                           <option value='allon'>All Infinite</option>
@@ -953,6 +961,7 @@
                           <option value='allNeutral' selected>----</option>
                           </select></div>
                         <br />
+                        </div>
                         <div id='ex1sugarAccordion'>
                           <details class='ex1sugarAccordionSection' id='ex1notSection'>
                             <summary class='ex1sugarSummary'>
@@ -1354,13 +1363,9 @@
                 </div>
               </div>
             </div><span title="end of orgBenchCol"></span>
-            <div class="orgInfo">
+            <div class='orgInfo'>
               <table border='0'
                      style='border-collapse: collapse; table-layout: auto; width: 100%; height: auto; background-color:#DDD'>
-                <colgroup>
-                  <col></col>
-                  <col></col>
-                </colgroup>
                 <tbody>
                   <tr>
                     <td>Function</td>

@@ -18,7 +18,6 @@ String.prototype.replaceAll = function(search, replacement) {
   return target.split(search).join(replacement);
 };
 
-
 //av.debug flags
 av.debug = {};
 av.debug.userMsg = false; //debug of user messages.
