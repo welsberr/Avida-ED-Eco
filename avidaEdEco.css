@@ -110,6 +110,11 @@
     height: 20px;
     margin: auto;
   }
+  #RtSideToggleButtons{
+    height: 20px;
+    margin: auto;
+  }
+  
 
 /*contains navigation column and pages (population, Organsims, Analysis) */
   .mainRow { 
@@ -162,6 +167,64 @@
     border-radius: 5px;
     min-width: 82px;
   }
+#FreezerTitle {
+  font-size: 190%;
+  text-align:  center;
+  font-weight: normal;
+}
+.freezerClass{
+  border: 1px solid #BABABA;
+  flex: 1;                /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+  overflow:scroll;
+  max-height: 600px;
+  overflow:scroll;
+}
+.freezerSection{
+  font-size: 130%;
+  background-color: #EEE;
+}
+
+/* trash area below freezer */
+#trashCan { 
+  grid-area: trashCan; 
+  align-self: stretch;
+  justify-self: stretch;
+  background: pink;
+}
+#showTextButtonDiv { 
+  grid-area: showTextButtonDiv;
+  align-self: stretch;
+  justify-self: stretch;
+  background: skyblue;
+}
+#developmentToggleDiv { 
+  grid-area: developmentToggleDiv;
+  align-self: stretch;
+  justify-self: stretch;
+  background: yellow;
+}
+
+.trash-grid-container{
+  display: grid;
+  grid-template-areas: 'trashCan showTextButtonDiv '
+                       'trashCan developmentToggleDiv';
+  align-items: center;   /* up down */
+  grid-template-columns: auto auto;
+  grid-template-rows: 50% 50%;
+  grid-column-gap: 1px;
+  grid-row-gap: 1px;
+  width: 100%;
+  background: palegreen;
+  flex: 0 1 40px;
+  border: 1px solid #AAA;
+}
+#showTextButton{
+  margin: auto;
+}
+#developmentToggle{
+  margin: auto;
+}
+
 
 .mainBlockHolder{
     background-color: #F5F5F5; /* lightskyblue; */
@@ -689,6 +752,9 @@
 /* -------------------- Select Box Styles: bavotasan.com Method (with special adaptations by ericrasch.com) */
 /* -------------------- Source: http://bavotasan.com/2011/style-select-box-using-only-css/ */
 /* play with select/option here https://codepen.io/dblackwood/pen/KjbGXo 
+/*
+/* I wish I wrote down what I did to make sure the box was wide enough to hold the text for all the options.
+/*
 /* Style a Select Box Using Only CSS. Inspired by: http://bavotasan.com/2011/style-select-box-using-only-css/
 /* fork from https://codepen.io/ericrasch/pen/zjDBx
 
@@ -702,23 +768,23 @@
 /* https://codepen.io/fabriceleven/pen/qOmNPG based on div around select
 
 /* if select in a div then content: '\25BC'; can be used in the div class css
-
+/* 
 /* From  https://www.proy.info/style-select-dropdown-using-css/ */
 /* body select.select_box option */ 
 
 select {
 /*  background: url("https://i.ibb.co/b7xjLrB/selectbox-arrow.png") right center no-repeat;  */
-  background: url('images/arrowDownBlackSmallMedOutlineMoreBackgnd.png') right center no-repeat;
-  background-size: 20px 20px;
+  height: 18px;
+  border: 1px solid #aaa;
+  background: url('images/select_white_on_black_V_150x200.png') right center no-repeat;
+  background-size:  auto 99%;    /* was 20 x 20 */
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
   appearance: none;
-  border: 1px solid black;
   border-radius: 5px;
-  margin-top: 2px;
-  padding-left: 2px;
-  padding-right: 1em;
+  margin: 0px 4px 0px 1px;     /* top right bottom left  */   /*top left/right bottom */ /*top/bottom  left/right */
+  padding: 0px 2em 0px 2px;   /* top right bottom left  */  /* box padding border margin outside now */
 }
 select:hover{
   cursor: pointer;
@@ -734,7 +800,7 @@ select:focus{
 }
 
 select:option { 
-    padding: 0 2px; 
+    padding: 0px 2px;    /*top/bottom  left/right  */
     background-color: #eee;
 } 
 /* for IE and Edge */ 
@@ -744,14 +810,18 @@ select::-ms-expand {
 select:disabled::-ms-expand { 
     background: #fff; 
 }
-body option:hover{
-  background-color: yellow;
-}
-/*
-option[selected]{
-    background:#0F0;  /*does not seem to work 
-}  
-*/
+
+  .toggleLftButton {
+    border-radius: 5px 0px 0px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 18px;
+    padding: 1px 4px 3px 4px;  /* top right bottom left */
+  }
+  .toggleRitButton {
+    border-radius: 0px 5px 5px 0px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 18px;
+    padding: 1px 4px 3px 4px;  /* top right bottom left */
+  }
+
 
 /* Checkbox next */
 
@@ -863,26 +933,6 @@ checkbox:focus {
 .flowInput{
   width: 2em;      /*  4.5em */
   height:1.6em
-}
-#FreezerTitle {
-  font-size: 190%;
-  text-align:  center;
-  font-weight: normal;
-}
-.freezerClass{
-  border: 1px solid #BABABA;
-  flex: 1;                /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-  overflow:scroll;
-  max-height: 600px;
-  overflow:scroll;
-}
-.freezerSection{
-  font-size: 130%;
-  background-color: #EEE;
-}
-#trashDiv{
-  flex: 0 1 40px;
-    border: 1px solid #AAA;
 }
 
   .orgBenchCol{

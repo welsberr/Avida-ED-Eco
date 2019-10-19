@@ -1109,15 +1109,16 @@ require([
 
   av.ui.where = function (domobj) {
     // placeholder that was to return the cell ID in the grid perhaps never done. 
-    //console.log('domobj=', domobj);
+    console.log('domobj=', domobj);
   };
 
-  av.ui.toggleDevelopentDisplays = function () {
+  av.ui.toggleDevelopentDisplays = function (domobj) {
+    console.log('domobj=', domobj);
     var len, tsk, sub;
     if ('visible' === av.doj.mnDebug.style.visibility) {
       av.ui.hideDevelopment = true;
       av.doj.mnDebug.style.visibility = 'hidden';
-      document.getElementById('showTextButton').style.display = 'none';
+      document.getElementById('showTextButton').style.visibility = 'visible';
       document.getElementById('popInfoTabHolder').className = 'tabHolderHide';
       document.getElementById('fzTdishSec').style.visibility = 'hidden';
       document.getElementById('testDishDetailDiv').style.display = 'none';
@@ -1153,7 +1154,7 @@ require([
     } else {       // development sectiomn can be seen.
       av.ui.hideDevelopment = false;
       av.doj.mnDebug.style.visibility = 'visible';
-      document.getElementById('showTextButton').style.display = 'flex';
+      document.getElementById('showTextButton').style.visibility = 'visible';
 
       document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
       document.getElementById('fzTdishSec').style.visibility = 'visible';
@@ -1368,7 +1369,7 @@ require([
   //So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
   //the default option.
   av.ui.mainBoxSwap = function (showBlock) {
-    //console.log('showBlock=', showBlock);
+    console.log('showBlock=', showBlock);
     av.ui.page = showBlock;
     av.dom.populationBlock.style.display = "none";
     av.dom.organismBlock.style.display = "none";
@@ -1392,9 +1393,7 @@ require([
     // if the miniplot on the populaton page needs to be initiated call that funciton.
     if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
       av.grd.popChartInit('av.ui.mainBoxSwap');
-    }
-    ;
-
+    };
     //console.log('end of mainBoxSwap');
   };
 
@@ -1420,7 +1419,7 @@ require([
     av.dom.ExecuteAbout.style.width = '100%';
     if (undefined !== av.traceObj) {
       av.ind.updateOrgTrace();
-    }
+    };
   };
 
   document.getElementById('analysisButton').onclick = function () {
@@ -1434,7 +1433,15 @@ require([
     av.post.addUser('Button: showTextButton');
     av.ui.mainBoxSwap('showTextBlock');
   };
-  // ------------------ three controls for the same purpose; took work to get tabs to look right so I'm keeping for now --
+  // ------------------ three controls for the same purpose; tabs used in develoopment mode --
+  
+  av.ptd.RtToggleButtton = function(domObj) {
+    console.log('id=', domObj.id, '; domObj.value=', domObj.value);
+    if ('populationBlock' == av.ui.page) {
+      //deal with tabs as well as toggle on population page
+      
+    }
+  };
 
   av.ptd.RtInfoPanel = function (domObj) {
     console.log('domObj.value=', domObj.value);
@@ -1442,8 +1449,7 @@ require([
     var tablinks = document.getElementsByClassName("tablinks");
     for (var ii = 0; ii < tablinks.length; ii++) {
       tablinks[ii].className = tablinks[ii].className.replace(" active", "");
-    }
-    ;
+    };
     av.dom.testSetupBlock.display = 'none';
     document.getElementById('ex1setupBlock').style.display = 'none';
     document.getElementById('tst2setupBlock').style.display = 'none';
@@ -1462,10 +1468,8 @@ require([
       // if the miniplot on the populaton page needs to be initiated call that funciton.
       if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
         av.grd.popChartInit('av.ptd.RtInfoPanel');
-      }
-      ;
-    }
-    ;
+      };
+    };
   };
 
   av.ptd.popRightInfoPanel = function (domObj) {
