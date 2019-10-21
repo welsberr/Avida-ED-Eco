@@ -196,12 +196,18 @@
   align-self: stretch;
   justify-self: stretch;
   background: skyblue;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 #developmentToggleDiv { 
   grid-area: developmentToggleDiv;
   align-self: stretch;
   justify-self: stretch;
   background: yellow;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .trash-grid-container{
@@ -219,10 +225,10 @@
   border: 1px solid #AAA;
 }
 #showTextButton{
-  margin: auto;
+  min-width: 60px;
 }
 #developmentToggle{
-  margin: auto;
+  min-width: 60px;
 }
 
 
@@ -816,12 +822,16 @@ select:disabled::-ms-expand {
     height: 18px;
     padding: 1px 4px 3px 4px;  /* top right bottom left */
   }
+
   .toggleRitButton {
     border-radius: 0px 5px 5px 0px;                  /* top-left, top-right, bottom-right, bottom-left */
     height: 18px;
     padding: 1px 4px 3px 4px;  /* top right bottom left */
+    background: inherit;
   }
-
+  .activeBtn {
+    background-color: #ccc;
+  }
 
 /* Checkbox next */
 

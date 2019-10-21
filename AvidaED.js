@@ -490,14 +490,12 @@ require([
   av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
 
 
-  if (av.debug.root)
-    console.log('before organIcon');
+  if (av.debug.root) console.log('before organIcon');
   av.dnd.organIcon = new dndTarget('organIcon', {accept: ['g'], selfAccept: false});
   av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
   av.dnd.gridCanvas = new dndTarget('gridCanvas', {accept: ['g']});
   av.dnd.trashCan = new dndSource('trashCan', {accept: ['c', 'g', 't', 'w'], singular: true});
-  if (av.debug.root)
-    console.log('after trashCan');
+  if (av.debug.root) console.log('after trashCan');
 
   av.dnd.activeConfig = new dndSource('activeConfig', {
     accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
@@ -513,8 +511,7 @@ require([
     selfAccept: false
   });
 
-  if (av.debug.root)
-    console.log('before activeOrgan');
+  if (av.debug.root) console.log('before activeOrgan');
   //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
   av.dnd.activeOrgan = new dndSource('activeOrgan', {
     accept: ['g'],
@@ -536,8 +533,7 @@ require([
   //**************************************************************************************************/
 
   //Avida as a web worker
-  if (av.debug.root)
-    console.log('before call avida');
+  if (av.debug.root) console.log('before call avida');
   //console.log('typeof(av.aww.uiWorker', typeof(av.aww.uiWorker));
   if (typeof (Worker) !== 'undefined') {
     //console.log('Worker type is not undefined');
@@ -553,15 +549,13 @@ require([
   ;
 
   //process message from web worker
-  if (av.debug.root)
-    console.log('before fio.uiWorker on message');
+  if (av.debug.root) console.log('before fio.uiWorker on message');
   av.aww.uiWorker.onmessage = function (ee) {
     //console.log('avida_ee', ee);
     av.msg.readMsg(ee);
   };  // in file messaging.js
 
-  if (av.debug.root)
-    console.log('before dnd triggers');
+  if (av.debug.root) console.log('before dnd triggers');
   //*******************************************************************************************************************
   //       Dojo Dnd drop function - triggers for all dojo dnd drop events
   //*******************************************************************************************************************
@@ -1126,6 +1120,7 @@ require([
       document.getElementById('testConfig').style.display = 'none';
       document.getElementById('avidianOutline').style.display = 'none';
       document.getElementById('popRightSideControlHolder').style.display = 'none';
+      document.getElementById('RtSideSelectHolder').style.display = 'none';
       document.getElementById('displayGridResourceData').style.display = 'none';
 
       av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopentDisplays');
@@ -1163,6 +1158,7 @@ require([
       document.getElementById('testConfig').style.display = 'flex';
       document.getElementById('avidianOutline').style.display = 'inline-block';
       document.getElementById('popRightSideControlHolder').style.display = 'flex';
+      document.getElementById('RtSideSelectHolder').style.display = 'flex';
       //document.getElementById('popRightSideArrow').style.display = 'none';        // as of 2019_0909 I think this can be deleted. 
       //                                                                            // inside popRightSideControlHolder
       document.getElementById('displayGridResourceData').style.display = 'flex';
@@ -1433,16 +1429,9 @@ require([
     av.post.addUser('Button: showTextButton');
     av.ui.mainBoxSwap('showTextBlock');
   };
-  // ------------------ three controls for the same purpose; tabs used in develoopment mode --
+  // ------------------ four controls for the same purpose; tabs used in develoopment mode --
   
-  av.ptd.RtToggleButtton = function(domObj) {
-    console.log('id=', domObj.id, '; domObj.value=', domObj.value);
-    if ('populationBlock' == av.ui.page) {
-      //deal with tabs as well as toggle on population page
-      
-    }
-  };
-
+  //this one goes away
   av.ptd.RtInfoPanel = function (domObj) {
     console.log('domObj.value=', domObj.value);
     //for tab system.
@@ -1456,11 +1445,14 @@ require([
 
     //for select/option control
     if ('Setup' == domObj.value) {
+      document.getElementById('SetupButton').className += ' activeBtn';
+      document.getElementById('StatsButton').className = 'toggleLftButton';
       document.getElementById('popRightSideSelect').value = 'Setup';
       av.dom.labInfoBlock.style.display = 'none';
       av.dom.setupBlock.style.display = 'flex';
       av.dom.setupTab.className += " active";
     } else {
+      // show Statisitcal data about grid
       document.getElementById('popRightSideSelect').value = 'Stats';
       av.dom.setupBlock.style.display = 'none';
       av.dom.labInfoBlock.style.display = 'flex';
@@ -1472,23 +1464,68 @@ require([
     };
   };
 
+  //Toggle switch for Population/Organism pages
+  av.ptd.rightInfoPanelToggleButton = function(domObj) {
+    console.log('domObj.value=', domObj.value, '; domObj.id=', domObj.id);
+    var tablinks = document.getElementsByClassName("tablinks");
+    for (var ii = 0; ii < tablinks.length; ii++) {
+      tablinks[ii].className = tablinks[ii].className.replace(" active", "");
+    };
+    av.dom.testSetupBlock.display = 'none';
+    document.getElementById('ex1setupBlock').style.display = 'none';
+    document.getElementById('tst2setupBlock').style.display = 'none';
+    if ('SetupButton' == domObj.id) {
+      document.getElementById('SetupButton').className += ' activeBtn';
+      document.getElementById('StatsButton').className = 'toggleLftButton';
+      av.dom.labInfoBlock.style.display = 'none';
+      av.dom.setupBlock.style.display = 'flex';
+      
+      document.getElementById('RtSideSelect').value = 'Setup';
+      document.getElementById('popRightSideSelect').value = 'Setup';
+      av.dom.setupTab.className += ' active';
+    } else {
+      // show Statisitcal data about grid
+      document.getElementById('StatsButton').className += ' activeBtn';
+      document.getElementById('SetupButton').className = 'toggleRitButton';
+      av.dom.setupBlock.style.display = 'none';
+      av.dom.labInfoBlock.style.display = 'flex';
+      
+      document.getElementById('RtSideSelect').value = 'Stats';
+      document.getElementById('popRightSideSelect').value = 'Stats';
+      av.dom.statsTab.className += 'active'; 
+      
+      // if the miniplot on the populaton page needs to be initiated call that funciton.
+      if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+        av.grd.popChartInit('av.ptd.rightInfoPanelToggleButton');
+      };
+    };
+    console.log('Stats.class=', document.getElementById('StatsButton').className, '; Setup.class=', document.getElementById('SetupButton').className);
+  };
+
+  // this funtion will go away. too
   av.ptd.popRightInfoPanel = function (domObj) {
     console.log('domObj.value=', domObj.value);
     var tablinks = document.getElementsByClassName("tablinks");
     for (var ii = 0; ii < tablinks.length; ii++) {
       tablinks[ii].className = tablinks[ii].className.replace(" active", "");
-    }
-    ;
+    };
     av.dom.testSetupBlock.display = 'none';
     document.getElementById('ex1setupBlock').style.display = 'none';
     document.getElementById('tst2setupBlock').style.display = 'none';
 
     if ('Setup' == domObj.value) {
+      document.getElementById('SetupButton').className += ' activeBtn';
+      document.getElementById('StatsButton').className = 'toggleLftButton';
+
       document.getElementById('RtSideSelect').value = 'Setup';
       av.dom.labInfoBlock.style.display = 'none';
       av.dom.setupBlock.style.display = 'flex';
       av.dom.setupTab.className += " active";
     } else {
+      // show Statisitcal data about grid
+      document.getElementById('StatsButton').className += ' activeBtn';
+      document.getElementById('SetupButton').className = 'toggleRitButton';
+      
       document.getElementById('RtSideSelect').value = 'Stats';
       av.dom.setupBlock.style.display = 'none';
       av.dom.labInfoBlock.style.display = 'flex';
@@ -1496,37 +1533,30 @@ require([
       // if the miniplot on the populaton page needs to be initiated call that funciton.
       if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
         av.grd.popChartInit('av.ptd.popRightInfoPanel');
-      }
-      ;
-    }
-    ;
+      };
+    };
+    
   };
 
-  //Development section
+  //Development section with tabs
   av.ptd.processTab = function (evt, contentType) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("labInfoClass");
     //console.log('tabcontent=', tabcontent);
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
-    }
+    };
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    ;
+      tablinks[i].className = tablinks[i].className.replace(" active", "");  //not working completely
+    };
     //console.log('contentType=',contentType,'; evt=', evt);  //keep because evt info looks useful for improving mouse code.
     document.getElementById(contentType).style.display = "flex";
     evt.currentTarget.className += " active";
   };
 
-  //av.ui.mainBoxSwap('populationBlock');  //commented out here as it is called near the end of this file
-  av.dom.setupBlock.style.none;
-  av.dom.testSetupBlock.style.none;
-  //console.log('av.dom.setupTab', av.dom.setupTab);
-  av.dom.setupTab.click();
-  av.dom.statsTab.click();
-  // ------------enf of two controls for the same purpose; took work to get tabs to look right so I'm keeping for now --
+  document.getElementById('StatsButton').click();
+  // ------------ end of four controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
 
 //------------------------------------------------------------------------------------------show/hide left side panel --
   av.ptd.lftPnlButtonImg = function () {
@@ -3850,7 +3880,7 @@ require([
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections 
     av.doj.mnDebug.style.visibility = 'hidden';   //visible
-  }
+  };
   av.ui.toggleDevelopentDisplays();
   // May need to do some things here to get the app to look right on the screen. 
   //av.grd.popChartFn();
@@ -3863,7 +3893,7 @@ require([
     dijit.byId('mnFlSaveWorkspace').attr('disabled', true);
     dijit.byId('mnFlSaveWorkspace').attr('disabled', true);
     dijit.byId('mnFlSaveAs').attr('disabled', true);
-  }
+  };
 
   // 
 

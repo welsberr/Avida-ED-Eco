@@ -123,7 +123,8 @@
                 <!--<span data-dojo-type='dijit/MenuItem' id='mnCnPopRun' label='Population: Run'></span>-->
                 <span data-dojo-type='dijit/MenuItem' id='mnCnRun' label='Run'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnCnPause' label='Pause'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnCnOne' label='Forward (Do one update)'></span>
+          document.getElementById('StatsButton').click();
+          <span data-dojo-type='dijit/MenuItem' id='mnCnOne' label='Forward (Do one update)'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnCnNewpop' label='Start New Experiment'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnCnOrganismTrace' label='Put Selected Organism in Organism View'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnCnOffspringTrace' label='Put Offspring in Organism View'></span>
@@ -187,10 +188,10 @@
           </select>
         </div>
         <div id='RtSideToggleButtons'>
-          <input type='button' id='StatsButton' class='toggleLftButton' value='Stats' onchange='av.ptd.RtToggleButton(this)'/><input type='button' id='SetupButton' class='toggleRitButton' value='Setup' onchange='av.ptd.RtToggleButtton(this)'/>
+          <input type='button' id='StatsButton' class='toggleLftButton' value='Stats' onclick='av.ptd.rightInfoPanelToggleButton(this)'/><input id='SetupButton' type='button' class='toggleRitButton' value='Setup' onclick='av.ptd.rightInfoPanelToggleButton(this)'/>
         </div>
-        <div id="rtPbuttonDiv" class="sidePnlBtnDiv">
-          <img id='rtPnlButtonImg' src='images/rtPnlBtn2.png'/>
+        <div id='rtPbuttonDiv' class="sidePnlBtnDiv">
+          <img id='rtPnlButtonImg' src='images/rtPnlBtn2.png' alt='image to indicate button to open/close the right information panel'/>
         </div>
       </div>
 
@@ -242,9 +243,11 @@
             <div id='trashCan'>
               <img id='trashCanImage' src='images/Avida-ED-trash-icon.png' style='width: 32px;' alt='trash can' />
             </div>
-            <div id='showTextButtonDiv'><input type='button' id='showTextButton' value='Big Text'/></div>
+            <div id='showTextButtonDiv'>
+              <input id='showTextButton' type='button' value='Big Text'/>
+            </div>
             <div id='developmentToggleDiv'>
-              <input type='button' id='developmentToggle' value=' toggle' onclick='av.ui.toggleDevelopentDisplays(this)' />
+              <input id='developmentToggle' type='button' value=' Toggle ' onclick='av.ui.toggleDevelopentDisplays(this)' />
             </div>
           </div>
         </div><span id="end_of_navCol"></span>
@@ -330,7 +333,7 @@
               <div id ="popInfoVert">
                 <div id='popInfoTabHolder' class="tabHolder">
                   <div class="tab">
-                    <button class="tablinks active" id="statsTab" onclick="av.ptd.processTab(event, 'labInfoBlock')">Data</button>
+                    <button class="tablinks active" id="statsTab" onclick="av.ptd.processTab(event, 'labInfoBlock')">Stats</button>
                     <button class="tablinks" id="setupTab" onclick="av.ptd.processTab(event, 'setupBlock')">Setup</button>
                     <button class="tablinks" id="testTab" onclick="av.ptd.processTab(event, 'testSetupBlock')">Test Setup</button>
                     <button class="tablinks" id="ex1Tab" onclick="av.ptd.processTab(event, 'ex1setupBlock')">Example 1</button>
