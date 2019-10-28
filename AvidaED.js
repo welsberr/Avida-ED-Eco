@@ -28,8 +28,8 @@
 //  
 //  fix color and data select/item buttons on Analysis page
 //  
-//  
-//
+//  min/max and limited to number for the orgCycle field
+//  oranismPage run button does not work
 //
 //
 // Versions -------------------------------------------------------------------------------------------------------
@@ -252,7 +252,8 @@ require([
     av.dom.gridCanvas = document.getElementById('gridCanvas');
     av.dom.scaleCanvas = document.getElementById('scaleCanvas');
     av.dom.popBot = document.getElementById('popBot');
-    av.dom.labInfoBlock = document.getElementById('labInfoBlock');
+    av.dom.popStatsBlock = document.getElementById('popStatsBlock');
+    av.dom.StatsButton = document.getElementById('StatsButton');
 
     av.dom.popChart = document.getElementById('popChart');  //easier handle for div with chart
     av.dom.popChrtHolder = document.getElementById('popChrtHolder');
@@ -377,8 +378,11 @@ require([
     //Organism Page
     av.dom.orgBotId = document.getElementById('orgBotId');
     av.dom.organCanvas = document.getElementById("organCanvas");
-
-
+    av.dom.orgInfoHolder = document.getElementById('orgInfoHolder');
+    av.dom.orgSettings = document.getElementById('orgSettings');
+    av.dom.orgDetailID = document.getElementById('orgDetailID');
+    av.dom.orgCycle = document.getElementById('orgCycle');
+    
     //Analysis Page  
     //av.dom.anlChrtSpace = document.getElementById('anlChrtSpace');  //easier handle for div with chart
     av.dom.anlChrtSpace = document.getElementById('anlDndChart');  //easier handle for div with chart
@@ -728,12 +732,6 @@ require([
       av.dnd.landOrganIcon(source, nodes, target);
       //Change to Organism Page
       av.ui.mainBoxSwap('organismBlock');
-      organismCanvasHolderSize();
-      var height = ($('#rightDetail').innerHeight() - 375) / 2;
-      av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
-      av.dom.ExecuteAbout.style.height = height + 'px';
-      av.dom.ExecuteJust.style.width = '100%';
-      av.dom.ExecuteAbout.style.width = '100%';
       av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
     }
   });
@@ -1110,21 +1108,23 @@ require([
     console.log('domobj=', domobj);
     var len, tsk, sub;
     if ('visible' === av.doj.mnDebug.style.visibility) {
+      //hide all development elements
       av.ui.hideDevelopment = true;
       av.doj.mnDebug.style.visibility = 'hidden';
-      document.getElementById('showTextButton').style.visibility = 'visible';
-      document.getElementById('popInfoTabHolder').className = 'tabHolderHide';
+      document.getElementById('showTextButtonDiv').style.visibility = 'hidden';
+      document.getElementById('developmentToggle').className = 'devoCammo';
+
       document.getElementById('fzTdishSec').style.visibility = 'hidden';
       document.getElementById('testDishDetailDiv').style.display = 'none';
       document.getElementById('testConfigLableHolder').style.display = 'none';
       document.getElementById('testConfig').style.display = 'none';
       document.getElementById('avidianOutline').style.display = 'none';
-      document.getElementById('popRightSideControlHolder').style.display = 'none';
-      document.getElementById('RtSideSelectHolder').style.display = 'none';
+
+      document.getElementById('popInfoTabHolder').className = 'tabHolderHide';
       document.getElementById('displayGridResourceData').style.display = 'none';
 
       av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopentDisplays');
-
+/*
       //console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
       len = document.getElementsByClassName('localEquilibrium').length;
       for (ii = 0; ii < len; ii++) {
@@ -1133,38 +1133,43 @@ require([
         document.getElementsByClassName('globalAll')[ii].style.display = 'none';
         document.getElementsByClassName('localEquilibrium')[ii].style.display = 'none';
         document.getElementsByClassName('localAll')[ii].style.display = 'none';
-      }
-      ;
+      };
       len = document.getElementsByClassName('globalEquilibrium').length - 1;
       document.getElementsByClassName('globalEquilibrium')[len].style.display = 'none';
       document.getElementsByClassName('globalFinite')[len].style.display = 'none';
       document.getElementsByClassName('globalAll')[len].style.display = 'none';
+*/
+      len = av.sgr.logicNames.length;
+      sub = 1;   //this may change later;
+      for (ii = 0; ii < len; ii++) {
+        tsk = av.sgr.logicNames[ii];
+        av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
+      };
 
-      dijit.byId('mnHpDebug').set('label', 'Show debug menu');
-      tsk = 'orn';
-      sub = 1;
-      document.getElementById(tsk + sub + 'gradientCheckbox').style.display = 'none';
+
+      dijit.byId('mnHpDebug').set('label', 'Show debug menu');   //???????
+//      tsk = 'orn';
+//      sub = 1;
+//      document.getElementById(tsk + sub + 'gradientCheckbox').style.display = 'none';
 
       av.post.addUser('Button: mnHpDebug: now hidden');
     } else {       // development sectiomn can be seen.
       av.ui.hideDevelopment = false;
       av.doj.mnDebug.style.visibility = 'visible';
-      document.getElementById('showTextButton').style.visibility = 'visible';
+      document.getElementById('showTextButtonDiv').style.visibility = 'visible';
+      document.getElementById('developmentToggle').className = 'devoShow';
 
-      document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
       document.getElementById('fzTdishSec').style.visibility = 'visible';
       document.getElementById('testDishDetailDiv').style.display = 'block';
       document.getElementById('testConfigLableHolder').style.display = 'flex';
       document.getElementById('testConfig').style.display = 'flex';
-      document.getElementById('avidianOutline').style.display = 'inline-block';
-      document.getElementById('popRightSideControlHolder').style.display = 'flex';
-      document.getElementById('RtSideSelectHolder').style.display = 'flex';
-      //document.getElementById('popRightSideArrow').style.display = 'none';        // as of 2019_0909 I think this can be deleted. 
-      //                                                                            // inside popRightSideControlHolder
+      document.getElementById('avidianOutline').style.display = 'inline-block'; 
+
+      document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
       document.getElementById('displayGridResourceData').style.display = 'flex';
 
       av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopentDisplays.onclick_show');
-
+/*
       //show environment options sill under development.
       len = document.getElementsByClassName('localEquilibrium').length;
       for (ii = 0; ii < len; ii++) {
@@ -1173,21 +1178,24 @@ require([
         document.getElementsByClassName('globalAll')[ii].style.display = 'inline';
         document.getElementsByClassName('localEquilibrium')[ii].style.display = 'inline';
         document.getElementsByClassName('localAll')[ii].style.display = 'inline';
-      }
-      ;
+      };
       len = document.getElementsByClassName('globalEquilibrium').length - 1;
       document.getElementsByClassName('globalEquilibrium')[len].style.display = 'inline';
       document.getElementsByClassName('globalFinite')[len].style.display = 'inline';
       document.getElementsByClassName('globalAll')[len].style.display = 'inline';
-      tsk = 'orn';
-      sub = 1;
-      document.getElementById(tsk + sub + 'gradientCheckbox').style.display = 'inline-block';
-
+*/      
+      len = av.sgr.logicNames.length;
+      sub = 1;   //this may change later;
+      for (ii = 0; ii < len; ii++) {
+        tsk = av.sgr.logicNames[ii];
+        av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
+      };
+//      document.getElementById(tsk + sub + 'gradientCheckbox').style.display = 'inline-block';
       //Show debug on dropdown menu
-      dijit.byId('mnHpDebug').set('label', 'Hide debug menu');
+      dijit.byId('mnHpDebug').set('label', 'Hide debug menu');   //????????
       av.post.addUser('Button: mnHpDebug: now visible');
     }
-    console.log('in av.ui.hideDevelopment=', av.ui.hideDevelopment, 'at end of function');
+    //console.log('in av.ui.hideDevelopment=', av.ui.hideDevelopment, 'at end of function');
   };
 
   //toggles showing resource data in right info panel (Stats window) in Populaton View
@@ -1365,7 +1373,7 @@ require([
   //So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
   //the default option.
   av.ui.mainBoxSwap = function (showBlock) {
-    console.log('showBlock=', showBlock);
+    //console.log('showBlock=', showBlock);
     av.ui.page = showBlock;
     av.dom.populationBlock.style.display = "none";
     av.dom.organismBlock.style.display = "none";
@@ -1377,7 +1385,7 @@ require([
     av.dom.showTextButton.style.background = 'white';
     document.getElementById(showBlock).style.display = "flex";   //orgPageButtonHolder
     var showButton = showBlock.substring(0,showBlock.length-5)+'Button';
-    console.log('showButton=',showButton);
+    //console.log('showButton=',showButton);
     document.getElementById(showButton).style.background = '#DBDBDB'; 
     //dijit.byId(showBlock).resize();
     //document.getElementById(showBlock).resize();
@@ -1387,12 +1395,35 @@ require([
     dijit.byId('mnCnOffspringTrace').attr('disabled', true);
 
     // if the miniplot on the populaton page needs to be initiated call that funciton.
-    if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+    if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
       av.grd.popChartInit('av.ui.mainBoxSwap');
     };
+    if (('populationBlock' == av.ui.page) || ('organismBlock' == av.ui.page)) {
+      document.getElementById('RtSideToggleButtons').style.display = 'block';
+      document.getElementById('ritePnlBtnDiv').style.display = 'block';
+    }
+    else {
+      document.getElementById('RtSideToggleButtons').style.display = 'none';
+      document.getElementById('ritePnlBtnDiv').style.display = 'none';
+    };
+    if ('organismBlock' == av.ui.page) {
+      if ('settings' == av.ui.orgInfo) {
+        av.dom.orgSettings.style.display = 'block';
+        av.dom.orgDetailID.style.display = 'none';
+      }
+      else {
+        av.dom.orgSettings.style.display = 'none';
+        av.dom.orgDetailID.style.display = 'block';
+        av.ui.adjustOrgInstructionTextAreaSize();
+      };
+      
+      if (undefined !== av.traceObj) {
+        av.ind.updateOrgTrace('mainBoxSwap_organismBlock');
+      };
+      av.ind.organismCanvasHolderSize('mainBoxSwap_organismBlock');   ///??????
+    }
     //console.log('end of mainBoxSwap');
   };
-
 
   // Buttons that call MainBoxSwap
   av.dom.populationButton.onclick = function () {
@@ -1400,22 +1431,26 @@ require([
     if (av.debug.dnd || av.debug.mouse)
       console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
     av.ui.mainBoxSwap('populationBlock');
-    //console.log('after mainBoxSwap to populationBlock');
   };
 
-  document.getElementById('organismButton').onclick = function () {
+  av.dom.organismButton.onclick = function () {
     av.post.addUser('Button: organismButton');
+    // * offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
+    // * clientWidth = box + 2*padding - scrollbar_width    
+    // * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
+    // * csssWidth = box only nothing else
+    console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
+      av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
+      $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
+    if (av.dom.orgInfoHolder.clientWidth < av.ui.orgInfoHolderMinWidth) av.ui.orgInfoHolderWidth = av.ui.orgInfoHolderMinWidth;
     av.ui.mainBoxSwap('organismBlock');
-    //console.log('after mainBoxSwap to organismBlock');
-    organismCanvasHolderSize();
-    var height = ($('#rightDetail').innerHeight() - 395) / 2;
-    av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
-    av.dom.ExecuteAbout.style.height = height + 'px';
-    av.dom.ExecuteJust.style.width = '100%';
-    av.dom.ExecuteAbout.style.width = '100%';
-    if (undefined !== av.traceObj) {
-      av.ind.updateOrgTrace();
-    };
+
+    av.dom.orgInfoHolder.style.width = av.ui.orgInfoHolderWidth + 'px';
+    
+    console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
+      av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
+      $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
+    console.log('orgInfoHolder.paddding=', $("#orgInfoHolder").css('padding'));
   };
 
   document.getElementById('analysisButton').onclick = function () {
@@ -1429,134 +1464,107 @@ require([
     av.post.addUser('Button: showTextButton');
     av.ui.mainBoxSwap('showTextBlock');
   };
-  // ------------------ four controls for the same purpose; tabs used in develoopment mode --
+  // ------------------ two controls for the same purpose; tabs used in develoopment mode --
   
-  //this one goes away
-  av.ptd.RtInfoPanel = function (domObj) {
-    console.log('domObj.value=', domObj.value);
-    //for tab system.
-    var tablinks = document.getElementsByClassName("tablinks");
-    for (var ii = 0; ii < tablinks.length; ii++) {
-      tablinks[ii].className = tablinks[ii].className.replace(" active", "");
-    };
-    av.dom.testSetupBlock.display = 'none';
-    document.getElementById('ex1setupBlock').style.display = 'none';
-    document.getElementById('tst2setupBlock').style.display = 'none';
-
-    //for select/option control
-    if ('Setup' == domObj.value) {
-      document.getElementById('SetupButton').className += ' activeBtn';
-      document.getElementById('StatsButton').className = 'toggleLftButton';
-      document.getElementById('popRightSideSelect').value = 'Setup';
-      av.dom.labInfoBlock.style.display = 'none';
-      av.dom.setupBlock.style.display = 'flex';
-      av.dom.setupTab.className += " active";
-    } else {
-      // show Statisitcal data about grid
-      document.getElementById('popRightSideSelect').value = 'Stats';
-      av.dom.setupBlock.style.display = 'none';
-      av.dom.labInfoBlock.style.display = 'flex';
-      av.dom.statsTab.className += " active";
-      // if the miniplot on the populaton page needs to be initiated call that funciton.
-      if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
-        av.grd.popChartInit('av.ptd.RtInfoPanel');
-      };
-    };
-  };
-
   //Toggle switch for Population/Organism pages
   av.ptd.rightInfoPanelToggleButton = function(domObj) {
-    console.log('domObj.value=', domObj.value, '; domObj.id=', domObj.id);
-    var tablinks = document.getElementsByClassName("tablinks");
-    for (var ii = 0; ii < tablinks.length; ii++) {
-      tablinks[ii].className = tablinks[ii].className.replace(" active", "");
-    };
-    av.dom.testSetupBlock.display = 'none';
-    document.getElementById('ex1setupBlock').style.display = 'none';
-    document.getElementById('tst2setupBlock').style.display = 'none';
-    if ('SetupButton' == domObj.id) {
-      document.getElementById('SetupButton').className += ' activeBtn';
-      document.getElementById('StatsButton').className = 'toggleLftButton';
-      av.dom.labInfoBlock.style.display = 'none';
-      av.dom.setupBlock.style.display = 'flex';
-      
-      document.getElementById('RtSideSelect').value = 'Setup';
-      document.getElementById('popRightSideSelect').value = 'Setup';
-      av.dom.setupTab.className += ' active';
-    } else {
-      // show Statisitcal data about grid
-      document.getElementById('StatsButton').className += ' activeBtn';
-      document.getElementById('SetupButton').className = 'toggleRitButton';
-      av.dom.setupBlock.style.display = 'none';
-      av.dom.labInfoBlock.style.display = 'flex';
-      
-      document.getElementById('RtSideSelect').value = 'Stats';
-      document.getElementById('popRightSideSelect').value = 'Stats';
-      av.dom.statsTab.className += 'active'; 
-      
-      // if the miniplot on the populaton page needs to be initiated call that funciton.
-      if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
-        av.grd.popChartInit('av.ptd.rightInfoPanelToggleButton');
+    if ('populationBlock' == av.ui.page) {
+      var tabcontent = document.getElementsByClassName("labInfoClass");
+      //console.log('tabcontent=', tabcontent);
+      for (ii = 0; ii < tabcontent.length; ii++) {
+        //console.log('ii=', ii, '; tabcontent[ii]=', tabcontent[ii]);
+        tabcontent[ii].className = 'labInfoClass labInfoNone';
+        //console.log('ii=', ii, '; tabcontent[ii].className =', tabcontent[ii].className);
       };
-    };
-    console.log('Stats.class=', document.getElementById('StatsButton').className, '; Setup.class=', document.getElementById('SetupButton').className);
-  };
-
-  // this funtion will go away. too
-  av.ptd.popRightInfoPanel = function (domObj) {
-    console.log('domObj.value=', domObj.value);
-    var tablinks = document.getElementsByClassName("tablinks");
-    for (var ii = 0; ii < tablinks.length; ii++) {
-      tablinks[ii].className = tablinks[ii].className.replace(" active", "");
-    };
-    av.dom.testSetupBlock.display = 'none';
-    document.getElementById('ex1setupBlock').style.display = 'none';
-    document.getElementById('tst2setupBlock').style.display = 'none';
-
-    if ('Setup' == domObj.value) {
-      document.getElementById('SetupButton').className += ' activeBtn';
-      document.getElementById('StatsButton').className = 'toggleLftButton';
-
-      document.getElementById('RtSideSelect').value = 'Setup';
-      av.dom.labInfoBlock.style.display = 'none';
-      av.dom.setupBlock.style.display = 'flex';
-      av.dom.setupTab.className += " active";
-    } else {
-      // show Statisitcal data about grid
-      document.getElementById('StatsButton').className += ' activeBtn';
-      document.getElementById('SetupButton').className = 'toggleRitButton';
-      
-      document.getElementById('RtSideSelect').value = 'Stats';
-      av.dom.setupBlock.style.display = 'none';
-      av.dom.labInfoBlock.style.display = 'flex';
-      av.dom.statsTab.className += " active";
-      // if the miniplot on the populaton page needs to be initiated call that funciton.
-      if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
-        av.grd.popChartInit('av.ptd.popRightInfoPanel');
+      var tablinks = document.getElementsByClassName("tablinks");
+      for (var ii = 0; ii < tablinks.length; ii++) {
+        //console.log('ii=', ii, '; tablinks[ii]=', tablinks[ii], '; tablinks[ii].className =', tablinks[ii].className);
+        tablinks[ii].className = tablinks[ii].className.replace(" active", "");
+        //console.log('tablinks[ii].className =', tablinks[ii].className);
       };
-    };
-    
+
+      if ('SetupButton' == domObj.id) {
+        document.getElementById('SetupButton').className = 'toggleRitButton activeBtn';
+        document.getElementById('StatsButton').className = 'toggleLftButton';
+        av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
+        av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
+
+        av.dom.setupTab.className = 'tablinks active';
+      } else {
+        // show Statisitcal data about grid
+        document.getElementById('StatsButton').className = 'toggleLftButton activeBtn';
+        document.getElementById('SetupButton').className = 'toggleRitButton';
+        av.dom.popStatsBlock.className = 'labInfoClass labInfoFlex';
+        av.dom.setupBlock.className = 'labInfoClass labInfoNone';
+
+        av.dom.statsTab.className = 'tablinks active'; 
+
+        // if the miniplot on the populaton page needs to be initiated call that funciton.
+        if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+          av.grd.popChartInit('av.ptd.rightInfoPanelToggleButton');
+        };
+      };
+      //console.log('Stats.class=', document.getElementById('StatsButton').className, '; Setup.class=', document.getElementById('SetupButton').className);
+    }
+    else if ('organismBlock' == av.ui.page) {
+      if ('SetupButton' == domObj.id) {
+        av.post.addUser('Button: OrgSetting');
+        av.ind.settingsChanged = false;
+        av.ui.orgInfo = 'settings';
+        av.dom.orgSettings.style.display = 'block';
+        av.dom.orgDetailID.style.display = 'none';
+      }
+      else {
+        av.ui.orgInfo = 'details';
+        av.dom.orgSettings.style.display = 'none';
+        av.dom.orgDetailID.style.display = 'block';
+        console.log('av.ind.settingsChanged=', av.ind.settingsChanged);
+        if (av.ind.settingsChanged) av.msg.doOrgTrace();
+        
+      }  
+    }
+    else {
+      // Analysis Page or Big text display for debug
+      console.log('should not be avaiable on analysis or showText page');
+    }
   };
 
   //Development section with tabs
   av.ptd.processTab = function (evt, contentType) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("labInfoClass");
+    var ii, tablinks;
+    var tabcontent = document.getElementsByClassName("labInfoClass");
     //console.log('tabcontent=', tabcontent);
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
+    for (ii = 0; ii < tabcontent.length; ii++) {
+      //console.log('ii=', ii, '; tabcontent[ii]=', tabcontent[ii]);
+      tabcontent[ii].className = 'labInfoClass labInfoNone';
+      //console.log('ii=', ii, '; tabcontent[ii].display =', tabcontent[ii].style.display);
     };
     tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");  //not working completely
+    for (ii = 0; ii < tablinks.length; ii++) {
+      //console.log('ii=', ii, '; tablinks[ii]=', tablinks[ii], '; tablinks[ii].className =', tablinks[ii].className);
+      tablinks[ii].className = tablinks[ii].className = 'tablinks';
+      //console.log('tablinks[ii].className =', tablinks[ii].className);
     };
     //console.log('contentType=',contentType,'; evt=', evt);  //keep because evt info looks useful for improving mouse code.
-    document.getElementById(contentType).style.display = "flex";
-    evt.currentTarget.className += " active";
+    document.getElementById(contentType).className = 'labInfoClass labInfoFlex';;
+    evt.currentTarget.className = "tablinks active";
+    //console.log('id=', evt.currentTarget.id);
+    if ('setupTab' == evt.currentTarget.id) {
+      document.getElementById('SetupButton').className = 'toggleRitButton activeBtn';
+      document.getElementById('StatsButton').className = 'toggleLftButton';
+    }
+    else if ('statsTab' == evt.currentTarget.id) {
+      document.getElementById('SetupButton').className = 'toggleRitButton';
+      document.getElementById('StatsButton').className = 'toggleLftButton activeBtn';      
+    }
+    else {
+      document.getElementById('SetupButton').className = 'toggleRitButton';
+      document.getElementById('StatsButton').className = 'toggleLftButton';            
+    }
   };
-
+  
   document.getElementById('StatsButton').click();
-  // ------------ end of four controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
+  // ------------ end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
 
 //------------------------------------------------------------------------------------------show/hide left side panel --
   av.ptd.lftPnlButtonImg = function () {
@@ -1572,7 +1580,7 @@ require([
       av.dom.popInfoHolder.style.width = av.ui.navColId + 'px';
     }
   };
-
+  
   av.dom.lftPnlButtonImg.onclick = function () {
     ///av.post.addUser('Button: lftPnlButtonImg');   //done in popStatView
     av.ptd.lftPnlButtonImg();
@@ -1584,25 +1592,48 @@ require([
 
 // hides and shows the population and selected organsim data on right of population page with 'Stats/mpa' button
   av.ptd.rtPnlButtonImg = function () {
-    if (av.ptd.popStatFlag) {
-      av.post.addUser('Button: rtPnlButtonImg: start hidding stats');
-      av.ptd.popStatFlag = false;
-      av.ptd.popInfoHolderWd = av.dom.popInfoHolder.offsetWidth;
-      av.dom.popInfoHolder.style.display = 'none';
-    } else {
-      av.post.addUser('Button: rtPnlButtonImg: start showing stats');
-      av.ptd.popStatFlag = true;
-      av.dom.popInfoHolder.style.display = 'flex';
-      //reset info pane dimensions. Try popInfoHolderWd = 395px; selOrgTypeWd = 150px
-      av.dom.popInfoHolder.style.width = av.ptd.popInfoHolderWd + 'px';
-      av.ui.adjustpopInfoSize('av.ptd.rtPnlButtonImg');
+    //console.log('rtPnlButtonImg: av.ui.page=', av.ui.page);
+    if ('populationBlock' == av.ui.page) {
+      if (av.ui.popStatFlag) {
+        av.post.addUser('Button: rtPnlButtonImg: start hidding population stats');
+        av.ui.popStatFlag = false;
+        av.ptd.popInfoHolderWd = av.dom.popInfoHolder.offsetWidth;
+        av.dom.popInfoHolder.style.display = 'none';
+      } else {
+        av.post.addUser('Button: rtPnlButtonImg: start showing population stats');
+        av.ui.popStatFlag = true;
+        av.dom.popInfoHolder.style.display = 'flex';
+        //reset info pane dimensions. Try popInfoHolderWd = 395px; selOrgTypeWd = 150px
+        av.dom.popInfoHolder.style.width = av.ptd.popInfoHolderWd + 'px';
+        av.ui.adjustpopInfoSize('av.ptd.rtPnlButtonImg');
+      };
     }
+    else if ('organismBlock' == av.ui.page) {
+      //console.log('av.ui.orgStatFlag=', av.ui.orgStatFlag);
+      if (av.ui.orgStatFlag) {
+        av.post.addUser('Button: rtPnlButtonImg: start hidding oranism stats');
+        av.ui.orgStatFlag = false;
+        //console.log('av.dom.orgInfoHolder.offsetWidth=', av.dom.orgInfoHolder.offsetWidth);
+        av.ui.orgInfoHolderWd = (av.ui.orgInfoHolderMinWidth > av.dom.orgInfoHolder.offsetWidth) ? 
+                                                         av.ui.orgInfoHolderMinWidth : av.dom.orgInfoHolder.offsetWidth;
+        av.dom.orgInfoHolder.style.display = 'none';
+      } else {
+        av.post.addUser('Button: rtPnlButtonImg: start showing oranism stats');
+        av.ui.orgStatFlag = true;
+        av.dom.orgInfoHolder.style.display = 'flex';
+        //reset info pane dimensions. 
+        //console.log('av.ui.orgInfoHolderWd=', av.ui.orgInfoHolderWd);
+        av.dom.orgInfoHolder.style.width = av.ui.orgInfoHolderWd + 'px';
+        //av.ui.adjustOrgInfoSize('av.ptd.rtPnlButtonImg');
+      };
+    }
+    else {
+      //no right info panel so button goes away
+      console.log('should not be available to be clicked');
+    };
   };
 
-  av.dom.rtPnlButtonImg.onclick = function () {
-    ///av.post.addUser('Button: rtPnlButtonImg');   //done in popStatView
-    av.ptd.rtPnlButtonImg();
-  };
+  av.dom.rtPnlButtonImg.onclick = function () { av.ptd.rtPnlButtonImg(); };
 
   //--------------------------------------------------------------------------------------------------------------------
   ///   Map Grid buttons - New  Run/Pause Freeze
@@ -1810,12 +1841,8 @@ require([
     av.post.addUser('Button: mnFzAddGenomeEx');
     av.dnd.FzAddExperimentFn('fzOrgan', 'activeOrgan', 'g');
     av.ui.mainBoxSwap('organismBlock');
-    organismCanvasHolderSize();
-    var height = ($('#rightDetail').innerHeight() - 375) / 2;
-    av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
-    av.dom.ExecuteAbout.style.height = height + 'px';
-    av.dom.ExecuteJust.style.width = '100%';
-    av.dom.ExecuteAbout.style.width = '100%';
+    av.ind.organismCanvasHolderSize();
+    av.ui.adjustOrgInstructionTextAreaSize();
     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
   });
 
@@ -1966,12 +1993,8 @@ require([
       } else if ('organIcon' == evt.target.id) {
         //Change to Organism Page
         av.ui.mainBoxSwap('organismBlock');
-        organismCanvasHolderSize();
-        var height = ($('#rightDetail').innerHeight() - 375) / 2;
-        av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
-        av.dom.ExecuteAbout.style.height = height + 'px';
-        av.dom.ExecuteJust.style.width = '100%';
-        av.dom.ExecuteAbout.style.width = '100%';
+        av.ind.organismCanvasHolderSize();
+        av.ui.adjustOrgInstructionTextAreaSize();
         if (av.debug.mouse)
           console.log('from parent', av.parent, '; fzr', av.fzr);
         av.post.addUser('Dragged item to Organism Icon');
@@ -1988,12 +2011,8 @@ require([
       if ('organIcon' == evt.target.id) {
         //Change to Organism Page
         av.ui.mainBoxSwap('organismBlock');
-        organismCanvasHolderSize();
-        var height = ($('#rightDetail').innerHeight() - 375) / 2;
-        av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
-        av.dom.ExecuteAbout.style.height = height + 'px';
-        av.dom.ExecuteJust.style.width = '100%';
-        av.dom.ExecuteAbout.style.width = '100%';
+        av.ind.organismCanvasHolderSize();
+        av.ui.adjustOrgInstructionTextAreaSize();
         av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
       }
       /*      else if ('fzOrgan' == target) {
@@ -2282,13 +2301,12 @@ require([
   // initialize needs to be in AvidaED.js; cannot be run when mini-graph is not visible. 
   // Should be done before av.grd.popChartFn is run.
   av.grd.popChartInit = function (from) {
-    console.log(from, 'called av.grd.popChartInit');
+    //console.log(from, 'called av.grd.popChartInit');
     //looke to see if poplulation page mini-chart is showing
-    if ('flex' != av.dom.labInfoBlock.style.display || ('populationBlock' !== av.ui.page)) {
+    if ('flex' != av.dom.popStatsBlock.style.display || ('populationBlock' !== av.ui.page)) {
       av.pch.needInit = true;
       return;
-    }
-    ;
+    };
 
     av.pch.clearPopChrt();
     av.pch.divSize('av.grd.popChartInit');
@@ -2296,14 +2314,12 @@ require([
 
     if (undefined == av.dom.popChart.data) {
       if (av.debug.plotly)
-        console.log('before plotly.plot in popChartInit');
+        //console.log('before plotly.plot in popChartInit');
       av.debug.log += '\n     --uiD: Plotly.plot("popChart", popData, av.pch.layout, av.pch.widg) in AvidaED.js at 1565';
       av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'popData, av.pch.layout, av.pch.widg', [popData, av.pch.layout, av.pch.widg]);
       Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
-      if (av.debug.uil)
-        console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
-      if (av.debug.plotly)
-        console.log('after plotly.plot in poChartInit');
+      if (av.debug.uil) console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
+      if (av.debug.plotly) console.log('after plotly.plot in poChartInit');
     } else {
       //av.pch.update = {
       //  xaxis: {range: [0, 10]}, yaxis: {range: [0, 1]},
@@ -2340,15 +2356,15 @@ require([
     if (av.pch.needInit) {
       console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, ' should not be here');
       // if the miniplot on the populaton page needs to be initiated call that funciton.
-      if ('flex' == av.dom.labInfoBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+      if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
         av.grd.popChartInit('av.grd.popChartFn');
       }
       ;
     } else  //console.log('av.grd.runState = ', av.grd.runState);
 
     // Do not display chart if the chart is not on the screen. Data seems to be getting updated. need to verify this.
-    // console.log('av.dom.labInfoBlock.style.display =', av.dom.labInfoBlock.style.display, '; av.ui.page=', av.ui.page);
-    if ('flex' != av.dom.labInfoBlock.style.display || ('populationBlock' !== av.ui.page)) {
+    // console.log('av.dom.popStatsBlock.style.display =', av.dom.popStatsBlock.style.display, '; av.ui.page=', av.ui.page);
+    if ('flex' != av.dom.popStatsBlock.style.display || ('populationBlock' !== av.ui.page)) {
       // the avidaDataRecorder.csv is broken
       return;
     }
@@ -3076,36 +3092,18 @@ require([
   /* *************************************************************** */
   /* **** Organism Setup Dialog */
 
-  //process button to hide or show Organism detail panel.
-  var DetailsFlag = true;
-  document.getElementById('OrgDetailsButton').onclick = function () {
-    av.post.addUser('Button: OrgDetailsButton');
-    if (DetailsFlag) {
-      DetailsFlag = false;
-      dijit.byId('rightDetail').set('style', 'display: none;');
-      registry.byId('rightDetail').domNode.style.width = '1px';
-      registry.byId('mainBC').layout();
-    } else {
-      DetailsFlag = true;
-      dijit.byId('rightDetail').set('style', 'display: block; visibility: visible;');
-      registry.byId('rightDetail').domNode.style.width = '180px';
-      registry.byId('mainBC').layout();
-    }
+  //process button to hide or show Organism detail panel: this button moved to population as it is using the same button:
+  
+  //adjust instruction text size
+  av.ui.adjustOrgInstructionTextAreaSize = function() {
+    var height = ( $('#orgInfoHolder').innerHeight() - $('#orgDetailID').innerHeight() - 10 ) / 2;
+    console.log('orgInfoHolder.ht=', $('#orgInfoHolder').innerHeight(), '; orgDetailID=',$('#orgDetailID').innerHeight(), '; height=', height);
+    av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
+    av.dom.ExecuteAbout.style.height = height + 'px';
+    av.dom.ExecuteJust.style.width = '100%';
+    av.dom.ExecuteAbout.style.width = '100%';    
   };
-
-  //Opens Settings dialog box
-  document.getElementById('OrgSetting').onclick = function () {
-    av.post.addUser('Button: OrgSetting');
-    av.ind.settingsChanged = false;
-    OrganSetupDialog.show();
-  };
-
-  //If settings were changed then this will request new data when the settings dialog box is closed.
-  OrganSetupDialog.connect(OrganSetupDialog, 'hide', function (e) {
-    av.post.addUser('Button: hide Setting');
-    if (av.ind.settingsChanged)
-      av.msg.doOrgTrace();
-  });
+  
 
   $(function slideOrganism() {
     /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
@@ -3134,13 +3132,14 @@ require([
     //$( '#orMuteInput' ).val(muteDefault+'%');
     $('#orMuteInput').val(muteDefault);
     /*update slide based on textbox */
+    
     $('#orMuteInput').change(function () {
       slides.slider('value', 100000.0 * Math.log(1 + (parseFloat(this.value))));
       av.ind.settingsChanged = true;
       if (av.debug.trace)
         console.log('orMute changed', av.ind.settingsChanged);
       //$( '#orMRate' ).val( 100000*Math.log(1+(parseFloat(this.value))) );
-      //console.log('in mute change');
+      console.log('in mute change');
       av.post.addUser('muteInput =' + dijit.byId('orMuteInput').get('value') + '1949');
     });
   });
@@ -3163,12 +3162,8 @@ require([
     av.post.addUser('Button: mnCnOrganismTrace');
     av.mouse.traceSelected(av.dnd, av.fzr, av.grd);
     av.ui.mainBoxSwap('organismBlock');
-    organismCanvasHolderSize();
-    var height = ($('#rightDetail').innerHeight() - 375) / 2;
-    av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
-    av.dom.ExecuteAbout.style.height = height + 'px';
-    av.dom.ExecuteJust.style.width = '100%';
-    av.dom.ExecuteAbout.style.width = '100%';
+    av.ind.organismCanvasHolderSize();
+    av.ui.adjustOrgInstructionTextAreaSize();
     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
   });
 
@@ -3177,12 +3172,8 @@ require([
     //Open Oranism view
     av.post.addUser('Button: mnCnOffspringTrace');
     av.ui.mainBoxSwap('organismBlock');
-    organismCanvasHolderSize();
-    var height = ($('#rightDetail').innerHeight() - 375) / 2;
-    av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
-    av.dom.ExecuteAbout.style.height = height + 'px';
-    av.dom.ExecuteJust.style.width = '100%';
-    av.dom.ExecuteAbout.style.width = '100%';
+    av.ind.organismCanvasHolderSize();
+    av.ui.adjustOrgInstructionTextAreaSize();
     offspringTrace(av.dnd, av.fio, av.fzr, av.gen);
   });
 
@@ -3192,17 +3183,15 @@ require([
 
   av.gen = av.ind.clearGen(av.gen);
   //set canvas size; called from many places
-  function organismCanvasHolderSize() {
+  av.ind.organismCanvasHolderSize = function() {
     av.dom.organCanvas.width = $('#organismCanvasHolder').innerWidth() - 6;
     av.dom.organCanvas.height = $('#organismCanvasHolder').innerHeight() - 12;
-  }
+  };
 
-  av.ind.updateOrgTrace = function () {
-    //set canvas size
-    ////console.log('gen', av.gen);
-    //console.log('av.traceObj', av.traceObj);
+  av.ind.updateOrgTrace = function (from) {
+    console.log(from, 'called av.ind.updateOrgTrace: av.traceObj=', av.traceObj.length);
     //console.log('av.ind.cycle', av.ind.cycle);
-    organismCanvasHolderSize();
+    av.ind.organismCanvasHolderSize();
     //if (undefined == av.traceObj[av.ind.cycle]) console.log('its undefined');
     if (!(undefined == av.traceObj || {} == av.traceObj || undefined == av.traceObj[av.ind.cycle])) {
       av.ind.didDivide = av.traceObj[av.ind.cycle].didDivide; //update global version of didDivide
@@ -3210,58 +3199,60 @@ require([
     } else
       av.ind.didDivide = false;
   };
+  
   /* ******************************************************************************************************************/
   /*                                 End of Canvas to draw genome and update details
-   /* **************************************************************************************************************** */
+  /* ******************************************************************************************************************/
 
   /* ************************************** Controls bottum of organism page ******************************************/
+  
+  //wonder if this does anything.
   function outputUpdate(vol) {
     document.querySelector('#orgCycle').value = vol;
   }
 
+  //need something so it does not go before begin of organism. 
   document.getElementById('orgBack').onclick = function () {
     var ii = Number(document.getElementById('orgCycle').value);
     if (av.ind.cycleSlider.get('minimum') < av.ind.cycleSlider.get('value')) {
       ii--;
-      dijit.byId('orgCycle').set('value', ii);
+      av.dom.orgCycle.value = ii;
       av.ind.cycle = ii;
-      av.ind.updateOrgTrace();
+      av.ind.updateOrgTrace('orgBack_onclick');
     }
     av.post.addUser('Button: orgBack; cycle = ' + ii);
   };
 
+  //Need something to check that it does not go past end of organism. 
   document.getElementById('orgForward').onclick = function () {
     var ii = Number(document.getElementById('orgCycle').value);
     if (av.ind.cycleSlider.get('maximum') > av.ind.cycleSlider.get('value')) {
       ii++;
-      dijit.byId('orgCycle').set('value', ii);
+      av.dom.orgCycle.value = ii;
       av.ind.cycle = ii;
       if (av.debug.ind)
         console.log('ii', ii, '; gen', av.gen);
-      av.ind.updateOrgTrace();
+      av.ind.updateOrgTrace('orgForward_onclick');
     }
     av.post.addUser('Button: orgForward; cycle = ' + ii);
   };
 
   document.getElementById('orgReset').onclick = function () {
     av.post.addUser('Button: orgReset');
-    //dijit.byId('orgCycle').set('value', 0);
-    //av.ind.cycle = 0;
-    //av.ind.updateOrgTrace();
-    //av.ind.orgStopFn()
     av.msg.doOrgTrace();
   };
 
   av.ind.orgRunFn = function () {
     if (av.ind.cycleSlider.get('maximum') > av.ind.cycleSlider.get('value')) {
       av.ind.cycle++;
-      dijit.byId('orgCycle').set('value', av.ind.cycle);
-      av.ind.updateOrgTrace();
+      av.dom.orgCycle.value = av.ind.cycle;
+      av.ind.updateOrgTrace('orgRunFn');
     } else {
       av.ind.orgStopFn();
     }
   };
 
+  //Broken; does not work; tiba; help
   document.getElementById('orgRun').onclick = function () {
     if ('Run' == document.getElementById('orgRun').textContent) {
       document.getElementById('orgRun').textContent = 'Stop';
@@ -3270,23 +3261,23 @@ require([
     } else {
       av.ind.orgStopFn();
       av.post.addUser('Button: orgRun = run; cycle = ' + av.ind.cycleSlider.get('value'));
-    }
+    };
   };
 
   document.getElementById('orgEnd').onclick = function () {
     av.post.addUser('Button: orgEnd');
-    dijit.byId('orgCycle').set('value', av.ind.cycleSlider.get('maximum'));
+    av.dom.orgCycle.value = av.ind.cycleSlider.get('maximum');
     av.ind.cycle = av.ind.cycleSlider.get('maximum');
-    av.ind.updateOrgTrace();
+    av.ind.updateOrgTrace('orgEnd_onclick');
     av.ind.orgStopFn();
   };
 
-  dijit.byId('orgCycle').on('Change', function (value) {
+  document.getElementById('orgCycle').onchange = function (value) {
     av.ind.cycleSlider.set('value', value);
     av.ind.cycle = value;
     //console.log('orgCycle.change');
-    av.ind.updateOrgTrace();
-  });
+    av.ind.updateOrgTrace('orgCycle_onChange');
+  };
 
   /* Organism Offspring Cost Slider */
   av.ind.cycleSlider = new HorizontalSlider({
@@ -3302,7 +3293,7 @@ require([
       document.getElementById('orgCycle').value = value;
       av.ind.cycle = value;
       //console.log('cycleSlider');
-      av.ind.updateOrgTrace();
+      av.ind.updateOrgTrace('av.ind.cycleSlider');
     }
   }, 'cycleSlider');
 
@@ -3318,31 +3309,26 @@ require([
         document.documentElement.clientHeight);
     if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
       document.documentElement.style.height = document.documentElement.clientHeight + 'px';
-    }
-    ;
+    };
 
     //initialize the ht for main buttons and trash can so there is no scroll bar
     if (av.dom.mainButtons.scrollHeight > av.dom.mainButtons.clientHeight) {
       av.dom.mainButtons.style.height = av.dom.mainButtons.scrollHeight + 'px';
-    }
-    ;
+    };
     if (av.debug.uil)
       console.log('trashDivHt.client,scroll=', av.dom.trashDiv.clientHeight, av.dom.trashDiv.scrollHeight);
     if (av.dom.trashDiv.scrollHeight > av.dom.trashDiv.clientHeight) {
       av.dom.trashDiv.style.height = av.dom.trashDiv.scrollHeight + 'px';
-    }
-    ;
+    };
     if (av.dom.orgTopId.scrollHeight > av.dom.orgTopId.clientHeight) {
       av.dom.orgTopId.style.height = av.dom.orgTopId.scrollHeight + 'px';
-    }
-    ;
+    };
     if (av.debug.uil)
       console.log('orgBot Ht', av.dom.orgBotId.scrollHeight, av.dom.orgBotId.clientHeight);
     if (av.dom.orgBotId.scrollHeight > av.dom.orgBotId.clientHeight) {
       av.ui.orgBotIdNum = av.dom.orgBotId.scrollHeight + 9;
       av.dom.orgBotId.style.height = av.ui.orgBotIdNum + 'px';
-    }
-    ;
+    };
   };
 
   //on 2018_0823 this is where height gets messed up when loading the program. 
@@ -3422,14 +3408,9 @@ require([
       }
     }
     if ('none' !== domStyle.get('organismBlock', 'display')) {
-      var rd = $('#rightDetail').innerHeight();
-      var height = ($('#rightDetail').innerHeight() - 395) / 2;  //was 375
-      av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
-      av.dom.ExecuteAbout.style.height = height + 'px';
-      av.dom.ExecuteJust.style.width = '100%';
-      av.dom.ExecuteAbout.style.width = '100%';
-      //console.log('rightDetail', height, rd);
-      av.ind.updateOrgTrace();
+      var rd = $('#orgDetailID').innerHeight();
+      av.ui.adjustOrgInstructionTextAreaSize();
+      av.ind.updateOrgTrace('av.ui.browserResizeEventHandler');
     }
   };
 
@@ -3464,8 +3445,8 @@ require([
         av.dom.navColId.offsetWidth, av.dom.mapHolder.offsetWidth, av.dom.popInfoHolder.offsetWidth,
         av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.popInfoHolder.offsetWidth);
     if (av.debug.uil)
-      console.log('Wd: labInfoBlock selOrgType sum', av.dom.labInfoBlock.offsetWidth, av.dom.selOrgType.clientWidth,
-        av.dom.labInfoBlock.offsetWidth + av.dom.selOrgType.clientWidth);
+      console.log('Wd: popStatsBlock selOrgType sum', av.dom.popStatsBlock.offsetWidth, av.dom.selOrgType.clientWidth,
+        av.dom.popStatsBlock.offsetWidth + av.dom.selOrgType.clientWidth);
 
     if (av.debug.uil)
       console.log('Ht; allAvida, mapHolder, popTopRw, gridHolder, popBot sum', av.dom.allAvida.offsetHeight,
@@ -3487,7 +3468,7 @@ require([
       if (av.debug.uil)
         console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
       av.dom.navColId.style.width = (0.3 * popSideWdSum) + 'px';
-      av.dom.labInfoBlock.style.width = (0.7 * popSideWdSum) + 'px';
+      av.dom.popStatsBlock.style.width = (0.7 * popSideWdSum) + 'px';
       av.dom.setupBlock.style.width = (0.7 * popSideWdSum) + 'px';
       av.dom.selOrgType.style.width = (0.33 * popSideWdSum) + 'px';
     } else {
@@ -3501,7 +3482,7 @@ require([
     console.log(from, 'called av.ui.chngPopWidth');
     av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px';
     av.dom.setupBlock.style.width = popInfoHolderWd + 'px';
-    av.dom.labInfoBlock.style.width = popInfoHolderWd + 'px';
+    av.dom.popStatsBlock.style.width = popInfoHolderWd + 'px';
     av.dom.selOrgType.style.width = ((popInfoHolderWd / 2).toFixed(0)) + 'px';
   };
 
@@ -3521,7 +3502,7 @@ require([
     }
     av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px';
     av.dom.setupBlock.style.width = popInfoHolderWd + 'px';
-    av.dom.labInfoBlock.style.width = popInfoHolderWd + 'px';
+    av.dom.popStatsBlock.style.width = popInfoHolderWd + 'px';
     popInfoHolderWd = (popInfoHolderWd / 2).toFixed(0); //Math.round(popInfoHolder/2);
     av.dom.selOrgType.style.width = popInfoHolderWd + 'px';
     if (av.debug.uil)
@@ -3546,7 +3527,7 @@ require([
     if (av.debug.uil)
       console.log('popInfoHolder.offsetWidth, clientwidth =', av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
     if (av.debug.uil)
-      console.log('labInfoBlock.offsetWidth, clientwidth =', av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
+      console.log('popStatsBlock.offsetWidth, clientwidth =', av.dom.popStatsBlock.offsetWidth, av.dom.popStatsBlock.clientWidth);
     if (av.debug.uil)
       console.log('selOrgType.offsetWidth, clientwidth =', av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
     if (av.debug.uil)
@@ -3558,8 +3539,7 @@ require([
     if (av.ui.popGridCtlWdMin > av.dom.gridHolder.offsetWidth) {
       adjustGridWd = av.ui.popGridCtlWdMin - av.dom.gridHolder.offsetWidth;
       av.ui.adjustpopInfoWd(adjustGridWd);
-    }
-    ;
+    };
     if (av.debug.uil)
       console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
     if (av.debug.uil)
@@ -3572,7 +3552,7 @@ require([
     if (av.debug.uil)
       console.log('popInfo.offsetWidth, clientwidth =', av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
     if (av.debug.uil)
-      console.log('labInfoBlock.offsetWidth, clientwidth =', av.dom.labInfoBlock.offsetWidth, av.dom.labInfoBlock.clientWidth);
+      console.log('popStatsBlock.offsetWidth, clientwidth =', av.dom.popStatsBlock.offsetWidth, av.dom.popStatsBlock.clientWidth);
     if (av.debug.uil)
       console.log('selOrgType.offsetWidth, clientwidth =', av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
 
@@ -3631,7 +3611,7 @@ require([
       av.dom.anlChrtSpace.style.visibility = 'hidden';
     else {
       av.dom.anlChrtSpace.style.visibility = 'visible';
-      //if ('populationBlock' === av.ui.page && av.ptd.popStatFlag && undefined !== av.anl.logFit[1]) {
+      //if ('populationBlock' === av.ui.page && av.ui.popStatFlag && undefined !== av.anl.logFit[1]) {
       if ('none' === document.getElementById('yLeftSelect').value && 'none' === document.getElementById('yRightSelect').value) {
         if (av.debug.plotly)
           console.log('both axis set to none');
@@ -3856,32 +3836,44 @@ require([
   //                                          Last things done
   // **************************************************************************************************************** */
   // Do this after all other is done; end of file
-
-  //av.ui.removeVerticalScrollbar('popTopRw', 'popTopRw');
-  console.log('before mainBoxSwap');
-  av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
-
   //must create the rest of the resource/reaction user interface before calling av.sgr.ChangeAllGeo('Global');
   av.sgr.buildHtml();
-  av.sgr.ChangeAllGeo('Global');
-  av.sgr.setSugarColors(true);  //true is to turn colors on;
-  av.sgr.ChangeAllsugarSupplyType('Infinite');
-  av.sgr.OpenCloseAllSugarDetails('allClose', 'Last things done');
 
   av.ui.ex1setSugarColors();   //example 1     //delete later
+
+  //av.ui.removeVerticalScrollbar('popTopRw', 'popTopRw');
+  
+  // * offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
+  // * clientWidth = box + 2*padding - scrollbar_width    
+  // * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
+  // * csssWidth = box only nothing else
+  console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
+    av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
+    $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
+
+  console.log('before mainBoxSwap');
+  av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
+  av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
+  av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
 
   av.doj.mnDebug.style.visibility = 'visible';   // set visiable so that av.ui.toggleDevelopentDisplays will hide debuts stuff
 
   // Avida-ED 4.0.0 Alpha Testing fix this too. 
   //true when diane is working; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; remove before putting on server for Avida-ED 4.0.0 Alpha Testing. ');
+    console.log('testing mode; set to true before public release for Avida-ED 4.0.0 Alpha Testing. ');
     //av.dom.xorLabel.onclick();   now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections 
     av.doj.mnDebug.style.visibility = 'hidden';   //visible
   };
-  av.ui.toggleDevelopentDisplays();
+  av.ui.toggleDevelopentDisplays('Last_things_done');
+  av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
+  av.sgr.ChangeAllGeo('Global');
+  av.sgr.setSugarColors(true);  //true is to turn colors on;
+  av.sgr.ChangeAllsugarSupplyType('Infinite');
+  av.sgr.OpenCloseAllSugarDetails('allClose', 'Last things done');
+  
   // May need to do some things here to get the app to look right on the screen. 
   //av.grd.popChartFn();
   //av.grd.drawGridSetupFn('initial background'); //Draw initial background
@@ -3894,6 +3886,9 @@ require([
     dijit.byId('mnFlSaveWorkspace').attr('disabled', true);
     dijit.byId('mnFlSaveAs').attr('disabled', true);
   };
+
+// should be none;
+  console.log('av.dom.testSetupBlock.display=', av.dom.testSetupBlock.display);
 
   // 
 

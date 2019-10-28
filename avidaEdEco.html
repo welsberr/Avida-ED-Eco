@@ -72,7 +72,7 @@
 
     <div id='allAvida'>
       <div class="headerRow">
-        <div id="lftPbuttonDiv" class="sidePnlBtnDiv">
+        <div id="lftPbuttonDiv" class="sidePnlBtnHolderClass">
           <img id='lftPnlButtonImg' src='images/lftPnlBtn2.png'/>
         </div>
         <div id="mainMenu">
@@ -181,16 +181,12 @@
             <span style='text-align: right'><label id='userMsgLabel' style='color: red; text-align: right'> </label></span>
           </div>
         </div>
-        <div id='RtSideSelectHolder'>
-          <select id='RtSideSelect' onchange='av.ptd.RtInfoPanel(this)'>
-            <option value='Stats' selected>Stats</option>
-            <option value='Setup'>Setup</option>
-          </select>
+        <div id='CanPutButtonHere'>
         </div>
         <div id='RtSideToggleButtons'>
           <input type='button' id='StatsButton' class='toggleLftButton' value='Stats' onclick='av.ptd.rightInfoPanelToggleButton(this)'/><input id='SetupButton' type='button' class='toggleRitButton' value='Setup' onclick='av.ptd.rightInfoPanelToggleButton(this)'/>
         </div>
-        <div id='rtPbuttonDiv' class="sidePnlBtnDiv">
+        <div id='ritePnlBtnDiv' class='sidePnlBtnHolderClass'>
           <img id='rtPnlButtonImg' src='images/rtPnlBtn2.png' alt='image to indicate button to open/close the right information panel'/>
         </div>
       </div>
@@ -247,7 +243,7 @@
               <input id='showTextButton' type='button' value='Big Text'/>
             </div>
             <div id='developmentToggleDiv'>
-              <input id='developmentToggle' type='button' value=' Toggle ' onclick='av.ui.toggleDevelopentDisplays(this)' />
+              <input id='developmentToggle' class='devoShow' type='button' value=' DevoToggle ' onclick='av.ui.toggleDevelopentDisplays(this)' />
             </div>
           </div>
         </div><span id="end_of_navCol"></span>
@@ -267,14 +263,10 @@
                   <div id='testConfig' class='activeConfigDojoDNDcontainer'></div>
                 </div>
                 <div id='popTopMsgSpace'></div>
-                <div id='popRightSideControlHolder' class='ritThin'>
-                  <div id='popRightSideSelectHolder'>
-                    <select id='popRightSideSelect' onchange='av.ptd.popRightInfoPanel(this)'>
-                      <option value='Stats' selected>Stats</option>
-                      <option value='Setup'>Setup</option>
-                    </select>
+                <div id='aControl_could_be_here' class='ritThin'>
+                  <div id='popRightSideSelectHolder' class='an_object_could_go_here'>
                   </div>
-                  <div id='popRightSideArrow'></div>
+                  <div id='anArrowWasHere'></div>
                 </div>
               </div>
               
@@ -333,7 +325,7 @@
               <div id ="popInfoVert">
                 <div id='popInfoTabHolder' class="tabHolder">
                   <div class="tab">
-                    <button class="tablinks active" id="statsTab" onclick="av.ptd.processTab(event, 'labInfoBlock')">Stats</button>
+                    <button class="tablinks active" id="statsTab" onclick="av.ptd.processTab(event, 'popStatsBlock')">Stats</button>
                     <button class="tablinks" id="setupTab" onclick="av.ptd.processTab(event, 'setupBlock')">Setup</button>
                     <button class="tablinks" id="testTab" onclick="av.ptd.processTab(event, 'testSetupBlock')">Test Setup</button>
                     <button class="tablinks" id="ex1Tab" onclick="av.ptd.processTab(event, 'ex1setupBlock')">Example 1</button>
@@ -341,7 +333,7 @@
                   </div>
                 </div>
                 <div class="labInfoHolder">
-                  <div id="labInfoBlock" class="labInfoClass">
+                  <div id="popStatsBlock" class="labInfoClass labInfoFlex">
                     <div id="popStatHolder">
                       <div id="popStatistics">
                         <div id="selOrgType">
@@ -385,12 +377,12 @@
                               </tr>
                             </tbody>
                           </table>
-                          <table id='sotBotTable' class='botSotTable' style="background-color: white;">
+                          <table id='sotBotTable' class='botSotTable' style="background: white;">
                             <tbody>
                               <tr>
                                 <th>
                                   <div class='noWrapF'><label id='sotFn'>Function&nbsp;&nbsp;</label></div></th>
-                                <th colspan='2' style='min-width: 110px; background-color: #fff'><div class='noWrapN'><label id='sotTimes'>Times Performed</label></div></th>
+                                <th colspan='2' style='min-width: 110px; background: #fff'><div class='noWrapN'><label id='sotTimes'>Times Performed</label></div></th>
                               </tr>
                               <tr>
                                 <td><div class='noWrap1'><label id='notLabel'>NOT</label></div></td>
@@ -480,12 +472,12 @@
                               </tbody>
                             </table>
                           </div>
-                          <div class=popB style="background-color: white;">
+                          <div class=popB style="background: white;">
                             <table id='popsBotTable' class='botPopTable'>
                               <tbody>
                                 <tr>
                                   <th><div class='noWrapF'><label id='psFn'>Function&nbsp;&nbsp;</label></div></th>
-                                  <th colspan='2' style='min-width: 100px; background-color: #fff'>
+                                  <th colspan='2' style='min-width: 100px; background: #fff'>
                                     <div class='noWrapN'><label id='psNumOrg'># of Organisms</label></div></th>
                                   <td></td>
                                 </tr>
@@ -582,9 +574,9 @@
                       <label id='updateLabel'>At update:</label>
                       <input type='text' id='autoUpdateOnce' value='1000' style='width:80px'>
                     </div>
-                  </div>  <span comment="end of labInfoBlock"></span>
+                  </div>  <span comment="end of popStatsBlock"></span>
 
-                  <div id="setupBlock" class="labInfoClass">
+                  <div id="setupBlock" class="labInfoClass labInfoFlex">
                     <form id='setupForm'>
                       Environmental Settings
                       <div  class='odd'>
@@ -844,7 +836,7 @@
                     </form>
                   </div>
 
-                  <div id="testSetupBlock" class="labInfoClass">
+                  <div id="testSetupBlock" class="labInfoClass labInfoFlex">
                     <form id="testSetupForm">
                       Test Setup section - this section will be debug only
                       <div  class='odd'>
@@ -919,7 +911,7 @@
                     </form>
                   </div>
 
-                  <div id='ex1setupBlock' class="labInfoClass">
+                  <div id='ex1setupBlock' class="labInfoClass labInfoFlex">
                     <form id='ex1setupForm'>
                       Environmental Settings
                       <div  class='odd'>
@@ -1319,7 +1311,7 @@
                   </div> <span id='end of Experiment 1'></span>  
 
 
-                  <div id='tst2setupBlock' class="labInfoClass">
+                  <div id='tst2setupBlock' class="labInfoClass labInfoFlex">
                     <form id='tst2setupForm'>
                       Test ideas
                       <div  class='even'>
@@ -1342,14 +1334,11 @@
           <div id="organismBlock" class="mainBlockClassRow">
             <div class="orgBenchCol">
               <div id="orgTopId" class="orgBenchTopRow">
-                <div class="orgTopLt">
+                <div class='orgTopLt'>
                   <img src='images/Avida-ED-ancestor-icon.png' style='height: 32px;' id='actOrgImg' />
                   <div id='activeOrgan' class='popDishClass'></div>
                 </div>
-                <div class="orgTopRt">
-                  <button id='OrgSetting'>Settings</button>&nbsp;
-                  <button id='OrgDetailsButton'>Details</button>
-                </div>
+                <div id='a_control_or_info_can_go_here' class="orgTopRt"></div>
               </div>
               <div class="orgMid" id='organismCanvasHolder'>
                 <canvas data-dojo-type='dojo.dnd.Target' id='organCanvas' width='100' height='100'
@@ -1358,10 +1347,7 @@
               <div class="orgBotClass" id='orgBotId'>
                 <div id='cycleSlider'></div><br />
                 <div class='lftmargin'>Cycle:
-                  <input id='orgCycle' type='text' data-dojo-type='dijit/form/NumberTextBox' name='cycle'
-                         required='true' value='0' data-dojo-props='constraints:{min:0, max:2000,places:0},
-                         invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid cycle number."'
-                         style='width:3em; height:1.6em'/>
+                  <input id='orgCycle' type='text' value='0' class='orgCycleClass' />
                 </div>
                 <div style='text-align:center'>
                   <button id='orgReset' disabled>Reset</button>
@@ -1371,73 +1357,108 @@
                   <button id='orgEnd' disabled>End</button>
                 </div>
               </div>
-            </div><span title="end of orgBenchCol"></span>
-            <div class='orgInfo'>
-              <table border='0'
-                     style='border-collapse: collapse; table-layout: auto; width: 100%; height: auto; background-color:#DDD'>
-                <tbody>
-                  <tr>
-                    <td>Function</td>
-                    <td>Times Performed</td>
-                  </tr>
-                  <tr>
-                    <td><label id='notOrg'>0 NOT</label></td>
-                    <td><label id='notPerf'>0</label></td>
-                  </tr>
-                  <tr>
-                    <td><label id='nanOrg'>1 NAN</label></td>
-                    <td><label id='nanPerf'>0</label></td>
-                  </tr>
-                  <tr>
-                    <td><label id='andOrg'>2 AND</label></td>
-                    <td><label id='andPerf'>0</label></td>
-                  </tr>
-                  <tr>
-                    <td><label id='ornOrg'>3 ORN</label></td>
-                    <td><label id='ornPerf'>0</label></td>
-                  </tr>
-                  <tr>
-                    <td><label id='oroOrg'>4 ORO</label></td>
-                    <td><label id='oroPerf'>0</label>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><label id='antOrg'>5 ANT</label></td>
-                    <td><label id='antPerf'>0</label></td>
-                  </tr>
-                  <tr>
-                    <td><label id='norOrg'>6 NOR</label></td>
-                    <td><label id='norPerf'>0</label></td>
-                  </tr>
-                  <tr>
-                    <td><label id='xorOrg'>7 XOR</label></td>
-                    <td><label id='xorPerf'>0</label></td>
-                  </tr>
-                  <tr>
-                    <td><label id='equOrg'>8 EQU</label></td>
-                    <td><label id='equPerf'>0</label></td>
-                  </tr>
-                </tbody>
-              </table>
-              <p>Input Buffer</p>
-              <canvas id='buffer' width='160px' height='15px' style='border:1px solid #000000;'></canvas>
-              <p>Registers: AX, BX, CX</p>
-              <canvas id='register' width='160px' height='15px' style='border:1px solid #000000;'></canvas>
-              <p>Stack A (first two frames)</p>
-              <canvas id='Astack' width='160px' height='10px' style='border:1px solid #000000;'></canvas>
-              <p>Stack B (first two frames)</p>
-              <canvas id='Bstack' width='160px' height='10px' style='border:1px solid #000000;'></canvas>
-              <p>Last Output</p>
-              <canvas id='output' width='160px' height='5px' style='border:1px solid #000000;'></canvas>
-              <span data-dojo-type='dijit/TitlePane' id='InstructionDetail' title='Instruction Details'
-                    extractContent='false' preventCache='false' preload='false' refreshOnShow='false' duration='200'
-                    open='false' style='min-width: 1px; width: 100%; height: auto;'>
-                <p>Just Executed:</p>
-                <textarea type='text' id='ExecuteJust' readonly style='height: 50px; width: 100%;'></textarea>
-                <p>About to Execute:</p>
-                <textarea type='text' id='ExecuteAbout' readonly style='height: 50px; width: 100%;'></textarea>
-              </span>
-            </div><span id="end_orgInfo"></span>
+            </div><span id="end_orgBenchCol"></span>
+            
+            <div id='orgInfoHolder'>
+              <div id='orgDetailID' class='orgDetailClass'>
+                <div id='orgTaskDataDiv'>
+                <table id = 'orgTaskDataTable'>
+                  <tbody>
+                    <tr>
+                      <td>Function</td>
+                      <td>Times Performed</td>
+                    </tr>
+                    <tr>
+                      <td><label id='notOrg'>0 NOT</label></td>
+                      <td><label id='notPerf'>0</label></td>
+                    </tr>
+                    <tr>
+                      <td><label id='nanOrg'>1 NAN</label></td>
+                      <td><label id='nanPerf'>0</label></td>
+                    </tr>
+                    <tr>
+                      <td><label id='andOrg'>2 AND</label></td>
+                      <td><label id='andPerf'>0</label></td>
+                    </tr>
+                    <tr>
+                      <td><label id='ornOrg'>3 ORN</label></td>
+                      <td><label id='ornPerf'>0</label></td>
+                    </tr>
+                    <tr>
+                      <td><label id='oroOrg'>4 ORO</label></td>
+                      <td><label id='oroPerf'>0</label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><label id='antOrg'>5 ANT</label></td>
+                      <td><label id='antPerf'>0</label></td>
+                    </tr>
+                    <tr>
+                      <td><label id='norOrg'>6 NOR</label></td>
+                      <td><label id='norPerf'>0</label></td>
+                    </tr>
+                    <tr>
+                      <td><label id='xorOrg'>7 XOR</label></td>
+                      <td><label id='xorPerf'>0</label></td>
+                    </tr>
+                    <tr>
+                      <td><label id='equOrg'>8 EQU</label></td>
+                      <td><label id='equPerf'>0</label></td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+                <p>Input Buffer</p>
+                <canvas id='buffer' class='orgStatCanvas15'></canvas>
+                <p>Registers: AX, BX, CX</p>
+                <canvas id='register' class='orgStatCanvas15'></canvas>
+                <p>Stack A (first two frames)</p>
+                <canvas id='Astack' class='orgStatCanvas10'></canvas>
+                <p>Stack B (first two frames)</p>
+                <canvas id='Bstack' class='orgStatCanvas10'></canvas>
+                <p>Last Output</p>
+                <canvas id='output' class='orgStatCanvas5'></canvas>
+                <div id='InstructionDetail'>Instruction Details
+                  <details>
+                    <summary>Just Executed:</summary>
+                    <textarea id='ExecuteJust' class='instructionText' readonly></textarea>
+                  </details>
+                  <details>
+                    <summary>About to Execute:</summary>
+                    <textarea id='ExecuteAbout' class='instructionText' readonly></textarea>
+                  </details>
+                </div>
+              </div><span id="end_orgDetailID"></span>
+              
+              
+              <div id='orgSettings' class='orgSettingClass'>
+
+                  <div class='even'>
+                    <span class='lftmargin'>Per Site Mutation Rate:</span>
+                    <span id='orMuteSlide'
+                          style='width:200px; display: inline-block; vertical-align: top; margin-left:20px; margin-right:20px'></span>
+                    <!-- style done here for the slider; margin to keep it from overlapping;
+                                        without width the slider is the full width of the browser window-->
+                    <!--<input id='orMuteInput' type='text' style='width: 4em; height:1.6em'></button>%-->
+                    <input id='orMuteInput' type='text' data-dojo-type='dijit/form/NumberTextBox' value=2.0 required='true' ;
+                           data-dojo-props='constraints:{min:0, max:100},
+                           invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
+                           style='width: 4.5em; height:1.6em'></button> %
+
+                    <!--<div class='fltLeft'>%</div>
+                    <input id='orMRate' type='text' readonly style='width: 4em; height:1.6em'></button>-->
+                  </div>
+                  <h3>Repeatability Mode:</h3>
+                  <input  type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganExperimentRadio'
+                         intermediateChanges='false' name='child' checked value='orgExp' iconClass='dijitNoIcon'></button>
+                  <label id='OrganExperimentLabel'>Experimental (Natural Variation)</label>
+                  <br/>
+                  <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganDemoRadio'
+                         intermediateChanges='false' name='child' value='orgDemo' iconClass='dijitNoIcon'></button>
+                  <label id='OrganDemoLabel'>Demo (forces exact replay)</label>
+                
+              </div>
+            </div><span id=''end_orgInfoHolder></span>
           </div><span id="end_organismBlock_n_mainBlockClassRow"></span>
 
           <div id="analysisBlock" class="analysisArea">
@@ -1663,42 +1684,6 @@
         <button data-dojo-type='dijit/form/Button' type='button' id='newDiscard'>Discard</button>
         <button data-dojo-type='dijit/form/Button' type='button' id='newSaveConfig'>Save Configured Dish</button>
         <button data-dojo-type='dijit/form/Button' type='button' id='newSaveWorld'>Save Populated Dish</button>
-      </div>
-    </div>
-
-    <span title="------------------------------------------------------- Single Organism Replication Settings Dialog --"></span>
-    <div class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='OrganSetupDialog' title='Settings for single organism reproduction'>
-      <div class='dijitDialogPaneContentArea'>
-        <form id='OrganRepeatForm'>
-          <div class='even'>
-            <span class='lftmargin'>Per Site Mutation Rate:</span>
-            <span id='orMuteSlide'
-                  style='width:200px; display: inline-block; vertical-align: top; margin-left:20px; margin-right:20px'></span>
-            <!-- style done here for the slider; margin to keep it from overlapping;
-                                without width the slider is the full width of the browser window-->
-            <!--<input id='orMuteInput' type='text' style='width: 4em; height:1.6em'></button>%-->
-            <input id='orMuteInput' type='text' data-dojo-type='dijit/form/NumberTextBox' value=2.0 required='true' ;
-                   data-dojo-props='constraints:{min:0, max:100},
-                   invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                   style='width: 4.5em; height:1.6em'></button> %
-
-            <!--<div class='fltLeft'>%</div>
-            <input id='orMRate' type='text' readonly style='width: 4em; height:1.6em'></button>-->
-          </div>
-          <h3>Repeatability Mode:</h3>
-          <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganExperimentRadio'
-                 intermediateChanges='false' name='child' checked value='orgExp' iconClass='dijitNoIcon'></button>
-          <label id='OrganExperimentLabel'>Experimental (Natural Variation)</label>
-          <br/>
-          <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganDemoRadio'
-                 intermediateChanges='false' name='child' value='orgDemo' iconClass='dijitNoIcon'></button>
-          <label id='OrganDemoLabel'>Demo (forces exact replay)</label>
-        </form>
-      </div>
-      <div class='dijitDialogPaneActionBar'>
-        <button data-dojo-type='dijit/form/Button' type='button' data-dojo-props='onClick:function(){OrganSetupDialog.hide();}' id='indDone'>
-          Done
-        </button>
       </div>
     </div>
 

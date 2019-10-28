@@ -131,7 +131,7 @@ av.mouse.dndTarget = ['organIcon'
 //list of dom elements on the Population page that need to have the mouse over shape/style changed for the drag n drop to look right
 av.mouse.notDndPopList = ['colorMode'
   , 'TimeLabel'
-  , 'labInfoBlock'
+  , 'popStatsBlock'
   , 'setupBlock'
   , 'populationBlock'
   , 'scaleCanvas'
@@ -229,7 +229,7 @@ for (var ii = 0; ii < lngth; ii++) {
 av.mouse.notDndIndList = ['colorMode'
   , 'populationBlock'
   , 'setupBlock'
-  , 'labInfoBlock'
+  , 'popStatsBlock'
   , 'scaleCanvas'
   , 'trashCan'
   , 'organismCanvasHolder'
@@ -265,8 +265,7 @@ av.mouse.notDndIndList = ['colorMode'
   , 'populationButton'
   , 'organismButton'
   , 'analysisButton'
-  , 'OrgSetting'
-  , 'OrgDetailsButton'
+  //, 'orgSetting'
   , 'cycleSlider'
   , 'orgCycle'
   , 'orgReset'
@@ -305,6 +304,10 @@ av.msg.setupType = 'normal';
 // so use the below updated condition
 
 av.ui = {};  //user interface functions and variables
+av.ui.popStatFlag = true;  //flag that determines if the stats panel is visible.
+av.ui.orgStatFlag = true;  //flag that determines if the stats panel is visible.
+av.ui.orgInfoHolderMinWidth = 250; //need to cross check with orgInfoHolder in avidaEdEco.css
+av.ui.orgInfo = 'details';   //settings is the other option
 av.ui.beginFlag = true;
 av.ui.oneUpdateFlag = false;
 av.ui.lftSidePnlShowing = true;
@@ -421,7 +424,6 @@ av.dnd = {};  //details in AvidiaEd.js as it access the DOM
 av.dnd.move = {};  //used to hold data needed for dnd type move.
 
 av.ptd = {};  // on population page that are not part of the grid. (PeTri Dish)
-av.ptd.popStatFlag = true;  //flag that determines if the stats panel is visible.
 av.ptd.logicButtons = ['notButton', 'nanButton', 'andButton', 'ornButton', 'oroButton', 'antButton', 'norButton', 'xorButton', 'equButton'];
 av.ptd.popInfoHolderWd = 395;
 
@@ -1094,6 +1096,6 @@ av.anl.clearChart = function () {
 // navColID or navColClass: wd = 152 includling 2px for a 1 px border. (minimum nice wd) about 84 too narrow, but works. 
 // mainBlockHolder: wd = 
 // popInfoHolder: mn wd = 500 inlcuding border
-// labInfoBlock: min wd = 364 no border. 
+// popStatsBlock: min wd = 364 no border. 
 // selOrgType: min wd = 164  (might make a tad smaller) includes 1 px border
 // popStats4grid: min wd = 176   (get left over)

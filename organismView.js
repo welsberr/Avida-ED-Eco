@@ -1,9 +1,11 @@
+var av = av || {};  //because av already exists
+
 av.ind.orgStopFn = function () {
   if (av.ind.update_timer) {
     clearInterval(av.ind.update_timer);
   }
   document.getElementById("orgRun").textContent = 'Run';
-}
+};
 
 av.ind.clearGen = function(gen) {
   'use strict';
@@ -322,8 +324,8 @@ av.ind.organTraceButtonInable = function () {
   document.getElementById('orgRun').disabled = false;
   document.getElementById('orgForward').disabled = false;
   document.getElementById('orgEnd').disabled = false;
-  dijit.byId('orgCycle').attr('disabled', false);
-}
+  av.dom.orgCycle.disabled = false;
+};
 
 
 //*****************************************************************/

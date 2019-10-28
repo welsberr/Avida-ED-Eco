@@ -42,10 +42,10 @@ av.msg.readMsg = function (ee) {
         av.traceObj = msg.snapshots;
         //console.log('av.traceObj', av.traceObj);
         av.ind.cycle = 0;
-        dijit.byId('orgCycle').set('value', 0);
+        av.dom.orgCycle.value = 0;
         av.ind.cycleSlider.set('maximum', av.traceObj.length - 1);
         av.ind.cycleSlider.set('discreteValues', av.traceObj.length);
-        av.ind.updateOrgTrace();
+        av.ind.updateOrgTrace('messaging_webOrgTraceBySequence');
         av.debug.log += '\n--Aui: \n' + av.utl.json2stringFn(msg);
         break;
       case 'webPopulationStats':

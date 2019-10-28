@@ -10,8 +10,8 @@ av.grd.backgroundSquares = function () {
       var yy = av.grd.marginY + av.grd.yOffset + jj * av.grd.cellHt;
       av.grd.cntx.fillStyle = 'rgb(40, 40, 40)';
       av.grd.cntx.fillRect(xx, yy, av.grd.cellWd - 1, av.grd.cellHt - 1);
-    }
-  }
+    };
+  };
 };
 
 /*

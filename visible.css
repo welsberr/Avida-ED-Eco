@@ -13,18 +13,6 @@
   display: none;
 }
 
-#setupBlock{
-  display: none;    
-}
-
-#labInfoBlock{       /* class is labinfoClass */
-  display: flex;    
-}
-
-#setupBlock{         /* class is labinfoClass */
-  display: none;    
-}
-
 #zoomSlide{display: none;}
 .noSize{display: none}
 
@@ -39,5 +27,5 @@
   width: 100%; 
   height: 100%; 
   z-index: 1000; 
-  background-color: #13332A
+  background: #13332A
 }
