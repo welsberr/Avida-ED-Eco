@@ -1,7 +1,7 @@
 /* global userMsgLabel */
 
 // need a server to run this. The one below works.
-// python -m SimpleHTTPServer  in the folder with index.html to start a server for using pouchDB
+// python -m SimpleHTTPServer  No longer using pouchDB
 // python -m SimpleHTTPServer 8001  to put on 8001 instead of 8000
 // Then visit http://127.0.0.1:8000/avidaED.html
 // 
@@ -169,7 +169,7 @@ require([
   setTimeout(function () {
     if (!av.ui.loadOK) {
       //alert('Avida-ED failed to load, please try re-loading');
-      appReloadDialog.show();
+      document.getElementById('appReloadDialog').style.display = 'show';
     }
   }, 121000);
 
@@ -1104,15 +1104,15 @@ require([
     console.log('domobj=', domobj);
   };
 
-  av.ui.toggleDevelopentDisplays = function (domobj) {
-    console.log('domobj=', domobj);
+  av.ui.toggleDevelopentDisplays = function () {
     var len, tsk, sub;
     if ('visible' === av.doj.mnDebug.style.visibility) {
       //hide all development elements
       av.ui.hideDevelopment = true;
       av.doj.mnDebug.style.visibility = 'hidden';
       document.getElementById('showTextButtonDiv').style.visibility = 'hidden';
-      document.getElementById('developmentToggle').className = 'devoCammo';
+      document.getElementById('developmentToggle').className = 'devoCammo';  
+      document.getElementById('ritePnlBtnHolder').className = 'pnlBtnHldrHide';
 
       document.getElementById('fzTdishSec').style.visibility = 'hidden';
       document.getElementById('testDishDetailDiv').style.display = 'none';
@@ -1124,21 +1124,7 @@ require([
       document.getElementById('displayGridResourceData').style.display = 'none';
 
       av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopentDisplays');
-/*
-      //console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
-      len = document.getElementsByClassName('localEquilibrium').length;
-      for (ii = 0; ii < len; ii++) {
-        document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'none';
-        document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
-        document.getElementsByClassName('globalAll')[ii].style.display = 'none';
-        document.getElementsByClassName('localEquilibrium')[ii].style.display = 'none';
-        document.getElementsByClassName('localAll')[ii].style.display = 'none';
-      };
-      len = document.getElementsByClassName('globalEquilibrium').length - 1;
-      document.getElementsByClassName('globalEquilibrium')[len].style.display = 'none';
-      document.getElementsByClassName('globalFinite')[len].style.display = 'none';
-      document.getElementsByClassName('globalAll')[len].style.display = 'none';
-*/
+
       len = av.sgr.logicNames.length;
       sub = 1;   //this may change later;
       for (ii = 0; ii < len; ii++) {
@@ -1148,9 +1134,6 @@ require([
 
 
       dijit.byId('mnHpDebug').set('label', 'Show debug menu');   //???????
-//      tsk = 'orn';
-//      sub = 1;
-//      document.getElementById(tsk + sub + 'gradientCheckbox').style.display = 'none';
 
       av.post.addUser('Button: mnHpDebug: now hidden');
     } else {       // development sectiomn can be seen.
@@ -1158,6 +1141,7 @@ require([
       av.doj.mnDebug.style.visibility = 'visible';
       document.getElementById('showTextButtonDiv').style.visibility = 'visible';
       document.getElementById('developmentToggle').className = 'devoShow';
+      document.getElementById('ritePnlBtnHolder').className = 'ritePnlBtnHlderShow';
 
       document.getElementById('fzTdishSec').style.visibility = 'visible';
       document.getElementById('testDishDetailDiv').style.display = 'block';
@@ -1169,28 +1153,14 @@ require([
       document.getElementById('displayGridResourceData').style.display = 'flex';
 
       av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopentDisplays.onclick_show');
-/*
-      //show environment options sill under development.
-      len = document.getElementsByClassName('localEquilibrium').length;
-      for (ii = 0; ii < len; ii++) {
-        document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'inline';
-        document.getElementsByClassName('globalFinite')[ii].style.display = 'inline';
-        document.getElementsByClassName('globalAll')[ii].style.display = 'inline';
-        document.getElementsByClassName('localEquilibrium')[ii].style.display = 'inline';
-        document.getElementsByClassName('localAll')[ii].style.display = 'inline';
-      };
-      len = document.getElementsByClassName('globalEquilibrium').length - 1;
-      document.getElementsByClassName('globalEquilibrium')[len].style.display = 'inline';
-      document.getElementsByClassName('globalFinite')[len].style.display = 'inline';
-      document.getElementsByClassName('globalAll')[len].style.display = 'inline';
-*/      
+
       len = av.sgr.logicNames.length;
       sub = 1;   //this may change later;
       for (ii = 0; ii < len; ii++) {
         tsk = av.sgr.logicNames[ii];
         av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
       };
-//      document.getElementById(tsk + sub + 'gradientCheckbox').style.display = 'inline-block';
+      
       //Show debug on dropdown menu
       dijit.byId('mnHpDebug').set('label', 'Hide debug menu');   //????????
       av.post.addUser('Button: mnHpDebug: now visible');
@@ -1400,11 +1370,11 @@ require([
     };
     if (('populationBlock' == av.ui.page) || ('organismBlock' == av.ui.page)) {
       document.getElementById('RtSideToggleButtons').style.display = 'block';
-      document.getElementById('ritePnlBtnDiv').style.display = 'block';
+      document.getElementById('ritePnlBtnHolder').style.display = 'block';
     }
     else {
       document.getElementById('RtSideToggleButtons').style.display = 'none';
-      document.getElementById('ritePnlBtnDiv').style.display = 'none';
+      document.getElementById('ritePnlBtnHolder').style.display = 'none';
     };
     if ('organismBlock' == av.ui.page) {
       if ('settings' == av.ui.orgInfo) {

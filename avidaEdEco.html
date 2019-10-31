@@ -72,7 +72,7 @@
 
     <div id='allAvida'>
       <div class="headerRow">
-        <div id="lftPbuttonDiv" class="sidePnlBtnHolderClass">
+        <div id="leftPnlBtnHolder" class="leftPnlBtnHlderShow">
           <img id='lftPnlButtonImg' src='images/lftPnlBtn2.png'/>
         </div>
         <div id="mainMenu">
@@ -186,7 +186,7 @@
         <div id='RtSideToggleButtons'>
           <input type='button' id='StatsButton' class='toggleLftButton' value='Stats' onclick='av.ptd.rightInfoPanelToggleButton(this)'/><input id='SetupButton' type='button' class='toggleRitButton' value='Setup' onclick='av.ptd.rightInfoPanelToggleButton(this)'/>
         </div>
-        <div id='ritePnlBtnDiv' class='sidePnlBtnHolderClass'>
+        <div id='ritePnlBtnHolder' class='ritePnlBtnHlderShow'>
           <img id='rtPnlButtonImg' src='images/rtPnlBtn2.png' alt='image to indicate button to open/close the right information panel'/>
         </div>
       </div>
@@ -243,7 +243,7 @@
               <input id='showTextButton' type='button' value='Big Text'/>
             </div>
             <div id='developmentToggleDiv'>
-              <input id='developmentToggle' class='devoShow' type='button' value=' DevoToggle ' onclick='av.ui.toggleDevelopentDisplays(this)' />
+              <input id='developmentToggle' class='devoShow' type='button' value=' DevoToggle ' onclick='av.ui.toggleDevelopentDisplays()' />
             </div>
           </div>
         </div><span id="end_of_navCol"></span>
@@ -1566,6 +1566,9 @@
         </div> <span id="end_mainBlockHolder"></span>
       </div>
     </div><span title='end of allAvida'></span>
+    
+    
+    
     <span title="-------------------------------------------------------------------------------------- Dialog boxes --"></span>
     <span title="---------------------------------------------------------------------------- Save WSfile Dialog box --"></span>
     <div  class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='sWSfDialog' title='The freezer has changed since last saved in a workspace'>
@@ -1645,7 +1648,7 @@
       </div>
     </div>
 
-    <span title="---------------------------------------------------------------------------------- New button Modal --"></span>
+    <span id="-------------------------------------------------------------------------------------New-button-Modal---"></span>
     <div class="modal" id='newModalID'>
 
       <!-- Modal content -->
@@ -1665,7 +1668,7 @@
         </div>
       </div>
 
-    </div>
+    </div><span id='end_newModalID____________________________________________________________________________________'></span>
 
     <span title="-This-is-the-dojo-version._The-nonDojo-version-uses-class=modal-------------------- New button Dialog --"></span>
     <div  data-dojo-type='dijit/Dialog' data-dojo-id='newDialogOld' id="newDialogID"
@@ -2078,45 +2081,66 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                 </div>
               </div>
 
-              <span title="----------------------------------------------- Suggesting restart if not loaded after a time delay --"></span>
-              <div class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='appReloadDialog'
-                   title='Avida-ED failed to load'>
-                <div class='dijitDialogPaneContentArea'>
-                  <p>Please try re-loading<br />
-                    Use your browser's reload function
-                  </p>
-                </div>
-                <div class='dijitDialogPaneActionBar'>
-                  <button data-dojo-type='dijit/form/Button' type='button' data-dojo-props='onClick:function(){appReloadDialog.hide();}'
-                          id='appReloadCancel'>close this dialong
-                  </button>
-                </div>
-              </div>
+    <span id="------------------------------------------example------------------------------------New-button-Modal---"></span>
+    <div id='newModalID_example' class="modal">
 
-              <span title="------------------------------------------------------------------- Send Log Data via e-mail client --"></span>
-              <div class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='sendLogDialog'
-                   title='Avida-ED Problem Report - help us make Avida-ED better'>
-                <div class='dijitDialogPaneContentArea'>
-                  <p id='sendLogPara'>
-                    Please describe the problem and put that at the beginning of the e-mail along with the session log from the text
-                    area seeen below.
-                  </p>
-                  <p>
-                    Please send the text below to 'Avida-ED-development@googlegroups.com'. Either copy and paste
-                    selected text or click on the send e-mail button.
-                  </p>
-                  <br />
-                  <textarea id='sendLogTextarea' cols='90' rows='20' ></textarea>
+      <!-- Modal content -->
+      <div class="modal-content" >
+        <div class="modal-header">
+          <h2>Would you like to save or discard the current petri dish before starting a new experiment?</h2>
+        </div>
+        <div class="modal-body">
+          <p>Configured Dish saves the experiment settings only.</p>
+          <p>Populated Dish saves organisms and experiment history.</p>
+        </div>
+        <div class="modal-footer">
+          <button id='newCancel'>Cancel</button>
+          <button id='newDiscard'>Discard</button>
+          <button id='newSaveConfig'>Save Configured Dish</button>
+          <button id='newSaveWorld'>Save Populated Dish</button>
+        </div>
+      </div>
 
-                </div>
-                <div class='dijitDialogPaneActionBar'>
-                  <button data-dojo-type='dijit/form/Button' type='button' id='sendPost' style = 'visibility: hidden'>Send POST</button>
-                  <button data-dojo-type='dijit/form/Button' type='button' id='sendEmail'>Send email</button>
-                  <button data-dojo-type='dijit/form/Button' type='button' data-dojo-props='onClick:function(){sendLogDialog.hide();}'
-                          id='sendLogDialogCancel'>Cancel
-                  </button>
-                </div>
-              </div>
+    </div><span id='end_newModalID____________________________________________________________________________________'></span>
+
+    <span id="--------------------------------------------------Suggesting-restart-if-not-loaded-after-a-time-delay --"></span>
+    <div id='appReloadDialog' class='modal' title='Avida-ED failed to load'>
+      <div class='modal-body'>
+        <p>Please try re-loading<br />
+          Use your browser's reload function
+        </p>
+      </div>
+      <div class='modal-footer'>
+        <button id='appReloadCancel' type='button' onClick='function(){document.getElementById("appReloadDialog").style.display="none";}'>
+          close this dialog
+        </button>
+      </div>
+    </div><span id='end_appReloadDialog_______________________________________________________________________________'></span>
+
+    <span title="------------------------------------------------------------------- Send Log Data via e-mail client --"></span>
+    <div class="notSeen" data-dojo-type='dijit/Dialog' data-dojo-id='sendLogDialog'
+         title='Avida-ED Problem Report - help us make Avida-ED better'>
+      <div class='dijitDialogPaneContentArea'>
+        <p id='sendLogPara'>
+          Please describe the problem and put that at the beginning of the e-mail along with the session log from the text
+          area seeen below.
+        </p>
+        <p>
+          Please send the text below to 'Avida-ED-development@googlegroups.com'. Either copy and paste
+          selected text or click on the send e-mail button.
+        </p>
+        <br />
+        <textarea id='sendLogTextarea' cols='90' rows='20' ></textarea>
+
+      </div>
+      <div class='dijitDialogPaneActionBar'>
+        <button data-dojo-type='dijit/form/Button' type='button' id='sendPost' style = 'visibility: hidden'>Send POST</button>
+        <button data-dojo-type='dijit/form/Button' type='button' id='sendEmail'>Send email</button>
+        <button data-dojo-type='dijit/form/Button' type='button' data-dojo-props='onClick:function(){sendLogDialog.hide();}'
+                id='sendLogDialogCancel'>Cancel
+        </button>
+      </div>
+    </div>
 
               <span title="-------------------------------------------------------------- Send Log Data by posting to database --"></span>
               <span title="-------------------------------------------------- Saving session log when no e-mail client present --"></span>

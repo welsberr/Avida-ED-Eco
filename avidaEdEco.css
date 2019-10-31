@@ -74,15 +74,22 @@
     border: 1px solid #AAA;
   }
 
-  #lftPbuttonDiv{
+.leftPnlBtnHlderShow{
     background: #eee;     /* #eee; better color ? */
     flex: 0 1 50px;
     padding: 2px 4px 2px 6px;    /* top right bottom left */
+    visibility: visible;
   }
-  #ritePnlBtnDiv{
+.pnlBtnHldrHide{
     flex: 0 1 50px;
-    padding: 2px 6px 2px 4px;    /* top right bottom left */
-  }
+    padding: 2px 6px 2px 4px;    /* top right bottom left */  
+  visibility: hidden;    
+}
+.ritePnlBtnHlderShow{
+    flex: 0 1 50px;
+    padding: 2px 6px 2px 4px;    /* top right bottom left */  
+    visibility: visible;
+}
   #lftPnlButtonImg{
     height: 20px;
     border: 2px solid black;  
@@ -196,7 +203,7 @@
   grid-area: showTextButtonDiv;
   align-self: stretch;
   justify-self: stretch;
-\  display: flex;
+  display: flex;
   align-items: center;
   justify-content: flex-end;
 }

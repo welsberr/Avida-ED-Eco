@@ -115,7 +115,7 @@ av.msg.readMsg = function (ee) {
         // Then used http://gifmaker.me/reverser/ to make a gif in reverse time order. Then Wesley used gifsicle
         // to combine the forward and reverse gif.
         $('#splash').remove(); //hides splace screen.
-        appReloadDialog.hide();
+        document.getElementById("appReloadDialog").style.display="none";
         av.ui.loadOK = true;
         if (av.debug.msg) console.log('before calling av.grd.popChartInit');
         av.grd.popChartInit('notification');
