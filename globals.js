@@ -593,7 +593,7 @@ av.sgr.processHideFlags = function(boolArry, from) {
   for (var ii=0; ii < len; ii++) {
     av.nut.hideFlags[av.sgr.hideFlgNames[ii]] = boolArry[ii];
   };
-  console.log('av.nut.hideFlags=',av.nut.hideFlags);
+  console.log('av.nut.hideFlags=',av.nut.hideFlags,'-------------------------------------------------------------');
 };
 
 av.nut = {};

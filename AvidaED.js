@@ -1124,15 +1124,29 @@ require([
       document.getElementById('displayGridResourceData').style.display = 'none';
 
       av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopentDisplays');
-
       len = av.sgr.logicNames.length;
       sub = 1;   //this may change later;
       for (ii = 0; ii < len; ii++) {
         tsk = av.sgr.logicNames[ii];
         av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
       };
-
-
+      
+      //Hide select options that are not yet implemented
+      //console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
+      len = document.getElementsByClassName('localEquilibrium').length;
+      for (ii = 0; ii < len; ii++) {
+        document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'none';
+        document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
+        document.getElementsByClassName('globalAll')[ii].style.display = 'none';
+        document.getElementsByClassName('localEquilibrium')[ii].style.display = 'none';
+        document.getElementsByClassName('localAll')[ii].style.display = 'none';
+      };
+      len = document.getElementsByClassName('globalEquilibrium').length - 1;
+      document.getElementsByClassName('globalEquilibrium')[len].style.display = 'none';
+      document.getElementsByClassName('globalFinite')[len].style.display = 'none';
+      document.getElementsByClassName('globalAll')[len].style.display = 'none';
+      
+      //debug menu??
       dijit.byId('mnHpDebug').set('label', 'Show debug menu');   //???????
 
       av.post.addUser('Button: mnHpDebug: now hidden');
@@ -1161,6 +1175,23 @@ require([
         av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
       };
       
+      //show environment options sill under development.
+      len = document.getElementsByClassName('localEquilibrium').length;
+      for (ii = 0; ii < len; ii++) {
+        document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'inline';
+        document.getElementsByClassName('globalFinite')[ii].style.display = 'inline';
+        document.getElementsByClassName('globalAll')[ii].style.display = 'inline';
+        document.getElementsByClassName('localEquilibrium')[ii].style.display = 'inline';
+        document.getElementsByClassName('localAll')[ii].style.display = 'inline';
+      };
+      len = document.getElementsByClassName('globalEquilibrium').length - 1;
+      document.getElementsByClassName('globalEquilibrium')[len].style.display = 'inline';
+      document.getElementsByClassName('globalFinite')[len].style.display = 'inline';
+      document.getElementsByClassName('globalAll')[len].style.display = 'inline';
+      tsk = 'orn';
+      sub = 1;
+      document.getElementById(tsk + sub + 'gradientCheckbox').style.display = 'inline-block';
+            
       //Show debug on dropdown menu
       dijit.byId('mnHpDebug').set('label', 'Hide debug menu');   //????????
       av.post.addUser('Button: mnHpDebug: now visible');
@@ -2718,7 +2749,7 @@ require([
     var taskID = selectObj.id;
     var task = taskID.substring(0, 3);
     var sub = taskID.substring(3, 1);
-    console.log('tst=', task, '; subsection=', sub);
+    console.log('taskID=', taskID, '; task =', task, '; subsection=', sub);
     sub = 1;
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.geometryChange');
   };
@@ -3857,8 +3888,8 @@ require([
     dijit.byId('mnFlSaveAs').attr('disabled', true);
   };
 
-// should be none;
-  console.log('av.dom.testSetupBlock.display=', av.dom.testSetupBlock.display);
+  // className should be 'labInfoClass labInfoNone'
+  console.log('av.dom.testSetupBlock.className=', av.dom.testSetupBlock.className);
 
   // 
 
