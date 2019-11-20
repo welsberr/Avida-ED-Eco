@@ -2748,19 +2748,19 @@ require([
     //need to find subregion Number in the future - set to 1 for now. 
     var taskID = selectObj.id;
     var task = taskID.substring(0, 3);
-    var sub = taskID.substring(3, 1);
-    console.log('taskID=', taskID, '; task =', task, '; subsection=', sub);
-    sub = 1;
+    var sub = taskID.substr(3, 1);
+    console.log('av.sgr.geometryChange: taskID=', taskID, '; task =', task, '; subsection=', sub);
+    sub = 1;       //or should this be 0 since it is in the 'summary' section?
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.geometryChange');
   };
 
   av.sgr.supplyChange_placeholder = function (domObj) {
     var taskID = domObj.id;
     var task = taskID.substring(0, 3);
-    var sub = taskID.substring(3, 1);
-    console.log('taskID=', taskID, 'tst=', task, '; subsection=', sub);
+    var sub = taskID.substr(3, 1);
+    console.log('taskID=', taskID, 'task=', task, '; subsection=', sub);
     sub = 1; //only whole dish  for now
-    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
+    av.sgr.changeDetailsLayout(task, sub, 'supplyChange_placeholder');
   };
 
   av.sgr.dishRegionChange = function (domObj) {
@@ -2771,8 +2771,8 @@ require([
     var taskID = domObj.id;
     var task = taskID.substring(0, 3);
     var sub = taskID.substr(3, 1);
-    console.log('taskID=', taskID, '; tst=', task, '; subsection=', sub); // this is wrong on 2019
-    sub = 1; //only whole dish  for now
+    console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub); 
+    sub = 1; //only whole dish  for now  or should sub=0 when it it global?
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
   };
 
@@ -2780,9 +2780,9 @@ require([
     var re_region = /(\D+)(\d+)(.*$)/;
     var taskID = domObj.id;
     var matchTaskRegion = taskID.match(re_region);
-    var task = matchTaskRegion[1];      //taskID.substring(0,3);  
-    var sub = matchTaskRegion[2];       //taskID.substring(3,1);   did not work
-    console.log('taskID=', taskID, 'tst=', task, '; subsection=', sub);
+    var task = matchTaskRegion[1];      //taskID.substring(0,3);   
+    var sub = matchTaskRegion[2];       //taskID.substring(3,1);   did not work; substr seems to work for sub
+    console.log('av.sgr.eachSugarCheckBoxChange: taskID=', taskID, 'tst=', task, '; subsection=', sub);
     if (1 < sub)
       sub = 1;
     sub = 1; //only whole dish  for now
@@ -3839,6 +3839,7 @@ require([
   // Do this after all other is done; end of file
   //must create the rest of the resource/reaction user interface before calling av.sgr.ChangeAllGeo('Global');
   av.sgr.buildHtml();
+  // av.sgr.defaults;
 
   av.ui.ex1setSugarColors();   //example 1     //delete later
 

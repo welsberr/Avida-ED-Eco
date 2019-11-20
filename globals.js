@@ -358,7 +358,7 @@ if (av.brs.isOpera) {
   av.brs.found++;
   av.brs.browser = 'Opera';
   av.debug.log += '\n     Browser is Opera';
-}
+};
 if (av.brs.isFirefox) {
   av.brs.found++;
   av.brs.browser = 'Firefox';
@@ -450,7 +450,19 @@ av.parents.clearParentsFn = function () {
 
 av.fzr = {};
 
-av.sgr = {};   //specific to resource/reactions (sugars);
+//Commments in the environment.cfg file?
+//
+//#comment option
+//#!xor not34 region=all:side=none:supply=finite:gradient=false
+//region options are in av.sgr.region above.   or regionNum could be used. 
+//supply optoins are in av.sgr.supply 
+//side options are in av.sgr.side3
+//gradient options are false/true
+//
+//Name ideas. not01g00 to 99  for gradients   leading zeros by using padStart
+//
+
+av.sgr = {};   //specific to resource/reactions (sugars); mostly constants. Not all iddeas written here will be used. 
 av.sgr.oseNames = ['Notose', 'Nanose', 'Andose', 'Ornose', 'Orose', 'Antose', 'Norose', 'Xorose', 'Equose'];
 av.sgr.logEdNames = ['0not', '1nan', '2and', '3orn', '4oro', '5ant', '6nor', '7xor', '8equ'];
 av.sgr.logicNames = ['not', 'nan', 'and', 'orn', 'oro', 'ant', 'nor', 'xor', 'equ'];
@@ -499,19 +511,21 @@ av.sgr.resrc_argu = ['name', 'initial', 'inflow', 'outflow', 'geometry'         
                             ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow',     //theste are new for Avida-ED and not in the wiki. 
                             , 'region', 'side', 'grdNum', 'regionCode','regionList'];  // this last row is not in the argurments for avida; used for 'multi-dish'
 
+
 //Avida resource Arguments that have Defaults I will probably use. If they are the default, they do not need to be in the Environment.cfg file
 av.sgr.resrcAvidaDefaultGlobalArgu = [ 'initial', 'inflow', 'outflow', 'geometry'   
                                     , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'];
 av.sgr.resrcAvidaDefaultGlobalValu =  [ 0, 0, 0.0, 'global', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
 
 av.sgr.resrcAvidaDefaultLocalValu =  [ 0, 0, 0.0, 'grid', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
-                          
-av.sgr.supply_argu = ['region', 'side', 'grdNum', 'regionCode','regionList'];           //each is an array for region
+                       
+//not in current use
+//av.sgr.supply_argu = ['region', 'side', 'grdNum', 'regionCode','regionList'];           //each is an array for region
 
 //number of subdishis is useful, especially if we only allow one layout per number of subdishes. 
 //geometry is always the same for all regions, but also part of the avida arguments for resource. 
 //Different ways to discribe layout, only one desciptor needed per task
-av.sgr.layout3 = ['glob', 'all', 'haf', 'three', '4th'];
+av.sgr.layout3 = ['glob', 'all', 'haf', 'thr', '4th'];
 av.sgr.layout = ['Global Dish', 'Whole Dish', 'Halves', '3-sections', 'Quarters'];
 av.sgr.layoutMany = ['glob', 'all', 'halfLR', 'halfTB', '3top1', '3bot1', '3lft1', '3Rit1', '3book', '3stack', '4th'];
                          
@@ -543,9 +557,10 @@ av.sgr.boxArguments = ['boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow']; //flag is
   av.sgr.regionNamesLower =  ['whole dish', 'upper left', 'upper right', 'lower left', 'lower right', 'top', 'bottom', 'left', 'right']; 
   
 // need to figure out how to assign when reading environment.cfg
-  av.sgr.supply3 =  ['non', 'inf',  'fin',  'equ',  'poi', 'flo' ];  //none, infinite, finite, equilibrium, poison
-  av.sgr.supply4 = ['none', 'infn', 'fint', 'equl', 'pois', 'flow'];
-  av.sgr.supply  = ['None', 'Infinite', 'Finite', 'Equilibrium', 'Flow'];    //only using the first four for now; 
+  av.sgr.supply3 =      ['non', 'inf',  'fin',  'equ',  'poi', 'flo' ];  //none, infinite, finite, equilibrium, poison
+  av.sgr.supply4 =      ['none', 'infn', 'fint', 'equl', 'pois', 'flow'];
+  av.sgr.supply  =      ['None', 'Infinite', 'Finite', 'Equilibrium', 'Flow'];    //only using the first 3 for now; 
+  av.sgr.supplylower  = ['none', 'infinite', 'finite', 'equilibrium', 'flow'];    //only using the first 3 for now; 
   //Flow would be from the source in a diffrent place fromt he sink: that is input x,y coordinaes are different from those of output. 
   av.sgr.supplyLetter = ['N'  , 'I'  , 'F'  , 'E', 'P', 'S'];   
   av.sgr.side1 = ['L', 'R', 'T', 'B', 'C', 'E', 'U'];
@@ -555,19 +570,97 @@ av.sgr.boxArguments = ['boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow']; //flag is
   av.sgr.hideFlgNames = ['gradient', 'periodic'];  
   av.sgr.hideFlagInit = [true, true];  //true is to hide when areas underdevelopment are hidden. 
   av.sgr.flagInitOpposite = [false, false];  //false in this case is to NOT hide as develpment sections shown.
-      
-//Commments in the environment.cfg file?
-//
-//#comment option
-//#!xor not34 region=all:side=none:supply=finite:gradient=false
-//region options are in av.sgr.region above.   or regionNum could be used. 
-//supply optoins are in av.sgr.supply 
-//side options are in av.sgr.side3
-//gradient options are false/true
-//
-//Name ideas. not01g00 to 99  for gradients   leading zeros by using padStart
-//
+  
+//one each task if I make a data structure from the UI that is separate from what goes in thhe config file.                  
+av.sgr.ui_allDish_argu = ['geometry', 'supplyType', 'initial', 'inflow', 'outflow', 'periodFlag', 'dishRegion'];
 
+//each task; each subregion
+av.sgr.ui_subDish_argu = ['subRegion', 'supplyType', 'initialHi', 'inflowHi', 'outflowHi', 'DiffuseFlag'
+                        , 'periodFlag', 'periodTime'
+                        , 'gradientFlag', 'side', 'initialLo', 'inflowLo', 'outflowLo'];
+        
+av.nut = {};
+//------------------------------------------------------------------------------------------- av.fzr.clearEnvironment --
+// used to create several structures used in defining parameters for the environment.cfg file
+av.fzr.clearEnvironment = function(from) {
+  //console.log(from + ' called av.fzr.clearEnvironment');
+  av.oldnut = av.nut;
+  av.nut = {};
+  av.nut.hideFlags = {};
+  av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.fzr.clearEnvironment');
+  
+  // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
+  // av.nut is used for normal runs. nut is for nutrients
+  
+  var logiclen = av.sgr.logicNames.length;
+  var rsrcelen = av.sgr.resrc_argu.length; 
+  var reactlen = av.sgr.react_argu.length;
+  var tsk;
+  var uiAllDishLen = av.sgr.ui_allDish_argu.length;
+  var uiSubDishLen = av.sgr.ui_subDish_argu.length;
+  for (var ii=0; ii< logiclen; ii++) {      //9
+    tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
+    av.nut[tsk] = {};    
+    av.nut[tsk]['resrc'] = {};
+    for (var jj=0; jj<rsrcelen; jj++){
+      av.nut[tsk]['resrc'][ av.sgr.resrc_argu[jj] ] = [];
+    };
+    av.nut[tsk]['react'] = {};
+    for (var jj=0; jj<reactlen; jj++){
+      av.nut[tsk]['react'][ av.sgr.react_argu[jj] ] = [];
+    };
+    //from user interface 
+    av.nut[tsk]['ui'] = {};
+    for (jj=0; jj < uiAllDishLen; jj++) {
+      av.nut[tsk].ui[av.sgr.ui_allDish_argu[jj] ] = 'default';
+    };
+    av.nut[tsk].ui.geometry = 'global';
+    av.nut[tsk].ui.supplyType = 'infinite';     //this is only for whem ui.geometry = global
+    av.nut[tsk].ui.initial = '10000';      //only whem ui.geometry = global and  supplyType = 'finite' (at lseat for not
+    av.nut[tsk].ui.periodFlag = false;
+    av.nut[tsk].ui.periodTime = 10000;  //radnom defautl number; only used if periodFlag = true; 
+    av.nut[tsk].ui.numRegion = 1;   // whole dish
+    av.nut[tsk].ui.regionLayoutName = 'all';  //only whole dish for now
+
+    for (jj=0; jj < uiSubDishLen; jj++) {
+      av.nut[tsk]['ui'][av.sgr.ui_subDish_argu[jj] ] = [];
+    };
+    //from event file
+    av.nut[tsk].ui.periodFlag[0] = false;    //false = default;  else true.  
+    av.nut[tsk].ui.subRegion[0] = 0;    // this goes with 'all' = regionLayoutName (or 1234 could be used
+    av.nut[tsk].ui.supplyType[0] = 'infinite';
+    av.nut[tsk].ui.initialHi[0] = 1000;  //sugar units/cell guess at an initial value when supplyType='infinite';
+  };
+  console.log('av.nut =',av.nut);
+  //console.log('av =',av);
+   
+  //--------------------------------------------- av.fzr.env section mighht be delted in future. used for Test Dishes --
+  // av.fzr.env is only used for Test Dishes. 
+  av.fzr.env = {};
+  av.fzr.env.rsrce = {};
+  av.fzr.env.react = {}; 
+  av.fzr.env.supply = {};
+   
+  for (var ii=0; ii< logiclen; ii++) {      //9
+    tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
+    //var vnm = av.sgr.logicVnames[ii];  
+    av.fzr.env.supply[tsk] = [];
+    av.fzr.env.rsrce[tsk] = {};    
+    for (var jj=0; jj<rsrcelen; jj++){
+      av.fzr.env.rsrce[tsk][av.sgr.resrc_argu[jj]] = [];
+    }
+    av.fzr.env.react[tsk] = {};
+    for (var jj=0; jj<reactlen; jj++){
+      av.fzr.env.react[tsk][ av.sgr.react_argu[jj] ] = [];
+    }
+  };
+  //console.log('av.fzr.env.react=',av.fzr.env.react);
+  //console.log('av.fzr.env.rsrce=',av.fzr.env.rsrce);
+  //console.log('av.fzr.env=', av.fzr.env);
+ //----------------------------------------------------------------------------- end of av.fzr.env section in globals --
+};
+
+//------------------------------------------------------------------------------------------- av.sgr.processHideFlags --
 //Flags for fields not yet implemented. 
 av.sgr.processHideFlags = function(boolArry, from) {
   //console.log(from+' called av.sgr.processHideFlags: hideDevelopment=', av.ui.hideDevelopment, '; boolArry=', boolArry);
@@ -595,75 +688,8 @@ av.sgr.processHideFlags = function(boolArry, from) {
   };
   console.log('av.nut.hideFlags=',av.nut.hideFlags,'-------------------------------------------------------------');
 };
+//------------------------------------------------------------------------------------ end of av.sgr.processHideFlags --
 
-av.nut = {};
-av.fzr.clearEnvironment = function(from) {
-  //console.log(from + ' called av.fzr.clearEnvironment');
-  av.event = {};
-  av.fzr.env = {};
-  av.oldnut = av.nut;
-  av.nut = {};
-  av.nut.hideFlags = {};
-  av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.fzr.clearEnvironment');
-  
-
-  // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
-  // av.fzr.env is only used for Test Dishes. 
-  // av.nut    is used for normal runs. nut is for nutrients
-  av.fzr.env.rsrce = {};
-  av.fzr.env.react = {}; 
-  av.fzr.env.supply = {};
-  var logiclen = av.sgr.logicNames.length;
-  var rsrcelen = av.sgr.resrc_argu.length; 
-  var reactlen = av.sgr.react_argu.length;
-  var tsk;
-  var rnm;
-  
-  for (var ii=0; ii< logiclen; ii++) {      //9
-    tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
-    av.nut[tsk] = {};
-    av.nut[tsk].numsubdish = 1;   // whole dish
-    av.nut[tsk].regionLayout = 'all';  // all, 4ths, topbot, lftrit
-    av.nut[tsk].geometry = 'global';
-    av.nut[tsk].supply = [];     // default is  'Infinite';]
-    
-    //from event file
-    av.nut[tsk].periodic = [];    //false = default;  else true.  
-    av.nut[tsk].periodTime = [];    //100,000 = defautl for now
-    
-    av.nut[tsk]['resrc'] = {};
-    av.nut[tsk]['react'] = {};
-    for (var jj=0; jj<rsrcelen; jj++){
-      rnm = av.sgr.resrc_argu[jj];
-      av.nut[tsk]['resrc'][rnm] = [];
-    }
-    for (var jj=0; jj<reactlen; jj++){
-      rnm = av.sgr.react_argu[jj];
-      av.nut[tsk]['react'][rnm] = [];
-    }
-  };
-  console.log('av.nut =',av.nut);
-  //console.log('av =',av);
-   
-  for (var ii=0; ii< logiclen; ii++) {      //9
-    tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
-    //var vnm = av.sgr.logicVnames[ii];  
-    av.fzr.env.supply[tsk] = [];
-    av.fzr.env.rsrce[tsk] = {};    
-    for (var jj=0; jj<rsrcelen; jj++){
-      av.fzr.env.rsrce[tsk][av.sgr.resrc_argu[jj]] = [];
-    }
-    av.fzr.env.react[tsk] = {};
-    for (var jj=0; jj<reactlen; jj++){
-      rnm = av.sgr.react_argu[jj];
-      av.fzr.env.react[tsk][rnm] = [];
-    }
-  };
-  //console.log('av.fzr.env.react=',av.fzr.env.react);
-  //console.log('av.fzr.env.rsrce=',av.fzr.env.rsrce);
-  //console.log('av.fzr.env=', av.fzr.env);
-
-};
 
 //-------------------------------------------------------------------------------------------- in av.fzr.clearFzrFn --//
 //cannot call av.fzr.clearFzrFn until after saveUpdateState is defined in fileIO.js

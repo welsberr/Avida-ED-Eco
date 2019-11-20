@@ -147,7 +147,7 @@ av.fwt.loadEnvDefaults = function (geometry, ndx, etsk) {
 };
 
 av.fwt.form2Nutrients = function() {
-  console.log('in v.fwt.form2Nutrients');
+  console.log('in av.fwt.form2Nutrients');
   var tsk; var etsk; var atsk; var domName; 
   var len = 1;
   var numtasks = av.sgr.logEdNames.length;
@@ -179,21 +179,38 @@ av.fwt.form2Nutrients = function() {
         av.nut[etsk].resrc.initial[0] = 0;  //different if finite
         av.nut[etsk].resrc.xdiffuse = 0;
         av.nut[etsk].resrc.ydiffuse = 0;
-
-      }
-      
-      
-    }
-
-    
-  }
+      };
+    };
+  };
 };
 
-av.fwt.form2NutrientStruct = function () {
-  //console.log('etsk=', etsk, '; ndx=', ndx, '; av.nut[etsk].resrc=', av.nut[etsk].resrc);
+av.fwt.form2NutrientStruct = function (from) {
   av.fzr.clearEnvironment('av.fwt.form2NutrientStruct');
-  //av.fwt.loadEnvDefaults('global', ndx, etsk);
-  av.fwt.form2Nutrients();
+  //I don't think I will use this here.  In this situation, all data should be directly from the dom.
+  //av.fwt.loadEnvDefaults('global', ndx, etsk);   
+  console.log(from, 'called av.fwt.form2NutrientStruct; av=', av);
+  
+  //------ assign ui parameters first --
+  var tsk; //name of a task with 3 letters
+  var numtsk; //number prefix to put in Avida-ED order before 3 letter prefix
+  var arguName;  // argument name
+  var logiclen = av.sgr.logicNames.length;
+  var uiAllDishLen = av.sgr.ui_allDish_argu.length;
+  for (var ii=0; ii< logiclen; ii++) {      //9
+    numtsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
+    tsk = av.sgr.logicNames[ii];      //3 letter logic names
+    // need an argument list to hold data relevant to getting data from dom or need to do each individually
+    for (jj=0; jj < uiAllDishLen; jj++) {
+      arguName = av.sgr.ui_allDish_argu[jj];
+      console.log('ii='+ii+'; jj='+jj, '; av.nut['+numtsk+'].ui['+arguName+']=', 'dom of', tsk+'0'+arguName);
+      console.log(document.getElementById(tsk+'0'+arguName).value);
+      av.nut[numtsk].ui[arguName] = document.getElementById(tsk+'0'+arguName).value;
+    };
+
+    
+  };
+
+  
 };
 
 
@@ -288,6 +305,8 @@ av.fwt.makeFzrEnvironmentCfg = function (idStr, toActiveConfigFlag, from) {
   'use strict';
   if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrEnvironmentCfg; idStr=', idStr);
   av.fwt.form2NutrientStruct('av.fwt.makeFzrEnvironmentCfg');
+  
+  //will change to av.fwt.nutStruct2Nuttxt later;x
   av.fwt.form2NutrientTxt(idStr, toActiveConfigFlag, 'av.fwt.makeFzrEnvironmentCfg');  
 };
 

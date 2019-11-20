@@ -15,6 +15,9 @@ av.ptd.makePauseState = function () {
   av.dom.oneUpdateButton.disabled = false;
 };
 
+//change what buttons work in the user interface to be consistent with avida running on the population page.
+//probably should not be called until after program is sure that it is valid to start running, but it works this way
+//might change someday.
 av.ptd.makeRunState = function (from) {
   //console.log(from, ' called av.ptd.makeRunState');
   av.dom.runStopButton.textContent = 'Pause';
@@ -246,25 +249,32 @@ av.ptd.runPopFn = function (from) {
   if (av.debug.popCon) console.log(from, 'called av.ptd.runPopFn: runPopFn runState =', av.grd.runState);
   //check for ancestor organism in configuration data
   var namelist;
+  // used only for testing new dish configurations don't work in the current computer interface
   if ('test' == av.msg.setupType)
-    namelist = dojo.query('> .dojoDndItem', 'ancestorBoTest');    
+    namelist = dojo.query('> .dojoDndItem', 'ancestorBoTest'); 
+  // normal end user version
   else
+    //get a list of names of organisms that are in the starting population. 
+    //works for both configured dishes and populated dishes
     namelist = dojo.query('> .dojoDndItem', 'ancestorBox');
   //console.log('namelist = namelist);
   if (1 > namelist.length) {
-    console.log('about to call av.ptd.makePauseState()');
+    //console.log('about to call av.ptd.makePauseState()');
+    // tiba: fix so 'av.ptd.makeRunState' is not called till after tests are done and remove the extra calls to makePauseState
     av.ptd.makePauseState();
     //NeedAncestorDialog.show();
     av.dom.needAncestorModalID.style.display = 'block';
   }
   else if (!av.ptd.validGridSize) {
     console.log('not option: !av.ptd.validGridSize=', !av.ptd.validGridSize);
+    // tiba: fix so 'av.ptd.makeRunState' is not called till after tests are done and remove the extra calls to makePauseState
     av.ptd.makePauseState();
     av.dom.userMsgLabel.innerHTML = 'A valid grid size is required before Avida will run';
     if ('populationBlock' !== av.ui.page) av.ui.mainBoxSwap('populationBlock');
   }
   else if (!av.ptd.validMuteInuput) {
     console.log('Not option: av.ptd.validMuteInuput=',av.ptd.validMuteInuput);
+    // tiba: fix so 'av.ptd.makeRunState' is not called till after tests are done and remove the extra calls to makePauseState
     av.ptd.makePauseState();
     av.dom.userMsgLabel.innerHTML = 'A valid mutation rate is required before Avida will run';
     if ('populationBlock' !== av.ui.page) av.ui.mainBoxSwap('populationBlock');
@@ -272,21 +282,26 @@ av.ptd.runPopFn = function (from) {
   else { // setup for a new run by sending config data to avida
     if (av.debug.popCon) console.log('else: av.ptd.validMuteInuput=',av.ptd.validMuteInuput);
     av.dom.userMsgLabel.innerHTML = '';
+    // tiba: eventually put the 'av.ptd.makeRunState' here.
+    
     if ('started' !== av.grd.runState) {
       if ('test' == av.msg.setupType) { 
         console.log('test files just allow edits directly to the environment file so rest of form is ignored');
         //get original files. 
         av.fwt.testForm2folder();
       }
+      // 
       else {
-        //collect setup data to send to avida.  Order matters. Files must be created first. Then files must be sent before some other stuff.
+        //collect setup data to send to avida in a normal run.  
+        //Order matters. Files must be created first. Then files must be sent before some other stuff.
         av.fwt.form2cfgFolder();          //creates avida.cfg and environment.cfg and ancestor.txt and ancestors_manual.txt from form
-      }
+      };
       if ('prepping' === av.grd.runState) {
-        av.msg.importConfigExpr('av.ptd.runPopFn ln291');   // send importExpr message to avida
+        av.msg.importConfigExpr('av.ptd.runPopFn ln285');   // send importExpr message to avida
         //console.log('after calling av.msg.importConfigExpr');
         av.msg.injectAncestors('config');
       }
+      //used for configured dish
       else {
         av.msg.importWorldExpr();
         //console.log('parents.injected = av.parents.injected);
@@ -311,9 +326,9 @@ av.ptd.runPopFn = function (from) {
         av.pch.dadVia[av.parents.name[ii]] = [];
       }
       //console.log('numver of ancestors =',av.pch.numDads, '; av.pch.dadFit=',av.pch.dadFit);
-    };
+    }; // end if section to deal with starting a new run
 
-    // auto update will need to be redone. for avida 4.0 
+    // tiba: auto update will need to be redone. for avida 4.0 
     if (av.dom.autoUpdateRadio.checked) {
       //av.msg.pause(av.dom.autoUpdateOnce.value);  //not used where there is handshaking (not used with av.msg.stepUpdate)
       av.ui.autoStopFlag = true;

@@ -799,7 +799,7 @@ av.frd.eventsLineParse = function (cfgary) {
   return rslt;
  };
 
-av.eventsCFGparse = function (filestr) {
+av.frd.eventsCFGparse = function (filestr) {
     var matchComment, matchContinue, matchResult;
   var aline;
   var lines = filestr.split('\n');
@@ -855,7 +855,7 @@ av.eventsCFGparse = function (filestr) {
 
 av.frd.eventsCFG2form = function(fileStr){
   'use strict';
-  av.eventsCFGparse(fileStr);
+  av.frd.eventsCFGparse(fileStr);
 };
 
 

@@ -697,7 +697,7 @@
                                 <option id='orn0Quarters' class='Quarters' value='Quarters'>Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id='orn0initialDiv' class='sugarSummaryDiv'>
-                                <label><input id='orn0initialInput' class='sugInitialInput' type='text' value='100' onchange='av.sgr.initialChange(this);'/>
+                                <label><input id='orn0initial' class='sugInitialInput' type='text' value='100' onchange='av.sgr.initialChange(this);'/>
                                 &nbsp;Initial amount per cell&nbsp;&nbsp;</label>
                               </div>
                             </summary>
@@ -972,7 +972,7 @@
                                 <option value='Local'>Local</option>
                               </select>&nbsp;&nbsp;&nbsp;&nbsp;
                               <select  id='ex1notGlobRsrcType'>
-                                <option value='None'>(N)one</option>
+                                <option value='None'>None</option>
                                 <option value='Infinite' selected>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>Equilibrium</option>
@@ -1129,7 +1129,7 @@
                                 <option value='Local'>Local</option>
                               </select>&nbsp;
                               <select  id='ex1oroGlobRsrcType'>
-                                <option value='None'>(N)one</option>
+                                <option value='None'>None</option>
                                 <option value='Infinite' selected>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>Equilibrium</option>
@@ -1199,7 +1199,7 @@
                                 <option value='Local'>Local</option>
                               </select>&nbsp;
                               <select  id='ex1antGlobRsrcType'>
-                                <option value='None'>(N)one</option>
+                                <option value='None'>None</option>
                                 <option value='Infinite' selected>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>Equilibrium</option>
@@ -1208,15 +1208,16 @@
                             <div id='ex1antDetails' class='ex1sugarDetail'>
                             </div>
                           </details>
+                          
                           <details class='ex1sugarAccordionSection' id='ex1norSection'>
                             <summary class='ex1sugarSummary'>
                               <span class='ex1sugarTitle'>Norose</span>&nbsp;
                               <select  id='ex1norGlobalLocal'>
-                                <option value='Global' selected>Global</option>
-                                <option value='Local'>Local</option>
+                                <option value='Global'>Global</option>
+                                <option value='Local' selected>Local</option>
                               </select>&nbsp;
                               <select  id='ex1NorGlobRsrcType'>
-                                <option value='None'>(N)one</option>
+                                <option value='None'>None</option>
                                 <option value='Infinite' selected>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>Equilibrium</option>
@@ -1233,13 +1234,13 @@
                                 <option value='Local'>Local</option>
                               </select>&nbsp;
                               <select  id='ex1xorGlobRsrcType'>
-                                <option value='None'>(N)one</option>
+                                <option value='None'>None</option>
                                 <option value='Infinite'>Infinite</option>
                                 <option value='Finite' selected>Finite</option>
                                 <option value='Equilibrium'>Equilibrium</option>
                               </select>
                               <span>
-                                <input id='ex1xorGlinitial' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4em; height:1.6em' value = '500'/> 
+                                <input id='ex1xorGlinitial' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4em; height:1.6em' value = '1000'/> 
                                 initial amount per cell
                               </span>
                             </summary>
@@ -1254,7 +1255,7 @@
                                 <option value='Local'>Local</option>
                               </select>&nbsp;
                               <select  id='ex1equGlobRsrcType'>
-                                <option value='None'  selected>(N)one</option>
+                                <option value='None'  selected>None</option>
                                 <option value='Infinite'>Infinite</option>
                                 <option value='Finite'>Finite</option>
                                 <option value='Equilibrium'>(E)quilibrium</option>
