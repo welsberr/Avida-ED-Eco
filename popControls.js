@@ -778,13 +778,14 @@ av.sgr.changeDetailsLayout = function(tsk, sub, from) {
         document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount per cell';
         document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction per cell';
         document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
-        document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium when no resource has been consumed';
+        document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium when resource not consumed';
         document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-globalEqual-container';
-        console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'Details').className);
-        console.log(tsk+sub+'periodCheckbox.checked=', document.getElementById(tsk+sub+'periodCheck').checked);
-        if (true == document.getElementById(tsk+sub+'periodCheck').checked) {
+        console.log('task='+tsk, '; sub='+sub, '; get className from dom of ', tsk+'0Details');
+        console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'0Details').className);
+        console.log(tsk+'1periodCheckbox.checked=', document.getElementById(tsk+'1periodCheck').checked);
+        if (true == document.getElementById(tsk+'1periodCheck').checked) {
           document.getElementById(tsk+sub+'periodTime').style.display = 'block';
-          document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium when no resource has been consumed';
+          document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium when resource not consumed';
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-globalEqualPeriod-container';
         };
         document.getElementById(tsk+'0section').open = true;

@@ -173,9 +173,9 @@ av.fwt.form2Nutrients = function() {
       // for now there is just one option, the whole dish so len = 1
       for (sub = 1; sub <= 1; sub++) {   //yes this loop starts at 1 instead of zero
         av.nut[etsk].supply[sub] = document.getElementById(tsk + sub +'supplyType').value.toLowerCase();
-        av.nut[etsk].resrc.initial[sub]
+        av.nut[etsk].resrc.initial[sub];
         av.nut[etsk].supplyType[0] = document.getElementById(tsk + '0supplyType').value.toLowerCase();
-        av.nut[etsk].resrc.name = tsk + '00'  // this may change later
+        av.nut[etsk].resrc.name = tsk + '00';  // this may change later
         av.nut[etsk].resrc.initial[0] = 0;  //different if finite
         av.nut[etsk].resrc.xdiffuse = 0;
         av.nut[etsk].resrc.ydiffuse = 0;
@@ -188,7 +188,6 @@ av.fwt.form2NutrientStruct = function (from) {
   av.fzr.clearEnvironment('av.fwt.form2NutrientStruct');
   //I don't think I will use this here.  In this situation, all data should be directly from the dom.
   //av.fwt.loadEnvDefaults('global', ndx, etsk);   
-  console.log(from, 'called av.fwt.form2NutrientStruct; av=', av);
   
   //------ assign ui parameters first --
   var tsk; //name of a task with 3 letters
@@ -196,22 +195,27 @@ av.fwt.form2NutrientStruct = function (from) {
   var arguName;  // argument name
   var logiclen = av.sgr.logicNames.length;
   var uiAllDishLen = av.sgr.ui_allDish_argu.length;
+  var uiAllDomLen  = av.sgr.ui_allDom_argu.length;
   for (var ii=0; ii< logiclen; ii++) {      //9
     numtsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
     tsk = av.sgr.logicNames[ii];      //3 letter logic names
     // need an argument list to hold data relevant to getting data from dom or need to do each individually
-    for (jj=0; jj < uiAllDishLen; jj++) {
-      arguName = av.sgr.ui_allDish_argu[jj];
-      console.log('ii='+ii+'; jj='+jj, '; av.nut['+numtsk+'].ui['+arguName+']=', 'dom of', tsk+'0'+arguName);
-      console.log(document.getElementById(tsk+'0'+arguName).value);
+    for (jj=0; jj < uiAllDomLen; jj++) {
+      arguName = av.sgr.ui_allDom_argu[jj];
+      //console.log('ii='+ii+'; jj='+jj, '; av.nut['+numtsk+'].ui['+arguName+']=', 'dom of', tsk+'0'+arguName);
+      //console.log('domList length=', uiAllDomLen,'; value=',document.getElementById(tsk+'0'+arguName).value);
+      
+      //start on the potential subdishes next (but only 1 for now. 
+      
+      
       av.nut[numtsk].ui[arguName] = document.getElementById(tsk+'0'+arguName).value;
     };
+    av.nut[numtsk].ui.numRegion = av.sgr.regionDct[av.nut[numtsk].ui.regionName];
 
     
   };
-
-  
-};
+  console.log(from, 'called av.fwt.form2NutrientStruct; av=', av);
+  };
 
 
 av.fwt.form2NutrientTxt = function (idStr, toActiveConfigFlag, from) {

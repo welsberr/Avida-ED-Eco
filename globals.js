@@ -528,7 +528,13 @@ av.sgr.resrcAvidaDefaultLocalValu =  [ 0, 0, 0.0, 'grid', 1, 1, 0, 0];   //diffu
 av.sgr.layout3 = ['glob', 'all', 'haf', 'thr', '4th'];
 av.sgr.layout = ['Global Dish', 'Whole Dish', 'Halves', '3-sections', 'Quarters'];
 av.sgr.layoutMany = ['glob', 'all', 'halfLR', 'halfTB', '3top1', '3bot1', '3lft1', '3Rit1', '3book', '3stack', '4th'];
-                         
+//a dictionary to assign the number of regions based on possible names for region layouts in 'summary' section
+av.sgr.regionDct = {};  //more can be added if needed
+av.sgr.regionDct['all'] = 1;
+av.sgr.regionDct['WholeDish'] = 1;
+av.sgr.regionDct['HalvesLeftRight'] = 2;
+av.sgr.regionDct['ThirdsTopLeftRight'] = 3;
+av.sgr.regionDct['Quarters'] = 4;
 
 av.sgr.resrcAvidaDefaultGridArgu = [  'initial', 'inflow', 'outflow', 'geometry'   
                                   ,  'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'    // not used when geometry = global
@@ -571,8 +577,10 @@ av.sgr.boxArguments = ['boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow']; //flag is
   av.sgr.hideFlagInit = [true, true];  //true is to hide when areas underdevelopment are hidden. 
   av.sgr.flagInitOpposite = [false, false];  //false in this case is to NOT hide as develpment sections shown.
   
-//one each task if I make a data structure from the UI that is separate from what goes in thhe config file.                  
-av.sgr.ui_allDish_argu = ['geometry', 'supplyType', 'initial', 'inflow', 'outflow', 'periodFlag', 'dishRegion'];
+//one each task if I make a data structure from the UI that is separate from what goes in thhe config file.
+av.sgr.ui_allDom_argu = ['geometry', 'supplyType', 'dishRegion', 'initial'];  //'numRegion' is not in dom but found using dishRegion (region layout in the dish)
+av.sgr.ui_allDish_argu = ['geometry', 'supplyType', 'dishRegion', 'numRegion', 'initial'];
+// 'inflow', 'outflow', 'periodFlag';  could be in global, but won't fit on one line in the sumary/details accordian.
 
 //each task; each subregion
 av.sgr.ui_subDish_argu = ['subRegion', 'supplyType', 'initialHi', 'inflowHi', 'outflowHi', 'DiffuseFlag'
@@ -616,11 +624,11 @@ av.fzr.clearEnvironment = function(from) {
     };
     av.nut[tsk].ui.geometry = 'global';
     av.nut[tsk].ui.supplyType = 'infinite';     //this is only for whem ui.geometry = global
-    av.nut[tsk].ui.initial = '10000';      //only whem ui.geometry = global and  supplyType = 'finite' (at lseat for not
-    av.nut[tsk].ui.periodFlag = false;
-    av.nut[tsk].ui.periodTime = 10000;  //radnom defautl number; only used if periodFlag = true; 
+    av.nut[tsk].ui.dishRegion = 'all';  //only whole dish for now
     av.nut[tsk].ui.numRegion = 1;   // whole dish
-    av.nut[tsk].ui.regionLayoutName = 'all';  //only whole dish for now
+    av.nut[tsk].ui.initial = '10000';      //only whem ui.geometry = global and  supplyType = 'finite' 
+//    av.nut[tsk].ui.periodFlag = false;
+//    av.nut[tsk].ui.periodTime = 10000;  //radnom defautl number; only used if periodFlag = true; 
 
     for (jj=0; jj < uiSubDishLen; jj++) {
       av.nut[tsk]['ui'][av.sgr.ui_subDish_argu[jj] ] = [];

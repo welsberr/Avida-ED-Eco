@@ -26,7 +26,7 @@
                               </div>
                             </summary>
 
-                            <div id='xor0Details' class='sugarDetailSection'>
+                            <div id='xorDetails' class='sugarDetailSection'>
                               
                               <div id='xor1subSection' class='sugarDishSubsection'>
                                 <div id='xor1title' class='grid-sugarDetail-item subSectionTitle'>Whole Dish</div>
@@ -109,7 +109,7 @@
                               <div id='xor4subSection' class='sugarDishSubsection'>
                               </div><span id='xor4SectionEnd' class='endsugarDishSubsection'> </span>
                               
-                            </div><span id='xor0DetailsEnd' class='end_sugarDetailSection_grid_container'></span>
+                            </div><span id='xorDetailsEnd' class='end_sugarDetailSection_grid_container'></span>
                           </details>
                           
                           
