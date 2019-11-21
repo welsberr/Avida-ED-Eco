@@ -146,6 +146,7 @@ av.fwt.loadEnvDefaults = function (geometry, ndx, etsk) {
   };
 };
 
+/*
 av.fwt.form2Nutrients = function() {
   console.log('in av.fwt.form2Nutrients');
   var tsk; var etsk; var atsk; var domName; 
@@ -157,7 +158,7 @@ av.fwt.form2Nutrients = function() {
     atsk = av.sgr.logicVnames[ii];
     domName = tsk + '0geometry';
     av.nut[etsk].geometry = document.getElementById(domName).value;
-    av.nut[etsk].regionLayout = document.getElementById(tsk +'0dishRegion').value.toLowerCase();
+    av.nut[etsk].uiAll.regionLayout = document.getElementById(tsk +'0dishRegion').value.toLowerCase();
     if ('global' == av.nut[etsk].geometry.toLowerCase()) {
       
         av.sgr.resrc_argu = ['name', 'initial', 'inflow', 'outflow', 'geometry'           //technically name is not an argument, but it starts the list. 
@@ -183,6 +184,7 @@ av.fwt.form2Nutrients = function() {
     };
   };
 };
+*/
 
 av.fwt.form2NutrientStruct = function (from) {
   av.fzr.clearEnvironment('av.fwt.form2NutrientStruct');
@@ -192,30 +194,43 @@ av.fwt.form2NutrientStruct = function (from) {
   //------ assign ui parameters first --
   var tsk; //name of a task with 3 letters
   var numtsk; //number prefix to put in Avida-ED order before 3 letter prefix
-  var arguName;  // argument name
+  var arguDom;  // argument name in the Dom
+  var arguDish; // arugment name in the nutrient structure (nut); which is also the arugment name in the environment.cfg file
   var logiclen = av.sgr.logicNames.length;
   var uiAllDishLen = av.sgr.ui_allDish_argu.length;
   var uiAllDomLen  = av.sgr.ui_allDom_argu.length;
+  var uisubDomLen = av.sgr.ui_subDom_argu.length;
+  var uisubDishLen = av.sgr.ui_subDish_argu.length;
   for (var ii=0; ii< logiclen; ii++) {      //9
     numtsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
     tsk = av.sgr.logicNames[ii];      //3 letter logic names
     // need an argument list to hold data relevant to getting data from dom or need to do each individually
     for (jj=0; jj < uiAllDomLen; jj++) {
-      arguName = av.sgr.ui_allDom_argu[jj];
-      //console.log('ii='+ii+'; jj='+jj, '; av.nut['+numtsk+'].ui['+arguName+']=', 'dom of', tsk+'0'+arguName);
-      //console.log('domList length=', uiAllDomLen,'; value=',document.getElementById(tsk+'0'+arguName).value);
-      
-      //start on the potential subdishes next (but only 1 for now. 
-      
-      
-      av.nut[numtsk].ui[arguName] = document.getElementById(tsk+'0'+arguName).value;
+      arguDom = av.sgr.ui_allDom_argu[jj];
+      console.log('ii='+ii+'; jj='+jj, '; av.nut['+numtsk+'].uiAll['+arguDom+']=', 'dom of', tsk+'0'+arguDom);
+      console.log('domList length=', uiAllDomLen,'; value=',document.getElementById(tsk+'0'+arguDom).value);    
+      av.nut[numtsk].uiAll[arguDom] = document.getElementById(tsk+'0'+arguDom).value;
+      console.log('av.nut['+numtsk+'].uiAll['+arguDom+']=');
+      console.log(av.nut[numtsk].uiAll[arguDom]);
     };
-    av.nut[numtsk].ui.numRegion = av.sgr.regionDct[av.nut[numtsk].ui.regionName];
-
-    
-  };
-  console.log(from, 'called av.fwt.form2NutrientStruct; av=', av);
-  };
+    av.nut[numtsk].uiAll.numRegion = av.sgr.regionDct[av.nut[numtsk].uiAll.dishRegion];
+    console.log('av.nut[numtsk].uiAll.numRegion=', av.nut[numtsk].uiAll.numRegion, '; rName=', av.nut[numtsk].uiAll.dishRegion);
+    //start on the potential subdishes next (but only 1 for now). 
+    console.log('SubDishes Now -----------------uisubDom length=', uisubDomLen);
+    for (kk=1; kk <= av.nut[numtsk].uiAll.numRegion; kk++) {
+      av.nut[numtsk].uiSub.subRegion[kk] = kk;      //not sure this is needed or make sense. needs work when get past one reagion
+      for (jj=0; jj< uisubDomLen; jj++) {
+        arguDom = av.sgr.ui_subDom_argu[jj];
+        arguDish = av.sgr.ui_subDish_argu[jj];
+        console.log('ii='+ii+'; kk='+kk+'; jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDish+']=', 'dom of', tsk+kk+arguDom);
+        console.log('; value=',document.getElementById(tsk+'kk'+arguDom.value)  ); 
+        av.nut[numtsk].uiSub[arguDish][kk] = document.getElementById(tsk+kk+arguDom).value;
+      };
+    };  //end for kk
+  };  //end for ii
+  console.log(from, 'called av.fwt.form2NutrientStruct; ________________________ av.nut=', av.nut);
+  console.log(from, 'called av.fwt.form2NutrientStruct; ________________________ av.oldnut=', av.nut);
+};
 
 
 av.fwt.form2NutrientTxt = function (idStr, toActiveConfigFlag, from) {

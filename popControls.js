@@ -297,7 +297,7 @@ av.ptd.runPopFn = function (from) {
         av.fwt.form2cfgFolder();          //creates avida.cfg and environment.cfg and ancestor.txt and ancestors_manual.txt from form
       };
       if ('prepping' === av.grd.runState) {
-        av.msg.importConfigExpr('av.ptd.runPopFn ln285');   // send importExpr message to avida
+        av.msg.importConfigExpr('av.ptd.runPopFn ln300');   // send importExpr message to avida
         //console.log('after calling av.msg.importConfigExpr');
         av.msg.injectAncestors('config');
       }

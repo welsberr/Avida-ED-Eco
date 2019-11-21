@@ -579,13 +579,17 @@ av.sgr.boxArguments = ['boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow']; //flag is
   
 //one each task if I make a data structure from the UI that is separate from what goes in thhe config file.
 av.sgr.ui_allDom_argu = ['geometry', 'supplyType', 'dishRegion', 'initial'];  //'numRegion' is not in dom but found using dishRegion (region layout in the dish)
-av.sgr.ui_allDish_argu = ['geometry', 'supplyType', 'dishRegion', 'numRegion', 'initial'];
+av.sgr.ui_allDish_argu = ['geometry', 'supplyType', 'dishRegion', 'initial', 'numRegion'];   //'numRegion' is not in dom, so it is at the end of the list.
 // 'inflow', 'outflow', 'periodFlag';  could be in global, but won't fit on one line in the sumary/details accordian.
 
-//each task; each subregion
-av.sgr.ui_subDish_argu = ['subRegion', 'supplyType', 'initialHi', 'inflowHi', 'outflowHi', 'DiffuseFlag'
-                        , 'periodFlag', 'periodTime'
-                        , 'gradientFlag', 'side', 'initialLo', 'inflowLo', 'outflowLo'];
+//each task; each subregion; 'subRegion' is needed, but it is not a named item in the dom
+av.sgr.ui_subDom_argu = ['supplyType', 'initialHiInput', 'inflowHiInput', 'outflowHiInput', 'diffuseCheck'
+                        , 'periodCheck', 'periodInput'
+                        , 'gradientCheck', 'sideSelect', 'initialLoInput', 'inflowLoInput', 'outflowLoInput'];
+// arugment name in the nutrient structure (nut); which is also the arugment name in the environment.cfg file if relevent
+av.sgr.ui_subDish_argu = ['supplyType', 'initialHi', 'inflowHi', 'outflowHi', 'diffuseCheck'
+                        , 'periodCheck', 'periodTime'
+                        , 'gradientCheck', 'side', 'initialLo', 'inflowLo', 'outflowLo', 'subRegion'];  //subRegion is not in Dom, so it is at the end.
         
 av.nut = {};
 //------------------------------------------------------------------------------------------- av.fzr.clearEnvironment --
@@ -618,26 +622,32 @@ av.fzr.clearEnvironment = function(from) {
       av.nut[tsk]['react'][ av.sgr.react_argu[jj] ] = [];
     };
     //from user interface 
-    av.nut[tsk]['ui'] = {};
+    av.nut[tsk]['uiAll'] = {};
+    av.nut[tsk]['uiSub'] = {};
     for (jj=0; jj < uiAllDishLen; jj++) {
-      av.nut[tsk].ui[av.sgr.ui_allDish_argu[jj] ] = 'default';
+      av.nut[tsk].uiAll[ av.sgr.ui_allDish_argu[jj] ] = 'default';
     };
-    av.nut[tsk].ui.geometry = 'global';
-    av.nut[tsk].ui.supplyType = 'infinite';     //this is only for whem ui.geometry = global
-    av.nut[tsk].ui.dishRegion = 'all';  //only whole dish for now
-    av.nut[tsk].ui.numRegion = 1;   // whole dish
-    av.nut[tsk].ui.initial = '10000';      //only whem ui.geometry = global and  supplyType = 'finite' 
-//    av.nut[tsk].ui.periodFlag = false;
-//    av.nut[tsk].ui.periodTime = 10000;  //radnom defautl number; only used if periodFlag = true; 
+    av.nut[tsk].uiAll.geometry = 'global';
+    av.nut[tsk].uiAll.supplyType = 'infinite';     //this is only for whem ui.geometry = global
+    av.nut[tsk].uiAll.dishRegion = 'all';  //only whole dish for now
+    av.nut[tsk].uiAll.numRegion = 1;   // whole dishß
+    av.nut[tsk].uiAll.initial = 10000;      //only whem ui.geometry = global and  supplyType = 'finite' 
+    av.nut[tsk].uiAll.periodCheck = false;
+    av.nut[tsk].uiAll.periodTime = 10000;  //radnom defautl number; only used if periodFlag = true; 
 
     for (jj=0; jj < uiSubDishLen; jj++) {
-      av.nut[tsk]['ui'][av.sgr.ui_subDish_argu[jj] ] = [];
+      av.nut[tsk]['uiSub'][av.sgr.ui_subDish_argu[jj] ] = [];
     };
-    //from event file
-    av.nut[tsk].ui.periodFlag[0] = false;    //false = default;  else true.  
-    av.nut[tsk].ui.subRegion[0] = 0;    // this goes with 'all' = regionLayoutName (or 1234 could be used
-    av.nut[tsk].ui.supplyType[0] = 'infinite';
-    av.nut[tsk].ui.initialHi[0] = 1000;  //sugar units/cell guess at an initial value when supplyType='infinite';
+    // a few defaults
+    for (kk=0; kk<=1; kk++) {
+      av.nut[tsk].uiSub.subRegion[kk] = kk;    // this goes with 'all' = regionLayoutName (or 1234 could be used) or 'WholeDish'; tiba check this more than on region allowed
+      av.nut[tsk].uiSub.supplyType[kk] = 'infinite';
+      av.nut[tsk].uiSub.initialHi[kk] = 1000;  //sugar units/cell guess at an initial value when supplyType='infinite';
+      av.nut[tsk].uiSub.diffuseCheck[kk] = false;    //false = default;  else true.      
+      av.nut[tsk].uiSub.gradientCheck[kk] = false;    //false = default;  else true.      
+      //from event file
+      av.nut[tsk].uiSub.periodCheck[kk] = false;    //false = default;  else true.    
+    }
   };
   console.log('av.nut =',av.nut);
   //console.log('av =',av);
@@ -694,7 +704,7 @@ av.sgr.processHideFlags = function(boolArry, from) {
   for (var ii=0; ii < len; ii++) {
     av.nut.hideFlags[av.sgr.hideFlgNames[ii]] = boolArry[ii];
   };
-  console.log('av.nut.hideFlags=',av.nut.hideFlags,'-------------------------------------------------------------');
+  //console.log('av.nut.hideFlags=',av.nut.hideFlags,'-------------------------------------------------------------');
 };
 //------------------------------------------------------------------------------------ end of av.sgr.processHideFlags --
 

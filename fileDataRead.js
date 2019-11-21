@@ -720,8 +720,9 @@ av.frd.nutrientParse = function (filestr) {
     // the reaction can only act as if the resource for that task is none or infinite and it must be global. 
     if ('missing' != av.nut[tsk].react.resource[0]) {  
       distinctRegions = [...new Set(av.nut[tsk].resrc.regionCode)];
-      av.nut[tsk].numsubdish = distinctRegions.length;
-      av.nut[tsk].regionLayout = av.sgr.layout[av.nut[tsk].numsubdish];  //av.sgr.layout 
+      console.log('distinctRegions', distinctRegions);
+      av.nut[tsk].uiAll.regionNum = distinctRegions.length;
+      av.nut[tsk].uiAll.regionLayout = av.sgr.layout[av.nut[tsk].numsubdish];  //av.sgr.layout 
 
       geoLen = av.nut[tsk].resrc.geometry.length;
       if (1 < geoLen) {
