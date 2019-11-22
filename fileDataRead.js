@@ -604,24 +604,23 @@ av.frd.resrcLineParse = function(lnArray){
       //envobj.region[ndx] = subCode;
       //envobj.regionList[subCode] = ndx;
       
-
       //console.log('envobj.geometry=', envobj.geometry);
       //onsole.log('ndx=',ndx,'envobj.geometry[ndx]=', envobj.geometry[ndx]);
-      av.nut[edTsk].geometry = envobj.geometry[ndx];
+      av.nut[edTsk].uiAll.geometry = envobj.geometry[ndx];
       if (av.dbg.flg.nut) console.log('edTsk=', edTsk,'; av.nut[edTsk].geometry=', av.nut[edTsk].geometry);
 
       //Find the supply type
       if (0 < envobj.initial[ndx]) 
-        av.nut[edTsk].supply[ndx] = 'Finite';
+        av.nut[edTsk].uiSub.supplyType[ndx] = 'Finite';
       if (0 < envobj.inflow[ndx]) {
         if (envobj.inflowx1[ndx]==envobj.outflowx1[ndx] && envobj.inflowx2[ndx]==envobj.outflowx2[ndx] && 
             envobj.inflowy1[ndx]==envobj.outflowy1[ndx] && envobj.inflowy2[ndx]==envobj.outflowy2[ndx] ) {
           av.nut[edTsk].supply[ndx] = 'Equilibrium';           
         }
-        else av.nut[edTsk].supply[ndx] = 'Flow'; 
+        else av.nut[edTsk].uiSub.supplyType[ndx] = 'Flow'; 
       }
       if (0 == envobj.initial[ndx] && 0 == envobj.inflow[ndx]) 
-        av.nut[edTsk].supply[ndx] = 'None';
+        av.nut[edTsk].uiSub.supplyType[ndx] = 'None';
     }   //end of valid ndx found.
   }  
   // valid logic name not found;
@@ -716,14 +715,14 @@ av.frd.nutrientParse = function (filestr) {
     tsk = av.sgr.logEdNames[ii];
     //console.log('av.nut[tsk].react.resource=',av.nut[tsk].react.resource);
     
-    // is the conde word 'missing' is the listed as the name of the resource than there is not resource specified and 
+    // is the code word 'missing' is the listed as the name of the resource than there is not resource specified and 
     // the reaction can only act as if the resource for that task is none or infinite and it must be global. 
     if ('missing' != av.nut[tsk].react.resource[0]) {  
       distinctRegions = [...new Set(av.nut[tsk].resrc.regionCode)];
-      console.log('distinctRegions', distinctRegions);
+      console.log('tsk=', tsk, 'distinctRegions=', distinctRegions);
       av.nut[tsk].uiAll.regionNum = distinctRegions.length;
       av.nut[tsk].uiAll.regionLayout = av.sgr.layout[av.nut[tsk].numsubdish];  //av.sgr.layout 
-
+      console.log('av.nut['+tsk+'].uiAll.regionLayout = ', av.nut[tsk].uiAll.regionLayout);
       geoLen = av.nut[tsk].resrc.geometry.length;
       if (1 < geoLen) {
         av.nut[tsk].geometry = 'grid';

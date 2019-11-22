@@ -578,8 +578,8 @@ av.sgr.boxArguments = ['boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow']; //flag is
   av.sgr.flagInitOpposite = [false, false];  //false in this case is to NOT hide as develpment sections shown.
   
 //one each task if I make a data structure from the UI that is separate from what goes in thhe config file.
-av.sgr.ui_allDom_argu = ['geometry', 'supplyType', 'dishRegion', 'initial'];  //'numRegion' is not in dom but found using dishRegion (region layout in the dish)
-av.sgr.ui_allDish_argu = ['geometry', 'supplyType', 'dishRegion', 'initial', 'numRegion'];   //'numRegion' is not in dom, so it is at the end of the list.
+av.sgr.ui_allDom_argu = ['geometry', 'supplyType', 'regionLayout', 'initial'];  //'regionsNumOf' is not in dom but found using regionLayout (region layout in the dish)
+av.sgr.ui_allDish_argu = ['geometry', 'supplyType', 'regionLayout', 'initial', 'regionsNumOf'];   //'regionsNumOf' is not in dom, so it is at the end of the list.
 // 'inflow', 'outflow', 'periodFlag';  could be in global, but won't fit on one line in the sumary/details accordian.
 
 //each task; each subregion; 'subRegion' is needed, but it is not a named item in the dom
@@ -627,22 +627,27 @@ av.fzr.clearEnvironment = function(from) {
     for (jj=0; jj < uiAllDishLen; jj++) {
       av.nut[tsk].uiAll[ av.sgr.ui_allDish_argu[jj] ] = 'default';
     };
+    //defaults for items that describe the whole dish
     av.nut[tsk].uiAll.geometry = 'global';
     av.nut[tsk].uiAll.supplyType = 'infinite';     //this is only for whem ui.geometry = global
-    av.nut[tsk].uiAll.dishRegion = 'all';  //only whole dish for now
-    av.nut[tsk].uiAll.numRegion = 1;   // whole dishß
+    av.nut[tsk].uiAll.regionLayout = 'all';  //only whole dish for now
+    av.nut[tsk].uiAll.regionsNumOf = 1;   // whole dishß
     av.nut[tsk].uiAll.initial = 10000;      //only whem ui.geometry = global and  supplyType = 'finite' 
-    av.nut[tsk].uiAll.periodCheck = false;
-    av.nut[tsk].uiAll.periodTime = 10000;  //radnom defautl number; only used if periodFlag = true; 
 
     for (jj=0; jj < uiSubDishLen; jj++) {
       av.nut[tsk]['uiSub'][av.sgr.ui_subDish_argu[jj] ] = [];
     };
-    // a few defaults
-    for (kk=0; kk<=1; kk++) {
+    // a few defaults for when resources are local
+    for (kk=1; kk<=1; kk++) {
       av.nut[tsk].uiSub.subRegion[kk] = kk;    // this goes with 'all' = regionLayoutName (or 1234 could be used) or 'WholeDish'; tiba check this more than on region allowed
       av.nut[tsk].uiSub.supplyType[kk] = 'infinite';
-      av.nut[tsk].uiSub.initialHi[kk] = 1000;  //sugar units/cell guess at an initial value when supplyType='infinite';
+      av.nut[tsk].uiSub.initialHi[kk] = 1000;  //sugar units/cell guess at an initial value when supplyType='finite';
+      av.nut[tsk].uiSub.inflowHi[kk]  = 100;   //sugar units/cell guess at an initial value when supplyType='equilibrium';
+      av.nut[tsk].uiSub.outflowHi[kk] = 0.1;  //sugar units/cell guess at an initial value when supplyType='equilibrium';
+      av.nut[tsk].uiSub.inflowLo[kk]  =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
+      av.nut[tsk].uiSub.outflowLo[kk] = 0.1;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
+      av.nut[tsk].uiSub.initialLo[kk] =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
+      av.nut[tsk].uiSub.side[kk] = 'left';    //only valid for local resources with supply Type = 'gradient' or 'flow';
       av.nut[tsk].uiSub.diffuseCheck[kk] = false;    //false = default;  else true.      
       av.nut[tsk].uiSub.gradientCheck[kk] = false;    //false = default;  else true.      
       //from event file

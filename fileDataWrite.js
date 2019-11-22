@@ -158,7 +158,7 @@ av.fwt.form2Nutrients = function() {
     atsk = av.sgr.logicVnames[ii];
     domName = tsk + '0geometry';
     av.nut[etsk].geometry = document.getElementById(domName).value;
-    av.nut[etsk].uiAll.regionLayout = document.getElementById(tsk +'0dishRegion').value.toLowerCase();
+    av.nut[etsk].uiAll.regionLayout = document.getElementById(tsk +'0regionLayout').value.toLowerCase();
     if ('global' == av.nut[etsk].geometry.toLowerCase()) {
       
         av.sgr.resrc_argu = ['name', 'initial', 'inflow', 'outflow', 'geometry'           //technically name is not an argument, but it starts the list. 
@@ -170,7 +170,7 @@ av.fwt.form2Nutrients = function() {
 
     }
     else {
-      // local so there could be subdishes; later the number of subdishes will come from av.dom.orn0dishRegion.value
+      // local so there could be subdishes; later the number of subdishes will come from av.dom.orn0regionLayout.value
       // for now there is just one option, the whole dish so len = 1
       for (sub = 1; sub <= 1; sub++) {   //yes this loop starts at 1 instead of zero
         av.nut[etsk].supply[sub] = document.getElementById(tsk + sub +'supplyType').value.toLowerCase();
@@ -207,28 +207,48 @@ av.fwt.form2NutrientStruct = function (from) {
     // need an argument list to hold data relevant to getting data from dom or need to do each individually
     for (jj=0; jj < uiAllDomLen; jj++) {
       arguDom = av.sgr.ui_allDom_argu[jj];
-      console.log('ii='+ii+'; jj='+jj, '; av.nut['+numtsk+'].uiAll['+arguDom+']=', 'dom of', tsk+'0'+arguDom);
-      console.log('domList length=', uiAllDomLen,'; value=',document.getElementById(tsk+'0'+arguDom).value);    
+      //console.log('ii='+ii+'; jj='+jj, '; av.nut['+numtsk+'].uiAll['+arguDom+']=', 'dom of', tsk+'0'+arguDom);
+      //console.log('domList length=', uiAllDomLen,'; value=',document.getElementById(tsk+'0'+arguDom).value);    
       av.nut[numtsk].uiAll[arguDom] = document.getElementById(tsk+'0'+arguDom).value;
-      console.log('av.nut['+numtsk+'].uiAll['+arguDom+']=');
-      console.log(av.nut[numtsk].uiAll[arguDom]);
+      //console.log('av.nut['+numtsk+'].uiAll['+arguDom+']=');
+      //console.log(av.nut[numtsk].uiAll[arguDom]);
     };
-    av.nut[numtsk].uiAll.numRegion = av.sgr.regionDct[av.nut[numtsk].uiAll.dishRegion];
-    console.log('av.nut[numtsk].uiAll.numRegion=', av.nut[numtsk].uiAll.numRegion, '; rName=', av.nut[numtsk].uiAll.dishRegion);
+    av.nut[numtsk].uiAll.regionsNumOf = av.sgr.regionDct[av.nut[numtsk].uiAll.regionLayout];
+    //console.log('av.nut[numtsk].uiAll.regionsNumOf=', av.nut[numtsk].uiAll.regionsNumOf, '; rName=', av.nut[numtsk].uiAll.regionLayout);
     //start on the potential subdishes next (but only 1 for now). 
-    console.log('SubDishes Now -----------------uisubDom length=', uisubDomLen);
-    for (kk=1; kk <= av.nut[numtsk].uiAll.numRegion; kk++) {
+    //console.log('SubDishes Now -----------------uisubDom length=', uisubDomLen);
+    for (kk=1; kk <= av.nut[numtsk].uiAll.regionsNumOf; kk++) {
       av.nut[numtsk].uiSub.subRegion[kk] = kk;      //not sure this is needed or make sense. needs work when get past one reagion
       for (jj=0; jj< uisubDomLen; jj++) {
         arguDom = av.sgr.ui_subDom_argu[jj];
         arguDish = av.sgr.ui_subDish_argu[jj];
-        console.log('ii='+ii+'; kk='+kk+'; jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDish+']=', 'dom of', tsk+kk+arguDom);
-        console.log('; value=',document.getElementById(tsk+'kk'+arguDom.value)  ); 
+        //console.log('ii='+ii+'; kk='+kk+'; jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDish+']=', 'dom of', tsk+kk+arguDom);
+        //console.log('; value=',document.getElementById(tsk+'kk'+arguDom.value)  ); 
         av.nut[numtsk].uiSub[arguDish][kk] = document.getElementById(tsk+kk+arguDom).value;
       };
+      av.nut[numtsk].uiSub.diffuseCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
+      av.nut[numtsk].uiSub.periodCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
+      av.nut[numtsk].uiSub.gradientCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
     };  //end for kk
+
+    //now use what is in uiAll and uiSub to make resource and reaction fields
+    if ('global' == av.nut[numtsk].uiAll.geometry.toLowerCase() ) {
+      // only look at ui items that effect the global situation.
+      if ('infinite' == av.nut[numtsk].uiAll.supplyType.toLowerCase() ) {
+        
+      }
+      
+    } 
+    else {
+      // assume that it is local
+      
+    }
+
   };  //end for ii
   console.log(from, 'called av.fwt.form2NutrientStruct; ________________________ av.nut=', av.nut);
+  
+  
+  
   console.log(from, 'called av.fwt.form2NutrientStruct; ________________________ av.oldnut=', av.nut);
 };
 

@@ -2763,8 +2763,8 @@ require([
     av.sgr.changeDetailsLayout(task, sub, 'supplyChange_placeholder');
   };
 
-  av.sgr.dishRegionChange = function (domObj) {
-    console.log('av.sgr.dishRegionChange was called by', domObj);
+  av.sgr.regionLayoutChange = function (domObj) {
+    console.log('av.sgr.regionLayoutChange was called by', domObj);
   };
 
   av.sgr.supplyChange = function (domObj) {

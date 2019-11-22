@@ -14,7 +14,7 @@
                                 <option id='xor0Equilibrium' class='globalEquilibrium' value='Equilibrium'>Equilibrium</option>
                                 <option id='xor0All' class='globalAll' value='All'>All debug only</option>
                               </select>&nbsp;&nbsp;&nbsp;
-                              <select  id='xor0dishRegion' class='dishRegion' onchange='av.sgr.dishRegionChange(this)'>
+                              <select  id='xor0regionLayout' class='regionLayout' onchange='av.sgr.regionLayoutChange(this)'>
                                 <option id='xor0WholeDish' value='WholeDish selected'>Whole Dish</option>
                                 <option id='xor0HalvesLeftRight' class='HalfLftRit' value='HalvesLeftRight'>Halves Left/Right</option>
                                 <option id='xor0TopLeftRight' class='TopLftRit' value='ThirdsTopLeftRight'>Top/Bottom(L/R)</option>

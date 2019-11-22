@@ -736,11 +736,11 @@ av.sgr.changeDetailsLayout = function(tsk, sub, from) {
     supplyType = document.getElementById(tsk + sub + 'supplyType').value.toLowerCase();
     
   };
-  //console.log('tsk=', tsk, 'sub=', sub, '; geometry=', geometry, '; supplyType =', supplyType, ' ' ,tsk+'0dishRegion=', document.getElementById(tsk+'0dishRegion').value );
+  //console.log('tsk=', tsk, 'sub=', sub, '; geometry=', geometry, '; supplyType =', supplyType, ' ' ,tsk+'0regionLayout=', document.getElementById(tsk+'0regionLayout').value );
   
   //hide everything. Display parts based on what is selected
   document.getElementById(tsk+'0supplyType').style.display = 'none';      
-  document.getElementById(tsk+'0dishRegion').style.display = 'none';
+  document.getElementById(tsk+'0regionLayout').style.display = 'none';
   document.getElementById(tsk+'0initialDiv').style.display = 'none';
   document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'none';
   document.getElementById(tsk+sub+'title').style.display = 'none';
@@ -782,7 +782,7 @@ av.sgr.changeDetailsLayout = function(tsk, sub, from) {
         document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-globalEqual-container';
         console.log('task='+tsk, '; sub='+sub, '; get className from dom of ', tsk+'0Details');
         console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'0Details').className);
-        console.log(tsk+'1periodCheckbox.checked=', document.getElementById(tsk+'1periodCheck').checked);
+        console.log(tsk+'1periodCheckbox.checked value =', document.getElementById(tsk+'1periodCheck').checked, document.getElementById(tsk+'1periodCheck').value);
         if (true == document.getElementById(tsk+'1periodCheck').checked) {
           document.getElementById(tsk+sub+'periodTime').style.display = 'block';
           document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium when resource not consumed';
@@ -813,7 +813,7 @@ av.sgr.changeDetailsLayout = function(tsk, sub, from) {
     }    
   }        // end global 
   else {
-    //document.getElementById(tsk+'0dishRegion').style.display = 'inline-block';
+    //document.getElementById(tsk+'0regionLayout').style.display = 'inline-block';
     document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'block';
     //document.getElementById(tsk+sub+'title').style.display = 'block';    
     document.getElementById(tsk+'0section').open = true;
