@@ -173,9 +173,9 @@ av.fwt.form2Nutrients = function() {
       // local so there could be subdishes; later the number of subdishes will come from av.dom.orn0regionLayout.value
       // for now there is just one option, the whole dish so len = 1
       for (sub = 1; sub <= 1; sub++) {   //yes this loop starts at 1 instead of zero
-        av.nut[etsk].supply[sub] = document.getElementById(tsk + sub +'supplyType').value.toLowerCase();
+        av.nut[etsk].uiSub.supplyType[sub] = document.getElementById(tsk + sub +'supplyType').value.toLowerCase();
         av.nut[etsk].resrc.initial[sub];
-        av.nut[etsk].supplyType[0] = document.getElementById(tsk + '0supplyType').value.toLowerCase();
+        av.nut[etsk].uiAll.supplyType[0] = document.getElementById(tsk + '0supplyType').value.toLowerCase();
         av.nut[etsk].resrc.name = tsk + '00';  // this may change later
         av.nut[etsk].resrc.initial[0] = 0;  //different if finite
         av.nut[etsk].resrc.xdiffuse = 0;
@@ -194,6 +194,7 @@ av.fwt.form2NutrientStruct = function (from) {
   //------ assign ui parameters first --
   var tsk; //name of a task with 3 letters
   var numtsk; //number prefix to put in Avida-ED order before 3 letter prefix
+  var tskvar;  // avida uses variable length logic9 names
   var arguDom;  // argument name in the Dom
   var arguDish; // arugment name in the nutrient structure (nut); which is also the arugment name in the environment.cfg file
   var logiclen = av.sgr.logicNames.length;
@@ -201,9 +202,13 @@ av.fwt.form2NutrientStruct = function (from) {
   var uiAllDomLen  = av.sgr.ui_allDom_argu.length;
   var uisubDomLen = av.sgr.ui_subDom_argu.length;
   var uisubDishLen = av.sgr.ui_subDish_argu.length;
+  
+  var react_arguLen = av.sgr.react_argu.length;
+  
   for (var ii=0; ii< logiclen; ii++) {      //9
     numtsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
     tsk = av.sgr.logicNames[ii];      //3 letter logic names
+    tskvar = av.sgr.logicVnames[ii];   // variable length logic tasks names as required by Avida
     // need an argument list to hold data relevant to getting data from dom or need to do each individually
     for (jj=0; jj < uiAllDomLen; jj++) {
       arguDom = av.sgr.ui_allDom_argu[jj];
@@ -229,20 +234,48 @@ av.fwt.form2NutrientStruct = function (from) {
       av.nut[numtsk].uiSub.diffuseCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
       av.nut[numtsk].uiSub.periodCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
       av.nut[numtsk].uiSub.gradientCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
-    };  //end for kk
 
-    //now use what is in uiAll and uiSub to make resource and reaction fields
-    if ('global' == av.nut[numtsk].uiAll.geometry.toLowerCase() ) {
-      // only look at ui items that effect the global situation.
-      if ('infinite' == av.nut[numtsk].uiAll.supplyType.toLowerCase() ) {
-        
+      //now use what is in uiAll and uiSub to make resource and reaction fields
+      for (var ll = 0; ll < react_arguLen; ll++) {
+        av.nut[numtsk].react[ av.sgr.react_argu[ll] ][kk] = av.sgr.react_valED[ll];
       }
-      
-    } 
-    else {
-      // assume that it is local
-      
-    }
+      if ('global' == av.nut[numtsk].uiAll.geometry.toLowerCase() ) {
+        av.nut[numtsk].react.name = tskvar+'00';
+        // only look at ui items that effect the global situation.
+        if ('infinite' == av.nut[numtsk].uiAll.supplyType.toLowerCase() ) {
+          av.nut[numtsk].react.depletable[kk] = 0;                //tiba: not sure the effect on global reactions without resources
+          av.nut[numtsk].react.value = av.sgr.reactValues[ii];    //index needs to match number prefix os numtsk
+        }
+        else if ('none' == av.nut[numtsk].uiSub.supplyType.toLowerCase() ) {
+          av.nut[numtsk].react.depletable[kk] = 1;                //tiba: not sure the effect on global reactions without resources
+          av.nut[numtsk].react.value = 0;   //index needs to match number prefix os numtsk        
+        };    //all for now; finite will be implemented later;
+        // will be other later only implementing these two for now
+      } 
+      else {
+        // assume that it is local
+        av.nut[numtsk].react.name = tsk+kk;   //incomplete needs work; kk is the index, but the name comes from the layoutCode
+        av.nut[numtsk].react.value = av.sgr.reactValues[ii];    //index needs to match number prefix os numtsk
+        if ('infinite' == av.nut[numtsk].uiSub.supplyType.toLowerCase() ) {
+          av.nut[numtsk].react.depletable[kk] = 0;                //tiba: not sure the effect on global reactions without resources
+        }
+        else {
+          // not infiniate that resources can be depleated
+          av.nut[numtsk].react.depletable[kk] = 1;                //tiba: not sure the effect on global reactions without resources
+
+          if ('none' == av.nut[numtsk].uiSub.supplyType.toLowerCase() ) {
+            // none is implemented in the resource
+
+          }
+          else if ('finite' == av.nut[numtsk].uiSub.supplyType.toLowerCase() ) {
+            av.nut[numtsk].react.depletable[kk] = 1;                //tiba: not sure the effect on global reactions without resources
+            av.nut[numtsk].react.value = av.sgr.reactValues[ii];    //index needs to match number prefix os numtsk
+            // finite is implementeed in the resource
+          }
+        }; //end of NOT infinite
+        
+      };  // end of local if   
+    };   //end for kk   
 
   };  //end for ii
   console.log(from, 'called av.fwt.form2NutrientStruct; ________________________ av.nut=', av.nut);

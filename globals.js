@@ -454,7 +454,7 @@ av.fzr = {};
 //
 //#comment option
 //#!xor not34 region=all:side=none:supply=finite:gradient=false
-//region options are in av.sgr.region above.   or regionNum could be used. 
+//region options are in av.sgr.region below   There are several name formats and one dictionary below 
 //supply optoins are in av.sgr.supply 
 //side options are in av.sgr.side3
 //gradient options are false/true
@@ -486,30 +486,24 @@ av.sgr.sugarGreyShade = 20;
 //console.log('full mono colorMap length =', av.sgr.monoColormaplength, '; greyMap length =', av.color.greyMap.length
 //     , '; darkEnd =', av.sgr.darkEnd, '; sugarBackgroundShade', av.sgr.sugarBackgroundShade, '; sugarNameShade=', av.sgr.sugarNameShade);
 
-av.sgr.rsrce_fake = ['0', '3600', '0', '19', '20', '39', '1', '1'
-                           ,'.2', '0', '19', '20', '39', '0', '0'
-                           ,'true', '0', '20', '20', '20', 'not1'];
-                            
-av.sgr.react_fake = ['1', '1', '0.99', '1.0', '1', 'not1', 'not', 'not1', 'pow']; 
-
-av.sgr.react_argu = ['depletable', 'value', 'min', 'max', 'max_count', 'name', 'task', 'resource', 'type']; 
-av.sgr.reacDefaultValu = [ 1,                0,  0.99,    1,            1,     '',     '',  'missing', 'pow'];
+av.sgr.react_fake = [ 'pow',   0.9,   1.0,      1,             1,     'not1',  'not',     'not1',    1   ];
+av.sgr.react_argu = ['type', 'min', 'max', 'max_count', 'depletable', 'name', 'task', 'resource', 'value']; 
+av.sgr.react_valED = ['pow',  0.99999,  1,           1,            0,     '',     '',  'missing',    0   ];
                             //depletable = 1 = yes resources are eaten; 0 = no they are not eaten
                             //type = pow always in Avida-ED
                             //value = 1 through 5 based on number of nan gates needed to do the task. 
                             //max_count = 1 always in Avida-ED
                             //min will be a constant probably 0.9
                             //max will be a constang probably 1.1
-av.sgr.resrc_argu_old = ['initial', 'inflow', 'inflowx1', 'inflowx2', 'xdiffuse', 'ydiffuse'
-                           , 'outflow', 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2', 'xgravity', 'ygravity'
-                           , 'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow', 'name'
-                           , 'geometry', 'region', 'side', 'grdNum', 'regionCode','regionList'];  
-av.sgr.resrc_argu = ['name', 'initial', 'inflow', 'outflow', 'geometry'           //technically name is not an argument, but it starts the list. 
+
+av.sgr.resrc_argu = ['name', 'initial', 'inflow', 'outflow', 'geometry'           //geometry is always the same, not sure it belongs here
                             ,  'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'  
                             , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'
                             , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'
-                            ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow',     //theste are new for Avida-ED and not in the wiki. 
-                            , 'region', 'side', 'grdNum', 'regionCode','regionList'];  // this last row is not in the argurments for avida; used for 'multi-dish'
+                            ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow' ];   //these are new for Avida-ED and not in the wiki. 
+                            
+                            //belong ui part of structure not resource
+                            //, 'region', 'side', 'grdNum', 'regionCode','regionList'];  // this last row is not in the argurments for avida; used for 'multi-dish'
 
 
 //Avida resource Arguments that have Defaults I will probably use. If they are the default, they do not need to be in the Environment.cfg file
@@ -526,7 +520,7 @@ av.sgr.resrcAvidaDefaultLocalValu =  [ 0, 0, 0.0, 'grid', 1, 1, 0, 0];   //diffu
 //geometry is always the same for all regions, but also part of the avida arguments for resource. 
 //Different ways to discribe layout, only one desciptor needed per task
 av.sgr.layout3 = ['glob', 'all', 'haf', 'thr', '4th'];
-av.sgr.layout = ['Global Dish', 'Whole Dish', 'Halves', '3-sections', 'Quarters'];
+av.sgr.layout = ['Global Dish', 'Whole Dish', 'Halves', 'ThirdsTopLeftRight', 'Quarters'];
 av.sgr.layoutMany = ['glob', 'all', 'halfLR', 'halfTB', '3top1', '3bot1', '3lft1', '3Rit1', '3book', '3stack', '4th'];
 //a dictionary to assign the number of regions based on possible names for region layouts in 'summary' section
 av.sgr.regionDct = {};  //more can be added if needed
@@ -556,11 +550,18 @@ av.sgr.boxArguments = ['boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow']; //flag is
                          // so the region lisst for quarters is [empty, 0, 1, 2, 3]
                          // the retion list for top bottom would be [empty, empty, empty, empty, empty, 0, 1]
 
-  //Regtion List: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
+  //Region List based on 4 quarters: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
   av.sgr.region3char =    ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];
   av.sgr.regionCodes =   [  '00',   '01',   '02',   '03',   '04',  '12',  '34',  '13',  '24'];   //These numbers go with the regions above
   av.sgr.regionNames =  ['Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
   av.sgr.regionNamesLower =  ['whole dish', 'upper left', 'upper right', 'lower left', 'lower right', 'top', 'bottom', 'left', 'right']; 
+  
+  //region List based on 9 sections like a tic-tac-toe board
+  av.sgr.regionN3chr =   ['all', 'upL', 'upC', 'upR', 'mdL', 'mdC', 'mdR', 'loL', 'loC', 'loR'
+                        , 'lft', 'cen', 'rit', 'top', 'mid', 'bot'];
+  av.sgr.regionNcodes = ['_0_', '_1_', '_2_', '_3_', '_4_', '_5_', '_6_', '_7_', '_8_', '_9_'
+                        , '147', '258', '369', '123', '456', '789'];
+  
   
 // need to figure out how to assign when reading environment.cfg
   av.sgr.supply3 =      ['non', 'inf',  'fin',  'equ',  'poi', 'flo' ];  //none, infinite, finite, equilibrium, poison
@@ -619,7 +620,7 @@ av.fzr.clearEnvironment = function(from) {
     };
     av.nut[tsk]['react'] = {};
     for (var jj=0; jj<reactlen; jj++){
-      av.nut[tsk]['react'][ av.sgr.react_argu[jj] ] = [];
+      av.nut[tsk]['react'][ av.sgr.react_argu[jj] ] = [];     
     };
     //from user interface 
     av.nut[tsk]['uiAll'] = {};
@@ -851,7 +852,6 @@ av.grd.clearGrd = function () {
   av.grd.mxRxor = 1.0;  //store initial maximum xor Resource in any cell during an experiment.
   av.grd.mxRequ = 1.0;  //store initial maximum equ Resource in any cell during an experiment.
   
-
   av.grd.rescaleTolerance = 0.1;
   av.grd.rescaleTimeConstant = 1;
   av.grd.SelectedColor = '#ffffff';
@@ -881,12 +881,12 @@ av.grd.clearGrd = function () {
   
   av.grd.gridWasCols = 20;
   av.grd.gridWasRows = 20;
-
 };
 av.grd.clearGrd();
 
 av.pch = {};   // related to the chart on the population page
 av.pch.dadMax = 16;
+
 av.pch.clearPopChrt = function () {
   av.pch.ht = 10;
   av.pch.wd = 10; 
