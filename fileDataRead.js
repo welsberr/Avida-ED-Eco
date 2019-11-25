@@ -453,13 +453,15 @@ av.frd.reactLineParse = function(lnArray) {
       av.nut[edTsk].uiAll.geometry = 'global';            //grid (if 1 < subdish)
       
       if (0 < +reActObj.value[ndx]) {
-        av.nut[edTsk].avSub.supplyType[ndx] = 'infinite';
+        console.log('av.nut = ', av.nut);
+        console.log('av.nut['+edTsk+'].uiAll.supplyType['+ndx+'] =',av.nut[edTsk].uiAll.supplyType[ndx])
+        av.nut[edTsk].uiAll.supplyType = 'infinite';
       }
       else if (0 > +reActObj.value[ndx])  {
-        av.nut[edTsk].avSub.supplyType[ndx] = 'poison';   //poison or damage. does not kill, but hurts energy aquisition rate (ear). 
+        av.nut[edTsk].uiAll.supplyType = 'poison';   //poison or damage. does not kill, but hurts energy aquisition rate (ear). 
       }
       else {
-        av.nut[edTsk].avSub.supplyType[ndx] = 'none';
+        av.nut[edTsk].uiAll.supplyType = 'none';
       }
       //console.log('edTsk=', edTsk, '; ndx=', ndx, '; av.nut[edTsk].uiAll.supplyType[ndx]=', av.nut[edTsk].uiSub.supplyType[ndx]
       //             , '; av.nut[edTsk].uiAll.regionsNumOf=', av.nut[edTsk].uiAll.regionsNumOf);
@@ -546,12 +548,12 @@ av.frd.resrcLineParse = function(lnArray){
 
 // need to change this the ui part of the structure
       //find region listed in user interface?
-      rSourcObj.regionCode[ndx] = matchTaskRegion[2];   //This is a one or two digit string.
+      av.nut[edTsk].uiSub.regionCode[ndx] = matchTaskRegion[2];   //This is a one to three digit string.
       regionStr = ('000'+ matchTaskRegion[2]).slice(-2);               //to add a leading zero if needed.
       var tmpndx = av.sgr.regionCodes.indexOf(regionStr);
-      rSourcObj.region[ndx] = av.sgr.regionNames[tmpndx];
-      if (av.dbg.flg.nut) console.log('ndx=',ndx, '; rSourcObj.regionCode[ndx]=',rSourcObj.regionCode[ndx],'; rSourcObj.region[ndx]=',rSourcObj.region[ndx]);
-      rSourcObj.regionList[rSourcObj.regionCode[ndx]] = ndx;
+      av.nut[edTsk].uiSub.regionName[ndx] = av.sgr.regionNames[tmpndx];
+      if (av.dbg.flg.nut) console.log('ndx=',ndx, '; av.nut[edTsk].uiSub.regionCode[ndx]=',av.nut[edTsk].uiSub.regionCode[ndx],'; av.nut[edTsk].uiSub.region[ndx]=',rSourcObj.region[ndx]);
+      //rSourcObj.regionList[rSourcObj.regionCode[ndx]] = ndx;
       
       // look for a side if it is flow or gradient
       if (0 < matchTaskRegion[3].length){
@@ -1573,8 +1575,8 @@ av.frd.resourceLineParse = function (lnArray) {
     rSourcObj.ydiffuse[ndx] = 0;
     rSourcObj.xgravity[ndx] = 0;
     rSourcObj.ygravity[ndx] = 0;
-    rSourcObj.region[ndx] = 'all';
-    rSourcObj.side[ndx] = 'unk';
+    //rSourcObj.region[ndx] = 'all';
+    //rSourcObj.side[ndx] = 'unk';
     //av.fzr.env.rsrce[edTsk][ndx] = 'unk';
 
     //process all data pairs
@@ -1604,8 +1606,8 @@ av.frd.resourceLineParse = function (lnArray) {
     ;
 
     var subCode = rSourcObj.name[ndx].substring(3).toString();
-    rSourcObj.region[ndx] = subCode;
-    rSourcObj.regionList[subCode] = ndx;
+    //rSourcObj.region[ndx] = subCode;
+    //rSourcObj.regionList[subCode] = ndx;
 
     if (0 < rSourcObj.initial[ndx]) {
       av.fzr.env.supply[edTsk][ndx] = 'fin';

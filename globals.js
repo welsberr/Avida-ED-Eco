@@ -585,12 +585,14 @@ av.sgr.ui_allDish_argu = ['geometry', 'supplyType', 'regionLayout', 'initial', '
 
 //each task; each subregion; 'subRegion' is needed, but it is not a named item in the dom
 av.sgr.ui_subDom_argu = ['supplyType', 'initialHiInput', 'inflowHiInput', 'outflowHiInput', 'diffuseCheck'
-                        , 'periodCheck', 'periodInput'
+                        , 'periodCheck', 'periodInput'                                                          //not sure if regionCode and regionName belong in Dom
                         , 'gradientCheck', 'sideSelect', 'initialLoInput', 'inflowLoInput', 'outflowLoInput'];
 // arugment name in the nutrient structure (nut); which is also the arugment name in the environment.cfg file if relevent
 av.sgr.ui_subDish_argu = ['supplyType', 'initialHi', 'inflowHi', 'outflowHi', 'diffuseCheck'
                         , 'periodCheck', 'periodTime'
-                        , 'gradientCheck', 'side', 'initialLo', 'inflowLo', 'outflowLo', 'subRegion'];  //subRegion is not in Dom, so it is at the end.
+                        , 'gradientCheck', 'side', 'initialLo', 'inflowLo', 'outflowLo', 
+                        'regionCode', 'regionName', 'subRegion'];  //subRegion is not in Dom, so it is at the end.
+                      //regionName should probably be in the dom, but it is not right now with only one region. 
         
 av.nut = {};
 //------------------------------------------------------------------------------------------- av.fzr.clearEnvironment --

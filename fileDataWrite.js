@@ -234,12 +234,16 @@ av.fwt.form2NutrientStruct = function (from) {
       av.nut[numtsk].uiSub.diffuseCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
       av.nut[numtsk].uiSub.periodCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
       av.nut[numtsk].uiSub.gradientCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
+      av.nut[numtsk].uiSub.regionCode[kk] = '00';
+      av.nut[numtsk].uiSub.regionName[kk] = 'WholeDish';
 
       //now use what is in uiAll and uiSub to make resource and reaction fields
       for (var ll = 0; ll < react_arguLen; ll++) {
         av.nut[numtsk].react[ av.sgr.react_argu[ll] ][kk] = av.sgr.react_valED[ll];
       }
       if ('global' == av.nut[numtsk].uiAll.geometry.toLowerCase() ) {
+        //av.nut[numtsk].uiSub.regionCode[kk] = '00';          should these exist in av.nut[numttsk].uiAll ??
+        //av.nut[numtsk].uiSub.regionName[kk] = 'WholeDish';
         av.nut[numtsk].react.name = tskvar+'00';
         // only look at ui items that effect the global situation.
         if ('infinite' == av.nut[numtsk].uiAll.supplyType.toLowerCase() ) {
