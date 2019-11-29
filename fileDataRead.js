@@ -774,13 +774,14 @@ av.frd.nutrientParse = function (filestr, from) {
     // is the code word 'missing' is the listed as the name of the resource than there is not resource specified and 
     // the reaction can only act as if the resource for that task is none or infinite and it must be global. 
     if ('missing' != av.nut[numTsk].react.resource[0]) {  
-      distinctRegions = [...new Set(av.nut[numTsk].resrc.regionCode)];
+      console.log('av.nut[numTsk].uiSub.regionCode = ', av.nut[numTsk].uiSub.regionCode);
+      distinctRegions = [...new Set(av.nut[numTsk].uiSub.regionCode)];
       console.log('numTsk=', numTsk, '; distinctRegions=', distinctRegions);
       av.nut[numTsk].uiAll.regionsNumOf = distinctRegions.length;
-      console.log('distinctRegions.length =', distinctRegions.length, '; ');
+      console.log('distinctRegions.length =', distinctRegions.length);
       
       av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLayoutValues[av.nut[numTsk].uiAll.regionsNumOf];  //av.sgr.layout 
-      //console.log('av.nut['+numTsk+'].uiAll.regionLayout = ', av.nut[numTsk].uiAll.regionLayout);
+      console.log('av.nut['+numTsk+'].uiAll.regionLayout = ', av.nut[numTsk].uiAll.regionLayout);
       geoLen = av.nut[numTsk].resrc.geometry.length;
       if (1 < geoLen) {
         av.nut[numTsk].uiAll.geometry = 'Grid';
@@ -822,25 +823,33 @@ av.frd.nutrientStruct2dom = function(from) {
   var uiSubLength; 
   var ndx;
   var numTsk, tsk, tskose;
-  var subNum = 1;
   var globalNum = 0;
+  var subNum = 1;                   //Will need to loop throughh all subNum later
+  // only one regioin for now, so this worrks. I may need add at subcode indext later.
+  // the data for the regions may not go in the struture in the same order they need to be on the user interface. 
   
   for (var ii = 0; ii < sugarLength; ii++) {
     numTsk = av.sgr.logEdNames[ii];
     tsk = av.sgr.logicNames[ii];
     tskose = av.sgr.oseNames[ii];
     
-    console.log('tsk=', tsk);
-    document.getElementById(tsk+'0geometry').value = av.nut[numTsk].uiAll.geometry;
+    document.getElementById(tsk+'0regionLayout').value = av.nut[numTsk].uiAll.regionLayout;
     if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+      document.getElementById(tsk+'0geometry').value = av.nut[numTsk].uiAll.geometry;
       document.getElementById(tsk+'0supplyType').value = av.nut[numTsk].uiAll.supplyType;
-      document.getElementById(tsk+'0regionLayout').value = av.nut[numTsk].uiAll.regionLayout;
     }
     else if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+      document.getElementById(tsk+'0geometry').value = 'Local';    //Should probably be in a lookup table in globals.js
+      //regionCode will need to be converted to region Value or need to get regionValue from xy cooredinates
+      //document.getElementById(tsk+'0regionLayout').value = av.nut[numTsk].uiSub.regionCode[subNum];
+      console.log('av.nut['+numTsk+'].uiSub.supplyType['+subNum+'] = ', av.nut[numTsk].uiSub.supplyType[subNum]);
+      document.getElementById(tsk+subNum+'supplyType').value = av.nut[numTsk].uiSub.supplyType[subNum]; 
+      console.log(tsk+subNum+'supplyType.value = ', document.getElementById(tsk+subNum+'supplyType').value);
+      document.getElementById(tsk+subNum+'initialHiInput').value = av.nut[numTsk].resrc.initial[subNum]; 
       
     }
     else {consol.log('Error: geometry unrecognized');}
-    
+    av.sgr.changeDetailsLayout(tsk, subNum, 'av.frd.nutrientStruct2dom');
   }
   console.log('av.nut = ', av.nut);
   console.log('================================================================== end of av.frd.nutrientStruct2dom ==');

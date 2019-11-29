@@ -650,24 +650,26 @@
                         
                         <div id='sugarAccordion'>
 
+
+
                           <details id="not0section" class="sugarAccordionSection">
                             <summary id="not0summary" class="sugarSummary">
                               <div id="not0title" class="sugarTitle">Notose</div>&nbsp;
                               <select id="not0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                                <option value="Global" selected>Global</option>
+                                <option value="Global" selected="">Global</option>
                                 <option value="Local">Local</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="not0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
                                 <option id="not0none" value="None">None</option>
-                                <option id="not0Infinite" value="Infinite" selected>Infinite</option>
+                                <option id="not0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="not0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="not0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
                                 <option id="not0All" class="globalAll" value="All">All debug only</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="not0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
-                                <option id="not0WholeDish" value="1WholeDish" selected>Whole Dish</option>
-                                <option id="not0HalvesLeftRight" class="HalfLftRit" value="2HalvesLftRit">Halves Left/Right</option>
-                                <option id="not0TopLeftRight" class="TopLftRit" value="3TopLeftRight">Top/Bottom(L/R)</option>
+                                <option id="not0WholeDish" value="1All" selected="">Whole Dish</option>
+                                <option id="not0HalvesLeftRight" class="HalfLftRit" value="2LftRit">Halves Left/Right</option>
+                                <option id="not0TopLeftRight" class="TopLftRit" value="3TopLftRit">Top/Bottom(L/R)</option>
                                 <option id="not0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id="not0initialDiv" class="sugarSummaryDiv">
@@ -683,7 +685,7 @@
                                 <div id="not1supplyTypeSelectHolder" class="grid-sugarDetail-item typeInput">
                                   <select id="not1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
                                     <option id="not1none" value="None">None</option>
-                                    <option id="not1Infinite" value="Infinite" selected>Infinite</option>
+                                    <option id="not1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="not1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="not1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
                                     <option id="not1All" class="localAll" value="All">All debug only</option>
@@ -700,7 +702,7 @@
                                 </div>
                                 <div id="not1hiSideSelectHolder" class="grid-sugarDetail-item sideInput">
                                   <label><select id="not1sideSelect">
-                                    <option value="left" selected>Left</option>
+                                    <option value="left" selected="">Left</option>
                                     <option value="right">Right</option>
                                     <option value="top">Top</option>
                                     <option value="bottom">Bottom</option>
@@ -757,21 +759,21 @@
                             <summary id="nan0summary" class="sugarSummary">
                               <div id="nan0title" class="sugarTitle">Nanose</div>&nbsp;
                               <select id="nan0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                                <option value="Global" selected>Global</option>
+                                <option value="Global" selected="">Global</option>
                                 <option value="Local">Local</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="nan0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
                                 <option id="nan0none" value="None">None</option>
-                                <option id="nan0Infinite" value="Infinite" selected>Infinite</option>
+                                <option id="nan0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="nan0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="nan0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
                                 <option id="nan0All" class="globalAll" value="All">All debug only</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="nan0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
-                                <option id="nan0WholeDish" value="WholeDish" selected>Whole Dish</option>
-                                <option id="nan0HalvesLeftRight" class="HalfLftRit" value="HalvesLeftRight">Halves Left/Right</option>
-                                <option id="nan0TopLeftRight" class="TopLftRit" value="ThirdsTopLeftRight">Top/Bottom(L/R)</option>
-                                <option id="nan0Quarters" class="Quarters" value="Quarters">Quarters</option>
+                                <option id="nan0WholeDish" value="1All" selected="">Whole Dish</option>
+                                <option id="nan0HalvesLeftRight" class="HalfLftRit" value="2LftRit">Halves Left/Right</option>
+                                <option id="nan0TopLeftRight" class="TopLftRit" value="3TopLftRit">Top/Bottom(L/R)</option>
+                                <option id="nan0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id="nan0initialDiv" class="sugarSummaryDiv">
                                 <label><input id="nan0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">
@@ -786,7 +788,7 @@
                                 <div id="nan1supplyTypeSelectHolder" class="grid-sugarDetail-item typeInput">
                                   <select id="nan1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
                                     <option id="nan1none" value="None">None</option>
-                                    <option id="nan1Infinite" value="Infinite" selected>Infinite</option>
+                                    <option id="nan1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="nan1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="nan1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
                                     <option id="nan1All" class="localAll" value="All">All debug only</option>
@@ -803,7 +805,7 @@
                                 </div>
                                 <div id="nan1hiSideSelectHolder" class="grid-sugarDetail-item sideInput">
                                   <label><select id="nan1sideSelect">
-                                    <option value="left" selected>Left</option>
+                                    <option value="left" selected="">Left</option>
                                     <option value="right">Right</option>
                                     <option value="top">Top</option>
                                     <option value="bottom">Bottom</option>
@@ -860,21 +862,21 @@
                             <summary id="and0summary" class="sugarSummary">
                               <div id="and0title" class="sugarTitle">Andose</div>&nbsp;
                               <select id="and0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                                <option value="Global" selected>Global</option>
+                                <option value="Global" selected="">Global</option>
                                 <option value="Local">Local</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="and0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
                                 <option id="and0none" value="None">None</option>
-                                <option id="and0Infinite" value="Infinite" selected>Infinite</option>
+                                <option id="and0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="and0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="and0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
                                 <option id="and0All" class="globalAll" value="All">All debug only</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="and0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
-                                <option id="and0WholeDish" value="WholeDish" selected>Whole Dish</option>
-                                <option id="and0HalvesLeftRight" class="HalfLftRit" value="HalvesLeftRight">Halves Left/Right</option>
-                                <option id="and0TopLeftRight" class="TopLftRit" value="ThirdsTopLeftRight">Top/Bottom(L/R)</option>
-                                <option id="and0Quarters" class="Quarters" value="Quarters">Quarters</option>
+                                <option id="and0WholeDish" value="1All" selected="">Whole Dish</option>
+                                <option id="and0HalvesLeftRight" class="HalfLftRit" value="2LftRit">Halves Left/Right</option>
+                                <option id="and0TopLeftRight" class="TopLftRit" value="3TopLftRit">Top/Bottom(L/R)</option>
+                                <option id="and0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id="and0initialDiv" class="sugarSummaryDiv">
                                 <label><input id="and0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">
@@ -889,7 +891,7 @@
                                 <div id="and1supplyTypeSelectHolder" class="grid-sugarDetail-item typeInput">
                                   <select id="and1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
                                     <option id="and1none" value="None">None</option>
-                                    <option id="and1Infinite" value="Infinite" selected>Infinite</option>
+                                    <option id="and1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="and1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="and1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
                                     <option id="and1All" class="localAll" value="All">All debug only</option>
@@ -906,7 +908,7 @@
                                 </div>
                                 <div id="and1hiSideSelectHolder" class="grid-sugarDetail-item sideInput">
                                   <label><select id="and1sideSelect">
-                                    <option value="left" selected>Left</option>
+                                    <option value="left" selected="">Left</option>
                                     <option value="right">Right</option>
                                     <option value="top">Top</option>
                                     <option value="bottom">Bottom</option>
@@ -963,18 +965,18 @@
                             <summary id="orn0summary" class="sugarSummary">
                               <div id="orn0title" class="sugarTitle">Ornose</div>&nbsp;
                               <select id="orn0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                                <option value="Global" selected>Global</option>
+                                <option value="Global" selected="">Global</option>
                                 <option value="Local">Local</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="orn0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
                                 <option id="orn0none" value="None">None</option>
-                                <option id="orn0Infinite" value="Infinite" selected>Infinite</option>
+                                <option id="orn0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="orn0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="orn0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
                                 <option id="orn0All" class="globalAll" value="All">All debug only</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="orn0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
-                                <option id="orn0WholeDish" value="1All" selected>Whole Dish</option>
+                                <option id="orn0WholeDish" value="1All" selected="">Whole Dish</option>
                                 <option id="orn0HalvesLeftRight" class="HalfLftRit" value="2LftRit">Halves Left/Right</option>
                                 <option id="orn0TopLeftRight" class="TopLftRit" value="3TopLftRit">Top/Bottom(L/R)</option>
                                 <option id="orn0Quarters" class="Quarters" value="4Quarters">Quarters</option>
@@ -992,7 +994,7 @@
                                 <div id="orn1supplyTypeSelectHolder" class="grid-sugarDetail-item typeInput">
                                   <select id="orn1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
                                     <option id="orn1none" value="None">None</option>
-                                    <option id="orn1Infinite" value="Infinite" selected>Infinite</option>
+                                    <option id="orn1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="orn1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="orn1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
                                     <option id="orn1All" class="localAll" value="All">All debug only</option>
@@ -1009,7 +1011,7 @@
                                 </div>
                                 <div id="orn1hiSideSelectHolder" class="grid-sugarDetail-item sideInput">
                                   <label><select id="orn1sideSelect">
-                                    <option value="left" selected>Left</option>
+                                    <option value="left" selected="">Left</option>
                                     <option value="right">Right</option>
                                     <option value="top">Top</option>
                                     <option value="bottom">Bottom</option>
@@ -1064,23 +1066,23 @@
 
                           <details id="oro0section" class="sugarAccordionSection">
                             <summary id="oro0summary" class="sugarSummary">
-                              <div id="oro0titlexlass="sugarTitle">Orose</div>&nbsp;
+                              <div id="oro0title" class="sugarTitle">Orose</div>&nbsp;
                               <select id="oro0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                                <option value="Global" selected>Global</option>
+                                <option value="Global" selected="">Global</option>
                                 <option value="Local">Local</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="oro0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
                                 <option id="oro0none" value="None">None</option>
-                                <option id="oro0Infinite" value="Infinite" selected>Infinite</option>
+                                <option id="oro0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="oro0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="oro0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
                                 <option id="oro0All" class="globalAll" value="All">All debug only</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="oro0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
-                                <option id="oro0WholeDish" value="WholeDish" selected>Whole Dish</option>
-                                <option id="oro0HalvesLeftRight" class="HalfLftRit" value="HalvesLeftRight">Halves Left/Right</option>
-                                <option id="oro0TopLeftRight" class="TopLftRit" value="ThirdsTopLeftRight">Top/Bottom(L/R)</option>
-                                <option id="oro0Quarters" class="Quarters" value="Quarters">Quarters</option>
+                                <option id="oro0WholeDish" value="1All" selected="">Whole Dish</option>
+                                <option id="oro0HalvesLeftRight" class="HalfLftRit" value="2LftRit">Halves Left/Right</option>
+                                <option id="oro0TopLeftRight" class="TopLftRit" value="3TopLftRit">Top/Bottom(L/R)</option>
+                                <option id="oro0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id="oro0initialDiv" class="sugarSummaryDiv">
                                 <label><input id="oro0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">
@@ -1095,7 +1097,7 @@
                                 <div id="oro1supplyTypeSelectHolder" class="grid-sugarDetail-item typeInput">
                                   <select id="oro1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
                                     <option id="oro1none" value="None">None</option>
-                                    <option id="oro1Infinite" value="Infinite" selected>Infinite</option>
+                                    <option id="oro1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="oro1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="oro1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
                                     <option id="oro1All" class="localAll" value="All">All debug only</option>
@@ -1112,7 +1114,7 @@
                                 </div>
                                 <div id="oro1hiSideSelectHolder" class="grid-sugarDetail-item sideInput">
                                   <label><select id="oro1sideSelect">
-                                    <option value="left" selected>Left</option>
+                                    <option value="left" selected="">Left</option>
                                     <option value="right">Right</option>
                                     <option value="top">Top</option>
                                     <option value="bottom">Bottom</option>
@@ -1169,21 +1171,21 @@
                             <summary id="ant0summary" class="sugarSummary">
                               <div id="ant0title" class="sugarTitle">Antose</div>&nbsp;
                               <select id="ant0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                                <option value="Global" selected>Global</option>
+                                <option value="Global" selected="">Global</option>
                                 <option value="Local">Local</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="ant0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
                                 <option id="ant0none" value="None">None</option>
-                                <option id="ant0Infinite" value="Infinite" selected>Infinite</option>
+                                <option id="ant0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="ant0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="ant0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
                                 <option id="ant0All" class="globalAll" value="All">All debug only</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="ant0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
-                                <option id="ant0WholeDish" value="WholeDish" selected>Whole Dish</option>
-                                <option id="ant0HalvesLeftRight" class="HalfLftRit" value="HalvesLeftRight">Halves Left/Right</option>
-                                <option id="ant0TopLeftRight" class="TopLftRit" value="ThirdsTopLeftRight">Top/Bottom(L/R)</option>
-                                <option id="ant0Quarters" class="Quarters" value="Quarters">Quarters</option>
+                                <option id="ant0WholeDish" value="1All" selected="">Whole Dish</option>
+                                <option id="ant0HalvesLeftRight" class="HalfLftRit" value="2LftRit">Halves Left/Right</option>
+                                <option id="ant0TopLeftRight" class="TopLftRit" value="3TopLftRit">Top/Bottom(L/R)</option>
+                                <option id="ant0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id="ant0initialDiv" class="sugarSummaryDiv">
                                 <label><input id="ant0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">
@@ -1198,7 +1200,7 @@
                                 <div id="ant1supplyTypeSelectHolder" class="grid-sugarDetail-item typeInput">
                                   <select id="ant1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
                                     <option id="ant1none" value="None">None</option>
-                                    <option id="ant1Infinite" value="Infinite" selected>Infinite</option>
+                                    <option id="ant1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="ant1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="ant1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
                                     <option id="ant1All" class="localAll" value="All">All debug only</option>
@@ -1215,7 +1217,7 @@
                                 </div>
                                 <div id="ant1hiSideSelectHolder" class="grid-sugarDetail-item sideInput">
                                   <label><select id="ant1sideSelect">
-                                    <option value="left" selected>Left</option>
+                                    <option value="left" selected="">Left</option>
                                     <option value="right">Right</option>
                                     <option value="top">Top</option>
                                     <option value="bottom">Bottom</option>
@@ -1272,21 +1274,21 @@
                             <summary id="nor0summary" class="sugarSummary">
                               <div id="nor0title" class="sugarTitle">Norose</div>&nbsp;
                               <select id="nor0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                                <option value="Global" selected>Global</option>
+                                <option value="Global" selected="">Global</option>
                                 <option value="Local">Local</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="nor0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
                                 <option id="nor0none" value="None">None</option>
-                                <option id="nor0Infinite" value="Infinite" selected>Infinite</option>
+                                <option id="nor0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="nor0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="nor0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
                                 <option id="nor0All" class="globalAll" value="All">All debug only</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="nor0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
-                                <option id="nor0WholeDish" value="WholeDish" selected>Whole Dish</option>
-                                <option id="nor0HalvesLeftRight" class="HalfLftRit" value="HalvesLeftRight">Halves Left/Right</option>
-                                <option id="nor0TopLeftRight" class="TopLftRit" value="ThirdsTopLeftRight">Top/Bottom(L/R)</option>
-                                <option id="nor0Quarters" class="Quarters" value="Quarters">Quarters</option>
+                                <option id="nor0WholeDish" value="1All" selected="">Whole Dish</option>
+                                <option id="nor0HalvesLeftRight" class="HalfLftRit" value="2LftRit">Halves Left/Right</option>
+                                <option id="nor0TopLeftRight" class="TopLftRit" value="3TopLftRit">Top/Bottom(L/R)</option>
+                                <option id="nor0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id="nor0initialDiv" class="sugarSummaryDiv">
                                 <label><input id="nor0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">
@@ -1301,7 +1303,7 @@
                                 <div id="nor1supplyTypeSelectHolder" class="grid-sugarDetail-item typeInput">
                                   <select id="nor1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
                                     <option id="nor1none" value="None">None</option>
-                                    <option id="nor1Infinite" value="Infinite" selected>Infinite</option>
+                                    <option id="nor1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="nor1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="nor1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
                                     <option id="nor1All" class="localAll" value="All">All debug only</option>
@@ -1318,7 +1320,7 @@
                                 </div>
                                 <div id="nor1hiSideSelectHolder" class="grid-sugarDetail-item sideInput">
                                   <label><select id="nor1sideSelect">
-                                    <option value="left" selected>Left</option>
+                                    <option value="left" selected="">Left</option>
                                     <option value="right">Right</option>
                                     <option value="top">Top</option>
                                     <option value="bottom">Bottom</option>
@@ -1375,21 +1377,21 @@
                             <summary id="xor0summary" class="sugarSummary">
                               <div id="xor0title" class="sugarTitle">Xorose</div>&nbsp;
                               <select id="xor0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                                <option value="Global" selected>Global</option>
+                                <option value="Global" selected="">Global</option>
                                 <option value="Local">Local</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="xor0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
                                 <option id="xor0none" value="None">None</option>
-                                <option id="xor0Infinite" value="Infinite" selected>Infinite</option>
+                                <option id="xor0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="xor0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="xor0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
                                 <option id="xor0All" class="globalAll" value="All">All debug only</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="xor0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
-                                <option id="xor0WholeDish" value="WholeDish" selected>Whole Dish</option>
-                                <option id="xor0HalvesLeftRight" class="HalfLftRit" value="HalvesLeftRight">Halves Left/Right</option>
-                                <option id="xor0TopLeftRight" class="TopLftRit" value="ThirdsTopLeftRight">Top/Bottom(L/R)</option>
-                                <option id="xor0Quarters" class="Quarters" value="Quarters">Quarters</option>
+                                <option id="xor0WholeDish" value="1All" selected="">Whole Dish</option>
+                                <option id="xor0HalvesLeftRight" class="HalfLftRit" value="2LftRit">Halves Left/Right</option>
+                                <option id="xor0TopLeftRight" class="TopLftRit" value="3TopLftRit">Top/Bottom(L/R)</option>
+                                <option id="xor0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id="xor0initialDiv" class="sugarSummaryDiv">
                                 <label><input id="xor0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">
@@ -1404,7 +1406,7 @@
                                 <div id="xor1supplyTypeSelectHolder" class="grid-sugarDetail-item typeInput">
                                   <select id="xor1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
                                     <option id="xor1none" value="None">None</option>
-                                    <option id="xor1Infinite" value="Infinite" selected>Infinite</option>
+                                    <option id="xor1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="xor1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="xor1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
                                     <option id="xor1All" class="localAll" value="All">All debug only</option>
@@ -1421,7 +1423,7 @@
                                 </div>
                                 <div id="xor1hiSideSelectHolder" class="grid-sugarDetail-item sideInput">
                                   <label><select id="xor1sideSelect">
-                                    <option value="left" selected>Left</option>
+                                    <option value="left" selected="">Left</option>
                                     <option value="right">Right</option>
                                     <option value="top">Top</option>
                                     <option value="bottom">Bottom</option>
@@ -1478,21 +1480,21 @@
                             <summary id="equ0summary" class="sugarSummary">
                               <div id="equ0title" class="sugarTitle">Equose</div>&nbsp;
                               <select id="equ0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                                <option value="Global" selected>Global</option>
+                                <option value="Global" selected="">Global</option>
                                 <option value="Local">Local</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="equ0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
                                 <option id="equ0none" value="None">None</option>
-                                <option id="equ0Infinite" value="Infinite" selected>Infinite</option>
+                                <option id="equ0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="equ0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="equ0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
                                 <option id="equ0All" class="globalAll" value="All">All debug only</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="equ0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
-                                <option id="equ0WholeDish" value="WholeDish" selected>Whole Dish</option>
-                                <option id="equ0HalvesLeftRight" class="HalfLftRit" value="HalvesLeftRight">Halves Left/Right</option>
-                                <option id="equ0TopLeftRight" class="TopLftRit" value="ThirdsTopLeftRight">Top/Bottom(L/R)</option>
-                                <option id="equ0Quarters" class="Quarters" value="Quarters">Quarters</option>
+                                <option id="equ0WholeDish" value="1All" selected="">Whole Dish</option>
+                                <option id="equ0HalvesLeftRight" class="HalfLftRit" value="2LftRit">Halves Left/Right</option>
+                                <option id="equ0TopLeftRight" class="TopLftRit" value="3TopLftRit">Top/Bottom(L/R)</option>
+                                <option id="equ0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id="equ0initialDiv" class="sugarSummaryDiv">
                                 <label><input id="equ0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">
@@ -1507,7 +1509,7 @@
                                 <div id="equ1supplyTypeSelectHolder" class="grid-sugarDetail-item typeInput">
                                   <select id="equ1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
                                     <option id="equ1none" value="None">None</option>
-                                    <option id="equ1Infinite" value="Infinite" selected>Infinite</option>
+                                    <option id="equ1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="equ1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="equ1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
                                     <option id="equ1All" class="localAll" value="All">All debug only</option>
@@ -1524,7 +1526,7 @@
                                 </div>
                                 <div id="equ1hiSideSelectHolder" class="grid-sugarDetail-item sideInput">
                                   <label><select id="equ1sideSelect">
-                                    <option value="left" selected>Left</option>
+                                    <option value="left" selected="">Left</option>
                                     <option value="right">Right</option>
                                     <option value="top">Top</option>
                                     <option value="bottom">Bottom</option>
