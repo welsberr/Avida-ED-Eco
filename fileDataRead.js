@@ -198,17 +198,17 @@ av.fio.processFiles = function (loadConfigFlag){
           if ('c0/avida.cfg' == av.fio.anID) {
             av.frd.avidaCFG2form(av.fio.thisfile.asText());
           }
-          if ('c0/environment.cfg' == av.fio.anID) {
+          else if ('c0/environment.cfg' == av.fio.anID) {
             av.frd.environmentCFG2form(av.fio.thisfile.asText().trim());
           }
-          if ('c0/events.cfg' == av.fio.anID) {
-            av.frd.eventsCFG2form(av.fio.thisfile.asText().trim());
+          else if ('c0/events.cfg' == av.fio.anID) {
+            av.frd.eventsCFG2form(av.fio.thisfile.asText().trim(), 'av.fio.processFiles');
           }
-        }
+        };
         //Process dishes with ancesotrs. 
         if ('ancestors' == fileType || 'ancestors_manual' == fileType) {
           av.fio.anID = av.fio.anID + '.txt';
-        }
+        };
         //put the text of the file in the freezer
         av.fzr.file[av.fio.anID] = av.fio.thisfile.asText().trim();
         //if (av.debug.fio) console.log('FileType is ', fileType, '; filepath = ', av.fio.anID);
@@ -269,7 +269,10 @@ av.frd.updateSetup = function(from) {
   av.frd.avidaCFG2form(doctext);
   doctext = av.fzr.file[dir + '/environment.cfg'];
   //av.frd.environmentCFG2form(doctext);
-  av.frd.environment2struct(doctext);      //puts environment in a structure
+  av.frd.environment2struct(doctext, 'av.frd.updateSetup');      //puts environment in a structure
+  doctext = av.fzr.file[dir + '/events.cfg'];
+  av.frd.eventsLineParse(doctext, 'av.frd.updateSetup');
+  av.frd.nutrientStruct2dom('av.frd.updateSetup');           //puts data from the structure in the the dom for user interface
 
   doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
   av.frd.pauseRunAtTXT2form(doctext);
@@ -287,7 +290,7 @@ av.frd.updateTestSetup = function (from) {
   
   av.frd.avidaTestform(doctext);         //av.frd.avidaCFG2form(doctext);
   doctext = av.fzr.file[dir + '/environment.cfg'];
-  av.frd.environment2struct(doctext);     
+  av.frd.environment2struct(doctext, 'av.frd.updateTestSetup');     
   //av.frd.environmentTestform(doctext);     //for now editing the whole file
   //console.log('av.dom.environConfigEdit=',av.dom.environConfigEdit);
 
@@ -364,7 +367,7 @@ av.frd.environmentCFG2form = function (fileStr) {
 
 //----------------------------------------------------------------------------------------- put in nutrient structure --
 
-av.frd.findNameIndex = function(nutrientObj, rtag) {
+av.frd.findNameIndex = function(nutrientObj, rtag, geometry) {
   /*
    * 
    * @param nutrientObj =  the suboabject of av.nut that holds the arrays for logic9 type
@@ -376,15 +379,29 @@ av.frd.findNameIndex = function(nutrientObj, rtag) {
    * return its index if it exists
    * return length + 1 is it does not exist
    */
-  //console.log('nutrientObj=',nutrientObj,'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+  //var geometry = String (geometry_);
+  //console.log('rtag=', rtag, '; geometry = ', geometry, '; nutrientObj=',nutrientObj,'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
   var defaultindex = nutrientObj.name.length;
-  var found = nutrientObj.name.indexOf(rtag);
+  //console.log('rtag=', rtag, '; geometry = ', geometry, '; defaultindex=', defaultindex);
+  if (undefined != geometry) {
+    if ('grid' == geometry.toLowerCase() && 1 > defaultindex) {
+      defaultindex = 1;
+    }
+    else if ('global' == geometry.toLowerCase() && 1 > defaultindex) { 
+      defaultindex = 0;
+    };
+  }
+  else {console.log('why is geometry undefined: geometry = ', geometry);}
   
+  var found = nutrientObj.name.indexOf(rtag);
+
+  //onsole.log('defaultindex = ',  defaultindex, '; name.length = ', nutrientObj.name.length, 'found=', found );
+
   if (-1 < found) {
-    console.log('The name ', rtag, ' was found already in av.nut;   The subobject=',nutrientObj);
+    //console.log('The name ', rtag, ' was found already in av.nut;   The subobject=',nutrientObj);
     return found;
   } 
-  //console.log('defaultindex=',defaultindex,'; rtag='+rtag, '; found=', found, '; nutrientObj.name=', nutrientObj.name);  
+  console.log('defaultindex=',defaultindex,'; rtag='+rtag, '; found=', found, '; nutrientObj.name=', nutrientObj.name);  
   return defaultindex;  
 };
 
@@ -394,12 +411,14 @@ av.frd.findNameIndex = function(nutrientObj, rtag) {
 // Avida-ED 3 version for no resource is 
 // REACTION ANDN andn process:value=0.0:type=pow requisite:max_count=1  #value=3.0
 
-av.frd.reactLineParse = function(lnArray) {
+av.frd.reactLineParse = function(lnArray, from) {
   'use strict';
+  console.log('____', from, ' called av.frd.reactLineParse _____');
   var lnError = 'none';     //was it a valid line wihtout errors
   //console.log('lnArray = ', lnArray);
   var pear = [];
   var nn;
+  var mm;
   
   //find logic type
   
@@ -407,28 +426,32 @@ av.frd.reactLineParse = function(lnArray) {
   var logicindex = av.sgr.logicVnames.indexOf( lnArray[2] );   //task name length is variable so must fined in taht array
   //console.log('logicindex=',logicindex);
   if (-1 < logicindex) {
-    var edTsk = av.sgr.logEdNames[logicindex];
+    var numTsk = av.sgr.logEdNames[logicindex];
     // Checking for a resource tag
-    //console.log('edTsk=', edTsk);
-    var reActObj = av.nut[edTsk].react;   //objec based on logic type and reaction;
-    //console.log('edTsk=', edTsk,'; lnArray', lnArray);
-    var ndx = av.frd.findNameIndex(reActObj, lnArray[1]);
+    //console.log('numTsk=', numTsk);
+    var reActObj = av.nut[numTsk].react;   //objec based on logic type and reaction;
+    //console.log('numTsk=', numTsk,'; lnArray', lnArray);
+    //console.log('av.nut.'+numTsk+'.uiAll.geometry = ');
+    
+    console.log('av.nut['+numTsk+'].uiAll = ',av.nut[numTsk].uiAll);
+    
+    var ndx = av.frd.findNameIndex(reActObj, lnArray[1], av.nut[numTsk].uiAll.geometry);
    
     reActObj.name[ndx] = lnArray[1];   //assin the name of the resource. 
     
     // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file with constants for Avida-ED
-    reActObj.depletable[ndx] = 0;
-    reActObj.value[ndx] = 1;
-    reActObj.min[ndx] = 0.99;
-    reActObj.max[ndx] = 1.0;
-    reActObj.max_count[ndx] = 1; 
-    reActObj.task[ndx] = lnArray[2];
+    reActObj.depletable[ndx] = 1;   //This is the default value for Avida
+    reActObj.value[ndx] = 1;      //Avida default = 1; v<0 --> poison; v = 0 --> "None";  v > 0 --> rewarded; this should always be in cfg file
+    reActObj.min[ndx] = 0.99;     //Avida default=0; set slightly below one because i'm not sure how the numbers are represented and wanted to make wure min < max
+    reActObj.max[ndx] = 1.0;      //Avida default=1; Need to talk to curriculum folks about best value for min in Avidea-ED; I'm thinking just less than 1
+    reActObj.max_count[ndx] = 1;         //Avdida-ED default = 1; 
+    reActObj.task[ndx] = lnArray[2];     //from line parcing passed to this method 
     reActObj.resource[ndx] = "missing";  //if resoucre = missing, no resource was stated and the reaction is global and either none or infinite
-    reActObj.type[ndx] = 'pow';
+    reActObj.type[ndx] = 'pow';          //Avida-ED default = 'pow'
  
     var len;
     var lngth = lnArray.length;
-    //console.log('ndx=',ndx, '; name=lnArray[1]=',lnArray[1],'; task=',lnArray[2], '; edTsk=', edTsk, '; lnArray.length=', lnArray.length);
+    //console.log('ndx=',ndx, '; name=lnArray[1]=',lnArray[1],'; task=',lnArray[2], '; numTsk=', numTsk, '; lnArray.length=', lnArray.length);
     for (var jj=3; jj<lngth ;jj++) {
       var pairArray = lnArray[jj].split(':');    //this should get process
       len = pairArray.length;    
@@ -443,32 +466,41 @@ av.frd.reactLineParse = function(lnArray) {
         else {
             lnError = ' '+pear[0]+' is not a valid reaction keyword. lnArray = '+lnArray;
             //console.log(lnError);
-        }
-      }
+        };
+      };
     };
     //There are older environment.cfg files that do not include a resource in the reaction statement. 
     // All of those will be considered to have global resources and they will typically be infinite or none.
     if ('missing' == reActObj.resource[ndx]) {
-      av.nut[edTsk].numsubdish = 1;                 //reaction but no resource so it must be global and none or infinite
-      av.nut[edTsk].uiAll.geometry = 'global';            //grid (if 1 < subdish)
+      av.nut[numTsk].numsubdish = 1;                 //reaction but no resource so it must be global and none or infinite
+      av.nut[numTsk].uiAll.geometry = 'Global';            //grid (if 1 < subdish)
       
-      if (0 < +reActObj.value[ndx]) {
-        console.log('av.nut = ', av.nut);
-        console.log('av.nut['+edTsk+'].uiAll.supplyType['+ndx+'] =',av.nut[edTsk].uiAll.supplyType[ndx])
-        av.nut[edTsk].uiAll.supplyType = 'infinite';
+      if (0 < reActObj.value[ndx]) {
+        av.nut[numTsk].uiAll.supplyType = 'Infinite';
+        console.log('av.nut['+numTsk+'].uiAll.supplyType =', av.nut[numTsk].uiAll.supplyType);
       }
-      else if (0 > +reActObj.value[ndx])  {
-        av.nut[edTsk].uiAll.supplyType = 'poison';   //poison or damage. does not kill, but hurts energy aquisition rate (ear). 
+      else if (0 > reActObj.value[ndx])  {
+        av.nut[numTsk].uiAll.supplyType = 'Poison';   //poison or damage. does not kill, but hurts energy aquisition rate (ear). 
       }
       else {
-        av.nut[edTsk].uiAll.supplyType = 'none';
+        av.nut[numTsk].uiAll.supplyType = 'None';
+        console.log('av.nut['+numTsk+'].uiAll.supplyType =', av.nut[numTsk].uiAll.supplyType);
       }
-      //console.log('edTsk=', edTsk, '; ndx=', ndx, '; av.nut[edTsk].uiAll.supplyType[ndx]=', av.nut[edTsk].uiSub.supplyType[ndx]
-      //             , '; av.nut[edTsk].uiAll.regionsNumOf=', av.nut[edTsk].uiAll.regionsNumOf);
+      //console.log('numTsk=', numTsk, '; ndx=', ndx, '; av.nut[numTsk].uiAll.supplyType[ndx]=', av.nut[numTsk].uiSub.supplyType[ndx]
+      //             , '; av.nut[numTsk].uiAll.regionsNumOf=', av.nut[numTsk].uiAll.regionsNumOf);
+    }
+    else {
+      mm = av.nut[numTsk].resrc.name.indexOf( reActObj.resource[ndx] );
+      console.log('index in resource object =', mm, '; depletable=', reActObj.depletable[ndx], '; av.nut.', numTsk ,'.uiSub.supplyType=', av.nut[numTsk].uiSub.supplyType);
+      console.log('numTsk=', numTsk, 'numTsk[0]=',numTsk[0], '; # numTsk = ', Number(numTsk[0]));
+      if (1 > reActObj.depletable[ndx] && 'none' != av.nut[numTsk].uiSub.supplyType[ndx].toLowerCase()) {
+        av.nut[numTsk].uiSub.supplyType[ndx] = 'Infinite';
+        if (1 < Number(numTsk[[1]]) ) console.log('# of numTsk = ', Number(numTsk[[1]]) );
+      };
     };
     
     
-    //console.log('edTsk=', edTsk,'ndx=',ndx,'reActObj=', reActObj);
+    //console.log('numTsk=', numTsk,'ndx=',ndx,'reActObj=', reActObj);
   }  
   // valid logic name not found;
   else {
@@ -479,9 +511,10 @@ av.frd.reactLineParse = function(lnArray) {
   return lnError;
 };
 
-av.frd.resrcLineParse = function(lnArray){
+av.frd.resrcLineParse = function(lnArray, from ){
   'use strict';
   var lineErrors = 'none';  //was it a valid line wihtout errors
+  console.log('____', from, ' called av.frd.resrcLineParse____');
   //console.log('lnArray = ', lnArray);
   var pairArray = lnArray[1].split(':');
   var pear = [];
@@ -489,8 +522,9 @@ av.frd.resrcLineParse = function(lnArray){
   var matchTaskRegion;
   var matchSide;
   var matchgradientNdx;
+  var len;
   var nn; 
-  var edTsk;
+  var numTsk;
   var rSourcObj;
   var regionStr;
   var ndx;
@@ -512,25 +546,36 @@ av.frd.resrcLineParse = function(lnArray){
   var tsk =  matchTaskRegion[1];
   var logicindex = av.sgr.logicNames.indexOf( tsk );
   if (-1 < logicindex) {
-    edTsk = av.sgr.logEdNames[logicindex];
+    numTsk = av.sgr.logEdNames[logicindex];
     // Checking for a resource tag
-    rSourcObj = av.nut[edTsk].resrc;
-    //console.log('edTsk='+edTsk,'; rSourcObj=', rSourcObj);
-
+    rSourcObj = av.nut[numTsk].resrc;
+    //console.log('numTsk='+numTsk,'; rSourcObj=', rSourcObj);
+    
+    //needs to be more efficient. tiba fix later. Should break out of loop when found. look at av.frd.findNameIndex for hints
+    len = pairArray.length;
+    for (var ii=1; ii < len; ii++) {
+      pear = pairArray[ii].split('=');
+      //console.log('pear = ', pear);
+      if ('geometry' == pear[0].toLowerCase() ) {
+        av.nut[numTsk].uiAll.geometry = pear[1];
+      };   
+    }; 
+    console.log('pairArray = ', pairArray, '; geometry['+numTsk+']=', av.nut[numTsk].uiAll.geometry,'; matchTaskRegion =', matchTaskRegion);
+    
     // check to make sure name is unqiue. If it is not unique then overright the previous data. 
-    ndx = av.frd.findNameIndex(rSourcObj, pairArray[0]);   // index into all the arrays that hold resource/reaction parameters; The name should be unique for all arrays in the object. 
-    //console.log('ndx=',ndx);
+    ndx = av.frd.findNameIndex(rSourcObj, pairArray[0], av.nut[numTsk].uiAll.geometry);   // index into all the arrays that hold resource/reaction parameters; The name should be unique for all arrays in the object. 
+    console.log('ndx=',ndx);
     if (-1 < ndx) {
       rSourcObj.name[ndx] = pairArray[0];    //asign the name of the resource statement. 
 
       // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file witha few exceptions
       // boxflag is false indicating there are no box values. 
-      // in Avida-ED, geometry=grid or global; The user interface calls grid = 'Local'
+      // in Avida-ED, geometry=Grid or global; The user interface calls Grid = 'Local'
       rSourcObj.boxflag[ndx] = false;
       rSourcObj.inflow[ndx] = 0;
       rSourcObj.outflow[ndx] = 0;
       rSourcObj.initial[ndx] = 0;
-      rSourcObj.geometry[ndx] = "grid";     //not sure this belongs here
+      //rSourcObj.geometry[ndx] = "Grid";     //not sure this belongs here
       rSourcObj.inflowx1[ndx] = 0;                     //techincally should be rand between 0 and cols-1
       rSourcObj.inflowx2[ndx] = rSourcObj.inflowx1[ndx]; 
       rSourcObj.inflowy1[ndx] = 0;                     //techincally should be rand between 0 and rows-1
@@ -548,14 +593,17 @@ av.frd.resrcLineParse = function(lnArray){
 
 // need to change this the ui part of the structure
       //find region listed in user interface?
-      av.nut[edTsk].uiSub.regionCode[ndx] = matchTaskRegion[2];   //This is a one to three digit string.
+      av.nut[numTsk].uiSub.regionCode[ndx] = matchTaskRegion[2];   //This is a one to three digit string.
       regionStr = ('000'+ matchTaskRegion[2]).slice(-2);               //to add a leading zero if needed.
       var tmpndx = av.sgr.regionCodes.indexOf(regionStr);
-      av.nut[edTsk].uiSub.regionName[ndx] = av.sgr.regionNames[tmpndx];
-      if (av.dbg.flg.nut) console.log('ndx=',ndx, '; av.nut[edTsk].uiSub.regionCode[ndx]=',av.nut[edTsk].uiSub.regionCode[ndx],'; av.nut[edTsk].uiSub.region[ndx]=',rSourcObj.region[ndx]);
+      av.nut[numTsk].uiSub.regionName[ndx] = av.sgr.regionNames[tmpndx];
+      console.log ('av.dbg.flg.nut=', av.dbg.flg.nut);
+      if (av.dbg.flg.nut) 
+        console.log('ndx=',ndx, '; av.nut[numTsk].uiSub.regionCode[ndx]=', av.nut[numTsk].uiSub.regionCode[ndx],'; av.nut[numTsk].uiSub.regionName[ndx]=',av.nut[numTsk].uiSub.regionName[ndx]);
       //rSourcObj.regionList[rSourcObj.regionCode[ndx]] = ndx;
       
-      // look for a side if it is flow or gradient
+      
+      // look for a side if it is flow or gradient   thhis part does not work right.
       if (0 < matchTaskRegion[3].length){
         matchSide = matchTaskRegion[3].match(re_side);
         if (av.dbg.flg.nut) console.log('re_side=', re_side, '; matchSide=', matchSide);
@@ -575,11 +623,11 @@ av.frd.resrcLineParse = function(lnArray){
       };
 
       //process all data pairs
-      var len = pairArray.length;
+      len = pairArray.length;
       //console.log('len=',len,'; pairArray=',pairArray);
       for (var ii=1; ii < len; ii++) {
         pear = pairArray[ii].split('=');
-        //console.log('Resource: ii=',ii,'; pear=', pear);
+        console.log('Resource: ii=',ii,'; pear=', pear);
         nn = av.sgr.resrc_argu.indexOf(pear[0].toLowerCase());
         if (-1 < nn) {
           rSourcObj[av.sgr.resrc_argu[nn]][ndx] = pear[1];
@@ -597,11 +645,11 @@ av.frd.resrcLineParse = function(lnArray){
           else {
             lineErrors = 'leftside, '+pear[0]+', not a valid resource keyword. lnArray = '+lnArray;
             console.log(lineErrors);
-          }
-        }
+          };
+        };
       };
 
-      //console.log('edTsk=', edTsk, '; av.nut[edTsk]=', av.nut[edTsk]);
+      //console.log('numTsk=', numTsk, '; av.nut[numTsk]=', av.nut[numTsk]);
       //tsk
       //var subCode =  rSourcObj.name[ndx].substring(3).toString();
       //rSourcObj.region[ndx] = subCode;
@@ -610,21 +658,22 @@ av.frd.resrcLineParse = function(lnArray){
       //console.log('rSourcObj.geometry=', rSourcObj.geometry);
       //onsole.log('ndx=',ndx,'rSourcObj.geometry[ndx]=', rSourcObj.geometry[ndx]);
       
-      av.nut[edTsk].uiAll.geometry = rSourcObj.geometry[ndx];
-      if (av.dbg.flg.nut) console.log('edTsk=', edTsk,'; av.nut[edTsk].uiAll.geometry=', av.nut[edTsk].uiAll.geometry);
+      av.nut[numTsk].uiAll.geometry = rSourcObj.geometry[ndx];
+      if (av.dbg.flg.nut) console.log('numTsk=', numTsk,'; av.nut[numTsk].uiAll.geometry=', av.nut[numTsk].uiAll.geometry);
 
       //Find the supply type
-      if (0 < rSourcObj.initial[ndx]) 
-        av.nut[edTsk].uiSub.supplyType[ndx] = 'Finite';
+      if (0 < rSourcObj.initial[ndx]) {
+        av.nut[numTsk].uiSub.supplyType[ndx] = 'Finite';
+      };
       if (0 < rSourcObj.inflow[ndx]) {
         if (rSourcObj.inflowx1[ndx]==rSourcObj.outflowx1[ndx] && rSourcObj.inflowx2[ndx]==rSourcObj.outflowx2[ndx] && 
             rSourcObj.inflowy1[ndx]==rSourcObj.outflowy1[ndx] && rSourcObj.inflowy2[ndx]==rSourcObj.outflowy2[ndx] ) {
-          av.nut[edTsk].uiSub.supplyType[ndx] = 'Equilibrium';           
+          av.nut[numTsk].uiSub.supplyType[ndx] = 'Equilibrium';           
         }
-        else av.nut[edTsk].uiSub.supplyType[ndx] = 'Flow'; 
+        else av.nut[numTsk].uiSub.supplyType[ndx] = 'Flow'; 
       }
       if (0 == rSourcObj.initial[ndx] && 0 == rSourcObj.inflow[ndx]) 
-        av.nut[edTsk].uiSub.supplyType[ndx] = 'None';
+        av.nut[numTsk].uiSub.supplyType[ndx] = 'None';
     }   //end of valid ndx found.
   }  
   // valid logic name not found;
@@ -637,9 +686,11 @@ av.frd.resrcLineParse = function(lnArray){
   return lineErrors;
 };
 
+//----------------------------------------------------------------------------------------------------- nutrientParse --
 // Uses environment.cfg file to create a structure to hold environment variables. 
-av.frd.nutrientParse = function (filestr) {
+av.frd.nutrientParse = function (filestr, from) {
   'use strict';
+  console.log('============================================================ ',from + ' called av.frd.nutrientParse ==');
   var errors='';
   var reacError, rsrcError;
   var eolfound;
@@ -690,7 +741,7 @@ av.frd.nutrientParse = function (filestr) {
       //console.log('lineArray=', lineArray);
       matchResult = lineArray[0].match(re_REACTION);
       //console.log('matchReaction=', matchResult);
-      if (null != matchResult) reacError = av.frd.reactLineParse(lineArray);
+      if (null != matchResult) reacError = av.frd.reactLineParse(lineArray, 'av.frd.nutrientParse');
       else {
         reacError='none';
         //console.log('no matach on REACTION');
@@ -698,77 +749,108 @@ av.frd.nutrientParse = function (filestr) {
       
       matchResult = lineArray[0].match(re_RESOURCE);
       //consolen('matchResource=', matchResult);
-      if (null != matchResult) rsrcError = av.frd.resrcLineParse(lineArray);
+      if (null != matchResult) rsrcError = av.frd.resrcLineParse(lineArray, 'av.frd.nutrientParse');
       else {rsrcError = 'none';}
       
       if ('none' != rsrcError || 'none' != reacError) {
         //console.log('errors in line: ii=', ii, '; aline=', aline);
         errors += 'ii='+ii+'; rsrcError='+rsrcError+'; reacError='+reacError+'\n';
-      }
-    if (av.dbg.flg.nut) console.log('----------------------------------------------------------------------------------------------------');
-    }  //end of processing lines longer than 3 characters
+      };
+      
+    if (av.dbg.flg.nut) console.log('--------------------- end of processing one lines that was longer than 3 characters -------------------------------');
+    }  //end of processing one line that was lines longer than 3 characters
     ii++;
   } // while that goes through lines in file. 
   
-  var tsk;
+  var numTsk;
   var len = av.sgr.logEdNames.length;   //9
   var geoLen;
   var distinctRegions;
   //find some summary info about nutrients. Need to look at each task separately. 
   for (var ii=0; ii< len; ii++) {
-    tsk = av.sgr.logEdNames[ii];
-    //console.log('av.nut[tsk].react.resource=', av.nut[tsk].react.resource);
-    //console.log('av.nut[tsk].resrc.regionCode=', av.nut[tsk].resrc.regionCode);
+    numTsk = av.sgr.logEdNames[ii];
+    //console.log('av.nut[numTsk].react.resource=', av.nut[numTsk].react.resource);
+    //console.log('av.nut[numTsk].resrc.regionCode=', av.nut[numTsk].resrc.regionCode);
     // is the code word 'missing' is the listed as the name of the resource than there is not resource specified and 
     // the reaction can only act as if the resource for that task is none or infinite and it must be global. 
-    if ('missing' != av.nut[tsk].react.resource[0]) {  
-      distinctRegions = [...new Set(av.nut[tsk].resrc.regionCode)];
-      //console.log('tsk=', tsk, '; distinctRegions=', distinctRegions);
-      av.nut[tsk].uiAll.regionsNumOf = distinctRegions.length;
-      av.nut[tsk].uiAll.regionLayout = av.sgr.layout[av.nut[tsk].uiAll.regionsNumOf];  //av.sgr.layout 
-      console.log('av.nut['+tsk+'].uiAll.regionLayout = ', av.nut[tsk].uiAll.regionLayout);
-      geoLen = av.nut[tsk].resrc.geometry.length;
+    if ('missing' != av.nut[numTsk].react.resource[0]) {  
+      distinctRegions = [...new Set(av.nut[numTsk].resrc.regionCode)];
+      console.log('numTsk=', numTsk, '; distinctRegions=', distinctRegions);
+      av.nut[numTsk].uiAll.regionsNumOf = distinctRegions.length;
+      console.log('distinctRegions.length =', distinctRegions.length, '; ');
+      
+      av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLayoutValues[av.nut[numTsk].uiAll.regionsNumOf];  //av.sgr.layout 
+      //console.log('av.nut['+numTsk+'].uiAll.regionLayout = ', av.nut[numTsk].uiAll.regionLayout);
+      geoLen = av.nut[numTsk].resrc.geometry.length;
       if (1 < geoLen) {
-        av.nut[tsk].uiAll.geometry = 'grid';
+        av.nut[numTsk].uiAll.geometry = 'Grid';
       }
       else if (-1 < geoLen) {    
-        if (av.dbg.flg.nut) console.log('av.nut[tsk].resrc.geometry=', av.nut[tsk].resrc.geometry);
-        if (undefined != av.nut[tsk].resrc.geometry[0]) 
-          av.nut[tsk].uiAll.geometry = av.nut[tsk].resrc.geometry[0];
+        if (av.dbg.flg.nut) console.log('av.nut[numTsk].resrc.geometry=', av.nut[numTsk].resrc.geometry);
+        if (undefined != av.nut[numTsk].resrc.geometry[0]) 
+          av.nut[numTsk].uiAll.geometry = av.nut[numTsk].resrc.geometry[0];
         else
-          //console.log('tsk=', tsk, '; len=', len, '; geoLen=', geoLen);
-          av.nut[tsk].uiAll.geometry = "global";
+          //console.log('numTsk=', numTsk, '; len=', len, '; geoLen=', geoLen);
+          av.nut[numTsk].uiAll.geometry = "global";
       }
       else console.log('confused as not sure how length can be negative');
     };  // a resource was defined so it could be grid or global
   };  // end of logtic task loops
   //return errors;
+  console.log('============================================================================== end of nutrientParse ==');
 };
+//---------------------------------------------------------------------------------------------- end of nutrientParse --
 
 //-------------------------------------------------------------------------------------------------------------- both --
 // puts data from the environment.cfg into the setup form for the population page
-av.frd.environment2struct = function (fileStr) {
+av.frd.environment2struct = function (fileStr, from) {
   'use strict';
-  //console.log('in av.frd.environment2struct');
-  av.frd.nutrientParse(fileStr);
-  console.log('av.nut=', av.nut);
+  console.log(from, ' called av.frd.environment2struct');
+  av.frd.nutrientParse(fileStr, 'av.frd.environment2struct');
   var errors = av.frd.environmentParse(fileStr);
   if (1 < errors.length) console.log('errors=', errors);
-  console.log('----------------------------------------------------------------------------------------------------');
-  
-  // Now put into the user interface
-  
-  
+  console.log('av.nut=', av.nut);
+  console.log('------------------------------------------------------------------ end of av.frd.environment2struct --');
 };
 
 //--------------------------------------- end of  section to put data from environment.cfg into environment Structure --
 
-
+//Now that structure exists, use that data to update values in the uwer interface. 
+av.frd.nutrientStruct2dom = function(from) {
+  console.log(from, ' called av.frd.nutrientStruct2dom');
+  var sugarLength = av.sgr.logicNames.length;
+  var uiSubLength; 
+  var ndx;
+  var numTsk, tsk, tskose;
+  var subNum = 1;
+  var globalNum = 0;
+  
+  for (var ii = 0; ii < sugarLength; ii++) {
+    numTsk = av.sgr.logEdNames[ii];
+    tsk = av.sgr.logicNames[ii];
+    tskose = av.sgr.oseNames[ii];
+    
+    console.log('tsk=', tsk);
+    document.getElementById(tsk+'0geometry').value = av.nut[numTsk].uiAll.geometry;
+    if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+      document.getElementById(tsk+'0supplyType').value = av.nut[numTsk].uiAll.supplyType;
+      document.getElementById(tsk+'0regionLayout').value = av.nut[numTsk].uiAll.regionLayout;
+    }
+    else if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+      
+    }
+    else {consol.log('Error: geometry unrecognized');}
+    
+  }
+  console.log('av.nut = ', av.nut);
+  console.log('================================================================== end of av.frd.nutrientStruct2dom ==');
+};
 //-------------------------------------------------------------------------- get needed events out of events.cfg file --
 
-av.frd.eventsLineParse = function (cfgary) {
+av.frd.eventsLineParse = function (cfgary, from) {
   'use strict';
-  console.log('line array = ', cfgary);
+  console.log(from, 'called av.frd.eventsLineParse');
+  //console.log('line array = ', cfgary);
   var eventType;
   var tmpStr;
   var start;
@@ -803,8 +885,9 @@ av.frd.eventsLineParse = function (cfgary) {
   return rslt;
  };
 
-av.frd.eventsCFGparse = function (filestr) {
-    var matchComment, matchContinue, matchResult;
+av.frd.eventsCFGparse = function (filestr, from) {
+  console.log(from, 'called av.frd.eventsCFGparse');
+  var matchComment, matchContinue, matchResult;
   var aline;
   var lines = filestr.split('\n');
   var lngth = lines.length;       //number of lines in file. 
@@ -857,19 +940,11 @@ av.frd.eventsCFGparse = function (filestr) {
   //console.log('----------------------------------------------------------------------------------------------------');
 };
 
-av.frd.eventsCFG2form = function(fileStr){
+av.frd.eventsCFG2form = function(fileStr, from){
   'use strict';
-  av.frd.eventsCFGparse(fileStr);
+  console.log(from, 'called av.frd.eventsCFG2form');
+  av.frd.eventsCFGparse(fileStr, 'av.frd.eventsCFG2form' );
 };
-
-
-
-
-
-
-
-
-
 
 //--------------------------------------------- section to put data from avida.cfg into setup form of population page --
 //makes a dictionary entry out of line if the key and value are the first two items.
@@ -1476,15 +1551,16 @@ av.frd.reactionLineParse = function (lnArray) {
   //console.log('lnArray = ', lnArray);
   var pear = [];
   var nn;
+  var numTsk;
   //find logic type
   //console.log('task = lnArray[2]=',lnArray[2]);
   var logicindex = av.sgr.logicVnames.indexOf(lnArray[2]);   //task name
   //console.log('logicindex=',logicindex);
   if (-1 < logicindex) {
-    var edTsk = av.sgr.logEdNames[logicindex];
+    numTsk = av.sgr.logEdNames[logicindex];
     // Checking for a resource tag
-    //console.log('edTsk=', edTsk);
-    var reActObj = av.fzr.env.react[edTsk];   //objec based on logic type and reaction;
+    //console.log('numTsk=', numTsk);
+    var reActObj = av.fzr.env.react[numTsk];   //objec based on logic type and reaction;
     var ndx = av.frd.rNameIndex(reActObj, lnArray[1]);
     //assin the name of the resource. 
     reActObj.name[ndx] = lnArray[1];
@@ -1500,7 +1576,7 @@ av.frd.reactionLineParse = function (lnArray) {
 
     var len;
     var lngth = lnArray.length;
-    //console.log('ndx=',ndx, '; name=lnArray[1]=',lnArray[1],'; task=',lnArray[2], '; edTsk=', edTsk, '; lnArray.length=', lnArray.length);
+    //console.log('ndx=',ndx, '; name=lnArray[1]=',lnArray[1],'; task=',lnArray[2], '; numTsk=', numTsk, '; lnArray.length=', lnArray.length);
     for (var jj = 3; jj < lngth; jj++) {
       var pairArray = lnArray[jj].split(':');    //this should get process
       len = pairArray.length;
@@ -1520,7 +1596,7 @@ av.frd.reactionLineParse = function (lnArray) {
       ;  //completed going thru pair arrays
     }
     ;  //completed loop to processs lnArray
-    //console.log('edTsk=', edTsk,'ndx=',ndx,'reActObj=', reActObj);
+    //console.log('numTsk=', numTsk,'ndx=',ndx,'reActObj=', reActObj);
   }
   // valid logic name not found;
   else {
@@ -1544,10 +1620,10 @@ av.frd.resourceLineParse = function (lnArray) {
   var logicindex = av.sgr.logicNames.indexOf(pairArray[0].substring(0, 3));
   //console.log('logicindex=',logicindex);
   if (-1 < logicindex) {
-    var edTsk = av.sgr.logEdNames[logicindex];
+    var numTsk = av.sgr.logEdNames[logicindex];
     // Checking for a resource tag
-    var rSourcObj = av.fzr.env.rsrce[edTsk];
-    //console.log('edTsk='+edTsk,'; rSourcObj=', rSourcObj);
+    var rSourcObj = av.fzr.env.rsrce[numTsk];
+    //console.log('numTsk='+numTsk,'; rSourcObj=', rSourcObj);
     var ndx = av.frd.rNameIndex(rSourcObj, pairArray[0]);
     //console.log('ndx=',ndx);
     //assin the name of the resource. 
@@ -1562,7 +1638,7 @@ av.frd.resourceLineParse = function (lnArray) {
     rSourcObj.inflow[ndx] = 0;
     rSourcObj.outflow[ndx] = 0;
     rSourcObj.initial[ndx] = 0;
-    rSourcObj.geometry[ndx] = "grid";
+    //rSourcObj.geometry[ndx] = "Grid";
     rSourcObj.inflowx1[ndx] = 0;                     //techincally should be rand between 0 and cols-1
     rSourcObj.inflowx2[ndx] = rSourcObj.inflowx1[ndx];
     rSourcObj.inflowy1[ndx] = 0;                     //techincally should be rand between 0 and rows-1
@@ -1577,7 +1653,7 @@ av.frd.resourceLineParse = function (lnArray) {
     rSourcObj.ygravity[ndx] = 0;
     //rSourcObj.region[ndx] = 'all';
     //rSourcObj.side[ndx] = 'unk';
-    //av.fzr.env.rsrce[edTsk][ndx] = 'unk';
+    //av.fzr.env.rsrce[numTsk][ndx] = 'unk';
 
     //process all data pairs
     var len = pairArray.length;
@@ -1610,16 +1686,16 @@ av.frd.resourceLineParse = function (lnArray) {
     //rSourcObj.regionList[subCode] = ndx;
 
     if (0 < rSourcObj.initial[ndx]) {
-      av.fzr.env.supply[edTsk][ndx] = 'fin';
-      //av.fzr.env.rsrce[edTsk].supply[ndx] = 'fin';
+      av.fzr.env.supply[numTsk][ndx] = 'fin';
+      //av.fzr.env.rsrce[numTsk].supply[ndx] = 'fin';
     } else if (0 < rSourcObj.inflow[ndx]) {
-      av.fzr.env.supply[edTsk][ndx] = 'equ';
-      //av.fzr.env.rsrce[edTsk].supply[ndx] = 'equ';
+      av.fzr.env.supply[numTsk][ndx] = 'equ';
+      //av.fzr.env.rsrce[numTsk].supply[ndx] = 'equ';
     }
 
     //now assign an index to the region list. 
 
-    //console.log('matchNum=', matchNum,'; edTsk=', edTsk,'ndx=',ndx,'av.fzr.env.rsrce['+edTsk+'].regionList=', av.fzr.env.rsrce[edTsk].regionList);
+    //console.log('matchNum=', matchNum,'; numTsk=', numTsk,'ndx=',ndx,'av.fzr.env.rsrce['+numTsk+'].regionList=', av.fzr.env.rsrce[numTsk].regionList);
   }
   // valid logic name not found;
   else {

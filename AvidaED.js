@@ -3838,7 +3838,7 @@ require([
   // **************************************************************************************************************** */
   // Do this after all other is done; end of file
   //must create the rest of the resource/reaction user interface before calling av.sgr.ChangeAllGeo('Global');
-  //av.sgr.buildHtml();
+  av.sgr.buildHtml();
   // av.sgr.defaults;
 
   av.ui.ex1setSugarColors();   //example 1     //delete later

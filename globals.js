@@ -38,7 +38,7 @@ av.debug.alo = false; //analysis page layout
 
 av.dbg = {};
 av.dbg.flg = {}; 
-av.dbg.flg.nut = false;
+av.dbg.flg.nut = true;
 
 av.debug.usr = ''; //working on log for user actions.
 
@@ -516,9 +516,10 @@ av.sgr.resrcAvidaDefaultLocalValu =  [ 0, 0, 0.0, 'grid', 1, 1, 0, 0];   //diffu
 //not in current use
 //av.sgr.supply_argu = ['region', 'side', 'grdNum', 'regionCode','regionList'];           //each is an array for region
 
+/************************************************************           ideas for regionLayout Names and Region Names --
 //number of subdishis is useful, especially if we only allow one layout per number of subdishes. 
 //geometry is always the same for all regions, but also part of the avida arguments for resource. 
-//Different ways to discribe layout, only one desciptor needed per task
+//Different ways to discribe layout, only one desciptor needed per task; most of these are just ideas
 av.sgr.layout3 = ['glob', 'all', 'haf', 'thr', '4th'];
 av.sgr.layout = ['Global Dish', 'Whole Dish', 'Halves', 'ThirdsTopLeftRight', 'Quarters'];
 av.sgr.layoutMany = ['glob', 'all', 'halfLR', 'halfTB', '3top1', '3bot1', '3lft1', '3Rit1', '3book', '3stack', '4th'];
@@ -529,6 +530,33 @@ av.sgr.regionDct['WholeDish'] = 1;
 av.sgr.regionDct['HalvesLeftRight'] = 2;
 av.sgr.regionDct['ThirdsTopLeftRight'] = 3;
 av.sgr.regionDct['Quarters'] = 4;
+
+                         //region list does not work at this time. It was to create a way to fill out on the data ofr all tasks based on region. 
+                         //     I don't think we need it now. It should go away  when that part of ex1 goes away. 
+                         //name will be created from task, subdishnum or region, type and side
+                         // 
+                         // region list was used to state the index into the array of data that goes with the region in the regionlis. 
+                         // so the region lisst for quarters is [empty, 0, 1, 2, 3]
+                         // the region list for top bottom would be [empty, empty, empty, empty, empty, 0, 1]
+
+  av.sgr.regionNamesLower =  ['whole dish', 'upper left', 'upper right', 'lower left', 'lower right', 'top', 'bottom', 'left', 'right']; 
+  av.sgr.regionValues =  ['WholeDish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
+  
+  //region List based on 9 sections like a tic-tac-toe board
+  av.sgr.regionN3chr =   ['all', 'upL', 'upC', 'upR', 'mdL', 'mdC', 'mdR', 'loL', 'loC', 'loR'
+                        , 'lft', 'cen', 'rit', 'top', 'mid', 'bot'];
+  av.sgr.regionNcodes = ['_0_', '_1_', '_2_', '_3_', '_4_', '_5_', '_6_', '_7_', '_8_', '_9_'
+                        , '147', '258', '369', '123', '456', '789'];
+*/
+
+//Region Layout in use as of 2019 Dec
+  av.sgr.regionLayoutValues = ['1All', '2LftRit', '3TopLftRit', '4Quarters'];
+
+  //Region List based on 4 quarters: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
+  av.sgr.regionNames =  ['Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
+  av.sgr.region3char = ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];   //Use as values when the time comes
+  av.sgr.regionCodes = [ '00',  '01',  '02',  '03',  '04',  '12',  '34',  '13',  '24'];   //These numbers go with the regions above
+
 
 av.sgr.resrcAvidaDefaultGridArgu = [  'initial', 'inflow', 'outflow', 'geometry'   
                                   ,  'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'    // not used when geometry = global
@@ -542,25 +570,6 @@ av.sgr.boxArguments = ['boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow']; //flag is
                       //boxx and boxy are the upper left corner positions of the region in Avida-ED
                       //boxcol and boxrow is the size of the box, so the lower right corner is (boxx+boxcol-1, boxy+boxrow-1]
                          
-                         //region list does not work at this time. It was to create a way to fill out on the data ofr all tasks based on region. 
-                         //     I don't think we need it now. It should go away  when that part of ex1 goes away. 
-                         //name will be created from task, subdishnum or region, type and side
-                         // 
-                         // region list was used to state the index into the array of data that goes with the region in the regionlis. 
-                         // so the region lisst for quarters is [empty, 0, 1, 2, 3]
-                         // the retion list for top bottom would be [empty, empty, empty, empty, empty, 0, 1]
-
-  //Region List based on 4 quarters: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
-  av.sgr.region3char =    ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];
-  av.sgr.regionCodes =   [  '00',   '01',   '02',   '03',   '04',  '12',  '34',  '13',  '24'];   //These numbers go with the regions above
-  av.sgr.regionNames =  ['Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
-  av.sgr.regionNamesLower =  ['whole dish', 'upper left', 'upper right', 'lower left', 'lower right', 'top', 'bottom', 'left', 'right']; 
-  
-  //region List based on 9 sections like a tic-tac-toe board
-  av.sgr.regionN3chr =   ['all', 'upL', 'upC', 'upR', 'mdL', 'mdC', 'mdR', 'loL', 'loC', 'loR'
-                        , 'lft', 'cen', 'rit', 'top', 'mid', 'bot'];
-  av.sgr.regionNcodes = ['_0_', '_1_', '_2_', '_3_', '_4_', '_5_', '_6_', '_7_', '_8_', '_9_'
-                        , '147', '258', '369', '123', '456', '789'];
   
   
 // need to figure out how to assign when reading environment.cfg
@@ -590,11 +599,18 @@ av.sgr.ui_subDom_argu = ['supplyType', 'initialHiInput', 'inflowHiInput', 'outfl
 // arugment name in the nutrient structure (nut); which is also the arugment name in the environment.cfg file if relevent
 av.sgr.ui_subDish_argu = ['supplyType', 'initialHi', 'inflowHi', 'outflowHi', 'diffuseCheck'
                         , 'periodCheck', 'periodTime'
-                        , 'gradientCheck', 'side', 'initialLo', 'inflowLo', 'outflowLo', 
-                        'regionCode', 'regionName', 'subRegion'];  //subRegion is not in Dom, so it is at the end.
-                      //regionName should probably be in the dom, but it is not right now with only one region. 
+                        , 'gradientCheck', 'side', 'initialLo', 'inflowLo', 'outflowLo'
+                        , 'regionCode', 'regionName', 'boxed' , 'subRegion'];  //subRegion is not in Dom, so it is at the end; boxed has not been added to the dom yet
+                       //regionName should probably be in the dom, but it is not right now with only one region. 
         
-av.nut = {};
+av.nut = {};  // within Nutrients (av.nut) the first element in all arrays refer to the geometry="global". The element has an index = 0;
+              // when geometry="grid", Avida-ED calls it "local" and there can be up to 9 subdishes. 
+              // subscripts 1-9 can refer upto 9 subsections within a dish. They are actually elements 2-10, but the subscript is 1-9. 
+              // at this time, I'm only implementing 1 local section, which like global, covers the "Whole Dish". 
+              // av.uiALL.regionLayout has various options which define both how many subdishes can be defined and where in the dish those subdishes are located. 
+              // the dom elelment tsk#regionLayout.value will determine number and labels for the subsections. 
+              // When more subdishes are implemented, an array or dictionary will be defined for each of the tsk#regionLayout values. 
+              // 
 //------------------------------------------------------------------------------------------- av.fzr.clearEnvironment --
 // used to create several structures used in defining parameters for the environment.cfg file
 av.fzr.clearEnvironment = function(from) {
@@ -631,19 +647,19 @@ av.fzr.clearEnvironment = function(from) {
       av.nut[tsk].uiAll[ av.sgr.ui_allDish_argu[jj] ] = 'default';
     };
     //defaults for items that describe the whole dish
-    av.nut[tsk].uiAll.geometry = 'global';
-    av.nut[tsk].uiAll.supplyType = 'infinite';     //this is only for whem ui.geometry = global
-    av.nut[tsk].uiAll.regionLayout = 'all';  //only whole dish for now
+    av.nut[tsk].uiAll.geometry = 'Global';        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
+    av.nut[tsk].uiAll.supplyType = 'Infinite';    //this is only for whem ui.geometry = global
+    av.nut[tsk].uiAll.regionLayout = '1All';  //only whole dish for now
     av.nut[tsk].uiAll.regionsNumOf = 1;   // whole dishß
-    av.nut[tsk].uiAll.initial = 10000;      //only whem ui.geometry = global and  supplyType = 'finite' 
+    av.nut[tsk].uiAll.initial = 1000;      //only whem ui.geometry = global and  supplyType = 'finite' 
 
     for (jj=0; jj < uiSubDishLen; jj++) {
       av.nut[tsk]['uiSub'][av.sgr.ui_subDish_argu[jj] ] = [];
     };
     // a few defaults for when resources are local
-    for (kk=1; kk<=1; kk++) {
+    for (kk=1; kk<=1; kk++) {                  //later the subRegion will be determined by x, x coordinates
       av.nut[tsk].uiSub.subRegion[kk] = kk;    // this goes with 'all' = regionLayoutName (or 1234 could be used) or 'WholeDish'; tiba check this more than on region allowed
-      av.nut[tsk].uiSub.supplyType[kk] = 'infinite';
+      av.nut[tsk].uiSub.supplyType[kk] = 'unknown';  //Lamar this may need to change
       av.nut[tsk].uiSub.initialHi[kk] = 1000;  //sugar units/cell guess at an initial value when supplyType='finite';
       av.nut[tsk].uiSub.inflowHi[kk]  = 100;   //sugar units/cell guess at an initial value when supplyType='equilibrium';
       av.nut[tsk].uiSub.outflowHi[kk] = 0.1;  //sugar units/cell guess at an initial value when supplyType='equilibrium';
@@ -654,7 +670,8 @@ av.fzr.clearEnvironment = function(from) {
       av.nut[tsk].uiSub.diffuseCheck[kk] = false;    //false = default;  else true.      
       av.nut[tsk].uiSub.gradientCheck[kk] = false;    //false = default;  else true.      
       //from event file
-      av.nut[tsk].uiSub.periodCheck[kk] = false;    //false = default;  else true.    
+      av.nut[tsk].uiSub.periodCheck[kk] = false;    //false = default;  else true.   
+      av.nut[tsk].uiSub.boxed[kk] = true;           //true keeps resources in their subdish; false allows them to flow into the rest of the dish
     }
   };
   console.log('av.nut =',av.nut);

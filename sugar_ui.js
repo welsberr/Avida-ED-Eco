@@ -5,7 +5,7 @@
  *  The Periodic functions occure in the Event File. 
  */
 
-/*    Just to state the dom IDs that might be used.
+/*  Just to state some dom IDs that might be used.
     av.dom.sugarAccordion = document.getElementById('sugarAccordion');
     av.dom.orn0section = document.getElementById('orn0section');
     av.dom.orn0title
@@ -17,6 +17,8 @@
 
 var av = av || {};  //incase av already exists
 
+
+// This function builds the html for all the other tasks based on the html writen for "orn"
 av.sgr.buildHtml = function() {
   //console.log('in av.sgr.buildHtml');
   var tskSectionStr = '';

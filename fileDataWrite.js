@@ -219,9 +219,9 @@ av.fwt.form2NutrientStruct = function (from) {
       //console.log(av.nut[numtsk].uiAll[arguDom]);
     };
     av.nut[numtsk].uiAll.regionsNumOf = av.sgr.regionDct[av.nut[numtsk].uiAll.regionLayout];
-    //console.log('av.nut[numtsk].uiAll.regionsNumOf=', av.nut[numtsk].uiAll.regionsNumOf, '; rName=', av.nut[numtsk].uiAll.regionLayout);
+    console.log('av.nut[numtsk].uiAll.regionsNumOf=', av.nut[numtsk].uiAll.regionsNumOf, '; rName=', av.nut[numtsk].uiAll.regionLayout);
     //start on the potential subdishes next (but only 1 for now). 
-    //console.log('SubDishes Now -----------------uisubDom length=', uisubDomLen);
+    console.log('SubDishes Now -----------------uisubDom length=', uisubDomLen);
     for (kk=1; kk <= av.nut[numtsk].uiAll.regionsNumOf; kk++) {
       av.nut[numtsk].uiSub.subRegion[kk] = kk;      //not sure this is needed or make sense. needs work when get past one reagion
       for (jj=0; jj< uisubDomLen; jj++) {
@@ -250,7 +250,7 @@ av.fwt.form2NutrientStruct = function (from) {
           av.nut[numtsk].react.depletable[kk] = 0;                //tiba: not sure the effect on global reactions without resources
           av.nut[numtsk].react.value = av.sgr.reactValues[ii];    //index needs to match number prefix os numtsk
         }
-        else if ('none' == av.nut[numtsk].uiSub.supplyType.toLowerCase() ) {
+        else if ('none' == av.nut[numtsk].uiAll.supplyType.toLowerCase() ) {
           av.nut[numtsk].react.depletable[kk] = 1;                //tiba: not sure the effect on global reactions without resources
           av.nut[numtsk].react.value = 0;   //index needs to match number prefix os numtsk        
         };    //all for now; finite will be implemented later;
@@ -260,18 +260,18 @@ av.fwt.form2NutrientStruct = function (from) {
         // assume that it is local
         av.nut[numtsk].react.name = tsk+kk;   //incomplete needs work; kk is the index, but the name comes from the layoutCode
         av.nut[numtsk].react.value = av.sgr.reactValues[ii];    //index needs to match number prefix os numtsk
-        if ('infinite' == av.nut[numtsk].uiSub.supplyType.toLowerCase() ) {
+        if ('infinite' == av.nut[numtsk].uiSub.supplyType[kk].toLowerCase() ) {
           av.nut[numtsk].react.depletable[kk] = 0;                //tiba: not sure the effect on global reactions without resources
         }
         else {
           // not infiniate that resources can be depleated
           av.nut[numtsk].react.depletable[kk] = 1;                //tiba: not sure the effect on global reactions without resources
 
-          if ('none' == av.nut[numtsk].uiSub.supplyType.toLowerCase() ) {
+          if ('none' == av.nut[numtsk].uiSub.supplyType[kk].toLowerCase() ) {
             // none is implemented in the resource
 
           }
-          else if ('finite' == av.nut[numtsk].uiSub.supplyType.toLowerCase() ) {
+          else if ('finite' == av.nut[numtsk].uiSub.supplyType[kk].toLowerCase() ) {
             av.nut[numtsk].react.depletable[kk] = 1;                //tiba: not sure the effect on global reactions without resources
             av.nut[numtsk].react.value = av.sgr.reactValues[ii];    //index needs to match number prefix os numtsk
             // finite is implementeed in the resource
