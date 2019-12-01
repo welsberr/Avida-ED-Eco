@@ -2359,8 +2359,7 @@ require([
       // if the miniplot on the populaton page needs to be initiated call that funciton.
       if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
         av.grd.popChartInit('av.grd.popChartFn');
-      }
-      ;
+      };
     } else  //console.log('av.grd.runState = ', av.grd.runState);
 
     // Do not display chart if the chart is not on the screen. Data seems to be getting updated. need to verify this.
@@ -2368,8 +2367,7 @@ require([
     if ('flex' != av.dom.popStatsBlock.style.display || ('populationBlock' !== av.ui.page)) {
       // the avidaDataRecorder.csv is broken
       return;
-    }
-    ;
+    };
 
     //console.log('av.grd.runState = ', av.grd.runState);
     if ('prepping' === av.grd.runState) {   //values can be prepping, started, or world

@@ -218,8 +218,13 @@ av.fwt.form2NutrientStruct = function (from) {
       //console.log('av.nut['+numtsk+'].uiAll['+arguDom+']=');
       //console.log(av.nut[numtsk].uiAll[arguDom]);
     };
-    av.nut[numtsk].uiAll.regionsNumOf = av.sgr.regionDct[av.nut[numtsk].uiAll.regionLayout];
-    console.log('av.nut[numtsk].uiAll.regionsNumOf=', av.nut[numtsk].uiAll.regionsNumOf, '; rName=', av.nut[numtsk].uiAll.regionLayout);
+    console.log('av.nut['+numtsk+'].uiAll.regionsNumOf', av.nut[numtsk].uiAll.regionsNumOf);
+    av.nut[numtsk].uiAll.regionsNumOf = av.nut[numtsk].uiAll.regionLayout[1];
+    
+    console.log('av.nut['+numtsk+'].uiAll.regionsNumOf', av.nut[numtsk].uiAll.regionsNumOf, '; rName=', av.nut[numtsk].uiAll.regionLayout);
+   //  will need to go through a list of names later so maybe I should make the dictionary
+   //  
+   //  
     //start on the potential subdishes next (but only 1 for now). 
     console.log('SubDishes Now -----------------uisubDom length=', uisubDomLen);
     for (kk=1; kk <= av.nut[numtsk].uiAll.regionsNumOf; kk++) {

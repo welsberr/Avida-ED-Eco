@@ -268,10 +268,15 @@ av.frd.updateSetup = function(from) {
   
   av.frd.avidaCFG2form(doctext);
   doctext = av.fzr.file[dir + '/environment.cfg'];
+  console.log(dir + '/environment.cfg:  ', doctext);
   //av.frd.environmentCFG2form(doctext);
   av.frd.environment2struct(doctext, 'av.frd.updateSetup');      //puts environment in a structure
   doctext = av.fzr.file[dir + '/events.cfg'];
-  av.frd.eventsLineParse(doctext, 'av.frd.updateSetup');
+  console.log('events.cfg = ', doctext, '; length = ', doctext.length);
+
+  if (2 < doctext.length) {
+    av.frd.eventsCFG2form(doctext, 'av.frd.updateSetup');
+  }
   av.frd.nutrientStruct2dom('av.frd.updateSetup');           //puts data from the structure in the the dom for user interface
 
   doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
@@ -757,7 +762,7 @@ av.frd.nutrientParse = function (filestr, from) {
         errors += 'ii='+ii+'; rsrcError='+rsrcError+'; reacError='+reacError+'\n';
       };
       
-    if (av.dbg.flg.nut) console.log('--------------------- end of processing one lines that was longer than 3 characters -------------------------------');
+    if (av.dbg.flg.nut) console.log('--------------------- end of processing a line that was longer than 3 characters -------------------------------');
     }  //end of processing one line that was lines longer than 3 characters
     ii++;
   } // while that goes through lines in file. 
@@ -823,10 +828,15 @@ av.frd.nutrientStruct2dom = function(from) {
   var uiSubLength; 
   var ndx;
   var numTsk, tsk, tskose;
+  var initialValue, rows, cols, gridSize;
   var globalNum = 0;
   var subNum = 1;                   //Will need to loop throughh all subNum later
   // only one regioin for now, so this worrks. I may need add at subcode indext later.
   // the data for the regions may not go in the struture in the same order they need to be on the user interface. 
+  cols = Number(av.nut.fileCols);
+  rows = Number(av.nut.fileRows);
+  gridSize = cols * rows;
+  console.log('cols = ', cols, '; rows = ', rows, '; gridSize = ', gridSize);
   
   for (var ii = 0; ii < sugarLength; ii++) {
     numTsk = av.sgr.logEdNames[ii];
@@ -845,10 +855,20 @@ av.frd.nutrientStruct2dom = function(from) {
       console.log('av.nut['+numTsk+'].uiSub.supplyType['+subNum+'] = ', av.nut[numTsk].uiSub.supplyType[subNum]);
       document.getElementById(tsk+subNum+'supplyType').value = av.nut[numTsk].uiSub.supplyType[subNum]; 
       console.log(tsk+subNum+'supplyType.value = ', document.getElementById(tsk+subNum+'supplyType').value);
-      document.getElementById(tsk+subNum+'initialHiInput').value = av.nut[numTsk].resrc.initial[subNum]; 
       
+      if (isNaN(Number(av.nut[numTsk].resrc.initial[subNum])) ) {
+        ndx = aav.sgr.resrcAvidaDefaultGlobalArgu.indexOf('initial');
+        initialValue = gridSize * av.sgr.resrcAvida_EDdefaultValu[ndx];
+      }
+      else {
+        initialValue = Number(av.nut[numTsk].resrc.initial[subNum] ) / gridSize;
+      }
+      console.log('av.nut['+numTsk+'].resrc.initial['+subNum+'] = ', av.nut[numTsk].resrc.initial[subNum], ' or ', initialValue, ' per cell');
+      document.getElementById(tsk+subNum+'initialHiInput').value = initialValue;   
     }
-    else {consol.log('Error: geometry unrecognized');}
+    else {
+      console.log('Error: geometry unrecognized');
+    }
     av.sgr.changeDetailsLayout(tsk, subNum, 'av.frd.nutrientStruct2dom');
   }
   console.log('av.nut = ', av.nut);
@@ -859,7 +879,7 @@ av.frd.nutrientStruct2dom = function(from) {
 av.frd.eventsLineParse = function (cfgary, from) {
   'use strict';
   console.log(from, 'called av.frd.eventsLineParse');
-  //console.log('line array = ', cfgary);
+  console.log('line array = ', cfgary, '; length = ', cfgary.length);
   var eventType;
   var tmpStr;
   var start;

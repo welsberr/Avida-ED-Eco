@@ -1408,9 +1408,9 @@ av.dnd.contextMenu = function(target, fzItemID, from) {
         av.post.addUser('Button: export:' + document.getElementById(fzItemID).textContent);
         var type;
         var itemName = document.getElementById(fzItemID).textContent;
-        var zName = prompt(itemName + ' will be saved as ' + itemName + '.avidaedfreezeritem.zip', itemName + '.avidaedfreezeritem.zip');
+        var zName = prompt(itemName + ' will be saved as ' + itemName + '.avidaED_fi.zip', itemName + '.avidaED_fi.zip');
         if (zName) {
-          if (0 === zName.length) zName = itemName + '.avidaedfreezeritem.zip';  //.avidaedfreezeritem.zip is 23 characters
+          if (0 === zName.length) zName = itemName + '.avidaED_fi.zip';  //.avidaED_fi.zip is 23 characters
           if ('.zip' != zName.substring(zName.length - 4)) zName = zName + '.zip';
           dir = av.fzr.dir[fzItemID];
           type = dir.substring(0, 1);

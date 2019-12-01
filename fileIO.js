@@ -237,7 +237,9 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
           fileContainedInZipFile = zipFileLoaded.files[nameOfFileContainedInZipFile];
           //Mac generated freezerItems have the string '.avidaedfreezeritem/' before the files for each freezerItem.
           //This prefix needs to be removed if present. av.fio.zipPathRoot will be assigned the beginning of the path name within the zip file.
-
+          //
+          // the sufix changed to avidaED_fi, the problem string might change
+          //
           //console.log('nameOfFileContainedInZipFile=', nameOfFileContainedInZipFile, '; fileContainedInZipFile.asText()=', fileContainedInZipFile.asText());
           //console.log('nameOfFileContainedInZipFile=', nameOfFileContainedInZipFile);
           if (null === av.fio.zipPathRoot) {

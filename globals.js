@@ -508,10 +508,11 @@ av.sgr.resrc_argu = ['name', 'initial', 'inflow', 'outflow', 'geometry'         
 
 //Avida resource Arguments that have Defaults I will probably use. If they are the default, they do not need to be in the Environment.cfg file
 av.sgr.resrcAvidaDefaultGlobalArgu = [ 'initial', 'inflow', 'outflow', 'geometry'   
-                                    , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'];
-av.sgr.resrcAvidaDefaultGlobalValu =  [ 0, 0, 0.0, 'global', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
+                                     , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'];
+av.sgr.resrcAvidaDefaultGlobalValu = [ 0, 0, 0.0, 'global', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
 
-av.sgr.resrcAvidaDefaultLocalValu =  [ 0, 0, 0.0, 'grid', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
+av.sgr.resrcAvidaDefaultLocalValu = [ 0, 0, 0.0, 'grid', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
+av.sgr.resrcAvida_EDdefaultValu =   [ 100, 0, 0.0, 'global', 0, 0, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
                        
 //not in current use
 //av.sgr.supply_argu = ['region', 'side', 'grdNum', 'regionCode','regionList'];           //each is an array for region
@@ -524,6 +525,7 @@ av.sgr.layout3 = ['glob', 'all', 'haf', 'thr', '4th'];
 av.sgr.layout = ['Global Dish', 'Whole Dish', 'Halves', 'ThirdsTopLeftRight', 'Quarters'];
 av.sgr.layoutMany = ['glob', 'all', 'halfLR', 'halfTB', '3top1', '3bot1', '3lft1', '3Rit1', '3book', '3stack', '4th'];
 //a dictionary to assign the number of regions based on possible names for region layouts in 'summary' section
+
 av.sgr.regionDct = {};  //more can be added if needed
 av.sgr.regionDct['all'] = 1;
 av.sgr.regionDct['WholeDish'] = 1;
@@ -552,6 +554,9 @@ av.sgr.regionDct['Quarters'] = 4;
 //Region Layout in use as of 2019 Dec
   av.sgr.regionLayoutValues = ['1All', '2LftRit', '3TopLftRit', '4Quarters'];
 
+//will need something like the statement below eventuatlly
+//sav.sgr['3TopLftRit'] = ['top', 'Lft', 'Rit'];
+  
   //Region List based on 4 quarters: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
   av.sgr.regionNames =  ['Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
   av.sgr.region3char = ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];   //Use as values when the time comes
