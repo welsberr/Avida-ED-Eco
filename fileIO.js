@@ -13,6 +13,7 @@
 
 var av = av || {};  //incase av already exists
 
+/*------------------------------------------------------------------------------------------------ av.fio.readZipWS --*/
 av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
   if (av.debug.fio) console.log('zipFileName', zipFileName, '; loadConfigFlag=', loadConfigFlag);
   'use strict';
@@ -108,9 +109,11 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
   av.fzr.saveUpdateState('default');
   av.fzr.wsNameMsg = 'Default';
 };
+/*----------------------------------------------------------------------------------------- end of av.fio.readZipWS --*/
 
-  //------------------------------ call to read in a user selected Workspace -------------------------------------------
+/*------------------------------------------------------------------------------------------ av.fio.userPickZipRead --*/
   //https://thiscouldbebetter.wordpress.com/2013/08/06/reading-zip-files-in-javascript-using-jszip/
+  // call to read in a user selected Workspace
   av.fio.userPickZipRead = function () {
     'use strict';
     av.fzr.usrFileLoaded = false;

@@ -40,7 +40,7 @@ av.fwt.makeFzrFile = function (fileId, text, from) {
 
 av.fwt.makeActConfigFile = function (fileId, text, from) {
   'use strict';
-  console.log(from, ' called av.fwt.makeActConfigFile: fileID=', fileId);
+  //console.log(from, ' called av.fwt.makeActConfigFile: fileID=', fileId);
   av.fzr.actConfig.file[fileId] = text;
 };
 
@@ -127,69 +127,10 @@ av.fwt.makeFzrAvidaTest = function (idStr, toActiveConfigFlag, from) {
 
 /*---------------------------------------------------------------------------------- end of av.fwt.makeFzrAvidaTest --*/
 
-/*------------------------------------------------------------------------------------ av.fwt.makeFzrEnvironmentCfg --*/
-// might not use
-av.fwt.loadEnvDefaults = function (geometry, ndx, etsk) {
-  var len; //var tmp;
-  len = av.sgr.react_argu.length;
-  for (var ii=0; ii< len; ii++) {
-    av.nut[etsk].react[av.sgr.react_argu[ii]][ndx] = av.sgr.reacDefaultValu[ii];
-  };
-  if ('global' == geometry) {
-    len = av.sgr.resrcAvidaDefaultArgu.length;
-    for (var ii=0; ii< len; ii++) {
-      av.nut[etsk].resrc[av.sgr.resrcAvidaDefaultArgu[ii]][ndx] = av.sgr.resrcAvidaDefaultGlobalValu[ii];
-    };
-  } // now for the 'grid' defaults
-  else {
-      av.nut[etsk].resrc[av.sgr.resrcAvidaDefaultLocalArgu[ii]][ndx] = av.sgr.resrcAvidaDefaultLocallValu[ii];    
-  };
-};
-
-/*
-av.fwt.form2Nutrients = function() {
-  console.log('in av.fwt.form2Nutrients');
-  var tsk; var etsk; var atsk; var domName; 
-  var len = 1;
-  var numtasks = av.sgr.logEdNames.length;
-  for (var ii=0; ii< numtasks; ii++) {
-    etsk = av.sgr.logEdNames[ii];
-    tsk = av.sgr.logicNames[ii];
-    atsk = av.sgr.logicVnames[ii];
-    domName = tsk + '0geometry';
-    av.nut[etsk].geometry = document.getElementById(domName).value;
-    av.nut[etsk].uiAll.regionLayout = document.getElementById(tsk +'0regionLayout').value.toLowerCase();
-    if ('global' == av.nut[etsk].geometry.toLowerCase()) {
-      
-        av.sgr.resrc_argu = ['name', 'initial', 'inflow', 'outflow', 'geometry'           //technically name is not an argument, but it starts the list. 
-                            ,  'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'  
-                            , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'
-                            , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'
-                            ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow',     //theste are new for Avida-ED and not in the wiki. 
-                            , 'region', 'side', 'grdNum', 'regionCode','regionList'];  // this last row is not in the argurments for avida; used for 'multi-dish'
-
-    }
-    else {
-      // local so there could be subdishes; later the number of subdishes will come from av.dom.orn0regionLayout.value
-      // for now there is just one option, the whole dish so len = 1
-      for (sub = 1; sub <= 1; sub++) {   //yes this loop starts at 1 instead of zero
-        av.nut[etsk].uiSub.supplyType[sub] = document.getElementById(tsk + sub +'supplyType').value.toLowerCase();
-        av.nut[etsk].resrc.initial[sub];
-        av.nut[etsk].uiAll.supplyType[0] = document.getElementById(tsk + '0supplyType').value.toLowerCase();
-        av.nut[etsk].resrc.name = tsk + '00';  // this may change later
-        av.nut[etsk].resrc.initial[0] = 0;  //different if finite
-        av.nut[etsk].resrc.xdiffuse = 0;
-        av.nut[etsk].resrc.ydiffuse = 0;
-      };
-    };
-  };
-};
-*/
+/*-------------------------------------------------------------------------------------- av.fwt.form2NutrientStruct --*/
 
 av.fwt.form2NutrientStruct = function (from) {
   av.fzr.clearEnvironment('av.fwt.form2NutrientStruct');
-  //I don't think I will use this here.  In this situation, all data should be directly from the dom.
-  //av.fwt.loadEnvDefaults('global', ndx, etsk);   
   
   //------ assign ui parameters first --
   var tsk; //name of a task with 3 letters
@@ -287,14 +228,13 @@ av.fwt.form2NutrientStruct = function (from) {
     };   //end for kk   
 
   };  //end for ii
-  console.log(from, 'called av.fwt.form2NutrientStruct; ________________________ av.nut=', av.nut);
-  
-  
-  
-  console.log(from, 'called av.fwt.form2NutrientStruct; ________________________ av.oldnut=', av.nut);
+  console.log('----------------------------------------------End of av.fwt.form2NutrientStruct, when called by ', from);
+  console.log('av.oldnut=', av.oldnut);
+  console.log('av.nut=', av.nut);
 };
+/*------------------------------------------------------------------------------- End of av.fwt.form2NutrientStruct --*/
 
-
+/*----------------------------------------------------------------------------------------- av.fwt.form2NutrientTxt --*/
 av.fwt.form2NutrientTxt = function (idStr, toActiveConfigFlag, from) {
   console.log(from + ' called av.fwt.form2NutrientTxt');
   var geometry = 'Global';
@@ -365,36 +305,37 @@ av.fwt.form2NutrientTxt = function (idStr, toActiveConfigFlag, from) {
           sgrPerCell = Number(document.getElementById(tsk+ndx+'initialHiInput').value);
           regionInit = numCells * sgrPerCell;
           console.log('tsk=',tsk,'; ndx=',ndx,'; sgrPerCell=', sgrPerCell, '; diffusion checkbox = ', document.getElementById(tsk+ndx+'diffuseCheck').checked );
-          txt += 'RESOURCE ' + rname + ':geometry=grid:initial=' + regionInit + ' \n';
+          
+          //only have diffusion = 0 implemented at this time
+          txt += 'RESOURCE ' + rname + ':geometry=grid:initial=' + regionInit + ':xdiffuse=0:ydiffuse=0\n';
           txt += 'REACTION ' + rname +  ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:max=1:min=1 requisite:max_count=1 \n';
           break;
       };  // end of LOCAL swtich
     };
     
   }// end of loop to go thru all the logic functions. 
-  //console.log('txt=', txt);
-  //console.log('av.oldnut=',av.oldnut);
   console.log('very tired: av.nut=',av.nut);
   console.log('av.fzr=', av.fzr);
 //  if ('cfg'==idStr) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');  // 
   if (toActiveConfigFlag) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');  // 
   else {av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.form2NutrientTxt');}
 };
+/*---------------------------------------------------------------------------------- End of av.fwt.form2NutrientTxt --*/
 
-
+/*------------------------------------------------------------------------------------ av.fwt.makeFzrEnvironmentCfg --*/
 av.fwt.makeFzrEnvironmentCfg = function (idStr, toActiveConfigFlag, from) {
   'use strict';
   if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrEnvironmentCfg; idStr=', idStr);
   av.fwt.form2NutrientStruct('av.fwt.makeFzrEnvironmentCfg');
   
-  //will change to av.fwt.nutStruct2Nuttxt later;x
+  //will change to av.fwt.nutStruct2Nuttxt later;
   av.fwt.form2NutrientTxt(idStr, toActiveConfigFlag, 'av.fwt.makeFzrEnvironmentCfg');  
 };
 
 /*--------------------------------------------------------------------------------- av.fwt.makeFzrOldEnvironmentCfg --*/
 av.fwt.makeFzrOldEnvironmentCfg = function (idStr, from) {
   'use strict';
-  if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrOldEnvironmentCfg');
+  console.log(from, ' called av.fwt.makeFzrOldEnvironmentCfg *************************************************');
   var txt = '';
   if (av.dom.notose.checked) txt += 'REACTION  NOT  not   process:value=1:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NOT  not   process:value=0:type=pow  requisite:max_count=1\n';
   if (av.dom.nanose.checked) txt += 'REACTION  NAND nand  process:value=1:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NAND nand  process:value=0:type=pow  requisite:max_count=1\n';
@@ -420,7 +361,7 @@ av.fwt.makeFzrEnvironmentTest = function (idStr, from) {
   else  { av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.makeFzrEnvironmentTest');}
 };
 
-/*----------------------------------------------------------------------------------- av.fwt.makeFzrEnvironmentTest --*/
+/*-------------------------------------------------------------------------------------- av.fwt.makeFzrAncestorAuto --*/
 
 av.fwt.makeFzrAncestorAuto = function (idStr, toActiveConfigFlag, from) {
   'use strict';
@@ -436,6 +377,7 @@ av.fwt.makeFzrAncestorAuto = function (idStr, toActiveConfigFlag, from) {
   else {av.fwt.makeFzrFile(idStr+'/ancestors.txt', txt), 'av.fwt.makeFzrAncestorAuto';}
 };
 
+/*-------------------------------------------------------------------------------------- av.fwt.makeFzrAncestorHand --*/
 av.fwt.makeFzrAncestorHand = function (idStr, toActiveConfigFlag, from) {
   'use strict';
   //if (av.debug.fio) 
@@ -451,6 +393,7 @@ av.fwt.makeFzrAncestorHand = function (idStr, toActiveConfigFlag, from) {
   else {av.fwt.makeFzrFile(idStr+'/ancestors_manual.txt', txt, 'av.fwt.makeFzrAncestorHand');}
 };
 
+/*-------------------------------------------------------------------------------------------- av.fwt.makeFzrTRfile --*/
 av.fwt.makeFzrTRfile = function (path, data) {
   var text = '';
   var pairs = [];
@@ -464,6 +407,7 @@ av.fwt.makeFzrTRfile = function (path, data) {
 };
 
 //Never called as of 2019 Oct 2; Delete??
+/*-------------------------------------------------------------------------------------- av.fwt.makeFzrTimeRecorder --*/
 av.fwt.makeFzrTimeRecorder = function (fname, data) {
   var text='';
   var lngth = data.length-1;
@@ -488,6 +432,7 @@ av.fwt.form2cfgFolder = function() {
 };
 
 //test setup to active folder just before sending to avida
+/*------------------------------------------------------------------------------------------ av.fwt.testForm2folder --*/
 av.fwt.testForm2folder = function() {
   'use strict';
   var toActiveConfigFlag = true; // true is to Config spot for experiment; false is to Freezer
@@ -498,6 +443,7 @@ av.fwt.testForm2folder = function() {
 };
 
 //making a freezer file not an active file
+/*-------------------------------------------------------------------------------------------- av.fwt.makeFzrConfig --*/
 av.fwt.makeFzrConfig = function (num, from) {
   'use strict';
   console.log(from, 'called av.fwt.makeFzrConfig');
@@ -515,6 +461,7 @@ av.fwt.makeFzrConfig = function (num, from) {
   av.fwt.makeFzrPauseRunAt('c'+num, 'av.fwt.makeFzrConfig');
 };
 
+/*--------------------------------------------------------------------------------------------- av.fwt.makeFzrWorld --*/
 av.fwt.makeFzrWorld = function (num, from) {
   'use strict';
    var toActiveConfigFlag = false; // true is to Config spot for experiment; false is to Freezer
@@ -537,6 +484,7 @@ av.fwt.makeFzrWorld = function (num, from) {
   av.fwt.makeFzrCSV('w'+num);
 };
 
+/*---------------------------------------------------------------------------------------------- av.fwt.popExpWrite --*/
 av.fwt.popExpWrite = function (msg) {
   'use strict';
   //console.log('exportExpr', msg);
@@ -558,6 +506,7 @@ av.fwt.popExpWrite = function (msg) {
   //console.log('fzr', av.fzr.file);
 };
 
+/*------------------------------------------------------------------------------------------ av.fwt.removeFzrConfig --*/
 av.fwt.removeFzrConfig = function(dir) {
   'use strict';
   av.fwt.deleteFzrFile(dir+'/ancestors.txt');
@@ -572,6 +521,7 @@ av.fwt.removeFzrConfig = function(dir) {
   delete av.fzr.dir[domid];
 };
 
+/*------------------------------------------------------------------------------------------ av.fwt.removeFzrGenome --*/
 av.fwt.removeFzrGenome = function (dir) {
   'use strict';
   av.fwt.deleteFzrFile(dir+'/entryname.txt');
@@ -582,6 +532,7 @@ av.fwt.removeFzrGenome = function (dir) {
   //console.log('after remove genome: dir', dir, '; av.fzr', av.fzr);
 };
 
+/*------------------------------------------------------------------------------------------- av.fwt.removeFzrWorld --*/
 av.fwt.removeFzrWorld = function (dir) {
   'use strict';
   av.fwt.deleteFzrFile(dir+'/ancestors.txt');
@@ -599,6 +550,7 @@ av.fwt.removeFzrWorld = function (dir) {
   //av.fwt.deleteFzrFile(dir+'/');
 };
 
+/*-------------------------------------------------------------------------------------------- av.fwt.removeFzrItem --*/
 av.fwt.removeFzrItem = function(dir, type){
   'use strict';
   //console.log('dir', dir, '; type', type, '; dir0', dir[0]);
@@ -615,6 +567,7 @@ av.fwt.removeFzrItem = function(dir, type){
   };
 };
 
+/*----------------------------------------------------------------------------------------------- av.fwt.makeFzrCSV --*/
 av.fwt.makeFzrCSV = function(idStr) {
   "use strict";
   console.log('name is ', idStr + '/entryname.txt');
@@ -628,12 +581,14 @@ av.fwt.makeFzrCSV = function(idStr) {
 
 };
 
+/*------------------------------------------------------------------------------------------ av.fwt.writeCurrentCSV --*/
 av.fwt.writeCurrentCSV = function(idStr) {  
   "use strict";
   av.fwt.makeCSV(idStr);
   av.fio.fzSaveCsvfn();
 };
 
+/*-------------------------------------------------------------------------------------------------- av.fwt.makeCSV --*/
 av.fwt.makeCSV = function(fileNm) {
   'use strict';
   if ('populationBlock' === av.ui.page) {
@@ -727,6 +682,7 @@ av.fwt.makeCSV = function(fileNm) {
   }
   //console.log(av.fwt.csvStrg);
 };
+/*------------------------------------------------------------------------------------------- End of av.fwt.makeCSV --*/
 
 
 /***********************************************************************************************************************
@@ -965,193 +921,76 @@ Can apparently save files in Safari from javascript
  }
  };
  reader.readAsDataURL(blob);
+                  
+                  
+                  
+/***********************************************************************************************************************
+                                  Code Not in use  may delte later. 
+/***********************************************************************************************************************
+                
+                  
 
-County data from https://web.co.orange.nc.us/pinmanagementweb/
-  or https://web.co.orange.nc.us/PinManagementWeb/PinInquiry.aspx
-     and https://gis.orangecountync.gov:8443/orangeNCGIS/default.htm
-     and https://property.spatialest.com/nc/orange/#/property/69519
-  these alas could also be useful 
-    https://www.orangecountync.gov/2057/Download-GIS-Data
-    https://www.orangecountync.gov/FAQ.aspx?TID=37
-                  
-  PIN = 9872217978 (inactive)
-    size = 1 lot; date = 1901
-    child PINs
-      PIN = 9872217989 (inactive)
-        size = 99.17 acre (John C Blackwood and Shelton Nunn listed)  
-        date = 1981
-        prior owner = Mattie E Blacwkood
-        child PIN = 9872227017 (inactive) Aunt Mattie's house and land
-          size = 103.19 acre
-          date = 1901
-          owners (1/8 each)
-            Blackwood, John Council
-            Blackwood, Samuel Joyner
-            Blackwood, Robert Craig
-            Blackwood, Linda
-            Blackwood, Lewis Boone
-            Nunn, Annie Virginia
-            Nunn, William Shelton
-            Nunn, Robert C
-          other Parent PIN = 9872324017 (inactive)
-            John Council Blackwood ETAL and William Shelton Nunn listed
-            size = 2.01 acre
-            prior owner = Mattie E Blacwkood
-            date recorded = 1981_1108
-            note: this PIN has only one child PIN = 9872227017
-          Child PINs
-            PIN = 9872312673 = was Mattie's house with 6 acres (now new house)
-              address = 1020 New Hope Church Rd
-              size = 6.25 to 6.5 acre
-              Value = $715,100
-            PIN = 9872227341 =  (inactive) other land (94.68 acre)
-              size = 94.68 acres
-              date recorded = 1982_0722
-              owner = Blackwood John C ETAL
-              child PINs
-                PIN = 9872411905
-                  size = 1.50 acre
-                  date recorded = 1984_1011
-                  owner = Department of Transportation
-                  child PIN = 9871766139 Department of Transportation (lots of other parents) 
-                PIN = 9872321355
-                  size = 93.18 acre
-                  date recorded = 1984_1011
-                  owners = John C Blackwood ETAL & William S Nunn 
-                  address = RT 2 New Hope Church Rd Box 1021
-                  child PINs
-                    PIN = 9872217422 (Active) woods to west of Mattie's house
-                      size = 10 to 11.65
-                      date recorded = 2006_0109
-                      interest owners
-                        5/16 John Council Blackwood 
-                        3/16 John Council Blackwood 
-                        2/16 John Council Blackwood (1/8) total = 10/16 or 5/8
-                        2/16 Sheila N Bishop (1/8)
-                        2/16 Sheila N Bishop (1/8) total = 1/4
-                        1/16 Sam & MM Blackwood 
-                        2/16 Saumual J Blackwood (1/8) total = 3/16
-                        2/16 Sheldon Hrs Blackwood (1/8)
-                        2/16 Annie Virginia Nunn (1/8)
-                        2/16 Robert Craig Blackwood (1/8)
-                      value = 5,900 (land only)
-                    PIN = 9872223822 (inactive)
-                      size = 62.2 acres
-                      date recorded = 1901 0101
-                      owner = Newllo L Teer Co
-                    PIN = 9872326022 (Active) land between Mattie and Grandma's
-                      size = 20.98 acres 
-                      date recorded = 2006_0109
-                      interest owners
-                        5/16 John Council Blackwood 
-                        3/16 John Council Blackwood 
-                        2/16 John Council Blackwood (1/8) total = 10/16 or 5/8
-                        2/16 Sheila N Bishop (1/8)
-                        2/16 Sheila N Bishop (1/8) total = 1/4
-                        1/16 Sam & MM Blackwood 
-                        2/16 Saumual J Blackwood (1/8) total = 3/16
-                        2/16 Sheldon Hrs Blackwood (1/8)
-                        2/16 Annie Virginia Nunn (1/8)
-                        2/16 Robert Craig Blackwood (1/8)
-                      value = $9,279 (land only) by county              
-      PIN = 9872410248 (inactive)
-        size = 3.65 date = 1979; owner = John C. Blackwood
-        child PINs
-          PIN = 9872410384 (active)
-            size = 0.92 acres
-            address = 1113 New Hope Church Rd   Grandma Singly's house
-            description = house by Tapps based on https://gis.orangecountync.gov:8443/orangeNCGIS/default.htm
-            date recorded = 1982_1223
-            owner = John C Blackwood
-            finsished = 1264 sq ft; Grade C+05; 2B 1B; built 1968; $193,600; Stm/Hot Wtr
-          PIN = 9872319289 (active)
-            size = 0.92 acre
-            address = 1107 New Hope Church Rd
-            description = middle house based on https://gis.orangecountync.gov:8443/orangeNCGIS/default.htm
-            date recorded = 1982_1223
-            owner = John C Blackwood
-            finished = 1328 sq ft; qualinty = Grade C+05; 3B 2B 1986 ~$193,000 Combo H&A
-          PIN = 9872411178 (active)
-            size = 0.98 acres
-            description = house behind other two bassed on https://gis.orangecountync.gov:8443/orangeNCGIS/default.htm
-            address = 1105 New Hope Church Rd
-            date recorded = 1982_1223
-            owner = John C Blackwood
-            finished = 1306 sq ft; quality = Grade C+10; 3B 2B built 1988 ~$212,400 Combo H&A
-          PIN = 9872317188 (inactive)
-            size = 0.83 acre (3A)
-            child PIN = 9872317185 (active)
-              size = 1.45 acre 
-              address = 1021 New Hope Church Rd 
-              drawing of outline of John's house from https://property.spatialest.com/nc/orange/#/property/69519
-                finished = 2772 sq ft; quality = Grade B-10; 3B 1.5B built 1963 $333,200; Combo H&A
-              description = John's house based on https://gis.orangecountync.gov:8443/orangeNCGIS/default.htm 
-              other parent PIN = 9872317043 (inactive)
-                size = 0.62 acres
-                date recorded = 1982_1105
-                previouss owner = Robert A & Joy W Bonar
-                address = 1723 New Hope Church Rd (of this lot only)
--------------
-Other nearby propoety
-  Homer Tapp's House = 1201 New Hope Church Rd
-    PIN = 9872413444 (active)
-    owner listed as Jack C. Tapp
-    size = 5.03 acre
-    value = $	468,300
- Jack C. Tapp PINs
-  PIN = 9872413444 (Busy Bee Apiaries = house where we got permissoin to ride St Patrick)
-                  
-                  
-                  
-                  
-  Brown's House (Bonnar's) includes the house
-    addresss = 921/923 New Hope Church Rd
-    PIN = 9871395706
-    Acres = 12
-    value = $656,600
-  PIN = 9871399754; owner=Bonar Robert & Joy; acre = 80.42 Acres; date = 1901   
-    child PIN = 9872317043 (became part of John C Blackwood's Lot)
-    child PIN = 9872401210; Searle Properties 1986; 79.8 acres = subdivision
-      1723 New Hope Church Rd (Bonars sold to Searle Properties)
+/*  put here in 2019 Dec
+av.fwt.loadEnvDefaults = function (geometry, ndx, etsk) {
+  var len; //var tmp;
+  len = av.sgr.react_argu.length;
+  for (var ii=0; ii< len; ii++) {
+    av.nut[etsk].react[av.sgr.react_argu[ii]][ndx] = av.sgr.reacDefaultValu[ii];
+  };
+  if ('global' == geometry) {
+    len = av.sgr.resrcAvidaDefaultArgu.length;
+    for (var ii=0; ii< len; ii++) {
+      av.nut[etsk].resrc[av.sgr.resrcAvidaDefaultArgu[ii]][ndx] = av.sgr.resrcAvidaDefaultGlobalValu[ii];
+    };
+  } // now for the 'grid' defaults
+  else {
+      av.nut[etsk].resrc[av.sgr.resrcAvidaDefaultLocalArgu[ii]][ndx] = av.sgr.resrcAvidaDefaultLocallValu[ii];    
+  };
+};
+*/
 
-PIN = 9872423009
-  address = 4334 Vallie Hi Ln; Chapel Hill NC 27516-8191
-  owner = Carolyn Blackwood
-  lot = 3.35 acre
-  finished = 2666 sq ft; quality = Grade B-10; 5B 2B; built 1965; forced Air;
-  value = $385,200
-  original house = 41*31 + 8*12 = 1367 sq ft (with partial basement)
-  Sunroom was carport = 12*23 = 276
-  Addition = 31*31 = 961 with apartment upstairs and grar
-  
-----
-was Uncle Vernon's 
- Woods behind Grandma's and Matties
-  PIN = 9872331584
-    related PINs
-  owner = HANSON AGGREGATES SOUTHEAST INC
-  owner address = 3520 PIEDMONT RD STE 410 
- 				C/O MARVIN F POER & COMPANY SPS RE 
- 				ATLANTA GA 30305
-  Acres = 206.76
-  Value = 2,766,500 (land only)
- Land between I-40 and Blackwood Farm Park
-  PIN = 9872540013
-  Acre = 48 to 48.75 
-  value = $944,300 (land only)
- Land N of Hanson Aggregates (west of I40)
-  PIN = 9872268538
-  owner = MCGEE DIANE B ETAL & CANTER PATSY B
-  owner address = PO BOX 5, CLEMMONS NC
-  Acre = 58 to 60.26
-  Value = $18,390 (land only) appears land locked
- Land N of Hanson Aggregates (east of I40)
-  PIN = 9872461956
-  owner = MCGEE DIANE B ETAL & CANTER PATSY B
-  value = $	1,519 (land only) might get access to Cheyenne Dr, or land locked
-  acre = 6 to 6.7 acre
+/*  put here in 2019 Dec
+av.fwt.form2Nutrients = function() {
+  console.log('in av.fwt.form2Nutrients');
+  var tsk; var etsk; var atsk; var domName; 
+  var len = 1;
+  var numtasks = av.sgr.logEdNames.length;
+  for (var ii=0; ii< numtasks; ii++) {
+    etsk = av.sgr.logEdNames[ii];
+    tsk = av.sgr.logicNames[ii];
+    atsk = av.sgr.logicVnames[ii];
+    domName = tsk + '0geometry';
+    av.nut[etsk].geometry = document.getElementById(domName).value;
+    av.nut[etsk].uiAll.regionLayout = document.getElementById(tsk +'0regionLayout').value.toLowerCase();
+    if ('global' == av.nut[etsk].geometry.toLowerCase()) {
+      
+        av.sgr.resrc_argu = ['name', 'initial', 'inflow', 'outflow', 'geometry'           //technically name is not an argument, but it starts the list. 
+                            ,  'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'  
+                            , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'
+                            , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'
+                            ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow',     //theste are new for Avida-ED and not in the wiki. 
+                            , 'region', 'side', 'grdNum', 'regionCode','regionList'];  // this last row is not in the argurments for avida; used for 'multi-dish'
+
+    }
+    else {
+      // local so there could be subdishes; later the number of subdishes will come from av.dom.orn0regionLayout.value
+      // for now there is just one option, the whole dish so len = 1
+      for (sub = 1; sub <= 1; sub++) {   //yes this loop starts at 1 instead of zero
+        av.nut[etsk].uiSub.supplyType[sub] = document.getElementById(tsk + sub +'supplyType').value.toLowerCase();
+        av.nut[etsk].resrc.initial[sub];
+        av.nut[etsk].uiAll.supplyType[0] = document.getElementById(tsk + '0supplyType').value.toLowerCase();
+        av.nut[etsk].resrc.name = tsk + '00';  // this may change later
+        av.nut[etsk].resrc.initial[0] = 0;  //different if finite
+        av.nut[etsk].resrc.xdiffuse = 0;
+        av.nut[etsk].resrc.ydiffuse = 0;
+      };
+    };
+  };
+};
+*/
 
                   
+                 
   /********************************************************************************************************************/
                   
                   

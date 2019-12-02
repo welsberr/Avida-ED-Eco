@@ -511,7 +511,7 @@ av.sgr.resrcAvidaDefaultGlobalArgu = [ 'initial', 'inflow', 'outflow', 'geometry
                                      , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'];
 av.sgr.resrcAvidaDefaultGlobalValu = [ 0, 0, 0.0, 'global', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
 
-av.sgr.resrcAvidaDefaultLocalValu = [ 0, 0, 0.0, 'grid', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
+av.sgr.resrcAvidaDefaultGridValu = [ 0, 0, 0.0, 'grid', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
 av.sgr.resrcAvida_EDdefaultValu =   [ 100, 0, 0.0, 'global', 0, 0, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
                        
 //not in current use

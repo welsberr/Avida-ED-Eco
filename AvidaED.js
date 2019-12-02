@@ -965,11 +965,12 @@ require([
   av.fio.FileSaver = FileSaver;
   av.pch.Plotly = Plotly;
 
-  av.fio.readZipWS(av.fio.defaultFname, true);
-  //av.fio.loadDefaultConfig();
+  //Read the default work space and then loadConfigFlag = true; //the @default should be placed at the current configuration
+  av.fio.readZipWS(av.fio.defaultFname, true);  
+  
+  //Need to get @default (the condents of folder c0) into the active config field. 
 
-  // can from here to dom.ready be functions only? 2018_0801
-  //
+  
   //********************************************************************************************************************
   // Menu Buttons handling
   //********************************************************************************************s************************
@@ -984,7 +985,7 @@ require([
     if ('no' === av.fzr.saveState)
       sWSfDialog.show();  //Save WSfile Dialog box
     else {
-      av.fio.readZipWS(av.fio.defaultFname, false);  //false = do not load config file
+      av.fio.readZipWS(av.fio.defaultFname, false);  //loadConfigFlag = false = do not load config file
     }
   });
 
@@ -999,7 +1000,7 @@ require([
     av.post.addUser('Button: sWSfOpen');
     sWSfDialog.hide(sWSfDialog.hide);
     if (av.fio.useDefault) {
-      av.fio.readZipWS(av.fio.defaultFname, false);
+      av.fio.readZipWS(av.fio.defaultFname, false);  //loadConfigFlag = false = do not load config file
     }  //false = do not load config file
     else {
       //document.getElementById('inputFile').click();  //to get user picked file
@@ -1009,7 +1010,6 @@ require([
 
   // open and read user picked file
   //--------------------------------------------------------------------------------------------------------------------
-
   dijit.byId('mnFlOpenWS').on('Click', function () {
     'use strict';
     av.post.addUser('Button: mnFlOpenWS');
@@ -1022,7 +1022,6 @@ require([
   });
 
   //--------------------------------------------------------------------------------------------------------------------
-
   dijit.byId('mnFlFzItem').on('Click', function () {
     'use strict';
     av.post.addUser('Button: mnFlFzItem');
@@ -2355,16 +2354,26 @@ require([
   av.grd.popChartFn = function (from) {
     'use strict';
     if (av.pch.needInit) {
-      console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, ' should not be here');
+      //console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, ' minigraph not visible');
+      /*
+      console.log('is popStatsBlock visible?', $(av.dom.popStatsBlock).is(":visible")); 
+      console.log(from, ' called av.grd.popChartFn: av.pch.needInit= ', av.pch.needInit, '; av.ui.page=', av.ui.page,
+                      '; av.dom.popStatsBlock..jquery.ccs.display = ', $(av.dom.popStatsBlock).css('display') );
+      */
       // if the miniplot on the populaton page needs to be initiated call that funciton.
-      if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+      // In this situation, av.dom.popStatsBlock.style.display does not give the correct answer; 
+      // my guess is because display is cahnged by changing the class rather than by changing the element directly
+      //if ('flex' == $(av.dom.popStatsBlock).css('display') && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+      // a shorter version see if the mini-graph is om the page. 
+      if ( $(av.dom.popStatsBlock).is(":visible") && av.pch.needInit ) {
         av.grd.popChartInit('av.grd.popChartFn');
       };
-    } else  //console.log('av.grd.runState = ', av.grd.runState);
+    } else { 
+      //console.log('av.grd.runState = ', av.grd.runState); 
+    };
 
     // Do not display chart if the chart is not on the screen. Data seems to be getting updated. need to verify this.
-    // console.log('av.dom.popStatsBlock.style.display =', av.dom.popStatsBlock.style.display, '; av.ui.page=', av.ui.page);
-    if ('flex' != av.dom.popStatsBlock.style.display || ('populationBlock' !== av.ui.page)) {
+    if ( $(av.dom.popStatsBlock).is(":visible") ) {
       // the avidaDataRecorder.csv is broken
       return;
     };
@@ -2391,7 +2400,7 @@ require([
         else {
           av.pch.yChange = true;
           av.pch.yValue = document.getElementById('yaxis').value;
-        }
+        };
         //console.log('av.pch.maxFit=',av.pch.aveMaxFit, '; av.pch.logMaxFit=',av.pch.logMaxFit, '; av.pch.aveFit = ', av.pch.aveFit);
         //console.log('av.pch.logFit = ', av.pch.logFit);
         if ('Average Fitness' === document.getElementById('yaxis').value) {

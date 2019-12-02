@@ -2,7 +2,7 @@
 var av = av || {};  //incase av already exists
 var dijit = dijit || {};  //incase av already exists
 
-
+/*------------------------------------------------------------------------------------------------ av.fio.addFzItem --*/
 av.fio.addFzItem = function(dndSection, name, type, fileNum) {
   'use strict';
   var domid;
@@ -48,6 +48,7 @@ av.fio.addFzItem = function(dndSection, name, type, fileNum) {
   }
 };
 
+/*------------------------------------------------------------------------------------------ av.fio.setActiveConfig --*/
 av.fio.setActiveConfig = function(dndSection, name, type){
   'use strict';
   if (av.debug.fio)  console.log('name=', name);
@@ -63,6 +64,7 @@ av.fio.setActiveConfig = function(dndSection, name, type){
   return av.fzr.actConfig.actDomid;
 };
 
+/*-------------------------------------------------------------------------------------- av.frd.add2freezerFromFile --*/
 av.frd.add2freezerFromFile = function (loadConfigFlag) {
   'use strict';
   var type = av.fio.anID.substr(0, 1);
@@ -123,6 +125,7 @@ av.frd.add2freezerFromFile = function (loadConfigFlag) {
   av.fzr.dir[domid] = dir;
 };
 
+/*------------------------------------------------------------------------------------ av.frd.add2multiDishFromFile --*/
 av.frd.add2multiDishFromFile = function(){
   "use strict";
   //console.log(from, ' called av.frd.add2multiDishFromFile');
@@ -150,11 +153,13 @@ av.frd.add2multiDishFromFile = function(){
   console.log('multiDish=', multiDish, '; superNum=', superNum, '; subDish=', subDish, '; subNum=', subNum, '; type=', type, 'wNum=', av.fzr.mDish[multiDish].wNum);
 };
 
+/*------------------------------------------------------------------------------------------ aav.frd.processSubDish --*/
 av.frd.processSubDish = function() {
   "use strict";
   console.log('SubDish:', av.fzr.fziType, ';  ID=', av.fio.anID);
 };
 
+/*--------------------------------------------------------------------------------------------- av.fio.processFiles --*/
 av.fio.processFiles = function (loadConfigFlag){
   'use strict';
   var fileType = av.fio.anID;
@@ -166,12 +171,13 @@ av.fio.processFiles = function (loadConfigFlag){
   //if (av.debug.fio) console.log('anID=', av.fio.anID, '; fileType=', fileType, '; fziType=', av.fzr.fziType);
     switch (fileType) {
       case 'entryname.txt':
-        // only for dealing with the multi-dish section
-        if ('subDish' != av.fzr.fziType) {
+        if ('subDish' != av.fzr.fziType) {  //the if was added when trying to deal with multi-dish they used the else case
+          // all normal files
           av.frd.add2freezerFromFile(loadConfigFlag);
           av.fzr.usrFileLoaded = true;
         }
         else {
+          // only for dealing with the multi-dish section
           av.frd.add2multiDishFromFile();
         }
       case 'ancestors':
@@ -221,7 +227,9 @@ av.fio.processFiles = function (loadConfigFlag){
     //console.log('file type in zip: fname ', av.fio.fName, '; id ', av.fio.anID, '; type ', fileType);
   }
 };
+/*-------------------------------------------------------------------------------------- end of av.fio.processFiles --*/
 
+/*----------------------------------------------------------------------------------------- av.fio.processItemFiles --*/
 av.fio.processItemFiles = function (){
   'use strict';
   switch (av.fio.anID) {
@@ -372,6 +380,7 @@ av.frd.environmentCFG2form = function (fileStr) {
 
 //----------------------------------------------------------------------------------------- put in nutrient structure --
 
+/*------------------------------------------------------------------------------------------- aav.frd.findNameIndex --*/
 av.frd.findNameIndex = function(nutrientObj, rtag, geometry) {
   /*
    * 
@@ -416,12 +425,14 @@ av.frd.findNameIndex = function(nutrientObj, rtag, geometry) {
 // Avida-ED 3 version for no resource is 
 // REACTION ANDN andn process:value=0.0:type=pow requisite:max_count=1  #value=3.0
 
-av.frd.reactLineParse = function(lnArray, from) {
+/*------------------------------------------------------------------------------------------- av.frd.reActLineParse --*/
+av.frd.reActLineParse = function(lnArray, from) {
   'use strict';
-  console.log('____', from, ' called av.frd.reactLineParse _____');
+  console.log('____', from, ' called av.frd.reActLineParse _____');
   var lnError = 'none';     //was it a valid line wihtout errors
   //console.log('lnArray = ', lnArray);
   var pear = [];
+  var reSrcNameAry; var reSrcName;
   var nn;
   var mm;
   
@@ -495,17 +506,20 @@ av.frd.reactLineParse = function(lnArray, from) {
       //             , '; av.nut[numTsk].uiAll.regionsNumOf=', av.nut[numTsk].uiAll.regionsNumOf);
     }
     else {
-      mm = av.nut[numTsk].resrc.name.indexOf( reActObj.resource[ndx] );
-      console.log('index in resource object =', mm, '; depletable=', reActObj.depletable[ndx], '; av.nut.', numTsk ,'.uiSub.supplyType=', av.nut[numTsk].uiSub.supplyType);
-      console.log('numTsk=', numTsk, 'numTsk[0]=',numTsk[0], '; # numTsk = ', Number(numTsk[0]));
-      if (1 > reActObj.depletable[ndx] && 'none' != av.nut[numTsk].uiSub.supplyType[ndx].toLowerCase()) {
-        av.nut[numTsk].uiSub.supplyType[ndx] = 'Infinite';
-        if (1 < Number(numTsk[[1]]) ) console.log('# of numTsk = ', Number(numTsk[[1]]) );
+      // Reaction names a Resource; Need to find info about that resource
+      console.log('____resourceName['+ndx+'] =', reActObj.resource[ndx], '; Name array is', av.nut[numTsk].resrc.name); 
+      reSrcName = reActObj.resource[ndx];
+      reSrcNameAry = av.nut[numTsk].resrc.name;
+      mm = reSrcNameAry.indexOf( reSrcName );
+      console.log('reSource  mm  =', mm, '; depletable=', reActObj.depletable[ndx], 
+                  '; av.nut.'+numTsk +'.uiSub.supplyType=', av.nut[numTsk].uiSub.supplyType);
+      console.log('av.nut[numTsk]=', av.nut[numTsk]);
+      if (undefined != reActObj.depletable[ndx]) {
+        if (1 > reActObj.depletable[ndx]) {
+          av.nut[numTsk].uiSub.supplyType[ndx] = 'Infinite';
+        };
       };
     };
-    
-    
-    //console.log('numTsk=', numTsk,'ndx=',ndx,'reActObj=', reActObj);
   }  
   // valid logic name not found;
   else {
@@ -516,6 +530,7 @@ av.frd.reactLineParse = function(lnArray, from) {
   return lnError;
 };
 
+/*------------------------------------------------------------------------------------------- av.frd.resrcLineParse --*/
 av.frd.resrcLineParse = function(lnArray, from ){
   'use strict';
   var lineErrors = 'none';  //was it a valid line wihtout errors
@@ -746,7 +761,7 @@ av.frd.nutrientParse = function (filestr, from) {
       //console.log('lineArray=', lineArray);
       matchResult = lineArray[0].match(re_REACTION);
       //console.log('matchReaction=', matchResult);
-      if (null != matchResult) reacError = av.frd.reactLineParse(lineArray, 'av.frd.nutrientParse');
+      if (null != matchResult) reacError = av.frd.reActLineParse(lineArray, 'av.frd.nutrientParse');
       else {
         reacError='none';
         //console.log('no matach on REACTION');
@@ -805,7 +820,7 @@ av.frd.nutrientParse = function (filestr, from) {
   //return errors;
   console.log('============================================================================== end of nutrientParse ==');
 };
-//---------------------------------------------------------------------------------------------- end of nutrientParse --
+//--------------------------------------------------------------------------------------- end of av.frd.nutrientParse --
 
 //-------------------------------------------------------------------------------------------------------------- both --
 // puts data from the environment.cfg into the setup form for the population page
@@ -849,7 +864,7 @@ av.frd.nutrientStruct2dom = function(from) {
       document.getElementById(tsk+'0supplyType').value = av.nut[numTsk].uiAll.supplyType;
     }
     else if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
-      document.getElementById(tsk+'0geometry').value = 'Local';    //Should probably be in a lookup table in globals.js
+      document.getElementById(tsk+'0geometry').value = 'Grid';    //Should probably be in a lookup table in globals.js
       //regionCode will need to be converted to region Value or need to get regionValue from xy cooredinates
       //document.getElementById(tsk+'0regionLayout').value = av.nut[numTsk].uiSub.regionCode[subNum];
       console.log('av.nut['+numTsk+'].uiSub.supplyType['+subNum+'] = ', av.nut[numTsk].uiSub.supplyType[subNum]);
@@ -1574,7 +1589,7 @@ av.frd.rNameIndex = function(avfzrenvLog, rtag) {
 };
 
 
-av.frd.reactionLineParse = function (lnArray) {
+av.frd.reActionLineParse = function (lnArray) {
   'use strict';
   var lnError = 'none';     //was it a valid line wihtout errors
   //console.log('lnArray = ', lnArray);
@@ -1792,7 +1807,7 @@ av.frd.environmentParse = function (filestr) {
       matchResult = lineArray[0].match(re_REACTION);
       //console.log('matchReaction=', matchResult);
       if (null != matchResult)
-        reacError = av.frd.reactionLineParse(lineArray);
+        reacError = av.frd.reActionLineParse(lineArray);
       else {
         reacError = 'none';
       }
