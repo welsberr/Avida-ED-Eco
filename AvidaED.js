@@ -966,6 +966,7 @@ require([
   av.pch.Plotly = Plotly;
 
   //Read the default work space and then loadConfigFlag = true; //the @default should be placed at the current configuration
+  // need to change how loadConfig worrks
   av.fio.readZipWS(av.fio.defaultFname, true);  
   
   //Need to get @default (the condents of folder c0) into the active config field. 

@@ -65,8 +65,9 @@ av.fio.setActiveConfig = function(dndSection, name, type){
 };
 
 /*-------------------------------------------------------------------------------------- av.frd.add2freezerFromFile --*/
-av.frd.add2freezerFromFile = function (loadConfigFlag) {
+av.frd.add2freezerFromFile = function (loadConfigFlag, from) {
   'use strict';
+  console.log(from, ' called av.frd.add2freezerFromFile: loadConfigFlag = ', loadConfigFlag)
   var type = av.fio.anID.substr(0, 1);
   //console.log('av.fio.anID', av.fio.anID);
   var dir = av.utl.wsb('/', av.fio.anID);
@@ -84,7 +85,7 @@ av.frd.add2freezerFromFile = function (loadConfigFlag) {
       domid = av.fio.addFzItem(av.dnd.fzConfig, name, type, num);
       if ('dndSection is undefined' == domid) console.log('av.dnd.fzConfig is undefined');
       if (av.fzr.cNum < Number(num)) {av.fzr.cNum = Number(num); }
-      //console.log('c: num', num, '; name', name, 'flag', loadConfigFlag);
+      console.log('c: num=', num, '; name=', name, 'loadConfigflag = ', loadConfigFlag);
       if (0 == num && loadConfigFlag) {var ConfigActiveDomID = av.fio.setActiveConfig(av.dnd.activeConfig, name, 'b');}
       break;
     case 'g':
@@ -160,8 +161,9 @@ av.frd.processSubDish = function() {
 };
 
 /*--------------------------------------------------------------------------------------------- av.fio.processFiles --*/
-av.fio.processFiles = function (loadConfigFlag){
+av.fio.processFiles = function (loadConfigFlag, from){
   'use strict';
+  console.log(from, ' called av.fio.processFiles: loadConfigFlag = ', loadConfigFlag);
   var fileType = av.fio.anID;
   if ('subDish' === av.fzr.fziType){
     fileType = av.utl.wsa('/', fileType);
@@ -173,7 +175,7 @@ av.fio.processFiles = function (loadConfigFlag){
       case 'entryname.txt':
         if ('subDish' != av.fzr.fziType) {  //the if was added when trying to deal with multi-dish they used the else case
           // all normal files
-          av.frd.add2freezerFromFile(loadConfigFlag);
+          av.frd.add2freezerFromFile(loadConfigFlag, 'av.fio.processFiles');
           av.fzr.usrFileLoaded = true;
         }
         else {
@@ -225,7 +227,7 @@ av.fio.processFiles = function (loadConfigFlag){
         //need to fix this so the config dish is loaded after all teh files are read not during the file reading. 
         if (loadConfigFlag) {        
         //if (false) {
-            console.log('loadConfigFlag = ', loadConfigFlag);
+            //console.log('loadConfigFlag = ', loadConfigFlag);
             if ('c0/avida.cfg' == av.fio.anID) {
               av.frd.avidaCFG2form(av.fio.thisfile.asText());
             }

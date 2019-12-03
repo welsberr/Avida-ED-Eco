@@ -16,6 +16,7 @@ var av = av || {};  //incase av already exists
 /*------------------------------------------------------------------------------------------------ av.fio.readZipWS --*/
 av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
   if (av.debug.fio) console.log('zipFileName', zipFileName, '; loadConfigFlag=', loadConfigFlag);
+  console.log('zipFileName', zipFileName, '; loadConfigFlag=', loadConfigFlag);
   'use strict';
   if (loadConfigFlag) av.fzr.clearFzrFn();
   else av.fzr.clearMainFzrFn();  // clear freezer (globals.js)
@@ -84,13 +85,12 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
       //if (av.debug.fio) console.log('nameOfFileContainedInZipFile=', nameOfFileContainedInZipFile,';___fName=',av.fio.fName, '; ___zipPathRoot=', av.fio.zipPathRoot, '; ____anID=',av.fio.anID);
       //if (av.debug.fio) console.log('fName=',av.fio.fName, '; ____anID=',av.fio.anID);
 
-      //this section needs to be fixed for multidish I think.
       if (3 < av.fio.fName.length) {
         var tmpr = av.utl.wsb('/', av.fio.anID);
         if (0 < tmpr.indexOf('/')) {av.fzr.fziType = 'subDish';}
         else {av.fzr.fziType = tmpr.charAt(0);}
         //console.log('av.fio.fName', av.fio.fName, '; av.fio.anID', av.fio.anID, '; tmpr=', tmpr, '; av.fzr.fziType=',av.fzr.fziType);
-        av.fio.processFiles(loadConfigFlag);
+        av.fio.processFiles(loadConfigFlag, 'av.fio.readZipWS');
       }  //do not load configfile
     };
     //want to sort TestDishes here
@@ -173,11 +173,11 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
             av.fzr.fziType = av.utl.wsb('/', av.fio.anID).charAt(0);
             if (av.fio.anID.lastIndexOf('/') != av.fio.anID.indexOf('/') && av.fzr.fziType == 'm') {
               av.fzr.fziType = 'subDish';
-            }
+            };
             //if (av.debug.fio) console.log('av.fio.fName', av.fio.fName, '; av.fio.anID', av.fio.anID, '; av.fzr.fziType=',av.fzr.fziType);
-            av.fio.processFiles(false);  //load files
-          }
-        }
+            av.fio.processFiles(false, 'av.fio.userPickZipRead');  //load files
+          };
+        };
         if (av.debug.fio) console.log('cNum=',av.fzr.cNum, '; gNum=', av.fzr.gNum, '; mNum', av.fzr.mNum, '; wNum', av.fzr.wNum);
         if ('populationBlock' === av.ui.page) av.grd.drawGridSetupFn('av.fio.userPickZipRead');
         av.fzr.cNum++;  //now the Num value refer to the next (new) item to be put in the freezer.
@@ -293,7 +293,7 @@ av.fio.fixFname = function() {
         if ('dndSection is undefined' == domid) console.log('av.dnd.fzConfig is undefined');
         dir = 'c' + av.fzr.cNum;
         av.fzr.cNum++;
-        //if (av.debug.fio) console.log('c: num', num, '; name', name, 'flag', loadConfigFlag);
+        if (av.debug.fio) console.log('c: num', num, '; name', name);
         break;
       case 'g':
         domid = av.fio.addFzItem(av.dnd.fzOrgan, name, type, av.fzr.gNum);
