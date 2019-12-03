@@ -258,6 +258,7 @@ require([
     av.dom.popChart = document.getElementById('popChart');  //easier handle for div with chart
     av.dom.popChrtHolder = document.getElementById('popChrtHolder');
 
+    av.dom.cycleSlider = document.getElementById('cycleSlider');
     av.dom.runStopButton = document.getElementById('runStopButton');
     av.dom.oneUpdateButton = document.getElementById('oneUpdateButton');
     av.dom.newDishButton = document.getElementById('newDishButton');
@@ -3106,7 +3107,7 @@ require([
   //adjust instruction text size
   av.ui.adjustOrgInstructionTextAreaSize = function() {
     var height = ( $('#orgInfoHolder').innerHeight() - $('#orgDetailID').innerHeight() - 10 ) / 2;
-    console.log('orgInfoHolder.ht=', $('#orgInfoHolder').innerHeight(), '; orgDetailID=',$('#orgDetailID').innerHeight(), '; height=', height);
+    //console.log('orgInfoHolder.ht=', $('#orgInfoHolder').innerHeight(), '; orgDetailID=',$('#orgDetailID').innerHeight(), '; height=', height);
     av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
     av.dom.ExecuteAbout.style.height = height + 'px';
     av.dom.ExecuteJust.style.width = '100%';
@@ -3198,7 +3199,7 @@ require([
   };
 
   av.ind.updateOrgTrace = function (from) {
-    console.log(from, 'called av.ind.updateOrgTrace: av.traceObj=', av.traceObj.length);
+    //console.log(from, 'called av.ind.updateOrgTrace: av.traceObj=', av.traceObj.length);
     //console.log('av.ind.cycle', av.ind.cycle);
     av.ind.organismCanvasHolderSize();
     //if (undefined == av.traceObj[av.ind.cycle]) console.log('its undefined');
@@ -3217,16 +3218,22 @@ require([
   
   //wonder if this does anything.
   function outputUpdate(vol) {
+    //console.log('outputUpdate: vol= ', vol);
     document.querySelector('#orgCycle').value = vol;
-  }
-
-  //need something so it does not go before begin of organism. 
-  document.getElementById('orgBack').onclick = function () {
+  };
+  
+  //Need to fix lenth of cycleSlider so it lines up with slider on canvas. 
+  //bit strings sill not updated correctly   2019 Dec 03
+  
+]  document.getElementById('orgBack').onclick = function () {
     var ii = Number(document.getElementById('orgCycle').value);
-    if (av.ind.cycleSlider.get('minimum') < av.ind.cycleSlider.get('value')) {
+    //console.log('; av.ind.cycleSlider.get(minimum") =', av.ind.cycleSlider.get('minimum'), '; orgBack: ii = ', ii );
+    //console.log('av.ind.cycleSlider = ', av.ind.cycleSlider);
+    if (av.ind.cycleSlider.get('minimum') < ii) {
       ii--;
       av.dom.orgCycle.value = ii;
       av.ind.cycle = ii;
+      av.ind.cycleSlider.set('value', ii);
       av.ind.updateOrgTrace('orgBack_onclick');
     }
     av.post.addUser('Button: orgBack; cycle = ' + ii);
@@ -3235,60 +3242,68 @@ require([
   //Need something to check that it does not go past end of organism. 
   document.getElementById('orgForward').onclick = function () {
     var ii = Number(document.getElementById('orgCycle').value);
-    if (av.ind.cycleSlider.get('maximum') > av.ind.cycleSlider.get('value')) {
+    //console.log('orgForward: ii = ', ii);
+    if (av.ind.cycleSlider.get('maximum') > ii) {
       ii++;
       av.dom.orgCycle.value = ii;
       av.ind.cycle = ii;
-      if (av.debug.ind)
-        console.log('ii', ii, '; gen', av.gen);
+      av.ind.cycleSlider.set('value', ii);
       av.ind.updateOrgTrace('orgForward_onclick');
+      //console.log('ii', ii, '; gen', av.gen);
     }
     av.post.addUser('Button: orgForward; cycle = ' + ii);
   };
 
   document.getElementById('orgReset').onclick = function () {
+    //console.log('orgReset');
     av.post.addUser('Button: orgReset');
     av.msg.doOrgTrace();
   };
 
   av.ind.orgRunFn = function () {
-    if (av.ind.cycleSlider.get('maximum') > av.ind.cycleSlider.get('value')) {
+    if (av.ind.cycleSlider.get('maximum') > av.ind.cycle) {
       av.ind.cycle++;
       av.dom.orgCycle.value = av.ind.cycle;
+      av.ind.cycleSlider.set('value', av.ind.cycle);
       av.ind.updateOrgTrace('orgRunFn');
     } else {
       av.ind.orgStopFn();
     }
   };
 
-  //Broken; does not work; tiba; help
   document.getElementById('orgRun').onclick = function () {
+    //console.log('orgRun: av.ind.cycleSlider.get("value")=', av.ind.cycleSlider.get('value'));
     if ('Run' == document.getElementById('orgRun').textContent) {
       document.getElementById('orgRun').textContent = 'Stop';
       av.ind.update_timer = setInterval(av.ind.orgRunFn, 100);
-      av.post.addUser('Button: orgRun = stop; cycle = ' + av.ind.cycleSlider.get('value'));
+      av.post.addUser('Button: orgRun = stop; cycle = ' + av.ind.cycle);
     } else {
       av.ind.orgStopFn();
-      av.post.addUser('Button: orgRun = run; cycle = ' + av.ind.cycleSlider.get('value'));
+      av.post.addUser('Button: orgRun = run; cycle = ' + av.ind.cycle);
     };
   };
 
   document.getElementById('orgEnd').onclick = function () {
+    console.log('orgEnd: av.ind.cycleSlider.get("maximum)', av.ind.cycleSlider.get('maximum'));
     av.post.addUser('Button: orgEnd');
     av.dom.orgCycle.value = av.ind.cycleSlider.get('maximum');
     av.ind.cycle = av.ind.cycleSlider.get('maximum');
+    av.ind.cycleSlider.set('value', av.ind.cycle);
     av.ind.updateOrgTrace('orgEnd_onclick');
     av.ind.orgStopFn();
   };
 
-  document.getElementById('orgCycle').onchange = function (value) {
-    av.ind.cycleSlider.set('value', value);
-    av.ind.cycle = value;
-    //console.log('orgCycle.change');
-    av.ind.updateOrgTrace('orgCycle_onChange');
+  av.ind.orgCycleInputChange = function (domObj) {
+    console.log('orgCycle.onChange:  value = ',  domObj.value);
+    av.ind.cycleSlider.set('value', domObj.value);  //seemed to work;
+    av.ind.cycle = domObj.value;
+    console.log('orgCycle: value = ', domObj.value, '; av.ind.cycleSlider.get("value") =', av.ind.cycleSlider.get('value'));
+    av.ind.updateOrgTrace('av.ind.orgCycleInputChange');
+    console.log('orgCycle: value = ', domObj.value, '; av.ind.cycleSlider=', av.ind.cycleSlider);
   };
 
   /* Organism Offspring Cost Slider */
+  console.log('av.dom.cycleSlider =', av.dom.cycleSlider);
   av.ind.cycleSlider = new HorizontalSlider({
     name: 'cycleSlider',
     value: 0,
@@ -3305,6 +3320,9 @@ require([
       av.ind.updateOrgTrace('av.ind.cycleSlider');
     }
   }, 'cycleSlider');
+    console.log('av.dom.cycleSlider.innerHTML =', av.dom.cycleSlider.innerHTML);
+    console.log('av.ind.cycleSlider =', av.ind.cycleSlider);
+
 
   //********************************************************************************************************************
   // Resize window helpers -------------------------------------------
