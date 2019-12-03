@@ -475,12 +475,12 @@ av.fwt.makeFzrWorld = function (num, from) {
   av.fwt.makeFzrInstsetCfg('w'+num);
   av.fwt.makeFzrAncestorAuto('w'+num, toActiveConfigFlag, 'av.fwt.makeFzrWorld');
   av.fwt.makeFzrAncestorHand('w'+num, toActiveConfigFlag, 'av.fwt.makeFzrWorld');
-  av.fwt.makeFzrTRfile('w'+num+'/tr0', av.pch.aveFit);
-  av.fwt.makeFzrTRfile('w'+num+'/tr1', av.pch.aveCst);
-  av.fwt.makeFzrTRfile('w'+num+'/tr2', av.pch.aveEar);
-  av.fwt.makeFzrTRfile('w'+num+'/tr3', av.pch.aveNum);
-  av.fwt.makeFzrTRfile('w'+num+'/tr4', av.pch.aveVia);
-  av.fwt.makeFzrFile('w'+num + '/update', av.grd.updateNum.toString(), 'av.fwt.makeFzrWorld' );
+  av.fwt.makeFzrTRfile('w'+num+'/tr0.txt', av.pch.aveFit);
+  av.fwt.makeFzrTRfile('w'+num+'/tr1.txt', av.pch.aveCst);
+  av.fwt.makeFzrTRfile('w'+num+'/tr2.txt', av.pch.aveEar);
+  av.fwt.makeFzrTRfile('w'+num+'/tr3.txt', av.pch.aveNum);
+  av.fwt.makeFzrTRfile('w'+num+'/tr4.txt', av.pch.aveVia);
+  av.fwt.makeFzrFile('w'+num + '/update.txt', av.grd.updateNum.toString(), 'av.fwt.makeFzrWorld' );
   av.fwt.makeFzrCSV('w'+num);
 };
 

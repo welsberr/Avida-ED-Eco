@@ -873,7 +873,7 @@ av.grd.updateSelectedOrganismType = function (msg) {
     xorTime.textContent = '-';
     equTime.textContent = '-';
   }
-  if (av.debug.msg) dnaLabel.textContent = wsa(',', wsa(',', msg.genome));
+  if (av.debug.msg) dnaLabel.textContent = av.utl.wsa(',', av.utl.wsa(',', msg.genome));
   if (av.debug.msg) viableLabel.textContent = msg.isViable;
   if (0 > msg.isViable) viableLabel.textContent = 'no';
   else if (0 < msg.isViable) viableLabel.textContent = 'yes';

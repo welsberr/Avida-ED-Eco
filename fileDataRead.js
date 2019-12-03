@@ -69,13 +69,13 @@ av.frd.add2freezerFromFile = function (loadConfigFlag) {
   'use strict';
   var type = av.fio.anID.substr(0, 1);
   //console.log('av.fio.anID', av.fio.anID);
-  var dir = wsb('/', av.fio.anID);
+  var dir = av.utl.wsb('/', av.fio.anID);
   var num = dir.substr(1, dir.length-1);
   var name, domid;
   //console.log('av.fio.thisfile.asText()', av.fio.thisfile.asText());
   //console.log('av.fio.thisfile', av.fio.thisfile);
   if (null == av.fio.thisfile.asText()) { name = av.fio.anID; }
-  else { name = wsb('\n', av.fio.thisfile.asText()); }
+  else { name = av.utl.wsb('\n', av.fio.thisfile.asText()); }
 
   //if (av.debug.fio) console.log('type ', type, '; dir', dir, '; num', num);
   
@@ -130,7 +130,7 @@ av.frd.add2multiDishFromFile = function(){
   "use strict";
   //console.log(from, ' called av.frd.add2multiDishFromFile');
   console.log('av.fio.fName', av.fio.fName, '; av.fio.anID', av.fio.anID, '; av.fzr.fziType=',av.fzr.fziType);
-  var multiDish = wsb('/', av.fio.anID);
+  var multiDish = av.utl.wsb('/', av.fio.anID);
   var superNum = multiDish.substr(1, multiDish.length-1);
   var firstIndex = av.fio.anID.indexOf('/');
   var lastIndex = av.fio.anID.lastIndexOf('/');
@@ -164,10 +164,10 @@ av.fio.processFiles = function (loadConfigFlag){
   'use strict';
   var fileType = av.fio.anID;
   if ('subDish' === av.fzr.fziType){
-    fileType = wsa('/', fileType);
+    fileType = av.utl.wsa('/', fileType);
     //av.frd.processSubDish();
   }
-  fileType = wsa('/', fileType);
+  fileType = av.utl.wsa('/', fileType);
   //if (av.debug.fio) console.log('anID=', av.fio.anID, '; fileType=', fileType, '; fziType=', av.fzr.fziType);
     switch (fileType) {
       case 'entryname.txt':
@@ -182,6 +182,12 @@ av.fio.processFiles = function (loadConfigFlag){
         }
       case 'ancestors':
       case 'ancestors_manual':
+      case 'tr0':
+      case 'tr1':
+      case 'tr2':
+      case 'tr3':
+      case 'tr4':
+      case 'update':
       case 'ancestors.txt':
       case 'ancestors_manual.txt':
       case 'avida.cfg':
@@ -193,31 +199,53 @@ av.fio.processFiles = function (loadConfigFlag){
       case 'instset.cfg':
       case 'offset.txt':
       case 'timeRecorder.csv':
-      case 'tr0':
-      case 'tr1':
-      case 'tr2':
-      case 'tr3':
-      case 'tr4':
-      case 'update':
-        // deal with multidish 
-        if (loadConfigFlag) {
-          if ('c0/avida.cfg' == av.fio.anID) {
-            av.frd.avidaCFG2form(av.fio.thisfile.asText());
-          }
-          else if ('c0/environment.cfg' == av.fio.anID) {
-            av.frd.environmentCFG2form(av.fio.thisfile.asText().trim());
-          }
-          else if ('c0/events.cfg' == av.fio.anID) {
-            av.frd.eventsCFG2form(av.fio.thisfile.asText().trim(), 'av.fio.processFiles');
-          }
+      case 'tr0.txt':
+      case 'tr1.txt':
+      case 'tr2.txt':
+      case 'tr3.txt':
+      case 'tr4.txt':
+      case 'update.txt':
+        // deal with multidish - not sure what this section has to do with multi-dish? perhaps a reminder that if we implement multidishh?
+
+        // fix files that are missing the .txt extension
+        switch (fileType) {
+          case 'ancestors':
+          case 'ancestors_manual':
+          case 'tr0':
+          case 'tr1':
+          case 'tr2':
+          case 'tr3':
+          case 'tr4':
+          case 'update':
+            //console.log('av.fio.anID = ', av.fio.anID);
+            av.fio.anID += '.txt';
+            break;
         };
-        //Process dishes with ancesotrs. 
-        if ('ancestors' == fileType || 'ancestors_manual' == fileType) {
-          av.fio.anID = av.fio.anID + '.txt';
-        };
-        //put the text of the file in the freezer
-        av.fzr.file[av.fio.anID] = av.fio.thisfile.asText().trim();
-        //if (av.debug.fio) console.log('FileType is ', fileType, '; filepath = ', av.fio.anID);
+
+        //need to fix this so the config dish is loaded after all teh files are read not during the file reading. 
+        if (loadConfigFlag) {        
+        //if (false) {
+            console.log('loadConfigFlag = ', loadConfigFlag);
+            if ('c0/avida.cfg' == av.fio.anID) {
+              av.frd.avidaCFG2form(av.fio.thisfile.asText());
+            }
+            else if ('c0/environment.cfg' == av.fio.anID) {
+              av.frd.environmentCFG2form(av.fio.thisfile.asText().trim());
+            }
+            else if ('c0/events.cfg' == av.fio.anID) {
+              av.frd.eventsCFG2form(av.fio.thisfile.asText().trim(), 'av.fio.processFiles');
+            }
+          };
+
+          //put the text of the file in the freezer
+          av.fzr.file[av.fio.anID] = av.fio.thisfile.asText().trim();
+
+          //Process dishes with ancesotrs. 
+          if ('ancestors' == fileType || 'ancestors_manual' == fileType) {
+            av.fio.anID = av.fio.anID + '.txt';
+          };
+
+          //if (av.debug.fio) console.log('FileType is ', fileType, '; filepath = ', av.fio.anID);
         break;
       default:
         //if (av.debug.fio) console.log('undefined file type in zip: full ', av.fio.fName, '; id ', av.fio.anID, '; type ', fileType);
@@ -233,10 +261,16 @@ av.fio.processFiles = function (loadConfigFlag){
 av.fio.processItemFiles = function (){
   'use strict';
   switch (av.fio.anID) {
-    case 'entryname.txt':
-    case 'entrytype.txt':
     case 'ancestors':
     case 'ancestors_manual':
+    case 'tr0':
+    case 'tr1':
+    case 'tr2':
+    case 'tr3':
+    case 'tr4':
+    case 'update':
+    case 'entryname.txt':
+    case 'entrytype.txt':
     case 'ancestors.txt':
     case 'ancestors_manual.txt':
     case 'avida.cfg':
@@ -247,15 +281,33 @@ av.fio.processItemFiles = function (){
     case 'genome.seq':
     case 'instset.cfg':
     case 'timeRecorder.csv':
-    case 'tr0':
-    case 'tr1':
-    case 'tr2':
-    case 'tr3':
-    case 'tr4':
-    case 'update':
+    case 'tr0.txt':
+    case 'tr1.txt':
+    case 'tr2.txt':
+    case 'tr3.txt':
+    case 'tr4.txt':
+    case 'update.txt':
+
+      // fix files that are missing the .txt extension
+      console.log('av.fio.anID = ', av.fio.anID);
+      switch (av.fio.anID) {
+        case 'ancestors':
+        case 'ancestors_manual':
+        case 'tr0':
+        case 'tr1':
+        case 'tr2':
+        case 'tr3':
+        case 'tr4':
+        case 'update':
+          av.fio.anID += '.txt';
+          break;
+      };
+      
       if ('ancestors' == av.fio.anID ||'ancestors_manual' == av.fio.anID) {
         av.fio.anID = av.fio.anID + '.txt';
-      }
+      };
+      //put the text of the file in the freezer
+      console.log('av.fio.anID = ', av.fio.anID);
       av.fzr.item[av.fio.anID] = av.fio.thisfile.asText().trim();
       break;
     default:
@@ -328,7 +380,7 @@ av.frd.environmentCFGlineParse = function(instr){
   //console.log('instr', instr);
   var cfgary = av.utl.flexsplit(instr).split(',');      //replaces white space with a comma, then splits on comma
   //console.log('cfgary = ', cfgary);
-  if (0 < cfgary[3].length) {num = wsb(':',wsa('=',cfgary[3]));}
+  if (0 < cfgary[3].length) {num = av.utl.wsb(':',av.utl.wsa('=',cfgary[3]));}
   if (0 == num) {flag = false;} //use == in this case as they are of different type
   //if (av.debug.fio) console.log('flag', flag, '; num', num, '; cfgary', cfgary[3], '; instr', instr);
   //console.log('flag', flag, '; num', num, '; cfgary', cfgary[3], '; instr', instr);
@@ -1395,11 +1447,11 @@ av.frd.loadTimeRecorderData = function(dir) {
 //console.log('fzr.file', av.fzr.file);
 // if there is NOT a timeRecorder.csv file, then look for tr0, tr1, tr2, tr3 and tr4
   if (undefined == av.fzr.file[dir + '/timeRecorder.csv']) {
-    av.pch.aveFit = av.fio.tr2chart(av.fzr.file[dir + '/tr0']);
-    av.pch.aveCst = av.fio.tr2chart(av.fzr.file[dir + '/tr1']);
-    av.pch.aveEar = av.fio.tr2chart(av.fzr.file[dir + '/tr2']);
-    av.pch.aveNum = av.fio.tr2chart(av.fzr.file[dir + '/tr3']);
-    av.pch.aveVia = av.fio.tr2chart(av.fzr.file[dir + '/tr4']);
+    av.pch.aveFit = av.fio.tr2chart(av.fzr.file[dir + '/1']);
+    av.pch.aveCst = av.fio.tr2chart(av.fzr.file[dir + '/tr1.txt']);
+    av.pch.aveEar = av.fio.tr2chart(av.fzr.file[dir + '/tr2.txt']);
+    av.pch.aveNum = av.fio.tr2chart(av.fzr.file[dir + '/tr3.txt']);
+    av.pch.aveVia = av.fio.tr2chart(av.fzr.file[dir + '/tr4.txt']);
     console.log('via=', av.fzr.file[dir + '/tr4']);
     //av.pch.xx = [];  in globals.js
     //console.log('av.pch.aveFit', av.pch.aveFit);

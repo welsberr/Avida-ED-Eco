@@ -1144,11 +1144,11 @@ av.dnd.runTestDish2 = function(fzSection, target, type) {
 
 av.anl.loadWorldData = function (worldNum, dir) {
   if (av.debug.dnd) console.log('loadWorldData: WoldNum:', worldNum, '; dir', dir);
-  av.fzr.pop[worldNum].fit = av.fio.tr2chart(av.fzr.file[dir + '/tr0']);
-  av.fzr.pop[worldNum].ges = av.fio.tr2chart(av.fzr.file[dir + '/tr1']);
-  av.fzr.pop[worldNum].met = av.fio.tr2chart(av.fzr.file[dir + '/tr2']);
-  av.fzr.pop[worldNum].num = av.fio.tr2chart(av.fzr.file[dir + '/tr3']);
-  av.fzr.pop[worldNum].via = av.fio.tr2chart(av.fzr.file[dir + '/tr4']);
+  av.fzr.pop[worldNum].fit = av.fio.tr2chart(av.fzr.file[dir + '/tr0.txt']);
+  av.fzr.pop[worldNum].ges = av.fio.tr2chart(av.fzr.file[dir + '/tr1.txt']);
+  av.fzr.pop[worldNum].met = av.fio.tr2chart(av.fzr.file[dir + '/tr2.txt']);
+  av.fzr.pop[worldNum].num = av.fio.tr2chart(av.fzr.file[dir + '/tr3.txt']);
+  av.fzr.pop[worldNum].via = av.fio.tr2chart(av.fzr.file[dir + '/tr4.txt']);
 };
 
 av.anl.clearWorldData = function (worldNum){

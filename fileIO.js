@@ -73,20 +73,20 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
       //if (av.debug.fio) console.log('nameOfFileContainedInZipFile=', nameOfFileContainedInZipFile);
       if (null === av.fio.zipPathRoot) {
         if (0 < nameOfFileContainedInZipFile.indexOf('avidaWs') && 0 > nameOfFileContainedInZipFile.indexOf('MACOSX')) {
-          av.fio.zipPathRoot = wsb('/', nameOfFileContainedInZipFile);
+          av.fio.zipPathRoot = av.utl.wsb('/', nameOfFileContainedInZipFile);
         }
         else if (0 > nameOfFileContainedInZipFile.indexOf('MACOSX')) {av.fio.zipPathRoot='';}
       }
       av.fio.thisfile = av.fio.zipfile.files[nameOfFileContainedInZipFile];
       av.fio.fName = nameOfFileContainedInZipFile;
-      if (10 < av.fio.zipPathRoot.length) av.fio.anID = wsa(av.fio.zipPathRoot+'/', av.fio.fName);
+      if (10 < av.fio.zipPathRoot.length) av.fio.anID = av.utl.wsa(av.fio.zipPathRoot+'/', av.fio.fName);
       else av.fio.anID = av.fio.fName;
       //if (av.debug.fio) console.log('nameOfFileContainedInZipFile=', nameOfFileContainedInZipFile,';___fName=',av.fio.fName, '; ___zipPathRoot=', av.fio.zipPathRoot, '; ____anID=',av.fio.anID);
       //if (av.debug.fio) console.log('fName=',av.fio.fName, '; ____anID=',av.fio.anID);
 
       //this section needs to be fixed for multidish I think.
       if (3 < av.fio.fName.length) {
-        var tmpr = wsb('/', av.fio.anID);
+        var tmpr = av.utl.wsb('/', av.fio.anID);
         if (0 < tmpr.indexOf('/')) {av.fzr.fziType = 'subDish';}
         else {av.fzr.fziType = tmpr.charAt(0);}
         //console.log('av.fio.fName', av.fio.fName, '; av.fio.anID', av.fio.anID, '; tmpr=', tmpr, '; av.fzr.fziType=',av.fzr.fziType);
@@ -156,7 +156,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
             console.log('av.fio.zipPathRoot=',av.fio.zipPathRoot);
             //if (0 < nameOfFileContainedInZipFile.indexOf('avidaedworkspace') && 0 > nameOfFileContainedInZipFile.indexOf('MACOSX')) {
             if (0 > nameOfFileContainedInZipFile.indexOf('MACOSX')) {
-              av.fio.zipPathRoot = wsb('/', nameOfFileContainedInZipFile);
+              av.fio.zipPathRoot = av.utl.wsb('/', nameOfFileContainedInZipFile);
             }
             else if (0 > nameOfFileContainedInZipFile.indexOf('MACOSX')) {
               av.fio.zipPathRoot = '';
@@ -164,13 +164,13 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
           }
           av.fio.thisfile = zipFileLoaded.files[nameOfFileContainedInZipFile];
           av.fio.fName = nameOfFileContainedInZipFile;
-          if (0 < av.fio.zipPathRoot.length) av.fio.anID = wsa(av.fio.zipPathRoot + '/', av.fio.fName);
+          if (0 < av.fio.zipPathRoot.length) av.fio.anID = av.utl.wsa(av.fio.zipPathRoot + '/', av.fio.fName);
           else av.fio.anID = av.fio.fName;
           //if (av.debug.fio) console.log('nameOfFileContainedInZipFile=', nameOfFileContainedInZipFile,';___fName=',av.fio.fName, '; ___zipPathRoot=', av.fio.zipPathRoot, '; ____anID=',av.fio.anID);
           //if (av.debug.fio) console.log('fName=',av.fio.fName, '; ____anID=',av.fio.anID);
           //if (3 < av.fio.fName.length) {
           if (3 < av.fio.anID.length) {
-            av.fzr.fziType = wsb('/', av.fio.anID).charAt(0);
+            av.fzr.fziType = av.utl.wsb('/', av.fio.anID).charAt(0);
             if (av.fio.anID.lastIndexOf('/') != av.fio.anID.indexOf('/') && av.fzr.fziType == 'm') {
               av.fzr.fziType = 'subDish';
             }
@@ -247,7 +247,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
           //console.log('nameOfFileContainedInZipFile=', nameOfFileContainedInZipFile);
           if (null === av.fio.zipPathRoot) {
             if (0 < nameOfFileContainedInZipFile.indexOf('avidaedfreezeritem') && 0 > nameOfFileContainedInZipFile.indexOf('MACOSX')) {
-              av.fio.zipPathRoot = wsb('/', nameOfFileContainedInZipFile);
+              av.fio.zipPathRoot = av.utl.wsb('/', nameOfFileContainedInZipFile);
             }
             else if (0 > nameOfFileContainedInZipFile.indexOf('MACOSX')) {
               av.fio.zipPathRoot = '';
@@ -257,7 +257,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
           av.fio.fName = nameOfFileContainedInZipFile;
 
           //console.log('zipPathRoot', av.fio.zipPathRoot, '; fName', av.fio.fName);
-          if (2 < av.fio.zipPathRoot.length) av.fio.anID = wsa(av.fio.zipPathRoot + '/', av.fio.fName);
+          if (2 < av.fio.zipPathRoot.length) av.fio.anID = av.utl.wsa(av.fio.zipPathRoot + '/', av.fio.fName);
           else av.fio.anID = av.fio.fName;
           //console.log('nameOfFileContainedInZipFile=', nameOfFileContainedInZipFile, ';___fName=', av.fio.fName, '; ___zipPathRoot=', av.fio.zipPathRoot, '; ____anID=', av.fio.anID);
           //console.log('fName=', av.fio.fName, '; ____anID=', av.fio.anID);
@@ -282,7 +282,7 @@ av.fio.fixFname = function() {
   'use strict';
   var domid, name, type, dir;
   if (av.fzr.item['entryname.txt']) { name = av.fzr.item['entryname.txt'].trim(); }
-  else { name = wsb('.', av.fio.zipPathRoot); }
+  else { name = av.utl.wsb('.', av.fio.zipPathRoot); }
   //console.log('name', name, '; zipPathRoot', av.fio.zipPathRoot);
 
   if (av.fzr.item['entrytype.txt']) {
@@ -361,7 +361,7 @@ av.fio.fzSaveCurrentWorkspaceFn = function () {
   var end = av.fio.userFname.substring(av.fio.userFname.length-4);
   if ('.zip' != end) av.fio.userFname = av.fio.userFname + '.zip';
   console.log('userName=', av.fio.userFname);
-  var folderName = wsb('.zip', av.fio.userFname);
+  var folderName = av.utl.wsb('.zip', av.fio.userFname);
   if (av.debug.fio) console.log('end', end, '; userFname', av.fio.userFname, '; folderName', folderName);
 
   //make zipfile as a blob

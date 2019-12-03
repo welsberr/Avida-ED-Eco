@@ -136,11 +136,11 @@ Number.prototype.formatNum = function(fracDigits, location){
 
 
 /*
- wsb(target, thestring)
+ av.utl.wsb(target, thestring)
  returns the part of the string that occurs before the target substring
  or the entire string if the target is not found.
  */
-function wsb(target, strng){   //string is longer, target is the substring
+av.utl.wsb = function(target, strng){   //string is longer, target is the substring
   'use strict';
   var sb = strng;
   var tndx = strng.indexOf(target);
@@ -150,15 +150,15 @@ function wsb(target, strng){   //string is longer, target is the substring
     sb = strng.substr(0, tndx);
     return sb;
   }
-}
+};
 //string.trim() removes leading and trailing white space
 
 /*
- wsa(target, thestring)
+ av.utl.wsa(target, thestring)
  returns the part of the string that follows the target or
  the empty string if the target is not found.
  */
-function wsa(target, strng){
+av.utl.wsa = function(target, strng){
   'use strict';
   var sb = strng;
   var tndx = strng.indexOf(target);
@@ -168,11 +168,11 @@ function wsa(target, strng){
     sb = strng.substr(tndx + target.length, strng.length);
     return sb;
   }
-}
+};
 /*
  So to extract the genome out of
  var genplus = "0,heads-default,abcdefghijklmnopqrstuvwxyz";
- var genome = wsa(",", wsa(",", genplus));
+ var genome = av.utl.wsa(",", av.utl.wsa(",", genplus));
  */
 
 //replaces , with a !; remove preceeding and trailing spaces; replace spaces with ~
@@ -206,10 +206,10 @@ av.utl.dTailWrite = function (file, lineNum, nameStr, objAry) {
   var lngth = objAry.length;
   var objName = ''; var sbStr = '';
   for (var ii = 0; ii < lngth; ii++) {
-    objName = wsb(',', nameStr);
+    objName = av.utl.wsb(',', nameStr);
     if ('' == objName) console.log('empty string');
-    sbStr = wsb('.', wsa('.', nameStr));
-    nameStr = wsa(',', nameStr);
+    sbStr = av.utl.wsb('.', av.utl.wsa('.', nameStr));
+    nameStr = av.utl.wsa(',', nameStr);
     if ('dom' == sbStr) {
       av.debug.dTail += '\n' + objName + ' = ' + objAry[ii].toString();
     }
