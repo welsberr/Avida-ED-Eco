@@ -1,5 +1,6 @@
 var av = av || {};  //because av already exists
 
+/*------------------------------------------------------------------------------------------------ av.ind.orgStopFn --*/
 av.ind.orgStopFn = function () {
   if (av.ind.update_timer) {
     clearInterval(av.ind.update_timer);
@@ -7,6 +8,7 @@ av.ind.orgStopFn = function () {
   document.getElementById("orgRun").textContent = 'Run';
 };
 
+/*------------------------------------------------------------------------------------------------- av.ind.clearGen --*/
 av.ind.clearGen = function(gen) {
   'use strict';
   av.ind.settingsChanged = false;
@@ -21,7 +23,7 @@ av.ind.clearGen = function(gen) {
   av.ind.cy = [150, 150];  //center of main circle y
   av.ind.fontsize = Math.round(1.8 * av.ind.smallR);
   av.ind.rotate = [0, 0];  //used to rotate offspring 180 degrees when growing; otherwise no rotation.
-  av.ind.dna = ["", ""];
+  av.ind.dna = ['', ''];
   av.ind.TimeLineHeight = 44;  //was 50;
   av.ind.imageXY = {x: 5, y: 5};
   av.ind.didDivide = false;
@@ -30,29 +32,30 @@ av.ind.clearGen = function(gen) {
   av.ind.smCenX = [[], []];
   av.ind.smCenY = [[], []];
   //initialize all canvases needed for Organism page
-  av.ind.bufferCvs = document.getElementById("buffer");
-  av.ind.bufferCtx = av.ind.bufferCvs.getContext("2d");
-  av.ind.bufferCtx.translate(0.5, 0.5);
-  av.ind.registerCvs = document.getElementById("register");
-  av.ind.registerCtx = av.ind.registerCvs.getContext("2d");
-  av.ind.registerCtx.translate(0.5, 0.5);
-  av.ind.AstackCvs = document.getElementById("Astack");
-  av.ind.AstackCtx = av.ind.AstackCvs.getContext("2d");
-  av.ind.AstackCtx.translate(0.5, 0.5);
-  av.ind.BstackCvs = document.getElementById("Bstack");
-  av.ind.BstackCtx = av.ind.BstackCvs.getContext("2d");
-  av.ind.BstackCtx.translate(0.5, 0.5);
-  av.ind.outputCvs = document.getElementById("output");
-  av.ind.outputCtx = av.ind.outputCvs.getContext("2d");
-  //av.ind.outputCtx.imageSmoothingEnabled= false;
-  av.ind.ctx = av.dom.organCanvas.getContext("2d");
+  av.dom.cpuBuffer = document.getElementById('cpuBufferCnvs');
+  av.ind.cpuBufferCtx = av.dom.cpuBuffer.getContext('2d');
+  av.ind.cpuBufferCtx.translate(0.5, 0.5);
+  av.dom.cpuRegister = document.getElementById('cpuRegisterCnvs');
+  av.ind.cpuRegisterCtx = av.dom.cpuRegister.getContext('2d');
+  av.ind.cpuRegisterCtx.translate(0.5, 0.5);
+  av.dom.cpuStackA = document.getElementById('cpuStackAcnvs');
+  av.ind.cpuStackActx = av.dom.cpuStackA.getContext('2d');
+  av.ind.cpuStackActx.translate(0.5, 0.5);
+  av.dom.cpuStackB = document.getElementById('cpuStackBcnvs');
+  av.ind.cpuStackBctx = av.dom.cpuStackB.getContext('2d');
+  av.ind.cpuStackBctx.translate(0.5, 0.5);
+  av.dom.cpuOutputCnvs = document.getElementById('cpuOutputCnvs');
+  av.ind.cpuOutputCtx = av.dom.cpuOutputCnvs.getContext('2d');
+  //av.ind.cpuOutputCtx.imageSmoothingEnabled= false;
+  av.ind.ctx = av.dom.organCanvas.getContext('2d');
   av.ind.ctx.translate(0.5, 0.5);  //makes a crisper image  http://stackoverflow.com/questions/4261090/html5-canvas-and-anti-aliasing
-  //av.ind.timeLineCanvas = document.getElementById("timeLine");
-  //av.ind.tLctx = av.ind.timeLineCanvas.getContext("2d");
+  //av.ind.timeLineCanvas = document.getElementById('timeLine');
+  //av.ind.tLctx = av.ind.timeLineCanvas.getContext('2d');
   return gen;
 };
 
-function DrawTimeline(obj, gen) {
+/*--------------------------------------------------------------------------------------------- av.ind.drawTimeline --*/
+av.ind.drawTimeline = function(obj, gen) {
   'use strict';
   var startX, lineY, endX, length, numCycles, upLabelY, dnLabelY, txtWide, dnTickX, dnNum;
   var tickLength = 6;
@@ -81,7 +84,7 @@ function DrawTimeline(obj, gen) {
   var lngth = obj.length;
   for (var ii = 1; ii < lngth; ii++) {
     if (obj[ii - 1].functions.not < obj[ii].functions.not) {
-      upNum.push("0");
+      upNum.push('0');
       upNdx.push(ii);
     }
     if (obj[ii - 1].functions.nand < obj[ii].functions.nand) {
@@ -154,9 +157,13 @@ function DrawTimeline(obj, gen) {
   av.ind.ctx.fillStyle = av.color.names["Red"];
   av.ind.ctx.arc(dnTickX, lineY, radius, 0, 2 * Math.PI);
   av.ind.ctx.fill();
-}
+};
+/*-------------------------------------------------------------------------------------- end of av.ind.drawTimeline --*/
 
-av.ind.drawBitStr = function(context, row, bitStr) {
+/*----------------------------------------------------------------------------------------------- av.ind.drawBitStr --*/
+av.ind.drawBitStr = function(context, row, bitStr, from) {
+  //console.log(from, ' called av.ind.drawBitStr: context=', context, '; row=', row, '; bitStr=', bitStr);
+  //console.log(from, ' called av.ind.drawBitStr: row=', row, '; bitStr=', bitStr);
   var recWidth = 5;   //The width of the rectangle, in pixels
   var recHeight = 5;  //The height of the rectangle, in pixels
   var xx; //The x-coordinate of the upper-left corner of the rectangle
@@ -191,13 +198,18 @@ av.ind.drawBitStr = function(context, row, bitStr) {
       context.moveTo(xx, yy);
       context.lineTo(xx, yy + recHeight);
       context.stroke();
-    }
+    };
+    //need to compare to Avida-ED 3 and see why this does not work
+    //
+    // ***************
+    //
     //console.log("fs=", context.fillStyle, "; xx=", xx, "; yy=", yy, "; w=", recWidth, "; h=", recHeight,
     //            "; bitStr=",str, "; out=",context.strokeStyle);
-  }
-}
+  };
+};
 
-function genomeCircle(gen, gg, obj) { //gg is generation
+/*-------------------------------------------------------------------------------------------- av.ind.genomeCircle  --*/
+av.ind.genomeCircle = function(gen, gg, obj) { //gg is generation
   'use strict';
   var txtW;      // width of txt
   //var tickR;        //mutation tick mark: radius used to find position for tick Mark
@@ -246,9 +258,11 @@ function genomeCircle(gen, gg, obj) { //gg is generation
   //Draw center of circle to test max arc height - should not go past center of circle
   //av.ind.ctx.arc(av.ind.cx[gg], av.ind.cy[gg], av.ind.smallR/4, 0, 2*Math.PI);
   //av.ind.ctx.fill();
-}
+};
+/*------------------------------------------------------------------------------------- end of av.ind.genomeCircle  --*/
 
-function drawHead(gen, spot, gg, head) {
+/*------------------------------------------------------------------------------------------------- av.ind.drawHead --*/
+av.ind.drawHead = function(gen, spot, gg, head) {
   'use strict';
   var hx, hy; //center of head and used as center of ring
   var txtW;  // width of txt
@@ -271,10 +285,11 @@ function drawHead(gen, spot, gg, head) {
   av.ind.ctx.font = av.ind.fontsize + "px Arial";
   txtW = av.ind.ctx.measureText(av.color.headCodes[head]).width;
   av.ind.ctx.fillText(av.color.headCodes[head], hx - txtW / 2, hy + av.ind.smallR / 2);
-}
+};
 
+/*------------------------------------------------------------------------------------------------- av.ind.drawArc2 --*/
 //Draw arc using Bézier curve and two control points http://www.w3schools.com/tags/canvas_beziercurveto.asp
-function drawArc2(gen, spot1, spot2, rep) { //draw an arc
+drawArc2 = function(gen, spot1, spot2, rep) { //draw an arc
   'use strict';
   var xx1, yy1, xx2, yy2, xc1, yc1, xc2, yc2;
   av.ind.ctx.lineWidth = 1;
@@ -299,10 +314,11 @@ function drawArc2(gen, spot1, spot2, rep) { //draw an arc
   //console.log(xc1, yc1, xc2, yc2, xx2, yy2);
   av.ind.ctx.bezierCurveTo(xc1, yc1, xc2, yc2, xx2, yy2);
   av.ind.ctx.stroke();
-}
+};
 
+/*------------------------------------------------------------------------------------------------- av.ind.drawIcon --*/
 //Draw offspring Icon once cell divides  from http://stackoverflow.com/questions/8977369/drawing-png-to-a-canvas-element-not-showing-transparency
-function drawIcon(gen) {
+av.ind.drawIcon = function(gen) {
   'use strict';
   var txt = "Offspring Genome";
   var drw = new Image();
@@ -317,6 +333,7 @@ function drawIcon(gen) {
 }
 
 
+/*----------------------------------------------------------------------------------- av.ind.organTraceButtonInable --*/
 av.ind.organTraceButtonInable = function () {
   'use strict';
   document.getElementById('orgReset').disabled = false;
@@ -328,11 +345,13 @@ av.ind.organTraceButtonInable = function () {
 };
 
 
-//*****************************************************************/
-//main function to update the Organism Trace on the Organism Page
-av.ind.updateOrganTrace = function (obj, gen) {
+/*----------------------------------------------------------------------------------------- av.ind.updateOrganTrace --*/
+//                   main function to update the Organism Trace on the Organism Page
+/*--------------------------------------------------------------------------------------------------------------------*/
+av.ind.updateOrganTrace = function (obj, gen, from) {
   'use strict';
-  for (ii=0; ii <101; ii++) { av.ind.labeled[ii] = false}  //reset lable flags
+  //console.log(from, ' called av.ind.updateOrganTrace');
+  for (ii=0; ii <101; ii++) { av.ind.labeled[ii] = false;}  //reset lable flags
   //inable buttons if disabled.
   if (true === document.getElementById('orgRun').disabled) av.ind.organTraceButtonInable();
   //Find size and content of each genome.
@@ -344,10 +363,10 @@ av.ind.updateOrganTrace = function (obj, gen) {
     //console.log('obj[av.ind.cycle].memSpace',obj[av.ind.cycle].memSpace[ii]);
   }
   //Draw Timeline
-  DrawTimeline(obj, gen);
+  av.ind.drawTimeline(obj, gen);
   //Find radius and center of big circle for each genome
   if (av.dom.organCanvas.height < .55 * (av.dom.organCanvas.width - av.ind.TimeLineHeight)) {
-    av.ind.bigR[av.ind.mom] = Math.round(0.43 * (av.dom.organCanvas.height - av.ind.TimeLineHeight))  //set size based on height
+    av.ind.bigR[av.ind.mom] = Math.round(0.43 * (av.dom.organCanvas.height - av.ind.TimeLineHeight));  //set size based on height
   }
   else {
     av.ind.bigR[av.ind.mom] = Math.round(0.2 * av.dom.organCanvas.width) //set size based on width
@@ -360,7 +379,7 @@ av.ind.updateOrganTrace = function (obj, gen) {
   av.ind.pathR = av.ind.bigR[av.ind.mom] - 3 * av.ind.smallR;      //radius of circle used to define reference point of arcs on path
   av.ind.headR[av.ind.mom] = av.ind.bigR[av.ind.mom] - 2 * av.ind.smallR;      //radius of circle made by center of head positions.
   av.ind.fontsize = Math.round(1.8 * av.ind.smallR);
-  genomeCircle(gen, 0, obj);
+  av.ind.genomeCircle(gen, 0, obj);
   // Draw child (Son) genome in a circle ---------
   if (1 < obj[av.ind.cycle].memSpace.length) {
     av.ind.bigR[av.ind.son] = av.ind.smallR * 2 * av.ind.size[av.ind.son] / (2 * Math.PI);
@@ -370,7 +389,7 @@ av.ind.updateOrganTrace = function (obj, gen) {
     if (obj[av.ind.cycle].didDivide) {
       av.ind.cx[av.ind.son] = av.dom.organCanvas.width / 2 + 1.2 * av.ind.bigR[av.ind.son];
       av.ind.rotate[av.ind.son] = 0;
-      drawIcon(gen);
+      av.ind.drawIcon(gen);
       //there is an offspring, so it can be saved in the freezer or fed back into Organism viewer
       dijit.byId("mnFzOffspring").attr("disabled", false);
       dijit.byId("mnCnOffspringTrace").attr("disabled", false);
@@ -383,7 +402,7 @@ av.ind.updateOrganTrace = function (obj, gen) {
       dijit.byId("mnCnOffspringTrace").attr("disabled", true);
       //console.log("xy", av.ind.cx[av.ind.son], av.ind.cy[av.ind.son], " size", av.ind.size[av.ind.mom]);
     }
-    genomeCircle(gen, 1, obj);
+    av.ind.genomeCircle(gen, 1, obj);
   }
   //Draw path of acrs
   //drawArc2(gen, spot1, spot2, rep)
@@ -391,47 +410,49 @@ av.ind.updateOrganTrace = function (obj, gen) {
   for (var ii = 0; ii < lngth; ii++) {
     drawArc2(gen, obj[av.ind.cycle].jumps[ii].fromIDX, obj[av.ind.cycle].jumps[ii].toIDX, obj[av.ind.cycle].jumps[ii].freq);
   }
-  //drawHead(gen, spot, generation, head) // draws the various heads for parent (Mom)
+  //av.ind.drawHead(gen, spot, generation, head) // draws the various heads for parent (Mom)
   lngth = obj[av.ind.cycle].memSpace.length;
   for (var ii = 0; ii < lngth; ii++) {
     if (undefined != obj[av.ind.cycle].memSpace[ii].heads.read) {
-      drawHead(gen, obj[av.ind.cycle].memSpace[ii].heads.read, ii, "READ");
+      av.ind.drawHead(gen, obj[av.ind.cycle].memSpace[ii].heads.read, ii, "READ");
     }
     if (undefined != obj[av.ind.cycle].memSpace[ii].heads.write) {
-      drawHead(gen, obj[av.ind.cycle].memSpace[ii].heads.write, ii, "WRITE");
+      av.ind.drawHead(gen, obj[av.ind.cycle].memSpace[ii].heads.write, ii, "WRITE");
     }
     if (undefined != obj[av.ind.cycle].memSpace[ii].heads.flow) {
-      drawHead(gen, obj[av.ind.cycle].memSpace[ii].heads.flow, ii, "FLOW");
+      av.ind.drawHead(gen, obj[av.ind.cycle].memSpace[ii].heads.flow, ii, "FLOW");
     }
     if (undefined != obj[av.ind.cycle].memSpace[ii].heads.ip) {
-      drawHead(gen, obj[av.ind.cycle].memSpace[ii].heads.ip, ii, "IP");
+      av.ind.drawHead(gen, obj[av.ind.cycle].memSpace[ii].heads.ip, ii, "IP");
     }
   }
   //Draw buffers ---------------------------------------------------
-  //av.ind.drawBitStr (name, row, bitStr);
+  //av.ind.drawBitStr(name, row, bitStr, 'just to show format');
   var lngth = obj[av.ind.cycle].buffers.input.length;
   for (var ii = 0; ii < lngth; ii++) {
-    av.ind.drawBitStr(av.ind.bufferCtx, ii, obj[av.ind.cycle].buffers.input[ii]);
+    av.ind.drawBitStr(av.ind.cpuBufferCtx, ii, obj[av.ind.cycle].buffers.input[ii], 'cpuBufferCtx');
   }
-  av.ind.drawBitStr(av.ind.registerCtx, 0, obj[av.ind.cycle].registers['ax']);
-  av.ind.drawBitStr(av.ind.registerCtx, 1, obj[av.ind.cycle].registers['bx']);
-  av.ind.drawBitStr(av.ind.registerCtx, 2, obj[av.ind.cycle].registers['cx']);
+  av.ind.drawBitStr(av.ind.cpuRegisterCtx, 0, obj[av.ind.cycle].registers['ax'], 'cpuRegisterCtx A');
+  av.ind.drawBitStr(av.ind.cpuRegisterCtx, 1, obj[av.ind.cycle].registers['bx'], 'cpuRegisterCtx B');
+  av.ind.drawBitStr(av.ind.cpuRegisterCtx, 2, obj[av.ind.cycle].registers['cx'], 'cpuRegisterCtx C');
   //console.log("A", obj[av.ind.cycle].buffers);
   for (var ii = 0; ii < 2; ii++) { //only showing the top 2 in the stack of 10
     //console.log(ii, obj[av.ind.cycle].buffers["stack A"][ii]);
-    av.ind.drawBitStr(av.ind.AstackCtx, ii, obj[av.ind.cycle].buffers["stack A"][ii]);
+    av.ind.drawBitStr(av.ind.cpuStackActx, ii, obj[av.ind.cycle].buffers["stack A"][ii], 'cpuStack A');
   }
   for (var ii = 0; ii < 2; ii++) { //only showing the top 2 in the stack of 10
-    av.ind.drawBitStr(av.ind.BstackCtx, ii, obj[av.ind.cycle].buffers["stack B"][ii]);
+    av.ind.drawBitStr(av.ind.cpuStackBctx, ii, obj[av.ind.cycle].buffers["stack B"][ii], 'cpuStack B');
   }
-  av.ind.drawBitStr(av.ind.outputCtx, 0, obj[av.ind.cycle].buffers.output[av.ind.mom]);
+  av.ind.drawBitStr(av.ind.cpuOutputCtx, 0, obj[av.ind.cycle].buffers.output[av.ind.mom], 'cpuOutput');
   // update details
-  updateTimesPerformed(obj, gen);   //Update Times functions are performed.
-  writeInstructDetails(obj, gen);   //Write Instruction Details
+  av.ind.updateTimesPerformed(obj, gen);   //Update Times functions are performed.
+  av.ind.writeInstructDetails(obj, gen);   //Write Instruction Details
   //context.clearRect(0, 0, canvas.width, canvas.height); //to clear canvas see http://stackoverflow.com/questions/2142535/how-to-clear-the-canvas-for-redrawing
-}
+};
+/*---------------------------------------------------------------------------------- end of av.ind.updateOrganTrace --*/
 
-function updateTimesPerformed(obj, gen) {
+/*------------------------------------------------------------------------------------- av.ind.updateTimesPerformed --*/
+av.ind.updateTimesPerformed = function(obj, gen) {
   'use strict';
   document.getElementById("notPerf").textContent = obj[av.ind.cycle].functions.not;
   document.getElementById("nanPerf").textContent = obj[av.ind.cycle].functions.nand;
@@ -498,12 +519,14 @@ function updateTimesPerformed(obj, gen) {
     document.getElementById("equOrg").textContent = "8 EQU";
   }
   */
-}
+};
+/*------------------------------------------------------------------------------ end of av.ind.updateTimesPerformed --*/
 
-function writeInstructDetails(obj, gen) {
+/*------------------------------------------------------------------------------------- av.ind.writeInstructDetails --*/
+av.ind.writeInstructDetails = function(obj, gen) {
   'use strict';
   var letter;
-  var IPspot = obj[av.ind.cycle].memSpace[av.ind.mom].heads.ip
+  var IPspot = obj[av.ind.cycle].memSpace[av.ind.mom].heads.ip;
   if (undefined == obj[av.ind.cycle - 1]) {
     document.getElementById("ExecuteJust").textContent = "(none)";
   }
@@ -520,4 +543,4 @@ function writeInstructDetails(obj, gen) {
     document.getElementById("ExecuteAbout").textContent = letter + ": " + av.color.InstDescribe[letter];
   }
   //console.log('spot=', IPspot, ' letter=', letter, " Instr=", av.color.InstDescribe[letter]);
-}
+};

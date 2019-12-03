@@ -602,7 +602,7 @@
                         <input id='mRate' type='text' readonly style='width: 4em; height:1.6em'></button> -->
                         <label id='muteError'>Error place holder</label>
                       </div>
-                      <div class='odd'>Ancestral Organism(s):z
+                      <div class='odd'>Ancestral Organism(s):
                         <div class='ancestorContainer' id='ancestorBox'></div>
                       </div>
                       <div class='even'>
@@ -1663,10 +1663,7 @@
                         <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='autoUpdateRadiTest'
                                intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' value='setupdate' />
                         At update:
-                        <input type='text' data-dojo-type='dijit/form/NumberSpinner' id='autoUpdateSpinneTest'
-                               intermediateChanges='false'
-                               trim='false' uppercase='false' lowercase='false' propercase='false' invalidMessage='$_unset_$'
-                               value='1000' data-dojo-props='smallDelta:100, constraints:{places:0}' style='width:80px'>
+                        <input type='text' id='autoUpdateSpinneTest' style='width:80px'>
                       </div>
                     </form>
                   </div>
@@ -2170,15 +2167,15 @@
                 </table>
                 </div>
                 <p>Input Buffer</p>
-                <canvas id='buffer' class='orgStatCanvas15'></canvas>
+                <canvas id='cpuBufferCnvs' class='orgStatCanvas15'></canvas>
                 <p>Registers: AX, BX, CX</p>
-                <canvas id='register' class='orgStatCanvas15'></canvas>
+                <canvas id='cpuRegisterCnvs' class='orgStatCanvas15'></canvas>
                 <p>Stack A (first two frames)</p>
-                <canvas id='Astack' class='orgStatCanvas10'></canvas>
+                <canvas id='cpuStackAcnvs' class='orgStatCanvas10'></canvas>
                 <p>Stack B (first two frames)</p>
-                <canvas id='Bstack' class='orgStatCanvas10'></canvas>
+                <canvas id='cpuStackBcnvs' class='orgStatCanvas10'></canvas>
                 <p>Last Output</p>
-                <canvas id='output' class='orgStatCanvas5'></canvas>
+                <canvas id='cpuOutputCnvs' class='orgStatCanvas5'></canvas>
                 <div id='InstructionDetail'>Instruction Details
                   <details>
                     <summary>Just Executed:</summary>

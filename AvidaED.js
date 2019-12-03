@@ -3203,7 +3203,7 @@ require([
     //if (undefined == av.traceObj[av.ind.cycle]) console.log('its undefined');
     if (!(undefined == av.traceObj || {} == av.traceObj || undefined == av.traceObj[av.ind.cycle])) {
       av.ind.didDivide = av.traceObj[av.ind.cycle].didDivide; //update global version of didDivide
-      av.ind.updateOrganTrace(av.traceObj, av.gen);
+      av.ind.updateOrganTrace(av.traceObj, av.gen, 'av.ind.updateOrgTrace');
     } else
       av.ind.didDivide = false;
   };
