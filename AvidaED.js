@@ -1,7 +1,9 @@
 /* global userMsgLabel */
 
+// pouchDB requied a server to run, but no longer using pouchDB, but still using the server. 
+// 
 // need a server to run this. The one below works.
-// python -m SimpleHTTPServer  No longer using pouchDB
+// python -m SimpleHTTPServer  
 // python -m SimpleHTTPServer 8001  to put on 8001 instead of 8000
 // Then visit http://127.0.0.1:8000/avidaED.html
 // 
@@ -15,6 +17,12 @@
 // :wq will write and then quit vim
 // git push -u origin master
 //
+//----------------------------------------------------------------------------------------------------------------------
+// Ideally I would have listed the hashtag or the complied version of Avida that goes with each veersion of Avida-ED
+//  - in reality this did not happen. Or if at least I had thee ID of the commit on github that would have been good.
+//  - the instructions below are supposed to tell one how to get a hash number for compiled emspcripten, but I'm not
+//    really sure what the instructions mean. 
+//  
 // Get hashtag of avida side to state which version of avida works with this version of av_ui
 // git rev-parse HEAD
 //
@@ -23,21 +31,12 @@
 // to thet the parse value go to the current version of avida folder and
 // git rev-parse --short HEAD
 //
-// Problems -------------------------------------------------------------------------------------------------------
-//  Fix av.anl.widg = {   statement on globals in Avida-ED 3.2 to match the one in Avida-ED-4 ecology
+//----------------------------------------------------------------------------------------------------------------------
 //  
-//  fix color and data select/item buttons on Analysis page
-//  
-//  min/max and limited to number for the orgCycle field
-//  oranismPage run button does not work
-//
-//
 // Versions -------------------------------------------------------------------------------------------------------
-// The main change are the limited Resources
-//
-//
-//
-//
+// The main function change from Avida-ED 3 to four is the addition of limited and gird (local) resources
+// Layout was changed on Population Page 
+// all files in tthe workspace now have a three letter sufix; *.txt was added to those missing a suffix
 //
 //
 // Generic Notes -------------------------------------------------------------------------------------------------------
@@ -54,14 +53,20 @@
 //
 // Path in TX for Filezilla /var/www/vhosts/bwng/public_html/projects/Avida-ED
 //
-// for things on Darwin (dream weaver site)
-// ssh -l diane darwin.beacon.msu.edu/html
+// for things on Darwin (dream weaver site)    // line out of date
+// ssh -l diane darwin.beacon.msu.edu/html     // line out of date
 // var/sites/Avida-ED.msu.edu
 // emacs home.html
 //
-
-// Curent things broken:
+//----------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------- Problems --
+//  Fix av.anl.widg = {   statement on globals in Avida-ED 3.2 to match the one in Avida-ED-4 ecology
+//  
+//  fix color and data select/item buttons on Analysis page
+//
 // the avidaDataRecorder.csv is broken
+//
+//----------------------------------------------------------------------------------------------------------------------
 
 console.log('version from Avida-ED-flex-active_2019_0929');
 var av = av || {};  //incase av already exists
@@ -146,7 +151,7 @@ require([
   'use strict';
   if (typeof $ != 'undefined') {
     // jQuery is loaded => print the version
-    // console.log($.fn.jquery);
+    av.jqueryVersion = ($.fn.jquery);
   } else {
     console.log('Jquery ($) is not defined.');
   }
@@ -433,8 +438,7 @@ require([
   };
   av.dom.load();
 
-  if (av.debug.root)
-    console.log('before dnd definitions');
+  // if (av.debug.root) { console.log('before dnd definitions'); };
   /********************************************************************************************************************/
   /******************************************* Dojo Drag N Drop Initialization ****************************************/
   /********************************************************************************************************************/
@@ -447,16 +451,16 @@ require([
     singular: true,
     selfAccept: false
   });
-  if (av.debug.root)
-    console.log('before fzOrgan');
+  
+  // if (av.debug.root) { console.log('before fzOrgan'); }
+  
   av.dnd.fzOrgan = new dndSource('fzOrgan', {
     accept: ['g'], //g=genome
     copyOnly: true,
     singular: true,
     selfAccept: false
   });
-  if (av.debug.root)
-    console.log('before fzWorld');
+  // if (av.debug.root) { console.log('before fzWorld'); };
   av.dnd.fzWorld = new dndSource('fzWorld', {
     //accept: ['b', 'w'],   //b=both; w=world  //only after the population started running
     singular: true,
@@ -495,12 +499,12 @@ require([
   av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
 
 
-  if (av.debug.root) console.log('before organIcon');
+  // if (av.debug.root) { console.log('before organIcon'); }
   av.dnd.organIcon = new dndTarget('organIcon', {accept: ['g'], selfAccept: false});
   av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
   av.dnd.gridCanvas = new dndTarget('gridCanvas', {accept: ['g']});
   av.dnd.trashCan = new dndSource('trashCan', {accept: ['c', 'g', 't', 'w'], singular: true});
-  if (av.debug.root) console.log('after trashCan');
+  // if (av.debug.root) { console.log('after trashCan'); }
 
   av.dnd.activeConfig = new dndSource('activeConfig', {
     accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
@@ -516,7 +520,7 @@ require([
     selfAccept: false
   });
 
-  if (av.debug.root) console.log('before activeOrgan');
+  // if (av.debug.root) { console.log('before activeOrgan'); }
   //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
   av.dnd.activeOrgan = new dndSource('activeOrgan', {
     accept: ['g'],
@@ -538,29 +542,33 @@ require([
   //**************************************************************************************************/
 
   //Avida as a web worker
-  if (av.debug.root) console.log('before call avida');
+  // if (av.debug.root) { console.log('before call avida'); }
   //console.log('typeof(av.aww.uiWorker', typeof(av.aww.uiWorker));
+  
   if (typeof (Worker) !== 'undefined') {
     //console.log('Worker type is not undefined');
     if (null === av.aww.uiWorker) {
       av.aww.uiWorker = new Worker('avida.js');
       //console.log('webworker created');
       av.debug.log += '\n     --note: av.aww.uiWorker was null, started a new webworker';
-    } else
-      console.log('av.aww.uiWorker is not null');
-  } else {
+    } 
+    else {
+      console.log('av.aww.uiWorker is not null'); 
+    } 
+  }
+  else {
     userMsgLabel.textContent = "Sorry, your browser does not support Web workers and Avida won't run";
   }
-  ;
 
   //process message from web worker
-  if (av.debug.root) console.log('before fio.uiWorker on message');
+  // if (av.debug.root) { console.log('before fio.uiWorker on message'); }
+  
   av.aww.uiWorker.onmessage = function (ee) {
     //console.log('avida_ee', ee);
     av.msg.readMsg(ee);
   };  // in file messaging.js
 
-  if (av.debug.root) console.log('before dnd triggers');
+  // if (av.debug.root) { console.log('before dnd triggers'); }
   //*******************************************************************************************************************
   //       Dojo Dnd drop function - triggers for all dojo dnd drop events
   //*******************************************************************************************************************
@@ -728,8 +736,7 @@ require([
   av.dnd.organIcon.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of organIcon
     //setTimeout(null,1000);
     if ('organIcon' === target.node.id) {
-      if (av.debug.dnd)
-        console.log('landOrganIcon: s, t', source, target);
+      if (av.debug.dnd) { console.log('landOrganIcon: s, t', source, target); }
       av.dnd.landOrganIcon(source, nodes, target);
       //Change to Organism Page
       av.ui.mainBoxSwap('organismBlock');
@@ -739,8 +746,7 @@ require([
 
   av.dnd.activeOrgan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeOrgan
     if ('activeOrgan' === target.node.id) {
-      if (av.debug.dnd)
-        console.log('activeOrgan: s, t', source, target);
+      if (av.debug.dnd) { console.log('activeOrgan: s, t', source, target); }
       av.dnd.makeMove(source, nodes, target);
       //av.dnd.landActiveOrgan(source, nodes, target);
       av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
@@ -749,8 +755,7 @@ require([
 
   av.dnd.organCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of organCanvas
     if ('organCanvas' === target.node.id) {
-      if (av.debug.dnd)
-        console.log('landorganCanvas: s, t', source, target);
+      if (av.debug.dnd) { console.log('landorganCanvas: s, t', source, target); }
       av.dnd.landorganCanvas(source, nodes, target);
       av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
     }
@@ -761,8 +766,7 @@ require([
       var remove = {};
       remove.type = '';
       remove.dir = '';
-      if (av.debug.dnd)
-        console.log('trashCan: s, t', source, target);
+      if (av.debug.dnd) { console.log('trashCan: s, t', source, target); }
       remove = av.dnd.landTrashCan(source, nodes, target);
       if ('' !== remove.type) {
         //removeFzrItem(av.fzr, remove.dir, remove.type);
@@ -774,8 +778,7 @@ require([
 
   av.dnd.anlDndChart.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of anlDndChart
     if ('anlDndChart' === target.node.id) {
-      if (av.debug.dnd)
-        console.log('anlDndChart: s, t', source, target);
+      if (av.debug.dnd) { console.log('anlDndChart: s, t', source, target); }
       av.dnd.landAnlDndChart(av.dnd, source, nodes, target);
       av.anl.AnaChartFn();
     }
@@ -783,8 +786,7 @@ require([
 
   av.dnd.popDish0.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of popDish0
     if ('popDish0' === target.node.id) {
-      if (av.debug.dnd)
-        console.log('popDish0: s, t', source, target);
+      if (av.debug.dnd) { console.log('popDish0: s, t', source, target); }
       av.dnd.landpopDish0(av.dnd, source, nodes, target);
       av.anl.AnaChartFn();
     }
@@ -792,8 +794,7 @@ require([
 
   av.dnd.popDish1.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of popDish1
     if ('popDish1' === target.node.id) {
-      if (av.debug.dnd)
-        console.log('popDish1: s, t', source, target);
+      if (av.debug.dnd) { console.log('popDish1: s, t', source, target); }
       av.dnd.landpopDish1(av.dnd, source, nodes, target);
       av.anl.AnaChartFn();
     }
@@ -801,8 +802,7 @@ require([
 
   av.dnd.popDish2.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of popDish2
     if ('popDish2' === target.node.id) {
-      if (av.debug.dnd)
-        console.log('popDish2: s, t', source, target);
+      if (av.debug.dnd) { console.log('popDish2: s, t', source, target); }
       av.dnd.landpopDish2(av.dnd, source, nodes, target);
       av.anl.AnaChartFn();
     }
@@ -837,8 +837,7 @@ require([
   //                                    End of dojo based DND triggered functions
   //----------------------------------------------------------------------------------------------------------------------
 
-  if (av.debug.root)
-    console.log('before Error Logging');
+  // if (av.debug.root) { console.log('before Error Logging'); }
   //********************************************************************************************************************
   // Error logging
   //********************************************************************************************************************
@@ -920,20 +919,40 @@ require([
     if (!av.ui.sendEmailFlag) {
       if ('no' === av.fzr.saveState || 'maybe' === av.fzr.saveState) {
         return 'Your workspace may have changed sine you last saved. Do you want to save first?';
+      }
+        //e.stopPropagation works in Firefox.
+      if (event.stopPropagation) {
+          event.stopPropagation();
+          event.preventDefault();
+        }
+      }
+    };
+
+/*  
+ *   How it was before checked with jsLint.com;   linke appears to be broken.
+ * 
+  //http://www.technicaladvices.com/2012/03/26/detecting-the-page-leave-event-in-javascript/
+  //Cannot get custom message in Firefox (or Safari for now)
+  window.onbeforeunload = function (event) {
+    if (!av.ui.sendEmailFlag) {
+      if ('no' === av.fzr.saveState || 'maybe' === av.fzr.saveState) {
+        return 'Your workspace may have changed sine you last saved. Do you want to save first?';
 
         //e.stopPropagation works in Firefox.
         if (event.stopPropagation) {
           event.stopPropagation();
           event.preventDefault();
-        }
-        ;
-      }
-      ;
-    }
-    ;
+        };
+      };
+    };
   };
+*/
 
-  /*
+
+
+
+
+/*
    //http://stackoverflow.com/questions/20773306/mozilla-firefox-not-working-with-window-onbeforeunload
    var myEvent = window.attachEvent || window.addEventListener;
    var chkevent = window.attachEvent ? 'onbeforeunload' : 'beforeunload'; /// make IE7, IE8 compitable
@@ -977,15 +996,15 @@ require([
   // Menu Buttons handling
   //********************************************************************************************s************************
 
-  if (av.debug.fio)
-    console.log('dijit test', dijit.byId('mnFlOpenDefaultWS'));
+  if (av.debug.fio) { console.log('dijit test', dijit.byId('mnFlOpenDefaultWS')); }
 
   dijit.byId('mnFlOpenDefaultWS').on('Click', function () {
     'use strict';
     av.post.addUser('Button: mnFlOpenDefaultWS');
     av.fio.useDefault = true;
-    if ('no' === av.fzr.saveState)
+    if ('no' === av.fzr.saveState) {
       sWSfDialog.show();  //Save WSfile Dialog box
+    }
     else {
       av.fio.readZipWS(av.fio.defaultFname, false);  //loadConfigFlag = false = do not load config file
     }
@@ -1016,11 +1035,13 @@ require([
     'use strict';
     av.post.addUser('Button: mnFlOpenWS');
     av.fio.useDefault = false;
-    if ('no' === av.fzr.saveState)
+    if ('no' === av.fzr.saveState) {
       sWSfDialog.show();   //Need to change to include might be saved tiba fix
+    }
     //else document.getElementById('inputFile').click();
-    else
+    else {
       document.getElementById('putWS').click();  // calls av.fio.userPickZipRead
+    }
   });
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -1055,8 +1076,7 @@ require([
       av.post.addUser('Button: mnFlSaveAs');
       var suggest = 'avidaWS.avidaWs.zip';
       if (av.fio.userFname) {
-        if (0 < av.fio.userFname.length)
-          suggest = av.fio.userFname;
+        if (0 < av.fio.userFname.length) { suggest = av.fio.userFname; }
       }
       av.fio.userFname = prompt('Choose a new name for your Workspace now', suggest);
       if (null !== av.fio.userFname) {
@@ -1225,8 +1245,7 @@ require([
   };
   //------------- Testing only need to delete above later.--------------------
 
-  if (av.debug.root)
-    console.log('before Help drop down menu');
+  // if (av.debug.root) { console.log('before Help drop down menu'); }
   //--------------------------------------------------------------------------------------------------------------------
   // Help Drop down menu buttons
   //--------------------------------------------------------------------------------------------------------------------
@@ -2042,8 +2061,7 @@ require([
   //av.dom.gridCanvas.height = $('#gridHolder').innerHeight() - 16 - av.dom.scaleCanvas.height;
 
   //--------------------------------------------------------------------------------------------------------------------
-  if (av.debug.root)
-    console.log('before av.grd.drawGridSetupFn');
+  // if (av.debug.root) { console.log('before av.grd.drawGridSetupFn'); }
 
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
@@ -2255,8 +2273,7 @@ require([
   // *******************************************************************************************************************
   //    Buttons that select organisms that perform a logic function
   // *******************************************************************************************************************
-  if (av.debug.root)
-    console.log('before logic buttons');
+  // if (av.debug.root)  { console.log('before logic buttons'); }
 
   //    av.post.addUser('Button: notButton');    //done in av.ptd.bitToggle
   document.getElementById('notButton').onclick = function () {
@@ -2357,17 +2374,24 @@ require([
     'use strict';
     if (av.pch.needInit) {
       //console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, ' minigraph not visible');
-      /*
+      
       console.log('is popStatsBlock visible?', $(av.dom.popStatsBlock).is(":visible")); 
       console.log(from, ' called av.grd.popChartFn: av.pch.needInit= ', av.pch.needInit, '; av.ui.page=', av.ui.page,
                       '; av.dom.popStatsBlock..jquery.ccs.display = ', $(av.dom.popStatsBlock).css('display') );
-      */
+      
       // if the miniplot on the populaton page needs to be initiated call that funciton.
       // In this situation, av.dom.popStatsBlock.style.display does not give the correct answer; 
-      // my guess is because display is cahnged by changing the class rather than by changing the element directly
+      // my guess is because display is changed by changing the class rather than by changing the element directly
       //if ('flex' == $(av.dom.popStatsBlock).css('display') && ('populationBlock' == av.ui.page) && av.pch.needInit) {
-      // a shorter version see if the mini-graph is om the page. 
-      if ( $(av.dom.popStatsBlock).is(":visible") && av.pch.needInit ) {
+      
+      // a shorter version see if the mini-graph is om the page, but the mini-graph does not work correctly with this conditional. 
+      //if ( $(av.dom.popStatsBlock).is(":visible") && av.pch.needInit ) {
+      
+      //Older if statement that works better, but not the data for popStatsBlock.sytle.display are wrong 
+      // if the miniplot on the populaton page needs to be initiated call that:
+      //    av.dom.popStatsBlock.style.display never is 'flex' so 
+      //           av.grd.popChartInit('av.grd.popChartFn'); never called
+      if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
         av.grd.popChartInit('av.grd.popChartFn');
       };
     } else { 
@@ -2375,6 +2399,10 @@ require([
     };
 
     // Do not display chart if the chart is not on the screen. Data seems to be getting updated. need to verify this.
+    // Older version (popStatsBlock.sytle.display is wrong)
+    if ('flex' != av.dom.popStatsBlock.style.display || ('populationBlock' !== av.ui.page)) {    
+    
+    // jQuery version
     if ( $(av.dom.popStatsBlock).is(":visible") ) {
       // the avidaDataRecorder.csv is broken
       return;
@@ -2563,6 +2591,7 @@ require([
     }
   };
 
+  //--------------------------------------------- ************** Tiba whhy does is this functions empty?
   av.grd.popChartClear = function () {
     'use strict';
     //console.log('in popChartClear');
@@ -2578,8 +2607,9 @@ require([
   } else {
     av.grd.gridWasCols = Number(av.dom.sizeCols.value);
     av.grd.gridWasRows = Number(av.dom.sizeRows.value);
-  }
+  };
 
+//-------------------------------------------------------------------------------------------------- av.ptd.popSizeFn --
   av.ptd.popSizeFn = function (from) {
     av.grd.setupCols = Number(av.dom.sizeCols.value);
     av.grd.setupRows = Number(av.dom.sizeRows.value);
@@ -2600,8 +2630,7 @@ require([
         av.parents.AvidaNdx[av.parents.handNdx[ii]] = av.parents.col[av.parents.handNdx[ii]] + av.grd.setupCols * av.parents.row[av.parents.handNdx[ii]];
         console.log('New cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
       }
-    }
-    ;
+    };
     av.grd.gridWasCols = Number(av.dom.sizeCols.value);
     av.grd.gridWasRows = Number(av.dom.sizeRows.value);
     //reset zoom power to 1
@@ -2612,6 +2641,7 @@ require([
     av.grd.drawGridSetupFn('av.ptd.popSizeFn');
   };
 
+//---------------------------------------------------------------------------------------------- av.ptd.popSizeFnTest --
   av.ptd.popSizeFnTest = function (from) {
     av.grd.setupCols = Number(av.dom.sizeColTest.value);
     av.grd.setupRows = Number(av.dom.sizeRowTest.value);
@@ -2631,9 +2661,8 @@ require([
         av.parents.row[av.parents.handNdx[ii]] = Math.floor(av.grd.setupRows * av.parents.row[av.parents.handNdx[ii]] / av.grd.gridWasRows);  //was trunc
         av.parents.AvidaNdx[av.parents.handNdx[ii]] = av.parents.col[av.parents.handNdx[ii]] + av.grd.setupCols * av.parents.row[av.parents.handNdx[ii]];
         console.log('New cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
-      }
-    }
-    ;
+      };
+    };
     av.grd.gridWasCols = Number(av.dom.sizeColTest.value);
     av.grd.gridWasRows = Number(av.dom.sizeRowTest.value);
     //reset zoom power to 1
@@ -2644,6 +2673,7 @@ require([
     av.grd.drawGridSetupFn('av.ptd.popSizeFn');
   };
 
+//-------------------------------------------------------------------------------------------- av.ptd.muteInputChange --
   av.ptd.muteInputChange = function (value, muteErroTest) {
     var muteNum = Number(value);
     if (av.debug.uil)
@@ -2674,6 +2704,7 @@ require([
     ;
   };
 
+//-------------------------------------------------------------------------------------------- av.ptd.randInputChange --
   av.ptd.randInputChange = function (value, randErroTest) {
     var randNum = Number(value);
     if (av.debug.uil)
@@ -2704,8 +2735,9 @@ require([
     ;
   };
 
-  /************************************************************************************ enviornment (sugar) settings ****/
+  /********************************************************************************** enviornment (sugar) settings ****/
 
+//------------------------------------------------------------------------------------------- av.ui.ex1setSugarColors --
   av.ui.ex1setSugarColors = function () {
     var sugarSection = ['ex1notSection', 'ex1nanSection', 'ex1andSection', 'ex1ornSection', 'ex1oroSection', 'ex1antSection', 'ex1norSection', 'ex1xorSection', 'ex1equSection'];
     var len = av.sgr.sugarColors.length;
@@ -2717,10 +2749,10 @@ require([
       } else {
         document.getElementById(sugarSection[ii]).style.backgroundColor = av.color[av.sgr.sugarColors[ii]][ndx];
       }
-    }
-    ;
+    };
   };
 
+//---------------------------------------------------------------------------------------- ex1allSugarChange.onChange --
   document.getElementById('ex1allSugarChange').onchange = function () {
     var allSugar = document.getElementById('ex1allSugarChange').value;
     av.ptd.ex1allSugarChange(allSugar);
@@ -2729,8 +2761,14 @@ require([
   };
 
 // end of ex1 and tst2 page stuff
+//----------------------------------------------------------------------------------------------------------------------
+
+ 
 //------------------------------------------------------------------------------------------------- Sugar Accordion ----
-//Global or Local in Ed speak = Global or Grid in Avida Environment file.
+//             Global or Local in Ed speak = Global or Grid in Avida Environment file.
+
+    
+//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.allSugarGeometryChange = function (domObj) {
     var idx = domObj.selectedIndex;        // get the index of the selected option 
     var which = domObj.options[idx].value;   // get the value of the selected option 
@@ -2739,6 +2777,7 @@ require([
     document.getElementById('allSugarGeometry').value = 'Neutral';
   };
 
+//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.allsugarSupplyTypeChange = function (domObj) {
     var idx = domObj.selectedIndex;        // get the index of the selected option 
     var which = domObj.options[idx].value;   // get the value of the selected option 
@@ -2746,6 +2785,7 @@ require([
     document.getElementById('allsugarSupplyType').value = 'Neutral';
   };
 
+//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.allSugarDetailsOpenClose = function (domObj) {
     var idx = domObj.selectedIndex;        // get the index of the selected option 
     var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
@@ -2753,6 +2793,7 @@ require([
     document.getElementById('allSugarDetails').value = 'Neutral';
   };
 
+//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.geometryChange = function (selectObj) {
     //need to find subregion Number in the future - set to 1 for now. 
     var taskID = selectObj.id;
@@ -2763,6 +2804,7 @@ require([
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.geometryChange');
   };
 
+//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.supplyChange_placeholder = function (domObj) {
     var taskID = domObj.id;
     var task = taskID.substring(0, 3);
@@ -2772,6 +2814,7 @@ require([
     av.sgr.changeDetailsLayout(task, sub, 'supplyChange_placeholder');
   };
 
+//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.regionLayoutChange = function (domObj) {
     console.log('av.sgr.regionLayoutChange was called by', domObj);
   };
@@ -2785,10 +2828,11 @@ require([
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
   };
 
+//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.eachSugarCheckBoxChange = function (domObj) {
-    var re_region = /(\D+)(\d+)(.*$)/;
+    //av.sgr.re_region = /(\D+)(\d+)(.*$)/;
     var taskID = domObj.id;
-    var matchTaskRegion = taskID.match(re_region);
+    var matchTaskRegion = taskID.match(av.sgr.re_region);
     var task = matchTaskRegion[1];      //taskID.substring(0,3);   
     var sub = matchTaskRegion[2];       //taskID.substring(3,1);   did not work; substr seems to work for sub
     console.log('av.sgr.eachSugarCheckBoxChange: taskID=', taskID, 'tst=', task, '; subsection=', sub);
@@ -2798,11 +2842,13 @@ require([
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.eachSugarCheckBoxChange');
   };
 
+//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.periodChange = function (domObj) {
     //console.log('av.sgr.periodChange domObj=', domObj);
     console.log('id=', domObj.id, '; domObj.value=', domObj.value);
   };
 
+//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.initialChange = function (domObj) {
     //console.log('av.sgr.initialChange domObj=', domObj);
     console.log('domObj.value=', domObj.value);
@@ -2822,18 +2868,23 @@ require([
     }
   };
 
+//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.inflowChange = function (domObj) {
     console.log('av.sgr.inflowChange domObj=', domObj);
     console.log('id=', domObj.id, '; domObj.value=', domObj.value);
   };
 
+//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.outflowChange = function (domObj) {
     console.log('av.sgr.outflowChange domObj=', domObj);
     console.log('id=', domObj.id, '; domObj.value=', domObj.value);
   };
 
-  /******************************************************************************** End enviornment (sugar) settings ****/
+  /****************************************************************************** End enviornment (sugar) settings ****/
 
+  /**************************************************************************** Tests for Population Setup section ****/
+
+//------------------------------------------------------------------------------------------------- av.ptd.gridChange --
   av.ptd.gridChange = function (domObj) {
     console.log('in av.ptd.gridChange; domObj.id =', domObj.id);
     var colNum = Number(av.dom.sizeCols.value);
@@ -2887,6 +2938,7 @@ require([
     }
   };
 
+//---------------------------------------------------------------------------------------------- av.ptd.gridChangTest --
   av.ptd.gridChangTest = function (from) {
     console.log(from, 'called av.ptd.gridChangTest; ');
     var colNum = Number(av.dom.sizeColTest.value);
@@ -2939,12 +2991,13 @@ require([
     }
   };
 
+//-------------------------------------------------------------------------------------------- $(function slidemute() --
   $(function slidemute() {
     /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
     /* the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, */
     /* so I multiplied by 100,000 to get 100.000% to come out even. */
     //console.log('before defaultslide value');
-    var muteSlideDefault = 109861.;
+    var muteSlideDefault = 109861.0;
     var muteVal;
     /* results in 2% as a default */
     var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3);
@@ -3001,7 +3054,7 @@ require([
         'vars': {'source': 'av.dnd.fzOrgan', 'nodeDir': 'g0', 'target': 'av.dnd.popGrid', 'xGrid': 4, 'yGrid': 9},
         //// need dom Id associated with @ancestor.
         'assumptions': {'nodeName': '@ancestor'}    //condition, constraint
-      }
+      };
       //usr:
       av.post.addUser('muteInput =' + muteVal.formatNum(1), ' in AvidaED.js line 1865');
       av.post.usrOneline(av.post.data, 'in AvidaED.js line 1868');
@@ -3010,6 +3063,7 @@ require([
     });
   });
 
+//------------------------------------------------------------------------------------ dojo controls that will change --
   dojo.connect(dijit.byId('childParentRadio'), 'onClick', function () {
     av.post.addUser('Button: childParentRadio');
   });
@@ -3097,14 +3151,13 @@ require([
     //console.log('autoUpdateOnce=', av.dom.autoUpdateOnce.value);
   });
 
-  /* *************************************************************** */
-  /* Organism page script *********************************************/
-  /* *************************************************************** */
-  /* **** Organism Setup Dialog */
+//----------------------------------------------------------------------------------------------------------------------
+//                                                     Oranism Page methods
+//----------------------------------------------------------------------------------------------------------------------
 
-  //process button to hide or show Organism detail panel: this button moved to population as it is using the same button:
   
   //adjust instruction text size
+//---------------------------------------------------------------------------- av.ui.adjustOrgInstructionTextAreaSize --
   av.ui.adjustOrgInstructionTextAreaSize = function() {
     var height = ( $('#orgInfoHolder').innerHeight() - $('#orgDetailID').innerHeight() - 10 ) / 2;
     //console.log('orgInfoHolder.ht=', $('#orgInfoHolder').innerHeight(), '; orgDetailID=',$('#orgDetailID').innerHeight(), '; height=', height);
@@ -3115,12 +3168,13 @@ require([
   };
   
 
+//--------------------------------------------------------------------------------------------------- $ slideOrganism --
   $(function slideOrganism() {
     /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
     /* the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, */
     /* so I multiplied by 100,000 to get 100.000% to come out even. */
     //console.log('before defaultslide value');
-    var muteSlideDefault = 109861.;
+    var muteSlideDefault = 109861.0;
     /* results in 2% as a default */
     var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3);
     var slides = $('#orMuteSlide').slider({
@@ -3156,6 +3210,7 @@ require([
 
   //triggers flag that requests more data when the settings dialog is closed.
   //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
+//--------------------------------------------------------------------------------------------------- $ slideOrganism --
   dojo.connect(dijit.byId('OrganExperimentRadio'), 'onClick', function () {
     av.post.addUser('Button: OrganExperimentRadio');
     av.ind.settingsChanged = true;
@@ -3165,9 +3220,11 @@ require([
     av.post.addUser('Button: OrganDemoRadio');
   });
 
-  // ****************************************************************
-  //        Menu buttons that call for genome/Organism trace
-  // ****************************************************************
+//----------------------------------------------------------------------------------------------------------------------
+//                                        Menu buttons that call for genome/Organism trace
+//----------------------------------------------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------------------------- mnCnOrganismTrace --
   dijit.byId('mnCnOrganismTrace').on('Click', function () {
     av.post.addUser('Button: mnCnOrganismTrace');
     av.mouse.traceSelected(av.dnd, av.fzr, av.grd);
@@ -3187,11 +3244,14 @@ require([
     offspringTrace(av.dnd, av.fio, av.fzr, av.gen);
   });
 
-  /* ****************************************************************/
-  /*                  Canvas for Organsim View (genome)
-   /* ************************************************************** */
+//----------------------------------------------------------------------------------------------------------------------
+//                                             Canvas for Organsim View (genome)
+//----------------------------------------------------------------------------------------------------------------------
 
+  // why is this hear in the open? if it is part of loading the program, should it be with othe loading code?
   av.gen = av.ind.clearGen(av.gen);
+  
+  
   //set canvas size; called from many places
   av.ind.organismCanvasHolderSize = function() {
     av.dom.organCanvas.width = $('#organismCanvasHolder').innerWidth() - 6;
@@ -3210,22 +3270,25 @@ require([
       av.ind.didDivide = false;
   };
   
-  /* ******************************************************************************************************************/
-  /*                                 End of Canvas to draw genome and update details
-  /* ******************************************************************************************************************/
+//----------------------------------------------------------------------------------------------------------------------
+//                                 End of Canvas to draw genome and update details
+//----------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
+//                    Methods for Buttons examine run of one Avidian on Organaism Page (below drawing of genome
+//----------------------------------------------------------------------------------------------------------------------
 
-  /* ************************************** Controls bottum of organism page ******************************************/
   
   //wonder if this does anything.
   function outputUpdate(vol) {
-    //console.log('outputUpdate: vol= ', vol);
+    console.log('outputUpdate: vol= ', vol);
     document.querySelector('#orgCycle').value = vol;
   };
   
   //Need to fix lenth of cycleSlider so it lines up with slider on canvas. 
   //bit strings sill not updated correctly   2019 Dec 03
   
-]  document.getElementById('orgBack').onclick = function () {
+//----------------------------------------------------------------------------------------------------------------------
+  document.getElementById('orgBack').onclick = function () {
     var ii = Number(document.getElementById('orgCycle').value);
     //console.log('; av.ind.cycleSlider.get(minimum") =', av.ind.cycleSlider.get('minimum'), '; orgBack: ii = ', ii );
     //console.log('av.ind.cycleSlider = ', av.ind.cycleSlider);
@@ -3239,7 +3302,7 @@ require([
     av.post.addUser('Button: orgBack; cycle = ' + ii);
   };
 
-  //Need something to check that it does not go past end of organism. 
+//----------------------------------------------------------------------------------------------------------------------
   document.getElementById('orgForward').onclick = function () {
     var ii = Number(document.getElementById('orgCycle').value);
     //console.log('orgForward: ii = ', ii);
@@ -3254,12 +3317,14 @@ require([
     av.post.addUser('Button: orgForward; cycle = ' + ii);
   };
 
+//----------------------------------------------------------------------------------------------------------------------
   document.getElementById('orgReset').onclick = function () {
     //console.log('orgReset');
     av.post.addUser('Button: orgReset');
     av.msg.doOrgTrace();
   };
 
+//----------------------------------------------------------------------------------------------------------------------
   av.ind.orgRunFn = function () {
     if (av.ind.cycleSlider.get('maximum') > av.ind.cycle) {
       av.ind.cycle++;
@@ -3271,6 +3336,7 @@ require([
     }
   };
 
+//----------------------------------------------------------------------------------------------------------------------
   document.getElementById('orgRun').onclick = function () {
     //console.log('orgRun: av.ind.cycleSlider.get("value")=', av.ind.cycleSlider.get('value'));
     if ('Run' == document.getElementById('orgRun').textContent) {
@@ -3283,6 +3349,7 @@ require([
     };
   };
 
+//----------------------------------------------------------------------------------------------------------------------
   document.getElementById('orgEnd').onclick = function () {
     console.log('orgEnd: av.ind.cycleSlider.get("maximum)', av.ind.cycleSlider.get('maximum'));
     av.post.addUser('Button: orgEnd');
@@ -3293,6 +3360,7 @@ require([
     av.ind.orgStopFn();
   };
 
+//----------------------------------------------------------------------------------------------------------------------
   av.ind.orgCycleInputChange = function (domObj) {
     console.log('orgCycle.onChange:  value = ',  domObj.value);
     av.ind.cycleSlider.set('value', domObj.value);  //seemed to work;
@@ -3302,7 +3370,9 @@ require([
     console.log('orgCycle: value = ', domObj.value, '; av.ind.cycleSlider=', av.ind.cycleSlider);
   };
 
-  /* Organism Offspring Cost Slider */
+//       Organism Offspring Cycle Slider      running all the cycles completes the reproduuction
+//       I think this is another loading action rather than a function that gets called. 
+//----------------------------------------------------------------------------------------------------------------------
   console.log('av.dom.cycleSlider =', av.dom.cycleSlider);
   av.ind.cycleSlider = new HorizontalSlider({
     name: 'cycleSlider',
@@ -3325,11 +3395,11 @@ require([
 
 
   //********************************************************************************************************************
-  // Resize window helpers -------------------------------------------
+  //                                             Resize window helpers 
   //********************************************************************************************************************
-  if (av.debug.root)
-    console.log('before Resize helpers');
+  // if (av.debug.root) { console.log('before Resize helpers'); }
 
+//----------------------------------------------------------------------------------------------------------------------
   av.removeVerticalScrollBars = function () {
     if (av.debug.uil)
       console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight,
@@ -3359,6 +3429,7 @@ require([
   };
 
   //on 2018_0823 this is where height gets messed up when loading the program. 
+//----------------------------------------------------------------------------------------------------------------------
   av.pch.divSize = function (from) {
     //console.log(from, 'called av.pch.divSize');
     //av.debug.uil = true;
@@ -3397,6 +3468,7 @@ require([
     //av.debug.uil = false;
   };
 
+//----------------------------------------------------------------------------------------------------------------------
   av.anl.divSize = function (from) {
     if (av.debug.alo)
       console.log(from, 'called av.anl.divSize');
@@ -3417,6 +3489,7 @@ require([
   };
 
   // called from script in html file as well as below
+//----------------------------------------------------------------------------------------------------------------------
   av.ui.browserResizeEventHandler = function (from) {
     if (true)
       console.log(from, 'called av.ui.browserResizeEventHandler');
@@ -3442,12 +3515,16 @@ require([
   };
 
   //console.log('before resize function');
+  //does this need a timer function to delay response slightly so the page is not re-written as frequently when the
+  //page is changing sizes  ??
+//----------------------------------------------------------------------------------------------------------------------
   $(window).resize(function () {
     // av.ui.resizePopLayout('window.resize');    //does not work.
   });
 
 
   //This function does not work. make grid get larger and larger
+//----------------------------------------------------------------------------------------------------------------------
   av.ui.resizePopLayout = function (from) {
     //console.log(from, 'called av.ui.resizePopLayout');
     var extraGridWd = 0;  //positive there is extra to distribute; negative need more space.
@@ -3505,6 +3582,7 @@ require([
     }
   };
 
+//----------------------------------------------------------------------------------------------------------------------
   av.ui.chngPopWidth = function (from) {
     console.log(from, 'called av.ui.chngPopWidth');
     av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px';
@@ -3513,6 +3591,7 @@ require([
     av.dom.selOrgType.style.width = ((popInfoHolderWd / 2).toFixed(0)) + 'px';
   };
 
+//----------------------------------------------------------------------------------------------------------------------
   av.ui.adjustpopInfoWd = function (adjustGridWd) {
     var popInfoHolderWd = av.dom.popInfoHolder.offsetWidth - adjustGridWd;  //adjustGridWd postive means Grid needs width
     if (av.debug.uil)
@@ -3521,7 +3600,7 @@ require([
       var navColWd = av.dom.navColId.offsetWidth;
       if (av.debug.uil)
         console.log("navColWd=", navColWd, '; popInfoHolderWd=', popInfoHolderWd, '');
-      navColWd = (.33 * (navColWd + popInfoHolderWd)).toFixed(0);
+      navColWd = (0.33 * (navColWd + popInfoHolderWd)).toFixed(0);
       popInfoHolderWd = navColWd * 2;
       av.dom.navColId.style.width = navColWd + 'px';
       if (av.debug.uil)
@@ -3538,6 +3617,7 @@ require([
       console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
   };
 
+//----------------------------------------------------------------------------------------------------------------------
   //Adjust Statistics area width based on gridholder size and shape. gridholder should be roughly square
   av.ui.adjustpopInfoSize = function (from) {
     var adjustGridWd = 0;
@@ -3819,6 +3899,7 @@ require([
    //stylesheet.insertRule('.botTable td {  line-height: ' + ht + 'px;  }', 265);
    */
 
+//----------------------------------------------------------------------------------------------------------------------
   av.ui.removeVerticalScrollbar = function (scrollDiv, htChangeDiv) {
     //https://tylercipriani.com/2014/07/12/crossbrowser-javascript-scrollbar-detection.html
     var scrollSpace = 0;
@@ -3845,14 +3926,12 @@ require([
       }
       //redraw the screen
       //av.ui.mainBoxSwap(page);
-      //if (av.debug.root) 
       if (av.debug.uil) {
-        console.log('Afterscroll', hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
+          console.log('Afterscroll', hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
           document.getElementById(scrollDiv).clientHeight, '; htChangeDiv=', document.getElementById(htChangeDiv).scrollHeight,
           document.getElementById(htChangeDiv).offsetHeight, document.getElementById(htChangeDiv).style.height);
-      }
-      ;
-    }
+      };
+    };
   };
 
   //Tiba - put back soon
@@ -3939,7 +4018,9 @@ require([
     }
     return new_obj;
   };
-});
+}   
+  
+  );
 
 //------- not in use = example
 //var hexColor = av.ui.invertHash(av.color.names);
@@ -4155,8 +4236,6 @@ require([
  <ul id='fzRdish' class='container'>
  </ul>
  </details>
- 
- *
  */
 
 //Tabs could be used in the header row for the page buttons. Formated like the tabs on the info pannel for populaton page
@@ -4166,5 +4245,4 @@ require([
  <span>Organism Tab</span>
  <span>Analysis Tab</span>
  </div>
- 
  */

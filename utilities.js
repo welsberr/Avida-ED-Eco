@@ -513,7 +513,7 @@ av.debug.log += '\n' + 'user info = ' + window.navigator.userAgent + ';  Screen 
 //                        Utilities to convert text to and from format needed by emscripten database
 //                                      Created by ruppmatt on 12/16/15.
 //**********************************************************************************************************************
-/*
+/*            apparently they are no longe in use 2019_1205
 
 function utf16to8(str) {
   'use strict';
