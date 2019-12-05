@@ -551,11 +551,9 @@ av.sgr.regionDct['Quarters'] = 4;
                         , '147', '258', '369', '123', '456', '789'];
 */
 
-//regular expression that lint did not like in AvidaED.js
-av.sgr.re_region = /(\D+)(\d+)(.*$)/;
-
-
 //Region Layout in use as of 2019 Dec
+
+  av.sgr.re_region = /(\D+)(\d+)(.*$)/;
   av.sgr.regionLayoutValues = ['1All', '2LftRit', '3TopLftRit', '4Quarters'];
 
 //will need something like the statement below eventuatlly

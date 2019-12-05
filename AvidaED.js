@@ -1,14 +1,18 @@
-/* global userMsgLabel */
 
-// pouchDB requied a server to run, but no longer using pouchDB, but still using the server. 
-// 
-// need a server to run this. The one below works.
-// python -m SimpleHTTPServer  
+if (av.debug.root) { console.log('AvidaED.js line 3'); }
+
+// need a server to run Avida-ED from a file. The one below works.
+// python -m SimpleHTTPServer 
 // python -m SimpleHTTPServer 8001  to put on 8001 instead of 8000
 // Then visit http://127.0.0.1:8000/avidaED.html
-// 
-//4814740943
+// pouchDB requied a server to run, but no longer using pouchDB, but still using the server. 
 //
+//----------------------------------------------------------------------------------------------------------------------
+// Ideally I would have listed the hashtag or the complied version of Avida that goes with each veersion of Avida-ED
+//  - in reality this did not happen. Or if at least I had thee ID of the commit on github that would have been good.
+//  - the instructions below are supposed to tell one how to get a hash number for compiled emspcripten, but I'm not
+//    really sure what the instructions mean. 
+//  
 // Git commands used to push
 // git add .
 // git commit -m 'comment about the change being pushed'
@@ -17,12 +21,6 @@
 // :wq will write and then quit vim
 // git push -u origin master
 //
-//----------------------------------------------------------------------------------------------------------------------
-// Ideally I would have listed the hashtag or the complied version of Avida that goes with each veersion of Avida-ED
-//  - in reality this did not happen. Or if at least I had thee ID of the commit on github that would have been good.
-//  - the instructions below are supposed to tell one how to get a hash number for compiled emspcripten, but I'm not
-//    really sure what the instructions mean. 
-//  
 // Get hashtag of avida side to state which version of avida works with this version of av_ui
 // git rev-parse HEAD
 //
@@ -31,32 +29,43 @@
 // to thet the parse value go to the current version of avida folder and
 // git rev-parse --short HEAD
 //
-//----------------------------------------------------------------------------------------------------------------------
+// Problems -------------------------------------------------------------------------------------------------------
+//  Fix av.anl.widg = {   statement on globals in Avida-ED 3.2 to match the one in Avida-ED-4 ecology
 //  
+//  fix color and data select/item buttons on Analysis page
+//  
+//  min/max and limited to number for the orgCycle field
+//  oranismPage run button does not work
+//
+// 
+// 4814740943 this might be the hash number for avida.js, but not sure
+//
 // Versions -------------------------------------------------------------------------------------------------------
+// The main change are the limited Resources
+//
 // The main function change from Avida-ED 3 to four is the addition of limited and gird (local) resources
 // Layout was changed on Population Page 
 // all files in tthe workspace now have a three letter sufix; *.txt was added to those missing a suffix
-//
 //
 // Generic Notes -------------------------------------------------------------------------------------------------------
 //
 // [option]<alt>{go} to get library in the list for finder
 //
-// /var/www/vhosts/bwng/public_html/projects/
-//
 // to have chrome run from file
 ///Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --allow-file-access-from-files
+////
+// Path in TX for Filezilla /var/www/vhosts/bwng/public_html/projects/Avida-ED
+//                          /var/www/vhosts/bwng/public_html/projects/
+//
+// Dreamweaver no longer in use ----------------------------------------------------------------------------------------
+//
+// for things on Darwin (dream weaver site)
+// ssh -l diane darwin.beacon.msu.edu/html
+// var/sites/Avida-ED.msu.edu
+// emacs home.html
 //
 // to get to mac files on parallels
 // net use z: \\Mac\Home
-//
-// Path in TX for Filezilla /var/www/vhosts/bwng/public_html/projects/Avida-ED
-//
-// for things on Darwin (dream weaver site)    // line out of date
-// ssh -l diane darwin.beacon.msu.edu/html     // line out of date
-// var/sites/Avida-ED.msu.edu
-// emacs home.html
 //
 //----------------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------- Problems --
@@ -64,9 +73,10 @@
 //  
 //  fix color and data select/item buttons on Analysis page
 //
-// the avidaDataRecorder.csv is broken
-//
+//  the avidaDataRecorder.csv does not export correctly, but is created correctly when the population is frozen
+//  
 //----------------------------------------------------------------------------------------------------------------------
+// 
 
 console.log('version from Avida-ED-flex-active_2019_0929');
 var av = av || {};  //incase av already exists
@@ -120,19 +130,21 @@ require([
   //'lib/jquery.fileDownload.js',
   //'lib/Blob',
   'lib/jszip.min.js',
+  
   'lib/FileSaver.js',
   //'avida-messages.js',
   'messaging.js',
-  'fileDataRead.js',
+ 'initializeDomReadyItems.js',
+ 'fileDataRead.js',
   'fileDataWrite.js',
   'fileIO.js',
-
   'populationGrid.js',
   'organismView.js',
   'dojoDnd.js',
   'popControls.js',
   'mouse.js',
   'mouseDown.js',
+  'reSizePageParts.js',
   'sugar_ui.js',
   //'restartAvida.js',
   //'diagnosticconsole.js',
@@ -187,258 +199,15 @@ require([
   // Initialize variables that depend on files loaded in requirement statement
   // -------------------------------------------------------------------------------------------------------------------
 
-  dijit.byId('mnCnPause').attr('disabled', true);
-  dijit.byId('mnCnOrganismTrace').attr('disabled', true);
-  dijit.byId('mnFzOrganism').attr('disabled', true);
-  dijit.byId('mnFzOffspring').attr('disabled', true);
-  dijit.byId('mnFzPopulation').attr('disabled', true);
-  //dijit.byId('mnFzAddConfigEx').attr('disabled', true);
-  //dijit.byId('mnFzAddGenomeEx').attr('disabled', true);
-  //dijit.byId('mnFzAddPopEx').attr('disabled', true);
-  //dijit.byId('mnFzAddGenomeView').attr('disabled', true);
-  //dijit.byId('mnFzAddPopAnalysis').attr('disabled', true);
-
-  // for analyze page
-  av.anl.color[0] = av.color.names[document.getElementById('pop0color').value];
-  av.anl.color[1] = av.color.names[document.getElementById('pop1color').value];
-  av.anl.color[2] = av.color.names[document.getElementById('pop2color').value];
-  av.anl.yLeftTitle = document.getElementById('yLeftSelect').value;
-  av.anl.yRightTitle = document.getElementById('yRightSelect').value;
-
-  av.dom.load = function () {
-    'use strict';
-    //Menu
-    av.doj.mnCnPopRun = document.getElementById('mnCnPopRun');
-
-    av.doj.mnFlStandAloneApp = document.getElementById('mnFlStandAloneApp');
-    av.doj.mnHpAbout = document.getElementById('mnHpAbout');
-    av.doj.mnHpManual = document.getElementById('mnHpManual');
-    av.doj.mnHpHardware = document.getElementById('mnHpHardware');
-    av.doj.mnHpInfo = document.getElementById('mnHpInfo');
-    av.doj.mnHpProblem = document.getElementById('mnHpProblem');
-    av.doj.mnHpDebug = document.getElementById('mnHpDebug');
-    av.doj.mnDebug = document.getElementById('mnDebug');
-
-    //main area
-    av.dom.userMsgLabel = document.getElementById('userMsgLabel');
-    av.dom.wsSavedMsg = document.getElementById('wsSavedMsg');
-    av.dom.wsNameMsg = document.getElementById('wsNameMsg');
-
-
-    av.dom.allAvida = document.getElementById('allAvida');
-    av.dom.navColId = document.getElementById('navColId');
-
-    av.dom.populationButton = document.getElementById('populationButton');
-    av.dom.freezeButton = document.getElementById('freezeButton');
-    av.dom.populationBlock = document.getElementById('populationBlock');
-    av.dom.organismBlock = document.getElementById('organismBlock');
-    av.dom.analysisBlock = document.getElementById('analysisBlock');
-    av.dom.showTextBlock = document.getElementById('showTextBlock');
-    av.dom.populationButton = document.getElementById('populationButton');
-    av.dom.organismButton = document.getElementById('organismButton');
-    av.dom.analysisButton = document.getElementById('analysisButton');
-    av.dom.showTextButton = document.getElementById('showTextButton');
-    av.dom.allAvida = document.getElementById('allAvida');
-
-    av.dom.lftPnlButtonImg = document.getElementById('lftPnlButtonImg');
-    av.dom.rtPnlButtonImg = document.getElementById('rtPnlButtonImg');
-
-    //Population Page
-    av.dom.popInfoHolder = document.getElementById('popInfoHolder');
-    av.dom.statsTab = document.getElementById('statsTab');
-    av.dom.setupTab = document.getElementById('setupTab');
-    av.dom.testTab = document.getElementById('testTab');
-    av.dom.setupBlock = document.getElementById('setupBlock');
-    av.dom.testSetupBlock = document.getElementById('testSetupBlock');
-    av.dom.mapHolder = document.getElementById('mapHolder');
-    av.dom.popTopRw = document.getElementById('popTopRw');
-    av.dom.popBot = document.getElementById('popBot');
-    av.dom.gridHolder = document.getElementById('gridHolder');
-    av.dom.gridCanvas = document.getElementById('gridCanvas');
-    av.dom.scaleCanvas = document.getElementById('scaleCanvas');
-    av.dom.popBot = document.getElementById('popBot');
-    av.dom.popStatsBlock = document.getElementById('popStatsBlock');
-    av.dom.StatsButton = document.getElementById('StatsButton');
-
-    av.dom.popChart = document.getElementById('popChart');  //easier handle for div with chart
-    av.dom.popChrtHolder = document.getElementById('popChrtHolder');
-
-    av.dom.cycleSlider = document.getElementById('cycleSlider');
-    av.dom.runStopButton = document.getElementById('runStopButton');
-    av.dom.oneUpdateButton = document.getElementById('oneUpdateButton');
-    av.dom.newDishButton = document.getElementById('newDishButton');
-    av.dom.avidianOutline = document.getElementById('avidianOutline');
-
-
-    av.dom.selOrgType = document.getElementById('selOrgType');
-    av.dom.gridControlTable = document.getElementById('gridControlTable');
-
-    //Test setup page
-    av.dom.sizeCellTest = document.getElementById('sizeCellTest');
-    av.dom.sizeColTest = document.getElementById('sizeColTest');
-    av.dom.sizeRowTest = document.getElementById('sizeRowTest');
-    av.dom.childParentRadiTest = document.getElementById('childParentRadiTest');
-    av.dom.experimentRadiTest = document.getElementById('experimentRadiTest');
-    av.dom.randInpuTest = document.getElementById('randInpuTest');
-    av.dom.manualUpdateRadiTest = document.getElementById('manualUpdateRadiTest');
-    //av.dom.Test = document.getElementById('Test');
-    //av.dom.Test = document.getElementById('Test');
-
-    //Population Map Setup page
-    av.dom.sizeCells = document.getElementById('sizeCells');
-    av.dom.sizeCols = document.getElementById('sizeCols');
-    av.dom.sizeRows = document.getElementById('sizeRows');
-    av.dom.muteInput = document.getElementById('muteInput');
-    av.dom.muteError = document.getElementById('muteError');
-    av.dom.childParentRadio = document.getElementById('childParentRadio');
-    av.dom.childRandomRadio = document.getElementById('childRandomRadio');
-    av.dom.envNone = document.getElementById('envNone');
-    av.dom.envFinite = document.getElementById('envFinite');
-    av.dom.envGradient = document.getElementById('envGradient');
-    av.dom.envEquilibrium = document.getElementById('envEquilibrium');
-    av.dom.envSourceSink = document.getElementById('envSourceSink');
-    av.dom.envInitial = document.getElementById('envInitial');
-    av.dom.envEqInflow = document.getElementById('envEqInflow');
-    av.dom.envEqOutflow = document.getElementById('envEqOutflow');
-    av.dom.envEqual = document.getElementById('envEqual');
-    av.dom.envGrSide = document.getElementById('envGrSide');
-    av.dom.envGrInflow = document.getElementById('envGrInflow');
-    av.dom.envGrOutflow = document.getElementById('envGrOutflow');
-    //av.dom.env = document.getElementById(''); 
-
-    av.dom.notose = document.getElementById('notose');
-    av.dom.andose = document.getElementById('andose');
-    av.dom.orose = document.getElementById('orose');
-    av.dom.norose = document.getElementById('norose');
-    av.dom.equose = document.getElementById('equose');  //5
-    av.dom.nanose = document.getElementById('nanose');
-    av.dom.ornose = document.getElementById('ornose');
-    av.dom.andnose = document.getElementById('andnose');
-    av.dom.xorose = document.getElementById('xorose');
-
-
-    av.dom.notButton = document.getElementById('notButton');
-    av.dom.andButton = document.getElementById('andButton');
-    av.dom.orButton = document.getElementById('orButton');
-    av.dom.norButton = document.getElementById('norButton');
-    av.dom.equButton = document.getElementById('equButton');  //5
-    av.dom.nanButton = document.getElementById('nanButton');
-    av.dom.ornButton = document.getElementById('ornButton');
-    av.dom.andnButton = document.getElementById('andnButton');
-    av.dom.xorButton = document.getElementById('xorButton');
-
-    av.dom.sugarAccordion = document.getElementById('sugarAccordion');
-    av.dom.orn0section = document.getElementById('orn0section');
-    av.dom.orn0summary = document.getElementById('orn0summary');
-    av.dom.orn0title = document.getElementById('orn0title');
-    av.dom.orn0Details = document.getElementById('orn0Details');
-    av.dom.orn1subSection = document.getElementById('orn1subSection');
-    av.dom.showTextarea = document.getElementById('showTextarea');
-
-    /*
-     * Not in use any longer; might use to create new vars
-     * 
-     av.dom.notType = document.getElementById('notType');
-     av.dom.andType = document.getElementById('andType');
-     av.dom.oroType = document.getElementById('oroType');
-     av.dom.norType = document.getElementById('norType');
-     av.dom.equType = document.getElementById('equType'); 
-     av.dom.nanType = document.getElementById('nanType');
-     av.dom.ornType = document.getElementById('ornType');
-     av.dom.antType = document.getElementById('antType');
-     av.dom.xorType = document.getElementById('xorType');
-     
-     av.dom.notIn = document.getElementById('notIn');
-     av.dom.andIn = document.getElementById('andIn');
-     av.dom.oroIn = document.getElementById('oroIn');
-     av.dom.norIn = document.getElementById('norIn');
-     av.dom.equIn = document.getElementById('equIn'); 
-     av.dom.nanIn = document.getElementById('nanIn');
-     av.dom.ornIn = document.getElementById('ornIn');
-     av.dom.antIn = document.getElementById('antIn');
-     av.dom.xorIn = document.getElementById('xorIn');
-     
-     av.dom.notOut = document.getElementById('notOut');
-     av.dom.andOut = document.getElementById('andOut');
-     av.dom.oroOut = document.getElementById('oroOut');
-     av.dom.norOut = document.getElementById('norOut');
-     av.dom.equOut = document.getElementById('equOut'); 
-     av.dom.nanOut = document.getElementById('nanOut');
-     av.dom.ornOut = document.getElementById('ornOut');
-     av.dom.antOut = document.getElementById('antOut');
-     av.dom.xorOut = document.getElementById('xorOut');
-     */
-    av.dom.experimentRadio = document.getElementById('experimentRadio');
-    av.dom.demoRadio = document.getElementById('demoRadio');
-    av.dom.manualUpdateRadio = document.getElementById('manualUpdateRadio');
-    av.dom.autoUpdateRadio = document.getElementById('autoUpdateRadio');
-    av.dom.autoUpdateOnce = document.getElementById('autoUpdateOnce');
-
-    //test dishes setup
-    av.dom.environConfigEdit = document.getElementById('environConfigEdit');
-    av.dom.tst2textarea = document.getElementById('tst2textarea');
-
-    av.dom.sendLogPara = document.getElementById('sendLogPara');
-    av.dom.sendLogTextarea = document.getElementById('sendLogTextarea');
-
-    //Organism Page
-    av.dom.orgBotId = document.getElementById('orgBotId');
-    av.dom.organCanvas = document.getElementById("organCanvas");
-    av.dom.orgInfoHolder = document.getElementById('orgInfoHolder');
-    av.dom.orgSettings = document.getElementById('orgSettings');
-    av.dom.orgDetailID = document.getElementById('orgDetailID');
-    av.dom.orgCycle = document.getElementById('orgCycle');
-    
-    //Analysis Page  
-    //av.dom.anlChrtSpace = document.getElementById('anlChrtSpace');  //easier handle for div with chart
-    av.dom.anlChrtSpace = document.getElementById('anlDndChart');  //easier handle for div with chart
-    av.dom.anlDndChart = document.getElementById('anlDndChart');
-    av.dom.anaChrtHolder = document.getElementById('anaChrtHolder');
-    av.dom.popDish0 = document.getElementById('popDish0');
-    av.dom.popDish1 = document.getElementById('popDish1');
-    av.dom.popDish2 = document.getElementById('popDish2');
-
-    //post - send data to database
-    av.dom.postLogTextarea = document.getElementById('postLogTextarea');
-    av.dom.postLogPara = document.getElementById('postLogPara');
-    av.dom.postVersionLabel = document.getElementById('postVersionLabel');
-    av.dom.postScreenSize = document.getElementById('postScreenSize');
-    av.dom.postUserInfoLabel = document.getElementById('postUserInfoLabel');
-    av.dom.postError = document.getElementById('postError');
-    av.dom.postProblemError = document.getElementById('postProblemError');
-    av.dom.postEmailInput = document.getElementById('postEmailInput');
-    av.dom.postEmailLabel = document.getElementById('postEmailLabel');
-    av.dom.postNoteLabel = document.getElementById('postNoteLabel');
-    av.dom.postComment = document.getElementById('postComment');
-    av.dom.postLogTextarea = document.getElementById('postLogTextarea');
-    av.dom.postdTailTextarea = document.getElementById('postdTailTextarea');
-    av.dom.postStatus = document.getElementById('postStatus');
-
-    av.dom.mainButtons = document.getElementById('mainButtons');
-    av.dom.trashDiv = document.getElementById('trashDiv');
-
-    av.dom.orgTopId = document.getElementById('orgTopId');
-
-    av.dom.ExecuteJust = document.getElementById('ExecuteJust');       //check for code repeats might be able to do a function and clean things tiba
-    av.dom.ExecuteAbout = document.getElementById('ExecuteAbout');
-
-    av.dom.xorLabel = document.getElementById('xorLabel');          //used to toggle debug menu
-
-    //av.dom. = document.getElementById('');
-    // Modal Dialogs 
-    av.dom.newModalID = document.getElementById('newModalID');
-    av.dom.newCancel = document.getElementById('newCancel');
-    av.dom.newDiscard = document.getElementById('newDiscard');
-    av.dom.newSaveConfig = document.getElementById('newSaveConfig');
-    av.dom.newSaveWorld = document.getElementById('newSaveWorld');
-    av.dom.needAncestorModalID = document.getElementById('needAncestorModalID');
-    av.dom.needAncestorCancel = document.getElementById('needAncestorCancel');
-
-    //av.dom. = document.getElementById('');
-  };
+  av.dom.initilizeDigitData();
+  av.dom.initilizeAnalizePage(); 
   av.dom.load();
 
-  // if (av.debug.root) { console.log('before dnd definitions'); };
+  if (av.debug.root) { console.log('before dnd definitions'); };
+
+  av.dom.load();
+
+  if (av.debug.root) { console.log('before dnd definitions'); };
   /********************************************************************************************************************/
   /******************************************* Dojo Drag N Drop Initialization ****************************************/
   /********************************************************************************************************************/
@@ -452,15 +221,15 @@ require([
     selfAccept: false
   });
   
-  // if (av.debug.root) { console.log('before fzOrgan'); }
-  
+  if (av.debug.root) { console.log('before fzOrgan'); }
   av.dnd.fzOrgan = new dndSource('fzOrgan', {
     accept: ['g'], //g=genome
     copyOnly: true,
     singular: true,
     selfAccept: false
   });
-  // if (av.debug.root) { console.log('before fzWorld'); };
+  
+  if (av.debug.root) { console.log('before fzWorld'); };
   av.dnd.fzWorld = new dndSource('fzWorld', {
     //accept: ['b', 'w'],   //b=both; w=world  //only after the population started running
     singular: true,
@@ -498,13 +267,12 @@ require([
 
   av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
 
-
-  // if (av.debug.root) { console.log('before organIcon'); }
+  if (av.debug.root) { console.log('before organIcon'); }
   av.dnd.organIcon = new dndTarget('organIcon', {accept: ['g'], selfAccept: false});
   av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
   av.dnd.gridCanvas = new dndTarget('gridCanvas', {accept: ['g']});
   av.dnd.trashCan = new dndSource('trashCan', {accept: ['c', 'g', 't', 'w'], singular: true});
-  // if (av.debug.root) { console.log('after trashCan'); }
+  if (av.debug.root) { console.log('after trashCan'); }
 
   av.dnd.activeConfig = new dndSource('activeConfig', {
     accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
@@ -520,7 +288,7 @@ require([
     selfAccept: false
   });
 
-  // if (av.debug.root) { console.log('before activeOrgan'); }
+  if (av.debug.root) { console.log('before activeOrgan'); }
   //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
   av.dnd.activeOrgan = new dndSource('activeOrgan', {
     accept: ['g'],
@@ -542,33 +310,29 @@ require([
   //**************************************************************************************************/
 
   //Avida as a web worker
-  // if (av.debug.root) { console.log('before call avida'); }
-  //console.log('typeof(av.aww.uiWorker', typeof(av.aww.uiWorker));
-  
+  if (av.debug.root) { console.log('before call avida'); }
+  //
+  if (av.debug.root) { console.log('typeof(av.aww.uiWorker', typeof(av.aww.uiWorker)); }
   if (typeof (Worker) !== 'undefined') {
     //console.log('Worker type is not undefined');
     if (null === av.aww.uiWorker) {
       av.aww.uiWorker = new Worker('avida.js');
       //console.log('webworker created');
       av.debug.log += '\n     --note: av.aww.uiWorker was null, started a new webworker';
-    } 
-    else {
-      console.log('av.aww.uiWorker is not null'); 
-    } 
-  }
+    } else { console.log('av.aww.uiWorker is not null'); }
+  } 
   else {
     userMsgLabel.textContent = "Sorry, your browser does not support Web workers and Avida won't run";
-  }
+  };
 
   //process message from web worker
-  // if (av.debug.root) { console.log('before fio.uiWorker on message'); }
-  
+  if (av.debug.root) { console.log('before dnd triggers'); }
   av.aww.uiWorker.onmessage = function (ee) {
     //console.log('avida_ee', ee);
     av.msg.readMsg(ee);
   };  // in file messaging.js
 
-  // if (av.debug.root) { console.log('before dnd triggers'); }
+  if (av.debug.root) { console.log('before dnd triggers'); }
   //*******************************************************************************************************************
   //       Dojo Dnd drop function - triggers for all dojo dnd drop events
   //*******************************************************************************************************************
@@ -837,7 +601,7 @@ require([
   //                                    End of dojo based DND triggered functions
   //----------------------------------------------------------------------------------------------------------------------
 
-  // if (av.debug.root) { console.log('before Error Logging'); }
+   if (av.debug.root) { console.log('before Error Logging'); }
   //********************************************************************************************************************
   // Error logging
   //********************************************************************************************************************
@@ -919,24 +683,6 @@ require([
     if (!av.ui.sendEmailFlag) {
       if ('no' === av.fzr.saveState || 'maybe' === av.fzr.saveState) {
         return 'Your workspace may have changed sine you last saved. Do you want to save first?';
-      }
-        //e.stopPropagation works in Firefox.
-      if (event.stopPropagation) {
-          event.stopPropagation();
-          event.preventDefault();
-        }
-      }
-    };
-
-/*  
- *   How it was before checked with jsLint.com;   linke appears to be broken.
- * 
-  //http://www.technicaladvices.com/2012/03/26/detecting-the-page-leave-event-in-javascript/
-  //Cannot get custom message in Firefox (or Safari for now)
-  window.onbeforeunload = function (event) {
-    if (!av.ui.sendEmailFlag) {
-      if ('no' === av.fzr.saveState || 'maybe' === av.fzr.saveState) {
-        return 'Your workspace may have changed sine you last saved. Do you want to save first?';
 
         //e.stopPropagation works in Firefox.
         if (event.stopPropagation) {
@@ -946,37 +692,7 @@ require([
       };
     };
   };
-*/
 
-
-
-
-
-/*
-   //http://stackoverflow.com/questions/20773306/mozilla-firefox-not-working-with-window-onbeforeunload
-   var myEvent = window.attachEvent || window.addEventListener;
-   var chkevent = window.attachEvent ? 'onbeforeunload' : 'beforeunload'; /// make IE7, IE8 compitable
-   
-   myEvent(chkevent, function(e) { // For >=IE7, Chrome, Firefox
-   var confirmationMessage = 'Remember to save your workSpace before you leave Avida-ED';  // a space
-   (e || window.event).returnValue = confirmationMessage;
-   return confirmationMessage;
-   });
-   
-   function goodbye(e) {
-   if(!e) e = window.event;
-   //e.cancelBubble is supported by IE - this will kill the bubbling process.
-   e.cancelBubble = true;
-   e.returnValue = 'Have you saved your workspace?'; //This is displayed on the dialog
-   
-   //e.stopPropagation works in Firefox.
-   if (e.stopPropagation) {
-   e.stopPropagation();
-   e.preventDefault();
-   }
-   }
-   window.onbeforeunload=goodbye;
-   */
 
   //********************************************************************************************************************
   //  Read Default Workspace as part of initialization
@@ -1022,7 +738,8 @@ require([
     sWSfDialog.hide(sWSfDialog.hide);
     if (av.fio.useDefault) {
       av.fio.readZipWS(av.fio.defaultFname, false);  //loadConfigFlag = false = do not load config file
-    }  //false = do not load config file
+    }  
+    //false = do not load config file
     else {
       //document.getElementById('inputFile').click();  //to get user picked file
       document.getElementById('putWS').click();  //to get user picked file
@@ -1053,7 +770,7 @@ require([
     document.getElementById('importFzrItem').click();
   });
 
-  // ----------------------- Save Workspace ----------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------
   // Save current workspace (mnFzSaveWorkspace)
   document.getElementById('mnFlSaveWorkspace').onclick = function () {
     if (!av.brs.isSafari) {
@@ -1069,6 +786,7 @@ require([
     console.log('----------------------------------------------------------filesaver supported?', e);
   }
 
+  //--------------------------------------------------------------------------------------------------------------------
   // Save current workspace with a new name
   document.getElementById('mnFlSaveAs').onclick = function () {
     if (!av.brs.isSafari) {
@@ -1085,6 +803,7 @@ require([
     }
   };
 
+  //--------------------------------------------------------------------------------------------------------------------
   //Export csv data from current run.
   dijit.byId('mnFlExportData').on('Click', function () {
     'use strict';
@@ -1092,6 +811,7 @@ require([
     av.fwt.writeCurrentCSV(av.fzr.actConfig.name + '@' + av.grd.popStatsMsg.update + '\n');
   });
 
+  //--------------------------------------------------------------------------------------------------------------------
   //Export chart data from current run.
   dijit.byId('mnFlExportGraph').on('Click', function () {
     'use strict';
@@ -1099,15 +819,15 @@ require([
     mnFlExportGraphDialog.show();
   });
 
-  //Save Stand alone applicaton .
+  //--------------------------------------------------------------------------------------------------------------------
+  //Save Stand alone applicaton.
   dijit.byId('mnFlStandAloneApp').on('Click', function () {
     'use strict';
     av.post.addUser('Button: mnFlExportGraph');
     mnFlStandAloneAppDialog.show();
   });
 
-  //------------- Testing & Development Tools. Hide from User .--------------------
-
+ //----------------------------------------- Testing & Development Tools that are hidden from from User .---------------
   av.doj.mnHpDebug.onclick = function () {
     if ('visible' === av.doj.mnDebug.style.visibility) {
       av.doj.mnDebug.style.visibility = 'hidden';
@@ -1125,127 +845,7 @@ require([
     console.log('domobj=', domobj);
   };
 
-  av.ui.toggleDevelopentDisplays = function () {
-    var len, tsk, sub;
-    if ('visible' === av.doj.mnDebug.style.visibility) {
-      //hide all development elements
-      av.ui.hideDevelopment = true;
-      av.doj.mnDebug.style.visibility = 'hidden';
-      document.getElementById('showTextButtonDiv').style.visibility = 'hidden';
-      document.getElementById('developmentToggle').className = 'devoCammo';  
-      document.getElementById('ritePnlBtnHolder').className = 'pnlBtnHldrHide';
-
-      document.getElementById('fzTdishSec').style.visibility = 'hidden';
-      document.getElementById('testDishDetailDiv').style.display = 'none';
-      document.getElementById('testConfigLableHolder').style.display = 'none';
-      document.getElementById('testConfig').style.display = 'none';
-      document.getElementById('avidianOutline').style.display = 'none';
-
-      document.getElementById('popInfoTabHolder').className = 'tabHolderHide';
-      document.getElementById('displayGridResourceData').style.display = 'none';
-
-      av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopentDisplays');
-      len = av.sgr.logicNames.length;
-      sub = 1;   //this may change later;
-      for (ii = 0; ii < len; ii++) {
-        tsk = av.sgr.logicNames[ii];
-        av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
-      };
-      
-      //Hide select options that are not yet implemented
-      //console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
-      len = document.getElementsByClassName('localEquilibrium').length;
-      for (ii = 0; ii < len; ii++) {
-        document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'none';
-        document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
-        document.getElementsByClassName('globalAll')[ii].style.display = 'none';
-        document.getElementsByClassName('localEquilibrium')[ii].style.display = 'none';
-        document.getElementsByClassName('localAll')[ii].style.display = 'none';
-      };
-      len = document.getElementsByClassName('globalEquilibrium').length - 1;
-      document.getElementsByClassName('globalEquilibrium')[len].style.display = 'none';
-      document.getElementsByClassName('globalFinite')[len].style.display = 'none';
-      document.getElementsByClassName('globalAll')[len].style.display = 'none';
-      
-      //debug menu??
-      dijit.byId('mnHpDebug').set('label', 'Show debug menu');   //???????
-
-      av.post.addUser('Button: mnHpDebug: now hidden');
-    } else {       // development sectiomn can be seen.
-      av.ui.hideDevelopment = false;
-      av.doj.mnDebug.style.visibility = 'visible';
-      document.getElementById('showTextButtonDiv').style.visibility = 'visible';
-      document.getElementById('developmentToggle').className = 'devoShow';
-      document.getElementById('ritePnlBtnHolder').className = 'ritePnlBtnHlderShow';
-
-      document.getElementById('fzTdishSec').style.visibility = 'visible';
-      document.getElementById('testDishDetailDiv').style.display = 'block';
-      document.getElementById('testConfigLableHolder').style.display = 'flex';
-      document.getElementById('testConfig').style.display = 'flex';
-      document.getElementById('avidianOutline').style.display = 'inline-block'; 
-
-      document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
-      document.getElementById('displayGridResourceData').style.display = 'flex';
-
-      av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopentDisplays.onclick_show');
-
-      len = av.sgr.logicNames.length;
-      sub = 1;   //this may change later;
-      for (ii = 0; ii < len; ii++) {
-        tsk = av.sgr.logicNames[ii];
-        av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
-      };
-      
-      //show environment options sill under development.
-      len = document.getElementsByClassName('localEquilibrium').length;
-      for (ii = 0; ii < len; ii++) {
-        document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'inline';
-        document.getElementsByClassName('globalFinite')[ii].style.display = 'inline';
-        document.getElementsByClassName('globalAll')[ii].style.display = 'inline';
-        document.getElementsByClassName('localEquilibrium')[ii].style.display = 'inline';
-        document.getElementsByClassName('localAll')[ii].style.display = 'inline';
-      };
-      len = document.getElementsByClassName('globalEquilibrium').length - 1;
-      document.getElementsByClassName('globalEquilibrium')[len].style.display = 'inline';
-      document.getElementsByClassName('globalFinite')[len].style.display = 'inline';
-      document.getElementsByClassName('globalAll')[len].style.display = 'inline';
-      tsk = 'orn';
-      sub = 1;
-      document.getElementById(tsk + sub + 'gradientCheckbox').style.display = 'inline-block';
-            
-      //Show debug on dropdown menu
-      dijit.byId('mnHpDebug').set('label', 'Hide debug menu');   //????????
-      av.post.addUser('Button: mnHpDebug: now visible');
-    }
-    //console.log('in av.ui.hideDevelopment=', av.ui.hideDevelopment, 'at end of function');
-  };
-
-  //toggles showing resource data in right info panel (Stats window) in Populaton View
-  av.dom.xorLabel.onclick = function () {
-    if ('none' === document.getElementById('displayGridResourceData').style.display) {
-      document.getElementById('displayGridResourceData').style.display = 'flex';
-    } else {
-      document.getElementById('displayGridResourceData').style.display = 'none';
-    }
-  };
-
-
-
-  av.fwt.tryDown = function (blob) {
-    var ab = document.createElement('a');
-    ab.href = 'data:attachment/csv;charset=utf-8,' + encodeURI(av.debug.log);
-    ab.target = '_blank';
-    ab.download = 'testfile.txt';
-    document.body.appendChild(ab);
-    ab.click();
-    setTimeout(function () {
-      document.body.removeChild(ab);
-      window.URL.revokeObjectURL(ab.href);
-    }, 100);
-  };
-  //------------- Testing only need to delete above later.--------------------
-
-  // if (av.debug.root) { console.log('before Help drop down menu'); }
+  if (av.debug.root) { console.log('before Help drop down menu'); }
   //--------------------------------------------------------------------------------------------------------------------
   // Help Drop down menu buttons
   //--------------------------------------------------------------------------------------------------------------------
@@ -2061,7 +1661,7 @@ require([
   //av.dom.gridCanvas.height = $('#gridHolder').innerHeight() - 16 - av.dom.scaleCanvas.height;
 
   //--------------------------------------------------------------------------------------------------------------------
-  // if (av.debug.root) { console.log('before av.grd.drawGridSetupFn'); }
+  if (av.debug.root) { console.log('before av.grd.drawGridSetupFn'); }
 
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
@@ -2273,7 +1873,7 @@ require([
   // *******************************************************************************************************************
   //    Buttons that select organisms that perform a logic function
   // *******************************************************************************************************************
-  // if (av.debug.root)  { console.log('before logic buttons'); }
+  if (av.debug.root)  { console.log('before logic buttons'); }
 
   //    av.post.addUser('Button: notButton');    //done in av.ptd.bitToggle
   document.getElementById('notButton').onclick = function () {
@@ -2383,8 +1983,8 @@ require([
       // In this situation, av.dom.popStatsBlock.style.display does not give the correct answer; 
       // my guess is because display is changed by changing the class rather than by changing the element directly
       //if ('flex' == $(av.dom.popStatsBlock).css('display') && ('populationBlock' == av.ui.page) && av.pch.needInit) {
-      
-      // a shorter version see if the mini-graph is om the page, but the mini-graph does not work correctly with this conditional. 
+      //
+      // a shorter version see if the mini-graph is om the page. 
       //if ( $(av.dom.popStatsBlock).is(":visible") && av.pch.needInit ) {
       
       //Older if statement that works better, but not the data for popStatsBlock.sytle.display are wrong 
@@ -2392,17 +1992,13 @@ require([
       //    av.dom.popStatsBlock.style.display never is 'flex' so 
       //           av.grd.popChartInit('av.grd.popChartFn'); never called
       if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
-        av.grd.popChartInit('av.grd.popChartFn');
+        av.grd.popChartInit('av.grd.popChartFn');  
       };
     } else { 
-      //console.log('av.grd.runState = ', av.grd.runState); 
+      console.log('av.grd.runState = ', av.grd.runState); 
     };
 
     // Do not display chart if the chart is not on the screen. Data seems to be getting updated. need to verify this.
-    // Older version (popStatsBlock.sytle.display is wrong)
-    if ('flex' != av.dom.popStatsBlock.style.display || ('populationBlock' !== av.ui.page)) {    
-    
-    // jQuery version
     if ( $(av.dom.popStatsBlock).is(":visible") ) {
       // the avidaDataRecorder.csv is broken
       return;
@@ -2591,7 +2187,7 @@ require([
     }
   };
 
-  //--------------------------------------------- ************** Tiba whhy does is this functions empty?
+//--------------------------------------------------------------- ************** Tiba whhy does is this functions empty?
   av.grd.popChartClear = function () {
     'use strict';
     //console.log('in popChartClear');
@@ -2609,7 +2205,7 @@ require([
     av.grd.gridWasRows = Number(av.dom.sizeRows.value);
   };
 
-//-------------------------------------------------------------------------------------------------- av.ptd.popSizeFn --
+/*------------------------------------------------------------------------------------------------ av.ptd.popSizeFn --*/
   av.ptd.popSizeFn = function (from) {
     av.grd.setupCols = Number(av.dom.sizeCols.value);
     av.grd.setupRows = Number(av.dom.sizeRows.value);
@@ -2641,7 +2237,7 @@ require([
     av.grd.drawGridSetupFn('av.ptd.popSizeFn');
   };
 
-//---------------------------------------------------------------------------------------------- av.ptd.popSizeFnTest --
+/*-------------------------------------------------------------------------------------------- av.ptd.popSizeFnTest --*/
   av.ptd.popSizeFnTest = function (from) {
     av.grd.setupCols = Number(av.dom.sizeColTest.value);
     av.grd.setupRows = Number(av.dom.sizeRowTest.value);
@@ -2661,7 +2257,7 @@ require([
         av.parents.row[av.parents.handNdx[ii]] = Math.floor(av.grd.setupRows * av.parents.row[av.parents.handNdx[ii]] / av.grd.gridWasRows);  //was trunc
         av.parents.AvidaNdx[av.parents.handNdx[ii]] = av.parents.col[av.parents.handNdx[ii]] + av.grd.setupCols * av.parents.row[av.parents.handNdx[ii]];
         console.log('New cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
-      };
+      }
     };
     av.grd.gridWasCols = Number(av.dom.sizeColTest.value);
     av.grd.gridWasRows = Number(av.dom.sizeRowTest.value);
@@ -2673,7 +2269,7 @@ require([
     av.grd.drawGridSetupFn('av.ptd.popSizeFn');
   };
 
-//-------------------------------------------------------------------------------------------- av.ptd.muteInputChange --
+/*------------------------------------------------------------------------------------------ av.ptd.muteInputChange --*/
   av.ptd.muteInputChange = function (value, muteErroTest) {
     var muteNum = Number(value);
     if (av.debug.uil)
@@ -2700,11 +2296,10 @@ require([
         document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be a valid number. ';
         console.log('==NaN');
       }
-    }
-    ;
+    };
   };
 
-//-------------------------------------------------------------------------------------------- av.ptd.randInputChange --
+/*------------------------------------------------------------------------------------------ av.ptd.randInputChange --*/
   av.ptd.randInputChange = function (value, randErroTest) {
     var randNum = Number(value);
     if (av.debug.uil)
@@ -2731,13 +2326,12 @@ require([
         document.getElementById(randErroTest).innerHTML += 'Random Seed must be a valid number. ';
         console.log('==NaN');
       }
-    }
-    ;
+    };
   };
 
   /********************************************************************************** enviornment (sugar) settings ****/
 
-//------------------------------------------------------------------------------------------- av.ui.ex1setSugarColors --
+/*----------------------------------------------------------------------------------------- av.ui.ex1setSugarColors --*/
   av.ui.ex1setSugarColors = function () {
     var sugarSection = ['ex1notSection', 'ex1nanSection', 'ex1andSection', 'ex1ornSection', 'ex1oroSection', 'ex1antSection', 'ex1norSection', 'ex1xorSection', 'ex1equSection'];
     var len = av.sgr.sugarColors.length;
@@ -2752,7 +2346,7 @@ require([
     };
   };
 
-//---------------------------------------------------------------------------------------- ex1allSugarChange.onChange --
+/*-------------------------------------------------------------------------------------- ex1allSugarChange.onChange --*/
   document.getElementById('ex1allSugarChange').onchange = function () {
     var allSugar = document.getElementById('ex1allSugarChange').value;
     av.ptd.ex1allSugarChange(allSugar);
@@ -2761,14 +2355,8 @@ require([
   };
 
 // end of ex1 and tst2 page stuff
-//----------------------------------------------------------------------------------------------------------------------
-
- 
 //------------------------------------------------------------------------------------------------- Sugar Accordion ----
-//             Global or Local in Ed speak = Global or Grid in Avida Environment file.
-
-    
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//Global or Local in Ed speak = Global or Grid in Avida Environment file.
   av.sgr.allSugarGeometryChange = function (domObj) {
     var idx = domObj.selectedIndex;        // get the index of the selected option 
     var which = domObj.options[idx].value;   // get the value of the selected option 
@@ -2819,6 +2407,7 @@ require([
     console.log('av.sgr.regionLayoutChange was called by', domObj);
   };
 
+//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.supplyChange = function (domObj) {
     var taskID = domObj.id;
     var task = taskID.substring(0, 3);
@@ -2830,7 +2419,7 @@ require([
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.eachSugarCheckBoxChange = function (domObj) {
-    //av.sgr.re_region = /(\D+)(\d+)(.*$)/;
+  //av.sgr.re_region = /(\D+)(\d+)(.*$)/;
     var taskID = domObj.id;
     var matchTaskRegion = taskID.match(av.sgr.re_region);
     var task = matchTaskRegion[1];      //taskID.substring(0,3);   
@@ -2937,7 +2526,6 @@ require([
       }
     }
   };
-
 //---------------------------------------------------------------------------------------------- av.ptd.gridChangTest --
   av.ptd.gridChangTest = function (from) {
     console.log(from, 'called av.ptd.gridChangTest; ');
@@ -2992,7 +2580,7 @@ require([
   };
 
 //-------------------------------------------------------------------------------------------- $(function slidemute() --
-  $(function slidemute() {
+   $(function slidemute() {
     /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
     /* the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, */
     /* so I multiplied by 100,000 to get 100.000% to come out even. */
@@ -3063,8 +2651,8 @@ require([
     });
   });
 
-//------------------------------------------------------------------------------------ dojo controls that will change --
-  dojo.connect(dijit.byId('childParentRadio'), 'onClick', function () {
+//xxs------------------------------------------------------------------------------------ dojo controls that will change --
+   dojo.connect(dijit.byId('childParentRadio'), 'onClick', function () {
     av.post.addUser('Button: childParentRadio');
   });
 
@@ -3154,9 +2742,8 @@ require([
 //----------------------------------------------------------------------------------------------------------------------
 //                                                     Oranism Page methods
 //----------------------------------------------------------------------------------------------------------------------
-
-  
-  //adjust instruction text size
+ 
+//adjust instruction text size
 //---------------------------------------------------------------------------- av.ui.adjustOrgInstructionTextAreaSize --
   av.ui.adjustOrgInstructionTextAreaSize = function() {
     var height = ( $('#orgInfoHolder').innerHeight() - $('#orgDetailID').innerHeight() - 10 ) / 2;
@@ -3167,7 +2754,6 @@ require([
     av.dom.ExecuteAbout.style.width = '100%';    
   };
   
-
 //--------------------------------------------------------------------------------------------------- $ slideOrganism --
   $(function slideOrganism() {
     /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
@@ -3210,7 +2796,7 @@ require([
 
   //triggers flag that requests more data when the settings dialog is closed.
   //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
-//--------------------------------------------------------------------------------------------------- $ slideOrganism --
+//----------------------------------------------------------------------------------------------------------------------
   dojo.connect(dijit.byId('OrganExperimentRadio'), 'onClick', function () {
     av.post.addUser('Button: OrganExperimentRadio');
     av.ind.settingsChanged = true;
@@ -3223,7 +2809,7 @@ require([
 //----------------------------------------------------------------------------------------------------------------------
 //                                        Menu buttons that call for genome/Organism trace
 //----------------------------------------------------------------------------------------------------------------------
-
+//
 //------------------------------------------------------------------------------------------------- mnCnOrganismTrace --
   dijit.byId('mnCnOrganismTrace').on('Click', function () {
     av.post.addUser('Button: mnCnOrganismTrace');
@@ -3250,8 +2836,7 @@ require([
 
   // why is this hear in the open? if it is part of loading the program, should it be with othe loading code?
   av.gen = av.ind.clearGen(av.gen);
-  
-  
+
   //set canvas size; called from many places
   av.ind.organismCanvasHolderSize = function() {
     av.dom.organCanvas.width = $('#organismCanvasHolder').innerWidth() - 6;
@@ -3277,7 +2862,6 @@ require([
 //                    Methods for Buttons examine run of one Avidian on Organaism Page (below drawing of genome
 //----------------------------------------------------------------------------------------------------------------------
 
-  
   //wonder if this does anything.
   function outputUpdate(vol) {
     console.log('outputUpdate: vol= ', vol);
@@ -3349,7 +2933,6 @@ require([
     };
   };
 
-//----------------------------------------------------------------------------------------------------------------------
   document.getElementById('orgEnd').onclick = function () {
     console.log('orgEnd: av.ind.cycleSlider.get("maximum)', av.ind.cycleSlider.get('maximum'));
     av.post.addUser('Button: orgEnd');
@@ -3395,11 +2978,11 @@ require([
 
 
   //********************************************************************************************************************
-  //                                             Resize window helpers 
+  // Resize window helpers -------------------------------------------
   //********************************************************************************************************************
-  // if (av.debug.root) { console.log('before Resize helpers'); }
+  if (av.debug.root)
+    console.log('before Resize helpers');
 
-//----------------------------------------------------------------------------------------------------------------------
   av.removeVerticalScrollBars = function () {
     if (av.debug.uil)
       console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight,
@@ -3429,7 +3012,6 @@ require([
   };
 
   //on 2018_0823 this is where height gets messed up when loading the program. 
-//----------------------------------------------------------------------------------------------------------------------
   av.pch.divSize = function (from) {
     //console.log(from, 'called av.pch.divSize');
     //av.debug.uil = true;
@@ -3468,7 +3050,6 @@ require([
     //av.debug.uil = false;
   };
 
-//----------------------------------------------------------------------------------------------------------------------
   av.anl.divSize = function (from) {
     if (av.debug.alo)
       console.log(from, 'called av.anl.divSize');
@@ -3489,7 +3070,6 @@ require([
   };
 
   // called from script in html file as well as below
-//----------------------------------------------------------------------------------------------------------------------
   av.ui.browserResizeEventHandler = function (from) {
     if (true)
       console.log(from, 'called av.ui.browserResizeEventHandler');
@@ -3515,16 +3095,12 @@ require([
   };
 
   //console.log('before resize function');
-  //does this need a timer function to delay response slightly so the page is not re-written as frequently when the
-  //page is changing sizes  ??
-//----------------------------------------------------------------------------------------------------------------------
   $(window).resize(function () {
     // av.ui.resizePopLayout('window.resize');    //does not work.
   });
 
 
   //This function does not work. make grid get larger and larger
-//----------------------------------------------------------------------------------------------------------------------
   av.ui.resizePopLayout = function (from) {
     //console.log(from, 'called av.ui.resizePopLayout');
     var extraGridWd = 0;  //positive there is extra to distribute; negative need more space.
@@ -3582,7 +3158,6 @@ require([
     }
   };
 
-//----------------------------------------------------------------------------------------------------------------------
   av.ui.chngPopWidth = function (from) {
     console.log(from, 'called av.ui.chngPopWidth');
     av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px';
@@ -3591,7 +3166,6 @@ require([
     av.dom.selOrgType.style.width = ((popInfoHolderWd / 2).toFixed(0)) + 'px';
   };
 
-//----------------------------------------------------------------------------------------------------------------------
   av.ui.adjustpopInfoWd = function (adjustGridWd) {
     var popInfoHolderWd = av.dom.popInfoHolder.offsetWidth - adjustGridWd;  //adjustGridWd postive means Grid needs width
     if (av.debug.uil)
@@ -3600,7 +3174,7 @@ require([
       var navColWd = av.dom.navColId.offsetWidth;
       if (av.debug.uil)
         console.log("navColWd=", navColWd, '; popInfoHolderWd=', popInfoHolderWd, '');
-      navColWd = (0.33 * (navColWd + popInfoHolderWd)).toFixed(0);
+      navColWd = (.33 * (navColWd + popInfoHolderWd)).toFixed(0);
       popInfoHolderWd = navColWd * 2;
       av.dom.navColId.style.width = navColWd + 'px';
       if (av.debug.uil)
@@ -3617,7 +3191,6 @@ require([
       console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
   };
 
-//----------------------------------------------------------------------------------------------------------------------
   //Adjust Statistics area width based on gridholder size and shape. gridholder should be roughly square
   av.ui.adjustpopInfoSize = function (from) {
     var adjustGridWd = 0;
@@ -3676,8 +3249,9 @@ require([
   // **************************************************************************************************************** */
   //                                                Analysis Page
   // **************************************************************************************************************** */
-
-  // initialize needs to be in AvidaED.js
+  if (av.debug.root) { console.log('End of resize helpers; start of Analysis Page'); }
+  
+  // initialize needs to be in AvidaED.js   Does not work in included files
   av.anl.anaChartInit = function () {
     av.anl.divSize('anaChartInit');
 
@@ -3821,7 +3395,7 @@ require([
   };
 
 
-  av.popColorOnClick = function (domObj) {
+  av.anl.popColorOnClick = function (domObj) {
     var ndx = Number(domObj.id.substr(3, 1));
     console.log('domObj.id=', domObj.id, '; ndx=', ndx, '; domObj.value', domObj.value, '; av.color.names[]=', av.color.names[domObj.value]);
     av.anl.color[ndx] = av.color.names[domObj.value];
@@ -3899,7 +3473,6 @@ require([
    //stylesheet.insertRule('.botTable td {  line-height: ' + ht + 'px;  }', 265);
    */
 
-//----------------------------------------------------------------------------------------------------------------------
   av.ui.removeVerticalScrollbar = function (scrollDiv, htChangeDiv) {
     //https://tylercipriani.com/2014/07/12/crossbrowser-javascript-scrollbar-detection.html
     var scrollSpace = 0;
@@ -3926,18 +3499,24 @@ require([
       }
       //redraw the screen
       //av.ui.mainBoxSwap(page);
+      //if (av.debug.root) 
       if (av.debug.uil) {
-          console.log('Afterscroll', hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
+        console.log('Afterscroll', hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
           document.getElementById(scrollDiv).clientHeight, '; htChangeDiv=', document.getElementById(htChangeDiv).scrollHeight,
           document.getElementById(htChangeDiv).offsetHeight, document.getElementById(htChangeDiv).style.height);
-      };
-    };
+      }
+      ;
+    }
   };
 
   //Tiba - put back soon
   //av.ui.removeVerticalScrollbar('popStats4grid', 'popStatistics');
   //av.ui.removeVerticalScrollbar('popBot', 'popBot');
-
+  
+  
+  //Resize tools might be called here or after "Last things done"
+  
+  if (av.debug.root) console.log('after chart defined for analysis page');
   // **************************************************************************************************************** */
   //                                          Last things done
   // **************************************************************************************************************** */
@@ -4018,9 +3597,7 @@ require([
     }
     return new_obj;
   };
-}   
-  
-  );
+});
 
 //------- not in use = example
 //var hexColor = av.ui.invertHash(av.color.names);
@@ -4236,6 +3813,8 @@ require([
  <ul id='fzRdish' class='container'>
  </ul>
  </details>
+ 
+ *
  */
 
 //Tabs could be used in the header row for the page buttons. Formated like the tabs on the info pannel for populaton page
@@ -4245,4 +3824,5 @@ require([
  <span>Organism Tab</span>
  <span>Analysis Tab</span>
  </div>
+ 
  */

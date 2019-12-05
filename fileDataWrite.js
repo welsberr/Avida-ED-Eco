@@ -832,7 +832,21 @@ http://thiscouldbebetter.neocities.org/texteditor.html
       window.URL.revokeObjectURL(ab.href);
     }, 100);
   }
-
+                  
+ av.fwt.tryDown = function (blob) {
+    var ab = document.createElement('a');
+    ab.href = 'data:attachment/csv;charset=utf-8,' + encodeURI(av.debug.log);
+    ab.target = '_blank';
+    ab.download = 'testfile.txt';
+    document.body.appendChild(ab);
+    ab.click();
+    setTimeout(function () {
+      document.body.removeChild(ab);
+      window.URL.revokeObjectURL(ab.href);
+    }, 100);
+  };
+  //------------- Testing only need to delete above later.--------------------
+                  
  //window.open('data:attachment/csv;charset=utf-8,' + encodeURI(av.debug.log)); //also works, but creates odd file names.
 
 
