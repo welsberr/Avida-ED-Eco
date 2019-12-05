@@ -75,6 +75,8 @@ if (av.debug.root) { console.log('AvidaED.js line 3'); }
 //
 //  the avidaDataRecorder.csv does not export correctly, but is created correctly when the population is frozen
 //  
+//  Did not put value for pauseAt in when it read PauseAt.txt as part of testConfig
+//  
 //----------------------------------------------------------------------------------------------------------------------
 // 
 
@@ -1973,12 +1975,10 @@ require([
   av.grd.popChartFn = function (from) {
     'use strict';
     if (av.pch.needInit) {
-      //console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, ' minigraph not visible');
-      
-      console.log('is popStatsBlock visible?', $(av.dom.popStatsBlock).is(":visible")); 
-      console.log(from, ' called av.grd.popChartFn: av.pch.needInit= ', av.pch.needInit, '; av.ui.page=', av.ui.page,
-                      '; av.dom.popStatsBlock..jquery.ccs.display = ', $(av.dom.popStatsBlock).css('display') );
-      
+      //console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, '; av.ui.page=', av.ui.page);
+      console.log(from, 'called popChartFn: av.pch.needInit= ', av.pch.needInit, 
+                      '; $(statsBlock.display = ', $(av.dom.popStatsBlock).css('display'),
+                      '; StatsBlock.show? = ', $(av.dom.popStatsBlock).is(":visible"));      
       // if the miniplot on the populaton page needs to be initiated call that funciton.
       // In this situation, av.dom.popStatsBlock.style.display does not give the correct answer; 
       // my guess is because display is changed by changing the class rather than by changing the element directly
@@ -1992,7 +1992,7 @@ require([
       //    av.dom.popStatsBlock.style.display never is 'flex' so 
       //           av.grd.popChartInit('av.grd.popChartFn'); never called
       if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
-        av.grd.popChartInit('av.grd.popChartFn');  
+        av.grd.popChartInit('av.grd.popChartFn');
       };
     } else { 
       console.log('av.grd.runState = ', av.grd.runState); 
@@ -2705,20 +2705,10 @@ require([
     av.post.addUser('Button: demoRadio');
   });
 
-  dojo.connect(dijit.byId('manualUpdateRadio'), 'onClick', function () {
-    av.post.addUser('Button: manualUpdateRadio');
-    av.ui.autoStopFlag = false;
-  });
-
-  dojo.connect(dijit.byId('autoUpdateRadio'), 'onClick', function () {
-    av.post.addUser('Button: autoUpdateRadio');
-    av.ui.autoStopFlag = true;
-  });
-
-  av.dom.autoUpdateOnce.onchange = function () {
-    av.post.addUser('Spinner: autoUpdateOnce = ' + av.dom.autoUpdateOnce.value);
-    av.ui.autoStopValue = av.dom.autoUpdateOnce.value;
-    //console.log('autoUpdateOnce=', av.dom.autoUpdateOnce.value);
+  av.dom.autoPauseNum.onchange = function () {
+    av.post.addUser(': autoPauseNum = ' + av.dom.autoPauseNum.value);
+    av.ui.autoStopValue = av.dom.autoPauseNum.value;
+    //console.log('autoPauseNum=', av.dom.autoPauseNum.value);
   };
 
 
@@ -2734,9 +2724,9 @@ require([
 
 
   dojo.connect(dijit.byId('autoUpdateSpinneTest'), 'onChange', function () {
-    av.post.addUser('Spinner: autoUpdateOnce = ' + av.dom.autoUpdateOnce.value);
+    av.post.addUser('Spinner: autoPauseNum = ' + av.dom.autoPauseNum.value);
     av.ui.autoStopValue = dijit.byId('autoUpdateSpinneTest').get('value');
-    //console.log('autoUpdateOnce=', av.dom.autoUpdateOnce.value);
+    //console.log('autoPauseNum=', av.dom.autoPauseNum.value);
   });
 
 //----------------------------------------------------------------------------------------------------------------------

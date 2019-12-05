@@ -167,9 +167,8 @@ var av = av || {};  //incase av already exists
      */
     av.dom.experimentRadio = document.getElementById('experimentRadio');
     av.dom.demoRadio = document.getElementById('demoRadio');
-    av.dom.manualUpdateRadio = document.getElementById('manualUpdateRadio');
-    av.dom.autoUpdateRadio = document.getElementById('autoUpdateRadio');
-    av.dom.autoUpdateOnce = document.getElementById('autoUpdateOnce');
+    av.dom.autoPauseCheck = document.getElementById('autoPauseCheck');
+    av.dom.autoPauseNum = document.getElementById('autoPauseNum');
 
     //test dishes setup
     av.dom.environConfigEdit = document.getElementById('environConfigEdit');

@@ -62,9 +62,9 @@ av.fwt.makeFzrEventsCfgWorld = function (idStr) {
 av.fwt.makeFzrPauseRunAt = function (idStr, from) {
   'use strict';
   console.log(from + ' called av.fwt.makeFzrPauseRunAt');
-  var txt = av.dom.autoUpdateOnce.value.toString();
+  var txt = av.dom.autoPauseNum.value.toString();
   // Is auto Update Radio button checked?
-  if (av.dom.manualUpdateRadio.checked) {  //manually pause population
+  if (!av.dom.autoPauseCheck.checked) {  //manually pause population
     txt = '-1';   //Manual Update
   }
   if (false) {av.fwt.makeActConfigFile('pauseRunAt.txt', txt, 'av.fwt.makeFzrPauseRunAt');}

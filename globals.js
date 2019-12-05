@@ -64,6 +64,7 @@ av.post.usrOut = function (jStr, comment) {
   av.debug.log += '\n--usr: ' + '~|~' + str0.replace(/\\n/g, "\n") + '~.~' + note;
 };
 
+/*
 //default values - these are not in use; the values now come from the file system
 av.dft = {};
 av.dft.sizeCols = 100;
@@ -81,8 +82,8 @@ av.dft.norose = true;
 av.dft.xorose = true;
 av.dft.equose = true;
 av.dft.repeat = 'experimentRadio';   //alternate = 'demoRadio'
-av.dft.pauseType = 'manualUpdateRadio';     //alternate = 'autoUpdateRadio'
-av.dft.autoUpdateOnce = 1000;
+av.dft.autoPauseNum = 1000;
+*/
 
 av.mouse = {};
 

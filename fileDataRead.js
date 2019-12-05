@@ -67,7 +67,7 @@ av.fio.setActiveConfig = function(dndSection, name, type){
 /*-------------------------------------------------------------------------------------- av.frd.add2freezerFromFile --*/
 av.frd.add2freezerFromFile = function (loadConfigFlag, from) {
   'use strict';
-  console.log(from, ' called av.frd.add2freezerFromFile: loadConfigFlag = ', loadConfigFlag);
+  //console.log(from, ' called av.frd.add2freezerFromFile: loadConfigFlag = ', loadConfigFlag);
   var type = av.fio.anID.substr(0, 1);
   //console.log('av.fio.anID', av.fio.anID);
   var dir = av.utl.wsb('/', av.fio.anID);
@@ -199,6 +199,7 @@ av.fio.processFiles = function (loadConfigFlag, from){
       case 'events.cfg':
       case 'genome.seq':
       case 'instset.cfg':
+      case 'pauseRunAt.txt':
       case 'offset.txt':
       case 'timeRecorder.csv':
       case 'tr0.txt':
@@ -282,6 +283,7 @@ av.fio.processItemFiles = function (){
     case 'events.cfg':
     case 'genome.seq':
     case 'instset.cfg':
+    case 'pauseRunAt.txt':
     case 'timeRecorder.csv':
     case 'tr0.txt':
     case 'tr1.txt':
@@ -342,7 +344,8 @@ av.frd.updateSetup = function(from) {
   av.frd.nutrientStruct2dom('av.frd.updateSetup');           //puts data from the structure in the the dom for user interface
 
   doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
-  av.frd.pauseRunAtTXT2form(doctext);
+  console.log ('dir = ', dir);
+  if (undefined != doctext) { av.frd.pauseRunAtTXT2form(doctext); }
 };
 //----------------------------------------------------------------------------------------- end of av.frd.updateSetup --
 
@@ -415,7 +418,6 @@ av.frd.environmentCFG2form = function (fileStr) {
   'use strict';
   var dict = av.frd.environmentCFGparse(fileStr);
   //console.log('av.frd.environmentCFG2form; dict=',dict);
-  
   
   /*
   dijit.byId('notose').set('checked', dict.NOT);
@@ -1169,18 +1171,31 @@ av.frd.pauseRunAtTest2form = function (fileStr) {
 };
 
 //--------------------- puts data from the av.frd.pauseRun.txt file into the setup form for the population page---------
+// this uses the value from the last ine in pauseRunAt.txt if the line has more than one char.
 av.frd.pauseRunAtTXT2form = function (fileStr) {
   'use strict';
-  var update = parseInt(fileStr);
-  if (0 < update) {
-    dijit.byId('manualUpdateRadio').set('checked', false);
-    dijit.byId('autoUpdateRadio').set('checked', true);
-    av.dom.autoUpdateOnce.value = update;
-  }
-  else {
-    dijit.byId('manualUpdateRadio').set('checked', true);
-    dijit.byId('autoUpdateRadio').set('checked', false);
-    av.dom.autoUpdateOnce.value = '1000';
+  console.log('fileStr=', fileStr);
+  if (undefined != fileStr) {
+    var lines = fileStr.split('\n');
+    var update;
+    var lngth = lines.length;
+    for (var ii = 0; ii < lngth; ii++) {
+      if (1 < lines[ii].length) {
+        console.log('lines['+ii+'] = ', lines[ii]);
+        update  = Number(lines[ii]);
+        if (isNaN(update)) {
+          av.dom.autoPauseCheck.checked = false;
+          av.dom.autoPauseNum.value = '1000';
+        } else if (0 < update){
+          av.dom.autoPauseCheck.checked = true;
+          av.dom.autoPauseNum.value = update;
+        }
+        else {
+          av.dom.autoPauseCheck.checked = false;
+          av.dom.autoPauseNum.value = '1000';
+        }
+      }
+    } // for
   }
 };
 

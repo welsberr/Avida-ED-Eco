@@ -154,8 +154,8 @@ av.msg.check4anotherUpdate = function () {
       //make pause state
       av.ptd.makePauseState();
       av.ui.autoStopFlag = false;
-      dijit.byId('manualUpdateRadio').set('checked', true);
-      dijit.byId('autoUpdateRadio').set('checked', false);
+      av.dom.autoPauseCheck.checked = false;      
+      //test dishes only
       dijit.byId('manualUpdateRadiTest').set('checked', true);
       dijit.byId('autoUpdateRadiTest').set('checked', false);
       if (av.ui.oneUpdateFlag) av.ui.oneUpdateFlag = false;

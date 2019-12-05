@@ -564,15 +564,9 @@
                     </div>
   
                     <div id='pauseOptions'>
-                      <label>Pause Run:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='manualUpdateRadio'
-                             intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' checked
-                             value='manual' />
-                      <label id='ManLabel'>Manually</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='autoUpdateRadio'
-                             intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' value='setupdate' />
-                      <label id='updateLabel'>At update:</label>
-                      <input type='text' id='autoUpdateOnce' value='1000' style='width:80px'>
+                      Pause Run when run at Update:&nbsp;
+                      <label><input type='text' id='autoPauseNum' value='1000' style='width:80px'> when checked
+                      <input id="autoPauseCheck" type="checkbox"> </label>
                     </div>
                   </div>  <span comment="end of popStatsBlock"></span>
 
@@ -2035,36 +2029,6 @@
                                intermediateChanges='false' iconClass='dijitNoIcon' name='repeat' value='demo'>
                         <label id='ex1demoLabel'>Demo</label>
                       </div>
-                      <div class='odd'>
-                        <label>Pause Run:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='ex1manualUpdateRadio'
-                               intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' checked
-                               value='manual' />
-                        <label id='ex1ManLabel'>Manually</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='ex1autoUpdateRadio'
-                               intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' value='setupdate' />
-                        <label id='ex1updateLabel'>At update:</label>
-                        <input type='text' data-dojo-type='dijit/form/NumberSpinner' id='ex1autoUpdateSpinner'
-                               intermediateChanges='false'
-                               trim='false' uppercase='false' lowercase='false' propercase='false' invalidMessage='$_unset_$'
-                               value='1000' data-dojo-props='smallDelta:100, constraints:{places:0}' style='width:80px'>
-                      </div>
-                      <span data-dojo-type='dijit/TitlePane' id='ex1AdvancedSetup' title='Advanced Setup'
-                            extractContent='false' preventCache='false' preload='false' refreshOnShow='false' duration='200'
-                            open='false' style='min-width: 1px; width: 100%; height: auto; visibility: hidden'>
-                        <div class='even'>
-                          time Slice:
-                          <input id='ex1avetimeSlice' value='20'
-                                 style='width: 3em; height:1.6em' />
-                          &nbsp;&nbsp;&nbsp;
-                          Update Delay:
-                          <input id='ex1sleepDelay' type='text' data-dojo-type='dijit/form/NumberTextBox'
-                                 required='true' value='50' data-dojo-props='constraints:{min:0, max:5000,places:0},
-                                 invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid update Delay."'
-                                 style='width:4em; height:1.6em'/>
-                          msecs<br />
-                        </div>
-                      </span>
                     </form>
                   </div> <span id='end of Experiment 1'></span>  
 

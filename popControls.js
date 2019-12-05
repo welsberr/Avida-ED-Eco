@@ -329,11 +329,11 @@ av.ptd.runPopFn = function (from) {
     }; // end if section to deal with starting a new run
 
     // tiba: auto update will need to be redone. for avida 4.0 
-    if (av.dom.autoUpdateRadio.checked) {
-      //av.msg.pause(av.dom.autoUpdateOnce.value);  //not used where there is handshaking (not used with av.msg.stepUpdate)
+    if (av.dom.autoPauseCheck.checked) {
+      //av.msg.pause(av.dom.autoPauseNum.value);  //not used where there is handshaking (not used with av.msg.stepUpdate)
       av.ui.autoStopFlag = true;
-      av.ui.autoStopValue = av.dom.autoUpdateOnce.value;
-      //console.log('stop at  = av.dom.autoUpdateOnce.value;
+      av.ui.autoStopValue = av.dom.autoPauseNum.value;
+      //console.log('stop at  = av.dom.autoPauseNum.value;
     };
     //console.log('before call av.ptd.makeRunState');
     av.ptd.makeRunState('av.ptd.runPopFn 328');
@@ -572,9 +572,8 @@ av.ptd.resetDishFn = function (need2sendRest2avida) { //Need to reset all settin
   if (av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg']) {av.fzr.actConfig.file['instset.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg'];}
 
     //Clear options that are not in the config files
-  av.dom.manualUpdateRadio.checked = true;
-  av.dom.autoUpdateRadio.checked = false;
-  av.dom.autoUpdateOnce.value = av.ptd.autoPauseUpdate;
+    av.dom.autoPauseCheck.checked = false;
+    av.dom.autoPauseNum.value = av.ptd.autoPauseUpdate;
 
   av.ptd.clearLogicButtons();
   //console.log('fzr.activeCon', av.fzr.actConfig);
