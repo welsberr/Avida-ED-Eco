@@ -3441,82 +3441,14 @@ require([
     av.anl.AnaChartFn();
     av.post.addUser('Button: yRightSelect = ' + document.getElementById('yRightSelect').value);
   };
-
-  // **************************************************************************************************************** */
-  //Tasks that Need to be run when page is loaded and after chart is defined
-  // **************************************************************************************************************** */
-
-  //if (true) console.log('after chart defined for analysis page');
-  // ------------------------ Population Page Statistics tables --------------------------------------------------------
-
-  //av.ui.adjustpopInfoSize('after page loaded, before chart is defined.');  // djb might delete later; not using as of 2018_0827
-
-  //used to set the height so the data just fits. Done because different monitor/browser combinations require a different height in pixels.
-  //may need to take out as requires loading twice now.
-
-  //setting row height to match on population page stats window
-  //http://www.tek-tips.com/viewthread.cfm?qid=891026
-  /*
-   Trying to dynamically set row ht in case it was different on differnt screens/opperationg systems, browsers.
-   Never got it working
-   
-   var popsBotTblRows = document.getElementById('popsBotTable').rows;
-   var sotBotTbl = document.getElementById('sotBotTable').rows;
-   var ht = sotBotTbl[2].offsetHeight;
-   for (var ii = 1; ii < popsBotTblRows.length; ii++) {
-   //sotBotTbl[ii].offsetHeight = popsBotTblRows[ii].offsetHeight;  //can only get values not put them.
-   console.log('sot rowHt=',sotBotTbl[ii].offsetHeight, '; PopsrowHt=',popsBotTblRows[ii].offsetHeight );
-   }
-   
-   var newCss = '.botTable td {  line-height: ' + ht + 'px;  }';
-   av.ptd.setStyle(newCss);
-   //stylesheet.insertRule('.botTable td {  line-height: ' + ht + 'px;  }', 265);
-   */
-
-  av.ui.removeVerticalScrollbar = function (scrollDiv, htChangeDiv) {
-    //https://tylercipriani.com/2014/07/12/crossbrowser-javascript-scrollbar-detection.html
-    var scrollSpace = 0;
-    if (0 <= window.jscd.os.indexOf('Win')) {
-      scrollSpace = 17;
-    }
-    //if the two heights are different then there is a scroll bar
-    var ScrollDif = document.getElementById(scrollDiv).scrollHeight - document.getElementById(scrollDiv).clientHeight;
-    var hasScrollbar = 0 < ScrollDif;
-    if (av.debug.uil)
-      console.log('scroll', scrollDiv, hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
-        document.getElementById(scrollDiv).clientHeight, '; htChangeDiv=', document.getElementById(htChangeDiv).scrollHeight,
-        document.getElementById(htChangeDiv).offsetHeight, document.getElementById(htChangeDiv).style.height);
-
-    var divHt = document.getElementById(htChangeDiv).offsetHeight;
-    if (av.debug.uil)
-      console.log('htChangeDiv is', htChangeDiv, '; divHt=', divHt);
-    if (hasScrollbar) {
-      if (null !== divHt) {
-        var NewHt = divHt + 1 + scrollSpace + ScrollDif;  //add the ht difference to the outer div that holds this one
-        //line below is where the height of the div actually changes
-        if (av.debug.uil)
-          document.getElementById(htChangeDiv).style.height = NewHt + 'px';
-      }
-      //redraw the screen
-      //av.ui.mainBoxSwap(page);
-      //if (av.debug.root) 
-      if (av.debug.uil) {
-        console.log('Afterscroll', hasScrollbar, document.getElementById(scrollDiv).scrollHeight,
-          document.getElementById(scrollDiv).clientHeight, '; htChangeDiv=', document.getElementById(htChangeDiv).scrollHeight,
-          document.getElementById(htChangeDiv).offsetHeight, document.getElementById(htChangeDiv).style.height);
-      }
-      ;
-    }
-  };
-
-  //Tiba - put back soon
-  //av.ui.removeVerticalScrollbar('popStats4grid', 'popStatistics');
-  //av.ui.removeVerticalScrollbar('popBot', 'popBot');
-  
-  
-  //Resize tools might be called here or after "Last things done"
   
   if (av.debug.root) console.log('after chart defined for analysis page');
+  // **************************************************************************************************************** */
+  //                                       end of Analysis Page
+  // **************************************************************************************************************** */
+
+  //Resize tools might be called here or after "Last things done
+  
   // **************************************************************************************************************** */
   //                                          Last things done
   // **************************************************************************************************************** */
@@ -3563,15 +3495,6 @@ require([
   // May need to do some things here to get the app to look right on the screen. 
   //av.grd.popChartFn();
   //av.grd.drawGridSetupFn('initial background'); //Draw initial background
-
-  //Safari 9 will not allow saving workspaces or freezer items.  This is old from when Safari did not allow saving.
-  //if (av.brs.isSafari) {
-  if (false) {
-    userMsgLabel.textContent = 'Safari 9 does not allow saving a workspace or freezer items. Please use Firefox or Chrome';
-    dijit.byId('mnFlSaveWorkspace').attr('disabled', true);
-    dijit.byId('mnFlSaveWorkspace').attr('disabled', true);
-    dijit.byId('mnFlSaveAs').attr('disabled', true);
-  };
 
   // className should be 'labInfoClass labInfoNone'
   console.log('av.dom.testSetupBlock.className=', av.dom.testSetupBlock.className);

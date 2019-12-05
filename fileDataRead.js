@@ -67,7 +67,7 @@ av.fio.setActiveConfig = function(dndSection, name, type){
 /*-------------------------------------------------------------------------------------- av.frd.add2freezerFromFile --*/
 av.frd.add2freezerFromFile = function (loadConfigFlag, from) {
   'use strict';
-  console.log(from, ' called av.frd.add2freezerFromFile: loadConfigFlag = ', loadConfigFlag)
+  console.log(from, ' called av.frd.add2freezerFromFile: loadConfigFlag = ', loadConfigFlag);
   var type = av.fio.anID.substr(0, 1);
   //console.log('av.fio.anID', av.fio.anID);
   var dir = av.utl.wsb('/', av.fio.anID);
