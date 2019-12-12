@@ -915,6 +915,7 @@ av.pch = {};   // related to the chart on the population page
 av.pch.dadMax = 16;
 
 av.pch.clearPopChrt = function () {
+  av.pch.needInit = true; //Added on 2019 Dec 10 Tues; not sure if it belongs here or not
   av.pch.ht = 10;
   av.pch.wd = 10; 
   //console.log('av.pch.wd', av.pch.wd);    // when duging why plotly crashed; turned out plotly crashs if div holding plot is not displayed

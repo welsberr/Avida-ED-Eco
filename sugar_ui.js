@@ -47,9 +47,10 @@ av.sgr.buildHtml = function() {
       document.getElementById(av.sgr.logicNames[ii]+'0Details').innerHTML = newstr;
     }
   };
+    //Was using this to display how I was building sugar according data
     //console.log('av.dom.orn0section.innerHTML=', av.dom.orn0section.innerHTML);
     //av.dom.tst2textarea.value = document.getElementById('equ0Details').innerHTML;
-    av.dom.tst2textarea.value = tskSectionStr;
+    //av.dom.tst2textarea.value = tskSectionStr;
     
     av.dom.showTextarea.value = av.dom.sugarAccordion.innerHTML;  
     //av.dom.showTextarea.value = document.getElementById('not0Details');  

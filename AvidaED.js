@@ -1,5 +1,5 @@
 
-if (av.debug.root) { console.log('AvidaED.js line 3'); }
+if (av.debug.root) { console.log('root: AvidaED.js line 3'); }
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
@@ -80,7 +80,7 @@ if (av.debug.root) { console.log('AvidaED.js line 3'); }
 //----------------------------------------------------------------------------------------------------------------------
 // 
 
-console.log('version from Avida-ED-flex-active_2019_0929');
+console.log('root: version from Avida-ED-flex-active_2019_0929');
 var av = av || {};  //incase av already exists
 var dojo = dojo || {};
 
@@ -196,7 +196,7 @@ require([
   //av.mouse.getOriginalShapes(); only gets empty strings
 
   /********************************************************************************************************************/
-  console.log('after splash screen code');
+  console.log('root: after splash screen code');
   // -------------------------------------------------------------------------------------------------------------------
   // Initialize variables that depend on files loaded in requirement statement
   // -------------------------------------------------------------------------------------------------------------------
@@ -205,11 +205,11 @@ require([
   av.dom.initilizeAnalizePage(); 
   av.dom.load();
 
-  if (av.debug.root) { console.log('before dnd definitions'); };
+  if (av.debug.root) { console.log('root: before dnd definitions'); };
 
   av.dom.load();
 
-  if (av.debug.root) { console.log('before dnd definitions'); };
+  if (av.debug.root) { console.log('root: before dnd definitions'); };
   /********************************************************************************************************************/
   /******************************************* Dojo Drag N Drop Initialization ****************************************/
   /********************************************************************************************************************/
@@ -269,12 +269,12 @@ require([
 
   av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
 
-  if (av.debug.root) { console.log('before organIcon'); }
+  if (av.debug.root) { console.log('root: before organIcon'); }
   av.dnd.organIcon = new dndTarget('organIcon', {accept: ['g'], selfAccept: false});
   av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
   av.dnd.gridCanvas = new dndTarget('gridCanvas', {accept: ['g']});
   av.dnd.trashCan = new dndSource('trashCan', {accept: ['c', 'g', 't', 'w'], singular: true});
-  if (av.debug.root) { console.log('after trashCan'); }
+  if (av.debug.root) { console.log('root: after trashCan'); }
 
   av.dnd.activeConfig = new dndSource('activeConfig', {
     accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
@@ -290,7 +290,7 @@ require([
     selfAccept: false
   });
 
-  if (av.debug.root) { console.log('before activeOrgan'); }
+  if (av.debug.root) { console.log('root: before activeOrgan'); }
   //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
   av.dnd.activeOrgan = new dndSource('activeOrgan', {
     accept: ['g'],
@@ -312,9 +312,9 @@ require([
   //**************************************************************************************************/
 
   //Avida as a web worker
-  if (av.debug.root) { console.log('before call avida'); }
+  if (av.debug.root) { console.log('root: before call avida'); }
   //
-  if (av.debug.root) { console.log('typeof(av.aww.uiWorker', typeof(av.aww.uiWorker)); }
+  if (av.debug.root) { console.log('root: typeof(av.aww.uiWorker', typeof(av.aww.uiWorker)); }
   if (typeof (Worker) !== 'undefined') {
     //console.log('Worker type is not undefined');
     if (null === av.aww.uiWorker) {
@@ -328,13 +328,13 @@ require([
   };
 
   //process message from web worker
-  if (av.debug.root) { console.log('before dnd triggers'); }
+  if (av.debug.root) { console.log('root: before dnd triggers'); }
   av.aww.uiWorker.onmessage = function (ee) {
     //console.log('avida_ee', ee);
     av.msg.readMsg(ee);
   };  // in file messaging.js
 
-  if (av.debug.root) { console.log('before dnd triggers'); }
+  if (av.debug.root) { console.log('root: before dnd triggers'); }
   //*******************************************************************************************************************
   //       Dojo Dnd drop function - triggers for all dojo dnd drop events
   //*******************************************************************************************************************
@@ -476,7 +476,7 @@ require([
    });
    */
 
-  //console.log('av.dnd.ancestorBox', av.dnd.ancestorBox);
+  console.log('root: av.dnd.ancestorBox', av.dnd.ancestorBox);
   av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
     if ('ancestorBox' === target.node.id) {
       //console.log('ancestorBox=', target, av.dnd.ancestorBox);  //yes they are the same. could use in the above if statement.
@@ -603,7 +603,7 @@ require([
   //                                    End of dojo based DND triggered functions
   //----------------------------------------------------------------------------------------------------------------------
 
-   if (av.debug.root) { console.log('before Error Logging'); }
+   if (av.debug.root) { console.log('root: before Error Logging'); }
   //********************************************************************************************************************
   // Error logging
   //********************************************************************************************************************
@@ -624,12 +624,12 @@ require([
     av.debug.error = 'Error: ' + message + ' from ' + file + ':' + line + ':' + col;
     av.debug.sendLogTextarea = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail + '\n\n' + av.debug.error;
 
-    console.log('before call problemWindow');
+    console.log('root: before call problemWindow');
     av.ui.problemWindow();
   };
 
   window.addEventListener('error', function (evt) {
-    //console.log('event listener', evt);
+    //console.log('In window.addEventListener: event listener', evt);
   });
   //--------------------------------------------------------------------------------------------
 
@@ -714,7 +714,7 @@ require([
   // Menu Buttons handling
   //********************************************************************************************s************************
 
-  if (av.debug.fio) { console.log('dijit test', dijit.byId('mnFlOpenDefaultWS')); }
+  if (av.debug.fio) { console.log('fio: dijit test', dijit.byId('mnFlOpenDefaultWS')); }
 
   dijit.byId('mnFlOpenDefaultWS').on('Click', function () {
     'use strict';
@@ -847,7 +847,7 @@ require([
     console.log('domobj=', domobj);
   };
 
-  if (av.debug.root) { console.log('before Help drop down menu'); }
+  if (av.debug.root) { console.log('root: before Help drop down menu'); }
   //--------------------------------------------------------------------------------------------------------------------
   // Help Drop down menu buttons
   //--------------------------------------------------------------------------------------------------------------------
@@ -928,6 +928,7 @@ require([
       isSafari: av.brs.isSafari
     };
 
+    console.log('root: defore defining av.debug.postData');
     av.debug.postData = {
       version: av.ui.version,
       userInfo: window.navigator.userAgent,
@@ -943,7 +944,7 @@ require([
       freezer: JSON.stringify(av.fzr),
       vars: av.debug.vars
     };
-    console.log('postData=', av.debug.postData);
+    console.log('root:  postData=', av.debug.postData);
 
     //Until we get sending data to database figure out. Switch between post and e-mail session log
     if (true) {
@@ -995,6 +996,7 @@ require([
   //visibility:hidden can be used, but it leaves the white space and just does not display dijits.
   //So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
   //the default option.
+  console.log('root: before av.ui.mainBoxSwap defined');
   av.ui.mainBoxSwap = function (showBlock) {
     //console.log('showBlock=', showBlock);
     av.ui.page = showBlock;
@@ -1018,7 +1020,9 @@ require([
     dijit.byId('mnCnOffspringTrace').attr('disabled', true);
 
     // if the miniplot on the populaton page needs to be initiated call that funciton.
-    if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+    console.log('In: av.ui.mainBoxSwap; av.pch.needInit=', av.pch.needInit, '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));
+    //if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+    if ($(av.dom.popStatsBlock).is(":visible") && (av.pch.needInit) ) {
       av.grd.popChartInit('av.ui.mainBoxSwap');
     };
     if (('populationBlock' == av.ui.page) || ('organismBlock' == av.ui.page)) {
@@ -1123,7 +1127,12 @@ require([
         av.dom.statsTab.className = 'tablinks active'; 
 
         // if the miniplot on the populaton page needs to be initiated call that funciton.
-        if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+        console.log('In: av.ptd.rightInfoPanelToggleButton; av.pch.needInit=', av.pch.needInit
+              , '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
+        
+        //if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+        if ( $(av.dom.popStatsBlock).is(":visible") && av.pch.needInit) {
+          console.log('need to call av.grd.popChartInit');
           av.grd.popChartInit('av.ptd.rightInfoPanelToggleButton');
         };
       };
@@ -1190,6 +1199,7 @@ require([
   // ------------ end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
 
 //------------------------------------------------------------------------------------------show/hide left side panel --
+  console.log('root: beforer define: av.ptd.lftPnlButtonImg'); 
   av.ptd.lftPnlButtonImg = function () {
     if (av.ui.lftSidePnlShowing) {
       av.post.addUser('Button: lftPnlButtonImg: start hidding left side panel');
@@ -1214,6 +1224,7 @@ require([
 //----------------------------------------------------------------------------------------------------------------------
 
 // hides and shows the population and selected organsim data on right of population page with 'Stats/mpa' button
+  console.log('root: before av.ptd.rtPnlButtonImg');
   av.ptd.rtPnlButtonImg = function () {
     //console.log('rtPnlButtonImg: av.ui.page=', av.ui.page);
     if ('populationBlock' == av.ui.page) {
@@ -1347,7 +1358,7 @@ require([
     //console.log('newSaveConfig click');
   };
 
-  function newButtonBoth() {
+  av.ui.newButtonBoth = function() {
     'use strict';
     if ('prepping' == av.grd.runState) {// reset petri dish
       av.msg.reset();
@@ -1358,17 +1369,17 @@ require([
       av.ptd.makePauseState();
       av.dom.newModalID.style.display = "block";
     }
-  }
+  };
 
 //  document.getElementById('newDishButton').onclick = function () {
   av.dom.newDishButton.onclick = function () {
     av.post.addUser('Button: newDishButton');
-    newButtonBoth();
+    av.ui.newButtonBoth();
   };
 
   dijit.byId('mnCnNewpop').on('Click', function () {
     av.post.addUser('Button: mnCnNewpop');
-    newButtonBoth();
+    av.ui.newButtonBoth();
   });
 
   //**************************************      Freeze Button      *****************************************************
@@ -1663,7 +1674,7 @@ require([
   //av.dom.gridCanvas.height = $('#gridHolder').innerHeight() - 16 - av.dom.scaleCanvas.height;
 
   //--------------------------------------------------------------------------------------------------------------------
-  if (av.debug.root) { console.log('before av.grd.drawGridSetupFn'); }
+  if (av.debug.root) { console.log('root: before av.grd.drawGridSetupFn'); }
 
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
@@ -1875,7 +1886,7 @@ require([
   // *******************************************************************************************************************
   //    Buttons that select organisms that perform a logic function
   // *******************************************************************************************************************
-  if (av.debug.root)  { console.log('before logic buttons'); }
+  if (av.debug.root)  { console.log('root: before logic buttons'); }
 
   //    av.post.addUser('Button: notButton');    //done in av.ptd.bitToggle
   document.getElementById('notButton').onclick = function () {
@@ -1921,24 +1932,34 @@ require([
 
   // initialize needs to be in AvidaED.js; cannot be run when mini-graph is not visible. 
   // Should be done before av.grd.popChartFn is run.
+  
+  console.log('before av.grd.popChartInit defined');
   av.grd.popChartInit = function (from) {
-    //console.log(from, 'called av.grd.popChartInit');
-    //looke to see if poplulation page mini-chart is showing
-    if ('flex' != av.dom.popStatsBlock.style.display || ('populationBlock' !== av.ui.page)) {
+    //console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
+    //                '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display, '; av.ui.page=', av.ui.page, 
+    //                '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
+    //
+    console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
+                    '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
+
+    //look to see if poplulation page mini-chart is showing
+    //if ('flex' != av.dom.popStatsBlock.style.display || ('populationBlock' !== av.ui.page)) {
+    if ( $(av.dom.popStatsBlock).is(":visible") ) {
       av.pch.needInit = true;
+      console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit);
       return;
     };
-
     av.pch.clearPopChrt();
+    console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit);
     av.pch.divSize('av.grd.popChartInit');
     var popData = av.pch.data;
 
+    console.com('av.dom.popChart.data=',av.dom.popChart.data, ' gets done even if mini-graph != visible ?????');
     if (undefined == av.dom.popChart.data) {
-      if (av.debug.plotly)
-        //console.log('before plotly.plot in popChartInit');
+      if (av.debug.plotly) { console.log('before plotly.plot in popChartInit'); }
       av.debug.log += '\n     --uiD: Plotly.plot("popChart", popData, av.pch.layout, av.pch.widg) in AvidaED.js at 1565';
       av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'popData, av.pch.layout, av.pch.widg', [popData, av.pch.layout, av.pch.widg]);
-      Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
+      Plotly.plot('popData=', popData, '; av.pch.layout=', av.pch.layout, '; av.pch.widg=', av.pch.widg);
       if (av.debug.uil) console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
       if (av.debug.plotly) console.log('after plotly.plot in poChartInit');
     } else {
@@ -1954,10 +1975,9 @@ require([
         height: av.pch.ht
       };
 
-      if (av.debug.plotly)
-        console.log('popData', popData);
+      if (av.debug.plotly) { console.log('popData', popData); }
       //Plotly.purge(av.dom.popChart);      //does not seem to work once plotly.animate has been used
-      //console.log('data=', av.dom.popChart.data);
+      console.log('av.dom.popChart.data=', av.dom.popChart.data);
       if (undefined != av.dom.popChart.data[0]) {
         av.debug.log += '\n     --uiD: Plotly: Plotly.deleteTraces(av.dom.popChart, [0, 1]) in AvidaED.js at 2133';
         av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart', [av.dom.popChart]);
@@ -1971,14 +1991,18 @@ require([
     //console.log('layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width);
     av.pch.needInit = false;
   };
+  console.log('after av.grd.popChartInit defined');
+
 
   av.grd.popChartFn = function (from) {
     'use strict';
+    console.log(from, 'called popChartFn: av.pch.needInit= ', av.pch.needInit, 
+                      '; $(statsBlock.display = ', $(av.dom.popStatsBlock).css('display'),
+                      '; av.dom.popStatsBlock.style.display', av.dom.popStatsBlock.style.display,
+                      '; av.ui.page=', av.ui.page,
+                      '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));      
     if (av.pch.needInit) {
       //console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, '; av.ui.page=', av.ui.page);
-      console.log(from, 'called popChartFn: av.pch.needInit= ', av.pch.needInit, 
-                      '; $(statsBlock.display = ', $(av.dom.popStatsBlock).css('display'),
-                      '; StatsBlock.show? = ', $(av.dom.popStatsBlock).is(":visible"));      
       // if the miniplot on the populaton page needs to be initiated call that funciton.
       // In this situation, av.dom.popStatsBlock.style.display does not give the correct answer; 
       // my guess is because display is changed by changing the class rather than by changing the element directly
@@ -1991,8 +2015,15 @@ require([
       // if the miniplot on the populaton page needs to be initiated call that:
       //    av.dom.popStatsBlock.style.display never is 'flex' so 
       //           av.grd.popChartInit('av.grd.popChartFn'); never called
-      if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+      // 
+      // console.log('popStatsBlock = ', $(av.dom.popStatsBlock).css('display'), '; av.pch.needInit=', av.pch.needInit);
+      //if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+
+      
+      console.log('$(av.dom.popStatsBlock).css("display")  = ', $(av.dom.popStatsBlock).css('display'), '; av.pch.needInit=', av.pch.needInit);
+      if ( $(av.dom.popStatsBlock).css('display') && av.pch.needInit ) {
         av.grd.popChartInit('av.grd.popChartFn');
+        console.log('av.grd.runState = ', av.grd.runState);
       };
     } else { 
       console.log('av.grd.runState = ', av.grd.runState); 
@@ -2000,13 +2031,14 @@ require([
 
     // Do not display chart if the chart is not on the screen. Data seems to be getting updated. need to verify this.
     if ( $(av.dom.popStatsBlock).is(":visible") ) {
-      // the avidaDataRecorder.csv is broken
+      console.log('Not visible: so skip rest of function');
       return;
     };
+    
 
-    //console.log('av.grd.runState = ', av.grd.runState);
+    console.log('av.grd.runState = ', av.grd.runState);
     if ('prepping' === av.grd.runState) {   //values can be prepping, started, or world
-      av.dom.popChart.style.visibility = 'hidden';
+      av.dom.popChart.style.visibility = 'hidden';  //hide mini-chart when a dish is not running
     } else {
       av.dom.popChart.style.visibility = 'visible';
       if ('none' === document.getElementById('yaxis').value) {
@@ -2970,8 +3002,7 @@ require([
   //********************************************************************************************************************
   // Resize window helpers -------------------------------------------
   //********************************************************************************************************************
-  if (av.debug.root)
-    console.log('before Resize helpers');
+  if (av.debug.root) { console.log('root: before Resize helpers'); }
 
   av.removeVerticalScrollBars = function () {
     if (av.debug.uil)
@@ -3003,52 +3034,48 @@ require([
 
   //on 2018_0823 this is where height gets messed up when loading the program. 
   av.pch.divSize = function (from) {
-    //console.log(from, 'called av.pch.divSize');
+    console.log(from, 'called av.pch.divSize');
     //av.debug.uil = true;
-    if (av.debug.uil)
+    if (av.debug.uil) {
       console.log('popChrtHolder css.wd ht border padding margin=', $("#popChrtHolder").css('width'), $("#popChrtHolder").css('height')
         , $("#popChrtHolder").css('border'), $("#popChrtHolder").css('padding'), $("#popChrtHolder").css('margin'));
-
-    if (av.debug.uil)
+    } 
+    if (av.debug.uil) {
       console.log('av.dom.popChrtHolder.ht offset, client ht=', av.dom.popChrtHolder.offsetHeight,
         av.dom.popChrtHolder.clientHeight, '; parseInt(padding)=', parseInt($("#popChrtHolder").css('padding'), 10));
-
+    }
     av.pch.ht = av.dom.popChrtHolder.clientHeight - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
     av.pch.wd = av.dom.popChrtHolder.clientWidth - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
     //console.log(from, 'called av.pch.divSize:', 'av.pch.wd=', av.pch.wd, '; av.pch.ht=', av.pch.ht);
     av.pch.layout.height = av.pch.ht;
     av.pch.layout.width = av.pch.wd;
-    if (av.debug.uil)
-      console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
-    if (av.debug.uil)
-      console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
+    if (av.debug.uil) { console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht); }
+    if (av.debug.uil) { console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
 
     //av.dom.popChrtHolder.style.width = av.dom.popChrtHolder.clientWidth + 'px';  //seems redundent  djb said to delete as of 2018_0827
     //av.dom.popChrtHolder.style.height = av.dom.popChrtHolder.clientHeight + 'px';  //seems redundent djb said to delete as of 2018_0827
     av.dom.popChart.style.height = av.pch.ht + 'px';
     av.dom.popChart.style.width = av.pch.wd + 'px';
-    if (av.debug.uil)
+    if (av.debug.uil) {
       console.log('popChart css.wd, border, padding, margin=', $("#popChart").css('width'), $("#popChart").css('height')
         , $("#popChart").css('border'), $("#popChart").css('padding'), $("#popChart").css('margin'));
-    if (av.debug.uil)
+    }
+    if (av.debug.uil) {
       console.log('av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight,
         av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'), 10));
-    if (av.debug.uil)
-      console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht);
-    if (av.debug.uil)
-      console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
+    }
+    if (av.debug.uil) { console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht); }
+    if (av.debug.uil) { console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
     //av.debug.uil = false;
   };
 
   av.anl.divSize = function (from) {
-    if (av.debug.alo)
-      console.log(from, 'called av.anl.divSize');
+    if (av.debug.alo) { console.log(from, 'called av.anl.divSize'); }
     //console.log(from,'anaChrtHolder Ht client scroll ', av.dom.anaChrtHolder.clientHeight, av.dom.anaChrtHolder.scrollHeight);
     //console.log(from,'anlDndChart Ht client scroll', av.dom.anlDndChart.clientHeight, av.dom.anlDndChart.scrollHeight);
     //console.log(from,'anlChrtSpace Ht client scroll', av.dom.anlChrtSpace.clientHeight, av.dom.anlChrtSpace.scrollHeight);
 
-    if (av.debug.alo)
-      console.log('av.dom.anaChrtHolder.clientWd, Ht=', av.dom.anaChrtHolder.clientWidth, av.dom.anaChrtHolder.clientHeight);
+    if (av.debug.alo) { console.log('av.dom.anaChrtHolder.clientWd, Ht=', av.dom.anaChrtHolder.clientWidth, av.dom.anaChrtHolder.clientHeight); }
     av.anl.ht = av.dom.anaChrtHolder.clientHeight - 1;
     av.anl.wd = av.dom.anaChrtHolder.clientWidth - 1;
     av.dom.anaChrtHolder.style.height = av.anl.ht + 'px';
@@ -3061,16 +3088,16 @@ require([
 
   // called from script in html file as well as below
   av.ui.browserResizeEventHandler = function (from) {
-    if (true)
-      console.log(from, 'called av.ui.browserResizeEventHandler');
+    if (true) { console.log(from, 'called av.ui.browserResizeEventHandler'); }
     if ('none' !== domStyle.get('analysisBlock', 'display')) {
       av.anl.AnaChartFn();
     }
     if ('none' !== domStyle.get('populationBlock', 'display')) {
       //av.ui.resizePopLayout('av.ui.browserResizeEventHandler popBlock');  //does not work
-      if (av.debug.uil)
+      if (av.debug.uil) {
         console.log('av.grd.canvasSize =', av.grd.canvasSize, '; av.dom.gridCanvas.width = ', av.dom.gridCanvas.width,
           '; av.dom.gridHolder.clientHeight=', av.dom.gridHolder.clientHeight);
+      }
       if (av.grd.need2DrawGrid) {
         av.grd.popChartFn('av.ui.browserResizeEventHandler');
         console.log('av.grd.need2DrawGrid=', av.grd.need2DrawGrid);
@@ -3239,7 +3266,7 @@ require([
   // **************************************************************************************************************** */
   //                                                Analysis Page
   // **************************************************************************************************************** */
-  if (av.debug.root) { console.log('End of resize helpers; start of Analysis Page'); }
+  if (av.debug.root) { console.log('root: start of Analysis Page'); }
   
   // initialize needs to be in AvidaED.js   Does not work in included files
   av.anl.anaChartInit = function () {
@@ -3268,6 +3295,7 @@ require([
     //console.log('layout=', av.dom.anlChrtSpace.layout);
     av.dom.anlChrtSpace.style.visibility = 'hidden';
   };
+  console.log('root: before av.anl.anaChartInit called');
   av.anl.anaChartInit();
 
   av.anl.AnaChartFn = function () {
@@ -3432,7 +3460,7 @@ require([
     av.post.addUser('Button: yRightSelect = ' + document.getElementById('yRightSelect').value);
   };
   
-  if (av.debug.root) console.log('after chart defined for analysis page');
+  if (av.debug.root) console.log('root: after chart defined for analysis page');
   // **************************************************************************************************************** */
   //                                       end of Analysis Page
   // **************************************************************************************************************** */

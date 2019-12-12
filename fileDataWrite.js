@@ -304,7 +304,7 @@ av.fwt.form2NutrientTxt = function (idStr, toActiveConfigFlag, from) {
           // later will get from av.nut
           sgrPerCell = Number(document.getElementById(tsk+ndx+'initialHiInput').value);
           regionInit = numCells * sgrPerCell;
-          console.log('tsk=',tsk,'; ndx=',ndx,'; sgrPerCell=', sgrPerCell, '; diffusion checkbox = ', document.getElementById(tsk+ndx+'diffuseCheck').checked );
+          //console.log('tsk=',tsk,'; ndx=',ndx,'; sgrPerCell=', sgrPerCell, '; diffusion checkbox = ', document.getElementById(tsk+ndx+'diffuseCheck').checked );
           
           //only have diffusion = 0 implemented at this time
           txt += 'RESOURCE ' + rname + ':geometry=grid:initial=' + regionInit + ':xdiffuse=0:ydiffuse=0\n';
