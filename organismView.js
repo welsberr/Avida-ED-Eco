@@ -1,5 +1,7 @@
 var av = av || {};  //because av already exists
 
+
+if (av.debug.root) { console.log('Root: before av.ind.orgStopFn'); }
 /*------------------------------------------------------------------------------------------------ av.ind.orgStopFn --*/
 av.ind.orgStopFn = function () {
   if (av.ind.update_timer) {
@@ -451,6 +453,7 @@ av.ind.updateOrganTrace = function (obj, gen, from) {
 };
 /*---------------------------------------------------------------------------------- end of av.ind.updateOrganTrace --*/
 
+if (av.debug.root) { console.log('Root: before av.ind.updateTimesPerformed'); }
 /*------------------------------------------------------------------------------------- av.ind.updateTimesPerformed --*/
 av.ind.updateTimesPerformed = function(obj, gen) {
   'use strict';

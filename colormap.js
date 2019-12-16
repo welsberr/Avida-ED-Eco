@@ -3,6 +3,8 @@
 var av = av || {};  //incase av already exists
 
 //Definition of Viridis and other dictionaries or color data sets
+
+console.log('Root: before definition of av.color'); 
 av.color = {};
 
 av.color.defaultParentColor = 'rgb(200, 200, 200)';

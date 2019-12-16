@@ -1,5 +1,6 @@
 var av = av || {};  //incase av already exists
 
+if (av.debug.root) { console.log('Root: before av.msg.readMsg'); }
 av.msg.readMsg = function (ee) {
   'use strict';
 
@@ -893,6 +894,7 @@ av.grd.updateSelectedOrganismType = function (msg) {
   }
 };
 
+if (av.debug.root) { console.log('Root: before av.msg.fillColorBlock'); }
 av.msg.fillColorBlock = function (msg) {  //Draw the color block
     'use strict';
     if (av.debug.msg) console.log('in fillColorBlock');

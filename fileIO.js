@@ -13,9 +13,10 @@
 
 var av = av || {};  //incase av already exists
 
+if (av.debug.root) { console.log('Root: before av.fio.readZipWS'); }
 /*------------------------------------------------------------------------------------------------ av.fio.readZipWS --*/
 av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
-  if (av.debug.fio) console.log('zipFileName', zipFileName, '; loadConfigFlag=', loadConfigFlag);
+  if (av.debug.fio) console.log('zipFileName=', zipFileName, '; loadConfigFlag=', loadConfigFlag);
   console.log('zipFileName', zipFileName, '; loadConfigFlag=', loadConfigFlag);
   'use strict';
   if (loadConfigFlag) av.fzr.clearFzrFn();
@@ -438,6 +439,7 @@ av.fzr.saveUpdateState = function (newSaveState) {
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
+if (av.debug.root) { console.log('Root: before window.downloadFile'); }
 // Source: http://pixelscommander.com/en/javascript/javascript-file-download-ignore-content-type/
 window.downloadFile = function (sUrl) {
 
@@ -483,6 +485,7 @@ window.downloadFile = function (sUrl) {
 //console.log('navigator.userAgent = ', navigator.userAgent);
 window.downloadFile.isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
 window.downloadFile.isSafari = navigator.userAgent.toLowerCase().indexOf('safari') > -1;
+if (av.debug.root) { console.log('Root: end of file: navigator.userAgent=',navigator.userAgent); }
 
 /* PouchDB websites
  http://pouchdb.com/api.html#database_information

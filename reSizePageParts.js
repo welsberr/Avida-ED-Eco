@@ -10,7 +10,7 @@ var av = av || {};  //because av already exists
   //********************************************************************************************************************
   //                                             Resize window helpers 
   //********************************************************************************************************************
-  if (av.debug.root) { console.log('before Resize helpers'); }
+  if (av.debug.root) { console.log('Root: before Resize helpers'); }
 
 //----------------------------------------------------------------------------------------------------------------------
   av.removeVerticalScrollBars = function () {
@@ -286,7 +286,7 @@ var av = av || {};  //because av already exists
       console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
   };
 
-
+if (av.debug.root) { console.log('Root: before av.ui.removeVerticalScrollbar'); }
 //----------------------------------------------------------------------------------------------------------------------
   av.ui.removeVerticalScrollbar = function (scrollDiv, htChangeDiv) {
     //https://tylercipriani.com/2014/07/12/crossbrowser-javascript-scrollbar-detection.html

@@ -20,21 +20,22 @@ String.prototype.replaceAll = function(search, replacement) {
 
 //av.debug flags
 av.debug = {};
-av.debug.userMsg = false; //debug of user messages.
-av.debug.root = false;  //statements that look for failiers when the code executes outside of functions
-av.debug.bool = false;  //av.debug statements that look for errors outlining logic functions
-av.debug.mouse = false;  //av.debug statements about non-dojo drag and drop
-av.debug.dnd = false;  //debu statements about dojo dnd
-av.debug.msg = false;  //messages to and from avida
-av.debug.trace = false;  //organism page
-av.debug.grid = false;  //population grid
-av.debug.popCon = false;  //population Controls
-av.debug.fio = false;  // file input/output; fio, read, write
-av.debug.ind = false;  //oranism page
-av.debug.anl = false;  //analysis page
-av.debug.plotly = false;  //both popChart and analysis
-av.debug.uil = false; //user interface layout.
 av.debug.alo = false; //analysis page layout
+av.debug.anl = false;  //analysis page
+av.debug.bool = false;  //av.debug statements that look for errors outlining logic functions
+av.debug.dnd = false;  //debu statements about dojo dnd
+av.debug.fio = false;  // file input/output; fio, read, write
+av.debug.fzr = false;  // statements about freezer
+av.debug.grid = false;  //population grid
+av.debug.ind = false;  //oranism page
+av.debug.mouse = false;  //av.debug statements about non-dojo drag and drop
+av.debug.msg = false;  //messages to and from avida
+av.debug.plotly = false;  //both popChart and analysis
+av.debug.popCon = false;  //population Controls
+av.debug.root = true;  //statements that look for failiers when the code executes outside of functions
+av.debug.trace = false;  //organism page
+av.debug.uil = false; //user interface layout.
+av.debug.userMsg = false; //debug of user messages.
 
 av.dbg = {};
 av.dbg.flg = {}; 
@@ -398,9 +399,10 @@ if (0 === av.brs.found) {
 //----------------------------------------------------------------------------------------------------------------------
 
 //console.log('window.navigator',window.navigator);
-if (av.debug.root) console.log('brs', av.brs);
-if (av.debug.root) console.log('browser info:', av.brs.name, ': ', window.navigator.userAgent);
-
+if (av.debug.root) { 
+  console.log('Root: brs', av.brs);
+  console.log('Root: browser info: window.navigator.userAgent=', window.navigator.userAgent);
+}
 //----------------------------------------------------------------------------------------------------------------------
 
 av.utl = {};  // holds utility functions
@@ -799,38 +801,38 @@ av.fzr.workspaceName = 'default';
 // Does NOT clear the active config data
 av.fzr.clearMainFzrFn = function () {
   'use strict';
-  if (av.debug.root) console.log('in ClearMainFzrFn');
+  if (av.debug.fzr) { console.log('Freezer: in ClearMainFzrFn'); }
 
 
   //Clear each section of the freezer and active organism and ancestorBox
-  if (av.debug.root) console.log('before av.dnd.fzConfig.selectAll', av.dnd.fzConfig);
+  if (av.debug.fzr) { console.log('Freezer: before av.dnd.fzConfig.selectAll', av.dnd.fzConfig); }
   av.dnd.fzConfig.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
-  if (av.debug.root) console.log('before av.dnd.fzConfig.sync');
+  if (av.debug.fzr) { console.log('Freezer: before av.dnd.fzConfig.sync'); }
   av.dnd.fzConfig.sync();   //should be done after insertion or deletion
-  if (av.debug.root) console.log('before av.dnd.fzOrgan.selectAll=', av.dnd.fzOrgan);
+  if (av.debug.fzr) { console.log('Freezer: before av.dnd.fzOrgan.selectAll=', av.dnd.fzOrgan); }
   av.dnd.fzOrgan.selectAll().deleteSelectedNodes();
-  if (av.debug.root) console.log('before av.dnd.fzOrgan.sync');
+  if (av.debug.fzr) { console.log('Freezer: before av.dnd.fzOrgan.sync'); }
   av.dnd.fzOrgan.sync();
 
 /*
-  if (av.debug.root) console.log('before av.dnd.fzMdish.selectAll=', av.dnd.fzMdish);
+  if (av.debug.fzr) console.log('Freezer: before av.dnd.fzMdish.selectAll=', av.dnd.fzMdish);
   av.dnd.fzMdish.selectAll().deleteSelectedNodes();
-  if (av.debug.root) console.log('before av.dnd.fzMdish.sync');
+  if (av.debug.fzr) console.log('Freezer: before av.dnd.fzMdish.sync');
   av.dnd.fzMdish.sync();
 */
 
-  if (av.debug.root) console.log('before av.dnd.fzWorld.selectAll=', av.dnd.fzWorld);
+  if (av.debug.fzr) { console.log('Freezer: before av.dnd.fzWorld.selectAll=', av.dnd.fzWorld); }
   av.dnd.fzWorld.selectAll().deleteSelectedNodes();
-  if (av.debug.root) console.log('before av.dnd.fzWorld.sync');
+  if (av.debug.fzr) { console.log('Freezer: before av.dnd.fzWorld.sync'); }
   av.dnd.fzWorld.sync();
-  if (av.debug.root) console.log('before av.dnd.ancestorBox.selectAll=', av.dnd.ancestorBox);
+  if (av.debug.fzr) { console.log('Freezer: before av.dnd.ancestorBox.selectAll=', av.dnd.ancestorBox); }
   av.dnd.ancestorBox.selectAll().deleteSelectedNodes();
-  if (av.debug.root) console.log('before av.dnd.ancestorBox.sync');
+  if (av.debug.fzr) { console.log('Freezer: before av.dnd.ancestorBox.sync'); }
   av.dnd.ancestorBox.sync();
 
-  if (av.debug.root) console.log('before av.fzr.saveUpdateState');
+  if (av.debug.fzr) { console.log('Freezer: before av.fzr.saveUpdateState'); }
   av.fzr.saveUpdateState('yes');
-  if (av.debug.root) console.log('end of ClearMainFzrFn');
+  if (av.debug.fzr) { console.log('Freezer: end of ClearMainFzrFn'); }
 };
 
 

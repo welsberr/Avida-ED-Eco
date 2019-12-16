@@ -1,6 +1,7 @@
 var av = av || {};  //because av already exists
 var dijit = dijit || {};
 
+if (av.debug.root) { console.log('Root: before av.grd.backgroundSquares'); }
 av.grd.backgroundSquares = function () {
   'use strict';
   var boxColor = '#111';
@@ -811,6 +812,7 @@ av.grd.gradientScale = function (from) {
   if (av.debug.uil) console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset; end gradientScale');
 };
 
+if (av.debug.root) { console.log('Root: before av.grd.cellFilled'); }
 av.grd.cellFilled = function (AvNdx, ii) {
   var flag = false;
   //console.log('av.grd.cellFilled', AvNdx, av.parents.AvidaNdx)

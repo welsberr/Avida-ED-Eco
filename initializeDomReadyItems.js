@@ -1,7 +1,10 @@
 //Just a definition of pointes to DOM objecs. I'm not sure if this speeds up running at all just slows down lading the app
 
-var av = av || {};  //incase av already exists
+var av = av || {};  //because av already exists, want to let editor know that av is valid
+var dojo = dojo || {};
+var dijit = dijit || {};
 
+if (av.debug.root) { console.log('Root: before av.dom.load'); }
   av.dom.load = function () {
     'use strict';
     //Menu
@@ -193,6 +196,9 @@ var av = av || {};  //incase av already exists
     av.dom.popDish0 = document.getElementById('popDish0');
     av.dom.popDish1 = document.getElementById('popDish1');
     av.dom.popDish2 = document.getElementById('popDish2');
+    av.dom.pop0color = document.getElementById('pop0color');
+    av.dom.pop1color = document.getElementById('pop1color');
+    av.dom.pop2color = document.getElementById('pop2color');
 
     //post - send data to database
     av.dom.postLogTextarea = document.getElementById('postLogTextarea');
@@ -232,7 +238,8 @@ var av = av || {};  //incase av already exists
 
     //av.dom. = document.getElementById('');
   };
-
+  //av.dom.load();
+  
   av.dom.initilizeDigitData = function () {
     dijit.byId('mnCnPause').attr('disabled', true);
     dijit.byId('mnCnOrganismTrace').attr('disabled', true);
@@ -248,12 +255,16 @@ var av = av || {};  //incase av already exists
   
   // for analyze page
   av.dom.initilizeAnalizePage = function() {
-    av.anl.color[0] = av.color.names[document.getElementById('pop0color').value];
-    av.anl.color[1] = av.color.names[document.getElementById('pop1color').value];
-    av.anl.color[2] = av.color.names[document.getElementById('pop2color').value];
+    //console.log('getDomByID of pop0color=', document.getElementById('pop0color') );
+    //console.log('av.dom.pop0color=', av.dom.pop0color);
+    //console.log('av.dom.pop0color.value=', av.dom.pop0color.value);
+    //console.log('av.color.names=', av.color.names);
+    av.anl.color[0] = av.color.names[av.dom.pop0color.value];
+    av.anl.color[1] = av.color.names[av.dom.pop1color.value];
+    av.anl.color[2] = av.color.names[av.dom.pop2color.value];
     av.anl.yLeftTitle = document.getElementById('yLeftSelect').value;
     av.anl.yRightTitle = document.getElementById('yRightSelect').value;
-  }
+  };
 
   av.ui.toggleDevelopentDisplays = function () {
     var len, tsk, sub;
@@ -350,6 +361,7 @@ var av = av || {};  //incase av already exists
     //console.log('in av.ui.hideDevelopment=', av.ui.hideDevelopment, 'at end of function');
   };
 
+if (av.debug.root) { console.log('Root: before av.ui.xorLabel'); }
 //----------------------------------------------------------------------------------------------------------------------
   //toggles showing resource data in right info panel (Stats window) in Populaton View
   av.ui.xorLabel = function () {

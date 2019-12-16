@@ -19,6 +19,7 @@ var av = av || {};  //incase av already exists
 
 
 // This function builds the html for all the other tasks based on the html writen for "orn"
+if (av.debug.root) { console.log('Root: before av.sgr.buildHtml'); }
 av.sgr.buildHtml = function() {
   //console.log('in av.sgr.buildHtml');
   var tskSectionStr = '';

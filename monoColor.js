@@ -6271,5 +6271,5 @@ av.color.greyMap = [
    ,'rgb( 1, 1, 1 )'
    ,'rgb( 0, 0, 0 )'];  
 
-console.log('cornflower blue length =', av.color.cornMap.length);
-console.log('greyMap length =', av.color.greyMap.length);
+//console.log('cornflower blue length =', av.color.cornMap.length);
+//console.log('greyMap length =', av.color.greyMap.length);

@@ -1,5 +1,5 @@
 
-if (av.debug.root) { console.log('root: AvidaED.js line 3'); }
+if (av.debug.root) { console.log('Root: AvidaED.js at beginning of file'); }
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
@@ -80,7 +80,7 @@ if (av.debug.root) { console.log('root: AvidaED.js line 3'); }
 //----------------------------------------------------------------------------------------------------------------------
 // 
 
-console.log('root: version from Avida-ED-flex-active_2019_0929');
+console.log('Root: before require statement');
 var av = av || {};  //incase av already exists
 var dojo = dojo || {};
 
@@ -136,8 +136,8 @@ require([
   'lib/FileSaver.js',
   //'avida-messages.js',
   'messaging.js',
- 'initializeDomReadyItems.js',
- 'fileDataRead.js',
+  'initializeDomReadyItems.js',
+  'fileDataRead.js',
   'fileDataWrite.js',
   'fileIO.js',
   'populationGrid.js',
@@ -196,20 +196,19 @@ require([
   //av.mouse.getOriginalShapes(); only gets empty strings
 
   /********************************************************************************************************************/
-  console.log('root: after splash screen code');
+  if (av.debug.root) { console.log('Root: after splash screen code'); }
   // -------------------------------------------------------------------------------------------------------------------
   // Initialize variables that depend on files loaded in requirement statement
   // -------------------------------------------------------------------------------------------------------------------
 
+  if (av.debug.root) { console.log('Root: before av.dom.load'); };
+  av.dom.load();
+
   av.dom.initilizeDigitData();
   av.dom.initilizeAnalizePage(); 
-  av.dom.load();
 
-  if (av.debug.root) { console.log('root: before dnd definitions'); };
 
-  av.dom.load();
-
-  if (av.debug.root) { console.log('root: before dnd definitions'); };
+  if (av.debug.root) { console.log('Root: before dnd definitions'); };
   /********************************************************************************************************************/
   /******************************************* Dojo Drag N Drop Initialization ****************************************/
   /********************************************************************************************************************/
@@ -223,7 +222,7 @@ require([
     selfAccept: false
   });
   
-  if (av.debug.root) { console.log('before fzOrgan'); }
+  if (av.debug.root) { console.log('Root: before fzOrgan'); }
   av.dnd.fzOrgan = new dndSource('fzOrgan', {
     accept: ['g'], //g=genome
     copyOnly: true,
@@ -231,7 +230,7 @@ require([
     selfAccept: false
   });
   
-  if (av.debug.root) { console.log('before fzWorld'); };
+  if (av.debug.root) { console.log('Root: before fzWorld'); };
   av.dnd.fzWorld = new dndSource('fzWorld', {
     //accept: ['b', 'w'],   //b=both; w=world  //only after the population started running
     singular: true,
@@ -269,12 +268,12 @@ require([
 
   av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
 
-  if (av.debug.root) { console.log('root: before organIcon'); }
+  if (av.debug.root) { console.log('Root: before organIcon'); }
   av.dnd.organIcon = new dndTarget('organIcon', {accept: ['g'], selfAccept: false});
   av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
   av.dnd.gridCanvas = new dndTarget('gridCanvas', {accept: ['g']});
   av.dnd.trashCan = new dndSource('trashCan', {accept: ['c', 'g', 't', 'w'], singular: true});
-  if (av.debug.root) { console.log('root: after trashCan'); }
+  if (av.debug.root) { console.log('Root: after trashCan'); }
 
   av.dnd.activeConfig = new dndSource('activeConfig', {
     accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
@@ -290,7 +289,7 @@ require([
     selfAccept: false
   });
 
-  if (av.debug.root) { console.log('root: before activeOrgan'); }
+  if (av.debug.root) { console.log('Root: before activeOrgan'); }
   //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
   av.dnd.activeOrgan = new dndSource('activeOrgan', {
     accept: ['g'],
@@ -312,9 +311,9 @@ require([
   //**************************************************************************************************/
 
   //Avida as a web worker
-  if (av.debug.root) { console.log('root: before call avida'); }
+  if (av.debug.root) { console.log('Root: before call avida'); }
   //
-  if (av.debug.root) { console.log('root: typeof(av.aww.uiWorker', typeof(av.aww.uiWorker)); }
+  if (av.debug.root) { console.log('Root: typeof(av.aww.uiWorker', typeof(av.aww.uiWorker)); }
   if (typeof (Worker) !== 'undefined') {
     //console.log('Worker type is not undefined');
     if (null === av.aww.uiWorker) {
@@ -328,13 +327,13 @@ require([
   };
 
   //process message from web worker
-  if (av.debug.root) { console.log('root: before dnd triggers'); }
+  if (av.debug.root) { console.log('Root: before dnd triggers'); }
   av.aww.uiWorker.onmessage = function (ee) {
     //console.log('avida_ee', ee);
     av.msg.readMsg(ee);
   };  // in file messaging.js
 
-  if (av.debug.root) { console.log('root: before dnd triggers'); }
+  if (av.debug.root) { console.log('Root: before dnd triggers'); }
   //*******************************************************************************************************************
   //       Dojo Dnd drop function - triggers for all dojo dnd drop events
   //*******************************************************************************************************************
@@ -476,7 +475,7 @@ require([
    });
    */
 
-  console.log('root: av.dnd.ancestorBox', av.dnd.ancestorBox);
+  if (av.debug.root) { console.log('Root: before av.dnd.ancestorBox'); }
   av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
     if ('ancestorBox' === target.node.id) {
       //console.log('ancestorBox=', target, av.dnd.ancestorBox);  //yes they are the same. could use in the above if statement.
@@ -603,7 +602,7 @@ require([
   //                                    End of dojo based DND triggered functions
   //----------------------------------------------------------------------------------------------------------------------
 
-   if (av.debug.root) { console.log('root: before Error Logging'); }
+   if (av.debug.root) { console.log('Root: before Error Logging'); }
   //********************************************************************************************************************
   // Error logging
   //********************************************************************************************************************
@@ -624,7 +623,7 @@ require([
     av.debug.error = 'Error: ' + message + ' from ' + file + ':' + line + ':' + col;
     av.debug.sendLogTextarea = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail + '\n\n' + av.debug.error;
 
-    console.log('root: before call problemWindow');
+    //console.log('inside Window.on_Error: before call problemWindow');
     av.ui.problemWindow();
   };
 
@@ -694,28 +693,87 @@ require([
       };
     };
   };
-
-
-  //********************************************************************************************************************
-  //  Read Default Workspace as part of initialization
-  // ********************************************************************************************************************
-  av.fio.JSZip = JSZip;  //to allow other required files to be able to use JSZip
-  av.fio.FileSaver = FileSaver;
-  av.pch.Plotly = Plotly;
-
-  //Read the default work space and then loadConfigFlag = true; //the @default should be placed at the current configuration
-  // need to change how loadConfig worrks
-  av.fio.readZipWS(av.fio.defaultFname, true);  
   
-  //Need to get @default (the condents of folder c0) into the active config field. 
+  if (av.debug.root) { console.log('Root: defore av.ui.problemWindow'); }
+  //process problme pop-up window
+  av.ui.problemWindow = function () {
+    //console.log('in problemWindow');
+    av.debug.vars = {
+      isBlink: av.brs.isBlink,
+      isChrome: av.brs.isChrome,
+      isEdge: av.brs.isEdge,
+      isFirefox: av.brs.isFirefox,
+      isIE: av.brs.isIE,
+      isOpera: av.brs.isOpera,
+      isSafari: av.brs.isSafari
+    };
 
-  
+    av.debug.postData = {
+      version: av.ui.version,
+      userInfo: window.navigator.userAgent,
+      screenSize: av.brs.userData.screen,
+      comment: 'userComment',
+      error: av.debug.error,
+      email: 'user email if provided',
+      triggered: av.debug.triggered,
+      logs: {
+        details: av.debug.dTail,
+        session: av.debug.log
+      },
+      freezer: JSON.stringify(av.fzr),
+      vars: av.debug.vars
+    };
+    //console.log('postData=', av.debug.postData); }
+
+    //Until we get sending data to database figure out. Switch between post and e-mail session log
+    if (true) {
+      //Need to be able to get rid of these three lines for postPost. will crash without them now.
+      sendLogDialog.show();  //textarea must be visable first
+      av.dom.sendLogTextarea.focus();   //must not be commented out or extra error
+      sendLogDialog.hide();  //
+      av.post.sendWindow();
+    }
+    //e-mail in production version until database worked out.
+    else {
+      av.post.emailWindow();
+    }
+  };
+
+  av.post.sendWindow = function () {
+    postLogDialog.show();  //textarea must be visable first
+    av.dom.postLogPara.textContent = av.post.postLogPara;
+    av.dom.postVersionLabel.textContent = av.ui.version;
+    av.dom.postScreenSize.textContent = av.brs.userData.screen;
+    av.dom.postUserInfoLabel.textContent = window.navigator.userAgent.toString();
+    av.dom.postError.textContent = av.debug.error;
+    av.dom.postError.style.color = 'red';
+    av.dom.postEmailLabel.textContent = av.debug.postEmailLabel;
+    av.dom.postNoteLabel.textContent = av.debug.postNoteLabel;
+    av.dom.postStatus.textContent = av.debug.postStatus;
+    av.dom.postLogTextarea.textContent = av.debug.log;
+    av.dom.postdTailTextarea.textContent = av.debug.dTail;
+    av.dom.postProblemError.textContent = '';
+  };
+
+  av.post.emailWindow = function () {
+    av.dom.sendLogTextarea.textContent = av.debug.sendLogTextarea;
+    av.dom.sendLogPara.textContent = av.debug.sendLogPara;
+
+    //document.getElementById('postLogTextarea').textContent = av.debug.sendLogTextarea;
+    //document.getElementById('postLogPara').textContent = av.debug.sendLogPara;
+
+    sendLogDialog.show();  //textarea must be visable first
+    av.dom.sendLogTextarea.focus();
+    av.dom.sendLogTextarea.select();  //https://css-tricks.com/snippets/javascript/auto-select-textarea-text/
+  };
+    
   //********************************************************************************************************************
   // Menu Buttons handling
   //********************************************************************************************s************************
 
   if (av.debug.fio) { console.log('fio: dijit test', dijit.byId('mnFlOpenDefaultWS')); }
 
+  if (av.debug.root) { console.log('Root: before mnFlOpenDefaultWS'); }
   dijit.byId('mnFlOpenDefaultWS').on('Click', function () {
     'use strict';
     av.post.addUser('Button: mnFlOpenDefaultWS');
@@ -847,7 +905,7 @@ require([
     console.log('domobj=', domobj);
   };
 
-  if (av.debug.root) { console.log('root: before Help drop down menu'); }
+  if (av.debug.root) { console.log('Root: before Help drop down menu'); }
   //--------------------------------------------------------------------------------------------------------------------
   // Help Drop down menu buttons
   //--------------------------------------------------------------------------------------------------------------------
@@ -915,79 +973,6 @@ require([
       + '\n' + av.debug.dTail;
   };
 
-  //process problme pop-up window
-  av.ui.problemWindow = function () {
-    //console.log('in problemWindow');
-    av.debug.vars = {
-      isBlink: av.brs.isBlink,
-      isChrome: av.brs.isChrome,
-      isEdge: av.brs.isEdge,
-      isFirefox: av.brs.isFirefox,
-      isIE: av.brs.isIE,
-      isOpera: av.brs.isOpera,
-      isSafari: av.brs.isSafari
-    };
-
-    console.log('root: defore defining av.debug.postData');
-    av.debug.postData = {
-      version: av.ui.version,
-      userInfo: window.navigator.userAgent,
-      screenSize: av.brs.userData.screen,
-      comment: 'userComment',
-      error: av.debug.error,
-      email: 'user email if provided',
-      triggered: av.debug.triggered,
-      logs: {
-        details: av.debug.dTail,
-        session: av.debug.log
-      },
-      freezer: JSON.stringify(av.fzr),
-      vars: av.debug.vars
-    };
-    console.log('root:  postData=', av.debug.postData);
-
-    //Until we get sending data to database figure out. Switch between post and e-mail session log
-    if (true) {
-      //Need to be able to get rid of these three lines for postPost. will crash without them now.
-      sendLogDialog.show();  //textarea must be visable first
-      av.dom.sendLogTextarea.focus();   //must not be commented out or extra error
-      sendLogDialog.hide();  //
-      av.post.sendWindow();
-    }
-    //e-mail in production version until database worked out.
-    else {
-      av.post.emailWindow();
-    }
-  };
-
-  av.post.sendWindow = function () {
-    postLogDialog.show();  //textarea must be visable first
-    av.dom.postLogPara.textContent = av.post.postLogPara;
-    av.dom.postVersionLabel.textContent = av.ui.version;
-    av.dom.postScreenSize.textContent = av.brs.userData.screen;
-    av.dom.postUserInfoLabel.textContent = window.navigator.userAgent.toString();
-    av.dom.postError.textContent = av.debug.error;
-    av.dom.postError.style.color = 'red';
-    av.dom.postEmailLabel.textContent = av.debug.postEmailLabel;
-    av.dom.postNoteLabel.textContent = av.debug.postNoteLabel;
-    av.dom.postStatus.textContent = av.debug.postStatus;
-    av.dom.postLogTextarea.textContent = av.debug.log;
-    av.dom.postdTailTextarea.textContent = av.debug.dTail;
-    av.dom.postProblemError.textContent = '';
-  };
-
-  av.post.emailWindow = function () {
-    av.dom.sendLogTextarea.textContent = av.debug.sendLogTextarea;
-    av.dom.sendLogPara.textContent = av.debug.sendLogPara;
-
-    //document.getElementById('postLogTextarea').textContent = av.debug.sendLogTextarea;
-    //document.getElementById('postLogPara').textContent = av.debug.sendLogPara;
-
-    sendLogDialog.show();  //textarea must be visable first
-    av.dom.sendLogTextarea.focus();
-    av.dom.sendLogTextarea.select();  //https://css-tricks.com/snippets/javascript/auto-select-textarea-text/
-  };
-
   //********************************************************************************************************************
   // main button scripts
   //********************************************************************************************************************
@@ -996,7 +981,7 @@ require([
   //visibility:hidden can be used, but it leaves the white space and just does not display dijits.
   //So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
   //the default option.
-  console.log('root: before av.ui.mainBoxSwap defined');
+  if (av.debug.root) { console.log('Root: before av.ui.mainBoxSwap defined'); }
   av.ui.mainBoxSwap = function (showBlock) {
     //console.log('showBlock=', showBlock);
     av.ui.page = showBlock;
@@ -1053,6 +1038,7 @@ require([
   };
 
   // Buttons that call MainBoxSwap
+  if (av.debug.root) { console.log('Root: before av.dom.populationButton.onclick'); }
   av.dom.populationButton.onclick = function () {
     av.post.addUser('Button: populationButton');
     if (av.debug.dnd || av.debug.mouse)
@@ -1087,6 +1073,7 @@ require([
     av.anl.AnaChartFn();
   };
 
+  if (av.debug.root) { console.log('Root: before showTextButton.onclick'); }
   document.getElementById('showTextButton').onclick = function () {
     av.post.addUser('Button: showTextButton');
     av.ui.mainBoxSwap('showTextBlock');
@@ -1094,6 +1081,7 @@ require([
   // ------------------ two controls for the same purpose; tabs used in develoopment mode --
   
   //Toggle switch for Population/Organism pages
+  if (av.debug.root) { console.log('Root: before av.ptd.rightInfoPanelToggleButton'); }
   av.ptd.rightInfoPanelToggleButton = function(domObj) {
     if ('populationBlock' == av.ui.page) {
       var tabcontent = document.getElementsByClassName("labInfoClass");
@@ -1162,6 +1150,7 @@ require([
   };
 
   //Development section with tabs
+  if (av.debug.root) { console.log('Root: before av.ptd.processTab'); }
   av.ptd.processTab = function (evt, contentType) {
     var ii, tablinks;
     var tabcontent = document.getElementsByClassName("labInfoClass");
@@ -1194,12 +1183,10 @@ require([
       document.getElementById('StatsButton').className = 'toggleLftButton';            
     }
   };
-  
-  document.getElementById('StatsButton').click();
-  // ------------ end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
+  // ------- end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
 
-//------------------------------------------------------------------------------------------show/hide left side panel --
-  console.log('root: beforer define: av.ptd.lftPnlButtonImg'); 
+  //----------------------------------------------------------------------------------------show/hide left side panel --
+  if (av.debug.root) { console.log('Root: before av.ptd.lftPnlButtonImg'); }
   av.ptd.lftPnlButtonImg = function () {
     if (av.ui.lftSidePnlShowing) {
       av.post.addUser('Button: lftPnlButtonImg: start hidding left side panel');
@@ -1224,7 +1211,7 @@ require([
 //----------------------------------------------------------------------------------------------------------------------
 
 // hides and shows the population and selected organsim data on right of population page with 'Stats/mpa' button
-  console.log('root: before av.ptd.rtPnlButtonImg');
+  if (av.debug.root) { console.log('Root: before av.ptd.rtPnlButtonImg'); }
   av.ptd.rtPnlButtonImg = function () {
     //console.log('rtPnlButtonImg: av.ui.page=', av.ui.page);
     if ('populationBlock' == av.ui.page) {
@@ -1674,7 +1661,7 @@ require([
   //av.dom.gridCanvas.height = $('#gridHolder').innerHeight() - 16 - av.dom.scaleCanvas.height;
 
   //--------------------------------------------------------------------------------------------------------------------
-  if (av.debug.root) { console.log('root: before av.grd.drawGridSetupFn'); }
+  if (av.debug.root) { console.log('Root: before av.grd.drawGridSetupFn'); }
 
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
@@ -1886,7 +1873,7 @@ require([
   // *******************************************************************************************************************
   //    Buttons that select organisms that perform a logic function
   // *******************************************************************************************************************
-  if (av.debug.root)  { console.log('root: before logic buttons'); }
+  if (av.debug.root)  { console.log('Root: before logic buttons'); }
 
   //    av.post.addUser('Button: notButton');    //done in av.ptd.bitToggle
   document.getElementById('notButton').onclick = function () {
@@ -1954,7 +1941,7 @@ require([
     av.pch.divSize('av.grd.popChartInit');
     var popData = av.pch.data;
 
-    console.com('av.dom.popChart.data=',av.dom.popChart.data, ' gets done even if mini-graph != visible ?????');
+    console.log('av.dom.popChart.data=',av.dom.popChart.data, ' gets done even if mini-graph != visible ?????');
     if (undefined == av.dom.popChart.data) {
       if (av.debug.plotly) { console.log('before plotly.plot in popChartInit'); }
       av.debug.log += '\n     --uiD: Plotly.plot("popChart", popData, av.pch.layout, av.pch.widg) in AvidaED.js at 1565';
@@ -2761,6 +2748,25 @@ require([
     //console.log('autoPauseNum=', av.dom.autoPauseNum.value);
   });
 
+  //********************************************************************************************************************
+  //  Read Default Workspace as part of initialization
+  // ********************************************************************************************************************
+  av.fio.JSZip = JSZip;  //to allow other required files to be able to use JSZip
+  av.fio.FileSaver = FileSaver;
+  av.pch.Plotly = Plotly;
+
+  //Read the default work space and then loadConfigFlag = true; //the @default should be placed at the current configuration
+  // need to change how loadConfig worrks
+  
+  if (av.debug.root) { console.log('Root: before calling av.fio.readZipWS ---------------'); }
+  av.fio.readZipWS(av.fio.defaultFname, true);  
+  
+  //Need to get @default (the condents of folder c0) into the active config field. 
+
+  //------------------------------------------------------- call StatsButton.click to get the display in default mode --
+  if (av.debug.root) { console.log('Root: before call StatsButton.click'); }
+  document.getElementById('StatsButton').click();
+
 //----------------------------------------------------------------------------------------------------------------------
 //                                                     Oranism Page methods
 //----------------------------------------------------------------------------------------------------------------------
@@ -3002,7 +3008,7 @@ require([
   //********************************************************************************************************************
   // Resize window helpers -------------------------------------------
   //********************************************************************************************************************
-  if (av.debug.root) { console.log('root: before Resize helpers'); }
+  if (av.debug.root) { console.log('Root: before Resize helpers'); }
 
   av.removeVerticalScrollBars = function () {
     if (av.debug.uil)
@@ -3266,7 +3272,7 @@ require([
   // **************************************************************************************************************** */
   //                                                Analysis Page
   // **************************************************************************************************************** */
-  if (av.debug.root) { console.log('root: start of Analysis Page'); }
+  if (av.debug.root) { console.log('Root: start of Analysis Page'); }
   
   // initialize needs to be in AvidaED.js   Does not work in included files
   av.anl.anaChartInit = function () {
@@ -3295,7 +3301,7 @@ require([
     //console.log('layout=', av.dom.anlChrtSpace.layout);
     av.dom.anlChrtSpace.style.visibility = 'hidden';
   };
-  console.log('root: before av.anl.anaChartInit called');
+  if (av.debug.root) { console.log('Root: before av.anl.anaChartInit called'); }
   av.anl.anaChartInit();
 
   av.anl.AnaChartFn = function () {
@@ -3422,19 +3428,19 @@ require([
     av.anl.AnaChartFn();    //redraw chart which will get new color from dom
   };
   /*
-   document.getElementById('pop0color').onclick = function () {
-   av.anl.color[0] = av.color.names[document.getElementById('pop0color').value];
+   av.dom.pop0color.onclick = function () {
+   av.anl.color[0] = av.color.names[av.dom.pop0color.value];
    av.post.addUser('Button: pop0color');
    av.anl.AnaChartFn();
    };
-   document.getElementById('pop1color').onclick = function () {
+   av.dom.pop1color.onclick = function () {
    av.post.addUser('Button: pop1color');
-   av.anl.color[1] = av.color.names[document.getElementById('pop1color').value];
+   av.anl.color[1] = av.color.names[av.dom.pop1color.value];
    av.anl.AnaChartFn();
    };
-   document.getElementById('pop2color').onclick = function () {
+   av.dom.pop2color.onclick = function () {
    av.post.addUser('Button: pop2color');
-   av.anl.color[2] = av.color.names[document.getElementById('pop2color').value];
+   av.anl.color[2] = av.color.names[av.dom.pop2color.value];
    av.anl.AnaChartFn();
    };
    */
@@ -3460,7 +3466,7 @@ require([
     av.post.addUser('Button: yRightSelect = ' + document.getElementById('yRightSelect').value);
   };
   
-  if (av.debug.root) console.log('root: after chart defined for analysis page');
+  if (av.debug.root) { console.log('Root: after chart defined for analysis page'); }
   // **************************************************************************************************************** */
   //                                       end of Analysis Page
   // **************************************************************************************************************** */

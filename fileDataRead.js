@@ -2,6 +2,7 @@
 var av = av || {};  //incase av already exists
 var dijit = dijit || {};  //incase av already exists
 
+if (av.debug.root) { console.log('Root: before av.fio.addFzItem'); }
 /*------------------------------------------------------------------------------------------------ av.fio.addFzItem --*/
 av.fio.addFzItem = function(dndSection, name, type, fileNum) {
   'use strict';
@@ -1820,6 +1821,7 @@ av.frd.resourceLineParse = function (lnArray) {
 };
 
 // Uses environment.cfg file to create a structure to hold environment variables. 
+if (av.debug.root) { console.log('Root: before av.frd.environmentParse'); }
 av.frd.environmentParse = function (filestr) {
   'use strict';
   var errors = '';

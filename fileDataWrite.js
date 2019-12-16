@@ -1,6 +1,7 @@
 //write file data
 var av = av || {};  //incase av already exists
 
+if (av.debug.root) { console.log('Root: before av.fwt.deleteFzrFile'); }
 av.fwt.deleteFzrFile = function (fileId) {
   'use strict';
   try { delete av.fzr.file[fileId];}
@@ -588,6 +589,7 @@ av.fwt.writeCurrentCSV = function(idStr) {
   av.fio.fzSaveCsvfn();
 };
 
+if (av.debug.root) { console.log('Root: before av.fwt.makeCSV'); }
 /*-------------------------------------------------------------------------------------------------- av.fwt.makeCSV --*/
 av.fwt.makeCSV = function(fileNm) {
   'use strict';

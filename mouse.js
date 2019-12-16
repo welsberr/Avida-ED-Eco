@@ -5,6 +5,7 @@ av = av || {};  //incase av already exists
 
 
 //get domID list for freezer; just organism section
+if (av.debug.root) { console.log('Root: before av.mouse.frzOrgCurserSet'); }
 av.mouse.frzOrgCurserSet = function(state) {
   'use strict';
   for (var dir in av.fzr.domid) {
@@ -353,6 +354,7 @@ av.mouse.fromAncestorBoxRemove = function (removeName) {
 }
 
 //Key movement on grid
+if (av.debug.root) { console.log('Root: before av.mouse.arrowKeysOnGrid'); }
 av.mouse.arrowKeysOnGrid = function (event) {
   'use strict';
   if (av.grd.flagSelected) {

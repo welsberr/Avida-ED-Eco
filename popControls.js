@@ -6,7 +6,8 @@ var av = av || {};  //incase av already exists
 var dojo = dojo || {};  //incase av already exists
 var dijit = dijit || {};  //incase av already exists
 
-av.ptd.makePauseState = function () {
+if (av.debug.root) { console.log('Root: before av.ptd.makePauseState'); }
+  av.ptd.makePauseState = function () {
   dijit.byId('mnCnPause').attr('disabled', true);
   dijit.byId('mnCnRun').attr('disabled', false);
   dijit.byId('mnCnOne').attr('disabled', false);
@@ -985,6 +986,7 @@ av.ptd.ex1allSugarChange = function (allmode) {
 };
 
 //in tst2 page now
+if (av.debug.root) { console.log('Root: before av.ptd.allSugarCheckBox'); }
 av.ptd.allSugarCheckBox = function (allmode) {
   var onflag = true;
   if ('allComp' == allmode) {
@@ -1018,6 +1020,7 @@ av.ptd.allSugarCheckBox = function (allmode) {
 };
 
 //for structure on tst2 tab; not currently called as of 2019 Aug 4
+/*
 av.ptd.envobj2form = function(from) {
   console.log(from, 'called av.ptd.envobj2form');
   console.log('av.ui.envRegion=',av.ui.envRegion, '; av.ui.envTask=', av.ui.envTask, '; av.ui.envDistribute=',av.ui.envDistribute);
@@ -1065,6 +1068,5 @@ av.ptd.envobj2form = function(from) {
     }
   }
   else {console.log('Error in an environment indesx: av.ui.envRegion=',av.ui.envRegion, '; av.ui.envTask=', av.ui.envTask, '; av.ui.envDistribute=',av.ui.envDistribute);}
-
 };
-
+*/
