@@ -1,4 +1,5 @@
 var av = av || {};  //incase av already exists
+var dijit = dijit || {};  //to let file know dijit is defined
 
 if (av.debug.root) { console.log('Root: before av.msg.readMsg'); }
 av.msg.readMsg = function (ee) {
@@ -119,7 +120,7 @@ av.msg.readMsg = function (ee) {
         document.getElementById("appReloadDialog").style.display="none";
         av.ui.loadOK = true;
         if (av.debug.msg) console.log('before calling av.grd.popChartInit');
-        av.grd.popChartInit('notification');
+        av.grd.popChartInit('Message: notification');
         break;
       case 'warning':
         userMsgLabel.textContent = 'Avida warning at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);

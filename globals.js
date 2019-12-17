@@ -30,7 +30,6 @@ av.debug.grid = false;  //population grid
 av.debug.ind = false;  //oranism page
 av.debug.mouse = false;  //av.debug statements about non-dojo drag and drop
 av.debug.msg = false;  //messages to and from avida
-av.debug.plotly = false;  //both popChart and analysis
 av.debug.popCon = false;  //population Controls
 av.debug.root = true;  //statements that look for failiers when the code executes outside of functions
 av.debug.trace = false;  //organism page
@@ -40,6 +39,7 @@ av.debug.userMsg = false; //debug of user messages.
 av.dbg = {};
 av.dbg.flg = {}; 
 av.dbg.flg.nut = true;
+av.dbg.flg.plt = true;  //both popChart and analysis
 
 av.debug.usr = ''; //working on log for user actions.
 
