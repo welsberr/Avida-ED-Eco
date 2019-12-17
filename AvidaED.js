@@ -1,5 +1,5 @@
 
-if (av.debug.root) { console.log('Root: AvidaED.js at beginning of file'); }
+// if (av.debug.root) { console.log('Root: AvidaED.js at beginning of file'); }
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
@@ -80,7 +80,7 @@ if (av.debug.root) { console.log('Root: AvidaED.js at beginning of file'); }
 //----------------------------------------------------------------------------------------------------------------------
 // 
 
-console.log('Root: before require statement');
+//if (av.debug.root) { console.log('Root: before require statement'); }
 var av = av || {};  //incase av already exists
 var dojo = dojo || {};
 
@@ -196,19 +196,19 @@ require([
   //av.mouse.getOriginalShapes(); only gets empty strings
 
   /********************************************************************************************************************/
-  if (av.debug.root) { console.log('Root: after splash screen code'); }
+  // if (av.debug.root) { console.log('Root: after splash screen code'); }
   // -------------------------------------------------------------------------------------------------------------------
   // Initialize variables that depend on files loaded in requirement statement
   // -------------------------------------------------------------------------------------------------------------------
 
-  if (av.debug.root) { console.log('Root: before av.dom.load'); };
+  // if (av.debug.root) { console.log('Root: before av.dom.load'); };
   av.dom.load();
 
   av.dom.initilizeDigitData();
   av.dom.initilizeAnalizePage(); 
 
 
-  if (av.debug.root) { console.log('Root: before dnd definitions'); };
+  // if (av.debug.root) { console.log('Root: before dnd definitions'); };
   /********************************************************************************************************************/
   /******************************************* Dojo Drag N Drop Initialization ****************************************/
   /********************************************************************************************************************/
@@ -222,7 +222,7 @@ require([
     selfAccept: false
   });
   
-  if (av.debug.root) { console.log('Root: before fzOrgan'); }
+  // if (av.debug.root) { console.log('Root: before fzOrgan'); }
   av.dnd.fzOrgan = new dndSource('fzOrgan', {
     accept: ['g'], //g=genome
     copyOnly: true,
@@ -230,7 +230,7 @@ require([
     selfAccept: false
   });
   
-  if (av.debug.root) { console.log('Root: before fzWorld'); };
+  // if (av.debug.root) { console.log('Root: before fzWorld'); };
   av.dnd.fzWorld = new dndSource('fzWorld', {
     //accept: ['b', 'w'],   //b=both; w=world  //only after the population started running
     singular: true,
@@ -268,12 +268,12 @@ require([
 
   av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
 
-  if (av.debug.root) { console.log('Root: before organIcon'); }
+  // if (av.debug.root) { console.log('Root: before organIcon'); }
   av.dnd.organIcon = new dndTarget('organIcon', {accept: ['g'], selfAccept: false});
   av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
   av.dnd.gridCanvas = new dndTarget('gridCanvas', {accept: ['g']});
   av.dnd.trashCan = new dndSource('trashCan', {accept: ['c', 'g', 't', 'w'], singular: true});
-  if (av.debug.root) { console.log('Root: after trashCan'); }
+  // if (av.debug.root) { console.log('Root: after trashCan'); }
 
   av.dnd.activeConfig = new dndSource('activeConfig', {
     accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
@@ -289,7 +289,7 @@ require([
     selfAccept: false
   });
 
-  if (av.debug.root) { console.log('Root: before activeOrgan'); }
+  // if (av.debug.root) { console.log('Root: before activeOrgan'); }
   //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
   av.dnd.activeOrgan = new dndSource('activeOrgan', {
     accept: ['g'],
@@ -311,9 +311,9 @@ require([
   //**************************************************************************************************/
 
   //Avida as a web worker
-  if (av.debug.root) { console.log('Root: before call avida'); }
+  // if (av.debug.root) { console.log('Root: before call avida'); }
   //
-  if (av.debug.root) { console.log('Root: typeof(av.aww.uiWorker', typeof(av.aww.uiWorker)); }
+  // if (av.debug.root) { console.log('Root: typeof(av.aww.uiWorker', typeof(av.aww.uiWorker)); }
   if (typeof (Worker) !== 'undefined') {
     //console.log('Worker type is not undefined');
     if (null === av.aww.uiWorker) {
@@ -327,13 +327,13 @@ require([
   };
 
   //process message from web worker
-  if (av.debug.root) { console.log('Root: before dnd triggers'); }
+  // if (av.debug.root) { console.log('Root: before dnd triggers'); }
   av.aww.uiWorker.onmessage = function (ee) {
     //console.log('avida_ee', ee);
     av.msg.readMsg(ee);
   };  // in file messaging.js
 
-  if (av.debug.root) { console.log('Root: before dnd triggers'); }
+  // if (av.debug.root) { console.log('Root: before dnd triggers'); }
   //*******************************************************************************************************************
   //       Dojo Dnd drop function - triggers for all dojo dnd drop events
   //*******************************************************************************************************************
@@ -475,7 +475,7 @@ require([
    });
    */
 
-  if (av.debug.root) { console.log('Root: before av.dnd.ancestorBox'); }
+  // if (av.debug.root) { console.log('Root: before av.dnd.ancestorBox'); }
   av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
     if ('ancestorBox' === target.node.id) {
       //console.log('ancestorBox=', target, av.dnd.ancestorBox);  //yes they are the same. could use in the above if statement.
@@ -602,7 +602,7 @@ require([
   //                                    End of dojo based DND triggered functions
   //----------------------------------------------------------------------------------------------------------------------
 
-   if (av.debug.root) { console.log('Root: before Error Logging'); }
+   // if (av.debug.root) { console.log('Root: before Error Logging'); }
   //********************************************************************************************************************
   // Error logging
   //********************************************************************************************************************
@@ -694,7 +694,7 @@ require([
     };
   };
   
-  if (av.debug.root) { console.log('Root: defore av.ui.problemWindow'); }
+  // if (av.debug.root) { console.log('Root: defore av.ui.problemWindow'); }
   //process problme pop-up window
   av.ui.problemWindow = function () {
     //console.log('in problemWindow');
@@ -773,7 +773,7 @@ require([
 
   if (av.debug.fio) { console.log('fio: dijit test', dijit.byId('mnFlOpenDefaultWS')); }
 
-  if (av.debug.root) { console.log('Root: before mnFlOpenDefaultWS'); }
+  // if (av.debug.root) { console.log('Root: before mnFlOpenDefaultWS'); }
   dijit.byId('mnFlOpenDefaultWS').on('Click', function () {
     'use strict';
     av.post.addUser('Button: mnFlOpenDefaultWS');
@@ -905,7 +905,7 @@ require([
     console.log('domobj=', domobj);
   };
 
-  if (av.debug.root) { console.log('Root: before Help drop down menu'); }
+  // if (av.debug.root) { console.log('Root: before Help drop down menu'); }
   //--------------------------------------------------------------------------------------------------------------------
   // Help Drop down menu buttons
   //--------------------------------------------------------------------------------------------------------------------
@@ -981,7 +981,7 @@ require([
   //visibility:hidden can be used, but it leaves the white space and just does not display dijits.
   //So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
   //the default option.
-  if (av.debug.root) { console.log('Root: before av.ui.mainBoxSwap defined'); }
+  // if (av.debug.root) { console.log('Root: before av.ui.mainBoxSwap defined'); }
   av.ui.mainBoxSwap = function (showBlock) {
     //console.log('showBlock=', showBlock);
     av.ui.page = showBlock;
@@ -1038,7 +1038,7 @@ require([
   };
 
   // Buttons that call MainBoxSwap
-  if (av.debug.root) { console.log('Root: before av.dom.populationButton.onclick'); }
+  // if (av.debug.root) { console.log('Root: before av.dom.populationButton.onclick'); }
   av.dom.populationButton.onclick = function () {
     av.post.addUser('Button: populationButton');
     if (av.debug.dnd || av.debug.mouse)
@@ -1073,7 +1073,7 @@ require([
     av.anl.AnaChartFn();
   };
 
-  if (av.debug.root) { console.log('Root: before showTextButton.onclick'); }
+  // if (av.debug.root) { console.log('Root: before showTextButton.onclick'); }
   document.getElementById('showTextButton').onclick = function () {
     av.post.addUser('Button: showTextButton');
     av.ui.mainBoxSwap('showTextBlock');
@@ -1081,7 +1081,7 @@ require([
   // ------------------ two controls for the same purpose; tabs used in develoopment mode --
   
   //Toggle switch for Population/Organism pages
-  if (av.debug.root) { console.log('Root: before av.ptd.rightInfoPanelToggleButton'); }
+  // if (av.debug.root) { console.log('Root: before av.ptd.rightInfoPanelToggleButton'); }
   av.ptd.rightInfoPanelToggleButton = function(domObj) {
     if ('populationBlock' == av.ui.page) {
       var tabcontent = document.getElementsByClassName("labInfoClass");
@@ -1150,7 +1150,7 @@ require([
   };
 
   //Development section with tabs
-  if (av.debug.root) { console.log('Root: before av.ptd.processTab'); }
+  // if (av.debug.root) { console.log('Root: before av.ptd.processTab'); }
   av.ptd.processTab = function (evt, contentType) {
     var ii, tablinks;
     var tabcontent = document.getElementsByClassName("labInfoClass");
@@ -1186,7 +1186,7 @@ require([
   // ------- end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
 
   //----------------------------------------------------------------------------------------show/hide left side panel --
-  if (av.debug.root) { console.log('Root: before av.ptd.lftPnlButtonImg'); }
+  // if (av.debug.root) { console.log('Root: before av.ptd.lftPnlButtonImg'); }
   av.ptd.lftPnlButtonImg = function () {
     if (av.ui.lftSidePnlShowing) {
       av.post.addUser('Button: lftPnlButtonImg: start hidding left side panel');
@@ -1211,7 +1211,7 @@ require([
 //----------------------------------------------------------------------------------------------------------------------
 
 // hides and shows the population and selected organsim data on right of population page with 'Stats/mpa' button
-  if (av.debug.root) { console.log('Root: before av.ptd.rtPnlButtonImg'); }
+  // if (av.debug.root) { console.log('Root: before av.ptd.rtPnlButtonImg'); }
   av.ptd.rtPnlButtonImg = function () {
     //console.log('rtPnlButtonImg: av.ui.page=', av.ui.page);
     if ('populationBlock' == av.ui.page) {
@@ -1661,7 +1661,7 @@ require([
   //av.dom.gridCanvas.height = $('#gridHolder').innerHeight() - 16 - av.dom.scaleCanvas.height;
 
   //--------------------------------------------------------------------------------------------------------------------
-  if (av.debug.root) { console.log('Root: before av.grd.drawGridSetupFn'); }
+  // if (av.debug.root) { console.log('Root: before av.grd.drawGridSetupFn'); }
 
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
@@ -1920,7 +1920,7 @@ require([
   // initialize needs to be in AvidaED.js; cannot be run when mini-graph is not visible. 
   // Should be done before av.grd.popChartFn is run.
   
-  console.log('before av.grd.popChartInit defined');
+  // if (av.debug.root) { console.log('Root: before av.grd.popChartInit defined'); }
   av.grd.popChartInit = function (from) {
     //console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
     //                '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display, '; av.ui.page=', av.ui.page, 
@@ -1933,7 +1933,7 @@ require([
     //if ('flex' != av.dom.popStatsBlock.style.display || ('populationBlock' !== av.ui.page)) {
     if ( !$(av.dom.popStatsBlock).is(":visible") ) {
       av.pch.needInit = true;
-      console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit);
+      if (av.dbg.flg.plt) { console.log('PopPlot:',from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit); }
       return;
     };
     av.pch.clearPopChrt();
@@ -1986,7 +1986,7 @@ require([
     if (av.dbg.flg.plt) { console.log('PopPlot: layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width); }
     av.pch.needInit = false;
   };
-  console.log('after av.grd.popChartInit defined');
+  if (av.debug.root) { console.log('after av.grd.popChartInit defined'); }
 
 
   av.grd.popChartFn = function (from) {
@@ -2018,34 +2018,34 @@ require([
 
       
       if ( !$(av.dom.popStatsBlock).is(":visible") ) {
-        console.log('PopPlot: if $popStatsBlock is visible & needInit - then call popChartInit');
+        if (av.dbg.flg.plt) { console.log('PopPlot: if $popStatsBlock is visible & needInit - then call popChartInit'); }
         av.grd.popChartInit('av.grd.popChartFn');
-        console.log('av.grd.runState = ', av.grd.runState);
+        if (av.dbg.flg.plt) { console.log('PopPlot: av.grd.runState = ', av.grd.runState); }
       };
     } else { 
-      console.log('av.grd.runState = ', av.grd.runState); 
+      if (av.dbg.flg.plt) { console.log('PopPlot: av.grd.runState = ', av.grd.runState); }
     };
 
     // Do not display chart if the chart is not on the screen. Data seems to be getting updated. need to verify this.
     if ( !$(av.dom.popStatsBlock).is(":visible") ) {
-      console.log('Not visible: so skip rest of function');
+      if (av.dbg.flg.plt) { console.log('PopPlot: Not visible: so skip rest of function'); }
       return;
     };
     
 
-    console.log('av.grd.runState = ', av.grd.runState);
+    if (av.dbg.flg.plt) { console.log('PopPlot: av.grd.runState = ', av.grd.runState); }
     if ('prepping' === av.grd.runState) {   //values can be prepping, started, or world
       av.dom.popChart.style.visibility = 'hidden';  //hide mini-chart when a dish is not running
     } else {
       av.dom.popChart.style.visibility = 'visible';
       if ('none' === document.getElementById('yaxis').value) {
         if (undefined !== av.dom.popChart.data) {
-          console.log('before purge in popChartFn');
+          if (av.dbg.flg.plt) { console.log('PopPlot: before purge in popChartFn'); }
           av.debug.log += '\n     --uiD: Plotly: Plotly.deleteTraces(av.dom.popChart, [0, 1]) in AvidaED.js at 1621';
           av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart', [av.dom.popChart]);
           Plotly.deleteTraces(av.dom.popChart, [0, 1]);
           //Plotly.purge(av.dom.popChart);      //does not seem to work once plotly.animate has been used
-          console.log('after purge in popChartFn');
+          if (av.dbg.flg.plt) { console.log('PopPlot: after purge in popChartFn'); }
         }
       } else {
         av.pch.divSize('av.grd.popChartFn');
@@ -2112,16 +2112,16 @@ require([
           av.pch.yChange = false;
           av.pch.layout.width = av.pch.wd;
           av.pch.layout.height = av.pch.ht;
-          console.log('before purge in update grid chart');
+          if (av.dbg.flg.plt) { console.log('PopPlot: before purge in update grid chart'); }
           av.debug.log += '\n     --uiD: Plotly: Plotly.purge(av.dom.popChart)  in AvidaED.js at 1690';
           av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart', [av.dom.popChart]);
           Plotly.purge(av.dom.popChart);
-          console.log('after purge in update grid chart');
+          if (av.dbg.flg.plt) { console.log('PopPlot: after purge in update grid chart'); }
           av.debug.log += '\n     --uiD: Plotly: Plotly.plot("popChart", popData, av.pch.layout, av.pch.widg)  in AvidaED.js at 1694';
           av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'popData, av.pch.layout, av.pch.widg', [popData, av.pch.layout, av.pch.widg]);
           Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
           //Plotly.plot('popChart', popData, av.pch.layout);
-          console.log('purge chart.popData=', av.dom.popChart.data);
+          if (av.dbg.flg.plt) { console.log('PopPlot: purge chart.popData=', av.dom.popChart.data); }
           //console.log('purge chart.layout=', av.dom.popChart.layout);
         } else {
           //av.pch.update = {
@@ -2239,11 +2239,11 @@ require([
     if (undefined != av.parents.handNdx) {
       var lngth = av.parents.handNdx.length;
       for (var ii = 0; ii < lngth; ii++) {
-        console.log('old cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
+        if (av.debug.popCon) { console.log('old cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]); }
         av.parents.col[av.parents.handNdx[ii]] = Math.floor(av.grd.setupCols * av.parents.col[av.parents.handNdx[ii]] / av.grd.gridWasCols);  //was trunc
         av.parents.row[av.parents.handNdx[ii]] = Math.floor(av.grd.setupRows * av.parents.row[av.parents.handNdx[ii]] / av.grd.gridWasRows);  //was trunc
         av.parents.AvidaNdx[av.parents.handNdx[ii]] = av.parents.col[av.parents.handNdx[ii]] + av.grd.setupCols * av.parents.row[av.parents.handNdx[ii]];
-        console.log('New cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
+        if (av.debug.popCon) { console.log('New cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]); }
       }
     };
     av.grd.gridWasCols = Number(av.dom.sizeCols.value);
@@ -2271,11 +2271,11 @@ require([
     if (undefined != av.parents.handNdx) {
       var lngth = av.parents.handNdx.length;
       for (var ii = 0; ii < lngth; ii++) {
-        console.log('old cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
+        //console.log('old cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
         av.parents.col[av.parents.handNdx[ii]] = Math.floor(av.grd.setupCols * av.parents.col[av.parents.handNdx[ii]] / av.grd.gridWasCols);  //was trunc
         av.parents.row[av.parents.handNdx[ii]] = Math.floor(av.grd.setupRows * av.parents.row[av.parents.handNdx[ii]] / av.grd.gridWasRows);  //was trunc
         av.parents.AvidaNdx[av.parents.handNdx[ii]] = av.parents.col[av.parents.handNdx[ii]] + av.grd.setupCols * av.parents.row[av.parents.handNdx[ii]];
-        console.log('New cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
+        //console.log('New cr', av.parents.col[av.parents.handNdx[ii]], av.parents.row[av.parents.handNdx[ii]]);
       }
     };
     av.grd.gridWasCols = Number(av.dom.sizeColTest.value);
@@ -2304,15 +2304,15 @@ require([
       av.dom.userMsgLabel.innerHTML = '';
       if (muteNum <= 0) {
         document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be >= than zero percent. ';
-        console.log('<0');
+        if (av.debug.popCon) { console.log('<0'); }
       }
       if (muteNum >= 100) {
         document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be 100% or less. ';
-        console.log('>0');
+        if (av.debug.popCon) { console.log('>0'); }
       }
       if (isNaN(muteNum)) {
         document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be a valid number. ';
-        console.log('==NaN');
+        if (av.debug.popCon) { console.log('==NaN'); }
       }
     };
   };
@@ -2333,15 +2333,15 @@ require([
       av.dom.userMsgLabel.innerHTML = '';
       if (randNum <= -1) {
         document.getElementById(randErroTest).innerHTML += 'Random Seed must be > -1. ';
-        console.log('<0');
+        if (av.debug.popCon) { console.log('<0'); }
       }
       if (randNum >= 1000000) {
         document.getElementById(randErroTest).innerHTML += 'Random Seed must be 1,000,000 or less. ';
-        console.log('>0');
+        if (av.debug.popCon) { console.log('>0'); }
       }
       if (isNaN(randNum)) {
         document.getElementById(randErroTest).innerHTML += 'Random Seed must be a valid number. ';
-        console.log('==NaN');
+        if (av.debug.popCon) { console.log('==NaN'); }
       }
     };
   };
@@ -2404,7 +2404,7 @@ require([
     var taskID = selectObj.id;
     var task = taskID.substring(0, 3);
     var sub = taskID.substr(3, 1);
-    console.log('av.sgr.geometryChange: taskID=', taskID, '; task =', task, '; subsection=', sub);
+    if (av.dbg.flg.nut) { console.log('av.sgr.geometryChange: taskID=', taskID, '; task =', task, '; subsection=', sub); }
     sub = 1;       //or should this be 0 since it is in the 'summary' section?
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.geometryChange');
   };
@@ -2414,14 +2414,14 @@ require([
     var taskID = domObj.id;
     var task = taskID.substring(0, 3);
     var sub = taskID.substr(3, 1);
-    console.log('taskID=', taskID, 'task=', task, '; subsection=', sub);
+    if (av.dbg.flg.nut) { console.log('taskID=', taskID, 'task=', task, '; subsection=', sub); }
     sub = 1; //only whole dish  for now
     av.sgr.changeDetailsLayout(task, sub, 'supplyChange_placeholder');
   };
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.regionLayoutChange = function (domObj) {
-    console.log('av.sgr.regionLayoutChange was called by', domObj);
+    if (av.dbg.flg.nut) { console.log('av.sgr.regionLayoutChange was called by', domObj); }
   };
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
@@ -2429,7 +2429,7 @@ require([
     var taskID = domObj.id;
     var task = taskID.substring(0, 3);
     var sub = taskID.substr(3, 1);
-    console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub); 
+    if (av.dbg.flg.nut) { console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub); }
     sub = 1; //only whole dish  for now  or should sub=0 when it it global?
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
   };
@@ -2441,7 +2441,7 @@ require([
     var matchTaskRegion = taskID.match(av.sgr.re_region);
     var task = matchTaskRegion[1];      //taskID.substring(0,3);   
     var sub = matchTaskRegion[2];       //taskID.substring(3,1);   did not work; substr seems to work for sub
-    console.log('av.sgr.eachSugarCheckBoxChange: taskID=', taskID, 'tst=', task, '; subsection=', sub);
+    if (av.dbg.flg.nut) { console.log('av.sgr.eachSugarCheckBoxChange: taskID=', taskID, 'tst=', task, '; subsection=', sub); }
     if (1 < sub)
       sub = 1;
     sub = 1; //only whole dish  for now
@@ -2451,13 +2451,13 @@ require([
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.periodChange = function (domObj) {
     //console.log('av.sgr.periodChange domObj=', domObj);
-    console.log('id=', domObj.id, '; domObj.value=', domObj.value);
+    if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
   };
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.initialChange = function (domObj) {
     //console.log('av.sgr.initialChange domObj=', domObj);
-    console.log('domObj.value=', domObj.value);
+    if (av.dbg.flg.nut) { console.log('domObj.value=', domObj.value); }
     var ndx = domObj.id.indexOf('Input');
     var id = domObj.id.substring(0, ndx) + 'Text';
     //console.log('new id=', id, '; old id=', domObj.id);
@@ -2476,14 +2476,14 @@ require([
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.inflowChange = function (domObj) {
-    console.log('av.sgr.inflowChange domObj=', domObj);
-    console.log('id=', domObj.id, '; domObj.value=', domObj.value);
+    if (av.dbg.flg.nut) { console.log('av.sgr.inflowChange domObj=', domObj); }
+    if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
   };
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.outflowChange = function (domObj) {
-    console.log('av.sgr.outflowChange domObj=', domObj);
-    console.log('id=', domObj.id, '; domObj.value=', domObj.value);
+    if (av.dbg.flg.nut) { console.log('av.sgr.outflowChange domObj=', domObj); }
+    if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
   };
 
   /****************************************************************************** End enviornment (sugar) settings ****/
@@ -2492,7 +2492,7 @@ require([
 
 //------------------------------------------------------------------------------------------------- av.ptd.gridChange --
   av.ptd.gridChange = function (domObj) {
-    console.log('in av.ptd.gridChange; domObj.id =', domObj.id);
+    if (av.dbg.flg.nut) { console.log('in av.ptd.gridChange; domObj.id =', domObj.id); }
     var colNum = Number(av.dom.sizeCols.value);
     var rowNum = Number(av.dom.sizeRows.value);
     //console.log('col, row=', colNum, rowNum);
@@ -2514,38 +2514,38 @@ require([
       else
         av.dom.sizeRows.style.color = 'red';
       av.dom.sizeCells.style.color = 'red';
-      console.log('not valid; col, row=', colNum, rowNum);
+      if (av.dbg.flg.nut) { console.log('not valid; col, row=', colNum, rowNum); }
       av.dom.sizeCells.innerHTML = '';
       av.dom.userMsgLabel.innerHTML = '';
       if (colNum <= 0) {
         av.dom.sizeCells.innerHTML += 'Number of columns must be greater than zero. ';
-        console.log('<0');
+        if (av.dbg.flg.nut) { console.log('<0'); }
       }
       if (colNum >= 100) {
         av.dom.sizeCells.innerHTML += 'Number of columns must be 100 or less. ';
-        console.log('>0');
+        if (av.dbg.flg.nut) { console.log('>0'); }
       }
       if (isNaN(colNum)) {
         av.dom.sizeCells.innerHTML += 'Number of columns must be a valid number. ';
-        console.log('==NaN');
+        if (av.dbg.flg.nut) { console.log('==NaN'); }
       }
       if (rowNum <= 0) {
         av.dom.sizeCells.innerHTML += 'Number of rows must be greater than zero. ';
-        console.log('<0');
+        if (av.dbg.flg.nut) { console.log('<0'); }
       }
       if (rowNum >= 100) {
         av.dom.sizeCells.innerHTML += 'Number of rows must be 100 or less. ';
-        console.log('>0');
+        if (av.dbg.flg.nut) { console.log('>0'); }
       }
       if (isNaN(rowNum)) {
         av.dom.sizeCells.innerHTML += 'Number of rows must be a valid number. ';
-        console.log('==NaN');
+        if (av.dbg.flg.nut) { console.log('==NaN'); }
       }
     }
   };
 //---------------------------------------------------------------------------------------------- av.ptd.gridChangTest --
   av.ptd.gridChangTest = function (from) {
-    console.log(from, 'called av.ptd.gridChangTest; ');
+    //console.log(from, 'called av.ptd.gridChangTest; ');
     var colNum = Number(av.dom.sizeColTest.value);
     var rowNum = Number(av.dom.sizeRowTest.value);
     if (colNum > 0 && colNum <= 100 && rowNum > 0 && rowNum <= 100) {
@@ -2566,32 +2566,32 @@ require([
       else
         av.dom.sizeRowTest.style.color = 'red';
       av.dom.sizeCellTest.style.color = 'red';
-      console.log('not valid; col, row=', colNum, rowNum);
+      //console.log('not valid; col, row=', colNum, rowNum);
       av.dom.sizeCellTest.innerHTML = '';
       av.dom.userMsgLabel.innerHTML = '';
       if (colNum <= 0) {
         av.dom.sizeCellTest.innerHTML += 'Number of columns must be greater than zero. ';
-        console.log('<0');
+        //console.log('<0');
       }
       if (colNum >= 100) {
         av.dom.sizeCellTest.innerHTML += 'Number of columns must be 100 or less. ';
-        console.log('>0');
+        //console.log('>0');
       }
       if (isNaN(colNum)) {
         av.dom.sizeCellTest.innerHTML += 'Number of columns must be a valid number. ';
-        console.log('==NaN');
+        //console.log('==NaN');
       }
       if (rowNum <= 0) {
         av.dom.sizeCellTest.innerHTML += 'Number of rows must be greater than zero. ';
-        console.log('<0');
+        //console.log('<0');
       }
       if (rowNum >= 100) {
         av.dom.sizeCellTest.innerHTML += 'Number of rows must be 100 or less. ';
-        console.log('>0');
+        //console.log('>0');
       }
       if (isNaN(rowNum)) {
         av.dom.sizeCellTest.innerHTML += 'Number of rows must be a valid number. ';
-        console.log('==NaN');
+        //console.log('==NaN');
       }
     }
   };
@@ -2756,13 +2756,13 @@ require([
   //Read the default work space and then loadConfigFlag = true; //the @default should be placed at the current configuration
   // need to change how loadConfig worrks
   
-  if (av.debug.root) { console.log('Root: before calling av.fio.readZipWS ---------------'); }
+  // if (av.debug.root) { console.log('Root: before calling av.fio.readZipWS ---------------'); }
   av.fio.readZipWS(av.fio.defaultFname, true);  
   
   //Need to get @default (the condents of folder c0) into the active config field. 
 
   //------------------------------------------------------- call StatsButton.click to get the display in default mode --
-  if (av.debug.root) { console.log('Root: before call StatsButton.click'); }
+  // if (av.debug.root) { console.log('Root: before call StatsButton.click'); }
   document.getElementById('StatsButton').click();
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -2770,7 +2770,7 @@ require([
 //----------------------------------------------------------------------------------------------------------------------
  
 //adjust instruction text size
-  if (av.debug.root) { console.log('Root: before av.ui.adjustOrgInstructionTextAreaSize'); }
+  // if (av.debug.root) { console.log('Root: before av.ui.adjustOrgInstructionTextAreaSize'); }
 //---------------------------------------------------------------------------- av.ui.adjustOrgInstructionTextAreaSize --
   av.ui.adjustOrgInstructionTextAreaSize = function() {
     var height = ( $('#orgInfoHolder').innerHeight() - $('#orgDetailID').innerHeight() - 10 ) / 2;
@@ -2800,8 +2800,7 @@ require([
         $('#orMuteInput').val((Math.pow(Math.E, (ui.value / 100000)) - 1).toFixed(3));
         /*put the value in the text box */
         av.ind.settingsChanged = true;
-        if (av.debug.trace)
-          console.log('orSlide changed', av.ind.settingsChanged);
+        if (av.debug.trace) { console.log('orSlide changed', av.ind.settingsChanged); }
       }
     });
     /* initialize */
@@ -2813,10 +2812,9 @@ require([
     $('#orMuteInput').change(function () {
       slides.slider('value', 100000.0 * Math.log(1 + (parseFloat(this.value))));
       av.ind.settingsChanged = true;
-      if (av.debug.trace)
-        console.log('orMute changed', av.ind.settingsChanged);
+      if (av.debug.trace) { console.log('orMute changed', av.ind.settingsChanged); }
       //$( '#orMRate' ).val( 100000*Math.log(1+(parseFloat(this.value))) );
-      console.log('in mute change');
+      if (aav.debug.trace) console.log('in mute change');
       av.post.addUser('muteInput =' + dijit.byId('orMuteInput').get('value') + '1949');
     });
   });
@@ -2891,7 +2889,7 @@ require([
 
   //wonder if this does anything.
   function outputUpdate(vol) {
-    console.log('outputUpdate: vol= ', vol);
+    if (av.debug.ind) { console.log('outputUpdate: vol= ', vol); }
     document.querySelector('#orgCycle').value = vol;
   };
   
@@ -2961,7 +2959,7 @@ require([
   };
 
   document.getElementById('orgEnd').onclick = function () {
-    console.log('orgEnd: av.ind.cycleSlider.get("maximum)', av.ind.cycleSlider.get('maximum'));
+    if (av.debug.ind) { console.log('orgEnd: av.ind.cycleSlider.get("maximum)', av.ind.cycleSlider.get('maximum')); }
     av.post.addUser('Button: orgEnd');
     av.dom.orgCycle.value = av.ind.cycleSlider.get('maximum');
     av.ind.cycle = av.ind.cycleSlider.get('maximum');
@@ -2972,18 +2970,18 @@ require([
 
 //----------------------------------------------------------------------------------------------------------------------
   av.ind.orgCycleInputChange = function (domObj) {
-    console.log('orgCycle.onChange:  value = ',  domObj.value);
+    if (av.debug.ind) { console.log('orgCycle.onChange:  value = ',  domObj.value); }
     av.ind.cycleSlider.set('value', domObj.value);  //seemed to work;
     av.ind.cycle = domObj.value;
-    console.log('orgCycle: value = ', domObj.value, '; av.ind.cycleSlider.get("value") =', av.ind.cycleSlider.get('value'));
+    if (av.debug.ind) { console.log('orgCycle: value = ', domObj.value, '; av.ind.cycleSlider.get("value") =', av.ind.cycleSlider.get('value')); }
     av.ind.updateOrgTrace('av.ind.orgCycleInputChange');
-    console.log('orgCycle: value = ', domObj.value, '; av.ind.cycleSlider=', av.ind.cycleSlider);
+    if (av.debug.ind) { console.log('orgCycle: value = ', domObj.value, '; av.ind.cycleSlider=', av.ind.cycleSlider); }
   };
 
 //       Organism Offspring Cycle Slider      running all the cycles completes the reproduuction
 //       I think this is another loading action rather than a function that gets called. 
 //----------------------------------------------------------------------------------------------------------------------
-  console.log('av.dom.cycleSlider =', av.dom.cycleSlider);
+  if (av.debug.ind) { console.log('av.dom.cycleSlider =', av.dom.cycleSlider); }
   av.ind.cycleSlider = new HorizontalSlider({
     name: 'cycleSlider',
     value: 0,
@@ -3000,19 +2998,18 @@ require([
       av.ind.updateOrgTrace('av.ind.cycleSlider');
     }
   }, 'cycleSlider');
-    console.log('av.dom.cycleSlider.innerHTML =', av.dom.cycleSlider.innerHTML);
-    console.log('av.ind.cycleSlider =', av.ind.cycleSlider);
+    if (av.debug.ind) { console.log('av.dom.cycleSlider.innerHTML =', av.dom.cycleSlider.innerHTML); }
+    if (av.debug.ind) { console.log('av.ind.cycleSlider =', av.ind.cycleSlider); }
 
 
   //********************************************************************************************************************
   // Resize window helpers -------------------------------------------
   //********************************************************************************************************************
-  if (av.debug.root) { console.log('Root: before Resize helpers'); }
+  // if (av.debug.root) { console.log('Root: before Resize helpers'); }
 
   av.removeVerticalScrollBars = function () {
     if (av.debug.uil)
-      console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight,
-        document.documentElement.clientHeight);
+      if (av.debug.uil) { console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight, document.documentElement.clientHeight); }
     if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
       document.documentElement.style.height = document.documentElement.clientHeight + 'px';
     };
@@ -3021,16 +3018,14 @@ require([
     if (av.dom.mainButtons.scrollHeight > av.dom.mainButtons.clientHeight) {
       av.dom.mainButtons.style.height = av.dom.mainButtons.scrollHeight + 'px';
     };
-    if (av.debug.uil)
-      console.log('trashDivHt.client,scroll=', av.dom.trashDiv.clientHeight, av.dom.trashDiv.scrollHeight);
+    if (av.debug.uil) {console.log('trashDivHt.client,scroll=', av.dom.trashDiv.clientHeight, av.dom.trashDiv.scrollHeight); }
     if (av.dom.trashDiv.scrollHeight > av.dom.trashDiv.clientHeight) {
       av.dom.trashDiv.style.height = av.dom.trashDiv.scrollHeight + 'px';
     };
     if (av.dom.orgTopId.scrollHeight > av.dom.orgTopId.clientHeight) {
       av.dom.orgTopId.style.height = av.dom.orgTopId.scrollHeight + 'px';
     };
-    if (av.debug.uil)
-      console.log('orgBot Ht', av.dom.orgBotId.scrollHeight, av.dom.orgBotId.clientHeight);
+    if (av.debug.uil) { console.log('orgBot Ht', av.dom.orgBotId.scrollHeight, av.dom.orgBotId.clientHeight); }
     if (av.dom.orgBotId.scrollHeight > av.dom.orgBotId.clientHeight) {
       av.ui.orgBotIdNum = av.dom.orgBotId.scrollHeight + 9;
       av.dom.orgBotId.style.height = av.ui.orgBotIdNum + 'px';
@@ -3039,9 +3034,9 @@ require([
 
   //on 2018_0823 this is where height gets messed up when loading the program. 
    av.pch.divSize = function (from) {
-    console.log(from, 'called av.pch.divSize');
-    //av.debug.uil = true;
-    if (av.debug.uil) {
+    if (av.debug.uil) { console.log(from, 'called av.pch.divSize'); }
+    av.debug.uil = true;
+    if (av.debug.uil) { 
       console.log('popChrtHolder css.wd ht border padding margin=', $("#popChrtHolder").css('width'), $("#popChrtHolder").css('height')
         , $("#popChrtHolder").css('border'), $("#popChrtHolder").css('padding'), $("#popChrtHolder").css('margin'));
     } 
@@ -3105,7 +3100,7 @@ require([
       }
       if (av.grd.need2DrawGrid) {
         av.grd.popChartFn('av.ui.browserResizeEventHandler');
-        console.log('av.grd.need2DrawGrid=', av.grd.need2DrawGrid);
+        if (av.debug.uil) { console.log('av.grd.need2DrawGrid=', av.grd.need2DrawGrid); }
         //av.grd.drawGridSetupFn('av.ui.browserResizeEventHandler when pop=flex');
       }
     }
@@ -3142,33 +3137,29 @@ require([
     //https://stackoverflow.com/questions/590602/padding-or-margin-value-in-pixels-as-integer-using-jquery
     //console.log('gridHolder_margin' ,$("#gridHolder").css("margin"), '; popChart=', $("#popChart").css('margin'));
 
-    if (av.debug.uil)
+    if (av.debug.uil) { 
       console.log('Wd: allAvida navColId mapHolder gridHolder popInfoHolder, sum', av.dom.allAvida.offsetWidth,
         av.dom.navColId.offsetWidth, av.dom.mapHolder.offsetWidth, av.dom.popInfoHolder.offsetWidth,
         av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.popInfoHolder.offsetWidth);
-    if (av.debug.uil)
       console.log('Wd: popStatsBlock selOrgType sum', av.dom.popStatsBlock.offsetWidth, av.dom.selOrgType.clientWidth,
         av.dom.popStatsBlock.offsetWidth + av.dom.selOrgType.clientWidth);
 
-    if (av.debug.uil)
       console.log('Ht; allAvida, mapHolder, popTopRw, gridHolder, popBot sum', av.dom.allAvida.offsetHeight,
         av.dom.mapHolder.offsetHeight, av.dom.popTopRw.offsetHeight, av.dom.gridHolder.offsetHeight,
         av.dom.popBot.offsetHeight, av.dom.popTopRw.offsetHeight + av.dom.gridHolder.offsetHeight + av.dom.popBot.offsetHeight);
+      }
     if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight && av.dom.gridHolder.offsetWidth > av.ui.popGridCtlWdMin) {
       //set grid size based on height and distribute extra width.
       extraGridWd = av.dom.gridHolder.offsetWidth - av.dom.gridHolder.offsetHeight;
       popSideWdSum = popSideWdSum + extraGridWd;
-      if (av.debug.uil)
-        console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+      if (av.debug.uil) { console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight); }
       //av.dom.gridCanvas.width = av.dom.gridHolder.clientHeight;     //no style for canvas; style needed for div
       //av.dom.gridCanvas.height = av.dom.gridHolder.clientHeight;
       av.dom.gridCanvas.width = $("#gridHolder").height();     //no style for canvas; style needed for div
       av.dom.gridCanvas.height = $("#gridHolder").height();
 
-      if (av.debug.uil)
-        console.log('av.dom.gridCanvas.wd ht', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
-      if (av.debug.uil)
-        console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+      if (av.debug.uil) { console.log('av.dom.gridCanvas.wd ht', av.dom.gridCanvas.width, av.dom.gridCanvas.height); }
+      if (av.debug.uil) { console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight); }
       av.dom.navColId.style.width = (0.3 * popSideWdSum) + 'px';
       av.dom.popStatsBlock.style.width = (0.7 * popSideWdSum) + 'px';
       av.dom.setupBlock.style.width = (0.7 * popSideWdSum) + 'px';
@@ -3181,7 +3172,7 @@ require([
   };
 
   av.ui.chngPopWidth = function (from) {
-    console.log(from, 'called av.ui.chngPopWidth');
+    if (av.debug.uil) { console.log(from, 'called av.ui.chngPopWidth'); }
     av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px';
     av.dom.setupBlock.style.width = popInfoHolderWd + 'px';
     av.dom.popStatsBlock.style.width = popInfoHolderWd + 'px';
@@ -3190,50 +3181,38 @@ require([
 
   av.ui.adjustpopInfoWd = function (adjustGridWd) {
     var popInfoHolderWd = av.dom.popInfoHolder.offsetWidth - adjustGridWd;  //adjustGridWd postive means Grid needs width
-    if (av.debug.uil)
-      console.log('popInfoHolderWd=', popInfoHolderWd, '; av.ui.popInfoHolderMinWd', av.ui.popInfoHolderMinWd);
+    if (av.debug.uil) { console.log('popInfoHolderWd=', popInfoHolderWd, '; av.ui.popInfoHolderMinWd', av.ui.popInfoHolderMinWd); }
     if (popInfoHolderWd < av.ui.popInfoHolderMinWd) {
       var navColWd = av.dom.navColId.offsetWidth;
-      if (av.debug.uil)
-        console.log("navColWd=", navColWd, '; popInfoHolderWd=', popInfoHolderWd, '');
+      if (av.debug.uil) {console.log("navColWd=", navColWd, '; popInfoHolderWd=', popInfoHolderWd, ''); }
       navColWd = (.33 * (navColWd + popInfoHolderWd)).toFixed(0);
       popInfoHolderWd = navColWd * 2;
       av.dom.navColId.style.width = navColWd + 'px';
-      if (av.debug.uil)
-        console.log('navColWd=', navColWd, '; popInfoHolderWd=', popInfoHolderWd, '; mapHolder=', av.dom.mapHolder.offsetWidth);
+      if (av.debug.uil) {console.log('navColWd=', navColWd, '; popInfoHolderWd=', popInfoHolderWd, '; mapHolder=', av.dom.mapHolder.offsetWidth); }
     }
     av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px';
     av.dom.setupBlock.style.width = popInfoHolderWd + 'px';
     av.dom.popStatsBlock.style.width = popInfoHolderWd + 'px';
     popInfoHolderWd = (popInfoHolderWd / 2).toFixed(0); //Math.round(popInfoHolder/2);
     av.dom.selOrgType.style.width = popInfoHolderWd + 'px';
-    if (av.debug.uil)
-      console.log('set selOrgType to ', popInfoHolderWd + 'px');
-    if (av.debug.uil)
-      console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
+    if (av.debug.uil) { console.log('set selOrgType to ', popInfoHolderWd + 'px'); }
+    if (av.debug.uil) { console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth); }
   };
 
   //Adjust Statistics area width based on gridholder size and shape. gridholder should be roughly square
   av.ui.adjustpopInfoSize = function (from) {
     var adjustGridWd = 0;
-    if (av.debug.uil)
+    if (av.debug.uil) { 
       console.log('av.ui.adjustpopInfoSize was called from: ', from);
-    if (av.debug.uil)
       console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth);
-    if (av.debug.uil)
-      console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth,
-        '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
-    if (av.debug.uil)
+      console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
       console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ',
         av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.popInfoHolder.offsetWidth);
-    if (av.debug.uil)
       console.log('popInfoHolder.offsetWidth, clientwidth =', av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
-    if (av.debug.uil)
       console.log('popStatsBlock.offsetWidth, clientwidth =', av.dom.popStatsBlock.offsetWidth, av.dom.popStatsBlock.clientWidth);
-    if (av.debug.uil)
       console.log('selOrgType.offsetWidth, clientwidth =', av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
-    if (av.debug.uil)
       console.log('av.ui.popGridCtlWdMin=', av.ui.popGridCtlWdMin, '; gridHolder.offsetWidt=', av.dom.gridHolder.offsetWidth);
+    }
     if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight) {
       adjustGridWd = av.dom.gridHolder.offsetHeight - av.dom.gridHolder.offsetWidth; //adjustGridWd negative means grid holder is too wide.
       av.ui.adjustpopInfoWd(adjustGridWd);
@@ -3242,36 +3221,31 @@ require([
       adjustGridWd = av.ui.popGridCtlWdMin - av.dom.gridHolder.offsetWidth;
       av.ui.adjustpopInfoWd(adjustGridWd);
     };
-    if (av.debug.uil)
+    if (av.debug.uil) {
       console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
-    if (av.debug.uil)
       console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth,
         '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
-    if (av.debug.uil)
       console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ',
         av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.popInfoHolder.offsetWidth);
 
-    if (av.debug.uil)
       console.log('popInfo.offsetWidth, clientwidth =', av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
-    if (av.debug.uil)
       console.log('popStatsBlock.offsetWidth, clientwidth =', av.dom.popStatsBlock.offsetWidth, av.dom.popStatsBlock.clientWidth);
-    if (av.debug.uil)
       console.log('selOrgType.offsetWidth, clientwidth =', av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
-
+    }
     av.dom.gridCanvas.style.width = (av.dom.gridHolder.clientHeight - 2) + 'px';
     av.dom.gridCanvas.style.height = av.dom.gridCanvas.offsetWidth + 'px';
     av.dom.scaleCanvas.style.width = (av.dom.gridControlTable.clientWidth - 1) + 'px';
 
-    if (av.debug.uil)
+    if (av.debug.uil) {
       console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-    if (av.debug.uil)
       console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+    }
   };
 
   // **************************************************************************************************************** */
   //                                                Analysis Page
   // **************************************************************************************************************** */
-  if (av.debug.root) { console.log('Root: start of Analysis Page'); }
+  // if (av.debug.root) { console.log('Root: start of Analysis Page'); }
   
   // initialize needs to be in AvidaED.js   Does not work in included files
   av.anl.anaChartInit = function () {
@@ -3296,7 +3270,7 @@ require([
     //console.log('layout=', av.dom.anlChrtSpace.layout);
     av.dom.anlChrtSpace.style.visibility = 'hidden';
   };
-  if (av.debug.root) { console.log('Root: before av.anl.anaChartInit called'); }
+  // if (av.debug.root) { console.log('Root: before av.anl.anaChartInit called'); }
   av.anl.anaChartInit();
 
   av.anl.AnaChartFn = function () {
@@ -3416,6 +3390,7 @@ require([
     console.log('av.anl.color[ndx]=', av.anl.color[ndx]);
     av.anl.AnaChartFn();    //redraw chart which will get new color from dom
   };
+  
   /*
    av.dom.pop0color.onclick = function () {
    av.anl.color[0] = av.color.names[av.dom.pop0color.value];
@@ -3433,6 +3408,7 @@ require([
    av.anl.AnaChartFn();
    };
    */
+  
   //Set Y-axis title and choose the correct array to plot
   document.getElementById('yLeftSelect').onclick = function () {
     av.post.addUser('Button: yLeftSelect = ' + document.getElementById('yLeftSelect').value);
@@ -3455,7 +3431,7 @@ require([
     av.post.addUser('Button: yRightSelect = ' + document.getElementById('yRightSelect').value);
   };
   
-  if (av.debug.root) { console.log('Root: after chart defined for analysis page'); }
+  // if (av.debug.root) { console.log('Root: after chart defined for analysis page'); }
   // **************************************************************************************************************** */
   //                                       end of Analysis Page
   // **************************************************************************************************************** */

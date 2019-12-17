@@ -1,18 +1,18 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+  /* 
+   * To change this license header, choose License Headers in Project Properties.
+   * To change this template file, choose Tools | Templates
+   * and open the template in the editor.
+   */
 
 
-var av = av || {};  //because av already exists
+  var av = av || {};  //because av already exists
 
   //********************************************************************************************************************
   //                                             Resize window helpers 
   //********************************************************************************************************************
-  if (av.debug.root) { console.log('Root: before Resize helpers'); }
+  // if (av.debug.root) { console.log('Root: before Resize helpers'); }
 
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
   av.removeVerticalScrollBars = function () {
     if (av.debug.uil)
       console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight,
@@ -42,7 +42,7 @@ var av = av || {};  //because av already exists
   };
 
   //on 2018_0823 this is where height gets messed up when loading the program. 
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
   av.pch.divSize = function (from) {
     //console.log(from, 'called av.pch.divSize');
     //av.debug.uil = true;
@@ -81,7 +81,7 @@ var av = av || {};  //because av already exists
     //av.debug.uil = false;
   };
 
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
   av.anl.divSize = function (from) {
     if (av.debug.alo)
       console.log(from, 'called av.anl.divSize');
@@ -89,8 +89,7 @@ var av = av || {};  //because av already exists
     //console.log(from,'anlDndChart Ht client scroll', av.dom.anlDndChart.clientHeight, av.dom.anlDndChart.scrollHeight);
     //console.log(from,'anlChrtSpace Ht client scroll', av.dom.anlChrtSpace.clientHeight, av.dom.anlChrtSpace.scrollHeight);
 
-    if (av.debug.alo)
-      console.log('av.dom.anaChrtHolder.clientWd, Ht=', av.dom.anaChrtHolder.clientWidth, av.dom.anaChrtHolder.clientHeight);
+    if (av.debug.alo) { console.log('av.dom.anaChrtHolder.clientWd, Ht=', av.dom.anaChrtHolder.clientWidth, av.dom.anaChrtHolder.clientHeight); }
     av.anl.ht = av.dom.anaChrtHolder.clientHeight - 1;
     av.anl.wd = av.dom.anaChrtHolder.clientWidth - 1;
     av.dom.anaChrtHolder.style.height = av.anl.ht + 'px';
@@ -102,7 +101,7 @@ var av = av || {};  //because av already exists
   };
 
   // called from script in html file as well as below
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
   av.ui.browserResizeEventHandler = function (from) {
     if (true)
       console.log(from, 'called av.ui.browserResizeEventHandler');
@@ -130,14 +129,14 @@ var av = av || {};  //because av already exists
   //console.log('before resize function');
   //does this need a timer function to delay response slightly so the page is not re-written as frequently when the
   //page is changing sizes  ??
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
   $(window).resize(function () {
     // av.ui.resizePopLayout('window.resize');    //does not work.
   });
 
 
   //This function does not work. make grid get larger and larger
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
   av.ui.resizePopLayout = function (from) {
     //console.log(from, 'called av.ui.resizePopLayout');
     var extraGridWd = 0;  //positive there is extra to distribute; negative need more space.
@@ -195,7 +194,7 @@ var av = av || {};  //because av already exists
     }
   };
 
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
   av.ui.chngPopWidth = function (from) {
     console.log(from, 'called av.ui.chngPopWidth');
     av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px';
@@ -204,7 +203,7 @@ var av = av || {};  //because av already exists
     av.dom.selOrgType.style.width = ((popInfoHolderWd / 2).toFixed(0)) + 'px';
   };
 
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
   av.ui.adjustpopInfoWd = function (adjustGridWd) {
     var popInfoHolderWd = av.dom.popInfoHolder.offsetWidth - adjustGridWd;  //adjustGridWd postive means Grid needs width
     if (av.debug.uil)
@@ -230,7 +229,7 @@ var av = av || {};  //because av already exists
       console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
   };
 
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
   //Adjust Statistics area width based on gridholder size and shape. gridholder should be roughly square
   av.ui.adjustpopInfoSize = function (from) {
     var adjustGridWd = 0;
@@ -286,8 +285,8 @@ var av = av || {};  //because av already exists
       console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
   };
 
-if (av.debug.root) { console.log('Root: before av.ui.removeVerticalScrollbar'); }
-//----------------------------------------------------------------------------------------------------------------------
+  // if (av.debug.root) { console.log('Root: before av.ui.removeVerticalScrollbar'); }
+  //----------------------------------------------------------------------------------------------------------------------
   av.ui.removeVerticalScrollbar = function (scrollDiv, htChangeDiv) {
     //https://tylercipriani.com/2014/07/12/crossbrowser-javascript-scrollbar-detection.html
     var scrollSpace = 0;
@@ -326,9 +325,9 @@ if (av.debug.root) { console.log('Root: before av.ui.removeVerticalScrollbar'); 
   //av.ui.removeVerticalScrollbar('popBot', 'popBot');
 
 
-//----------------------------------------------------------------------------------------------------------------------
-//                 Code that was compeletly commmented out
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
+  //                 Code that was compeletly commmented out
+  //----------------------------------------------------------------------------------------------------------------------
   // ------------------------ Population Page Statistics tables --------------------------------------------------------
 
   //av.ui.adjustpopInfoSize('after page loaded, before chart is defined.');  // djb might delete later; not using as of 2018_0827
