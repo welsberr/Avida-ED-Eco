@@ -1120,7 +1120,7 @@ require([
         
         //if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
         if ( $(av.dom.popStatsBlock).is(":visible") && av.pch.needInit) {
-          console.log('need to call av.grd.popChartInit');
+          if (av.dbg.flg.plt) { console.log('need to call av.grd.popChartInit'); }
           av.grd.popChartInit('av.ptd.rightInfoPanelToggleButton');
         };
       };
@@ -1140,7 +1140,6 @@ require([
         av.dom.orgDetailID.style.display = 'block';
         console.log('av.ind.settingsChanged=', av.ind.settingsChanged);
         if (av.ind.settingsChanged) av.msg.doOrgTrace();
-        
       }  
     }
     else {
@@ -1798,14 +1797,12 @@ require([
 
         rescaleLabel.textContent = av.grd.fillRescale;       //Tiba look at later
         av.grd.need2DrawGrid = true;
-        if (av.debug.uil)
+        if (av.debug.uil) {
           console.log('w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= End: av.dom.gridCanvas.width ht____________');
-        if (av.debug.uil)
           console.log('w:', $("#gridCanvas").outerWidth(), $("#gridCanvas").outerHeight(), '= End: gridCanvas jQuery.outerWd______________');
-        if (av.debug.uil)
           console.log('w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
-        if (av.debug.uil)
           console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
+        }
       }
     }
   };
@@ -1942,7 +1939,7 @@ require([
 
     //if (av.dbg.flg.plt) { console.log('PopPlot: dom of popChart=', document.getElementById('popChart') ); }
     if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart=', av.dom.popChart); }
-    if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
+      if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
     
     if (undefined == av.dom.popChart.data) {
       if (av.dbg.flg.plt) { console.log('PopPlot: before plotly.plot in popChartInit'); }
@@ -1951,6 +1948,7 @@ require([
       if (av.dbg.flg.plt) { console.log('PopPlot: popData=', popData); }
       if (av.dbg.flg.plt) { console.log('PopPlot: av.pch.layout=', av.pch.layout); }
       if (av.dbg.flg.plt) { console.log('PopPlot: av.pch.widg=', av.pch.widg); }
+      if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
       
       Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
       
@@ -1959,14 +1957,14 @@ require([
     } else {
       //av.pch.update = {
       //  xaxis: {range: [0, 10]}, yaxis: {range: [0, 1]},
-      //  width: av.pch.wd,
-      //  height: av.pch.ht
+      //  width: av.pch.layout.width,
+      //  height: av.pch.layout.height
       //};
-      if (av.dbg.flg.plt) { console.log('PopPlot: av.pch.wd ht=', av.pch.wd, av.pch.ht); }
+      if (av.dbg.flg.plt) { console.log('PopPlot: av.pch.layout.width ht=', av.pch.layout.width, av.pch.layout.height); }
       av.pch.update = {
         autorange: true,
-        width: av.pch.wd,
-        height: av.pch.ht
+        width: av.pch.layout.width,
+        height: av.pch.layout.height
       };
 
       if (av.dbg.flg.plt) { console.log('PopPlot: popData', popData); }
@@ -1980,6 +1978,7 @@ require([
         av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in av.grd.popChartInit in AvidaED.js at 2182';
         av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
         Plotly.relayout(av.dom.popChart, av.pch.update);
+        if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
       }
     }
     av.dom.popChart.style.visibility = 'hidden';
@@ -2032,22 +2031,27 @@ require([
       return;
     };
     
-
     if (av.dbg.flg.plt) { console.log('PopPlot: av.grd.runState = ', av.grd.runState); }
     if ('prepping' === av.grd.runState) {   //values can be prepping, started, or world
       av.dom.popChart.style.visibility = 'hidden';  //hide mini-chart when a dish is not running
     } else {
       av.dom.popChart.style.visibility = 'visible';
       if ('none' === document.getElementById('yaxis').value) {
+        //the data arrays still need to be updated - hope that happens someplace else. 
+        
         if (undefined !== av.dom.popChart.data) {
-          if (av.dbg.flg.plt) { console.log('PopPlot: before purge in popChartFn'); }
-          av.debug.log += '\n     --uiD: Plotly: Plotly.deleteTraces(av.dom.popChart, [0, 1]) in AvidaED.js at 1621';
-          av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart', [av.dom.popChart]);
-          Plotly.deleteTraces(av.dom.popChart, [0, 1]);
+          // Took the next 3 lines out on 2019_1217 because it did not make sense to me to delete Traces. This could be the wrong thing
+          //av.debug.log += '\n     --uiD: Plotly: Plotly.deleteTraces(av.dom.popChart, [0, 1]) in AvidaED.js at 1621';
+          //av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart', [av.dom.popChart]);
+          //Plotly.deleteTraces(av.dom.popChart, [0, 1]);
+
+          // Not purging Plotly. so took the followling out.
+          //if (av.dbg.flg.plt) { console.log('PopPlot: before purge in popChartFn'); }
           //Plotly.purge(av.dom.popChart);      //does not seem to work once plotly.animate has been used
-          if (av.dbg.flg.plt) { console.log('PopPlot: after purge in popChartFn'); }
+          //if (av.dbg.flg.plt) { console.log('PopPlot: after purge in popChartFn'); }
         }
       } else {
+        // this is the adust the size. Seems like the size should only change when window/div changes size rather than checking very time. 
         av.pch.divSize('av.grd.popChartFn');
 
         if (document.getElementById('yaxis').value === av.pch.yValue)
@@ -2110,8 +2114,8 @@ require([
         //if (av.pch.yChange) {
         if (false) {
           av.pch.yChange = false;
-          av.pch.layout.width = av.pch.wd;
-          av.pch.layout.height = av.pch.ht;
+          av.pch.layout.width = av.pch.pixel.wd - av.pch.pixel.wdif;
+          av.pch.layout.height = av.pch.pixel.ht - av.pch.pixel.hdif;
           if (av.dbg.flg.plt) { console.log('PopPlot: before purge in update grid chart'); }
           av.debug.log += '\n     --uiD: Plotly: Plotly.purge(av.dom.popChart)  in AvidaED.js at 1690';
           av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart', [av.dom.popChart]);
@@ -2126,16 +2130,16 @@ require([
         } else {
           //av.pch.update = {
           //  xaxis: {range: [0, av.pch.popY.length + 1]}, yaxis: {range: [0, 1.1 * av.pch.maxY]},
-          //  width: av.pch.wd,
-          //  height: av.pch.ht
+          //  width: av.pch.layout.width,
+          //  height: av.pch.layout.height
           //};
-          if (av.debug.uil) { console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht); }
+          if (av.debug.uil) { console.log('av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
           if (av.debug.uil) { console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
 
           av.pch.update = {
             autorange: true,
-            width: av.pch.wd,
-            height: av.pch.ht
+            width: av.pch.layout.width,
+            height: av.pch.layout.height
           };
           //av.pch.update = {xaxis: {range: [0, av.pch.popY.length+1]}, yaxis: {range: [0, av.pch.maxY]}};
 
@@ -2174,8 +2178,8 @@ require([
               if (undefined == av.pch.update) {
                 av.pch.update = {
                   autorange: true,
-                  width: av.pch.wd,
-                  height: av.pch.ht
+                  width: av.pch.layout.width,
+                  height: av.pch.layout.height
                 };
               }
               ;
@@ -3034,39 +3038,40 @@ require([
 
   //on 2018_0823 this is where height gets messed up when loading the program. 
    av.pch.divSize = function (from) {
-    if (av.debug.uil) { console.log(from, 'called av.pch.divSize'); }
     av.debug.uil = true;
+    if (av.debug.uil) { console.log('PopPlotSize: ',from, 'called av.pch.divSize'); }
     if (av.debug.uil) { 
       console.log('popChrtHolder css.wd ht border padding margin=', $("#popChrtHolder").css('width'), $("#popChrtHolder").css('height')
         , $("#popChrtHolder").css('border'), $("#popChrtHolder").css('padding'), $("#popChrtHolder").css('margin'));
     } 
     if (av.debug.uil) {
-      console.log('av.dom.popChrtHolder.ht offset, client ht=', av.dom.popChrtHolder.offsetHeight,
+      console.log('PopPlotSize: av.dom.popChrtHolder.ht offset, client ht=', av.dom.popChrtHolder.offsetHeight,
         av.dom.popChrtHolder.clientHeight, '; parseInt(padding)=', parseInt($("#popChrtHolder").css('padding'), 10));
     }
-    av.pch.ht = av.dom.popChrtHolder.clientHeight - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
-    av.pch.wd = av.dom.popChrtHolder.clientWidth - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
-    //console.log(from, 'called av.pch.divSize:', 'av.pch.wd=', av.pch.wd, '; av.pch.ht=', av.pch.ht);
-    av.pch.layout.height = av.pch.ht;
-    av.pch.layout.width = av.pch.wd;
-    if (av.debug.uil) { console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht); }
-    if (av.debug.uil) { console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
+    
+    av.pch.pixel.ht = av.dom.popChrtHolder.clientHeight - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
+    av.pch.pixel.wd = av.dom.popChrtHolder.clientWidth - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
+    //console.log(from, 'called av.pch.divSize: av.pch.pixel.wd=', av.pch.pixel.wd, '; av.pch.pixel.ht=', av.pch.pixel.ht);
+    av.pch.layout.height = av.pch.pixel.ht - av.pch.pixel.hdif;  //leave a bit more vertical space for plot;
+    av.pch.layout.width = av.pch.pixel.wd - av.pch.pixel.wdif;   //leave more horizontal space to right of plot;
+    if (av.debug.uil) { console.log('PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
+    if (av.debug.uil) { console.log('PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
 
     //av.dom.popChrtHolder.style.width = av.dom.popChrtHolder.clientWidth + 'px';  //seems redundent  djb said to delete as of 2018_0827
     //av.dom.popChrtHolder.style.height = av.dom.popChrtHolder.clientHeight + 'px';  //seems redundent djb said to delete as of 2018_0827
-    av.dom.popChart.style.height = av.pch.ht + 'px';
-    av.dom.popChart.style.width = av.pch.wd + 'px';
+    av.dom.popChart.style.height = av.pch.layout.height + 'px';
+    av.dom.popChart.style.width = av.pch.layout.width + 'px';
     if (av.debug.uil) {
-      console.log('popChart css.wd, border, padding, margin=', $("#popChart").css('width'), $("#popChart").css('height')
+      console.log('PopPlotSize: popChart css.wd, border, padding, margin=', $("#popChart").css('width'), $("#popChart").css('height')
         , $("#popChart").css('border'), $("#popChart").css('padding'), $("#popChart").css('margin'));
     }
     if (av.debug.uil) {
-      console.log('av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight,
+      console.log('PopPlotSize: av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight,
         av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'), 10));
     }
-    if (av.debug.uil) { console.log('av.pch.wd ht=', av.pch.wd, av.pch.ht); }
-    if (av.debug.uil) { console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
-    //av.debug.uil = false;
+    if (av.debug.uil) { console.log('PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
+    if (av.debug.uil) { console.log('PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
+    av.debug.uil = false;
   };
 
   av.anl.divSize = function (from) {

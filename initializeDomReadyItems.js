@@ -283,7 +283,7 @@
         document.getElementById('avidianOutline').style.display = 'none';
 
         document.getElementById('popInfoTabHolder').className = 'tabHolderHide';
-        document.getElementById('displayGridResourceData').style.display = 'none';
+        //document.getElementById('displayGridResourceData').style.display = 'none';
 
         av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopentDisplays');
         len = av.sgr.logicNames.length;
@@ -326,7 +326,7 @@
         document.getElementById('avidianOutline').style.display = 'inline-block'; 
 
         document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
-        document.getElementById('displayGridResourceData').style.display = 'flex';
+        //document.getElementById('displayGridResourceData').style.display = 'flex';
 
         av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopentDisplays.onclick_show');
 
