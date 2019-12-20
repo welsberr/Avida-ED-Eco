@@ -80,7 +80,7 @@ if (av.debug.root) { console.log('root: AvidaED.js line 3'); }
 //----------------------------------------------------------------------------------------------------------------------
 // 
 
-console.log('root: version from Avida-ED-flex-active_2019_0929');
+console.log('root: version from Avida-ED-flex-active_2019_1212');
 var av = av || {};  //incase av already exists
 var dojo = dojo || {};
 
@@ -196,7 +196,7 @@ require([
   //av.mouse.getOriginalShapes(); only gets empty strings
 
   /********************************************************************************************************************/
-  console.log('root: after splash screen code');
+  if (av.debug.root) { console.log('root: after splash screen code'); }
   // -------------------------------------------------------------------------------------------------------------------
   // Initialize variables that depend on files loaded in requirement statement
   // -------------------------------------------------------------------------------------------------------------------
@@ -223,7 +223,7 @@ require([
     selfAccept: false
   });
   
-  if (av.debug.root) { console.log('before fzOrgan'); }
+  if (av.debug.root) { console.log('Root: before fzOrgan'); }
   av.dnd.fzOrgan = new dndSource('fzOrgan', {
     accept: ['g'], //g=genome
     copyOnly: true,
@@ -231,7 +231,7 @@ require([
     selfAccept: false
   });
   
-  if (av.debug.root) { console.log('before fzWorld'); };
+  if (av.debug.root) { console.log('Root: before fzWorld'); };
   av.dnd.fzWorld = new dndSource('fzWorld', {
     //accept: ['b', 'w'],   //b=both; w=world  //only after the population started running
     singular: true,
@@ -476,7 +476,7 @@ require([
    });
    */
 
-  console.log('root: av.dnd.ancestorBox', av.dnd.ancestorBox);
+if (av.debug.root) { console.log('root: av.dnd.ancestorBox', av.dnd.ancestorBox); }
   av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
     if ('ancestorBox' === target.node.id) {
       //console.log('ancestorBox=', target, av.dnd.ancestorBox);  //yes they are the same. could use in the above if statement.
@@ -624,7 +624,7 @@ require([
     av.debug.error = 'Error: ' + message + ' from ' + file + ':' + line + ':' + col;
     av.debug.sendLogTextarea = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail + '\n\n' + av.debug.error;
 
-    console.log('root: before call problemWindow');
+  if (av.debug.root) { console.log('root: before call problemWindow'); }
     av.ui.problemWindow();
   };
 
@@ -694,21 +694,6 @@ require([
       };
     };
   };
-
-
-  //********************************************************************************************************************
-  //  Read Default Workspace as part of initialization
-  // ********************************************************************************************************************
-  av.fio.JSZip = JSZip;  //to allow other required files to be able to use JSZip
-  av.fio.FileSaver = FileSaver;
-  av.pch.Plotly = Plotly;
-
-  //Read the default work space and then loadConfigFlag = true; //the @default should be placed at the current configuration
-  // need to change how loadConfig worrks
-  av.fio.readZipWS(av.fio.defaultFname, true);  
-  
-  //Need to get @default (the condents of folder c0) into the active config field. 
-
   
   //********************************************************************************************************************
   // Menu Buttons handling
@@ -928,7 +913,7 @@ require([
       isSafari: av.brs.isSafari
     };
 
-    console.log('root: defore defining av.debug.postData');
+  if (av.debug.root) { console.log('root: defore defining av.debug.postData'); }
     av.debug.postData = {
       version: av.ui.version,
       userInfo: window.navigator.userAgent,
@@ -944,7 +929,7 @@ require([
       freezer: JSON.stringify(av.fzr),
       vars: av.debug.vars
     };
-    console.log('root:  postData=', av.debug.postData);
+  if (av.debug.root) { console.log('root:  postData=', av.debug.postData); }
 
     //Until we get sending data to database figure out. Switch between post and e-mail session log
     if (true) {
@@ -960,6 +945,7 @@ require([
     }
   };
 
+if (av.debug.root) { console.log('root:  before av.post.sendWindow'); }
   av.post.sendWindow = function () {
     postLogDialog.show();  //textarea must be visable first
     av.dom.postLogPara.textContent = av.post.postLogPara;
@@ -976,6 +962,7 @@ require([
     av.dom.postProblemError.textContent = '';
   };
 
+  if (av.debug.root) { console.log('root:  av.post.emailWindow'); }
   av.post.emailWindow = function () {
     av.dom.sendLogTextarea.textContent = av.debug.sendLogTextarea;
     av.dom.sendLogPara.textContent = av.debug.sendLogPara;
@@ -996,7 +983,7 @@ require([
   //visibility:hidden can be used, but it leaves the white space and just does not display dijits.
   //So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
   //the default option.
-  console.log('root: before av.ui.mainBoxSwap defined');
+  if (av.debug.root) { console.log('root: before av.ui.mainBoxSwap defined'); }
   av.ui.mainBoxSwap = function (showBlock) {
     //console.log('showBlock=', showBlock);
     av.ui.page = showBlock;
@@ -1053,6 +1040,7 @@ require([
   };
 
   // Buttons that call MainBoxSwap
+  if (av.debug.root) { console.log('root: before av.dom.populationButton.onclick'); }
   av.dom.populationButton.onclick = function () {
     av.post.addUser('Button: populationButton');
     if (av.debug.dnd || av.debug.mouse)
@@ -1060,6 +1048,7 @@ require([
     av.ui.mainBoxSwap('populationBlock');
   };
 
+  if (av.debug.root) { console.log('root: beforer define: av.dom.organismButton.onclick');}
   av.dom.organismButton.onclick = function () {
     av.post.addUser('Button: organismButton');
     // * offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
@@ -1087,12 +1076,14 @@ require([
     av.anl.AnaChartFn();
   };
 
+  if (av.debug.root) { console.log('root:  before showTextButton.onclick'); }
   document.getElementById('showTextButton').onclick = function () {
     av.post.addUser('Button: showTextButton');
     av.ui.mainBoxSwap('showTextBlock');
   };
   // ------------------ two controls for the same purpose; tabs used in develoopment mode --
   
+  if (av.debug.root) { console.log('root: beforer av.ptd.av.ptd.rightInfoPanelToggleButton');}
   //Toggle switch for Population/Organism pages
   av.ptd.rightInfoPanelToggleButton = function(domObj) {
     if ('populationBlock' == av.ui.page) {
@@ -1161,6 +1152,7 @@ require([
     }
   };
 
+  if (av.debug.root) { console.log('root: beforer define: av.ptd.processTab');}
   //Development section with tabs
   av.ptd.processTab = function (evt, contentType) {
     var ii, tablinks;
@@ -1194,12 +1186,10 @@ require([
       document.getElementById('StatsButton').className = 'toggleLftButton';            
     }
   };
-  
-  document.getElementById('StatsButton').click();
   // ------------ end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
 
 //------------------------------------------------------------------------------------------show/hide left side panel --
-  console.log('root: beforer define: av.ptd.lftPnlButtonImg'); 
+  if (av.debug.root) { console.log('root: beforer define: av.ptd.lftPnlButtonImg');}
   av.ptd.lftPnlButtonImg = function () {
     if (av.ui.lftSidePnlShowing) {
       av.post.addUser('Button: lftPnlButtonImg: start hidding left side panel');
@@ -1224,7 +1214,7 @@ require([
 //----------------------------------------------------------------------------------------------------------------------
 
 // hides and shows the population and selected organsim data on right of population page with 'Stats/mpa' button
-  console.log('root: before av.ptd.rtPnlButtonImg');
+if (av.debug.root) { console.log('root: before av.ptd.rtPnlButtonImg'); }
   av.ptd.rtPnlButtonImg = function () {
     //console.log('rtPnlButtonImg: av.ui.page=', av.ui.page);
     if ('populationBlock' == av.ui.page) {
@@ -2998,7 +2988,6 @@ require([
     console.log('av.dom.cycleSlider.innerHTML =', av.dom.cycleSlider.innerHTML);
     console.log('av.ind.cycleSlider =', av.ind.cycleSlider);
 
-
   //********************************************************************************************************************
   // Resize window helpers -------------------------------------------
   //********************************************************************************************************************
@@ -3295,7 +3284,7 @@ require([
     //console.log('layout=', av.dom.anlChrtSpace.layout);
     av.dom.anlChrtSpace.style.visibility = 'hidden';
   };
-  console.log('root: before av.anl.anaChartInit called');
+if (av.debug.root) { console.log('root: before av.anl.anaChartInit called'); }
   av.anl.anaChartInit();
 
   av.anl.AnaChartFn = function () {
@@ -3465,6 +3454,19 @@ require([
   //                                       end of Analysis Page
   // **************************************************************************************************************** */
 
+  //********************************************************************************************************************
+  //  Read Default Workspace as part of initialization
+  // ********************************************************************************************************************
+  av.fio.JSZip = JSZip;  //to allow other required files to be able to use JSZip
+  av.fio.FileSaver = FileSaver;
+  av.pch.Plotly = Plotly;
+
+  //Read the default work space and then loadConfigFlag = true; //the @default should be placed at the current configuration
+  // need to change how loadConfig worrks
+  av.fio.readZipWS(av.fio.defaultFname, true);  
+  
+  //Need to get @default (the condents of folder c0) into the active config field. 
+
   //Resize tools might be called here or after "Last things done
   
   // **************************************************************************************************************** */
@@ -3504,6 +3506,7 @@ require([
     av.doj.mnDebug.style.visibility = 'hidden';   //visible
   };
   av.ui.toggleDevelopentDisplays('Last_things_done');
+  //document.getElementById('StatsButton').click();
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
   av.sgr.ChangeAllGeo('Global');
   av.sgr.setSugarColors(true);  //true is to turn colors on;
@@ -3538,7 +3541,8 @@ require([
     }
     return new_obj;
   };
-});
+}
+  );
 
 //------- not in use = example
 //var hexColor = av.ui.invertHash(av.color.names);

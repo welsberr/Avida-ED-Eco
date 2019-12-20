@@ -12,6 +12,7 @@
 //https://thiscouldbebetter.wordpress.com/2013/08/06/reading-zip-files-in-javascript-using-jszip/
 
 var av = av || {};  //incase av already exists
+if (av.debug.root) { console.log('root: in fileIO'); }
 
 /*------------------------------------------------------------------------------------------------ av.fio.readZipWS --*/
 av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
@@ -277,7 +278,7 @@ av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
     };
   };
 
-//
+if (av.debug.root) { console.log('root: before av.fio.fixFname'); }
 av.fio.fixFname = function() {
   'use strict';
   var domid, name, type, dir;
@@ -349,6 +350,7 @@ av.fio.SaveUsingDomElement = function(aStr, fName, typeStr) {
   }, 100);
 };
 
+if (av.debug.root) { console.log('root: before av.fio.fixFname'); }
 av.fio.fzSaveCurrentWorkspaceFn = function () {
   'use strict';
   if (av.debug.fio) console.log('defaultUserFname', av.fio.defaultUserFname);
@@ -397,7 +399,8 @@ av.fio.fzSaveCurrentWorkspaceFn = function () {
   av.fzr.saveUpdateState('maybe');
 };
 
-//    wsSavedMsg.textcontent = 'Workspace: default  ';
+// wsSavedMsg.textcontent = 'Workspace: default  ';
+if (av.debug.root) { console.log('root: before av.fzr.saveUpdateState'); }
 av.fzr.saveUpdateState = function (newSaveState) {
   'use strict';
   //console.log('oldState', av.fzr.saveState, '; newState', newSaveState);
