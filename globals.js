@@ -981,7 +981,7 @@
       //line: {color: '#00FF00', width: 1, dash: 'solid' }   //dash: (solid   dot    dashdot   dash
       line: {color: '#00FF00', width: 1, dash: 'solid' }
     };
-    av.pch.pixels = {wd: 310, ht: 202, wdif:10, hdif:2};
+    av.pch.pixel = {wd: 310, ht: 202, wdif:10, hdif:2};
     av.pch.data = [av.pch.trace0, av.pch.trace1];
     av.pch.layout = {
       autosize: false,
