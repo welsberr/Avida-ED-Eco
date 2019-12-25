@@ -58,10 +58,14 @@
   
   #allAvida{
     display: flex;
+/*   
     min-height: 100vh;
     min-width: 100vw;
     max-height: 100vh;
     max-width: 100vw;
+*/
+    height: 100vh;
+    width: 100vw;
     flex-direction: column;
     margin: 0;
     background:  #F5F5F5;   /* lightsalmon;  */
@@ -126,7 +130,6 @@
     margin: auto;
   }
   
-
 /*contains navigation column and pages (population, Organsims, Analysis) */
   .mainRow { 
     flex: 1 1 auto;          /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
@@ -135,23 +138,25 @@
     align-items: stretch;
     height: 100%;
     background: #F5F5F5; /* red; */
-    max-height: 800px;
+    max-height: 100vh;
+    max-width: 100vw;
     overflow:scroll;
   }
   .navColClass {
     resize: horizontal;
     overflow: auto;
-    width: 280px;        /*was 152   340px*/
+    min-width: 240px;        /*was 152   340px*/
     display: flex;
     flex-direction: column;
     background: #F5F5F5; /* lavender; */
     border: 1px solid #AAA;
-    max-height: 800px;
+    max-height: 100vh;
     overflow:scroll;
   }
 
   .mainPageButtons{
     border: 1px solid #AAA;
+    width: 100%;
     flex:0 1 112px;
   }
   .PageButtonHolder {
@@ -178,21 +183,27 @@
     border-radius: 5px;
     min-width: 82px;
   }
-#FreezerTitle {
-  font-size: 190%;
-  text-align:  center;
-  font-weight: normal;
-}
 .freezerClass{
   border: 1px solid #BABABA;
   flex: 1;                /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
   overflow:scroll;
-  max-height: 600px;
+  max-height: 90vh;
+  width: 100%;
   overflow:scroll;
 }
-.freezerSection{
+#FreezerTitle {
+  font-size: 190%;
+  text-align:  center;
+  font-weight: normal;
+  width: 100%;
+}
+.frzAccordion {
+  width: 100%;
+}
+.freezerSummaryClass{
   font-size: 130%;
   background: #EEE;
+  width: 100%;
 }
 
 /* trash area below freezer */
@@ -252,6 +263,8 @@
 .mainBlockHolder{
     background: #F5F5F5;     /* lightskyblue; */
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
+    height: 100%;
+    width: 100%;
     border: 1px solid #AAA;
   }
   .mainBlockClassRow {
@@ -270,7 +283,7 @@
     overflow:auto;
     flex-direction: column;
     width: 100%;
-    max-height: 800px;
+    max-height: 100vh;
     overflow:scroll;
     /*max-width: 430px;   /* tiba; temp fix will need to change this later */
   }
@@ -331,12 +344,37 @@
       padding: 3px;
       background: darkgrey;
     }
+.scaleCanvasHolderClass { 
+  flex: 0 1 20px;
+  min-height: 30px;
+  grid-area: scaleCanvas; 
+  width: 100%
+}
+
+.scaleCanvasClass {
+  width: 100%;
+  height: 30px;
+  border: 1px solid #DDDDDD;
+}
 .benchPopBot{
   flex: 0 1 40px;
   border: 1px solid #AAA;
-  min-height: 69px;
+  min-height: 41px;
   overflow: auto;
   background: #F5F5F5; /* peachpuff;*/
+}
+  .zoomSlideClass { grid-area: zoomSlide; visibility: hidden; }
+  .timeUpdateClass { grid-area: timeUpdate;}
+  .freezeButtonDivClass { grid-area: freezeButton;}
+  .modeHolderClass { grid-area: modeHolder;}
+  .gridButtonClass { grid-area: gridButton;}
+  .rescalingClass { grid-area: rescaling;}
+  .popBotRiteClas { grid-area: popBotRite;}
+.gridControlContainerClass{
+  display: grid;
+  grid-template-areas: 'timeUpdate  modeHolder  rescaling'
+                       'freezeButton gridButton popBotRite';
+  width: 100%;
 }
 
 /* right informaton pannel on the populatoin page */
@@ -344,7 +382,7 @@
     flex: 0 1 440px;          /* flex: 0 1 344px width I think; is fixed in that dimension   was 349px  was 560px*/
     border: 1px solid #AAA;      /*sot stat = 190;  popstat =234  for  424 */
     background: #F5F5F5;
-    max-height: 750px;
+    max-height: 99vh;
     min-width: 440px;
     overflow:scroll;
   }

@@ -71,7 +71,7 @@
 
 
       av.dom.selOrgType = document.getElementById('selOrgType');
-      av.dom.gridControlTable = document.getElementById('gridControlTable');
+      av.dom.gridControlContainer = document.getElementById('gridControlContainer');
 
       //Test setup page
       av.dom.sizeCellTest = document.getElementById('sizeCellTest');

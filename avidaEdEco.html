@@ -172,7 +172,7 @@
               </span>
             </span>
           </span>     
-        </div>  <span comment="end of mainMenu"></span>
+        </div>  <span id="end_mainMenu"></span>
 
         <div id="headerMsg">
           <div id='msgHolder'>
@@ -213,22 +213,22 @@
             <div id='FreezerTitle'>Freezer</div>
             <span title="https://stackoverflow.com/questions/24977965/collapsible-lists-using-html-and-css"></span>
             <details class='frzAccordion' open>
-              <summary id='fzConfigureSec' class="freezerSection">Configured Dishes</summary>
+              <summary id='fzConfigureSec' class="freezerSummaryClass">Configured Dishes</summary>
               <ul id='fzConfig' class='container'>
               </ul>
             </details>
             <details class='frzAccordion' open>
-              <summary id='organismsFzSec' class="freezerSection">Organisms</summary>
+              <summary id='organismsFzSec' class="freezerSummaryClass">Organisms</summary>
               <ul id='fzOrgan' class='container'>
               </ul>
             </details>
             <details class='frzAccordion' open>
-              <summary id='fzWorldSec' class="freezerSection">Populated Dishes</summary>
+              <summary id='fzWorldSec' class="freezerSummaryClass">Populated Dishes</summary>
               <ul id='fzWorld' class='container'>
               </ul>
             </details>
             <details class='frzAccordion debugDetails' id='fzTdishDetails' open>
-              <summary id='fzTdishSec' class="freezerSection">Test Dishes</summary>
+              <summary id='fzTdishSec' class="freezerSummaryClass">Test Dishes</summary>
               <div id='testDishDetailDiv'>
                 <ul id='fzTdish' class='container'>
                 </ul>
@@ -273,51 +273,51 @@
               <div class="benchPopMid" id='gridHolder' data-dojo-type='dijit/layout/ContentPane'>
                 <canvas data-dojo-type='dojo.dnd.Target' id='gridCanvas'></canvas>
               </div>
+              <div id='scaleCanvasHolder' class='scaleCanvasHolderClass'>
+                <canvas id='scaleCanvas' class='scaleCanvasClass' width='30 px' height='30 px' style='border:1px solid #DDDDDD;'></canvas>
+              </div>
               <div class="benchPopBot" id="popBot">
-                <table border='0' style='border-collapse: collapse; table-layout: auto; width: 100%; height: auto;' id='gridControlTable'>
-                  <tbody>
-                    <tr>
-                  <span title="was a div around scaleCanvas id='scaleDiv' style='overflow: auto'"></span>
-                  <canvas id='scaleCanvas' width='30 px' height='30 px' style='border:1px solid #DDDDDD;'></canvas>
-                  </tr>
-                  <tr>
-                    <td>
-                      Time: <label id='TimeLabel'>(not started)</label><br/>
-                      <button id='freezeButton'>Freeze</button>
-                    </td>
-                    <td style='text-align: center; min-width:166px'>
-                      Mode:
-                      <select  id='colorMode'>
-                        <option value='Fitness' selected>Fitness</option>
-                        <option value='Offspring Cost'>Offspring Cost</option>
-                        <option value='Energy Acq. Rate'>Energy Acq. Rate</option>
-                        <option value='Ancestor Organism'>Ancestor Organism</option>
-                        <option value='rnot'>Resource: Notose</option>
-                        <option value='rnan'>Resource: Nanose</option>
-                        <option value='rand'>Resource: Andose</option>
-                        <option value='rorn'>Resource: Ornose</option>
-                        <option value='roro'>Resource: Orose</option>
-                        <option value='rant'>Resource: Antose</option>
-                        <option value='rnor'>Resource: Norose</option>
-                        <option value='rxor'>Resource: Xorose</option>
-                        <option value='requ'>Resource: Equose</option>
-                        <option value='None'>None</option>
-                      </select><br/>
+                
+                <div id='gridControlContainer' class='gridControlContainerClass'>
+                  <div id='timeUpdates' class='timeUpdateClass'>Time: <label id='TimeLabel'>(not started)</label></div>
+                  <div id='freezeButtonDiv' class='freezeButtonDivClass'><button id='freezeButton'>Freeze</button></div>
+                  <div id='modeHolder' class='modeHolderClass'>
+                    Mode:
+                    <select  id='colorMode'>
+                      <option value='Fitness' selected>Fitness</option>
+                      <option value='Offspring Cost'>Offspring Cost</option>
+                      <option value='Energy Acq. Rate'>Energy Acq. Rate</option>
+                      <option value='Ancestor Organism'>Ancestor Organism</option>
+                      <option value='rnot'>Resource: Notose</option>
+                      <option value='rnan'>Resource: Nanose</option>
+                      <option value='rand'>Resource: Andose</option>
+                      <option value='rorn'>Resource: Ornose</option>
+                      <option value='roro'>Resource: Orose</option>
+                      <option value='rant'>Resource: Antose</option>
+                      <option value='rnor'>Resource: Norose</option>
+                      <option value='rxor'>Resource: Xorose</option>
+                      <option value='requ'>Resource: Equose</option>
+                      <option value='None'>None</option>
+                    </select>
+                  </div>
+                  <div id='gridButtons' class='gridButtonClass'>
                       <button id='newDishButton'>New</button>
                       <button id='runStopButton'>Run</button>
                       <button id='oneUpdateButton'>Forward</button>
-                      <button id='avidianOutline' onclick='av.ui.avidianOutlineOnclick(this);'>Resource Mode: show Avidian Outlines</button>
-                    </td>
-                    <td style='text-align: right; min-width:100px'>
+                  </div>
+                  <div id='rescaling' class='rescalingClass'>
                       <label id='rescaleLabel'> </label><br />
-                      <div id='zoomSlide'>
+                  </div>
+                  <div id='popBotRight' class='botBotRiteClass'>
+                      <button id='avidianOutline' onclick='av.ui.avidianOutlineOnclick(this);'>Resource Mode: show Avidian Outlines</button>
+                      <label id='rescaleLabel'> </label><br />
+                      <div id='zoomSlide' class='zoomSlide'>
                         <!--<div data-dojo-type='dijit/form/HorizontalRule' container='bottomDecoration' style='height: 5px;'></div>-->
                         <!--<ol data-dojo-type='dijit/form/HorizontalRuleLabels' container='bottomDecoration' labels='1x,20x' style='height: 20px;'>-->
                       </div>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
+                  </div>
+                </div>
+                
               </div>
             </div>
 

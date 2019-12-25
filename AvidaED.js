@@ -1716,11 +1716,13 @@ require([
           }
         }
 
-        //figure out scale or legend
-        if (av.dom.gridControlTable.clientWidth < $("#gridHolder").height()) {
-          av.dom.scaleCanvas.width = (av.dom.gridControlTable.clientWidth - 22);  //works for canvas; need to use .style for divs
+        //check if gridHolder is taller ro wider
+        if (av.dom.gridControlContainer.clientWidth < $("#gridHolder").height()) {
+          av.dom.scaleCanvas.width = (av.dom.gridControlContainer.clientWidth - 22);  //works for canvas; need to use .style for divs
         } else
           av.dom.scaleCanvas.width = $("#gridHolder").height() - 22;
+
+        //figure out scale or legend
         if ('Ancestor Organism' == document.getElementById('colorMode').value) {
           av.grd.drawLegend();
         } else {
@@ -3239,7 +3241,7 @@ require([
     }
     av.dom.gridCanvas.style.width = (av.dom.gridHolder.clientHeight - 2) + 'px';
     av.dom.gridCanvas.style.height = av.dom.gridCanvas.offsetWidth + 'px';
-    av.dom.scaleCanvas.style.width = (av.dom.gridControlTable.clientWidth - 1) + 'px';
+    av.dom.scaleCanvas.style.width = (av.dom.gridControlContainer.clientWidth - 1) + 'px';
 
     if (av.debug.uil) {
       console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
@@ -3723,12 +3725,12 @@ require([
  * 
  
  <details class='debugDetails' id='fzMdishDetails'>
- <summary id='fzMdishSec' class="freezerSection">Multi-Dishes</summary>
+ <summary id='fzMdishSec' class="freezerSummaryClass">Multi-Dishes</summary>
  <ul id='fzMdish' class='container'>
  </ul>
  </details>
  <details class='debugDetails' id='fzRdishDetails'>
- <summary id='fzRdishSec' class="freezerSection">Resource setup</summary>
+ <summary id='fzRdishSec' class="freezerSummaryClass">Resource setup</summary>
  <ul id='fzRdish' class='container'>
  </ul>
  </details>

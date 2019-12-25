@@ -282,7 +282,7 @@
     }
     av.dom.gridCanvas.style.width = (av.dom.gridHolder.clientHeight - 2) + 'px';
     av.dom.gridCanvas.style.height = av.dom.gridCanvas.offsetWidth + 'px';
-    av.dom.scaleCanvas.style.width = (av.dom.gridControlTable.clientWidth - 1) + 'px';
+    av.dom.scaleCanvas.style.width = (av.dom.gridControlContainer.clientWidth - 1) + 'px';
 
     if (av.debug.uil) {
       console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
