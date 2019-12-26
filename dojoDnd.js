@@ -9,6 +9,10 @@ var dojo = dojo || {};
 //http://stackoverflow.com/questions/1134572/dojo-is-there-an-event-after-drag-drop-finished
 //Puts the contents of the source in a object (list) called items.
 //if (av.debug.root) { console.log('Root: before av.dnd.getAllItems'); }
+
+//============================================================================================ Drag n Drog Unilities ===
+
+//---------------------------------------------------------------------------------------------- av.dnd.getAllItems --*/
 av.dnd.getAllItems = function (source) {
   'use strict';
   var items = source.getAllNodes().map(function (node) {
@@ -17,6 +21,7 @@ av.dnd.getAllItems = function (source) {
   return items;
 };
 
+//------------------------------------------------------------------------------------------------- av.dnd.getDomId ----
 av.dnd.getDomId = function (name, target){
   'use strict';
   //Now find which node has the new content so it can get a context menu.
@@ -32,9 +37,7 @@ av.dnd.getDomId = function (name, target){
   return domItems[nodeIndex];
 };
 
-//----------------------------------------------------------------------------------------------------------------------
-//                                           Name for freezer item
-
+//-------------------------------------------------------------------------------------------- av.dnd.getUniqueName ----
 av.dnd.getUniqueName = function(name, target) {
   'use strict';
   var namelist = dojo.query('> .dojoDndItem', target.node.id);
@@ -54,6 +57,7 @@ av.dnd.getUniqueName = function(name, target) {
   return name;
 };
 
+//--------------------------------------------------------------------------------------------- av.dnd.makeNameList ----
 av.dnd.makeNameList = function (target) {
   'use strict';
   var namelist = dojo.query('> .dojoDndItem', target.node.id);
@@ -65,6 +69,7 @@ av.dnd.makeNameList = function (target) {
   return listNames;
 };
 
+//-------------------------------------------------------------------------------------- av.dnd.preTransferNameList ----
 av.dnd.preTransferNameList = function(target, name) {
   'use strict';
   var listFull = av.dnd.makeNameList(target);
@@ -75,6 +80,7 @@ av.dnd.preTransferNameList = function(target, name) {
   return listFull;
 };
 
+//--------------------------------------------------------------------------------------------- av.dnd.nameNfrzItem ----
 av.dnd.nameNfrzItem = function (namelist, name, number) {
   var num = number + 1;
   var aName = name + '_' + num.formatNum(0);
@@ -87,6 +93,7 @@ av.dnd.nameNfrzItem = function (namelist, name, number) {
   return newName;
 };
 
+//---------------------------------------------------------------------------------------------- av.dnd.namefzrItem ----
 av.dnd.namefzrItem = function(name, namelist) {
   'use strict';
   var theName;
@@ -100,6 +107,7 @@ av.dnd.namefzrItem = function(name, namelist) {
   return theName;
 };
 
+//----------------------------------------------------------------------------------------- av.dnd.getUniqueFzrName ----
 av.dnd.getUniqueFzrName = function(name, namelist) {
   'use strict';
   var unique = true;
@@ -117,9 +125,8 @@ av.dnd.getUniqueFzrName = function(name, namelist) {
   return name;
 };
 
-//----------------------------------------------------------------------------------------------------------------------
-// rename Parent
 
+//---------------------------------------------------------------------------------------------- av.dnd.nameNparent ----
 av.dnd.nameNparent = function (name, number) {
   var num = number + 1;
   var aName = name + '-' + num.formatNum(0);
@@ -132,6 +139,7 @@ av.dnd.nameNparent = function (name, number) {
   return newName;
 };
 
+//----------------------------------------------------------------------------------------------- av.dnd.nameParent ----
 av.dnd.nameParent = function(name) {
   'use strict';
   var theName;
@@ -144,12 +152,13 @@ av.dnd.nameParent = function(name) {
   av.parents.name.push(theName);
   return theName;
 };
+//======================================================================================== End Drag n Drog Unilities ===
 
-//----------------------------------------------- Configuration DnD ----------------------------------------------------
+//======================================================================================== Drag n Drop Configuration ===
 //Need to have only the most recent dropped configuration in configCurrent. Do this by deleting everything in configCurrent
 //and reinserting the most resent one after a drop event.
 //
-//-----------------------------------------------------------------------------------------start av.dnd.lndtestConfig --
+//---------------------------------------------------------------------------------------------- av.dnd.lndtestConfig --
 av.dnd.lndTestConfig = function (move) {
   'use strict';
   av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
@@ -319,56 +328,65 @@ av.dnd.lndTestConfig = function (move) {
 //-------------------------------------------------------------------------------------- start av.dnd.lndActiveConfig --
 av.dnd.lndActiveConfig = function (move, from) {
   'use strict';
-  console.log(from, 'called av.dnd.lndActiveConfig');
+  console.log(from, 'called av.dnd.lndActiveConfig; move = ', move);
   av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
   var ndx = -1;
   var klen = 0;
   var kk = 0;
   var str = '';
+  
+  //move.sourceNodes= move.source.getAllNodes();  //does not seeem to be used. 
+  //console.log('move.source.getAllNodes()=move.source.getAllNodes()=', move.sourceNodes);
+
+  
   //there is always a node here, so it must always be cleared when adding a new one.
   av.dnd.activeConfig.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
   av.dnd.activeConfig.sync();   //should be done after insertion or deletion
 
-  //get the data for the new configuration
-  move.source.forInSelectedItems(function (item, id) { //assign the node that is selected from the source.
-    av.dnd.activeConfig.insertNodes(false, [item]);
-  });
-  var domid = Object.keys(av.dnd.activeConfig.map)[0];
-  console.log('ldn.ActiveConfig: type=', move.target.map[domid].type[0] );
-  // The type assignment and .sync were done here in the past. I'm going to try moving this to just before clearing the ancestor box. 
-    //move.target.map[domid].type[0] = 'b';
-  av.dnd.activeConfig.sync();
-  console.log('data', move.target.map[domid].data, move.target.map[domid]);
+  //should be defined before av.dnd.landActiveConfig is called - comment out later
+  move.sourceMoveData = move.source.map[move.sourceDomId];
+  
+  console.log('sourceDomId=,', move.sourceDomId,'; move.source.map[sourceDomId].data=', move.source.map[move.sourceDomId].data, '; mmove.sourceMoveData=', move.sourceMoveData);
 
-  av.fzr.actConfig.actDomid = domid;
-  av.fzr.actConfig.name = document.getElementById(domid).textContent;
-  console.log('New Config:', av.fzr.actConfig.name);
-  av.fzr.actConfig.fzDomid = Object.keys(move.source.selection)[0];
+  //if we know the item and id can we do this without anything selected? Yes. so we need to replace this with the insertNodes below
+  //get the data for the new configuration
+  /*
+  move.source.forInSelectedItems(
+    function (item, id) { 
+      //assign the node that is selected from the source.
+      av.dnd.activeConfig.insertNodes(false, [item]);
+      console.log('In move.source.forInSelectedItems: id=', id, '; item=', item);
+  });
+  */
+  
+  // [item] must be the item that is the node we want to put in move.target from move.source 
+  av.dnd.activeConfig.insertNodes(false, [ move.sourceMoveData]);
+
+  // Syncronize activeConfig holder as things were manipulated in javascript
+  av.dnd.activeConfig.sync();   //or should sync be after reassign type to b?
+          //Still reassigning thing within holder using javascript. Should av.dnd.___.sync() be after this?    so did again later
+  
+  av.fzr.actConfig.actDomid = Object.keys(move.target.map)[0];
+  //          av.fzr.actConfig.actDomid = Object.keys(av.dnd.activeConfig.map)[0];    //old version
+  av.fzr.actConfig.name = document.getElementById(av.fzr.actConfig.actDomid).textContent;
+  console.log('New Config name=:', av.fzr.actConfig.name);
+  
+  av.fzr.actConfig.fzDomid = move.sourceDomId;
+  console.log('av.fzr.actConfig.fzDomid=', av.fzr.actConfig.fzDomid, '; move.sourceDomId=', move.sourceDomId);
+  console.log('Object.keys(move.target.map)[0];=', Object.keys(move.target.map)[0], '; av.fzr.actConfig.actDomid=', av.fzr.actConfig.actDomid);
+
   av.fzr.actConfig.dir = av.fzr.dir[av.fzr.actConfig.fzDomid];
   delete av.fzr.actConfig.file['instset.cfg'];
   if (av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg']) {
     av.fzr.actConfig.file['instset.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg'];
   }
-  
+   
   //The types are reassigned to indicate that they might be the populated form of the dishes.
-  /*
-  if ('c' == move.target.map[domid].type[0] || 'w' == move.target.map[domid].type[0]) {
-    move.target.map[domid].type[0]= 'b';
-    av.frd.updateSetup('av.dnd.lndActiveConfig');                  //call the avida-ED 3.0 style setup page
-    av.msg.setupType = 'standard';
-  }
-  else {
-    move.target.map[domid].type[0] = 'v';   //type is test or populated test
-    av.frd.updateTestSetup('av.dnd.lndActiveConfig');               //call the test version of Setup
-    av.msg.setupType = 'test';
-  };
-  */
-  //The types are reassigned to indicate that they might be the populated form of the dishes.
-    move.target.map[domid].type[0]= 'b';
+    move.target.map[av.fzr.actConfig.actDomid].type[0]= 'b';
     av.frd.updateSetup('av.dnd.lndActiveConfig');                  //call the avida-ED 3.0 style setup page
     av.msg.setupType = 'standard';
  
- 
+  //--------------------------------- doho DnD done; now update ancestors and other data from files
   //Clear ancestorBox
   av.dnd.ancestorBox.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
   av.dnd.ancestorBox.sync();   //should be done after insertion or deletion
@@ -377,7 +395,7 @@ av.dnd.lndActiveConfig = function (move, from) {
 
   av.parents.clearParentsFn();
 
-  console.log('move.source.node.id=',move.source.node.id);
+  console.log('move.source.node.id=',move.source.node.id, '; why is this out of order?');
   if ('fzConfig' === move.source.node.id || ('fzTdish' === move.source.node.id)) {
     av.fzr.actConfig.type = move.type;
     //av.fzr.actConfig.type = 'c';
@@ -539,8 +557,10 @@ av.dnd.landFzConfig = function (source, nodes, target) {
   }
 };
 
-//----------------------------------------------------Organism dnd------------------------------------------------------
+//=============================================================================================== av.dnd.landFzOrgan ===
+
 //When something is added to the Organism Freezer
+//---------------------------------------------------------------------------------------------- av.dnd.landFzOrgan --*/
 av.dnd.landFzOrgan = function (source, nodes, target) {
   'use strict';
   var gen;
@@ -606,8 +626,10 @@ av.dnd.landFzOrgan = function (source, nodes, target) {
   }
   if (av.debug.dnd) console.log('End of av.dnd.landFzOrgan');
 };
+//------------------------------------------------------------------------------------------ end av.dnd.landFzOrgan --*/
 
 //here the parameters are Dojo DND objects
+//------------------------------------------------------------------------------------------------- av.dnd.makeMove --*/
 av.dnd.makeMove = function (source, nodes, target) {
   'use strict';
   var added = false;
@@ -617,8 +639,11 @@ av.dnd.makeMove = function (source, nodes, target) {
   av.dnd.move.nodeName = nodes[0].textContent;
   av.dnd.move.sourceDomId = Object.keys(source.selection)[0];
   av.dnd.move.dir = av.fzr.dir[av.dnd.move.sourceDomId];
+  av.dnd.move.nodeName = av.fzr.domid[av.dnd.move.dir];
   var domIDs = Object.keys(target.map);
   av.dnd.move.targetDomId = domIDs[domIDs.length-1];
+  av.dnd.move.sourceMoveData = av.dnd.move.source.map[av.dnd.move.sourceDomId];
+
   //console.log('move', av.dnd.move);
   switch (target) {
     case av.dnd.ancestorBox:
@@ -638,10 +663,11 @@ av.dnd.makeMove = function (source, nodes, target) {
       break;
   }
 };
-
+//--------------------------------------------------------------------------------------------- end av.dnd.makeMove --*/
 //av.post.data = { is defined as around avidaED.js 1950
 
 
+//------------------------------------------------------------------------------------------- av.dnd.lndAncestorBox --*/
 av.dnd.lndAncestorBox = function (move) {
   'use strict';
   var added;
@@ -676,7 +702,9 @@ av.dnd.lndAncestorBox = function (move) {
   }
   else return (false);
 };
+//--------------------------------------------------------------------------------------- end av.dnd.lndAncestorBox --*/
 
+//---------------------------------------------------------------------------------------- av.dnd.lndAncestorBoTest --*/
 av.dnd.lndAncestorBoTest = function (move) {
   'use strict';
   var added;
@@ -711,8 +739,10 @@ av.dnd.lndAncestorBoTest = function (move) {
   }
   else return (false);
 };
+//------------------------------------------------------------------------------------ end av.dnd.lndAncestorBoTest --*/
 
 // Process Drop on gridCanvas
+//------------------------------------------------------------------------------------------- av.dnd.landGridCanvas --*/
 av.dnd.landGridCanvas = function (source, nodes, target) {
   'use strict';
   if (av.debug.dnd) console.log('inside gridCanvas dnd');
@@ -783,7 +813,9 @@ av.dnd.landGridCanvas = function (source, nodes, target) {
   
   if (av.debug.dnd) console.log('parents', av.parents);
 };
+//--------------------------------------------------------------------------------------- end av.dnd.landGridCanvas --*/
 
+//------------------------------------------------------------------------------------ av.dnd.updateFromFzrOrganism --*/
 av.dnd.updateFromFzrOrganism = function () {
   'use strict';
   var domId = Object.keys(av.dnd.fzOrgan.selection)[0];
@@ -798,6 +830,7 @@ av.dnd.updateFromFzrOrganism = function () {
   if (av.debug.dnd) console.log('av.fzr.actOrgan', av.fzr.actOrgan);
 };
 
+//-------------------------------------------------------------------------------------------- av.dnd.landOrganIcon --*/
 av.dnd.landOrganIcon = function (source, nodes, target) {
   //clear out the old data if an organism is already there
   'use strict';
@@ -829,9 +862,11 @@ av.dnd.landOrganIcon = function (source, nodes, target) {
   av.dnd.organIcon.selectAll().deleteSelectedNodes();  //clear items
   av.dnd.organIcon.sync();   //should be done after insertion or deletion
 };
+//---------------------------------------------------------------------------------------- end av.dnd.landOrganIcon --*/
 
 //Need to have only the most recent dropped organism in av.dnd.activeOrgan. Do this by deleting everything in activeOrgan
 //and reinserting the most resent one after a drop event.
+//------------------------------------------------------------------------------------------- av.dnd.lndActiveOrgan --*/
 av.dnd.lndActiveOrgan = function (move) {
   'use strict';
   //av.post.addUser('DnD: ' + move.fzSection.node.id + '--> ' + move.target.node.id + ': by: ' + move.sourceDomId.textContent);
@@ -853,9 +888,11 @@ av.dnd.lndActiveOrgan = function (move) {
   }
   av.dnd.updateFromFzrOrganism();
 };
+//---------------------------------------------------------------------------------------- end av.dnd.lndActiveOrgan --*/
 
 //Need to have only the most recent dropped organism in av.dnd.activeOrgan. Do this by deleting everything in activeOrgan
 //and reinserting the most resent one after a drop event.
+//------------------------------------------------------------------------------------------ av.dnd.landActiveOrgan --*/
 av.dnd.landActiveOrgan = function (source, nodes, target) {
   'use strict';
   av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
@@ -876,9 +913,11 @@ av.dnd.landActiveOrgan = function (source, nodes, target) {
   }
   av.dnd.updateFromFzrOrganism();
 };
+//-------------------------------------------------------------------------------------- end av.dnd.landActiveOrgan --*/
 
 //The variable organCanvas with the html tag organismCanvas will Not hold the organism. Anything dropped on the OrganismCanvas
 //will be put in av.dnd.activeOrgan.
+//------------------------------------------------------------------------------------------ av.dnd.landorganCanvas --*/
 av.dnd.landorganCanvas = function (source, nodes, target) {
   'use strict';
   av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
@@ -901,10 +940,14 @@ av.dnd.landorganCanvas = function (source, nodes, target) {
 
   if ('fzOrgan' == source.node.id) av.dnd.updateFromFzrOrganism();
 };
+//-------------------------------------------------------------------------------------- end av.dnd.landorganCanvas --*/
 
-//------------------------------------------------- Populated Dishes DND -----------------------------------------------
+//============================================================================================= Populated Dishes DND ===
+
 //Process when an World is added to the Freezer
-av.dnd.landFzWorldFn = function (pkg) {//source, pkg.nodes, pkg.target) {
+//pkg contains = pkg.source, pkg.nodes, pkg.target
+//--------------------------------------------------------------------------------------------- av.dnd.landFzWorldFn ---
+av.dnd.landFzWorldFn = function (pkg) {  
   'use strict';
   if (av.debug.dnd) console.log('landFzPopDish: fzr', av.fzr);
   var domid = Object.keys(pkg.target.selection)[0];
@@ -947,6 +990,7 @@ av.dnd.landFzWorldFn = function (pkg) {//source, pkg.nodes, pkg.target) {
     av.dnd.fzWorld.sync();   //should be done after insertion or deletion
   }
 };
+//----------------------------------------------------------------------------------------- end av.dnd.landFzWorldFn ---
 
     //ways to get information about the Dnd containers
     //console.log('pkg.nodes[0].id, pkg.target.node.id = ', pkg.nodes[0].id, pkg.target.node.id);
@@ -960,7 +1004,7 @@ av.dnd.landFzWorldFn = function (pkg) {//source, pkg.nodes, pkg.target) {
     //console.log(document.getElementById(Object.keys(pkg.target.selection)[0]).innerHTML)
     //console.log('allnodes: ',pkg.target.getAllNodes());
 
-// Process av.dnd.trashCan ---------------------------------------------------
+//---------------------------------------------------------------------------------------------- av.dnd.landTrashCan ---
 av.dnd.landTrashCan = function (source, nodes, target) {
   'use strict';
   av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
@@ -996,7 +1040,7 @@ av.dnd.landTrashCan = function (source, nodes, target) {
   av.dnd.trashCan.selectAll().deleteSelectedNodes();  //in all cases, empty the av.dnd.trashCan
   return remove;
 };
-
+//------------------------------------------------------------------------------------------ end av.dnd.landTrashCan ---
 
 //------------------------------------------------------------------------------------------ av.msg.TestDishSetupPrep --
 av.dnd.TestDishSetupPrep = function(fzSection, target, type) {
@@ -1014,14 +1058,14 @@ av.dnd.TestDishSetupPrep = function(fzSection, target, type) {
     av.dnd.activeConfig.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
     av.dnd.activeConfig.sync();   //should be done after insertion or deletion
                                       
-    var nodeMv = av.dnd[fzSection].getSelectedNodes()[0].id;
-    console.log('fzSection=', fzSection, '; nodeMv=', nodeMv);
+    var nodeMvDomid = av.dnd[fzSection].getSelectedNodes()[0].id;
+    console.log('fzSection=', fzSection, '; nodeMvDomid=', nodeMvDomid);
     var added = false;
     av.dnd.move.via = 'menu';
     av.dnd.move.source = av.dnd[fzSection];
     av.dnd.move.target = av.dnd[target];
     av.dnd.move.type = type;
-    av.dnd.move.sourceDomId = nodeMv;
+    av.dnd.move.sourceDomId = nodeMvDomid;
     av.dnd.move.dir = av.fzr.dir[av.dnd.move.sourceDomId];
     av.dnd.move.nodeName = av.fzr.file[av.dnd.move.dir + '/entryname.txt'];
     av.dnd[target].insertNodes(false, [{data: av.dnd.move.nodeName, type: [type]}]);
@@ -1054,14 +1098,14 @@ av.dnd.runTestDish = function(fzSection, target, type) {
 
   if (undefined != av.dnd[fzSection].getSelectedNodes()[0]) {
     //This section partially puts the multi-dish in the active area
-    var nodeMv = av.dnd[fzSection].getSelectedNodes()[0].id;
-    console.log('fzSection=', fzSection, '; nodeMv=', nodeMv);
+    var nodeMvDomid = av.dnd[fzSection].getSelectedNodes()[0].id;
+    console.log('fzSection=', fzSection, '; nodeMvDomid=', nodeMvDomid);
     var added = false;
     av.dnd.move.via = 'menu';
     av.dnd.move.source = av.dnd[fzSection];
     av.dnd.move.target = av.dnd[target];
     av.dnd.move.type = type;
-    av.dnd.move.sourceDomId = nodeMv;
+    av.dnd.move.sourceDomId = nodeMvDomid;
     av.dnd.move.dir = av.fzr.dir[av.dnd.move.sourceDomId];
     av.dnd.move.nodeName = av.fzr.file[av.dnd.move.dir + '/entryname.txt'];
     av.dnd[target].insertNodes(false, [{data: av.dnd.move.nodeName, type: [type]}]);
@@ -1106,14 +1150,14 @@ av.dnd.runTestDish2 = function(fzSection, target, type) {
     //This section partially puts the test-dish in the active area
     av.msg.setupType = 'test';   //Do not reload files from the active config freezer section
                                       //Do not put data from files in the setup section. 
-    var nodeMv = av.dnd[fzSection].getSelectedNodes()[0].id;
-    console.log('fzSection=', fzSection, '; nodeMv=', nodeMv);
+    var nodeMvDomid = av.dnd[fzSection].getSelectedNodes()[0].id;
+    console.log('fzSection=', fzSection, '; nodeMvDomid=', nodeMvDomid);
     var added = false;
     av.dnd.move.via = 'menu';
     av.dnd.move.source = av.dnd[fzSection];
     av.dnd.move.target = av.dnd[target];
     av.dnd.move.type = type;
-    av.dnd.move.sourceDomId = nodeMv;
+    av.dnd.move.sourceDomId = nodeMvDomid;
     av.dnd.move.dir = av.fzr.dir[av.dnd.move.sourceDomId];
     av.dnd.move.nodeName = av.fzr.file[av.dnd.move.dir + '/entryname.txt'];
     av.dnd[target].insertNodes(false, [{data: av.dnd.move.nodeName, type: [type]}]);
@@ -1195,6 +1239,102 @@ av.anl.loadSelectedData = function (worldNum, axisSide, side) {
   }
 };
 
+
+// get rid of if don't use
+//-------------------------------------------------------------------------------------- av.dnd.loadDefautlConfigFn --*/
+av.dnd.loadDefautlConfigFn = function (from) {
+  
+  av.dom.findNode = function(item, index) {
+    //console.log('ndx=', index, '; item=', item);
+    console.log('ndx=', index, '; item.id=', item.id, '; av.fzr.domid.c0=', av.fzr.domid.c0);
+    if (av.fzr.domid.c0 == item.id) {
+      av.dnd.move.sourceNodeNdx = index;
+      console.log('av.dnd.move.sourceNodeNdx=', av.dnd.move.sourceNodeNdx);
+      //break; //not allowed in this function according to NetBeans
+    }
+  };
+  
+  var fzSection = 'fzConfig';
+  var target = 'activeConfig';
+  var type = 'c';
+  var nodes = av.dnd[fzSection].getAllNodes();
+  var ndx = -1;
+  var domID = '';
+  
+  console.log(from, 'called av.dnd.loadDefautlConfigFn: av.fzr.file.c0/entryname.txt=', av.fzr.file['c0/entryname.txt']);
+  console.log('av.fzr.domid.c0=', av.fzr.domid.c0);
+
+  console.log('fzrObject.getAllNodes[0]=', av.dnd[fzSection].getAllNodes()[0]);
+  console.log('fzrObject.getAllNodes=',    av.dnd[fzSection].getAllNodes());
+  
+  nodes.forEach(av.dom.findNode);
+
+  //messier as this goes through all items, not just the nodes with numberical dictionary type names
+  for (var ii in nodes) {
+    console.log('ii, nodes[ii].id=', ii, nodes[ii].id );
+    if (av.fzr.domid.c0 == nodes[ii].id) {
+      ndx = ii;
+      break;
+    }
+  }
+  
+  //console.log('fzrObject=', av.dnd[fzSection].getSelectedNodes()[0]);
+  
+  //need to find selected item. looking for 'dojoDndItem dojoDndItemAnchor' might help
+  //console.log('fzOrgan selected keys', Object.keys(av.dnd.fzOrgan.selection)[0]);
+  //Object.keys(av.dnd.fzOrgan.selection)[0] and av.dnd.fzOrgan.getSelectedNodes()[0].id return the same thing
+
+  //for this it does not need to be selected, but I have to get the corrrect stuff into av.dnd.move
+
+  //if (undefined != av.dnd[fzSection].getSelectedNodes()[0]) {
+    //var nodeMvDomid = av.dnd[fzSection].getSelectedNodes()[0].id;
+
+    console.log('ndx=', ndx);
+    console.log('av.dnd.move.sourceNodeNdx=', av.dnd.move.sourceNodeNdx);
+
+    if (-1 <  ndx) {
+    var nodeMvDomid = nodes[av.dnd.move.sourceNodeNdx].id;
+    var node2Mv = nodes[ndx].id;     //from messey version
+    console.log('fzSection=', fzSection, '; target=', target, '; nodeMvDomid=', nodeMvDomid);
+    console.log('type=', type, '; node2Mv=', node2Mv);
+    
+    av.dnd.move.sourceDomId = nodeMvDomid;
+
+    console.log('; moveNode=', nodes[av.dnd.move.sourceDomId]);
+
+    var addedPopPage = false;
+    var addedAnaPage = false;
+    av.dnd.move.via = 'menu';
+    av.dnd.move.source = av.dnd[fzSection];
+    av.dnd.move.target = av.dnd[target];
+    av.dnd.move.type = type;
+    av.dnd.move.dir = av.fzr.dir[av.dnd.move.sourceDomId];
+    av.dnd.move.nodeName = av.fzr.file[av.dnd.move.dir + '/entryname.txt'];
+    
+    //put node to move into the target
+    av.dnd[target].insertNodes(false, [{data: av.dnd.move.nodeName, type: [type]}]);
+    av.dnd[target].sync();
+    var domIDs = Object.keys(av.dnd[target].map);
+    av.dnd.move.targetDomId = domIDs[domIDs.length - 1];
+    av.dnd.move.sourceMoveData = av.dnd.move.source.map[av.dnd.move.sourceDomId];
+    console.log('move', av.dnd.move);
+    
+    if (('fzConfig' == fzSection || 'fzWorld' == fzSection) && 'activeConfig' == target) { 
+      addedPopPage = av.dnd.lndActiveConfig(av.dnd.move, 'av.dnd.loadDefautlConfigFn');
+    }
+    else {
+      console.log('Error: some criteria not met');
+    }
+  } 
+  else {
+    console.log('Error: index of default configuration file not found; there must be a c0 folder');
+  }
+};
+//---------------------------------------------------------------------------------- end av.dnd.loadDefautlConfigFn --*/
+
+
+//Add items from freezer section using the menu
+//---------------------------------------------------------------------------------------- av.dnd.FzAddExperimentFn --*/
 av.dnd.FzAddExperimentFn = function (fzSection, target, type) {
   //console.log('fzrObject=', av.dnd[fzSection].getSelectedNodes()[0]);
   //need to find selected item. looking for 'dojoDndItem dojoDndItemAnchor' might help
@@ -1202,28 +1342,34 @@ av.dnd.FzAddExperimentFn = function (fzSection, target, type) {
   //Object.keys(av.dnd.fzOrgan.selection)[0] and av.dnd.fzOrgan.getSelectedNodes()[0].id return the same thing
 
   if (undefined != av.dnd[fzSection].getSelectedNodes()[0]) {
-    var nodeMv = av.dnd[fzSection].getSelectedNodes()[0].id;
-    console.log('fzSection=', fzSection, '; target=', target, '; nodeMv=', nodeMv, '; type=', type);
-    var added = false;
+    var nodeMvDomid = av.dnd[fzSection].getSelectedNodes()[0].id;
+    console.log('fzSection=', fzSection, '; target=', target, '; nodeMvDomid=', nodeMvDomid, '; type=', type);
+    var addedPopPage = false;
+    var addedAnaPage = false;
     av.dnd.move.via = 'menu';
     av.dnd.move.source = av.dnd[fzSection];
     av.dnd.move.target = av.dnd[target];
     av.dnd.move.type = type;
     //av.dnd.move.sourceDomId = Object.keys(av.dnd.move.source.selection)[0];  //does not work here even if same basic thing work in AvidaED.js
-    av.dnd.move.sourceDomId = nodeMv;
+    av.dnd.move.sourceDomId = nodeMvDomid;
     av.dnd.move.dir = av.fzr.dir[av.dnd.move.sourceDomId];
     av.dnd.move.nodeName = av.fzr.file[av.dnd.move.dir + '/entryname.txt'];
     av.dnd[target].insertNodes(false, [{data: av.dnd.move.nodeName, type: [type]}]);
     av.dnd[target].sync();
     var domIDs = Object.keys(av.dnd[target].map);
     av.dnd.move.targetDomId = domIDs[domIDs.length - 1];
+    av.dnd.move.sourceMoveData = av.dnd.move.source.map[av.dnd.move.sourceDomId];
     console.log('move', av.dnd.move);
-    if ('fzOrgan' == fzSection && 'ancestorBox' == target) added = av.dnd.lndAncestorBox(av.dnd.move);
-    else if ('fzOrgan' == fzSection && 'activeOrgan' == target) added = av.dnd.lndActiveOrgan(av.dnd.move);
-    else if (('fzConfig' == fzSection || 'fzWorld' == fzSection) && 'activeConfig' == target) added = av.dnd.lndActiveConfig(av.dnd.move);
-    else if ('anlDndChart' == target && 'fzWorld' == fzSection) added = av.dnd.lndAnlDndChart(av.dnd.move);
+    
+    if ('fzOrgan' == fzSection && 'ancestorBox' == target) { addedPopPage = av.dnd.lndAncestorBox(av.dnd.move); }
+    else if ('fzOrgan' == fzSection && 'activeOrgan' == target) { addedPopPage = av.dnd.lndActiveOrgan(av.dnd.move); }
+    else if (('fzConfig' == fzSection || 'fzWorld' == fzSection) && 'activeConfig' == target) { 
+      addedPopPage = av.dnd.lndActiveConfig(av.dnd.move, 'av.dnd.FzAddExperimentFn');
+    }
+    else if ('anlDndChart' == target && 'fzWorld' == fzSection) addedAnaPage = av.dnd.lndAnlDndChart(av.dnd.move);
 
-    if (added) av.grd.drawGridSetupFn('av.dnd.FzAddExperimentFn');
+    if (addedPopPage) av.grd.drawGridSetupFn('av.dnd.FzAddExperimentFn');
+    
   }
   else {
     switch(fzSection) {
@@ -1239,6 +1385,7 @@ av.dnd.FzAddExperimentFn = function (fzSection, target, type) {
     }
   }
 };
+//------------------------------------------------------------------------------------ end av.dnd.FzAddExperimentFn --*/
 
 
 av.dnd.lndAnlDndChart = function (move) {
@@ -1277,6 +1424,7 @@ av.dnd.landAnlDndChart = function (dnd, source, nodes, target) {
   av.dnd.anlDndChart.sync();   //should be done after insertion or deletion
 };
 
+//------------------------------------------------------------------------------------------------- av.dnd.putNslot --*/
 av.dnd.putNslot = function (Num, source) {
   'use strict';
   //the console.log get the data one way, the codes gets the same data another way. 
@@ -1292,10 +1440,12 @@ av.dnd.putNslot = function (Num, source) {
   av.anl.loadSelectedData(Num, 'yLeftSelect', 'left');
   av.anl.loadSelectedData(Num, 'yRightSelect', 'right');
 };
+//--------------------------------------------------------------------------------------------- end av.dnd.putNslot --*/
 
 // should be able to combine the following three functions, but hope to get rid of dojo dnd someday. 
 // only called from  av.dnd.popDish0.on('DndDrop', function (source, nodes, copy, target)
 // tried to put in a separate file at one time and at that time it did not work. 
+//--------------------------------------------------------------------------------------------- av.dnd.landpopDish# --*/
 av.dnd.landpopDish0 = function (dnd, source, nodes, target) {
   'use strict';
   av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
@@ -1365,11 +1515,12 @@ av.dnd.landpopDish2 = function (dnd, source, nodes, target) {
   av.anl.loadSelectedData(2, 'yLeftSelect', 'left');
   av.anl.loadSelectedData(2, 'yRightSelect', 'right');
 };
+//----------------------------------------------------------------------------------------- end av.dnd.landpopDish# --*/
 
-/* ********************************************************************** */
-/* Right Click Context Menu Freezer ************************************* */
-/* ********************************************************************** */
-//used to re-name freezer items after they are created----------------
+// ****************************************************************************************************************** */
+//                                                                                   Right Click Context Menu Freezer */
+// ****************************************************************************************************************** */
+//used to re-name freezer items after they are created
 //http://jsfiddle.net/bEurr/10/
 //if (av.debug.root) { console.log('Root: before av.dnd.contextMenu'); }
 av.dnd.contextMenu = function(target, fzItemID, from) {
@@ -1457,12 +1608,41 @@ av.dnd.contextMenu = function(target, fzItemID, from) {
   }));
 };
 
+  //---------------------------------------------------------------------------------------- av.dnd.clearFrzDogjoFn --*/
+  av.dnd.clearFrzDojoFn = function() {
+    //Clear each section of the freezer
+    //if (av.debug.fio) { console.log('FIO: before  av.dnd.fzConfig.selectAll'); }
+    av.dnd.fzConfig.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
+    //if (av.debug.fio) { console.log('FIO: before av.dnd.fzConfig.sync'); }
+    av.dnd.fzConfig.sync('');   //should be done after insertion or deletion
+    //if (av.debug.fio) { console.log('FIO: before av.dnd.fzOrgan.selectAll', av.dnd.fzOrgan); }
+    av.dnd.fzOrgan.selectAll().deleteSelectedNodes();
+    //if (av.debug.fio) { console.log('FIO: before av.dnd.fzOrgan.sync'); }
+    av.dnd.fzOrgan.sync();
+    /*
+    if (av.debug.fio) { console.log('before av.dnd.fzMdish.selectAll', av.dnd.fzMdish); }
+    av.dnd.fzMdish.selectAll().deleteSelectedNodes();
+    av.dnd.fzMdish.sync();
+
+    if (av.debug.fio) { console.log('before av.dnd.fzRdish.selectAll', av.dnd.fzMdish); }
+    av.dnd.fzRdish.selectAll().deleteSelectedNodes();
+    av.dnd.fzRdish.sync();
+    */
+    //if (av.debug.fio) { console.log('FIO: before av.dnd.fzTdish.selectAll', av.dnd.fzMdish); }
+    av.dnd.fzTdish.selectAll().deleteSelectedNodes();
+    av.dnd.fzTdish.sync();
+
+    //if (av.debug.fio) { console.log('FIO: before av.dnd.fzWorld.selectAll', av.dnd.fzWorld); }
+    av.dnd.fzWorld.selectAll().deleteSelectedNodes();
+    av.dnd.fzWorld.sync();
+    //if (av.debug.fio) { console.log('FIO: after av.dnd.fzWorld.selectAll'); }
+  };
+  //------------------------------------------------------------------------------------ end av.dnd.clearFrzDogjoFn --*/
+
 /* ****************************************************************************************************************** */
 /* ****************************************************************************************************************** */
 /*
 A dojo menu drop down cannot call a dojo popup. It crashes
-
-
 
 Looking at DND move https://dojotoolkit.org/reference-guide/1.10/dojo/dnd/Moveable.html
  https://dojotoolkit.org/reference-guide/1.10/dojo/dnd/Moveable.html

@@ -29,15 +29,6 @@
 // to thet the parse value go to the current version of avida folder and
 // git rev-parse --short HEAD
 //
-// Problems -------------------------------------------------------------------------------------------------------
-//  Fix av.anl.widg = {   statement on globals in Avida-ED 3.2 to match the one in Avida-ED-4 ecology
-//  
-//  fix color and data select/item buttons on Analysis page
-//  
-//  min/max and limited to number for the orgCycle field
-//  oranismPage run button does not work
-//
-// 
 // 4814740943 this might be the hash number for avida.js, but not sure
 //
 // Versions -------------------------------------------------------------------------------------------------------
@@ -77,6 +68,14 @@
 //  
 //  Did not put value for pauseAt in when it read PauseAt.txt as part of testConfig
 //  
+//  Rescaling is missing on the lower right  under the population page petri dish
+//  
+//  Oraganism Page -------
+//  
+//  canvases for bit patterns do not work.
+//  need to line up actual slide with canvas image of the slide scalex
+//  Crashed when I tried to drag icon for offspring organism off the canvas
+//
 //----------------------------------------------------------------------------------------------------------------------
 // 
 
@@ -771,7 +770,7 @@ require([
   // Menu Buttons handling
   //********************************************************************************************s************************
 
-  if (av.debug.fio) { console.log('fio: dijit test', dijit.byId('mnFlOpenDefaultWS')); }
+  // if (av.debug.root) { console.log('Root: dijit test', dijit.byId('mnFlOpenDefaultWS')); }
 
   // if (av.debug.root) { console.log('Root: before mnFlOpenDefaultWS'); }
   dijit.byId('mnFlOpenDefaultWS').on('Click', function () {
@@ -1115,10 +1114,10 @@ require([
         av.dom.statsTab.className = 'tablinks active'; 
 
         // if the miniplot on the populaton page needs to be initiated call that funciton.
-        console.log('In: av.ptd.rightInfoPanelToggleButton; av.pch.needInit=', av.pch.needInit
-              , '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
-        
-        //if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
+        if (av.dbg.flg.plt) { 
+          console.log('In: av.ptd.rightInfoPanelToggleButton; av.pch.needInit=', av.pch.needInit
+              , '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") ); 
+        }
         if ( $(av.dom.popStatsBlock).is(":visible") && av.pch.needInit) {
           if (av.dbg.flg.plt) { console.log('need to call av.grd.popChartInit'); }
           av.grd.popChartInit('av.ptd.rightInfoPanelToggleButton');
@@ -1924,10 +1923,11 @@ require([
     //console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
     //                '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display, '; av.ui.page=', av.ui.page, 
     //                '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
-    //
-    console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
+    
+    if (av.dbg.flg.plt) { 
+      console.log(from , 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
                     '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
-
+    }
     //look to see if poplulation page mini-chart is showing
     //if ('flex' != av.dom.popStatsBlock.style.display || ('populationBlock' !== av.ui.page)) {
     if ( !$(av.dom.popStatsBlock).is(":visible") ) {
@@ -1935,13 +1935,14 @@ require([
       if (av.dbg.flg.plt) { console.log('PopPlot:',from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit); }
       return;
     };
+    
     av.pch.clearPopChrt();
     av.pch.divSize('av.grd.popChartInit');
     var popData = av.pch.data;
 
     //if (av.dbg.flg.plt) { console.log('PopPlot: dom of popChart=', document.getElementById('popChart') ); }
     if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart=', av.dom.popChart); }
-      if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
+    if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
     
     if (undefined == av.dom.popChart.data) {
       if (av.dbg.flg.plt) { console.log('PopPlot: before plotly.plot in popChartInit'); }
@@ -3040,7 +3041,8 @@ require([
 
   //on 2018_0823 this is where height gets messed up when loading the program. 
    av.pch.divSize = function (from) {
-    av.debug.uil = true;
+    console.log('PopPlotSize: ',from, 'called av.pch.divSize, not in if statement.');  
+    av.debug.uil = false;
     if (av.debug.uil) { console.log('PopPlotSize: ',from, 'called av.pch.divSize'); }
     if (av.debug.uil) { 
       console.log('popChrtHolder css.wd ht border padding margin=', $("#popChrtHolder").css('width'), $("#popChrtHolder").css('height')
@@ -3461,11 +3463,12 @@ require([
   // * clientWidth = box + 2*padding - scrollbar_width    
   // * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
   // * csssWidth = box only nothing else
-  console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
+  if (av.debug.ind) {
+    console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
     av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
     $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
-
-  console.log('before mainBoxSwap');
+  }
+  if (av.debug.root) { console.log('before mainBoxSwap'); }
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
   av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
   av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
@@ -3493,7 +3496,7 @@ require([
   //av.grd.drawGridSetupFn('initial background'); //Draw initial background
 
   // className should be 'labInfoClass labInfoNone'
-  console.log('av.dom.testSetupBlock.className=', av.dom.testSetupBlock.className);
+  if (av.dbg.flg.nut) { console.log('av.dom.testSetupBlock.className=', av.dom.testSetupBlock.className); }
 
   // 
 

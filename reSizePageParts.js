@@ -10,10 +10,6 @@
   //********************************************************************************************************************
   //                                             Resize window helpers 
   //********************************************************************************************************************
-   
-  
-  
-  
   
   // if (av.debug.root) { console.log('Root: before Resize helpers'); }
   //----------------------------------------------------------------------------------------------------------------------
@@ -46,7 +42,7 @@
   //----------------------------------------------------------------------------------------------------------------------
   //on 2018_0823 this is where height gets messed up when loading the program. 
    av.pch.divSize = function (from) {
-    av.debug.uil = true;
+    //av.debug.uil = true;
     if (av.debug.uil) { console.log('PopPlotSize: ',from, 'called av.pch.divSize'); }
     if (av.debug.uil) { 
       console.log('popChrtHolder css.wd ht border padding margin=', $("#popChrtHolder").css('width'), $("#popChrtHolder").css('height')
@@ -79,7 +75,7 @@
     }
     if (av.debug.uil) { console.log('PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
     if (av.debug.uil) { console.log('PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
-    av.debug.uil = false;
+    //av.debug.uil = false;
   };
 
   av.anl.divSize = function (from) {

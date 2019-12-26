@@ -17,36 +17,13 @@
   /*------------------------------------------------------------------------------------------------ av.fio.readZipWS --*/
   av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
     if (av.debug.fio) console.log('zipFileName=', zipFileName, '; loadConfigFlag=', loadConfigFlag);
-    console.log('zipFileName', zipFileName, '; loadConfigFlag=', loadConfigFlag);
+                    //console.log('zipFileName=', zipFileName, '; loadConfigFlag=', loadConfigFlag);
     'use strict';
-    if (loadConfigFlag) av.fzr.clearFzrFn();
-    else av.fzr.clearMainFzrFn();  // clear freezer (globals.js)
-    //Clear each section of the freezer
-    if (av.debug.fio) console.log('before  av.dnd.fzConfig.selectAll');
-    av.dnd.fzConfig.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
-    if (av.debug.fio) console.log('before av.dnd.fzConfig.sync');
-    av.dnd.fzConfig.sync('');   //should be done after insertion or deletion
-    if (av.debug.fio) console.log('before av.dnd.fzOrgan.selectAll', av.dnd.fzOrgan);
-    av.dnd.fzOrgan.selectAll().deleteSelectedNodes();
-    if (av.debug.fio) console.log('before av.dnd.fzOrgan.sync');
-    av.dnd.fzOrgan.sync();
-    /*
-    if (av.debug.fio) console.log('before av.dnd.fzMdish.selectAll', av.dnd.fzMdish);
-    av.dnd.fzMdish.selectAll().deleteSelectedNodes();
-    av.dnd.fzMdish.sync();
-
-    if (av.debug.fio) console.log('before av.dnd.fzRdish.selectAll', av.dnd.fzMdish);
-    av.dnd.fzRdish.selectAll().deleteSelectedNodes();
-    av.dnd.fzRdish.sync();
-    */
-    if (av.debug.fio) console.log('before av.dnd.fzTdish.selectAll', av.dnd.fzMdish);
-    av.dnd.fzTdish.selectAll().deleteSelectedNodes();
-    av.dnd.fzTdish.sync();
-
-    if (av.debug.fio) console.log('before av.dnd.fzWorld.selectAll', av.dnd.fzWorld);
-    av.dnd.fzWorld.selectAll().deleteSelectedNodes();
-    av.dnd.fzWorld.sync();
-    if (av.debug.fio) console.log('after av.dnd.fzWorld.selectAll');
+    if (loadConfigFlag) { av.fzr.clearFzr_activeConfig_and_nutData_Fn(); }
+    else { av.fzr.clearMainFzrFn(); }  // clear freezer (globals.js)
+    
+    av.dnd.clearFrzDojoFn();
+    
     //Change loading a workspace will change the freezer, but not parents or configuration
   /*  av.parents.clearParentsFn();  //globals.js
     av.dnd.ancestorBox.selectAll().deleteSelectedNodes();
@@ -54,6 +31,8 @@
     av.dnd.activeOrgan.selectAll().deleteSelectedNodes();
     av.dnd.activeOrgan.sync();
   */
+ 
+    av.fzr.loadedFromFile = 'before oReg defined.';
     var oReq = new XMLHttpRequest();
     oReq.open("GET", zipFileName, true);
     oReq.responseType = "arraybuffer";
@@ -88,12 +67,14 @@
 
         if (3 < av.fio.fName.length) {
           var tmpr = av.utl.wsb('/', av.fio.anID);
-          if (0 < tmpr.indexOf('/')) {av.fzr.fziType = 'subDish';}
-          else {av.fzr.fziType = tmpr.charAt(0);}
-          //console.log('av.fio.fName', av.fio.fName, '; av.fio.anID', av.fio.anID, '; tmpr=', tmpr, '; av.fzr.fziType=',av.fzr.fziType);
+          if (0 < tmpr.indexOf('/')) {av.fzr.folderType = 'subDish';}
+          else {av.fzr.folderType = tmpr.charAt(0);}
+          //console.log('av.fio.fName', av.fio.fName, '; av.fio.anID', av.fio.anID, '; tmpr=', tmpr, '; av.fzr.folderType=',av.fzr.folderType);
           av.fio.processFiles(loadConfigFlag, 'av.fio.readZipWS');
         }  //do not load configfile
-      };
+      };  //end of process files loops
+      
+      
       //want to sort TestDishes here
       av.dnd.sortDnD('fzTdish');
 
@@ -105,8 +86,62 @@
       av.fzr.cNum++;  //now the Num value refer to the next (new) item to be put in the freezer.
       av.fzr.gNum++;
       av.fzr.wNum++;
+      
+      console.log('loadConfigFlag=',loadConfigFlag, '; av.fzr=', av.fzr);
+
+      if (loadConfigFlag) {
+        var fzSection = 'fzConfig';
+        var target = 'activeConfig';
+        var type = 'c';
+
+        var conName = av.fzr.file['c0/entryname.txt'];
+        var conDomID = av.fzr.domid['c0'];
+        var defaultConfigDomID = av.fzr.domid.c0;
+        av.dom[conName] = document.getElementById(conDomID);
+        console.log('entryname=', conName, '; domid of c0 is ', conDomID, '; defaultConfigDomID=', defaultConfigDomID);
+        
+  console.log('fzrObject.getAllNodes[0]=', av.dnd[fzSection].getAllNodes()[0]);
+  console.log('fzrObject.getAllNodes=',    av.dnd[fzSection].getAllNodes());
+        
+        
+        av.dom.simulate(document.getElementById(defaultConfigDomID), "click");
+        
+        console.log('fzConfig=', av.dnd.fzConfig);
+        
+        //av.dnd.fzConfig.selectAll(av.dnd.fzConfig);
+        console.log('getSelectedNodes[0]=', av.dnd[fzSection].getSelectedNodes()[0]);
+        console.log('getSelectedNodes=', av.dnd[fzSection].getSelectedNodes());
+        
+        av.dnd.loadDefautlConfigFn('av.fio.readZipWS');
+
+
+
+
+
+
+        if (false) {
+          //console.log('loadConfigFlag = ', loadConfigFlag);
+
+
+          if ('c0/avida.cfg' == av.fio.anID) {
+            av.frd.avidaCFG2form(av.fio.thisfile.asText());
+          }
+          else if ('c0/environment.cfg' == av.fio.anID) {
+            av.frd.environmentCFG2form(av.fio.thisfile.asText().trim());
+          }
+          else if ('c0/events.cfg' == av.fio.anID) {
+            av.frd.eventsCFG2form(av.fio.thisfile.asText().trim(), 'av.fio.processFiles');
+          }
+        }
+      };
+      
+      
+      av.fzr.loadedFromFile = 'End oReq.onload.';
     };
     oReq.send();
+    av.fzr.loadedFromFile = 'after oReq.send.';
+    
+
     av.fzr.saveUpdateState('default');
     av.fzr.wsNameMsg = 'Default';
   };
@@ -171,11 +206,11 @@
             //if (av.debug.fio) console.log('fName=',av.fio.fName, '; ____anID=',av.fio.anID);
             //if (3 < av.fio.fName.length) {
             if (3 < av.fio.anID.length) {
-              av.fzr.fziType = av.utl.wsb('/', av.fio.anID).charAt(0);
-              if (av.fio.anID.lastIndexOf('/') != av.fio.anID.indexOf('/') && av.fzr.fziType == 'm') {
-                av.fzr.fziType = 'subDish';
+              av.fzr.folderType = av.utl.wsb('/', av.fio.anID).charAt(0);
+              if (av.fio.anID.lastIndexOf('/') != av.fio.anID.indexOf('/') && av.fzr.folderType == 'm') {
+                av.fzr.folderType = 'subDish';
               };
-              //if (av.debug.fio) console.log('av.fio.fName', av.fio.fName, '; av.fio.anID', av.fio.anID, '; av.fzr.fziType=',av.fzr.fziType);
+              //if (av.debug.fio) console.log('av.fio.fName', av.fio.fName, '; av.fio.anID', av.fio.anID, '; av.fzr.folderType=',av.fzr.folderType);
               av.fio.processFiles(false, 'av.fio.userPickZipRead');  //load files
             };
           };

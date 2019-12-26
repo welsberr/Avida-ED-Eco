@@ -34,7 +34,7 @@
       //var domID = av.dnd.getDomId(configName, target);
 
 
-      if (av.debug.fio) console.log('fileNum=', fileNum, '; name=', name, '; Section=', dndSection.node.id);
+      if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', dndSection.node.id);
       //console.log('fileNum', fileNum, '; name', name, '; Section', dndSection.node.id, '; type', type);
 
       //create a right av.mouse-click context menu for the item just created.
@@ -131,7 +131,7 @@
   av.frd.add2multiDishFromFile = function(){
     "use strict";
     //console.log(from, ' called av.frd.add2multiDishFromFile');
-    //console.log('av.fio.fName', av.fio.fName, '; av.fio.anID', av.fio.anID, '; av.fzr.fziType=',av.fzr.fziType);
+    //console.log('av.fio.fName', av.fio.fName, '; av.fio.anID', av.fio.anID, '; av.fzr.folderType=',av.fzr.folderType);
     var multiDish = av.utl.wsb('/', av.fio.anID);
     var superNum = multiDish.substr(1, multiDish.length-1);
     var firstIndex = av.fio.anID.indexOf('/');
@@ -158,23 +158,27 @@
   /*------------------------------------------------------------------------------------------ aav.frd.processSubDish --*/
   av.frd.processSubDish = function() {
     "use strict";
-    //console.log('SubDish:', av.fzr.fziType, ';  ID=', av.fio.anID);
+    //console.log('SubDish:', av.fzr.folderType, ';  ID=', av.fio.anID);
   };
 
   /*--------------------------------------------------------------------------------------------- av.fio.processFiles --*/
-  av.fio.processFiles = function (loadConfigFlag, from){
+  av.fio.processFiles = function (loadConfigFlag, from) {
     'use strict';
-    if (av.debug.fio) { console.log(from, ' called av.fio.processFiles: loadConfigFlag = ', loadConfigFlag); }
+    if (av.dbg.flg.frd) { console.log('FIO: ',from, ' called av.fio.processFiles: loadConfigFlag = ', loadConfigFlag); }
     var fileType = av.fio.anID;
-    if ('subDish' === av.fzr.fziType){
+    
+    //Multi-dish not being implented at this time so subDish should never be a av.fzr.folderType
+    if ('subDish' === av.fzr.folderType){
       fileType = av.utl.wsa('/', fileType);
       //av.frd.processSubDish();
     }
+    
+    
     fileType = av.utl.wsa('/', fileType);
-    //if (av.debug.fio) console.log('anID=', av.fio.anID, '; fileType=', fileType, '; fziType=', av.fzr.fziType);
+    //if (av.debug.fio) console.log('anID=', av.fio.anID, '; fileType=', fileType, '; fziType=', av.fzr.folderType);
       switch (fileType) {
         case 'entryname.txt':
-          if ('subDish' != av.fzr.fziType) {  //the if was added when trying to deal with multi-dish they used the else case
+          if ('subDish' != av.fzr.folderType) {  //the if was added when trying to deal with multi-dish they used the else case
             // all normal files
             av.frd.add2freezerFromFile(loadConfigFlag, 'av.fio.processFiles');
             av.fzr.usrFileLoaded = true;
@@ -226,7 +230,7 @@
               break;
           };
 
-          //need to fix this so the config dish is loaded after all teh files are read not during the file reading. 
+          //need to fix this so the config dish is loaded after all the files are read not during the file reading. 
           if (loadConfigFlag) {        
           //if (false) {
               //console.log('loadConfigFlag = ', loadConfigFlag);
@@ -245,9 +249,9 @@
             av.fzr.file[av.fio.anID] = av.fio.thisfile.asText().trim();
 
             //Process dishes with ancesotrs. 
-            if ('ancestors' == fileType || 'ancestors_manual' == fileType) {
-              av.fio.anID = av.fio.anID + '.txt';
-            };
+            //if ('ancestors' == fileType || 'ancestors_manual' == fileType) {
+            //  av.fio.anID = av.fio.anID + '.txt';
+            //};
 
             //if (av.debug.fio) console.log('FileType is ', fileType, '; filepath = ', av.fio.anID);
           break;

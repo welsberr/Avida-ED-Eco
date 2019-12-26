@@ -35,7 +35,7 @@
   //kept this one line function in case we need to go to storing the workspace in a database instead of freezer memory
   av.fwt.makeFzrFile = function (fileId, text, from) {
     'use strict';
-    console.log(from, ' called av.fwt.makeFzrFile: fileID=',fileId);
+    if (av.dbg.flg.frd) { console.log(from, ' called av.fwt.makeFzrFile: fileID=',fileId); }
     av.fzr.file[fileId] = text;
   };
 

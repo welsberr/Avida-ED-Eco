@@ -24,7 +24,7 @@
   av.debug.anl = false;  //analysis page
   av.debug.bool = false;  //av.debug statements that look for errors outlining logic functions
   av.debug.dnd = false;  //debu statements about dojo dnd
-  av.debug.fio = false;  // file input/output; fio, read, write
+  av.debug.fio = true;  // file input/output; fio, read, write
   av.debug.fzr = false;  // statements about freezer
   av.debug.grid = false;  //population grid
   av.debug.ind = false;  //oranism page
@@ -38,8 +38,9 @@
 
   av.dbg = {};
   av.dbg.flg = {}; 
-  av.dbg.flg.nut = true;
-  av.dbg.flg.plt = true;  //both popChart and analysis
+  av.dbg.flg.frd = false;  //reading file text strings
+  av.dbg.flg.nut = true;  //processing nustrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
+  av.dbg.flg.plt = false;  //both popChart and analysis
 
   av.debug.usr = ''; //working on log for user actions.
 
@@ -744,10 +745,10 @@
   //------------------------------------------------------------------------------------ end of av.sgr.processHideFlags --
 
 
-  //-------------------------------------------------------------------------------------------- in av.fzr.clearFzrFn --//
-  //cannot call av.fzr.clearFzrFn until after saveUpdateState is defined in fileIO.js
+  //---------------------------------------------------------------- in av.fzr.clearFzr_activeConfig_and_nutData_Fn --//
+  //cannot call av.fzr.clearFzr_activeConfig_and_nutData_Fn until after saveUpdateState is defined in fileIO.js
   // Clear the ___active config data__  and __av.nut___
-  av.fzr.clearFzrFn = function () {
+  av.fzr.clearFzr_activeConfig_and_nutData_Fn = function () {
     'use strict';
     av.fzr.dir = {};
     av.fzr.domid = {};
@@ -790,10 +791,10 @@
     }
     av.fzr.saveUpdateState('yes');
     av.fzr.subDishOrNot = 'none';
-    av.fzr.clearEnvironment('av.fzr.clearFzrFn');
+    av.fzr.clearEnvironment('av.fzr.clearFzr_activeConfig_and_nutData_Fn');
   };
 
-  //------------------------------------------------------------------------------------------- end av.fzr.clearFzrFn --//
+  //--------------------------------------------------------------- end av.fzr.clearFzr_activeConfig_and_nutData_Fn --//
 
   av.fzr.saveState = 'default';
   av.fzr.workspaceName = 'default';

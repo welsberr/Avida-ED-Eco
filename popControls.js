@@ -710,7 +710,7 @@
       idName = av.sgr.logicNames[ii] + endName;
       document.getElementById(idName).open = openFlag;
     }
-    console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption, '; openFlag=', openFlag, '; from=', from);
+    if (av.dbg.flg.nut) { console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption, '; openFlag=', openFlag, '; from=', from); }
   };
 
   av.sgr.changeDetailsLayout = function(tsk, sub, from) {
