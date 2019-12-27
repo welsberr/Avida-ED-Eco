@@ -87,7 +87,9 @@
         if ('dndSection is undefined' == domid) console.log('av.dnd.fzConfig is undefined');
         if (av.fzr.cNum < Number(num)) {av.fzr.cNum = Number(num); }
         // console.log('c: num=', num, '; name=', name, 'loadConfigflag = ', loadConfigFlag);
-        if (0 == num && loadConfigFlag) {var ConfigActiveDomID = av.fio.setActiveConfig(av.dnd.activeConfig, name, 'b');}
+         
+        //The default config file is loaded as the activeConfig after all the files are loaded. 
+        //if (0 == num && loadConfigFlag) {var ConfigActiveDomID = av.fio.setActiveConfig(av.dnd.activeConfig, name, 'b');}
         break;
       case 'g':
         domid = av.fio.addFzItem(av.dnd.fzOrgan, name, type, num);
@@ -165,14 +167,14 @@
   av.fio.processFiles = function (loadConfigFlag, from) {
     'use strict';
     if (av.dbg.flg.frd) { console.log('FIO: ',from, ' called av.fio.processFiles: loadConfigFlag = ', loadConfigFlag); }
+    console.log('FIO: ',from, ' called av.fio.processFiles: loadConfigFlag = ', loadConfigFlag);
     var fileType = av.fio.anID;
     
     //Multi-dish not being implented at this time so subDish should never be a av.fzr.folderType
     if ('subDish' === av.fzr.folderType){
       fileType = av.utl.wsa('/', fileType);
       //av.frd.processSubDish();
-    }
-    
+    };
     
     fileType = av.utl.wsa('/', fileType);
     //if (av.debug.fio) console.log('anID=', av.fio.anID, '; fileType=', fileType, '; fziType=', av.fzr.folderType);
@@ -231,8 +233,9 @@
           };
 
           //need to fix this so the config dish is loaded after all the files are read not during the file reading. 
-          if (loadConfigFlag) {        
-          //if (false) {
+          //if (loadConfigFlag) {        
+          // trying false; if thise works well this section will be deleted. 
+          if (false) {
               //console.log('loadConfigFlag = ', loadConfigFlag);
               if ('c0/avida.cfg' == av.fio.anID) {
                 av.frd.avidaCFG2form(av.fio.thisfile.asText());
@@ -248,7 +251,7 @@
             //put the text of the file in the freezer
             av.fzr.file[av.fio.anID] = av.fio.thisfile.asText().trim();
 
-            //Process dishes with ancesotrs. 
+            //Process dishes with ancesotrs. //this was commented out before 2019_1225;s
             //if ('ancestors' == fileType || 'ancestors_manual' == fileType) {
             //  av.fio.anID = av.fio.anID + '.txt';
             //};
@@ -263,9 +266,10 @@
       //console.log('file type in zip: fname ', av.fio.fName, '; id ', av.fio.anID, '; type ', fileType);
     }
   };
-  /*-------------------------------------------------------------------------------------- end of av.fio.processFiles --*/
+  //-------------------------------------------------------------------------------------- end of av.fio.processFiles --
 
-  /*----------------------------------------------------------------------------------------- av.fio.processItemFiles --*/
+  //----------------------------------------------------------------------------------------- av.fio.processItemFiles --
+  // used to load a single freeer item, not a whole workspace
   av.fio.processItemFiles = function (){
     'use strict';
     switch (av.fio.anID) {
@@ -324,9 +328,10 @@
         break;
     }
   };
-  //======================================================================================================================
+  //====================================================================================================================
 
-  //------------------------------------------ update config data from file data stored in freezer = av.frd.updateSetup --
+  //--------------------------------------------------------------------------------------------- av.frd.updateSetups --
+  //update config data from file data stored in freezer
   av.frd.updateSetup = function(from) {
     'use strict';
     if (av.debug.fio) { console.log(from, 'called av.frd.updateSetup; dir=', av.fzr.actConfig.dir); }
@@ -352,9 +357,10 @@
     if (av.debug.fio) { console.log ('dir = ', dir); }
     if (undefined != doctext) { av.frd.pauseRunAtTXT2form(doctext); }
   };
-  //----------------------------------------------------------------------------------------- end of av.frd.updateSetup --
+  //--------------------------------------------------------------------------------------- end of av.frd.updateSetup --
 
-  //------------------------------------------- update config data from file data stored in freezer for test setup page --
+  //--------------------------------------------------------------------------------------- of av.frd.updateTestSetup --
+  //update config data from file data stored in freezer for test setup page 
   av.frd.updateTestSetup = function (from) {
     'use strict';
     //console.log(from, ' called av.frd.updateTestSetup; dir=', dir);
@@ -380,9 +386,12 @@
     //doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
     //av.frd.pauseRunAtTest2form(doctext);
   };
-  //------------------------------------------------------------------------------------- end of av.frd.updateTestSetup --
+  //----------------------------------------------------------------------------------- end of av.frd.updateTestSetup --
 
-  //--------------------------- section to put data from environment.cfg into setup traditional form of population page --
+  //============================================================================================ read environment.cfg ==
+  //environment.cfg into setup traditional form of population page = no longer in use;
+  //---------------------------------------------------------------------------------- av.frd.environmentCFGlineParse --
+  
   av.frd.environmentCFGlineParse = function(instr){
     'use strict';
     var num = 0;
@@ -402,6 +411,7 @@
   };
 
   // makes a dictionary out of a environment.cfg file
+  //-------------------------------------------------------------------------------------- av.frd.environmentCFGparse --
   av.frd.environmentCFGparse = function (filestr) {
     'use strict';
     var rslt = {};
@@ -419,6 +429,7 @@
   };
 
   // puts data from the environment.cfg into the setup form for the population page
+  //-------------------------------------------------------------------------------------- av.frd.environmentCFG2form --
   av.frd.environmentCFG2form = function (fileStr) {
     'use strict';
     var dict = av.frd.environmentCFGparse(fileStr);
@@ -436,12 +447,14 @@
     dijit.byId('equose').set('checked', dict.EQU);
     */
   };
-  //--------------------- end ofsection to put data from environment.cfg into setup traditional form of population page --
+  //======================================================================================== end read environment.cfg ==
 
 
   //----------------------------------------------------------------------------------------- put in nutrient structure --
 
-  /*------------------------------------------------------------------------------------------- aav.frd.findNameIndex --*/
+  //============================================================================================ read environment.cfg ==
+  // to make nutrient structure; and then to create user controls
+  //-------------------------------------------------------------------------------------------- av.frd.findNameIndex --
   av.frd.findNameIndex = function(nutrientObj, rtag, geometry) {
     /*
      * 
@@ -479,14 +492,14 @@
     if (av.debug.fio) { console.log('defaultindex=',defaultindex,'; rtag='+rtag, '; found=', found, '; nutrientObj.name=', nutrientObj.name); }
     return defaultindex;  
   };
-
+  //---------------------------------------------------------------------------------------- end av.frd.findNameIndex --
 
   // Avida reacton line format
   // REACTION reactionName taskName process:resource=resourceName:value=2:type=pow:max=1.1:min=0.9 requisite:max_count=1
   // Avida-ED 3 version for no resource is 
   // REACTION ANDN andn process:value=0.0:type=pow requisite:max_count=1  #value=3.0
 
-  /*------------------------------------------------------------------------------------------- av.frd.reActLineParse --*/
+  //------------------------------------------------------------------------------------------- av.frd.reActLineParse --
   av.frd.reActLineParse = function(lnArray, from) {
     'use strict';
     if (av.debug.fio) { console.log('____', from, ' called av.frd.reActLineParse _____'); }
@@ -590,11 +603,11 @@
     return lnError;
   };
 
-  /*------------------------------------------------------------------------------------------- av.frd.resrcLineParse --*/
-  av.frd.resrcLineParse = function(lnArray, from ){
+  //------------------------------------------------------------------------------------------- av.frd.reSrcLineParse --
+  av.frd.reSrcLineParse = function(lnArray, from ){
     'use strict';
     var lineErrors = 'none';  //was it a valid line wihtout errors
-    if (av.debug.fio) { console.log('____', from, ' called av.frd.resrcLineParse____'); }
+    if (av.debug.fio) { console.log('____', from, ' called av.frd.reSrcLineParse____'); }
     //console.log('lnArray = ', lnArray);
     var pairArray = lnArray[1].split(':');
     var pear = [];
@@ -764,8 +777,9 @@
     //console.log('lineErrors=', lineErrors);
     return lineErrors;
   };
+  //--------------------------------------------------------------------------------------- end av.frd.reSrcLineParse --
 
-  //----------------------------------------------------------------------------------------------------- nutrientParse --
+  //-------------------------------------------------------------------------------------------- av.frd.nutrientParse --
   // Uses environment.cfg file to create a structure to hold environment variables. 
   av.frd.nutrientParse = function (filestr, from) {
     'use strict';
@@ -773,7 +787,7 @@
     var errors='';
     var reacError, rsrcError;
     var eolfound;
-    var lineobj;
+    //var lineobj;
     var aline;
     var lines = filestr.split('\n');
     var lngth = lines.length;
@@ -828,7 +842,7 @@
 
         matchResult = lineArray[0].match(re_RESOURCE);
         //consolen('matchResource=', matchResult);
-        if (null != matchResult) rsrcError = av.frd.resrcLineParse(lineArray, 'av.frd.nutrientParse');
+        if (null != matchResult) rsrcError = av.frd.reSrcLineParse(lineArray, 'av.frd.nutrientParse');
         else {rsrcError = 'none';}
 
         if ('none' != rsrcError || 'none' != reacError) {
@@ -879,13 +893,14 @@
     //return errors;
     if (av.dbg.flg.nut) { console.log('============================================================================== end of nutrientParse =='); }
   };
-  //--------------------------------------------------------------------------------------- end of av.frd.nutrientParse --
+  //------------------------------------------------------------------------------------- end of av.frd.nutrientParse --
 
-  //-------------------------------------------------------------------------------------------------------------- both --
+  //------------------------------------------------------------------------------------------------------------ both --
   // puts data from the environment.cfg into the setup form for the population page
   av.frd.environment2struct = function (fileStr, from) {
     'use strict';
     if (av.dbg.flg.nut) { console.log(from, ' called av.frd.environment2struct'); }
+    av.fzr.clearEnvironment('av.frd.environment2struct');
     av.frd.nutrientParse(fileStr, 'av.frd.environment2struct');
     var errors = av.frd.environmentParse(fileStr);
     if (1 < errors.length) console.log('errors=', errors);
@@ -893,9 +908,10 @@
     if (av.dbg.flg.nut) { console.log('------------------------------------------------------------------ end of av.frd.environment2struct --'); }
   };
 
-  //--------------------------------------- end of  section to put data from environment.cfg into environment Structure --
+  //------------------------------------- end of  section to put data from environment.cfg into environment Structure --
 
-  //Now that structure exists, use that data to update values in the uwer interface. 
+  //Now that structure exists, use that data to update values in the user interface. 
+  //--------------------------------------------------------------------------------------- av.frd.nutrientStruct2dom --
   av.frd.nutrientStruct2dom = function(from) {
     if (av.dbg.flg.nut) { console.log(from, ' called av.frd.nutrientStruct2dom'); }
     var sugarLength = av.sgr.logicNames.length;

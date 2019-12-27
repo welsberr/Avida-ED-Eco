@@ -19,7 +19,7 @@
     if (av.debug.fio) console.log('zipFileName=', zipFileName, '; loadConfigFlag=', loadConfigFlag);
                     //console.log('zipFileName=', zipFileName, '; loadConfigFlag=', loadConfigFlag);
     'use strict';
-    if (loadConfigFlag) { av.fzr.clearFzr_activeConfig_and_nutData_Fn(); }
+    if (loadConfigFlag) { av.fzr.clearFzr_activeConfig_nutData_Fn(); }
     else { av.fzr.clearMainFzrFn(); }  // clear freezer (globals.js)
     
     av.dnd.clearFrzDojoFn();
@@ -38,12 +38,12 @@
     oReq.responseType = "arraybuffer";
     oReq.onload = function (oEvent) {
       var arybuf = oReq.response;
-      if (av.debug.fio) console.log("have ziptest.zip", arybuf);
+      //if (av.debug.fio) { console.log("have ziptest.zip", arybuf); }
       // do something to extract it
       av.fio.zipfile = new av.fio.JSZip();
-      if (av.debug.fio) console.log("loading arybuf");
+      // if (av.debug.fio) { console.log("loading arybuf"); }
       av.fio.zipfile.load(arybuf, {base64: false});
-      if (av.debug.fio) console.log("arybuf loaded");
+      //if (av.debug.fio) { console.log("arybuf loaded"); }
       //if (av.debug.fio) console.log('before call procesfiles');
       av.fio.zipPathRoot = null;
       for (var nameOfFileContainedInZipFile in av.fio.zipfile.files) {
@@ -247,8 +247,9 @@
       fileReader.readAsArrayBuffer(zipFileToLoad);  //calls function that reads the zip file
     };
 
-    //------------------------------- call to import a freezer item ------------------------------------------------------
+    //---------------------------------------------------------------------------------------- av.fio.importZipRead ----
     //https://thiscouldbebetter.wordpress.com/2013/08/06/reading-zip-files-in-javascript-using-jszip/
+    // call to import a freezer item (not a workspace)
     av.fio.importZipRead = function () {
       'use strict';
       var fileReader, inputWSfile, zipFileToLoad;
@@ -298,7 +299,8 @@
             //console.log('nameOfFileContainedInZipFile=', nameOfFileContainedInZipFile, ';___fName=', av.fio.fName, '; ___zipPathRoot=', av.fio.zipPathRoot, '; ____anID=', av.fio.anID);
             //console.log('fName=', av.fio.fName, '; ____anID=', av.fio.anID);
             //console.log('-------------------------------------------------------------------------------------------------');
-            if (2 < av.fio.fName.length) av.fio.processItemFiles();  //do not load configfile
+            
+            if (2 < av.fio.fName.length) av.fio.processItemFiles();  //loading one item, not a whole workspace
           }
           //console.log('freezer', av.fzr);
           av.fio.fixFname();
@@ -312,8 +314,8 @@
         }
       };
     };
-
-  //
+    
+  //----------------------------------------------------------------------------------------------- av.fio.fixFname ----
   av.fio.fixFname = function() {
     'use strict';
     var domid, name, type, dir;

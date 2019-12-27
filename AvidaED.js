@@ -75,6 +75,9 @@
 //  canvases for bit patterns do not work.
 //  need to line up actual slide with canvas image of the slide scalex
 //  Crashed when I tried to drag icon for offspring organism off the canvas
+//  
+//  loading default configuration when loading default workspace is mostly fixed. Need to look at where things are done twice. 
+//  
 //
 //----------------------------------------------------------------------------------------------------------------------
 // 
