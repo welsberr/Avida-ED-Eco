@@ -12,7 +12,7 @@
                                 <option id='xor0Infinite' value='Infinite' selected>Infinite</option>
                                 <option id='xor0Finite' class='globalFinite' value='Finite'>Finite</option>
                                 <option id='xor0Equilibrium' class='globalEquilibrium' value='Equilibrium'>Equilibrium</option>
-                                <option id='xor0All' class='globalAll' value='All'>All debug only</option>
+                                <option id='xor0All' class='globalDebug' value='All'>All debug only</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select  id='xor0regionLayout' class='regionLayout' onchange='av.sgr.regionLayoutChange(this)'>
                                 <option id='xor0WholeDish' value='WholeDish selected'>Whole Dish</option>
@@ -36,7 +36,7 @@
                                     <option id='xor1Infinite' value='Infinite' selected>Infinite</option>
                                     <option id='xor1Finite' class='localFinite' value='Finite'>Finite</option>
                                     <option id='xor1Equilibrium' class='localEquilibrium' value='Equilibrium'>Equilibrium</option>
-                                    <option id='xor1All' class='localAll' value='All'>All debug only</option>
+                                    <option id='xor1All' class='localDebug' value='All'>All debug only</option>
                                   </select>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 <div id='xor1periodCheckbox' class='grid-sugarDetail-item periodCheckDiv' onchange='av.sgr.eachSugarCheckBoxChange(this);'>

@@ -379,7 +379,7 @@
 
 /* right informaton pannel on the populatoin page */
   #popInfoHolder {
-    flex: 0 1 440px;          /* flex: 0 1 344px width I think; is fixed in that dimension   was 349px  was 560px*/
+    flex: 0 1 440px;          /* flex: 0 1 344px width I think; is fixed in that dimension   was 349px  was 560px was 440*/
     border: 1px solid #AAA;      /*sot stat = 190;  popstat =234  for  424 */
     background: #F5F5F5;
     max-height: 99vh;
@@ -476,14 +476,38 @@
   padding: 2px 3px;
 }
 
+#environmentSettingTitle{
+  font-size: 130%;
+}
+.enviroSubHeading {
+  display: inline;
+  font-size: 120%;
+}
 /*************************************************************************** Sugar Accordion using details and select */
-/* Accodion using details/summary and hidden sections also defined here */
+
+/* Header and controls that change all tasks are here. */
+
+#sugarHeaderTitle { grid-area: headerTitle; font-size: 120%; justify-self: start ; background: inherit;}
+#sugarSettingTitle { grid-area:settingTitle; font-size: 110%; place-self: stretch end; background: inherit; }
+#allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: start; background: inherit;}
+#allsugarSupplyTypeDiv { grid-area:supplyType ; justify-self: end; background: inherit;}
+#allSugarDetailsDiv { grid-area:detailDiv ; justify-self: start; background: inherit;}
+/*area below not in use */
+#allSugarBlank { grid-area: allSugarBlank ;  }  /* <div id='allSugarBlank' class='AllsgrBlank'>&nbsp;&nbsp;&nbsp;&nbsp;</div> */
+
+.resourceHeaderContainer {
+  display: grid;
+  grid-template-areas: 'headerTitle  settingTitle'
+                       'geometryDiv supplyType '
+                       'detailDiv  detailDiv';
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Accodion using details/summary and hidden sections also defined here; one detail/summary for each logic task = surgar type */
 
 #sugarAccordion{
   width: 100%;
-}
-#setAllSugars{
-  display: inline-block;
 }
 .sugarAccordionSection{
   width: 100%;
@@ -496,21 +520,16 @@
   width: 100%;
 }
 
-.globalFinite{
-  display: inline;
-}
-.globalEquilibrium{
-  display: inline-block;
-}
-.globalAll{
-  display:none;
-}
-.localEquilibrium{
-  display: inline-block;
-}
-.localAll{
-  display:none;
-}
+.groupDebug{  display: inline; }
+.grooupFinite { display: inline; }
+.groupEquilibrium { display: inline; }
+
+.globalFinite { display: inline; }
+.globalEquilibrium { display: inline; }
+.globalDebug { display:inline; }
+
+.localEquilibrium { display: inline; }
+.localDebug { display:inline; }
 
 .HalfLftRit{
   display: inline-block;  
@@ -609,22 +628,6 @@
                           <div id='sugarReward32x'>Brutal (x32) equose</div>
 
 */
-#sugarHeaderTitle { grid-area: headerTitle; }
-#sugarSettingTitle { grid-area:settingTitle ; }
-#allSugarGeometryDiv { grid-area:geometryDiv ; }
-#allsugarSupplyTypeDiv { grid-area:supplyType ; }
-#allSugarDetailsDiv { grid-area:detailDiv ; }
-#allSugarBlank { grid-area: allSugarBlank ; }
-/* # { grid-area: ; } */
-
-.resourceHeaderContainer {
-  display: grid;
-  grid-template-areas: 'headerTitle  headerTitle headerTitle'
-                       'settingTitle geometryDiv supplyType '
-                       'detailDiv    detailDiv   detailDiv';
-  width: 100%;
-
-}
 
 /************************* Sugar controls layout in 'deails' of detail/summary for each task-sugar in sugar according */
 

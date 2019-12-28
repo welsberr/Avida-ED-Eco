@@ -294,19 +294,25 @@
         };
 
         //Hide select options that are not yet implemented
-        //console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
+        console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
+        console.log("document.getElementsByClassName('localEquilibrium')=", document.getElementsByClassName('localEquilibrium').length );
+
+        console.log("document.getElementsByClassName('globalFinite')=", document.getElementsByClassName('globalFinite').length );
         len = document.getElementsByClassName('localEquilibrium').length;
         for (ii = 0; ii < len; ii++) {
-          document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'none';
           document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
-          document.getElementsByClassName('globalAll')[ii].style.display = 'none';
+          document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'none';
+          document.getElementsByClassName('globalDebug')[ii].style.display = 'none';
+          
+          document.getElementsByClassName('localDebug')[ii].style.display = 'none';
           document.getElementsByClassName('localEquilibrium')[ii].style.display = 'none';
-          document.getElementsByClassName('localAll')[ii].style.display = 'none';
         };
-        len = document.getElementsByClassName('globalEquilibrium').length - 1;
-        document.getElementsByClassName('globalEquilibrium')[len].style.display = 'none';
-        document.getElementsByClassName('globalFinite')[len].style.display = 'none';
-        document.getElementsByClassName('globalAll')[len].style.display = 'none';
+       
+        // now clear options for changing all sugars (groups)
+        document.getElementsByClassName('groupEquilibrium')[0].style.display = 'none';
+        //document.getElementsByClassName('groupFinite')[0].style.display = 'none';     //finite available for local options
+        document.getElementsByClassName('groupDebug')[0].style.display = 'none';
+
 
         //debug menu??
         dijit.byId('mnHpDebug').set('label', 'Show debug menu');   //???????
@@ -342,17 +348,15 @@
         for (ii = 0; ii < len; ii++) {
           document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'inline';
           document.getElementsByClassName('globalFinite')[ii].style.display = 'inline';
-          document.getElementsByClassName('globalAll')[ii].style.display = 'inline';
+          document.getElementsByClassName('globalDebug')[ii].style.display = 'inline';
           document.getElementsByClassName('localEquilibrium')[ii].style.display = 'inline';
-          document.getElementsByClassName('localAll')[ii].style.display = 'inline';
+          document.getElementsByClassName('localDebug')[ii].style.display = 'inline';
         };
-        len = document.getElementsByClassName('globalEquilibrium').length - 1;
-        document.getElementsByClassName('globalEquilibrium')[len].style.display = 'inline';
-        document.getElementsByClassName('globalFinite')[len].style.display = 'inline';
-        document.getElementsByClassName('globalAll')[len].style.display = 'inline';
-        tsk = 'orn';
-        sub = 1;
-        document.getElementById(tsk + sub + 'gradientCheckbox').style.display = 'inline-block';
+        
+         // now show options for changing all sugars (groups)
+        document.getElementsByClassName('groupEquilibrium')[0].style.display = 'inline';
+        //document.getElementsByClassName('groupFinite')[0].style.display = 'inline';     //finite available for local options
+        document.getElementsByClassName('groupDebug')[0].style.display = 'inline';
 
         //Show debug on dropdown menu
         dijit.byId('mnHpDebug').set('label', 'Hide debug menu');   //????????

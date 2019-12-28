@@ -76,7 +76,10 @@
 //  need to line up actual slide with canvas image of the slide scalex
 //  Crashed when I tried to drag icon for offspring organism off the canvas
 //  
-//  loading default configuration when loading default workspace is mostly fixed. Need to look at where things are done twice. 
+//  Looking at loading default files and perhaps we need to add default values for finite when finite is selected even 
+//  there is no finite in the config file. 
+//  
+//  I also want an all finite option (that only applies to local for now)
 //  
 //
 //----------------------------------------------------------------------------------------------------------------------
@@ -2382,121 +2385,6 @@ require([
   };
 
 // end of ex1 and tst2 page stuff
-//------------------------------------------------------------------------------------------------- Sugar Accordion ----
-//Global or Local in Ed speak = Global or Grid in Avida Environment file.
-  av.sgr.allSugarGeometryChange = function (domObj) {
-    var idx = domObj.selectedIndex;        // get the index of the selected option 
-    var which = domObj.options[idx].value;   // get the value of the selected option 
-    av.sgr.ChangeAllGeo(which);
-    av.sgr.setSugarColors(true);  //true is to turn colors on;
-    document.getElementById('allSugarGeometry').value = 'Neutral';
-  };
-
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.allsugarSupplyTypeChange = function (domObj) {
-    var idx = domObj.selectedIndex;        // get the index of the selected option 
-    var which = domObj.options[idx].value;   // get the value of the selected option 
-    av.sgr.ChangeAllsugarSupplyType(which);
-    document.getElementById('allsugarSupplyType').value = 'Neutral';
-  };
-
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.allSugarDetailsOpenClose = function (domObj) {
-    var idx = domObj.selectedIndex;        // get the index of the selected option 
-    var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
-    av.sgr.OpenCloseAllSugarDetails(selectedOption, 'av.sgr.allSugarDetailsOpenClose');
-    document.getElementById('allSugarDetails').value = 'Neutral';
-  };
-
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.geometryChange = function (selectObj) {
-    //need to find subregion Number in the future - set to 1 for now. 
-    var taskID = selectObj.id;
-    var task = taskID.substring(0, 3);
-    var sub = taskID.substr(3, 1);
-    if (av.dbg.flg.nut) { console.log('av.sgr.geometryChange: taskID=', taskID, '; task =', task, '; subsection=', sub); }
-    sub = 1;       //or should this be 0 since it is in the 'summary' section?
-    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.geometryChange');
-  };
-
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.supplyChange_placeholder = function (domObj) {
-    var taskID = domObj.id;
-    var task = taskID.substring(0, 3);
-    var sub = taskID.substr(3, 1);
-    if (av.dbg.flg.nut) { console.log('taskID=', taskID, 'task=', task, '; subsection=', sub); }
-    sub = 1; //only whole dish  for now
-    av.sgr.changeDetailsLayout(task, sub, 'supplyChange_placeholder');
-  };
-
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.regionLayoutChange = function (domObj) {
-    if (av.dbg.flg.nut) { console.log('av.sgr.regionLayoutChange was called by', domObj); }
-  };
-
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.supplyChange = function (domObj) {
-    var taskID = domObj.id;
-    var task = taskID.substring(0, 3);
-    var sub = taskID.substr(3, 1);
-    if (av.dbg.flg.nut) { console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub); }
-    sub = 1; //only whole dish  for now  or should sub=0 when it it global?
-    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
-  };
-
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.eachSugarCheckBoxChange = function (domObj) {
-  //av.sgr.re_region = /(\D+)(\d+)(.*$)/;
-    var taskID = domObj.id;
-    var matchTaskRegion = taskID.match(av.sgr.re_region);
-    var task = matchTaskRegion[1];      //taskID.substring(0,3);   
-    var sub = matchTaskRegion[2];       //taskID.substring(3,1);   did not work; substr seems to work for sub
-    if (av.dbg.flg.nut) { console.log('av.sgr.eachSugarCheckBoxChange: taskID=', taskID, 'tst=', task, '; subsection=', sub); }
-    if (1 < sub)
-      sub = 1;
-    sub = 1; //only whole dish  for now
-    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.eachSugarCheckBoxChange');
-  };
-
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.periodChange = function (domObj) {
-    //console.log('av.sgr.periodChange domObj=', domObj);
-    if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
-  };
-
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.initialChange = function (domObj) {
-    //console.log('av.sgr.initialChange domObj=', domObj);
-    if (av.dbg.flg.nut) { console.log('domObj.value=', domObj.value); }
-    var ndx = domObj.id.indexOf('Input');
-    var id = domObj.id.substring(0, ndx) + 'Text';
-    //console.log('new id=', id, '; old id=', domObj.id);
-    //console.log('Number(domObj.value)=',Number(domObj.value));
-    if (isNaN(Number(domObj.value))) {
-      document.getElementById(id).innerHTML = 'inital amount must be a number';
-      document.getElementById(id).style.color = 'red';
-    } else if (0 > domObj.value) {
-      document.getElementById(id).innerHTML = 'inital amount must be > 0';
-      document.getElementById(id).style.color = 'red';
-    } else {
-      document.getElementById(id).innerHTML = 'inital amount per cell';
-      document.getElementById(id).style.color = 'black';
-    }
-  };
-
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.inflowChange = function (domObj) {
-    if (av.dbg.flg.nut) { console.log('av.sgr.inflowChange domObj=', domObj); }
-    if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
-  };
-
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.outflowChange = function (domObj) {
-    if (av.dbg.flg.nut) { console.log('av.sgr.outflowChange domObj=', domObj); }
-    if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
-  };
-
-  /****************************************************************************** End enviornment (sugar) settings ****/
 
   /**************************************************************************** Tests for Population Setup section ****/
 

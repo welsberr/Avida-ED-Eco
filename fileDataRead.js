@@ -900,7 +900,7 @@
   av.frd.environment2struct = function (fileStr, from) {
     'use strict';
     if (av.dbg.flg.nut) { console.log(from, ' called av.frd.environment2struct'); }
-    av.fzr.clearEnvironment('av.frd.environment2struct');
+    //av.fzr.clearEnvironment('av.frd.environment2struct');
     av.frd.nutrientParse(fileStr, 'av.frd.environment2struct');
     var errors = av.frd.environmentParse(fileStr);
     if (1 < errors.length) console.log('errors=', errors);

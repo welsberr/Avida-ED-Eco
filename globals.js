@@ -515,8 +515,18 @@
                                        , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'];
   av.sgr.resrcAvidaDefaultGlobalValu = [ 0, 0, 0.0, 'global', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
 
-  av.sgr.resrcAvidaDefaultGridValu = [ 0, 0, 0.0, 'grid', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
-  av.sgr.resrcAvida_EDdefaultValu =   [ 100, 0, 0.0, 'global', 0, 0, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
+  av.sgr.resrcAvidaDefaultGridValu =   [ 0, 0, 0.0, 'grid',  1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
+  av.sgr.resrcAvida_EDdfltGlobValu = [ 100, 0, 0.0, 'global', 0, 0, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
+
+  av.sgr.reSrcAvidaDefaultGridArguLong = [  'initial',    'inflow',   'outflow', 'geometry'   
+                                        ,  'inflowx1',  'inflowx2',  'inflowy1', 'inflowy2'    // not used when geometry = global
+                                        , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'    // not used when geometry = global
+                                        ,  'xdiffuse',  'ydiffuse',  'xgravity', 'ygravity'];
+  av.sgr.reSrcAvidaDefaultGridValuLong =  [ 0, 0, 0.0, 'global'
+                                          , 0, 0, 0, 0    //technically deterministic, but Avida-ED is using 0;
+                                          , 0, 0, 0, 0    //unset with the second parametner set equal to the first; again Avida-ED uses 0; 
+                                          , 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
+
 
   //not in current use
   //av.sgr.supply_argu = ['region', 'side', 'grdNum', 'regionCode','regionList'];           //each is an array for region
@@ -569,14 +579,6 @@
     av.sgr.regionCodes = [ '00',  '01',  '02',  '03',  '04',  '12',  '34',  '13',  '24'];   //These numbers go with the regions above
 
 
-  av.sgr.resrcAvidaDefaultGridArgu = [  'initial', 'inflow', 'outflow', 'geometry'   
-                                    ,  'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'    // not used when geometry = global
-                                    , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'    // not used when geometry = global
-                                    ,  'xdiffuse',  'ydiffuse',  'xgravity',  'ygravity'];
-  av.sgr.resrcAvidaDefaultGridValu =  [ 0, 0, 0.0, 'global'
-                                        , 0, 0, 0, 0    //technically deterministic, but Avida-ED is using 0;
-                                        , 0, 0, 0, 0    //unset with the second parametner set equal to the first; again Avida-ED uses 0; 
-                                        , 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
   av.sgr.boxArguments = ['boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow']; //flag is true if in use; false if these arguments are not included. 
                         //boxx and boxy are the upper left corner positions of the region in Avida-ED
                         //boxcol and boxrow is the size of the box, so the lower right corner is (boxx+boxcol-1, boxy+boxrow-1]
@@ -662,7 +664,7 @@
       av.nut[tsk].uiAll.supplyType = 'Infinite';    //this is only for whem ui.geometry = global
       av.nut[tsk].uiAll.regionLayout = '1All';  //only whole dish for now
       av.nut[tsk].uiAll.regionsNumOf = 1;   // whole dishß
-      av.nut[tsk].uiAll.initial = 1000;      //only whem ui.geometry = global and  supplyType = 'finite' 
+      av.nut[tsk].uiAll.initial = 1000;      //only whem ui.geometry = local and  supplyType = 'finite' 
 
       for (jj=0; jj < uiSubDishLen; jj++) {
         av.nut[tsk]['uiSub'][av.sgr.ui_subDish_argu[jj] ] = [];
