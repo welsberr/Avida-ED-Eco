@@ -376,6 +376,15 @@
       }
     };
 
+  //=========================================================================================== simulated dom action ===
+  // https://stackoverflow.com/questions/6157929/how-to-simulate-a-mouse-click-using-javascript?fbclid=IwAR0Ht17-ZP6Rb6paHLZUFoLPf_Hz0-WXRTv-dKS3SsZsymY8TsM7OJYinmQ
+  // 
+  // example call of av.dom.simulate
+  // av.dom.simulate(document.getElementById(defaultConfigDomID), "click");
+  //
+  // Note that as a third parameter you can pass in 'options'. The options you don't specify are taken from the 
+  // defaultOptions (see bottom of the script). So if you for example want to specify mouse coordinates you can do something like:
+  // simulate(document.getElementById("btn"), "click", { pointerX: 123, pointerY: 321 })
 
 av.dom.simulate = function (element, eventName) {
     console.log('element', element, '; eventName=', eventName);
@@ -439,6 +448,7 @@ av.dom.simulateDefaultOptions = {
     bubbles: true,
     cancelable: true
 };
+  //======================================================================================= end simulated dom action ===
 
 
 

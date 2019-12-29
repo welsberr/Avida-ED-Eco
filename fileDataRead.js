@@ -862,12 +862,12 @@
     //find some summary info about nutrients. Need to look at each task separately. 
     for (var ii=0; ii< len; ii++) {
       numTsk = av.sgr.logEdNames[ii];
-      //console.log('av.nut[numTsk].react.resource=', av.nut[numTsk].react.resource);
-      //console.log('av.nut[numTsk].resrc.regionCode=', av.nut[numTsk].resrc.regionCode);
+      //console.log('av.nut['+numTsk+'].react.resource=', av.nut[numTsk].react.resource);
+      //console.log('av.nut['+numTsk+'].resrc.regionCode=', av.nut[numTsk].resrc.regionCode);
       // is the code word 'missing' is the listed as the name of the resource than there is not resource specified and 
       // the reaction can only act as if the resource for that task is none or infinite and it must be global. 
       if ('missing' != av.nut[numTsk].react.resource[0]) {  
-        if (av.dbg.flg.nut) { console.log('av.nut[numTsk].uiSub.regionCode = ', av.nut[numTsk].uiSub.regionCode); }
+        if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiSub.regionCode = ', av.nut[numTsk].uiSub.regionCode); }
         distinctRegions = [...new Set(av.nut[numTsk].uiSub.regionCode)];
         if (av.dbg.flg.nut) { console.log('numTsk=', numTsk, '; distinctRegions=', distinctRegions); }
         av.nut[numTsk].uiAll.regionsNumOf = distinctRegions.length;
@@ -901,6 +901,8 @@
     'use strict';
     if (av.dbg.flg.nut) { console.log(from, ' called av.frd.environment2struct'); }
     //av.fzr.clearEnvironment('av.frd.environment2struct');
+    //should the dom be loaded from the clean environment and then load the data from the file? 
+    
     av.frd.nutrientParse(fileStr, 'av.frd.environment2struct');
     var errors = av.frd.environmentParse(fileStr);
     if (1 < errors.length) console.log('errors=', errors);

@@ -90,38 +90,10 @@
       console.log('loadConfigFlag=',loadConfigFlag, '; av.fzr=', av.fzr);
 
       if (loadConfigFlag) {
-        var fzSection = 'fzConfig';
-        var target = 'activeConfig';
-        var type = 'c';
-
-        var conName = av.fzr.file['c0/entryname.txt'];
-        var conDomID = av.fzr.domid['c0'];
-        var defaultConfigDomID = av.fzr.domid.c0;
-        av.dom[conName] = document.getElementById(conDomID);
-        console.log('entryname=', conName, '; domid of c0 is ', conDomID, '; defaultConfigDomID=', defaultConfigDomID);
-        
-  console.log('fzrObject.getAllNodes[0]=', av.dnd[fzSection].getAllNodes()[0]);
-  console.log('fzrObject.getAllNodes=',    av.dnd[fzSection].getAllNodes());
-        
-        
-        av.dom.simulate(document.getElementById(defaultConfigDomID), "click");
-        
-        console.log('fzConfig=', av.dnd.fzConfig);
-        
-        //av.dnd.fzConfig.selectAll(av.dnd.fzConfig);
-        console.log('getSelectedNodes[0]=', av.dnd[fzSection].getSelectedNodes()[0]);
-        console.log('getSelectedNodes=', av.dnd[fzSection].getSelectedNodes());
-        
+               
         av.dnd.loadDefautlConfigFn('av.fio.readZipWS');
 
-
-
-
-
-
         if (false) {
-          //console.log('loadConfigFlag = ', loadConfigFlag);
-
 
           if ('c0/avida.cfg' == av.fio.anID) {
             av.frd.avidaCFG2form(av.fio.thisfile.asText());

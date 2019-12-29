@@ -1243,7 +1243,10 @@ av.anl.loadSelectedData = function (worldNum, axisSide, side) {
 // get rid of if don't use
 //-------------------------------------------------------------------------------------- av.dnd.loadDefautlConfigFn --*/
 av.dnd.loadDefautlConfigFn = function (from) {
+  //console.log(from, 'called av.dnd.loadDefautlConfigFn: av.fzr.file.c0/entryname.txt=', av.fzr.file['c0/entryname.txt']);
+  //console.log('av.fzr.domid.c0=', av.fzr.domid.c0);
   
+  //example of using the javascript .forEach( function) property of nodes as a set of items each with an index
   av.dom.findNode = function(item, index) {
     //console.log('ndx=', index, '; item=', item);
     console.log('ndx=', index, '; item.id=', item.id, '; av.fzr.domid.c0=', av.fzr.domid.c0);
@@ -1253,54 +1256,38 @@ av.dnd.loadDefautlConfigFn = function (from) {
       //break; //not allowed in this function according to NetBeans
     }
   };
+  var nodes = av.dnd['fzConfig'].getAllNodes();
+  // example of a way to do this doing using a special dojo function.
+  //nodes.forEach(av.dom.findNode);
   
   var fzSection = 'fzConfig';
   var target = 'activeConfig';
   var type = 'c';
-  var nodes = av.dnd[fzSection].getAllNodes();
   var ndx = -1;
-  var domID = '';
   
-  console.log(from, 'called av.dnd.loadDefautlConfigFn: av.fzr.file.c0/entryname.txt=', av.fzr.file['c0/entryname.txt']);
-  console.log('av.fzr.domid.c0=', av.fzr.domid.c0);
-
-  console.log('fzrObject.getAllNodes[0]=', av.dnd[fzSection].getAllNodes()[0]);
-  console.log('fzrObject.getAllNodes=',    av.dnd[fzSection].getAllNodes());
+  //console.log('fzrObject.getAllNodes[0]=', av.dnd[fzSection].getAllNodes()[0]);
+  //console.log('fzrObject.getAllNodes=',    av.dnd[fzSection].getAllNodes());
+  //console.log('fzConfig=', av.dnd.fzConfig); 
   
-  nodes.forEach(av.dom.findNode);
-
-  //messier as this goes through all items, not just the nodes with numberical dictionary type names
-  for (var ii in nodes) {
-    console.log('ii, nodes[ii].id=', ii, nodes[ii].id );
+ 
+  //one more loop example idea
+  var len = nodes.length;
+  for (var ii=0; ii < len; ii++) {
+    //console.log('ii, nodes[ii].id=', ii, nodes[ii].id );
     if (av.fzr.domid.c0 == nodes[ii].id) {
       ndx = ii;
-      break;
-    }
-  }
-  
-  //console.log('fzrObject=', av.dnd[fzSection].getSelectedNodes()[0]);
-  
-  //need to find selected item. looking for 'dojoDndItem dojoDndItemAnchor' might help
-  //console.log('fzOrgan selected keys', Object.keys(av.dnd.fzOrgan.selection)[0]);
-  //Object.keys(av.dnd.fzOrgan.selection)[0] and av.dnd.fzOrgan.getSelectedNodes()[0].id return the same thing
+    }    
+  };
 
-  //for this it does not need to be selected, but I have to get the corrrect stuff into av.dnd.move
-
-  //if (undefined != av.dnd[fzSection].getSelectedNodes()[0]) {
-    //var nodeMvDomid = av.dnd[fzSection].getSelectedNodes()[0].id;
-
-    console.log('ndx=', ndx);
-    console.log('av.dnd.move.sourceNodeNdx=', av.dnd.move.sourceNodeNdx);
-
-    if (-1 <  ndx) {
-    var nodeMvDomid = nodes[av.dnd.move.sourceNodeNdx].id;
+  if (-1 <  ndx) {
+    var nodeMvDomid = nodes[ndx].id;
     var node2Mv = nodes[ndx].id;     //from messey version
-    console.log('fzSection=', fzSection, '; target=', target, '; nodeMvDomid=', nodeMvDomid);
-    console.log('type=', type, '; node2Mv=', node2Mv);
+    //console.log('fzSection=', fzSection, '; target=', target, '; nodeMvDomid=', nodeMvDomid);
+    //console.log('type=', type, '; node2Mv=', node2Mv);
     
     av.dnd.move.sourceDomId = nodeMvDomid;
 
-    console.log('; moveNode=', nodes[av.dnd.move.sourceDomId]);
+    //console.log('; moveNode=', nodes[av.dnd.move.sourceDomId]);
 
     var addedPopPage = false;
     var addedAnaPage = false;

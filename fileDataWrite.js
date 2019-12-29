@@ -230,8 +230,7 @@
 
     };  //end for ii
     console.log('----------------------------------------------End of av.fwt.form2NutrientStruct, when called by ', from);
-    console.log('av.oldnut=', av.oldnut);
-    console.log('av.nut=', av.nut);
+    console.log(from, 'called av.fwt.form2NutrientStruct - at end: av.nut=', av.nut);
   };
   /*------------------------------------------------------------------------------- End of av.fwt.form2NutrientStruct --*/
 

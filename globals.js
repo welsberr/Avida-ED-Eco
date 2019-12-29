@@ -628,7 +628,7 @@
   // used to create several structures used in defining parameters for the environment.cfg file
   av.fzr.clearEnvironment = function(from) {
     //console.log(from + ' called av.fzr.clearEnvironment');
-    av.oldnut = av.nut;
+    av.oldNut = av.nut;
     av.nut = {};
     av.nut.hideFlags = {};
     av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.fzr.clearEnvironment');
@@ -687,7 +687,9 @@
         av.nut[tsk].uiSub.boxed[kk] = true;           //true keeps resources in their subdish; false allows them to flow into the rest of the dish
       }
     };
-    console.log('av.nut =',av.nut);
+    av.cleanNut = av.nut;
+    console.log('av.oldNut =', av.oldNut);
+    console.log('av.cleanNut=', av.cleanNut);
     //console.log('av =',av);
 
     //--------------------------------------------- av.fzr.env section mighht be delted in future. used for Test Dishes --
