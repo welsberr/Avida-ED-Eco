@@ -90,13 +90,11 @@
       console.log('loadConfigFlag=',loadConfigFlag, '; av.fzr=', av.fzr);
 
       if (loadConfigFlag) {
-               
         av.dnd.loadDefautlConfigFn('av.fio.readZipWS');
 
         if (false) {
-
           if ('c0/avida.cfg' == av.fio.anID) {
-            av.frd.avidaCFG2form(av.fio.thisfile.asText());
+            av.frd.avidaCFG2form(av.fio.thisfile.asText(), 'av.fio.readZipWS');
           }
           else if ('c0/environment.cfg' == av.fio.anID) {
             av.frd.environmentCFG2form(av.fio.thisfile.asText().trim());
@@ -105,8 +103,8 @@
             av.frd.eventsCFG2form(av.fio.thisfile.asText().trim(), 'av.fio.processFiles');
           }
         }
+        
       };
-      
       
       av.fzr.loadedFromFile = 'End oReq.onload.';
     };

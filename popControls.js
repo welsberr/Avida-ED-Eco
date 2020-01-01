@@ -177,7 +177,7 @@
     av.pch.logNum = [];
 
     TimeLabel.textContent = 0;
-    //av.frd.avidaCFG2form(fileStr);
+    //av.frd.avidaCFG2form(fileStr, 'av.ptd.popNewExState');
     av.dnd.ancestorBox.selectAll().deleteSelectedNodes();
     av.dnd.ancestorBox.sync();
     av.dnd.ancestorBoTest.selectAll().deleteSelectedNodes();

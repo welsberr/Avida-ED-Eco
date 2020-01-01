@@ -568,7 +568,7 @@
   //Region Layout in use as of 2019 Dec
 
     av.sgr.re_region = /(\D+)(\d+)(.*$)/;
-    av.sgr.regionLayoutValues = ['1All', '2LftRit', '3TopLftRit', '4Quarters'];
+    av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '3TopLftRit', '4Quarters'];
 
   //will need something like the statement below eventuatlly
   //sav.sgr['3TopLftRit'] = ['top', 'Lft', 'Rit'];
@@ -600,6 +600,7 @@
     av.sgr.hideFlagInit = [true, true];  //true is to hide when areas underdevelopment are hidden. 
     av.sgr.flagInitOpposite = [false, false];  //false in this case is to NOT hide as develpment sections shown.
 
+  //av.sgr.ui values match the dom, so they are amount per cell; av.sgr.Resrce values match avida, so they are amouth per dish/world. (will adust for cell value later)
   //one each task if I make a data structure from the UI that is separate from what goes in thhe config file.
   av.sgr.ui_allDom_argu = ['geometry', 'supplyType', 'regionLayout', 'initial'];  //'regionsNumOf' is not in dom but found using regionLayout (region layout in the dish)
   av.sgr.ui_allDish_argu = ['geometry', 'supplyType', 'regionLayout', 'initial', 'regionsNumOf'];   //'regionsNumOf' is not in dom, so it is at the end of the list.
@@ -633,6 +634,8 @@
     av.nut.hideFlags = {};
     av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.fzr.clearEnvironment');
 
+    av.nut.fileCols = 30;
+    av.nut.fileRows = 30;
     // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
     // av.nut is used for normal runs. nut is for nutrients
 
