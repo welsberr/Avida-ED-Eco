@@ -929,8 +929,9 @@
     av.fzr.clearEnvironment('av.frd.environment2struct');
     //should the dom be loaded from the clean environment and then load the data from the file? 
     
-    av.nut.fileCols = av.fzr.actConfig.cols;  //came from  Number(dict.WORLD_X)
+    av.nut.wrldCols = av.fzr.actConfig.cols;  //came from  Number(dict.WORLD_X)
     av.nut.fileRows = av.fzr.actConfig.rows;  //came from  Number(dict.WORLD_Y)
+    av.nut.wrldSize = av.fzr.actConfig.size;
     
     av.frd.nutrientParse(fileStr, 'av.frd.environment2struct');
     var errors = av.frd.environmentParse(fileStr);
@@ -944,8 +945,67 @@
     if (av.dbg.flg.nut) { console.log('env.cfg ==> av.nut=', av.nut); }
     if (av.dbg.flg.nut) { console.log('------------------------------------------------------------------ end of av.frd.environment2struct --'); }
   };
+  //----------------------------------------------------------------------------------- end av.frd.environment2struct --
 
-  //------------------------------------- end of  section to put data from environment.cfg into environment Structure --
+  //Load defaults in the dom from the defaults in the av.nut structure. 
+  //------------------------------------------------------------------------------------------- av.frd.defaultNut2dom --
+  av.frd.defaultNut2dom = function(from) {
+    var sugarLength = av.sgr.logicNames.length;
+    var ndx;
+    var numTsk, tsk, tskose;
+    var initialValue, rows, cols, gridSize;
+    var subNum = 1;                   //Will need to loop throughh all subNum later
+    // only one regioin for now, so this works. I may need add at subcode index later.
+    // the data for the regions may not go in the struture in the same order they need to be on the user interface. 
+    cols = Number(av.nut.wrldCols);
+    rows = Number(av.nut.fileRows);
+    gridSize = cols * rows;
+    if (av.dbg.flg.nut) { console.log(from, ' called av.frd.defaultNut2dom: cols = ', cols, '; rows = ', rows, '; gridSize = ', gridSize); }
+
+    for (var ii = 0; ii < sugarLength; ii++) {
+      numTsk = av.sgr.logEdNames[ii];
+      tsk = av.sgr.logicNames[ii];
+      tskose = av.sgr.oseNames[ii];
+
+      document.getElementById(tsk+'0regionLayout').value = av.nut[numTsk].uiAll.regionLayout;
+      document.getElementById(tsk+'0geometry').value = av.nut[numTsk].uiAll.geometry;
+
+      if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+        document.getElementById(tsk+'0supplyType').value = av.nut[numTsk].uiAll.supplyType;
+      }
+      else if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {        
+        //regionCode will need to be converted to regionName or need to get regionName from xy cooredinates
+        document.getElementById(tsk+subNum+'title').value = av.nut[numTsk].uiSub.regionName[subNum];
+        
+        document.getElementById(tsk+subNum+'supplyType').value = av.nut[numTsk].uiSub.supplyType[subNum]; 
+
+        // if initial is not defined in RESOURCE then use the default value from globals.
+        if (isNaN(Number(av.nut[numTsk].resrc.initial[subNum])) ) {
+          ndx = aav.sgr.resrcAvidaDefaultGlobalArgu.indexOf('initial');
+          initialValue = Number( av.sgr.resrcAvida_EDdefaultValu[ndx] );
+        }
+        else {
+          initialValue = Number( av.nut[numTsk].resrc.initial[subNum] )/gridSize;    //dom contains initial value per cell; RESOURCE contains initial amount per world
+        }
+        document.getElementById(tsk+subNum+'initialHiInput').value = initialValue;   
+      }
+      else {
+        console.log('Error: geometry unrecognized');
+      }
+      av.sgr.changeDetailsLayout(tsk, subNum, 'av.frd.nutrientStruct2dom');
+    }
+    if (av.dbg.flg.nut) { 
+      var nutEvents = {};
+      nutEvents = av.nut;
+      console.log('av.nutEvents = ', nutEvents); 
+    }
+    if (av.dbg.flg.nut) { console.log('================================================================== end of av.frd.defaultNut2dom =='); }
+  };
+  //--------------------------------------------------------------------------------------- end av.frd.defaultNut2dom --
+
+
+
+
 
   //Now that structure exists, use that data to update values in the user interface. 
   //--------------------------------------------------------------------------------------- av.frd.nutrientStruct2dom --
@@ -955,9 +1015,9 @@
     var numTsk, tsk, tskose;
     var initialValue, rows, cols, gridSize;
     var subNum = 1;                   //Will need to loop throughh all subNum later
-    // only one regioin for now, so this worrks. I may need add at subcode indext later.
+    // only one regioin for now, so this works. I may need add at subcode index later.
     // the data for the regions may not go in the struture in the same order they need to be on the user interface. 
-    cols = Number(av.nut.fileCols);
+    cols = Number(av.nut.wrldCols);
     rows = Number(av.nut.fileRows);
     gridSize = cols * rows;
     if (av.dbg.flg.nut) { console.log(from, ' called av.frd.nutrientStruct2dom: cols = ', cols, '; rows = ', rows, '; gridSize = ', gridSize); }
@@ -1137,7 +1197,7 @@
     av.grd.gridWasCols = Number(dict.WORLD_X);  
     av.grd.setupCols = Number(dict.WORLD_X);  
     av.fzr.env.fileCols = Number(dict.WORLD_X);  //test dishes only
-    av.fzr.actConfig.cols = Number(dict.WORLD_X);   // move to av.nut.fileCols in environment.cfg to struct
+    av.fzr.actConfig.cols = Number(dict.WORLD_X);   // move to av.nut.wrldCols in environment.cfg to struct
     //dijit.byId('sizeCols').set('value', dict.WORLD_X);
     av.dom.sizeRows.value = dict.WORLD_Y;
     //dijit.byId('sizeRows').set('value', dict.WORLD_Y);

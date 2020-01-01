@@ -634,8 +634,9 @@
     av.nut.hideFlags = {};
     av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.fzr.clearEnvironment');
 
-    av.nut.fileCols = 30;
+    av.nut.wrldCols = 30;
     av.nut.fileRows = 30;
+    av.nut.wrldSize = av.nut.wrldCols * av.nut.fileRows;
     // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
     // av.nut is used for normal runs. nut is for nutrients
 
