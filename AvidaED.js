@@ -4,8 +4,11 @@
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
 // python -m SimpleHTTPServer 8001  to put on 8001 instead of 8000
-// Then visit http://127.0.0.1:8000/avidaED.html
+// Then visit 
 // pouchDB requied a server to run, but no longer using pouchDB, but still using the server. 
+//
+// Using NetBeans as IDE in 2019 Different versions exists see
+// https://netbeans.apache.org/download/archive/index.html
 //
 //----------------------------------------------------------------------------------------------------------------------
 // Ideally I would have listed the hashtag or the complied version of Avida that goes with each veersion of Avida-ED

@@ -7,7 +7,7 @@
   av.fio.addFzItem = function(dndSection, name, type, fileNum) {
     'use strict';
     var domid;
-    if (undefined != dndSection) {
+    if (undefined !== dndSection) {
       //var items = av.dnd.getAllItems(av.dnd.activeOrgan);
       //console.log('name=',name,'; items=',items);
       //var nodes = dndSection.getAllNodes();
@@ -22,7 +22,6 @@
         for (var ii = 0; ii < lngth; ii++) {
           names[ii] = dndSection.map[domItems[ii]].data;
         };
-
       }
       else {
         dndSection.insertNodes(false, [{data: name, type: [type]}]);
@@ -76,7 +75,7 @@
     var name, domid;
     //console.log('av.fio.thisfile.asText()', av.fio.thisfile.asText());
     //console.log('av.fio.thisfile', av.fio.thisfile);
-    if (null == av.fio.thisfile.asText()) { name = av.fio.anID; }
+    if (null === av.fio.thisfile.asText()) { name = av.fio.anID; }
     else { name = av.utl.wsb('\n', av.fio.thisfile.asText()); }
 
     //if (av.debug.fio) console.log('type ', type, '; dir', dir, '; num', num);
@@ -84,7 +83,7 @@
     switch (type) {
       case 'c':
         domid = av.fio.addFzItem(av.dnd.fzConfig, name, type, num);
-        if ('dndSection is undefined' == domid) console.log('av.dnd.fzConfig is undefined');
+        if ('dndSection is undefined' === domid) console.log('av.dnd.fzConfig is undefined');
         if (av.fzr.cNum < Number(num)) {av.fzr.cNum = Number(num); }
         // console.log('c: num=', num, '; name=', name, 'loadConfigflag = ', loadConfigFlag);
          
@@ -93,7 +92,7 @@
         break;
       case 'g':
         domid = av.fio.addFzItem(av.dnd.fzOrgan, name, type, num);
-        if ('dndSection is undefined' == domid) console.log('av.dnd.fzOrgan is undefined');
+        if ('dndSection is undefined' === domid) console.log('av.dnd.fzOrgan is undefined');
         if (av.fzr.gNum < Number(num)) {av.fzr.gNum = Number(num); }
         break;
   /*
@@ -115,12 +114,12 @@
   */
       case 't':
         domid = av.fio.addFzItem(av.dnd.fzTdish, name, type, num);
-        if ('dndSection is undefined' == domid) console.log('av.dnd.fzTdish is undefined');
+        if ('dndSection is undefined' === domid) console.log('av.dnd.fzTdish is undefined');
         if (av.fzr.tNum < Number(num)) {av.fzr.tNum = Number(num); }
         break;
       case 'w':
         domid = av.fio.addFzItem(av.dnd.fzWorld, name, type, num);
-        if ('dndSection is undefined' == domid) console.log('av.dnd.fzWorld is undefined');
+        if ('dndSection is undefined' === domid) console.log('av.dnd.fzWorld is undefined');
         if (av.fzr.wNum < Number(num)) {av.fzr.wNum = Number(num); }
         break;
     }
@@ -180,7 +179,7 @@
     //if (av.debug.fio) console.log('anID=', av.fio.anID, '; fileType=', fileType, '; fziType=', av.fzr.folderType);
       switch (fileType) {
         case 'entryname.txt':
-          if ('subDish' != av.fzr.folderType) {  //the if was added when trying to deal with multi-dish they used the else case
+          if ('subDish' !== av.fzr.folderType) {  //the if was added when trying to deal with multi-dish they used the else case
             // all normal files
             av.frd.add2freezerFromFile(loadConfigFlag, 'av.fio.processFiles');
             av.fzr.usrFileLoaded = true;
@@ -237,13 +236,13 @@
           // trying false; if thise works well this section will be deleted. 
           if (false) {
               //console.log('loadConfigFlag = ', loadConfigFlag);
-              if ('c0/avida.cfg' == av.fio.anID) {
+              if ('c0/avida.cfg' === av.fio.anID) {
                 av.frd.avidaCFG2form(av.fio.thisfile.asText(), 'av.fio.processFiles');
               }
-              else if ('c0/environment.cfg' == av.fio.anID) {
+              else if ('c0/environment.cfg' === av.fio.anID) {
                 av.frd.environmentCFG2form(av.fio.thisfile.asText().trim());
               }
-              else if ('c0/events.cfg' == av.fio.anID) {
+              else if ('c0/events.cfg' === av.fio.anID) {
                 av.frd.eventsCFG2form(av.fio.thisfile.asText().trim(), 'av.fio.processFiles');
               }
             };
@@ -316,7 +315,7 @@
             break;
         };
 
-        if ('ancestors' == av.fio.anID ||'ancestors_manual' == av.fio.anID) {
+        if ('ancestors' === av.fio.anID ||'ancestors_manual' == av.fio.anID) {
           av.fio.anID = av.fio.anID + '.txt';
         };
         //put the text of the file in the freezer
@@ -355,7 +354,7 @@
     av.frd.nutrientStruct2dom('av.frd.updateSetup');           //puts data from the structure in the the dom for user interface
 
     doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
-    if (undefined != doctext) { av.frd.pauseRunAtTXT2form(doctext); }
+    if (undefined !== doctext) { av.frd.pauseRunAtTXT2form(doctext); }
   };
   //--------------------------------------------------------------------------------------- end of av.frd.updateSetup --
 
@@ -400,7 +399,7 @@
     var cfgary = av.utl.flexsplit(instr).split(',');      //replaces white space with a comma, then splits on comma
     //console.log('cfgary = ', cfgary);
     if (0 < cfgary[3].length) {num = av.utl.wsb(':',av.utl.wsa('=',cfgary[3]));}
-    if (0 == num) {flag = false;} //use == in this case as they are of different type
+    if (0 === num) {flag = false;} //use == in this case as they are of different type
     //if (av.debug.fio) console.log('flag', flag, '; num', num, '; cfgary', cfgary[3], '; instr', instr);
     //console.log('flag', flag, '; num', num, '; cfgary', cfgary[3], '; instr', instr);
     var rslt = {
@@ -471,11 +470,11 @@
     //console.log('rtag=', rtag, '; geometry = ', geometry, '; nutrientObj=',nutrientObj,'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
     var defaultindex = nutrientObj.name.length;
     //console.log('rtag=', rtag, '; geometry = ', geometry, '; defaultindex=', defaultindex);
-    if (undefined != geometry) {
-      if ('grid' == geometry.toLowerCase() && 1 > defaultindex) {
+    if (undefined !== geometry) {
+      if ('grid' === geometry.toLowerCase() && 1 > defaultindex) {
         defaultindex = 1;
       }
-      else if ('global' == geometry.toLowerCase() && 1 > defaultindex) { 
+      else if ('global' === geometry.toLowerCase() && 1 > defaultindex) { 
         defaultindex = 0;
       };
     }
@@ -566,7 +565,7 @@
       // 
       // IF the code word 'missing' is the listed as the name of the resource than there is not resource specified and 
       // the reaction can only act as if the resource for that task is none or infinite and it must be global. 
-      if ('missing' == reActObj.resource[ndx]) {
+      if ('missing' === reActObj.resource[ndx]) {
         av.nut[numTsk].uiAll.regionsNumOf = 1;                 //reaction but no resource so it must be global and none or infinite
         av.nut[numTsk].uiAll.geometry = 'Global';            //grid (if 1 < subdish)
 
@@ -592,7 +591,7 @@
         mm = reSrcNameAry.indexOf( reSrcName );
         if (av.debug.fio) { console.log('reSource  mm  =', mm, '; depletable=', reActObj.depletable[ndx], '; av.nut.'+numTsk +'.uiSub.supplyType=', av.nut[numTsk].uiSub.supplyType); }
         if (av.debug.fio) { console.log('av.nut[numTsk]=', av.nut[numTsk]); }
-        if (undefined != reActObj.depletable[ndx]) {
+        if (undefined !== reActObj.depletable[ndx]) {
           if (1 > reActObj.depletable[ndx]) {
             av.nut[numTsk].uiSub.supplyType[ndx] = 'Infinite';
           };
@@ -655,7 +654,7 @@
       for (var ii=1; ii < len; ii++) {
         pear = pairArray[ii].split('=');
         //console.log('pear = ', pear);
-        if ('geometry' == pear[0].toLowerCase() ) {
+        if ('geometry' === pear[0].toLowerCase() ) {
           av.nut[numTsk].uiAll.geometry = pear[1];
         };   
       }; 
@@ -670,30 +669,7 @@
         // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file witha few exceptions
         // boxflag is false indicating there are no box values. 
         // in Avida-ED, geometry=Grid or global; The user interface calls Grid = 'Local'
-        
-        
         //defaults are done in av.fzr.clearEnvironment
-        /*
-        rSourcObj.boxflag[ndx] = false;
-        rSourcObj.inflow[ndx] = 0;
-        rSourcObj.outflow[ndx] = 0;
-        rSourcObj.initial[ndx] = 0;
-        //rSourcObj.geometry[ndx] = "Grid";     //not sure this belongs here
-        rSourcObj.inflowx1[ndx] = 0;                     //techincally should be rand between 0 and cols-1
-        rSourcObj.inflowx2[ndx] = rSourcObj.inflowx1[ndx]; 
-        rSourcObj.inflowy1[ndx] = 0;                     //techincally should be rand between 0 and rows-1
-        rSourcObj.inflowy2[ndx] = rSourcObj.inflowy1[ndx];
-        rSourcObj.outflowx1[ndx] = 0;                     //techincally should be rand between 0 and cols-1
-        rSourcObj.outflowx2[ndx] = rSourcObj.inflowx1[ndx]; 
-        rSourcObj.outflowy1[ndx] = 0;                     //techincally should be rand between 0 and rows-1
-        rSourcObj.outflowy2[ndx] = rSourcObj.inflowy1[ndx]; 
-        rSourcObj.xdiffuse[ndx] = 1;
-        rSourcObj.ydiffuse[ndx] = 1;
-        rSourcObj.xgravity[ndx] = 0;
-        rSourcObj.ygravity[ndx] = 0;
-        //rSourcObj.region[ndx] = '';
-        //rSourcObj.side[ndx] = '';
-        */
 
         // need to change this the ui part of the structure
         //find region listed in user interface?
@@ -736,7 +712,7 @@
             rSourcObj[av.sgr.resrc_argu[nn]][ndx] = pear[1];
           }
           else {
-            if ('cellbox' == pear[0].toLowerCase()) {
+            if ('cellbox' === pear[0].toLowerCase()) {
               cellboxdata = pear[1].split('|');
               //console.log('cellboxdata=',cellboxdata);
               rSourcObj.boxflag[ndx] = true;
@@ -769,13 +745,13 @@
           av.nut[numTsk].uiSub.supplyType[ndx] = 'Finite';
         };
         if (0 < rSourcObj.inflow[ndx]) {
-          if (rSourcObj.inflowx1[ndx]==rSourcObj.outflowx1[ndx] && rSourcObj.inflowx2[ndx]==rSourcObj.outflowx2[ndx] && 
-              rSourcObj.inflowy1[ndx]==rSourcObj.outflowy1[ndx] && rSourcObj.inflowy2[ndx]==rSourcObj.outflowy2[ndx] ) {
+          if (rSourcObj.inflowx1[ndx]===rSourcObj.outflowx1[ndx] && rSourcObj.inflowx2[ndx]===rSourcObj.outflowx2[ndx] && 
+              rSourcObj.inflowy1[ndx]===rSourcObj.outflowy1[ndx] && rSourcObj.inflowy2[ndx]===rSourcObj.outflowy2[ndx] ) {
             av.nut[numTsk].uiSub.supplyType[ndx] = 'Equilibrium';           
           }
           else av.nut[numTsk].uiSub.supplyType[ndx] = 'Flow'; 
         }
-        if (0 == rSourcObj.initial[ndx] && 0 == rSourcObj.inflow[ndx]) 
+        if (0 === rSourcObj.initial[ndx] && 0 === rSourcObj.inflow[ndx]) 
           av.nut[numTsk].uiSub.supplyType[ndx] = 'None';
       }   //end of valid ndx found.
     }  
@@ -815,8 +791,8 @@
       eolfound = false;
       metaData = lines[ii].match(re_metaData);        //console.log("lines["+ii+"]=", lines[ii]);
       matchComment = lines[ii].match(re_comment);
-      //if (null != metaData) { console.log('metaData=', metaData); }   // not useing metadata, hope there is no neeed
-      if (null != matchComment) {aline = matchComment[1];}
+      //if (null !== metaData) { console.log('metaData=', metaData); }   // not useing metadata, hope there is no neeed
+      if (null !== matchComment) {aline = matchComment[1];}
       else aline = lines[ii];
       if (3 < aline.length) {
         //console.log('aline.length=', aline.length,'; aline=', aline);
@@ -825,12 +801,12 @@
           if (ii+1 < lngth) {
             matchContinue = aline.match(re_continue);
             //console.log('matchContinue=',matchContinue);
-            if (null != matchContinue) {
+            if (null !== matchContinue) {
               ii++;
               //console.log('ii=', ii);
               matchComment = lines[ii].match(re_comment);
               //console.log('matchComment=',matchComment);
-              if (null != matchComment) {aline = matchContinue[1]+matchComment[1];}
+              if (null !== matchComment) {aline = matchContinue[1]+matchComment[1];}
               else aline = matchContinue[1]+lines[ii];
             }
             else eolfound = true;
@@ -846,7 +822,7 @@
         
         matchResult = lineArray[0].match(re_RESOURCE);
         //consolen('matchResource=', matchResult);
-        if (null != matchResult) { 
+        if (null !== matchResult) { 
           if (av.dbg.flg.nut) console.log('reSrcLineParse: lineArray=', lineArray);
           rsrcError = av.frd.reSrcLineParse(lineArray, 'av.frd.nutrientParse');
         }
@@ -854,7 +830,7 @@
 
         matchResult = lineArray[0].match(re_REACTION);
         //console.log('matchReaction=', matchResult);
-        if (null != matchResult) { 
+        if (null !== matchResult) { 
           if (av.dbg.flg.nut) { console.log('reActLineParse: lnArray=', lineArray); }
           reacError = av.frd.reActLineParse(lineArray, 'av.frd.nutrientParse'); 
         }
@@ -863,7 +839,7 @@
           //console.log('no matach on REACTION');
         };
 
-        if ('none' != rsrcError || 'none' != reacError) {
+        if ('none' !== rsrcError || 'none' !== reacError) {
           //console.log('errors in line: ii=', ii, '; aline=', aline);
           errors += 'ii='+ii+'; rsrcError='+rsrcError+'; reacError='+reacError+'\n';
         };
@@ -889,7 +865,7 @@
       // Then a region code, region name need to be assigned in av.nut[tsk]ui
       // 
       //
-      if ('missing' != av.nut[numTsk].react.resource[0]) {
+      if ('missing' !== av.nut[numTsk].react.resource[0]) {
         //If the key word
         
         //if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiAll = ', av.nut[numTsk].uiAll); }
@@ -907,7 +883,7 @@
         }
         else if (-1 < av.nut[numTsk].uiAll.regionsNumOf) {
           av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLayoutValues[1];
-          if (undefined != av.nut[numTsk].resrc.geometry[0]) { av.nut[numTsk].uiAll.geometry = av.nut[numTsk].resrc.geometry[0]; }
+          if (undefined !== av.nut[numTsk].resrc.geometry[0]) { av.nut[numTsk].uiAll.geometry = av.nut[numTsk].resrc.geometry[0]; }
           else { av.nut[numTsk].uiAll.geometry = 'Global'; }
         }
         if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiAll = ', av.nut[numTsk].uiAll); }
@@ -930,7 +906,7 @@
     //should the dom be loaded from the clean environment and then load the data from the file? 
     
     av.nut.wrldCols = av.fzr.actConfig.cols;  //came from  Number(dict.WORLD_X)
-    av.nut.fileRows = av.fzr.actConfig.rows;  //came from  Number(dict.WORLD_Y)
+    av.nut.wrldRows = av.fzr.actConfig.rows;  //came from  Number(dict.WORLD_Y)
     av.nut.wrldSize = av.fzr.actConfig.size;
     
     av.frd.nutrientParse(fileStr, 'av.frd.environment2struct');
@@ -942,7 +918,6 @@
       console.log('env.cfg_nut = ', nutConfig); 
     }
 
-    if (av.dbg.flg.nut) { console.log('env.cfg ==> av.nut=', av.nut); }
     if (av.dbg.flg.nut) { console.log('------------------------------------------------------------------ end of av.frd.environment2struct --'); }
   };
   //----------------------------------------------------------------------------------- end av.frd.environment2struct --
@@ -958,7 +933,7 @@
     // only one regioin for now, so this works. I may need add at subcode index later.
     // the data for the regions may not go in the struture in the same order they need to be on the user interface. 
     cols = Number(av.nut.wrldCols);
-    rows = Number(av.nut.fileRows);
+    rows = Number(av.nut.wrldRows);
     gridSize = cols * rows;
     if (av.dbg.flg.nut) { console.log(from, ' called av.frd.defaultNut2dom: cols = ', cols, '; rows = ', rows, '; gridSize = ', gridSize); }
 
@@ -970,10 +945,10 @@
       document.getElementById(tsk+'0regionLayout').value = av.nut[numTsk].uiAll.regionLayout;
       document.getElementById(tsk+'0geometry').value = av.nut[numTsk].uiAll.geometry;
 
-      if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+      if ('global' === av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         document.getElementById(tsk+'0supplyType').value = av.nut[numTsk].uiAll.supplyType;
       }
-      else if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {        
+      else if ('grid' === av.nut[numTsk].uiAll.geometry.toLowerCase() ) {        
         //regionCode will need to be converted to regionName or need to get regionName from xy cooredinates
         document.getElementById(tsk+subNum+'title').value = av.nut[numTsk].uiSub.regionName[subNum];
         
@@ -987,7 +962,7 @@
         else {
           initialValue = Number( av.nut[numTsk].resrc.initial[subNum] )/gridSize;    //dom contains initial value per cell; RESOURCE contains initial amount per world
         }
-        document.getElementById(tsk+subNum+'initialHiInput').value = initialValue;   
+        document.getElementById(tsk+subNum+'initialHiInput').value = initialValue/av.nut.wrldSize;   
       }
       else {
         console.log('Error: geometry unrecognized');
@@ -1013,14 +988,11 @@
     var sugarLength = av.sgr.logicNames.length;
     var ndx;
     var numTsk, tsk, tskose;
-    var initialValue, rows, cols, gridSize;
+    var initialValue;
     var subNum = 1;                   //Will need to loop throughh all subNum later
     // only one regioin for now, so this works. I may need add at subcode index later.
     // the data for the regions may not go in the struture in the same order they need to be on the user interface. 
-    cols = Number(av.nut.wrldCols);
-    rows = Number(av.nut.fileRows);
-    gridSize = cols * rows;
-    if (av.dbg.flg.nut) { console.log(from, ' called av.frd.nutrientStruct2dom: cols = ', cols, '; rows = ', rows, '; gridSize = ', gridSize); }
+    if (av.dbg.flg.nut) { console.log(from, ' called av.frd.nutrientStruct2dom'); }
 
     for (var ii = 0; ii < sugarLength; ii++) {
       numTsk = av.sgr.logEdNames[ii];
@@ -1045,7 +1017,7 @@
           initialValue = Number( av.sgr.resrcAvida_EDdefaultValu[ndx] );
         }
         else {
-          initialValue = Number( av.nut[numTsk].resrc.initial[subNum] )/gridSize;    //dom contains initial value per cell; RESOURCE contains initial amount per world
+          initialValue = Number( av.nut[numTsk].resrc.initial[subNum] );    //dom and nut contain initial value per cell; RESOURCE contains initial amount per world
         }
         document.getElementById(tsk+subNum+'initialHiInput').value = initialValue;   
       }
@@ -1119,7 +1091,7 @@
       //console.log("lines["+ii+"]=", lines[ii]);
       matchComment = lines[ii].match(re_comment);
       //console.log('matchComment=',matchComment);
-      if (null != matchComment) {aline = matchComment[1];}
+      if (null !== matchComment) {aline = matchComment[1];}
       else aline = lines[ii];
       if (3 < aline.length) {
         //console.log('aline.length=', aline.length,'; aline=', aline);
@@ -1128,12 +1100,12 @@
           if (ii+1 < lngth) {
             matchContinue = aline.match(re_continue);
             //console.log('matchContinue=',matchContinue);
-            if (null != matchContinue) {
+            if (null !== matchContinue) {
               ii++;
               //console.log('ii=', ii);
               matchComment = lines[ii].match(re_comment);
               //console.log('matchComment=',matchComment);
-              if (null != matchComment) {aline = matchContinue[1]+matchComment[1];}
+              if (null !== matchComment) {aline = matchContinue[1]+matchComment[1];}
               else aline = matchContinue[1]+lines[ii];
             }
             else eolfound = true;
@@ -1149,7 +1121,7 @@
         if (2 < lineArray.length) {
           matchResult = lineArray[2].toUpperCase().match(re_SETPERIODICRESOURCEINFLOW);
           //console.log('matchReaction=', matchResult);
-          if (null != matchResult) av.frd.setPeriodicInflowLineParse(lineArray);
+          if (null !== matchResult) av.frd.setPeriodicInflowLineParse(lineArray);
         }  //end of checking that line has at least 3 'words'
       }  //end of processing lines longer than 3 characters
       ii++;
@@ -1204,7 +1176,7 @@
     av.grd.gridWasRows = Number(dict.WORLD_Y);
     av.grd.setupRows = Number(dict.WORLD_Y);
     av.fzr.env.fileRows = Number(dict.WORLD_Y);   //test dishes only
-    av.fzr.actConfig.rows = Number(dict.WORLD_Y);    // move to av.nut.fileRows in environment.cfg to struct
+    av.fzr.actConfig.rows = Number(dict.WORLD_Y);    // move to av.nut.wrldRows in environment.cfg to struct
     document.getElementById('muteInput').value = dict.COPY_MUT_PROB*100;
     //var event = new Event('change');
     var event = new window.CustomEvent('change');
@@ -1292,7 +1264,7 @@
   av.frd.pauseRunAtTXT2form = function (fileStr) {
     'use strict';
     if (av.debug.fio) { console.log('fileStr=', fileStr); }
-    if (undefined != fileStr) {
+    if (undefined !== fileStr) {
       var lines = fileStr.split('\n');
       var update;
       var lngth = lines.length;
@@ -1467,7 +1439,7 @@
       if (1 < lines[ii].length) {
         cfgary = av.utl.flexsplit(lines[ii]).split(',');   //replaces white space with a comma, then splits on comma
         name = cfgary[0];
-        if ('#' != name[0]) {
+        if ('#' !== name[0]) {
           rslt.push(name);
         }
       }
@@ -1951,7 +1923,7 @@
       matchComment = lines[ii].match(re_comment);
       //console.log('matchComment=',matchComment);
 
-      if (null != matchComment) {
+      if (null !== matchComment) {
         aline = matchComment[1];
       } else
         aline = lines[ii];
@@ -1962,12 +1934,12 @@
           if (ii + 1 < lngth) {
             matchContinue = aline.match(re_continue);
             //console.log('matchContinue=',matchContinue);
-            if (null != matchContinue) {
+            if (null !== matchContinue) {
               ii++;
               //console.log('ii=', ii);
               matchComment = lines[ii].match(re_comment);
               //console.log('matchComment=',matchComment);
-              if (null != matchComment) {
+              if (null !== matchComment) {
                 aline = matchContinue[1] + matchComment[1];
               } else
                 aline = matchContinue[1] + lines[ii];
@@ -1983,7 +1955,7 @@
         //console.log('lineArray=', lineArray);
         matchResult = lineArray[0].match(re_REACTION);
         //console.log('matchReaction=', matchResult);
-        if (null != matchResult)
+        if (null !== matchResult)
           reacError = av.frd.reActionLineParse(lineArray);
         else {
           reacError = 'none';
@@ -1991,13 +1963,13 @@
 
         matchResult = lineArray[0].match(re_RESOURCE);
         //consolen('matchResource=', matchResult);
-        if (null != matchResult)
+        if (null !== matchResult)
           rsrcError = av.frd.resourceLineParse(lineArray);
         else {
           rsrcError = 'none';
         }
 
-        if ('none' != rsrcError || 'none' != reacError) {
+        if ('none' !== rsrcError || 'none' !== reacError) {
           //console.log('errors in line: ii=', ii, '; aline=', aline);
           errors += 'ii=' + ii + '; rsrcError=' + rsrcError + '; reacError=' + reacError + '\n';
         }

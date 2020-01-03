@@ -66,27 +66,6 @@
     av.debug.log += '\n--usr: ' + '~|~' + str0.replace(/\\n/g, "\n") + '~.~' + note;
   };
 
-  /*
-  //default values - these are not in use; the values now come from the file system
-  av.dft = {};
-  av.dft.sizeCols = 100;
-  av.dft.sizeRows = 100;
-  av.dft.muteInput = 2;   //percent
-  av.dft.child = 'childParentRadio';  //alternate = childRandomRadio
-  av.dft.nearParent = true;
-  av.dft.notose = true;
-  av.dft.nanose = true;
-  av.dft.andose = true;
-  av.dft.ornose = true;
-  av.dft.orose = true;
-  av.dft.andnose = true;
-  av.dft.norose = true;
-  av.dft.xorose = true;
-  av.dft.equose = true;
-  av.dft.repeat = 'experimentRadio';   //alternate = 'demoRadio'
-  av.dft.autoPauseNum = 1000;
-  */
-
   av.mouse = {};
 
   function clearmouse(av) {
@@ -616,6 +595,66 @@
                           , 'gradientCheck', 'side', 'initialLo', 'inflowLo', 'outflowLo'
                           , 'regionCode', 'regionName', 'boxed' , 'subRegion'];  //subRegion is not in Dom, so it is at the end; boxed has not been added to the dom yet
                          //regionName should probably be in the dom, but it is not right now with only one region. 
+  av.sgr.nut = {}; 
+  av.sgr.makeNutDefault = function () {
+    av.sgr.nut.wrldCols = 30;
+    av.sgr.nut.wrldRows = 30;
+    av.sgr.nut.wrldSize = av.sgr.nut.wrldCols * av.sgr.nut.wrldRows;
+    
+    av.sgr.nut.dft = {};    
+    
+    //No reSrc and reAct for now
+    /*
+    var rsrcelen = av.sgr.resrc_argu.length; 
+    var reactlen = av.sgr.react_argu.length;
+    av.sgr.nut.dft['resrc'] = {};
+    for (var jj=0; jj<rsrcelen; jj++){
+      av.sgr.nut.dft['resrc'][ av.sgr.resrc_argu[jj] ] = [];
+    };
+    av.sgr.nut.dft['react'] = {};
+    for (var jj=0; jj<reactlen; jj++){
+      av.sgr.nut.dft['react'][ av.sgr.react_argu[jj] ] = [];     
+    };
+    */
+    
+    //for user interface 
+    av.sgr.nut.dft['uiAll'] = {};
+    av.sgr.nut.dft['uiSub'] = {};
+    var uiAllDishLen = av.sgr.ui_allDish_argu.length;
+    for (jj=0; jj < uiAllDishLen; jj++) {
+      av.sgr.nut.dft.uiAll[ av.sgr.ui_allDish_argu[jj] ] = 'default';
+    };
+    //defaults for items that describe the whole dish
+    av.sgr.nut.dft.uiAll.geometry = 'Global';        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
+    av.sgr.nut.dft.uiAll.supplyType = 'Infinite';    //this is only for whem ui.geometry = global
+    av.sgr.nut.dft.uiAll.regionLayout = '1All';  //only whole dish for now
+    av.sgr.nut.dft.uiAll.regionsNumOf = 1;   // whole dishß
+    av.sgr.nut.dft.uiAll.initial = 1000;      //only whem ui.geometry = local and  supplyType = 'finite' 
+
+    //defaults for subtasks which must be Grid or Local
+    av.sgr.nut.dft.uiSub.supplyType = 'Infinite';  // Infinite default from Avida-ED 3: I think Should change to Finite
+    av.sgr.nut.dft.uiSub.initialHi = 1000;  //sugar units/cell guess at an initial value when supplyType='finite'; need to multiply by wrldSize
+    av.sgr.nut.dft.uiSub.inflowHi  = 100;   //sugar units/cell guess at an initial value when supplyType='equilibrium'; need to multiply by wrldSize
+    av.sgr.nut.dft.uiSub.outflowHi = 0.1;  //sugar units (fraction) guess at an initial value when supplyType='equilibrium';
+    av.sgr.nut.dft.uiSub.diffuseCheck = false;    //false = default;  else true.      
+    //from event file
+    av.sgr.nut.dft.uiSub.periodCheck = false;    //false = default;  else true.
+    av.sgr.nut.dft.uiSub.periodTime = 1000;    //need to play with default time in updates
+ 
+    av.sgr.nut.dft.uiSub.gradientCheck = false;    //false = default;  else true.      
+    av.sgr.nut.dft.uiSub.side = 'left';    //only valid for local resources with supply Type = 'gradient' or 'flow';
+    av.sgr.nut.dft.uiSub.inflowLo  =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
+    av.sgr.nut.dft.uiSub.outflowLo = 0.1;  //sugar units (fraction) guess at an initial value when supplyType='gradient' or 'flow';
+    av.sgr.nut.dft.uiSub.initialLo =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
+
+    av.sgr.nut.dft.uiSub.regionCode = '01';
+    av.sgr.nut.dft.uiSub.regionName = 'all';
+    av.sgr.nut.dft.uiSub.boxed = true;           //true keeps resources in their subdish; false allows them to flow into the rest of the dish
+    av.sgr.nut.dft.uiSub.subRegion = 1;    // this goes with 'all' = regionLayoutName (or 1234 could be used) or 'WholeDish'; tiba check this more than on region allowed
+  };
+  av.sgr.makeNutDefault();
+  console.log('av.sgr.nut =', av.sgr.nut);   //or should there just be a 'dft' task and only ever one region?
+ 
 
   av.nut = {};  // within Nutrients (av.nut) the first element in all arrays refer to the geometry="global". The element has an index = 0;
                 // when geometry="grid", Avida-ED calls it "local" and there can be up to 9 subdishes. 
@@ -624,7 +663,7 @@
                 // av.uiALL.regionLayout has various options which define both how many subdishes can be defined and where in the dish those subdishes are located. 
                 // the dom elelment tsk#regionLayout.value will determine number and labels for the subsections. 
                 // When more subdishes are implemented, an array or dictionary will be defined for each of the tsk#regionLayout values. 
-                // 
+                 
   //------------------------------------------------------------------------------------------- av.fzr.clearEnvironment --
   // used to create several structures used in defining parameters for the environment.cfg file
   av.fzr.clearEnvironment = function(from) {
@@ -635,10 +674,11 @@
     av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.fzr.clearEnvironment');
 
     av.nut.wrldCols = 30;
-    av.nut.fileRows = 30;
-    av.nut.wrldSize = av.nut.wrldCols * av.nut.fileRows;
+    av.nut.wrldRows = 30;
+    av.nut.wrldSize = av.nut.wrldCols * av.nut.wrldRows;
     // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
-    // av.nut is used for normal runs. nut is for nutrients
+    // av.nut is used for normal runs. nut is for nutrients; not used for test runs which run the envornment.cfg file as
+    // submitted in the workspace. 
 
     var logiclen = av.sgr.logicNames.length;
     var rsrcelen = av.sgr.resrc_argu.length; 
@@ -677,11 +717,11 @@
       for (kk=1; kk<=1; kk++) {                  //later the subRegion will be determined by x, x coordinates
         av.nut[tsk].uiSub.subRegion[kk] = kk;    // this goes with 'all' = regionLayoutName (or 1234 could be used) or 'WholeDish'; tiba check this more than on region allowed
         av.nut[tsk].uiSub.supplyType[kk] = 'unknown';  //Lamar this may need to change
-        av.nut[tsk].uiSub.initialHi[kk] = 1000;  //sugar units/cell guess at an initial value when supplyType='finite';
-        av.nut[tsk].uiSub.inflowHi[kk]  = 100;   //sugar units/cell guess at an initial value when supplyType='equilibrium';
-        av.nut[tsk].uiSub.outflowHi[kk] = 0.1;  //sugar units/cell guess at an initial value when supplyType='equilibrium';
+        av.nut[tsk].uiSub.initialHi[kk] = 1000;  //sugar units/cell guess at an initial value when supplyType='finite'; need to multiply by wrldSize
+        av.nut[tsk].uiSub.inflowHi[kk]  = 100;   //sugar units/cell guess at an initial value when supplyType='equilibrium'; need to multiply by wrldSize
+        av.nut[tsk].uiSub.outflowHi[kk] = 0.1;  //sugar units (fraction) guess at an initial value when supplyType='equilibrium';
         av.nut[tsk].uiSub.inflowLo[kk]  =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
-        av.nut[tsk].uiSub.outflowLo[kk] = 0.1;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
+        av.nut[tsk].uiSub.outflowLo[kk] = 0.1;  //sugar units (fraction) guess at an initial value when supplyType='gradient' or 'flow';
         av.nut[tsk].uiSub.initialLo[kk] =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
         av.nut[tsk].uiSub.side[kk] = 'left';    //only valid for local resources with supply Type = 'gradient' or 'flow';
         av.nut[tsk].uiSub.diffuseCheck[kk] = false;    //false = default;  else true.      
