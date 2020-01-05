@@ -346,7 +346,7 @@ av.dnd.lndActiveConfig = function (move, from) {
   //should be defined before av.dnd.landActiveConfig is called - comment out later
   move.sourceMoveData = move.source.map[move.sourceDomId];
   
-  console.log('sourceDomId=,', move.sourceDomId,'; move.source.map[sourceDomId].data=', move.source.map[move.sourceDomId].data, '; mmove.sourceMoveData=', move.sourceMoveData);
+  //console.log('sourceDomId=,', move.sourceDomId,'; move.source.map[sourceDomId].data=', move.source.map[move.sourceDomId].data, '; mmove.sourceMoveData=', move.sourceMoveData);
 
   //if we know the item and id can we do this without anything selected? Yes. so we need to replace this with the insertNodes below
   //get the data for the new configuration
@@ -369,11 +369,11 @@ av.dnd.lndActiveConfig = function (move, from) {
   av.fzr.actConfig.actDomid = Object.keys(move.target.map)[0];
   //          av.fzr.actConfig.actDomid = Object.keys(av.dnd.activeConfig.map)[0];    //old version
   av.fzr.actConfig.name = document.getElementById(av.fzr.actConfig.actDomid).textContent;
-  console.log('New Config name=:', av.fzr.actConfig.name);
+  //console.log('New Config name=:', av.fzr.actConfig.name);
   
   av.fzr.actConfig.fzDomid = move.sourceDomId;
-  console.log('av.fzr.actConfig.fzDomid=', av.fzr.actConfig.fzDomid, '; move.sourceDomId=', move.sourceDomId);
-  console.log('Object.keys(move.target.map)[0];=', Object.keys(move.target.map)[0], '; av.fzr.actConfig.actDomid=', av.fzr.actConfig.actDomid);
+  //console.log('av.fzr.actConfig.fzDomid=', av.fzr.actConfig.fzDomid, '; move.sourceDomId=', move.sourceDomId);
+  //console.log('Object.keys(move.target.map)[0];=', Object.keys(move.target.map)[0], '; av.fzr.actConfig.actDomid=', av.fzr.actConfig.actDomid);
 
   av.fzr.actConfig.dir = av.fzr.dir[av.fzr.actConfig.fzDomid];
   delete av.fzr.actConfig.file['instset.cfg'];
@@ -395,7 +395,7 @@ av.dnd.lndActiveConfig = function (move, from) {
 
   av.parents.clearParentsFn();
 
-  console.log('move.source.node.id=',move.source.node.id, '; why is this out of order?');
+  //console.log('move.source.node.id=',move.source.node.id, '; why is this out of order?');
   if ('fzConfig' === move.source.node.id || ('fzTdish' === move.source.node.id)) {
     av.fzr.actConfig.type = move.type;
     //av.fzr.actConfig.type = 'c';

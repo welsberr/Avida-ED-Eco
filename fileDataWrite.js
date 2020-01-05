@@ -285,7 +285,7 @@
       }
       else {   // local   using avida defaults for now will separate out diffusion later.    
         ndx = 1;   // only doing the first subsection for now
-        regionName = document.getElementById(tsk+ndx+'title').textContent;
+        regionName = document.getElementById(tsk+ndx+'regionName').textContent;
         region_ndx = av.sgr.regionNames.indexOf(regionName);
         regionCode = av.sgr.regionCodes[region_ndx];
         rname = tsk + regionCode;

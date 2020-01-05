@@ -908,15 +908,15 @@
     
     av.nut.wrldCols = av.fzr.actConfig.cols;  //came from  Number(dict.WORLD_X)
     av.nut.wrldRows = av.fzr.actConfig.rows;  //came from  Number(dict.WORLD_Y)
-    av.nut.wrldSize = av.fzr.actConfig.size;
+    av.nut.wrldSize = av.fzr.actConfig.cols * av.fzr.actConfig.rows;  //  av.fzr.actConfig.size;
     
     av.frd.nutrientParse(fileStr, 'av.frd.environment2struct');
     var errors = av.frd.environmentParse(fileStr);
     if (1 < errors.length) console.log('errors=', errors);    
     if (av.dbg.flg.nut) { 
-      var nutConfig = {};
-      nutConfig = av.nut;
-      console.log('env.cfg_nut = ', nutConfig); 
+      av.nutConfig = {};
+      av.nutConfig = av.nut;
+      console.log('env.cfg_nut = ', av.nutConfig); 
     }
 
     if (av.dbg.flg.nut) { console.log('------------------------------------------------------------------ end of av.frd.environment2struct --'); }
@@ -928,14 +928,9 @@
   av.frd.defaultNut2dom = function(from) {
     var sugarLength = av.sgr.logicNames.length;
     var numTsk, tsk, tskose;
-    var rows, cols, gridSize;
     var subNum = 1;                   //Will need to loop throughh all subNum later
     // only one regioin for now, so this works. I may need add at subcode index later.
     // the data for the regions may not go in the struture in the same order they need to be on the user interface. 
-    cols = Number(av.nut.wrldCols);
-    rows = Number(av.nut.wrldRows);
-    gridSize = cols * rows;
-    if (av.dbg.flg.nut) { console.log(from, ' called av.frd.defaultNut2dom: cols = ', cols, '; rows = ', rows, '; gridSize = ', gridSize); }
 
     for (var ii = 0; ii < sugarLength; ii++) {
       numTsk = av.sgr.logEdNames[ii];
@@ -949,11 +944,11 @@
 
       //for now only one dish - entire world. Later there will be subdishes initial plan is for 2 and then 4;
       for (subNum = 1; subNum <= 1; subNum++) {
-        console.log('ocument.getElementById('+tsk+subNum+'supplyType) =', document.getElementById(tsk+subNum+'supplyType') );
+        //console.log('ocument.getElementById('+tsk+subNum+'supplyType) =', document.getElementById(tsk+subNum+'supplyType') );
         document.getElementById(tsk+subNum+'supplyType').value = av.sgr.nut.dft.uiSub.supplyType;
-        console.log('ocument.getElementById('+tsk+subNum+'initialHiInput) =', document.getElementById(tsk+subNum+'initialHiInput') );
+        //console.log('ocument.getElementById('+tsk+subNum+'initialHiInput) =', document.getElementById(tsk+subNum+'initialHiInput') );
         document.getElementById(tsk+subNum+'initialHiInput').value = av.sgr.nut.dft.uiSub.initialHi;
-        console.log('document.getElementById('+tsk + subNum + 'inflowHiInput) =', document.getElementById(tsk+subNum+'inflowHi') );
+        //console.log('document.getElementById('+tsk + subNum + 'inflowHiInput) =', document.getElementById(tsk+subNum+'inflowHi') );
         document.getElementById(tsk+subNum+'inflowHiInput').value = av.sgr.nut.dft.uiSub.inflowHi;
         document.getElementById(tsk+subNum+'outflowHiInput').value = av.sgr.nut.dft.uiSub.outflowHi;
         document.getElementById(tsk+subNum+'diffuseCheck').value = av.sgr.nut.dft.uiSub.diffuseCheck;
@@ -972,8 +967,9 @@
         //document.getElementById(tsk+subNum+'subRegion').innerHTML = av.sgr.nut.dft.uiSub.subRegion;
         //document.getElementById(tsk+subNum+'').value = av.sgr.nut.dft.uiSub;    //in case we think of another
       }
-      if (av.dbg.flg.nut) { console.log('================================================================== end of av.frd.defaultNut2dom =='); }
+      //if (av.dbg.flg.nut) { console.log('----------------------------------------------------------- end of each task in default to dome =='); }
     };
+    if (av.dbg.flg.nut) { console.log('================================================================== end of av.frd.defaultNut2dom =='); }
   };
   //--------------------------------------------------------------------------------------- end av.frd.defaultNut2dom --
 
@@ -987,6 +983,12 @@
     var subNum = 1;                   //Will need to loop throughh all subNum later
     // only one regioin for now, so this works. I may need add at subcode index later.
     // the data for the regions may not go in the struture in the same order they need to be on the user interface. 
+    
+    var cols = Number(av.nut.wrldCols);
+    var rows = Number(av.nut.wrldRows);
+    var wrldSize = cols * rows;
+    if (av.dbg.flg.nut) { console.log(from, ' called av.frd.defaultNut2dom: cols = ', cols, '; rows = ', rows, '; wrldSize = ', wrldSize); }
+    
     if (av.dbg.flg.nut) { console.log(from, ' called av.frd.nutrientStruct2dom'); }
 
     for (var ii = 0; ii < sugarLength; ii++) {
@@ -1000,22 +1002,24 @@
       if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         document.getElementById(tsk+'0supplyType').value = av.nut[numTsk].uiAll.supplyType;
       }
-      else if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {        
-        //regionCode will need to be converted to regionName or need to get regionName from xy cooredinates
+      else if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+        
+        // regionCode will need to be converted to regionName or need to get regionName from xy cooredinates
+        // for now it is always "Whole Dish" because there is only one region
         document.getElementById(tsk+subNum+'regionName').value = av.nut[numTsk].uiSub.regionName[subNum];
         
-        console.log('document.getElementById('+tsk+subNum+'supplyType)',document.getElementById(tsk+subNum+'supplyType') );
+          //console.log('document.getElementById('+tsk+subNum+'supplyType)',document.getElementById(tsk+subNum+'supplyType') );
         document.getElementById(tsk+subNum+'supplyType').value = av.nut[numTsk].uiSub.supplyType[subNum]; 
 
         // if initial is not defined in RESOURCE then use the default value from globals.
-        if (isNaN(Number(av.nut[numTsk].resrc.initial[subNum])) ) {
-          ndx = aav.sgr.resrcAvidaDefaultGlobalArgu.indexOf('initial');
-          initialValue = Number( av.sgr.resrcAvida_EDdefaultValu[ndx] );
+        if (!isNaN(Number(av.nut[numTsk].resrc.initial[subNum])) ) {
+          //dom and nut contain initial value per cell; RESOURCE contains initial amount per world
+          initialValue = Number( av.nut[numTsk].resrc.initial[subNum] / wrldSize );    
+          document.getElementById(tsk+subNum+'initialHiInput').value = initialValue;
+          av.nut[numTsk].uiSub.initialHi[subNum] = initialValue;
         }
-        else {
-          initialValue = Number( av.nut[numTsk].resrc.initial[subNum] );    //dom and nut contain initial value per cell; RESOURCE contains initial amount per world
-        }
-        document.getElementById(tsk+subNum+'initialHiInput').value = initialValue;   
+        // else it keeps the default value;
+        // this is all that is being set now; I'll set more later
       }
       else {
         console.log('Error: geometry unrecognized');
@@ -1023,52 +1027,15 @@
       av.sgr.changeDetailsLayout(tsk, subNum, 'av.frd.nutrientStruct2dom');
     }
     if (av.dbg.flg.nut) { 
-      var nutEvents = {};
-      nutEvents = av.nut;
-      console.log('av.nutEvents = ', nutEvents); 
+      av.nut2dom = {};
+      av.nut2dom = av.nut;
+      console.log('nut2dom = ', av.nut2dom); 
     }
     if (av.dbg.flg.nut) { console.log('================================================================== end of av.frd.nutrientStruct2dom =='); }
   };
   //------------------------------------------------------------------------ get needed events out of events.cfg file --
 
 //======================================================================================================================
-  av.frd.eventsLineParse = function (cfgary, from) {
-    'use strict';
-    if (av.dbg.flg.nut) { console.log(from, 'called av.frd.eventsLineParse'); }
-    if (av.dbg.flg.nut) { console.log('line array = ', cfgary, '; length = ', cfgary.length); }
-    var eventType;
-    var tmpStr;
-    var start;
-    var period;
-    var end;
-    var rslt = {
-      eventType : cfgary[0],
-      timeing : cfgary[1],
-      event : cfgary[2]
-    };
-    eventType = cfgary[0];
-    var ndx = cfgary[1].indexOf(':');
-    if (0 > ndx) {
-      start = cfgary[1];
-    }
-    else {
-      start = cfgary[1].substr(0,ndx);
-      tmpStr = cfgary[1].substr(ndx);
-      ndx = tmpStr.indexOf(':');
-      if (0 > ndx) {
-        period = tmpStr;
-      }
-      else {
-        period = tmpStr.substr(0,ndx);
-        end = tmpStr.substr(ndx);
-      };
-    };
-    var eventName = cfgary[2];
-    var resrcName = cfgary[3];
-    var cosStep = cfgary[4];
-    if (av.dbg.flg.nut) { console.log(eventType, start, period, end, eventName, resrcName, cosStep); }
-    return rslt;
-   };
 
   av.frd.eventsCFGparse = function (filestr, from) {
     if (av.dbg.flg.nut) { console.log(from, 'called av.frd.eventsCFGparse'); }
@@ -1166,13 +1133,15 @@
     av.grd.setupCols = Number(dict.WORLD_X);  
     av.fzr.env.fileCols = Number(dict.WORLD_X);  //test dishes only
     av.fzr.actConfig.cols = Number(dict.WORLD_X);   // move to av.nut.wrldCols in environment.cfg to struct
-    //dijit.byId('sizeCols').set('value', dict.WORLD_X);
+
     av.dom.sizeRows.value = dict.WORLD_Y;
-    //dijit.byId('sizeRows').set('value', dict.WORLD_Y);
     av.grd.gridWasRows = Number(dict.WORLD_Y);
     av.grd.setupRows = Number(dict.WORLD_Y);
     av.fzr.env.fileRows = Number(dict.WORLD_Y);   //test dishes only
     av.fzr.actConfig.rows = Number(dict.WORLD_Y);    // move to av.nut.wrldRows in environment.cfg to struct
+    
+    av.fzr.actConfig.size = av.fzr.actConfig.cols * av.fzr.actConfig.rows;
+    
     document.getElementById('muteInput').value = dict.COPY_MUT_PROB*100;
     //var event = new Event('change');
     var event = new window.CustomEvent('change');

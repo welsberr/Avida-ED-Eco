@@ -695,7 +695,8 @@
       };
       av.nut[tsk]['react'] = {};
       for (var jj=0; jj<reactlen; jj++){
-        av.nut[tsk]['react'][ av.sgr.react_argu[jj] ] = [];     
+        av.nut[tsk]['react'][ av.sgr.react_argu[jj] ] = [];     //Should these actually lbe left blank if they are really avida defaults? 
+                                                                //We don't need to write the avida defaults; We do need to write where Avida-ED devaults don't match avida
       };
       //from user interface 
       av.nut[tsk]['uiAll'] = {};
@@ -704,16 +705,18 @@
         av.nut[tsk].uiAll[ av.sgr.ui_allDish_argu[jj] ] = 'default';
       };
       //defaults for items that describe the whole dish
+      // These should be in arrays or dictionaries so that they always match with av.sgr.nut.dft.uiAll - tiba fix later
       av.nut[tsk].uiAll.geometry = 'Global';        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
       av.nut[tsk].uiAll.supplyType = 'Infinite';    //this is only for whem ui.geometry = global
-      av.nut[tsk].uiAll.regionLayout = '1All';  //only whole dish for now
+      av.nut[tsk].uiAll.regionLayout = 'Whole Dish';  //only whole dish for now
       av.nut[tsk].uiAll.regionsNumOf = 1;   // whole dishß
       av.nut[tsk].uiAll.initial = 1000;      //only whem ui.geometry = local and  supplyType = 'finite' 
 
       for (jj=0; jj < uiSubDishLen; jj++) {
         av.nut[tsk]['uiSub'][av.sgr.ui_subDish_argu[jj] ] = [];
       };
-      // a few defaults for when resources are local
+      // Do this once I have an array set up to assign values and make sure that av.nut.tsk.uiSub matches av.sgr.nut.dft.uiSub
+/*
       for (kk=1; kk<=1; kk++) {                  //later the subRegion will be determined by x, x coordinates
         av.nut[tsk].uiSub.subRegion[kk] = kk;    // this goes with 'all' = regionLayoutName (or 1234 could be used) or 'WholeDish'; tiba check this more than on region allowed
         av.nut[tsk].uiSub.supplyType[kk] = 'unknown';  //Lamar this may need to change
@@ -730,10 +733,13 @@
         av.nut[tsk].uiSub.periodCheck[kk] = false;    //false = default;  else true.   
         av.nut[tsk].uiSub.boxed[kk] = true;           //true keeps resources in their subdish; false allows them to flow into the rest of the dish
       }
-    };
-    av.cleanNut = av.nut;
-    console.log('av.oldNut =', av.oldNut);
-    console.log('av.cleanNut=', av.cleanNut);
+*/
+    };   //end of looping through the logic tasks.
+    if (av.dbg.flg.nut) {
+      av.cleanNut = av.nut;
+      console.log('av.oldNut =', av.oldNut);
+      console.log('av.cleanNut=', av.cleanNut);
+    }
     //console.log('av =',av);
 
     //--------------------------------------------- av.fzr.env section mighht be delted in future. used for Test Dishes --

@@ -293,11 +293,12 @@
           av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
         };
 
-        //Hide select options that are not yet implemented
-        console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
-        console.log("document.getElementsByClassName('localEquilibrium')=", document.getElementsByClassName('localEquilibrium').length );
+        //console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
+        //console.log("document.getElementsByClassName('localEquilibrium')=", document.getElementsByClassName('localEquilibrium').length );
 
-        console.log("document.getElementsByClassName('globalFinite')=", document.getElementsByClassName('globalFinite').length );
+        //console.log("document.getElementsByClassName('globalFinite')=", document.getElementsByClassName('globalFinite').length );
+        
+        //Hide select options that are not yet implemented
         len = document.getElementsByClassName('localEquilibrium').length;
         for (ii = 0; ii < len; ii++) {
           document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
