@@ -160,7 +160,7 @@
       document.getElementById(id).innerHTML = 'inital amount must be > 0';
       document.getElementById(id).style.color = 'red';
     } else {
-      document.getElementById(id).innerHTML = 'inital amount per cell';
+      document.getElementById(id).innerHTML = 'inital amount / cell';
       document.getElementById(id).style.color = 'black';
     }
   };
@@ -208,8 +208,8 @@
     // all tasks
     for (var ii=0; ii< numtasks; ii++) {  
       //change glabal and all subsections  (only 1 sub secton for now) - this may need to change later; but only allowing None and Infinte for now, so ok.
-      for (var jj=start; jj< 2; jj++) {
-        domName = av.sgr.logicNames[ii] + jj + endName;
+      for (var sub=start; sub< 2; sub++) {
+        domName = av.sgr.logicNames[ii] + sub + endName;
         document.getElementById(domName).value = selectedOption;
       }
       av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], 1, 'av.sgr.ChangeAllsugarSupplyType');
@@ -239,8 +239,8 @@
       //console.log('idname=',idname);
       document.getElementById(idname).style.color = nameColor;  
       // eventually there will be up to 4 subsections. deal with that later.
-      for (var jj=1; jj < 2; jj++) {
-        idname = av.sgr.logicNames[ii]+jj+'title';
+      for (var sub=1; sub < 2; sub++) {
+        idname = av.sgr.logicNames[ii]+sub+'regionName';
         document.getElementById(idname).style.color = darkColor;  
       }
     }
@@ -292,7 +292,7 @@
     document.getElementById(tsk+'0regionLayout').style.display = 'none';
     document.getElementById(tsk+'0initialDiv').style.display = 'none';
     document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'none';
-    document.getElementById(tsk+sub+'title').style.display = 'none';
+    document.getElementById(tsk+sub+'regionName').style.display = 'none';
     document.getElementById(tsk+sub+'blank').style.display = 'none';      
     document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
     document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'none';
@@ -324,8 +324,8 @@
           document.getElementById(tsk+sub+'periodCheckbox').style.display = 'block';
           document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
           document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount per cell';
-          document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction per cell';
+          document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount / cell';
+          document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction / cell';
           document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
           document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium when resource not consumed';
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-globalEqual-container';
@@ -364,7 +364,7 @@
     else {
       //document.getElementById(tsk+'0regionLayout').style.display = 'inline-block';
       document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'block';
-      //document.getElementById(tsk+sub+'title').style.display = 'block';    
+      //document.getElementById(tsk+sub+'regionName').style.display = 'block';    
       document.getElementById(tsk+'0section').open = true;
 
       switch (supplyType) {    //for when geometery = local
@@ -382,7 +382,7 @@
             //gradient
             document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'block';
             document.getElementById(tsk+sub+'sideText').innerHTML = 'Choose the side to have the a higher initla amount';
-            document.getElementById(tsk+sub+'initialHiText').innerHTML = 'High side initial amount per cell';
+            document.getElementById(tsk+sub+'initialHiText').innerHTML = 'High side initial amount / cell';
             document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';
             document.getElementById(tsk+sub+'initialLoDiv').style.display = 'block';
             document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-FiniteGradient-container';
@@ -422,8 +422,8 @@
             document.getElementById(tsk+sub+'equalLoDiv').style.display = 'block';
             document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium on high side.';
             document.getElementById(tsk+sub+'equalLoText').innerHTML = ' = equilibrium on Low side';
-            document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount per cell on high side.';
-            document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction per cell on high side';
+            document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount / cell on high side.';
+            document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction / cell on high side';
             document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualGradient-container';
             console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
             if (true == document.getElementById(tsk+sub+'periodCheck').checked && !av.sgr.hideFlgNames.periodic) {
@@ -439,8 +439,8 @@
             document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
             document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
             document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
-            document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount per cell';
-            document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction per cell';
+            document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount / cell';
+            document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction / cell';
             document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
             document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium if not consumed.';
             document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Equal-container';

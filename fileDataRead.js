@@ -351,6 +351,7 @@
     //av.frd.environmentCFG2form(doctext);
     av.frd.environment2struct(doctext, 'av.frd.updateSetup');      //puts environment in a structure
 
+    av.frd.defaultNut2dom('av.frd.updateSetup');               //put data from defaults in the dom.
     av.frd.nutrientStruct2dom('av.frd.updateSetup');           //puts data from the structure in the the dom for user interface
 
     doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
@@ -588,8 +589,8 @@
         if (av.debug.fio) { console.log('____resourceName['+ndx+'] =', reActObj.resource[ndx], '; Name array is', av.nut[numTsk].resrc.name); } 
         reSrcName = reActObj.resource[ndx];
         reSrcNameAry = av.nut[numTsk].resrc.name;
-        mm = reSrcNameAry.indexOf( reSrcName );
         if (av.debug.fio) { console.log('reSource  mm  =', mm, '; depletable=', reActObj.depletable[ndx], '; av.nut.'+numTsk +'.uiSub.supplyType=', av.nut[numTsk].uiSub.supplyType); }
+        mm = reSrcNameAry.indexOf( reSrcName );
         if (av.debug.fio) { console.log('av.nut[numTsk]=', av.nut[numTsk]); }
         if (undefined !== reActObj.depletable[ndx]) {
           if (1 > reActObj.depletable[ndx]) {
@@ -911,7 +912,7 @@
     
     av.frd.nutrientParse(fileStr, 'av.frd.environment2struct');
     var errors = av.frd.environmentParse(fileStr);
-    if (1 < errors.length) console.log('errors=', errors);
+    if (1 < errors.length) console.log('errors=', errors);    
     if (av.dbg.flg.nut) { 
       var nutConfig = {};
       nutConfig = av.nut;
@@ -926,9 +927,8 @@
   //------------------------------------------------------------------------------------------- av.frd.defaultNut2dom --
   av.frd.defaultNut2dom = function(from) {
     var sugarLength = av.sgr.logicNames.length;
-    var ndx;
     var numTsk, tsk, tskose;
-    var initialValue, rows, cols, gridSize;
+    var rows, cols, gridSize;
     var subNum = 1;                   //Will need to loop throughh all subNum later
     // only one regioin for now, so this works. I may need add at subcode index later.
     // the data for the regions may not go in the struture in the same order they need to be on the user interface. 
@@ -942,45 +942,40 @@
       tsk = av.sgr.logicNames[ii];
       tskose = av.sgr.oseNames[ii];
 
-      document.getElementById(tsk+'0regionLayout').value = av.nut[numTsk].uiAll.regionLayout;
-      document.getElementById(tsk+'0geometry').value = av.nut[numTsk].uiAll.geometry;
+      document.getElementById(tsk+'0geometry').value = av.sgr.nut.dft.uiAll.geometry;
+      document.getElementById(tsk+'0supplyType').value = av.sgr.nut.dft.uiAll.supplyType;
+      document.getElementById(tsk+'0regionLayout').value = av.sgr.nut.dft.uiAll.regionLayout;
+      document.getElementById(tsk+'0initial').value = av.sgr.nut.dft.uiAll.initial;
 
-      if ('global' === av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
-        document.getElementById(tsk+'0supplyType').value = av.nut[numTsk].uiAll.supplyType;
+      //for now only one dish - entire world. Later there will be subdishes initial plan is for 2 and then 4;
+      for (subNum = 1; subNum <= 1; subNum++) {
+        console.log('ocument.getElementById('+tsk+subNum+'supplyType) =', document.getElementById(tsk+subNum+'supplyType') );
+        document.getElementById(tsk+subNum+'supplyType').value = av.sgr.nut.dft.uiSub.supplyType;
+        console.log('ocument.getElementById('+tsk+subNum+'initialHiInput) =', document.getElementById(tsk+subNum+'initialHiInput') );
+        document.getElementById(tsk+subNum+'initialHiInput').value = av.sgr.nut.dft.uiSub.initialHi;
+        console.log('document.getElementById('+tsk + subNum + 'inflowHiInput) =', document.getElementById(tsk+subNum+'inflowHi') );
+        document.getElementById(tsk+subNum+'inflowHiInput').value = av.sgr.nut.dft.uiSub.inflowHi;
+        document.getElementById(tsk+subNum+'outflowHiInput').value = av.sgr.nut.dft.uiSub.outflowHi;
+        document.getElementById(tsk+subNum+'diffuseCheck').value = av.sgr.nut.dft.uiSub.diffuseCheck;
+        document.getElementById(tsk+subNum+'periodCheck').value = av.sgr.nut.dft.uiSub.periodCheck;
+        document.getElementById(tsk+subNum+'gradientCheck').value = av.sgr.nut.dft.uiSub.gradientCheck;
+        document.getElementById(tsk+subNum+'sideSelect').value = av.sgr.nut.dft.uiSub.side;
+        document.getElementById(tsk+subNum+'inflowLoInput').value = av.sgr.nut.dft.uiSub.inflowLo;
+        document.getElementById(tsk+subNum+'outflowLoInput').value = av.sgr.nut.dft.uiSub.outflowLo;
+        document.getElementById(tsk+subNum+'initialLoInput').value = av.sgr.nut.dft.uiSub.initialLo;
+        document.getElementById(tsk+subNum+'regionName').value = av.sgr.nut.dft.uiSub.regionName;
+        //
+        // Not really in Dom, but needed to transition between environment.cfg to dom back to environment.cfg
+        //
+        //document.getElementById(tsk+subNum+'regionCode').value = av.sgr.nut.dft.uiSub.regionCode;
+        //document.getElementById(tsk+subNum+'boxed').value = av.sgr.nut.dft.uiSub.boxed;
+        //document.getElementById(tsk+subNum+'subRegion').innerHTML = av.sgr.nut.dft.uiSub.subRegion;
+        //document.getElementById(tsk+subNum+'').value = av.sgr.nut.dft.uiSub;    //in case we think of another
       }
-      else if ('grid' === av.nut[numTsk].uiAll.geometry.toLowerCase() ) {        
-        //regionCode will need to be converted to regionName or need to get regionName from xy cooredinates
-        document.getElementById(tsk+subNum+'title').value = av.nut[numTsk].uiSub.regionName[subNum];
-        
-        document.getElementById(tsk+subNum+'supplyType').value = av.nut[numTsk].uiSub.supplyType[subNum]; 
-
-        // if initial is not defined in RESOURCE then use the default value from globals.
-        if (isNaN(Number(av.nut[numTsk].resrc.initial[subNum])) ) {
-          ndx = aav.sgr.resrcAvidaDefaultGlobalArgu.indexOf('initial');
-          initialValue = Number( av.sgr.resrcAvida_EDdefaultValu[ndx] );
-        }
-        else {
-          initialValue = Number( av.nut[numTsk].resrc.initial[subNum] )/gridSize;    //dom contains initial value per cell; RESOURCE contains initial amount per world
-        }
-        document.getElementById(tsk+subNum+'initialHiInput').value = initialValue/av.nut.wrldSize;   
-      }
-      else {
-        console.log('Error: geometry unrecognized');
-      }
-      av.sgr.changeDetailsLayout(tsk, subNum, 'av.frd.nutrientStruct2dom');
-    }
-    if (av.dbg.flg.nut) { 
-      var nutEvents = {};
-      nutEvents = av.nut;
-      console.log('av.nutEvents = ', nutEvents); 
-    }
-    if (av.dbg.flg.nut) { console.log('================================================================== end of av.frd.defaultNut2dom =='); }
+      if (av.dbg.flg.nut) { console.log('================================================================== end of av.frd.defaultNut2dom =='); }
+    };
   };
   //--------------------------------------------------------------------------------------- end av.frd.defaultNut2dom --
-
-
-
-
 
   //Now that structure exists, use that data to update values in the user interface. 
   //--------------------------------------------------------------------------------------- av.frd.nutrientStruct2dom --
@@ -1007,8 +1002,9 @@
       }
       else if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {        
         //regionCode will need to be converted to regionName or need to get regionName from xy cooredinates
-        document.getElementById(tsk+subNum+'title').value = av.nut[numTsk].uiSub.regionName[subNum];
+        document.getElementById(tsk+subNum+'regionName').value = av.nut[numTsk].uiSub.regionName[subNum];
         
+        console.log('document.getElementById('+tsk+subNum+'supplyType)',document.getElementById(tsk+subNum+'supplyType') );
         document.getElementById(tsk+subNum+'supplyType').value = av.nut[numTsk].uiSub.supplyType[subNum]; 
 
         // if initial is not defined in RESOURCE then use the default value from globals.

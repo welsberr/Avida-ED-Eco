@@ -63,15 +63,9 @@
 //
 //----------------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------- Problems --
-//  Fix av.anl.widg = {   statement on globals in Avida-ED 3.2 to match the one in Avida-ED-4 ecology
+//  I think I fixed this: Did not put value for pauseAt in when it read PauseAt.txt as part of testConfig
 //  
-//  fix color and data select/item buttons on Analysis page
-//
-//  the avidaDataRecorder.csv does not export correctly, but is created correctly when the population is frozen
-//  
-//  Did not put value for pauseAt in when it read PauseAt.txt as part of testConfig
-//  
-//  Rescaling is missing on the lower right  under the population page petri dish
+//  Need to scale from initial per dish to initial per cell going from environment.cfg to dom
 //  
 //  Oraganism Page -------
 //  
@@ -81,8 +75,15 @@
 //  
 //  Looking at loading default files and perhaps we need to add default values for finite when finite is selected even 
 //  there is no finite in the config file. 
+// 
+//  Analysis page
 //  
-//  I also want an all finite option (that only applies to local for now)
+//  Fix av.anl.widg = {   statement on globals in Avida-ED 3.2 to match the one in Avida-ED-4 ecology
+//  
+//  fix color and data select/item buttons on Analysis page
+//
+//  the avidaDataRecorder.csv does not export correctly, but is created correctly when the population is frozen
+//  
 //  
 //
 //----------------------------------------------------------------------------------------------------------------------

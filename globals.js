@@ -627,7 +627,7 @@
     //defaults for items that describe the whole dish
     av.sgr.nut.dft.uiAll.geometry = 'Global';        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
     av.sgr.nut.dft.uiAll.supplyType = 'Infinite';    //this is only for whem ui.geometry = global
-    av.sgr.nut.dft.uiAll.regionLayout = '1All';  //only whole dish for now
+    av.sgr.nut.dft.uiAll.regionLayout = 'Whole Dish';  //only whole dish for now
     av.sgr.nut.dft.uiAll.regionsNumOf = 1;   // whole dishß
     av.sgr.nut.dft.uiAll.initial = 1000;      //only whem ui.geometry = local and  supplyType = 'finite' 
 
