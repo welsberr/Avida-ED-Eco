@@ -74,10 +74,10 @@
   };
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.allsugarSupplyTypeChange = function (domObj) {
+  av.sgr.allsugarSupplyTypeChange = function (domObj) {  
     var idx = domObj.selectedIndex;        // get the index of the selected option 
-    var which = domObj.options[idx].value;   // get the value of the selected option 
-    av.sgr.ChangeAllsugarSupplyType(which);
+    var selectedValue = domObj.options[idx].value;   // get the value of the selected option 
+    av.sgr.ChangeAllsugarSupplyType(selectedValue, 'av.sgr.allsugarSupplyTypeChange');
     document.getElementById('allsugarSupplyType').value = 'Neutral';
   };
 
@@ -198,9 +198,9 @@
   };
 
   //--------------------------------------------------------------------------------- av.sgr.ChangeAllsugarSupplyType --
-  av.sgr.ChangeAllsugarSupplyType = function(selectedOption) {
+  av.sgr.ChangeAllsugarSupplyType = function(selectedOption, from) {
     var endName = 'supplyType';   //nan0supplyType  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
-    //console.log('endName=', endName, '; selectedOption=',selectedOption);
+    //console.log(from, ' called av.sgr.ChangeAllsugarSupplyType: selectedOption=',selectedOption);
     var domName = '';  
     var numtasks = av.sgr.logicNames.length;
     var start = 0;   //most will start with 0 for global and also do local section 1
@@ -211,8 +211,9 @@
       for (var sub=start; sub< 2; sub++) {
         domName = av.sgr.logicNames[ii] + sub + endName;
         document.getElementById(domName).value = selectedOption;
+        //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
+        if (0 < sub) av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarSupplyType');   //only need to do once per task/subsection combo even if it does change both global and subtasks
       }
-      av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], 1, 'av.sgr.ChangeAllsugarSupplyType');
     }
       //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
   };
@@ -291,6 +292,7 @@
     document.getElementById(tsk+'0supplyType').style.display = 'none';      
     document.getElementById(tsk+'0regionLayout').style.display = 'none';
     document.getElementById(tsk+'0initialDiv').style.display = 'none';
+    //console.log('document.getElementById('+tsk+sub+'supplyTypeSelectHolder) =', document.getElementById(tsk+sub+'supplyTypeSelectHolder'));
     document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'none';
     document.getElementById(tsk+sub+'regionName').style.display = 'none';
     document.getElementById(tsk+sub+'blank').style.display = 'none';      
@@ -465,6 +467,7 @@
           break;
           */
         case 'Debug':
+          document.getElementById(tsk+'0regionLayout').style.display = 'inline-block';
           document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
           document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
           document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'inline-block';

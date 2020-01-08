@@ -445,6 +445,82 @@
   //Name ideas. not01g00 to 99  for gradients   leading zeros by using padStart
   //
 
+  /************************************************************           ideas for regionLayout Names and Region Names --
+  // These are ideas tossed about that I'm not currently using - or they are defined lower down. 
+  //
+
+
+  //Avida resource Arguments that have Defaults I might use probably use. If they are the default, they do not need to be in the Environment.cfg file
+  /*
+  av.sgr.resrcAvidaDefaultGlobalArgu = [ 'initial', 'inflow', 'outflow', 'geometry'   
+                                       , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'];
+
+  av.sgr.resrcAvidaDefaultGlobalValu = [ 0, 0, 0.0, 'global', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
+
+  av.sgr.resrcAvidaDefaultGridValu =   [ 0, 0, 0.0, 'grid',  1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
+  av.sgr.resrcAvida_EDdfltGlobValu = [ 100, 0, 0.0, 'global', 0, 0, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
+
+  av.sgr.reSrcAvidaDefaultGridLongArgu = [  'initial',    'inflow',   'outflow', 'geometry'   
+                                        ,  'inflowx1',  'inflowx2',  'inflowy1', 'inflowy2'    // not used when geometry = global
+                                        , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'    // not used when geometry = global
+                                        ,  'xdiffuse',  'ydiffuse',  'xgravity', 'ygravity'];
+  av.sgr.reSrcAvidaDefaultGridLongValu =  [ 0, 0, 0.0, 'global'
+                                          , 0, 0, 0, 0    //technically deterministic, but Avida-ED is using 0;
+                                          , 0, 0, 0, 0    //unset with the second parametner set equal to the first; again Avida-ED uses 0; 
+                                          , 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
+*/
+/*
+  //not in current use
+  //av.sgr.supply_argu = ['region', 'side', 'grdNum', 'regionCode','regionList'];           //each is an array for region
+
+  //number of subdishis is useful, especially if we only allow one layout per number of subdishes. 
+  //geometry is always the same for all regions, but also part of the avida arguments for resource. 
+  //Different ways to discribe layout, only one desciptor needed per task; most of these are just ideas
+  av.sgr.layout3 = ['glob', 'all', 'haf', 'thr', '4th'];
+  av.sgr.layout = ['Global Dish', 'Whole Dish', 'Halves', 'ThirdsTopLeftRight', 'Quarters'];
+  av.sgr.layoutMany = ['glob', 'all', 'halfLR', 'halfTB', '3top1', '3bot1', '3lft1', '3Rit1', '3book', '3stack', '4th'];
+  //a dictionary to assign the number of regions based on possible names for region layouts in 'summary' section
+
+  av.sgr.regionDct = {};  //more can be added if needed
+  av.sgr.regionDct['all'] = 1;
+  av.sgr.regionDct['WholeDish'] = 1;
+  av.sgr.regionDct['HalvesLeftRight'] = 2;
+  av.sgr.regionDct['ThirdsTopLeftRight'] = 3;
+  av.sgr.regionDct['Quarters'] = 4;
+
+                           //region list does not work at this time. It was to create a way to fill out of the data of all tasks based on region. 
+                           //     I don't think we need it now. It should go away  when that part of ex1 goes away. 
+                           //name will be created from task, subdishnum or region, type and side
+                           // 
+                           // region list was used to state the index into the array of data that goes with the region in the regionlis. 
+                           // so the region lisst for quarters is [empty, 0, 1, 2, 3]
+                           // the region list for top bottom would be [empty, empty, empty, empty, empty, 0, 1]
+
+    av.sgr.regionNamesLower =  ['whole dish', 'upper left', 'upper right', 'lower left', 'lower right', 'top', 'bottom', 'left', 'right']; 
+    av.sgr.regionValues =  ['WholeDish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
+
+    //region List based on 9 sections like a tic-tac-toe board
+    av.sgr.regionN3chr =   ['all', 'upL', 'upC', 'upR', 'mdL', 'mdC', 'mdR', 'loL', 'loC', 'loR'
+                          , 'lft', 'cen', 'rit', 'top', 'mid', 'bot'];
+    av.sgr.regionNcodes = ['_0_', '_1_', '_2_', '_3_', '_4_', '_5_', '_6_', '_7_', '_8_', '_9_'
+                          , '147', '258', '369', '123', '456', '789'];
+  */
+
+
+  //----------------------------------------------------------------------------------------------------------------------
+  // av.sgr = These are constants; dictionaries and arrays that might be useful to process 
+  //       // environment.cfg --> av.nut.reAct & reSrc (nutrient structure)
+  //       // av.nut.reAct & reSrc --> av.nut.uiAll & uiSub
+  //       // av.nut --> dom (actual values in the dom that the user sees)
+  //       // dom --> av.nut.uiAll & uiSub
+  //       // av.nut.uiAll & uiSub --> av.nut.reAct & reSrc
+  //       // av.nut.reAct & reSrc --> environment. 
+  //       //
+  //       // there are extra items nin av.sgr as ideas were put in before implementation and not all ideas were used
+  //       // in implementation. Eventually after all is working with at least 4 subdishes Diane will clean out extra 
+  //       // items in av.sgr
+  //----------------------------------------------------------------------------------------------------------------------
+
   av.sgr = {};   //specific to resource/reactions (sugars); mostly constants. Not all iddeas written here will be used. 
   av.sgr.oseNames = ['Notose', 'Nanose', 'Andose', 'Ornose', 'Orose', 'Antose', 'Norose', 'Xorose', 'Equose'];
   av.sgr.logEdNames = ['0not', '1nan', '2and', '3orn', '4oro', '5ant', '6nor', '7xor', '8equ'];
@@ -469,80 +545,63 @@
   //console.log('full mono colorMap length =', av.sgr.monoColormaplength, '; greyMap length =', av.color.greyMap.length
   //     , '; darkEnd =', av.sgr.darkEnd, '; sugarBackgroundShade', av.sgr.sugarBackgroundShade, '; sugarNameShade=', av.sgr.sugarNameShade);
 
-  av.sgr.react_fake = [ 'pow',   0.9,   1.0,      1,             1,     'not1',  'not',     'not1',    1   ];
-  av.sgr.react_argu = ['type', 'min', 'max', 'max_count', 'depletable', 'name', 'task', 'resource', 'value']; 
-  av.sgr.react_valED = ['pow',  0.99999,  1,           1,            0,     '',     '',  'missing',    0   ];
-                              //depletable = 1 = yes resources are eaten; 0 = no they are not eaten
-                              //type = pow always in Avida-ED
-                              //value = 1 through 5 based on number of nan gates needed to do the task. 
-                              //max_count = 1 always in Avida-ED
-                              //min will be a constant probably 0.9
-                              //max will be a constang probably 1.1
+  av.sgr.react_valED = [   '',       1,            1,  'missing',   0.0,  1.0,   '',           1,    'pow' ];
+  av.sgr.react_argu = ['name', 'value', 'depletable', 'resource', 'min', 'max', 'task', 'max_count', 'type'];   
+  av.sgr.reAct_edValu_d = {
+    'name' : '',
+    'value' : 1,
+    'depletable' : 1,
+    'resource' : 'missing',
+    'min' : 0.999, 
+    'max' : 1.0,
+    'task' : '',
+    'max_count' : 1,
+    'type' : 'pow'
+  };
+
+  av.sgr.reAct_avidaDft_d = {
+      'name' : '',       //name of reaction
+      'value' : 1,       //value = 1 through 5 based on number of nan gates needed to do the task. 
+      'depletable' : 1,  // depletable = 1 = yes resources are eaten; 0 = no they are not eaten
+      'resource' : '',  // name or resource that needs to be present for reaction. if none stated assume infinate
+      'min' : 0.0,      // min will be a constant probably 0.9
+      'max' : 1.0,      // max will be a constang probably 1.1
+      'task' : '',      // one of the logic. s
+      'max_count' : 1,  // max_count = 1 always in Avida-ED
+      'type' : 'add'    // type = pow always in Avida-ED
+  };
 
   av.sgr.resrc_argu = ['name', 'initial', 'inflow', 'outflow', 'geometry'           //geometry is always the same, not sure it belongs here
-                              ,  'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'  
-                              , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'
-                              , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'
-                              ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow' ];   //these are new for Avida-ED and not in the wiki. 
+                      , 'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'  
+                      , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'
+                      , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'
+                      ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow' ];   //these are new for Avida-ED and not in the wiki. 
+                  //belong ui part of structure not resource
+                  //, 'region', 'side', 'grdNum', 'regionCode','regionList'];  // this last row is not in the argurments for avida; used for 'multi-dish'
 
-                              //belong ui part of structure not resource
-                              //, 'region', 'side', 'grdNum', 'regionCode','regionList'];  // this last row is not in the argurments for avida; used for 'multi-dish'
-
-
-  //Avida resource Arguments that have Defaults I will probably use. If they are the default, they do not need to be in the Environment.cfg file
-  av.sgr.resrcAvidaDefaultGlobalArgu = [ 'initial', 'inflow', 'outflow', 'geometry'   
-                                       , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'];
-  av.sgr.resrcAvidaDefaultGlobalValu = [ 0, 0, 0.0, 'global', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
-
-  av.sgr.resrcAvidaDefaultGridValu =   [ 0, 0, 0.0, 'grid',  1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
-  av.sgr.resrcAvida_EDdfltGlobValu = [ 100, 0, 0.0, 'global', 0, 0, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
-
-  av.sgr.reSrcAvidaDefaultGridArguLong = [  'initial',    'inflow',   'outflow', 'geometry'   
-                                        ,  'inflowx1',  'inflowx2',  'inflowy1', 'inflowy2'    // not used when geometry = global
-                                        , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'    // not used when geometry = global
-                                        ,  'xdiffuse',  'ydiffuse',  'xgravity', 'ygravity'];
-  av.sgr.reSrcAvidaDefaultGridValuLong =  [ 0, 0, 0.0, 'global'
-                                          , 0, 0, 0, 0    //technically deterministic, but Avida-ED is using 0;
-                                          , 0, 0, 0, 0    //unset with the second parametner set equal to the first; again Avida-ED uses 0; 
-                                          , 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
-
-
-  //not in current use
-  //av.sgr.supply_argu = ['region', 'side', 'grdNum', 'regionCode','regionList'];           //each is an array for region
-
-  /************************************************************           ideas for regionLayout Names and Region Names --
-  //number of subdishis is useful, especially if we only allow one layout per number of subdishes. 
-  //geometry is always the same for all regions, but also part of the avida arguments for resource. 
-  //Different ways to discribe layout, only one desciptor needed per task; most of these are just ideas
-  av.sgr.layout3 = ['glob', 'all', 'haf', 'thr', '4th'];
-  av.sgr.layout = ['Global Dish', 'Whole Dish', 'Halves', 'ThirdsTopLeftRight', 'Quarters'];
-  av.sgr.layoutMany = ['glob', 'all', 'halfLR', 'halfTB', '3top1', '3bot1', '3lft1', '3Rit1', '3book', '3stack', '4th'];
-  //a dictionary to assign the number of regions based on possible names for region layouts in 'summary' section
-
-  av.sgr.regionDct = {};  //more can be added if needed
-  av.sgr.regionDct['all'] = 1;
-  av.sgr.regionDct['WholeDish'] = 1;
-  av.sgr.regionDct['HalvesLeftRight'] = 2;
-  av.sgr.regionDct['ThirdsTopLeftRight'] = 3;
-  av.sgr.regionDct['Quarters'] = 4;
-
-                           //region list does not work at this time. It was to create a way to fill out on the data ofr all tasks based on region. 
-                           //     I don't think we need it now. It should go away  when that part of ex1 goes away. 
-                           //name will be created from task, subdishnum or region, type and side
-                           // 
-                           // region list was used to state the index into the array of data that goes with the region in the regionlis. 
-                           // so the region lisst for quarters is [empty, 0, 1, 2, 3]
-                           // the region list for top bottom would be [empty, empty, empty, empty, empty, 0, 1]
-
-    av.sgr.regionNamesLower =  ['whole dish', 'upper left', 'upper right', 'lower left', 'lower right', 'top', 'bottom', 'left', 'right']; 
-    av.sgr.regionValues =  ['WholeDish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
-
-    //region List based on 9 sections like a tic-tac-toe board
-    av.sgr.regionN3chr =   ['all', 'upL', 'upC', 'upR', 'mdL', 'mdC', 'mdR', 'loL', 'loC', 'loR'
-                          , 'lft', 'cen', 'rit', 'top', 'mid', 'bot'];
-    av.sgr.regionNcodes = ['_0_', '_1_', '_2_', '_3_', '_4_', '_5_', '_6_', '_7_', '_8_', '_9_'
-                          , '147', '258', '369', '123', '456', '789'];
-  */
+  av.sgr.reSrc_avidaDft_d = {
+      'initial' : 0
+    , 'inflow' : 0
+    , 'outflow' : 0.0
+    , 'geometry' : 'global' // Avida-ED 'global' = global; Avida-ED 'local = grid; Avida-ED does not used torus
+    , 'inflowx1' : 0        // Actually in Avida, inflowx1 is deterministic
+    , 'inflowx2' : 0        // = inflowx1;
+    , 'inflowy1' : 0        // Actually in Avida, inflowx1 is deterministic
+    , 'inflowy2' : 0        // = inflowy1
+    , 'outflowx1' : 0    // Actually in Avida, outflowx1 is unset
+    , 'outflowx2' : 0    // = outflowx1
+    , 'outflowy1' : 0    // Actually in Avida, outflowy1 is unset
+    , 'outflowy2' : 0    // = outflowy1
+    , 'xdiffuse' : 1.0
+    , 'ydiffuse' : 1.0
+    , 'xgravity' : 0.0
+    , 'ygravity' : 0.0
+    , 'boxflag' : false  //box is new for Avida-ED and only in defined within Avida-ED no not in the wiki at https://github.com/devosoft/avida/wiki/Environment-file
+    , 'boxx' : 0
+    , 'boxy' : 0 
+    , 'boxcol' : 0
+    , 'boxrow' : 0
+};
 
   //Region Layout in use as of 2019 Dec
 
@@ -596,6 +655,7 @@
                           , 'regionCode', 'regionName', 'boxed' , 'subRegion'];  //subRegion is not in Dom, so it is at the end; boxed has not been added to the dom yet
                          //regionName should probably be in the dom, but it is not right now with only one region. 
   av.sgr.nut = {}; 
+  //------------------------------------------------------------------------------------------- av.sgr.makeNutDefault --
   av.sgr.makeNutDefault = function () {
     av.sgr.nut.wrldCols = 30;
     av.sgr.nut.wrldRows = 30;
@@ -627,15 +687,15 @@
     //defaults for items that describe the whole dish
     av.sgr.nut.dft.uiAll.geometry = 'Global';        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
     av.sgr.nut.dft.uiAll.supplyType = 'Infinite';    //this is only for whem ui.geometry = global
-    av.sgr.nut.dft.uiAll.regionLayout = 'Whole Dish';  //only whole dish for now
-    av.sgr.nut.dft.uiAll.regionsNumOf = 1;   // whole dishß
+    av.sgr.nut.dft.uiAll.regionLayout = '0All';  //only Whole Dish for now; '1All' is the code for 'Whole Dish';
+    av.sgr.nut.dft.uiAll.regionsNumOf = 1;   // whole dish = there is only one dish 
     av.sgr.nut.dft.uiAll.initial = 1000;      //only whem ui.geometry = local and  supplyType = 'finite' 
 
     //defaults for subtasks which must be Grid or Local
     av.sgr.nut.dft.uiSub.supplyType = 'Infinite';  // Infinite default from Avida-ED 3: I think Should change to Finite
     av.sgr.nut.dft.uiSub.initialHi = 1000;  //sugar units/cell guess at an initial value when supplyType='finite'; need to multiply by wrldSize
     av.sgr.nut.dft.uiSub.inflowHi  = 100;   //sugar units/cell guess at an initial value when supplyType='equilibrium'; need to multiply by wrldSize
-    av.sgr.nut.dft.uiSub.outflowHi = 0.1;  //sugar units (fraction) guess at an initial value when supplyType='equilibrium';
+    av.sgr.nut.dft.uiSub.outflowHi = 0.1;   //sugar units (fraction) guess at an initial value when supplyType='equilibrium';
     av.sgr.nut.dft.uiSub.diffuseCheck = false;    //false = default;  else true.      
     //from event file
     av.sgr.nut.dft.uiSub.periodCheck = false;    //false = default;  else true.
@@ -652,6 +712,7 @@
     av.sgr.nut.dft.uiSub.boxed = true;           //true keeps resources in their subdish; false allows them to flow into the rest of the dish
     av.sgr.nut.dft.uiSub.subRegion = 1;    // this goes with 'all' = regionLayoutName (or 1234 could be used) or 'WholeDish'; tiba check this more than on region allowed
   };
+  //---------------------------------------------------------------------------------------end av.sgr.makeNutDefault --
   av.sgr.makeNutDefault();
   console.log('av.sgr.nut =', av.sgr.nut);   //or should there just be a 'dft' task and only ever one region?
  
@@ -664,7 +725,7 @@
                 // the dom elelment tsk#regionLayout.value will determine number and labels for the subsections. 
                 // When more subdishes are implemented, an array or dictionary will be defined for each of the tsk#regionLayout values. 
                  
-  //------------------------------------------------------------------------------------------- av.fzr.clearEnvironment --
+  //----------------------------------------------------------------------------------------- av.fzr.clearEnvironment --
   // used to create several structures used in defining parameters for the environment.cfg file
   av.fzr.clearEnvironment = function(from) {
     //console.log(from + ' called av.fzr.clearEnvironment');
@@ -708,7 +769,7 @@
       // These should be in arrays or dictionaries so that they always match with av.sgr.nut.dft.uiAll - tiba fix later
       av.nut[tsk].uiAll.geometry = 'Global';        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
       av.nut[tsk].uiAll.supplyType = 'Infinite';    //this is only for whem ui.geometry = global
-      av.nut[tsk].uiAll.regionLayout = 'Whole Dish';  //only whole dish for now
+      av.nut[tsk].uiAll.regionLayout = '1All';  //only whole dish for now
       av.nut[tsk].uiAll.regionsNumOf = 1;   // whole dishß
       av.nut[tsk].uiAll.initial = 1000;      //only whem ui.geometry = local and  supplyType = 'finite' 
 
@@ -767,6 +828,7 @@
     //console.log('av.fzr.env=', av.fzr.env);
    //----------------------------------------------------------------------------- end of av.fzr.env section in globals --
   };
+  //------------------------------------------------------------------------------------- end av.fzr.clearEnvironment --
 
   //------------------------------------------------------------------------------------------- av.sgr.processHideFlags --
   //Flags for fields not yet implemented. 

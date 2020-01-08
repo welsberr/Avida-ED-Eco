@@ -1,0 +1,56 @@
+
+Avida-core requires a number of modifications to work with multi-dishes to add concepts of boxed regions.  The implementation of these regions is called a cellbox.  It has the following members and methods:
+
+	int xx
+	int yy
+	int height
+	int width
+	
+	bool InCellBox(cell_id, WORLD_X, WORLD_Y)
+	bool GetRandomCell(AvidaContext&)
+
+A cellbox will need to be applied independently (for implementation ease) in the following areas:
+- Environment Reactions
+- - Reactions must be localized to individual regions in order for infinite resource configuration files to be used in a multi-dish setup.
+- - These restrictions are controlled by reaction the cReactionRequisite class and associated methods.  They are imposed in cEnvironment::TestRequisites
+- - Reactions must still be renamed upon loading
+- - Cellbox restrictions must be imposed upon loading
+
+Environment Spatial Resources
+- - For spatial resources that are not configured by the CELL method (GRID, TORUS), we will need to alter the process that initializes the resource accounting system as well as the behavior of the flow methods.
+- - Resource accounting is controlled by cResourceCount and a specialized class for spatial resources cSpatialResCount.  The latter is where the resource grids are created as a torus and then severed for GRID resources.
+- - For cellbox-localized resources, the idea is that any cell that is not at the boundary of the cellbox will still be completely connected to its neighbors.  Any cell at the boundary will not be connected to a cell outside the boundary.  Any cell not next to a cell within the cell box will not be connected to anything to minimize any errors and perhaps speed up the code by skipping the processing of regions in which the resource cannot flow (also avoiding problems possibly).
+- - At the moment cSpatialResCount::SetPointers (where the grid is created) is called twice:
+- - - Trace 2
+- - - - cSpatialResCount::SetPointers()
+- - - - cSpatialResCount::ResizeClear(x,y,geom)
+- - - - cResourceCount::ResizeSpatialGrids(x,y)
+- - - - cPopulation::SetupCellGrid()
+- - - - cPopulation::cPopulation(cWorld*)
+- - - - cWorld::setup(...)
+- - - - cWorld::Initialize(...)
+- - - Trace 2
+- - - - cSpatialResCount::SetPointers()
+- - - - cSpatialResourceCount::Setup(...)  #Nightmare function
+- - - - cPopulation::SetupCellGrid()
+- - - - cPopulation::cPopulation(cWorld*)
+- - - - cWorld::setup(...)
+- - - - cWorld::Initialize(...)
+- - - - Main
+- - Why is SetPointers called twice?
+- - - This appears to be an artifact of deme-resource configuration needing the cell-size to be set before its setup process.
+- - - Altering cSpatialResCount::ResizeClear to not call SetPointers doesn’t seem to affect any regression tests.  Indeed, cSpatialResCount::Setup calls it later via Trace 2.
+- - - We can rid ourselves of the first call with no problem it seems.
+- - Refactoring
+- - - We should consider creating a virtual base ResourceSetup class and child classes that implement these functions because the setup is nuts.
+- - - We will have to inform SetPointers about how to set the boundary conditions
+
+
+- Environment Gradient Resources (not planned)
+- - This might be cheap to add later.
+
+- Population / Configuration
+- - Mutation rates and organism placement rely upon AvidaConfig, which is currently global.  As such, multiple configuration files may be stored in a list of AvidaConfig objects, each associated with a cellbox.  We would store this in cPopulation.  All AvidaED objects in a multidish will need to be aware of this.
+- Should probably consider a GetCellboxConfig(cell_id) method to return the appropriate AvidaConfig object
+
+from: https://docs.google.com/document/d/1MAvNb6KpN8lXOXTfxOiW0xqsKRwVwwM08ikushEaPaQ/edit?ts=5a3980aa

@@ -65,7 +65,6 @@
 //---------------------------------------------------------------------------------------------------------- Problems --
 //  I think I fixed this: Did not put value for pauseAt in when it read PauseAt.txt as part of testConfig
 //  
-//  Need to scale from initial per dish to initial per cell going from environment.cfg to dom
 //  
 //  Oraganism Page -------
 //  

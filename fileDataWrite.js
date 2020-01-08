@@ -128,10 +128,10 @@
 
   /*---------------------------------------------------------------------------------- end of av.fwt.makeFzrAvidaTest --*/
 
-  /*-------------------------------------------------------------------------------------- av.fwt.form2NutrientStruct --*/
+  /*-------------------------------------------------------------------------------------- av.fwt.dom2NutrientStruct --*/
 
-  av.fwt.form2NutrientStruct = function (from) {
-    av.fzr.clearEnvironment('av.fwt.form2NutrientStruct');
+  av.fwt.dom2NutrientStruct = function (from) {
+    av.fzr.clearEnvironment('av.fwt.dom2NutrientStruct');
 
     //------ assign ui parameters first --
     var tsk; //name of a task with 3 letters
@@ -146,6 +146,7 @@
     var uisubDishLen = av.sgr.ui_subDish_argu.length;
 
     var react_arguLen = av.sgr.react_argu.length;
+    console.log(from,'called av.fwt.dom2NutrientStruct: react_arguLen=',react_arguLen);
 
     for (var ii=0; ii< logiclen; ii++) {      //9
       numtsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
@@ -160,15 +161,15 @@
         //console.log('av.nut['+numtsk+'].uiAll['+arguDom+']=');
         //console.log(av.nut[numtsk].uiAll[arguDom]);
       };
-      console.log('av.nut['+numtsk+'].uiAll.regionsNumOf', av.nut[numtsk].uiAll.regionsNumOf);
-      av.nut[numtsk].uiAll.regionsNumOf = av.nut[numtsk].uiAll.regionLayout[1];
+      //console.log('av.nut['+numtsk+'].uiAll=',av.nut[numtsk].uiAll);
+      av.nut[numtsk].uiAll.regionsNumOf = av.nut[numtsk].uiAll.regionLayout[0];
 
-      console.log('av.nut['+numtsk+'].uiAll.regionsNumOf', av.nut[numtsk].uiAll.regionsNumOf, '; rName=', av.nut[numtsk].uiAll.regionLayout);
-     //  will need to go through a list of names later so maybe I should make the dictionary
-     //  
-     //  
+      //console.log('av.nut['+numtsk+'].uiAll.regionsNumOf=', av.nut[numtsk].uiAll.regionsNumOf, '; rName=', av.nut[numtsk].uiAll.regionLayout);
+      // will need to go through a list of names later so maybe I should make the dictionary
+       
+       
       //start on the potential subdishes next (but only 1 for now). 
-      console.log('SubDishes Now -----------------uisubDom length=', uisubDomLen);
+      //console.log('SubDishes Now -----------------uisubDom length=', uisubDomLen);
       for (kk=1; kk <= av.nut[numtsk].uiAll.regionsNumOf; kk++) {
         av.nut[numtsk].uiSub.subRegion[kk] = kk;      //not sure this is needed or make sense. needs work when get past one reagion
         for (jj=0; jj< uisubDomLen; jj++) {
@@ -184,10 +185,23 @@
         av.nut[numtsk].uiSub.regionCode[kk] = '00';
         av.nut[numtsk].uiSub.regionName[kk] = 'WholeDish';
 
+        
         //now use what is in uiAll and uiSub to make resource and reaction fields
+        // Start with default Avida-ED values for reactoins. 
+        /*
         for (var ll = 0; ll < react_arguLen; ll++) {
           av.nut[numtsk].react[ av.sgr.react_argu[ll] ][kk] = av.sgr.react_valED[ll];
         }
+        var tmp = av.nut[numtsk].react;
+        console.log('numtsk =', numtsk,';  av.nut[numtsk].react=', tmp);
+        */       
+       
+        // Start with default Avida-ED values for reactoins. re-writen with dictionary. 
+        for (var ll = 0; ll < react_arguLen; ll++) {
+          av.nut[numtsk].react[ av.sgr.react_argu[ll] ][kk] = av.sgr.reAct_edValu_d[av.sgr.react_argu[ll]];
+        }
+        //console.log('numtsk =', numtsk,';  av.nut[numtsk].react=', av.nut[numtsk].react);
+        
         if ('global' == av.nut[numtsk].uiAll.geometry.toLowerCase() ) {
           //av.nut[numtsk].uiSub.regionCode[kk] = '00';          should these exist in av.nut[numttsk].uiAll ??
           //av.nut[numtsk].uiSub.regionName[kk] = 'WholeDish';
@@ -229,12 +243,22 @@
       };   //end for kk   
 
     };  //end for ii
-    console.log('----------------------------------------------End of av.fwt.form2NutrientStruct, when called by ', from);
-    console.log(from, 'called av.fwt.form2NutrientStruct - at end: av.nut=', av.nut);
+    console.log('----------------------------------------------End of av.fwt.dom2NutrientStruct, when called by ', from);
+    console.log(from, 'called av.fwt.dom2NutrientStruct - at end: av.nut=', av.nut);
   };
-  /*------------------------------------------------------------------------------- End of av.fwt.form2NutrientStruct --*/
+  //-------------------------------------------------------------------------------- End of av.fwt.dom2NutrientStruct --
 
-  /*----------------------------------------------------------------------------------------- av.fwt.form2NutrientTxt --*/
+  //------------------------------------------------------------------------------- av.fwt.NutStruct2environment_cfg  --
+  av.fwt.NutStruct2environment_cfg = function (idStr, toActiveConfigFlag, from) {
+    
+  };
+  //--------------------------------------------------------------------------- end av.fwt.NutStruct2environment_cfg  --
+
+
+
+
+  // the function av.fwt.form2NutrientTxt needs to be replaced with av.fwt.NutStruct2environment_cfg
+  //----------------------------------------------------------------------------------------- av.fwt.form2NutrientTxt --
   av.fwt.form2NutrientTxt = function (idStr, toActiveConfigFlag, from) {
     console.log(from + ' called av.fwt.form2NutrientTxt');
     var geometry = 'Global';
@@ -270,7 +294,7 @@
       if ('global' == geometry.toLowerCase()) {
         regionName = 'Whole Dish';           //alway the case for global.
         region_ndx = av.sgr.regionCodes.indexOf(regionName);
-        regionCode = '00';
+        regionCode = '00';        //will need to find later based subdish+regionName
         rname = tsk + regionCode;
         supplyType = document.getElementById(tsk+'0supplyType').value.toLowerCase();
         //console.log('regionCode=', regionCode, '; regionName=', regionName, '; rname=', rname, '; suppplyType=', supplyType);      
@@ -326,7 +350,7 @@
   av.fwt.makeFzrEnvironmentCfg = function (idStr, toActiveConfigFlag, from) {
     'use strict';
     if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrEnvironmentCfg; idStr=', idStr);
-    av.fwt.form2NutrientStruct('av.fwt.makeFzrEnvironmentCfg');
+    av.fwt.dom2NutrientStruct('av.fwt.makeFzrEnvironmentCfg');
 
     //will change to av.fwt.nutStruct2Nuttxt later;
     av.fwt.form2NutrientTxt(idStr, toActiveConfigFlag, 'av.fwt.makeFzrEnvironmentCfg');  
