@@ -31,16 +31,17 @@
   av.debug.mouse = false;  //av.debug statements about non-dojo drag and drop
   av.debug.msg = false;  //messages to and from avida
   av.debug.popCon = false;  //population Controls
-  av.debug.root = false;  //statements that look for failiers when the code executes outside of functions
   av.debug.trace = false;  //organism page
   av.debug.uil = false; //user interface layout.
   av.debug.userMsg = false; //debug of user messages.
+  //av.dbg.flg.root
 
   av.dbg = {};
   av.dbg.flg = {}; 
   av.dbg.flg.frd = false;  //reading file text strings
   av.dbg.flg.nut = true;  //processing nustrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
   av.dbg.flg.plt = false;  //both popChart and analysis
+  av.dbg.flg.root = true;  //statements that look for failiers when the code executes outside of functions
 
   av.debug.usr = ''; //working on log for user actions.
 
@@ -379,7 +380,7 @@
   //----------------------------------------------------------------------------------------------------------------------
 
   //console.log('window.navigator',window.navigator);
-  if (av.debug.root) { 
+  if (av.dbg.flg.root) { 
     console.log('Root: brs', av.brs);
     console.log('Root: browser info: window.navigator.userAgent=', window.navigator.userAgent);
   }

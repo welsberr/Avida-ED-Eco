@@ -1,7 +1,7 @@
   //write file data
   var av = av || {};  //incase av already exists
 
-  // if (av.debug.root) { console.log('Root: before av.fwt.deleteFzrFile'); }
+  if (av.dbg.flg.root) { console.log('Root: before av.fwt.deleteFzrFile'); }
   av.fwt.deleteFzrFile = function (fileId) {
     'use strict';
     try { delete av.fzr.file[fileId];}
@@ -58,7 +58,7 @@
     av.fwt.makeFzrFile(idStr+'/events.cfg', txt, 'av.fwt.makeFzrEventsCfgWorld');
   };
 
-  /*---------------------------------------------------------------------------------------- av.fwt.makeFzrPauseRunAt --*/
+  //---------------------------------------------------------------------------------------- av.fwt.makeFzrPauseRunAt --
 
   av.fwt.makeFzrPauseRunAt = function (idStr, from) {
     'use strict';
@@ -100,7 +100,7 @@
     else {av.fwt.makeFzrFile(idStr+'/avida.cfg', txt, 'av.fwt.makeFzrAvidaCfg');}
   };
 
-  /*----------------------------------------------------------------------------------------- av.fwt.makeFzrAvidaTest --*/
+  //----------------------------------------------------------------------------------------- av.fwt.makeFzrAvidaTest --
   av.fwt.makeFzrAvidaTest = function (idStr, toActiveConfigFlag, from) {
     'use strict';
     if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrAvidaTest', '; col, row = ', av.dom.sizeCols.value, av.dom.sizeRows.value);
@@ -126,9 +126,9 @@
     else {av.fwt.makeFzrFile(idStr+'/avida.cfg', txt, 'av.fwt.makeFzrAvidaTest');}
   };
 
-  /*---------------------------------------------------------------------------------- end of av.fwt.makeFzrAvidaTest --*/
+  //---------------------------------------------------------------------------------- end of av.fwt.makeFzrAvidaTest --
 
-  /*-------------------------------------------------------------------------------------- av.fwt.dom2NutrientStruct --*/
+  //-------------------------------------------------------------------------------------- av.fwt.dom2NutrientStruct --
 
   av.fwt.dom2NutrientStruct = function (from) {
     av.fzr.clearEnvironment('av.fwt.dom2NutrientStruct');
@@ -254,13 +254,10 @@
   };
   //--------------------------------------------------------------------------- end av.fwt.NutStruct2environment_cfg  --
 
-
-
-
-  // the function av.fwt.form2NutrientTxt needs to be replaced with av.fwt.NutStruct2environment_cfg
-  //----------------------------------------------------------------------------------------- av.fwt.form2NutrientTxt --
-  av.fwt.form2NutrientTxt = function (idStr, toActiveConfigFlag, from) {
-    console.log(from + ' called av.fwt.form2NutrientTxt');
+  // the function av.fwt.dom2environment_cfg needs to be replaced with av.fwt.NutStruct2environment_cfg
+  //-------------------------------------------------------------------------------------- av.fwt.dom2environment_cfg --
+  av.fwt.dom2environment_cfg = function (idStr, toActiveConfigFlag, from) {
+    console.log(from + ' called av.fwt.dom2environment_cfg');
     var geometry = 'Global';
     var supplyType = 'Infinite';
     var ndx = 1;           // only using the first subsection for now
@@ -340,23 +337,23 @@
     }// end of loop to go thru all the logic functions. 
     console.log('very tired: av.nut=',av.nut);
     console.log('av.fzr=', av.fzr);
-  //  if ('cfg'==idStr) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');  // 
-    if (toActiveConfigFlag) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');  // 
-    else {av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.form2NutrientTxt');}
+  //  if ('cfg'==idStr) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.dom2environment_cfg');  // 
+    if (toActiveConfigFlag) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.dom2environment_cfg');  // 
+    else {av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.dom2environment_cfg');}
   };
-  /*---------------------------------------------------------------------------------- End of av.fwt.form2NutrientTxt --*/
+  //------------------------------------------------------------------------------- End of av.fwt.dom2environment_cfg --
 
-  /*------------------------------------------------------------------------------------ av.fwt.makeFzrEnvironmentCfg --*/
+  //------------------------------------------------------------------------------------ av.fwt.makeFzrEnvironmentCfg --
   av.fwt.makeFzrEnvironmentCfg = function (idStr, toActiveConfigFlag, from) {
     'use strict';
     if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrEnvironmentCfg; idStr=', idStr);
     av.fwt.dom2NutrientStruct('av.fwt.makeFzrEnvironmentCfg');
 
     //will change to av.fwt.nutStruct2Nuttxt later;
-    av.fwt.form2NutrientTxt(idStr, toActiveConfigFlag, 'av.fwt.makeFzrEnvironmentCfg');  
+    av.fwt.dom2environment_cfg(idStr, toActiveConfigFlag, 'av.fwt.makeFzrEnvironmentCfg');  
   };
 
-  /*--------------------------------------------------------------------------------- av.fwt.makeFzrOldEnvironmentCfg --*/
+  //--------------------------------------------------------------------------------- av.fwt.makeFzrOldEnvironmentCfg --
   av.fwt.makeFzrOldEnvironmentCfg = function (idStr, from) {
     'use strict';
     console.log(from, ' called av.fwt.makeFzrOldEnvironmentCfg *************************************************');
@@ -374,7 +371,7 @@
     else  { av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.makeFzrOldEnvironmentCfg');}
   };
 
-  /*----------------------------------------------------------------------------------- av.fwt.makeFzrEnvironmentTest --*/
+  //----------------------------------------------------------------------------------- av.fwt.makeFzrEnvironmentTest --
   av.fwt.makeFzrEnvironmentTest = function (idStr, from) {
     'use strict';
     if (av.debug.fio) console.log(from, 'called av.fwt.makeFzrEnvironmentTest');
@@ -385,7 +382,7 @@
     else  { av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.makeFzrEnvironmentTest');}
   };
 
-  /*-------------------------------------------------------------------------------------- av.fwt.makeFzrAncestorAuto --*/
+  //-------------------------------------------------------------------------------------- av.fwt.makeFzrAncestorAuto --
 
   av.fwt.makeFzrAncestorAuto = function (idStr, toActiveConfigFlag, from) {
     'use strict';
@@ -401,7 +398,7 @@
     else {av.fwt.makeFzrFile(idStr+'/ancestors.txt', txt), 'av.fwt.makeFzrAncestorAuto';}
   };
 
-  /*-------------------------------------------------------------------------------------- av.fwt.makeFzrAncestorHand --*/
+  //-------------------------------------------------------------------------------------- av.fwt.makeFzrAncestorHand --
   av.fwt.makeFzrAncestorHand = function (idStr, toActiveConfigFlag, from) {
     'use strict';
     //if (av.debug.fio) 
@@ -417,7 +414,7 @@
     else {av.fwt.makeFzrFile(idStr+'/ancestors_manual.txt', txt, 'av.fwt.makeFzrAncestorHand');}
   };
 
-  /*-------------------------------------------------------------------------------------------- av.fwt.makeFzrTRfile --*/
+  //-------------------------------------------------------------------------------------------- av.fwt.makeFzrTRfile --
   av.fwt.makeFzrTRfile = function (path, data) {
     var text = '';
     var pairs = [];
@@ -431,7 +428,7 @@
   };
 
   //Never called as of 2019 Oct 2; Delete??
-  /*-------------------------------------------------------------------------------------- av.fwt.makeFzrTimeRecorder --*/
+  //-------------------------------------------------------------------------------------- av.fwt.makeFzrTimeRecorder --
   av.fwt.makeFzrTimeRecorder = function (fname, data) {
     var text='';
     var lngth = data.length-1;
@@ -444,7 +441,7 @@
     av.fwt.makeFzrTRfile(fname, text, 'av.fwt.makeFzrTimeRecorder');
   };
 
-  // --------------------------------------------------- called by other files -------------------------------------------
+  // --------------------------------------------------- called by other files -----------------------------------------
   //Setup to active folder just before sending to avida
   av.fwt.form2cfgFolder = function() {
     'use strict';
@@ -456,7 +453,7 @@
   };
 
   //test setup to active folder just before sending to avida
-  /*------------------------------------------------------------------------------------------ av.fwt.testForm2folder --*/
+  //------------------------------------------------------------------------------------------ av.fwt.testForm2folder --
   av.fwt.testForm2folder = function() {
     'use strict';
     var toActiveConfigFlag = true; // true is to Config spot for experiment; false is to Freezer
@@ -467,7 +464,7 @@
   };
 
   //making a freezer file not an active file
-  /*-------------------------------------------------------------------------------------------- av.fwt.makeFzrConfig --*/
+  //-------------------------------------------------------------------------------------------- av.fwt.makeFzrConfig --
   av.fwt.makeFzrConfig = function (num, from) {
     'use strict';
     console.log(from, 'called av.fwt.makeFzrConfig');
@@ -485,7 +482,7 @@
     av.fwt.makeFzrPauseRunAt('c'+num, 'av.fwt.makeFzrConfig');
   };
 
-  /*--------------------------------------------------------------------------------------------- av.fwt.makeFzrWorld --*/
+  //--------------------------------------------------------------------------------------------- av.fwt.makeFzrWorld --
   av.fwt.makeFzrWorld = function (num, from) {
     'use strict';
      var toActiveConfigFlag = false; // true is to Config spot for experiment; false is to Freezer
@@ -508,7 +505,7 @@
     av.fwt.makeFzrCSV('w'+num);
   };
 
-  /*---------------------------------------------------------------------------------------------- av.fwt.popExpWrite --*/
+  //---------------------------------------------------------------------------------------------- av.fwt.popExpWrite --
   av.fwt.popExpWrite = function (msg) {
     'use strict';
     //console.log('exportExpr', msg);
@@ -530,7 +527,7 @@
     //console.log('fzr', av.fzr.file);
   };
 
-  /*------------------------------------------------------------------------------------------ av.fwt.removeFzrConfig --*/
+  //------------------------------------------------------------------------------------------ av.fwt.removeFzrConfig --
   av.fwt.removeFzrConfig = function(dir) {
     'use strict';
     av.fwt.deleteFzrFile(dir+'/ancestors.txt');
@@ -545,7 +542,7 @@
     delete av.fzr.dir[domid];
   };
 
-  /*------------------------------------------------------------------------------------------ av.fwt.removeFzrGenome --*/
+  //------------------------------------------------------------------------------------------ av.fwt.removeFzrGenome --
   av.fwt.removeFzrGenome = function (dir) {
     'use strict';
     av.fwt.deleteFzrFile(dir+'/entryname.txt');
@@ -556,7 +553,7 @@
     //console.log('after remove genome: dir', dir, '; av.fzr', av.fzr);
   };
 
-  /*------------------------------------------------------------------------------------------- av.fwt.removeFzrWorld --*/
+  //------------------------------------------------------------------------------------------- av.fwt.removeFzrWorld --
   av.fwt.removeFzrWorld = function (dir) {
     'use strict';
     av.fwt.deleteFzrFile(dir+'/ancestors.txt');
@@ -574,7 +571,7 @@
     //av.fwt.deleteFzrFile(dir+'/');
   };
 
-  /*-------------------------------------------------------------------------------------------- av.fwt.removeFzrItem --*/
+  //-------------------------------------------------------------------------------------------- av.fwt.removeFzrItem --
   av.fwt.removeFzrItem = function(dir, type){
     'use strict';
     //console.log('dir', dir, '; type', type, '; dir0', dir[0]);
@@ -591,7 +588,7 @@
     };
   };
 
-  /*----------------------------------------------------------------------------------------------- av.fwt.makeFzrCSV --*/
+  //----------------------------------------------------------------------------------------------- av.fwt.makeFzrCSV --
   av.fwt.makeFzrCSV = function(idStr) {
     "use strict";
     console.log('name is ', idStr + '/entryname.txt');
@@ -605,15 +602,15 @@
 
   };
 
-  /*------------------------------------------------------------------------------------------ av.fwt.writeCurrentCSV --*/
+  //------------------------------------------------------------------------------------------ av.fwt.writeCurrentCSV --
   av.fwt.writeCurrentCSV = function(idStr) {  
     "use strict";
     av.fwt.makeCSV(idStr);
     av.fio.fzSaveCsvfn();
   };
 
-  // if (av.debug.root) { console.log('Root: before av.fwt.makeCSV'); }
-  /*-------------------------------------------------------------------------------------------------- av.fwt.makeCSV --*/
+  if (av.dbg.flg.root) { console.log('Root: before av.fwt.makeCSV'); }
+  //-------------------------------------------------------------------------------------------------- av.fwt.makeCSV --
   av.fwt.makeCSV = function(fileNm) {
     'use strict';
     if ('populationBlock' === av.ui.page) {
@@ -707,7 +704,7 @@
     }
     //console.log(av.fwt.csvStrg);
   };
-  /*------------------------------------------------------------------------------------------- End of av.fwt.makeCSV --*/
+  //------------------------------------------------------------------------------------------- End of av.fwt.makeCSV --
 
 
   /***********************************************************************************************************************

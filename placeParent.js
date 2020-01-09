@@ -3,7 +3,7 @@
   var dojo = dojo || {};  //incase av already exists
   var dijit = dijit || {};  //incase av already exists
 
-  // if (av.debug.root) { console.log('Root: before av.parents.placeAncestors'); }
+  if (av.dbg.flg.root) { console.log('Root: before av.parents.placeAncestors'); }
   //---------- set Ancestors ------------------/
   av.parents.placeAncestors = function () {
     var cols = av.grd.setupCols;
@@ -480,7 +480,7 @@
     return Math.exp(val) /(1.0 + Math.exp(val));
   }
 
-  // if (av.debug.root) { console.log('Root: before drawArc1'); }
+  if (av.dbg.flg.root) { console.log('Root: before drawArc1'); }
   //Draw arc using quadraticCurve and 1 control point http://www.w3schools.com/tags/canvas_quadraticcurveto.asp
   function drawArc1(gen, spot1, spot2, rep){
     var xx1, yy1, xx2, yy2, xxc, yyc;
