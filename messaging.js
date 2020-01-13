@@ -1,7 +1,7 @@
   var av = av || {};  //incase av already exists
   var dijit = dijit || {};  //to let file know dijit is defined
 
-  if (av.dbg.flg.root) { console.log('Root: before av.msg.readMsg'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.msg.readMsg'); }
   av.msg.readMsg = function (ee) {
     'use strict';
 
@@ -667,15 +667,15 @@
       av.pch.aveVia[msg.update] = msg.viables;
       av.pch.xx[msg.update] = msg.update;
 
-      //console.log('av.parents.name.length = ',av.parents.name.length);
+      //console.log('av.parents.name.length = ',av.parents.name.length, '; av.pch.numDads=', av.pch.numDads);
       for (var ii = 0; ii<av.pch.numDads; ii++) {
-        console.log('msg.by_clade[av.parents.name[ii]]=',msg.by_clade[av.parents.name[ii]]);
-        console.log('msg.by_clade['+av.parents.name[ii]+'].fitness=', msg.by_clade[av.parents.name[ii]].fitness);
+        //console.log('ii='+ii,'; msg.by_clade[av.parents.name[ii]]=',msg.by_clade[av.parents.name[ii]], '; av.parents.name[ii]=', av.parents.name[ii]);
         if (undefined != msg.by_clade[av.parents.name[ii]]) {
-          console.log('ii=',ii,'; msg.update=', msg.update);
-          console.log('av.pch.dadFit=', av.pch.dadFit);
-          console.log('av.parents.name', av.parents.name);
-          console.log('msg.by_clade=', msg.by_clade);
+          //console.log('ii='+ii,'; msg.by_clade['+av.parents.name[ii]+'].fitness=', msg.by_clade[av.parents.name[ii]].fitness);
+          //console.log('ii=',ii,'; msg.update=', msg.update);
+          //console.log('av.pch.dadFit=', av.pch.dadFit);
+          //console.log('av.parents.name', av.parents.name);
+          //console.log('msg.by_clade=', msg.by_clade);
           av.pch.dadFit[av.parents.name[ii]][msg.update] = msg.by_clade[av.parents.name[ii]].fitness;
           av.pch.dadCst[av.parents.name[ii]][msg.update] = msg.by_clade[av.parents.name[ii]].gestation;
           av.pch.dadEar[av.parents.name[ii]][msg.update] = msg.by_clade[av.parents.name[ii]].metabolism;
@@ -895,7 +895,7 @@
     }
   };
 
-  if (av.dbg.flg.root) { console.log('Root: before av.msg.fillColorBlock'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.msg.fillColorBlock'); }
   av.msg.fillColorBlock = function (msg) {  //Draw the color block
       'use strict';
       if (av.debug.msg) console.log('in fillColorBlock');

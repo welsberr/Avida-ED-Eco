@@ -1,6 +1,6 @@
   var av = av || {};  //incase av already exists
 
-  if (av.dbg.flg.root) { console.log('Root: before av.mouse.downOrganCanvasFn'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.mouse.downOrganCanvasFn'); }
   av.mouse.downOrganCanvasFn = function(evt) {
     av.mouse.DnOrganPos = [evt.offsetX, evt.offsetY];
     av.mouse.Dn = true;
@@ -89,7 +89,7 @@
     }
   };
 
-  if (av.dbg.flg.root) { console.log('Root: before av.mouse.downGridCanvasFn'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.mouse.downGridCanvasFn'); }
   av.mouse.downGridCanvasFn = function (evt) {
     av.mouse.DnGridPos = [evt.offsetX, evt.offsetY];
     av.mouse.Dn = true;

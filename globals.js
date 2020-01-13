@@ -34,7 +34,7 @@
   av.debug.trace = false;  //organism page
   av.debug.uil = false; //user interface layout.
   av.debug.userMsg = false; //debug of user messages.
-  //av.dbg.flg.root
+  //av.debug. root = false;  //statements that look for failiers when the code executes outside of functions
 
   av.dbg = {};
   av.dbg.flg = {}; 
@@ -102,7 +102,7 @@
     , 'organCanvas'
     , 'activeOrgan'
     , 'actOrgImg'
-    , 'activeOrgImg'
+//    , 'activeOrgImg'
   ];
 
   av.mouse.dndTarget = ['organIcon'

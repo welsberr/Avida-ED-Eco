@@ -8,7 +8,7 @@ var dojo = dojo || {};
 
 //http://stackoverflow.com/questions/1134572/dojo-is-there-an-event-after-drag-drop-finished
 //Puts the contents of the source in a object (list) called items.
-//if (av.dbg.flg.root) { console.log('Root: before av.dnd.getAllItems'); }
+// if (av.dbg.flg.root) { console.log('Root: before av.dnd.getAllItems'); }
 
 //============================================================================================ Drag n Drog Unilities ===
 
@@ -1509,7 +1509,7 @@ av.dnd.landpopDish2 = function (dnd, source, nodes, target) {
 // ****************************************************************************************************************** */
 //used to re-name freezer items after they are created
 //http://jsfiddle.net/bEurr/10/
-//if (av.dbg.flg.root) { console.log('Root: before av.dnd.contextMenu'); }
+// if (av.dbg.flg.root) { console.log('Root: before av.dnd.contextMenu'); }
 av.dnd.contextMenu = function(target, fzItemID, from) {
   'use strict';
   var fzSection = target.node.id;

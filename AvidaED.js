@@ -1,5 +1,7 @@
 
-if (av.dbg.flg.root) { console.log('Root: AvidaED.js at beginning of file'); }
+ // if (av.dbg.flg.root) { console.log('Root: AvidaED.js at beginning of file on 2020_0111 @ 20:21'); }
+ if (true) { console.log('Root: AvidaED.js at beginning of file on 2020_0111 @ 20:21'); }
+
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
@@ -65,15 +67,17 @@ if (av.dbg.flg.root) { console.log('Root: AvidaED.js at beginning of file'); }
 //---------------------------------------------------------------------------------------------------------- Problems --
 //  I think I fixed this: Did not put value for pauseAt in when it read PauseAt.txt as part of testConfig
 //  
-//  Populaton Page -------
+//  Population Page -------
 //  
-//  The change all Supply Types does not work when changing tsk0supplyType.value to 'Debug'
+//  Need to draw plot when open Stats from Setup page
+//  the avidaDataRecorder.csv does not export correctly, but is created correctly when the population is frozen
 //  
 //  Oraganism Page -------
 //  
-//  canvases for bit patterns do not work.
+//  Fixed: canvases for bit patterns do not work.
+//  Fixed:Crashed when I tried to drag icon for offspring organism off the canvas
+//  
 //  need to line up actual slide with canvas image of the slide scalex
-//  Crashed when I tried to drag icon for offspring organism off the canvas
 //  
 //  Looking at loading default files and perhaps we need to add default values for finite when finite is selected even 
 //  there is no finite in the config file. 
@@ -84,14 +88,13 @@ if (av.dbg.flg.root) { console.log('Root: AvidaED.js at beginning of file'); }
 //  
 //  fix color and data select/item buttons on Analysis page
 //
-//  the avidaDataRecorder.csv does not export correctly, but is created correctly when the population is frozen
 //  
 //  
 //
 //----------------------------------------------------------------------------------------------------------------------
 // 
 
-//if (av.dbg.flg.root) { console.log('Root: before require statement'); }
+// if (av.dbg.flg.root) { console.log('Root: before require statement'); }
 var av = av || {};  //incase av already exists
 var dojo = dojo || {};
 
@@ -174,12 +177,15 @@ require([
   ready, $, jqueryui, Plotly, //fileDownload,  //Blob.js,
   JSZip, FileSaver) {
   'use strict';
+  // if (av.dbg.flg.root) { console.log('before type of $'); }
   if (typeof $ != 'undefined') {
     // jQuery is loaded => print the version
+    console.log('Jquery ($) is defined.');
     av.jqueryVersion = ($.fn.jquery);
   } else {
     console.log('Jquery ($) is not defined.');
   }
+  // if (av.dbg.flg.root) { console.log('after type of $'); }
 
   //console.log('dojo version', dojo.version.toString());
   parser.parse();
@@ -207,19 +213,19 @@ require([
   //av.mouse.getOriginalShapes(); only gets empty strings
 
   /********************************************************************************************************************/
-  if (av.dbg.flg.root) { console.log('Root: after splash screen code'); }
+  // if (av.dbg.flg.root) { console.log('Root: after splash screen code'); }
   // -------------------------------------------------------------------------------------------------------------------
   // Initialize variables that depend on files loaded in requirement statement
   // -------------------------------------------------------------------------------------------------------------------
 
-  if (av.dbg.flg.root) { console.log('Root: before av.dom.load'); };
+  // if (av.dbg.flg.root) { console.log('Root: before av.dom.load'); };
   av.dom.load();
 
   av.dom.initilizeDigitData();
   av.dom.initilizeAnalizePage(); 
 
 
-  if (av.dbg.flg.root) { console.log('Root: before dnd definitions'); };
+  // if (av.dbg.flg.root) { console.log('Root: before dnd definitions'); };
   /********************************************************************************************************************/
   /******************************************* Dojo Drag N Drop Initialization ****************************************/
   /********************************************************************************************************************/
@@ -233,7 +239,7 @@ require([
     selfAccept: false
   });
   
-  if (av.dbg.flg.root) { console.log('Root: before fzOrgan'); }
+  // if (av.dbg.flg.root) { console.log('Root: before fzOrgan'); }
   av.dnd.fzOrgan = new dndSource('fzOrgan', {
     accept: ['g'], //g=genome
     copyOnly: true,
@@ -241,7 +247,7 @@ require([
     selfAccept: false
   });
   
-  if (av.dbg.flg.root) { console.log('Root: before fzWorld'); };
+  // if (av.dbg.flg.root) { console.log('Root: before fzWorld'); };
   av.dnd.fzWorld = new dndSource('fzWorld', {
     //accept: ['b', 'w'],   //b=both; w=world  //only after the population started running
     singular: true,
@@ -279,12 +285,12 @@ require([
 
   av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
 
-  if (av.dbg.flg.root) { console.log('Root: before organIcon'); }
+  // if (av.dbg.flg.root) { console.log('Root: before organIcon'); }
   av.dnd.organIcon = new dndTarget('organIcon', {accept: ['g'], selfAccept: false});
   av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
   av.dnd.gridCanvas = new dndTarget('gridCanvas', {accept: ['g']});
   av.dnd.trashCan = new dndSource('trashCan', {accept: ['c', 'g', 't', 'w'], singular: true});
-  if (av.dbg.flg.root) { console.log('Root: after trashCan'); }
+  // if (av.dbg.flg.root) { console.log('Root: after trashCan'); }
 
   av.dnd.activeConfig = new dndSource('activeConfig', {
     accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
@@ -300,7 +306,7 @@ require([
     selfAccept: false
   });
 
-  if (av.dbg.flg.root) { console.log('Root: before activeOrgan'); }
+  // if (av.dbg.flg.root) { console.log('Root: before activeOrgan'); }
   //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
   av.dnd.activeOrgan = new dndSource('activeOrgan', {
     accept: ['g'],
@@ -322,9 +328,9 @@ require([
   //**************************************************************************************************/
 
   //Avida as a web worker
-  if (av.dbg.flg.root) { console.log('Root: before call avida'); }
+  // if (av.dbg.flg.root) { console.log('Root: before call avida'); }
   //
-  if (av.dbg.flg.root) { console.log('Root: typeof(av.aww.uiWorker', typeof(av.aww.uiWorker)); }
+  // if (av.dbg.flg.root) { console.log('Root: typeof(av.aww.uiWorker', typeof(av.aww.uiWorker)); }
   if (typeof (Worker) !== 'undefined') {
     //console.log('Worker type is not undefined');
     if (null === av.aww.uiWorker) {
@@ -338,13 +344,13 @@ require([
   };
 
   //process message from web worker
-  if (av.dbg.flg.root) { console.log('Root: before dnd triggers'); }
+  // if (av.dbg.flg.root) { console.log('Root: before dnd triggers'); }
   av.aww.uiWorker.onmessage = function (ee) {
     //console.log('avida_ee', ee);
     av.msg.readMsg(ee);
   };  // in file messaging.js
 
-  if (av.dbg.flg.root) { console.log('Root: before dnd triggers'); }
+  // if (av.dbg.flg.root) { console.log('Root: before dnd triggers'); }
   //*******************************************************************************************************************
   //       Dojo Dnd drop function - triggers for all dojo dnd drop events
   //*******************************************************************************************************************
@@ -486,7 +492,7 @@ require([
    });
    */
 
-  if (av.dbg.flg.root) { console.log('Root: before av.dnd.ancestorBox'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.dnd.ancestorBox'); }
   av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
     if ('ancestorBox' === target.node.id) {
       //console.log('ancestorBox=', target, av.dnd.ancestorBox);  //yes they are the same. could use in the above if statement.
@@ -613,7 +619,7 @@ require([
   //                                    End of dojo based DND triggered functions
   //----------------------------------------------------------------------------------------------------------------------
 
-   if (av.dbg.flg.root) { console.log('Root: before Error Logging'); }
+   // if (av.dbg.flg.root) { console.log('Root: before Error Logging'); }
   //********************************************************************************************************************
   // Error logging
   //********************************************************************************************************************
@@ -705,7 +711,7 @@ require([
     };
   };
   
-  if (av.dbg.flg.root) { console.log('Root: defore av.ui.problemWindow'); }
+  // if (av.dbg.flg.root) { console.log('Root: defore av.ui.problemWindow'); }
   //process problme pop-up window
   av.ui.problemWindow = function () {
     //console.log('in problemWindow');
@@ -782,9 +788,9 @@ require([
   // Menu Buttons handling
   //********************************************************************************************s************************
 
-  if (av.dbg.flg.root) { console.log('Root: dijit test', dijit.byId('mnFlOpenDefaultWS')); }
+  // if (av.dbg.flg.root) { console.log('Root: dijit test', dijit.byId('mnFlOpenDefaultWS')); }
 
-  if (av.dbg.flg.root) { console.log('Root: before mnFlOpenDefaultWS'); }
+  // if (av.dbg.flg.root) { console.log('Root: before mnFlOpenDefaultWS'); }
   dijit.byId('mnFlOpenDefaultWS').on('Click', function () {
     'use strict';
     av.post.addUser('Button: mnFlOpenDefaultWS');
@@ -916,7 +922,7 @@ require([
     console.log('domobj=', domobj);
   };
 
-  if (av.dbg.flg.root) { console.log('Root: before Help drop down menu'); }
+  // if (av.dbg.flg.root) { console.log('Root: before Help drop down menu'); }
   //--------------------------------------------------------------------------------------------------------------------
   // Help Drop down menu buttons
   //--------------------------------------------------------------------------------------------------------------------
@@ -992,7 +998,7 @@ require([
   //visibility:hidden can be used, but it leaves the white space and just does not display dijits.
   //So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
   //the default option.
-  if (av.dbg.flg.root) { console.log('Root: before av.ui.mainBoxSwap defined'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.ui.mainBoxSwap defined'); }
   av.ui.mainBoxSwap = function (showBlock) {
     //console.log('showBlock=', showBlock);
     av.ui.page = showBlock;
@@ -1030,6 +1036,7 @@ require([
       document.getElementById('ritePnlBtnHolder').style.display = 'none';
     };
     if ('organismBlock' == av.ui.page) {
+
       if ('settings' == av.ui.orgInfo) {
         av.dom.orgSettings.style.display = 'block';
         av.dom.orgDetailID.style.display = 'none';
@@ -1044,12 +1051,14 @@ require([
         av.ind.updateOrgTrace('mainBoxSwap_organismBlock');
       };
       av.ind.organismCanvasHolderSize('mainBoxSwap_organismBlock');   ///??????
+      av.ind.clearGen('mainBoxSwap_organismBlock');
+      av.ind.cpuOutputCnvsSize();
     }
     //console.log('end of mainBoxSwap');
   };
 
   // Buttons that call MainBoxSwap
-  if (av.dbg.flg.root) { console.log('Root: before av.dom.populationButton.onclick'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.dom.populationButton.onclick'); }
   av.dom.populationButton.onclick = function () {
     av.post.addUser('Button: populationButton');
     if (av.debug.dnd || av.debug.mouse)
@@ -1084,7 +1093,7 @@ require([
     av.anl.AnaChartFn();
   };
 
-  if (av.dbg.flg.root) { console.log('Root: before showTextButton.onclick'); }
+  // if (av.dbg.flg.root) { console.log('Root: before showTextButton.onclick'); }
   document.getElementById('showTextButton').onclick = function () {
     av.post.addUser('Button: showTextButton');
     av.ui.mainBoxSwap('showTextBlock');
@@ -1092,7 +1101,7 @@ require([
   // ------------------ two controls for the same purpose; tabs used in develoopment mode --
   
   //Toggle switch for Population/Organism pages
-  if (av.dbg.flg.root) { console.log('Root: before av.ptd.rightInfoPanelToggleButton'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.rightInfoPanelToggleButton'); }
   av.ptd.rightInfoPanelToggleButton = function(domObj) {
     if ('populationBlock' == av.ui.page) {
       var tabcontent = document.getElementsByClassName("labInfoClass");
@@ -1160,7 +1169,7 @@ require([
   };
 
   //Development section with tabs
-  if (av.dbg.flg.root) { console.log('Root: before av.ptd.processTab'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.processTab'); }
   av.ptd.processTab = function (evt, contentType) {
     var ii, tablinks;
     var tabcontent = document.getElementsByClassName("labInfoClass");
@@ -1196,7 +1205,7 @@ require([
   // ------- end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
 
   //----------------------------------------------------------------------------------------show/hide left side panel --
-  if (av.dbg.flg.root) { console.log('Root: before av.ptd.lftPnlButtonImg'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.lftPnlButtonImg'); }
   av.ptd.lftPnlButtonImg = function () {
     if (av.ui.lftSidePnlShowing) {
       av.post.addUser('Button: lftPnlButtonImg: start hidding left side panel');
@@ -1221,7 +1230,7 @@ require([
 //----------------------------------------------------------------------------------------------------------------------
 
 // hides and shows the population and selected organsim data on right of population page with 'Stats/mpa' button
-  if (av.dbg.flg.root) { console.log('Root: before av.ptd.rtPnlButtonImg'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.rtPnlButtonImg'); }
   av.ptd.rtPnlButtonImg = function () {
     //console.log('rtPnlButtonImg: av.ui.page=', av.ui.page);
     if ('populationBlock' == av.ui.page) {
@@ -1472,7 +1481,7 @@ require([
     av.post.addUser('Button: mnFzAddGenomeEx');
     av.dnd.FzAddExperimentFn('fzOrgan', 'activeOrgan', 'g');
     av.ui.mainBoxSwap('organismBlock');
-    av.ind.organismCanvasHolderSize();
+    av.ind.organismCanvasHolderSize('mnFzAddGenomeView');
     av.ui.adjustOrgInstructionTextAreaSize();
     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
   });
@@ -1624,7 +1633,7 @@ require([
       } else if ('organIcon' == evt.target.id) {
         //Change to Organism Page
         av.ui.mainBoxSwap('organismBlock');
-        av.ind.organismCanvasHolderSize();
+        av.ind.organismCanvasHolderSize('mouseup_organIcon_parent');
         av.ui.adjustOrgInstructionTextAreaSize();
         if (av.debug.mouse)
           console.log('from parent', av.parent, '; fzr', av.fzr);
@@ -1642,7 +1651,7 @@ require([
       if ('organIcon' == evt.target.id) {
         //Change to Organism Page
         av.ui.mainBoxSwap('organismBlock');
-        av.ind.organismCanvasHolderSize();
+        av.ind.organismCanvasHolderSize('mouseup_organIcon_Kid');
         av.ui.adjustOrgInstructionTextAreaSize();
         av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
       }
@@ -1671,7 +1680,7 @@ require([
   //av.dom.gridCanvas.height = $('#gridHolder').innerHeight() - 16 - av.dom.scaleCanvas.height;
 
   //--------------------------------------------------------------------------------------------------------------------
-  if (av.dbg.flg.root) { console.log('Root: before av.grd.drawGridSetupFn'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.grd.drawGridSetupFn'); }
 
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
@@ -1883,7 +1892,7 @@ require([
   // *******************************************************************************************************************
   //    Buttons that select organisms that perform a logic function
   // *******************************************************************************************************************
-  if (av.dbg.flg.root)  { console.log('Root: before logic buttons'); }
+  if (av.dbg.flg.root) { console.log('Root: before logic buttons'); }
 
   //    av.post.addUser('Button: notButton');    //done in av.ptd.bitToggle
   document.getElementById('notButton').onclick = function () {
@@ -1930,7 +1939,7 @@ require([
   // initialize needs to be in AvidaED.js; cannot be run when mini-graph is not visible. 
   // Should be done before av.grd.popChartFn is run.
   
-  if (av.dbg.flg.root) { console.log('Root: before av.grd.popChartInit defined'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.grd.popChartInit defined'); }
   av.grd.popChartInit = function (from) {
     //console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
     //                '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display, '; av.ui.page=', av.ui.page, 
@@ -2000,7 +2009,7 @@ require([
     if (av.dbg.flg.plt) { console.log('PopPlot: layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width); }
     av.pch.needInit = false;
   };
-  if (av.dbg.flg.root) { console.log('after av.grd.popChartInit defined'); }
+  if (av.dbg.flg.root) { console.log('Roote: after av.grd.popChartInit defined'); }
 
 
   av.grd.popChartFn = function (from) {
@@ -2010,8 +2019,8 @@ require([
     //                  '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display,
     //                  '; av.ui.page=', av.ui.page,
     //                  '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));      
-    console.log('PopPlot:',from, 'called popChartFn: av.pch.needInit= ', av.pch.needInit, 
-                      '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));      
+    //console.log('PopPlot:',from, 'called popChartFn: av.pch.needInit= ', av.pch.needInit, 
+    //                  '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));      
     if (av.pch.needInit) {
       //console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, '; av.ui.page=', av.ui.page);
       // if the miniplot on the populaton page needs to be initiated call that funciton.
@@ -2660,13 +2669,13 @@ require([
   //Read the default work space and then loadConfigFlag = true; //the @default should be placed at the current configuration
   // need to change how loadConfig worrks
   
-  if (av.dbg.flg.root) { console.log('Root: before calling av.fio.readZipWS ---------------'); }
+  // if (av.dbg.flg.root) { console.log('Root: before calling av.fio.readZipWS ---------------'); }
   av.fio.readZipWS(av.fio.defaultFname, true);  
   
   //Need to get @default (the condents of folder c0) into the active config field. 
 
   //------------------------------------------------------- call StatsButton.click to get the display in default mode --
-  if (av.dbg.flg.root) { console.log('Root: before call StatsButton.click'); }
+  // if (av.dbg.flg.root) { console.log('Root: before call StatsButton.click'); }
   document.getElementById('StatsButton').click();
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -2674,7 +2683,7 @@ require([
 //----------------------------------------------------------------------------------------------------------------------
  
 //adjust instruction text size
-  if (av.dbg.flg.root) { console.log('Root: before av.ui.adjustOrgInstructionTextAreaSize'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.ui.adjustOrgInstructionTextAreaSize'); }
 //---------------------------------------------------------------------------- av.ui.adjustOrgInstructionTextAreaSize --
   av.ui.adjustOrgInstructionTextAreaSize = function() {
     var height = ( $('#orgInfoHolder').innerHeight() - $('#orgDetailID').innerHeight() - 10 ) / 2;
@@ -2744,7 +2753,7 @@ require([
     av.post.addUser('Button: mnCnOrganismTrace');
     av.mouse.traceSelected(av.dnd, av.fzr, av.grd);
     av.ui.mainBoxSwap('organismBlock');
-    av.ind.organismCanvasHolderSize();
+    av.ind.organismCanvasHolderSize('mnCnOrganismTrace');
     av.ui.adjustOrgInstructionTextAreaSize();
     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
   });
@@ -2754,7 +2763,7 @@ require([
     //Open Oranism view
     av.post.addUser('Button: mnCnOffspringTrace');
     av.ui.mainBoxSwap('organismBlock');
-    av.ind.organismCanvasHolderSize();
+    av.ind.organismCanvasHolderSize('mnCnOffspringTrace');
     av.ui.adjustOrgInstructionTextAreaSize();
     offspringTrace(av.dnd, av.fio, av.fzr, av.gen);
   });
@@ -2763,19 +2772,23 @@ require([
 //                                             Canvas for Organsim View (genome)
 //----------------------------------------------------------------------------------------------------------------------
 
-  // why is this hear in the open? if it is part of loading the program, should it be with othe loading code?
-  av.gen = av.ind.clearGen(av.gen);
-
   //set canvas size; called from many places
   av.ind.organismCanvasHolderSize = function() {
     av.dom.organCanvas.width = $('#organismCanvasHolder').innerWidth() - 6;
     av.dom.organCanvas.height = $('#organismCanvasHolder').innerHeight() - 12;
   };
+  //set output Canvas Size
+  av.ind.cpuOutputCnvsSize = function() {
+    console.log('output Wd Ht: $inner =', $('#cpuOutputCnvs').innerWidth(), $('#cpuOutputCnvs').innerHeight());
+    av.ind.outputCanvasWd = $('#cpuOutputCnvs').innerWidth();
+    av.ind.outputCanvasHt = $('#cpuOutputCnvs').innerHeight();
+    console.log('av.ind.outputCanvas=', av.ind.outputCanvasWd, av.ind.outputCanvasHt);
+  };
 
   av.ind.updateOrgTrace = function (from) {
     //console.log(from, 'called av.ind.updateOrgTrace: av.traceObj=', av.traceObj.length);
     //console.log('av.ind.cycle', av.ind.cycle);
-    av.ind.organismCanvasHolderSize();
+    av.ind.organismCanvasHolderSize('av.ind.updateOrgTrace');
     //if (undefined == av.traceObj[av.ind.cycle]) console.log('its undefined');
     if (!(undefined == av.traceObj || {} == av.traceObj || undefined == av.traceObj[av.ind.cycle])) {
       av.ind.didDivide = av.traceObj[av.ind.cycle].didDivide; //update global version of didDivide
@@ -2909,7 +2922,7 @@ require([
   //********************************************************************************************************************
   // Resize window helpers -------------------------------------------
   //********************************************************************************************************************
-  if (av.dbg.flg.root) { console.log('Root: before Resize helpers'); }
+  // if (av.dbg.flg.root) { console.log('Root: before Resize helpers'); }
 
   av.removeVerticalScrollBars = function () {
     if (av.debug.uil)
@@ -2938,7 +2951,7 @@ require([
 
   //on 2018_0823 this is where height gets messed up when loading the program. 
    av.pch.divSize = function (from) {
-    console.log('PopPlotSize: ',from, 'called av.pch.divSize, not in if statement.');  
+    if (av.debug.uil) { console.log('PopPlotSize: ',from, 'called av.pch.divSize, not in if statement.'); }
     av.debug.uil = false;
     if (av.debug.uil) { console.log('PopPlotSize: ',from, 'called av.pch.divSize'); }
     if (av.debug.uil) { 
@@ -3151,7 +3164,7 @@ require([
   // **************************************************************************************************************** */
   //                                                Analysis Page
   // **************************************************************************************************************** */
-  if (av.dbg.flg.root) { console.log('Root: start of Analysis Page'); }
+  // if (av.dbg.flg.root) { console.log('Root: start of Analysis Page'); }
   
   // initialize needs to be in AvidaED.js   Does not work in included files
   av.anl.anaChartInit = function () {
@@ -3176,7 +3189,7 @@ require([
     //console.log('layout=', av.dom.anlChrtSpace.layout);
     av.dom.anlChrtSpace.style.visibility = 'hidden';
   };
-  if (av.dbg.flg.root) { console.log('Root: before av.anl.anaChartInit called'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.anl.anaChartInit called'); }
   av.anl.anaChartInit();
 
   av.anl.AnaChartFn = function () {
@@ -3337,7 +3350,7 @@ require([
     av.post.addUser('Button: yRightSelect = ' + document.getElementById('yRightSelect').value);
   };
   
-  if (av.dbg.flg.root) { console.log('Root: after chart defined for analysis page'); }
+  // if (av.dbg.flg.root) { console.log('Root: after chart defined for analysis page'); }
   // **************************************************************************************************************** */
   //                                       end of Analysis Page
   // **************************************************************************************************************** */
@@ -3365,7 +3378,7 @@ require([
     av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
     $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
   }
-  if (av.dbg.flg.root) { console.log('before mainBoxSwap'); }
+  if (av.dbg.flg.root) { console.log('Root: before mainBoxSwap'); }
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
   av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
   av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
@@ -3385,7 +3398,7 @@ require([
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
   av.sgr.ChangeAllGeo('Global');
   av.sgr.setSugarColors(true);  //true is to turn colors on;
-  av.sgr.ChangeAllsugarSupplyType('Infinite', 'Last things done');
+  av.sgr.ChangeAllsugarSupplyType('Infinite');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last things done');
   
   // May need to do some things here to get the app to look right on the screen. 
@@ -3541,7 +3554,7 @@ require([
  * offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
  * clientWidth = box + 2*padding - scrollbar_width    
  * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
- * csssWidth = box only nothing else
+ * cssWidth = box only nothing else
  * 
  * scrollbarWidth = offsetWidth - clientWidth - getComputedStyle().borderLeftWidth - getComputedStyle().borderRightWidth
  *  

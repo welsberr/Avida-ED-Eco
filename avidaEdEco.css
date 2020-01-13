@@ -1064,18 +1064,18 @@ checkbox:focus {
     height: auto;
   }
   .orgStatCanvas15{
-    width: 160px; 
-    height: 15px; 
+    width: 162px; 
+    height: 17px; 
     border:1px solid #000000;
   }
   .orgStatCanvas10{
-    width: 160px; 
-    height: 10px; 
+    width: 162px; 
+    height: 12px; 
     border:1px solid #000000;
   }
   .orgStatCanvas5{
-    width: 160px; 
-    height:  5px; 
+    width: 162px; 
+    height:  7px; 
     border:1px solid #000000;
   }
   .instructionText{

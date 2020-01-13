@@ -4,7 +4,7 @@
   var dojo = dojo || {};
   var dijit = dijit || {};
 
-  if (av.dbg.flg.root) { console.log('Root: before av.dom.load'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.dom.load'); }
     av.dom.load = function () {
       'use strict';
       //Menu
@@ -366,7 +366,7 @@
       //console.log('in av.ui.hideDevelopment=', av.ui.hideDevelopment, 'at end of function');
     };
 
-  if (av.dbg.flg.root) { console.log('Root: before av.ui.xorLabel'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.ui.xorLabel'); }
   //----------------------------------------------------------------------------------------------------------------------
     //toggles showing resource data in right info panel (Stats window) in Populaton View
     av.ui.xorLabel = function () {

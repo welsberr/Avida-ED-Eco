@@ -1,7 +1,7 @@
   var av = av || {};  //because av already exists
 
 
-  if (av.dbg.flg.root) { console.log('Root: before av.ind.orgStopFn'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.ind.orgStopFn'); }
   /*------------------------------------------------------------------------------------------------ av.ind.orgStopFn --*/
   av.ind.orgStopFn = function () {
     if (av.ind.update_timer) {
@@ -11,7 +11,7 @@
   };
 
   /*------------------------------------------------------------------------------------------------- av.ind.clearGen --*/
-  av.ind.clearGen = function(gen) {
+  av.ind.clearGen = function(from) {
     'use strict';
     av.ind.settingsChanged = false;
     av.ind.cycle = 0;
@@ -36,24 +36,42 @@
     //initialize all canvases needed for Organism page
     av.dom.cpuBuffer = document.getElementById('cpuBufferCnvs');
     av.ind.cpuBufferCtx = av.dom.cpuBuffer.getContext('2d');
+    av.ind.cpuBufferCtx.canvas.width = $('#cpuBufferCnvs').innerWidth();   // in pixels
+    av.ind.cpuBufferCtx.canvas.height = $('#cpuBufferCnvs').innerHeight();  // in pixels
+    console.log('inputBuffer w, h=', $('#cpuBufferCnvs').innerWidth(), $('#cpuBufferCnvs').innerHeight(), '; iputcanvas.w, h=', av.ind.cpuBufferCtx.canvas.width, av.ind.cpuBufferCtx.canvas.height);
     av.ind.cpuBufferCtx.translate(0.5, 0.5);
+    
     av.dom.cpuRegister = document.getElementById('cpuRegisterCnvs');
     av.ind.cpuRegisterCtx = av.dom.cpuRegister.getContext('2d');
+    av.ind.cpuRegisterCtx.canvas.width = $('#cpuRegisterCnvs').innerWidth();   // in pixels
+    av.ind.cpuRegisterCtx.canvas.height = $('#cpuRegisterCnvs').innerHeight();  // in pixels
+    console.log('register w, h =', av.ind.cpuRegisterCtx.canvas.width, av.ind.cpuRegisterCtx.canvas.height, '; dom.width=', av.dom.cpuRegister.width, av.dom.cpuRegister.style.width, av.dom.cpuRegister.clientWidth, av.dom.cpuRegister.offsetWidth, av.dom.cpuRegister.scrollWidth);
     av.ind.cpuRegisterCtx.translate(0.5, 0.5);
+
     av.dom.cpuStackA = document.getElementById('cpuStackAcnvs');
     av.ind.cpuStackActx = av.dom.cpuStackA.getContext('2d');
+    av.ind.cpuStackActx.canvas.width =  $('#cpuStackAcnvs').innerWidth();   // in pixels
+    av.ind.cpuStackActx.canvas.height = $('#cpuStackAcnvs').innerHeight();   // in pixels
     av.ind.cpuStackActx.translate(0.5, 0.5);
+
     av.dom.cpuStackB = document.getElementById('cpuStackBcnvs');
     av.ind.cpuStackBctx = av.dom.cpuStackB.getContext('2d');
+    av.ind.cpuStackBctx.canvas.width = $('#cpuStackBcnvs').innerWidth();   // in pixels
+    av.ind.cpuStackBctx.canvas.height = $('#cpuStackBcnvs').innerHeight();   // in pixels
     av.ind.cpuStackBctx.translate(0.5, 0.5);
+
     av.dom.cpuOutputCnvs = document.getElementById('cpuOutputCnvs');
     av.ind.cpuOutputCtx = av.dom.cpuOutputCnvs.getContext('2d');
+    av.ind.cpuOutputCtx.canvas.width = $('#cpuOutputCnvs').innerWidth();   // in pixels
+    av.ind.cpuOutputCtx.canvas.height = $('#cpuOutputCnvs').innerHeight();   // in pixels
+    av.ind.cpuStackBctx.translate(0.5, 0.5);
     //av.ind.cpuOutputCtx.imageSmoothingEnabled= false;
     av.ind.ctx = av.dom.organCanvas.getContext('2d');
     av.ind.ctx.translate(0.5, 0.5);  //makes a crisper image  http://stackoverflow.com/questions/4261090/html5-canvas-and-anti-aliasing
     //av.ind.timeLineCanvas = document.getElementById('timeLine');
     //av.ind.tLctx = av.ind.timeLineCanvas.getContext('2d');
-    return gen;
+    console.log('output = ', cpuOutputCnvs);
+
   };
 
   /*--------------------------------------------------------------------------------------------- av.ind.drawTimeline --*/
@@ -164,15 +182,18 @@
 
   /*----------------------------------------------------------------------------------------------- av.ind.drawBitStr --*/
   av.ind.drawBitStr = function(context, row, bitStr, from) {
+    //console.log('context.wd,ht=', context.canvas.width, context.canvas.height);
     //console.log(from, ' called av.ind.drawBitStr: context=', context, '; row=', row, '; bitStr=', bitStr);
     //console.log(from, ' called av.ind.drawBitStr: row=', row, '; bitStr=', bitStr);
+    //console.log('wd, ht =', context.canvas.width, ',', context.canvas.height);
     var recWidth = 5;   //The width of the rectangle, in pixels
     var recHeight = 5;  //The height of the rectangle, in pixels
     var xx; //The x-coordinate of the upper-left corner of the rectangle
     var yy = row * recHeight;    //upper-left corner of rectangle
     var str = "1";
-    var color;
     var lngth = bitStr.length;
+    
+    //loop through all bits on that row;
     for (var ii = 0; ii < lngth; ii++) {
       xx = ii * (recWidth);
       //draw outline of rectangle
@@ -327,12 +348,12 @@
     drw.src = "images/Avida-ED-ancestor-icon.png";
     drw.onload = function () {   //image size(width, height) from http://stackoverflow.com/questions/5173796/html5-get-image-dimension
       av.ind.ctx.drawImage(drw, av.ind.cx[av.ind.son] - drw.width / 2, av.ind.cy[av.ind.son] - drw.height / 2);
-    }
+    };
     av.ind.ctx.fillStyle = av.color.names["black"];
     av.ind.ctx.font = av.ind.fontsize + "px Arial";
     var txtWd = av.ind.ctx.measureText(txt).width;
     av.ind.ctx.fillText(txt, av.ind.cx[av.ind.son] - txtWd / 2, av.ind.cy[av.ind.son] + drw.height);
-  }
+  };
 
 
   /*----------------------------------------------------------------------------------- av.ind.organTraceButtonInable --*/
@@ -453,7 +474,7 @@
   };
   /*---------------------------------------------------------------------------------- end of av.ind.updateOrganTrace --*/
 
-  if (av.dbg.flg.root) { console.log('Root: before av.ind.updateTimesPerformed'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.ind.updateTimesPerformed'); }
   /*------------------------------------------------------------------------------------- av.ind.updateTimesPerformed --*/
   av.ind.updateTimesPerformed = function(obj, gen) {
     'use strict';

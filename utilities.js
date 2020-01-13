@@ -505,7 +505,7 @@
     'Cookies: ' + jscd.cookies + '\n' +
     'Screen Size: ' + jscd.screen + '\n\n' +
     'Full User Agent: ' + navigator.userAgent;
-  if (av.dbg.flg.root) { console.log('Root: av.brs.str=',av.brs.str); }
+  // if (av.dbg.flg.root) { console.log('Root: av.brs.str=',av.brs.str); }
   av.debug.log += '\n' + 'user info = ' + window.navigator.userAgent + ';  Screen Size: ' + jscd.screen;
 
 
