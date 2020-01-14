@@ -1,6 +1,6 @@
 
  // if (av.dbg.flg.root) { console.log('Root: AvidaED.js at beginning of file on 2020_0111 @ 20:21'); }
- if (true) { console.log('Root: AvidaED.js at beginning of file on 2020_0111 @ 20:21'); }
+ if (true) { console.log('Root: AvidaED.js at beginning of file on 2020_0113 @ 17:55'); }
 
 
 // need a server to run Avida-ED from a file. The one below works.
@@ -76,8 +76,9 @@
 //  
 //  Fixed: canvases for bit patterns do not work.
 //  Fixed:Crashed when I tried to drag icon for offspring organism off the canvas
+//  Fixed: need to line up actual slide with canvas image of the slide scalex
 //  
-//  need to line up actual slide with canvas image of the slide scalex
+//  Need to get slider under canvas to go back to zero when reset is clicked. 
 //  
 //  Looking at loading default files and perhaps we need to add default values for finite when finite is selected even 
 //  there is no finite in the config file. 
@@ -2727,7 +2728,7 @@ require([
       av.ind.settingsChanged = true;
       if (av.debug.trace) { console.log('orMute changed', av.ind.settingsChanged); }
       //$( '#orMRate' ).val( 100000*Math.log(1+(parseFloat(this.value))) );
-      if (aav.debug.trace) console.log('in mute change');
+      if (av.debug.trace) console.log('in mute change');
       av.post.addUser('muteInput =' + dijit.byId('orMuteInput').get('value') + '1949');
     });
   });
@@ -3551,11 +3552,14 @@ require([
  *       box (with actual content or guts
  * the size of stuff around the box gets added twice, once for each side
  * 
- * offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
- * clientWidth = box + 2*padding - scrollbar_width    
- * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
+ * dom.name.offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
+ * dom.name.clientWidth = box + 2*padding - scrollbar_width    
+ * dom.name.scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
  * cssWidth = box only nothing else
- * 
+ * dom.name.width
+ * $('#name').innerWidth()
+ *    where name is from the id='name'   of the dom objecte in the html
+ *    
  * scrollbarWidth = offsetWidth - clientWidth - getComputedStyle().borderLeftWidth - getComputedStyle().borderRightWidth
  *  
  */

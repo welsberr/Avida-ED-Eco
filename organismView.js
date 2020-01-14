@@ -75,7 +75,7 @@
   };
 
   /*--------------------------------------------------------------------------------------------- av.ind.drawTimeline --*/
-  av.ind.drawTimeline = function(obj, gen) {
+  av.ind.drawTimeline = function(obj) {
     'use strict';
     var startX, lineY, endX, length, numCycles, upLabelY, dnLabelY, txtWide, dnTickX, dnNum;
     var tickLength = 6;
@@ -94,8 +94,9 @@
     dnTickY = lineY + tickLength;
     upLabelY = lineY - upLabelYoffset;
     dnLabelY = lineY + dnLabelYoffset;
-    startX = 26;                //The numbers are fudge factors to account for the end of the slider
-    endX = av.dom.organCanvas.width - 25;
+    startX = 21;                //The numbers are fudge factors to account for the end of the slider //was 26
+    endX = av.dom.organCanvas.width - 18;     //was 25
+    // console.log('organCanvas.width $ style.width client offset scroll=', av.dom.organCanvas.width, $('#organCanvas').innerWidth(), av.dom.organCanvas.style.width, av.dom.organCanvas.clientWidth, av.dom.organCanvas.offsetWidth, av.dom.organCanvas.scrollWidth);
     length = endX - startX;
     numCycles = obj.length - 1;
 
@@ -386,7 +387,7 @@
       //console.log('obj[av.ind.cycle].memSpace',obj[av.ind.cycle].memSpace[ii]);
     }
     //Draw Timeline
-    av.ind.drawTimeline(obj, gen);
+    av.ind.drawTimeline(obj);
     //Find radius and center of big circle for each genome
     if (av.dom.organCanvas.height < .55 * (av.dom.organCanvas.width - av.ind.TimeLineHeight)) {
       av.ind.bigR[av.ind.mom] = Math.round(0.43 * (av.dom.organCanvas.height - av.ind.TimeLineHeight));  //set size based on height

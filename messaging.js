@@ -47,6 +47,7 @@
           av.dom.orgCycle.value = 0;
           av.ind.cycleSlider.set('maximum', av.traceObj.length - 1);
           av.ind.cycleSlider.set('discreteValues', av.traceObj.length);
+          av.ind.cycleSlider.set('value', av.ind.cycle);
           av.ind.updateOrgTrace('messaging_webOrgTraceBySequence');
           av.debug.log += '\n--Aui: \n' + av.utl.json2stringFn(msg);
           break;
@@ -508,6 +509,7 @@
             seed                                            //seed where 0 = random; >0 to replay that number
           ]
         };
+        //
         if (av.debug.msg) console.log('doOrgTrace', request);
         if (av.debug.msg) console.log('doOrgTrace string', av.utl.json2stringFn(request));
         av.aww.uiWorker.postMessage(request);
