@@ -41,7 +41,7 @@
   av.dbg.flg.frd = false;  //reading file text strings
   av.dbg.flg.nut = true;  //processing nustrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
   av.dbg.flg.plt = false;  //both popChart and analysis
-  av.dbg.flg.root = true;  //statements that look for failiers when the code executes outside of functions
+  av.dbg.flg.root = false;  //statements that look for failiers when the code executes outside of functions
 
   av.debug.usr = ''; //working on log for user actions.
 
@@ -690,7 +690,7 @@
     av.sgr.nut.dft.uiAll.supplyType = 'Infinite';    //this is only for whem ui.geometry = global
     av.sgr.nut.dft.uiAll.regionLayout = '0All';  //only Whole Dish for now; '1All' is the code for 'Whole Dish';
     av.sgr.nut.dft.uiAll.regionsNumOf = 1;   // whole dish = there is only one dish 
-    av.sgr.nut.dft.uiAll.initial = 1000;      //only whem ui.geometry = local and  supplyType = 'finite' 
+    av.sgr.nut.dft.uiAll.initial = 1000;      //only used when whem ui.geometry = global and  supplyType = 'finite' 
 
     //defaults for subtasks which must be Grid or Local
     av.sgr.nut.dft.uiSub.supplyType = 'Infinite';  // Infinite default from Avida-ED 3: I think Should change to Finite
@@ -760,7 +760,7 @@
         av.nut[tsk]['react'][ av.sgr.react_argu[jj] ] = [];     //Should these actually lbe left blank if they are really avida defaults? 
                                                                 //We don't need to write the avida defaults; We do need to write where Avida-ED devaults don't match avida
       };
-      //from user interface 
+      //for user interface 
       av.nut[tsk]['uiAll'] = {};
       av.nut[tsk]['uiSub'] = {};
       for (jj=0; jj < uiAllDishLen; jj++) {
@@ -772,7 +772,7 @@
       av.nut[tsk].uiAll.supplyType = 'Infinite';    //this is only for whem ui.geometry = global
       av.nut[tsk].uiAll.regionLayout = '1All';  //only whole dish for now
       av.nut[tsk].uiAll.regionsNumOf = 1;   // whole dishß
-      av.nut[tsk].uiAll.initial = 1000;      //only whem ui.geometry = local and  supplyType = 'finite' 
+      av.nut[tsk].uiAll.initial = -1;      //only used whem ui.geometry = global and  supplyType = 'finite' 
 
       for (jj=0; jj < uiSubDishLen; jj++) {
         av.nut[tsk]['uiSub'][av.sgr.ui_subDish_argu[jj] ] = [];

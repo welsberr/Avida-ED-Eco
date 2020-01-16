@@ -6,7 +6,7 @@
   var dojo = dojo || {};  //incase av already exists
   var dijit = dijit || {};  //incase av already exists
 
-  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.makePauseState'); }
+  // // if (av.dbg.flg.root) { console.log('Root: before av.ptd.makePauseState'); }
     av.ptd.makePauseState = function () {
     dijit.byId('mnCnPause').attr('disabled', true);
     dijit.byId('mnCnRun').attr('disabled', false);

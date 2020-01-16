@@ -1,7 +1,7 @@
   var av = av || {};  //because av already exists
 
 
-  // if (av.dbg.flg.root) { console.log('Root: before av.ind.orgStopFn'); }
+  // // if (av.dbg.flg.root) { console.log('Root: before av.ind.orgStopFn'); }
   /*------------------------------------------------------------------------------------------------ av.ind.orgStopFn --*/
   av.ind.orgStopFn = function () {
     if (av.ind.update_timer) {
@@ -475,7 +475,7 @@
   };
   /*---------------------------------------------------------------------------------- end of av.ind.updateOrganTrace --*/
 
-  // if (av.dbg.flg.root) { console.log('Root: before av.ind.updateTimesPerformed'); }
+  // // if (av.dbg.flg.root) { console.log('Root: before av.ind.updateTimesPerformed'); }
   /*------------------------------------------------------------------------------------- av.ind.updateTimesPerformed --*/
   av.ind.updateTimesPerformed = function(obj, gen) {
     'use strict';

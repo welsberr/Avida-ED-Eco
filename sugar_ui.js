@@ -19,7 +19,7 @@
 
 
   // This function builds the html for all the other tasks based on the html writen for "orn"
-  // if (av.dbg.flg.root) { console.log('Root: before av.sgr.buildHtml'); }
+  // // if (av.dbg.flg.root) { console.log('Root: before av.sgr.buildHtml'); }
   av.sgr.buildHtml = function() {
     //console.log('in av.sgr.buildHtml');
     var tskSectionStr = '';
@@ -538,7 +538,7 @@
   };
 
   //in tst2 page now
-  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.allSugarCheckBox'); }
+  // // if (av.dbg.flg.root) { console.log('Root: before av.ptd.allSugarCheckBox'); }
   av.ptd.allSugarCheckBox = function (allmode) {
     var onflag = true;
     if ('allComp' == allmode) {

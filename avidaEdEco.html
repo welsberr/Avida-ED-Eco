@@ -2200,7 +2200,7 @@
                   <button id='pop0delete' class='anaDeleteButton'>X</button>&nbsp;&nbsp;
                 </div>
                 <div id='pop0colorDiv' class='anaColorLineDiv'>
-                  <select  id='pop0color' onclick='av.anl.popColorOnClick(this);'>
+                  <select  id='pop0color' onchange='av.anl.popColorOnChange(this);'>
                     <option value='Red' selected>Red</option>
                     <option value='Blue'>Blue</option>
                     <option value='Green'>Green</option>
@@ -2220,7 +2220,7 @@
                   <button id='pop1delete' class='anaDeleteButton'>X</button>&nbsp;&nbsp;
                 </div>
                 <div id='pop1colorDiv' class='anaColorLineDiv'>
-                  <select  id='pop1color' class='anaColorLine' onclick='av.anl.popColorOnClick(this);'>
+                  <select  id='pop1color' class='anaColorLine' onchange='av.anl.popColorOnChange(this);'>
                     <option value='Red'>Red</option>
                     <option value='Blue' selected>Blue</option>
                     <option value='Green'>Green</option>
@@ -2240,7 +2240,7 @@
                   <button id='pop2delete' class='anaDeleteButton'>X</button>&nbsp;&nbsp;
                 </div>
                 <div id='pop2colorDiv' class='anaColorLineDiv'>
-                  <select  id='pop2color' onclick='av.anl.popColorOnClick(this);'>
+                  <select  id='pop2color' onchange='av.anl.popColorOnChange(this);'>
                     <option value='Red'>Red</option>
                     <option value='Blue'>Blue</option>
                     <option value='Green'>Green</option>
@@ -2258,7 +2258,7 @@
               </div><span value="analegend"></span>
               
               <div class="anaYaxis">
-                <select  id='yLeftSelect'>
+                <select  id='yLeftSelect' onchange='av.anl.yScaleSelect_onChange(this);'>
                   <option value='None'>None</option>
                   <option value='Average Fitness' selected>Average Fitness</option>
                   <option value='Average Offspring Cost'>Average Offspring Cost</option>
@@ -2267,7 +2267,7 @@
                   <option value='Number Viable'>Number Viable</option>
                 </select> Thicker line; left y-axis
                 <br></br>
-                <select  id='yRightSelect'>
+                <select  id='yRightSelect' onchange='av.anl.yScaleSelect_onChange(this);'>
                   <option value='None'>None</option>
                   <option value='Average Fitness'>Average Fitness</option>
                   <option value='Average Offspring Cost' selected>Average Offspring Cost</option>

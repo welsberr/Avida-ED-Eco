@@ -2,7 +2,7 @@
   var av = av || {};  //incase av already exists
   var dijit = dijit || {};  //incase av already exists
 
-  // if (av.dbg.flg.root) { console.log('Root: before av.fio.addFzItem'); }
+  // // if (av.dbg.flg.root) { console.log('Root: before av.fio.addFzItem'); }
   /*------------------------------------------------------------------------------------------------ av.fio.addFzItem --*/
   av.fio.addFzItem = function(dndSection, name, type, fileNum) {
     'use strict';
@@ -742,7 +742,7 @@
         //if (av.dbg.flg.nut) console.log('numTsk=', numTsk,'; av.nut[numTsk].uiAll.geometry=', av.nut[numTsk].uiAll.geometry);
 
         //Find the supply type
-        if (0 < rSourcObj.initial[ndx]) {
+        if (0 <= rSourcObj.initial[ndx]) {
           av.nut[numTsk].uiSub.supplyType[ndx] = 'Finite';
         };
         if (0 < rSourcObj.inflow[ndx]) {
@@ -768,7 +768,7 @@
   //--------------------------------------------------------------------------------------- end av.frd.reSrcLineParse --
 
   //-------------------------------------------------------------------------------------------- av.frd.nutrientParse --
-  // Uses environment.cfg file to create a structure to hold environment variables. 
+  // Uses environment.cfg file to create a structure to hold environment variables.   uses av.nut
   av.frd.nutrientParse = function (filestr, from) {
     'use strict';
     if (av.debug.fio) { console.log('============================================================ ',from + ' called av.frd.nutrientParse =='); }
@@ -910,14 +910,14 @@
     av.nut.wrldRows = av.fzr.actConfig.rows;  //came from  Number(dict.WORLD_Y)
     av.nut.wrldSize = av.fzr.actConfig.cols * av.fzr.actConfig.rows;  //  av.fzr.actConfig.size;
     
-    av.frd.nutrientParse(fileStr, 'av.frd.environment2struct');
-    var errors = av.frd.environmentParse(fileStr);
-    if (1 < errors.length) console.log('errors=', errors);    
+    av.frd.nutrientParse(fileStr, 'av.frd.environment2struct');    // uses av.nut
     if (av.dbg.flg.nut) { 
       av.nutConfig = {};
       av.nutConfig = av.nut;
-      console.log('env.cfg_nut = ', av.nutConfig); 
-    }
+      console.log('av.frd.nutrientParse = ', av.nutConfig); 
+    }    
+    var errors = av.frd.environmentParse(fileStr);    // uses av.fzr.env.react This is in the test tab only and will be removed
+    if (1 < errors.length) console.log('errors=', errors);    
 
     if (av.dbg.flg.nut) { console.log('------------------------------------------------------------------ end of av.frd.environment2struct --'); }
   };
@@ -1704,6 +1704,7 @@
     return defaultindex;  
   };
 
+  //uses av.fzr.env.react
   av.frd.reActionLineParse = function (lnArray) {
     'use strict';
     var lnError = 'none';     //was it a valid line wihtout errors
@@ -1764,6 +1765,7 @@
     return lnError;
   };
 
+  //uses av.fzr.env.react
   av.frd.resourceLineParse = function (lnArray) {
     'use strict';
     var lineErrors = 'none';  //was it a valid line wihtout errors
@@ -1863,8 +1865,9 @@
     return lineErrors;
   };
 
+  // uses av.fzr.env.react
   // Uses environment.cfg file to create a structure to hold environment variables. 
-  // if (av.dbg.flg.root) { console.log('Root: before av.frd.environmentParse'); }
+  // // if (av.dbg.flg.root) { console.log('Root: before av.frd.environmentParse'); }
   av.frd.environmentParse = function (filestr) {
     'use strict';
     var errors = '';

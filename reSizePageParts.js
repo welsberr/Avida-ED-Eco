@@ -11,7 +11,7 @@
   //                                             Resize window helpers 
   //********************************************************************************************************************
   
-  // if (av.dbg.flg.root) { console.log('Root: before Resize helpers'); }
+  // // if (av.dbg.flg.root) { console.log('Root: before Resize helpers'); }
   //----------------------------------------------------------------------------------------------------------------------
    av.removeVerticalScrollBars = function () {
     if (av.debug.uil) { console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight, document.documentElement.clientHeight); }
@@ -123,14 +123,6 @@
       av.ind.updateOrgTrace('av.ui.browserResizeEventHandler');
     }
   };
-
-  //console.log('before resize function');
-  //does this need a timer function to delay response slightly so the page is not re-written as frequently when the
-  //page is changing sizes  ??
-  //----------------------------------------------------------------------------------------------------------------------
-  $(window).resize(function () {
-    // av.ui.resizePopLayout('window.resize');    //does not work.
-  });
 
   //----------------------------------------------------------------------------------------------------------------------
     av.ui.chngPopWidth = function (from) {
@@ -287,7 +279,7 @@
   };
 
 
-  // if (av.dbg.flg.root) { console.log('Root: before av.ui.removeVerticalScrollbar'); }
+  // // if (av.dbg.flg.root) { console.log('Root: before av.ui.removeVerticalScrollbar'); }
   //----------------------------------------------------------------------------------------------------------------------
   av.ui.removeVerticalScrollbar = function (scrollDiv, htChangeDiv) {
     //https://tylercipriani.com/2014/07/12/crossbrowser-javascript-scrollbar-detection.html

@@ -8,7 +8,7 @@ var dojo = dojo || {};
 
 //http://stackoverflow.com/questions/1134572/dojo-is-there-an-event-after-drag-drop-finished
 //Puts the contents of the source in a object (list) called items.
-// if (av.dbg.flg.root) { console.log('Root: before av.dnd.getAllItems'); }
+// // if (av.dbg.flg.root) { console.log('Root: before av.dnd.getAllItems'); }
 
 //============================================================================================ Drag n Drog Unilities ===
 
@@ -1206,8 +1206,9 @@ av.anl.clearWorldData = function (worldNum){
 };
 
 //worldNum is a number 0-2 of the population loaded into analysis page
-av.anl.loadSelectedData = function (worldNum, axisSide, side) {
+av.anl.loadSelectedData = function (worldNum, axisSide, side, from) {
   'use strict';
+  console.log(from, 'called v.anl.loadSelectedData: worldNum=',worldNum, '; axis=', axisSide, '; side=', side);
   var dataType = document.getElementById(axisSide).value.toLowerCase();
   switch(dataType) {
     case 'none':
@@ -1424,8 +1425,8 @@ av.dnd.putNslot = function (Num, source) {
   av.dnd['popDish'+Num].insertNodes(false, [{data: name, type: ['w']}]);
   av.dnd['popDish'+Num].sync();
   av.anl.loadWorldData(Num, dir);
-  av.anl.loadSelectedData(Num, 'yLeftSelect', 'left');
-  av.anl.loadSelectedData(Num, 'yRightSelect', 'right');
+  av.anl.loadSelectedData(Num, 'yLeftSelect', 'left', 'av.dnd.putNslot');
+  av.anl.loadSelectedData(Num, 'yRightSelect', 'right', 'av.dnd.putNslot');
 };
 //--------------------------------------------------------------------------------------------- end av.dnd.putNslot --*/
 
@@ -1452,8 +1453,8 @@ av.dnd.landpopDish0 = function (dnd, source, nodes, target) {
   var fzdomid = Object.keys(source.selection)[0];
   var dir = av.fzr.dir[fzdomid];
   av.anl.loadWorldData(0, dir);
-  av.anl.loadSelectedData(0, 'yLeftSelect', 'left');
-  av.anl.loadSelectedData(0, 'yRightSelect', 'right');
+  av.anl.loadSelectedData(0, 'yLeftSelect', 'left', 'av.dnd.landpopDish0');
+  av.anl.loadSelectedData(0, 'yRightSelect', 'right', 'av.dnd.landpopDish0');
 };
 
 av.dnd.landpopDish1 = function (dnd, source, nodes, target) {
@@ -1475,8 +1476,8 @@ av.dnd.landpopDish1 = function (dnd, source, nodes, target) {
   var fzdomid = Object.keys(source.selection)[0];
   var dir = av.fzr.dir[fzdomid];
   av.anl.loadWorldData(1, dir);
-  av.anl.loadSelectedData(1, 'yLeftSelect', 'left');
-  av.anl.loadSelectedData(1, 'yRightSelect', 'right');
+  av.anl.loadSelectedData(1, 'yLeftSelect', 'left', 'av.dnd.landpopDish1');
+  av.anl.loadSelectedData(1, 'yRightSelect', 'right', 'av.dnd.landpopDish1');
 };
 
 av.dnd.landpopDish2 = function (dnd, source, nodes, target) {
@@ -1499,8 +1500,8 @@ av.dnd.landpopDish2 = function (dnd, source, nodes, target) {
   var fzdomid = Object.keys(source.selection)[0];
   var dir = av.fzr.dir[fzdomid];
   av.anl.loadWorldData(2, dir);
-  av.anl.loadSelectedData(2, 'yLeftSelect', 'left');
-  av.anl.loadSelectedData(2, 'yRightSelect', 'right');
+  av.anl.loadSelectedData(2, 'yLeftSelect', 'left', 'av.dnd.landpopDish2');
+  av.anl.loadSelectedData(2, 'yRightSelect', 'right', 'av.dnd.landpopDish2');
 };
 //----------------------------------------------------------------------------------------- end av.dnd.landpopDish# --*/
 
@@ -1509,7 +1510,7 @@ av.dnd.landpopDish2 = function (dnd, source, nodes, target) {
 // ****************************************************************************************************************** */
 //used to re-name freezer items after they are created
 //http://jsfiddle.net/bEurr/10/
-// if (av.dbg.flg.root) { console.log('Root: before av.dnd.contextMenu'); }
+// // if (av.dbg.flg.root) { console.log('Root: before av.dnd.contextMenu'); }
 av.dnd.contextMenu = function(target, fzItemID, from) {
   'use strict';
   var fzSection = target.node.id;
