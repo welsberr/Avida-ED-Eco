@@ -730,7 +730,8 @@
   // used to create several structures used in defining parameters for the environment.cfg file
   av.fzr.clearEnvironment = function(from) {
     //console.log(from + ' called av.fzr.clearEnvironment');
-    av.oldNut = av.nut;
+    av.oldNut = {};
+    av.oldNut = JSON.parse(JSON.stringify(av.nut));
     av.nut = {};
     av.nut.hideFlags = {};
     av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.fzr.clearEnvironment');
@@ -798,7 +799,10 @@
 */
     };   //end of looping through the logic tasks.
     if (av.dbg.flg.nut) {
-      av.cleanNut = av.nut;
+      av.cleanNut = {};
+      av.cleanNut = JSON.parse(JSON.stringify(av.nut));
+      av.cleanNut[tsk].uiAll.geometry = 'grid';
+      console.log('av.nut[tsk].uiAll.geometry', av.nut[tsk].uiAll.geometry, '; tsk=', tsk);
       console.log('av.oldNut =', av.oldNut);
       console.log('av.cleanNut=', av.cleanNut);
     }

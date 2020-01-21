@@ -742,7 +742,10 @@
         //if (av.dbg.flg.nut) console.log('numTsk=', numTsk,'; av.nut[numTsk].uiAll.geometry=', av.nut[numTsk].uiAll.geometry);
 
         //Find the supply type
-        if (0 <= rSourcObj.initial[ndx]) {
+        if (0 == rSourcObj.initial[ndx]) {
+          av.nut[numTsk].uiSub.supplyType[ndx] = 'None';
+        } 
+        else if (0 < rSourcObj.initial[ndx]) {
           av.nut[numTsk].uiSub.supplyType[ndx] = 'Finite';
         };
         if (0 < rSourcObj.inflow[ndx]) {
@@ -913,7 +916,7 @@
     av.frd.nutrientParse(fileStr, 'av.frd.environment2struct');    // uses av.nut
     if (av.dbg.flg.nut) { 
       av.nutConfig = {};
-      av.nutConfig = av.nut;
+      av.nutConfig = JSON.parse(JSON.stringify(av.nut));
       console.log('av.frd.nutrientParse = ', av.nutConfig); 
     }    
     var errors = av.frd.environmentParse(fileStr);    // uses av.fzr.env.react This is in the test tab only and will be removed
@@ -1028,7 +1031,7 @@
     }
     if (av.dbg.flg.nut) { 
       av.nut2dom = {};
-      av.nut2dom = av.nut;
+      av.nut2dom = JSON.parse(JSON.stringify(av.nut));
       console.log('nut2dom = ', av.nut2dom); 
     }
     if (av.dbg.flg.nut) { console.log('================================================================== end of av.frd.nutrientStruct2dom =='); }
