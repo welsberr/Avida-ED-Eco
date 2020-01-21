@@ -649,9 +649,6 @@ av.dnd.makeMove = function (source, nodes, target) {
     case av.dnd.ancestorBox:
       added = av.dnd.lndAncestorBox(av.dnd.move);
       break;
-    case av.dnd.ancestorBoTexs:
-      added = av.dnd.lndAncestorBoTest(av.dnd.move);
-      break;
     case av.dnd.activeConfig:
       added = av.dnd.lndActiveConfig(av.dnd.move, 'av.dnd.makeMove');
       break;
@@ -662,18 +659,19 @@ av.dnd.makeMove = function (source, nodes, target) {
       added = av.dnd.lndTestConfig(av.dnd.move);
       break;
   }
+  if(!added) { console.log('error moving item');  }
 };
-//--------------------------------------------------------------------------------------------- end av.dnd.makeMove --*/
-//av.post.data = { is defined as around avidaED.js 1950
+//----------------------------------------------------------------------------------------------- end av.dnd.makeMove --
 
 
-//------------------------------------------------------------------------------------------- av.dnd.lndAncestorBox --*/
+//--------------------------------------------------------------------------------------------- av.dnd.lndAncestorBox --
 av.dnd.lndAncestorBox = function (move) {
   'use strict';
   var added;
   //Do not copy parents if one is moved within Ancestor Box
   if ('ancestorBox' != move.source.node.id) {
     //av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
+    /*
     av.post.data = {
       'operation' : 'DojoDnd',
       'name' : 'av.dnd.lndAncestorBox',
@@ -682,15 +680,20 @@ av.dnd.lndAncestorBox = function (move) {
       'assumptions' : {'nodeName': move.nodeName, 'via': move.via}
     };
     av.post.usrOut(av.post.data, 'in dojoDND.js line 467');
-
+     */
+    console.log('move=', move);
+    
+    //The rest of this is about updating data for parents and the automatic placement of that parent.
     //find genome by finding source
     //console.log('seq=', av.fzr.file[move.dir+'/genome.seq']);
     av.parents.genome.push(av.fzr.file[move.dir+'/genome.seq']);
     var nn = av.parents.name.length;
     av.parents.autoNdx.push(nn);
     av.parents.injected.push(false);
-    var newName = av.dnd.nameParent(move.nodeName);
+    
+    var newName = av.dnd.nameParent(move.sourceMoveData.data);
     document.getElementById(move.targetDomId).textContent = newName;
+    
     av.parents.howPlaced.push('auto');
     av.parents.domid.push(move.targetDomId); //domid in ancestorBox used to remove if square in grid moved to trashcan
     //Find color of ancestor
@@ -698,13 +701,15 @@ av.dnd.lndAncestorBox = function (move) {
     else { av.parents.color.push(av.color.defaultParentColor); }
     av.parents.placeAncestors();
     if (av.debug.dnd) console.log('parents', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]);
+    av.grd.drawGridSetupFn('av.dnd.lndAncestorBox');
+
     return (true);
   }
   else return (false);
 };
-//--------------------------------------------------------------------------------------- end av.dnd.lndAncestorBox --*/
+//----------------------------------------------------------------------------------------- end av.dnd.lndAncestorBox --
 
-//---------------------------------------------------------------------------------------- av.dnd.lndAncestorBoTest --*/
+//------------------------------------------------------------------------------------------ av.dnd.lndAncestorBoTest --
 av.dnd.lndAncestorBoTest = function (move) {
   'use strict';
   var added;
@@ -739,10 +744,10 @@ av.dnd.lndAncestorBoTest = function (move) {
   }
   else return (false);
 };
-//------------------------------------------------------------------------------------ end av.dnd.lndAncestorBoTest --*/
+//-------------------------------------------------------------------------------------- end av.dnd.lndAncestorBoTest --
 
 // Process Drop on gridCanvas
-//------------------------------------------------------------------------------------------- av.dnd.landGridCanvas --*/
+//--------------------------------------------------------------------------------------------- av.dnd.landGridCanvas --
 av.dnd.landGridCanvas = function (source, nodes, target) {
   'use strict';
   if (av.debug.dnd) console.log('inside gridCanvas dnd');

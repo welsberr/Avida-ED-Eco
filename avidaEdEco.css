@@ -185,7 +185,7 @@
   }
 .freezerClass{
   border: 1px solid #BABABA;
-  flex: 1;                /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+  flex: 1;                /* fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
   overflow:scroll;
   max-height: 90vh;
   width: 100%;
@@ -202,10 +202,12 @@
 }
 .freezerSummaryClass{
   font-size: 130%;
-  background: #EEE;
+  background: #EEE;      /* was #EEE; */
   width: 100%;
 }
-
+.freezerContainer {
+  padding-left: 10px;
+}
 /* trash area below freezer */
 #trashCan { 
   grid-area: trashCan; 

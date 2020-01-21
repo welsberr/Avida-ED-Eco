@@ -1,6 +1,6 @@
 
  // // if (av.dbg.flg.root) { console.log('Root: AvidaED.js at beginning of file on 2020_0111 @ 20:21'); }
- if (true) { console.log('Root: AvidaED.js at beginning of file on 2020_0114 @ 22:54'); }
+ if (true) { console.log('Root: AvidaED.js at beginning of file on 2020_0121 @ 00:53'); }
 
 
 // need a server to run Avida-ED from a file. The one below works.
