@@ -72,6 +72,12 @@
 //  Need to draw plot when open Stats from Setup page
 //  the avidaDataRecorder.csv does not export correctly, but is created correctly when the population is frozen
 //  
+//  In the environment.cfg file I wrote, I put one unit or resouce in each cell for grid; infinite. I need to have 
+//  the same amount of resouce as in the default so it will default to the corret courrect amount if the user changes from 
+//  infimite to finite in the UI. 
+//  
+//  I think it will write to have the default amount of resource for that region. 
+//  
 //  Oraganism Page -------
 //  
 //  Fixed: canvases for bit patterns do not work.
@@ -2651,13 +2657,6 @@ require([
   dojo.connect(dijit.byId('autoUpdateRadiTest'), 'onClick', function () {
     av.post.addUser('Button: autoUpdateRadiTest');
     av.ui.autoStopFlag = true;
-  });
-
-
-  dojo.connect(dijit.byId('autoUpdateSpinneTest'), 'onChange', function () {
-    av.post.addUser('Spinner: autoPauseNum = ' + av.dom.autoPauseNum.value);
-    av.ui.autoStopValue = dijit.byId('autoUpdateSpinneTest').get('value');
-    //console.log('autoPauseNum=', av.dom.autoPauseNum.value);
   });
 
   //********************************************************************************************************************

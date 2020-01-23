@@ -321,7 +321,9 @@
             txt += 'REACTION ' + rname + ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:max=1:min=1  requisite:max_count=1 \n';
             break;
           case 'infinite':
-            txt += 'RESOURCE ' + rname + ':geometry=grid:initial=' + numCells + ' \n';   //cells should have one, but not deplete any
+            sgrPerCell = av.sgr.nut.dft.uiSub.initialHi;
+            regionInit = numCells * sgrPerCell;
+            txt += 'RESOURCE ' + rname + ':geometry=grid:initial=' + regionInit + ':xdiffuse=0:ydiffuse=0\n';   //cells should have one, but not deplete any
             txt += 'REACTION ' + rname +  ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:depletable=0 requisite:max_count=1 \n';
             break;
           case 'finite':

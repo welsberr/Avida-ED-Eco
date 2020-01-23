@@ -990,10 +990,8 @@
     var cols = Number(av.nut.wrldCols);
     var rows = Number(av.nut.wrldRows);
     var wrldSize = cols * rows;
-    if (av.dbg.flg.nut) { console.log(from, ' called av.frd.defaultNut2dom: cols = ', cols, '; rows = ', rows, '; wrldSize = ', wrldSize); }
+    if (av.dbg.flg.nut) { console.log(from, ' called av.frd.nutrientStruct2dom: cols = ', cols, '; rows = ', rows, '; wrldSize = ', wrldSize); }
     
-    if (av.dbg.flg.nut) { console.log(from, ' called av.frd.nutrientStruct2dom'); }
-
     for (var ii = 0; ii < sugarLength; ii++) {
       numTsk = av.sgr.logEdNames[ii];
       tsk = av.sgr.logicNames[ii];

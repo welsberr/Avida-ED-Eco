@@ -74,11 +74,12 @@
     //console.log(from, 'called av.grd.setMapData: av.grd.msg.fitness=',av.grd.msg.fitness);
     if (undefined != av.grd.msg.fitness) {
       //console.log('av.grd.msg', av.grd.msg);
-      //console.log('av.grd.mxFit', av.grd.mxFit, '; av.grd.msg.fitness.maxVal', av.grd.msg.fitness.maxVal, '; limit',
-      //  (1 - av.grd.rescaleTolerance) * av.grd.mxFit);
-      if (av.grd.mxFit < av.grd.msg.fitness.maxVal || ( av.grd.updateNum >3000 && (1 - av.grd.rescaleTolerance) * av.grd.mxFit > av.grd.msg.fitness.maxVal) ) {
+      //console.log('av.grd.mxFit=', av.grd.mxFit, '; av.grd.msg.fitness.maxVal=', av.grd.msg.fitness.maxVal, '; low limit=',
+      //  (1 - av.grd.rescaleTolerance) * av.grd.mxFit, '; lo2 limit = ', (1 - 2*av.grd.rescaleTolerance) * av.grd.mxFit );
+      if (av.grd.mxFit < av.grd.msg.fitness.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxFit > av.grd.msg.fitness.maxVal) ) {
         av.grd.mxFit = av.grd.mxFit + ((1 + av.grd.rescaleTolerance) * av.grd.msg.fitness.maxVal - av.grd.mxFit) / av.grd.rescaleTimeConstant;
         av.grd.reScaleFit = 'rescaling';
+        //console.log('rescaling')
       }
       else av.grd.reScaleFit = '';
 
