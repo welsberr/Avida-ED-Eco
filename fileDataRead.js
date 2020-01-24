@@ -353,6 +353,7 @@
 
     av.frd.defaultNut2dom('av.frd.updateSetup');               //put data from defaults in the dom.
     av.frd.nutrientStruct2dom('av.frd.updateSetup');           //puts data from the structure in the the dom for user interface
+    //av.sgr.updateSugarColors('av.frd.updateSetup');  //now called from av.sgr.changeDetailsLayout
 
     doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
     if (undefined !== doctext) { av.frd.pauseRunAtTXT2form(doctext); }
@@ -943,7 +944,7 @@
       document.getElementById(tsk+'0geometry').value = av.sgr.nut.dft.uiAll.geometry;
       document.getElementById(tsk+'0supplyType').value = av.sgr.nut.dft.uiAll.supplyType;
       document.getElementById(tsk+'0regionLayout').value = av.sgr.nut.dft.uiAll.regionLayout;
-      document.getElementById(tsk+'0initial').value = av.sgr.nut.dft.uiAll.initial;
+      document.getElementById(tsk+'0initial').value = av.sgr.nut.dft.uiAll.initial; 
 
       //for now only one dish - entire world. Later there will be subdishes initial plan is for 2 and then 4;
       for (subNum = 1; subNum <= 1; subNum++) {

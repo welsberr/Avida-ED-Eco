@@ -69,7 +69,7 @@
     var idx = domObj.selectedIndex;        // get the index of the selected option 
     var which = domObj.options[idx].value;   // get the value of the selected option 
     av.sgr.ChangeAllGeo(which);
-    av.sgr.setSugarColors(true);  //true is to turn colors on;
+    //av.sgr.setSugarColors(true);  //true is to turn colors on;    //color now dependent on presence absence of resources for that task
     document.getElementById('allSugarGeometry').value = 'Neutral';
   };
 
@@ -219,6 +219,7 @@
   };
 
   //------------------------------------------------------------------------------------------- av.sgr.setSugarColors --
+    // not called as of 2020_0124
   av.sgr.setSugarColors = function(colorFlg) {
     var idname;
     var backgndColor = av.color.greyMap[av.sgr.sugarGreyShade];
@@ -246,9 +247,46 @@
       }
     }
   };
+  
+  //---------------------------------------------------------------------------------------- av.sgr.updateSugarColors --
+  // not called as of 2020_0124
+  av.sgr.updateSugarColors = function() {
+    var tsk;
+    var sub = 1;
+    var colorFlg = true;
+    var from = 'av.sgr.update.colors';
+    var geometry, supplyType, initial;
+    var len = av.sgr.logicNames.length;
+    for (ii = 0; ii < len; ii++) {
+      tsk = av.sgr.logicNames[ii];
+      geometry = document.getElementById(tsk+'0geometry').value;
+      if ('global' == geometry.toLowerCase()) {
+        supplyType = document.getElementById(tsk + '0supplyType').value.toLowerCase();
+        if ('none' == supplyType.toLowerCase() ) {
+          colorFlg = false;
+        }
+      }
+      // now look at local resources that might be different in the different subSections in the future. 
+      else {
+        supplyType = document.getElementById(tsk + sub + 'supplyType').value.toLowerCase();
+        if ('none' == supplyType.toLowerCase() ) {
+          colorFlg = false;
+        }
+        else if ('finite' == supplyType.toLowerCase() ) {
+          initial = document.getElementById(tsk+sub+'initialHiInput').value;
+          if (0 >= initial) {
+            colorFlg = false;
+          }
+        }
+      }
+      // for all tasks call setSingeleSugarColor
+      av.sgr.setSingleSugarColor(colorFlg, ii, from);
+    }
+  };
+  //------------------------------------------------------------------------------------ end av.sgr.updateSugarColors --
 
   //--------------------------------------------------------------------------------- av.sgr.OpenCloseAllSugarDetails --
-  av.sgr.OpenCloseAllSugarDetails = function(selectedOption, from){
+  av.sgr.OpenCloseAllSugarDetails = function(selectedOption, from) {
     var endName = '0section';   //nanGeometry
     var idName = '';
     var openFlag = false;
@@ -261,6 +299,68 @@
     }
     if (av.dbg.flg.nut) { console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption, '; openFlag=', openFlag, '; from=', from); }
   };
+  
+  //-------------------------------------------------------------------------------------- av.sgr.setSingleSugarColor --
+  av.sgr.setSingleSugarColor = function(colorFlg, tskNum, from) {
+    console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg);
+    var idname;
+    var backgndColor = av.color.greyMap[av.sgr.sugarGreyShade];
+    var nameColor = 'Black';
+    var darkColor = '#eee';
+      //need to think this thru as eventually there will be up to 4 subsections. Just one for now.
+      idname = av.sgr.logicNames[tskNum]+'0section';
+      //if ('Local' == document.getElementById('allSugarGeometry').value) {    //when determined by local vs global 
+      if (colorFlg) {
+        backgndColor = av.color[av.sgr.sugarColors[tskNum]][av.sgr.sugarBackgroundShade];
+        nameColor = av.color[av.sgr.sugarColors[tskNum]][av.sgr.sugarNameShade]; 
+        darkColor = av.color[av.sgr.sugarColors[tskNum]][av.sgr.sugarNameShade+10]; 
+      }
+      // make grey
+      else {
+        backgndColor = av.color.greyMap[av.sgr.sugarBackgroundShade];
+        nameColor = av.color.greyMap[av.sgr.sugarNameShade]; 
+        darkColor = av.color.greyMap[av.sgr.sugarNameShade+10];         
+      }
+      idname = av.sgr.logicNames[tskNum]+'0section';
+      document.getElementById(idname).style.backgroundColor = backgndColor;
+      idname = av.sgr.logicNames[tskNum]+'0title';
+      //console.log('idname=',idname);
+      document.getElementById(idname).style.color = nameColor;  
+      // eventually there will be up to 4 subsections. deal with that later.
+      for (var sub=1; sub < 2; sub++) {
+        idname = av.sgr.logicNames[tskNum]+sub+'regionName';
+        document.getElementById(idname).style.color = darkColor;  
+      }
+  };
+  //---------------------------------------------------------------------------------- end av.sgr.setSingleSugarColor --
+
+  av.sgr.findSugarPresent = function(supplyType, geometry, tsk, sub, from) {
+    console.log(from, 'called av.sgr.findSugarPresent: supplyType=', supplyType, '; geometry=', geometry, '; tsk=', tsk, '; sub=', sub);
+    var colorFlg = true;
+    var indx = av.sgr.logicNames.indexOf(tsk);
+    if ('global' == geometry.toLowerCase()) {
+      supplyType = document.getElementById(tsk + '0supplyType').value.toLowerCase();
+      if ('none' == supplyType.toLowerCase() ) {
+        colorFlg = false;
+      }
+    }
+    // now look at local resources that might be different in the different subSections in the future. 
+    else {
+      supplyType = document.getElementById(tsk + sub + 'supplyType').value.toLowerCase();
+      if ('none' == supplyType.toLowerCase() ) {
+        colorFlg = false;
+      }
+      else if ('finite' == supplyType.toLowerCase() ) {
+        initial = document.getElementById(tsk+sub+'initialHiInput').value;
+        if (0 >= initial) {
+          colorFlg = false;
+        }
+      }
+    }
+    // for all tasks call setSingeleSugarColor
+    av.sgr.setSingleSugarColor(colorFlg, indx, 'av.sgr.findSugarPresent');
+  };
+
 
   //-------------------------------------------------------------------------------------- av.sgr.changeDetailsLayout --
   av.sgr.changeDetailsLayout = function(tsk, sub, from) {
@@ -272,7 +372,8 @@
 
     // one line method to get value of select/option struture. 
     var geometry = document.getElementById(tsk+'0geometry').value;
-
+    var geoLo = geometry.toLowerCase();
+    
     //this 2 line method woks to get the value of the option in the select structure, but so does the one line method;
     //var idx = document.getElementById(tsk+'0geometry').selectedIndex;
     //var geoOption = document.getElementById(tsk+'0geometry').options[idx].value;   // get the value of the selected option   
@@ -287,7 +388,8 @@
 
     };
     //console.log('tsk=', tsk, 'sub=', sub, '; geometry=', geometry, '; supplyType =', supplyType, ' ' ,tsk+'0regionLayout=', document.getElementById(tsk+'0regionLayout').value );
-
+    av.sgr.findSugarPresent(supplyType, geoLo, tsk, sub, 'av.sgr.changeDetailsLayout');
+    
     //hide everything. Display parts based on what is selected
     document.getElementById(tsk+'0supplyType').style.display = 'none';      
     document.getElementById(tsk+'0regionLayout').style.display = 'none';

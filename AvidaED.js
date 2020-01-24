@@ -3360,10 +3360,10 @@ require([
   //                                       end of Analysis Page
   // **************************************************************************************************************** */
 
-  //Resize tools might be called here or after "Last things done
+  //Resize tools might be called here or after "Last_things_done"
   
   // **************************************************************************************************************** */
-  //                                          Last things done
+  //                                          Last_things_done
   // **************************************************************************************************************** */
   // Do this after all other is done; end of file
   //must create the rest of the resource/reaction user interface before calling av.sgr.ChangeAllGeo('Global');
@@ -3402,9 +3402,9 @@ require([
   av.ui.toggleDevelopentDisplays('Last_things_done');
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
   av.sgr.ChangeAllGeo('Global');
-  av.sgr.setSugarColors(true);  //true is to turn colors on;
-  av.sgr.ChangeAllsugarSupplyType('Infinite');
-  av.sgr.OpenCloseAllSugarDetails('allClose', 'Last things done');
+  //av.sgr.setSugarColors(true);  //true is to turn colors on;    // set color/grey individually so when 0 resources, grey shades rather than colors
+  av.sgr.ChangeAllsugarSupplyType('Last_things_done');
+  av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');
   
   // May need to do some things here to get the app to look right on the screen. 
   //av.grd.popChartFn();
