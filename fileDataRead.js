@@ -2,7 +2,7 @@
   var av = av || {};  //incase av already exists
   var dijit = dijit || {};  //incase av already exists
 
-  // // if (av.dbg.flg.root) { console.log('Root: before av.fio.addFzItem'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.fio.addFzItem'); }
   /*------------------------------------------------------------------------------------------------ av.fio.addFzItem --*/
   av.fio.addFzItem = function(dndSection, name, type, fileNum) {
     'use strict';
@@ -1869,7 +1869,7 @@
 
   // uses av.fzr.env.react
   // Uses environment.cfg file to create a structure to hold environment variables. 
-  // // if (av.dbg.flg.root) { console.log('Root: before av.frd.environmentParse'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.frd.environmentParse'); }
   av.frd.environmentParse = function (filestr) {
     'use strict';
     var errors = '';

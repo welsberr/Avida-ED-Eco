@@ -5,7 +5,7 @@
 
 
   //get domID list for freezer; just organism section
-  // // if (av.dbg.flg.root) { console.log('Root: before av.mouse.frzOrgCurserSet'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.mouse.frzOrgCurserSet'); }
   av.mouse.frzOrgCurserSet = function(state) {
     'use strict';
     for (var dir in av.fzr.domid) {
@@ -355,7 +355,7 @@
   }
 
   //Key movement on grid
-  // // if (av.dbg.flg.root) { console.log('Root: before av.mouse.arrowKeysOnGrid'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.mouse.arrowKeysOnGrid'); }
   av.mouse.arrowKeysOnGrid = function (event) {
     'use strict';
     if (av.grd.flagSelected) {

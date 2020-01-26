@@ -1,7 +1,7 @@
   //write file data
   var av = av || {};  //incase av already exists
 
-  // // if (av.dbg.flg.root) { console.log('Root: before av.fwt.deleteFzrFile'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.fwt.deleteFzrFile'); }
   av.fwt.deleteFzrFile = function (fileId) {
     'use strict';
     try { delete av.fzr.file[fileId];}
@@ -614,7 +614,7 @@
     av.fio.fzSaveCsvfn();
   };
 
-  // // if (av.dbg.flg.root) { console.log('Root: before av.fwt.makeCSV'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.fwt.makeCSV'); }
   /*-------------------------------------------------------------------------------------------------- av.fwt.makeCSV --*/
   av.fwt.makeCSV = function(fileNm) {
     'use strict';

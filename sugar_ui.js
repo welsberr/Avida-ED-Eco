@@ -19,7 +19,7 @@
 
 
   // This function builds the html for all the other tasks based on the html writen for "orn"
-  // // if (av.dbg.flg.root) { console.log('Root: before av.sgr.buildHtml'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.sgr.buildHtml'); }
   av.sgr.buildHtml = function() {
     //console.log('in av.sgr.buildHtml');
     var tskSectionStr = '';
@@ -147,11 +147,11 @@
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.initialChange = function (domObj) {
-    //console.log('av.sgr.initialChange domObj=', domObj);
+    console.log('av.sgr.initialChange domObj=', domObj);
     if (av.dbg.flg.nut) { console.log('domObj.value=', domObj.value); }
     var ndx = domObj.id.indexOf('Input');
     var id = domObj.id.substring(0, ndx) + 'Text';
-    //console.log('new id=', id, '; old id=', domObj.id);
+    console.log('text id=', id, '; input id=', domObj.id);
     //console.log('Number(domObj.value)=',Number(domObj.value));
     if (isNaN(Number(domObj.value))) {
       document.getElementById(id).innerHTML = 'inital amount must be a number';
@@ -162,6 +162,13 @@
     } else {
       document.getElementById(id).innerHTML = 'inital amount / cell';
       document.getElementById(id).style.color = 'black';
+      var tsk = domObj.id.substring(0, 3);  //start and end (does not inlcude end)
+      var sub = domObj.id.substr(3, 1);     //start and number of characters
+      var geometry = document.getElementById(tsk+'0geometry').value;
+      var supplyType = document.getElementById(tsk+sub+'supplyType').value;
+      console.log('tsk=', tsk, '; geometry=', geometry, '; supplyType=', supplyType);
+      
+     av.sgr.findSugarPresent(supplyType, geometry, tsk, sub, 'av.sgr.initialChange');
     }
   };
 
@@ -640,7 +647,7 @@
   };
 
   //in tst2 page now
-  // // if (av.dbg.flg.root) { console.log('Root: before av.ptd.allSugarCheckBox'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.allSugarCheckBox'); }
   av.ptd.allSugarCheckBox = function (allmode) {
     var onflag = true;
     if ('allComp' == allmode) {
