@@ -487,24 +487,61 @@
 }
 /*************************************************************************** Sugar Accordion using details and select */
 
-/* Header and controls that change all tasks are here. */
+/* Header and controls that change all tasks are here.   /*  background: inherit */
+/* inherit 
+#sugarHeaderTitle { grid-area: headerTitle; justify-self: start ; background: inherit; font-size: 120%;}
+#sugarSetTitle { grid-area:settingTitle; justify-self: start; background: inherit; font-size: 110%; }  
+#allsugarSupplyTypeDiv { grid-area:supplyType ; justify-self: start; background: inherit;}
+#allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: end; background: inherit;}
+#allSugarDetailsDiv { grid-area:detailDiv; justify-self: start; background: inherit;}
 
-#sugarHeaderTitle { grid-area: headerTitle; font-size: 120%; justify-self: start ; background: inherit;}
-#sugarSettingTitle { grid-area:settingTitle; font-size: 110%; place-self: stretch end; background: inherit; }
-#allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: start; background: inherit;}
-#allsugarSupplyTypeDiv { grid-area:supplyType ; justify-self: end; background: inherit;}
-#allSugarDetailsDiv { grid-area:detailDiv ; justify-self: start; background: inherit;}
-/*area below not in use */
-#allSugarBlank { grid-area: allSugarBlank ;  }  /* <div id='allSugarBlank' class='AllsgrBlank'>&nbsp;&nbsp;&nbsp;&nbsp;</div> */
+#allSgr4Blnk { grid-area: allSgr4Blnk; background: inherit; }  
+#allSgr5Blnk { grid-area: allSgr5Blnk; background: inherit; } 
 
 .resourceHeaderContainer {
   display: grid;
-  grid-template-areas: 'headerTitle  settingTitle'
-                       'geometryDiv supplyType '
-                       'detailDiv  detailDiv';
-  justify-content: space-between;
+  grid-template-areas: 'headerTitle    headerTitle   settingTitle'
+                       'allSgr4Blnk  geometryDiv   supplyType '
+                       'allSgr4Blnk  allSgr5Blnk detailDiv';
   width: 100%;
+  grid-template-columns: auto auto auto;
+  justify-content: space-between;	
 }
+*/
+
+/* Header and controls that change all tasks are here.   /*  background: inherit */
+/* inherit */
+#sugarHeaderTitle { grid-area: headerTitle; justify-self: start ; background: inherit; font-size: 120%;}
+#sugarSetTitle { grid-area:setTitle; justify-self: start; background: inherit; font-size: 110%; }  
+#allsugarSupplyTypeDiv { grid-area:supplyType ; justify-self: center; background: inherit;}
+#allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: center; background: inherit;}
+#allSugarDetailsDiv { grid-area:detailDiv; justify-self: center; background: inherit;}
+#geometrySgr { grid-area:geometrySgr; justify-self: center; }
+#supplyTypeSgr { grid-area:supplyTypeSgr; justify-self: center; }
+#showHideSgr { grid-area:showHideSgr; justify-self: center; }
+#taskSugar { grid-area:taskSugar; justify-self: center; }
+
+#allSgr4Blnk { grid-area: allSgr4Blnk; background: inherit; }  
+#allSgr5Blnk { grid-area: allSgr5Blnk; background: inherit; } 
+
+
+
+.resourceHeaderContainer {
+  display: grid;
+  grid-template-areas: 'headerTitle  headerTitle setTitle    setTitle'
+                       'taskSugar  geometrySgr supplyTypeSgr showHideSgr'
+                       'allSgr4Blnk  geometryDiv supplyType  detailDiv';
+  width: 100%;
+  grid-template-columns: auto auto auto auto;
+  justify-content: space-between;	
+}
+
+/*  Not in use
+                          <div id='allSgr4Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                          <div id='allSgr5Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>                          
+*/
+
+
 
 /* Accodion using details/summary and hidden sections also defined here; one detail/summary for each logic task = surgar type */
 

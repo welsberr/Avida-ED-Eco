@@ -616,31 +616,37 @@
                         
                         <div id='sugarHeader' class='resourceHeaderContainer'>
                           <div id='sugarHeaderTitle' class='rHeadItem'>Resource Options: </div>
-                          <div id='sugarSettingTitle' class='rHeadItem'>Set all sugars: </div>
+                          <div id='sugarSetTitle' class='rHeadItem'>Set all sugars: </div>
+                          <div id='allSgr4Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
                           <div id="allSugarGeometryDiv" class='rHeadItem'>
                             <select id="allSugarGeometry" onchange='av.sgr.allSugarGeometryChange(this);'>
                               <option value='Global'>All Global</option>
                               <option value='Grid'>All Local</option>
                               <option value='Neutral' selected>----</option>                            
-                            </select> Geometry &nbsp;&nbsp;
+                            </select>
                           </div>
                           <div id='allsugarSupplyTypeDiv' class='rHeadItem'>
                             <select id='allsugarSupplyType' onchange='av.sgr.allsugarSupplyTypeChange(this);'>
                               <option value='None'>All None</option>
                               <option value='Infinite'>All Infinite</option>
                               <option value='Finite' class='groupFinite'>Local Finite</option>
-                              <option value='Equilibrium' class='groupEquilibrium'>All Equilibrium</option>
-                              <option value='Debug' class='groupDebug'>All debug only</option>
+                              <option value='Equilibrium' class='groupEquilibrium'>All Equal</option>
+                              <option value='Debug' class='groupDebug'>All debug</option>
                               <option value='Neutral' selected>----</option>
-                            </select> Supply type &nbsp;&nbsp;
+                            </select> 
                           </div>
                           <div id='allSugarDetailsDiv' class='rHeadItem'>
                             <select id="allSugarDetails" onchange='av.sgr.allSugarDetailsOpenClose(this);'>
                               <option value='allOpen'>Show All</option>
                               <option value='allClose'>Hide All</option>
                               <option value='Neutral' selected>----</option>                            
-                            </select> Show/Hide Details
+                            </select> 
                           </div>
+                          <div id='geometrySgr'> Geometry</div>
+                          <div id='supplyTypeSgr'>Supply Type</div>
+                          <div id='taskSugar' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                          <div id='showHideSgr' class='rHeadItem'>Show/Hide Details</div>
                         </div>
                         
                         <div id='sugarAccordion'>
@@ -657,7 +663,7 @@
                                 <option id="not0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="not0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="not0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
-                                <option id="not0Debug" class="globalDebug" value="Debug">All debug only</option>
+                                <option id="not0Debug" class="globalDebug" value="Debug">All debug</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="not0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                                 <option id="not0WholeDish" value="1All" selected="">Whole Dish</option>
@@ -665,10 +671,12 @@
                                 <option id="not0TopLeftRight" class="TopLftRit" value="3TopLftRit">Top/Bottom(L/R)</option>
                                 <option id="not0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
-                              <div id="not0initialDiv" class="sugarSummaryDiv">
-                                <label><input id="not0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">
-                                &nbsp;Initial amount / cell&nbsp;&nbsp;</label>
-                              </div>
+                              <span id="not0initialDiv" class="sugarSummaryDiv">
+                                <input id="not0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
+                              </span>
+                              <span>
+
+                              </span>
                             </summary>
 
                             <div id="not0Details" class="sugarDetailSection">
@@ -681,7 +689,7 @@
                                     <option id="not1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="not1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="not1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
-                                    <option id="not1Debug" class="localDebug" value="Debug">All debug only</option>
+                                    <option id="not1Debug" class="localDebug" value="Debug">All debug</option>
                                   </select>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 <div id="not1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -760,7 +768,7 @@
                                 <option id="nan0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="nan0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="nan0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
-                                <option id="nan0Debug" class="globalDebug" value="All">All debug only</option>
+                                <option id="nan0Debug" class="globalDebug" value="All">All debug</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="nan0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                                 <option id="nan0WholeDish" value="1All" selected="">Whole Dish</option>
@@ -769,9 +777,8 @@
                                 <option id="nan0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id="nan0initialDiv" class="sugarSummaryDiv">
-                                <label><input id="nan0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">
-                                &nbsp;Initial amount / cell&nbsp;&nbsp;</label>
-                              </div>
+                                <input id="nan0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
+\                              </div>
                             </summary>
 
                             <div id="nan0Details" class="sugarDetailSection">
@@ -784,7 +791,7 @@
                                     <option id="nan1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="nan1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="nan1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
-                                    <option id="nan1Debug" class="localDebug" value="Debug">All debug only</option>
+                                    <option id="nan1Debug" class="localDebug" value="Debug">All debug</option>
                                   </select>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 <div id="nan1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -863,7 +870,7 @@
                                 <option id="and0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="and0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="and0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
-                                <option id="and0Debug" class="globalDebug" value="All">All debug only</option>
+                                <option id="and0Debug" class="globalDebug" value="All">All debug</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="and0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                                 <option id="and0WholeDish" value="1All" selected="">Whole Dish</option>
@@ -872,8 +879,7 @@
                                 <option id="and0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id="and0initialDiv" class="sugarSummaryDiv">
-                                <label><input id="and0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">
-                                &nbsp;Initial amount / cell&nbsp;&nbsp;</label>
+                                <input id="and0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
                               </div>
                             </summary>
 
@@ -887,7 +893,7 @@
                                     <option id="and1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="and1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="and1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
-                                    <option id="and1Debug" class="localDebug" value="Debug">All debug only</option>
+                                    <option id="and1Debug" class="localDebug" value="Debug">All debug</option>
                                   </select>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 <div id="and1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -966,7 +972,7 @@
                                 <option id="orn0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="orn0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="orn0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
-                                <option id="orn0Debug" class="globalDebug" value="All">All debug only</option>
+                                <option id="orn0Debug" class="globalDebug" value="All">All debug</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="orn0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                                 <option id="orn0WholeDish" value="1All" selected="">Whole Dish</option>
@@ -975,8 +981,7 @@
                                 <option id="orn0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id="orn0initialDiv" class="sugarSummaryDiv">
-                                <label><input id="orn0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">
-                                &nbsp;Initial amount / cell&nbsp;&nbsp;</label>
+                                <input id="orn0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
                               </div>
                             </summary>
 
@@ -990,7 +995,7 @@
                                     <option id="orn1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="orn1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="orn1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
-                                    <option id="orn1Debug" class="localDebug" value="Debug">All debug only</option>
+                                    <option id="orn1Debug" class="localDebug" value="Debug">All debug</option>
                                   </select>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 <div id="orn1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1069,7 +1074,7 @@
                                 <option id="oro0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="oro0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="oro0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
-                                <option id="oro0Debug" class="globalDebug" value="All">All debug only</option>
+                                <option id="oro0Debug" class="globalDebug" value="All">All debug</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="oro0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                                 <option id="oro0WholeDish" value="1All" selected="">Whole Dish</option>
@@ -1078,8 +1083,7 @@
                                 <option id="oro0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id="oro0initialDiv" class="sugarSummaryDiv">
-                                <label><input id="oro0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">
-                                &nbsp;Initial amount / cell&nbsp;&nbsp;</label>
+                                <input id="oro0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
                               </div>
                             </summary>
 
@@ -1093,7 +1097,7 @@
                                     <option id="oro1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="oro1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="oro1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
-                                    <option id="oro1Debug" class="localDebug" value="Debug">All debug only</option>
+                                    <option id="oro1Debug" class="localDebug" value="Debug">All debug</option>
                                   </select>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 <div id="oro1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1172,7 +1176,7 @@
                                 <option id="ant0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="ant0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="ant0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
-                                <option id="ant0Debug" class="globalDebug" value="All">All debug only</option>
+                                <option id="ant0Debug" class="globalDebug" value="All">All debug</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="ant0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                                 <option id="ant0WholeDish" value="1All" selected="">Whole Dish</option>
@@ -1181,8 +1185,7 @@
                                 <option id="ant0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id="ant0initialDiv" class="sugarSummaryDiv">
-                                <label><input id="ant0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">
-                                &nbsp;Initial amount / cell&nbsp;&nbsp;</label>
+                                <input id="ant0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
                               </div>
                             </summary>
 
@@ -1196,7 +1199,7 @@
                                     <option id="ant1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="ant1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="ant1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
-                                    <option id="ant1Debug" class="localDebug" value="Debug">All debug only</option>
+                                    <option id="ant1Debug" class="localDebug" value="Debug">All debug</option>
                                   </select>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 <div id="ant1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1275,7 +1278,7 @@
                                 <option id="nor0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="nor0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="nor0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
-                                <option id="nor0Debug" class="globalDebug" value="All">All debug only</option>
+                                <option id="nor0Debug" class="globalDebug" value="All">All debug</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="nor0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                                 <option id="nor0WholeDish" value="1All" selected="">Whole Dish</option>
@@ -1284,8 +1287,7 @@
                                 <option id="nor0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id="nor0initialDiv" class="sugarSummaryDiv">
-                                <label><input id="nor0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">
-                                &nbsp;Initial amount / cell&nbsp;&nbsp;</label>
+                                <input id="nor0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
                               </div>
                             </summary>
 
@@ -1299,7 +1301,7 @@
                                     <option id="nor1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="nor1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="nor1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
-                                    <option id="nor1Debug" class="localDebug" value="Debug">All debug only</option>
+                                    <option id="nor1Debug" class="localDebug" value="Debug">All debug</option>
                                   </select>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 <div id="nor1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1378,7 +1380,7 @@
                                 <option id="xor0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="xor0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="xor0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
-                                <option id="xor0Debug" class="globalDebug" value="All">All debug only</option>
+                                <option id="xor0Debug" class="globalDebug" value="All">All debug</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="xor0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                                 <option id="xor0WholeDish" value="1All" selected="">Whole Dish</option>
@@ -1387,8 +1389,7 @@
                                 <option id="xor0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id="xor0initialDiv" class="sugarSummaryDiv">
-                                <label><input id="xor0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">
-                                &nbsp;Initial amount / cell&nbsp;&nbsp;</label>
+                                <input id="xor0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
                               </div>
                             </summary>
 
@@ -1402,7 +1403,7 @@
                                     <option id="xor1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="xor1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="xor1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
-                                    <option id="xor1Debug" class="localDebug" value="Debug">All debug only</option>
+                                    <option id="xor1Debug" class="localDebug" value="Debug">All debug</option>
                                   </select>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 <div id="xor1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1481,7 +1482,7 @@
                                 <option id="equ0Infinite" value="Infinite" selected="">Infinite</option>
                                 <option id="equ0Finite" class="globalFinite" value="Finite">Finite</option>
                                 <option id="equ0Equilibrium" class="globalEquilibrium" value="Equilibrium">Equilibrium</option>
-                                <option id="equ0Debug" class="globalDebug" value="All">All debug only</option>
+                                <option id="equ0Debug" class="globalDebug" value="All">All debug</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <select id="equ0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                                 <option id="equ0WholeDish" value="1All" selected="">Whole Dish</option>
@@ -1490,8 +1491,7 @@
                                 <option id="equ0Quarters" class="Quarters" value="4Quarters">Quarters</option>
                               </select>&nbsp;&nbsp;&nbsp;
                               <div id="equ0initialDiv" class="sugarSummaryDiv">
-                                <label><input id="equ0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">
-                                &nbsp;Initial amount / cell&nbsp;&nbsp;</label>
+                                <input id="equ0initial" class="sugInitialInput" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
                               </div>
                             </summary>
 
@@ -1505,7 +1505,7 @@
                                     <option id="equ1Infinite" value="Infinite" selected="">Infinite</option>
                                     <option id="equ1Finite" class="localFinite" value="Finite">Finite</option>
                                     <option id="equ1Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
-                                    <option id="equ1Debug" class="localDebug" value="Debug">All debug only</option>
+                                    <option id="equ1Debug" class="localDebug" value="Debug">All debug</option>
                                   </select>&nbsp;&nbsp;&nbsp;
                                 </div>
                                 <div id="equ1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1614,7 +1614,7 @@
                         <div class='ancestorContainer' id='ancestorBoTest'></div>
                       </div>
                       <div class='even'>
-                        Place Offspring:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Place Offspring in Test Dish:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='childParentRadiTest'
                                intermediateChanges='false'
                                iconClass='dijitNoIcon' name='child' value='nearParent'>
@@ -1691,7 +1691,7 @@
                         <div class='ancestorContainer' id='ex1ancestorBox'></div>
                       </div>
                       <div class='even'>
-                        Place Offspring:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Place Offspring Ex1:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='ex1childParentRadio'
                                intermediateChanges='false'
                                iconClass='dijitNoIcon' name='child' value='nearParent'>
@@ -2292,7 +2292,7 @@
           </div> <span id='end_showTextBlock'></span>  
           
         </div> <span id="end_mainBlockHolder"></span>
-      </div>
+      </div>  <spam id="end_class_mainRow"></spam>
     </div><span title='end of allAvida'></span>
     
     
