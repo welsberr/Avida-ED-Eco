@@ -511,36 +511,39 @@
 
 /* Header and controls that change all tasks are here.   /*  background: inherit */
 /* inherit */
-#sugarHeaderTitle { grid-area: headerTitle; justify-self: start ; background: inherit; font-size: 120%;}
-#sugarSetTitle { grid-area:setTitle; justify-self: start; background: inherit; font-size: 110%; }  
+#sugarHeaderTitle { grid-area: headerTitle; justify: start ; background: #CCC; font-size: 120%;}
+#sugarSetTitle { grid-area:setTitle; justify-self: center; background: inherit; font-size: 110%; }
 #allsugarSupplyTypeDiv { grid-area:supplyType ; justify-self: center; background: inherit;}
 #allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: center; background: inherit;}
 #allSugarDetailsDiv { grid-area:detailDiv; justify-self: center; background: inherit;}
-#geometrySgr { grid-area:geometrySgr; justify-self: center; }
-#supplyTypeSgr { grid-area:supplyTypeSgr; justify-self: center; }
-#showHideSgr { grid-area:showHideSgr; justify-self: center; }
+#geometrySgr { grid-area:geometrySgr; justify-self: center; background: inherit;}
+#supplyTypeSgr { grid-area:supplyTypeSgr; justify-self: center; background: inherit;}
+#showHideSgr { grid-area:showHideSgr; justify-self: center; background: inherit;}
 #taskSugar { grid-area:taskSugar; justify-self: center; }
 
-#allSgr4Blnk { grid-area: allSgr4Blnk; background: inherit; }  
-#allSgr5Blnk { grid-area: allSgr5Blnk; background: inherit; } 
+#allSgr4Blnk { grid-area: allSgr4Blnk; background: #CCC; }
+#allSgr5Blnk { grid-area: allSgr5Blnk; background: #CCC; }
 
 
 
 .resourceHeaderContainer {
   display: grid;
-  grid-template-areas: 'headerTitle  headerTitle setTitle    setTitle'
-                       'taskSugar  geometrySgr supplyTypeSgr showHideSgr'
+  grid-template-areas: 'headerTitle  headerTitle setTitle    allSgr5Blnk'
+                       'allSgr4Blnk  geometrySgr supplyTypeSgr showHideSgr'
                        'allSgr4Blnk  geometryDiv supplyType  detailDiv';
   width: 100%;
-  grid-template-columns: auto auto auto auto;
-  justify-content: space-between;	
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: 33fr 33fr 33fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background: #DDD;
 }
 
 /*  Not in use
                           <div id='allSgr4Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                          <div id='allSgr5Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>                          
+                          <div id='allSgr5Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                          <div id='taskSugar' class='rHeadItem'>Sugar Name</div>
 */
-
 
 
 /* Accodion using details/summary and hidden sections also defined here; one detail/summary for each logic task = surgar type */
