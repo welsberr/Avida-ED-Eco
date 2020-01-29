@@ -74,13 +74,13 @@ div {
 
 div.odd {
   background: #CCCCCC;
-  padding: 0.5em 0.3em 1em 0.3em;
+  padding: 0.5em 0.5em 1em 0.5em;   /* top, right, bottom, left;  right and left were 0.3 before*/
   clear: left;
 }
 
 .even {
   background: #EEEEEE;
-  padding: 0.5em 0.3em 1em 0.3em;
+  padding: 0.5em 0.3em 1em 0.5em;
   clear: left;
 }
 

@@ -70,7 +70,7 @@
       </div>
     </div>
 
-    <div id='allAvida'>
+    <div id='allAvidaContainer'>
       <div class="headerRow">
         <div id="leftPnlBtnHolder" class="leftPnlBtnHlderShow">
           <img id='lftPnlButtonImg' src='images/lftPnlBtn2.png'/>
@@ -190,7 +190,6 @@
         </div>
       </div>
 
-      <div class="mainRow">
         <div id="navColId" class="navColClass">
           
           <div id='mainButtons' class="mainPageButtons">
@@ -246,7 +245,7 @@
               <input id='developmentToggle' class='devoShow' type='button' value='DevoToggle' onclick='av.ui.toggleDevelopentDisplays()' />
             </div>
           </div>
-        </div><span id="end_of_navCol"></span>
+        </div><span id="end_of_navCol" style='display:none;'></span>
 
         <div class="mainBlockHolder">
 
@@ -617,7 +616,6 @@
                         <div id='sugarHeader' class='resourceHeaderContainer'>
                           <div id='sugarHeaderTitle' class='rHeadItem'>Resource Options: </div>
                           <div id='sugarSetTitle' class='rHeadItem'>Set all sugars: </div>
-                          <div id='allSgr4Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
                           <div id="allSugarGeometryDiv" class='rHeadItem'>
                             <select id="allSugarGeometry" onchange='av.sgr.allSugarGeometryChange(this);'>
@@ -645,8 +643,9 @@
                           </div>
                           <div id='geometrySgr'> Geometry</div>
                           <div id='supplyTypeSgr'>Supply Type</div>
-                          <div id='taskSugar' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
                           <div id='showHideSgr' class='rHeadItem'>Show/Hide Details</div>
+                          <div id='allSgr4Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                          <div id='allSgr5Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
                         </div>
                         
                         <div id='sugarAccordion'>
@@ -2291,8 +2290,7 @@
             </form>
           </div> <span id='end_showTextBlock'></span>  
           
-        </div> <span id="end_mainBlockHolder"></span>
-      </div>  <spam id="end_class_mainRow"></spam>
+        </div> <span id="end_mainBlockHolder" style='display:none;'></span>
     </div><span title='end of allAvida'></span>
     
     

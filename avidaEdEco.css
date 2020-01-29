@@ -15,7 +15,6 @@
   .tabHolderShow {
     flex: 0 0 auto;
     display: block;
-    background:
   }
   .tabHolderHide {
     background: beige;
@@ -56,22 +55,62 @@
   background: #ccc;
 }
   
-  #allAvida{
-    display: flex;
+  #allAvidaContainer{
+    display: grid;
+    grid-template-areas: 'headerRow headerRow headerRow'
+                          'navColClass mainBlockHolder mainBlockHolder';
+    height: 100vh;
+    width: 100vw;
+    max-height: 100vh;
+    max-width: 100vw;
+    margin: 0;
+    background:  #F5F5F5;   /* lightsalmon;  */
 /*   
     min-height: 100vh;
     min-width: 100vw;
     max-height: 100vh;
     max-width: 100vw;
 */
-    height: 100vh;
-    width: 100vw;
-    flex-direction: column;
-    margin: 0;
-    background:  #F5F5F5;   /* lightsalmon;  */
-    align-items: stretch;      
   }
-  .headerRow, .footerRow {
+  .headerRow {
+    grid-area:headerRow;
+    height: 2.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid red;               /* #AAA; */
+  }
+  
+  .navColClass {
+    grid-area:navColClass;
+    place-self: stretch;
+    min-width: 240px;        /*was 152   340px*/
+    display: flex;
+    flex-direction: column;
+    background: #F5F5F5; /* lavender; */
+    border: 1px solid #AAA;
+    max-height: 100vh;
+    resize: horizontal;
+    overflow:scroll;
+  }
+
+/*contains pages (population, Organsims, Analysis) */
+.mainBlockHolder{
+    grid-area:mainBlockHolder;
+    align-self: stretch;
+    background: #F5F5F5;     /* lightskyblue; */
+    height: 100%;
+    width: 100%;
+    border: 1px solid #AAA;
+  }
+
+  
+  
+  
+  
+  
+  
+  .footerRow {
     flex: 0 1 30px;   /*sized to content   was 25  */
     /* background: #ddd; */
     display: flex;
@@ -110,6 +149,7 @@
   }
   #mainMenu{
     flex: 0 1 350px;
+    height: 2.5em;
   }
   #headerMsg{
     flex: 1 1 auto;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
@@ -130,29 +170,6 @@
     margin: auto;
   }
   
-/*contains navigation column and pages (population, Organsims, Analysis) */
-  .mainRow { 
-    flex: 1 1 auto;          /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    height: 100%;
-    background: #F5F5F5; /* red; */
-    max-height: 100vh;
-    max-width: 100vw;
-    overflow:scroll;
-  }
-  .navColClass {
-    resize: horizontal;
-    overflow: auto;
-    min-width: 240px;        /*was 152   340px*/
-    display: flex;
-    flex-direction: column;
-    background: #F5F5F5; /* lavender; */
-    border: 1px solid #AAA;
-    max-height: 100vh;
-    overflow:scroll;
-  }
 
   .mainPageButtons{
     border: 1px solid #AAA;
@@ -194,7 +211,7 @@
 #FreezerTitle {
   font-size: 190%;
   text-align:  center;
-  font-weight: normal;
+  font-weFight: normal;
   width: 100%;
 }
 .frzAccordion {
@@ -210,7 +227,7 @@
 }
 /* trash area below freezer */
 #trashCan { 
-  grid-area: trashCan; 
+  grid-area: trashCan;
   align-self: stretch;
   justify-self: stretch;
 }
@@ -261,14 +278,6 @@
   
 }
 
-
-.mainBlockHolder{
-    background: #F5F5F5;     /* lightskyblue; */
-    flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
-    height: 100%;
-    width: 100%;
-    border: 1px solid #AAA;
-  }
   .mainBlockClassRow {
     display: flex;
     flex-direction: row;
@@ -511,34 +520,37 @@
 
 /* Header and controls that change all tasks are here.   /*  background: inherit */
 /* inherit */
-#sugarHeaderTitle { grid-area: headerTitle; justify-self: start ; background: inherit; font-size: 120%;}
-#sugarSetTitle { grid-area:setTitle; justify-self: start; background: inherit; font-size: 110%; }  
+#sugarHeaderTitle { grid-area: headerTitle; justify: start ; background: #CCC; font-size: 120%;}
+#sugarSetTitle { grid-area:setTitle; justify-self: center; background: inherit; font-size: 110%; }  
 #allsugarSupplyTypeDiv { grid-area:supplyType ; justify-self: center; background: inherit;}
 #allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: center; background: inherit;}
 #allSugarDetailsDiv { grid-area:detailDiv; justify-self: center; background: inherit;}
-#geometrySgr { grid-area:geometrySgr; justify-self: center; }
-#supplyTypeSgr { grid-area:supplyTypeSgr; justify-self: center; }
-#showHideSgr { grid-area:showHideSgr; justify-self: center; }
+#geometrySgr { grid-area:geometrySgr; justify-self: center; background: inherit;}
+#supplyTypeSgr { grid-area:supplyTypeSgr; justify-self: center; background: inherit;}
+#showHideSgr { grid-area:showHideSgr; justify-self: center; background: inherit;}
 #taskSugar { grid-area:taskSugar; justify-self: center; }
 
-#allSgr4Blnk { grid-area: allSgr4Blnk; background: inherit; }  
-#allSgr5Blnk { grid-area: allSgr5Blnk; background: inherit; } 
+#allSgr4Blnk { grid-area: allSgr4Blnk; background: #CCC; }  
+#allSgr5Blnk { grid-area: allSgr5Blnk; background: #CCC; } 
 
 
 
 .resourceHeaderContainer {
   display: grid;
-  grid-template-areas: 'headerTitle  headerTitle setTitle    setTitle'
-                       'taskSugar  geometrySgr supplyTypeSgr showHideSgr'
+  grid-template-areas: 'headerTitle  headerTitle setTitle    allSgr5Blnk'
+                       'allSgr4Blnk  geometrySgr supplyTypeSgr showHideSgr'
                        'allSgr4Blnk  geometryDiv supplyType  detailDiv';
   width: 100%;
-  grid-template-columns: auto auto auto auto;
-  justify-content: space-between;	
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background: #DDD;
 }
 
 /*  Not in use
                           <div id='allSgr4Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                          <div id='allSgr5Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>                          
+                          <div id='allSgr5Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                          <div id='taskSugar' class='rHeadItem'>Sugar Name</div>
 */
 
 
@@ -1291,4 +1303,18 @@ checkbox:focus {
   }
 
   
+  /*---------------------------------------------------------------------------------------------------- Not in use --*/
   
+    /*contains navigation column and pages (population, Organsims, Analysis)         No longer in use*/
+  .mainRowContainer { 
+    flex: 1 1 auto;          /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+    display: grid;
+    grid-template-areas: 'navColClass mainBlockHolder';
+    justify-items: stretch;
+    width: 100%;
+    height: 100%;
+    background: #F5F5F5; /* red; */
+    max-height: 100vh;
+    max-width: 100vw;
+    overflow:scroll;
+  }
