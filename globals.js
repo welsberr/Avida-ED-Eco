@@ -306,7 +306,7 @@
   //used in adjusting size of areas on population page
   av.ui.gridHolderSideBuffer = 0;
   av.ui.popGridCtlWdMin = 380;   //was 430
-  av.ui.popInfoHolderMinWd = 338;
+  av.ui.rightInfoHolderMinWd = 338;
   av.ui.popBotHtMin = 90;
   av.ui.navColIdMinWd = 152;
 
@@ -409,7 +409,7 @@
 
   av.ptd = {};  // on population page that are not part of the grid. (PeTri Dish)
   av.ptd.logicButtons = ['notButton', 'nanButton', 'andButton', 'ornButton', 'oroButton', 'antButton', 'norButton', 'xorButton', 'equButton'];
-  av.ptd.popInfoHolderWd = 395;
+  av.ptd.rightInfoHolderWd = 395;
 
   //structure to hold list of ancestor organisms
   av.parents = {};
@@ -1297,7 +1297,7 @@
   // Population page: Initial assume a square grid and both sidebars open. 
   // navColID or navColClass: wd = 152 includling 2px for a 1 px border. (minimum nice wd) about 84 too narrow, but works. 
   // mainBlockHolder: wd = 
-  // popInfoHolder: mn wd = 500 inlcuding border
+  // rightInfoHolder: mn wd = 500 inlcuding border
   // popStatsBlock: min wd = 364 no border. 
   // selOrgType: min wd = 164  (might make a tad smaller) includes 1 px border
   // popStats4grid: min wd = 176   (get left over)

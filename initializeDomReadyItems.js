@@ -33,7 +33,7 @@
       av.dom.populationBlock = document.getElementById('populationBlock');
       av.dom.organismBlock = document.getElementById('organismBlock');
       av.dom.analysisBlock = document.getElementById('analysisBlock');
-      av.dom.showTextBlock = document.getElementById('showTextBlock');
+      av.dom.showTextDebugBlock = document.getElementById('showTextDebugBlock');
       av.dom.populationButton = document.getElementById('populationButton');
       av.dom.organismButton = document.getElementById('organismButton');
       av.dom.analysisButton = document.getElementById('analysisButton');
@@ -42,9 +42,13 @@
 
       av.dom.lftPnlButtonImg = document.getElementById('lftPnlButtonImg');
       av.dom.rtPnlButtonImg = document.getElementById('rtPnlButtonImg');
+      
+      av.dom.orgInfoHolder = document.getElementById('orgInfoHolder');
+      av.dom.popRightInfoHoldAll = document.getElementById('popRightInfoHoldAll');
+
 
       //Population Page
-      av.dom.popInfoHolder = document.getElementById('popInfoHolder');
+      av.dom.rightInfoHolder = document.getElementById('rightInfoHolder');
       av.dom.statsTab = document.getElementById('statsTab');
       av.dom.setupTab = document.getElementById('setupTab');
       av.dom.testTab = document.getElementById('testTab');

@@ -70,8 +70,8 @@
       </div>
     </div>
 
-    <div id='allAvidaContainer'>
-      <div class="headerRow">
+    <div id='allAvidaContainer' class='all3pop'>
+      <div id='headerMain' class="headerRow">
         <div id="leftPnlBtnHolder" class="leftPnlBtnHlderShow">
           <img id='lftPnlButtonImg' src='images/lftPnlBtn2.png'/>
         </div>
@@ -188,7 +188,7 @@
         <div id='ritePnlBtnHolder' class='ritePnlBtnHlderShow'>
           <img id='rtPnlButtonImg' src='images/rtPnlBtn2.png' alt='image to indicate button to open/close the right information panel'/>
         </div>
-      </div>
+      </div><span id='headerMain_end' class='displayNone'></span>
 
         <div id="navColId" class="navColClass">
           
@@ -232,7 +232,7 @@
                 </div>
               </div>
             </details >
-          </div><span id='freezerClass_end'></span>
+          </div><span id='freezerClass_end' class='displayNone'></span>
 
           <div id="trashDiv" class='trash-grid-container'>
             <div id='trashCan'>
@@ -245,7 +245,7 @@
               <input id='developmentToggle' class='devoShow' type='button' value='DevoToggle' onclick='av.ui.toggleDevelopentDisplays()' />
             </div>
           </div>
-        </div><span id="end_of_navCol" style='display:none;'></span>
+        </div><span id='navColID_end' class='displayNone'></span>
 
         <div class="mainBlockHolder">
 
@@ -317,11 +317,146 @@
                   </div>
                 </div>
                 
-              </div>
-            </div>
+              </div><span id='benchPopBot_end' class='displayNone'></span>
+            </div><span id='mapHolder_end' class='displayNone'></span>
+ 
+          </div>  <span id='populationBlock_end' class='displayNone'></span>
 
-            <div id="popInfoHolder"> 
-              <div id ="popInfoVert">
+
+          <div id="organismBlock" class="mainBlockClassRow">
+            <div class="orgBenchCol">
+              <div id="orgTopId" class="orgBenchTopRow">
+                <div class='orgTopLt'>
+                  <img id='actOrgImg' src='images/Avida-ED-ancestor-icon.png' style='height: 32px;' alt='Avida-ED ancestor Icon image'/>
+                  <div id='activeOrgan' class='popDishClass'></div>
+                </div>
+                <div id='a_control_or_info_can_go_here' class="orgTopRt"></div>
+              </div>
+              <div class="orgMid" id='organismCanvasHolder'>
+                <canvas data-dojo-type='dojo.dnd.Target' id='organCanvas' width='100' height='100'
+                        style='border:1px solid #000000;'></canvas>
+              </div>
+              <div class="orgBotClass" id='orgBotId'>
+                <div id='cycleSlider'></div><br />
+                <div class='lftmargin'>Cycle:
+                  <input id='orgCycle' type='text' value='0' class='orgCycleClass' onchange='av.ind.orgCycleInputChange(this)'/>
+                </div>
+                <div style='text-align:center'>
+                  <button id='orgReset' disabled>Reset</button>
+                  <button id='orgBack' disabled>Back</button>
+                  <button id='orgRun' disabled>Run</button>
+                  <button id='orgForward' disabled>Forward</button>
+                  <button id='orgEnd' disabled>End</button>
+                </div>
+              </div>
+            </div><span id="end_orgBenchCol"></span>
+          </div><span id="end_organismBlock_n_mainBlockClassRow"></span>
+
+          <div id="analysisBlock" class="analysisArea">
+            <div id='anaChrtHolder' class="anaTop" >
+              <div id='anlDndChart'></div>
+            </div>
+            
+            <div id='anaControls' class="anaBot">
+              <div class="analegend">
+                <div id='pop0deleteDiv' class='anaDeleteButtonDiv'>
+                  <button id='pop0delete' class='anaDeleteButton'>X</button>&nbsp;&nbsp;
+                </div>
+                <div id='pop0colorDiv' class='anaColorLineDiv'>
+                  <select  id='pop0color' onchange='av.anl.popColorOnChange(this);'>
+                    <option value='Red' selected>Red</option>
+                    <option value='Blue'>Blue</option>
+                    <option value='Green'>Green</option>
+                    <option value='Yellow'>Yellow</option>
+                    <option value='Orange'>Orange</option>
+                    <option value='Purple'>Purple</option>
+                    <option value='Cyan'>Cyan</option>
+                    <option value='Magenta'>Magenta</option>
+                    <option value='Black'>Black</option>
+                  </select>
+                </div>
+                <div id='popDish0Div' class='popDishHolder'>
+                  <div id='popDish0' class='popDishClass'></div>
+                </div>
+
+                <div id='pop1deleteDiv' class='anaDeleteButtonDiv'>
+                  <button id='pop1delete' class='anaDeleteButton'>X</button>&nbsp;&nbsp;
+                </div>
+                <div id='pop1colorDiv' class='anaColorLineDiv'>
+                  <select  id='pop1color' class='anaColorLine' onchange='av.anl.popColorOnChange(this);'>
+                    <option value='Red'>Red</option>
+                    <option value='Blue' selected>Blue</option>
+                    <option value='Green'>Green</option>
+                    <option value='Yellow'>Yellow</option>
+                    <option value='Orange'>Orange</option>
+                    <option value='Purple'>Purple</option>
+                    <option value='Cyan'>Cyan</option>
+                    <option value='Magenta'>Magenta</option>
+                    <option value='Black'>Black</option>
+                  </select>
+                </div>
+                <div id='popDish1Div' class='popDishHolder'>
+                  <div id='popDish1' class='popDishClass'></div>
+                </div>
+                
+                <div id='pop2deleteDiv' class='anaDeleteButtonDiv'>
+                  <button id='pop2delete' class='anaDeleteButton'>X</button>&nbsp;&nbsp;
+                </div>
+                <div id='pop2colorDiv' class='anaColorLineDiv'>
+                  <select  id='pop2color' onchange='av.anl.popColorOnChange(this);'>
+                    <option value='Red'>Red</option>
+                    <option value='Blue'>Blue</option>
+                    <option value='Green'>Green</option>
+                    <option value='Yellow'>Yellow</option>
+                    <option value='Orange'>Orange</option>
+                    <option value='Purple'>Purple</option>
+                    <option value='Cyan'>Cyan</option>
+                    <option value='Magenta'>Magenta</option>
+                    <option value='Black' selected>Black</option>
+                  </select>
+                </div>
+                <div id='popDish2Div' class='popDishHolder'>
+                  <div id='popDish2' class='popDishClass'></div>
+                </div>
+              </div><span value="analegend"></span>
+              
+              <div class="anaYaxis">
+                <select  id='yLeftSelect' onchange='av.anl.yScaleSelect_onChange(this);'>
+                  <option value='None'>None</option>
+                  <option value='Average Fitness' selected>Average Fitness</option>
+                  <option value='Average Offspring Cost'>Average Offspring Cost</option>
+                  <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
+                  <option value='Number of Organisms'>Number of Organisms</option>
+                  <option value='Number Viable'>Number Viable</option>
+                </select> Thicker line; left y-axis
+                <br></br>
+                <select  id='yRightSelect' onchange='av.anl.yScaleSelect_onChange(this);'>
+                  <option value='None'>None</option>
+                  <option value='Average Fitness'>Average Fitness</option>
+                  <option value='Average Offspring Cost' selected>Average Offspring Cost</option>
+                  <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
+                  <option value='Number of Organisms'>Number of Organisms</option>
+                  <option value='Number Viable'>Number Viable</option>
+                </select> Thinner line; right y-axis
+              </div><span value="anaYaxis"></span>
+            </div><span id='anaControls_end' class='displayNone'></span>
+          </div> <span id='analysisBloc' class='displayNone'></span>
+          
+          <div id='showTextDebugBlock' class="analysisArea">
+            <form id='showTextForm'>
+              Show big text chunks
+              <div  class='even'>
+                Big Text Area to show long text strings:<br />
+                <div>
+                <textarea id='showTextarea' cols='150' rows='50'></textarea><br />
+                </div>
+              </div>
+            </form>
+          </div> <span id='showTextDebugBlock_end' class='displayNone'></span>  
+        </div> <span id='mainBlockHolder_end' class='dispalyNone'></span>
+          
+            <div id='rightInfoHolder'> 
+              <div id='popRightInfoHoldAll'>
                 <div id='popInfoTabHolder' class="tabHolder">
                   <div class="tab">
                     <button class="tablinks active" id="statsTab" onclick="av.ptd.processTab(event, 'popStatsBlock')">Stats</button>
@@ -331,11 +466,11 @@
                     <button class="tablinks" id="tst2Tab" onclick="av.ptd.processTab(event, 'tst2setupBlock')">Test 2</button>
                   </div>
                 </div>
-                <div class="labInfoHolder">
-                  <div id="popStatsBlock" class="labInfoClass labInfoFlex">
-                    <div id="popStatHolder">
-                      <div id="popStatistics">
-                        <div id="selOrgType">
+                <div id='popTabContentHolder' class='labInfoHolder'>  
+                  <div id='popStatsBlock' class="labInfoClass labInfoFlex"> 
+                    <div id='popStatHolder'>
+                      <div id='popStatistics'>
+                        <div id='selOrgType'>
                           <div class='popStatsTitle'>
                             <label id='sotLabel'>Selected Organism Type</label>
                           </div>
@@ -431,7 +566,8 @@
                             </tbody>
                           </table>
                           <label id='dnaLabel'></label>
-                        </div>
+                        </div><span id='selOrgType_end' class='displayNone'></span>
+                        
                         <div id="popStats4grid">
                           <div class='popStatsTitle'>
                             <label id='popStat'>Population Statistics</label>
@@ -471,7 +607,7 @@
                               </tbody>
                             </table>
                           </div>
-                          <div class=popB style="background: white;">
+                          <div id='popTskChartPick' class='popB' style="background: white;">
                             <table id='popsBotTable' class='botPopTable'>
                               <tbody>
                                 <tr>
@@ -527,10 +663,10 @@
                                 </tr>
                               </tbody>
                             </table>
-                          </div>
-                        </div>
-                      </div> <span comment="end of popStatistics"></span>
-                    </div><span comment="end of popStatHolder"></span>
+                          </div> <span id='popTskChartPick_end' class='displayNone'></span>
+                        </div> <span></span>
+                      </div> <span id='popStatistics_id' class='displayNone'></span>
+                    </div><span id='popStatHolder_end' class='displayNone'></span>
                     
                     <div id="displayGridResourceData" class="debug">
                       <div class="grid-currentSugarAmount-container">
@@ -551,7 +687,7 @@
                       <div id='popChart'></div>
                       <div id='popChartDiv'></div>
                     </div>
-                    <div id="miniChartYaxis">
+                    <div id='miniChartYaxis'>
                       <label id='yaxisLabel'>Y-axis</label>
                       <select  id='yaxis'>
                         <option value='Average Fitness' selected>Average Fitness</option>
@@ -561,16 +697,16 @@
                         <option value='Number Viable'>Number Viable</option>
                         <option value='None'>None</option>
                       </select>
-                    </div>
+                    </div><span id='miniChartYaxis_end' class='displayNone'></span>
   
                     <div id='pauseOptions'>
                       Pause Run when run at Update:&nbsp;
                       <label><input id='autoPauseNum' type='text' value='1000' style='width:80px'> when checked
                       <input id="autoPauseCheck" type="checkbox"> </label>
                     </div>
-                  </div>  <span comment="end of popStatsBlock"></span>
+                  </div>  <span id='popStatsBlock_end' class='displayNone'></span>
 
-                  <div id="setupBlock" class="labInfoClass labInfoFlex">
+                  <div id='setupBlock' class="labInfoClass labInfoFlex">
                     <form id='setupForm'>
                       <div id='environmentSettingTitle'>Environmental Settings</div>
                       <div  class='odd'>
@@ -612,42 +748,8 @@
                       </div>
                       
                       <div class='odd'>
-                        
-                        <div id='sugarHeader' class='resourceHeaderContainer'>
-                          <div id='sugarHeaderTitle' class='rHeadItem'>Resource Options: </div>
-                          <div id='sugarSetTitle' class='rHeadItem'>Set all sugars: </div>
-
-                          <div id="allSugarGeometryDiv" class='rHeadItem'>
-                            <select id="allSugarGeometry" onchange='av.sgr.allSugarGeometryChange(this);'>
-                              <option value='Global'>All Global</option>
-                              <option value='Grid'>All Local</option>
-                              <option value='Neutral' selected>----</option>                            
-                            </select>
-                          </div>
-                          <div id='allsugarSupplyTypeDiv' class='rHeadItem'>
-                            <select id='allsugarSupplyType' onchange='av.sgr.allsugarSupplyTypeChange(this);'>
-                              <option value='None'>All None</option>
-                              <option value='Infinite'>All Infinite</option>
-                              <option value='Finite' class='groupFinite'>Local Finite</option>
-                              <option value='Equilibrium' class='groupEquilibrium'>All Equal</option>
-                              <option value='Debug' class='groupDebug'>All debug</option>
-                              <option value='Neutral' selected>----</option>
-                            </select> 
-                          </div>
-                          <div id='allSugarDetailsDiv' class='rHeadItem'>
-                            <select id="allSugarDetails" onchange='av.sgr.allSugarDetailsOpenClose(this);'>
-                              <option value='allOpen'>Show All</option>
-                              <option value='allClose'>Hide All</option>
-                              <option value='Neutral' selected>----</option>                            
-                            </select> 
-                          </div>
-                          <div id='geometrySgr'> Geometry</div>
-                          <div id='supplyTypeSgr'>Supply Type</div>
-                          <div id='showHideSgr' class='rHeadItem'>Show/Hide Details</div>
-                          <div id='allSgr4Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                          <div id='allSgr5Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                        </div>
-                        
+                        <div id='sugarHeaderTitle' class='enviroSubHeading'>Resource Options: </div>
+    
                         <div id='sugarAccordion'>
 
                           <details id="not0section" class="sugarAccordionSection">
@@ -1571,7 +1673,40 @@
                             </div><span id="equ0DetailsEnd"></span>
                           </details>
                                                                                                         
-                        </div><span id='sugarAccordionEnd'></span>
+                        </div><span id='sugarAccordion_end' class='displayNone'></span>
+                        
+                        <div id='sugarFooter' class='resourceHeaderContainer'>
+                          <div id='sugarSetTitle' class='rHeadItem'>Set all Resources</div>
+
+                          <div id="allSugarGeometryDiv" class='rHeadItem'>
+                            <select id="allSugarGeometry" onchange='av.sgr.allSugarGeometryChange(this);'>
+                              <option value='Global'>Global</option>
+                              <option value='Grid'>Local</option>
+                              <option value='Neutral' selected>----</option>                            
+                            </select>
+                          </div>
+                          <div id='allsugarSupplyTypeDiv' class='rHeadItem'>
+                            <select id='allsugarSupplyType' onchange='av.sgr.allsugarSupplyTypeChange(this);'>
+                              <option value='None'>None</option>
+                              <option value='Infinite'>Infinite</option>
+                              <option value='Finite' class='groupFinite'>Finite</option>
+                              <option value='Equilibrium' class='groupEquilibrium'>Equal</option>
+                              <option value='Debug' class='groupDebug'>Debug</option>
+                              <option value='Neutral' selected>----</option>
+                            </select> 
+                          </div>
+                          <div id='allSugarDetailsDiv' class='rHeadItem'>
+                            <select id="allSugarDetails" onchange='av.sgr.allSugarDetailsOpenClose(this);'>
+                              <option value='allOpen'>Show</option>
+                              <option value='allClose'>Hide</option>
+                              <option value='Neutral' selected>----</option>                            
+                            </select> 
+                          </div>
+                          <div id='geometrySgr'> Geometry</div>
+                          <div id='supplyTypeSgr'>Supply Type</div>
+                          <div id='showHideSgr' class='rHeadItem'>Details</div>
+                        </div><span id='sugarFooter_end' class='displayNone'></span>
+                        
                       </div> <span tag='end of odd'></span>
 
                       <div class='even'>
@@ -1586,7 +1721,7 @@
                       </div>
                       
                     </form>
-                  </div>
+                  </div><span id='setupBlock_end' class='displayNone'></span>
 
                   <div id="testSetupBlock" class="labInfoClass labInfoFlex">
                     <form id="testSetupForm">
@@ -1658,7 +1793,7 @@
                         <input type='text' id='autoUpdateSpinneTest' style='width:80px'>
                       </div>
                     </form>
-                  </div>
+                  </div><span id='testSetupBlock_end' class='displayNone'></span>
 
                   <div id='ex1setupBlock' class="labInfoClass labInfoFlex">
                     <form id='ex1setupForm'>
@@ -2034,8 +2169,8 @@
                                intermediateChanges='false' iconClass='dijitNoIcon' name='repeat' value='demo'>
                         <label id='ex1demoLabel'>Demo</label>
                       </div>
-                    </form>
-                  </div> <span id='end of Experiment 1'></span>  
+                    </form><span id='ex1setupForm_end' class='displayNone'></span>
+                  </div> <span id='ex1setupBlock_end' class='displayNone'></span>  
 
 
                   <div id='tst2setupBlock' class="labInfoClass labInfoFlex">
@@ -2044,253 +2179,117 @@
                       <div  class='even'>
                         Text Area to show long text strings:<br />
                         <div>
-                        <textarea id='tst2textarea' cols='80' rows='50'></textarea><br />
-
+                          <textarea id='tst2textarea' cols='80' rows='50'></textarea><br />
                         </div>
                       </div>
 
-                    </form>
-                  </div> <span id='end_tst2setupBlock'></span>  
+                    </form><span id='tst2setupForm_end' class='displayNone'></span>
+                  </div> <span id='tst2setupBlock_end' class='displayNone'></span>  
 
-                </div><span comment="end of infoHolder"></span>
-              </div><span comment="end of popInfoVert"></span>
-            </div>  <span comment="end of popInfoHolder"></span>
-          </div>  <span id="end_populationBlock_in_mainBlockClassRow"></span>
-
-
-          <div id="organismBlock" class="mainBlockClassRow">
-            <div class="orgBenchCol">
-              <div id="orgTopId" class="orgBenchTopRow">
-                <div class='orgTopLt'>
-                  <img id='actOrgImg' src='images/Avida-ED-ancestor-icon.png' style='height: 32px;' alt='Avida-ED ancestor Icon image'/>
-                  <div id='activeOrgan' class='popDishClass'></div>
-                </div>
-                <div id='a_control_or_info_can_go_here' class="orgTopRt"></div>
-              </div>
-              <div class="orgMid" id='organismCanvasHolder'>
-                <canvas data-dojo-type='dojo.dnd.Target' id='organCanvas' width='100' height='100'
-                        style='border:1px solid #000000;'></canvas>
-              </div>
-              <div class="orgBotClass" id='orgBotId'>
-                <div id='cycleSlider'></div><br />
-                <div class='lftmargin'>Cycle:
-                  <input id='orgCycle' type='text' value='0' class='orgCycleClass' onchange='av.ind.orgCycleInputChange(this)'/>
-                </div>
-                <div style='text-align:center'>
-                  <button id='orgReset' disabled>Reset</button>
-                  <button id='orgBack' disabled>Back</button>
-                  <button id='orgRun' disabled>Run</button>
-                  <button id='orgForward' disabled>Forward</button>
-                  <button id='orgEnd' disabled>End</button>
-                </div>
-              </div>
-            </div><span id="end_orgBenchCol"></span>
-            
-            <div id='orgInfoHolder'>
-              <div id='orgDetailID' class='orgDetailClass'>
-                <div id='orgTaskDataDiv'>
-                <table id = 'orgTaskDataTable'>
-                  <tbody>
-                    <tr>
-                      <td>Function</td>
-                      <td>Times Performed</td>
-                    </tr>
-                    <tr>
-                      <td><label id='notOrg'>0 NOT</label></td>
-                      <td><label id='notPerf'>0</label></td>
-                    </tr>
-                    <tr>
-                      <td><label id='nanOrg'>1 NAN</label></td>
-                      <td><label id='nanPerf'>0</label></td>
-                    </tr>
-                    <tr>
-                      <td><label id='andOrg'>2 AND</label></td>
-                      <td><label id='andPerf'>0</label></td>
-                    </tr>
-                    <tr>
-                      <td><label id='ornOrg'>3 ORN</label></td>
-                      <td><label id='ornPerf'>0</label></td>
-                    </tr>
-                    <tr>
-                      <td><label id='oroOrg'>4 ORO</label></td>
-                      <td><label id='oroPerf'>0</label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><label id='antOrg'>5 ANT</label></td>
-                      <td><label id='antPerf'>0</label></td>
-                    </tr>
-                    <tr>
-                      <td><label id='norOrg'>6 NOR</label></td>
-                      <td><label id='norPerf'>0</label></td>
-                    </tr>
-                    <tr>
-                      <td><label id='xorOrg'>7 XOR</label></td>
-                      <td><label id='xorPerf'>0</label></td>
-                    </tr>
-                    <tr>
-                      <td><label id='equOrg'>8 EQU</label></td>
-                      <td><label id='equPerf'>0</label></td>
-                    </tr>
-                  </tbody>
-                </table>
-                </div>
-                <p>Input Buffer</p>
-                <canvas id='cpuBufferCnvs' class='orgStatCanvas15'></canvas>
-                <p>Registers: AX, BX, CX</p>
-                <canvas id='cpuRegisterCnvs' class='orgStatCanvas15'></canvas>
-                <p>Stack A (first two frames)</p>
-                <canvas id='cpuStackAcnvs' class='orgStatCanvas10'></canvas>
-                <p>Stack B (first two frames)</p>
-                <canvas id='cpuStackBcnvs' class='orgStatCanvas10'></canvas>
-                <p>Last Output</p>
-                <canvas id='cpuOutputCnvs' class='orgStatCanvas5'></canvas>
-                <div id='InstructionDetail'>Instruction Details
-                  <details>
-                    <summary>Just Executed:</summary>
-                    <textarea id='ExecuteJust' class='instructionText' readonly></textarea>
-                  </details>
-                  <details>
-                    <summary>About to Execute:</summary>
-                    <textarea id='ExecuteAbout' class='instructionText' readonly></textarea>
-                  </details>
-                </div>
-              </div><span id="end_orgDetailID"></span>
+                </div><span id='popTabContentHolder_end' class='displayNone'></span>
+              </div><span id='popRightInfoHoldAll_end' class='displayNone'></span>
               
-              
-              <div id='orgSettings' class='orgSettingClass'>
-
-                  <div class='even'>
-                    <span class='lftmargin'>Per Site Mutation Rate:</span>
-                    <span id='orMuteSlide'
-                          style='width:200px; display: inline-block; vertical-align: top; margin-left:20px; margin-right:20px'></span>
-                    <!-- style done here for the slider; margin to keep it from overlapping;
-                                        without width the slider is the full width of the browser window-->
-                    <!--<input id='orMuteInput' type='text' style='width: 4em; height:1.6em'></button>%-->
-                    <input id='orMuteInput' type='text' data-dojo-type='dijit/form/NumberTextBox' value=2.0 required='true' ;
-                           data-dojo-props='constraints:{min:0, max:100},
-                           invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                           style='width: 4.5em; height:1.6em'></button> %
-
-                    <!--<div class='fltLeft'>%</div>
-                    <input id='orMRate' type='text' readonly style='width: 4em; height:1.6em'></button>-->
+              <div id='orgInfoHolder'>
+                <div id='orgDetailID' class='orgDetailClass'>
+                  <div id='orgTaskDataDiv'>
+                  <table id='orgTaskDataTable'>
+                    <tbody>
+                      <tr>
+                        <td>Function</td>
+                        <td>Times Performed</td>
+                      </tr>
+                      <tr>
+                        <td><label id='notOrg'>0 NOT</label></td>
+                        <td><label id='notPerf'>0</label></td>
+                      </tr>
+                      <tr>
+                        <td><label id='nanOrg'>1 NAN</label></td>
+                        <td><label id='nanPerf'>0</label></td>
+                      </tr>
+                      <tr>
+                        <td><label id='andOrg'>2 AND</label></td>
+                        <td><label id='andPerf'>0</label></td>
+                      </tr>
+                      <tr>
+                        <td><label id='ornOrg'>3 ORN</label></td>
+                        <td><label id='ornPerf'>0</label></td>
+                      </tr>
+                      <tr>
+                        <td><label id='oroOrg'>4 ORO</label></td>
+                        <td><label id='oroPerf'>0</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><label id='antOrg'>5 ANT</label></td>
+                        <td><label id='antPerf'>0</label></td>
+                      </tr>
+                      <tr>
+                        <td><label id='norOrg'>6 NOR</label></td>
+                        <td><label id='norPerf'>0</label></td>
+                      </tr>
+                      <tr>
+                        <td><label id='xorOrg'>7 XOR</label></td>
+                        <td><label id='xorPerf'>0</label></td>
+                      </tr>
+                      <tr>
+                        <td><label id='equOrg'>8 EQU</label></td>
+                        <td><label id='equPerf'>0</label></td>
+                      </tr>
+                    </tbody>
+                  </table><span id='orgTaskDataTable_end' class='displayNone'></span>
                   </div>
-                  <h3>Repeatability Mode:</h3>
-                  <input  type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganExperimentRadio'
-                         intermediateChanges='false' name='child' checked value='orgExp' iconClass='dijitNoIcon'></button>
-                  <label id='OrganExperimentLabel'>Experimental (Natural Variation)</label>
-                  <br/>
-                  <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganDemoRadio'
-                         intermediateChanges='false' name='child' value='orgDemo' iconClass='dijitNoIcon'></button>
-                  <label id='OrganDemoLabel'>Demo (forces exact replay)</label>
-                
-              </div>
-            </div><span id=''end_orgInfoHolder></span>
-          </div><span id="end_organismBlock_n_mainBlockClassRow"></span>
+                  <p>Input Buffer</p>
+                  <canvas id='cpuBufferCnvs' class='orgStatCanvas15'></canvas>
+                  <p>Registers: AX, BX, CX</p>
+                  <canvas id='cpuRegisterCnvs' class='orgStatCanvas15'></canvas>
+                  <p>Stack A (first two frames)</p>
+                  <canvas id='cpuStackAcnvs' class='orgStatCanvas10'></canvas>
+                  <p>Stack B (first two frames)</p>
+                  <canvas id='cpuStackBcnvs' class='orgStatCanvas10'></canvas>
+                  <p>Last Output</p>
+                  <canvas id='cpuOutputCnvs' class='orgStatCanvas5'></canvas>
+                  <div id='InstructionDetail'>Instruction Details
+                    <details>
+                      <summary>Just Executed:</summary>
+                      <textarea id='ExecuteJust' class='instructionText' readonly></textarea>
+                    </details>
+                    <details>
+                      <summary>About to Execute:</summary>
+                      <textarea id='ExecuteAbout' class='instructionText' readonly></textarea>
+                    </details>
+                  </div>
+                </div><span id="end_orgDetailID"></span>
 
-          <div id="analysisBlock" class="analysisArea">
-            <div id='anaChrtHolder' class="anaTop" >
-              <div id='anlDndChart'></div>
-            </div>
-            
-            <div class="anaBot">
-              <div class="analegend">
-                <div id='pop0deleteDiv' class='anaDeleteButtonDiv'>
-                  <button id='pop0delete' class='anaDeleteButton'>X</button>&nbsp;&nbsp;
-                </div>
-                <div id='pop0colorDiv' class='anaColorLineDiv'>
-                  <select  id='pop0color' onchange='av.anl.popColorOnChange(this);'>
-                    <option value='Red' selected>Red</option>
-                    <option value='Blue'>Blue</option>
-                    <option value='Green'>Green</option>
-                    <option value='Yellow'>Yellow</option>
-                    <option value='Orange'>Orange</option>
-                    <option value='Purple'>Purple</option>
-                    <option value='Cyan'>Cyan</option>
-                    <option value='Magenta'>Magenta</option>
-                    <option value='Black'>Black</option>
-                  </select>
-                </div>
-                <div id='popDish0Div' class='popDishHolder'>
-                  <div id='popDish0' class='popDishClass'></div>
-                </div>
+                <div id='orgSettings' class='orgSettingClass'>
+                    <div class='even'>
+                      <span class='lftmargin'>Per Site Mutation Rate:</span>
+                      <span id='orMuteSlide'
+                            style='width:200px; display: inline-block; vertical-align: top; margin-left:20px; margin-right:20px'></span>
+                      <!-- style done here for the slider; margin to keep it from overlapping;
+                                          without width the slider is the full width of the browser window-->
+                      <!--<input id='orMuteInput' type='text' style='width: 4em; height:1.6em'></button>%-->
+                      <input id='orMuteInput' type='text' data-dojo-type='dijit/form/NumberTextBox' value=2.0 required='true' ;
+                             data-dojo-props='constraints:{min:0, max:100},
+                             invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
+                             style='width: 4.5em; height:1.6em'></button> %
 
-                <div id='pop1deleteDiv' class='anaDeleteButtonDiv'>
-                  <button id='pop1delete' class='anaDeleteButton'>X</button>&nbsp;&nbsp;
-                </div>
-                <div id='pop1colorDiv' class='anaColorLineDiv'>
-                  <select  id='pop1color' class='anaColorLine' onchange='av.anl.popColorOnChange(this);'>
-                    <option value='Red'>Red</option>
-                    <option value='Blue' selected>Blue</option>
-                    <option value='Green'>Green</option>
-                    <option value='Yellow'>Yellow</option>
-                    <option value='Orange'>Orange</option>
-                    <option value='Purple'>Purple</option>
-                    <option value='Cyan'>Cyan</option>
-                    <option value='Magenta'>Magenta</option>
-                    <option value='Black'>Black</option>
-                  </select>
-                </div>
-                <div id='popDish1Div' class='popDishHolder'>
-                  <div id='popDish1' class='popDishClass'></div>
-                </div>
-                
-                <div id='pop2deleteDiv' class='anaDeleteButtonDiv'>
-                  <button id='pop2delete' class='anaDeleteButton'>X</button>&nbsp;&nbsp;
-                </div>
-                <div id='pop2colorDiv' class='anaColorLineDiv'>
-                  <select  id='pop2color' onchange='av.anl.popColorOnChange(this);'>
-                    <option value='Red'>Red</option>
-                    <option value='Blue'>Blue</option>
-                    <option value='Green'>Green</option>
-                    <option value='Yellow'>Yellow</option>
-                    <option value='Orange'>Orange</option>
-                    <option value='Purple'>Purple</option>
-                    <option value='Cyan'>Cyan</option>
-                    <option value='Magenta'>Magenta</option>
-                    <option value='Black' selected>Black</option>
-                  </select>
-                </div>
-                <div id='popDish2Div' class='popDishHolder'>
-                  <div id='popDish2' class='popDishClass'></div>
-                </div>
-              </div><span value="analegend"></span>
+                      <!--<div class='fltLeft'>%</div>
+                      <input id='orMRate' type='text' readonly style='width: 4em; height:1.6em'></button>-->
+                    </div>
+                    <h3>Repeatability Mode:</h3>
+                    <input  type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganExperimentRadio'
+                           intermediateChanges='false' name='child' checked value='orgExp' iconClass='dijitNoIcon'></button>
+                    <label id='OrganExperimentLabel'>Experimental (Natural Variation)</label>
+                    <br/>
+                    <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganDemoRadio'
+                           intermediateChanges='false' name='child' value='orgDemo' iconClass='dijitNoIcon'></button>
+                    <label id='OrganDemoLabel'>Demo (forces exact replay)</label>
+
+                </div><span id='orgSettings_end' class='displayNone'></span>
+              </div><span id='orgInfoHolder_end' class='displayNone'></span>
               
-              <div class="anaYaxis">
-                <select  id='yLeftSelect' onchange='av.anl.yScaleSelect_onChange(this);'>
-                  <option value='None'>None</option>
-                  <option value='Average Fitness' selected>Average Fitness</option>
-                  <option value='Average Offspring Cost'>Average Offspring Cost</option>
-                  <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
-                  <option value='Number of Organisms'>Number of Organisms</option>
-                  <option value='Number Viable'>Number Viable</option>
-                </select> Thicker line; left y-axis
-                <br></br>
-                <select  id='yRightSelect' onchange='av.anl.yScaleSelect_onChange(this);'>
-                  <option value='None'>None</option>
-                  <option value='Average Fitness'>Average Fitness</option>
-                  <option value='Average Offspring Cost' selected>Average Offspring Cost</option>
-                  <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
-                  <option value='Number of Organisms'>Number of Organisms</option>
-                  <option value='Number Viable'>Number Viable</option>
-                </select> Thinner line; right y-axis
-              </div><span value="anaYaxis"></span>
-            </div><span value="anaBot"></span>
-          </div> <span comment="end_analysisBlock"></span>
-          
-          <div id='showTextBlock' class="analysisArea">
-            <form id='showTextForm'>
-              Show big text chunks
-              <div  class='even'>
-                Big Text Area to show long text strings:<br />
-                <div>
-                <textarea id='showTextarea' cols='150' rows='50'></textarea><br />
-                </div>
-              </div>
-            </form>
-          </div> <span id='end_showTextBlock'></span>  
-          
-        </div> <span id="end_mainBlockHolder" style='display:none;'></span>
+            </div><span id='rightInfoHolder_end' class='displayNone'></span>
+       
     </div><span title='end of allAvida'></span>
     
     

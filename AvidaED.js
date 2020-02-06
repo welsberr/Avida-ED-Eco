@@ -1,6 +1,6 @@
 
  // if (av.dbg.flg.root) { console.log('Root: AvidaED.js at beginning of file on 2020_0111 @ 20:21'); }
- if (true) { console.log('Root: AvidaED.js at beginning of file on 2020_0121 @ 00:53'); }
+ if (true) { console.log('Root: AvidaED.js at beginning of file on 2020_0206 @ 18:23'); }
 
 
 // need a server to run Avida-ED from a file. The one below works.
@@ -65,7 +65,6 @@
 //
 //----------------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------- Problems --
-//  I think I fixed this: Did not put value for pauseAt in when it read PauseAt.txt as part of testConfig
 //  
 //  Population Page -------
 //  
@@ -77,11 +76,12 @@
 //  
 //  I think it will write to have the default amount of resource for that region. 
 //  
-//  Oraganism Page -------
-//  
 //  Looking at loading default files and perhaps we need to add default values for finite when finite is selected even 
 //  there is no finite in the config file. 
-// 
+//  
+//  Oraganism Page -------
+//  
+//  
 //  Analysis page
 //  
 //  Fix av.anl.widg = {   statement on globals in Avida-ED 3.2 to match the one in Avida-ED-4 ecology
@@ -1000,7 +1000,9 @@ require([
     av.dom.populationBlock.style.display = "none";
     av.dom.organismBlock.style.display = "none";
     av.dom.analysisBlock.style.display = "none";
-    av.dom.showTextBlock.style.display = "none";
+    av.dom.showTextDebugBlock.style.display = "none";
+    av.dom.orgInfoHolder.style.display = 'none';
+    av.dom.popRightInfoHoldAll.style.display = 'none';
     av.dom.populationButton.style.background = 'white';
     av.dom.organismButton.style.background = 'white';
     av.dom.analysisButton.style.background = 'white';
@@ -1018,20 +1020,24 @@ require([
 
     // if the miniplot on the populaton page needs to be initiated call that funciton.
     console.log('In: av.ui.mainBoxSwap; av.pch.needInit=', av.pch.needInit, '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));
-    //if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
     if ($(av.dom.popStatsBlock).is(":visible") && (av.pch.needInit) ) {
       av.grd.popChartInit('av.ui.mainBoxSwap');
     };
-    if (('populationBlock' == av.ui.page) || ('organismBlock' == av.ui.page)) {
+     if (('populationBlock' == av.ui.page) || ('organismBlock' == av.ui.page)) {
       document.getElementById('RtSideToggleButtons').style.display = 'block';
       document.getElementById('ritePnlBtnHolder').style.display = 'block';
+      document.getElementById('rightInfoHolder').style.display = 'block';
     }
     else {
       document.getElementById('RtSideToggleButtons').style.display = 'none';
       document.getElementById('ritePnlBtnHolder').style.display = 'none';
+      document.getElementById('rightInfoHolder').style.display = 'none';
     };
+    if ('populationBlock' == av.ui.page) {
+      av.dom.popRightInfoHoldAll.style.display = 'block';
+    }
     if ('organismBlock' == av.ui.page) {
-
+      av.dom.orgInfoHolder.style.display = 'block';
       if ('settings' == av.ui.orgInfo) {
         av.dom.orgSettings.style.display = 'block';
         av.dom.orgDetailID.style.display = 'none';
@@ -1049,6 +1055,7 @@ require([
       av.ind.clearGen('mainBoxSwap_organismBlock');
       av.ind.cpuOutputCnvsSize();
     }
+    console.log()
     //console.log('end of mainBoxSwap');
   };
 
@@ -1091,7 +1098,7 @@ require([
   // if (av.dbg.flg.root) { console.log('Root: before showTextButton.onclick'); }
   document.getElementById('showTextButton').onclick = function () {
     av.post.addUser('Button: showTextButton');
-    av.ui.mainBoxSwap('showTextBlock');
+    av.ui.mainBoxSwap('showTextDebugBlock');
   };
   // ------------------ two controls for the same purpose; tabs used in develoopment mode --
   
