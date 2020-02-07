@@ -1023,20 +1023,16 @@ require([
     if ($(av.dom.popStatsBlock).is(":visible") && (av.pch.needInit) ) {
       av.grd.popChartInit('av.ui.mainBoxSwap');
     };
-     if (('populationBlock' == av.ui.page) || ('organismBlock' == av.ui.page)) {
-      document.getElementById('RtSideToggleButtons').style.display = 'block';
-      document.getElementById('ritePnlBtnHolder').style.display = 'block';
-      document.getElementById('rightInfoHolder').style.display = 'block';
-    }
-    else {
-      document.getElementById('RtSideToggleButtons').style.display = 'none';
-      document.getElementById('ritePnlBtnHolder').style.display = 'none';
-      document.getElementById('rightInfoHolder').style.display = 'none';
-    };
     if ('populationBlock' == av.ui.page) {
       av.dom.popRightInfoHoldAll.style.display = 'block';
+      document.getElementById('allAvidaContainer').className = 'all3pop';
+    }
+    if ('analysisBlock' == av.ui.page) {
+      document.getElementById('allAvidaContainer').className = 'all2lft';
     }
     if ('organismBlock' == av.ui.page) {
+      document.getElementById('allAvidaContainer').className = 'all3org';
+      console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
       av.dom.orgInfoHolder.style.display = 'block';
       if ('settings' == av.ui.orgInfo) {
         av.dom.orgSettings.style.display = 'block';
@@ -1055,8 +1051,17 @@ require([
       av.ind.clearGen('mainBoxSwap_organismBlock');
       av.ind.cpuOutputCnvsSize();
     }
-    console.log()
-    //console.log('end of mainBoxSwap');
+     if (('populationBlock' == av.ui.page) || ('organismBlock' == av.ui.page)) {
+      document.getElementById('RtSideToggleButtons').style.display = 'block';
+      document.getElementById('ritePnlBtnHolder').style.display = 'block';
+      document.getElementById('rightInfoHolder').style.display = 'block';
+    }
+    else {
+      document.getElementById('RtSideToggleButtons').style.display = 'none';
+      document.getElementById('ritePnlBtnHolder').style.display = 'none';
+      document.getElementById('rightInfoHolder').style.display = 'none';
+    };
+    console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
   };
 
   // Buttons that call MainBoxSwap
@@ -1213,13 +1218,19 @@ require([
     if (av.ui.lftSidePnlShowing) {
       av.post.addUser('Button: lftPnlButtonImg: start hidding left side panel');
       av.ui.lftSidePnlShowing = false;
-      av.ui.navColId = av.dom.navColId.offsetWidth;
-      av.dom.navColId.style.display = 'none';
+      //av.ui.navColId = av.dom.navColId.offsetWidth;
+      //av.dom.navColId.style.display = 'none';
+      if ('all3pop' == document.getElementById('allAvidaContainer').className) {
+        document.getElementById('allAvidaContainer').className = 'all2rit';
+      }
     } else {
       av.post.addUser('Button: lftPnlButtonImg: start showing left side panel');
       av.ui.lftSidePnlShowing = true;
-      av.dom.navColId.style.display = 'flex';
-      av.dom.popInfoHolder.style.width = av.ui.navColId + 'px';
+      //av.dom.navColId.style.display = 'flex';
+      //av.dom.rightInfoHolder.style.width = av.ui.navColId + 'px';
+      if ('all2rit' == document.getElementById('allAvidaContainer').className) {
+        document.getElementById('allAvidaContainer').className = 'all3pop';
+      }
     }
   };
   
@@ -1240,14 +1251,14 @@ require([
       if (av.ui.popStatFlag) {
         av.post.addUser('Button: rtPnlButtonImg: start hidding population stats');
         av.ui.popStatFlag = false;
-        av.ptd.popInfoHolderWd = av.dom.popInfoHolder.offsetWidth;
-        av.dom.popInfoHolder.style.display = 'none';
+        av.ptd.rightInfoHolderWd = av.dom.rightInfoHolder.offsetWidth;
+        av.dom.rightInfoHolder.style.display = 'none';
       } else {
         av.post.addUser('Button: rtPnlButtonImg: start showing population stats');
         av.ui.popStatFlag = true;
-        av.dom.popInfoHolder.style.display = 'flex';
-        //reset info pane dimensions. Try popInfoHolderWd = 395px; selOrgTypeWd = 150px
-        av.dom.popInfoHolder.style.width = av.ptd.popInfoHolderWd + 'px';
+        av.dom.rightInfoHolder.style.display = 'flex';
+        //reset info pane dimensions. Try rightInfoHolderWd = 395px; selOrgTypeWd = 150px
+        av.dom.rightInfoHolder.style.width = av.ptd.rightInfoHolderWd + 'px';
         av.ui.adjustpopInfoSize('av.ptd.rtPnlButtonImg');
       };
     }
@@ -3036,12 +3047,12 @@ require([
   av.ui.resizePopLayout = function (from) {
     //console.log(from, 'called av.ui.resizePopLayout');
     var extraGridWd = 0;  //positive there is extra to distribute; negative need more space.
-    var popSideWdSum = av.dom.navColId.offsetWidth + av.dom.popInfoHolder.offsetWidth;
+    var popSideWdSum = av.dom.navColId.offsetWidth + av.dom.rightInfoHolder.offsetWidth;
     av.ui.allAvidaWd = av.dom.allAvida.offsetWidth;
     av.ui.navColIdWd = av.dom.navColId.offsetWidth;
     av.ui.mapHolderWd = av.dom.mapHolder.offsetWidth;
     av.ui.gridHolderWd = av.dom.gridHolder.offsetWidth;
-    av.ui.popInfoHolderWd = av.dom.popInfoHolder.offsetWidth;
+    av.ui.rightInfoHolderWd = av.dom.rightInfoHolder.offsetWidth;
 
     av.ui.allAvidaHt = av.dom.allAvida.offsetHeight;
     av.ui.mapHolderHd = av.dom.mapHolder.offsetHeight;
@@ -3053,9 +3064,9 @@ require([
     //console.log('gridHolder_margin' ,$("#gridHolder").css("margin"), '; popChart=', $("#popChart").css('margin'));
 
     if (av.debug.uil) { 
-      console.log('Wd: allAvida navColId mapHolder gridHolder popInfoHolder, sum', av.dom.allAvida.offsetWidth,
-        av.dom.navColId.offsetWidth, av.dom.mapHolder.offsetWidth, av.dom.popInfoHolder.offsetWidth,
-        av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.popInfoHolder.offsetWidth);
+      console.log('Wd: allAvida navColId mapHolder gridHolder rightInfoHolder, sum', av.dom.allAvida.offsetWidth,
+        av.dom.navColId.offsetWidth, av.dom.mapHolder.offsetWidth, av.dom.rightInfoHolder.offsetWidth,
+        av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.rightInfoHolder.offsetWidth);
       console.log('Wd: popStatsBlock selOrgType sum', av.dom.popStatsBlock.offsetWidth, av.dom.selOrgType.clientWidth,
         av.dom.popStatsBlock.offsetWidth + av.dom.selOrgType.clientWidth);
 
@@ -3088,29 +3099,29 @@ require([
 
   av.ui.chngPopWidth = function (from) {
     if (av.debug.uil) { console.log(from, 'called av.ui.chngPopWidth'); }
-    av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px';
-    av.dom.setupBlock.style.width = popInfoHolderWd + 'px';
-    av.dom.popStatsBlock.style.width = popInfoHolderWd + 'px';
-    av.dom.selOrgType.style.width = ((popInfoHolderWd / 2).toFixed(0)) + 'px';
+    av.dom.rightInfoHolder.style.width = rightInfoHolderWd + 'px';
+    av.dom.setupBlock.style.width = rightInfoHolderWd + 'px';
+    av.dom.popStatsBlock.style.width = rightInfoHolderWd + 'px';
+    av.dom.selOrgType.style.width = ((rightInfoHolderWd / 2).toFixed(0)) + 'px';
   };
 
   av.ui.adjustpopInfoWd = function (adjustGridWd) {
-    var popInfoHolderWd = av.dom.popInfoHolder.offsetWidth - adjustGridWd;  //adjustGridWd postive means Grid needs width
-    if (av.debug.uil) { console.log('popInfoHolderWd=', popInfoHolderWd, '; av.ui.popInfoHolderMinWd', av.ui.popInfoHolderMinWd); }
-    if (popInfoHolderWd < av.ui.popInfoHolderMinWd) {
+    var rightInfoHolderWd = av.dom.rightInfoHolder.offsetWidth - adjustGridWd;  //adjustGridWd postive means Grid needs width
+    if (av.debug.uil) { console.log('rightInfoHolderWd=', rightInfoHolderWd, '; av.ui.rightInfoHolderMinWd', av.ui.rightInfoHolderMinWd); }
+    if (rightInfoHolderWd < av.ui.rightInfoHolderMinWd) {
       var navColWd = av.dom.navColId.offsetWidth;
-      if (av.debug.uil) {console.log("navColWd=", navColWd, '; popInfoHolderWd=', popInfoHolderWd, ''); }
-      navColWd = (.33 * (navColWd + popInfoHolderWd)).toFixed(0);
-      popInfoHolderWd = navColWd * 2;
+      if (av.debug.uil) {console.log("navColWd=", navColWd, '; rightInfoHolderWd=', rightInfoHolderWd, ''); }
+      navColWd = (.33 * (navColWd + rightInfoHolderWd)).toFixed(0);
+      rightInfoHolderWd = navColWd * 2;
       av.dom.navColId.style.width = navColWd + 'px';
-      if (av.debug.uil) {console.log('navColWd=', navColWd, '; popInfoHolderWd=', popInfoHolderWd, '; mapHolder=', av.dom.mapHolder.offsetWidth); }
+      if (av.debug.uil) {console.log('navColWd=', navColWd, '; rightInfoHolderWd=', rightInfoHolderWd, '; mapHolder=', av.dom.mapHolder.offsetWidth); }
     }
-    av.dom.popInfoHolder.style.width = popInfoHolderWd + 'px';
-    av.dom.setupBlock.style.width = popInfoHolderWd + 'px';
-    av.dom.popStatsBlock.style.width = popInfoHolderWd + 'px';
-    popInfoHolderWd = (popInfoHolderWd / 2).toFixed(0); //Math.round(popInfoHolder/2);
-    av.dom.selOrgType.style.width = popInfoHolderWd + 'px';
-    if (av.debug.uil) { console.log('set selOrgType to ', popInfoHolderWd + 'px'); }
+    av.dom.rightInfoHolder.style.width = rightInfoHolderWd + 'px';
+    av.dom.setupBlock.style.width = rightInfoHolderWd + 'px';
+    av.dom.popStatsBlock.style.width = rightInfoHolderWd + 'px';
+    rightInfoHolderWd = (rightInfoHolderWd / 2).toFixed(0); //Math.round(rightInfoHolder/2);
+    av.dom.selOrgType.style.width = rightInfoHolderWd + 'px';
+    if (av.debug.uil) { console.log('set selOrgType to ', rightInfoHolderWd + 'px'); }
     if (av.debug.uil) { console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth); }
   };
 
@@ -3120,10 +3131,10 @@ require([
     if (av.debug.uil) { 
       console.log('av.ui.adjustpopInfoSize was called from: ', from);
       console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth);
-      console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
+      console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, '; rightInfoHolder.wd=', av.dom.rightInfoHolder.offsetWidth);
       console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ',
-        av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.popInfoHolder.offsetWidth);
-      console.log('popInfoHolder.offsetWidth, clientwidth =', av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
+        av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.rightInfoHolder.offsetWidth);
+      console.log('rightInfoHolder.offsetWidth, clientwidth =', av.dom.rightInfoHolder.offsetWidth, av.dom.rightInfoHolder.clientWidth);
       console.log('popStatsBlock.offsetWidth, clientwidth =', av.dom.popStatsBlock.offsetWidth, av.dom.popStatsBlock.clientWidth);
       console.log('selOrgType.offsetWidth, clientwidth =', av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
       console.log('av.ui.popGridCtlWdMin=', av.ui.popGridCtlWdMin, '; gridHolder.offsetWidt=', av.dom.gridHolder.offsetWidth);
@@ -3139,11 +3150,11 @@ require([
     if (av.debug.uil) {
       console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
       console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth,
-        '; popInfoHolder.wd=', av.dom.popInfoHolder.offsetWidth);
+        '; rightInfoHolder.wd=', av.dom.rightInfoHolder.offsetWidth);
       console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ',
-        av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.popInfoHolder.offsetWidth);
+        av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.rightInfoHolder.offsetWidth);
 
-      console.log('popInfo.offsetWidth, clientwidth =', av.dom.popInfoHolder.offsetWidth, av.dom.popInfoHolder.clientWidth);
+      console.log('popInfo.offsetWidth, clientwidth =', av.dom.rightInfoHolder.offsetWidth, av.dom.rightInfoHolder.clientWidth);
       console.log('popStatsBlock.offsetWidth, clientwidth =', av.dom.popStatsBlock.offsetWidth, av.dom.popStatsBlock.clientWidth);
       console.log('selOrgType.offsetWidth, clientwidth =', av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
     }
@@ -3649,7 +3660,7 @@ require([
 // 
 /* Bits of html that I might use later. Stored here because comments are not as reliable in html as they are in javacript 
  * 
- 
+ https://stackoverflow.com/questions/24977965/collapsible-lists-using-html-and-css
  <details class='debugDetails' id='fzMdishDetails'>
  <summary id='fzMdishSec' class="freezerSummaryClass">Multi-Dishes</summary>
  <ul id='fzMdish' class='container'>
