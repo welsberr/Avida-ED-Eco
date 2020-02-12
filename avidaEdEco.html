@@ -28,39 +28,49 @@
     </script>
 
     <script type='text/javascript' src='colormap.js'></script>
+    <script type='text/javascript'> //console.log('after colormap.js');</script>
     <script type='text/javascript' src='monoColor.js'></script>
+    <script type='text/javascript'> //console.log('after monoColor.js');</script>
+
     <script type='text/javascript' src='globals.js'></script>
+    <script type='text/javascript'> //console.log('after globals.js');</script>
     <script type='text/javascript' src='placeParent.js'></script>
+    <script type='text/javascript'> //console.log('after placeParent.js');</script>
+
     <script type='text/javascript' src='utilities.js'></script>
-    <script type='text/javascript' src='AvidaED.js'></script>
+    <script type='text/javascript'> //console.log('after utilities.js');</script>
+    <script type='text/javascript' src='avidaED.js'></script>
+    <script type='text/javascript'> //console.log('after avidaED.js');</script>
 
     <link href='images/favicon.ico' rel='icon' type='image/x-icon' />
     <link rel='stylesheet' href='lib/jquery-ui/themes/smoothness/jquery-ui.css'>
     <style>
       @import 'themes/claro/document.css';
       @import 'themes/claro/claro.css';	
-      @import 'AvidaED.css';
+      @import 'avidaED.css';
       @import 'avidaEdEco.css';
       @import 'visible.css';
     </style>
     <script>
-            function avResize() {
-              //console.log('initial handler in html only');
-              // av.ui.browserResizeEventHandler()  //gets an error on a fresh load
-            }
+      //console.log('before avResize');
+      function avResize() {
+        console.log('initial handler in html only');
+        // av.ui.browserResizeEventHandler()  //gets an error on a fresh load
+      }
 
-            //never triggered not sure why. trying to get mouse coordinates for IE
-            function getCoords(event) {
-              av.mouse.grdX = event.clientX;
-              av.mouse.grdY = event.clientY;
-              console.log(' on grid in html xy', event.clientX, event.clientY);
-            }
+      //never triggered not sure why. trying to get mouse coordinates for IE
+      //console.log('before getCoords');
+      function getCoords(event) {
+        av.mouse.grdX = event.clientX;
+        av.mouse.grdY = event.clientY;
+        console.log(' on grid in html xy', event.clientX, event.clientY);
+      }
+      //console.log('last line in script before close head')
     </script>
   </head>
 
   <body id='avidaED' data-maq-flow-layout='true' data-maq-comptype='desktop' class='claro' data-maq-ws='collapse'
-        data-maq-appstates='{}' id='myapp'
-        onresize='avResize()'>
+        data-maq-appstates='{}' onresize='avResize()'>
     <span id="http://stackoverflow.com/questions/20828799/creating-a-splash-page-in-html5"></span>
     <div id='splash'>
       <div align='center'>

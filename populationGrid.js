@@ -1,6 +1,7 @@
   var av = av || {};  //because av already exists
   var dijit = dijit || {};
 
+  // if (av.dbg.flg.root) { console.log('Root: start of populationGrid'); }
   // if (av.dbg.flg.root) { console.log('Root: before av.grd.backgroundSquares'); }
   av.grd.backgroundSquares = function () {
     'use strict';
@@ -605,7 +606,7 @@
     // no longer doing offsets inside the canvas - Need to get rid of offsets 
 
     // First find sizes based on zoom
-    if (av.debug.uil) console.log('av.grd.zoom=', av.grd.zoom);
+    if (av.debug.uil) { console.log('ui: av.grd.zoom=', av.grd.zoom); }
     av.grd.boxX = av.grd.zoom * av.grd.spaceX;
     av.grd.boxY = av.grd.zoom * av.grd.spaceY;
     //get rows and cols based on user input 
@@ -628,7 +629,7 @@
     }
 
     //Determine new size of grid
-      if (av.debug.uil) console.log('w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= In: av.dom.gridCanvas.width ht--');
+      if (av.debug.uil) { console.log('ui: w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= In: av.dom.gridCanvas.width ht--'); }
 
       av.dom.gridCanvas.width = av.grd.sizeX;
       av.dom.gridCanvas.height = av.grd.sizeY;
@@ -641,7 +642,7 @@
     //get cell size based on grid size and number of columns and rows
     av.grd.cellWd = ((av.grd.sizeX - av.grd.marginX) / av.grd.cols);
     av.grd.cellHt = ((av.grd.sizeY - av.grd.marginY) / av.grd.rows);
-    if(av.debug.uil) console.log(av.grd.marginX, '= av.grd.marginX; ', av.grd.marginY, '= av.grd.marginY');
+    if (av.debug.uil) { console.log('ui: ', av.grd.marginX, '= av.grd.marginX; ', av.grd.marginY, '= av.grd.marginY'); }
     //Find a reasonable maximum zoom for this grid and screen space for av.grd.zoomSlide
     /*
     var zMaxCells = Math.floor(av.grd.spaceCells / 25);  // at least 10 cells   was trunc
@@ -749,8 +750,8 @@
 
   av.grd.gradientScale = function (from) {
     'use strict';
-    if (av.debug.uil) console.log(from, 'called av.grd.gradientScale. w:',av.dom.scaleCanvas.width, av.dom.scaleCanvas.height, '= scaleCanvas Wd Ht; start gradientScale ');
-    if (av.debug.uil) console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset; start gradientScale');
+    if (av.debug.uil) { console.log('ui: ', from, 'called av.grd.gradientScale. w:',av.dom.scaleCanvas.width, av.dom.scaleCanvas.height, '= scaleCanvas Wd Ht; start gradientScale '); }
+    if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset; start gradientScale'); }
 
     //finding the dimensions needed for the legend. 
     av.dom.scaleCanvas.height = 30;
@@ -809,8 +810,8 @@
         av.grd.sCtx.fillText(txt, xx, legendHt - 2, maxTxtWd);
       }
     }
-    if (av.debug.uil) console.log('w:',av.dom.scaleCanvas.width, av.dom.scaleCanvas.height, '= scaleCanvas Wd Ht; end gradientScale ');
-    if (av.debug.uil) console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset; end gradientScale');
+    if (av.debug.uil) { console.log('ui: w:',av.dom.scaleCanvas.width, av.dom.scaleCanvas.height, '= scaleCanvas Wd Ht; end gradientScale '); }
+    if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset; end gradientScale'); }
   };
 
   // if (av.dbg.flg.root) { console.log('Root: before av.grd.cellFilled'); }
@@ -829,6 +830,7 @@
     }
     return flag;
   };
+  // if (av.dbg.flg.root) { console.log('Root: end of populationGrid'); }
 
   /*how to center grid
   http://stackoverflow.com/questions/5127937/how-to-center-canvas-in-html5

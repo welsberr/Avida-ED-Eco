@@ -7,6 +7,9 @@
   // one global to hold them all.
   var av = av || {};  //incase av already exists
 
+  console.log('start of globals on 2020_0211');
+
+
   Number.prototype.pad = function(size) {
     var ss = String(this);
     while (ss.length < (size || 2)) {ss = "0" + ss;}
@@ -32,16 +35,15 @@
   av.debug.msg = false;  //messages to and from avida
   av.debug.popCon = false;  //population Controls
   av.debug.trace = false;  //organism page
-  av.debug.uil = false; //user interface layout.
+  av.debug.uil = true; //user interface layout.
   av.debug.userMsg = false; //debug of user messages.
-  //av.debug. root = false;  //statements that look for failiers when the code executes outside of functions
 
   av.dbg = {};
   av.dbg.flg = {}; 
   av.dbg.flg.frd = false;  //reading file text strings
-  av.dbg.flg.nut = true;  //processing nustrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
+  av.dbg.flg.nut = false;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
   av.dbg.flg.plt = false;  //both popChart and analysis
-  av.dbg.flg.root = false;  //statements that look for failiers when the code executes outside of functions
+  av.dbg.flg.root = true;  //statements that look for failers when the code executes outside of functions
 
   av.debug.usr = ''; //working on log for user actions.
 
@@ -380,10 +382,8 @@
   //----------------------------------------------------------------------------------------------------------------------
 
   //console.log('window.navigator',window.navigator);
-  if (av.dbg.flg.root) { 
-    console.log('Root: brs', av.brs);
-    console.log('Root: browser info: window.navigator.userAgent=', window.navigator.userAgent);
-  }
+  // if (av.dbg.flg.root) { console.log('Root: brs', av.brs); }
+  // if (av.dbg.flg.root) { console.log('Root: browser info: window.navigator.userAgent=', window.navigator.userAgent); }
   //----------------------------------------------------------------------------------------------------------------------
 
   av.utl = {};  // holds utility functions
@@ -1288,7 +1288,9 @@
       ]
     };
   };
-    av.anl.clearChart();
+  av.anl.clearChart();
+  
+  console.log('end of globals');
 
   //----------------------------------------------------------------------------------------------------------------------
   // Notes on page layout

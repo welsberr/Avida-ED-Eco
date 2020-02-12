@@ -2,6 +2,7 @@
   //----------------------------------------------------------------------------------------------------------------------
   //because IE does not understand var event = new Event('change'); in the file fileIO.js
 
+  // if (av.dbg.flg.root) { console.log('Root: start of utilities'); }
   var av = av || {};  //incase av already exists
 
   //----------------------------------------------------------------------------------------------------------------------
@@ -14,7 +15,6 @@
     }
     return array;
   };
-
 
   //----------------------------------------------------------------------------------------------------------------------
   (function () {
@@ -599,6 +599,7 @@
     document.body.appendChild(para);
   }
   */
+ 
   //**********************************************************************************************************************
   //   Another way to encode; decode stuff for emscripten files  system
   //**********************************************************************************************************************
@@ -636,6 +637,8 @@
 
     return UTF8;
   })();
+  
+  // if (av.dbg.flg.root) { console.log('Root: end of utilities.js'); };
 
   //Example of using the above functions
   /*

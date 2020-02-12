@@ -1,7 +1,5 @@
-
- // if (av.dbg.flg.root) { console.log('Root: AvidaED.js at beginning of file on 2020_0111 @ 20:21'); }
- if (true) { console.log('Root: AvidaED.js at beginning of file on 2020_0206 @ 18:23'); }
-
+ // if (av.dbg.flg.root) { console.log('Root: avidaED.js at beginning of file on 2020_0111 @ 20:21'); };
+ console.log('Root: avidaED.js at beginning of file on 2020_0206 @ 18:23'); 
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
@@ -172,7 +170,7 @@ require([
   ready, $, jqueryui, Plotly, //fileDownload,  //Blob.js,
   JSZip, FileSaver) {
   'use strict';
-  // if (av.dbg.flg.root) { console.log('before type of $'); }
+  if (av.dbg.flg.root) { console.log('before type of $'); }
   if (typeof $ != 'undefined') {
     // jQuery is loaded => print the version
     console.log('Jquery ($) is defined.');
@@ -180,7 +178,7 @@ require([
   } else {
     console.log('Jquery ($) is not defined.');
   }
-  // if (av.dbg.flg.root) { console.log('after type of $'); }
+  if (av.dbg.flg.root) { console.log('after type of $'); }
 
   //console.log('dojo version', dojo.version.toString());
   parser.parse();
@@ -255,28 +253,6 @@ require([
     copyOnly: true,
     selfAccept: false
   });
-
-  /*
-   av.dnd.fzMdish = new dndSource('fzMdish', {  //multi-dsih
-   accept: ['b', 'm'],  //m=multidish
-   copyOnly: true,
-   singular: true,
-   selfAccept: false
-   });
-   av.dnd.fzRdish = new dndSource('fzRdish', {  //Resources only version
-   accept: ['r'],  //t=resource display
-   copyOnly: true,
-   singular: true,
-   selfAccept: false
-   });
-   */
-
-  /*  //kept only as an example of how to programatically add data to a dnd container
-   av.dnd.fzWorld.insertNodes(false, [
-   {data: 'm2w30u1000nand', type: ['w']},
-   {data: 'm2w30u1000not', type: ['w']}
-   ]);
-   */
 
   av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
 
@@ -610,9 +586,30 @@ require([
     }
   });
 
+  /*  //kept only as an example of how to programatically add data to a dnd container
+   av.dnd.fzWorld.insertNodes(false, [
+   {data: 'm2w30u1000nand', type: ['w']},
+   {data: 'm2w30u1000not', type: ['w']}
+   ]);
+   */
+
   //----------------------------------------------------------------------------------------------------------------------
   //                                    End of dojo based DND triggered functions
   //----------------------------------------------------------------------------------------------------------------------
+  window.onbeforeunload = function (event) {
+  console.log('window.onbeforeunload');
+    if (!av.ui.sendEmailFlag) {
+      if ('no' === av.fzr.saveState || 'maybe' === av.fzr.saveState) {
+        return 'Your workspace may have changed sine you last saved. Do you want to save first?';
+
+        //e.stopPropagation works in Firefox.
+        if (event.stopPropagation) {
+          event.stopPropagation();
+          event.preventDefault();
+        };
+      };
+    };
+  };
 
    // if (av.dbg.flg.root) { console.log('Root: before Error Logging'); }
   //********************************************************************************************************************
@@ -623,7 +620,7 @@ require([
   //https://bugsnag.com/blog/js-stacktracess
   //http://blog.bugsnag.com/js-stacktraces
   window.onerror = function (message, file, line, col, error) {
-    //console.log('in onError');
+    console.log('in window.onerror');
     av.dom.runStopButton.innerHTML = 'Run';  //av.msg.pause('now');
     av.debug.finalizeDtail();
     av.debug.triggered = 'errorTriggered';
@@ -636,15 +633,19 @@ require([
     av.debug.sendLogTextarea = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail + '\n\n' + av.debug.error;
 
     //console.log('inside Window.on_Error: before call problemWindow');
-    av.ui.problemWindow();
+    av.ui.problemWindow('window.onerror');
   };
 
   window.addEventListener('error', function (evt) {
-    //console.log('In window.addEventListener: event listener', evt);
+    console.log('In window.addEventListener: event listener', evt);
   });
   //--------------------------------------------------------------------------------------------
+  //http://www.technicaladvices.com/2012/03/26/detecting-the-page-leave-event-in-javascript/
+  //Cannot get custom message in Firefox (or Safari for now)
+  
 
   on(document.getElementById('postPost'), 'click', function () {
+    console.log('in on(document.getElementById(postPost)');
     av.post.addUser('Button: postPost');
     //Data to send
     av.debug.postData.email = av.dom.postEmailInput.value;
@@ -689,27 +690,11 @@ require([
   // selected text
   // http://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
   // http://www.javascriptkit.com/javatutors/copytoclipboard.shtml
-
-  //http://www.technicaladvices.com/2012/03/26/detecting-the-page-leave-event-in-javascript/
-  //Cannot get custom message in Firefox (or Safari for now)
-  window.onbeforeunload = function (event) {
-    if (!av.ui.sendEmailFlag) {
-      if ('no' === av.fzr.saveState || 'maybe' === av.fzr.saveState) {
-        return 'Your workspace may have changed sine you last saved. Do you want to save first?';
-
-        //e.stopPropagation works in Firefox.
-        if (event.stopPropagation) {
-          event.stopPropagation();
-          event.preventDefault();
-        };
-      };
-    };
-  };
   
   // if (av.dbg.flg.root) { console.log('Root: defore av.ui.problemWindow'); }
   //process problme pop-up window
-  av.ui.problemWindow = function () {
-    //console.log('in problemWindow');
+  av.ui.problemWindow = function (from) {
+    console.log(from, 'called av.ui.problemWindow');
     av.debug.vars = {
       isBlink: av.brs.isBlink,
       isChrome: av.brs.isChrome,
@@ -735,7 +720,7 @@ require([
       freezer: JSON.stringify(av.fzr),
       vars: av.debug.vars
     };
-    //console.log('postData=', av.debug.postData); }
+    //console.log('postData=', av.debug.postData); 
 
     //Until we get sending data to database figure out. Switch between post and e-mail session log
     if (true) {
@@ -752,6 +737,7 @@ require([
   };
 
   av.post.sendWindow = function () {
+    console.log('in av.post.sendWindow');
     postLogDialog.show();  //textarea must be visable first
     av.dom.postLogPara.textContent = av.post.postLogPara;
     av.dom.postVersionLabel.textContent = av.ui.version;
@@ -768,6 +754,7 @@ require([
   };
 
   av.post.emailWindow = function () {
+    console.log('in av.post.emailWindow');
     av.dom.sendLogTextarea.textContent = av.debug.sendLogTextarea;
     av.dom.sendLogPara.textContent = av.debug.sendLogPara;
 
@@ -943,7 +930,7 @@ require([
     av.debug.sendLogTextarea = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail;
     av.debug.error = '';
     av.dom.postError.style.color = 'grey';
-    av.ui.problemWindow();
+    av.ui.problemWindow("dijit.byId('mnHpProblem').on('Click', function ()");
     // only shows one line = prompt('Please put this in an e-mail to help us improve Avida-ED: Copy to clipboard: Ctrl+C, Enter', '\nto: ' + av.fio.mailAddress + '\n' + av.debug.log);
   });
 
@@ -1141,7 +1128,7 @@ require([
         av.dom.setupBlock.className = 'labInfoClass labInfoNone';
         av.dom.statsTab.className = 'tablinks active'; 
 
-        if (true) {      //av.dbg.flg.plt
+        if (av.dbg.flg.plt) {      //
           console.log('In: av.ptd.rightInfoPanelToggleButton; av.pch.needInit=', av.pch.needInit
               , '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") ); 
         }
@@ -1329,7 +1316,6 @@ require([
     av.ptd.runPopFn('av.dom.oneUpdateButton.onclick');
   };
 
-//  av.dom.avidianOutline.onclick = function () {
   av.ui.avidianOutlineOnclick = function (domObj) {
     av.post.addUser('Button: avidianOutline; av.ui.showOutlineFlag=' + av.ui.showOutlineFlag);
     if ('Resource Mode: hide Avidian Outlines' == av.dom.avidianOutline.innerHTML) {
@@ -1391,7 +1377,6 @@ require([
     }
   };
 
-//  document.getElementById('newDishButton').onclick = function () {
   av.dom.newDishButton.onclick = function () {
     av.post.addUser('Button: newDishButton');
     av.ui.newButtonBoth();
@@ -1698,15 +1683,13 @@ require([
 
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
-    if (av.debug.uil)
-      console.log(from, 'called av.grd.drawGridSetupFn');
+    if (true) {console.log(from, 'called av.grd.drawGridSetupFn'); }
     av.dom.popBot.style.height = '5px';
 
     //size testing box = mainButtons
     av.dsz.mainButtonsWd = parseInt($("#mainButtons").css("width"));
     av.dsz.mainButtonsHt = parseInt($("#mainButtons").css("height"));
-    if (av.debug.uil)
-      console.log('w:', av.dsz.mainButtonsWd, av.dsz.mainButtonsHt, '= mainButtons');
+    if (av.debug.uil) { console.log('ui: w:', av.dsz.mainButtonsWd, av.dsz.mainButtonsHt, '= mainButtons'); }
 
     //about total window size
     av.dsz.windowWd = window.innerWidth || document.documentElement.clientWidth
@@ -1716,15 +1699,10 @@ require([
     if (av.debug.uil)
       console.log('w:', av.dsz.windowWd, av.dsz.windowHd, '= window');
 
-    if (av.debug.uil)
-      console.log('w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
-    if (av.debug.uil)
-      console.log('w:', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight(), '= av.dom.gridHolder jQuery.innerWd ht');
-    if (av.debug.uil)
-      console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
-
-    if (av.debug.uil)
-      console.log('w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= av.dom.gridCanvas.width ht____________');
+    if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht'); }
+    if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight(), '= av.dom.gridHolder jQuery.innerWd ht'); }
+    if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset'); }
+    if (av.debug.uil) { console.log('ui: w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= av.dom.gridCanvas.width ht____________'); }
 
     if (undefined != av.grd.msg) {
       if ('prepping' != av.grd.runState && undefined != av.grd.msg.fitness) {
@@ -1765,36 +1743,27 @@ require([
         }
         //console.log('after drawing scale or legend. update=',av.grd.oldUpdate);
 
-        if (av.debug.uil)
-          console.log('w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
-        if (av.debug.uil)
-          console.log('w:', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight(), '= av.dom.gridHolder jQuery.innerWd ht ~ client');
-        if (av.debug.uil)
-          console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
+        if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht'); }
+        if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight(), '= av.dom.gridHolder jQuery.innerWd ht ~ client'); }
+        if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset'); }
 
         av.dom.popBot.style.height = av.dom.popBot.scrollHeight + 'px';
-        if (av.debug.uil)
-          console.log('change ht of popBot');
+        if (av.debug.uil) { console.log('ui: change ht of popBot'); }
 
-        //if (av.debug.uil) console.log('w:', av.dom.gridHolder.scrollWidth, av.dom.gridHolder.scrollHeight, '= av.dom.gridHolder.scrollWidth ht');
-        //if (av.debug.uil) console.log('w:', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight, '= av.dom.gridHolder.clientWidth ht');
-        //if (av.debug.uil) console.log('w:', av.dom.gridHolder.offsetWidth, av.dom.gridHolder.offsetHeight, '= av.dom.gridHolder.offsetWidth ht');
-        //if (av.debug.uil) console.log('w:', parseInt($("#gridHolder").css('width')), parseInt($("#gridHolder").css('height')),'= av.dom.gridHolder jQuery.cssWd ht ~ outer ~ offset');
+        //if (av.debug.uil) { console.log('ui: w:', av.dom.gridHolder.scrollWidth, av.dom.gridHolder.scrollHeight, '= av.dom.gridHolder.scrollWidth ht'); }
+        //if (av.debug.uil) { console.log('ui: w:', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight, '= av.dom.gridHolder.clientWidth ht'); }
+        //if (av.debug.uil) { console.log('ui: w:', av.dom.gridHolder.offsetWidth, av.dom.gridHolder.offsetHeight, '= av.dom.gridHolder.offsetWidth ht'); }
+        //if (av.debug.uil) { console.log('ui: w:', parseInt($("#gridHolder").css('width')), parseInt($("#gridHolder").css('height')),'= av.dom.gridHolder jQuery.cssWd ht ~ outer ~ offset'); }
 
         //av.dsz.gridHolderWd = parseInt($("#gridHolder").css("width"));   //this seems to match offsetht
         //av.dsz.gridHolderHt = parseInt($("#gridHolder").css("height"));
-        //if (av.debug.uil) console.log('w:',av.dsz.gridHolderWd,av.dsz.gridHolderHt, '= gridHolder jQuery.width ht ~ outer ~ css ~ offset');
+        //if (av.debug.uil) { console.log('ui: w:',av.dsz.gridHolderWd,av.dsz.gridHolderHt, '= gridHolder jQuery.width ht ~ outer ~ css ~ offset'); }
 
 
-        if (av.debug.uil)
-          console.log('w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
-        if (av.debug.uil)
-          console.log('w:', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight(), '= av.dom.gridHolder jQuery.innerWd ht ~ client');
-        if (av.debug.uil)
-          console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
-
-        if (av.debug.uil)
-          console.log('w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= Before: av.dom.gridCanvas.width ht____________');
+        if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht'); }
+        if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight(), '= av.dom.gridHolder jQuery.innerWd ht ~ client'); }
+        if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset'); }
+        if (av.debug.uil) { console.log('ui: w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= Before: av.dom.gridCanvas.width ht____________'); }
 
         //if (av.dom.gridHolder.style.height < av.dom.gridHolder.clientWidth){
         //if (av.dom.gridHolder.style.height < av.dom.gridHolder.style.width){
@@ -1810,14 +1779,10 @@ require([
         av.grd.spaceY = av.grd.canvasSize;
 
         av.grd.findGridSize(av.grd, av.parents);
-        if (av.debug.uil)
-          console.log('w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= After: av.dom.gridCanvas.width ht____________');
-        if (av.debug.uil)
-          console.log('w:', $("#gridCanvas").outerWidth(), $("#gridCanvas").outerHeight(), '= After: gridCanvas jQuery.outerWd______________');
-        if (av.debug.uil)
-          console.log('w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
-        if (av.debug.uil)
-          console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
+        if (av.debug.uil) { console.log('ui: w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= After: av.dom.gridCanvas.width ht____________'); }
+        if (av.debug.uil) { console.log('ui: w:', $("#gridCanvas").outerWidth(), $("#gridCanvas").outerHeight(), '= After: gridCanvas jQuery.outerWd______________'); }
+        if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht'); }
+        if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset'); }
 
         //Need to fix for scrolling   // This was commented out in Avida-ED 3.1
         //if (av.dom.gridHolder.scrollHeight == av.dom.gridHolder.clientHeight + 17) {
@@ -1827,17 +1792,16 @@ require([
         //  consold.log('inside DrawGridSetupFn in odd if statement ----------------------------------');
         //}
 
-        if (av.debug.uil)
-          console.log('before av.grd.drawGridUpdate');
+        if (true) { console.log('before av.grd.drawGridUpdate'); }
         av.grd.drawGridUpdate();   //in populationGrid.js
 
         rescaleLabel.textContent = av.grd.fillRescale;       //Tiba look at later
         av.grd.need2DrawGrid = true;
         if (av.debug.uil) {
-          console.log('w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= End: av.dom.gridCanvas.width ht____________');
-          console.log('w:', $("#gridCanvas").outerWidth(), $("#gridCanvas").outerHeight(), '= End: gridCanvas jQuery.outerWd______________');
-          console.log('w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
-          console.log('w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
+          console.log('ui: w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= End: av.dom.gridCanvas.width ht____________');
+          console.log('ui: w:', $("#gridCanvas").outerWidth(), $("#gridCanvas").outerHeight(), '= End: gridCanvas jQuery.outerWd______________');
+          console.log('ui: w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
+          console.log('ui: w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
         }
       }
     }
@@ -1850,7 +1814,6 @@ require([
   // *******************************************************************************************************************
 
   // Get color map data from Avida and draw
-  //dijit.byId('colorMode').on('Change', function () {
   document.getElementById('colorMode').onchange = function () {
     av.grd.drawGridSetupFn('colorMode_onchange');
   };
@@ -1903,6 +1866,7 @@ require([
    av.post.addUser('Button: mnCubehelix pressed');
    });
    */
+  
   // *******************************************************************************************************************
   //    Buttons that select organisms that perform a logic function
   // *******************************************************************************************************************
@@ -1990,7 +1954,7 @@ require([
       
       Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
       
-      if (av.debug.uil) console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height);
+      if (av.debug.uil) { console.log('ui: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
       if (av.dbg.flg.plt) console.log('after plotly.plot in poChartInit');
     } else {
       //av.pch.update = {
@@ -2023,7 +1987,7 @@ require([
     if (av.dbg.flg.plt) { console.log('PopPlot: layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width); }
     av.pch.needInit = false;
   };
-  if (av.dbg.flg.root) { console.log('Roote: after av.grd.popChartInit defined'); }
+  // if (av.dbg.flg.root) { console.log('Root: after av.grd.popChartInit defined'); }
 
    //Draw popChartFn
   av.grd.popChartFn = function (from) {
@@ -2171,8 +2135,8 @@ require([
           //  width: av.pch.layout.width,
           //  height: av.pch.layout.height
           //};
-          if (av.debug.uil) { console.log('av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
-          if (av.debug.uil) { console.log('av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
+          if (av.debug.uil) { console.log('ui: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
+          if (av.debug.uil) { console.log('ui: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
 
           av.pch.update = {
             autorange: true,
@@ -2333,7 +2297,7 @@ require([
 /*------------------------------------------------------------------------------------------ av.ptd.muteInputChange --*/
   av.ptd.muteInputChange = function (value, muteErroTest) {
     var muteNum = Number(value);
-    if (av.debug.uil) {console.log('muteNum=', muteNum); }
+    if (av.debug.uil) { console.log('ui: muteNum=', muteNum); }
     if (muteNum >= 0 && muteNum <= 100) {
       av.ptd.validMuteInuput = true;
       document.getElementById(muteErroTest).style.color = 'black';
@@ -2362,7 +2326,7 @@ require([
 /*------------------------------------------------------------------------------------------ av.ptd.randInputChange --*/
   av.ptd.randInputChange = function (value, randErroTest) {
     var randNum = Number(value);
-    if (av.debug.uil) { console.log('randNum=', randNum); }
+    if (av.debug.uil) { console.log('ui: randNum=', randNum); }
     if (randNum >= -1 && randNum <= 1000000) {
       av.ptd.validMuteInuput = true;
       document.getElementById(randErroTest).style.color = 'black';
@@ -2932,8 +2896,7 @@ require([
   // if (av.dbg.flg.root) { console.log('Root: before Resize helpers'); }
 
   av.removeVerticalScrollBars = function () {
-    if (av.debug.uil)
-      if (av.debug.uil) { console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight, document.documentElement.clientHeight); }
+    if (av.debug.uil) { console.log('ui: documentElement Ht, scroll client', document.documentElement.scrollHeight, document.documentElement.clientHeight); }
     if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
       document.documentElement.style.height = document.documentElement.clientHeight + 'px';
     };
@@ -2942,14 +2905,14 @@ require([
     if (av.dom.mainButtons.scrollHeight > av.dom.mainButtons.clientHeight) {
       av.dom.mainButtons.style.height = av.dom.mainButtons.scrollHeight + 'px';
     };
-    if (av.debug.uil) {console.log('trashDivHt.client,scroll=', av.dom.trashDiv.clientHeight, av.dom.trashDiv.scrollHeight); }
+    if (av.debug.uil) { console.log('ui: trashDivHt.client,scroll=', av.dom.trashDiv.clientHeight, av.dom.trashDiv.scrollHeight); }
     if (av.dom.trashDiv.scrollHeight > av.dom.trashDiv.clientHeight) {
       av.dom.trashDiv.style.height = av.dom.trashDiv.scrollHeight + 'px';
     };
     if (av.dom.orgTopId.scrollHeight > av.dom.orgTopId.clientHeight) {
       av.dom.orgTopId.style.height = av.dom.orgTopId.scrollHeight + 'px';
     };
-    if (av.debug.uil) { console.log('orgBot Ht', av.dom.orgBotId.scrollHeight, av.dom.orgBotId.clientHeight); }
+    if (av.debug.uil) { console.log('ui: orgBot Ht', av.dom.orgBotId.scrollHeight, av.dom.orgBotId.clientHeight); }
     if (av.dom.orgBotId.scrollHeight > av.dom.orgBotId.clientHeight) {
       av.ui.orgBotIdNum = av.dom.orgBotId.scrollHeight + 9;
       av.dom.orgBotId.style.height = av.ui.orgBotIdNum + 'px';
@@ -2958,15 +2921,15 @@ require([
 
   //on 2018_0823 this is where height gets messed up when loading the program. 
    av.pch.divSize = function (from) {
-    if (av.debug.uil) { console.log('PopPlotSize: ',from, 'called av.pch.divSize, not in if statement.'); }
-    av.debug.uil = false;
-    if (av.debug.uil) { console.log('PopPlotSize: ',from, 'called av.pch.divSize'); }
+    if (av.debug.uil) { console.log('ui: PopPlotSize: ',from, 'called av.pch.divSize, not in if statement.'); }
+    //av.debug.uil = false;
+    if (av.debug.uil) { console.log('ui: PopPlotSize: ',from, 'called av.pch.divSize'); }
     if (av.debug.uil) { 
-      console.log('popChrtHolder css.wd ht border padding margin=', $("#popChrtHolder").css('width'), $("#popChrtHolder").css('height')
+      console.log('ui: popChrtHolder css.wd ht border padding margin=', $("#popChrtHolder").css('width'), $("#popChrtHolder").css('height')
         , $("#popChrtHolder").css('border'), $("#popChrtHolder").css('padding'), $("#popChrtHolder").css('margin'));
     } 
     if (av.debug.uil) {
-      console.log('PopPlotSize: av.dom.popChrtHolder.ht offset, client ht=', av.dom.popChrtHolder.offsetHeight,
+      console.log('ui: PopPlotSize: av.dom.popChrtHolder.ht offset, client ht=', av.dom.popChrtHolder.offsetHeight,
         av.dom.popChrtHolder.clientHeight, '; parseInt(padding)=', parseInt($("#popChrtHolder").css('padding'), 10));
     }
     
@@ -2975,33 +2938,33 @@ require([
     //console.log(from, 'called av.pch.divSize: av.pch.pixel.wd=', av.pch.pixel.wd, '; av.pch.pixel.ht=', av.pch.pixel.ht);
     av.pch.layout.height = av.pch.pixel.ht - av.pch.pixel.hdif;  //leave a bit more vertical space for plot;
     av.pch.layout.width = av.pch.pixel.wd - av.pch.pixel.wdif;   //leave more horizontal space to right of plot;
-    if (av.debug.uil) { console.log('PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
-    if (av.debug.uil) { console.log('PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
+    if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
+    if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
 
     //av.dom.popChrtHolder.style.width = av.dom.popChrtHolder.clientWidth + 'px';  //seems redundent  djb said to delete as of 2018_0827
     //av.dom.popChrtHolder.style.height = av.dom.popChrtHolder.clientHeight + 'px';  //seems redundent djb said to delete as of 2018_0827
     av.dom.popChart.style.height = av.pch.layout.height + 'px';
     av.dom.popChart.style.width = av.pch.layout.width + 'px';
     if (av.debug.uil) {
-      console.log('PopPlotSize: popChart css.wd, border, padding, margin=', $("#popChart").css('width'), $("#popChart").css('height')
+      console.log('ui: PopPlotSize: popChart css.wd, border, padding, margin=', $("#popChart").css('width'), $("#popChart").css('height')
         , $("#popChart").css('border'), $("#popChart").css('padding'), $("#popChart").css('margin'));
     }
     if (av.debug.uil) {
-      console.log('PopPlotSize: av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight,
+      console.log('ui: PopPlotSize: av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight,
         av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'), 10));
     }
-    if (av.debug.uil) { console.log('PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
-    if (av.debug.uil) { console.log('PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
-    av.debug.uil = false;
+    if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
+    if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
+    //av.debug.uil = false;
   };
 
   av.anl.divSize = function (from) {
-    if (av.debug.alo) { console.log(from, 'called av.anl.divSize'); }
+    if (av.debug.alo) { console.log('alo: ', from, 'called av.anl.divSize'); }
     //console.log(from,'anaChrtHolder Ht client scroll ', av.dom.anaChrtHolder.clientHeight, av.dom.anaChrtHolder.scrollHeight);
     //console.log(from,'anlDndChart Ht client scroll', av.dom.anlDndChart.clientHeight, av.dom.anlDndChart.scrollHeight);
     //console.log(from,'anlChrtSpace Ht client scroll', av.dom.anlChrtSpace.clientHeight, av.dom.anlChrtSpace.scrollHeight);
 
-    if (av.debug.alo) { console.log('av.dom.anaChrtHolder.clientWd, Ht=', av.dom.anaChrtHolder.clientWidth, av.dom.anaChrtHolder.clientHeight); }
+    if (av.debug.alol) { console.log('alo: av.dom.anaChrtHolder.clientWd, Ht=', av.dom.anaChrtHolder.clientWidth, av.dom.anaChrtHolder.clientHeight); }
     av.anl.ht = av.dom.anaChrtHolder.clientHeight - 1;
     av.anl.wd = av.dom.anaChrtHolder.clientWidth - 1;
     av.dom.anaChrtHolder.style.height = av.anl.ht + 'px';
@@ -3021,12 +2984,12 @@ require([
     if ('none' !== domStyle.get('populationBlock', 'display')) {
       //av.ui.resizePopLayout('av.ui.browserResizeEventHandler popBlock');  //does not work
       if (av.debug.uil) {
-        console.log('av.grd.canvasSize =', av.grd.canvasSize, '; av.dom.gridCanvas.width = ', av.dom.gridCanvas.width,
+        console.log('ui: av.grd.canvasSize =', av.grd.canvasSize, '; av.dom.gridCanvas.width = ', av.dom.gridCanvas.width,
           '; av.dom.gridHolder.clientHeight=', av.dom.gridHolder.clientHeight);
       }
       if (av.grd.need2DrawGrid) {
         av.grd.popChartFn('av.ui.browserResizeEventHandler');
-        if (av.debug.uil) { console.log('av.grd.need2DrawGrid=', av.grd.need2DrawGrid); }
+        if (av.debug.uil) { console.log('ui: av.grd.need2DrawGrid=', av.grd.need2DrawGrid); }
         //av.grd.drawGridSetupFn('av.ui.browserResizeEventHandler when pop=flex');
       }
     }
@@ -3064,13 +3027,13 @@ require([
     //console.log('gridHolder_margin' ,$("#gridHolder").css("margin"), '; popChart=', $("#popChart").css('margin'));
 
     if (av.debug.uil) { 
-      console.log('Wd: allAvida navColId mapHolder gridHolder rightInfoHolder, sum', av.dom.allAvida.offsetWidth,
+      console.log('ui: Wd: allAvida navColId mapHolder gridHolder rightInfoHolder, sum', av.dom.allAvida.offsetWidth,
         av.dom.navColId.offsetWidth, av.dom.mapHolder.offsetWidth, av.dom.rightInfoHolder.offsetWidth,
         av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.rightInfoHolder.offsetWidth);
-      console.log('Wd: popStatsBlock selOrgType sum', av.dom.popStatsBlock.offsetWidth, av.dom.selOrgType.clientWidth,
+      console.log('ui: Wd: popStatsBlock selOrgType sum', av.dom.popStatsBlock.offsetWidth, av.dom.selOrgType.clientWidth,
         av.dom.popStatsBlock.offsetWidth + av.dom.selOrgType.clientWidth);
 
-      console.log('Ht; allAvida, mapHolder, popTopRw, gridHolder, popBot sum', av.dom.allAvida.offsetHeight,
+      console.log('ui: Ht; allAvida, mapHolder, popTopRw, gridHolder, popBot sum', av.dom.allAvida.offsetHeight,
         av.dom.mapHolder.offsetHeight, av.dom.popTopRw.offsetHeight, av.dom.gridHolder.offsetHeight,
         av.dom.popBot.offsetHeight, av.dom.popTopRw.offsetHeight + av.dom.gridHolder.offsetHeight + av.dom.popBot.offsetHeight);
       }
@@ -3078,14 +3041,14 @@ require([
       //set grid size based on height and distribute extra width.
       extraGridWd = av.dom.gridHolder.offsetWidth - av.dom.gridHolder.offsetHeight;
       popSideWdSum = popSideWdSum + extraGridWd;
-      if (av.debug.uil) { console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight); }
+      if (av.debug.uil) { console.log('ui: av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight); }
       //av.dom.gridCanvas.width = av.dom.gridHolder.clientHeight;     //no style for canvas; style needed for div
       //av.dom.gridCanvas.height = av.dom.gridHolder.clientHeight;
       av.dom.gridCanvas.width = $("#gridHolder").height();     //no style for canvas; style needed for div
       av.dom.gridCanvas.height = $("#gridHolder").height();
 
-      if (av.debug.uil) { console.log('av.dom.gridCanvas.wd ht', av.dom.gridCanvas.width, av.dom.gridCanvas.height); }
-      if (av.debug.uil) { console.log('av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight); }
+      if (av.debug.uil) { console.log('ui: av.dom.gridCanvas.wd ht', av.dom.gridCanvas.width, av.dom.gridCanvas.height); }
+      if (av.debug.uil) { console.log('ui: av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight); }
       av.dom.navColId.style.width = (0.3 * popSideWdSum) + 'px';
       av.dom.popStatsBlock.style.width = (0.7 * popSideWdSum) + 'px';
       av.dom.setupBlock.style.width = (0.7 * popSideWdSum) + 'px';
@@ -3098,7 +3061,7 @@ require([
   };
 
   av.ui.chngPopWidth = function (from) {
-    if (av.debug.uil) { console.log(from, 'called av.ui.chngPopWidth'); }
+    if (av.debug.uil) { console.log('ui: ', from, 'called av.ui.chngPopWidth'); }
     av.dom.rightInfoHolder.style.width = rightInfoHolderWd + 'px';
     av.dom.setupBlock.style.width = rightInfoHolderWd + 'px';
     av.dom.popStatsBlock.style.width = rightInfoHolderWd + 'px';
@@ -3107,37 +3070,37 @@ require([
 
   av.ui.adjustpopInfoWd = function (adjustGridWd) {
     var rightInfoHolderWd = av.dom.rightInfoHolder.offsetWidth - adjustGridWd;  //adjustGridWd postive means Grid needs width
-    if (av.debug.uil) { console.log('rightInfoHolderWd=', rightInfoHolderWd, '; av.ui.rightInfoHolderMinWd', av.ui.rightInfoHolderMinWd); }
+    if (av.debug.uil) { console.log('ui: rightInfoHolderWd=', rightInfoHolderWd, '; av.ui.rightInfoHolderMinWd', av.ui.rightInfoHolderMinWd); }
     if (rightInfoHolderWd < av.ui.rightInfoHolderMinWd) {
       var navColWd = av.dom.navColId.offsetWidth;
-      if (av.debug.uil) {console.log("navColWd=", navColWd, '; rightInfoHolderWd=', rightInfoHolderWd, ''); }
+      if (av.debug.uil) { console.log('ui: navColWd=', navColWd, '; rightInfoHolderWd=', rightInfoHolderWd, ''); }
       navColWd = (.33 * (navColWd + rightInfoHolderWd)).toFixed(0);
       rightInfoHolderWd = navColWd * 2;
       av.dom.navColId.style.width = navColWd + 'px';
-      if (av.debug.uil) {console.log('navColWd=', navColWd, '; rightInfoHolderWd=', rightInfoHolderWd, '; mapHolder=', av.dom.mapHolder.offsetWidth); }
+      if (av.debug.uil) { console.log('ui: navColWd=', navColWd, '; rightInfoHolderWd=', rightInfoHolderWd, '; mapHolder=', av.dom.mapHolder.offsetWidth); }
     }
     av.dom.rightInfoHolder.style.width = rightInfoHolderWd + 'px';
     av.dom.setupBlock.style.width = rightInfoHolderWd + 'px';
     av.dom.popStatsBlock.style.width = rightInfoHolderWd + 'px';
     rightInfoHolderWd = (rightInfoHolderWd / 2).toFixed(0); //Math.round(rightInfoHolder/2);
     av.dom.selOrgType.style.width = rightInfoHolderWd + 'px';
-    if (av.debug.uil) { console.log('set selOrgType to ', rightInfoHolderWd + 'px'); }
-    if (av.debug.uil) { console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth); }
+    if (av.debug.uil) { console.log('ui: set selOrgType to ', rightInfoHolderWd + 'px'); }
+    if (av.debug.uil) { console.log('ui: gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth); }
   };
 
   //Adjust Statistics area width based on gridholder size and shape. gridholder should be roughly square
   av.ui.adjustpopInfoSize = function (from) {
     var adjustGridWd = 0;
     if (av.debug.uil) { 
-      console.log('av.ui.adjustpopInfoSize was called from: ', from);
-      console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth);
-      console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, '; rightInfoHolder.wd=', av.dom.rightInfoHolder.offsetWidth);
-      console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ',
+      console.log('ui: av.ui.adjustpopInfoSize was called from: ', from);
+      console.log('ui: gridHolder.wd=', av.dom.gridHolder.offsetWidth);
+      console.log('ui: navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, '; rightInfoHolder.wd=', av.dom.rightInfoHolder.offsetWidth);
+      console.log('ui: allAvida=', av.dom.allAvida.offsetWidth, '; sum= ',
         av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.rightInfoHolder.offsetWidth);
-      console.log('rightInfoHolder.offsetWidth, clientwidth =', av.dom.rightInfoHolder.offsetWidth, av.dom.rightInfoHolder.clientWidth);
-      console.log('popStatsBlock.offsetWidth, clientwidth =', av.dom.popStatsBlock.offsetWidth, av.dom.popStatsBlock.clientWidth);
-      console.log('selOrgType.offsetWidth, clientwidth =', av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
-      console.log('av.ui.popGridCtlWdMin=', av.ui.popGridCtlWdMin, '; gridHolder.offsetWidt=', av.dom.gridHolder.offsetWidth);
+      console.log('ui: rightInfoHolder.offsetWidth, clientwidth =', av.dom.rightInfoHolder.offsetWidth, av.dom.rightInfoHolder.clientWidth);
+      console.log('ui: popStatsBlock.offsetWidth, clientwidth =', av.dom.popStatsBlock.offsetWidth, av.dom.popStatsBlock.clientWidth);
+      console.log('ui: selOrgType.offsetWidth, clientwidth =', av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
+      console.log('ui: av.ui.popGridCtlWdMin=', av.ui.popGridCtlWdMin, '; gridHolder.offsetWidt=', av.dom.gridHolder.offsetWidth);
     }
     if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight) {
       adjustGridWd = av.dom.gridHolder.offsetHeight - av.dom.gridHolder.offsetWidth; //adjustGridWd negative means grid holder is too wide.
@@ -3148,23 +3111,23 @@ require([
       av.ui.adjustpopInfoWd(adjustGridWd);
     };
     if (av.debug.uil) {
-      console.log('gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
-      console.log('navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth,
+      console.log('ui: gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
+      console.log('ui: navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth,
         '; rightInfoHolder.wd=', av.dom.rightInfoHolder.offsetWidth);
-      console.log('allAvida=', av.dom.allAvida.offsetWidth, '; sum= ',
+      console.log('ui: allAvida=', av.dom.allAvida.offsetWidth, '; sum= ',
         av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.rightInfoHolder.offsetWidth);
 
-      console.log('popInfo.offsetWidth, clientwidth =', av.dom.rightInfoHolder.offsetWidth, av.dom.rightInfoHolder.clientWidth);
-      console.log('popStatsBlock.offsetWidth, clientwidth =', av.dom.popStatsBlock.offsetWidth, av.dom.popStatsBlock.clientWidth);
-      console.log('selOrgType.offsetWidth, clientwidth =', av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
+      console.log('ui: popInfo.offsetWidth, clientwidth =', av.dom.rightInfoHolder.offsetWidth, av.dom.rightInfoHolder.clientWidth);
+      console.log('ui: popStatsBlock.offsetWidth, clientwidth =', av.dom.popStatsBlock.offsetWidth, av.dom.popStatsBlock.clientWidth);
+      console.log('ui: selOrgType.offsetWidth, clientwidth =', av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
     }
     av.dom.gridCanvas.style.width = (av.dom.gridHolder.clientHeight - 2) + 'px';
     av.dom.gridCanvas.style.height = av.dom.gridCanvas.offsetWidth + 'px';
     av.dom.scaleCanvas.style.width = (av.dom.gridControlContainer.clientWidth - 1) + 'px';
 
     if (av.debug.uil) {
-      console.log('av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-      console.log('==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+      console.log('ui: av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+      console.log('ui: ==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
     }
   };
 
@@ -3180,7 +3143,7 @@ require([
     if (undefined !== av.dom.anlChrtSpace.data) {
       if (av.dbg.flg.plt) { console.log('AnaPlot: before purge in init'); } 
       av.debug.log += '\n     --uiD: Plotly: Plotly.purge(av.dom.anlChrtSpace) in AvidaED.js at 2168';
-      av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace', [av.dom.anlChrtSpace]);
+      av.utl.dTailWrite('avidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace', [av.dom.anlChrtSpace]);
       Plotly.purge(av.dom.anlChrtSpace);
       if (av.dbg.flg.plt) { console.log('AnaPlot: after purge in init'); }
     }
@@ -3189,7 +3152,7 @@ require([
     if (av.dbg.flg.plt) { console.log('AnaPlot: anlChrtPlotly in av.anl.anaChartInit'); }
     //Plotly.plot('anlChrtSpace', anaData, av.anl.layout, av.anl.widg);
     av.debug.log += '\n     --uiD: Plotly: Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg) in AvidaED.js at 2157';
-    av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg', [av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg]);
+    av.utl.dTailWrite('avidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg', [av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg]);
     Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg);
     if (av.dbg.flg.plt) { console.log('AnaPlot: after plot in av.anl.anaChartInit'); }
 
@@ -3222,7 +3185,7 @@ require([
         else if (undefined !== av.dom.anlChrtSpace.data) {
           console.log('before purge in anaChartFn');
           av.debug.log += '\n     --uiD: Plotly: Plotly.purge(av.dom.anlChrtSpace) in AvidaED.js at 2205';
-          av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace', [av.dom.anlChrtSpace]);
+          av.utl.dTailWrite('avidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace', [av.dom.anlChrtSpace]);
           Plotly.purge(av.dom.anlChrtSpace);
           console.log('after purge in anaChartFn');
         }
@@ -3266,12 +3229,12 @@ require([
         av.anl.layout.yaxis2.title = document.getElementById('yRightSelect').value;
         if (av.dbg.flg.plt) { console.log('AnaPlot: before purge in update'); }
         av.debug.log += '\n     --uiD: Plotly: Plotly.purge(av.dom.anlChrtSpace) in AvidaED.js at 2249';
-        av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace', [av.dom.anlChrtSpace]);
+        av.utl.dTailWrite('avidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace', [av.dom.anlChrtSpace]);
         Plotly.purge(av.dom.anlChrtSpace);
         if (av.dbg.flg.plt) { console.log('AnaPlot: after plot anlChrtSpace'); }
         //Plotly.plot('anlChrtSpace', anaData, av.anl.layout, av.anl.widg);
         av.debug.log += '\n     --uiD: Plotly: Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg) in AvidaED.js at 2254';
-        av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg', [av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg]);
+        av.utl.dTailWrite('avidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg', [av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg]);
         Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg);
         if (av.dbg.flg.plt) { console.log('AnaPlot: after plot anlChrtSpace'); }
       }
@@ -3486,6 +3449,22 @@ require([
  }
  });
  */
+
+/* Not in use */
+  /*
+   av.dnd.fzMdish = new dndSource('fzMdish', {  //multi-dsih
+   accept: ['b', 'm'],  //m=multidish
+   copyOnly: true,
+   singular: true,
+   selfAccept: false
+   });
+   av.dnd.fzRdish = new dndSource('fzRdish', {  //Resources only version
+   accept: ['r'],  //t=resource display
+   copyOnly: true,
+   singular: true,
+   selfAccept: false
+   });
+   */
 
 // Web sites that looked useful for some task
 /* Capture Close event

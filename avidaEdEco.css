@@ -68,6 +68,10 @@
                           'navColClass mainBlockHolder';
     height: 100vh;
     width: 100vw;
+    max-height: 100vh;
+    max-width: 100vw;
+    min-height: 100vh;
+    min-width: 100vw;
     margin: 0;
     background:  #F5F5F5;   /* lightsalmon;  */
   }
@@ -79,6 +83,10 @@
                          'mainBlockHolder rightInfoHolder';
     height: 100vh;
     width: 100vw;
+    min-height: 100vh;
+    min-width: 100vw;
+    max-height: 100vh;
+    max-width: 100vw;
     margin: 0;
     background:  #F5F5F5;   /* lightsalmon;  */
   }
@@ -90,6 +98,10 @@
                           'navColClass mainBlockHolder rightInfoHolder';
     height: 100vh;
     width: 100vw;
+    min-height: 100vh;
+    min-width: 100vw;
+    max-height: 100vh;
+    max-width: 100vw;
     margin: 0;
     background:  #F5F5F5;   /* lightsalmon;  */
   }
@@ -102,6 +114,10 @@
                           'navColClass mainBlockHolder rightInfoHolder';
     height: 100vh;
     width: 100vw;
+    min-height: 100vh;
+    min-width: 100vw;
+    max-height: 100vh;
+    max-width: 100vw;
     margin: 0;
     background:  #F5F5F5;   /* lightsalmon;  */
   }
@@ -1157,6 +1173,7 @@ checkbox:focus {
     background: #F5F5F5; /* #F5F5F5; /* peachpuff; */
   }
   
+  /* the left side of the analysis controls at the bottom of analysis page */
   .analegend{
     flex: 0 1 50%;
     border: 1px solid #AAA;
@@ -1171,7 +1188,6 @@ checkbox:focus {
     grid-template-areas: 'pop0delete pop0color popDish0'
                          'pop1delete pop1color popDish1'
                          'pop2delete pop2color popDish2';
-    
   }
     #pop0deleteDiv { grid-area: pop0delete;}
     #pop1deleteDiv { grid-area: pop1delete;}
@@ -1184,25 +1200,29 @@ checkbox:focus {
     #popDish2Div { grid-area: popDish2;}
     
     .anaDeleteButtonDiv{
-      padding: 2px 4px;  /*top/bottom  left/right  */
+      padding: 1px 4px;  /*top/bottom  left/right  */
     }
     .anaDeleteButton{
-      margin: 2px;
+      margin: auto;
+      height: 18px;
+      position: absolute;
     };
     .anaColorLineDiv{
       padding: 2px 4px;  /*top/bottom  left/right  */
-      width: 100%; 
+      width: 99%; 
       background: #F5F5F5;   /*lightblue; */
     }
+    /* holdes color select/option structure */
     .anaColorLine{
       height: 17px;
       min-width: 50px;
       margin: auto;
     }
-    .popDishHolder{
+    .popDishHolder{  
       padding 3px;
       background: #F5F5F5;  /*lemonchiffon; */
     }
+    //insdie popDishHolder
     .popDishClass {
       min-height: 1.6em;
       padding: 5px;
