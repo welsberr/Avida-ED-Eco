@@ -16,7 +16,10 @@
 #zoomSlide{display: none;}
 .noSize{display: none}
 
-.notSeen{margin: 0;}
+.notSeen{
+  margin: 0;
+  display: none;
+}
 #splash{
   display: none;
   position: absolute; 

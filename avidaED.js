@@ -1336,14 +1336,14 @@ require([
   };
 
   av.dom.newCancel.onclick = function () {
-    av.dom.newModalID.style.display = 'none';
+    av.dom.newDishModalID.style.display = 'none';
   };
 
   /******************************************* New Button and new Dialog **********************************************/
 
   av.dom.newDiscard.onclick = function () {
     av.post.addUser('Button: newDiscard');
-    av.dom.newModalID.style.display = 'none';
+    av.dom.newDishModalID.style.display = 'none';
     av.msg.reset();
     //console.log('newDiscard click');
   };
@@ -1351,7 +1351,7 @@ require([
   av.dom.newSaveWorld.onclick = function () {
     av.post.addUser('Button: newSaveWorld');
     av.ptd.FrPopulationFn();
-    av.dom.newModalID.style.display = 'none';
+    av.dom.newDishModalID.style.display = 'none';
     av.msg.reset();
     //console.log('newSaveWorld click');
   };
@@ -1359,7 +1359,7 @@ require([
   av.dom.newSaveConfig.onclick = function () {
     av.post.addUser('Button: newSaveConfig');
     av.ptd.FrConfigFn('av.dom.newSaveConfig.onclick');
-    av.dom.newModalID.style.display = 'none';
+    av.dom.newDishModalID.style.display = 'none';
     av.msg.reset();
     //console.log('newSaveConfig click');
   };
@@ -1373,7 +1373,8 @@ require([
     } else {// check to see about saving current population
       av.msg.pause('now');
       av.ptd.makePauseState();
-      av.dom.newModalID.style.display = "block";
+      console.log('av.dom.newDishModalID=', av.dom.newDishModalID);
+      av.dom.newDishModalID.style.display = "block";
     }
   };
 

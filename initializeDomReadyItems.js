@@ -232,7 +232,7 @@
 
       //av.dom. = document.getElementById('');
       // Modal Dialogs 
-      av.dom.newModalID = document.getElementById('newModalID');
+      av.dom.newDishModalID = document.getElementById('newDishModalID');
       av.dom.newCancel = document.getElementById('newCancel');
       av.dom.newDiscard = document.getElementById('newDiscard');
       av.dom.newSaveConfig = document.getElementById('newSaveConfig');
