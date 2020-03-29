@@ -7,7 +7,7 @@
   // one global to hold them all.
   var av = av || {};  //incase av already exists
 
-  console.log('start of globals on 2020_0211');
+  console.log('start of globals on 2020_0228');
 
 
   Number.prototype.pad = function(size) {
@@ -43,7 +43,7 @@
   av.dbg.flg.frd = false;  //reading file text strings
   av.dbg.flg.nut = false;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
   av.dbg.flg.plt = false;  //both popChart and analysis
-  av.dbg.flg.root = true;  //statements that look for failers when the code executes outside of functions
+  av.dbg.flg.root = false;  //statements that look for failers when the code executes outside of functions
 
   av.debug.usr = ''; //working on log for user actions.
 
@@ -715,7 +715,7 @@
   };
   //---------------------------------------------------------------------------------------end av.sgr.makeNutDefault --
   av.sgr.makeNutDefault();
-  console.log('av.sgr.nut =', av.sgr.nut);   //or should there just be a 'dft' task and only ever one region?
+  //console.log('av.sgr.nut =', av.sgr.nut);   //or should there just be a 'dft' task and only ever one region?
  
 
   av.nut = {};  // within Nutrients (av.nut) the first element in all arrays refer to the geometry="global". The element has an index = 0;

@@ -1,5 +1,5 @@
  // if (av.dbg.flg.root) { console.log('Root: avidaED.js at beginning of file on 2020_0111 @ 20:21'); };
- console.log('Root: avidaED.js at beginning of file on 2020_0206 @ 18:23'); 
+ console.log('Root: avidaED.js at beginning of file on 2020_0228'); 
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
@@ -46,8 +46,8 @@
 // [option]<alt>{go} to get library in the list for finder
 //
 // to have chrome run from file
-///Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --allow-file-access-from-files
-////
+// Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --allow-file-access-from-files
+//
 // Path in TX for Filezilla /var/www/vhosts/bwng/public_html/projects/Avida-ED
 //                          /var/www/vhosts/bwng/public_html/projects/
 //
@@ -1335,33 +1335,34 @@ require([
     av.dom.needAncestorModalID.style.display = 'none';
   };
 
-  av.dom.newCancel.onclick = function () {
+  av.dom.newDishCancel.onclick = function () {
     av.dom.newDishModalID.style.display = 'none';
+    console.log('in av.dom.newDishCancel.onclick');
   };
 
   /******************************************* New Button and new Dialog **********************************************/
 
-  av.dom.newDiscard.onclick = function () {
-    av.post.addUser('Button: newDiscard');
+  av.dom.newDishDiscard.onclick = function () {
+    av.post.addUser('Button: newDishDiscard');
     av.dom.newDishModalID.style.display = 'none';
     av.msg.reset();
-    //console.log('newDiscard click');
+    //console.log('newDishDiscard click');
   };
 
-  av.dom.newSaveWorld.onclick = function () {
-    av.post.addUser('Button: newSaveWorld');
+  av.dom.newDishSaveWorld.onclick = function () {
+    av.post.addUser('Button: newDishSaveWorld');
     av.ptd.FrPopulationFn();
     av.dom.newDishModalID.style.display = 'none';
     av.msg.reset();
-    //console.log('newSaveWorld click');
+    //console.log('newDishSaveWorld click');
   };
 
-  av.dom.newSaveConfig.onclick = function () {
-    av.post.addUser('Button: newSaveConfig');
-    av.ptd.FrConfigFn('av.dom.newSaveConfig.onclick');
+  av.dom.newDishSaveConfig.onclick = function () {
+    av.post.addUser('Button: newDishSaveConfig');
+    av.ptd.FrConfigFn('av.dom.newDishSaveConfig.onclick');
     av.dom.newDishModalID.style.display = 'none';
     av.msg.reset();
-    //console.log('newSaveConfig click');
+    //console.log('newDishSaveConfig click');
   };
 
   av.ui.newButtonBoth = function() {

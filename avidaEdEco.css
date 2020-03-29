@@ -4,11 +4,6 @@
     box-sizing: border-box;  /* include padding and border in the elements width/size */
   }
 */
-  body {
-    margin: 0;
-    background: #F5F5F5; /* cyan; */
-    padding: 0;
-  }
   .displayNone{
     display: none;
   }
@@ -270,7 +265,7 @@
 #FreezerTitle {
   font-size: 190%;
   text-align:  center;
-  font-weFight: normal;
+  font-style: normal;
   width: 100%;
 }
 .frzAccordion {
@@ -1271,6 +1266,8 @@ checkbox:focus {
 
 .modal-header {
     padding: 8px 8px;
+    font-size: 130%;
+    font-weight: bold;
     background: lightgray;
     color: black;
 }
