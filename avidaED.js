@@ -1,5 +1,5 @@
  // if (av.dbg.flg.root) { console.log('Root: avidaED.js at beginning of file on 2020_0111 @ 20:21'); };
- console.log('Root: avidaED.js at beginning of file on 2020_0228'); 
+ console.log('Root: avidaED.js at beginning of file on 2020_0489'); 
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
@@ -91,6 +91,29 @@
 var av = av || {};  //incase av already exists
 var dojo = dojo || {};
 
+/* from html header of avidaEdEco.html because comments don't work as well in html
+    <script type='text/javascript' src='lib/dojo/dojo.js' data-dojo-config="'parseOnLoad':false,'async':true,
+            'packages':[
+            {'name':'gridx','location':'../gridx'},
+            {'name':'clipart','location':'../clipart'},
+            {'name':'maqettaSamples','location':'../../samples'},
+            {'name':'maqetta','location':'../maqetta'},
+            {'name':'shapes','location':'../shapes'},
+            {'name':'zazl','location':'../zazl'},
+            {'name':'widgets','location':'../custom'},
+            {'name':'jquery','location':'../jquery/dist','main':'jquery'},
+            {'name':'jquery-ui','location':'../jquery-ui','main':'jquery-ui'},
+            {'name':'dexie','location':'../','main':'Dexie'}
+            ],
+            'themeMap':[
+            ['Android','',['../themes/android/android.css']],
+            ['BlackBerry','',['../themes/blackberry/blackberry.css']],
+            ['iPad','',['../themes/ipad/ipad.css']],
+            ['iPhone','',['../themes/iphone/iphone.css']],
+            ['.*','',['../themes/iphone/iphone.css']
+            ]],'mblThemeFiles':[],'mblLoadCompatPattern':''">
+    </script>
+*/
 define.amd.jQuery = true;
 require([
   'maqetta/space',
@@ -132,15 +155,23 @@ require([
   'dojo/on',
   'dojo/request/xhr',
   'dojo/ready',
+  //next line from avidaEdEco.html
+  //            {'name':'jquery','location':'../jquery/dist','main':'jquery'},   // older version
   'jquery',
-  'jquery-ui',
-  'lib/plotly-latest.min.js',   //updatd to plotly_v1.44.3.js on 2018_0915
+  'jquery-ui',   //used primarily for the jquery slider. It can go away if the slider goes away. 
+
+  //'lib/plotly-latest.min.js',   //updatd to plotly_v1.44.3.js on 2018_0915
   //'lib/plotly.js',               //version  plotly_v1.44.3   as of 2018
-  //'lib/jquery.fileDownload.js',
-  //'lib/Blob',
-  'lib/jszip.min.js',
-  
-  'lib/FileSaver.js',
+  //'lib/plotly-v1.53.min.js',      //2020_0409 production
+  'lib/plotly-v1.53.js',      //2020_0409 development
+
+  //'lib/jszip.min.js',        //older version. Not sure what version
+  'lib/jszip-v2.6.1.js',        //need to update, but need to figure out update methods. 
+  //'jszip-v3.3.0.js',         //current version on 2020_0404, but code changes needed that have not been done. development
+  //'jszip-v3.3.0.min.js',     //current version on 2020_0404, but code changes needed that have not been done. production
+  'lib/FileSaver_v1.1_date-2016_0328.js',
+  //'lib/FileSaver-2.0.3/FileSaver.min.js',
+  //'lib/FileSaver.js',
   //'avida-messages.js',
   'messaging.js',
   'initializeDomReadyItems.js',
@@ -167,7 +198,7 @@ require([
   TitlePane, parser, declare, query, nodelistTraverse,
   dndSource, dndManager, dndSelector, dndTarget, domGeometry, domStyle, dom, domConst,
   aspect, on, xhr,
-  ready, $, jqueryui, Plotly, //fileDownload,  //Blob.js,
+  ready, $, jqueryui, Plotly, 
   JSZip, FileSaver) {
   'use strict';
   if (av.dbg.flg.root) { console.log('before type of $'); }
