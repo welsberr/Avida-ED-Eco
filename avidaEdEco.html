@@ -5,26 +5,20 @@
     <title>Avida-ED-ecoWeb active</title>
     <meta charset='utf-8' />
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-    <script type='text/javascript' src='lib/dojo/dojo.js' data-dojo-config="'parseOnLoad':false,'async':true,
-            'packages':[
-            {'name':'gridx','location':'../gridx'},
-            {'name':'clipart','location':'../clipart'},
-            {'name':'maqettaSamples','location':'../../samples'},
-            {'name':'maqetta','location':'../maqetta'},
-            {'name':'shapes','location':'../shapes'},
-            {'name':'zazl','location':'../zazl'},
-            {'name':'widgets','location':'../custom'},
-            {'name':'jquery','location':'../jquery/dist','main':'jquery'},
-            {'name':'jquery-ui','location':'../jquery-ui','main':'jquery-ui'},
-            {'name':'dexie','location':'../','main':'Dexie'}
-            ],
-            'themeMap':[
-            ['Android','',['../themes/android/android.css']],
-            ['BlackBerry','',['../themes/blackberry/blackberry.css']],
-            ['iPad','',['../themes/ipad/ipad.css']],
-            ['iPhone','',['../themes/iphone/iphone.css']],
-            ['.*','',['../themes/iphone/iphone.css']
-            ]],'mblThemeFiles':[],'mblLoadCompatPattern':''">
+    <script type='text/javascript' src='lib/dojo-release-1.16.2/dojo/dojo.js'
+          data-dojo-config="'parseOnLoad':false,'async':true,
+        'packages':[
+        {'name':'maqetta','location':'../../maqetta'},
+        {'name':'jquery','location':'../../','main':'jquery-v3.4.1.min'},
+        {'name':'jquery-ui','location':'../../jquery-ui-1.12.1.custom','main':'jquery-ui.min'}
+        ],
+        'themeMap':[
+          ['Android','',['../../themes/android/android.css']],
+          ['BlackBerry','',['../../themes/blackberry/blackberry.css']],
+          ['iPad','',['../../themes/ipad/ipad.css']],
+          ['iPhone','',['../../themes/iphone/iphone.css']],
+          ['.*','',['../../themes/iphone/iphone.css']
+        ]],'mblThemeFiles':[],'mblLoadCompatPattern':''">
     </script>
 
     <script type='text/javascript' src='colormap.js'></script>
@@ -43,7 +37,7 @@
     <script type='text/javascript'> //console.log('after avidaED.js');</script>
 
     <link href='images/favicon.ico' rel='icon' type='image/x-icon' />
-    <link rel='stylesheet' href='lib/jquery-ui/themes/smoothness/jquery-ui.css'>
+    <link rel='stylesheet' href='lib/jquery-ui-1.12.1.custom/jquery-ui.css'>
     <style>
       @import 'themes/claro/document.css';
       @import 'themes/claro/claro.css';	
@@ -69,7 +63,7 @@
     </script>
   </head>
 
-  <body id='avidaED' data-maq-flow-layout='true' data-maq-comptype='desktop' class='claro' data-maq-ws='collapse'
+  <body id='myapp' data-maq-flow-layout='true' data-maq-comptype='desktop' class='claro' data-maq-ws='collapse'
         data-maq-appstates='{}' onresize='avResize()'>
     <span id="http://stackoverflow.com/questions/20828799/creating-a-splash-page-in-html5"></span>
     <div id='splash'>
@@ -2402,22 +2396,22 @@
     </div><span id='o____________________________________________________________________________end_exampleModalID___'></span>
 
     <span class='notSeen' id='o______________________________________________________________________newDishModalID___'></span>
-    <div id='newDishModalID' class='modal' >
+    <div id='newDishModalID' class='modal'>
 
       <!-- Modal content -->
-      <div class="modal-content" >
+      <div class="modal-content">
         <div class="modal-header">
-          <h2>Would you like to save or discard the current petri dish before starting a new experiment?</h2>
+          <p>Would you like to save or discard the current petri dish before starting a new experiment?</p>
         </div>
         <div class="modal-body">
           <p>Configured Dish: saves the experiment settings only.</p>
           <p>Populated Dish: saves organisms and experiment history, but finite resources will replenish.</p>
         </div>
         <div class="modal-footer">
-          <button id='newModCancel'>Cancel</button>
-          <button id='newModDiscard'>Discard</button>
-          <button id='newModSaveConfig'>Save Configured Dish</button>
-          <button id='newModSaveWorld'>Save Populated Dish</button>
+          <button id='newDishCancel'>Cancel</button>
+          <button id='newDishDiscard'>Discard</button>
+          <button id='newDishSaveConfig'>Save Configured Dish</button>
+          <button id='newDishSaveWorld'>Save Populated Dish</button>
         </div>
       </div>
     </div><span class='notSeen' id='o____________________________________________________________end_newDishModalID___'></span>

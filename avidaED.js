@@ -1,5 +1,5 @@
  // if (av.dbg.flg.root) { console.log('Root: avidaED.js at beginning of file on 2020_0111 @ 20:21'); };
- console.log('Root: avidaED.js at beginning of file on 2020_0206 @ 18:23'); 
+ console.log('Root: avidaED.js at beginning of file on 2020_0413 @ 22:09'); 
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
@@ -132,15 +132,23 @@ require([
   'dojo/on',
   'dojo/request/xhr',
   'dojo/ready',
+  //next line from avidaEdEco.html
+  //            {'name':'jquery','location':'../jquery/dist','main':'jquery'},   // older version
   'jquery',
-  'jquery-ui',
-  'lib/plotly-latest.min.js',   //updatd to plotly_v1.44.3.js on 2018_0915
+  'jquery-ui',   //used primarily for the jquery slider. It can go away if the slider goes away. 
+                // line from avidaEdEco.html        <link rel='stylesheet' href='lib/jquery-ui/themes/smoothness/jquery-ui.css'>
+  //'lib/plotly-latest.min.js',   //updatd to plotly_v1.44.3.js on 2018_0915
   //'lib/plotly.js',               //version  plotly_v1.44.3   as of 2018
-  //'lib/jquery.fileDownload.js',
-  //'lib/Blob',
-  'lib/jszip.min.js',
-  
-  'lib/FileSaver.js',
+  //'lib/plotly-v1.53.min.js',      //2020_0409 production
+  'lib/plotly-v1.53.js',      //2020_0409 development
+
+  //'lib/jszip.min.js',        //older version. Not sure what version
+  'lib/jszip-v2.6.1.js',        //need to update, but need to figure out update methods. 
+  //'jszip-v3.3.0.js',         //current version on 2020_0404, but code changes needed that have not been done. development
+  //'jszip-v3.3.0.min.js',     //current version on 2020_0404, but code changes needed that have not been done. production
+  'lib/FileSaver_v1.1_date-2016_0328.js',
+  //'lib/FileSaver-2.0.3/FileSaver.min.js',
+  //'lib/FileSaver.js',
   //'avida-messages.js',
   'messaging.js',
   'initializeDomReadyItems.js',
@@ -1329,39 +1337,39 @@ require([
     }
   };
 
-//------------------------------------------------------------------------------------- modal dialog cancle buttons --
+//------------------------------------------------------------------------------------- modal dialog cancel buttons --
 
   av.dom.needAncestorCancel.onclick = function () {
     av.dom.needAncestorModalID.style.display = 'none';
   };
 
-  av.dom.newCancel.onclick = function () {
+  av.dom.newDishCancel.onclick = function () {
     av.dom.newDishModalID.style.display = 'none';
   };
 
   /******************************************* New Button and new Dialog **********************************************/
 
-  av.dom.newDiscard.onclick = function () {
-    av.post.addUser('Button: newDiscard');
+  av.dom.newDishDiscard.onclick = function () {
+    av.post.addUser('Button: newDishDiscard');
     av.dom.newDishModalID.style.display = 'none';
     av.msg.reset();
-    //console.log('newDiscard click');
+    //console.log('newDishDiscard click');
   };
 
-  av.dom.newSaveWorld.onclick = function () {
-    av.post.addUser('Button: newSaveWorld');
+  av.dom.newDishSaveWorld.onclick = function () {
+    av.post.addUser('Button: newDishSaveWorld');
     av.ptd.FrPopulationFn();
     av.dom.newDishModalID.style.display = 'none';
     av.msg.reset();
-    //console.log('newSaveWorld click');
+    //console.log('newDishSaveWorld click');
   };
 
-  av.dom.newSaveConfig.onclick = function () {
-    av.post.addUser('Button: newSaveConfig');
-    av.ptd.FrConfigFn('av.dom.newSaveConfig.onclick');
+  av.dom.newDishSaveConfig.onclick = function () {
+    av.post.addUser('Button: newDishSaveConfig');
+    av.ptd.FrConfigFn('av.dom.newDishSaveConfig.onclick');
     av.dom.newDishModalID.style.display = 'none';
     av.msg.reset();
-    //console.log('newSaveConfig click');
+    //console.log('newDishSaveConfig click');
   };
 
   av.ui.newButtonBoth = function() {

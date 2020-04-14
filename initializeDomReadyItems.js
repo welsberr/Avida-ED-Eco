@@ -233,10 +233,10 @@
       //av.dom. = document.getElementById('');
       // Modal Dialogs 
       av.dom.newDishModalID = document.getElementById('newDishModalID');
-      av.dom.newCancel = document.getElementById('newCancel');
-      av.dom.newDiscard = document.getElementById('newDiscard');
-      av.dom.newSaveConfig = document.getElementById('newSaveConfig');
-      av.dom.newSaveWorld = document.getElementById('newSaveWorld');
+      av.dom.newDishCancel = document.getElementById('newDishCancel');
+      av.dom.newDishDiscard = document.getElementById('newDishDiscard');
+      av.dom.newDishSaveConfig = document.getElementById('newDishSaveConfig');
+      av.dom.newDishSaveWorld = document.getElementById('newDishSaveWorld');
       av.dom.needAncestorModalID = document.getElementById('needAncestorModalID');
       av.dom.needAncestorCancel = document.getElementById('needAncestorCancel');
 

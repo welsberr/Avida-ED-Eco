@@ -270,7 +270,7 @@
 #FreezerTitle {
   font-size: 190%;
   text-align:  center;
-  font-weFight: normal;
+  font-style: normal;
   width: 100%;
 }
 .frzAccordion {
@@ -1271,6 +1271,8 @@ checkbox:focus {
 
 .modal-header {
     padding: 8px 8px;
+    font-size: 130%;
+    font-weight: bold;
     background: lightgray;
     color: black;
 }

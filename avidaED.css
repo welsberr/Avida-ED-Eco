@@ -35,7 +35,8 @@ html, body {
   width: 100%;
   margin: 0;
   padding:0;
-  background: #eee;
+  background: #F5F5F5; /* cyan; */
+  font-family: Trebuchet MS, sans-serif;
 }
 
 .bit32 {                       /* not in use */
@@ -46,25 +47,30 @@ html, body {
 p {
   margin-top: 0px;
   margin-bottom: 0px;
+  font-family: Trebuchet MS, sans-serif;
 }
 
 li {
   margin: 0px 0px 0px 0px;
+  font-family: Trebuchet MS, sans-serif;
 }
 
 ul {
   margin-top: 0px;
   margin-bottom: 0px;
+  font-family: Trebuchet MS, sans-serif;
 }
 
 h2, h3 {
   margin-top: 0px;
   margin-bottom: 0px;
   margin-left: 10px;
+  font-family: Trebuchet MS, sans-serif;
 }
 
 div {
-  margin: 0
+  margin: 0;
+  padding: 0;
 }
 
 #anlDndChart {
