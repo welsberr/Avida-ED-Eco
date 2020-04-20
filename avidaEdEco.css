@@ -17,6 +17,9 @@
     padding: 0;
   }
   
+  #popInfoTabHolder {
+    width: 100%;
+  }
   .tabHolderShow {
     flex: 0 0 auto;
     display: block;
@@ -32,7 +35,7 @@
   /*border: 1px solid #ccc; */
   border: none;
   background: inherit;
-  float:right;
+  /* float: right; */
 }
 
 /* Style the buttons inside the tab */
@@ -162,7 +165,7 @@
     height: 100%;
     overflow:scroll;
   }
-  #popRightInfoHoldAll {
+  #popInfoVert {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -447,7 +450,7 @@
   width: 100%;
 }
 
-/* right informaton pannel on the populatoin page is all held by popRightInfoHoldAll which is in #rightInfoHolder */
+/* right informaton pannel on the populatoin page is all held by popInfoVert which is in #rightInfoHolder */
 
   .labInfoHolder {
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 

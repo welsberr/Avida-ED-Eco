@@ -35,7 +35,7 @@
   av.debug.msg = false;  //messages to and from avida
   av.debug.popCon = false;  //population Controls
   av.debug.trace = false;  //organism page
-  av.debug.uil = true; //user interface layout.
+  av.debug.uil = false; //user interface layout.
   av.debug.userMsg = false; //debug of user messages.
 
   av.dbg = {};
@@ -43,7 +43,7 @@
   av.dbg.flg.frd = false;  //reading file text strings
   av.dbg.flg.nut = false;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
   av.dbg.flg.plt = false;  //both popChart and analysis
-  av.dbg.flg.root = true;  //statements that look for failers when the code executes outside of functions
+  av.dbg.flg.root = false;  //statements that look for failers when the code executes outside of functions
 
   av.debug.usr = ''; //working on log for user actions.
 

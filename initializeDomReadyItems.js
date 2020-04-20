@@ -44,7 +44,7 @@
       av.dom.rtPnlButtonImg = document.getElementById('rtPnlButtonImg');
       
       av.dom.orgInfoHolder = document.getElementById('orgInfoHolder');
-      av.dom.popRightInfoHoldAll = document.getElementById('popRightInfoHoldAll');
+      av.dom.popInfoVert = document.getElementById('popInfoVert');
 
 
       //Population Page
@@ -317,7 +317,6 @@
         document.getElementsByClassName('groupEquilibrium')[0].style.display = 'none';
         //document.getElementsByClassName('groupFinite')[0].style.display = 'none';     //finite available for local options
         document.getElementsByClassName('groupDebug')[0].style.display = 'none';
-
 
         //debug menu??
         dijit.byId('mnHpDebug').set('label', 'Show debug menu');   //???????

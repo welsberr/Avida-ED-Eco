@@ -997,7 +997,7 @@ require([
     av.dom.analysisBlock.style.display = "none";
     av.dom.showTextDebugBlock.style.display = "none";
     av.dom.orgInfoHolder.style.display = 'none';
-    av.dom.popRightInfoHoldAll.style.display = 'none';
+    av.dom.popInfoVert.style.display = 'none';
     av.dom.populationButton.style.background = 'white';
     av.dom.organismButton.style.background = 'white';
     av.dom.analysisButton.style.background = 'white';
@@ -1019,7 +1019,7 @@ require([
       av.grd.popChartInit('av.ui.mainBoxSwap');
     };
     if ('populationBlock' == av.ui.page) {
-      av.dom.popRightInfoHoldAll.style.display = 'block';
+      av.dom.popInfoVert.style.display = 'block';
       document.getElementById('allAvidaContainer').className = 'all3pop';
     }
     if ('analysisBlock' == av.ui.page) {
@@ -3367,18 +3367,19 @@ require([
   av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
   av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
 
-  av.doj.mnDebug.style.visibility = 'visible';   // set visiable so that av.ui.toggleDevelopentDisplays will hide debuts stuff
+  av.doj.mnDebug.style.visibility = 'visible';   // set visiable so that av.ui.toggleDevelopentDisplays will hide devo stuff
 
   // Avida-ED 4.0.0 Alpha Testing fix this too. 
   //true when diane is working; false for all production releases even in alpha testsing.  
   if (false) {
     console.log('testing mode; set to true before public release for Avida-ED 4.0.0 Alpha Testing. ');
-    //av.dom.xorLabel.onclick();   now only turns grid resource value table on and off
+    av.dom.xorLabel.onclick();   //now only turns grid resource value table on and off
     //
-    //set mmDebug to hidden so that when toggle called it will show the development sections 
+    //set mmDebug to hidden so that when toggle called it will show the development sections x
     av.doj.mnDebug.style.visibility = 'hidden';   //visible
   };
-  av.ui.toggleDevelopentDisplays('Last_things_done');
+  //av.ui.toggleDevelopentDisplays('Last_things_done');  //ned to put this back for production
+  
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
   av.sgr.ChangeAllGeo('Global');
   //av.sgr.setSugarColors(true);  //true is to turn colors on;    // set color/grey individually so when 0 resources, grey shades rather than colors
