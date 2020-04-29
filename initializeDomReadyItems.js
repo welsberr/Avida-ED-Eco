@@ -37,7 +37,7 @@
       av.dom.populationButton = document.getElementById('populationButton');
       av.dom.organismButton = document.getElementById('organismButton');
       av.dom.analysisButton = document.getElementById('analysisButton');
-      av.dom.showTextButton = document.getElementById('showTextButton');
+      av.dom.showTextDebugButton = document.getElementById('showTextDebugButton');
       av.dom.allAvida = document.getElementById('allAvida');
 
       av.dom.lftPnlButtonImg = document.getElementById('lftPnlButtonImg');
@@ -276,7 +276,7 @@
         //hide all development elements
         av.ui.hideDevelopment = true;
         av.doj.mnDebug.style.visibility = 'hidden';
-        document.getElementById('showTextButtonDiv').style.visibility = 'hidden';
+        document.getElementById('showTextDebugButtonDiv').style.visibility = 'hidden';
         document.getElementById('developmentToggle').className = 'devoCammo';  
         document.getElementById('ritePnlBtnHolder').className = 'pnlBtnHldrHide';
 
@@ -325,7 +325,7 @@
       } else {       // development sectiomn can be seen.
         av.ui.hideDevelopment = false;
         av.doj.mnDebug.style.visibility = 'visible';
-        document.getElementById('showTextButtonDiv').style.visibility = 'visible';
+        document.getElementById('showTextDebugButtonDiv').style.visibility = 'visible';
         document.getElementById('developmentToggle').className = 'devoShow';
         document.getElementById('ritePnlBtnHolder').className = 'ritePnlBtnHlderShow';
 

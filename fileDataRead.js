@@ -987,7 +987,9 @@
     var subNum = 1;                   //Will need to loop throughh all subNum later
     // only one regioin for now, so this works. I may need add at subcode index later.
     // the data for the regions may not go in the struture in the same order they need to be on the user interface. 
-    
+    var xdiffuse = -1;
+    var ydiffuse = -1;
+    var diffusion = -1;
     var cols = Number(av.nut.wrldCols);
     var rows = Number(av.nut.wrldRows);
     var wrldSize = cols * rows;
@@ -1013,13 +1015,31 @@
           //console.log('document.getElementById('+tsk+subNum+'supplyType)',document.getElementById(tsk+subNum+'supplyType') );
         document.getElementById(tsk+subNum+'supplyType').value = av.nut[numTsk].uiSub.supplyType[subNum]; 
 
-        // if initial is not defined in RESOURCE then use the default value from globals.
+        // if initial is defined in RESOURCE, use that value, else use the default value from globals.
         if (!isNaN(Number(av.nut[numTsk].resrc.initial[subNum])) ) {
           //dom and nut contain initial value per cell; RESOURCE contains initial amount per world
           initialValue = Number( av.nut[numTsk].resrc.initial[subNum] / wrldSize );    
           document.getElementById(tsk+subNum+'initialHiInput').value = initialValue;
           av.nut[numTsk].uiSub.initialHi[subNum] = initialValue;
         }
+        console.log('numTsk=',numTsk,'; subNum=',subNum,'; resrc.xdiffuse=',av.nut[numTsk].resrc.xdiffuse[subNum], '; resrc.ydiffuse=',av.nut[numTsk].resrc.ydiffuse[subNum]);
+        if (av.nut[numTsk].resrc.xdiffuse[subNum]) {
+          if (!isNaN(Number(av.nut[numTsk].resrc.xdiffuse[subNum]))) {xdiffuse = Number(av.nut[numTsk].resrc.xdiffuse[subNum]);}
+          else {xdiffuse = 1;}
+        } 
+        else {xdiffuse = 1;}
+        if (av.nut[numTsk].resrc.ydiffuse[subNum]) {
+          if (!isNaN(Number(av.nut[numTsk].resrc.ydiffuse[subNum]))) {ydiffuse = Number(av.nut[numTsk].resrc.ydiffuse[subNum]);}
+          else {ydiffuse = 1;}
+        }
+        else {ydiffuse = 1;}
+        diffuse = Math.round((xdiffuse+ydiffuse)/2);
+        console.log('diffuse=', diffuse);
+        if (0 < diffuse) {
+          document.getElementById(tsk+subNum+'diffuseCheck').checked = true;
+        }
+        else { document.getElementById(tsk+subNum+'diffuseCheck').checked = false;}
+                
         // else it keeps the default value;
         // this is all that is being set now; I'll set more later
       }

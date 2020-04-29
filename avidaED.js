@@ -1001,10 +1001,10 @@ require([
     av.dom.populationButton.style.background = 'white';
     av.dom.organismButton.style.background = 'white';
     av.dom.analysisButton.style.background = 'white';
-    av.dom.showTextButton.style.background = 'white';
+    av.dom.showTextDebugButton.style.background = 'white';
     document.getElementById(showBlock).style.display = "flex";   //orgPageButtonHolder
     var showButton = showBlock.substring(0,showBlock.length-5)+'Button';
-    //console.log('showButton=',showButton);
+    console.log('showButton=',showButton);
     document.getElementById(showButton).style.background = '#DBDBDB'; 
     //dijit.byId(showBlock).resize();
     //document.getElementById(showBlock).resize();
@@ -1095,9 +1095,9 @@ require([
     av.anl.AnaChartFn();
   };
 
-  // if (av.dbg.flg.root) { console.log('Root: before showTextButton.onclick'); }
-  document.getElementById('showTextButton').onclick = function () {
-    av.post.addUser('Button: showTextButton');
+  // if (av.dbg.flg.root) { console.log('Root: before showTextDebugButton.onclick'); }
+  document.getElementById('showTextDebugButton').onclick = function () {
+    av.post.addUser('Button: showTextDebugButton');
     av.ui.mainBoxSwap('showTextDebugBlock');
   };
   // ------------------ two controls for the same purpose; tabs used in develoopment mode --

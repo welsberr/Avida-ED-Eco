@@ -293,8 +293,8 @@
   align-self: stretch;
   justify-self: stretch;
 }
-#showTextButtonDiv { 
-  grid-area: showTextButtonDiv;
+#showTextDebugButtonDiv { 
+  grid-area: showTextDebugButtonDiv;
   align-self: stretch;
   justify-self: stretch;
   display: flex;
@@ -312,7 +312,7 @@
 
 .trash-grid-container{
   display: grid;
-  grid-template-areas: 'trashCan showTextButtonDiv '
+  grid-template-areas: 'trashCan showTextDebugButtonDiv '
                        'trashCan developmentToggleDiv';
   align-items: center;   /* up down */
   grid-template-columns: auto auto;
@@ -323,7 +323,7 @@
   flex: 0 1 40px;
   border: 1px solid #AAA;
 }
-#showTextButton{
+#showTextDebugButton{
   min-width: 60px;
 }
 #developmentToggle{
@@ -560,7 +560,7 @@
 
 
 
-.resourceHeaderContainer {
+.changeAllSugarsTogetherContainer {
   display: grid;
   grid-template-areas: 'setTitle  geometrySgr supplyTypeSgr showHideSgr'
                        'setTitle  geometryDiv supplyType  detailDiv';
@@ -736,6 +736,11 @@
 .grid-sugarDetail-Finite-noGridCheckbox-container {
   display: grid;
   grid-template-areas: 'typeInput initialHi';
+  width: 100%;
+}
+.grid-sugarDetail-Finite-noGradientCheckbox-container {
+  display: grid;
+  grid-template-areas: 'typeInput initialHi diffuseCheckDiv';
   width: 100%;
 }
 .grid-sugarDetail-Finite-container {

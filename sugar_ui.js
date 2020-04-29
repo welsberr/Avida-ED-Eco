@@ -505,8 +505,8 @@
             document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-container';
             if (av.nut.hideFlags.gradient) {
               document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
-              document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'none';
-              document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-noGridCheckbox-container';
+              //document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'none';
+              document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-noGradientCheckbox-container';
             }
             if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
             //if (av.dbg.flg.nut) { console.log('subSection=', document.getElementById(tsk+sub+'subSection')); }

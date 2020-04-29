@@ -635,7 +635,7 @@
     av.sgr.side3 = ['Lft', 'Rit', 'Top', 'Bot', 'Cen', 'Edg', 'Unk']; //left, right, top, bottom, center, edge, unknown
     av.sgr.side = ['left', 'rite', 'top', 'bottom', 'center', 'edges', 'unknown'];
 
-    av.sgr.hideFlgNames = ['gradient', 'periodic'];  
+    av.sgr.hideFlgNames = ['gradient', 'periodic', 'diffuse'];  
     av.sgr.hideFlagInit = [true, true];  //true is to hide when areas underdevelopment are hidden. 
     av.sgr.flagInitOpposite = [false, false];  //false in this case is to NOT hide as develpment sections shown.
 
