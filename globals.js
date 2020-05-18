@@ -7,6 +7,9 @@
   // one global to hold them all.
   var av = av || {};  //incase av already exists
 
+  console.log('start of globals on 2020_0213');
+
+
   Number.prototype.pad = function(size) {
     var ss = String(this);
     while (ss.length < (size || 2)) {ss = "0" + ss;}
@@ -34,14 +37,13 @@
   av.debug.trace = false;  //organism page
   av.debug.uil = false; //user interface layout.
   av.debug.userMsg = false; //debug of user messages.
-  //av.debug. root = false;  //statements that look for failiers when the code executes outside of functions
 
   av.dbg = {};
   av.dbg.flg = {}; 
   av.dbg.flg.frd = false;  //reading file text strings
-  av.dbg.flg.nut = true;  //processing nustrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
+  av.dbg.flg.nut = false;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
   av.dbg.flg.plt = false;  //both popChart and analysis
-  av.dbg.flg.root = false;  //statements that look for failiers when the code executes outside of functions
+  av.dbg.flg.root = false;  //statements that look for failers when the code executes outside of functions
 
   av.debug.usr = ''; //working on log for user actions.
 
@@ -306,7 +308,7 @@
   //used in adjusting size of areas on population page
   av.ui.gridHolderSideBuffer = 0;
   av.ui.popGridCtlWdMin = 380;   //was 430
-  av.ui.popInfoHolderMinWd = 338;
+  av.ui.rightInfoHolderMinWd = 338;
   av.ui.popBotHtMin = 90;
   av.ui.navColIdMinWd = 152;
 
@@ -380,10 +382,8 @@
   //----------------------------------------------------------------------------------------------------------------------
 
   //console.log('window.navigator',window.navigator);
-  if (av.dbg.flg.root) { 
-    console.log('Root: brs', av.brs);
-    console.log('Root: browser info: window.navigator.userAgent=', window.navigator.userAgent);
-  }
+  // if (av.dbg.flg.root) { console.log('Root: brs', av.brs); }
+  // if (av.dbg.flg.root) { console.log('Root: browser info: window.navigator.userAgent=', window.navigator.userAgent); }
   //----------------------------------------------------------------------------------------------------------------------
 
   av.utl = {};  // holds utility functions
@@ -409,7 +409,7 @@
 
   av.ptd = {};  // on population page that are not part of the grid. (PeTri Dish)
   av.ptd.logicButtons = ['notButton', 'nanButton', 'andButton', 'ornButton', 'oroButton', 'antButton', 'norButton', 'xorButton', 'equButton'];
-  av.ptd.popInfoHolderWd = 395;
+  av.ptd.rightInfoHolderWd = 395;
 
   //structure to hold list of ancestor organisms
   av.parents = {};
@@ -635,7 +635,7 @@
     av.sgr.side3 = ['Lft', 'Rit', 'Top', 'Bot', 'Cen', 'Edg', 'Unk']; //left, right, top, bottom, center, edge, unknown
     av.sgr.side = ['left', 'rite', 'top', 'bottom', 'center', 'edges', 'unknown'];
 
-    av.sgr.hideFlgNames = ['gradient', 'periodic'];  
+    av.sgr.hideFlgNames = ['gradient', 'periodic', 'diffuse'];  
     av.sgr.hideFlagInit = [true, true];  //true is to hide when areas underdevelopment are hidden. 
     av.sgr.flagInitOpposite = [false, false];  //false in this case is to NOT hide as develpment sections shown.
 
@@ -1288,7 +1288,9 @@
       ]
     };
   };
-    av.anl.clearChart();
+  av.anl.clearChart();
+  
+  console.log('end of globals');
 
   //----------------------------------------------------------------------------------------------------------------------
   // Notes on page layout
@@ -1297,7 +1299,7 @@
   // Population page: Initial assume a square grid and both sidebars open. 
   // navColID or navColClass: wd = 152 includling 2px for a 1 px border. (minimum nice wd) about 84 too narrow, but works. 
   // mainBlockHolder: wd = 
-  // popInfoHolder: mn wd = 500 inlcuding border
+  // rightInfoHolder: mn wd = 500 inlcuding border
   // popStatsBlock: min wd = 364 no border. 
   // selOrgType: min wd = 164  (might make a tad smaller) includes 1 px border
   // popStats4grid: min wd = 176   (get left over)

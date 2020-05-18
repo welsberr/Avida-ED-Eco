@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+.grid-container {
+  display: grid;
+  grid-template-areas: 'item1 item3 item5 item7'
+                       'item2 item4 item6 item8';
+  grid-template-columns: 50px auto auto 100px;
+  grid-template-rows: 80px auto;
+  grid-gap: 10px;
+  background-color: #2196F3;
+  padding: 10px;
+  height: 800px;
+}
+.item1 {grid-area: item1}
+.item2 {grid-area: item2}
+.item3 {grid-area: item3}
+.item4 {grid-area: item4}
+.item5 {grid-area: item5}
+.item6 {grid-area: item6}
+.item7 {grid-area: item7}
+.item8 {grid-area: item8}
+.item9 {grid-area: item9}
+
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 2px 0;
+  font-size: 30px;
+}
+</style>
+</head>
+<body>
+
+<h1>The grid-template-columns Property</h1>
+
+<p>Use the <em>grid-template-columns</em> property to define the number of columns in the grid layout.</p>
+<p>This grid layout has four columns:</p>
+
+<div class="grid-container">
+  <div class="item1">1</div>
+  <div class="item2">2</div>
+  <div class="item3">3</div>  
+  <div class="item4">4</div>
+  <div class="item5">5</div>
+  <div class="item6">6</div>
+  <div class="item7">7</div>
+  <div class="item8">8</div>
+</div>
+
+</body>
+</html>

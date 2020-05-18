@@ -1,3 +1,4 @@
+  // if (av.dbg.flg.root) { console.log('Root: start of messaging'); }  
   var av = av || {};  //incase av already exists
   var dijit = dijit || {};  //to let file know dijit is defined
 
@@ -929,7 +930,7 @@
       av.grd.selCtx.fillRect(0, 0, av.grd.SelectedWd, av.grd.SelectedHt);
 
     };
-
+    // if (av.dbg.flg.root) { console.log('Root: end of messaging'); }  
   // ------------------------------------------------ not in use ---------------------------------------------------------
   /*
   function doDbReady(fio) {

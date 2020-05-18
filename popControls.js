@@ -329,9 +329,7 @@
         //console.log('numver of ancestors =',av.pch.numDads, '; av.pch.dadFit=',av.pch.dadFit);
       }; // end if section to deal with starting a new run
 
-      // tiba: auto update will need to be redone. for avida 4.0 
       if (av.dom.autoPauseCheck.checked) {
-        //av.msg.pause(av.dom.autoPauseNum.value);  //not used where there is handshaking (not used with av.msg.stepUpdate)
         av.ui.autoStopFlag = true;
         av.ui.autoStopValue = av.dom.autoPauseNum.value;
         //console.log('stop at  = av.dom.autoPauseNum.value;

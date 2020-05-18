@@ -1,4 +1,5 @@
   // Place Parent on grid
+  // if (av.dbg.flg.root) { console.log('Root: start of placeParent'); }
   var av = av || {};  //incase av already exists
   var dojo = dojo || {};  //incase av already exists
   var dijit = dijit || {};  //incase av already exists
@@ -62,16 +63,16 @@
           lngth = av.parents.autoNdx.length;
           for (ii = 0; ii < lngth; ii++) {
             if (ii < 2) {
-              av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows / 4)
+              av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows / 4);
             }
             else {
-              av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows * 3 / 4)
+              av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows * 3 / 4);
             }
             if (ii % 2 < 1) {
-              av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols / 4)
+              av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols / 4);
             }
             else {
-              av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols * 3 / 4)
+              av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols * 3 / 4);
             }
             av.parents.AvidaNdx[av.parents.autoNdx[ii]] = av.parents.col[av.parents.autoNdx[ii]] + cols * av.parents.row[av.parents.autoNdx[ii]];
             //console.log('c,r,a', av.parents.col[av.parents.autoNdx[ii]],av.parents.row[av.parents.autoNdx[ii]],av.parents.AvidaNdx[av.parents.autoNdx[ii]]);
@@ -140,10 +141,10 @@
             lngth = av.parents.autoNdx.length;
             for (ii = 0; ii < lngth; ii++) {
               if (ii < 3) {
-                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows / 4)
+                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows / 4);
               }
               else {
-                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows * 3 / 4)
+                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows * 3 / 4);
               }
               cc = ii % 3;
               av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols * (2 * cc + 1) / 6);
@@ -160,10 +161,10 @@
             lngth = av.parents.autoNdx.length;
             for (ii = 0; ii < lngth; ii++) {
               if (ii < 3) {
-                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols / 4)
+                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols / 4);
               }
               else {
-                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols * 3 / 4)
+                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols * 3 / 4);
               }
               cc = ii % 3;
               av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows * (2 * cc + 1) / 6);
@@ -181,13 +182,13 @@
           lngth = av.parents.autoNdx.length;
           for (ii = 0; ii < lngth; ii++) {
             if (ii < 3) {
-              av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows / 5)
+              av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows / 5);
             }
             else if (ii < 6) {
-              av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows / 2)
+              av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows / 2);
             }
             else {
-              av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows * 4 / 5)
+              av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows * 4 / 5);
             }
             cc = ii % 3;
             av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols * (2 * cc + 1) / 6);
@@ -199,10 +200,10 @@
             lngth = av.parents.autoNdx.length;
             for (ii = 0; ii < lngth; ii++) {
               if (ii < 4) {
-                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows / 4)
+                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows / 4);
               }
               else {
-                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows * 3 / 4)
+                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows * 3 / 4);
               }
               cc = ii % 4;
               av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols * (2 * cc + 1) / 8);
@@ -219,10 +220,10 @@
             lngth = av.parents.autoNdx.length;
             for (ii = 0; ii < lngth; ii++) {
               if (ii < 4) {
-                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols / 4)
+                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols / 4);
               }
               else {
-                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols * 3 / 4)
+                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols * 3 / 4);
               }
               cc = ii % 4;
               av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows * (2 * cc + 1) / 8);
@@ -240,10 +241,10 @@
             lngth = av.parents.autoNdx.length;
             for (ii = 0; ii < lngth; ii++) {
               if (ii < 4) {
-                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows / 5)
+                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows / 5);
               }
               else {
-                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows * 4 / 5)
+                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows * 4 / 5);
               }
               cc = ii % 4;
               av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols * (2 * cc + 1) / 8);
@@ -259,10 +260,10 @@
             lngth = av.parents.autoNdx.length;
             for (ii = 0; ii < lngth; ii++) {
               if (ii < 4) {
-                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols / 5)
+                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols / 5);
               }
               else {
-                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols * 4 / 5)
+                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols * 4 / 5);
               }
               cc = ii % 4;
               av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows * (2 * cc + 1) / 8);
@@ -280,13 +281,13 @@
             lngth = av.parents.autoNdx.length;
             for (ii = 0; ii < lngth; ii++) {
               if (ii < 4) {
-                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows / 6)
+                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows / 6);
               }
               else if (ii < 8) {
-                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows / 2)
+                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows / 2);
               }
               else {
-                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows * 5 / 6)
+                av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows * 5 / 6);
               }
               cc = ii % 4;
               av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols * (2 * cc + 1) / 8);
@@ -297,13 +298,13 @@
             lngth = av.parents.autoNdx.length;
             for (ii = 0; ii < lngth; ii++) {
               if (ii < 4) {
-                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols / 6)
+                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols / 6);
               }
               else if (ii < 8) {
-                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols / 2)
+                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols / 2);
               }
               else {
-                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols * 5 / 6)
+                av.parents.col[av.parents.autoNdx[ii]] = Math.floor(cols * 5 / 6);
               }
               cc = ii % 4;
               av.parents.row[av.parents.autoNdx[ii]] = Math.floor(rows * (2 * cc + 1) / 8);
@@ -334,7 +335,7 @@
     //for (ii=0; ii< av.parents.autoNdx.length; ii++) {
     //  console.log("ii, col, row, ii", ii, av.parents.col[av.parents.autoNdx[ii]], av.parents.row[av.parents.autoNdx[ii]], av.parents.AvidaNdx[av.parents.autoNdx[ii]]);
     //}
-  }
+  };
 
   av.parents.makeHandAutoNdx = function () {
     'use strict';
@@ -353,7 +354,7 @@
         aa++;
       }
     }
-  }
+  };
 
   //removes the parent at index ParentNdx
   av.parents.removeParent = function (ParentNdx) {
@@ -472,17 +473,19 @@
       var id = node.id;
       f.call(o, container.getItem(id), id, container);
     });
-  }
+  };
 
   //sigmoid for use in converting a floating point into hue, saturation, brightness
   function sigmoid (xx, midpoint, steepness) {
     var val = steepness * (xx-midpoint);
     return Math.exp(val) /(1.0 + Math.exp(val));
-  }
+  };
 
+  //should ctx in this function be av.ind.ctx ??
   // if (av.dbg.flg.root) { console.log('Root: before drawArc1'); }
   //Draw arc using quadraticCurve and 1 control point http://www.w3schools.com/tags/canvas_quadraticcurveto.asp
   function drawArc1(gen, spot1, spot2, rep){
+    console.log('drawArc1: gen=', gen, 'spot1=', spot1, '; spot2=', spot2, 'rep=', rep);
     var xx1, yy1, xx2, yy2, xxc, yyc;
     ctx.lineWidth = 1;
     if (0 < spot2 - spot1) {
@@ -500,5 +503,6 @@
     yyc = av.ind.cy[0] + av.ind.pathR*Math.sin(spot2*2*Math.PI/av.ind.size[0] + (spot1-spot2)*(Math.PI)/av.ind.size[0]);
     ctx.quadraticCurveTo(xxc, yyc, xx2, yy2);
     ctx.stroke();
-  }
+  };
+  // if (av.dbg.flg.root) { console.log('Root: end of placeParent'); }
 

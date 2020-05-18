@@ -309,7 +309,7 @@
   
   //-------------------------------------------------------------------------------------- av.sgr.setSingleSugarColor --
   av.sgr.setSingleSugarColor = function(colorFlg, tskNum, from) {
-    console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg);
+    if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg); }
     var idname;
     var backgndColor = av.color.greyMap[av.sgr.sugarGreyShade];
     var nameColor = 'Black';
@@ -331,7 +331,7 @@
       idname = av.sgr.logicNames[tskNum]+'0section';
       document.getElementById(idname).style.backgroundColor = backgndColor;
       idname = av.sgr.logicNames[tskNum]+'0title';
-      //console.log('idname=',idname);
+      // if (av.dbg.flg.nut) { console.log('idname=',idname); }
       document.getElementById(idname).style.color = nameColor;  
       // eventually there will be up to 4 subsections. deal with that later.
       for (var sub=1; sub < 2; sub++) {
@@ -342,7 +342,7 @@
   //---------------------------------------------------------------------------------- end av.sgr.setSingleSugarColor --
 
   av.sgr.findSugarPresent = function(supplyType, geometry, tsk, sub, from) {
-    console.log(from, 'called av.sgr.findSugarPresent: supplyType=', supplyType, '; geometry=', geometry, '; tsk=', tsk, '; sub=', sub);
+    if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.findSugarPresent: supplyType=', supplyType, '; geometry=', geometry, '; tsk=', tsk, '; sub=', sub); }
     var colorFlg = true;
     var indx = av.sgr.logicNames.indexOf(tsk);
     if ('global' == geometry.toLowerCase()) {
@@ -372,8 +372,8 @@
   //-------------------------------------------------------------------------------------- av.sgr.changeDetailsLayout --
   av.sgr.changeDetailsLayout = function(tsk, sub, from) {
     //these are not as usefull, turn on the one after the first if ('global' statement if problems
-    //console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; sub=', sub);
-    //console.log('av.nut.hideFlags=', av.nut.hideFlags);
+    // if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; sub=', sub); }
+    // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags=', av.nut.hideFlags); }
 
     var supplyType;
 
@@ -384,8 +384,7 @@
     //this 2 line method woks to get the value of the option in the select structure, but so does the one line method;
     //var idx = document.getElementById(tsk+'0geometry').selectedIndex;
     //var geoOption = document.getElementById(tsk+'0geometry').options[idx].value;   // get the value of the selected option   
-    // console log just hows that the two methods to get the selected option get the same answer
-    //console.log('geometry=', geometry, '; geoOption=', geoOption);
+    // if (av.dbg.flg.nut) { console.log('geometry=', geometry, '; geoOption=', geoOption); }
 
     if ('global' == geometry.toLowerCase()) {
       supplyType = document.getElementById(tsk + '0supplyType').value.toLowerCase();
@@ -394,14 +393,14 @@
       supplyType = document.getElementById(tsk + sub + 'supplyType').value.toLowerCase();
 
     };
-    //console.log('tsk=', tsk, 'sub=', sub, '; geometry=', geometry, '; supplyType =', supplyType, ' ' ,tsk+'0regionLayout=', document.getElementById(tsk+'0regionLayout').value );
+    // if (av.dbg.flg.nut) { console.log('tsk=', tsk, 'sub=', sub, '; geometry=', geometry, '; supplyType =', supplyType, ' ' ,tsk+'0regionLayout=', document.getElementById(tsk+'0regionLayout').value ); }
     av.sgr.findSugarPresent(supplyType, geoLo, tsk, sub, 'av.sgr.changeDetailsLayout');
     
     //hide everything. Display parts based on what is selected
     document.getElementById(tsk+'0supplyType').style.display = 'none';      
     document.getElementById(tsk+'0regionLayout').style.display = 'none';
     document.getElementById(tsk+'0initialDiv').style.display = 'none';
-    //console.log('document.getElementById('+tsk+sub+'supplyTypeSelectHolder) =', document.getElementById(tsk+sub+'supplyTypeSelectHolder'));
+    //if (av.dbg.flg.nut) { console.log('document.getElementById('+tsk+sub+'supplyTypeSelectHolder) =', document.getElementById(tsk+sub+'supplyTypeSelectHolder')); }
     document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'none';
     document.getElementById(tsk+sub+'regionName').style.display = 'none';
     document.getElementById(tsk+sub+'blank').style.display = 'none';      
@@ -440,9 +439,9 @@
           document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
           document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium when resource not consumed';
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-globalEqual-container';
-          console.log('task='+tsk, '; sub='+sub, '; get className from dom of ', tsk+'0Details');
-          console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'0Details').className);
-          console.log(tsk+'1periodCheckbox.checked value =', document.getElementById(tsk+'1periodCheck').checked, document.getElementById(tsk+'1periodCheck').value);
+          if (av.dbg.flg.nut) { console.log('task='+tsk, '; sub='+sub, '; get className from dom of ', tsk+'0Details'); }
+          if (av.dbg.flg.nut) { console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'0Details').className); }
+          if (av.dbg.flg.nut) { console.log(tsk+'1periodCheckbox.checked value =', document.getElementById(tsk+'1periodCheck').checked, document.getElementById(tsk+'1periodCheck').value); }
           if (true == document.getElementById(tsk+'1periodCheck').checked) {
             document.getElementById(tsk+sub+'periodTime').style.display = 'block';
             document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium when resource not consumed';
@@ -468,7 +467,7 @@
           document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'block';
           document.getElementById(tsk+sub+'sideText').innerHTML = 'Side text describing what side means';
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetailAll-container';
-          console.log(tsk+'Details.class=', document.getElementById(tsk+'Details').className);
+          if (av.dbg.flg.nut) { console.log(tsk+'Details.class=', document.getElementById(tsk+'Details').className); }
           break;
       }    
     }        // end global 
@@ -485,10 +484,10 @@
             document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-None-container';
           break;
         case 'finite':   //Local
-          //console.log('av.nut.hideFlags.gradient=',av.nut.hideFlags.gradient);
+          // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags.gradient=',av.nut.hideFlags.gradient); }
           document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'block';
           document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'block';
-          //console.log('task=',tsk, '; sub=', sub, '; gradientCheck.checked=', document.getElementById(tsk+sub+'gradientCheck').checked);
+          // if (av.dbg.flg.nut) { console.log('task=',tsk, '; sub=', sub, '; gradientCheck.checked=', document.getElementById(tsk+sub+'gradientCheck').checked); }
           if (true == document.getElementById(tsk+sub+'gradientCheck').checked) {  
             //gradient
             document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'block';
@@ -497,7 +496,7 @@
             document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';
             document.getElementById(tsk+sub+'initialLoDiv').style.display = 'block';
             document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-FiniteGradient-container';
-            console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
+            if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
           }
           else {
             //not-gradient; Local
@@ -506,19 +505,19 @@
             document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-container';
             if (av.nut.hideFlags.gradient) {
               document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
-              document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'none';
-              document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-noGridCheckbox-container';
+              //document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'none';
+              document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-noGradientCheckbox-container';
             }
-            console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
-            //console.log('subSection=', document.getElementById(tsk+sub+'subSection'));
+            if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
+            //if (av.dbg.flg.nut) { console.log('subSection=', document.getElementById(tsk+sub+'subSection')); }
           }
           break;
         case 'equilibrium':
-          console.log(tsk,'0gradientCheckbox.checked=', document.getElementById(tsk+sub+'gradientCheck').checked);
+          if (av.dbg.flg.nut) { console.log(tsk,'0gradientCheckbox.checked=', document.getElementById(tsk+sub+'gradientCheck').checked); }
           if (!av.nut.hideFlags.gradient) document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
           if (!av.nut.hideFlags.periodic) document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
           document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'inline-block';
-          console.log(tsk+sub+'gradientCheck', document.getElementById(tsk+sub+'gradientCheck').checked, '; av.sgr.hideFlgNames.gradient=', av.sgr.hideFlgNames.gradient);
+          if (av.dbg.flg.nut) { console.log(tsk+sub+'gradientCheck', document.getElementById(tsk+sub+'gradientCheck').checked, '; av.sgr.hideFlgNames.gradient=', av.sgr.hideFlgNames.gradient); }
           if (true == document.getElementById(tsk+sub+'gradientCheck').checked && !av.sgr.hideFlgNames.gradient) {
             //gradient
             document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'block';
@@ -536,12 +535,12 @@
             document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount / cell on high side.';
             document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction / cell on high side';
             document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualGradient-container';
-            console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
+            if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
             if (true == document.getElementById(tsk+sub+'periodCheck').checked && !av.sgr.hideFlgNames.periodic) {
               document.getElementById(tsk+sub+'periodTime').style.display = 'block';
               document.getElementById(tsk+sub+'sideText').innerHTML = 'Side with a higher amount';
               document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualGradientPeriod-container';            
-              console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
+              if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
             }
           }
           else {
@@ -555,12 +554,12 @@
             document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
             document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium if not consumed.';
             document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Equal-container';
-            console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
+            if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
             if (true == document.getElementById(tsk+sub+'periodCheck').checked  && !av.sgr.hideFlgNames.periodic) {
               document.getElementById(tsk+sub+'periodTime').style.display = 'block';
               document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium when no resource has been consumed';
               document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualPeriod-container';            
-              console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
+              if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
             }
           }
           break;
@@ -572,7 +571,7 @@
           document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
           document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'block';
           document.getElementById(tsk+'Details').className = 'grid-sugarDetailSourceSink-container';
-          console.log('nanDetails.class=', document.getElementById(tsk+'Details').className);
+          if (av.dbg.flg.nut) { console.log('nanDetails.class=', document.getElementById(tsk+'Details').className); }
           break;
           */
         case 'Debug':
@@ -595,11 +594,11 @@
           document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
           document.getElementById(tsk+sub+'equalLoDiv').style.display = 'block';
           document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetailAll-container';
-          console.log(tsk+'Details.class=', document.getElementById(tsk+'Details').className);
+          if (av.dbg.flg.nut) { console.log(tsk+'Details.class=', document.getElementById(tsk+'Details').className); }
           break;
       };
     };
-    //console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className);
+    // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
 
   };
   //---------------------------------------------------------------------------------- end av.sgr.changeDetailsLayout --
@@ -611,7 +610,7 @@
   av.ptd.ex1allSugarChange = function (allmode) {
     var onoff = 'None';
     var geometry = 'Local';
-    console.log('ex1_allmode=', allmode);
+    if (av.dbg.flg.nut) { console.log('ex1_allmode=', allmode); }
     if ( ('allon' == allmode) || ('alloff' == allmode) ) {
       geometry = 'Global';
       if ('allon' == allmode) {
@@ -683,8 +682,8 @@
   //for structure on tst2 tab; not currently called as of 2019 Aug 4
   /*
   av.ptd.envobj2form = function(from) {
-    console.log(from, 'called av.ptd.envobj2form');
-    console.log('av.ui.envRegion=',av.ui.envRegion, '; av.ui.envTask=', av.ui.envTask, '; av.ui.envDistribute=',av.ui.envDistribute);
+    if (av.dbg.flg.nut) { console.log(from, 'called av.ptd.envobj2form'); }
+    if (av.dbg.flg.nut) { console.log('av.ui.envRegion=',av.ui.envRegion, '; av.ui.envTask=', av.ui.envTask, '; av.ui.envDistribute=',av.ui.envDistribute); }
     if (true) return;
     var task;
     var ndx = -1;
@@ -698,12 +697,12 @@
     if (-1 < logicindex && -1 < regionindex) {
       task = av.sgr.logEdNames[logicindex];
       envobj = av.fzr.env.rsrce[task];
-      //console.log('task='+task,'; av.fzr.env.rsrce[task] = ', av.fzr.env.rsrce[task]);
+      // if (av.dbg.flg.nut) {  console.log('task='+task,'; av.fzr.env.rsrce[task] = ', av.fzr.env.rsrce[task]); }
       len = envobj.name.length;
       //console.log('len='+len, '; envobj.name=',envobj.name);
 
       while(ii < len && !found) {
-        console.log('ii='+ii,'; envobj.name[ii]='+envobj.name[ii],'; envobj.name[ii].substring(3,10)='+envobj.name[ii].substring(3,10)+'|');
+        if (av.dbg.flg.nut) { console.log('ii='+ii,'; envobj.name[ii]='+envobj.name[ii],'; envobj.name[ii].substring(3,10)='+envobj.name[ii].substring(3,10)+'|'); }
         if (regionindex == envobj.name[ii].substring(3,10)) {
           found = true;
           ndx = ii;

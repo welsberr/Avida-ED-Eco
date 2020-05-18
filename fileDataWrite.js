@@ -1,4 +1,5 @@
   //write file data
+  // if (av.dbg.flg.root) { console.log('Root: start of fileDataWrite'); }
   var av = av || {};  //incase av already exists
 
   // if (av.dbg.flg.root) { console.log('Root: before av.fwt.deleteFzrFile'); }
@@ -260,7 +261,7 @@
   // the function av.fwt.form2NutrientTxt needs to be replaced with av.fwt.NutStruct2environment_cfg
   //----------------------------------------------------------------------------------------- av.fwt.form2NutrientTxt --
   av.fwt.form2NutrientTxt = function (idStr, toActiveConfigFlag, from) {
-    console.log(from + ' called av.fwt.form2NutrientTxt');
+    //console.log(from + ' called av.fwt.form2NutrientTxt');
     var geometry = 'Global';
     var supplyType = 'Infinite';
     var ndx = 1;           // only using the first subsection for now
@@ -340,8 +341,8 @@
       };
 
     }// end of loop to go thru all the logic functions. 
-    console.log('very tired: av.nut=',av.nut);
-    console.log('av.fzr=', av.fzr);
+    if (av.debug.fio) console.log('very tired: av.nut=',av.nut);
+    if (av.debug.fio) console.log('av.fzr=', av.fzr);
   //  if ('cfg'==idStr) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');  // 
     if (toActiveConfigFlag) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');  // 
     else {av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.form2NutrientTxt');}
@@ -361,7 +362,7 @@
   /*--------------------------------------------------------------------------------- av.fwt.makeFzrOldEnvironmentCfg --*/
   av.fwt.makeFzrOldEnvironmentCfg = function (idStr, from) {
     'use strict';
-    console.log(from, ' called av.fwt.makeFzrOldEnvironmentCfg *************************************************');
+    if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrOldEnvironmentCfg *************************************************');
     var txt = '';
     if (av.dom.notose.checked) txt += 'REACTION  NOT  not   process:value=1:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NOT  not   process:value=0:type=pow  requisite:max_count=1\n';
     if (av.dom.nanose.checked) txt += 'REACTION  NAND nand  process:value=1:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NAND nand  process:value=0:type=pow  requisite:max_count=1\n';
@@ -391,8 +392,7 @@
 
   av.fwt.makeFzrAncestorAuto = function (idStr, toActiveConfigFlag, from) {
     'use strict';
-    if (av.debug.fio) console.log(from, ' av.fwt.makeFzrAncestorAuto');
-    console.log(from, ' called av.fwt.makeFzrAncestorAuto: idStr=', idStr, '; toActiveConfigFlag=', toActiveConfigFlag);
+    if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrAncestorAuto: idStr=', idStr, '; toActiveConfigFlag=', toActiveConfigFlag);
     var txt = '';
     var lngth = av.parents.autoNdx.length;
     for (var ii = 0; ii < lngth; ii++) {
@@ -406,8 +406,7 @@
   /*-------------------------------------------------------------------------------------- av.fwt.makeFzrAncestorHand --*/
   av.fwt.makeFzrAncestorHand = function (idStr, toActiveConfigFlag, from) {
     'use strict';
-    //if (av.debug.fio) 
-      console.log(from, ' called av.fwt.makeFzrAncestorHand: idStr=', idStr, '; toActiveConfigFlag=', toActiveConfigFlag);
+    //if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrAncestorHand: idStr=', idStr, '; toActiveConfigFlag=', toActiveConfigFlag);
     var txt = '';
     var lngth = av.parents.handNdx.length;
     for (var ii = 0; ii < lngth; ii++) {
@@ -1031,6 +1030,6 @@
   */
 
 
-
+  // if (av.dbg.flg.root) { console.log('Root: end of fileDataWrite'); }
     /********************************************************************************************************************/
 

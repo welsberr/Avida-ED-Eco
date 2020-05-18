@@ -33,18 +33,22 @@
       av.dom.populationBlock = document.getElementById('populationBlock');
       av.dom.organismBlock = document.getElementById('organismBlock');
       av.dom.analysisBlock = document.getElementById('analysisBlock');
-      av.dom.showTextBlock = document.getElementById('showTextBlock');
+      av.dom.showTextDebugBlock = document.getElementById('showTextDebugBlock');
       av.dom.populationButton = document.getElementById('populationButton');
       av.dom.organismButton = document.getElementById('organismButton');
       av.dom.analysisButton = document.getElementById('analysisButton');
-      av.dom.showTextButton = document.getElementById('showTextButton');
+      av.dom.showTextDebugButton = document.getElementById('showTextDebugButton');
       av.dom.allAvida = document.getElementById('allAvida');
 
       av.dom.lftPnlButtonImg = document.getElementById('lftPnlButtonImg');
       av.dom.rtPnlButtonImg = document.getElementById('rtPnlButtonImg');
+      
+      av.dom.orgInfoHolder = document.getElementById('orgInfoHolder');
+      av.dom.popInfoVert = document.getElementById('popInfoVert');
+
 
       //Population Page
-      av.dom.popInfoHolder = document.getElementById('popInfoHolder');
+      av.dom.rightInfoHolder = document.getElementById('rightInfoHolder');
       av.dom.statsTab = document.getElementById('statsTab');
       av.dom.setupTab = document.getElementById('setupTab');
       av.dom.testTab = document.getElementById('testTab');
@@ -228,11 +232,11 @@
 
       //av.dom. = document.getElementById('');
       // Modal Dialogs 
-      av.dom.newModalID = document.getElementById('newModalID');
-      av.dom.newCancel = document.getElementById('newCancel');
-      av.dom.newDiscard = document.getElementById('newDiscard');
-      av.dom.newSaveConfig = document.getElementById('newSaveConfig');
-      av.dom.newSaveWorld = document.getElementById('newSaveWorld');
+      av.dom.newDishModalID = document.getElementById('newDishModalID');
+      av.dom.newDishCancel = document.getElementById('newDishCancel');
+      av.dom.newDishDiscard = document.getElementById('newDishDiscard');
+      av.dom.newDishSaveConfig = document.getElementById('newDishSaveConfig');
+      av.dom.newDishSaveWorld = document.getElementById('newDishSaveWorld');
       av.dom.needAncestorModalID = document.getElementById('needAncestorModalID');
       av.dom.needAncestorCancel = document.getElementById('needAncestorCancel');
 
@@ -272,7 +276,7 @@
         //hide all development elements
         av.ui.hideDevelopment = true;
         av.doj.mnDebug.style.visibility = 'hidden';
-        document.getElementById('showTextButtonDiv').style.visibility = 'hidden';
+        document.getElementById('showTextDebugButtonDiv').style.visibility = 'hidden';
         document.getElementById('developmentToggle').className = 'devoCammo';  
         document.getElementById('ritePnlBtnHolder').className = 'pnlBtnHldrHide';
 
@@ -314,7 +318,6 @@
         //document.getElementsByClassName('groupFinite')[0].style.display = 'none';     //finite available for local options
         document.getElementsByClassName('groupDebug')[0].style.display = 'none';
 
-
         //debug menu??
         dijit.byId('mnHpDebug').set('label', 'Show debug menu');   //???????
 
@@ -322,7 +325,7 @@
       } else {       // development sectiomn can be seen.
         av.ui.hideDevelopment = false;
         av.doj.mnDebug.style.visibility = 'visible';
-        document.getElementById('showTextButtonDiv').style.visibility = 'visible';
+        document.getElementById('showTextDebugButtonDiv').style.visibility = 'visible';
         document.getElementById('developmentToggle').className = 'devoShow';
         document.getElementById('ritePnlBtnHolder').className = 'ritePnlBtnHlderShow';
 
