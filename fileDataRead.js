@@ -1022,7 +1022,7 @@
           document.getElementById(tsk+subNum+'initialHiInput').value = initialValue;
           av.nut[numTsk].uiSub.initialHi[subNum] = initialValue;
         }
-        console.log('numTsk=',numTsk,'; subNum=',subNum,'; resrc.xdiffuse=',av.nut[numTsk].resrc.xdiffuse[subNum], '; resrc.ydiffuse=',av.nut[numTsk].resrc.ydiffuse[subNum]);
+        //console.log('numTsk=',numTsk,'; subNum=',subNum,'; resrc.xdiffuse=',av.nut[numTsk].resrc.xdiffuse[subNum], '; resrc.ydiffuse=',av.nut[numTsk].resrc.ydiffuse[subNum]);
         if (av.nut[numTsk].resrc.xdiffuse[subNum]) {
           if (!isNaN(Number(av.nut[numTsk].resrc.xdiffuse[subNum]))) {xdiffuse = Number(av.nut[numTsk].resrc.xdiffuse[subNum]);}
           else {xdiffuse = 1;}
@@ -1034,7 +1034,7 @@
         }
         else {ydiffuse = 1;}
         diffuse = Math.round((xdiffuse+ydiffuse)/2);
-        console.log('diffuse=', diffuse);
+        //console.log('diffuse=', diffuse);
         if (0 < diffuse) {
           document.getElementById(tsk+subNum+'diffuseCheck').checked = true;
         }

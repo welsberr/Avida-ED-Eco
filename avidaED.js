@@ -3342,7 +3342,7 @@ require([
   //Resize tools might be called here or after "Last_things_done"
   
   // **************************************************************************************************************** */
-  //                                          Last_things_done
+  //                                          Last_things_done; Last things done; Last done
   // **************************************************************************************************************** */
   // Do this after all other is done; end of file
   //must create the rest of the resource/reaction user interface before calling av.sgr.ChangeAllGeo('Global');
