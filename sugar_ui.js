@@ -22,39 +22,48 @@
   // if (av.dbg.flg.root) { console.log('Root: before av.sgr.buildHtml'); }
   av.sgr.buildHtml = function() {
     //console.log('in av.sgr.buildHtml');
+    var ii, jj;
     var tskSectionStr = '';
     //var subSectionStr = av.dom.orn1subSection.innterHTML;   //later there will be 4 of these for each sugar/task
     var newstr = '';
+    var pattern = 'orn';  
     var pattern0 = 'orn0';  
-    var pattern1 = 'orn1';
+    var patternNum = 'orn';
     var sgrNum = '';
     var len = av.sgr.logicNames.length;
     for (ii=0; ii<len; ii++) {
       if ('orn' != av.sgr.logicNames[ii]) {
         tskSectionStr = av.dom.orn0section.innerHTML;
         sgrNum = av.sgr.logicNames[ii] + '0';
-        //console.log('ii=', ii, '; sgrNum=',sgrNum);
+        //console.log('sgrNum=', sgrNum, 'pattern0=',pattern0);
         tskSectionStr = tskSectionStr.replaceAll(pattern0, sgrNum);
         //console.log('tskSectionStr=', tskSectionStr);
 
-        //av.dom.showTextarea.value = tskSectionStr;
+        av.dom.showTextarea.value = tskSectionStr;
         document.getElementById(av.sgr.logicNames[ii]+'0section').innerHTML = tskSectionStr;
         document.getElementById(av.sgr.logicNames[ii]+'0title').innerHTML = av.sgr.oseNames[ii];
 
         newstr = av.dom.orn0Details.innerHTML;
-        sgrNum = av.sgr.logicNames[ii] + '1';
-        newstr = newstr.replaceAll(pattern1, sgrNum);
+        for (jj=1; jj <=2; jj++) {
+          patternNum = pattern + jj.toString();
+          sgrNum = av.sgr.logicNames[ii] + jj;
+          //console.log('patternNum=',patternNum, '; sgrNum=',sgrNum);
+          newstr = newstr.replaceAll(patternNum, sgrNum);
+        }
         document.getElementById(av.sgr.logicNames[ii]+'0Details').innerHTML = newstr;
       }
-    };
+    }
       //Was using this to display how I was building sugar according data
       //console.log('av.dom.orn0section.innerHTML=', av.dom.orn0section.innerHTML);
       //av.dom.tst2textarea.value = document.getElementById('equ0Details').innerHTML;
       //av.dom.tst2textarea.value = tskSectionStr;
 
+      sgrNum = av.dom.sugarAccordion.innerHTML;
+      jj = sgrNum.length;
       av.dom.showTextarea.value = av.dom.sugarAccordion.innerHTML;  
+      //console.log('innterHTML.len=',jj,'; innerHtml=',av.dom.sugarAccordion.innerHTML);
       //av.dom.showTextarea.value = document.getElementById('not0Details');  
-      //av.dom.showTextarea.value = newstr;
+      av.dom.showTextarea.value = sgrNum;
   };
   
   //-------------------------------------------------------------------------------------------------- sugars for Eco --

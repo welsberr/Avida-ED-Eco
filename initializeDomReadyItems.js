@@ -272,6 +272,7 @@
 
     av.ui.toggleDevelopentDisplays = function () {
       var len, tsk, sub;
+      var tmp;
       if ('visible' === av.doj.mnDebug.style.visibility) {
         //hide all development elements
         av.ui.hideDevelopment = true;
@@ -297,16 +298,18 @@
           av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
         };
 
-        //console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
-        //console.log("document.getElementsByClassName('localEquilibrium')=", document.getElementsByClassName('localEquilibrium').length );
+        console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
+        console.log("document.getElementsByClassName('localEquilibrium')=", document.getElementsByClassName('localEquilibrium').length );
 
-        //console.log("document.getElementsByClassName('globalFinite')=", document.getElementsByClassName('globalFinite').length );
+        console.log("document.getElementsByClassName('globalFinite')=", document.getElementsByClassName('globalFinite').length );
         
         //Hide select options that are not yet implemented
         len = document.getElementsByClassName('localEquilibrium').length;
         for (ii = 0; ii < len; ii++) {
+          tmp = document.getElementsByClassName('globalFinite')[ii];
+          console.log('ii=',ii,'dom element=',tmp);
           document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
-          document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'none';
+          document.getElementsByClassName('globalEquilibrium'+[ii]).style.display = 'none';
           document.getElementsByClassName('globalDebug')[ii].style.display = 'none';
           
           document.getElementsByClassName('localDebug')[ii].style.display = 'none';

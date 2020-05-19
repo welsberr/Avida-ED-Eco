@@ -1160,6 +1160,78 @@
                           </div>
                         </div><span id="orn1Section_end" class='displayNone'></span>
 
+                        <div id="orn2subSection" class="sugarDishSubsection">
+                          <div id="orn2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
+                          <div id="orn2supplyTypeSelectHolder" class="grid-sugarDetail-item typeInput">
+                            <select id="orn2supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
+                              <option id="orn2none" value="None">None</option>
+                              <option id="orn2Infinite" value="Infinite" selected="">Infinite</option>
+                              <option id="orn2Finite" class="localFinite" value="Finite">Finite</option>
+                              <option id="orn2Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
+                              <option id="orn2Debug" class="localDebug" value="Debug">All debug</option>
+                            </select>&nbsp;&nbsp;&nbsp;
+                          </div>
+                          <div id="orn2periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
+                            <label><input id="orn2periodCheck" type="checkbox">Periodic&nbsp;&nbsp;</label>
+                          </div>
+                          <div id="orn2gradientCheckbox" class="grid-sugarDetail-item gradientCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
+                            <label><input id="orn2gradientCheck" type="checkbox">Gradient&nbsp;&nbsp;</label>
+                          </div>
+                          <div id="orn2diffuseCheckbox" class="grid-sugarDetail-item diffuseCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
+                            <label><input id="orn2diffuseCheck" type="checkbox">Diffusion&nbsp;&nbsp;</label>
+                          </div>
+                          <div id="orn2hiSideSelectHolder" class="grid-sugarDetail-item sideInput">
+                            <label><select id="orn2sideSelect">
+                              <option value="left" selected="">Left</option>
+                              <option value="right">Right</option>
+                              <option value="top">Top</option>
+                              <option value="bottom">Bottom</option>
+                              <option value="center">Center</option>
+                              <option value="edge">Edge</option>
+                            </select>
+                              <span id="orn2sideText">side text to describe what side means</span></label>
+                          </div>
+                          <div id="orn2periodTime" class="grid-sugarDetail-item periodTime">
+                            <label><input id="orn2periodInput" class="sugPeriodInput" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                          </div>
+                          <div id="orn2sideHiText" class="grid-sugarDetail-item sideTitleHi">High Side</div>
+                          <div id="orn2sideLoText" class="grid-sugarDetail-item sideTitleLo">Low Side</div>
+                          <div id="orn2blank" class="grid-sugarDetail-item sgrBlank">&nbsp;&nbsp;&nbsp;&nbsp;</div>  
+
+                          <div id="orn2initialHiDiv" class="grid-sugarDetail-item initialHi">
+                            <label><input id="orn2initialHiInput" class="sugInitialHiInput" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;
+                              <span id="orn2initialHiText">High side initial amount / cell </span></label>
+                          </div>
+                          <div id="orn2initialLoDiv" class="grid-sugarDetail-item initialLo">
+                            <label><input id="orn2initialLoInput" class="sugInitialLoInput" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;
+                              <span id="orn2initialLoText">Low side initial amount / cell</span></label>
+                          </div>
+                          <div id="orn2inflowHiDiv" class="grid-sugarDetail-item inflowHi">
+                            <label><input id="orn2inflowHiInput" class="sugInflowHiInput" type="text" onchange="av.sgr.inflowChange(this);">&nbsp;
+                              <span id="orn2inflowHiText" class="sugOutflowLabel">Inflow amount / cell</span></label>
+                          </div>
+                          <div id="orn2inflowLoDiv" class="grid-sugarDetail-item inflowLo">
+                            <label><input id="orn2inflowLoInput" class="sugInflowLoInput" type="text" onchange="av.sgr.inflowChange(this);">&nbsp;
+                            <span id="orn2inflowLoText" class="sugOutflowLabel">Inflow amount / cell on low side</span></label>
+                          </div>
+                          <div id="orn2outflowHiDiv" class="grid-sugarDetail-item outflowHi">
+                            <label><input id="orn2outflowHiInput" class="sugOutflowHiInput" type="text" onchange="av.sgr.outflowChange(this);">&nbsp;
+                            <span id="orn2outflowHiText" class="sugOutflowLabel">Outflow fraction / cell.</span></label>
+                          </div>
+                          <div id="orn2outflowLoDiv" class="grid-sugarDetail-item outflowLo">
+                            <label><input id="orn2outflowLoInput" class="sugOutflowLoInput" type="text" onchange="av.sgr.outflowChange(this);">&nbsp;
+                              <span id="orn2outflowLoText" class="sugOutflowLabel">Outflow fraction / cell on low side.</span></label>
+                          </div>
+                          <div id="orn2equalHiDiv" class="grid-sugarDetail-item equalHi">
+                            <span id="orn2equalHiValue"></span>
+                            <span id="orn2equalHiText"> = equilibrium when no resource has been consumed</span>
+                          </div>
+                          <div id="orn2equalLoDiv" class="grid-sugarDetail-item equalLo">
+                            <span id="orn2equalLoValue"></span>
+                            <span id="orn2equalLoText"> = equilibrium if not consumed</span>
+                          </div>
+                        </div><span id="orn2Section_end" class='displayNone'></span>
+
                       </div><span id="orn0Details_end" class='displayNone'></span>
                     </details>
 
