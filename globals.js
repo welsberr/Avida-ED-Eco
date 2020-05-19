@@ -41,7 +41,7 @@
   av.dbg = {};
   av.dbg.flg = {}; 
   av.dbg.flg.frd = false;  //reading file text strings
-  av.dbg.flg.nut = false;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
+  av.dbg.flg.nut = true;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
   av.dbg.flg.plt = false;  //both popChart and analysis
   av.dbg.flg.root = false;  //statements that look for failers when the code executes outside of functions
 
@@ -605,10 +605,16 @@
 };
 
   //Region Layout in use as of 2019 Dec
+  // not ready yet                        <option id="orn0TopLeftRight" class="TopLftRit" value="3TopLftRit">Top/Bottom(L/R)</option>
+  // not ready yet                        <option id="orn0Quarters" class="Quarters" value="4Quarters">Quarters</option>
 
     av.sgr.re_region = /(\D+)(\d+)(.*$)/;
     av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '3TopLftRit', '4Quarters'];
 
+    //entry zero is blank so indext matches subregion number 
+    av.sgr.All = [' ', 'Whole Dish'];
+    av.sgr.LftRit = [' ','Left', 'Right']; 
+    
   //will need something like the statement below eventuatlly
   //sav.sgr['3TopLftRit'] = ['top', 'Lft', 'Rit'];
 

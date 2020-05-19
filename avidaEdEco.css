@@ -639,7 +639,7 @@
   font-weight: bold;
   color: #444;
 }
-.sugarSummaryDiv{
+.sugarSummarySpan{
   display: inline-block;
 }
 .sugPeriodInput{
@@ -740,16 +740,29 @@
 .gradientCheckDiv { grid-area: gradientCheckDiv; }
 .diffuseCheckDiv { grid-area: diffuseCheckDiv; }
 
-.grid-sugarDetail-Finite-noGridCheckbox-container {
+.grid-sugarDetail-Infinite-container {
   display: grid;
-  grid-template-areas: 'typeInput initialHi';
+  grid-template-areas: 'subSectionTitle typeInput sgrBlank';
+  width: 100%;
+}
+
+.grid-sugarDetail-Finite-noGrradientCheckbox-container {  //not in use
+  display: grid;
+  grid-template-areas: 'subSectionTitle typeInput initialHi';
+  width: 100%;
+}
+.grid-sugarDetail-Finite-noGradientCheckboxOneLine-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle typeInput initialHi diffuseCheckDiv';
   width: 100%;
 }
 .grid-sugarDetail-Finite-noGradientCheckbox-container {
   display: grid;
-  grid-template-areas: 'typeInput initialHi diffuseCheckDiv';
+  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv'
+                       'initialHi initialHi sgrBlank';
   width: 100%;
 }
+
 .grid-sugarDetail-Finite-container {
   display: grid;
   grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
