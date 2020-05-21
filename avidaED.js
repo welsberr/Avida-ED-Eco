@@ -1694,7 +1694,7 @@ require([
 
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
-    if (true) {console.log(from, 'called av.grd.drawGridSetupFn'); }
+    //if (true) {console.log(from, 'called av.grd.drawGridSetupFn'); }
     av.dom.popBot.style.height = '5px';
 
     //size testing box = mainButtons
@@ -1803,7 +1803,7 @@ require([
         //  consold.log('inside DrawGridSetupFn in odd if statement ----------------------------------');
         //}
 
-        if (true) { console.log('before av.grd.drawGridUpdate'); }
+        if (false) { console.log('before av.grd.drawGridUpdate'); }
         av.grd.drawGridUpdate();   //in populationGrid.js
 
         rescaleLabel.textContent = av.grd.fillRescale;       //Tiba look at later

@@ -430,7 +430,7 @@
   border: 1px solid #DDDDDD;
 }
 .benchPopBot{
-  flex: 0 1 40px;
+  flex: 0 1 60px;
   border: 1px solid #AAA;
   min-height: 41px;
   overflow: auto;
@@ -509,7 +509,7 @@
     height: 100%;
   }
   #miniChartYaxis{
-    flex: 0 0 30px;
+    flex: 0 0 60px;
     border: 1px solid #AAA;
   }
 

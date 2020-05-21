@@ -642,7 +642,7 @@
     //find logic type
     matchTaskRegion = pairArray[0].match(re_region);  // Matches using re_num0 pattern.
     //if (av.dbg.flg.nut) console.log('re_region=', re_region, ', matchTaskRegion=', matchTaskRegion);
-
+    av.debug.fio = true;
     var tsk =  matchTaskRegion[1];
     var logicindex = av.sgr.logicNames.indexOf( tsk );
     if (-1 < logicindex) {
@@ -714,6 +714,7 @@
             rSourcObj[av.sgr.resrc_argu[nn]][ndx] = pear[1];
           }
           else {
+            console.log('pear= ', pear[0]);
             if ('cellbox' === pear[0].toLowerCase()) {
               cellboxdata = pear[1].split('|');
               //console.log('cellboxdata=',cellboxdata);
@@ -765,8 +766,8 @@
       lineErrors = 'resource,'+pairArray[0].substring(0,3)+' not found in av.sgr.logicNames';
       console.log(lineErrors);
     }
-
-    //console.log('lineErrors=', lineErrors);
+    av.debug.fio = false;
+    console.log('lineErrors=', lineErrors);
     return lineErrors;
   };
   //--------------------------------------------------------------------------------------- end av.frd.reSrcLineParse --
@@ -862,8 +863,8 @@
     //find some summary info about nutrients. Need to look at each task separately. 
     for (var ii=0; ii< len; ii++) {
       numTsk = av.sgr.logEdNames[ii];
-      //console.log('av.nut['+numTsk+'].react=', av.nut[numTsk].react);
-      //console.log('av.nut['+numTsk+'].resrc=', av.nut[numTsk].resrc);
+      console.log('av.nut['+numTsk+'].react=', av.nut[numTsk].react);
+      console.log('av.nut['+numTsk+'].resrc=', av.nut[numTsk].resrc);
       //
       // IF the code word 'missing' is NOT the listed as the name of the resource then the reaction has a RESOURCE 
       // The regionsNumOf is determined and used to assign default regionLayout
@@ -903,7 +904,7 @@
   //------------------------------------------------------------------------------------- end of av.frd.nutrientParse --
 
   //---------------------------------------------------------------------------------------- av.frd.environment2struct --
-  // puts data from the environment.cfg into the setup form for the population page
+  // puts data from the environment.cfg into the structure for the setup form for the population page
   av.frd.environment2struct = function (fileStr, from) {
     'use strict';
     if (av.dbg.flg.nut) { console.log(from, ' called av.frd.environment2struct'); }
@@ -915,7 +916,8 @@
     av.nut.wrldSize = av.fzr.actConfig.cols * av.fzr.actConfig.rows;  //  av.fzr.actConfig.size;
     
     av.frd.nutrientParse(fileStr, 'av.frd.environment2struct');    // uses av.nut
-    if (av.dbg.flg.nut) { 
+    //if (av.dbg.flg.nut) { 
+    if (true) { 
       av.nutConfig = {};
       av.nutConfig = JSON.parse(JSON.stringify(av.nut));
       console.log('av.frd.nutrientParse = ', av.nutConfig); 
@@ -1791,7 +1793,7 @@
   av.frd.resourceLineParse = function (lnArray) {
     'use strict';
     var lineErrors = 'none';  //was it a valid line wihtout errors
-    //console.log('lnArray = ', lnArray);
+    console.log('lnArray = ', lnArray);
     var pairArray = lnArray[1].split(':');
     var pear = [];
     var cellboxdata = [];
@@ -1848,7 +1850,7 @@
         } else {
           if ('cellbox' == pear[0].toLowerCase()) {
             cellboxdata = pear[1].split('|');
-            //console.log('cellboxdata=',cellboxdata);
+            console.log('cellboxdata=',cellboxdata);
             rSourcObj.boxflag[ndx] = true;
             rSourcObj.boxx[ndx] = cellboxdata[0];
             rSourcObj.boyy[ndx] = cellboxdata[1];

@@ -23,7 +23,7 @@
   av.grd.setColorMapOnly = function(from) {
     av.grd.cmap = av.color.Gnuplot2cmap;  //for fitness, offspring cost and energy aquisition rate
     var mapColor = 'greyMap';
-    console.log(from, 'called av.grd.setColorMapOnly: colorMode = ', document.getElementById("colorMode").value, ' ======================================');
+    //console.log(from, 'called av.grd.setColorMapOnly: colorMode = ', document.getElementById("colorMode").value, ' ======================================');
     switch (document.getElementById("colorMode").value) {
       case 'rnot':
         mapColor = av.sgr.sugarColors[0];
