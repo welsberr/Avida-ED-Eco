@@ -7,7 +7,7 @@
   // one global to hold them all.
   var av = av || {};  //incase av already exists
 
-  console.log('start of globals on 2020_0213');
+  console.log('start of globals on 2020_0615');
 
 
   Number.prototype.pad = function(size) {

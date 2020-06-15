@@ -166,7 +166,7 @@
   av.fio.processFiles = function (loadConfigFlag, from) {
     'use strict';
     if (av.dbg.flg.frd) { console.log('FIO: ',from, ' called av.fio.processFiles: loadConfigFlag = ', loadConfigFlag); }
-    console.log('FIO: ',from, ' called av.fio.processFiles: loadConfigFlag = ', loadConfigFlag);
+    //console.log('FIO: ',from, ' called av.fio.processFiles: loadConfigFlag = ', loadConfigFlag);
     var fileType = av.fio.anID;
     
     //Multi-dish not being implented at this time so subDish should never be a av.fzr.folderType

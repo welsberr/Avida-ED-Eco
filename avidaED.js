@@ -1694,7 +1694,7 @@ require([
 
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
-    if (true) {console.log(from, 'called av.grd.drawGridSetupFn'); }
+    //if (true) {console.log(from, 'called av.grd.drawGridSetupFn'); }
     av.dom.popBot.style.height = '5px';
 
     //size testing box = mainButtons
@@ -1803,7 +1803,7 @@ require([
         //  consold.log('inside DrawGridSetupFn in odd if statement ----------------------------------');
         //}
 
-        if (true) { console.log('before av.grd.drawGridUpdate'); }
+        //if (true) { console.log('before av.grd.drawGridUpdate'); }
         av.grd.drawGridUpdate();   //in populationGrid.js
 
         rescaleLabel.textContent = av.grd.fillRescale;       //Tiba look at later
@@ -3380,7 +3380,8 @@ require([
     //set mmDebug to hidden so that when toggle called it will show the development sections x
     av.doj.mnDebug.style.visibility = 'hidden';   //visible
   };
-  //av.ui.toggleDevelopentDisplays('Last_things_done');  //ned to put this back for production
+  av.ui.toggleDevelopentDisplays('Last_things_done');  //ned to put this back for production
+  av.dom.xorLabel.onclick();   //now only turns grid resource value table on and off
   
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
   av.sgr.ChangeAllGeo('Global');

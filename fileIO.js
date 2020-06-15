@@ -87,7 +87,7 @@
       av.fzr.gNum++;
       av.fzr.wNum++;
       
-      console.log('loadConfigFlag=',loadConfigFlag, '; av.fzr=', av.fzr);
+      //console.log('loadConfigFlag=',loadConfigFlag, '; av.fzr=', av.fzr);
 
       if (loadConfigFlag) {
         av.dnd.loadDefautlConfigFn('av.fio.readZipWS');
