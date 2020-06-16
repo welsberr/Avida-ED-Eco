@@ -1710,11 +1710,6 @@ require([
     if (av.debug.uil)
       console.log('w:', av.dsz.windowWd, av.dsz.windowHd, '= window');
 
-    if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht'); }
-    if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight(), '= av.dom.gridHolder jQuery.innerWd ht'); }
-    if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset'); }
-    if (av.debug.uil) { console.log('ui: w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= av.dom.gridCanvas.width ht____________'); }
-
     if (undefined != av.grd.msg) {
       if ('prepping' != av.grd.runState && undefined != av.grd.msg.fitness) {
         //av.grd.setMapData('av.grd.drawGridSetupFn');  //update color information for offpsring once run has started only if screen visable.
@@ -1739,11 +1734,15 @@ require([
           }
         }
 
-        //check if gridHolder is taller ro wider
+        //check if gridHolder is taller or wider
         if (av.dom.gridControlContainer.clientWidth < $("#gridHolder").height()) {
           av.dom.scaleCanvas.width = (av.dom.gridControlContainer.clientWidth - 22);  //works for canvas; need to use .style for divs
         } else
-          av.dom.scaleCanvas.width = $("#gridHolder").height() - 22;
+          av.dom.scaleCanvas.width = $("#gridHolder").height() - 22;  //the 22 was determined by trial and error and works on a mac
+
+        console.log('plain, client, offset, scroll, style, jq_innner, jq_reg, jq_outter ______________ after assigning scaleCanvasWidth');
+        console.log('scaleCanvas w:', av.dom.scaleCanvas.width, av.dom.scaleCanvas.clientWidth, av.dom.scaleCanvas.offsetWidth, av.dom.scaleCanvas.scrollWidth, av.dom.scaleCanvas.style.width,
+                      ';  h:', av.dom.scaleCanvas.height, av.dom.scaleCanvas.clientHeight, av.dom.scaleCanvas.offsetHeight, av.dom.scaleCanvas.scrollHeight, av.dom.scaleCanvas.style.height);
 
         //figure out scale or legend
         if ('Ancestor Organism' == document.getElementById('colorMode').value) {
@@ -1754,34 +1753,31 @@ require([
         }
         //console.log('after drawing scale or legend. update=',av.grd.oldUpdate);
 
-        if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht'); }
-        if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight(), '= av.dom.gridHolder jQuery.innerWd ht ~ client'); }
-        if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset'); }
-
         av.dom.popBot.style.height = av.dom.popBot.scrollHeight + 'px';
         if (av.debug.uil) { console.log('ui: change ht of popBot'); }
 
-        //if (av.debug.uil) { console.log('ui: w:', av.dom.gridHolder.scrollWidth, av.dom.gridHolder.scrollHeight, '= av.dom.gridHolder.scrollWidth ht'); }
-        //if (av.debug.uil) { console.log('ui: w:', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight, '= av.dom.gridHolder.clientWidth ht'); }
-        //if (av.debug.uil) { console.log('ui: w:', av.dom.gridHolder.offsetWidth, av.dom.gridHolder.offsetHeight, '= av.dom.gridHolder.offsetWidth ht'); }
         //if (av.debug.uil) { console.log('ui: w:', parseInt($("#gridHolder").css('width')), parseInt($("#gridHolder").css('height')),'= av.dom.gridHolder jQuery.cssWd ht ~ outer ~ offset'); }
 
         //av.dsz.gridHolderWd = parseInt($("#gridHolder").css("width"));   //this seems to match offsetht
         //av.dsz.gridHolderHt = parseInt($("#gridHolder").css("height"));
         //if (av.debug.uil) { console.log('ui: w:',av.dsz.gridHolderWd,av.dsz.gridHolderHt, '= gridHolder jQuery.width ht ~ outer ~ css ~ offset'); }
-
-
-        if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht'); }
-        if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").innerWidth(), $("#gridHolder").innerHeight(), '= av.dom.gridHolder jQuery.innerWd ht ~ client'); }
-        if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset'); }
-        if (av.debug.uil) { console.log('ui: w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= Before: av.dom.gridCanvas.width ht____________'); }
-
+        
+        console.log('plain, client, offset, scroll, style, jq_innner, jq_reg, jq_outter ______________ Before testing to see if gridHolder ht/width is larger');
+        console.log('gridHolder: w: _,',  av.dom.gridHolder.clientWidth, av.dom.gridHolder.offsetWidth, av.dom.gridHolder.scrollWidth, 
+                 av.dom.gridHolder.style.width, $("#gridHolder").innerWidth(), $("#gridHolder").width(), $("#gridHolder").outerWidth(),
+                '  h: ___, ',  av.dom.gridHolder.clientHeight, av.dom.gridHolder.offsetHeight, av.dom.gridHolder.scrollHeight, 
+                av.dom.gridHolder.style.height, $("#gridHolder").innerHeight(), $("#gridHolder").height(), $("#gridHolder").outerHeight());
+        console.log('gridCanvas w:', av.dom.gridCanvas.width, av.dom.gridCanvas.clientWidth, av.dom.gridCanvas.offsetWidth, av.dom.gridCanvas.scrollWidth, av.dom.gridCanvas.style.width,
+                      ';  h:', av.dom.gridCanvas.height, av.dom.gridCanvas.clientHeight, av.dom.gridCanvas.offsetHeight, av.dom.gridCanvas.scrollHeight, av.dom.gridCanvas.style.height);
+                      
         //if (av.dom.gridHolder.style.height < av.dom.gridHolder.clientWidth){
         //if (av.dom.gridHolder.style.height < av.dom.gridHolder.style.width){
         if ($("#gridHolder").height() < $("#gridHolder").width()) {
-          av.grd.canvasSize = $("#gridHolder").height() - 2;
+          av.grd.canvasSize = Math.floor( $("#gridHolder").height() ) - 4;
+          console.log('smaller height: canvasSize = ', av.grd.canvasSize);
         } else {
-          av.grd.canvasSize = $("#gridHolder").width() - 2;
+          av.grd.canvasSize = Math.floor( $("#gridHolder").width() ) - 2;
+          console.log('smaller width: canvasSize = ', av.grd.canvasSize);
         }
 
         av.dom.gridCanvas.width = av.grd.canvasSize;
@@ -1789,11 +1785,24 @@ require([
         av.grd.spaceX = av.grd.canvasSize;
         av.grd.spaceY = av.grd.canvasSize;
 
+        console.log('plain, client, offset, scroll, style, jq_innner, jq_reg, jq_outter ______________  Before findGridSize');
+        console.log('gridHolder: w: _,',  av.dom.gridHolder.clientWidth, av.dom.gridHolder.offsetWidth, av.dom.gridHolder.scrollWidth, 
+                 av.dom.gridHolder.style.width, $("#gridHolder").innerWidth(), $("#gridHolder").width(), $("#gridHolder").outerWidth(),
+                '  h: ___, ',  av.dom.gridHolder.clientHeight, av.dom.gridHolder.offsetHeight, av.dom.gridHolder.scrollHeight, 
+                av.dom.gridHolder.style.height, $("#gridHolder").innerHeight(), $("#gridHolder").height(), $("#gridHolder").outerHeight());
+        console.log('gridCanvas w:', av.dom.gridCanvas.width, av.dom.gridCanvas.clientWidth, av.dom.gridCanvas.offsetWidth, av.dom.gridCanvas.scrollWidth, av.dom.gridCanvas.style.width,
+                      ';  h:', av.dom.gridCanvas.height, av.dom.gridCanvas.clientHeight, av.dom.gridCanvas.offsetHeight, av.dom.gridCanvas.scrollHeight, av.dom.gridCanvas.style.height);
+
         av.grd.findGridSize(av.grd, av.parents);
-        if (av.debug.uil) { console.log('ui: w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= After: av.dom.gridCanvas.width ht____________'); }
-        if (av.debug.uil) { console.log('ui: w:', $("#gridCanvas").outerWidth(), $("#gridCanvas").outerHeight(), '= After: gridCanvas jQuery.outerWd______________'); }
-        if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht'); }
-        if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset'); }
+        
+        console.log('plain, client, offset, scroll, style, jq_innner, jq_reg, jq_outter ______________  After findGridSize');
+        console.log('gridHolder: w: _,',  av.dom.gridHolder.clientWidth, av.dom.gridHolder.offsetWidth, av.dom.gridHolder.scrollWidth, 
+                 av.dom.gridHolder.style.width, $("#gridHolder").innerWidth(), $("#gridHolder").width(), $("#gridHolder").outerWidth(),
+                '  h: ___, ',  av.dom.gridHolder.clientHeight, av.dom.gridHolder.offsetHeight, av.dom.gridHolder.scrollHeight, 
+                av.dom.gridHolder.style.height, $("#gridHolder").innerHeight(), $("#gridHolder").height(), $("#gridHolder").outerHeight());
+        console.log('gridCanvas w:', av.dom.gridCanvas.width, av.dom.gridCanvas.clientWidth, av.dom.gridCanvas.offsetWidth, av.dom.gridCanvas.scrollWidth, av.dom.gridCanvas.style.width,
+                      ';  h:', av.dom.gridCanvas.height, av.dom.gridCanvas.clientHeight, av.dom.gridCanvas.offsetHeight, av.dom.gridCanvas.scrollHeight, av.dom.gridCanvas.style.height);
+
 
         //Need to fix for scrolling   // This was commented out in Avida-ED 3.1
         //if (av.dom.gridHolder.scrollHeight == av.dom.gridHolder.clientHeight + 17) {
@@ -1809,10 +1818,13 @@ require([
         rescaleLabel.textContent = av.grd.fillRescale;       //Tiba look at later
         av.grd.need2DrawGrid = true;
         if (av.debug.uil) {
-          console.log('ui: w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= End: av.dom.gridCanvas.width ht____________');
-          console.log('ui: w:', $("#gridCanvas").outerWidth(), $("#gridCanvas").outerHeight(), '= End: gridCanvas jQuery.outerWd______________');
-          console.log('ui: w:', $("#gridHolder").width(), $("#gridHolder").height(), '= av.dom.gridHolder jQuery.width ht');
-          console.log('ui: w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset');
+        console.log('plain, client, offset, scroll, style, jq_innner, jq_reg, jq_outter ______________  After av.grd.drawGridUpdate');
+        console.log('gridHolder: w: _,',  av.dom.gridHolder.clientWidth, av.dom.gridHolder.offsetWidth, av.dom.gridHolder.scrollWidth, 
+                 av.dom.gridHolder.style.width, $("#gridHolder").innerWidth(), $("#gridHolder").width(), $("#gridHolder").outerWidth(),
+                '  h: ___, ',  av.dom.gridHolder.clientHeight, av.dom.gridHolder.offsetHeight, av.dom.gridHolder.scrollHeight, 
+                av.dom.gridHolder.style.height, $("#gridHolder").innerHeight(), $("#gridHolder").height(), $("#gridHolder").outerHeight());
+        console.log('gridCanvas w:', av.dom.gridCanvas.width, av.dom.gridCanvas.clientWidth, av.dom.gridCanvas.offsetWidth, av.dom.gridCanvas.scrollWidth, av.dom.gridCanvas.style.width,
+                      ';  h:', av.dom.gridCanvas.height, av.dom.gridCanvas.clientHeight, av.dom.gridCanvas.offsetHeight, av.dom.gridCanvas.scrollHeight, av.dom.gridCanvas.style.height);
         }
       }
     }
