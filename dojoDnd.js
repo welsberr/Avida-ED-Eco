@@ -633,6 +633,7 @@ av.dnd.landFzOrgan = function (source, nodes, target) {
 av.dnd.makeMove = function (source, nodes, target) {
   'use strict';
   var added = false;
+  var trgt = '';
   av.dnd.move.via = 'user';
   av.dnd.move.source = source;
   av.dnd.move.target = target;
@@ -644,22 +645,27 @@ av.dnd.makeMove = function (source, nodes, target) {
   av.dnd.move.targetDomId = domIDs[domIDs.length-1];
   av.dnd.move.sourceMoveData = av.dnd.move.source.map[av.dnd.move.sourceDomId];
 
-  //console.log('move', av.dnd.move);
+  console.log('move', av.dnd.move);
   switch (target) {
     case av.dnd.ancestorBox:
       added = av.dnd.lndAncestorBox(av.dnd.move);
+      trgt = 'ancestorBox';
       break;
     case av.dnd.activeConfig:
       added = av.dnd.lndActiveConfig(av.dnd.move, 'av.dnd.makeMove');
+      trgt = 'ActiveConfig';
       break;
     case av.dnd.activeOrgan:
       added = av.dnd.lndActiveOrgan(av.dnd.move);
+      trgt = 'ActiveOrgan';
       break;
     case av.dnd.testConfig:      
       added = av.dnd.lndTestConfig(av.dnd.move);
+      trgt = 'TestConfig';
       break;
+    default:
+      console.log('target not found: target=', target);
   }
-  if(!added) { console.log('error moving item');  }
 };
 //----------------------------------------------------------------------------------------------- end av.dnd.makeMove --
 

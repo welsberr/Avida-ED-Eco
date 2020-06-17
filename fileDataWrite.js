@@ -245,7 +245,8 @@
 
     };  //end for ii
     console.log('----------------------------------------------End of av.fwt.dom2NutrientStruct, when called by ', from);
-    console.log(from, 'called av.fwt.dom2NutrientStruct - at end: av.nut=', av.nut);
+    console.log(from, 'called av.fwt.dom2NutrientStruct - at end');
+    console.log('av.nut=',av.nut);
   };
   //-------------------------------------------------------------------------------- End of av.fwt.dom2NutrientStruct --
 
@@ -341,11 +342,12 @@
       };
 
     }// end of loop to go thru all the logic functions. 
-    if (av.debug.fio) console.log('very tired: av.nut=',av.nut);
-    if (av.debug.fio) console.log('av.fzr=', av.fzr);
+    if (true) console.log('very tired: av.nut=',av.nut);   //av.debug.fio
+    if (true) console.log('av.fzr=', av.fzr);
   //  if ('cfg'==idStr) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');  // 
     if (toActiveConfigFlag) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');  // 
     else {av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.form2NutrientTxt');}
+    console.log('environment = ', txt);
   };
   /*---------------------------------------------------------------------------------- End of av.fwt.form2NutrientTxt --*/
 

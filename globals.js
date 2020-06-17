@@ -508,6 +508,7 @@
   */
 
 
+
   //----------------------------------------------------------------------------------------------------------------------
   // av.sgr = These are constants; dictionaries and arrays that might be useful to process 
   //       // environment.cfg --> av.nut.reAct & reSrc (nutrient structure)
@@ -517,7 +518,7 @@
   //       // av.nut.uiAll & uiSub --> av.nut.reAct & reSrc
   //       // av.nut.reAct & reSrc --> environment. 
   //       //
-  //       // there are extra items nin av.sgr as ideas were put in before implementation and not all ideas were used
+  //       // there are extra items in av.sgr as ideas were put in before implementation and not all ideas were used
   //       // in implementation. Eventually after all is working with at least 4 subdishes Diane will clean out extra 
   //       // items in av.sgr
   //----------------------------------------------------------------------------------------------------------------------

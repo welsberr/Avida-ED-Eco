@@ -663,12 +663,14 @@
       if (av.debug.fio) { console.log('pairArray = ', pairArray, '; geometry['+numTsk+']=', av.nut[numTsk].uiAll.geometry,'; matchTaskRegion =', matchTaskRegion); }
 
       // check to make sure name is unqiue. If it is not unique then overright the previous data. 
-      ndx = av.frd.findNameIndex(rSourcObj, pairArray[0], av.nut[numTsk].uiAll.geometry);   // index into all the arrays that hold resource/reaction parameters; The name should be unique for all arrays in the object. 
+      // index into all the arrays that hold resource/reaction parameters; The name should be unique for all arrays in the object. 
+      ndx = av.frd.findNameIndex(rSourcObj, pairArray[0], av.nut[numTsk].uiAll.geometry);   
+      console.log('ndx=',ndx, '; tsk=',tsk, '; name=', pairArray[0], '-------------------------');
       if (av.debug.fio) { console.log('ndx=',ndx); }
       if (-1 < ndx) {
         rSourcObj.name[ndx] = pairArray[0];    //asign the name of the resource statement. 
 
-        // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file witha few exceptions
+        // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file with a few exceptions
         // boxflag is false indicating there are no box values. 
         // in Avida-ED, geometry=Grid or global; The user interface calls Grid = 'Local'
         //defaults are done in av.fzr.clearEnvironment
@@ -870,19 +872,16 @@
       // The regionsNumOf is determined and used to assign default regionLayout
       // Then a region code, region name need to be assigned in av.nut[tsk]ui
       // 
-      //
+      
       if ('missing' !== av.nut[numTsk].react.resource[0]) {
         //If the key word
         
-        //if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiAll = ', av.nut[numTsk].uiAll); }
-        //if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiSub = ', av.nut[numTsk].uiSub); }
-        
         distinctRegions = [...new Set(av.nut[numTsk].uiSub.regionCode)];
-        //if (av.dbg.flg.nut) { console.log('numTsk=', numTsk, '; distinctRegions=', distinctRegions); }      
+        console.log('numTsk=', numTsk, '; distinctRegions=', distinctRegions); 
         av.nut[numTsk].uiAll.regionsNumOf = distinctRegions.length-1;  //region[0] does not count ias it is for global
         //if (av.dbg.flg.nut) { console.log('distinctRegions.length =', distinctRegions.length); }
 
-        // if resource is NOT missing, set region layout by the number of number of distinct values in ui.Sub.regionCode array
+        // if resource exists, set region layout by the number of number of distinct values in ui.Sub.regionCode array
         if (0 < av.nut[numTsk].uiAll.regionsNumOf) {
           av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLayoutValues[av.nut[numTsk].uiAll.regionsNumOf];  //av.sgr.layout 
           av.nut[numTsk].uiAll.geometry = 'Grid';
@@ -893,7 +892,7 @@
           else { av.nut[numTsk].uiAll.geometry = 'Global'; }
         }
         if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiAll = ', av.nut[numTsk].uiAll); }
-        if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].resrc=', av.nut[numTsk].resrc); }
+        if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiSubs=', av.nut[numTsk].uiSub); }
       };  // a resource was defined so it could be grid or global
       
     };  // end of logic task loops
@@ -1009,41 +1008,44 @@
         document.getElementById(tsk+'0supplyType').value = av.nut[numTsk].uiAll.supplyType;
       }
       else if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
-        
-        // regionCode will need to be converted to regionName or need to get regionName from xy cooredinates
-        // for now it is always "Whole Dish" because there is only one region
-        document.getElementById(tsk+subNum+'regionName').value = av.nut[numTsk].uiSub.regionName[subNum];
-        
-          //console.log('document.getElementById('+tsk+subNum+'supplyType)',document.getElementById(tsk+subNum+'supplyType') );
-        document.getElementById(tsk+subNum+'supplyType').value = av.nut[numTsk].uiSub.supplyType[subNum]; 
+        subsections = av.nut[numTsk].resrc.geometry.length;
+        for (subNum = 1; subNum < subsections; subNum++) {
 
-        // if initial is defined in RESOURCE, use that value, else use the default value from globals.
-        if (!isNaN(Number(av.nut[numTsk].resrc.initial[subNum])) ) {
-          //dom and nut contain initial value per cell; RESOURCE contains initial amount per world
-          initialValue = Number( av.nut[numTsk].resrc.initial[subNum] / wrldSize );    
-          document.getElementById(tsk+subNum+'initialHiInput').value = initialValue;
-          av.nut[numTsk].uiSub.initialHi[subNum] = initialValue;
-        }
-        //console.log('numTsk=',numTsk,'; subNum=',subNum,'; resrc.xdiffuse=',av.nut[numTsk].resrc.xdiffuse[subNum], '; resrc.ydiffuse=',av.nut[numTsk].resrc.ydiffuse[subNum]);
-        if (av.nut[numTsk].resrc.xdiffuse[subNum]) {
-          if (!isNaN(Number(av.nut[numTsk].resrc.xdiffuse[subNum]))) {xdiffuse = Number(av.nut[numTsk].resrc.xdiffuse[subNum]);}
+          // regionCode will need to be converted to regionName or need to get regionName from xy cooredinates
+          // for now it is always "Whole Dish" because there is only one region
+          document.getElementById(tsk+subNum+'regionName').value = av.nut[numTsk].uiSub.regionName[subNum];
+
+            //console.log('document.getElementById('+tsk+subNum+'supplyType)',document.getElementById(tsk+subNum+'supplyType') );
+          document.getElementById(tsk+subNum+'supplyType').value = av.nut[numTsk].uiSub.supplyType[subNum]; 
+
+          // if initial is defined in RESOURCE, use that value, else use the default value from globals.
+          if (!isNaN(Number(av.nut[numTsk].resrc.initial[subNum])) ) {
+            //dom and nut contain initial value per cell; RESOURCE contains initial amount per world
+            initialValue = Number( av.nut[numTsk].resrc.initial[subNum] / wrldSize );    
+            document.getElementById(tsk+subNum+'initialHiInput').value = initialValue;
+            av.nut[numTsk].uiSub.initialHi[subNum] = initialValue;
+          }
+          //console.log('numTsk=',numTsk,'; subNum=',subNum,'; resrc.xdiffuse=',av.nut[numTsk].resrc.xdiffuse[subNum], '; resrc.ydiffuse=',av.nut[numTsk].resrc.ydiffuse[subNum]);
+          if (av.nut[numTsk].resrc.xdiffuse[subNum]) {
+            if (!isNaN(Number(av.nut[numTsk].resrc.xdiffuse[subNum]))) {xdiffuse = Number(av.nut[numTsk].resrc.xdiffuse[subNum]);}
+            else {xdiffuse = 1;}
+          } 
           else {xdiffuse = 1;}
-        } 
-        else {xdiffuse = 1;}
-        if (av.nut[numTsk].resrc.ydiffuse[subNum]) {
-          if (!isNaN(Number(av.nut[numTsk].resrc.ydiffuse[subNum]))) {ydiffuse = Number(av.nut[numTsk].resrc.ydiffuse[subNum]);}
+          if (av.nut[numTsk].resrc.ydiffuse[subNum]) {
+            if (!isNaN(Number(av.nut[numTsk].resrc.ydiffuse[subNum]))) {ydiffuse = Number(av.nut[numTsk].resrc.ydiffuse[subNum]);}
+            else {ydiffuse = 1;}
+          }
           else {ydiffuse = 1;}
-        }
-        else {ydiffuse = 1;}
-        diffuse = Math.round((xdiffuse+ydiffuse)/2);
-        //console.log('diffuse=', diffuse);
-        if (0 < diffuse) {
-          document.getElementById(tsk+subNum+'diffuseCheck').checked = true;
-        }
-        else { document.getElementById(tsk+subNum+'diffuseCheck').checked = false;}
-                
-        // else it keeps the default value;
-        // this is all that is being set now; I'll set more later
+          diffuse = Math.round((xdiffuse+ydiffuse)/2);
+          //console.log('diffuse=', diffuse);
+          if (0 < diffuse) {
+            document.getElementById(tsk+subNum+'diffuseCheck').checked = true;
+          }
+          else { document.getElementById(tsk+subNum+'diffuseCheck').checked = false;}
+
+          // else it keeps the default value;
+          // this is all that is being set now; I'll set more later
+        }  //loop thru subsections
       }
       else {
         console.log('Error: geometry unrecognized');
