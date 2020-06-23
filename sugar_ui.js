@@ -43,7 +43,8 @@
         document.getElementById(av.sgr.logicNames[ii]+'0title').innerHTML = av.sgr.oseNames[ii];
 
         newstr = av.dom.orn0Details.innerHTML;
-        for (jj=1; jj <=2; jj++) {
+        // av.nut.numRegionsinHTML is defined in globals and is the number of subregions in the html
+        for (jj=1; jj <= av.nut.numRegionsinHTML; jj++) {
           patternNum = pattern + jj.toString();
           sgrNum = av.sgr.logicNames[ii] + jj;
           //console.log('patternNum=',patternNum, '; sgrNum=',sgrNum);
@@ -181,7 +182,7 @@
       var supplyType = document.getElementById(tsk+sub+'supplyType').value;
       console.log('tsk=', tsk, '; geometry=', geometry, '; supplyType=', supplyType);
       
-     av.sgr.setColorForLocalsugarPresence(supplyType, geometry, tsk, sub, 'av.sgr.initialChange');
+     av.sgr.setColorFlagBasedonSugarPresence(supplyType, geometry, tsk, sub, 'av.sgr.initialChange');
     }
   };
 
@@ -261,9 +262,10 @@
       //console.log('idname=',idname);
       document.getElementById(idname).style.color = nameColor;  
       // eventually there will be up to 4 subsections. deal with that later.
-      for (var sub=1; sub < 2; sub++) {
+      for (var sub=1; sub < 3; sub++) {
         idname = av.sgr.logicNames[ii]+sub+'regionName';
         document.getElementById(idname).style.color = darkColor;  
+        console.log('set color for idname=', idname);
       }
     }
   };
@@ -327,6 +329,7 @@
   //-------------------------------------------------------------------------------------- av.sgr.setSingleSugarColor --
   av.sgr.setSingleSugarColor = function(colorFlg, tskNum, from) {
     //if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg); }
+    console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg);
     var idname;
     var backgndColor = av.color.greyMap[av.sgr.sugarGreyShade];
     var nameColor = 'Black';
@@ -351,96 +354,100 @@
       // if (av.dbg.flg.nut) { console.log('idname=',idname); }
       document.getElementById(idname).style.color = nameColor;  
       // eventually there will be up to 4 subsections. deal with that later.
-      for (var sub=1; sub < 2; sub++) {
+      for (var sub=1; sub <= av.nut.numRegionsinHTML; sub++) {
         idname = av.sgr.logicNames[tskNum]+sub+'regionName';
+        //console.log('set color for idname=', idname);
         document.getElementById(idname).style.color = darkColor;  
+        idname = av.sgr.logicNames[tskNum]+sub+'subSection';
+        document.getElementById(idname).style['border-top'] = '1px solid '+darkColor;  
       }
   };
   //---------------------------------------------------------------------------------- end av.sgr.setSingleSugarColor --
 
-  if (av.dbg.flg.root) { console.log('Root: av.sgr.setColorForLocalsugarPresence'); }
-  //----------------------------------------------------------------------------------------- av.sgr.setColorForLocalsugarPresence --
-  av.sgr.setColorForLocalsugarPresence = function(supplyType, geometry, tsk, sub, from) {
- // if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.setColorForLocalsugarPresence: supplyType=', supplyType, '; geometry=', geometry, '; tsk=', tsk, '; sub=', sub); }
-    var colorFlg = true;
+  if (av.dbg.flg.root) { console.log('Root: before av.sgr.setColorFlagBasedonSugarPresence'); }
+  //------------------------------------------------------------------------- av.sgr.setColorFlagBasedonSugarPresence --
+  av.sgr.setColorFlagBasedonSugarPresence = function(geometry, tsk, sub, from) {
+ // if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.setColorFlagBasedonSugarPresence: supplyType=', supplyType, '; geometry=', geometry, '; tsk=', tsk, '; sub=', sub); }
+    console.log(from, 'called av.sgr.setColorFlagBasedonSugarPresence: geometry=', geometry, '; tsk=', tsk, '; sub=', sub);
+    var colorFlg = false;
+    var supplyType;
     var domObjName;
     var indx = av.sgr.logicNames.indexOf(tsk);
+    var edTsk = av.sgr.logEdNames[indx];
+    av.nut[edTsk].uiAll.regionsNumOf =  Number(av.nut[edTsk].uiAll.regionLayout.substr(0,1) );
     if ('global' == geometry.toLowerCase()) {
       supplyType = document.getElementById(tsk + '0supplyType').value.toLowerCase();
-      if ('none' == supplyType.toLowerCase() ) {
-        colorFlg = false;
+      console.log('supplyType=', supplyType);
+      if ('none' != supplyType.toLowerCase() ) {
+        colorFlg = true;
       }
     }
     // now look at local resources that might be different in the different subSections in the future. 
     else {
-      domObjName = tsk + sub + 'supplyType';
-      // console.log('tsk=', tsk, '; sub=', sub);
-      // console.log('domElementID=|' + domObjName +'|');
-      // console.log(domObjName+'.value=', document.getElementById(domObjName).value);
-      supplyType = document.getElementById(domObjName).value.toLowerCase();
-      if ('none' == supplyType.toLowerCase() ) {
-        colorFlg = false;
-      }
-      else if ('finite' == supplyType.toLowerCase() ) {
-        initial = document.getElementById(tsk+sub+'initialHiInput').value;
-        if (0 >= initial) {
-          colorFlg = false;
+      for (var ii=1; ii <=av.nut[edTsk].uiAll.regionsNumOf; ii++) {
+        domObjName = tsk + ii + 'supplyType';
+        console.log('tsk=', tsk, '; ii=', ii);
+        console.log('domElementID=|' + domObjName +'|');
+        console.log(domObjName+'.value=', document.getElementById(domObjName).value);
+        supplyType = document.getElementById(domObjName).value.toLowerCase();
+        if ('none' != supplyType.toLowerCase() ) {
+          colorFlg = true;
+        }
+        if ('finite' == supplyType.toLowerCase() ) {
+          initial = document.getElementById(tsk+ii+'initialHiInput').value;
+          if (0 < initial) {
+            colorFlg = true;
+          }
         }
       }
-    }
+    } // end else Grid=geometry
     // for all tasks call setSingeleSugarColor
-    av.sgr.setSingleSugarColor(colorFlg, indx, 'av.sgr.setColorForLocalsugarPresence');
+    av.sgr.setSingleSugarColor(colorFlg, indx, 'av.sgr.setColorFlagBasedonSugarPresence');
   };
-  //------------------------------------------------------------------------------------- end av.sgr.setColorForLocalsugarPresence --
+  //--------------------------------------------------------------------- end av.sgr.setColorFlagBasedonSugarPresence --
 
 
   if (av.dbg.flg.root) { console.log('Root: before av.sgr.changeDetailsLayout'); }
   //-------------------------------------------------------------------------------------- av.sgr.changeDetailsLayout --
   av.sgr.changeDetailsLayout = function(tsk, subChanged, from) {
     //these are not as usefull, turn on the one after the first if ('global' statement if problems
-    // if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; subChanged=', subChanged); }
+    if (true) { console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; subChanged=', subChanged); }
     // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags=', av.nut.hideFlags); }
 
+    var ndx = av.sgr.logicNames.indexOf(tsk);
+    var edTsk = av.sgr.logEdNames[ndx];
     var supplyType;
     var regionName;
     var regionNameList;
-    
     // one line method to get value of select/option struture. 
-    var geometry = document.getElementById(tsk+'0geometry').value;
-    var geoLo = geometry.toLowerCase();
-    var regionLayout = document.getElementById(tsk+'0regionLayout').value;
-    //console.log('layout =', regionLayout, '; tsk=', tsk, ' subChanged=', subChanged, '; from=', from);
-    var numSubRegions = Number(regionLayout.substr(0,1) );
-    var layoutName = (regionLayout.substr(1) );
-    //console.log('num sub Regions=', numSubRegions, 'layoutName=', layoutName);
-    switch (layoutName) {
-      case 'All':
+    
+    av.nut[edTsk].uiAll.geometry = document.getElementById(tsk+'0geometry').value;
+    av.nut[edTsk].uiAll.regionLayout = document.getElementById(tsk+'0regionLayout').value;
+    //console.log('layout =', av.nut[tsk].uiAll.regionLayout, '; tsk=', tsk, ' subChanged=', subChanged, '; from=', from);
+    av.nut[edTsk].uiAll.regionsNumOf =  Number(av.nut[edTsk].uiAll.regionLayout.substr(0,1) );
+    console.log('num sub Regions=', av.nut[edTsk].uiAll.regionsNumOf, 'layoutName=', av.nut[edTsk].uiAll.regionLayout);
+    switch (av.nut[edTsk].uiAll.regionLayout) {
+      case '1All':
         regionNameList = av.sgr.All;
         break;
-      case 'LftRit':
+      case '2LftRit':
         regionNameList = av.sgr.LftRit;
         break;
-    }
-   
+    };
+    console.log('regionNameList=', regionNameList);
     //this 2 line method woks to get the value of the option in the select structure, but so does the one line method;
     //var idx = document.getElementById(tsk+'0geometry').selectedIndex;
     //var geoOption = document.getElementById(tsk+'0geometry').options[idx].value;   // get the value of the selected option   
     // if (av.dbg.flg.nut) { console.log('geometry=', geometry, '; geoOption=', geoOption); }
 
-    if ('global' == geometry.toLowerCase()) {
-      supplyType = document.getElementById(tsk + '0supplyType').value.toLowerCase();
-    }
-
-    // if (av.dbg.flg.nut) { console.log('tsk=', tsk, 'sub=', sub, '; geometry=', geometry, '; supplyType =', supplyType, ' ' ,tsk+'0regionLayout=', document.getElementById(tsk+'0regionLayout').value ); }
-    // right now I think this only works where there is one subregion.
-    av.sgr.setColorForLocalsugarPresence(supplyType, geoLo, tsk, subChanged, 'av.sgr.changeDetailsLayout');
-    
     //hide everything. Display parts based on what is selected
     document.getElementById(tsk+'0supplyType').style.display = 'none';
     document.getElementById(tsk+'0regionLayout').style.display = 'none';
     document.getElementById(tsk+'0initialDiv').style.display = 'none';
     //if (av.dbg.flg.nut) { console.log('document.getElementById('+tsk+sub+'supplyTypeSelectHolder) =', document.getElementById(tsk+sub+'supplyTypeSelectHolder')); }
-    for (var sub=1; sub <=2; sub++) {
+
+    // hide for all subsections possible not just the number based on the regon layout type
+    for (var sub=1; sub <= av.nut.numRegionsinHTML; sub++) {
       document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'none';
       document.getElementById(tsk+sub+'regionName').style.display = 'none';
       document.getElementById(tsk+sub+'blank').style.display = 'none';      
@@ -460,9 +467,10 @@
       document.getElementById(tsk+sub+'equalHiDiv').style.display = 'none';
       document.getElementById(tsk+sub+'equalLoDiv').style.display = 'none';
     };
-    if ('global' == geometry.toLowerCase()) {
-      document.getElementById(tsk+'0supplyType').style.display = 'inline-block';      
-      switch (supplyType) {
+    if ('global' == av.nut[edTsk].uiAll.geometry.toLowerCase()) {
+      document.getElementById(tsk+'0supplyType').style.display = 'inline-block';  
+      av.nut[edTsk].uiAll.supplyType = supplyType = document.getElementById(tsk + '0supplyType').value;
+      switch (av.nut[edTsk].uiAll.supplyType.toLowerCase()) {
         case 'none': 
         case 'infinite': 
           document.getElementById(tsk+'0section').open = false;
@@ -515,15 +523,21 @@
     else {
       document.getElementById(tsk+'0regionLayout').style.display = 'inline-block';
       document.getElementById(tsk+'0section').open = true;
-      for (var sub=1; sub <=numSubRegions; sub++) {
+      console.log('num sub Regions=', av.nut[edTsk].uiAll.regionsNumOf);
+      for (var sub=1; sub <= av.nut[edTsk].uiAll.regionsNumOf; sub++) {
         document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'block';
-        document.getElementById(tsk+sub+'regionName').style.display = 'block';    
-        supplyType = document.getElementById(tsk + sub + 'supplyType').value.toLowerCase();
+        document.getElementById(tsk+sub+'regionName').style.display = 'block';
+        
+        console.log('supplyType ui =', document.getElementById(tsk + sub + 'supplyType').value);
+        console.log('tsk=', tsk, 'edTsk=', edTsk, 'sub=', sub, '; uiSub=', av.nut[edTsk].uiSub) ;
+        console.log('supplyType nut =', av.nut[edTsk].uiSub.supplyType[sub]);
+        av.nut[edTsk].uiSub.supplyType[sub] = document.getElementById(tsk + sub + 'supplyType').value;
+        console.log('sub=', sub,'; regionNameList=',  regionNameList);
         regionName = regionNameList[sub];
         document.getElementById(tsk+sub+'regionName').innerHTML = regionName;
 
         // if (av.dbg.flg.nut) { console.log('tsk=', 'sub=', sub, tsk,'supplyType=', supplyType,'regionLayout=', document.getElementById(tsk+'0regionLayout').value); }
-        switch (supplyType) {    //for when geometery = local
+        switch (av.nut[edTsk].uiSub.supplyType[sub].toLowerCase()) {    //for when geometery = local
           case 'none':
           case 'infinite': 
               document.getElementById(tsk+sub+'blank').style.display = 'block';      
@@ -645,6 +659,9 @@
         }; //end of switch
       };  //end of subregion for loop
     }    //end of global/local if statement
+    // if (av.dbg.flg.nut) { console.log('tsk=', tsk, 'sub=', sub, '; geometry=', geometry, '; supplyType =', supplyType, ' ' ,tsk+'0regionLayout=', document.getElementById(tsk+'0regionLayout').value ); }
+    av.sgr.setColorFlagBasedonSugarPresence(av.nut[edTsk].uiAll.geometry.toLowerCase(), tsk, subChanged, 'av.sgr.changeDetailsLayout');
+        
     // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
   };
   //---------------------------------------------------------------------------------- end av.sgr.changeDetailsLayout --

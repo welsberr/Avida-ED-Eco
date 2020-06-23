@@ -742,7 +742,7 @@
     av.nut = {};
     av.nut.hideFlags = {};
     av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.fzr.clearEnvironment');
-
+    av.nut.numRegionsinHTML = 2;
     av.nut.wrldCols = 30;
     av.nut.wrldRows = 30;
     av.nut.wrldSize = av.nut.wrldCols * av.nut.wrldRows;

@@ -340,69 +340,70 @@
   
 }
 
-  .mainBlockClassRow {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    width: 100%;
-    background: #F5F5F5; /* lightblue; */
-  }
-  .popBenchCol{
-    background: #F5F5F5; /* lightgoldenrodyellow; */
-    flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
-    //flex: 0 1 auto;       //should scale with window size, but does not do what I want????
-    border: 1px solid #AAA;
-    display: flex;
-    overflow:auto;
-    flex-direction: column;
-    width: 100%;
-    max-height: 100%;
-    overflow:scroll;
-    /*max-width: 430px;   /* tiba; temp fix will need to change this later */
-  }
+.mainBlockClassRow {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  background: #F5F5F5; /* lightblue; */
+}
+.popBenchCol{
+  background: #F5F5F5; /* lightgoldenrodyellow; */
+  flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
+  //flex: 0 1 auto;       //should scale with window size, but does not do what I want????
+  border: 1px solid #AAA;
+  display: flex;
+  overflow:auto;
+  flex-direction: column;
+  width: 100%;
+  max-height: 100%;
+  overflow:scroll;
+  /*max-width: 430px;   /* tiba; temp fix will need to change this later */
+}
 
 .benchPopTopRow {
-    flex:0 1 30px;
-    display: flex;
-    flex-direction: row;
-    justify-content:space-between;
-    background: #F5F5F5; /* lightblue;  */
-    border: 1px solid #AAA;
-  }
-  #activeConfigHolder{
-    flex: 0 1 auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-  }
-    #popTopDishIcon{
-      flex: 0 1 58px;
-    }
-    #activeConfig {
-      flex: 0 1 120px;
-      padding-top: 5px;
-    }
-    #testConfigLableHolder {
-      margin: 4px;
-      flex: 0 1 40px;
-    }
-    #testConfig {
-      flex: 0 1 80px;
-    }
-    .activeConfigDojoDNDcontainer {
-      min-height: 30px;
-      min-width: 6em;
-      border: 1px solid #CCCCCC;
-      display: inline-block;
-      overflow: visible;
-    }
-    #popTopMsgSpace {
-      flex: 1 1 auto;          /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-      text-align: left;
-      padding-left: 4px;
-      margin: auto;
-    }
+  flex:0 1 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+  background: #F5F5F5; /* lightblue;  */
+  border: 1px solid #AAA;
+}
+#activeConfigHolder{
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#popTopDishIcon{
+  flex: 0 1 58px;
+}
+#activeConfig {
+  flex: 0 1 120px;
+  padding-top: 5px;
+}
+#testConfigLableHolder {
+  margin: 4px;
+  flex: 0 1 40px;
+}
+#testConfig {
+  flex: 0 1 80px;
+}
+.activeConfigDojoDNDcontainer {
+  min-height: 30px;
+  min-width: 6em;
+  border: 1px solid #CCCCCC;
+  display: inline-block;
+  overflow: visible;
+}
+#popTopMsgSpace {
+  flex: 1 1 auto;          /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+  text-align: left;
+  padding-left: 4px;
+  margin: auto;
+}
 
 .benchPopMid {
   border: 1px solid #AAA;
@@ -410,13 +411,13 @@
   background: #F5F5F5; /* blue; */
   overflow:auto;
 }
-  #gridHolder {
-      min-width: 200px;
-      overflow: auto;
-      margin: 0px;
-      padding: 3px;
-      background: darkgrey;
-    }
+#gridHolder {
+    min-width: 200px;
+    overflow: auto;
+    margin: 0px;
+    padding: 3px;
+    background: darkgrey;
+}
 .scaleCanvasHolderClass { 
   flex: 0 1 20px;
   min-height: 30px;
@@ -443,7 +444,7 @@
   .gridButtonClass { grid-area: gridButton;}
   .rescalingClass { grid-area: rescaling;}
   .popBotRiteClas { grid-area: popBotRite;}
-.gridControlContainerClass{
+  .gridControlContainerClass{
   display: grid;
   grid-template-areas: 'timeUpdate  modeHolder  rescaling'
                        'freezeButton gridButton popBotRite';
@@ -520,7 +521,7 @@
     width: 100%;
   }
   
-  .grid-currentSugarAmount-container {   /*on stats tab of population page */
+.grid-currentSugarAmount-container {   /*on stats tab of population page */
   display: inline-grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
   background: #F5F5F5;     /* #2196F3;  blue */
@@ -760,7 +761,10 @@
   display: grid;
   grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv'
                        'initialHi initialHi sgrBlank';
+  /* border: 1px solid rgba(128, 128, 128, 0.5); */
+  border: 1px solid #888;
   width: 100%;
+  
 }
 
 .grid-sugarDetail-Finite-container {
@@ -869,7 +873,7 @@
 }
 .grid-sugarDetail-item{
   background: rgba(128, 128, 128, 0.2);    
-  border: 1px solid rgba(128, 128, 128, 0.4);
+  border: 1px solid rgba(128, 128, 128, 0.3);
   text-align: left;
   padding: 1px 1px;
   min-height: 22px;

@@ -1009,6 +1009,7 @@
       }
       else if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         subsections = av.nut[numTsk].resrc.geometry.length;
+        console.log('subsections=', subsections,'; av.nut['+numTsk+']=', av.nut[numTsk]);
         for (subNum = 1; subNum < subsections; subNum++) {
 
           // regionCode will need to be converted to regionName or need to get regionName from xy cooredinates
@@ -1045,12 +1046,12 @@
 
           // else it keeps the default value;
           // this is all that is being set now; I'll set more later
+          av.sgr.changeDetailsLayout(tsk, subNum, 'av.frd.nutrientStruct2dom');
         }  //loop thru subsections
       }
       else {
         console.log('Error: geometry unrecognized');
       }
-      av.sgr.changeDetailsLayout(tsk, subNum, 'av.frd.nutrientStruct2dom');
     }
     if (av.dbg.flg.nut) { 
       av.nut2dom = {};
