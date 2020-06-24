@@ -2330,7 +2330,7 @@
                         <option value='Neutral' selected>----</option>                            
                       </select>
                     </div>
-                    <div id='allsugarSupplyTypeDiv' class='rHeadItem'>
+                    <div id='allSugarSupplyTypeDiv' class='rHeadItem'>
                       <select id='allsugarSupplyType' onchange='av.sgr.allsugarSupplyTypeChange(this);'>
                         <option value='None'>None</option>
                         <option value='Infinite'>Infinite</option>
@@ -2340,6 +2340,22 @@
                         <option value='Neutral' selected>----</option>
                       </select> 
                     </div>
+                    <div id='allSugarRegionLayoutDiv' class='rHeadItem'>
+                      <select id="allSugarRegionLayout" onchange='av.sgr.allSugarRegionLayoutChange(this);'>
+                          <option value="1All" selected="">Whole Dish</option>
+                          <option class="HalfLftRit" value="2LftRit">Halves (L/R)</option>
+                          <option class="TopLftRit" value="3TopLftRit">Up/Down (L/R)</option>
+                          <option class="Quarters" value="4Quarters">Quarters</option>
+                          <option value='Neutral' selected>----</option>                            
+                        </select>
+                    </div>
+                    <div id='allSugarDiffusionDiv' class='rHeadItem'>
+                      <select id="allSugarDiffusion" onchange='av.sgr.allSugarDiffusionChange(this);'>
+                        <option value='allOpen'>Off</option>
+                        <option value='allClose'>On</option>
+                        <option value='Neutral' selected>----</option>                            
+                      </select> 
+                    </div>
                     <div id='allSugarDetailsDiv' class='rHeadItem'>
                       <select id="allSugarDetails" onchange='av.sgr.allSugarDetailsOpenClose(this);'>
                         <option value='allOpen'>Show</option>
@@ -2347,20 +2363,22 @@
                         <option value='Neutral' selected>----</option>                            
                       </select> 
                     </div>
-                    <div id='geometrySgr'> Geometry</div>
-                    <div id='supplyTypeSgr'>Supply Type</div>
-                    <div id='showHideSgr' class='rHeadItem'>Details</div>
+                    <div id='geometrySgr'>Geometry &nbsp;</div>
+                    <div id='supplyTypeSgr'>Supply Type &nbsp;</div>
+                    <div id='regionLayoutSgr'>Region Layout &nbsp;</div>
+                    <div id='diffusionSgr'>Diffusion &nbsp;</div>
+                    <div id='showHideSgr'>Details: </div>
                   </div><span id='sugarFooter_end' class='displayNone'></span>
 
                 </div> <span tag='end of odd'></span>
 
                 <div class='even'>
                   <span class='enviroSubHeading'>Repeatability Mode:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='experimentRadio'
+                  <input type='radio' data-dojo-type='dijit/form/RadioButton' id='experimentRadio'
                          intermediateChanges='false' iconClass='dijitNoIcon' name='repeat'
                          value='experimental'>
                   <label id='experimentLabel'>Experimental</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='demoRadio' checked
+                  <input type='radio' data-dojo-type='dijit/form/RadioButton' id='demoRadio' checked
                          intermediateChanges='false' iconClass='dijitNoIcon' name='repeat' value='demo'>
                   <label id='demoLabel'>Demo</label>
                 </div>

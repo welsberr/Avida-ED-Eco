@@ -550,43 +550,47 @@
 /* #sugarHeaderTitle { grid-area: headerTitle; justify: start ; background: #CCC; font-size: 120%;}   /* may not need or want */
 
 #sugarSetTitle { grid-area:setTitle; justify-self: center; background: inherit; font-size: 110%; }
-#allsugarSupplyTypeDiv { grid-area:supplyType ; justify-self: center; background: inherit;}
-#allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: center; background: inherit;}
-#allSugarDetailsDiv { grid-area:detailDiv; justify-self: center; background: inherit;}
+#allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: center; }
+#allSugarSupplyTypeDiv { grid-area:supplyTypeDiv ; justify-self: center; }
+#allSugarRegionLayoutDiv { grid-area:regionLayoutDiv; justify-self: center; }
+#allSugarDiffusionDiv  { grid-area:diffusionDiv; justify-self: center; }
+#allSugarDetailsDiv { grid-area:detailDiv; justify-self: lefts; }
+
 #geometrySgr { grid-area:geometrySgr; justify-self: center; background: inherit;}
 #supplyTypeSgr { grid-area:supplyTypeSgr; justify-self: center; background: inherit;}
-#showHideSgr { grid-area:showHideSgr; justify-self: center; background: inherit;}
-#taskSugar { grid-area:taskSugar; justify-self: center; }
+#regionLayoutSgr { grid-area:regionLayoutSgr; justify-self: center; background: inherit;}
+#diffusionSgr { grid-area:diffusionSgr; justify-self: center; background: inherit;}
+#showHideSgr { grid-area:showHideSgr; justify-self: right; background: inherit;}
 
-#allSgr4Blnk { grid-area: allSgr4Blnk; background: #CCC; }
-#allSgr5Blnk { grid-area: allSgr5Blnk; background: #CCC; }
-
-
+#allSgr4Blnk { grid-area: allSgr3Blnk; }
+#allSgr4Blnk { grid-area: allSgr4Blnk; }
+#allSgr5Blnk { grid-area: allSgr5Blnk; }
 
 .changeAllSugarsTogetherContainer {
   display: grid;
-  grid-template-areas: 'headerTitle  headerTitle setTitle    allSgr5Blnk'
+  grid-template-areas: 'setTitle    setTitle      showHideSgr     detailDiv'
+                       'geometrySgr supplyTypeSgr regionLayoutSgr diffusionSgr'
+                       'geometryDiv supplyTypeDiv  regionLayoutDiv diffusionDiv';
+  /*
+  grid-template-areas: 'setTitle     headerTitle headerTitle   allSgr5Blnk'
                        'allSgr4Blnk  geometrySgr supplyTypeSgr showHideSgr'
                        'allSgr4Blnk  geometryDiv supplyType  detailDiv';
-  /*
+
   grid-template-areas: 'setTitle  geometrySgr supplyTypeSgr showHideSgr'
                        'setTitle  geometryDiv supplyType  detailDiv';
   */
   width: 100%;
-  grid-template-columns: 25% 25% 25% 25%;
-  /* grid-template-rows: 33fr 33fr 33fr; */
+  /* grid-template-columns: 20% 25% 30% 25%;
+    grid-template-rows: 33fr 33fr 33fr; */
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  background: inherit;   /* #DDD; */
+  background: #AAA;   /* #DDD; */
 }
-
-/*  Not in use
-                          <div id='allSgr4Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                          <div id='allSgr5Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                          <div id='taskSugar' class='rHeadItem'>Sugar Name</div>
+/* not in current use
+                    <div id='allSgr3Blnk'>&nbsp;&nbsp;&nbsp;</div>
+                    <div id='allSgr4Blnk'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div id='allSgr5Blnk'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 */
-
-
 /* Accodion using details/summary and hidden sections also defined here; one detail/summary for each logic task = surgar type */
 
 #sugarAccordion{

@@ -567,6 +567,7 @@
       // 
       // IF the code word 'missing' is the listed as the name of the resource than there is not resource specified and 
       // the reaction can only act as if the resource for that task is none or infinite and it must be global. 
+      av.debug.fio = true;
       if ('missing' === reActObj.resource[ndx]) {
         av.nut[numTsk].uiAll.regionsNumOf = 1;                 //reaction but no resource so it must be global and none or infinite
         av.nut[numTsk].uiAll.geometry = 'Global';            //grid (if 1 < subdish)
@@ -599,7 +600,9 @@
           };
         };
       };
-    }  
+      av.debug.fio = false;
+      console.log('numTsk',numTsk,'; ndx=',ndx, '; reAct_supplyType All Sub=', av.nut[numTsk].uiAll.supplyType, av.nut[numTsk].uiSub.supplyType[ndx]);
+    }
     // valid logic name not found;
     else {
       lnError = 'react task, '+ lnArray[2]+' not found in av.sgr.logicVnames';
@@ -740,7 +743,7 @@
         //rSourcObj.regionList[subCode] = ndx;
 
         //console.log('rSourcObj.geometry=', rSourcObj.geometry);
-        //onsole.log('ndx=',ndx,'rSourcObj.geometry[ndx]=', rSourcObj.geometry[ndx]);
+        //console.log('ndx=',ndx,'rSourcObj.geometry[ndx]=', rSourcObj.geometry[ndx]);
 
         av.nut[numTsk].uiAll.geometry = rSourcObj.geometry[ndx];
         //if (av.dbg.flg.nut) console.log('numTsk=', numTsk,'; av.nut[numTsk].uiAll.geometry=', av.nut[numTsk].uiAll.geometry);
@@ -761,6 +764,7 @@
         }
         if (0 === rSourcObj.initial[ndx] && 0 === rSourcObj.inflow[ndx]) 
           av.nut[numTsk].uiSub.supplyType[ndx] = 'None';
+        console.log('numTsk',numTsk,'; ndx=',ndx, '; reSrce_supplyType=', av.nut[numTsk].uiSub.supplyType[ndx]);
       }   //end of valid ndx found.
     }  
     // valid logic name not found;
@@ -1006,6 +1010,8 @@
 
       if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         document.getElementById(tsk+'0supplyType').value = av.nut[numTsk].uiAll.supplyType;
+        console.log('av.nut['+numTsk+']=', av.nut[numTsk]);
+        av.sgr.changeDetailsLayout(tsk, 1, 'av.frd.nutrientStruct2dom:global');  //or should subnum be 0?
       }
       else if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         subsections = av.nut[numTsk].resrc.geometry.length;
