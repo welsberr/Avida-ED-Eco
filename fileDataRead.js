@@ -353,7 +353,6 @@
 
     av.frd.defaultNut2dom('av.frd.updateSetup');               //put data from defaults in the dom.
     av.frd.nutrientStruct2dom('av.frd.updateSetup');           //puts data from the structure in the the dom for user interface
-    //av.sgr.updateSugarColors('av.frd.updateSetup');  //now called from av.sgr.changeDetailsLayout
 
     doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
     if (undefined !== doctext) { av.frd.pauseRunAtTXT2form(doctext); }
@@ -372,6 +371,7 @@
 
     av.frd.avidaTestform(doctext, 'av.frd.updateTestSetup');
     doctext = av.fzr.file[dir + '/environment.cfg'];
+    console.log('Test files only --------------------------------------------------------------');
     av.frd.environment2struct(doctext, 'av.frd.updateTestSetup');     
     //av.frd.environmentTestform(doctext);     //for now editing the whole file
     //console.log('av.dom.environConfigEdit=',av.dom.environConfigEdit);
@@ -591,8 +591,8 @@
         if (av.debug.fio) { console.log('____resourceName['+ndx+'] =', reActObj.resource[ndx], '; Name array is', av.nut[numTsk].resrc.name); } 
         reSrcName = reActObj.resource[ndx];
         reSrcNameAry = av.nut[numTsk].resrc.name;
-        if (av.debug.fio) { console.log('reSource  mm  =', mm, '; depletable=', reActObj.depletable[ndx], '; av.nut.'+numTsk +'.uiSub.supplyType=', av.nut[numTsk].uiSub.supplyType); }
         mm = reSrcNameAry.indexOf( reSrcName );
+        if (av.debug.fio) { console.log('reSource  mm  =', mm, '; depletable=', reActObj.depletable[ndx], '; av.nut.'+numTsk +'.uiSub.supplyType=', av.nut[numTsk].uiSub.supplyType); }
         if (av.debug.fio) { console.log('av.nut[numTsk]=', av.nut[numTsk]); }
         if (undefined !== reActObj.depletable[ndx]) {
           if (1 > reActObj.depletable[ndx]) {
@@ -867,38 +867,41 @@
     var geoLen;
     var distinctRegions;
     //find some summary info about nutrients. Need to look at each task separately. 
+    console.log('After while look looking at all lines of environment.cfg; Before looking for summarny information for each task');
     for (var ii=0; ii< len; ii++) {
       numTsk = av.sgr.logEdNames[ii];
-      console.log('av.nut['+numTsk+'].react=', av.nut[numTsk].react);
       console.log('av.nut['+numTsk+'].resrc=', av.nut[numTsk].resrc);
-      //
+      console.log('av.nut['+numTsk+'].react=', av.nut[numTsk].react);
+      console.log('av.nut['+numTsk+'].uiAll=', av.nut[numTsk].uiAll);
+      console.log('av.nut['+numTsk+'].uiSub=', av.nut[numTsk].uiSub);
+
       // IF the code word 'missing' is NOT the listed as the name of the resource then the reaction has a RESOURCE 
       // The regionsNumOf is determined and used to assign default regionLayout
       // Then a region code, region name need to be assigned in av.nut[tsk]ui
-      // 
-      
-      if ('missing' !== av.nut[numTsk].react.resource[0]) {
-        //If the key word
-        
-        distinctRegions = [...new Set(av.nut[numTsk].uiSub.regionCode)];
-        console.log('numTsk=', numTsk, '; distinctRegions=', distinctRegions); 
-        av.nut[numTsk].uiAll.regionsNumOf = distinctRegions.length-1;  //region[0] does not count ias it is for global
-        //if (av.dbg.flg.nut) { console.log('distinctRegions.length =', distinctRegions.length); }
+      for (var jj=0; jj<=av.nut.numRegionsinHTML; jj++) {
+        console.log('av.nut['+numTsk+']uiSub.supplyType['+jj+']=', av.nut[numTsk].uiSub.supplyType[jj]);
+        if ('missing' !== av.nut[numTsk].react.resource[jj]) {
+          //If the key word
 
-        // if resource exists, set region layout by the number of number of distinct values in ui.Sub.regionCode array
-        if (0 < av.nut[numTsk].uiAll.regionsNumOf) {
-          av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLayoutValues[av.nut[numTsk].uiAll.regionsNumOf];  //av.sgr.layout 
-          av.nut[numTsk].uiAll.geometry = 'Grid';
-        }
-        else if (-1 < av.nut[numTsk].uiAll.regionsNumOf) {
-          av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLayoutValues[1];
-          if (undefined !== av.nut[numTsk].resrc.geometry[0]) { av.nut[numTsk].uiAll.geometry = av.nut[numTsk].resrc.geometry[0]; }
-          else { av.nut[numTsk].uiAll.geometry = 'Global'; }
-        }
-        if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiAll = ', av.nut[numTsk].uiAll); }
-        if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiSubs=', av.nut[numTsk].uiSub); }
-      };  // a resource was defined so it could be grid or global
-      
+          distinctRegions = [...new Set(av.nut[numTsk].uiSub.regionCode)];
+          //console.log('numTsk=', numTsk, '; distinctRegions=', distinctRegions); 
+          av.nut[numTsk].uiAll.regionsNumOf = distinctRegions.length-1;  //region[0] does not count as it is for global
+          //if (av.dbg.flg.nut) { console.log('distinctRegions.length =', distinctRegions.length); }
+
+          // if resource exists, set region layout by the number of number of distinct values in ui.Sub.regionCode array
+          if (0 < av.nut[numTsk].uiAll.regionsNumOf) {
+            av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLayoutValues[av.nut[numTsk].uiAll.regionsNumOf];  //av.sgr.layout 
+            av.nut[numTsk].uiAll.geometry = 'Grid';
+          }
+          else if (-1 < av.nut[numTsk].uiAll.regionsNumOf) {
+            av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLayoutValues[1];
+            if (undefined !== av.nut[numTsk].resrc.geometry[0]) { av.nut[numTsk].uiAll.geometry = av.nut[numTsk].resrc.geometry[0]; }
+            else { av.nut[numTsk].uiAll.geometry = 'Global'; }
+          }
+          //if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiAll = ', av.nut[numTsk].uiAll); }
+          //if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiSubs=', av.nut[numTsk].uiSub); }
+        };  // a resource was defined so it could be grid or global
+      }; // end of loop through html sections
     };  // end of logic task loops
     
     //return errors;
@@ -911,23 +914,29 @@
   av.frd.environment2struct = function (fileStr, from) {
     'use strict';
     if (av.dbg.flg.nut) { console.log(from, ' called av.frd.environment2struct'); }
-    av.fzr.clearEnvironment('av.frd.environment2struct');
-    //should the dom be loaded from the clean environment and then load the data from the file? 
-    
-    av.nut.wrldCols = av.fzr.actConfig.cols;  //came from  Number(dict.WORLD_X)
-    av.nut.wrldRows = av.fzr.actConfig.rows;  //came from  Number(dict.WORLD_Y)
-    av.nut.wrldSize = av.fzr.actConfig.cols * av.fzr.actConfig.rows;  //  av.fzr.actConfig.size;
-    
-    av.frd.nutrientParse(fileStr, 'av.frd.environment2struct');    // uses av.nut
-    //if (av.dbg.flg.nut) { 
-    if (true) { 
-      av.nutConfig = {};
-      av.nutConfig = JSON.parse(JSON.stringify(av.nut));
-      console.log('av.frd.nutrientParse = ', av.nutConfig); 
-    }    
-    var errors = av.frd.environmentParse(fileStr);    // uses av.fzr.env.react This is in the test tab only and will be removed
-    if (1 < errors.length) console.log('errors=', errors);    
+    if ('test' != av.dnd.configFlag) {
+      // using 'normal' activeConfiguration 
+      av.fzr.clearEnvironment('av.frd.environment2struct');
+      //should the dom be loaded from the clean environment and then load the data from the file? 
 
+      av.nut.wrldCols = av.fzr.actConfig.cols;  //came from  Number(dict.WORLD_X)
+      av.nut.wrldRows = av.fzr.actConfig.rows;  //came from  Number(dict.WORLD_Y)
+      av.nut.wrldSize = av.fzr.actConfig.cols * av.fzr.actConfig.rows;  //  av.fzr.actConfig.size;
+
+      av.frd.nutrientParse(fileStr, 'av.frd.environment2struct');    // uses av.nut
+      //if (av.dbg.flg.nut) { 
+      if (true) { 
+        av.nutConfig = {};
+        av.nutConfig = JSON.parse(JSON.stringify(av.nut));
+        console.log('After av.frd.nutrientParse');
+        console.log('av.nut = ', av.nutConfig); 
+      }
+    }
+    else {
+      // using "testConfig"
+      var errors =  av.frd.testEnvironmentParse(fileStr, av.frd.environment2struc);    // uses av.fzr.env.react This is in the test tab only and will be removed
+      if (1 < errors.length) console.log('errors=', errors);    
+    }
     if (av.dbg.flg.nut) { console.log('------------------------------------------------------------------ end of av.frd.environment2struct --'); }
   };
   //----------------------------------------------------------------------------------- end av.frd.environment2struct --
@@ -937,7 +946,6 @@
   av.frd.defaultNut2dom = function(from) {
     var sugarLength = av.sgr.logicNames.length;
     var numTsk, tsk, tskose;
-    var subNum = 1;                   //Will need to loop throughh all subNum later
     // only one regioin for now, so this works. I may need add at subcode index later.
     // the data for the regions may not go in the struture in the same order they need to be on the user interface. 
 
@@ -952,7 +960,7 @@
       document.getElementById(tsk+'0initial').value = av.sgr.nut.dft.uiAll.initial; 
 
       //for now only one dish - entire world. Later there will be subdishes initial plan is for 2 and then 4;
-      for (subNum = 1; subNum <= 1; subNum++) {
+      for (subNum = 1; subNum <= av.nut.numRegionsinHTML; subNum++) {
         //console.log('ocument.getElementById('+tsk+subNum+'supplyType) =', document.getElementById(tsk+subNum+'supplyType') );
         document.getElementById(tsk+subNum+'supplyType').value = av.sgr.nut.dft.uiSub.supplyType;
         //console.log('ocument.getElementById('+tsk+subNum+'initialHiInput) =', document.getElementById(tsk+subNum+'initialHiInput') );
@@ -985,9 +993,11 @@
   //Now that structure exists, use that data to update values in the user interface. 
   //--------------------------------------------------------------------------------------- av.frd.nutrientStruct2dom --
   av.frd.nutrientStruct2dom = function(from) {
+    //console.log(from, 'called av.frd.nutrientStruct2dom --------------------');
     var sugarLength = av.sgr.logicNames.length;
     var ndx;
     var numTsk, tsk, tskose;
+    var tmpStr='';
     var initialValue;
     var subNum = 1;                   //Will need to loop throughh all subNum later
     // only one regioin for now, so this works. I may need add at subcode index later.
@@ -1011,18 +1021,19 @@
       if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         document.getElementById(tsk+'0supplyType').value = av.nut[numTsk].uiAll.supplyType;
         console.log('av.nut['+numTsk+']=', av.nut[numTsk]);
-        av.sgr.changeDetailsLayout(tsk, 1, 'av.frd.nutrientStruct2dom:global');  //or should subnum be 0?
       }
       else if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         subsections = av.nut[numTsk].resrc.geometry.length;
-        console.log('subsections=', subsections,'; av.nut['+numTsk+']=', av.nut[numTsk]);
+        //console.log('subsections=', subsections,'; av.nut['+numTsk+']=', av.nut[numTsk]);
         for (subNum = 1; subNum < subsections; subNum++) {
 
           // regionCode will need to be converted to regionName or need to get regionName from xy cooredinates
           // for now it is always "Whole Dish" because there is only one region
           document.getElementById(tsk+subNum+'regionName').value = av.nut[numTsk].uiSub.regionName[subNum];
 
-            //console.log('document.getElementById('+tsk+subNum+'supplyType)',document.getElementById(tsk+subNum+'supplyType') );
+          //console.log('document.getElementById('+tsk+subNum+'supplyType)',document.getElementById(tsk+subNum+'supplyType') );
+          tmpstr = JSON.stringify(av.nut[numTsk].uiSub.supplyType);
+          console.log('av.nut['+numTsk+'].uiSub.supplyType['+subNum+'] =',av.nut[numTsk].uiSub.supplyType[subNum], '; supplyType=', tmpstr);
           document.getElementById(tsk+subNum+'supplyType').value = av.nut[numTsk].uiSub.supplyType[subNum]; 
 
           // if initial is defined in RESOURCE, use that value, else use the default value from globals.
@@ -1052,12 +1063,13 @@
 
           // else it keeps the default value;
           // this is all that is being set now; I'll set more later
-          av.sgr.changeDetailsLayout(tsk, subNum, 'av.frd.nutrientStruct2dom');
         }  //loop thru subsections
       }
       else {
         console.log('Error: geometry unrecognized');
       }
+      // must be called outside the subsections loop
+      av.sgr.changeDetailsLayout(tsk, 1, 'av.frd.nutrientStruct2dom');  //the one in this case is for subsection, but it is not used. 
     }
     if (av.dbg.flg.nut) { 
       av.nut2dom = {};
@@ -1737,8 +1749,9 @@
     return defaultindex;  
   };
 
-  //uses av.fzr.env.react
-  av.frd.reActionLineParse = function (lnArray) {
+  // all av.frd.test files will be deleted eventually. 
+  av.frd.testReActLineParse = function (lnArray, from) {
+    //console.log(from, 'called av.frd.testReActLineParse');
     'use strict';
     var lnError = 'none';     //was it a valid line wihtout errors
     //console.log('lnArray = ', lnArray);
@@ -1798,9 +1811,10 @@
     return lnError;
   };
 
-  //uses av.fzr.env.react
-  av.frd.resourceLineParse = function (lnArray) {
+  //uses av.fzr.env.react 
+  av.frd.testResrcLineParse = function (lnArray, from) {
     'use strict';
+    //console.log(from, 'called av.frd.testResrcLineParse');
     var lineErrors = 'none';  //was it a valid line wihtout errors
     console.log('lnArray = ', lnArray);
     var pairArray = lnArray[1].split(':');
@@ -1900,8 +1914,9 @@
 
   // uses av.fzr.env.react
   // Uses environment.cfg file to create a structure to hold environment variables. 
-  // if (av.dbg.flg.root) { console.log('Root: before av.frd.environmentParse'); }
-  av.frd.environmentParse = function (filestr) {
+  // if (av.dbg.flg.root) { console.log('Root: before  av.frd.testEnvironmentParse'); }
+   av.frd.testEnvironmentParse = function (filestr, from) {
+    //console.log(from, 'called  av.frd.testEnvironmentParse');
     'use strict';
     var errors = '';
     var reacError, rsrcError;
@@ -1957,7 +1972,7 @@
         matchResult = lineArray[0].match(re_REACTION);
         //console.log('matchReaction=', matchResult);
         if (null !== matchResult)
-          reacError = av.frd.reActionLineParse(lineArray);
+          reacError = av.frd.testReActLineParse(lineArray, ' av.frd.testEnvironmentParse');
         else {
           reacError = 'none';
         }
@@ -1965,7 +1980,7 @@
         matchResult = lineArray[0].match(re_RESOURCE);
         //consolen('matchResource=', matchResult);
         if (null !== matchResult)
-          rsrcError = av.frd.resourceLineParse(lineArray);
+          rsrcError = av.frd.testResrcLineParse(lineArray, "av.frd.testEnvironmentParse");
         else {
           rsrcError = 'none';
         }

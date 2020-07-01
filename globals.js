@@ -405,6 +405,7 @@
   av.fio.mailAddress = 'Avida-ED-development@googlegroups.com';  //'mailto:diane.blackwood@gmail.com'
 
   av.dnd = {};  //details in AvidiaEd.js as it access the DOM
+  av.dnd.configFlag = 'normal';
   av.dnd.move = {};  //used to hold data needed for dnd type move.
 
   av.ptd = {};  // on population page that are not part of the grid. (PeTri Dish)
@@ -884,6 +885,7 @@
     av.fzr.item = {};
     av.fzr.mDish = {};
 
+    av.dnd.configFlag;  //flag to indicate if the normal or test configuration is in use. 
     av.fzr.cNum = 0;  //value of the next configured dish (config) number
     av.fzr.gNum = 0;  //value of the next organism (genome) number
     av.fzr.mNum = 0;  //value of the next multi-dish (complex-populated dish) number

@@ -161,6 +161,7 @@ av.dnd.nameParent = function(name) {
 //---------------------------------------------------------------------------------------------- av.dnd.lndtestConfig --
 av.dnd.lndTestConfig = function (move) {
   'use strict';
+  av.dnd.configFlag = 'test';
   av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
   var ndx = -1;
   var klen = 0;
@@ -328,7 +329,8 @@ av.dnd.lndTestConfig = function (move) {
 //-------------------------------------------------------------------------------------- start av.dnd.lndActiveConfig --
 av.dnd.lndActiveConfig = function (move, from) {
   'use strict';
-  console.log(from, 'called av.dnd.lndActiveConfig; move = ', move);
+  av.dnd.configFlag = 'normal';
+  console.log(from, 'called av.dnd.lndActiveConfig; move = ', move, '; configFlag=', av.dnd.configFlag);
   av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
   var ndx = -1;
   var klen = 0;

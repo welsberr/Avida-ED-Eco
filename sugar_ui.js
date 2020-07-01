@@ -366,9 +366,9 @@
 
   if (av.dbg.flg.root) { console.log('Root: before av.sgr.setColorFlagBasedonSugarPresence'); }
   //------------------------------------------------------------------------- av.sgr.setColorFlagBasedonSugarPresence --
-  av.sgr.setColorFlagBasedonSugarPresence = function(geometry, tsk, sub, from) {
+  av.sgr.setColorFlagBasedonSugarPresence = function(geometry, tsk, from) {
  // if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.setColorFlagBasedonSugarPresence: supplyType=', supplyType, '; geometry=', geometry, '; tsk=', tsk, '; sub=', sub); }
-    console.log(from, 'called av.sgr.setColorFlagBasedonSugarPresence: geometry=', geometry, '; tsk=', tsk, '; sub=', sub);
+    console.log(from, 'called av.sgr.setColorFlagBasedonSugarPresence: geometry=', geometry, '; tsk=', tsk);
     var colorFlg = false;
     var supplyType;
     var domObjName;
@@ -414,6 +414,7 @@
     if (true) { console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; subChanged=', subChanged); }
     // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags=', av.nut.hideFlags); }
 
+    var tmpstr = 'notset';
     var ndx = av.sgr.logicNames.indexOf(tsk);
     var edTsk = av.sgr.logEdNames[ndx];
     var supplyType;
@@ -466,6 +467,8 @@
       document.getElementById(tsk+sub+'outflowLoDiv').style.display = 'none';
       document.getElementById(tsk+sub+'equalHiDiv').style.display = 'none';
       document.getElementById(tsk+sub+'equalLoDiv').style.display = 'none';
+      tmpstr = JSON.stringify(av.nut[edTsk].uiSub.supplyType);
+      console.log('av.nut['+edTsk+'].uiSub.supplyType['+sub+'] =',av.nut[edTsk].uiSub.supplyType[sub], '; supplyType=', tmpstr);
     };
     if ('global' == av.nut[edTsk].uiAll.geometry.toLowerCase()) {
       document.getElementById(tsk+'0supplyType').style.display = 'inline-block';  
