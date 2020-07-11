@@ -125,7 +125,7 @@
     var taskID = domObj.id;
     var task = taskID.substring(0, 3);
     var sub = taskID.substr(3, 1);
-    console.log('taskID=', taskID, 'task=', task, '; subsection=', sub);
+    //console.log('taskID=', taskID, 'task=', task, '; subsection=', sub);
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.regionLayoutChange');
   };
 
@@ -165,8 +165,8 @@
  // if (av.dbg.flg.nut) { console.log('domObj.value=', domObj.value); }
     var ndx = domObj.id.indexOf('Input');
     var id = domObj.id.substring(0, ndx) + 'Text';
-    console.log('text id=', id, '; input id=', domObj.id);
-    //console.log('Number(domObj.value)=',Number(domObj.value));
+    // console.log('text id=', id, '; input id=', domObj.id);
+    // console.log('Number(domObj.value)=',Number(domObj.value));
     if (isNaN(Number(domObj.value))) {
       document.getElementById(id).innerHTML = 'inital amount must be a number';
       document.getElementById(id).style.color = 'red';
@@ -265,12 +265,12 @@
       for (var sub=1; sub < 3; sub++) {
         idname = av.sgr.logicNames[ii]+sub+'regionName';
         document.getElementById(idname).style.color = darkColor;  
-        console.log('set color for idname=', idname);
+        // console.log('set color for idname=', idname);
       }
     }
   };
   
-  if (av.dbg.flg.root) { console.log('Root: av.sgr.updateSugarColors'); }
+  //if (av.dbg.flg.root) { console.log('Root: av.sgr.updateSugarColors'); }
   //---------------------------------------------------------------------------------------- av.sgr.updateSugarColors --
   // not called as of 2020_0124
   av.sgr.updateSugarColors = function() {
@@ -308,7 +308,7 @@
   };
   //------------------------------------------------------------------------------------ end av.sgr.updateSugarColors --
 
-  if (av.dbg.flg.root) { console.log('Root: av.sgr.OpenCloseAllSugarDetails'); }
+  //if (av.dbg.flg.root) { console.log('Root: av.sgr.OpenCloseAllSugarDetails'); }
   //--------------------------------------------------------------------------------- av.sgr.OpenCloseAllSugarDetails --
   av.sgr.OpenCloseAllSugarDetails = function(selectedOption, from) {
     var endName = '0section';   //nanGeometry
@@ -329,7 +329,7 @@
   //-------------------------------------------------------------------------------------- av.sgr.setSingleSugarColor --
   av.sgr.setSingleSugarColor = function(colorFlg, tskNum, from) {
     //if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg); }
-    console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg);
+    //console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg);
     var idname;
     var backgndColor = av.color.greyMap[av.sgr.sugarGreyShade];
     var nameColor = 'Black';
@@ -364,11 +364,11 @@
   };
   //---------------------------------------------------------------------------------- end av.sgr.setSingleSugarColor --
 
-  if (av.dbg.flg.root) { console.log('Root: before av.sgr.setColorFlagBasedonSugarPresence'); }
+  //if (av.dbg.flg.root) { console.log('Root: before av.sgr.setColorFlagBasedonSugarPresence'); }
   //------------------------------------------------------------------------- av.sgr.setColorFlagBasedonSugarPresence --
   av.sgr.setColorFlagBasedonSugarPresence = function(geometry, tsk, from) {
  // if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.setColorFlagBasedonSugarPresence: supplyType=', supplyType, '; geometry=', geometry, '; tsk=', tsk, '; sub=', sub); }
-    console.log(from, 'called av.sgr.setColorFlagBasedonSugarPresence: geometry=', geometry, '; tsk=', tsk);
+    //console.log(from, 'called av.sgr.setColorFlagBasedonSugarPresence: geometry=', geometry, '; tsk=', tsk);
     var colorFlg = false;
     var supplyType;
     var domObjName;
@@ -377,7 +377,7 @@
     av.nut[edTsk].uiAll.regionsNumOf =  Number(av.nut[edTsk].uiAll.regionLayout.substr(0,1) );
     if ('global' == geometry.toLowerCase()) {
       supplyType = document.getElementById(tsk + '0supplyType').value.toLowerCase();
-      console.log('supplyType=', supplyType);
+      //console.log('supplyType=', supplyType);
       if ('none' != supplyType.toLowerCase() ) {
         colorFlg = true;
       }
@@ -386,9 +386,9 @@
     else {
       for (var ii=1; ii <=av.nut[edTsk].uiAll.regionsNumOf; ii++) {
         domObjName = tsk + ii + 'supplyType';
-        console.log('tsk=', tsk, '; ii=', ii);
-        console.log('domElementID=|' + domObjName +'|');
-        console.log(domObjName+'.value=', document.getElementById(domObjName).value);
+        //console.log('tsk=', tsk, '; ii=', ii);
+        //console.log('domElementID=|' + domObjName +'|');
+        //console.log(domObjName+'.value=', document.getElementById(domObjName).value);
         supplyType = document.getElementById(domObjName).value.toLowerCase();
         if ('none' != supplyType.toLowerCase() ) {
           colorFlg = true;
@@ -407,11 +407,11 @@
   //--------------------------------------------------------------------- end av.sgr.setColorFlagBasedonSugarPresence --
 
 
-  if (av.dbg.flg.root) { console.log('Root: before av.sgr.changeDetailsLayout'); }
+  //if (av.dbg.flg.root) { console.log('Root: before av.sgr.changeDetailsLayout'); }
   //-------------------------------------------------------------------------------------- av.sgr.changeDetailsLayout --
   av.sgr.changeDetailsLayout = function(tsk, subChanged, from) {
     //these are not as usefull, turn on the one after the first if ('global' statement if problems
-    if (true) { console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; subChanged=', subChanged); }
+    //if (true) { console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; subChanged=', subChanged); }
     // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags=', av.nut.hideFlags); }
 
     var tmpstr = 'notset';
@@ -426,7 +426,7 @@
     av.nut[edTsk].uiAll.regionLayout = document.getElementById(tsk+'0regionLayout').value;
     //console.log('layout =', av.nut[tsk].uiAll.regionLayout, '; tsk=', tsk, ' subChanged=', subChanged, '; from=', from);
     av.nut[edTsk].uiAll.regionsNumOf =  Number(av.nut[edTsk].uiAll.regionLayout.substr(0,1) );
-    console.log('num sub Regions=', av.nut[edTsk].uiAll.regionsNumOf, 'layoutName=', av.nut[edTsk].uiAll.regionLayout);
+    //console.log('num sub Regions=', av.nut[edTsk].uiAll.regionsNumOf, 'layoutName=', av.nut[edTsk].uiAll.regionLayout);
     switch (av.nut[edTsk].uiAll.regionLayout) {
       case '1All':
         regionNameList = av.sgr.All;
@@ -435,7 +435,7 @@
         regionNameList = av.sgr.LftRit;
         break;
     };
-    console.log('regionNameList=', regionNameList);
+    //console.log('regionNameList=', regionNameList);
     //this 2 line method woks to get the value of the option in the select structure, but so does the one line method;
     //var idx = document.getElementById(tsk+'0geometry').selectedIndex;
     //var geoOption = document.getElementById(tsk+'0geometry').options[idx].value;   // get the value of the selected option   
@@ -468,7 +468,7 @@
       document.getElementById(tsk+sub+'equalHiDiv').style.display = 'none';
       document.getElementById(tsk+sub+'equalLoDiv').style.display = 'none';
       tmpstr = JSON.stringify(av.nut[edTsk].uiSub.supplyType);
-      console.log('av.nut['+edTsk+'].uiSub.supplyType['+sub+'] =',av.nut[edTsk].uiSub.supplyType[sub], '; supplyType=', tmpstr);
+      //console.log('av.nut['+edTsk+'].uiSub.supplyType['+sub+'] =',av.nut[edTsk].uiSub.supplyType[sub], '; supplyType=', tmpstr);
     };
     if ('global' == av.nut[edTsk].uiAll.geometry.toLowerCase()) {
       document.getElementById(tsk+'0supplyType').style.display = 'inline-block';  
@@ -526,16 +526,16 @@
     else {
       document.getElementById(tsk+'0regionLayout').style.display = 'inline-block';
       document.getElementById(tsk+'0section').open = true;
-      console.log('num sub Regions=', av.nut[edTsk].uiAll.regionsNumOf);
+      //console.log('num sub Regions=', av.nut[edTsk].uiAll.regionsNumOf);
       for (var sub=1; sub <= av.nut[edTsk].uiAll.regionsNumOf; sub++) {
         document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'block';
         document.getElementById(tsk+sub+'regionName').style.display = 'block';
         
-        console.log('supplyType ui =', document.getElementById(tsk + sub + 'supplyType').value);
-        console.log('tsk=', tsk, 'edTsk=', edTsk, 'sub=', sub, '; uiSub=', av.nut[edTsk].uiSub) ;
-        console.log('supplyType nut =', av.nut[edTsk].uiSub.supplyType[sub]);
+        //console.log('supplyType ui =', document.getElementById(tsk + sub + 'supplyType').value);
+        //console.log('tsk=', tsk, 'edTsk=', edTsk, 'sub=', sub, '; uiSub=', av.nut[edTsk].uiSub) ;
+        //console.log('supplyType nut =', av.nut[edTsk].uiSub.supplyType[sub]);
         av.nut[edTsk].uiSub.supplyType[sub] = document.getElementById(tsk + sub + 'supplyType').value;
-        console.log('sub=', sub,'; regionNameList=',  regionNameList);
+        //console.log('sub=', sub,'; regionNameList=',  regionNameList);
         regionName = regionNameList[sub];
         document.getElementById(tsk+sub+'regionName').innerHTML = regionName;
 

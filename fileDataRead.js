@@ -490,7 +490,7 @@
       //console.log('The name ', rtag, ' was found already in av.nut;   The subobject=',nutrientObj);
       return found;
     } 
-    if (av.debug.fio) { console.log('defaultindex=',defaultindex,'; rtag='+rtag, '; found=', found, '; nutrientObj.name=', nutrientObj.name); }
+    //if (av.debug.fio) { console.log('defaultindex=',defaultindex,'; rtag='+rtag, '; found=', found, '; nutrientObj.name=', nutrientObj.name); }
     return defaultindex;  
   };
   //---------------------------------------------------------------------------------------- end av.frd.findNameIndex --
@@ -663,13 +663,16 @@
           av.nut[numTsk].uiAll.geometry = pear[1];
         };   
       }; 
-      if (av.debug.fio) { console.log('pairArray = ', pairArray, '; geometry['+numTsk+']=', av.nut[numTsk].uiAll.geometry,'; matchTaskRegion =', matchTaskRegion); }
+      if (av.debug.fio) { 
+        console.log('pairArray = ', pairArray);
+        //console.log('; geometry['+numTsk+']=', av.nut[numTsk].uiAll.geometry,'; matchTaskRegion =', matchTaskRegion); 
+      }
 
       // check to make sure name is unqiue. If it is not unique then overright the previous data. 
       // index into all the arrays that hold resource/reaction parameters; The name should be unique for all arrays in the object. 
       ndx = av.frd.findNameIndex(rSourcObj, pairArray[0], av.nut[numTsk].uiAll.geometry);   
-      console.log('ndx=',ndx, '; tsk=',tsk, '; name=', pairArray[0], '-------------------------');
-      if (av.debug.fio) { console.log('ndx=',ndx); }
+      //console.log('ndx=',ndx, '; tsk=',tsk, '; name=', pairArray[0], '-------------------------');
+      //if (av.debug.fio) { console.log('ndx=',ndx); }
       if (-1 < ndx) {
         rSourcObj.name[ndx] = pairArray[0];    //asign the name of the resource statement. 
 
@@ -684,7 +687,7 @@
         regionStr = ('000'+ matchTaskRegion[2]).slice(-2);               //to add a leading zero if needed.
         var tmpndx = av.sgr.regionCodes.indexOf(regionStr);
         av.nut[numTsk].uiSub.regionName[ndx] = av.sgr.regionNames[tmpndx];
-        if (av.debug.fio) { console.log ('av.dbg.flg.nut=', av.dbg.flg.nut); }
+        //if (av.debug.fio) { console.log ('av.dbg.flg.nut=', av.dbg.flg.nut); }
         //if (av.dbg.flg.nut) { console.log('ndx=',ndx, '; av.nut[numTsk].uiSub.regionCode[ndx]=', av.nut[numTsk].uiSub.regionCode[ndx],'; av.nut[numTsk].uiSub.regionName[ndx]=',av.nut[numTsk].uiSub.regionName[ndx]); }
         //rSourcObj.regionList[rSourcObj.regionCode[ndx]] = ndx;
 
@@ -713,13 +716,14 @@
         //console.log('len=',len,'; pairArray=',pairArray);
         for (var ii=1; ii < len; ii++) {
           pear = pairArray[ii].split('=');
-          if (av.debug.fio) { console.log('Resource: ii=',ii,'; pear=', pear); }
           nn = av.sgr.resrc_argu.indexOf(pear[0].toLowerCase());
+          //if (av.debug.fio) { console.log('Resource: ii=',ii,'; pear=', pear, '; nn=', nn); }
           if (-1 < nn) {
             rSourcObj[av.sgr.resrc_argu[nn]][ndx] = pear[1];
+            //console.log('av.sgr.resrc_argu[nn]=',av.sgr.resrc_argu[nn], '; value =', rSourcObj[av.sgr.resrc_argu[nn]][ndx] );
           }
           else {
-            console.log('pear= ', pear[0]);
+            //console.log('pear= ', pear[0]);
             if ('cellbox' === pear[0].toLowerCase()) {
               cellboxdata = pear[1].split('|');
               //console.log('cellboxdata=',cellboxdata);
@@ -736,14 +740,11 @@
           };
         };
 
-        //console.log('numTsk=', numTsk, '; av.nut[numTsk]=', av.nut[numTsk]);
-        //tsk
-        //var subCode =  rSourcObj.name[ndx].substring(3).toString();
-        //rSourcObj.region[ndx] = subCode;
-        //rSourcObj.regionList[subCode] = ndx;
+        console.log('numTsk=', numTsk, '; av.nut[numTsk]=', av.nut[numTsk]);
+        
 
-        //console.log('rSourcObj.geometry=', rSourcObj.geometry);
-        //console.log('ndx=',ndx,'rSourcObj.geometry[ndx]=', rSourcObj.geometry[ndx]);
+        console.log('rSourcObj.geometry=', rSourcObj.geometry);
+        console.log('ndx=',ndx,'rSourcObj.geometry[ndx]=', rSourcObj.geometry[ndx]);
 
         av.nut[numTsk].uiAll.geometry = rSourcObj.geometry[ndx];
         //if (av.dbg.flg.nut) console.log('numTsk=', numTsk,'; av.nut[numTsk].uiAll.geometry=', av.nut[numTsk].uiAll.geometry);
@@ -764,7 +765,7 @@
         }
         if (0 === rSourcObj.initial[ndx] && 0 === rSourcObj.inflow[ndx]) 
           av.nut[numTsk].uiSub.supplyType[ndx] = 'None';
-        console.log('numTsk',numTsk,'; ndx=',ndx, '; reSrce_supplyType=', av.nut[numTsk].uiSub.supplyType[ndx]);
+        //console.log('numTsk',numTsk,'; ndx=',ndx, '; reSrce_supplyType=', av.nut[numTsk].uiSub.supplyType[ndx]);
       }   //end of valid ndx found.
     }  
     // valid logic name not found;
@@ -773,7 +774,7 @@
       console.log(lineErrors);
     }
     av.debug.fio = false;
-    console.log('lineErrors=', lineErrors);
+    //console.log('lineErrors=', lineErrors);
     return lineErrors;
   };
   //--------------------------------------------------------------------------------------- end av.frd.reSrcLineParse --
@@ -864,22 +865,29 @@
     
     var numTsk;
     var len = av.sgr.logEdNames.length;   //9
-    var geoLen;
     var distinctRegions;
     //find some summary info about nutrients. Need to look at each task separately. 
-    console.log('After while look looking at all lines of environment.cfg; Before looking for summarny information for each task');
+    
+          //if (av.dbg.flg.nut) { 
+    if (true) { 
+      console.log('After while look looking at all lines of environment.cfg; Before looking for summarny information for each task');
+      av.nut_env_cfg = {};
+      av.nut_env_cfg = JSON.parse(JSON.stringify(av.nut));
+      console.log('av.nut = ', av.nutConfig); 
+    }
+    
     for (var ii=0; ii< len; ii++) {
       numTsk = av.sgr.logEdNames[ii];
-      console.log('av.nut['+numTsk+'].resrc=', av.nut[numTsk].resrc);
-      console.log('av.nut['+numTsk+'].react=', av.nut[numTsk].react);
-      console.log('av.nut['+numTsk+'].uiAll=', av.nut[numTsk].uiAll);
-      console.log('av.nut['+numTsk+'].uiSub=', av.nut[numTsk].uiSub);
+      //console.log('av.nut['+numTsk+'].resrc=', av.nut[numTsk].resrc);
+      //console.log('av.nut['+numTsk+'].react=', av.nut[numTsk].react);
+      //console.log('av.nut['+numTsk+'].uiAll=', av.nut[numTsk].uiAll);
+      //console.log('av.nut['+numTsk+'].uiSub=', av.nut[numTsk].uiSub);
 
       // IF the code word 'missing' is NOT the listed as the name of the resource then the reaction has a RESOURCE 
       // The regionsNumOf is determined and used to assign default regionLayout
       // Then a region code, region name need to be assigned in av.nut[tsk]ui
       for (var jj=0; jj<=av.nut.numRegionsinHTML; jj++) {
-        console.log('av.nut['+numTsk+']uiSub.supplyType['+jj+']=', av.nut[numTsk].uiSub.supplyType[jj]);
+        //console.log('av.nut['+numTsk+']uiSub.supplyType['+jj+']=', av.nut[numTsk].uiSub.supplyType[jj]);
         if ('missing' !== av.nut[numTsk].react.resource[jj]) {
           //If the key word
 
@@ -994,11 +1002,9 @@
   //--------------------------------------------------------------------------------------- av.frd.nutrientStruct2dom --
   av.frd.nutrientStruct2dom = function(from) {
     //console.log(from, 'called av.frd.nutrientStruct2dom --------------------');
-    var sugarLength = av.sgr.logicNames.length;
-    var ndx;
+    var sugarLength = av.sgr.logicNames.length;  //
     var numTsk, tsk, tskose;
-    var tmpStr='';
-    var initialValue;
+    var rValue;
     var subNum = 1;                   //Will need to loop throughh all subNum later
     // only one regioin for now, so this works. I may need add at subcode index later.
     // the data for the regions may not go in the struture in the same order they need to be on the user interface. 
@@ -1025,10 +1031,12 @@
       else if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         subsections = av.nut[numTsk].resrc.geometry.length;
         //console.log('subsections=', subsections,'; av.nut['+numTsk+']=', av.nut[numTsk]);
+        
+        //Loop through each subsection. 
         for (subNum = 1; subNum < subsections; subNum++) {
 
           // regionCode will need to be converted to regionName or need to get regionName from xy cooredinates
-          // for now it is always "Whole Dish" because there is only one region
+          console.log('numTsk=', numTsk, 'av.nut[numTsk].uiSub=', av.nut[numTsk].uiSub);
           document.getElementById(tsk+subNum+'regionName').value = av.nut[numTsk].uiSub.regionName[subNum];
 
           //console.log('document.getElementById('+tsk+subNum+'supplyType)',document.getElementById(tsk+subNum+'supplyType') );
@@ -1036,13 +1044,50 @@
           console.log('av.nut['+numTsk+'].uiSub.supplyType['+subNum+'] =',av.nut[numTsk].uiSub.supplyType[subNum], '; supplyType=', tmpstr);
           document.getElementById(tsk+subNum+'supplyType').value = av.nut[numTsk].uiSub.supplyType[subNum]; 
 
+          //------------------------------------------------------------------------- 
           // if initial is defined in RESOURCE, use that value, else use the default value from globals.
-          if (!isNaN(Number(av.nut[numTsk].resrc.initial[subNum])) ) {
-            //dom and nut contain initial value per cell; RESOURCE contains initial amount per world
-            initialValue = Number( av.nut[numTsk].resrc.initial[subNum] / wrldSize );    
-            document.getElementById(tsk+subNum+'initialHiInput').value = initialValue;
-            av.nut[numTsk].uiSub.initialHi[subNum] = initialValue;
-          }
+          rValue = Number(av.nut[numTsk].resrc.initial[subNum]);
+          if ( !isNaN(rValue) ) {
+            if ( 0 <= Number(av.nut[numTsk].resrc.initial[subNum]) ) {
+              //dom and nut contain initial value per cell; RESOURCE contains initial amount per world
+              rValue = rValue / wrldSize;    
+              document.getElementById(tsk+subNum+'initialHiInput').value = rValue;
+              av.nut[numTsk].uiSub.initialHi[subNum] = rValue;
+            };
+          };
+
+          //------------------------------------------------------------------------- 
+          // if inflow is defined in RESOURCE, use that value, else use the default value from globals.
+          rValue = Number(av.nut[numTsk].resrc.inflow[subNum]);
+          if ( !isNaN(rValue) ) {
+            if ( 0 <= rValue && rValue <= 1 ) {
+              document.getElementById(tsk+subNum+'inflowHiInput').value = rValue;
+              av.nut[numTsk].uiSub.inflowHi[subNum] = rValue;
+            };
+          };
+
+          if (!isNaN(Number(av.nut[numTsk].resrc.inflow[subNum])) ) {
+            if ( 0 <= Number(av.nut[numTsk].resrc.initial[subNum]) ) {
+              //dom and nut contain initial value per cell; RESOURCE contains initial amount per world
+              initialValue = Number( av.nut[numTsk].resrc.initial[subNum] / wrldSize );    
+              document.getElementById(tsk+subNum+'initialHiInput').value = initialValue;
+              av.nut[numTsk].uiSub.initialHi[subNum] = initialValue;
+            };
+          };
+          
+          
+          if (!isNaN(Number(av.nut[numTsk].resrc.inflow[subNum])) ) {
+            if ( 0 <= Number(av.nut[numTsk].resrc.initial[subNum]) ) {
+              //dom and nut contain initial value per cell; RESOURCE contains initial amount per world
+              initialValue = Number( av.nut[numTsk].resrc.initial[subNum] / wrldSize );    
+              document.getElementById(tsk+subNum+'initialHiInput').value = initialValue;
+              av.nut[numTsk].uiSub.initialHi[subNum] = initialValue;
+            };
+          };
+          
+          
+         
+          
           //console.log('numTsk=',numTsk,'; subNum=',subNum,'; resrc.xdiffuse=',av.nut[numTsk].resrc.xdiffuse[subNum], '; resrc.ydiffuse=',av.nut[numTsk].resrc.ydiffuse[subNum]);
           if (av.nut[numTsk].resrc.xdiffuse[subNum]) {
             if (!isNaN(Number(av.nut[numTsk].resrc.xdiffuse[subNum]))) {xdiffuse = Number(av.nut[numTsk].resrc.xdiffuse[subNum]);}
@@ -1058,10 +1103,14 @@
           //console.log('diffuse=', diffuse);
           if (0 < diffuse) {
             document.getElementById(tsk+subNum+'diffuseCheck').checked = true;
+            //need to assign diffuseCheck in uiSub to a value as well
           }
           else { document.getElementById(tsk+subNum+'diffuseCheck').checked = false;}
 
-          // else it keeps the default value;
+          // Make a function to check that values that should be numeric exist and are numeric, then assign the in uiSub
+          for (indx = 0; indx <3; indx ++) {
+            av.frd.findNumber4UIdata(numTsk, tsk, subNum, ndx)
+          }
           // this is all that is being set now; I'll set more later
         }  //loop thru subsections
       }
@@ -1078,10 +1127,38 @@
     }
     if (av.dbg.flg.nut) { console.log('================================================================== end of av.frd.nutrientStruct2dom =='); }
   };
-  //------------------------------------------------------------------------ get needed events out of events.cfg file --
+  //----------------------------------------------------------------------------------- end av.frd.nutrientStruct2dom --
+
+
+  //check for a valid number in reSrc  
+  //----------------------------------------------------------------------------------------------- findNumber4UIdata --
+  av.frd.findNumber4UIdata = function(numTsk, tsk, subNum, ndx){
+    // a max of < 0 indicates that there is no maximum in avidda
+    var resrcParm = av.sgr.resrc_num[ndx];
+    var uiSubParm = av.sgr.uisub_num[ndx];
+    var uiDomParm = av.sgr.uiDom_num[ndx];
+    console.log('numTsk=',numTsk, '; tsk=', tsk, '; subNum=', SubNum, '; ndx=', ndx, '; resrcP=', resrcParm, '; uiSubParm=', uiSubParm, '; uiDomParm=', uiDomParm)
+    var value = Number(av.nut[numTsk].resrc[resrcParm][subNum]);
+    //check to see if value is a number, if it is not an number than uiSub.parameter keeps the default value;
+    if ( !isNaN(Number(value) ) ) {
+      //if the parameter has maxium it will be greater than -1
+      if (-2 < max) {
+        //make assingments if the value is in range
+        if (av.sgr.uiMin <= value && value <= av.sgr.uiMax) {
+          av.nut[numTsk].uiSub[uiSubParm][subNum] =  value;
+        }
+        else { av.nut[numTsk].uiSub[uiSubParm][subNum] = av.sgr.nut.dft.uiSub.uiSubParm;
+      };
+    };
+    console.log('av.nut['+numTsk+'].uiSub['+uiSubParm+']['+subNum+'] = ', av.nut[numTsk].uiSub[uiSubParm][subNum]);
+  };
+  //------------------------------------------------------------------------------------------- end  findNumber4UIdata --
+
+
 
 //======================================================================================================================
 
+  //------------------------------------------------------------------------ get needed events out of events.cfg file --
   av.frd.eventsCFGparse = function (filestr, from) {
     if (av.dbg.flg.nut) { console.log(from, 'called av.frd.eventsCFGparse'); }
     var matchComment, matchContinue, matchResult;

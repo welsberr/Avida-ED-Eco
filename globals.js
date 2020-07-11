@@ -574,6 +574,7 @@
       'type' : 'add'    // type = pow always in Avida-ED
   };
 
+  // arugment name in the nutrient structure (nut); which is also the arugment name in the environment.cfg file if relevent
   av.sgr.resrc_argu = ['name', 'initial', 'inflow', 'outflow', 'geometry'           //geometry is always the same, not sure it belongs here
                       , 'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'  
                       , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'
@@ -581,6 +582,31 @@
                       ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow' ];   //these are new for Avida-ED and not in the wiki. 
                   //belong ui part of structure not resource
                   //, 'region', 'side', 'grdNum', 'regionCode','regionList'];  // this last row is not in the argurments for avida; used for 'multi-dish'
+
+  av.sgr.resrc_num = ['initial', 'inflow', 'outflow',
+                      , 'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'  
+                      , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'
+                      , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'
+                      , 'boxx', 'boyy', 'boxcol', 'boxrow' ];   //these are new for Avida-ED and not in the wiki. 
+
+  //names of arguements that have numerical values in av.nut[numtsk].uiSub
+  av.sgr.uiSub_num = ['initialHi', 'inflowHi', 'outflowHi', 
+                      'initialLo', 'inflowLo', 'outflowLo', 'period'];
+
+  av.sgr.uiDom_num = ['initialHiInput', 'inflowHiInput', 'outflowHiInput', 
+                      'initialLoInput', 'inflowLoInput', 'outflowLoInput', 'periodInput'];
+   av.sgr.uiMax_num = [-2, -2, 1, -2, -2, 0, -2]                    
+   av.sgr.uiMax_num = [ 0,  0, 0,  0,  0, 0, 1]
+    //each task; each subregion; 'subRegion' is needed, but it is not a named item in the dom
+  av.sgr.ui_subDom_argu = ['supplyType', 'initialHiInput', 'inflowHiInput', 'outflowHiInput', 'diffuseCheck'
+                          , 'periodCheck', 'periodInput'                                                          //not sure if regionCode and regionName belong in Dom
+                          , 'gradientCheck', 'sideSelect', 'initialLoInput', 'inflowLoInput', 'outflowLoInput'];
+  
+  av.sgr.ui_subDish_argu = ['supplyType', 'initialHi', 'inflowHi', 'outflowHi', 'diffuseCheck'
+                          , 'periodCheck', 'periodTime'
+                          , 'gradientCheck', 'side', 'initialLo', 'inflowLo', 'outflowLo'
+                          , 'regionCode', 'regionName', 'boxed' , 'subRegion'];  //subRegion is not in Dom, so it is at the end; boxed has not been added to the dom yet
+                         //regionName should probably be in the dom, but it is not right now with only one region. 
 
   av.sgr.reSrc_avidaDft_d = {
       'initial' : 0
@@ -599,7 +625,7 @@
     , 'ydiffuse' : 1.0
     , 'xgravity' : 0.0
     , 'ygravity' : 0.0
-    , 'boxflag' : false  //box is new for Avida-ED and only in defined within Avida-ED no not in the wiki at https://github.com/devosoft/avida/wiki/Environment-file
+    , 'boxflag' : false  //box is new for Avida-ED and only in defined within Avida-ED, but not in the wiki at https://github.com/devosoft/avida/wiki/Environment-file
     , 'boxx' : 0
     , 'boxy' : 0 
     , 'boxcol' : 0

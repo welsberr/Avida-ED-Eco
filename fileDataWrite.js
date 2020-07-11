@@ -147,8 +147,9 @@
     var uisubDishLen = av.sgr.ui_subDish_argu.length;
 
     var react_arguLen = av.sgr.react_argu.length;
-    console.log(from,'called av.fwt.dom2NutrientStruct: react_arguLen=',react_arguLen);
-
+    console.log(from,'called av.fwt.dom2NutrientStruct: react_arguLen=',react_arguLen, 
+        ';aiAlDishLen=',uiAllDishLen,'; uiAllDomLen=', uiAllDomLen, '; uisubDomLen=', uisubDomLen, 
+        '; uisubDishLen=', uisubDishLen);
     for (var ii=0; ii< logiclen; ii++) {      //9
       numtsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
       tsk = av.sgr.logicNames[ii];      //3 letter logic names
@@ -162,28 +163,29 @@
         //console.log('av.nut['+numtsk+'].uiAll['+arguDom+']=');
         //console.log(av.nut[numtsk].uiAll[arguDom]);
       };
-      //console.log('av.nut['+numtsk+'].uiAll=',av.nut[numtsk].uiAll);
+      console.log('av.nut['+numtsk+'].uiAll=',av.nut[numtsk].uiAll);
       av.nut[numtsk].uiAll.regionsNumOf = av.nut[numtsk].uiAll.regionLayout[0];
 
-      //console.log('av.nut['+numtsk+'].uiAll.regionsNumOf=', av.nut[numtsk].uiAll.regionsNumOf, '; rName=', av.nut[numtsk].uiAll.regionLayout);
+      console.log('av.nut['+numtsk+'].uiAll.regionsNumOf=', av.nut[numtsk].uiAll.regionsNumOf, '; rName=', av.nut[numtsk].uiAll.regionLayout);
       // will need to go through a list of names later so maybe I should make the dictionary
        
        
       //start on the potential subdishes next (but only 1 for now). 
-      //console.log('SubDishes Now -----------------uisubDom length=', uisubDomLen);
+      console.log('SubDishes Now -----------------uisubDom length=', uisubDomLen);
       for (kk=1; kk <= av.nut[numtsk].uiAll.regionsNumOf; kk++) {
         av.nut[numtsk].uiSub.subRegion[kk] = kk;      //not sure this is needed or make sense. needs work when get past one reagion
         for (jj=0; jj< uisubDomLen; jj++) {
           arguDom = av.sgr.ui_subDom_argu[jj];
           arguDish = av.sgr.ui_subDish_argu[jj];
-          //console.log('ii='+ii+'; kk='+kk+'; jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDish+']=', 'dom of', tsk+kk+arguDom);
-          //console.log('; value=',document.getElementById(tsk+'kk'+arguDom.value)  ); 
+          console.log('ii='+ii+'; kk='+kk+'; jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDish+']=', 'dom of', tsk+kk+arguDom);
+          console.log('; value=',document.getElementById(tsk+'kk'+arguDom.value)  ); 
           av.nut[numtsk].uiSub[arguDish][kk] = document.getElementById(tsk+kk+arguDom).value;
         };
+        console.log('arguDom=', arguDom);
         av.nut[numtsk].uiSub.diffuseCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
         av.nut[numtsk].uiSub.periodCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
         av.nut[numtsk].uiSub.gradientCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
-        av.nut[numtsk].uiSub.regionCode[kk] = '00';
+        av.nut[numtsk].uiSub.regionCode[kk] = document.getElementById(tsk+kk+arguDom).value;
         av.nut[numtsk].uiSub.regionName[kk] = 'WholeDish';
 
         

@@ -298,7 +298,7 @@
           av.fwt.form2cfgFolder();          //creates avida.cfg and environment.cfg and ancestor.txt and ancestors_manual.txt from form
         };
         if ('prepping' === av.grd.runState) {
-          av.msg.importConfigExpr('av.ptd.runPopFn ln300');   // send importExpr message to avida
+          av.msg.importConfigExpr('av.ptd.runPopFn ln301');   // send importExpr message to avida
           //console.log('after calling av.msg.importConfigExpr');
           av.msg.injectAncestors('config');
         }
@@ -335,7 +335,7 @@
         //console.log('stop at  = av.dom.autoPauseNum.value;
       };
       //console.log('before call av.ptd.makeRunState');
-      av.ptd.makeRunState('av.ptd.runPopFn 328');
+      av.ptd.makeRunState('av.ptd.runPopFn 338');
       //console.log('after call av.ptd.makeRunState');
       av.msg.stepUpdate();   //av.msg.doRunPause(av.fio);
       //console.log('after av.msg.stepUpdate');

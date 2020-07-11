@@ -306,16 +306,21 @@
         //Hide select options that are not yet implemented
         len = document.getElementsByClassName('localEquilibrium').length;
         for (ii = 0; ii < len; ii++) {
-          tmp = document.getElementsByClassName('globalFinite')[ii];
-          console.log('ii=',ii,'dom element=',tmp);
-          document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
-          document.getElementsByClassName('globalEquilibrium'+[ii]).style.display = 'none';
-          document.getElementsByClassName('globalDebug')[ii].style.display = 'none';
-          
+          console.log('localEquilibrium=', document.getElementsByClassName('localDebug')[ii].id);
           document.getElementsByClassName('localDebug')[ii].style.display = 'none';
           document.getElementsByClassName('localEquilibrium')[ii].style.display = 'none';
         };
        
+        //Hide select options that are not yet implemented
+        len = document.getElementsByClassName('globalEquilibrium').length;
+        for (ii = 0; ii < len; ii++) {
+          console.log('ii=',ii,'dom element=',document.getElementsByClassName('globalFinite')[ii].id);
+          document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
+          console.log('globalFinite=', document.getElementsByClassName('globalFinite')[ii].id);
+          document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'none';
+          document.getElementsByClassName('globalDebug')[ii].style.display = 'none';
+        };
+
         // now clear options for changing all sugars (groups)
         document.getElementsByClassName('groupEquilibrium')[0].style.display = 'none';
         //document.getElementsByClassName('groupFinite')[0].style.display = 'none';     //finite available for local options

@@ -232,7 +232,7 @@
       if (av.debug.msg) console.log('importExpr', request);
       console.log('importExpr', request);
       av.dom.tst2textarea.value = '\n--uiA: importExpr:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importTestDishExpr';
-      //console.log('\n--uiA: importExpr:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importTestDishExpr');
+      console.log('\n--uiA: importExpr:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importTestDishExpr');
 
       av.aww.uiWorker.postMessage(request);
       av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importConfigExpr';
