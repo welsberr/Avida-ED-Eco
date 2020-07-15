@@ -269,7 +269,7 @@
         console.log('filename=', dir+'/'+fList[ii]);
       }
     }
-    if (av.debug.msg) console.log('importExpr-testDish', request);
+    if (true) console.log('importExpr-testDish', request); //av.debug.msg
     av.aww.uiWorker.postMessage(request);
     av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from av.msg.makeTestDirMsg';
   };
@@ -305,6 +305,7 @@
       }
     }
     av.aww.uiWorker.postMessage(request);
+    if (true) console.log('makeResReqMsg', request); //av.debug.msg
     if (av.debug.msg) console.log('av.msg.makeResReqMsg', request);
 
     av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importPopExpr';
@@ -399,7 +400,7 @@
       if (av.fzr.file[dir+'/'+fList[ii]]) {request.files.push({ 'name': fList[ii], 'data': av.fzr.file[dir+'/'+fList[ii]] }); }
     }
 
-    if (av.debug.msg) console.log('importTestDishExpr', request);
+    if (true) console.log('importTestDishExpr', request);  //av.debug.msg
     console.log('importTestDishExpr', request);
     console.log('\n--uiA: importExpr:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importTestDishExpr');
     av.aww.uiWorker.postMessage(request);
@@ -456,7 +457,7 @@
     for (var ii = 0; ii < lngth; ii++) {
       if (av.fzr.actConfig.file[fList[ii]]) {request.files.push({ 'name': fList[ii], 'data': av.fzr.actConfig.file[fList[ii]] }); }
     }
-    if (av.debug.msg) console.log('importExpr', request);
+    if (true) console.log('importExpr', request);  //av.debug.msg
     av.aww.uiWorker.postMessage(request);
     av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importWorldExpr';
   };

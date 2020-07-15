@@ -7,7 +7,7 @@
   // one global to hold them all.
   var av = av || {};  //incase av already exists
 
-  console.log('start of globals on 2020_0521');
+  console.log('start of globals on 2020_0710');
 
 
   Number.prototype.pad = function(size) {
@@ -445,7 +445,8 @@
   //gradient options are false/true
   //
   //Name ideas. not01g00 to 99  for gradients   leading zeros by using padStart
-  //
+  // or not01q_T00, not003n_L00  where T = top, B = bottom, L = left, R = right as the "high side"
+  // q suffix on numbrs is q for quarters or n for ninths
 
   /************************************************************           ideas for regionLayout Names and Region Names --
   // These are ideas tossed about that I'm not currently using - or they are defined lower down. 
@@ -498,7 +499,7 @@
                            // so the region lisst for quarters is [empty, 0, 1, 2, 3]
                            // the region list for top bottom would be [empty, empty, empty, empty, empty, 0, 1]
 
-    av.sgr.regionNamesLower =  ['whole dish', 'upper left', 'upper right', 'lower left', 'lower right', 'top', 'bottom', 'left', 'right']; 
+    av.sgr.regionQuarterNamesLower =  ['whole dish', 'upper left', 'upper right', 'lower left', 'lower right', 'top', 'bottom', 'left', 'right']; 
     av.sgr.regionValues =  ['WholeDish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
 
     //region List based on 9 sections like a tic-tac-toe board
@@ -506,6 +507,20 @@
                           , 'lft', 'cen', 'rit', 'top', 'mid', 'bot'];
     av.sgr.regionNcodes = ['_0_', '_1_', '_2_', '_3_', '_4_', '_5_', '_6_', '_7_', '_8_', '_9_'
                           , '147', '258', '369', '123', '456', '789'];
+  
+  
+    //thinking about a situation where either 4ths or 9ths were allowed in Avida-ED
+    av.sqr.postfix_q    | 1, 2, |  //layout
+                        | 3, 4  |
+  
+    av.sqr.postfix_n | 1 2 3 |   //sub-sections can be done as for quarters below
+      // layout      | 4 5 6 |   // not123n = top one third row
+                     | 7 8 9 |
+    
+    av.sgr.regions = ['1q, 2q, 3q, 4q, 12q, 34q, 13q, 24q] //leading zeros also work
+  
+    av.sgr.gradient format | 12q_T0, 12q_T1, 12q_T2,   etc //starts at the top (row0)
+      defines rows in teh upper half with a gradient with the hightest concentration at the top. 
   */
 
 
@@ -595,18 +610,24 @@
 
   av.sgr.uiDom_num = ['initialHiInput', 'inflowHiInput', 'outflowHiInput', 
                       'initialLoInput', 'inflowLoInput', 'outflowLoInput', 'periodInput'];
-   av.sgr.uiMax_num = [-2, -2, 1, -2, -2, 0, -2]                    
-   av.sgr.uiMax_num = [ 0,  0, 0,  0,  0, 0, 1]
-    //each task; each subregion; 'subRegion' is needed, but it is not a named item in the dom
+  av.sgr.uiMin = [-2, -2, 1, -2, -2, 0, -2];                    
+  av.sgr.uiMax = [ 0,  0, 0,  0,  0, 0, 1];
   av.sgr.ui_subDom_argu = ['supplyType', 'initialHiInput', 'inflowHiInput', 'outflowHiInput', 'diffuseCheck'
                           , 'periodCheck', 'periodInput'                                                          //not sure if regionCode and regionName belong in Dom
                           , 'gradientCheck', 'sideSelect', 'initialLoInput', 'inflowLoInput', 'outflowLoInput'];
   
   av.sgr.ui_subDish_argu = ['supplyType', 'initialHi', 'inflowHi', 'outflowHi', 'diffuseCheck'
-                          , 'periodCheck', 'periodTime'
+                          , 'periodCheck', 'periodTime', 'area'
                           , 'gradientCheck', 'side', 'initialLo', 'inflowLo', 'outflowLo'
-                          , 'regionCode', 'regionName', 'boxed' , 'subRegion'];  //subRegion is not in Dom, so it is at the end; boxed has not been added to the dom yet
-                         //regionName should probably be in the dom, but it is not right now with only one region. 
+                          , 'regionCode', 'regionName', 'boxed' , 'subRegion', 'regionNdx'];  
+                        //subRegion is not in Dom, so it is at the end; boxed has not been added to the dom yet
+                        //I don't think subRegion is in use. 
+  //av.sgr.ui values match the dom, so they are amount per cell; av.sgr.Resrce values match avida, so they are amouth per dish/world. (will adust for cell value later)
+  //one each task if I make a data structure from the UI that is separate from what goes in thhe config file.
+  av.sgr.ui_allDom_argu = ['geometry', 'supplyType', 'regionLayout', 'initial'];  //'regionsNumOf' is not in dom but found using regionLayout (region layout in the dish)
+  av.sgr.ui_allDish_argu = ['geometry', 'supplyType', 'regionLayout', 'initial', 'regionsNumOf'];   //'regionsNumOf' is not in dom, so it is at the end of the list.
+  // 'inflow', 'outflow', 'periodFlag';  could be in global, but won't fit on one line in the sumary/details accordian.
+
 
   av.sgr.reSrc_avidaDft_d = {
       'initial' : 0
@@ -639,7 +660,7 @@
     av.sgr.re_region = /(\D+)(\d+)(.*$)/;
     av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '3TopLftRit', '4Quarters'];
 
-    //entry zero is blank so indext matches subregion number 
+    //entry zero is blank so index matches subregion number 
     av.sgr.All = [' ', 'Whole Dish'];
     av.sgr.LftRit = [' ','Left', 'Right']; 
     
@@ -647,10 +668,13 @@
   //sav.sgr['3TopLftRit'] = ['top', 'Lft', 'Rit'];
 
     //Region List based on 4 quarters: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
-    av.sgr.regionNames =  ['Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
-    av.sgr.region3char = ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];   //Use as values when the time comes
-    av.sgr.regionCodes = [ '00',  '01',  '02',  '03',  '04',  '12',  '34',  '13',  '24'];   //These numbers go with the regions above
-
+    av.sgr.regionQuarterNames = ['Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
+    av.sgr.regionQuarter3Char = ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];   //Use as values when the time comes
+    av.sgr.regionQuarterCodes = ['000', '001', '002', '003', '004', '012', '034', '013', '024'];   //These numbers go with the regions above
+    av.sgr.regionQuarterCols =  [  1.0,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0,   0.5,   0.5];   //fraction of rows
+    av.sgr.regionQuarterRows =  [  1.0,   0.5,   0.5,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0];   //fraction of rows
+    av.sgr.regionQuarterColsAdd = [  0,     1,     0,     1,     0,     0,     0,     1,     0];   //fraction of rows
+    av.sgr.regionQuarterRowsAdd = [  0,     1,     1,     0,     0,     1,     0,     0,     0];   //fraction of rows
 
   av.sgr.boxArguments = ['boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow']; //flag is true if in use; false if these arguments are not included. 
                         //boxx and boxy are the upper left corner positions of the region in Avida-ED
@@ -673,22 +697,6 @@
     av.sgr.hideFlagInit = [true, true];  //true is to hide when areas underdevelopment are hidden. 
     av.sgr.flagInitOpposite = [false, false];  //false in this case is to NOT hide as develpment sections shown.
 
-  //av.sgr.ui values match the dom, so they are amount per cell; av.sgr.Resrce values match avida, so they are amouth per dish/world. (will adust for cell value later)
-  //one each task if I make a data structure from the UI that is separate from what goes in thhe config file.
-  av.sgr.ui_allDom_argu = ['geometry', 'supplyType', 'regionLayout', 'initial'];  //'regionsNumOf' is not in dom but found using regionLayout (region layout in the dish)
-  av.sgr.ui_allDish_argu = ['geometry', 'supplyType', 'regionLayout', 'initial', 'regionsNumOf'];   //'regionsNumOf' is not in dom, so it is at the end of the list.
-  // 'inflow', 'outflow', 'periodFlag';  could be in global, but won't fit on one line in the sumary/details accordian.
-
-  //each task; each subregion; 'subRegion' is needed, but it is not a named item in the dom
-  av.sgr.ui_subDom_argu = ['supplyType', 'initialHiInput', 'inflowHiInput', 'outflowHiInput', 'diffuseCheck'
-                          , 'periodCheck', 'periodInput'                                                          //not sure if regionCode and regionName belong in Dom
-                          , 'gradientCheck', 'sideSelect', 'initialLoInput', 'inflowLoInput', 'outflowLoInput'];
-  // arugment name in the nutrient structure (nut); which is also the arugment name in the environment.cfg file if relevent
-  av.sgr.ui_subDish_argu = ['supplyType', 'initialHi', 'inflowHi', 'outflowHi', 'diffuseCheck'
-                          , 'periodCheck', 'periodTime'
-                          , 'gradientCheck', 'side', 'initialLo', 'inflowLo', 'outflowLo'
-                          , 'regionCode', 'regionName', 'boxed' , 'subRegion'];  //subRegion is not in Dom, so it is at the end; boxed has not been added to the dom yet
-                         //regionName should probably be in the dom, but it is not right now with only one region. 
   av.sgr.nut = {}; 
   //------------------------------------------------------------------------------------------- av.sgr.makeNutDefault --
   av.sgr.makeNutDefault = function () {
@@ -731,6 +739,7 @@
     av.sgr.nut.dft.uiSub.initialHi = 1000;  //sugar units/cell guess at an initial value when supplyType='finite'; need to multiply by wrldSize
     av.sgr.nut.dft.uiSub.inflowHi  = 100;   //sugar units/cell guess at an initial value when supplyType='equilibrium'; need to multiply by wrldSize
     av.sgr.nut.dft.uiSub.outflowHi = 0.1;   //sugar units (fraction) guess at an initial value when supplyType='equilibrium';
+    av.sgr.nut.dft.uiSub.area = 900;   //based on a standard 30 x 30 world
     av.sgr.nut.dft.uiSub.diffuseCheck = false;    //false = default;  else true.      
     //from event file
     av.sgr.nut.dft.uiSub.periodCheck = false;    //false = default;  else true.
@@ -741,12 +750,12 @@
     av.sgr.nut.dft.uiSub.inflowLo  =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
     av.sgr.nut.dft.uiSub.outflowLo = 0.1;  //sugar units (fraction) guess at an initial value when supplyType='gradient' or 'flow';
     av.sgr.nut.dft.uiSub.initialLo =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
-
+    av.sgr.nut.dft.uiSub.regionNdx = 1;   //index into various region data vectors
     av.sgr.nut.dft.uiSub.regionCode = '01';
     av.sgr.nut.dft.uiSub.regionName = 'all';
     av.sgr.nut.dft.uiSub.boxed = true;           //true keeps resources in their subdish; false allows them to flow into the rest of the dish
-    av.sgr.nut.dft.uiSub.subRegion = 1;    // this goes with 'all' = regionLayoutName (or 1234 could be used) or 'WholeDish'; tiba check this more than on region allowed
-  };
+    av.sgr.nut.dft.uiSub.subRegion = 0;    // this goes with 'all' = regionLayoutName (or 1234 could be used) or 'WholeDish'; tiba check this more than on region allowed
+  };                                       // not sure if subregion is in use. 
   //---------------------------------------------------------------------------------------end av.sgr.makeNutDefault --
   av.sgr.makeNutDefault();
   console.log('av.sgr.nut =', av.sgr.nut);   //or should there just be a 'dft' task and only ever one region?
@@ -812,25 +821,6 @@
       for (jj=0; jj < uiSubDishLen; jj++) {
         av.nut[tsk]['uiSub'][av.sgr.ui_subDish_argu[jj] ] = [];
       };
-      // Do this once I have an array set up to assign values and make sure that av.nut.tsk.uiSub matches av.sgr.nut.dft.uiSub
-/*
-      for (kk=1; kk<=1; kk++) {                  //later the subRegion will be determined by x, x coordinates
-        av.nut[tsk].uiSub.subRegion[kk] = kk;    // this goes with 'all' = regionLayoutName (or 1234 could be used) or 'WholeDish'; tiba check this more than on region allowed
-        av.nut[tsk].uiSub.supplyType[kk] = 'unknown';  //Lamar this may need to change
-        av.nut[tsk].uiSub.initialHi[kk] = 1000;  //sugar units/cell guess at an initial value when supplyType='finite'; need to multiply by wrldSize
-        av.nut[tsk].uiSub.inflowHi[kk]  = 100;   //sugar units/cell guess at an initial value when supplyType='equilibrium'; need to multiply by wrldSize
-        av.nut[tsk].uiSub.outflowHi[kk] = 0.1;  //sugar units (fraction) guess at an initial value when supplyType='equilibrium';
-        av.nut[tsk].uiSub.inflowLo[kk]  =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
-        av.nut[tsk].uiSub.outflowLo[kk] = 0.1;  //sugar units (fraction) guess at an initial value when supplyType='gradient' or 'flow';
-        av.nut[tsk].uiSub.initialLo[kk] =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
-        av.nut[tsk].uiSub.side[kk] = 'left';    //only valid for local resources with supply Type = 'gradient' or 'flow';
-        av.nut[tsk].uiSub.diffuseCheck[kk] = false;    //false = default;  else true.      
-        av.nut[tsk].uiSub.gradientCheck[kk] = false;    //false = default;  else true.      
-        //from event file
-        av.nut[tsk].uiSub.periodCheck[kk] = false;    //false = default;  else true.   
-        av.nut[tsk].uiSub.boxed[kk] = true;           //true keeps resources in their subdish; false allows them to flow into the rest of the dish
-      }
-*/
     };   //end of looping through the logic tasks.
     if (av.dbg.flg.nut) {
       av.cleanNut = {};

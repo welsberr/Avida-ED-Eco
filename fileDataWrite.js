@@ -297,7 +297,7 @@
       //console.log('domName=', domName, '; value=', geometry);
       if ('global' == geometry.toLowerCase()) {
         regionName = 'Whole Dish';           //alway the case for global.
-        region_ndx = av.sgr.regionCodes.indexOf(regionName);
+        region_ndx = av.sgr.regionQuarterCodes.indexOf(regionName);
         regionCode = '00';        //will need to find later based subdish+regionName
         rname = tsk + regionCode;
         supplyType = document.getElementById(tsk+'0supplyType').value.toLowerCase();
@@ -314,8 +314,8 @@
       else {   // local   using avida defaults for now will separate out diffusion later.    
         ndx = 1;   // only doing the first subsection for now
         regionName = document.getElementById(tsk+ndx+'regionName').textContent;
-        region_ndx = av.sgr.regionNames.indexOf(regionName);
-        regionCode = av.sgr.regionCodes[region_ndx];
+        region_ndx = av.sgr.regionQuarterNames.indexOf(regionName);
+        regionCode = av.sgr.regionQuarterCodes[region_ndx];
         rname = tsk + regionCode;
         supplyType = document.getElementById(tsk+ndx+'supplyType').value.toLowerCase();
         //console.log('regionCode=', regionCode, '; regionName=', regionName, '; rname=', rname, '; suppplyType=', supplyType);

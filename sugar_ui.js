@@ -100,13 +100,14 @@
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.geometryChange = function (selectObj) {
-    //need to find subregion Number in the future - set to 1 for now. 
+    //need to find subregion Number in the future - set to 1 for now.;
     var taskID = selectObj.id;
     var task = taskID.substring(0, 3);
     var sub = taskID.substr(3, 1);
  // if (av.dbg.flg.nut) { console.log('av.sgr.geometryChange: taskID=', taskID, '; task =', task, '; subsection=', sub); }
     sub = 1;       //or should this be 0 since it is in the 'summary' section?
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.geometryChange');
+    //does av.sgr.changeDetailsLayout need a 'sub' value? 
   };
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
