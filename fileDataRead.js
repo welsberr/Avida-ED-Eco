@@ -806,7 +806,6 @@
     var aline;
     var lines = filestr.split('\n');
     var lngth = lines.length;
-    var regionArea = 1;
     var matchComment, matchContinue, matchResult, metaData;
     var re_metaData = /^(.*?)#!.*$/;    //metadata 
     var re_comment =  /^(.*?)#.*$/;   //look at begining of the line and look until #; used to get the stuff before the #
@@ -925,14 +924,15 @@
           //if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiSubs=', av.nut[numTsk].uiSub); }
         };  // a resource was defined so it could be grid or global
         //find area in this subregion for this resource
-        console.log('------------------');
-        console.log('av.nut['+numTsk+'].uiSub.regionNdx['+jj+']=', av.nut[numTsk].uiSub.regionNdx[jj], ' len=', av.sgr.regionQuarterCodes.length);
+        //console.log('------------------');
+        //console.log('av.nut['+numTsk+'].uiSub.regionNdx['+jj+']=', av.nut[numTsk].uiSub.regionNdx[jj], ' len=', av.sgr.regionQuarterCodes.length);
+        //     var regionArea = 1;
         if (null != av.nut[numTsk].uiSub.regionNdx[jj] && undefined != av.nut[numTsk].uiSub.regionNdx[jj]){
           if (0 <= av.nut[numTsk].uiSub.regionNdx[jj] && av.nut[numTsk].uiSub.regionNdx[jj] < av.sgr.regionQuarterCodes.length) {
-            //look for area of subregion
-            av.nut[numTsk].uiSub.area[jj] = av.frd.findInflowSize(numTsk, jj);
-            regionArea = av.frd.findInflowArea(numTsk, jj);
-            console.log('av.nut['+numTsk+'].uiSub.area['+jj+']=', av.nut[numTsk].uiSub.area[jj], 'regionArea=', regionArea);
+            //look for area of subregion based on Resource coordinates
+            av.nut[numTsk].uiSub.area[jj] = av.frd.getInflowAreaResrc(numTsk, jj);
+            //regionArea = av.frd.getInflowRegionArea(numTsk, jj);
+            //console.log('av.nut['+numTsk+'].uiSub.area['+jj+']=', av.nut[numTsk].uiSub.area[jj], 'regionArea=', regionArea);
           }
         }; 
       }; // end of loop through html sections
@@ -943,11 +943,12 @@
   //------------------------------------------------------------------------------------- end of av.frd.nutrientParse --
   
   //Find subarea based on region code
-  av.frd.findInflowArea = function(numTsk, subnum) {
+  //-------------------------------------------------------------------------------------- av.frd.getInflowRegionArea --
+  av.frd.getInflowRegionArea = function(numTsk, subnum) {
     var ndx = av.nut[numTsk].uiSub.regionNdx[subnum];
     var cols = av.nut.wrldCols *  av.sgr.regionQuarterCols[ndx];
     var rows = av.nut.wrldRows *  av.sgr.regionQuarterRows[ndx];
-    console.log('tsk=', numTsk, '; subnum=', subnum,'; ndx=', ndx, '; cols=', cols, '; rows=', rows);
+    //console.log('tsk=', numTsk, '; subnum=', subnum,'; ndx=', ndx, '; cols=', cols, '; rows=', rows);
      if(0 != av.nut.wrldCols % 2) {
        cols += av.sgr.regionQuarterColsAdd[1];
      }
@@ -956,9 +957,11 @@
      };
      return (rows*cols);
   };
+  //---------------------------------------------------------------------------------- end av.frd.getInflowRegionArea --
+  
   //Find subarea based on inflow x, y coordinates
-  //------------------------------------------------------------------------------------------- av.frd.findInflowSize --
-  av.frd.findInflowSize = function(numTsk, subnum) {
+  //--------------------------------------------------------------------------------------- av.frd.getInflowAreaResrc --
+  av.frd.getInflowAreaResrc = function(numTsk, subnum) {
     var area = 1;
     var corner = '';
     var coordinates = {};
@@ -966,7 +969,7 @@
     var len = labels.length;
     for (var ndx = 0; ndx < len; ndx++) {
       corner = labels[ndx];
-      console.log('corner=', corner, '; av.nut['+numTsk+'].resrc['+corner+']['+subnum+']=', av.nut[numTsk].resrc[corner][subnum]);
+      //console.log('corner=', corner, '; av.nut['+numTsk+'].resrc['+corner+']['+subnum+']=', av.nut[numTsk].resrc[corner][subnum]);
       if (NaN == Number(av.nut[numTsk].resrc[corner][subnum])) {
         coordinates[labels[0]] = 0;
       }
@@ -974,13 +977,14 @@
         coordinates[corner] = Number(av.nut[numTsk].resrc[corner][subnum]);
       }
     }
-    console.log('coordinates=',coordinates);
+    //console.log('coordinates=',coordinates);
     var subCols = Math.abs( coordinates.inflowx2 - coordinates.inflowx1 ) + 1;
     var subRows = Math.abs( coordinates.inflowy2 - coordinates.inflowy1 ) + 1;
     area = subCols * subRows;
-    console.log('numTsk=', numTsk, 'subnum=', subnum, '; cols=', subCols, '; rows=', subRows, '; area=', area);
+    //console.log('numTsk=', numTsk, 'subnum=', subnum, '; cols=', subCols, '; rows=', subRows, '; area=', area);
     return (area);
   };
+  //----------------------------------------------------------------------------------- end av.frd.getInflowAreaResrc --
 
   //---------------------------------------------------------------------------------------- av.frd.environment2struct --
   // puts data from the environment.cfg into the structure for the setup form for the population page
@@ -1106,7 +1110,7 @@
           //document.getElementById(tsk+subNum+'regionName').value = av.nut[numTsk].uiSub.regionName[subNum];
 
           //console.log('document.getElementById('+tsk+subNum+'supplyType)',document.getElementById(tsk+subNum+'supplyType') );
-          tmpstr = JSON.stringify(av.nut[numTsk].uiSub.supplyType);
+          //tmpstr = JSON.stringify(av.nut[numTsk].uiSub.supplyType);
           //console.log('av.nut['+numTsk+'].uiSub.supplyType['+subNum+'] =',av.nut[numTsk].uiSub.supplyType[subNum], '; supplyType=', tmpstr);
           document.getElementById(tsk+subNum+'supplyType').value = av.nut[numTsk].uiSub.supplyType[subNum]; 
 
@@ -1130,39 +1134,53 @@
           else { document.getElementById(tsk+subNum+'diffuseCheck').checked = false;}
 
           //------------------------------------------------------------------------- 
-          // if initial is defined in RESOURCE, use that value, else use the default value from globals.
+          // Find area of region or whole dish as needed for inflow  Not sure this statement is needed, as there should alway be an area for dish 1.
+          if ("1All" == av.nut[numTsk].uiAll.regionLayout) {
+            area = wrldSize;
+          }
+          else {
+            area = av.nut[numTsk].uiSub.area[subNum];
+          };
+
+          //------------------------------------------------------------------------- 
+          // This only works for whole dish until I start parsing cells. 
+          // if initial is defined in RESOURCE, use that value, else use the default value from globals.          
           rValue = Number(av.nut[numTsk].resrc.initial[subNum]);
           if ( !isNaN(rValue) ) {
-            if ( 0 <= Number(av.nut[numTsk].resrc.initial[subNum]) ) {
-              //dom and nut contain initial value per cell; 
-              //RESOURCE contains initial amount for all cells defined (whole world or subsection)
-              area = av.frd.findSectionSize();
-              rValue = rValue / wrldSize;
-            }
-            else {
-              rValue = av.sgr.nut.dft.uiSub.initialHi;
-            }
-            document.getElementById(tsk+subNum+'initialHiInput').value = rValue;
-            av.nut[numTsk].uiSub.initialHi[subNum] = rValue;
-
+            if ( 0 <= rValue ) {
+              document.getElementById(tsk+subNum+'initialHiInput').value = rValue;
+              av.nut[numTsk].uiSub.initialHi[subNum] = rValue;
+            };
           };
 
           //------------------------------------------------------------------------- 
           // if inflow is defined in RESOURCE, use that value, else use the default value from globals.
           rValue = Number(av.nut[numTsk].resrc.inflow[subNum]);
           if ( !isNaN(rValue) ) {
-            if ( 0 <= rValue ) {
-              document.getElementById(tsk+subNum+'inflowHiInput').value = rValue;
-              av.nut[numTsk].uiSub.inflowHi[subNum] = rValue;
-            };
+            if ( 0 <= Number(av.nut[numTsk].resrc.inflow[subNum]) ) {
+              //dom and nut contain inflow value per cell; 
+              //RESOURCE contains inflow amount for all cells defined (whole world or subsection)
+              if (0 < area) { rValue = rValue / area; }
+              else { console.log('ERROR: area must be greater than zero'); }
+            }
+            else {
+              rValue = av.sgr.nut.dft.uiSub.inflowHi;
+            }
+          }
+          else {
+              rValue = av.sgr.nut.dft.uiSub.inflowHi;           
           };
+          //console.log('id=', tsk+subNum+'inflowHiInput');
+          document.getElementById(tsk+subNum+'inflowHiInput').value = rValue;
+          av.nut[numTsk].uiSub.inflowHi[subNum] = rValue;
 
           //------------------------------------------------------------------------- 
           // if outflow is defined in RESOURCE, use that value, else use the default value from globals.
           rValue = Number(av.nut[numTsk].resrc.outflow[subNum]);
           if ( !isNaN(rValue) ) {
             if ( 0 <= rValue && rValue <= 1 ) {
-              document.getElementById(tsk+subNum+'inflowHiInput').value = rValue;
+              
+              document.getElementById(tsk+subNum+'outflowHiInput').value = rValue;
               av.nut[numTsk].uiSub.outflowHi[subNum] = rValue;
             };
           };
@@ -1174,6 +1192,7 @@
         console.log('Error: geometry unrecognized');
       }
       // must be called outside the subsections loop
+      console.log('av.nut['+numTsk+']', av.nut[numTsk])
       av.sgr.changeDetailsLayout(tsk, 1, 'av.frd.nutrientStruct2dom');  //the one in this case is for subsection, but it is not used. 
     }
     if (av.dbg.flg.nut) { 

@@ -414,7 +414,7 @@
     //these are not as usefull, turn on the one after the first if ('global' statement if problems
     //if (true) { console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; subChanged=', subChanged); }
     // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags=', av.nut.hideFlags); }
-
+    var tmpNum = 1;
     var tmpstr = 'notset';
     var ndx = av.sgr.logicNames.indexOf(tsk);
     var edTsk = av.sgr.logEdNames[ndx];
@@ -616,7 +616,15 @@
               document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount / cell';
               document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction / cell';
               document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
-              document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium if not consumed.';
+              if (!isNaN(Number(av.nut[edTsk].uiSub.inflowHi[sub])) && !isNaN(Number(av.nut[edTsk].uiSub.outflowHi[sub]))) {
+                if (0<Number(av.nut[edTsk].uiSub.outflowHi[sub])) {
+                tmpNum = Number(av.nut[edTsk].uiSub.inflowHi[sub]) / Number(av.nut[edTsk].uiSub.outflowHi[sub]);
+                document.getElementById(tsk+sub+'equalHiText').innerHTML = tmpNum + ' = equilibrium if not consumed.';                  
+                }
+              }
+              else {
+                document.getElementById(tsk+sub+'equalHiText').innerHTML = 'outflow must be greater than  0';
+              }
               document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Equal-container';
            // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
               if (true == document.getElementById(tsk+sub+'periodCheck').checked  && !av.sgr.hideFlgNames.periodic) {
