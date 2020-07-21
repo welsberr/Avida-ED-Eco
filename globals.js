@@ -610,14 +610,20 @@
 
   av.sgr.uiDom_num = ['initialHiInput', 'inflowHiInput', 'outflowHiInput', 
                       'initialLoInput', 'inflowLoInput', 'outflowLoInput', 'periodInput'];
-  av.sgr.uiMin = [-2, -2, 1, -2, -2, 0, -2];                    
+  av.sgr.uiMin = [-2, -2, 1, -2, -2, 0, -2];  //need to document this tiba                  
   av.sgr.uiMax = [ 0,  0, 0,  0,  0, 0, 1];
-  av.sgr.ui_subDom_argu = ['supplyType', 'initialHiInput', 'inflowHiInput', 'outflowHiInput', 'diffuseCheck'
-                          , 'periodCheck', 'periodInput'                                                          //not sure if regionCode and regionName belong in Dom
-                          , 'gradientCheck', 'sideSelect', 'initialLoInput', 'inflowLoInput', 'outflowLoInput'];
   
-  av.sgr.ui_subDish_argu = ['supplyType', 'initialHi', 'inflowHi', 'outflowHi', 'diffuseCheck'
-                          , 'periodCheck', 'periodTime', 'area'
+  av.sgr.ui_subD_Check = [ 'diffuseCheck', 'periodCheck', 'gradientCheck' ];
+  av.sgr.ui_subDom_num = ['initialHiInput', 'inflowHiInput', 'outflowHiInput', 'periodInput' 
+                        , 'initialLoInput', 'inflowLoInput', 'outflowLoInput', 'area'];
+  av.sgr.ui_subDom_num = ['initialHi', 'inflowHi', 'outflowHi', 'period' 
+                        , 'initialLo', 'inflowLo', 'outflowLo', 'area'];
+  av.sgr.ui_subDom_argu = ['supplyType', 'initialHiInput', 'inflowHiInput', 'outflowHiInput', 'periodInput'
+                          , 'diffuseCheck', 'periodCheck'   //not sure if regionCode and regionName belong in Dom
+                          , 'gradientCheck', 'sideSelect', 'initialLoInput', 'inflowLoInput', 'outflowLoInput'];
+  av.sgr.ui_sub_num_argu_use = 6; // goint from dom to struct
+  av.sgr.ui_subDish_argu = ['supplyType', 'initialHi', 'inflowHi', 'outflowHi', 'periodTime'
+                          , 'diffuseCheck', 'periodCheck', 'area'
                           , 'gradientCheck', 'side', 'initialLo', 'inflowLo', 'outflowLo'
                           , 'regionCode', 'regionName', 'boxed' , 'subRegion', 'regionNdx'];  
                         //subRegion is not in Dom, so it is at the end; boxed has not been added to the dom yet

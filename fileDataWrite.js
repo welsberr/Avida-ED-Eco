@@ -150,6 +150,7 @@
     console.log(from,'called av.fwt.dom2NutrientStruct: react_arguLen=',react_arguLen, 
         ';aiAlDishLen=',uiAllDishLen,'; uiAllDomLen=', uiAllDomLen, '; uisubDomLen=', uisubDomLen, 
         '; uisubDishLen=', uisubDishLen);
+    console.log('dom(nan1supplyType)=', document.getElementById('nan1supplyType').value);
     for (var ii=0; ii< logiclen; ii++) {      //9
       numtsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
       tsk = av.sgr.logicNames[ii];      //3 letter logic names
@@ -166,7 +167,7 @@
       console.log('av.nut['+numtsk+'].uiAll=',av.nut[numtsk].uiAll);
       av.nut[numtsk].uiAll.regionsNumOf = av.nut[numtsk].uiAll.regionLayout[0];
 
-      console.log('av.nut['+numtsk+'].uiAll.regionsNumOf=', av.nut[numtsk].uiAll.regionsNumOf, '; rName=', av.nut[numtsk].uiAll.regionLayout);
+      //console.log('av.nut['+numtsk+'].uiAll.regionsNumOf=', av.nut[numtsk].uiAll.regionsNumOf, '; rName=', av.nut[numtsk].uiAll.regionLayout);
       // will need to go through a list of names later so maybe I should make the dictionary
        
        
@@ -177,8 +178,8 @@
         for (jj=0; jj< uisubDomLen; jj++) {
           arguDom = av.sgr.ui_subDom_argu[jj];
           arguDish = av.sgr.ui_subDish_argu[jj];
-          console.log('ii='+ii+'; kk='+kk+'; jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDish+']=', 'dom of', tsk+kk+arguDom);
-          console.log('; value=',document.getElementById(tsk+'kk'+arguDom.value)  ); 
+          console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDish+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
+          console.log('; dom=',document.getElementById(tsk+kk+arguDom).value ); 
           av.nut[numtsk].uiSub[arguDish][kk] = document.getElementById(tsk+kk+arguDom).value;
         };
         console.log('arguDom=', arguDom);
@@ -186,7 +187,6 @@
         av.nut[numtsk].uiSub.periodCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
         av.nut[numtsk].uiSub.gradientCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
         av.nut[numtsk].uiSub.regionCode[kk] = document.getElementById(tsk+kk+arguDom).value;
-        av.nut[numtsk].uiSub.regionName[kk] = 'WholeDish';
 
         
         //now use what is in uiAll and uiSub to make resource and reaction fields

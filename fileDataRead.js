@@ -643,13 +643,13 @@
                                           // match.length is the length of the array, including null elements 
     //av.debug.fio = true;
 
-    //if (av.dbg.flg.nut) console.log('reSrcLineParse: pairArray=', pairArray);
+    if (av.dbg.flg.nut) console.log('reSrcLineParse: pairArray=', pairArray);
     //find logic type include test for quarters vs ninths subregion layout. 
     matchTaskRegion = pairArray[0].match(re_name);  // Matches using re_name pattern: looing for tsk##q_gradientInfo.
     //if (av.dbg.flg.nut) console.log('nut: pairArra[0]=', pairArray[0],'; re_name=', re_name, ', matchTaskRegion=', matchTaskRegion);
     if (null == matchTaskRegion) {
       matchTaskRegion = pairArray[0].match(re_region);  // Matches using re_num0 pattern.
-      if (av.dbg.flg.nut) console.log('nut: pairArra[0]=', pairArray[0],'; re_region=', re_region, ', matchTaskRegion=', matchTaskRegion);
+      //if (av.dbg.flg.nut) console.log('nut: pairArra[0]=', pairArray[0],'; re_region=', re_region, ', matchTaskRegion=', matchTaskRegion);
       //assume 'q' for quarters if suffix letter indicating subregion layout not included. 
       matchTaskRegion[4] = matchTaskRegion[3];
       matchTaskRegion[3] = 'q';
@@ -1116,22 +1116,30 @@
 
           //console.log('numTsk=',numTsk,'; subNum=',subNum,'; resrc.xdiffuse=',av.nut[numTsk].resrc.xdiffuse[subNum], '; resrc.ydiffuse=',av.nut[numTsk].resrc.ydiffuse[subNum]);
           if (av.nut[numTsk].resrc.xdiffuse[subNum]) {
-            if (!isNaN(Number(av.nut[numTsk].resrc.xdiffuse[subNum]))) {xdiffuse = Number(av.nut[numTsk].resrc.xdiffuse[subNum]);}
+            if (!isNaN(Number(av.nut[numTsk].resrc.xdiffuse[subNum]))) {
+              xdiffuse = Number(av.nut[numTsk].resrc.xdiffuse[subNum]);
+            }
             else {xdiffuse = 1;}
           } 
           else {xdiffuse = 1;}
           if (av.nut[numTsk].resrc.ydiffuse[subNum]) {
-            if (!isNaN(Number(av.nut[numTsk].resrc.ydiffuse[subNum]))) {ydiffuse = Number(av.nut[numTsk].resrc.ydiffuse[subNum]);}
+            if (!isNaN(Number(av.nut[numTsk].resrc.ydiffuse[subNum]))) {
+              ydiffuse = Number(av.nut[numTsk].resrc.ydiffuse[subNum]);
+            }
             else {ydiffuse = 1;}
           }
           else {ydiffuse = 1;}
           diffuse = Math.round((xdiffuse+ydiffuse)/2);
-          //console.log('diffuse=', diffuse);
+          console.log('xdiffuse=', xdiffuse, '; ydiffuse', ydiffuse, '; diffuse=', diffuse);
+          //console.log();
           if (0 < diffuse) {
             document.getElementById(tsk+subNum+'diffuseCheck').checked = true;
-            //need to assign diffuseCheck in uiSub to a value as well
+            av.nut[numTsk].uiSub.diffuseCheck[subNum] = true;
           }
-          else { document.getElementById(tsk+subNum+'diffuseCheck').checked = false;}
+          else { 
+            document.getElementById(tsk+subNum+'diffuseCheck').checked = false;
+            av.nut[numTsk].uiSub.diffuseCheck[subNum] = false;
+          }
 
           //------------------------------------------------------------------------- 
           // Find area of region or whole dish as needed for inflow  Not sure this statement is needed, as there should alway be an area for dish 1.
