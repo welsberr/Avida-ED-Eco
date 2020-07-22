@@ -99,7 +99,7 @@
       av.dom.envNone = document.getElementById('envNone');
       av.dom.envFinite = document.getElementById('envFinite');
       av.dom.envGradient = document.getElementById('envGradient');
-      av.dom.envEquilibrium = document.getElementById('envEquilibrium');
+      av.dom.envChemostat = document.getElementById('envChemostat');
       av.dom.envSourceSink = document.getElementById('envSourceSink');
       av.dom.envInitial = document.getElementById('envInitial');
       av.dom.envEqInflow = document.getElementById('envEqInflow');
@@ -110,6 +110,7 @@
       av.dom.envGrOutflow = document.getElementById('envGrOutflow');
       //av.dom.env = document.getElementById(''); 
 
+/*
       av.dom.notose = document.getElementById('notose');
       av.dom.andose = document.getElementById('andose');
       av.dom.orose = document.getElementById('orose');
@@ -119,7 +120,7 @@
       av.dom.ornose = document.getElementById('ornose');
       av.dom.andnose = document.getElementById('andnose');
       av.dom.xorose = document.getElementById('xorose');
-
+*/
 
       av.dom.notButton = document.getElementById('notButton');
       av.dom.andButton = document.getElementById('andButton');
@@ -298,31 +299,31 @@
           av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
         };
 
-        console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
-        console.log("document.getElementsByClassName('localEquilibrium')=", document.getElementsByClassName('localEquilibrium').length );
+        console.log("document.getElementsByClassName('globalChemostat')=", document.getElementsByClassName('globalChemostat').length );
+        console.log("document.getElementsByClassName('localChemostat')=", document.getElementsByClassName('localChemostat').length );
 
         console.log("document.getElementsByClassName('globalFinite')=", document.getElementsByClassName('globalFinite').length );
         
         //Hide select options that are not yet implemented
-        len = document.getElementsByClassName('localEquilibrium').length;
+        len = document.getElementsByClassName('localChemostat').length;
         for (ii = 0; ii < len; ii++) {
-          console.log('localEquilibrium=', document.getElementsByClassName('localDebug')[ii].id);
+          console.log('localChemostat=', document.getElementsByClassName('localDebug')[ii].id);
           document.getElementsByClassName('localDebug')[ii].style.display = 'none';
-          document.getElementsByClassName('localEquilibrium')[ii].style.display = 'none';
+          document.getElementsByClassName('localChemostat')[ii].style.display = 'none';
         };
        
         //Hide select options that are not yet implemented
-        len = document.getElementsByClassName('globalEquilibrium').length;
+        len = document.getElementsByClassName('globalChemostat').length;
         for (ii = 0; ii < len; ii++) {
           console.log('ii=',ii,'dom element=',document.getElementsByClassName('globalFinite')[ii].id);
           document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
           console.log('globalFinite=', document.getElementsByClassName('globalFinite')[ii].id);
-          document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'none';
+          document.getElementsByClassName('globalChemostat')[ii].style.display = 'none';
           document.getElementsByClassName('globalDebug')[ii].style.display = 'none';
         };
 
         // now clear options for changing all sugars (groups)
-        document.getElementsByClassName('groupEquilibrium')[0].style.display = 'none';
+        document.getElementsByClassName('groupChemostat')[0].style.display = 'none';
         //document.getElementsByClassName('groupFinite')[0].style.display = 'none';     //finite available for local options
         document.getElementsByClassName('groupDebug')[0].style.display = 'none';
 
@@ -356,17 +357,17 @@
         };
 
         //show environment options sill under development.
-        len = document.getElementsByClassName('localEquilibrium').length;
+        len = document.getElementsByClassName('localChemostat').length;
         for (ii = 0; ii < len; ii++) {
-          document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'inline';
+          document.getElementsByClassName('globalChemostat')[ii].style.display = 'inline';
           document.getElementsByClassName('globalFinite')[ii].style.display = 'inline';
           document.getElementsByClassName('globalDebug')[ii].style.display = 'inline';
-          document.getElementsByClassName('localEquilibrium')[ii].style.display = 'inline';
+          document.getElementsByClassName('localChemostat')[ii].style.display = 'inline';
           document.getElementsByClassName('localDebug')[ii].style.display = 'inline';
         };
         
          // now show options for changing all sugars (groups)
-        document.getElementsByClassName('groupEquilibrium')[0].style.display = 'inline';
+        document.getElementsByClassName('groupChemostat')[0].style.display = 'inline';
         //document.getElementsByClassName('groupFinite')[0].style.display = 'inline';     //finite available for local options
         document.getElementsByClassName('groupDebug')[0].style.display = 'inline';
 

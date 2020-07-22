@@ -27,7 +27,7 @@
     var newstr = '';
     var pattern = 'orn';  
     var pattern0 = 'orn0';  
-    var patternNum = 'orn';
+    var patternTsk = 'orn';
     var sgrNum = '';
     var len = av.sgr.logicNames.length;
     for (ii=0; ii<len; ii++) {
@@ -45,10 +45,10 @@
         newstr = av.dom.orn0Details.innerHTML;
         // av.nut.numRegionsinHTML is defined in globals and is the number of subregions in the html
         for (jj=1; jj <= av.nut.numRegionsinHTML; jj++) {
-          patternNum = pattern + jj.toString();
+          patternTsk = pattern + jj.toString();
           sgrNum = av.sgr.logicNames[ii] + jj;
-          //console.log('patternNum=',patternNum, '; sgrNum=',sgrNum);
-          newstr = newstr.replaceAll(patternNum, sgrNum);
+          //console.log('patternTsk=',patternTsk, '; sgrNum=',sgrNum);
+          newstr = newstr.replaceAll(patternTsk, sgrNum);
         }
         document.getElementById(av.sgr.logicNames[ii]+'0Details').innerHTML = newstr;
       }
@@ -297,7 +297,7 @@
           colorFlg = false;
         }
         else if ('finite' == supplyType.toLowerCase() ) {
-          initial = document.getElementById(tsk+sub+'initialHiInput').value;
+          initial = document.getElementById(tsk+sub+'initialHiNp').value;
           if (0 >= initial) {
             colorFlg = false;
           }
@@ -395,7 +395,7 @@
           colorFlg = true;
         }
         if ('finite' == supplyType.toLowerCase() ) {
-          initial = document.getElementById(tsk+ii+'initialHiInput').value;
+          initial = document.getElementById(tsk+ii+'initialHiNp').value;
           if (0 < initial) {
             colorFlg = true;
           }
@@ -466,8 +466,8 @@
       document.getElementById(tsk+sub+'inflowLoDiv').style.display = 'none';
       document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'none';
       document.getElementById(tsk+sub+'outflowLoDiv').style.display = 'none';
-      document.getElementById(tsk+sub+'equalHiDiv').style.display = 'none';
-      document.getElementById(tsk+sub+'equalLoDiv').style.display = 'none';
+      document.getElementById(tsk+sub+'chmstatHiDiv').style.display = 'none';
+      document.getElementById(tsk+sub+'chmstatLoDiv').style.display = 'none';
       tmpstr = JSON.stringify(av.nut[edTsk].uiSub.supplyType);
       //console.log('av.nut['+edTsk+'].uiSub.supplyType['+sub+'] =',av.nut[edTsk].uiSub.supplyType[sub], '; supplyType=', tmpstr);
     };
@@ -483,21 +483,21 @@
           document.getElementById(tsk+'0initialDiv').style.display = 'inline-block';
           document.getElementById(tsk+'0section').open = false;
           break;
-        case 'equilibrium':
+        case 'chemostat':
           document.getElementById(tsk+'1periodCheckbox').style.display = 'block';
           document.getElementById(tsk+'1inflowHiDiv').style.display = 'block';
           document.getElementById(tsk+'1outflowHiDiv').style.display = 'block';
           document.getElementById(tsk+'1inflowHiText').innerHTML = 'Inflow amount / cell';
           document.getElementById(tsk+'1outflowHiText').innerHTML = 'Outflow fraction / cell';
-          document.getElementById(tsk+'1equalHiDiv').style.display = 'block';
-          document.getElementById(tsk+'1equalHiText').innerHTML = ' = equilibrium when resource not consumed';
+          document.getElementById(tsk+'1chmstatHiDiv').style.display = 'block';
+          document.getElementById(tsk+'1chmstatHiText').innerHTML = ' = chemostat when resource not consumed';
           document.getElementById(tsk+'1subSection').className = 'grid-sugarDetail-globalEqual-container';
           // if (av.dbg.flg.nut) { console.log('task='+tsk, '; sub='+sub, '; get className from dom of ', tsk+'0Details'); }
           // if (av.dbg.flg.nut) { console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'0Details').className); }
           // if (av.dbg.flg.nut) { console.log(tsk+'1periodCheckbox.checked value =', document.getElementById(tsk+'1periodCheck').checked, document.getElementById(tsk+'1periodCheck').value); }
           if (true == document.getElementById(tsk+'1periodCheck').checked) {
             document.getElementById(tsk+'1periodTime').style.display = 'block';
-            document.getElementById(tsk+'1equalHiText').innerHTML = ' = equilibrium when resource not consumed';
+            document.getElementById(tsk+'1chmstatHiText').innerHTML = ' = chemostat when resource not consumed';
             document.getElementById(tsk+'1subSection').className = 'grid-sugarDetail-globalEqualPeriod-container';
           };
           document.getElementById(tsk+'0section').open = true;
@@ -515,8 +515,8 @@
           document.getElementById(tsk+'1inflowLoDiv').style.display = 'block';
           document.getElementById(tsk+'1outflowHiDiv').style.display = 'block';
           document.getElementById(tsk+'1outflowLoDiv').style.display = 'block';
-          document.getElementById(tsk+'1equalHiDiv').style.display = 'block';
-          document.getElementById(tsk+'1equalLoDiv').style.display = 'block';
+          document.getElementById(tsk+'1chmstatHiDiv').style.display = 'block';
+          document.getElementById(tsk+'1chmstatLoDiv').style.display = 'block';
           document.getElementById(tsk+'1hiSideSelectHolder').style.display = 'block';
           document.getElementById(tsk+'1sideText').innerHTML = 'Side text describing what side means';
           document.getElementById(tsk+'1subSection').className = 'grid-sugarDetailAll-container';
@@ -576,7 +576,7 @@
               // if (av.dbg.flg.nut) { console.log('subSection=', document.getElementById(tsk+sub+'subSection')); }
             }
             break;
-          case 'equilibrium':
+          case 'chemostat':
          // if (av.dbg.flg.nut) { console.log(tsk,'0gradientCheckbox.checked=', document.getElementById(tsk+sub+'gradientCheck').checked); }
             if (!av.nut.hideFlags.gradient) document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
             if (!av.nut.hideFlags.periodic) document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
@@ -592,10 +592,10 @@
               document.getElementById(tsk+sub+'inflowLoDiv').style.display = 'block';
               document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
               document.getElementById(tsk+sub+'outflowLoDiv').style.display = 'block';
-              document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
-              document.getElementById(tsk+sub+'equalLoDiv').style.display = 'block';
-              document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium on high side.';
-              document.getElementById(tsk+sub+'equalLoText').innerHTML = ' = equilibrium on Low side';
+              document.getElementById(tsk+sub+'chmstatHiDiv').style.display = 'block';
+              document.getElementById(tsk+sub+'chmstatLoDiv').style.display = 'block';
+              document.getElementById(tsk+sub+'chmstatHiText').innerHTML = ' = chemostat on high side.';
+              document.getElementById(tsk+sub+'chmstatLoText').innerHTML = ' = equilibrium on Low side';
               document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount / cell on high side.';
               document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction / cell on high side';
               document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualGradient-container';
@@ -615,21 +615,22 @@
               document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
               document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount / cell';
               document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction / cell';
-              document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
-              if (!isNaN(Number(av.nut[edTsk].uiSub.inflowHi[sub])) && !isNaN(Number(av.nut[edTsk].uiSub.outflowHi[sub]))) {
-                if (0<Number(av.nut[edTsk].uiSub.outflowHi[sub])) {
-                tmpNum = Number(av.nut[edTsk].uiSub.inflowHi[sub]) / Number(av.nut[edTsk].uiSub.outflowHi[sub]);
-                document.getElementById(tsk+sub+'equalHiText').innerHTML = tmpNum + ' = equilibrium if not consumed.';                  
+              document.getElementById(tsk+sub+'chmstatHiDiv').style.display = 'block';
+              if (!isNaN(Number(av.nut[edTsk].uiSub.inflowHiNp[sub])) && !isNaN(Number(av.nut[edTsk].uiSub.outflowHiNp[sub]))) {
+                if (0<Number(av.nut[edTsk].uiSub.outflowHiNp[sub])) {
+                tmpNum = Number(av.nut[edTsk].uiSub.inflowHiNp[sub]) / Number(av.nut[edTsk].uiSub.outflowHiNp[sub]);
+                
+                document.getElementById(tsk+sub+'chmstatHiText').innerHTML = tmpNum.toFixed(1) + ' = chemostat if not consumed.';                  
                 }
               }
               else {
-                document.getElementById(tsk+sub+'equalHiText').innerHTML = 'outflow must be greater than  0';
+                document.getElementById(tsk+sub+'chmstatHiText').innerHTML = 'outflow must be greater than  0';
               }
               document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Equal-container';
            // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
               if (true == document.getElementById(tsk+sub+'periodCheck').checked  && !av.sgr.hideFlgNames.periodic) {
                 document.getElementById(tsk+sub+'periodTime').style.display = 'block';
-                document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium when no resource has been consumed';
+                document.getElementById(tsk+sub+'chmstatHiText').innerHTML = ' = equilibrium when not consumed';
                 document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualPeriod-container';            
              // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
               }
@@ -663,8 +664,8 @@
             document.getElementById(tsk+sub+'inflowLoDiv').style.display = 'block';
             document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
             document.getElementById(tsk+sub+'outflowLoDiv').style.display = 'block';
-            document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
-            document.getElementById(tsk+sub+'equalLoDiv').style.display = 'block';
+            document.getElementById(tsk+sub+'chmstatHiDiv').style.display = 'block';
+            document.getElementById(tsk+sub+'chmstatLoDiv').style.display = 'block';
             document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetailAll-container';
          // if (av.dbg.flg.nut) { console.log(tsk+'Details.class=', document.getElementById(tsk+'Details').className); }
             break;
@@ -790,7 +791,7 @@
       if ('Finite' == av.ui.envDistribute) {  
         av.dom.envInitial.value  = envobj.initial[ndx];
       }
-      else if ('Equilibrium' == av.ui.envDistribute) {
+      else if ('Chemostat' == av.ui.envDistribute) {
         var inflow = envobj.inflow[ndx];
         var outflow = envobj.outflow[ndx];
         av.dom.envEqInflow.value = inflow;

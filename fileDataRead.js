@@ -774,7 +774,7 @@
         if (0 < rSourcObj.inflow[ndx]) {
           if (rSourcObj.inflowx1[ndx]===rSourcObj.outflowx1[ndx] && rSourcObj.inflowx2[ndx]===rSourcObj.outflowx2[ndx] && 
               rSourcObj.inflowy1[ndx]===rSourcObj.outflowy1[ndx] && rSourcObj.inflowy2[ndx]===rSourcObj.outflowy2[ndx] ) {
-            av.nut[numTsk].uiSub.supplyType[ndx] = 'Equilibrium';           
+            av.nut[numTsk].uiSub.supplyType[ndx] = 'Chemostat';           
           }
           else av.nut[numTsk].uiSub.supplyType[ndx] = 'Flow'; 
         }
@@ -1041,18 +1041,19 @@
       for (subNum = 1; subNum <= av.nut.numRegionsinHTML; subNum++) {
         //console.log('ocument.getElementById('+tsk+subNum+'supplyType) =', document.getElementById(tsk+subNum+'supplyType') );
         document.getElementById(tsk+subNum+'supplyType').value = av.sgr.nut.dft.uiSub.supplyType;
-        //console.log('ocument.getElementById('+tsk+subNum+'initialHiInput) =', document.getElementById(tsk+subNum+'initialHiInput') );
-        document.getElementById(tsk+subNum+'initialHiInput').value = av.sgr.nut.dft.uiSub.initialHi;
-        //console.log('document.getElementById('+tsk + subNum + 'inflowHiInput) =', document.getElementById(tsk+subNum+'inflowHi') );
-        document.getElementById(tsk+subNum+'inflowHiInput').value = av.sgr.nut.dft.uiSub.inflowHi;
-        document.getElementById(tsk+subNum+'outflowHiInput').value = av.sgr.nut.dft.uiSub.outflowHi;
+        //console.log('ocument.getElementById('+tsk+subNum+'initialHiNp) =', document.getElementById(tsk+subNum+'initialHiNp') );
+        document.getElementById(tsk+subNum+'initialHiNp').value = av.sgr.nut.dft.uiSub.initialHi;
+        //console.log('document.getElementById('+tsk + subNum + 'inflowHiNp) =', document.getElementById(tsk+subNum+'inflowHi') );
+        document.getElementById(tsk+subNum+'inflowHiNp').value = av.sgr.nut.dft.uiSub.inflowHi;
+        document.getElementById(tsk+subNum+'outflowHiNp').value = av.sgr.nut.dft.uiSub.outflowHi;
         document.getElementById(tsk+subNum+'diffuseCheck').value = av.sgr.nut.dft.uiSub.diffuseCheck;
         document.getElementById(tsk+subNum+'periodCheck').value = av.sgr.nut.dft.uiSub.periodCheck;
         document.getElementById(tsk+subNum+'gradientCheck').value = av.sgr.nut.dft.uiSub.gradientCheck;
-        document.getElementById(tsk+subNum+'sideSelect').value = av.sgr.nut.dft.uiSub.side;
-        document.getElementById(tsk+subNum+'inflowLoInput').value = av.sgr.nut.dft.uiSub.inflowLo;
-        document.getElementById(tsk+subNum+'outflowLoInput').value = av.sgr.nut.dft.uiSub.outflowLo;
-        document.getElementById(tsk+subNum+'initialLoInput').value = av.sgr.nut.dft.uiSub.initialLo;
+        //console.log('document.getElementById('+tsk+subNum+'hiSide)=', document.getElementById(tsk+subNum+'hiSide') );
+        document.getElementById(tsk+subNum+'hiSide').value = av.sgr.nut.dft.uiSub.hiSide;
+        document.getElementById(tsk+subNum+'inflowLoNp').value = av.sgr.nut.dft.uiSub.inflowLo;
+        document.getElementById(tsk+subNum+'outflowLoNp').value = av.sgr.nut.dft.uiSub.outflowLo;
+        document.getElementById(tsk+subNum+'initialLoNp').value = av.sgr.nut.dft.uiSub.initialLo;
         document.getElementById(tsk+subNum+'regionName').value = av.sgr.nut.dft.uiSub.regionName;
         //
         // Not really in Dom, but needed to transition between environment.cfg to dom back to environment.cfg
@@ -1130,8 +1131,7 @@
           }
           else {ydiffuse = 1;}
           diffuse = Math.round((xdiffuse+ydiffuse)/2);
-          console.log('xdiffuse=', xdiffuse, '; ydiffuse', ydiffuse, '; diffuse=', diffuse);
-          //console.log();
+          //console.log(tsk+subNum+'.xdiffuse=', xdiffuse, '; ydiffuse', ydiffuse, '; diffuse=', diffuse);
           if (0 < diffuse) {
             document.getElementById(tsk+subNum+'diffuseCheck').checked = true;
             av.nut[numTsk].uiSub.diffuseCheck[subNum] = true;
@@ -1156,8 +1156,8 @@
           rValue = Number(av.nut[numTsk].resrc.initial[subNum]);
           if ( !isNaN(rValue) ) {
             if ( 0 <= rValue ) {
-              document.getElementById(tsk+subNum+'initialHiInput').value = rValue;
-              av.nut[numTsk].uiSub.initialHi[subNum] = rValue;
+              document.getElementById(tsk+subNum+'initialHiNp').value = rValue;
+              av.nut[numTsk].uiSub.initialHiNp[subNum] = rValue;
             };
           };
 
@@ -1178,18 +1178,18 @@
           else {
               rValue = av.sgr.nut.dft.uiSub.inflowHi;           
           };
-          //console.log('id=', tsk+subNum+'inflowHiInput');
-          document.getElementById(tsk+subNum+'inflowHiInput').value = rValue;
-          av.nut[numTsk].uiSub.inflowHi[subNum] = rValue;
+          //console.log('id=', tsk+subNum+'inflowHiNp');
+          document.getElementById(tsk+subNum+'inflowHiNp').value = rValue;
+          av.nut[numTsk].uiSub.inflowHiNp[subNum] = rValue;
 
           //------------------------------------------------------------------------- 
           // if outflow is defined in RESOURCE, use that value, else use the default value from globals.
           rValue = Number(av.nut[numTsk].resrc.outflow[subNum]);
           if ( !isNaN(rValue) ) {
             if ( 0 <= rValue && rValue <= 1 ) {
-              
-              document.getElementById(tsk+subNum+'outflowHiInput').value = rValue;
-              av.nut[numTsk].uiSub.outflowHi[subNum] = rValue;
+              //console.log('av.nut['+numTsk+'].uiSub.outflowHiNp['+subNum+']=', tsk+subNum+'outflowHiNp).value=', rValue);
+              document.getElementById(tsk+subNum+'outflowHiNp').value = rValue;
+              av.nut[numTsk].uiSub.outflowHiNp[subNum] = rValue;
             };
           };
         
@@ -1200,7 +1200,7 @@
         console.log('Error: geometry unrecognized');
       }
       // must be called outside the subsections loop
-      console.log('av.nut['+numTsk+']', av.nut[numTsk])
+      //console.log('av.nut['+numTsk+']', av.nut[numTsk]);
       av.sgr.changeDetailsLayout(tsk, 1, 'av.frd.nutrientStruct2dom');  //the one in this case is for subsection, but it is not used. 
     }
     if (av.dbg.flg.nut) { 

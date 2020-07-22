@@ -102,6 +102,7 @@
     av.dom.childParentRadio.disabled = true;
     av.dom.childRandomRadio.disabled = true;
     /*
+     * These checkboxes no longer exist; tiba delete by 2021
     av.dom.notose.disabled = true;
     av.dom.nanose.disabled = true;
     av.dom.andose.disabled = true;

@@ -133,7 +133,6 @@
 
   av.fwt.dom2NutrientStruct = function (from) {
     av.fzr.clearEnvironment('av.fwt.dom2NutrientStruct');
-
     //------ assign ui parameters first --
     var tsk; //name of a task with 3 letters
     var numtsk; //number prefix to put in Avida-ED order before 3 letter prefix
@@ -141,16 +140,18 @@
     var arguDom;  // argument name in the Dom
     var arguDish; // arugment name in the nutrient structure (nut); which is also the arugment name in the environment.cfg file
     var logiclen = av.sgr.logicNames.length;
+    var area = 1;
     var uiAllDishLen = av.sgr.ui_allDish_argu.length;
     var uiAllDomLen  = av.sgr.ui_allDom_argu.length;
-    var uisubDomLen = av.sgr.ui_subDom_argu.length;
-    var uisubDishLen = av.sgr.ui_subDish_argu.length;
+    var uiSubDom_numLen = av.sgr.uiSubDom_num.length;
+    var uiSub_checkLen = av.sgr.uiSub_Check.length;
+    var ui_subDom_txt = av.sgr.ui_subDom_txt.length;
+    var tmpNum = 1;
 
     var react_arguLen = av.sgr.react_argu.length;
     console.log(from,'called av.fwt.dom2NutrientStruct: react_arguLen=',react_arguLen, 
-        ';aiAlDishLen=',uiAllDishLen,'; uiAllDomLen=', uiAllDomLen, '; uisubDomLen=', uisubDomLen, 
-        '; uisubDishLen=', uisubDishLen);
-    console.log('dom(nan1supplyType)=', document.getElementById('nan1supplyType').value);
+        ';aiAlDishLen=',uiAllDishLen,'; uiAllDomLen=', uiAllDomLen, '; uiSubdom_numLen=', uiSubDom_numLen, 
+        '; uiSub_checkLen=', uiSub_checkLen, '; ui_subDom_txt=', ui_subDom_txt);
     for (var ii=0; ii< logiclen; ii++) {      //9
       numtsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
       tsk = av.sgr.logicNames[ii];      //3 letter logic names
@@ -166,28 +167,48 @@
       };
       console.log('av.nut['+numtsk+'].uiAll=',av.nut[numtsk].uiAll);
       av.nut[numtsk].uiAll.regionsNumOf = av.nut[numtsk].uiAll.regionLayout[0];
-
+      
       //console.log('av.nut['+numtsk+'].uiAll.regionsNumOf=', av.nut[numtsk].uiAll.regionsNumOf, '; rName=', av.nut[numtsk].uiAll.regionLayout);
       // will need to go through a list of names later so maybe I should make the dictionary
        
-       
-      //start on the potential subdishes next (but only 1 for now). 
-      console.log('SubDishes Now -----------------uisubDom length=', uisubDomLen);
+      //start on the potential subdishes next
+      console.log('SubDishes Now -----------------uiSub_txt length=', ui_subDom_txt);
       for (kk=1; kk <= av.nut[numtsk].uiAll.regionsNumOf; kk++) {
         av.nut[numtsk].uiSub.subRegion[kk] = kk;      //not sure this is needed or make sense. needs work when get past one reagion
-        for (jj=0; jj< uisubDomLen; jj++) {
-          arguDom = av.sgr.ui_subDom_argu[jj];
-          arguDish = av.sgr.ui_subDish_argu[jj];
-          console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDish+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
+ 
+        for (jj=0; jj< ui_subDom_txt; jj++) {
+          arguDom = av.sgr.ui_subDom_txt[jj];
+          console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
           console.log('; dom=',document.getElementById(tsk+kk+arguDom).value ); 
-          av.nut[numtsk].uiSub[arguDish][kk] = document.getElementById(tsk+kk+arguDom).value;
+          av.nut[numtsk].uiSub[arguDom][kk] = document.getElementById(tsk+kk+arguDom).value;
         };
-        console.log('arguDom=', arguDom);
+        for (jj=0; jj< uiSub_checkLen; jj++) {
+          arguDom = av.sgr.uiSub_Check[jj];
+          console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
+          console.log('; dom=',document.getElementById(tsk+kk+arguDom).checked ); 
+          av.nut[numtsk].uiSub[arguDom][kk] = document.getElementById(tsk+kk+arguDom).checked;
+        };
+        
+        // error in this section
+        //Need to fine area of subregions first. 
+        for (jj=0; jj< uiSubDom_numLen; jj++) {
+          arguDom = av.sgr.uiSubDom_num[jj];
+          console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
+          console.log('; dom=',document.getElementById(tsk+kk+arguDom) ); 
+          if (!isNaN(Number(document.getElementById(tsk+kk+arguDom).value))) {
+            tmpNum = Number(document.getElementById(tsk+kk+arguDom).value);
+            if ('in' == arguDom.substr(0,2)) {
+              tmpNum = tmpNum / area;   //need to find area first
+            };
+          av.nut[numtsk].uiSub[arguDom][kk] = tmpNum;
+          }
+        };
+/*        
         av.nut[numtsk].uiSub.diffuseCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
         av.nut[numtsk].uiSub.periodCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
         av.nut[numtsk].uiSub.gradientCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
         av.nut[numtsk].uiSub.regionCode[kk] = document.getElementById(tsk+kk+arguDom).value;
-
+*/
         
         //now use what is in uiAll and uiSub to make resource and reaction fields
         // Start with default Avida-ED values for reactoins. 
@@ -332,7 +353,7 @@
             break;
           case 'finite':
             // later will get from av.nut
-            sgrPerCell = Number(document.getElementById(tsk+ndx+'initialHiInput').value);
+            sgrPerCell = Number(document.getElementById(tsk+ndx+'initialHiNp').value);
             regionInit = numCells * sgrPerCell;
             //console.log('tsk=',tsk,'; ndx=',ndx,'; sgrPerCell=', sgrPerCell, '; diffusion checkbox = ', document.getElementById(tsk+ndx+'diffuseCheck').checked );
 
@@ -363,7 +384,9 @@
     av.fwt.form2NutrientTxt(idStr, toActiveConfigFlag, 'av.fwt.makeFzrEnvironmentCfg');  
   };
 
-  /*--------------------------------------------------------------------------------- av.fwt.makeFzrOldEnvironmentCfg --*/
+  /*--------------------------------------------------------------------------------- av.fwt.makeFzrOldEnvironmentCfg --
+   *  This function is not loner in use. delete by 2021
+   
   av.fwt.makeFzrOldEnvironmentCfg = function (idStr, from) {
     'use strict';
     if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrOldEnvironmentCfg *************************************************');

@@ -223,10 +223,12 @@
   #wsSavedMsg{
     color: blue;
   }
+  /* not used as of 2020 July 23 
   #RtSideSelectHolder{
     height: 20px;
     margin: auto;
   }
+  */
   #RtSideToggleButtons{
     height: 20px;
     margin: auto;
@@ -609,13 +611,13 @@
 
 .groupDebug{  display: inline; }
 .grooupFinite { display: inline; }
-.groupEquilibrium { display: inline; }
+.groupChemostat { display: inline; }
 
 .globalFinite { display: inline; }
-.globalEquilibrium { display: inline; }
+.globalChemostat { display: inline; }
 .globalDebug { display:inline; }
 
-.localEquilibrium { display: inline; }
+.localChemostat { display: inline; }
 .localDebug { display:inline; }
 
 .HalfLftRit{
@@ -647,32 +649,33 @@
 .sugarSummarySpan{
   display: inline-block;
 }
-.sugPeriodInput{
+.sugPeriodNclass{
   width: 3.5em; height:1.5em;
 }
-.sugInitialInput{
+.sugInitialNclass{
   width: 4em; height:1.5em;
 }
-.sugInitialHiInput{
+.sugInitialHiNclass{
   width: 4em; height:1.5em;
 }
-.sugInitialLoInput{
+.sugInitialLoNclass{
   width: 4em; height:1.5em;
 }
-.sugInflowHiInput{
+.sugInflowHiNclass{
   width: 3.5em; height:1.5em;
 }
-.sugInflowLoInput{
+.sugInflowLoNclass{
   width: 3.5em; height:1.5em;
 }
-.sugOutflowHiInput{
+.sugOutflowHiNclass{
   width: 3.5em; height:1.5em;
 }
-.sugOutflowLoInput{
+.sugOutflowLoNclass{
   width: 3.5em; height:1.5em;
 }
+/*   Not in use as of 2020 july 22
 #notSection{
-  background: rgba(255,153,178, 1);  /* bigger number is closer to white; 0,0,0 is black*/
+  background: rgba(255,153,178, 1);  /* bigger number is closer to white; 0,0,0 is black
 }
 #nanSection{
   background: rgba(255,204,153, 1);
@@ -718,52 +721,52 @@
 
 /************************* Sugar controls layout in 'deails' of detail/summary for each task-sugar in sugar according */
 
-.initialHi { grid-area: initialHi;}
-.initialLo { grid-area: initialLo;}
+.initialHiDclass { grid-area: initialHi;}
+.initialLoDclass { grid-area: initialLo;}
 
-.inflowHi { grid-area: inflowHi; }
-.inflowLo { grid-area: inflowLo; }
+.inflowHiDclass { grid-area: inflowHi; }
+.inflowLoDclass { grid-area: inflowLo; }
 
-.outflowHi { grid-area: outflowHi; }
-.outflowLo { grid-area: outflowLo; }
+.outflowHiDclass { grid-area: outflowHi; }
+.outflowLoDclass { grid-area: outflowLo; }
 
-.equalHi { grid-area: equalHi; }
-.equalLo { grid-area: equalLo; }
+.chmstatHiDclass { grid-area: chmstatHi; }
+.chmstatLoDclass { grid-area: chmstatLo; }
 
-.sideTitleHi { grid-area: sideTitleHi; }
-.sideTitleLo { grid-area: sideTitleLo; }
+.sideTitleHiDclass { grid-area: sideTitleHi; }
+.sideTitleLoDclass { grid-area: sideTitleLo; }
 
-.typeInput { grid-area: typeInput; }
-.sideInput { grid-area: sideInput; }
+.sideNclass { grid-area: sideInput; }
+.supplyTypeNclass { grid-area: supplyType; }
 
 .subSectionTitle { grid-area: subSectionTitle; }
 .sgrBlank { grid-area: sgrBlank; }
 
 .periodCheckDiv { grid-area: periodCheckDiv; }
-.periodTime { grid-area: periodTime; }
+.periodTimeClass { grid-area: periodTime; }
 
 .gradientCheckDiv { grid-area: gradientCheckDiv; }
 .diffuseCheckDiv { grid-area: diffuseCheckDiv; }
 
 .grid-sugarDetail-Infinite-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput sgrBlank';
+  grid-template-areas: 'subSectionTitle supplyType sgrBlank';
   width: 100%;
 }
 
 .grid-sugarDetail-Finite-noGrradientCheckbox-container {  //not in use
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput initialHi';
+  grid-template-areas: 'subSectionTitle supplyType initialHi';
   width: 100%;
 }
 .grid-sugarDetail-Finite-noGradientCheckboxOneLine-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput initialHi diffuseCheckDiv';
+  grid-template-areas: 'subSectionTitle supplyType initialHi diffuseCheckDiv';
   width: 100%;
 }
 .grid-sugarDetail-Finite-noGradientCheckbox-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv'
+  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv'
                        'initialHi initialHi sgrBlank';
   /* border: 1px solid rgba(128, 128, 128, 0.5); */
   border: 1px solid #888;
@@ -773,13 +776,13 @@
 
 .grid-sugarDetail-Finite-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
+  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv gradientCheckDiv'
                        'initialHi  initialHi initialHi initialHi';
   width: 100%;
 }
 .grid-sugarDetail-FiniteGradient-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
+  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv gradientCheckDiv'
                        'sideInput sideInput sideInput sideInput'
                        'initialHi  initialHi initialLo initialLo';
   width: 100%;
@@ -787,7 +790,7 @@
 
 .grid-sugarDetail-FiniteGradient-container_md {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv'
+  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv'
                        'initialLo initialLo sideInput'
                        'initialHi  initialHi gradientCheckDiv';
   width: 100%;
@@ -795,7 +798,7 @@
 
 .grid-sugarDetail-FiniteGradient-container_old {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv'
+  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv'
                        'sideInput sideInput sideInput gradientCheckDiv'
                        'initialHi initialHi initialLo initialLo';
   width: 100%;
@@ -803,7 +806,7 @@
 
 .grid-sugarDetailAll-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput'
+  grid-template-areas: 'subSectionTitle supplyType'
                        'sideInput sideInput'
                        'periodCheckDiv periodTime'
                        'gradientCheckDiv diffuseCheckDiv'
@@ -811,66 +814,66 @@
                        'initialHi initialLo'
                        'inflowHi inflowLo'
                        'outflowHi outflowLo'
-                       'equalHi equalLo';
+                       'chmstatHi chmstatLo';
   width: 100%;
 }
 .grid-sugarDetail-globalEqual-container {
   display: grid;
   grid-template-areas: 'inflowHi periodCheckDiv'
-                       'outflowHi equalHi';
+                       'outflowHi chmstatHi';
   width: 100%;
 }
 .grid-sugarDetail-globalEqualPeriod-container {
   display: grid;
   grid-template-areas: 'inflowHi periodCheckDiv periodTime'
-                       'outflowHi equalHi equalHi';
+                       'outflowHi chmstatHi chmstatHi';
   width: 100%;
 }
 .grid-sugarDetail-None-container {
   display: grid;
-  grid-template-areas: 'typeInput sgrBlank sgrBlank sgrBlank sgrBlank';
+  grid-template-areas: 'supplyType sgrBlank sgrBlank sgrBlank sgrBlank';
   width: 100%;
 }
 
 .grid-sugarDetail-Equal-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
+  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv gradientCheckDiv'
                        'inflowHi inflowHi periodCheckDiv periodCheckDiv'
-                       'outflowHi outflowHi equalHi equalHi';
+                       'outflowHi outflowHi chmstatHi chmstatHi';
   width: 100%;
 }
 .grid-sugarDetail-EqualPeriod-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
+  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv gradientCheckDiv'
                        'inflowHi inflowHi periodCheckDiv periodTime'
-                       'outflowHi outflowHi equalHi equalHi';
+                       'outflowHi outflowHi chmstatHi chmstatHi';
   width: 100%;
 }
 
 .grid-sugarDetail-EqualGradient-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
+  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv gradientCheckDiv'
                        'sideInput sideInput sideInput      periodCheckDiv'
 /*                     'sideTitleHi sideTitleLo'   */
                        'inflowHi inflowHi    inflowLo inflowLo'
                        'outflowHi outflowHi  outflowLo outflowLo'
-                       'equalHi equalHi      equalLo equalLo';
+                       'chmstatHi chmstatHi  chmstatLo chmstatLo';
   width: 100%;
   color: black;
 }
 .grid-sugarDetail-EqualGradientPeriod-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
+  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv gradientCheckDiv'
                        'sideInput sideInput       periodTime periodCheckDiv'
 /*                     'sideTitleHi sideTitleLo'   */
                        'inflowHi inflowHi    inflowLo inflowLo'
                        'outflowHi outflowHi  outflowLo outflowLo'
-                       'equalHi equalHi      equalLo equalLo';
+                       'chmstatHi chmstatHi  chmstatLo chmstatLo';
   width: 100%;
 }
 .grid-sugarDetail-Flow-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput'
+  grid-template-areas: 'subSectionTitle supplyType'
                        'sideInput sideInput'
                        'inflowHi outflowHi';
   width: 100%;
@@ -1077,7 +1080,8 @@ checkbox:focus {
 }
 
 /******************************************************************** end used in examples will be deleted eventually */
-  
+
+/* not in use as of 2020 July 22
 .taskSets{
   display: flex;
   flex-direction: row;
@@ -1103,7 +1107,7 @@ checkbox:focus {
   width: 2em;      /*  4.5em */
   height:1.6em
 }
-
+*/
   .orgBenchCol{
     background: #F5F5F5; /* lightgoldenrodyellow;*/
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
@@ -1114,9 +1118,9 @@ checkbox:focus {
   }
   .orgBenchTopRow{
     border: 1px solid #AAA;
-    flex:0 1 30px;    // describes this as element in a bigger flex box
+    flex:0 1 30px;    /* describes this as element in a bigger flex box */
     overflow: auto;
-    display: flex;    // makes this a flexbox to hold smaller elements
+    display: flex;    /* makes this a flexbox to hold smaller elements */
     flex-direction: row;
   }
   .orgTopLt{
@@ -1258,7 +1262,7 @@ checkbox:focus {
       padding 3px;
       background: #F5F5F5;  /*lemonchiffon; */
     }
-    //insdie popDishHolder
+    /* insdie popDishHolder */
     .popDishClass {
       min-height: 1.6em;
       padding: 5px;
@@ -1324,7 +1328,7 @@ checkbox:focus {
 
 /*************************************************************************************************** no longer in use */
 
-//Not in use, but could be useful
+/// Not in use, but could be useful
   /* from https://www.bestcssbuttongenerator.com/#/17 */
   .fancyButton {
     -moz-box-shadow: 5px 4px 7px 0px #899599;

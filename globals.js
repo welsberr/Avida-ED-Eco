@@ -474,7 +474,7 @@
 */
 /*
   //not in current use
-  //av.sgr.supply_argu = ['region', 'side', 'grdNum', 'regionCode','regionList'];           //each is an array for region
+  //av.sgr.supply_argu = ['region', 'hiSide', 'grdNum', 'regionCode','regionList'];           //each is an array for region
 
   //number of subdishis is useful, especially if we only allow one layout per number of subdishes. 
   //geometry is always the same for all regions, but also part of the avida arguments for resource. 
@@ -596,7 +596,7 @@
                       , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'
                       ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow' ];   //these are new for Avida-ED and not in the wiki. 
                   //belong ui part of structure not resource
-                  //, 'region', 'side', 'grdNum', 'regionCode','regionList'];  // this last row is not in the argurments for avida; used for 'multi-dish'
+                  //, 'region', 'hiSide', 'grdNum', 'regionCode','regionList'];  // this last row is not in the argurments for avida; used for 'multi-dish'
 
   av.sgr.resrc_num = ['initial', 'inflow', 'outflow',
                       , 'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'  
@@ -604,27 +604,27 @@
                       , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'
                       , 'boxx', 'boyy', 'boxcol', 'boxrow' ];   //these are new for Avida-ED and not in the wiki. 
 
-  //names of arguements that have numerical values in av.nut[numtsk].uiSub
-  av.sgr.uiSub_num = ['initialHi', 'inflowHi', 'outflowHi', 
-                      'initialLo', 'inflowLo', 'outflowLo', 'period'];
-
-  av.sgr.uiDom_num = ['initialHiInput', 'inflowHiInput', 'outflowHiInput', 
-                      'initialLoInput', 'inflowLoInput', 'outflowLoInput', 'periodInput'];
+                    
+                    
+                    
+                    
   av.sgr.uiMin = [-2, -2, 1, -2, -2, 0, -2];  //need to document this tiba                  
   av.sgr.uiMax = [ 0,  0, 0,  0,  0, 0, 1];
   
-  av.sgr.ui_subD_Check = [ 'diffuseCheck', 'periodCheck', 'gradientCheck' ];
-  av.sgr.ui_subDom_num = ['initialHiInput', 'inflowHiInput', 'outflowHiInput', 'periodInput' 
-                        , 'initialLoInput', 'inflowLoInput', 'outflowLoInput', 'area'];
-  av.sgr.ui_subDom_num = ['initialHi', 'inflowHi', 'outflowHi', 'period' 
-                        , 'initialLo', 'inflowLo', 'outflowLo', 'area'];
-  av.sgr.ui_subDom_argu = ['supplyType', 'initialHiInput', 'inflowHiInput', 'outflowHiInput', 'periodInput'
+  av.sgr.uiSubDom_num = ['initialHiNp', 'inflowHiNp', 'outflowHiNp',                
+                      'initialLoNp', 'inflowLoNp', 'outflowLoNp', 'periodNp'];  //names of arguements that have numerical values in the dom for each subdish
+  av.sgr.uiSubDish_num = ['initialHiNp', 'inflowHiNp', 'outflowHiNp', 
+                        , 'initialLoNp', 'inflowLoNp', 'outflowLoNp', 'periodNp', 'area'];  //names of arguements that have numerical values in av.nut[numtsk].uiSub
+  av.sgr.ui_subDom_txt = ['supplyType', 'hiSide'];                      
+  
+  av.sgr.uiSub_Check = [ 'diffuseCheck', 'periodCheck', 'gradientCheck' ];
+  av.sgr.ui_subDom_argu = ['supplyType', 'initialHiNp', 'inflowHiNp', 'outflowHiNp', 'periodNp'
                           , 'diffuseCheck', 'periodCheck'   //not sure if regionCode and regionName belong in Dom
-                          , 'gradientCheck', 'sideSelect', 'initialLoInput', 'inflowLoInput', 'outflowLoInput'];
-  av.sgr.ui_sub_num_argu_use = 6; // goint from dom to struct
-  av.sgr.ui_subDish_argu = ['supplyType', 'initialHi', 'inflowHi', 'outflowHi', 'periodTime'
+                          , 'gradientCheck', 'hiSide', 'initialLoNp', 'inflowLoNp', 'outflowLoNp'];
+
+  av.sgr.ui_subDish_argu = ['supplyType', 'initialHiNp', 'inflowHiNp', 'outflowHiNp', 'periodNp'
                           , 'diffuseCheck', 'periodCheck', 'area'
-                          , 'gradientCheck', 'side', 'initialLo', 'inflowLo', 'outflowLo'
+                          , 'gradientCheck', 'hiSide', 'initialLoNp', 'inflowLoNp', 'outflowLoNp'
                           , 'regionCode', 'regionName', 'boxed' , 'subRegion', 'regionNdx'];  
                         //subRegion is not in Dom, so it is at the end; boxed has not been added to the dom yet
                         //I don't think subRegion is in use. 
@@ -689,10 +689,10 @@
 
 
   // need to figure out how to assign when reading environment.cfg
-    av.sgr.supply3 =      ['non', 'inf',  'fin',  'equ',  'poi', 'flo' ];  //none, infinite, finite, equilibrium, poison
-    av.sgr.supply4 =      ['none', 'infn', 'fint', 'equl', 'pois', 'flow'];
-    av.sgr.supply  =      ['None', 'Infinite', 'Finite', 'Equilibrium', 'Flow'];    //only using the first 3 for now; 
-    av.sgr.supplylower  = ['none', 'infinite', 'finite', 'equilibrium', 'flow'];    //only using the first 3 for now; 
+    av.sgr.supply3 =      ['non', 'inf',  'fin',  'chm',  'poi', 'flo' ];  //none, infinite, finite, chemostat, poison
+    av.sgr.supply4 =      ['none', 'infn', 'fint', 'chst', 'pois', 'flow'];
+    av.sgr.supply  =      ['None', 'Infinite', 'Finite', 'Chemostat', 'Flow'];    //only using the first 3 for now; 
+    av.sgr.supplylower  = ['none', 'infinite', 'finite', 'chemostat', 'flow'];    //only using the first 3 for now; 
     //Flow would be from the source in a diffrent place fromt he sink: that is input x,y coordinaes are different from those of output. 
     av.sgr.supplyLetter = ['N'  , 'I'  , 'F'  , 'E', 'P', 'S'];   
     av.sgr.side1 = ['L', 'R', 'T', 'B', 'C', 'E', 'U'];
@@ -743,8 +743,8 @@
     //defaults for subtasks which must be Grid or Local
     av.sgr.nut.dft.uiSub.supplyType = 'Infinite';  // Infinite default from Avida-ED 3: I think Should change to Finite
     av.sgr.nut.dft.uiSub.initialHi = 1000;  //sugar units/cell guess at an initial value when supplyType='finite'; need to multiply by wrldSize
-    av.sgr.nut.dft.uiSub.inflowHi  = 100;   //sugar units/cell guess at an initial value when supplyType='equilibrium'; need to multiply by wrldSize
-    av.sgr.nut.dft.uiSub.outflowHi = 0.1;   //sugar units (fraction) guess at an initial value when supplyType='equilibrium';
+    av.sgr.nut.dft.uiSub.inflowHi  = 100;   //sugar units/cell guess at an initial value when supplyType='chemostat'; need to multiply by wrldSize
+    av.sgr.nut.dft.uiSub.outflowHi = 0.1;   //sugar units (fraction) guess at an initial value when supplyType='chemostat';
     av.sgr.nut.dft.uiSub.area = 900;   //based on a standard 30 x 30 world
     av.sgr.nut.dft.uiSub.diffuseCheck = false;    //false = default;  else true.      
     //from event file
@@ -752,7 +752,7 @@
     av.sgr.nut.dft.uiSub.periodTime = 1000;    //need to play with default time in updates
  
     av.sgr.nut.dft.uiSub.gradientCheck = false;    //false = default;  else true.      
-    av.sgr.nut.dft.uiSub.side = 'left';    //only valid for local resources with supply Type = 'gradient' or 'flow';
+    av.sgr.nut.dft.uiSub.hiSide = 'left';    //only valid for local resources with supply Type = 'gradient' or 'flow';
     av.sgr.nut.dft.uiSub.inflowLo  =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
     av.sgr.nut.dft.uiSub.outflowLo = 0.1;  //sugar units (fraction) guess at an initial value when supplyType='gradient' or 'flow';
     av.sgr.nut.dft.uiSub.initialLo =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
@@ -831,8 +831,11 @@
     if (av.dbg.flg.nut) {
       av.cleanNut = {};
       av.cleanNut = JSON.parse(JSON.stringify(av.nut));
-      av.cleanNut[tsk].uiAll.geometry = 'grid';
-      console.log('av.nut[tsk].uiAll.geometry', av.nut[tsk].uiAll.geometry, '; tsk=', tsk);
+      // section to verifiy that av.nut and av.cleanNut are different structurs; console.log statements verified that they are different
+      // av.cleanNut[tsk].uiAll.geometry = 'grid';
+      // console.log('av.nut[tsk].uiAll.geometry', av.nut[tsk].uiAll.geometry, '; tsk=', tsk);
+      // console.log('av.cleanNut[tsk].uiAll.geometry', av.cleanNut[tsk].uiAll.geometry, '; tsk=', tsk);
+      console.log('near end of av.fzr.clearEnvironment');
       console.log('av.oldNut =', av.oldNut);
       console.log('av.cleanNut=', av.cleanNut);
     }
