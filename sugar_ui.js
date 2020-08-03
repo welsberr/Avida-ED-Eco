@@ -427,15 +427,19 @@
     av.nut[edTsk].uiAll.regionLayout = document.getElementById(tsk+'0regionLayout').value;
     //console.log('layout =', av.nut[tsk].uiAll.regionLayout, '; tsk=', tsk, ' subChanged=', subChanged, '; from=', from);
     av.nut[edTsk].uiAll.regionsNumOf =  Number(av.nut[edTsk].uiAll.regionLayout.substr(0,1) );
-    //console.log('num sub Regions=', av.nut[edTsk].uiAll.regionsNumOf, 'layoutName=', av.nut[edTsk].uiAll.regionLayout);
-    switch (av.nut[edTsk].uiAll.regionLayout) {
+    //console.log('num sub Regions=', av.nut[edTsk].uiAll.regionsNumOf, 'layoutName=', '|'+av.nut[edTsk].uiAll.regionLayout+'|');
+    
+    regionNameList = av.sgr[av.nut[edTsk].uiAll.regionLayout];
+/*    switch (av.nut[edTsk].uiAll.regionLayout) {
       case '1All':
-        regionNameList = av.sgr.All;
+        regionNameList = av.sgr['1All'];
+        
         break;
       case '2LftRit':
         regionNameList = av.sgr.LftRit;
         break;
     };
+  */
     //console.log('regionNameList=', regionNameList);
     //this 2 line method woks to get the value of the option in the select structure, but so does the one line method;
     //var idx = document.getElementById(tsk+'0geometry').selectedIndex;

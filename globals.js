@@ -667,8 +667,8 @@
     av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '3TopLftRit', '4Quarters'];
 
     //entry zero is blank so index matches subregion number 
-    av.sgr.All = [' ', 'Whole Dish'];
-    av.sgr.LftRit = [' ','Left', 'Right']; 
+    av.sgr['1All'] = [' ', 'Whole Dish'];
+    av.sgr['2LftRit'] = [' ','Left', 'Right']; 
     
   //will need something like the statement below eventuatlly
   //sav.sgr['3TopLftRit'] = ['top', 'Lft', 'Rit'];
@@ -699,7 +699,7 @@
     av.sgr.side3 = ['Lft', 'Rit', 'Top', 'Bot', 'Cen', 'Edg', 'Unk']; //left, right, top, bottom, center, edge, unknown
     av.sgr.side = ['left', 'rite', 'top', 'bottom', 'center', 'edges', 'unknown'];
 
-    av.sgr.hideFlgNames = ['gradient', 'periodic', 'diffuse'];  
+    av.sgr.hideFlgNames = ['gradient', 'periodic'];  
     av.sgr.hideFlagInit = [true, true];  //true is to hide when areas underdevelopment are hidden. 
     av.sgr.flagInitOpposite = [false, false];  //false in this case is to NOT hide as develpment sections shown.
 
@@ -828,7 +828,8 @@
         av.nut[tsk]['uiSub'][av.sgr.ui_subDish_argu[jj] ] = [];
       };
     };   //end of looping through the logic tasks.
-    if (av.dbg.flg.nut) {
+    //if (av.dbg.flg.nut) {
+    if (true) {
       av.cleanNut = {};
       av.cleanNut = JSON.parse(JSON.stringify(av.nut));
       // section to verifiy that av.nut and av.cleanNut are different structurs; console.log statements verified that they are different

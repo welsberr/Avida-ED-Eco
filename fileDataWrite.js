@@ -81,6 +81,7 @@
     //console.log('col; row - text', av.dom.sizeCols.text, av.dom.sizeRows.text);
     //console.log('col; row - value', av.dom.sizeCols.value, av.dom.sizeRows.value);
     //console.log('col; row - HTML', av.dom.sizeCols.innerHTML, av.dom.sizeRows.innerHTML);
+    
     var txt = 'WORLD_X ' + av.dom.sizeCols.value + '\n';
     txt += 'WORLD_Y ' + av.dom.sizeRows.value + '\n';
     txt += 'WORLD_GEOMETRY 1 \n';
@@ -127,12 +128,121 @@
     else {av.fwt.makeFzrFile(idStr+'/avida.cfg', txt, 'av.fwt.makeFzrAvidaTest');}
   };
 
-  /*---------------------------------------------------------------------------------- end of av.fwt.makeFzrAvidaTest --*/
+  /*-------------------------------------------------------------------------------- end of av.fwt.makeFzrAvidaTest --*/
 
-  /*-------------------------------------------------------------------------------------- av.fwt.dom2NutrientStruct --*/
+  //------------------------------------------------------------------------------------- av.fwt.nutUI2cftParameters  --
+  av.fwt.nutUI2cftParameters = function (from) {
+    console.log(from, 'called av.fwt.nutUI2cftParameters');
+    //------ assign ui parameters first --
+    var tsk; //name of a task with 3 letters
+    var numtsk; //number prefix to put in Avida-ED order before 3 letter prefix
+    var tskvar;  // avida uses variable length logic9 names
+    var logiclen = av.sgr.logicNames.length;
+    var tmpNum = 1;
+    var tmpTxt = '';
+    var ndx = 1;
+    var kk = 0;
+    var react_arguLen = av.sgr.react_argu.length;
 
-  av.fwt.dom2NutrientStruct = function (from) {
-    av.fzr.clearEnvironment('av.fwt.dom2NutrientStruct');
+    for (var ii=0; ii< logiclen; ii++) {      //9
+      numtsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
+      tsk = av.sgr.logicNames[ii];      //3 letter logic names
+      tskvar = av.sgr.logicVnames[ii];   // variable length logic tasks names as required by Avida
+      
+      if ('global' == av.nut[numtsk].uiAll.geometry.toLowerCase()) {
+        kk = 0;
+        // Start with default Avida-ED values for reactoins. re-writen with dictionary. 
+        for (var ll = 0; ll < react_arguLen; ll++) {
+          av.nut[numtsk].react[ av.sgr.react_argu[ll] ][kk] = av.sgr.reAct_edValu_d[av.sgr.react_argu[ll]];
+        }
+        av.nut[numtsk].react.name[0] = tsk+'000';
+        av.nut[numtsk].react.task[0] = tskvar;
+        console.log('numtsk =', numtsk,';  av.nut[numtsk].react=', av.nut[numtsk].react);
+        
+/*
+        
+        
+        av.nut[numtsk].react.max[0] = 1;
+        av.nut[numtsk].react.max_count[0] = 1;
+        av.nut[numtsk].react.min[0] = 0.99;
+        av.nut[numtsk].react.resource[0] = 'missing';
+        av.nut[numtsk].react.name[0] = tsk+'000';
+        av.nut[numtsk].react.task[0] = tskvar;
+        av.nut[numtsk].react.type[0] = 'pow';
+        av.nut[numtsk].react.depletable[0] = 1;
+        av.nut[numtsk].react.value[0] = av.sgr.reactValues[ii];
+*/
+                switch ( av.nut[numtsk].uiAll.supplyType.toLowerCase() ) {
+          case 'none':
+            av.nut[numtsk].react.value = 0;
+            break;
+          case 'infinite':
+            av.nut[numtsk].react.depletable[0] = 0;
+            break;
+          case 'finite':
+            av.nut[numtsk].react.resource[0] = tsk+'000';
+            break;
+          case 'chemostat': 
+            av.nut[numtsk].react.resource[0] = tsk+'000';
+            break;
+        }
+      }
+      else {
+        len = av.nut[numtsk].uiSub.regionCode.length;
+        for (var jj=1; jj<= len; jj++) {
+          // Start with default Avida-ED values for reactoins. re-writen with dictionary. 
+          for (var ll = 0; ll < react_arguLen; ll++) {
+            av.nut[numtsk].react[ av.sgr.react_argu[ll] ][jj] = av.sgr.reAct_edValu_d[av.sgr.react_argu[ll]];
+          }
+          av.nut[numtsk].react.name[jj] = tsk+'000';
+          av.nut[numtsk].react.resource[jj] = av.nut[numtsk].react.name[jj];
+          av.nut[numtsk].react.task[jj] = tskvar;
+          
+ /*
+          av.nut[numtsk].react.max[jj] = 1;
+          av.nut[numtsk].react.max_count[jj] = 1;
+          av.nut[numtsk].react.min[jj] = 0.99;
+          av.nut[numtsk].react.name[jj] = tsk+'000';
+          av.nut[numtsk].react.resource[jj] = av.nut[numtsk].react.name[jj];
+          av.nut[numtsk].react.resource[jj] = tsk+'000';
+          av.nut[numtsk].react.task[jj] = tskvar;
+          av.nut[numtsk].react.type[jj] = 'pow';
+          av.nut[numtsk].react.depletable[jj] = 1;
+*/ 
+          switch ( av.nut[numtsk].uiAll.supplyType.toLowerCase() ) {
+            case 'none':
+              break;
+            case 'infinite':
+              av.nut[numtsk].react.depletable[jj] = 0;
+              break;
+            case 'finite':
+              av.nut[numtsk].react.resource[jj] = tsk+'000';
+              break;
+            case 'chemostat': 
+              av.nut[numtsk].react.resource[jj] = tsk+'000';
+              break;
+          }
+        }  // for go thru array of subregions in grid;
+      }  // end global else grid
+    }  //end for loop to go thru all sugars
+    if (true) { 
+      console.log('----------------------------------------------End of av.fwt.dom2nutUIfields, when called by ', from);
+      av.nut_ui_cfg = {};
+      av.nut_ui_cfg = JSON.parse(JSON.stringify(av.nut));
+      console.log('av.nut_ui_cfg = ', av.nut_ui_cfg); 
+    }
+  
+  };
+  //---------------------------------------------------------------------------------------- end nutUI2cftParameters  --
+
+
+  /*---------------------------------------------------------------------------------------- av.fwt.dom2nutUIfields --*/
+
+  av.fwt.dom2nutUIfields = function (from) {
+    av.fzr.clearEnvironment('av.fwt.dom2nutUIfields');
+    av.nut.wrldCols = Number(av.dom.sizeCols.value);
+    av.nut.wrldRows = Number(av.dom.sizeRows.value);
+    av.nut.wrldSize = av.nut.wrldCols * av.nut.wrldRows;
     //------ assign ui parameters first --
     var tsk; //name of a task with 3 letters
     var numtsk; //number prefix to put in Avida-ED order before 3 letter prefix
@@ -147,9 +257,11 @@
     var uiSub_checkLen = av.sgr.uiSub_Check.length;
     var ui_subDom_txt = av.sgr.ui_subDom_txt.length;
     var tmpNum = 1;
-
+    var tmpTxt = '';
+    var ndx = 1;
     var react_arguLen = av.sgr.react_argu.length;
-    console.log(from,'called av.fwt.dom2NutrientStruct: react_arguLen=',react_arguLen, 
+    
+    console.log(from,'called av.fwt.dom2nutUIfields: react_arguLen=',react_arguLen, 
         ';aiAlDishLen=',uiAllDishLen,'; uiAllDomLen=', uiAllDomLen, '; uiSubdom_numLen=', uiSubDom_numLen, 
         '; uiSub_checkLen=', uiSub_checkLen, '; ui_subDom_txt=', ui_subDom_txt);
     for (var ii=0; ii< logiclen; ii++) {      //9
@@ -157,6 +269,7 @@
       tsk = av.sgr.logicNames[ii];      //3 letter logic names
       tskvar = av.sgr.logicVnames[ii];   // variable length logic tasks names as required by Avida
       // need an argument list to hold data relevant to getting data from dom or need to do each individually
+      
       for (jj=0; jj < uiAllDomLen; jj++) {
         arguDom = av.sgr.ui_allDom_argu[jj];
         //console.log('ii='+ii+'; jj='+jj, '; av.nut['+numtsk+'].uiAll['+arguDom+']=', 'dom of', tsk+'0'+arguDom);
@@ -165,27 +278,36 @@
         //console.log('av.nut['+numtsk+'].uiAll['+arguDom+']=');
         //console.log(av.nut[numtsk].uiAll[arguDom]);
       };
-      console.log('av.nut['+numtsk+'].uiAll=',av.nut[numtsk].uiAll);
+      //console.log('av.nut['+numtsk+'].uiAll=',av.nut[numtsk].uiAll);
       av.nut[numtsk].uiAll.regionsNumOf = av.nut[numtsk].uiAll.regionLayout[0];
       
       //console.log('av.nut['+numtsk+'].uiAll.regionsNumOf=', av.nut[numtsk].uiAll.regionsNumOf, '; rName=', av.nut[numtsk].uiAll.regionLayout);
       // will need to go through a list of names later so maybe I should make the dictionary
        
       //start on the potential subdishes next
-      console.log('SubDishes Now -----------------uiSub_txt length=', ui_subDom_txt);
+      //console.log('SubDishes Now -----------------uiSub_txt length=', ui_subDom_txt);
       for (kk=1; kk <= av.nut[numtsk].uiAll.regionsNumOf; kk++) {
-        av.nut[numtsk].uiSub.subRegion[kk] = kk;      //not sure this is needed or make sense. needs work when get past one reagion
- 
+        //subregion not currently used. using regionCode, regionName, regionNdx
+        //av.nut[numtsk].uiSub.subRegion[kk] = kk;      //not sure this is needed or make sense. needs work when get past one reagion
+        
+        tmpTxt = av.nut[numtsk].uiAll.regionLayout;
+        av.nut[numtsk].uiSub.regionName[kk] = av.sgr[tmpTxt][kk];
+        av.nut[numtsk].uiSub.regionNdx[kk] = av.sgr.regionQuarterNames.indexOf(av.sgr[tmpTxt][kk]);
+        ndx = av.nut[numtsk].uiSub.regionNdx[kk];
+        av.nut[numtsk].uiSub.regionCode[kk] = av.sgr.regionQuarterCodes[ndx];
+        av.nut[numtsk].uiSub.area[kk] = av.nut.wrldCols * av.sgr.regionQuarterCols[ndx]
+                            * av.nut.wrldRows * av.sgr.regionQuarterRows[ndx];
+
         for (jj=0; jj< ui_subDom_txt; jj++) {
           arguDom = av.sgr.ui_subDom_txt[jj];
-          console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
-          console.log('; dom=',document.getElementById(tsk+kk+arguDom).value ); 
+          //console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
+          //console.log('; dom=',document.getElementById(tsk+kk+arguDom).value ); 
           av.nut[numtsk].uiSub[arguDom][kk] = document.getElementById(tsk+kk+arguDom).value;
         };
         for (jj=0; jj< uiSub_checkLen; jj++) {
           arguDom = av.sgr.uiSub_Check[jj];
-          console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
-          console.log('; dom=',document.getElementById(tsk+kk+arguDom).checked ); 
+          //console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
+          //console.log('; dom=',document.getElementById(tsk+kk+arguDom).checked ); 
           av.nut[numtsk].uiSub[arguDom][kk] = document.getElementById(tsk+kk+arguDom).checked;
         };
         
@@ -193,14 +315,14 @@
         //Need to fine area of subregions first. 
         for (jj=0; jj< uiSubDom_numLen; jj++) {
           arguDom = av.sgr.uiSubDom_num[jj];
-          console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
-          console.log('; dom=',document.getElementById(tsk+kk+arguDom) ); 
+          //console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
+          //console.log('; dom=',document.getElementById(tsk+kk+arguDom).value ); 
           if (!isNaN(Number(document.getElementById(tsk+kk+arguDom).value))) {
             tmpNum = Number(document.getElementById(tsk+kk+arguDom).value);
             if ('in' == arguDom.substr(0,2)) {
               tmpNum = tmpNum / area;   //need to find area first
             };
-          av.nut[numtsk].uiSub[arguDom][kk] = tmpNum;
+            av.nut[numtsk].uiSub[arguDom][kk] = tmpNum;
           }
         };
 /*        
@@ -220,12 +342,16 @@
         console.log('numtsk =', numtsk,';  av.nut[numtsk].react=', tmp);
         */       
        
+    /* this is wrong - Diane redid in a separate function
+
         // Start with default Avida-ED values for reactoins. re-writen with dictionary. 
         for (var ll = 0; ll < react_arguLen; ll++) {
           av.nut[numtsk].react[ av.sgr.react_argu[ll] ][kk] = av.sgr.reAct_edValu_d[av.sgr.react_argu[ll]];
         }
         //console.log('numtsk =', numtsk,';  av.nut[numtsk].react=', av.nut[numtsk].react);
-        
+    */
+   
+    /*
         if ('global' == av.nut[numtsk].uiAll.geometry.toLowerCase() ) {
           //av.nut[numtsk].uiSub.regionCode[kk] = '00';          should these exist in av.nut[numttsk].uiAll ??
           //av.nut[numtsk].uiSub.regionName[kk] = 'WholeDish';
@@ -264,15 +390,25 @@
           }; //end of NOT infinite
 
         };  // end of local if   
+    */
+        
+        
       };   //end for kk   
 
     };  //end for ii
-    console.log('----------------------------------------------End of av.fwt.dom2NutrientStruct, when called by ', from);
-    console.log(from, 'called av.fwt.dom2NutrientStruct - at end');
-    console.log('av.nut=',av.nut);
+    if (true) { 
+      console.log('----------------------------------------------End of av.fwt.dom2nutUIfields, when called by ', from);
+      av.nut_ui = {};
+      av.nut_ui = JSON.parse(JSON.stringify(av.nut));
+      console.log('av.nut_ui = ', av.nut_ui); 
+    }
   };
-  //-------------------------------------------------------------------------------- End of av.fwt.dom2NutrientStruct --
+  //----------------------------------------------------------------------------------- End of av.fwt.dom2nutUIfields --
 
+
+
+  
+  
   //------------------------------------------------------------------------------- av.fwt.NutStruct2environment_cfg  --
   av.fwt.NutStruct2environment_cfg = function (idStr, toActiveConfigFlag, from) {
     
@@ -365,12 +501,18 @@
       };
 
     }// end of loop to go thru all the logic functions. 
-    if (true) console.log('very tired: av.nut=',av.nut);   //av.debug.fio
-    if (true) console.log('av.fzr=', av.fzr);
-  //  if ('cfg'==idStr) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');  // 
+ 
+     if (true) { 
+      console.log('end of End of av.fwt.form2NutrientTxt');   //av.debug.fio
+      av.nut_dom_cfg = {};
+      av.nut_dom_cfg = JSON.parse(JSON.stringify(av.nut));
+      console.log('av.nut_dom_cfg = ', av.nut_dom_cfg); 
+      console.log('av=', av);
+    }
+   
+    //  if ('cfg'==idStr) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');  // 
     if (toActiveConfigFlag) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');  // 
     else {av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.form2NutrientTxt');}
-    console.log('environment = ', txt);
   };
   /*---------------------------------------------------------------------------------- End of av.fwt.form2NutrientTxt --*/
 
@@ -378,8 +520,8 @@
   av.fwt.makeFzrEnvironmentCfg = function (idStr, toActiveConfigFlag, from) {
     'use strict';
     if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrEnvironmentCfg; idStr=', idStr);
-    av.fwt.dom2NutrientStruct('av.fwt.makeFzrEnvironmentCfg');
-
+    av.fwt.dom2nutUIfields('av.fwt.makeFzrEnvironmentCfg');
+    av.fwt.nutUI2cftParameters('av.fwt.makeFzrEnvironmentCfg');
     //will change to av.fwt.nutStruct2Nuttxt later;
     av.fwt.form2NutrientTxt(idStr, toActiveConfigFlag, 'av.fwt.makeFzrEnvironmentCfg');  
   };
@@ -478,7 +620,8 @@
     'use strict';
     var toActiveConfigFlag = true; // true is to Config spot for experiment; false is to Freezer
     av.fwt.makeFzrAvidaCfg('activeConfig', toActiveConfigFlag, 'av.fwt.form2cfgFolder');
-    av.fwt.makeFzrEnvironmentCfg('activeConfig', toActiveConfigFlag, 'av.fwt.form2cfgFolder');
+    //avida.cfg file must be created before the environment.cfg file. 
+    av.fwt.makeFzrEnvironmentCfg('activeConfig', toActiveConfigFlag, 'av.fwt.form2cfgFolder');  
     av.fwt.makeFzrAncestorAuto('activeConfig', toActiveConfigFlag, 'av.fwt.form2cfgFolder');
     av.fwt.makeFzrAncestorHand('activeConfig', toActiveConfigFlag, 'av.fwt.form2cfgFolder');
   };

@@ -643,7 +643,7 @@
                                           // match.length is the length of the array, including null elements 
     //av.debug.fio = true;
 
-    if (av.dbg.flg.nut) console.log('reSrcLineParse: pairArray=', pairArray);
+    //if (av.dbg.flg.nut) console.log('Nut: reSrcLineParse: pairArray=', pairArray);
     //find logic type include test for quarters vs ninths subregion layout. 
     matchTaskRegion = pairArray[0].match(re_name);  // Matches using re_name pattern: looing for tsk##q_gradientInfo.
     //if (av.dbg.flg.nut) console.log('nut: pairArra[0]=', pairArray[0],'; re_name=', re_name, ', matchTaskRegion=', matchTaskRegion);
@@ -887,7 +887,7 @@
       console.log('After while look looking at all lines of environment.cfg; Before looking for summarny information for each task');
       av.nut_env_cfg = {};
       av.nut_env_cfg = JSON.parse(JSON.stringify(av.nut));
-      console.log('av.nut = ', av.nut_env_cfg); 
+      console.log('av.nut_env_cfg = ', av.nut_env_cfg); 
     }
     
     for (var ii=0; ii< len; ii++) {
