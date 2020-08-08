@@ -130,9 +130,244 @@
 
   /*-------------------------------------------------------------------------------- end of av.fwt.makeFzrAvidaTest --*/
 
-  //------------------------------------------------------------------------------------- av.fwt.nutUI2cftParameters  --
-  av.fwt.nutUI2cftParameters = function (from) {
-    console.log(from, 'called av.fwt.nutUI2cftParameters');
+  //Find subarea based on region code
+  //-------------------------------------------------------------------------------------- av.fwt.getInflowRegionArea --
+  av.fwt.getInflowRegionArea = function(numTsk, subnum) {
+    var ndx = av.nut[numTsk].uiSub.regionNdx[subnum];
+    var cols = Math.floor(av.nut.wrldCols *  av.sgr.regionQuarterCols[ndx]);
+    var rows = Math.floor(av.nut.wrldRows *  av.sgr.regionQuarterRows[ndx]);
+    //console.log('tsk=', numTsk, '; subnum=', subnum,'; ndx=', ndx, '; cols=', cols, '; rows=', rows);
+     
+    // if the number of rows or cols is odd, then one half will get an extra row/col in that direction
+    if(0 != av.nut.wrldCols % 2) {
+       cols += av.sgr.regionQuarterColsAdd[1];
+      }
+      if (0 != av.nut.wrldRows %2 ) {
+        rows += av.sgr.regionQuarterRowsAdd[1];
+      };
+      var rslt = {
+        area : rows*cols,
+        cols : cols,
+        rows : rows,
+        boxx : Math.floor(av.nut.wrldCols * av.sgr.regionQuarterBoxx[ndx]),
+        boxy : Math.floor(av.nut.wrldRows * av.sgr.regionQuarterBoxy[ndx])
+      };
+     return (rslt);
+  };
+  //---------------------------------------------------------------------------------- end av.fwt.getInflowRegionArea --
+
+  av.fwt.existDfltCheck = function(str, data, dfltTxt, avidaDefault){
+    console.log('in av.fwt.existDfltCheck: str=', str, '; data=', data, '; dfltTxt='+dfltTxt+'; avidaDefault='+avidaDefault+'|');  
+    var text = ''; 
+    if (str && data) { 
+      if ( Number(data) != Number(avidaDefault) ) {
+          text = str + data; 
+      };
+    }
+    else { text = dfltTxt; }
+    return text;
+  };
+  
+  av.fwt.existCheck = function(str, data, dfltTxt){
+    console.log('in av.fwt.existCheck: str=', str, '; data=', data, '; dfltTxt='+dfltTxt+'|');  
+    var text = ''; 
+    if (str && data) { 
+      text = str + data; 
+    }
+    else { text = dfltTxt; }
+    return text;
+  };
+
+  //--------------------------------------------------------------------------------------------- av.fwt.nut2cfgFile  --
+  av.fwt.nut2cfgFile = function (idStr, toActiveConfigFlag, from) {
+    console.log(from, 'called av.fwt.nut2cfgFile');
+
+    var tsk, tskvar, numtsk, resrcFix, cellboxtxt, cellTxt, cellList, ndx, codeTxt, reactTxt;
+    var logicLen = av.sgr.logicNames.length;
+    var txt = '';
+    var jj=0;
+    var cellBeg = 0; 
+    var cellEnd = av.nut.wrldSize-1;
+    
+    for (var ii=0; ii< logicLen; ii++) {      //9
+      numtsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
+      tsk = av.sgr.logicNames[ii];      //3 letter logic names
+      tskvar = av.sgr.logicVnames[ii];   // variable length logic tasks names as required by Avida
+
+      if ('global' == av.nut[numtsk].uiAll.geometry.toLowerCase()) {
+        console.log('numtsk=', '; jj=', jj, numtsk,'; supplyType=',av.nut[numtsk].uiAll.supplyType.toLowerCase());
+        switch ( av.nut[numtsk].uiAll.supplyType.toLowerCase() ) {
+          case 'none':
+          case 'infinite':
+            txt += 'REACTION ' + av.fwt.existCheck( '',av.nut[numtsk].react.name[jj],tskvar );
+            txt += ' ' + av.fwt.existCheck( '',av.nut[numtsk].react.task[jj], tskvar );
+            txt += ' process' + av.fwt.existCheck( ':value=', av.nut[numtsk].react.value[jj], '');
+            txt += av.fwt.existCheck( ':type=', av.nut[numtsk].react.type[jj], ':type=pow' );
+            txt += av.fwt.existDfltCheck( ':depletable=', av.nut[numtsk].react.depletable[jj], '', 1 );
+            txt += ' requisite' + av.fwt.existCheck(':max_count=', av.nut[numtsk].react.max_count[jj], ':max_count=1') + '\n\n';
+            break;
+          case 'finite':
+            txt += 'RESOURCE ' + av.fwt.existCheck('', av.nut[numtsk].resrc.name[jj], av.fwt.existCheck('', av.nut[numtsk].react.resource[jj], tsk) );
+            txt += av.fwt.existCheck(':geometry=', av.nut[numtsk].resrc.geometry[jj], '');
+            txt += av.fwt.existDfltCheck(':xdiffuse=', av.nut[numtsk].resrc.xdiffuse[jj], '', 1); 
+            txt += av.fwt.existDfltCheck(':ydiffuse=', av.nut[numtsk].resrc.ydiffuse[jj], '', 1); 
+            // Since fileDataRead looks for initial to see if the catagory is finite, 
+            // initial needs to be in the file even if it is the default value = 0
+            txt += av.fwt.existCheck(':initial=', av.nut[numtsk].resrc.initial[jj], '')+ '\n'; 
+            
+            // Reaction is the same for finite and chemostate
+            txt += 'REACTION ' + av.fwt.existCheck( '',av.nut[numtsk].react.name[jj],tskvar );
+            txt += ' ' + av.fwt.existCheck( '',av.nut[numtsk].react.task[jj], tskvar );
+            txt += ' process' + av.fwt.existCheck( ':value=', av.nut[numtsk].react.value[jj], '');
+            txt += av.fwt.existCheck( ':type=', av.nut[numtsk].react.type[jj], ':type=pow' );
+            txt += av.fwt.existDfltCheck( ':depletable=', av.nut[numtsk].react.depletable[jj], '', 1 );
+            txt += av.fwt.existCheck(' requisite:max_count=', av.nut[numtsk].react.max_count[jj], ' requisite:max_count=1') + '\n\n';
+
+            
+            txt += 'REACTION ' + av.nut[numtsk].react.name[jj] + ' ' + av.nut[numtsk].react.task[jj];
+            txt += ' process:resource='+av.nut[numtsk].react.resource[jj]+':value=' + av.nut[numtsk].react.value[jj];
+            txt +=':type=' + av.nut[numtsk].react.type[jj]+':min='+av.nut[numtsk].react.max[jj]+':min='+av.nut[numtsk].react.min[jj];
+            txt += ' requisite:max_count=' + av.nut[numtsk].react.max_count[jj] + '\n\n';
+            break;
+          case 'chemostat': 
+            txt += 'RESOURCE ' + av.fwt.existCheck('', av.nut[numtsk].resrc.name[jj], av.fwt.existCheck('', av.nut[numtsk].react.resource[jj], tsk) );
+            txt += av.fwt.existCheck(':geometry=', av.nut[numtsk].resrc.geometry[jj], '');
+            // Since fileDataRead looks for inflow/outflow to see if the catagory is chemostat, 
+            // initial must not exist in file
+            txt += av.fwt.existCheck(':inflow=', av.nut[numtsk].resrc.inflow[jj], ':inflow='+av.nut.wrldSize); 
+            txt += av.fwt.existCheck(':outflow=', av.nut[numtsk].resrc.inflow[jj], ':outflow='+av.nut.wrldSize); 
+            txt += av.fwt.existCheck(':inflowx1=', av.nut[numtsk].resrc.inflowx1[jj], ':inflowx1=0' ); 
+            txt += av.fwt.existCheck(':inflowy1=', av.nut[numtsk].resrc.inflowy1[jj], ':inflowy1=0' ); 
+            txt += av.fwt.existCheck(':inflowx2=', av.nut[numtsk].resrc.inflowx2[jj], ':inflowx2='+(av.nut.wrldCols-1)); 
+            txt += av.fwt.existCheck(':inflowy2=', av.nut[numtsk].resrc.inflowy2[jj], ':inflowy2='+(av.nut.wrldRows-1) ); 
+
+            txt += av.fwt.existCheck(':outflowx1=', av.nut[numtsk].resrc.outflowx1[jj], ':outflowx1=0' ); 
+            txt += av.fwt.existCheck(':outflowy1=', av.nut[numtsk].resrc.outflowy1[jj], ':outflowy1=0' ); 
+            txt += av.fwt.existCheck(':outflowx2=', av.nut[numtsk].resrc.outflowx2[jj], ':outflowx2='+(av.nut.wrldCols-1)); 
+            txt += av.fwt.existCheck(':outflowy2=', av.nut[numtsk].resrc.outflowy2[jj], ':outflowy2='+(av.nut.wrldRows-1) ); 
+            
+            txt += av.fwt.existDfltCheck(':xdiffuse=', av.nut[numtsk].resrc.xdiffuse[jj], '', 1); 
+            txt += av.fwt.existDfltCheck(':ydiffuse=', av.nut[numtsk].resrc.ydiffuse[jj], '', 1); 
+            txt +=  + '\n';
+            
+            // Reaction is the same for finite and chemostate
+            txt += 'REACTION ' + av.fwt.existCheck( '',av.nut[numtsk].react.name[jj],tskvar );
+            txt += ' ' + av.fwt.existCheck( '',av.nut[numtsk].react.task[jj], tskvar );
+            txt += ' process' + av.fwt.existCheck( ':value=', av.nut[numtsk].react.value[jj], '');
+            txt += av.fwt.existCheck( ':type=', av.nut[numtsk].react.type[jj], ':type=pow' );
+            txt += av.fwt.existDfltCheck( ':depletable=', av.nut[numtsk].react.depletable[jj], '', 1 );
+            txt += av.fwt.existCheck(' requisite:max_count=', av.nut[numtsk].react.max_count[jj], ' requisite:max_count1'+av.sgr.reactValues[ii]);
+            txt += '\n\n';
+            break;
+        }
+      }
+      else {
+        // geometery = grid
+        len = av.nut[numtsk].uiSub.regionCode.length;
+        for (jj=1; jj< len; jj++) {
+          console.log('numtsk=', '; jj=', jj, 'numtsk=', numtsk,'; supplyType=',av.nut[numtsk].uiAll.supplyType.toLowerCase());
+          resrcFix =  'RESOURCE ' + av.fwt.existCheck('', av.nut[numtsk].resrc.name[jj], av.fwt.existCheck('', av.nut[numtsk].react.resource[jj], tsk) );
+          //console.log('resrc_nam_only',resrcFix);
+          resrcFix += av.fwt.existCheck(':geometry=', av.nut[numtsk].resrc.geometry[jj], '');
+          //console.log('resrc_geometry',resrcFix);
+          resrcFix += av.fwt.existDfltCheck(':xdiffuse=', av.nut[numtsk].resrc.xdiffuse[jj], '', 1); 
+          resrcFix += av.fwt.existDfltCheck(':ydiffuse=', av.nut[numtsk].resrc.ydiffuse[jj], '', 1);
+          //console.log('resrcFix',resrcFix);
+          resrcFix +=  + '\n';
+
+          cellboxtxt = '';
+          if ( (null == av.nut[numtsk].resrc.boxflag[jj]) && (null == av.nut[numtsk].resrc.boxx[jj]) 
+            && (null == av.nut[numtsk].resrc.boxy[jj]) && (null == av.nut[numtsk].resrct.boxcol[jj]) 
+            && (null == av.nut[numtsk].resrc.boxrow[jj]) ) {
+            if (av.nut[numtsk].resrc.boxflag[jj]) {
+              cellboxtxt += ':cellbox='+',' + av.nut[numtsk].resrc.boxx[jj] + ',' + av.nut[numtsk].resrc.boxy[jj] + ',';
+              cellboxtxt += ',' + av.nut[numtsk].resrc.boxcol[jj] + ',' + av.nut[numtsk].resrc.boxrow[jj];
+            }
+          };
+          
+          cellTxt = 'CELL ' + av.fwt.existCheck('', av.nut[numtsk].resrc.name[jj], av.fwt.existCheck('', av.nut[numtsk].react.resource[jj], tsk) );
+          
+          //Find cell description
+          codeTxt = av.nut[numtsk].uiSub.regionCode[jj];
+          ndx = av.sgr.regionQuarterCodes.indexOf(codeTxt);
+          //lineararray index = x + y * (numcols)
+          if ('000' == codeTxt || '012' == codeTxt || '34' == codeTxt) {
+            cellBeg = Number(av.nut[numtsk].resrc.boxx[jj]) +
+                      Number(av.nut[numtsk].resrc.boxy[jj]) * Number(av.nut.wldCols);
+            cellEnd = Number(av.nut[numtsk].resrc.boxy[jj]) +
+                      Number(av.nut[numtsk].resrc.boxy[jj]) * Number(av.nut.wldCols);
+          }
+          else {
+            //This is wrong as I think it only gives the first row of list in that region
+            cellBeg = Number(av.nut[numtsk].resrc.boxx[jj]) +
+                      Number(av.nut[numtsk].resrc.boxy[jj]) * Number(av.nut.wldCols);
+            cellEnd = cellBeg + Number(av.nut[numtsk].resrc.boxcol[jj])-1;
+          }
+          cellList = ':' + Math.floor(cellBeg) + '..' + Math.floor(cellEnd);
+          cellTxt += cellList;
+          cellTxt += av.fwt.existCheck(':initial=', av.nut[numtsk].resrc.initial[jj], ':initial='+av.nut[numtsk].uiSub.area[jj])+ '\n'; 
+          
+
+          reactTxt = 'REACTION ' + av.fwt.existCheck( '',av.nut[numtsk].react.name[jj],tskvar );
+          reactTxt += ' ' + av.fwt.existCheck( '',av.nut[numtsk].react.task[jj], tskvar );
+          reactTxt += ' process' + av.fwt.existCheck( ':value=', av.nut[numtsk].react.value[jj], '');
+          reactTxt += av.fwt.existCheck( ':type=', av.nut[numtsk].react.type[jj], ':type=pow' );
+          reactTxt += av.fwt.existDfltCheck( ':depletable=', av.nut[numtsk].react.depletable[jj], '', 1 );
+          reactTxt += av.fwt.existCheck(' requisite:max_count=', av.nut[numtsk].react.max_count[jj], ' requisite:max_count1'+av.sgr.reactValues[ii]);
+          reactTxt += '\n\n';
+          console.log('numtsk=', numtsk, '; jj=', jj,'; supplyType=',av.nut[numtsk].uiAll.supplyType.toLowerCase());
+          switch ( av.nut[numtsk].uiAll.supplyType.toLowerCase() ) {
+            case 'infinite':
+              txt += resrcFix+'\n';
+              txt += cellTxt;
+              txt += reactTxt;
+              break;
+            case 'none':
+            case 'finite':
+              txt += resrcFix+'\n';
+              txt += cellTxt;
+              break;
+              txt += reactTxt;
+            case 'chemostat': 
+              txt += 'RESOURCE ' + av.fwt.existCheck('', av.nut[numtsk].resrc.name[jj], av.fwt.existCheck('', av.nut[numtsk].react.resource[jj], tsk) );
+              txt += av.fwt.existCheck(':geometry=', av.nut[numtsk].resrc.geometry[jj], '');
+              // Since fileDataRead looks for inflow/outflow to see if the catagory is chemostat, 
+              // initial must not exist in file
+              txt += av.fwt.existCheck(':inflow=', av.nut[numtsk].resrc.inflow[jj], ':inflow='+av.nut.wrldSize); 
+              txt += av.fwt.existCheck(':outflow=', av.nut[numtsk].resrc.inflow[jj], ':outflow='+av.nut.wrldSize); 
+              txt += av.fwt.existCheck(':inflowx1=', av.nut[numtsk].resrc.inflowx1[jj], ':inflowx1=0' ); 
+              txt += av.fwt.existCheck(':inflowy1=', av.nut[numtsk].resrc.inflowy1[jj], ':inflowy1=0' ); 
+              txt += av.fwt.existCheck(':inflowx2=', av.nut[numtsk].resrc.inflowx2[jj], ':inflowx2='+(av.nut.wrldCols-1)); 
+              txt += av.fwt.existCheck(':inflowy2=', av.nut[numtsk].resrc.inflowy2[jj], ':inflowy2='+(av.nut.wrldRows-1) ); 
+
+              txt += av.fwt.existCheck(':outflowx1=', av.nut[numtsk].resrc.outflowx1[jj], ':outflowx1=0' ); 
+              txt += av.fwt.existCheck(':outflowy1=', av.nut[numtsk].resrc.outflowy1[jj], ':outflowy1=0' ); 
+              txt += av.fwt.existCheck(':outflowx2=', av.nut[numtsk].resrc.outflowx2[jj], ':outflowx2='+(av.nut.wrldCols-1)); 
+              txt += av.fwt.existCheck(':outflowy2=', av.nut[numtsk].resrc.outflowy2[jj], ':outflowy2='+(av.nut.wrldRows-1) ); 
+
+
+              txt += av.fwt.existDfltCheck(':xdiffuse=', av.nut[numtsk].resrc.xdiffuse[jj], '', 1); 
+              txt += av.fwt.existDfltCheck(':ydiffuse=', av.nut[numtsk].resrc.ydiffuse[jj], '', 1); 
+              txt +=  + '\n';
+
+              // Reaction is the same for finite and chemostate
+              txt += reactTxt;
+              break;
+          } // end of switch
+        } // end loop through array of each resource/reaction instance
+      }
+      txt += '#-----\n';
+    }  // end of looping through each sugar
+    console.log(txt);
+    if (toActiveConfigFlag) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');
+    else {av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.form2NutrientTxt');}
+
+  };
+  //----------------------------------------------------------------------------------------- end av.fwt.nut2cfgFile  --
+  
+  //-------------------------------------------------------------------------------------- av.fwt.nutUI2cfgStructure  --
+  av.fwt.nutUI2cfgStructure = function (from) {
+    console.log(from, 'called av.fwt.nutUI2cfgStructure');
     //------ assign ui parameters first --
     var tsk; //name of a task with 3 letters
     var numtsk; //number prefix to put in Avida-ED order before 3 letter prefix
@@ -141,7 +376,7 @@
     var tmpNum = 1;
     var tmpTxt = '';
     var ndx = 1;
-    var kk = 0;
+    var jj = 0;
     var react_arguLen = av.sgr.react_argu.length;
 
     for (var ii=0; ii< logiclen; ii++) {      //9
@@ -150,29 +385,32 @@
       tskvar = av.sgr.logicVnames[ii];   // variable length logic tasks names as required by Avida
       
       if ('global' == av.nut[numtsk].uiAll.geometry.toLowerCase()) {
-        kk = 0;
+        jj = 0;
+        av.nut[numtsk].resrc.geometry[jj] = av.nut[numtsk].uiAll.geometry;
+        av.nut[numtsk].resrc.boxflag[jj] = false;
+
         // Start with default Avida-ED values for reactoins. re-writen with dictionary. 
         for (var ll = 0; ll < react_arguLen; ll++) {
-          av.nut[numtsk].react[ av.sgr.react_argu[ll] ][kk] = av.sgr.reAct_edValu_d[av.sgr.react_argu[ll]];
+          av.nut[numtsk].react[ av.sgr.react_argu[ll] ][jj] = av.sgr.reAct_edValu_d[av.sgr.react_argu[ll]];
         }
-        av.nut[numtsk].react.name[0] = tsk+'000';
-        av.nut[numtsk].react.task[0] = tskvar;
+        
+        av.nut[numtsk].react.value[jj] = av.sgr.reactValues[ii];
+        av.nut[numtsk].react.name[jj] = tsk+'000';
+        av.nut[numtsk].react.task[jj] = tskvar;
         console.log('numtsk =', numtsk,';  av.nut[numtsk].react=', av.nut[numtsk].react);
+
+        //inflow and outflow coordinates are the same for most suppply Types
+        av.nut[numtsk].resrc.inflowx1[jj] = 0;
+        av.nut[numtsk].resrc.inflowy1[jj] = 0;
+        av.nut[numtsk].resrc.outflowx1[jj] = 0;
+        av.nut[numtsk].resrc.outflowy1[jj] = 0;
+
+        av.nut[numtsk].resrc.inflowx2[jj] += av.nut.wldCols-1;
+        av.nut[numtsk].resrc.inflowy2[jj] += av.nut.wldRows-1;
+        av.nut[numtsk].resrc.outflowx2[jj] += av.nut.wldCols-1;
+        av.nut[numtsk].resrc.outflowy2[jj] += av.nut.wldRows-1;
         
-/*
-        
-        
-        av.nut[numtsk].react.max[0] = 1;
-        av.nut[numtsk].react.max_count[0] = 1;
-        av.nut[numtsk].react.min[0] = 0.99;
-        av.nut[numtsk].react.resource[0] = 'missing';
-        av.nut[numtsk].react.name[0] = tsk+'000';
-        av.nut[numtsk].react.task[0] = tskvar;
-        av.nut[numtsk].react.type[0] = 'pow';
-        av.nut[numtsk].react.depletable[0] = 1;
-        av.nut[numtsk].react.value[0] = av.sgr.reactValues[ii];
-*/
-                switch ( av.nut[numtsk].uiAll.supplyType.toLowerCase() ) {
+        switch ( av.nut[numtsk].uiAll.supplyType.toLowerCase() ) {
           case 'none':
             av.nut[numtsk].react.value = 0;
             break;
@@ -180,6 +418,7 @@
             av.nut[numtsk].react.depletable[0] = 0;
             break;
           case 'finite':
+            av.nut[numtsk].resrc.initial[jj] = av.nut[numtsk].uiAll.initial;
             av.nut[numtsk].react.resource[0] = tsk+'000';
             break;
           case 'chemostat': 
@@ -188,15 +427,51 @@
         }
       }
       else {
+        // 'Local' or 'grid'
         len = av.nut[numtsk].uiSub.regionCode.length;
-        for (var jj=1; jj<= len; jj++) {
+        for (jj=1; jj< len; jj++) {
           // Start with default Avida-ED values for reactoins. re-writen with dictionary. 
           for (var ll = 0; ll < react_arguLen; ll++) {
             av.nut[numtsk].react[ av.sgr.react_argu[ll] ][jj] = av.sgr.reAct_edValu_d[av.sgr.react_argu[ll]];
-          }
-          av.nut[numtsk].react.name[jj] = tsk+'000';
-          av.nut[numtsk].react.resource[jj] = av.nut[numtsk].react.name[jj];
+          };
+
+          av.nut[numtsk].react.value[jj] = av.sgr.reactValues[ii];
+          av.nut[numtsk].react.name[jj] = av.nut[numtsk].resrc.name[jj];
+          av.nut[numtsk].react.resource[jj] = av.nut[numtsk].resrc.name[jj];
           av.nut[numtsk].react.task[jj] = tskvar;
+
+          av.nut[numtsk].resrc.boxflag[jj] = true;
+          av.nut[numtsk].resrc.geometry[jj] = av.nut[numtsk].uiAll.geometry.toLowerCase();
+          av.nut[numtsk].resrc.name[jj] = tsk + av.nut[numtsk].uiSub.regionCode[jj]+'q';
+
+          if (av.nut[numtsk].uiSub.diffuseCheck[jj]) {
+            av.nut[numtsk].resrc.xdiffuse[jj] = 1;
+            av.nut[numtsk].resrc.ydiffuse[jj] = 1;
+          }
+          else {
+            av.nut[numtsk].resrc.xdiffuse[jj] = 0;
+            av.nut[numtsk].resrc.ydiffuse[jj] = 0;            
+          };
+          //ndx = av.sgr.regionQuarterNames.indexOf(av.nut[numtsk].uiSub.regionName[jj]);
+          
+          //inflow and outflow coordinates are the same for most suppply Types
+          av.nut[numtsk].resrc.inflowx1[jj] = av.nut[numtsk].resrc.boxx[jj];
+          av.nut[numtsk].resrc.inflowy1[jj] = av.nut[numtsk].resrc.boxy[jj];
+          av.nut[numtsk].resrc.outflowx1[jj] = av.nut[numtsk].resrc.boxx[jj];
+          av.nut[numtsk].resrc.outflowy1[jj] = av.nut[numtsk].resrc.boxy[jj];
+          
+          av.nut[numtsk].resrc.inflowx2[jj] = av.nut[numtsk].resrc.boxx[jj]+av.nut[numtsk].resrc.boxcol[jj]-1;
+          av.nut[numtsk].resrc.inflowy2[jj] = av.nut[numtsk].resrc.boxy[jj]+av.nut[numtsk].resrc.boxrow[jj]-1;
+          av.nut[numtsk].resrc.outflowx2[jj] = av.nut[numtsk].resrc.boxx[jj]+av.nut[numtsk].resrc.boxcol[jj]-1;
+          av.nut[numtsk].resrc.outflowy2[jj] = av.nut[numtsk].resrc.boxy[jj]+av.nut[numtsk].resrc.boxrow[jj]-1;
+          
+          av.nut[numtsk].react.resource[jj] = tsk+av.nut[numtsk].uiSub.regionCode[jj]+'q';
+          av.nut[numtsk].react.name[jj] = tsk+av.nut[numtsk].uiSub.regionCode[jj]+'q';
+
+          
+          //console.log('numtsk='+numtsk, 'sub='+jj, 'x2=', av.nut[numtsk].resrc.inflowx2[jj],
+          //   'y2=', av.nut[numtsk].resrc.inflowy2[jj]);
+          //av.nut[numtsk].resrc.inflow[jj] = av.nut[numtsk].uiSub.[jj];
           
  /*
           av.nut[numtsk].react.max[jj] = 1;
@@ -209,24 +484,34 @@
           av.nut[numtsk].react.type[jj] = 'pow';
           av.nut[numtsk].react.depletable[jj] = 1;
 */ 
+
+
           switch ( av.nut[numtsk].uiAll.supplyType.toLowerCase() ) {
-            case 'none':
-              break;
             case 'infinite':
               av.nut[numtsk].react.depletable[jj] = 0;
+              av.nut[numtsk].react.initial[jj] = av.nut[numtsk].uiSub.area[jj];
               break;
+            case 'none':
             case 'finite':
-              av.nut[numtsk].react.resource[jj] = tsk+'000';
+              av.nut[numtsk].resrc.initial[jj] = av.nut[numtsk].uiSub.initialHiNp[jj] 
+                        * av.nut[numtsk].uiSub.area[jj];
               break;
             case 'chemostat': 
-              av.nut[numtsk].react.resource[jj] = tsk+'000';
+              
+              av.nut[numtsk].resrc.inflow[jj] =  av.nut[numtsk].uiSub.inflowHi[jj]
+                        * av.nut[numtsk].uiSub.area[jj];
+              av.nut[numtsk].resrc.outflow[jj] = av.nut[numtsk].uiSub.outflow[jj]
+                        * av.nut[numtsk].uiSub.area[jj];
+//              av.nut[numtsk].resrc.[jj] = av.nut[numtsk].uiSub.[jj];
+              
               break;
           }
-        }  // for go thru array of subregions in grid;
-      }  // end global else grid
+        }  // for go thru array of subregions in grid; 
+      };  // end global else grid
+      console.log('av.nut['+numtsk+'].react.value=', av.nut[numtsk].react.value);
     }  //end for loop to go thru all sugars
     if (true) { 
-      console.log('----------------------------------------------End of av.fwt.dom2nutUIfields, when called by ', from);
+      console.log('----------------------------------------------End of av.fwt.nutUI2cfgStructure, when called by ', from);
       av.nut_ui_cfg = {};
       av.nut_ui_cfg = JSON.parse(JSON.stringify(av.nut));
       console.log('av.nut_ui_cfg = ', av.nut_ui_cfg); 
@@ -234,7 +519,6 @@
   
   };
   //---------------------------------------------------------------------------------------- end nutUI2cftParameters  --
-
 
   /*---------------------------------------------------------------------------------------- av.fwt.dom2nutUIfields --*/
 
@@ -260,6 +544,7 @@
     var tmpTxt = '';
     var ndx = 1;
     var react_arguLen = av.sgr.react_argu.length;
+    var rslt;
     
     console.log(from,'called av.fwt.dom2nutUIfields: react_arguLen=',react_arguLen, 
         ';aiAlDishLen=',uiAllDishLen,'; uiAllDomLen=', uiAllDomLen, '; uiSubdom_numLen=', uiSubDom_numLen, 
@@ -294,10 +579,19 @@
         av.nut[numtsk].uiSub.regionName[kk] = av.sgr[tmpTxt][kk];
         av.nut[numtsk].uiSub.regionNdx[kk] = av.sgr.regionQuarterNames.indexOf(av.sgr[tmpTxt][kk]);
         ndx = av.nut[numtsk].uiSub.regionNdx[kk];
+        
         av.nut[numtsk].uiSub.regionCode[kk] = av.sgr.regionQuarterCodes[ndx];
-        av.nut[numtsk].uiSub.area[kk] = av.nut.wrldCols * av.sgr.regionQuarterCols[ndx]
-                            * av.nut.wrldRows * av.sgr.regionQuarterRows[ndx];
+        //av.nut[numtsk].uiSub.area[kk] = av.nut.wrldCols * av.sgr.regionQuarterCols[ndx]
+        //                    * av.nut.wrldRows * av.sgr.regionQuarterRows[ndx];
 
+        rslt = av.fwt.getInflowRegionArea(numtsk, kk);
+        av.nut[numtsk].uiSub.area[kk] = rslt.area;
+        av.nut[numtsk].resrc.boxcol[kk] = rslt.cols;
+        av.nut[numtsk].resrc.boxrow[kk] = rslt.rows;
+        av.nut[numtsk].resrc.boxx[kk] = rslt.boxx;
+        //console.log('av.nut['+numtsk+'].resrc.boxx['+kk+'] =', av.nut[numtsk].resrc.boxx[kk]);
+        av.nut[numtsk].resrc.boxy[kk] = rslt.boxy;
+        
         for (jj=0; jj< ui_subDom_txt; jj++) {
           arguDom = av.sgr.ui_subDom_txt[jj];
           //console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
@@ -324,75 +618,7 @@
             };
             av.nut[numtsk].uiSub[arguDom][kk] = tmpNum;
           }
-        };
-/*        
-        av.nut[numtsk].uiSub.diffuseCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
-        av.nut[numtsk].uiSub.periodCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
-        av.nut[numtsk].uiSub.gradientCheck[kk] = document.getElementById(tsk+kk+arguDom).checked;
-        av.nut[numtsk].uiSub.regionCode[kk] = document.getElementById(tsk+kk+arguDom).value;
-*/
-        
-        //now use what is in uiAll and uiSub to make resource and reaction fields
-        // Start with default Avida-ED values for reactoins. 
-        /*
-        for (var ll = 0; ll < react_arguLen; ll++) {
-          av.nut[numtsk].react[ av.sgr.react_argu[ll] ][kk] = av.sgr.react_valED[ll];
-        }
-        var tmp = av.nut[numtsk].react;
-        console.log('numtsk =', numtsk,';  av.nut[numtsk].react=', tmp);
-        */       
-       
-    /* this is wrong - Diane redid in a separate function
-
-        // Start with default Avida-ED values for reactoins. re-writen with dictionary. 
-        for (var ll = 0; ll < react_arguLen; ll++) {
-          av.nut[numtsk].react[ av.sgr.react_argu[ll] ][kk] = av.sgr.reAct_edValu_d[av.sgr.react_argu[ll]];
-        }
-        //console.log('numtsk =', numtsk,';  av.nut[numtsk].react=', av.nut[numtsk].react);
-    */
-   
-    /*
-        if ('global' == av.nut[numtsk].uiAll.geometry.toLowerCase() ) {
-          //av.nut[numtsk].uiSub.regionCode[kk] = '00';          should these exist in av.nut[numttsk].uiAll ??
-          //av.nut[numtsk].uiSub.regionName[kk] = 'WholeDish';
-          av.nut[numtsk].react.name = tskvar+'00';
-          // only look at ui items that effect the global situation.
-          if ('infinite' == av.nut[numtsk].uiAll.supplyType.toLowerCase() ) {
-            av.nut[numtsk].react.depletable[kk] = 0;                //tiba: not sure the effect on global reactions without resources
-            av.nut[numtsk].react.value = av.sgr.reactValues[ii];    //index needs to match number prefix os numtsk
-          }
-          else if ('none' == av.nut[numtsk].uiAll.supplyType.toLowerCase() ) {
-            av.nut[numtsk].react.depletable[kk] = 1;                //tiba: not sure the effect on global reactions without resources
-            av.nut[numtsk].react.value = 0;   //index needs to match number prefix os numtsk        
-          };    //all for now; finite will be implemented later;
-          // will be other later only implementing these two for now
-        } 
-        else {
-          // assume that it is local
-          av.nut[numtsk].react.name = tsk+kk;   //incomplete needs work; kk is the index, but the name comes from the layoutCode
-          av.nut[numtsk].react.value = av.sgr.reactValues[ii];    //index needs to match number prefix os numtsk
-          if ('infinite' == av.nut[numtsk].uiSub.supplyType[kk].toLowerCase() ) {
-            av.nut[numtsk].react.depletable[kk] = 0;                //tiba: not sure the effect on global reactions without resources
-          }
-          else {
-            // not infiniate that resources can be depleated
-            av.nut[numtsk].react.depletable[kk] = 1;                //tiba: not sure the effect on global reactions without resources
-
-            if ('none' == av.nut[numtsk].uiSub.supplyType[kk].toLowerCase() ) {
-              // none is implemented in the resource
-
-            }
-            else if ('finite' == av.nut[numtsk].uiSub.supplyType[kk].toLowerCase() ) {
-              av.nut[numtsk].react.depletable[kk] = 1;                //tiba: not sure the effect on global reactions without resources
-              av.nut[numtsk].react.value = av.sgr.reactValues[ii];    //index needs to match number prefix os numtsk
-              // finite is implementeed in the resource
-            }
-          }; //end of NOT infinite
-
-        };  // end of local if   
-    */
-        
-        
+        };        
       };   //end for kk   
 
     };  //end for ii
@@ -405,18 +631,11 @@
   };
   //----------------------------------------------------------------------------------- End of av.fwt.dom2nutUIfields --
 
-
-
-  
-  
   //------------------------------------------------------------------------------- av.fwt.NutStruct2environment_cfg  --
   av.fwt.NutStruct2environment_cfg = function (idStr, toActiveConfigFlag, from) {
     
   };
   //--------------------------------------------------------------------------- end av.fwt.NutStruct2environment_cfg  --
-
-
-
 
   // the function av.fwt.form2NutrientTxt needs to be replaced with av.fwt.NutStruct2environment_cfg
   //----------------------------------------------------------------------------------------- av.fwt.form2NutrientTxt --
@@ -511,7 +730,7 @@
     }
    
     //  if ('cfg'==idStr) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');  // 
-    if (toActiveConfigFlag) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');  // 
+    if (toActiveConfigFlag) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');
     else {av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.form2NutrientTxt');}
   };
   /*---------------------------------------------------------------------------------- End of av.fwt.form2NutrientTxt --*/
@@ -521,9 +740,13 @@
     'use strict';
     if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrEnvironmentCfg; idStr=', idStr);
     av.fwt.dom2nutUIfields('av.fwt.makeFzrEnvironmentCfg');
-    av.fwt.nutUI2cftParameters('av.fwt.makeFzrEnvironmentCfg');
+    av.fwt.nutUI2cfgStructure('av.fwt.makeFzrEnvironmentCfg');
+    console.log('before calling av.fwt.nut2cfgFile');
+    av.fwt.nut2cfgFile(idStr, toActiveConfigFlag, 'av.fwt.makeFzrEnvironmentCfg');
+    console.log('after calling av.fwt.nut2cfgFile');
+    
     //will change to av.fwt.nutStruct2Nuttxt later;
-    av.fwt.form2NutrientTxt(idStr, toActiveConfigFlag, 'av.fwt.makeFzrEnvironmentCfg');  
+    //av.fwt.form2NutrientTxt(idStr, toActiveConfigFlag, 'av.fwt.makeFzrEnvironmentCfg');  
   };
 
   /*--------------------------------------------------------------------------------- av.fwt.makeFzrOldEnvironmentCfg --
@@ -1178,7 +1401,7 @@
                               ,  'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'  
                               , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'
                               , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'
-                              ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow',     //theste are new for Avida-ED and not in the wiki. 
+                              ,'boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow',     //theste are new for Avida-ED and not in the wiki. 
                               , 'region', 'side', 'grdNum', 'regionCode','regionList'];  // this last row is not in the argurments for avida; used for 'multi-dish'
 
       }

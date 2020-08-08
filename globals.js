@@ -9,7 +9,6 @@
 
   console.log('start of globals on 2020_0710');
 
-
   Number.prototype.pad = function(size) {
     var ss = String(this);
     while (ss.length < (size || 2)) {ss = "0" + ss;}
@@ -594,7 +593,7 @@
                       , 'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'  
                       , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'
                       , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'
-                      ,'boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow' ];   //these are new for Avida-ED and not in the wiki. 
+                      ,'boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow' ];   //these are new for Avida-ED and not in the wiki. 
                   //belong ui part of structure not resource
                   //, 'region', 'hiSide', 'grdNum', 'regionCode','regionList'];  // this last row is not in the argurments for avida; used for 'multi-dish'
 
@@ -602,7 +601,7 @@
                       , 'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'  
                       , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'
                       , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'
-                      , 'boxx', 'boyy', 'boxcol', 'boxrow' ];   //these are new for Avida-ED and not in the wiki. 
+                      , 'boxx', 'boxy', 'boxcol', 'boxrow' ];   //these are new for Avida-ED and not in the wiki. 
 
                     
                     
@@ -677,12 +676,13 @@
     av.sgr.regionQuarterNames = ['Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
     av.sgr.regionQuarter3Char = ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];   //Use as values when the time comes
     av.sgr.regionQuarterCodes = ['000', '001', '002', '003', '004', '012', '034', '013', '024'];   //These numbers go with the regions above
-    av.sgr.regionQuarterCols =  [  1.0,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0,   0.5,   0.5];   //fraction of rows
+    av.sgr.regionQuarterCols =  [  1.0,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0,   0.5,   0.5];   //fraction of cols
     av.sgr.regionQuarterRows =  [  1.0,   0.5,   0.5,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0];   //fraction of rows
-    av.sgr.regionQuarterColsAdd = [  0,     1,     0,     1,     0,     0,     0,     1,     0];   //fraction of rows
-    av.sgr.regionQuarterRowsAdd = [  0,     1,     1,     0,     0,     1,     0,     0,     0];   //fraction of rows
-
-  av.sgr.boxArguments = ['boxflag', 'boxx', 'boyy', 'boxcol', 'boxrow']; //flag is true if in use; false if these arguments are not included. 
+    av.sgr.regionQuarterColsAdd = [  0,     0,     1,     0,     1,     0,     0,     0,     1];   //add amount if odd cols in world
+    av.sgr.regionQuarterRowsAdd = [  0,     0,     0,     1,     1,     0,     1,     0,     0];   //add amount if odd rows in world
+    av.sgr.regionQuarterBoxx =  [  0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.5];  
+    av.sgr.regionQuarterBoxy =  [  0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.0];  
+  av.sgr.boxArguments = ['boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow']; //flag is true if in use; false if these arguments are not included. 
                         //boxx and boxy are the upper left corner positions of the region in Avida-ED
                         //boxcol and boxrow is the size of the box, so the lower right corner is (boxx+boxcol-1, boxy+boxrow-1]
 
@@ -711,21 +711,7 @@
     av.sgr.nut.wrldSize = av.sgr.nut.wrldCols * av.sgr.nut.wrldRows;
     
     av.sgr.nut.dft = {};    
-    
-    //No reSrc and reAct for now
-    /*
-    var rsrcelen = av.sgr.resrc_argu.length; 
-    var reactlen = av.sgr.react_argu.length;
-    av.sgr.nut.dft['resrc'] = {};
-    for (var jj=0; jj<rsrcelen; jj++){
-      av.sgr.nut.dft['resrc'][ av.sgr.resrc_argu[jj] ] = [];
-    };
-    av.sgr.nut.dft['react'] = {};
-    for (var jj=0; jj<reactlen; jj++){
-      av.sgr.nut.dft['react'][ av.sgr.react_argu[jj] ] = [];     
-    };
-    */
-    
+        
     //for user interface 
     av.sgr.nut.dft['uiAll'] = {};
     av.sgr.nut.dft['uiSub'] = {};

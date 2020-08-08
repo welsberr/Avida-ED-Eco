@@ -587,18 +587,28 @@
         //             , '; av.nut[numTsk].uiAll.regionsNumOf=', av.nut[numTsk].uiAll.regionsNumOf);
       }
       else {
-        // Reaction names a Resource; Need to find info about that resource
+        if (null == reActObj.depletable[ndx]) { reActObj.depletable[ndx] = 1; }
+        if (1 > reActObj.depletable[ndx]) {
+          av.nut[numTsk].uiSub.supplyType[mm] = 'Infinite';
+        } 
+/*
+        // Reaction names a Resource; Need to find info about that resource to determine Supply Type. SupplyTypes will
+        // be determined after the entire file has beeen read to make sure the named resource  is in the (nut)rient structure 
+        
         //if (av.debug.fio) { console.log('____resourceName['+ndx+'] =', reActObj.resource[ndx], '; Name array is', av.nut[numTsk].resrc.name); } 
+        else {
         reSrcName = reActObj.resource[ndx];
         reSrcNameAry = av.nut[numTsk].resrc.name;
         mm = reSrcNameAry.indexOf( reSrcName );
+        console.log('numtsk=', numTsk, '; ndx=', ndx, '; mm=', mm);
         //if (av.debug.fio) { console.log('reSource  mm  =', mm, '; depletable=', reActObj.depletable[ndx], '; av.nut.'+numTsk +'.uiSub.supplyType=', av.nut[numTsk].uiSub.supplyType); }
         //if (av.debug.fio) { console.log('av.nut[numTsk]=', av.nut[numTsk]); }
-        if (undefined !== reActObj.depletable[ndx]) {
-          if (1 > reActObj.depletable[ndx]) {
-            av.nut[numTsk].uiSub.supplyType[ndx] = 'Infinite';
-          };
-        };
+        
+          if (0 < av.nut[numTsk].uiSub.inflowHi) {
+          av.nut[numTsk].uiSub.supplyType[ndx] = 'Infinite';
+          }
+        }
+*/
       };
       av.debug.fio = false;
       //console.log('numTsk',numTsk,'; ndx=',ndx, '; reAct_supplyType All Sub=', av.nut[numTsk].uiAll.supplyType, av.nut[numTsk].uiSub.supplyType[ndx]);
@@ -746,7 +756,7 @@
               //console.log('cellboxdata=',cellboxdata);
               rSourcObj.boxflag[ndx] = true;
               rSourcObj.boxx[ndx] = cellboxdata[0];
-              rSourcObj.boyy[ndx] = cellboxdata[1];
+              rSourcObj.boxy[ndx] = cellboxdata[1];
               rSourcObj.boxcol[ndx] = cellboxdata[2];
               rSourcObj.boxrow[ndx] = cellboxdata[3];
             }
@@ -760,8 +770,10 @@
         //console.log('numTsk=', numTsk, '; av.nut[numTsk]=', av.nut[numTsk]);
         //console.log('rSourcObj.geometry=', rSourcObj.geometry);
         //console.log('ndx=',ndx,'rSourcObj.geometry[ndx]=', rSourcObj.geometry[ndx]);
-
-        av.nut[numTsk].uiAll.geometry = rSourcObj.geometry[ndx];
+        console.log('rSourcObj.geometry['+ndx+']=', rSourcObj.geometry[ndx], 'av.nut['+numTsk+'].uiAll.geometry', av.nut[numTsk].uiAll.geometry);
+        if ('grid' == rSourcObj.geometry[ndx].toLowerCase() || 'global' == rSourcObj.geometry[ndx].toLowerCase() ) {
+          av.nut[numTsk].uiAll.geometry = rSourcObj.geometry[ndx];
+        }
         //if (av.dbg.flg.nut) console.log('numTsk=', numTsk,'; av.nut[numTsk].uiAll.geometry=', av.nut[numTsk].uiAll.geometry);
 
         //Find the supply type
@@ -877,11 +889,6 @@
     } // while that goes through lines in file. 
     if (av.dbg.flg.nut) { console.log('------------------------------ all environment.cfg lines processed --------------'); }
     
-    var numTsk;
-    var len = av.sgr.logEdNames.length;   //9
-    var distinctRegions;
-    //find some summary info about nutrients. Need to look at each task separately. 
-    
           //if (av.dbg.flg.nut) { 
     if (true) { 
       console.log('After while look looking at all lines of environment.cfg; Before looking for summarny information for each task');
@@ -889,6 +896,11 @@
       av.nut_env_cfg = JSON.parse(JSON.stringify(av.nut));
       console.log('av.nut_env_cfg = ', av.nut_env_cfg); 
     }
+    
+    var numTsk;
+    var len = av.sgr.logEdNames.length;   //9
+    var distinctRegions;
+    //find some summary info about nutrients. Need to look at each task separately. 
     
     for (var ii=0; ii< len; ii++) {
       numTsk = av.sgr.logEdNames[ii];
@@ -903,86 +915,71 @@
       for (var jj=0; jj<=av.nut.numRegionsinHTML; jj++) {
         //console.log('av.nut['+numTsk+']uiSub.supplyType['+jj+']=', av.nut[numTsk].uiSub.supplyType[jj]);
         if ('missing' !== av.nut[numTsk].react.resource[jj]) {
-          //If the key word
+          // 'missing' is a key word used in this program to indicate that the reaction has no resoucre and is either 0 or infinite.
+          // These should have been fully translated in the parse react routine.
 
           distinctRegions = [...new Set(av.nut[numTsk].uiSub.regionCode)];
-          //console.log('numTsk=', numTsk, '; distinctRegions=', distinctRegions); 
+          console.log('numTsk=', numTsk, '; jj=', jj, '; distinctRegions=', distinctRegions, '; uiSub.geometry=', av.nut[numTsk].uiAll.geometry); 
           av.nut[numTsk].uiAll.regionsNumOf = distinctRegions.length-1;  //region[0] does not count as it is for global
           //if (av.dbg.flg.nut) { console.log('distinctRegions.length =', distinctRegions.length); }
 
           // if resource exists, set region layout by the number of number of distinct values in ui.Sub.regionCode array
-          if (0 < av.nut[numTsk].uiAll.regionsNumOf) {
-            av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLayoutValues[av.nut[numTsk].uiAll.regionsNumOf];  //av.sgr.layout 
-            av.nut[numTsk].uiAll.geometry = 'Grid';
-          }
-          else if (-1 < av.nut[numTsk].uiAll.regionsNumOf) {
-            av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLayoutValues[1];
+          if (0 == av.nut[numTsk].uiAll.regionsNumOf) {
+            // must be global.           
+            av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLayoutValues[0];
             if (undefined !== av.nut[numTsk].resrc.geometry[0]) { av.nut[numTsk].uiAll.geometry = av.nut[numTsk].resrc.geometry[0]; }
             else { av.nut[numTsk].uiAll.geometry = 'Global'; }
+            av.nut[numTsk].uiSub.area[0] = av.nut.wrldSize;
           }
-          //if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiAll = ', av.nut[numTsk].uiAll); }
-          //if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiSubs=', av.nut[numTsk].uiSub); }
-        };  // a resource was defined so it could be grid or global
-        //find area in this subregion for this resource
-        //console.log('------------------');
-        //console.log('av.nut['+numTsk+'].uiSub.regionNdx['+jj+']=', av.nut[numTsk].uiSub.regionNdx[jj], ' len=', av.sgr.regionQuarterCodes.length);
-        //     var regionArea = 1;
-        if (null != av.nut[numTsk].uiSub.regionNdx[jj] && undefined != av.nut[numTsk].uiSub.regionNdx[jj]){
-          if (0 <= av.nut[numTsk].uiSub.regionNdx[jj] && av.nut[numTsk].uiSub.regionNdx[jj] < av.sgr.regionQuarterCodes.length) {
-            //look for area of subregion based on Resource coordinates
-            av.nut[numTsk].uiSub.area[jj] = av.frd.getInflowAreaResrc(numTsk, jj);
-            //regionArea = av.frd.getInflowRegionArea(numTsk, jj);
-            //console.log('av.nut['+numTsk+'].uiSub.area['+jj+']=', av.nut[numTsk].uiSub.area[jj], 'regionArea=', regionArea);
+          else if (0 < av.nut[numTsk].uiAll.regionsNumOf) {
+            // should be grid
+            av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLayoutValues[av.nut[numTsk].uiAll.regionsNumOf];  //av.sgr.layout 
+            av.nut[numTsk].uiAll.geometry = 'Grid';
+            av.nut[numTsk].uiSub.area[jj] = av.frd.getInflowAreaResrc(numTsk, jj);            
           }
-        }; 
+            
+       };  
       }; // end of loop through html sections
     };  // end of logic task loops
     
     if (av.dbg.flg.nut) { console.log('============================================================================== end of nutrientParse =='); }
   };
   //------------------------------------------------------------------------------------- end of av.frd.nutrientParse --
-  
-  //Find subarea based on region code
-  //-------------------------------------------------------------------------------------- av.frd.getInflowRegionArea --
-  av.frd.getInflowRegionArea = function(numTsk, subnum) {
-    var ndx = av.nut[numTsk].uiSub.regionNdx[subnum];
-    var cols = av.nut.wrldCols *  av.sgr.regionQuarterCols[ndx];
-    var rows = av.nut.wrldRows *  av.sgr.regionQuarterRows[ndx];
-    //console.log('tsk=', numTsk, '; subnum=', subnum,'; ndx=', ndx, '; cols=', cols, '; rows=', rows);
-     if(0 != av.nut.wrldCols % 2) {
-       cols += av.sgr.regionQuarterColsAdd[1];
-     }
-     if (0 != av.nut.wrldRows %2 ) {
-       rows += av.sgr.regionQuarterRowsAdd[1];
-     };
-     return (rows*cols);
-  };
-  //---------------------------------------------------------------------------------- end av.frd.getInflowRegionArea --
-  
+    
   //Find subarea based on inflow x, y coordinates
   //--------------------------------------------------------------------------------------- av.frd.getInflowAreaResrc --
   av.frd.getInflowAreaResrc = function(numTsk, subnum) {
+    //console.log('in av.frd.getInflowAreaResrc: numTsk=', numTsk, '; subnum=', subnum);
     var area = 1;
     var corner = '';
     var coordinates = {};
     var labels = ['inflowx1', 'inflowx2', 'inflowy1', 'inflowy2'];
     var len = labels.length;
-    for (var ndx = 0; ndx < len; ndx++) {
-      corner = labels[ndx];
-      //console.log('corner=', corner, '; av.nut['+numTsk+'].resrc['+corner+']['+subnum+']=', av.nut[numTsk].resrc[corner][subnum]);
-      if (NaN == Number(av.nut[numTsk].resrc[corner][subnum])) {
-        coordinates[labels[0]] = 0;
+    if (null != av.nut[numTsk].uiSub.regionNdx[subnum]) {
+      if (0 <= av.nut[numTsk].uiSub.regionNdx[subnum] && av.nut[numTsk].uiSub.regionNdx[subnum] < av.sgr.regionQuarterCodes.length) {
+
+        for (var ndx = 0; ndx < len; ndx++) {
+          corner = labels[ndx];
+          //console.log('corner=', corner, '; av.nut['+numTsk+'].resrc['+corner+']['+subnum+']=', av.nut[numTsk].resrc[corner][subnum]);
+          if (NaN == Number(av.nut[numTsk].resrc[corner][subnum])) {
+            coordinates[labels[0]] = 0;
+          }
+          else {
+            coordinates[corner] = Number(av.nut[numTsk].resrc[corner][subnum]);
+          }
+        }
+        //console.log('coordinates=',coordinates);
+        var subCols = Math.abs( coordinates.inflowx2 - coordinates.inflowx1 ) + 1;
+        var subRows = Math.abs( coordinates.inflowy2 - coordinates.inflowy1 ) + 1;
+        area = subCols * subRows;
+        console.log('numTsk=', numTsk, 'subnum=', subnum, '; cols=', subCols, '; rows=', subRows, '; area=', area);
+        return (area);
       }
       else {
-        coordinates[corner] = Number(av.nut[numTsk].resrc[corner][subnum]);
+        console.log('Error: problem with av.nut['+numTsk+'].uiSub.regionNdx['+subnum+']=', av.nut[numTsk].uiSub.regionNdx[subnum]);
+        return (1);
       }
     }
-    //console.log('coordinates=',coordinates);
-    var subCols = Math.abs( coordinates.inflowx2 - coordinates.inflowx1 ) + 1;
-    var subRows = Math.abs( coordinates.inflowy2 - coordinates.inflowy1 ) + 1;
-    area = subCols * subRows;
-    //console.log('numTsk=', numTsk, 'subnum=', subnum, '; cols=', subCols, '; rows=', subRows, '; area=', area);
-    return (area);
   };
   //----------------------------------------------------------------------------------- end av.frd.getInflowAreaResrc --
 
@@ -1007,7 +1004,7 @@
         av.nutConfig = {};
         av.nutConfig = JSON.parse(JSON.stringify(av.nut));
         console.log('After av.frd.nutrientParse');
-        console.log('av.nut = ', av.nutConfig); 
+        console.log('av.nutConfig = ', av.nutConfig); 
       }
     }
     else {
@@ -2010,7 +2007,7 @@
             //console.log('cellboxdata=',cellboxdata);
             rSourcObj.boxflag[ndx] = true;
             rSourcObj.boxx[ndx] = cellboxdata[0];
-            rSourcObj.boyy[ndx] = cellboxdata[1];
+            rSourcObj.boxy[ndx] = cellboxdata[1];
             rSourcObj.boxcol[ndx] = cellboxdata[2];
             rSourcObj.boxrow[ndx] = cellboxdata[3];
           } else {
