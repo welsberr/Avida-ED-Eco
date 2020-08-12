@@ -767,10 +767,7 @@
           };
         };
 
-        //console.log('numTsk=', numTsk, '; av.nut[numTsk]=', av.nut[numTsk]);
-        //console.log('rSourcObj.geometry=', rSourcObj.geometry);
-        //console.log('ndx=',ndx,'rSourcObj.geometry[ndx]=', rSourcObj.geometry[ndx]);
-        console.log('rSourcObj.geometry['+ndx+']=', rSourcObj.geometry[ndx], 'av.nut['+numTsk+'].uiAll.geometry', av.nut[numTsk].uiAll.geometry);
+        //console.log('rSourcObj.geometry['+ndx+']=', rSourcObj.geometry[ndx], 'av.nut['+numTsk+'].uiAll.geometry', av.nut[numTsk].uiAll.geometry);
         if ('grid' == rSourcObj.geometry[ndx].toLowerCase() || 'global' == rSourcObj.geometry[ndx].toLowerCase() ) {
           av.nut[numTsk].uiAll.geometry = rSourcObj.geometry[ndx];
         }
@@ -894,13 +891,16 @@
       console.log('After while look looking at all lines of environment.cfg; Before looking for summarny information for each task');
       av.nut_env_cfg = {};
       av.nut_env_cfg = JSON.parse(JSON.stringify(av.nut));
-      console.log('av.nut_env_cfg = ', av.nut_env_cfg); 
+      console.log('; av.nut_env_cfg = ', av.nut_env_cfg); 
     }
     
-    var numTsk;
+    var numTsk, reActNameLen, resrcNameNdx, ndx;
     var len = av.sgr.logEdNames.length;   //9
-    var distinctRegions;
+    var distinctRegions, drLen;
+    var regionLayoutLen = av.sgr.regionLayoutValues.length;
     //find some summary info about nutrients. Need to look at each task separately. 
+    
+    console.log('regionLayoutLen=', regionLayoutLen,'; regionLayoutValues=', av.sgr.regionLayoutValues);
     
     for (var ii=0; ii< len; ii++) {
       numTsk = av.sgr.logEdNames[ii];
@@ -909,37 +909,38 @@
       //console.log('av.nut['+numTsk+'].uiAll=', av.nut[numTsk].uiAll);
       //console.log('av.nut['+numTsk+'].uiSub=', av.nut[numTsk].uiSub);
 
-      // IF the code word 'missing' is NOT the listed as the name of the resource then the reaction has a RESOURCE 
+      //distincRegions will be in more important when gradient is implemented
       // The regionsNumOf is determined and used to assign default regionLayout
-      // Then a region code, region name need to be assigned in av.nut[tsk]ui
-      for (var jj=0; jj<=av.nut.numRegionsinHTML; jj++) {
-        //console.log('av.nut['+numTsk+']uiSub.supplyType['+jj+']=', av.nut[numTsk].uiSub.supplyType[jj]);
-        if ('missing' !== av.nut[numTsk].react.resource[jj]) {
-          // 'missing' is a key word used in this program to indicate that the reaction has no resoucre and is either 0 or infinite.
-          // These should have been fully translated in the parse react routine.
+      // Then a region code, region name need to be assigned in av.nut[tsk]uiSub.regionName      
+      distinctRegions = [...new Set(av.nut[numTsk].uiSub.regionCode)];
+      drLen = distinctRegions.length;
+      // this is not fool proof it requires a reaction for every subdish of regionLayout definition
+      if (0<drLen && drLen <= regionLayoutLen) {
+        av.nut[numTsk].uiAll.regionsLayout = av.sgr.regionLayoutValues[drLen];
+        av.nut[numTsk].uiAll.regionsNumOf = drLen-1;  //region[0] does not count as it is for global
+        console.log('drLen=', drLen,'av.nut['+numTsk+'].uiAll.regionsLayout', av.nut[numTsk].uiAll.regionsLayout,'distinctRegions=', distinctRegions, '; uiSub.geometry=', av.nut[numTsk].uiAll.geometry, '; resrc.geometry=', av.nut[numTsk].resrc.geometry); 
+      }
+      else
+        console.log('numTsk=', numTsk, '; distinctRegions=', distinctRegions, '; uiSub.geometry=', av.nut[numTsk].uiAll.geometry); 
 
-          distinctRegions = [...new Set(av.nut[numTsk].uiSub.regionCode)];
-          console.log('numTsk=', numTsk, '; jj=', jj, '; distinctRegions=', distinctRegions, '; uiSub.geometry=', av.nut[numTsk].uiAll.geometry); 
-          av.nut[numTsk].uiAll.regionsNumOf = distinctRegions.length-1;  //region[0] does not count as it is for global
-          //if (av.dbg.flg.nut) { console.log('distinctRegions.length =', distinctRegions.length); }
-
-          // if resource exists, set region layout by the number of number of distinct values in ui.Sub.regionCode array
-          if (0 == av.nut[numTsk].uiAll.regionsNumOf) {
-            // must be global.           
-            av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLayoutValues[0];
-            if (undefined !== av.nut[numTsk].resrc.geometry[0]) { av.nut[numTsk].uiAll.geometry = av.nut[numTsk].resrc.geometry[0]; }
-            else { av.nut[numTsk].uiAll.geometry = 'Global'; }
-            av.nut[numTsk].uiSub.area[0] = av.nut.wrldSize;
-          }
-          else if (0 < av.nut[numTsk].uiAll.regionsNumOf) {
-            // should be grid
-            av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLayoutValues[av.nut[numTsk].uiAll.regionsNumOf];  //av.sgr.layout 
-            av.nut[numTsk].uiAll.geometry = 'Grid';
-            av.nut[numTsk].uiSub.area[jj] = av.frd.getInflowAreaResrc(numTsk, jj);            
-          }
-            
-       };  
-      }; // end of loop through html sections
+      //this will need work when gradient is added. 
+      reActNameLen = av.nut[numTsk].react.name.length;
+      for (var jj=0; jj<=reActNameLen; jj++) {
+        // 'missing' is a key word used in this program to indicate that the reaction has no resoucre and is either 0 or infinite.
+        // These should have been fully translated in the parse react routine; only processing those with resource names
+        if ('missing' !== av.nut[numTsk].react.resource[jj] && null != av.nut[numTsk].react.resource[jj]) {
+          console.log('av.nut['+numTsk+']uiSub.supplyType['+jj+']=', av.nut[numTsk].uiSub.supplyType[jj], '; geometry=', av.nut[numTsk].uiAll.geometry);
+          // Resource should exist
+          ndx = av.nut[numTsk].resrc.name.indexOf(av.nut[numTsk].react.resource[jj]);
+          if (true) {
+//          if (jj != ndx) {
+            console.log('ndx jj=', ndx, jj, '; av.nut['+numTsk+'].recrc.name=', av.nut[numTsk].resrc.name, 'av.nut['+numTsk+'].react.resource['+jj+']=', av.nut[numTsk].react.resource[jj] );
+          };
+        };  
+      }; // end of loop react name array
+      
+      
+      
     };  // end of logic task loops
     
     if (av.dbg.flg.nut) { console.log('============================================================================== end of nutrientParse =='); }

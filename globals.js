@@ -663,11 +663,14 @@
   // not ready yet                        <option id="orn0Quarters" class="Quarters" value="4Quarters">Quarters</option>
 
     av.sgr.re_region = /(\D+)(\d+)(.*$)/;
+    //av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '2UpDown', '3TopLftRit', '4Quarters'];
     av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '3TopLftRit', '4Quarters'];
 
     //entry zero is blank so index matches subregion number 
-    av.sgr['1All'] = [' ', 'Whole Dish'];
-    av.sgr['2LftRit'] = [' ','Left', 'Right']; 
+    av.sgr.name['1All'] = [null, 'Whole Dish'];
+    av.sgr.code['1All'] = [null, 00];
+    av.sgr['2LftRit'] = [null,'Left', 'Right']; 
+    av.sgr['3TopLftRit'] = [null, 'Top', 'L_Left', 'L_Right'];
     
   //will need something like the statement below eventuatlly
   //sav.sgr['3TopLftRit'] = ['top', 'Lft', 'Rit'];
