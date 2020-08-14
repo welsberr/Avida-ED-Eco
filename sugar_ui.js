@@ -79,7 +79,17 @@
     var which = domObj.options[idx].value;   // get the value of the selected option 
     av.sgr.ChangeAllGeo(which);
     //av.sgr.setSugarColors(true);  //true is to turn colors on;    //color now dependent on presence absence of resources for that task
-    document.getElementById('allSugarGeometry').value = 'Neutral';
+    document.getElementById('allSugarGeometry').value = 'neutral';
+  };
+  
+  av.sgr.allSugarRegionLayoutChange = function(domObj) {
+    console.log('not yet implemented');
+    document.getElementById('allSugarRegionLayout').value = 'neutral';
+  };
+
+  av.sgr.allSugarDiffusionChange = function(domObj) {
+    console.log('not yet implemented');
+    document.getElementById('allSugarDiffusion').value = 'neutral';
   };
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
@@ -87,7 +97,7 @@
     var idx = domObj.selectedIndex;        // get the index of the selected option 
     var selectedValue = domObj.options[idx].value;   // get the value of the selected option 
     av.sgr.ChangeAllsugarSupplyType(selectedValue, 'av.sgr.allsugarSupplyTypeChange');
-    document.getElementById('allsugarSupplyType').value = 'Neutral';
+    document.getElementById('allsugarSupplyType').value = 'neutral';
   };
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
@@ -95,7 +105,7 @@
     var idx = domObj.selectedIndex;        // get the index of the selected option 
     var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
     av.sgr.OpenCloseAllSugarDetails(selectedOption, 'av.sgr.allSugarDetailsOpenClose');
-    document.getElementById('allSugarDetails').value = 'Neutral';
+    document.getElementById('allSugarDetails').value = 'neutral';
   };
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
@@ -430,16 +440,16 @@
     //console.log('num sub Regions=', av.nut[edTsk].uiAll.regionsNumOf, 'layoutName=', '|'+av.nut[edTsk].uiAll.regionLayout+'|');
     
     regionNameList = av.sgr[av.nut[edTsk].uiAll.regionLayout];
-/*    switch (av.nut[edTsk].uiAll.regionLayout) {
+    switch (av.nut[edTsk].uiAll.regionLayout) {
       case '1All':
-        regionNameList = av.sgr['1All'];
+        regionNameList = av.sgr.name['1All'];
         
         break;
       case '2LftRit':
-        regionNameList = av.sgr.LftRit;
+        regionNameList = av.sgr.name['2LftRit'];
         break;
     };
-  */
+
     //console.log('regionNameList=', regionNameList);
     //this 2 line method woks to get the value of the option in the select structure, but so does the one line method;
     //var idx = document.getElementById(tsk+'0geometry').selectedIndex;
@@ -689,16 +699,16 @@
   //------------------------------------------------------------------------------------------ ex1 and tst2 delete later --
   //in tst2 page now
   av.ptd.ex1allSugarChange = function (allmode) {
-    var onoff = 'None';
+    var onoff = 'none';
     var geometry = 'Local';
  // if (av.dbg.flg.nut) { console.log('ex1_allmode=', allmode); }
     if ( ('allon' == allmode) || ('alloff' == allmode) ) {
-      geometry = 'Global';
+      geometry = 'global';
       if ('allon' == allmode) {
         onoff = 'Infinite';
       }
       else if ('alloff' == allmode) {
-        onoff = 'None';
+        onoff = 'none';
       };
       document.getElementById('ex1notGlobRsrcType').value = onoff;
       //document.getElementById('ex1nanGlobRsrcType').value = onoff;

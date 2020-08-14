@@ -1719,7 +1719,7 @@ require([
     }
     if ('populationBlock' === av.ui.page) {
       // Does not seem to change wd/ht of gridHolder
-      if ('None' == document.getElementById('colorMode').value) {
+      if ('none' == document.getElementById('colorMode').value.toLowerCase()) {
         if (av.grd.newlyNone) {
           av.grd.newlyNone = false;
           av.grd.cntx.fillStyle = av.color.names['Black'];
@@ -3397,7 +3397,7 @@ require([
   //av.ui.toggleDevelopentDisplays('Last_things_done');  //ned to put this back for production
   
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
-  av.sgr.ChangeAllGeo('Global');
+  av.sgr.ChangeAllGeo('global');
   //av.sgr.setSugarColors(true);  //true is to turn colors on;    // set color/grey individually so when 0 resources, grey shades rather than colors
   av.sgr.ChangeAllsugarSupplyType('Last_things_done');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');

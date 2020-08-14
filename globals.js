@@ -667,10 +667,12 @@
     av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '3TopLftRit', '4Quarters'];
 
     //entry zero is blank so index matches subregion number 
+    av.sgr.name = {};
+    av.sgr.code = {};
     av.sgr.name['1All'] = [null, 'Whole Dish'];
-    av.sgr.code['1All'] = [null, 00];
-    av.sgr['2LftRit'] = [null,'Left', 'Right']; 
-    av.sgr['3TopLftRit'] = [null, 'Top', 'L_Left', 'L_Right'];
+    av.sgr.code['1All'] = [null, '000'];
+    av.sgr.name['2LftRit'] = [null,'Left', 'Right']; 
+    av.sgr.name['3TopLftRit'] = [null, 'Top', 'L_Left', 'L_Right'];
     
   //will need something like the statement below eventuatlly
   //sav.sgr['3TopLftRit'] = ['top', 'Lft', 'Rit'];
@@ -689,12 +691,10 @@
                         //boxx and boxy are the upper left corner positions of the region in Avida-ED
                         //boxcol and boxrow is the size of the box, so the lower right corner is (boxx+boxcol-1, boxy+boxrow-1]
 
-
-
   // need to figure out how to assign when reading environment.cfg
     av.sgr.supply3 =      ['non', 'inf',  'fin',  'chm',  'poi', 'flo' ];  //none, infinite, finite, chemostat, poison
     av.sgr.supply4 =      ['none', 'infn', 'fint', 'chst', 'pois', 'flow'];
-    av.sgr.supply  =      ['None', 'Infinite', 'Finite', 'Chemostat', 'Flow'];    //only using the first 3 for now; 
+    av.sgr.supplyProper = ['None', 'Infinite', 'Finite', 'Chemostat', 'Flow'];    //only using the first 3 for now; 
     av.sgr.supplylower  = ['none', 'infinite', 'finite', 'chemostat', 'flow'];    //only using the first 3 for now; 
     //Flow would be from the source in a diffrent place fromt he sink: that is input x,y coordinaes are different from those of output. 
     av.sgr.supplyLetter = ['N'  , 'I'  , 'F'  , 'E', 'P', 'S'];   
@@ -723,14 +723,14 @@
       av.sgr.nut.dft.uiAll[ av.sgr.ui_allDish_argu[jj] ] = 'default';
     };
     //defaults for items that describe the whole dish
-    av.sgr.nut.dft.uiAll.geometry = 'Global';        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
-    av.sgr.nut.dft.uiAll.supplyType = 'Infinite';    //this is only for whem ui.geometry = global
+    av.sgr.nut.dft.uiAll.geometry = 'global';        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
+    av.sgr.nut.dft.uiAll.supplyType = 'infinite';    //this is only for whem ui.geometry = global
     av.sgr.nut.dft.uiAll.regionLayout = '0All';  //only Whole Dish for now; '1All' is the code for 'Whole Dish';
     av.sgr.nut.dft.uiAll.regionsNumOf = 1;   // whole dish = there is only one dish 
     av.sgr.nut.dft.uiAll.initial = 1000;      //only used when whem ui.geometry = global and  supplyType = 'finite' 
 
     //defaults for subtasks which must be Grid or Local
-    av.sgr.nut.dft.uiSub.supplyType = 'Infinite';  // Infinite default from Avida-ED 3: I think Should change to Finite
+    av.sgr.nut.dft.uiSub.supplyType = 'infinite';  // Infinite default from Avida-ED 3: I think Should change to Finite
     av.sgr.nut.dft.uiSub.initialHi = 1000;  //sugar units/cell guess at an initial value when supplyType='finite'; need to multiply by wrldSize
     av.sgr.nut.dft.uiSub.inflowHi  = 100;   //sugar units/cell guess at an initial value when supplyType='chemostat'; need to multiply by wrldSize
     av.sgr.nut.dft.uiSub.outflowHi = 0.1;   //sugar units (fraction) guess at an initial value when supplyType='chemostat';
@@ -799,6 +799,14 @@
         av.nut[tsk]['react'][ av.sgr.react_argu[jj] ] = [];     //Should these actually lbe left blank if they are really avida defaults? 
                                                                 //We don't need to write the avida defaults; We do need to write where Avida-ED devaults don't match avida
       };
+      av.nut[tsk]['cells'] = {};
+      av.nut[tsk]['cells'].name = [];
+      av.nut[tsk]['cells'].initial = [];
+      av.nut[tsk]['cells'].inflow = [];
+      av.nut[tsk]['cells'].outflow = [];
+      av.nut[tsk]['cells'].list = [];
+      
+      
       //for user interface 
       av.nut[tsk]['uiAll'] = {};
       av.nut[tsk]['uiSub'] = {};
@@ -807,8 +815,8 @@
       };
       //defaults for items that describe the whole dish
       // These should be in arrays or dictionaries so that they always match with av.sgr.nut.dft.uiAll - tiba fix later
-      av.nut[tsk].uiAll.geometry = 'Global';        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
-      av.nut[tsk].uiAll.supplyType = 'Infinite';    //this is only for whem ui.geometry = global
+      av.nut[tsk].uiAll.geometry = 'global';        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
+      av.nut[tsk].uiAll.supplyType = 'infinite';    //this is only for whem ui.geometry = global
       av.nut[tsk].uiAll.regionLayout = '1All';  //only whole dish for now
       av.nut[tsk].uiAll.regionsNumOf = 1;   // whole dishß
       av.nut[tsk].uiAll.initial = -1;      //only used whem ui.geometry = global and  supplyType = 'finite' 

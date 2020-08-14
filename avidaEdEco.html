@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+x<!DOCTYPE html>
 <html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <head>
@@ -301,7 +301,7 @@
                       <option value='rnor'>Resource: Norose</option>
                       <option value='rxor'>Resource: Xorose</option>
                       <option value='requ'>Resource: Equose</option>
-                      <option value='None'>None</option>
+                      <option value='none'>None</option>
                     </select>
                   </div>
                   <div id='gridButtons' class='gridButtonClass'>
@@ -425,7 +425,7 @@
               
               <div class="anaYaxis">
                 <select  id='yLeftSelect' onchange='av.anl.yScaleSelect_onChange(this);'>
-                  <option value='None'>None</option>
+                  <option value='none'>None</option>
                   <option value='Average Fitness' selected>Average Fitness</option>
                   <option value='Average Offspring Cost'>Average Offspring Cost</option>
                   <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
@@ -434,7 +434,7 @@
                 </select> Thicker line; left y-axis
                 <br></br>
                 <select  id='yRightSelect' onchange='av.anl.yScaleSelect_onChange(this);'>
-                  <option value='None'>None</option>
+                  <option value='none'>None</option>
                   <option value='Average Fitness'>Average Fitness</option>
                   <option value='Average Offspring Cost' selected>Average Offspring Cost</option>
                   <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
@@ -698,7 +698,7 @@
                   <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
                   <option value='Number of Organisms'>Number of Organisms</option>
                   <option value='Number Viable'>Number Viable</option>
-                  <option value='None'>None</option>
+                  <option value='none'>None</option>
                 </select>
               </div><span id='miniChartYaxis_end' class='displayNone'></span>
 
@@ -755,22 +755,18 @@
 
                   <div id='sugarAccordion'>
 
-
-
-
-
                     <details id="not0section" class="sugarAccordionSection">
                       <summary id="not0summary" class="sugarSummary">
                         <span id="not0title" class="sugarTitle">Notose</span>&nbsp;
                         <select id="not0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                          <option value="Global" selected="">Global</option>
-                          <option value="Grid">Local</option>
+                          <option value='global' selected="">Global</option>
+                          <option value='grid'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="not0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
-                          <option id="not0none" value="None">None</option>
-                          <option id="not0Infinite" value="Infinite" selected="">Infinite</option>
-                          <option id="not0Finite" value="Finite">Finite</option>
-                          <option id="not0Chemostat" value="Chemostat">Chemostat</option>
+                          <option id="not0none" value='none'>None</option>
+                          <option id="not0Infinite" value='infinite' selected="">Infinite</option>
+                          <option id="not0Finite" value="finite">Finite</option>
+                          <option id="not0Chemostat" value='chemostat'>Chemostat</option>
                           <option id="not0Debug" value="All">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="not0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
@@ -787,11 +783,11 @@
                           <div id="not1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="not1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="not1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="not1none" value="None">None</option>
-                              <option id="not1Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="not1Finite" class="localFinite" value="Finite">Finite</option>
-                              <option id="not1Chemostat" class="localChemostat" value="Chemostat">Chemostat</option>
-                              <option id="not1Debug" class="localDebug" value="Debug">All debug</option>
+                              <option id="not1none" value='none'>None</option>
+                              <option id="not1Infinite" value='infinite' selected="">Infinite</option>
+                              <option id="not1Finite" class="localFinite" value="finite">Finite</option>
+                              <option id="not1Chemostat" class="localChemostat" value='chemostat'>Chemostat</option>
+                              <option id="not1Debug" class="localDebug" value='debug'>All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="not1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -859,11 +855,11 @@
                           <div id="not2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="not2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="not2supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="not2none" value="None">None</option>
-                              <option id="not2Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="not2Finite" value="Finite">Finite</option>
-                              <option id="not2Chemostat" value="Chemostat">Chemostat</option>
-                              <option id="not2Debug" value="Debug">All debug</option>
+                              <option id="not2none" value='none'>None</option>
+                              <option id="not2Infinite" value='infinite' selected="">Infinite</option>
+                              <option id="not2Finite" value="finite">Finite</option>
+                              <option id="not2Chemostat" value='chemostat'>Chemostat</option>
+                              <option id="not2Debug" value='debug'>All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="not2periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -934,14 +930,14 @@
                       <summary id="nan0summary" class="sugarSummary">
                         <span id="nan0title" class="sugarTitle">Nanose</span>&nbsp;
                         <select id="nan0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                          <option value="Global" selected="">Global</option>
-                          <option value="Grid">Local</option>
+                          <option value='global' selected="">Global</option>
+                          <option value='grid'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="nan0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
-                          <option id="nan0none" value="None">None</option>
-                          <option id="nan0Infinite" value="Infinite" selected="">Infinite</option>
-                          <option id="nan0Finite" value="Finite">Finite</option>
-                          <option id="nan0Chemostat" value="Chemostat">Chemostat</option>
+                          <option id="nan0none" value='none'>None</option>
+                          <option id="nan0Infinite" value='infinite' selected="">Infinite</option>
+                          <option id="nan0Finite" value="finite">Finite</option>
+                          <option id="nan0Chemostat" value='chemostat'>Chemostat</option>
                           <option id="nan0Debug" value="All">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="nan0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
@@ -958,11 +954,11 @@
                           <div id="nan1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="nan1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="nan1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="nan1none" value="None">None</option>
-                              <option id="nan1Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="nan1Finite" class="localFinite" value="Finite">Finite</option>
-                              <option id="nan1Chemostat" class="localChemostat" value="Chemostat">Chemostat</option>
-                              <option id="nan1Debug" class="localDebug" value="Debug">All debug</option>
+                              <option id="nan1none" value='none'>None</option>
+                              <option id="nan1Infinite" value='infinite' selected="">Infinite</option>
+                              <option id="nan1Finite" class="localFinite" value="finite">Finite</option>
+                              <option id="nan1Chemostat" class="localChemostat" value='chemostat'>Chemostat</option>
+                              <option id="nan1Debug" class="localDebug" value='debug'>All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="nan1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1030,11 +1026,11 @@
                           <div id="nan2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="nan2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="nan2supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="nan2none" value="None">None</option>
-                              <option id="nan2Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="nan2Finite" value="Finite">Finite</option>
-                              <option id="nan2Chemostat" value="Chemostat">Chemostat</option>
-                              <option id="nan2Debug" value="Debug">All debug</option>
+                              <option id="nan2none" value='none'>None</option>
+                              <option id="nan2Infinite" value='infinite' selected="">Infinite</option>
+                              <option id="nan2Finite" value="finite">Finite</option>
+                              <option id="nan2Chemostat" value='chemostat'>Chemostat</option>
+                              <option id="nan2Debug" value='debug'>All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="nan2periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1105,14 +1101,14 @@
                       <summary id="and0summary" class="sugarSummary">
                         <span id="and0title" class="sugarTitle">Andose</span>&nbsp;
                         <select id="and0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                          <option value="Global" selected="">Global</option>
-                          <option value="Grid">Local</option>
+                          <option value='global' selected="">Global</option>
+                          <option value='grid'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="and0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
-                          <option id="and0none" value="None">None</option>
-                          <option id="and0Infinite" value="Infinite" selected="">Infinite</option>
-                          <option id="and0Finite" value="Finite">Finite</option>
-                          <option id="and0Chemostat" value="Chemostat">Chemostat</option>
+                          <option id="and0none" value='none'>None</option>
+                          <option id="and0Infinite" value='infinite' selected="">Infinite</option>
+                          <option id="and0Finite" value="finite">Finite</option>
+                          <option id="and0Chemostat" value='chemostat'>Chemostat</option>
                           <option id="and0Debug" value="All">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="and0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
@@ -1129,11 +1125,11 @@
                           <div id="and1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="and1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="and1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="and1none" value="None">None</option>
-                              <option id="and1Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="and1Finite" class="localFinite" value="Finite">Finite</option>
-                              <option id="and1Chemostat" class="localChemostat" value="Chemostat">Chemostat</option>
-                              <option id="and1Debug" class="localDebug" value="Debug">All debug</option>
+                              <option id="and1none" value='none'>None</option>
+                              <option id="and1Infinite" value='infinite' selected="">Infinite</option>
+                              <option id="and1Finite" class="localFinite" value="finite">Finite</option>
+                              <option id="and1Chemostat" class="localChemostat" value='chemostat'>Chemostat</option>
+                              <option id="and1Debug" class="localDebug" value='debug'>All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="and1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1201,11 +1197,11 @@
                           <div id="and2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="and2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="and2supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="and2none" value="None">None</option>
-                              <option id="and2Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="and2Finite" value="Finite">Finite</option>
-                              <option id="and2Chemostat" value="Chemostat">Chemostat</option>
-                              <option id="and2Debug" value="Debug">All debug</option>
+                              <option id="and2none" value='none'>None</option>
+                              <option id="and2Infinite" value='infinite' selected="">Infinite</option>
+                              <option id="and2Finite" value="finite">Finite</option>
+                              <option id="and2Chemostat" value='chemostat'>Chemostat</option>
+                              <option id="and2Debug" value='debug'>All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="and2periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1276,15 +1272,15 @@
                       <summary id="orn0summary" class="sugarSummary">
                         <span id="orn0title" class="sugarTitle">Ornose</span>&nbsp;
                         <select id="orn0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                          <option value="Global" selected="">Global</option>
-                          <option value="Grid">Local</option>
+                          <option value="global" selected="">Global</option>
+                          <option value="grid">Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="orn0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
-                          <option id="orn0none" value="None">None</option>
-                          <option id="orn0Infinite" value="Infinite" selected="">Infinite</option>
-                          <option id="orn0Finite" value="Finite">Finite</option>
-                          <option id="orn0Chemostat" value="Chemostat">Chemostat</option>
-                          <option id="orn0Debug" value="All">All debug</option>
+                          <option id="orn0none" value="none">None</option>
+                          <option id="orn0Infinite" value="infinite" selected="">Infinite</option>
+                          <option id="orn0Finite" value="finite">Finite</option>
+                          <option id="orn0Chemostat" value="chemostat">Chemostat</option>
+                          <option id="orn0Debug" value="all">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="orn0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                           <option id="orn0WholeDish" value="1All" selected="">Whole Dish</option>
@@ -1300,11 +1296,11 @@
                           <div id="orn1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="orn1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="orn1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="orn1none" value="None">None</option>
-                              <option id="orn1Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="orn1Finite" class="localFinite" value="Finite">Finite</option>
-                              <option id="orn1Chemostat" class="localChemostat" value="Chemostat">Chemostat</option>
-                              <option id="orn1Debug" class="localDebug" value="Debug">All debug</option>
+                              <option id="orn1none" value="none">None</option>
+                              <option id="orn1Infinite" value="infinite" selected="">Infinite</option>
+                              <option id="orn1Finite" class="localFinite" value="finite">Finite</option>
+                              <option id="orn1Chemostat" class="localChemostat" value="chemostat">Chemostat</option>
+                              <option id="orn1Debug" class="localDebug" value="debug">All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="orn1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1372,11 +1368,11 @@
                           <div id="orn2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="orn2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="orn2supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="orn2none" value="None">None</option>
-                              <option id="orn2Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="orn2Finite" value="Finite">Finite</option>
-                              <option id="orn2Chemostat" value="Chemostat">Chemostat</option>
-                              <option id="orn2Debug" value="Debug">All debug</option>
+                              <option id="orn2none" value="none">None</option>
+                              <option id="orn2Infinite" value="infinite" selected="">Infinite</option>
+                              <option id="orn2Finite" value="finite">Finite</option>
+                              <option id="orn2Chemostat" value="chemostat">Chemostat</option>
+                              <option id="orn2Debug" value="debug">All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="orn2periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1447,14 +1443,14 @@
                       <summary id="oro0summary" class="sugarSummary">
                         <span id="oro0title" class="sugarTitle">Orose</span>&nbsp;
                         <select id="oro0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                          <option value="Global" selected="">Global</option>
-                          <option value="Grid">Local</option>
+                          <option value='global' selected="">Global</option>
+                          <option value='grid'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="oro0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
-                          <option id="oro0none" value="None">None</option>
-                          <option id="oro0Infinite" value="Infinite" selected="">Infinite</option>
-                          <option id="oro0Finite" value="Finite">Finite</option>
-                          <option id="oro0Chemostat" value="Chemostat">Chemostat</option>
+                          <option id="oro0none" value='none'>None</option>
+                          <option id="oro0Infinite" value='infinite' selected="">Infinite</option>
+                          <option id="oro0Finite" value="finite">Finite</option>
+                          <option id="oro0Chemostat" value='chemostat'>Chemostat</option>
                           <option id="oro0Debug" value="All">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="oro0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
@@ -1471,11 +1467,11 @@
                           <div id="oro1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="oro1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="oro1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="oro1none" value="None">None</option>
-                              <option id="oro1Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="oro1Finite" class="localFinite" value="Finite">Finite</option>
-                              <option id="oro1Chemostat" class="localChemostat" value="Chemostat">Chemostat</option>
-                              <option id="oro1Debug" class="localDebug" value="Debug">All debug</option>
+                              <option id="oro1none" value='none'>None</option>
+                              <option id="oro1Infinite" value='infinite' selected="">Infinite</option>
+                              <option id="oro1Finite" class="localFinite" value="finite">Finite</option>
+                              <option id="oro1Chemostat" class="localChemostat" value='chemostat'>Chemostat</option>
+                              <option id="oro1Debug" class="localDebug" value='debug'>All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="oro1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1543,11 +1539,11 @@
                           <div id="oro2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="oro2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="oro2supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="oro2none" value="None">None</option>
-                              <option id="oro2Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="oro2Finite" value="Finite">Finite</option>
-                              <option id="oro2Chemostat" value="Chemostat">Chemostat</option>
-                              <option id="oro2Debug" value="Debug">All debug</option>
+                              <option id="oro2none" value='none'>None</option>
+                              <option id="oro2Infinite" value='infinite' selected="">Infinite</option>
+                              <option id="oro2Finite" value="finite">Finite</option>
+                              <option id="oro2Chemostat" value='chemostat'>Chemostat</option>
+                              <option id="oro2Debug" value='debug'>All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="oro2periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1618,14 +1614,14 @@
                       <summary id="ant0summary" class="sugarSummary">
                         <span id="ant0title" class="sugarTitle">Antose</span>&nbsp;
                         <select id="ant0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                          <option value="Global" selected="">Global</option>
-                          <option value="Grid">Local</option>
+                          <option value='global' selected="">Global</option>
+                          <option value='grid'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="ant0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
-                          <option id="ant0none" value="None">None</option>
-                          <option id="ant0Infinite" value="Infinite" selected="">Infinite</option>
-                          <option id="ant0Finite" value="Finite">Finite</option>
-                          <option id="ant0Chemostat" value="Chemostat">Chemostat</option>
+                          <option id="ant0none" value='none'>None</option>
+                          <option id="ant0Infinite" value='infinite' selected="">Infinite</option>
+                          <option id="ant0Finite" value="finite">Finite</option>
+                          <option id="ant0Chemostat" value='chemostat'>Chemostat</option>
                           <option id="ant0Debug" value="All">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="ant0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
@@ -1642,11 +1638,11 @@
                           <div id="ant1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="ant1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="ant1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="ant1none" value="None">None</option>
-                              <option id="ant1Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="ant1Finite" class="localFinite" value="Finite">Finite</option>
-                              <option id="ant1Chemostat" class="localChemostat" value="Chemostat">Chemostat</option>
-                              <option id="ant1Debug" class="localDebug" value="Debug">All debug</option>
+                              <option id="ant1none" value='none'>None</option>
+                              <option id="ant1Infinite" value='infinite' selected="">Infinite</option>
+                              <option id="ant1Finite" class="localFinite" value="finite">Finite</option>
+                              <option id="ant1Chemostat" class="localChemostat" value='chemostat'>Chemostat</option>
+                              <option id="ant1Debug" class="localDebug" value='debug'>All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="ant1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1714,11 +1710,11 @@
                           <div id="ant2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="ant2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="ant2supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="ant2none" value="None">None</option>
-                              <option id="ant2Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="ant2Finite" value="Finite">Finite</option>
-                              <option id="ant2Chemostat" value="Chemostat">Chemostat</option>
-                              <option id="ant2Debug" value="Debug">All debug</option>
+                              <option id="ant2none" value='none'>None</option>
+                              <option id="ant2Infinite" value='infinite' selected="">Infinite</option>
+                              <option id="ant2Finite" value="finite">Finite</option>
+                              <option id="ant2Chemostat" value='chemostat'>Chemostat</option>
+                              <option id="ant2Debug" value='debug'>All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="ant2periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1789,14 +1785,14 @@
                       <summary id="nor0summary" class="sugarSummary">
                         <span id="nor0title" class="sugarTitle">Norose</span>&nbsp;
                         <select id="nor0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                          <option value="Global" selected="">Global</option>
-                          <option value="Grid">Local</option>
+                          <option value='global' selected="">Global</option>
+                          <option value='grid'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="nor0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
-                          <option id="nor0none" value="None">None</option>
-                          <option id="nor0Infinite" value="Infinite" selected="">Infinite</option>
-                          <option id="nor0Finite" value="Finite">Finite</option>
-                          <option id="nor0Chemostat" value="Chemostat">Chemostat</option>
+                          <option id="nor0none" value='none'>None</option>
+                          <option id="nor0Infinite" value='infinite' selected="">Infinite</option>
+                          <option id="nor0Finite" value="finite">Finite</option>
+                          <option id="nor0Chemostat" value='chemostat'>Chemostat</option>
                           <option id="nor0Debug" value="All">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="nor0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
@@ -1813,11 +1809,11 @@
                           <div id="nor1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="nor1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="nor1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="nor1none" value="None">None</option>
-                              <option id="nor1Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="nor1Finite" class="localFinite" value="Finite">Finite</option>
-                              <option id="nor1Chemostat" class="localChemostat" value="Chemostat">Chemostat</option>
-                              <option id="nor1Debug" class="localDebug" value="Debug">All debug</option>
+                              <option id="nor1none" value='none'>None</option>
+                              <option id="nor1Infinite" value='infinite' selected="">Infinite</option>
+                              <option id="nor1Finite" class="localFinite" value="finite">Finite</option>
+                              <option id="nor1Chemostat" class="localChemostat" value='chemostat'>Chemostat</option>
+                              <option id="nor1Debug" class="localDebug" value='debug'>All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="nor1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1885,11 +1881,11 @@
                           <div id="nor2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="nor2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="nor2supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="nor2none" value="None">None</option>
-                              <option id="nor2Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="nor2Finite" value="Finite">Finite</option>
-                              <option id="nor2Chemostat" value="Chemostat">Chemostat</option>
-                              <option id="nor2Debug" value="Debug">All debug</option>
+                              <option id="nor2none" value='none'>None</option>
+                              <option id="nor2Infinite" value='infinite' selected="">Infinite</option>
+                              <option id="nor2Finite" value="finite">Finite</option>
+                              <option id="nor2Chemostat" value='chemostat'>Chemostat</option>
+                              <option id="nor2Debug" value='debug'>All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="nor2periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1960,14 +1956,14 @@
                       <summary id="xor0summary" class="sugarSummary">
                         <span id="xor0title" class="sugarTitle">Xorose</span>&nbsp;
                         <select id="xor0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                          <option value="Global" selected="">Global</option>
-                          <option value="Grid">Local</option>
+                          <option value='global' selected="">Global</option>
+                          <option value='grid'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="xor0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
-                          <option id="xor0none" value="None">None</option>
-                          <option id="xor0Infinite" value="Infinite" selected="">Infinite</option>
-                          <option id="xor0Finite" value="Finite">Finite</option>
-                          <option id="xor0Chemostat" value="Chemostat">Chemostat</option>
+                          <option id="xor0none" value='none'>None</option>
+                          <option id="xor0Infinite" value='infinite' selected="">Infinite</option>
+                          <option id="xor0Finite" value="finite">Finite</option>
+                          <option id="xor0Chemostat" value='chemostat'>Chemostat</option>
                           <option id="xor0Debug" value="All">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="xor0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
@@ -1984,11 +1980,11 @@
                           <div id="xor1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="xor1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="xor1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="xor1none" value="None">None</option>
-                              <option id="xor1Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="xor1Finite" class="localFinite" value="Finite">Finite</option>
-                              <option id="xor1Chemostat" class="localChemostat" value="Chemostat">Chemostat</option>
-                              <option id="xor1Debug" class="localDebug" value="Debug">All debug</option>
+                              <option id="xor1none" value='none'>None</option>
+                              <option id="xor1Infinite" value='infinite' selected="">Infinite</option>
+                              <option id="xor1Finite" class="localFinite" value="finite">Finite</option>
+                              <option id="xor1Chemostat" class="localChemostat" value='chemostat'>Chemostat</option>
+                              <option id="xor1Debug" class="localDebug" value='debug'>All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="xor1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -2056,11 +2052,11 @@
                           <div id="xor2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="xor2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="xor2supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="xor2none" value="None">None</option>
-                              <option id="xor2Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="xor2Finite" value="Finite">Finite</option>
-                              <option id="xor2Chemostat" value="Chemostat">Chemostat</option>
-                              <option id="xor2Debug" value="Debug">All debug</option>
+                              <option id="xor2none" value='none'>None</option>
+                              <option id="xor2Infinite" value='infinite' selected="">Infinite</option>
+                              <option id="xor2Finite" value="finite">Finite</option>
+                              <option id="xor2Chemostat" value='chemostat'>Chemostat</option>
+                              <option id="xor2Debug" value='debug'>All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="xor2periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -2131,14 +2127,14 @@
                       <summary id="equ0summary" class="sugarSummary">
                         <span id="equ0title" class="sugarTitle">Equose</span>&nbsp;
                         <select id="equ0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
-                          <option value="Global" selected="">Global</option>
-                          <option value="Grid">Local</option>
+                          <option value='global' selected="">Global</option>
+                          <option value='grid'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="equ0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
-                          <option id="equ0none" value="None">None</option>
-                          <option id="equ0Infinite" value="Infinite" selected="">Infinite</option>
-                          <option id="equ0Finite" value="Finite">Finite</option>
-                          <option id="equ0Chemostat" value="Chemostat">Chemostat</option>
+                          <option id="equ0none" value='none'>None</option>
+                          <option id="equ0Infinite" value='infinite' selected="">Infinite</option>
+                          <option id="equ0Finite" value="finite">Finite</option>
+                          <option id="equ0Chemostat" value='chemostat'>Chemostat</option>
                           <option id="equ0Debug" value="All">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="equ0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
@@ -2155,11 +2151,11 @@
                           <div id="equ1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="equ1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="equ1supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="equ1none" value="None">None</option>
-                              <option id="equ1Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="equ1Finite" class="localFinite" value="Finite">Finite</option>
-                              <option id="equ1Chemostat" class="localChemostat" value="Chemostat">Chemostat</option>
-                              <option id="equ1Debug" class="localDebug" value="Debug">All debug</option>
+                              <option id="equ1none" value='none'>None</option>
+                              <option id="equ1Infinite" value='infinite' selected="">Infinite</option>
+                              <option id="equ1Finite" class="localFinite" value="finite">Finite</option>
+                              <option id="equ1Chemostat" class="localChemostat" value='chemostat'>Chemostat</option>
+                              <option id="equ1Debug" class="localDebug" value='debug'>All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="equ1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -2227,11 +2223,11 @@
                           <div id="equ2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
                           <div id="equ2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeNclass">
                             <select id="equ2supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="equ2none" value="None">None</option>
-                              <option id="equ2Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="equ2Finite" value="Finite">Finite</option>
-                              <option id="equ2Chemostat" value="Chemostat">Chemostat</option>
-                              <option id="equ2Debug" value="Debug">All debug</option>
+                              <option id="equ2none" value='none'>None</option>
+                              <option id="equ2Infinite" value='infinite' selected="">Infinite</option>
+                              <option id="equ2Finite" value="finite">Finite</option>
+                              <option id="equ2Chemostat" value='chemostat'>Chemostat</option>
+                              <option id="equ2Debug" value='debug'>All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="equ2periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -2305,19 +2301,19 @@
 
                     <div id="allSugarGeometryDiv" class='rHeadItem'>
                       <select id="allSugarGeometry" onchange='av.sgr.allSugarGeometryChange(this);'>
-                        <option value='Global'>Global</option>
-                        <option value='Grid'>Local</option>
-                        <option value='Neutral' selected>----</option>                            
+                        <option value='global'>Global</option>
+                        <option value='grid'>Local</option>
+                        <option value='neutral' selected>----</option>                            
                       </select>
                     </div>
                     <div id='allSugarSupplyTypeDiv' class='rHeadItem'>
                       <select id='allsugarSupplyType' onchange='av.sgr.allsugarSupplyTypeChange(this);'>
-                        <option value='None'>None</option>
-                        <option value='Infinite'>Infinite</option>
-                        <option value='Finite' class='groupFinite'>Finite</option>
-                        <option value='Equilibrium' class='groupEquilibrium'>Equal</option>
-                        <option value='Debug' class='groupDebug'>Debug</option>
-                        <option value='Neutral' selected>----</option>
+                        <option value='none'>None</option>
+                        <option value='infinite'>Infinite</option>
+                        <option value='finite' class='groupFinite'>Finite</option>
+                        <option value='chemostat' class='groupEquilibrium'>Chemostat</option>
+                        <option value='debug' class='groupDebug'>Debug</option>
+                        <option value='neutral' selected>----</option>
                       </select> 
                     </div>
                     <div id='allSugarRegionLayoutDiv' class='rHeadItem'>
@@ -2326,21 +2322,21 @@
                           <option class="HalfLftRit" value="2LftRit">Halves (L/R)</option>
                           <option class="TopLftRit" value="3TopLftRit">Up/Down (L/R)</option>
                           <option class="Quarters" value="4Quarters">Quarters</option>
-                          <option value='Neutral' selected>----</option>                            
+                          <option value='neutral' selected>----</option>                            
                         </select>
                     </div>
                     <div id='allSugarDiffusionDiv' class='rHeadItem'>
                       <select id="allSugarDiffusion" onchange='av.sgr.allSugarDiffusionChange(this);'>
                         <option value='allOpen'>Off</option>
                         <option value='allClose'>On</option>
-                        <option value='Neutral' selected>----</option>                            
+                        <option value='neutral' selected>----</option>                            
                       </select> 
                     </div>
                     <div id='allSugarDetailsDiv' class='rHeadItem'>
                       <select id="allSugarDetails" onchange='av.sgr.allSugarDetailsOpenClose(this);'>
                         <option value='allOpen'>Show</option>
                         <option value='allClose'>Hide</option>
-                        <option value='Neutral' selected>----</option>                            
+                        <option value='neutral' selected>----</option>                            
                       </select> 
                     </div>
                     <div id='geometrySgr'>Geometry &nbsp;</div>
@@ -2497,14 +2493,14 @@
                       <summary class='ex1sugarSummary'>
                         <span class='ex1sugarTitle'>Notose</span>&nbsp;
                         <select  id='ex1notGlobalLocal'>
-                          <option value='Global' selected>Global</option>
-                          <option value='Local'>Local</option>
+                          <option value='global' selected>Global</option>
+                          <option value='local'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;&nbsp;
                         <select  id='ex1notGlobRsrcType'>
-                          <option value='None'>None</option>
-                          <option value='Infinite' selected>Infinite</option>
-                          <option value='Finite'>Finite</option>
-                          <option value='Equilibrium'>Equilibrium</option>
+                          <option value='none'>None</option>
+                          <option value='infinite' selected>Infinite</option>
+                          <option value='finite'>Finite</option>
+                          <option value='equilibrium'>Equilibrium</option>
                         </select>                        
                       </summary>
                       <div id='ex1notDetails' class='ex1sugarDetail'>
@@ -2515,8 +2511,8 @@
                       <summary class='ex1sugarSummary'>
                         <span class='ex1sugarTitle'>Nanose</span>&nbsp;
                         <select  id='ex1nanGlobalLocal'>
-                          <option value='Global'>Global</option>
-                          <option value='Local' selected>Local</option>
+                          <option value='global'>Global</option>
+                          <option value='local' selected>Local</option>
                         </select>&nbsp;
                         <select  id='ex1nanSpatSplit'>
                           <option value='EntireDish' selected>Entire Dish</option>
@@ -2529,8 +2525,8 @@
                         <div id='ex1nanPart1' class='ex1oddSugarPart'>
                           <label id='ex1nan1Detail' class='ex1dishPartLabel'>Entire Dish</label>
                           <select  id='ex1nanDistribute'>
-                            <option value='Finite'>Finite</option>
-                            <option value='Equilibrium' selected>Equilibrium</option>
+                            <option value='finite'>Finite</option>
+                            <option value='equilibrium' selected>Equilibrium</option>
                             <option value='Source/Sink'>Source/Sink</option>
                             <option value='Gradient'>Gradient</option>
                           </select>&nbsp;
@@ -2554,8 +2550,8 @@
                       <summary class='ex1sugarSummary'>
                         <span class='ex1sugarTitle'>Andose</span>&nbsp;
                         <select  id='ex1andGlobalLocal'>
-                          <option value='Global'>Global</option>
-                          <option value='Local' selected>Local</option>
+                          <option value='global'>Global</option>
+                          <option value='local' selected>Local</option>
                         </select>&nbsp;
                         <select  id='ex1andSpatSplit'>
                           <option value='EntireDish'>Entire Dish</option>
@@ -2568,8 +2564,8 @@
                         <div id='ex1andPart1' class='ex1oddSugarPart'>
                           <label id='ex1and1Detail' class='ex1dishPartLabel'>Upper Left</label>
                           <select  id='ex1andDistribute'>
-                            <option value='Finite'>Finite</option>
-                            <option value='Equilibrium' selected>Equilibrium</option>
+                            <option value='finite'>Finite</option>
+                            <option value='equilibrium' selected>Equilibrium</option>
                             <option value='Source/Sink'>Source/Sink</option>
                             <option value='Gradient'>Gradient</option>
                           </select>&nbsp;
@@ -2589,8 +2585,8 @@
                         <div id='ex1nanPart2' class='ex1evenSugar'>
                           <label id='ex1and2Detail' class='ex1dishPartLabel'>Upper Right</label>
                           <select  id='ex1and2Distribute'>
-                            <option value='Finite'>Finite</option>
-                            <option value='Equilibrium'>Equilibrium</option>
+                            <option value='finite'>Finite</option>
+                            <option value='equilibrium'>Equilibrium</option>
                             <option value='Source/Sink' selected>Source/Sink</option>
                             <option value='Gradient'>Gradient</option>
                           </select>&nbsp;
@@ -2613,8 +2609,8 @@
                         <div id='ex1andPart3' class='ex1oddSugarPart'>
                           <label id='ex1and3Detail' class='ex1dishPartLabel'>Lower Left</label>
                           <select  id='ex1and3Distribute'>
-                            <option value='Finite' selected>Finite</option>
-                            <option value='Equilibrium'>Equilibrium</option>
+                            <option value='finite' selected>Finite</option>
+                            <option value='equilibrium'>Equilibrium</option>
                             <option value='Source/Sink'>Source/Sink</option>
                             <option value='Gradient'>Gradient</option>
                           </select>&nbsp;
@@ -2629,8 +2625,8 @@
                         <div id='ex1andPart4' class='ex1evenSugar'>
                           <label id='ex1and4Detail' class='ex1dishPartLabel'>Lower Right</label>
                           <select  id='ex1and4Distribute'>
-                            <option value='Finite'>Finite</option>
-                            <option value='Equilibrium' selected>Equilibrium</option>
+                            <option value='finite'>Finite</option>
+                            <option value='equilibrium' selected>Equilibrium</option>
                             <option value='Source/Sink'>Source/Sink</option>
                             <option value='Gradient' selected>Gradient</option>
                           </select>
@@ -2656,14 +2652,14 @@
                       <summary class='ex1sugarSummary'>
                         <span class='ex1sugarTitle'>Ornose</span>&nbsp;
                         <select  id='ex1ornGlobalLocal'>
-                          <option value='Global' selected>Global</option>
-                          <option value='Local'>Local</option>
+                          <option value='global' selected>Global</option>
+                          <option value='local'>Local</option>
                         </select>&nbsp;
                         <select  id='ex1ornGlobRsrcType'>
-                          <option value='None'>None</option>
-                          <option value='Infinite' selected>Infinite</option>
-                          <option value='Finite'>Finite</option>
-                          <option value='Equilibrium'>Equilibrium</option>
+                          <option value='none'>None</option>
+                          <option value='infinite' selected>Infinite</option>
+                          <option value='finite'>Finite</option>
+                          <option value='equilibrium'>Equilibrium</option>
                         </select>                        
                       </summary>
                       <div id='ex1ornDetails' class='ex1sugarDetail'>
@@ -2674,8 +2670,8 @@
                       <summary class='ex1sugarSummary'>
                         <span class='ex1sugarTitle'>Orose</span>&nbsp;
                         <select  id='ex1oroGlobalLocal'>
-                          <option value='Global'>Global</option>
-                          <option value='Local' selected>Local</option>
+                          <option value='global'>Global</option>
+                          <option value='local' selected>Local</option>
                         </select>&nbsp;
                         <select  id='ex1oroSpatSplit'>
                           <option value='EntireDish'>Entire Dish</option>
@@ -2688,8 +2684,8 @@
                         <div id='ex1oroPart1' class='ex1oddSugarPart'>
                           <label id='ex1oro1Detail' class='ex1dishPartLabel'>Top</label>
                           <select  id='ex1oro1Distribute'>
-                            <option value='Finite'>Finite</option>
-                            <option value='Equilibrium' selected>Equilibrium</option>
+                            <option value='finite'>Finite</option>
+                            <option value='equilibrium' selected>Equilibrium</option>
                             <option value='Source/Sink'>Source/Sink</option>
                             <option value='Gradient'>Gradient</option>
                           </select>&nbsp;
@@ -2706,8 +2702,8 @@
                         <div id='ex1oroPart2' class='ex1evenSugar'>
                           <label id='ex1oro2Detail' class='ex1dishPartLabel'>Bottom</label>
                           <select  id='ex1oro2Distribute'>
-                            <option value='Finite'>Finite</option>
-                            <option value='Equilibrium' selected>Equilibrium</option>
+                            <option value='finite'>Finite</option>
+                            <option value='equilibrium' selected>Equilibrium</option>
                             <option value='Source/Sink'>Source/Sink</option>
                             <option value='Gradient'>Gradient</option>
                           </select>&nbsp;
@@ -2728,14 +2724,14 @@
                       <summary class='ex1sugarSummary'>
                         <span class='ex1sugarTitle'>Antose</span>&nbsp;
                         <select  id='ex1antGlobalLocal'>
-                          <option value='Global' selected>Global</option>
-                          <option value='Local'>Local</option>
+                          <option value='global' selected>Global</option>
+                          <option value='local'>Local</option>
                         </select>&nbsp;
                         <select  id='ex1antGlobRsrcType'>
-                          <option value='None'>None</option>
-                          <option value='Infinite' selected>Infinite</option>
-                          <option value='Finite'>Finite</option>
-                          <option value='Equilibrium'>Equilibrium</option>
+                          <option value='none'>None</option>
+                          <option value='infinite' selected>Infinite</option>
+                          <option value='finite'>Finite</option>
+                          <option value='equilibrium'>Equilibrium</option>
                         </select>                        
                       </summary>
                       <div id='ex1antDetails' class='ex1sugarDetail'>
@@ -2746,14 +2742,14 @@
                       <summary class='ex1sugarSummary'>
                         <span class='ex1sugarTitle'>Norose</span>&nbsp;
                         <select  id='ex1norGlobalLocal'>
-                          <option value='Global'>Global</option>
-                          <option value='Local' selected>Local</option>
+                          <option value='global'>Global</option>
+                          <option value='local' selected>Local</option>
                         </select>&nbsp;
                         <select  id='ex1norGlobRsrcType'>
-                          <option value='None'>None</option>
-                          <option value='Infinite' selected>Infinite</option>
-                          <option value='Finite'>Finite</option>
-                          <option value='Equilibrium'>Equilibrium</option>
+                          <option value='none'>None</option>
+                          <option value='infinite' selected>Infinite</option>
+                          <option value='finite'>Finite</option>
+                          <option value='equilibrium'>Equilibrium</option>
                         </select>                        
                       </summary>
                       <div id='ex1norDetails' class='ex1sugarDetail'>
@@ -2763,14 +2759,14 @@
                       <summary class='ex1sugarSummary'>
                         <span class='ex1sugarTitle'>Xorose</span>&nbsp;
                         <select  id='ex1xorGlobalLocal'>
-                          <option value='Global' selected>Global</option>
-                          <option value='Local'>Local</option>
+                          <option value='global' selected>Global</option>
+                          <option value='local'>Local</option>
                         </select>&nbsp;
                         <select  id='ex1xorGlobRsrcType'>
-                          <option value='None'>None</option>
-                          <option value='Infinite'>Infinite</option>
-                          <option value='Finite' selected>Finite</option>
-                          <option value='Equilibrium'>Equilibrium</option>
+                          <option value='none'>None</option>
+                          <option value='infinite'>Infinite</option>
+                          <option value='finite' selected>Finite</option>
+                          <option value='equilibrium'>Equilibrium</option>
                         </select>
                         <span>
                           <input id='ex1xorGlinitial' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4em; height:1.6em' value = '1000'/> 
@@ -2785,14 +2781,14 @@
                       <summary class='ex1sugarSummary'>
                         <span class='ex1sugarTitle'>Equose</span>&nbsp;
                         <select  id='ex1equGlobalLocal'>
-                          <option value='Global' selected>Global</option>
-                          <option value='Local'>Local</option>
+                          <option value='global' selected>Global</option>
+                          <option value='local'>Local</option>
                         </select>&nbsp;
                         <select  id='ex1equGlobRsrcType'>
-                          <option value='None'  selected>None</option>
-                          <option value='Infinite'>Infinite</option>
-                          <option value='Finite'>Finite</option>
-                          <option value='Equilibrium'>(E)quilibrium</option>
+                          <option value='none'  selected>None</option>
+                          <option value='infinite'>Infinite</option>
+                          <option value='finite'>Finite</option>
+                          <option value='equilibrium'>(E)quilibrium</option>
                         </select>                        
                       </summary>
                       <div id='ex1equDetails' class='ex1sugarDetail'>

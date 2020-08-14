@@ -506,7 +506,7 @@
   av.frd.reActLineParse = function(lnArray, from) {
     'use strict';
     if (av.debug.fio) { console.log('____', from, ' called av.frd.reActLineParse _____'); }
-    var lnError = 'none';     //was it a valid line wihtout errors
+    var lnError = 'chemostat';     //was it a valid line wihtout errors
     //console.log('lnArray = ', lnArray);
     var pear = [];
     var reSrcNameAry; var reSrcName;
@@ -570,27 +570,30 @@
       av.debug.fio = true;
       if ('missing' === reActObj.resource[ndx]) {
         av.nut[numTsk].uiAll.regionsNumOf = 1;                 //reaction but no resource so it must be global and none or infinite
-        av.nut[numTsk].uiAll.geometry = 'Global';            //grid (if 1 < subdish)
+        av.nut[numTsk].uiAll.geometry = 'global';            //grid (if 1 < subdish)
 
         if (0 < reActObj.value[ndx]) {
-          av.nut[numTsk].uiAll.supplyType = 'Infinite';
+          av.nut[numTsk].uiAll.supplyType = 'infinite';
           //if (av.debug.fio) { console.log('av.nut['+numTsk+'].uiAll.supplyType =', av.nut[numTsk].uiAll.supplyType); }
         }
         else if (0 > reActObj.value[ndx])  {
-          av.nut[numTsk].uiAll.supplyType = 'Poison';   //poison or damage. does not kill, but hurts energy aquisition rate (ear). 
+          av.nut[numTsk].uiAll.supplyType = 'poison';   //poison or damage. does not kill, but hurts energy aquisition rate (ear). 
         }
-        else {
-          av.nut[numTsk].uiAll.supplyType = 'None';
+        else if (0 == reActObj.value[ndx]) {
+          av.nut[numTsk].uiAll.supplyType = 'none';
           //if (av.debug.fio) { console.log('av.nut['+numTsk+'].uiAll.supplyType =', av.nut[numTsk].uiAll.supplyType); }
         }
         //console.log('numTsk=', numTsk, '; ndx=', ndx, '; av.nut[numTsk].uiAll.supplyType[ndx]=', av.nut[numTsk].uiSub.supplyType[ndx]
         //             , '; av.nut[numTsk].uiAll.regionsNumOf=', av.nut[numTsk].uiAll.regionsNumOf);
       }
       else {
+        //console.log('ndx=', ndx, '; av.nut['+numTsk+'].react.depletable=', av.nut[numTsk].react.depletable);
         if (null == reActObj.depletable[ndx]) { reActObj.depletable[ndx] = 1; }
-        if (1 > reActObj.depletable[ndx]) {
-          av.nut[numTsk].uiSub.supplyType[mm] = 'Infinite';
-        } 
+        if ( 1 != Number(reActObj.depletable[ndx]) ) {
+          av.nut[numTsk].uiSub.supplyType[ndx] = 'infinite';
+        };
+        //console.log('ndx=', ndx, '; reActObj.depletable=', reActObj.depletable, '; uiSub.supplyType=', av.nut[numTsk].uiSub.supplyType);
+
 /*
         // Reaction names a Resource; Need to find info about that resource to determine Supply Type. SupplyTypes will
         // be determined after the entire file has beeen read to make sure the named resource  is in the (nut)rient structure 
@@ -605,7 +608,7 @@
         //if (av.debug.fio) { console.log('av.nut[numTsk]=', av.nut[numTsk]); }
         
           if (0 < av.nut[numTsk].uiSub.inflowHi) {
-          av.nut[numTsk].uiSub.supplyType[ndx] = 'Infinite';
+          av.nut[numTsk].uiSub.supplyType[ndx] = 'infinite';
           }
         }
 */
@@ -626,7 +629,7 @@
   //------------------------------------------------------------------------------------------- av.frd.reSrcLineParse --
   av.frd.reSrcLineParse = function(lnArray, from ){
     'use strict';
-    var lineErrors = 'none';  //was it a valid line wihtout errors
+    var lineErrors = 'chemostat';  //was it a valid line wihtout errors
     if (av.debug.fio) { console.log('____', from, ' called av.frd.reSrcLineParse____'); }
     //console.log('lnArray = ', lnArray);
     var pairArray = lnArray[1].split(':');
@@ -759,6 +762,8 @@
               rSourcObj.boxy[ndx] = cellboxdata[1];
               rSourcObj.boxcol[ndx] = cellboxdata[2];
               rSourcObj.boxrow[ndx] = cellboxdata[3];
+              av.nut[numTsk].uiSub.area[ndx] = Number(rSourcObj.boxcol[ndx]) * Number(rSourcObj.boxrow[ndx]);
+              //console.log('av.nut['+numTsk+'].uiSub.area['+ndx+']=', av.nut[numTsk].uiSub.area[ndx], 'rSourcObj.boxrow[ndx]=', rSourcObj.boxrow[ndx]);
             }
             else {
               lineErrors = 'leftside, '+pear[0]+', not a valid resource keyword. lnArray = '+lnArray;
@@ -775,20 +780,37 @@
 
         //Find the supply type
         if (0 == rSourcObj.initial[ndx]) {
-          av.nut[numTsk].uiSub.supplyType[ndx] = 'None';
+          av.nut[numTsk].uiSub.supplyType[ndx] = 'none';
         } 
         else if (0 < rSourcObj.initial[ndx]) {
-          av.nut[numTsk].uiSub.supplyType[ndx] = 'Finite';
+          av.nut[numTsk].uiSub.supplyType[ndx] = 'finite';
+          if (null == av.nut[numTsk].uiSub.area[ndx]) {
+            av.nut[numTsk].uiSub.area[ndx] = av.nut.wrldSize;   //this may get redifned based on cells
+          }
         };
         if (0 < rSourcObj.inflow[ndx]) {
           if (rSourcObj.inflowx1[ndx]===rSourcObj.outflowx1[ndx] && rSourcObj.inflowx2[ndx]===rSourcObj.outflowx2[ndx] && 
               rSourcObj.inflowy1[ndx]===rSourcObj.outflowy1[ndx] && rSourcObj.inflowy2[ndx]===rSourcObj.outflowy2[ndx] ) {
-            av.nut[numTsk].uiSub.supplyType[ndx] = 'Chemostat';           
+            av.nut[numTsk].uiSub.supplyType[ndx] = 'chemostat';
+            if (null == av.nut[numTsk].uiSub.area[ndx]) {
+              rSourcObj.boxcol[ndx] = Math.abs( 1 + Number(rSourcObj.inflowx2[ndx]) - Number(rSourcObj.inflowx1[ndx]) );
+              rSourcObj.boxrow[ndx] = Math.abs( 1 + Number(rSourcObj.inflowy2[ndx]) - Number(rSourcObj.inflowy1[ndx]) );
+              av.nut[numTsk].uiSub.area[ndx] = rSourcObj.boxcol[ndx] * rSourcObj.boxrow[ndx];
+            }            
           }
-          else av.nut[numTsk].uiSub.supplyType[ndx] = 'Flow'; 
+          else { 
+            av.nut[numTsk].uiSub.supplyType[ndx] = 'flow';
+            if (null == av.nut[numTsk].uiSub.area[ndx] 
+                && null != rSourcObj.inflowx1[ndx] && null != rSourcObj.inflowx2[ndx] 
+                && null != rSourcObj.inflowy1[ndx] && null != rSourcObj.inflowy2[ndx] ) {
+              rSourcObj.boxcol[ndx] = Math.abs( 1 + Number(rSourcObj.inflowx2[ndx]) - Number(rSourcObj.inflowx1[ndx]) );
+              rSourcObj.boxrow[ndx] = Math.abs( 1 + Number(rSourcObj.inflowy2[ndx]) - Number(rSourcObj.inflowy1[ndx]) );
+              av.nut[numTsk].uiSub.area[ndx] = rSourcObj.boxcol[ndx] * rSourcObj.boxrow[ndx];
+            }            
+          }
         }
         if (0 === rSourcObj.initial[ndx] && 0 === rSourcObj.inflow[ndx]) 
-          av.nut[numTsk].uiSub.supplyType[ndx] = 'None';
+          av.nut[numTsk].uiSub.supplyType[ndx] = 'chemostat';
         //console.log('numTsk',numTsk,'; ndx=',ndx, '; reSrce_supplyType=', av.nut[numTsk].uiSub.supplyType[ndx]);
       }   //end of valid ndx found.
     }  
@@ -862,7 +884,7 @@
           //if (av.dbg.flg.nut) console.log('reSrcLineParse: lineArray=', lineArray);
           rsrcError = av.frd.reSrcLineParse(lineArray, 'av.frd.nutrientParse');
         }
-        else {rsrcError = 'none';}
+        else {rsrcError = 'chemostat';}
 
         matchResult = lineArray[0].match(re_REACTION);
         //console.log('matchReaction=', matchResult);
@@ -871,11 +893,11 @@
           reacError = av.frd.reActLineParse(lineArray, 'av.frd.nutrientParse'); 
         }
         else {
-          reacError='none';
+          reacError='chemostat';
           //console.log('no matach on REACTION');
         };
 
-        if ('none' !== rsrcError || 'none' !== reacError) {
+        if ('chemostat' !== rsrcError || 'chemostat' !== reacError) {
           //console.log('errors in line: ii=', ii, '; aline=', aline);
           errors += 'ii='+ii+'; rsrcError='+rsrcError+'; reacError='+reacError+'\n';
         };
@@ -900,7 +922,7 @@
     var regionLayoutLen = av.sgr.regionLayoutValues.length;
     //find some summary info about nutrients. Need to look at each task separately. 
     
-    console.log('regionLayoutLen=', regionLayoutLen,'; regionLayoutValues=', av.sgr.regionLayoutValues);
+    //console.log('regionLayoutLen=', regionLayoutLen,'; regionLayoutValues=', av.sgr.regionLayoutValues);
     
     for (var ii=0; ii< len; ii++) {
       numTsk = av.sgr.logEdNames[ii];
@@ -912,29 +934,41 @@
       //distincRegions will be in more important when gradient is implemented
       // The regionsNumOf is determined and used to assign default regionLayout
       // Then a region code, region name need to be assigned in av.nut[tsk]uiSub.regionName      
-      distinctRegions = [...new Set(av.nut[numTsk].uiSub.regionCode)];
+      distinctRegions = [...new Set(av.nut[numTsk].uiSub.regionCode.slice(1))];   //ignore index 0 as it is reserved for global data
+      //console.log('numTsk=', numTsk, '; distinctRegions=', distinctRegions);
       drLen = distinctRegions.length;
       // this is not fool proof it requires a reaction for every subdish of regionLayout definition
       if (0<drLen && drLen <= regionLayoutLen) {
         av.nut[numTsk].uiAll.regionsLayout = av.sgr.regionLayoutValues[drLen];
         av.nut[numTsk].uiAll.regionsNumOf = drLen-1;  //region[0] does not count as it is for global
-        console.log('drLen=', drLen,'av.nut['+numTsk+'].uiAll.regionsLayout', av.nut[numTsk].uiAll.regionsLayout,'distinctRegions=', distinctRegions, '; uiSub.geometry=', av.nut[numTsk].uiAll.geometry, '; resrc.geometry=', av.nut[numTsk].resrc.geometry); 
+        
+        // find region layout. THis logic will need to improve when more options are available. s
+        if (1 == drLen && '000' == distinctRegions[0]) {
+          av.nut[numTsk].uiAll.regionLayout = '1All';
+        }
+        else {
+          av.nut[numTsk].uiAll.regionLayout = '2LftRit';
+        }
+        //console.log('drLen=', drLen,'; av.nut['+numTsk+'].uiAll.regionsLayout', av.nut[numTsk].uiAll.regionsLayout
+        // ,'; distinctRegions=', distinctRegions, '; uiSub.geometry=', av.nut[numTsk].uiAll.geometry, '; resrc.geometry='
+        // , av.nut[numTsk].resrc.geometry, '; regionLayout=', av.nut[numTsk].uiAll.regionLayout); 
       }
-      else
-        console.log('numTsk=', numTsk, '; distinctRegions=', distinctRegions, '; uiSub.geometry=', av.nut[numTsk].uiAll.geometry); 
-
-      //this will need work when gradient is added. 
+      else {
+        // distinct regions out of range, probably zero for a global reaction
+        //console.log('numTsk=', numTsk, '; distinctRegions=', distinctRegions, '; uiAll.geometry=', av.nut[numTsk].uiAll.geometry, '; regionLayout=', av.nut[numTsk].uiAll.regionLayout,'=========================='); 
+      }
+      //this will need change to work when gradient is added. 
       reActNameLen = av.nut[numTsk].react.name.length;
       for (var jj=0; jj<=reActNameLen; jj++) {
         // 'missing' is a key word used in this program to indicate that the reaction has no resoucre and is either 0 or infinite.
         // These should have been fully translated in the parse react routine; only processing those with resource names
         if ('missing' !== av.nut[numTsk].react.resource[jj] && null != av.nut[numTsk].react.resource[jj]) {
-          console.log('av.nut['+numTsk+']uiSub.supplyType['+jj+']=', av.nut[numTsk].uiSub.supplyType[jj], '; geometry=', av.nut[numTsk].uiAll.geometry);
+          //console.log('av.nut['+numTsk+']uiSub.supplyType['+jj+']=', av.nut[numTsk].uiSub.supplyType[jj], '; geometry=', av.nut[numTsk].uiAll.geometry);
           // Resource should exist
           ndx = av.nut[numTsk].resrc.name.indexOf(av.nut[numTsk].react.resource[jj]);
           if (true) {
 //          if (jj != ndx) {
-            console.log('ndx jj=', ndx, jj, '; av.nut['+numTsk+'].recrc.name=', av.nut[numTsk].resrc.name, 'av.nut['+numTsk+'].react.resource['+jj+']=', av.nut[numTsk].react.resource[jj] );
+            //console.log('ndx jj=', ndx, jj, '; av.nut['+numTsk+'].recrc.name=', av.nut[numTsk].resrc.name, 'av.nut['+numTsk+'].react.resource['+jj+']=', av.nut[numTsk].react.resource[jj] );
           };
         };  
       }; // end of loop react name array
@@ -1146,6 +1180,7 @@
           }
           else {
             area = av.nut[numTsk].uiSub.area[subNum];
+            //console.log('av.nut['+numTsk+'].uiSub.area['+subNum+']=', av.nut[numTsk].uiSub.area[subNum]);
           };
 
           //------------------------------------------------------------------------- 
@@ -1885,7 +1920,7 @@
   av.frd.testReActLineParse = function (lnArray, from) {
     //console.log(from, 'called av.frd.testReActLineParse');
     'use strict';
-    var lnError = 'none';     //was it a valid line wihtout errors
+    var lnError = 'chemostat';     //was it a valid line wihtout errors
     //console.log('lnArray = ', lnArray);
     var pear = [];
     var nn;
@@ -1947,7 +1982,7 @@
   av.frd.testResrcLineParse = function (lnArray, from) {
     'use strict';
     //console.log(from, 'called av.frd.testResrcLineParse');
-    var lineErrors = 'none';  //was it a valid line wihtout errors
+    var lineErrors = 'chemostat';  //was it a valid line wihtout errors
     //console.log('lnArray = ', lnArray);
     var pairArray = lnArray[1].split(':');
     var pear = [];
@@ -2011,6 +2046,8 @@
             rSourcObj.boxy[ndx] = cellboxdata[1];
             rSourcObj.boxcol[ndx] = cellboxdata[2];
             rSourcObj.boxrow[ndx] = cellboxdata[3];
+            av.nut[numTsk].uiSub.area[ndx] = Number(rSourcObj.boxcol[ndx]) * Number(rSourcObj.boxrow[ndx]);
+            console.log('av.nut['+numTsk+'].uiSub.area['+ndx+']=', av.nut[numTsk].uiSub.area[ndx], 'rSourcObj.boxrow[ndx]=', rSourcObj.boxrow[ndx]);
           } else {
             lineErrors = 'pear[0]=, ' + pear[0] + ', not a valid resource keyword. lnArray = ' + lnArray;
             //console.log(lineErrors);
@@ -2106,7 +2143,7 @@
         if (null !== matchResult)
           reacError = av.frd.testReActLineParse(lineArray, ' av.frd.testEnvironmentParse');
         else {
-          reacError = 'none';
+          reacError = 'chemostat';
         }
 
         matchResult = lineArray[0].match(re_RESOURCE);
@@ -2114,10 +2151,10 @@
         if (null !== matchResult)
           rsrcError = av.frd.testResrcLineParse(lineArray, "av.frd.testEnvironmentParse");
         else {
-          rsrcError = 'none';
+          rsrcError = 'chemostat';
         }
 
-        if ('none' !== rsrcError || 'none' !== reacError) {
+        if ('chemostat' !== rsrcError || 'chemostat' !== reacError) {
           //console.log('errors in line: ii=', ii, '; aline=', aline);
           errors += 'ii=' + ii + '; rsrcError=' + rsrcError + '; reacError=' + reacError + '\n';
         }
