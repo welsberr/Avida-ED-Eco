@@ -299,33 +299,41 @@
           av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
         };
 
-        console.log("document.getElementsByClassName('globalChemostat')=", document.getElementsByClassName('globalChemostat').length );
+        console.log("document.getElementsByClassName('globalChemostat').lLength=", document.getElementsByClassName('globalChemostat').length );
         console.log("document.getElementsByClassName('localChemostat')=", document.getElementsByClassName('localChemostat').length );
-
         console.log("document.getElementsByClassName('globalFinite')=", document.getElementsByClassName('globalFinite').length );
         
         //Hide select options that are not yet implemented
-        len = document.getElementsByClassName('localChemostat').length;
+        
+        len = document.getElementsByClassName('localDebug').length;
         for (ii = 0; ii < len; ii++) {
-          console.log('localChemostat=', document.getElementsByClassName('localDebug')[ii].id);
           document.getElementsByClassName('localDebug')[ii].style.display = 'none';
-          document.getElementsByClassName('localChemostat')[ii].style.display = 'none';
+          //document.getElementsByClassName('localChemostat')[ii].style.display = 'none';
         };
        
         //Hide select options that are not yet implemented
-        len = document.getElementsByClassName('globalChemostat').length;
+        len = document.getElementsByClassName('globalDebug').length;
         for (ii = 0; ii < len; ii++) {
-          console.log('ii=',ii,'dom element=',document.getElementsByClassName('globalFinite')[ii].id);
-          document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
           console.log('globalFinite=', document.getElementsByClassName('globalFinite')[ii].id);
+          document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
           document.getElementsByClassName('globalChemostat')[ii].style.display = 'none';
           document.getElementsByClassName('globalDebug')[ii].style.display = 'none';
         };
+        
+        // Will hide later when I get the the 'localOnly' flag working
+/*
+        len = document.getElementsByClassName('geometryClass').length;
+        for (ii = 0; ii < len; ii++) {
+          //console.log('ii=',ii,'dom element=',document.getElementsByClassName('geometryClass')[ii]);
+          document.getElementsByClassName('geometryClass')[ii].style.display = 'none';
+        }
+*/
 
         // now clear options for changing all sugars (groups)
-        document.getElementsByClassName('groupChemostat')[0].style.display = 'none';
+        //document.getElementsByClassName('groupChemostat')[0].style.display = 'none';
         //document.getElementsByClassName('groupFinite')[0].style.display = 'none';     //finite available for local options
         document.getElementsByClassName('groupDebug')[0].style.display = 'none';
+        console.log('dom.groupDebug=', document.getElementsByClassName('groupDebug'));
 
         //debug menu??
         dijit.byId('mnHpDebug').set('label', 'Show debug menu');   //???????
@@ -367,7 +375,7 @@
         };
         
          // now show options for changing all sugars (groups)
-        document.getElementsByClassName('groupChemostat')[0].style.display = 'inline';
+        //document.getElementsByClassName('groupChemostat')[0].style.display = 'inline';
         //document.getElementsByClassName('groupFinite')[0].style.display = 'inline';     //finite available for local options
         document.getElementsByClassName('groupDebug')[0].style.display = 'inline';
 

@@ -421,6 +421,9 @@
   //----------------------------------------------------------------------------------------- end av.fwt.nut2cfgFile  --
   
   //-------------------------------------------------------------------------------------- av.fwt.nutUI2cfgStructure  --
+  // This function takes values in the uiAll and uiSub substructures and creates the data for the parameters that are 
+  // needed to write the evironment file. Iniital and inflow amounts are per cell in the ui and total aount in the environment
+  // in the RESOURCE and CELLS statements. 
   av.fwt.nutUI2cfgStructure = function (from) {
     //console.log(from, 'called av.fwt.nutUI2cfgStructure');
     //------ assign ui parameters first --
@@ -540,16 +543,19 @@
           av.nut[numtsk].react.depletable[jj] = 1;
 */ 
 
-          //console.log('av.nut['+numtsk+'].uiSub.supplyType['+jj+']=', av.nut[numtsk].uiSub.supplyType[jj]);
+          console.log('av.nut['+numtsk+'].uiSub.supplyType['+jj+']=', av.nut[numtsk].uiSub.supplyType[jj]);
           switch ( av.nut[numtsk].uiSub.supplyType[jj].toLowerCase() ) {
             case 'infinite':
               av.nut[numtsk].react.depletable[jj] = 0;
               av.nut[numtsk].cells.initial[jj] = av.nut[numtsk].uiSub.area[jj];
               break;
-            case 'none':
             case 'finite':
               av.nut[numtsk].cells.name[jj] = av.nut[numtsk].resrc.name[jj];
               av.nut[numtsk].cells.initial[jj] = Math.round(av.nut[numtsk].uiSub.initialHiNp[jj] * av.nut[numtsk].uiSub.area[jj]);
+              break;
+            case 'none':
+              av.nut[numtsk].cells.name[jj] = av.nut[numtsk].resrc.name[jj];
+              av.nut[numtsk].cells.initial[jj] = 0;
               break;
             case 'chemostat': 
               av.nut[numtsk].resrc.inflow[jj] =  Math.round(av.nut[numtsk].uiSub.inflowHiNp[jj] * av.nut[numtsk].uiSub.area[jj]);

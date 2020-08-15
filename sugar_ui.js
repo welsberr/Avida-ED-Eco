@@ -232,7 +232,7 @@
   //--------------------------------------------------------------------------------- av.sgr.ChangeAllsugarSupplyType --
   av.sgr.ChangeAllsugarSupplyType = function(selectedOption, from) {
     var endName = 'supplyType';   //nan0supplyType  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
-    //console.log(from, ' called av.sgr.ChangeAllsugarSupplyType: selectedOption=',selectedOption);
+    //xconsole.log(from, ' called av.sgr.ChangeAllsugarSupplyType: selectedOption=',selectedOption);
     var domName = '';  
     var numtasks = av.sgr.logicNames.length;
     var start = 0;   //most will start with 0 for global and also do local section 1

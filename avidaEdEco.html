@@ -247,7 +247,7 @@ x<!DOCTYPE html>
               <input id='showTextDebugButton' type='button' value='Big Text'/>
             </div>
             <div id='developmentToggleDiv'>
-              <input id='developmentToggle' class='devoShow' type='button' value='DevoToggle' onclick='av.ui.toggleDevelopentDisplays()' />
+              <input id='developmentToggle' class='devoShow' type='button' value=' in Development View ' onclick='av.ui.toggleDevelopentDisplays()' />
             </div>
           </div>
         </div><span id='navColID_end' class='displayNone'></span>
@@ -758,7 +758,7 @@ x<!DOCTYPE html>
                     <details id="not0section" class="sugarAccordionSection">
                       <summary id="not0summary" class="sugarSummary">
                         <span id="not0title" class="sugarTitle">Notose</span>&nbsp;
-                        <select id="not0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
+                        <select id="not0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
                           <option value='global' selected="">Global</option>
                           <option value='grid'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
@@ -929,7 +929,7 @@ x<!DOCTYPE html>
                     <details id="nan0section" class="sugarAccordionSection">
                       <summary id="nan0summary" class="sugarSummary">
                         <span id="nan0title" class="sugarTitle">Nanose</span>&nbsp;
-                        <select id="nan0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
+                        <select id="nan0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
                           <option value='global' selected="">Global</option>
                           <option value='grid'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
@@ -1100,7 +1100,7 @@ x<!DOCTYPE html>
                     <details id="and0section" class="sugarAccordionSection">
                       <summary id="and0summary" class="sugarSummary">
                         <span id="and0title" class="sugarTitle">Andose</span>&nbsp;
-                        <select id="and0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
+                        <select id="and0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
                           <option value='global' selected="">Global</option>
                           <option value='grid'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
@@ -1271,16 +1271,16 @@ x<!DOCTYPE html>
                     <details id="orn0section" class="sugarAccordionSection">
                       <summary id="orn0summary" class="sugarSummary">
                         <span id="orn0title" class="sugarTitle">Ornose</span>&nbsp;
-                        <select id="orn0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
+                        <select id="orn0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
                           <option value="global" selected="">Global</option>
                           <option value="grid">Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="orn0supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this)">
                           <option id="orn0none" value="none">None</option>
                           <option id="orn0Infinite" value="infinite" selected="">Infinite</option>
-                          <option id="orn0Finite" value="finite">Finite</option>
-                          <option id="orn0Chemostat" value="chemostat">Chemostat</option>
-                          <option id="orn0Debug" value="all">All debug</option>
+                          <option id="orn0Finite" class='globalFinite' value="finite">Finite</option>
+                          <option id="orn0Chemostat" class='globalChemostat' value="chemostat">Chemostat</option>
+                          <option id="orn0Debug" class='globalDebug' value="all">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="orn0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                           <option id="orn0WholeDish" value="1All" selected="">Whole Dish</option>
@@ -1442,7 +1442,7 @@ x<!DOCTYPE html>
                     <details id="oro0section" class="sugarAccordionSection">
                       <summary id="oro0summary" class="sugarSummary">
                         <span id="oro0title" class="sugarTitle">Orose</span>&nbsp;
-                        <select id="oro0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
+                        <select id="oro0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
                           <option value='global' selected="">Global</option>
                           <option value='grid'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
@@ -1613,7 +1613,7 @@ x<!DOCTYPE html>
                     <details id="ant0section" class="sugarAccordionSection">
                       <summary id="ant0summary" class="sugarSummary">
                         <span id="ant0title" class="sugarTitle">Antose</span>&nbsp;
-                        <select id="ant0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
+                        <select id="ant0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
                           <option value='global' selected="">Global</option>
                           <option value='grid'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
@@ -1784,7 +1784,7 @@ x<!DOCTYPE html>
                     <details id="nor0section" class="sugarAccordionSection">
                       <summary id="nor0summary" class="sugarSummary">
                         <span id="nor0title" class="sugarTitle">Norose</span>&nbsp;
-                        <select id="nor0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
+                        <select id="nor0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
                           <option value='global' selected="">Global</option>
                           <option value='grid'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
@@ -1955,7 +1955,7 @@ x<!DOCTYPE html>
                     <details id="xor0section" class="sugarAccordionSection">
                       <summary id="xor0summary" class="sugarSummary">
                         <span id="xor0title" class="sugarTitle">Xorose</span>&nbsp;
-                        <select id="xor0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
+                        <select id="xor0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
                           <option value='global' selected="">Global</option>
                           <option value='grid'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
@@ -2126,7 +2126,7 @@ x<!DOCTYPE html>
                     <details id="equ0section" class="sugarAccordionSection">
                       <summary id="equ0summary" class="sugarSummary">
                         <span id="equ0title" class="sugarTitle">Equose</span>&nbsp;
-                        <select id="equ0geometry" class="globalLocal" onchange="av.sgr.geometryChange(this);">
+                        <select id="equ0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
                           <option value='global' selected="">Global</option>
                           <option value='grid'>Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
@@ -2311,7 +2311,7 @@ x<!DOCTYPE html>
                         <option value='none'>None</option>
                         <option value='infinite'>Infinite</option>
                         <option value='finite' class='groupFinite'>Finite</option>
-                        <option value='chemostat' class='groupEquilibrium'>Chemostat</option>
+                        <option value='chemostat' class='groupChemostat'>Chemostat</option>
                         <option value='debug' class='groupDebug'>Debug</option>
                         <option value='neutral' selected>----</option>
                       </select> 

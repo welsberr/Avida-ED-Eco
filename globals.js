@@ -658,12 +658,13 @@
     , 'boxrow' : 0
 };
 
-  //Region Layout in use as of 2019 Dec
+
+//Region Layout in use as of 2019 Dec
   // not ready yet                        <option id="orn0TopLeftRight" class="TopLftRit" value="3TopLftRit">Top/Bottom(L/R)</option>
   // not ready yet                        <option id="orn0Quarters" class="Quarters" value="4Quarters">Quarters</option>
 
     av.sgr.re_region = /(\D+)(\d+)(.*$)/;
-    //av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '2UpDown', '3TopLftRit', '4Quarters'];
+    //av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '2UppLoww', '3TopLftRit', '4Quarters'];
     av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '3TopLftRit', '4Quarters'];
 
     //entry zero is blank so index matches subregion number 
@@ -672,11 +673,31 @@
     av.sgr.name['1All'] = [null, 'Whole Dish'];
     av.sgr.code['1All'] = [null, '000'];
     av.sgr.name['2LftRit'] = [null,'Left', 'Right']; 
-    av.sgr.name['3TopLftRit'] = [null, 'Top', 'L_Left', 'L_Right'];
+    av.sgr.code['2LftRit'] = [null, '013q', '024q']; 
+    av.sgr.name['2UppLow'] = [null,'Upper', 'Lower']; 
+    av.sgr.code['2UppLow'] = [null, '012q', '034q']; 
+    av.sgr.name['3TopLftRit'] = [null, 'Top', 'loL', 'loR'];
+    av.sgr.code['3TopLftRit'] = [null, '012q', '003q', '004q'];
+    av.sgr.name['4Quarters'] = [null, 'upL', 'upR', 'loL', 'loR'];
+    av.sgr.code['4Quarters'] = [null, '001q', '002q', '003q', '004q'];
+    
+    av.sgr.regionLookup = {};
+    av.sgr.regionLookup['000'] = ['1All'];
+    av.sgr.regionLookup['013q024q'] = ['2LftRit'];
+    av.sgr.regionLookup['012q024q'] = ['2UppLow'];
+    av.sgr.regionLookup['001q002q034q'] = ['LftRitLow'];
+    av.sgr.regionLookup['001q002q003q004q'] = ['4Quarders'];
+    av.sgr.regionLookup['003q004q012q'] = ['3TopLftRit'];
     
   //will need something like the statement below eventuatlly
   //sav.sgr['3TopLftRit'] = ['top', 'Lft', 'Rit'];
-
+  
+  
+  av.sgr.boxArguments = ['boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow']; //flag is true if in use; false if these arguments are not included. 
+                        //boxx and boxy are the upper left corner positions of the region in Avida-ED
+                        //boxcol and boxrow is the size of the box, so the lower right corner is (boxx+boxcol-1, boxy+boxrow-1]
+  
+// Still using this version
     //Region List based on 4 quarters: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
     av.sgr.regionQuarterNames = ['Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
     av.sgr.regionQuarter3Char = ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];   //Use as values when the time comes
@@ -687,10 +708,28 @@
     av.sgr.regionQuarterRowsAdd = [  0,     0,     0,     1,     1,     0,     1,     0,     0];   //add amount if odd rows in world
     av.sgr.regionQuarterBoxx =  [  0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.5];  
     av.sgr.regionQuarterBoxy =  [  0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.0];  
-  av.sgr.boxArguments = ['boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow']; //flag is true if in use; false if these arguments are not included. 
-                        //boxx and boxy are the upper left corner positions of the region in Avida-ED
-                        //boxcol and boxrow is the size of the box, so the lower right corner is (boxx+boxcol-1, boxy+boxrow-1]
 
+// Will convert to version below
+
+    //Region List based on 4 quarters: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
+    av.sgr.regionQuarter = {};
+    av.sgr.regionQuarter.Names = ['Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
+    av.sgr.regionQuarter['3Char'] = ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];   //Use as values when the time comes
+    av.sgr.regionQuarter.Codes = ['000', '001', '002', '003', '004', '012', '034', '013', '024'];   //These numbers go with the regions above
+    av.sgr.regionQuarter.Cols =  [  1.0,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0,   0.5,   0.5];   //fraction of cols
+    av.sgr.regionQuarter.Rows =  [  1.0,   0.5,   0.5,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0];   //fraction of rows
+    av.sgr.regionQuarter.ColsAdd = [  0,     0,     1,     0,     1,     0,     0,     0,     1];   //add amount if odd cols in world
+    av.sgr.regionQuarter.RowsAdd = [  0,     0,     0,     1,     1,     0,     1,     0,     0];   //add amount if odd rows in world
+    av.sgr.regionQuarter.Boxx =  [  0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.5];  
+    av.sgr.regionQuarter.Boxy =  [  0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.0];  
+    
+    av.sgr.regionNine = {};
+    av.sgr.regionNine.Codes = ['000n', '001n', '002n', '003n'   //top row: ninth of dish
+                                     , '004n', '005n', '006n'   //middle row
+                                     , '007n', '008n', '009n'   //bottom row
+                                     , '123n', '456n', '789n'   //rows 
+                                     , '147n', '258n', '369n'];  //columns 
+  
   // need to figure out how to assign when reading environment.cfg
     av.sgr.supply3 =      ['non', 'inf',  'fin',  'chm',  'poi', 'flo' ];  //none, infinite, finite, chemostat, poison
     av.sgr.supply4 =      ['none', 'infn', 'fint', 'chst', 'pois', 'flow'];
@@ -833,7 +872,7 @@
       // av.cleanNut[tsk].uiAll.geometry = 'grid';
       // console.log('av.nut[tsk].uiAll.geometry', av.nut[tsk].uiAll.geometry, '; tsk=', tsk);
       // console.log('av.cleanNut[tsk].uiAll.geometry', av.cleanNut[tsk].uiAll.geometry, '; tsk=', tsk);
-      console.log('near end of av.fzr.clearEnvironment');
+      //console.log('near end of av.fzr.clearEnvironment');
       console.log('av.oldNut =', av.oldNut);
       console.log('av.cleanNut=', av.cleanNut);
     }
