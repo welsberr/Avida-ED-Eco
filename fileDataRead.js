@@ -772,7 +772,8 @@
           };
         };
 
-        //console.log('rSourcObj.geometry['+ndx+']=', rSourcObj.geometry[ndx], 'av.nut['+numTsk+'].uiAll.geometry', av.nut[numTsk].uiAll.geometry);
+        //console.log('rSourcObj.geometry['+ndx+']=', rSourcObj.geometry[ndx]);
+        //console.log('av.nut['+numTsk+'].uiAll.geometry', av.nut[numTsk].uiAll.geometry);
         if ('grid' == rSourcObj.geometry[ndx].toLowerCase() || 'global' == rSourcObj.geometry[ndx].toLowerCase() ) {
           av.nut[numTsk].uiAll.geometry = rSourcObj.geometry[ndx];
         }

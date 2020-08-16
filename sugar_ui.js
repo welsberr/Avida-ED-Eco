@@ -425,13 +425,17 @@
     //if (true) { console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; subChanged=', subChanged); }
     // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags=', av.nut.hideFlags); }
     var tmpNum = 1;
-    var tmpstr = 'notset';
+    var onlyGrid = '';
     var ndx = av.sgr.logicNames.indexOf(tsk);
     var edTsk = av.sgr.logEdNames[ndx];
     var supplyType;
     var regionName;
     var regionNameList;
-    // one line method to get value of select/option struture. 
+    // one line method to get value of select/option struture.
+    if (av.sgr.gridOnly) {
+      onlyGrid = 'onlyGrid';
+      document.getElementById(tsk+'0geometry').style.displaly = 'none';
+    }
     
     av.nut[edTsk].uiAll.geometry = document.getElementById(tsk+'0geometry').value;
     av.nut[edTsk].uiAll.regionLayout = document.getElementById(tsk+'0regionLayout').value;

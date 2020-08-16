@@ -588,6 +588,30 @@
   grid-row-gap: 0px;
   background: #AAA;   /* #DDD; */
 }
+
+.changeAllSugarsTogetherNoGlobalContainer {
+  display: grid;
+  grid-template-areas: ' setTitle      showHideSgr     detailDiv'
+                       ' supplyTypeSgr regionLayoutSgr diffusionSgr'
+                       ' supplyTypeDiv regionLayoutDiv diffusionDiv';
+  /*
+  grid-template-areas: 'setTitle     headerTitle headerTitle   allSgr5Blnk'
+                       'allSgr4Blnk  geometrySgr supplyTypeSgr showHideSgr'
+                       'allSgr4Blnk  geometryDiv supplyType  detailDiv';
+
+  grid-template-areas: 'setTitle  geometrySgr supplyTypeSgr showHideSgr'
+                       'setTitle  geometryDiv supplyType  detailDiv';
+  */
+  width: 100%;
+  /* grid-template-columns: 20% 25% 30% 25%;
+    grid-template-rows: 33fr 33fr 33fr; */
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background: #AAA;   /* #DDD; */
+}
+
+
+
 /* not in current use
                     <div id='allSgr3Blnk'>&nbsp;&nbsp;&nbsp;</div>
                     <div id='allSgr4Blnk'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -607,6 +631,10 @@
   background: rgba(128, 128, 128, 0.0); 
   min-height: 20px;
   width: 100%;
+}
+
+.geometryClass{
+  display: inline-block
 }
 
 .groupDebug{  display: inline; }

@@ -298,8 +298,12 @@
           tsk = av.sgr.logicNames[ii];
           av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
         };
+        
+        if (av.sgr.gridOnly) {
+          document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherNoGlobalContainer';
+        }
 
-        console.log("document.getElementsByClassName('globalChemostat').lLength=", document.getElementsByClassName('globalChemostat').length );
+        console.log("document.getElementsByClassName('globalChemostat').length=", document.getElementsByClassName('globalChemostat').length );
         console.log("document.getElementsByClassName('localChemostat')=", document.getElementsByClassName('localChemostat').length );
         console.log("document.getElementsByClassName('globalFinite')=", document.getElementsByClassName('globalFinite').length );
         
@@ -318,6 +322,7 @@
           document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
           document.getElementsByClassName('globalChemostat')[ii].style.display = 'none';
           document.getElementsByClassName('globalDebug')[ii].style.display = 'none';
+          document.getElementsByClassName('geometryClass')[ii].style.display = 'none';
         };
         
         // Will hide later when I get the the 'localOnly' flag working
@@ -339,7 +344,8 @@
         dijit.byId('mnHpDebug').set('label', 'Show debug menu');   //???????
 
         av.post.addUser('Button: mnHpDebug: now hidden');
-      } else {       // development sectiomn can be seen.
+      } else {       
+        // development sectiomn can be seen.
         av.ui.hideDevelopment = false;
         av.doj.mnDebug.style.visibility = 'visible';
         document.getElementById('showTextDebugButtonDiv').style.visibility = 'visible';
@@ -357,6 +363,11 @@
 
         av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopentDisplays.onclick_show');
 
+        if (av.sgr.gridOnly) {
+          document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherContainer';
+        }
+
+
         len = av.sgr.logicNames.length;
         sub = 1;   //this may change later;
         for (ii = 0; ii < len; ii++) {
@@ -365,6 +376,8 @@
         };
 
         //show environment options sill under development.
+        document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherContainer';
+        
         len = document.getElementsByClassName('localChemostat').length;
         for (ii = 0; ii < len; ii++) {
           document.getElementsByClassName('globalChemostat')[ii].style.display = 'inline';
@@ -372,6 +385,7 @@
           document.getElementsByClassName('globalDebug')[ii].style.display = 'inline';
           document.getElementsByClassName('localChemostat')[ii].style.display = 'inline';
           document.getElementsByClassName('localDebug')[ii].style.display = 'inline';
+          document.getElementsByClassName('geometryClass')[ii].style.display = 'inline-block';
         };
         
          // now show options for changing all sugars (groups)

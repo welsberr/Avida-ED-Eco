@@ -1,1 +1,1 @@
-Equilibrium-mixed
+Chemostat-mixed
