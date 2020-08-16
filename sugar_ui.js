@@ -26,8 +26,10 @@
     //var subSectionStr = av.dom.orn1subSection.innterHTML;   //later there will be 4 of these for each sugar/task
     var newstr = '';
     var pattern = 'orn';  
-    var pattern0 = 'orn0';  
+    var pattern0 = 'orn0';
+    var patternW = 'ornW';
     var patternTsk = 'orn';
+    var tmpstr = '';
     var sgrNum = '';
     var len = av.sgr.logicNames.length;
     for (ii=0; ii<len; ii++) {
@@ -36,11 +38,19 @@
         sgrNum = av.sgr.logicNames[ii] + '0';
         //console.log('sgrNum=', sgrNum, 'pattern0=',pattern0);
         tskSectionStr = tskSectionStr.replaceAll(pattern0, sgrNum);
+        sgrNum = av.sgr.logicNames[ii] + 'W';
+        tskSectionStr = tskSectionStr.replaceAll(patternW, sgrNum);
         //console.log('tskSectionStr=', tskSectionStr);
 
-        av.dom.showTextarea.value = tskSectionStr;
-        document.getElementById(av.sgr.logicNames[ii]+'0section').innerHTML = tskSectionStr;
+        //av.dom.showTextarea.value = tskSectionStr;
+        tmpstr = av.sgr.logicNames[ii]+'0section';
+        //console.log('id = ', tmpstr);
+        document.getElementById(tmpstr).innerHTML = tskSectionStr;
+        tmpstr = av.sgr.logicNames[ii]+'0title';
+        //console.log('id = ', tmpstr);
         document.getElementById(av.sgr.logicNames[ii]+'0title').innerHTML = av.sgr.oseNames[ii];
+
+        document.getElementById(tmpstr).innerHTML = av.sgr.oseNames[ii];
 
         newstr = av.dom.orn0Details.innerHTML;
         // av.nut.numRegionsinHTML is defined in globals and is the number of subregions in the html
@@ -143,10 +153,19 @@
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.supplyChange = function (domObj) {
     var taskID = domObj.id;
+    var value = domObj.value;
     var task = taskID.substring(0, 3);
     var sub = taskID.substr(3, 1);
- // if (av.dbg.flg.nut) { console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub); }
-    sub = 1; //only whole dish  for now  or should sub=0 when it it global?
+    if ('1' == sub) {
+      var tmpstr = task + 'W' + taskID.substr(4);
+      console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub, '; suffix=', taskID.substr(4), '; value=', value, '; tmpstr = '+tmpstr);
+      document.getElementById(tmpstr).value = domObj.value;
+    }
+    else if ('W' == sub) {
+      var tmpstr = task + '1' + taskID.substr(4);
+      console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub, '; suffix=', taskID.substr(4), '; value=', value, '; tmpstr = '+tmpstr);
+      document.getElementById(tmpstr).value = domObj.value;      
+    }
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
   };
 
@@ -430,13 +449,26 @@
     var edTsk = av.sgr.logEdNames[ndx];
     var supplyType;
     var regionName;
+    var regionLayout = document.getElementById(tsk+'0regionLayout').value;
     var regionNameList;
     // one line method to get value of select/option struture.
-    if (av.sgr.gridOnly) {
+    console.log('onlygrid=', av.sgr.gridOnly, '; mnDebug=', av.doj.mnDebug.style.visibility, '; geoStyle=', document.getElementById(tsk+'0geometry').style.displaly, '; regionLayout=', regionLayout);
+    if (av.sgr.gridOnly && 'visible' != av.doj.mnDebug.style.visibility) {
       onlyGrid = 'onlyGrid';
       document.getElementById(tsk+'0geometry').style.displaly = 'none';
+      if ('1All' == regionLayout) {
+        document.getElementById(tsk+'WsupplyType').style.display = 'inline-block';
+        document.getElementById(tsk+'1supplyType').style.display = 'none';
+      }
+      else {
+        document.getElementById(tsk+'WsupplyType').style.display = 'none';
+        document.getElementById(tsk+'1supplyType').style.display = 'inline-block';
+      }
     }
-    
+    else {
+        document.getElementById(tsk+'WsupplyType').style.display = 'inline-block';
+        document.getElementById(tsk+'1supplyType').style.display = 'inline-block';
+    }
     av.nut[edTsk].uiAll.geometry = document.getElementById(tsk+'0geometry').value;
     av.nut[edTsk].uiAll.regionLayout = document.getElementById(tsk+'0regionLayout').value;
     //console.log('layout =', av.nut[tsk].uiAll.regionLayout, '; tsk=', tsk, ' subChanged=', subChanged, '; from=', from);

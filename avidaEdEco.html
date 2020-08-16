@@ -1286,6 +1286,13 @@ x<!DOCTYPE html>
                           <option id="orn0WholeDish" value="1All" selected="">Whole Dish</option>
                           <option id="orn0HalvesLeftRight" value="2LftRit">Halves Left/Right</option>
                         </select>&nbsp;&nbsp;&nbsp;
+                        <select id="ornWsupplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
+                          <option id="ornWnone" value="none">None</option>
+                          <option id="ornWInfinite" value="infinite" selected="">Infinite</option>
+                          <option id="ornWFinite" value="finite">Finite</option>
+                          <option id="ornWChemostat" value="chemostat">Chemostat</option>
+                          <option id="ornWDebug" value="debug">All debug</option>
+                        </select>&nbsp;&nbsp;&nbsp;
                         <span id="orn0initialDiv" class="sugarSummarySpan">
                           <input id="orn0initial" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
                         </span>
