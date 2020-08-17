@@ -722,18 +722,10 @@ x<!DOCTYPE html>
                 </div>
                 <div class='even'>
                   <span class='enviroSubHeading lftmargin' >Per Site Mutation Rate:</span>
-                  <span id='muteSlide'
-                        style='width:100px; display: inline-block; vertical-align: top; margin-left:20px; margin-right:20px'></span>
-                  <!-- style done here for the slider; margin to keep it from overlapping;
-                                        without width the slider is the full width of the browser window-->
-                  <!--<input id='muteInput' type='text' style='width: 4em; height:1.6em'></button> -->
-                  <input id='muteInput' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' ;
-                         data-dojo-props='constraints:{min:0, max:100},
-                         invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                         style='width: 4.5em; height:1.6em' onchange='av.ptd.muteInputChange(this.value, "muteError")'> %<br />
-                  <!--; or the slider value is &nbsp;</div>
-                  <input id='mRate' type='text' readonly style='width: 4em; height:1.6em'></button> -->
+                  <input id='muteInput' type='text' 
+                         style='width: 4.5em; height:1.6em' onchange='av.ptd.muteInputChange(this)'></input>%<br />
                   <label id='muteError'>Error place holder</label>
+                  <div id='muteSlide'></div>
                 </div>
                 <div class='odd'><div class='enviroSubHeading'>Ancestral Organism(s):</div>
                   <div class='ancestorContainer' id='ancestorBox'></div>
@@ -2462,7 +2454,7 @@ x<!DOCTYPE html>
                   <input id='ex1muteInput' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true' ;
                          data-dojo-props='constraints:{min:0, max:100},
                          invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                         style='width: 4.5em; height:1.6em' onchange='av.ptd.muteInputChange(this.value, "muteError")'> %<br />
+                         style='width: 4.5em; height:1.6em')'> %<br />
                   <!--; or the slider value is &nbsp;</div>
                   <input id='ex1mRate' type='text' readonly style='width: 4em; height:1.6em'></button> -->
                   <label id='ex1muteError'>Error place holder</label>
@@ -2909,7 +2901,7 @@ x<!DOCTYPE html>
           <div id='orgSettings' class='orgSettingClass'>
               <div class='even'>
                 <span class='lftmargin'>Per Site Mutation Rate:</span>
-                <span id='orMuteSlide'
+                <span id='orgMuteSlide'
                       style='width:200px; display: inline-block; vertical-align: top; margin-left:20px; margin-right:20px'></span>
                 <!-- style done here for the slider; margin to keep it from overlapping;
                                     without width the slider is the full width of the browser window-->

@@ -301,6 +301,9 @@
         
         if (av.sgr.gridOnly) {
           document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherNoGlobalContainer';
+          document.getElementById('geometrySgr').style.display = 'none';
+          document.getElementById('allSugarGeometryDiv').style.display = 'none'; 
+          document.getElementById('allSugarGeometry').style.display = 'none'; 
         }
 
         console.log("document.getElementsByClassName('globalChemostat').length=", document.getElementsByClassName('globalChemostat').length );
@@ -365,6 +368,8 @@
 
         if (av.sgr.gridOnly) {
           document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherContainer';
+          document.getElementById('geometrySgr').style.displaly = 'inline-block';
+          document.getElementById('allSugarGeometryDiv').style.displaly = 'inline-block';
         }
 
 

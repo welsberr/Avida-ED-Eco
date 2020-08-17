@@ -545,6 +545,17 @@
   display: inline;
   font-size: 120%;
 }
+
+/* style done here for the slider; margin to keep it from overlapping;
+                      without width the slider is the full width of the browser window-->
+   <input id='muteInput' type='text' style='width: 4em; height:1.6em'></button> */
+#muteSlide {
+  width:100px; 
+  display: inline-block; 
+  vertical-align: top; 
+  margin-left:20px; 
+  margin-right:20px
+}
 /*************************************************************************** Sugar Accordion using details and select */
 
 /* Header and controls that change all tasks are here.   /*  background: inherit */
@@ -714,7 +725,7 @@
 #ornSection{
   background: rgba(153,255,153, 1);
 }
-#oroSection{
+#oroSection{-sugarDetail-chemostat-container
   background: rgba(153,255,153, 1);
 }
 #antSection{
@@ -782,6 +793,10 @@
   width: 100%;
 }
 
+.grid-sugarDetail-Infinite-container {
+  display: none;
+}
+
 .grid-sugarDetail-Finite-noGrradientCheckbox-container {  //not in use
   display: grid;
   grid-template-areas: 'subSectionTitle supplyType initialHi';
@@ -845,7 +860,7 @@
                        'chmstatHi chmstatLo';
   width: 100%;
 }
-.grid-sugarDetail-globalEqual-container {
+.grid-sugarDetail-globalsugarDetail-chemostat {
   display: grid;
   grid-template-areas: 'inflowHi periodCheckDiv'
                        'outflowHi chmstatHi';
@@ -863,14 +878,14 @@
   width: 100%;
 }
 
-.grid-sugarDetail-Equal-container {
+.grid-sugarDetail-chemostat-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv gradientCheckDiv'
                        'inflowHi inflowHi periodCheckDiv periodCheckDiv'
                        'outflowHi outflowHi chmstatHi chmstatHi';
   width: 100%;
 }
-.grid-sugarDetail-EqualPeriod-container {
+.grid-sugarDetail-chemostatPeriod-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv gradientCheckDiv'
                        'inflowHi inflowHi periodCheckDiv periodTime'
@@ -878,7 +893,7 @@
   width: 100%;
 }
 
-.grid-sugarDetail-EqualGradient-container {
+.grid-sugarDetail-chemostat-Gradient-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv gradientCheckDiv'
                        'sideInput sideInput sideInput      periodCheckDiv'
@@ -889,7 +904,7 @@
   width: 100%;
   color: black;
 }
-.grid-sugarDetail-EqualGradientPeriod-container {
+.grid-sugarDetail-chemostatGradientPeriod-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv gradientCheckDiv'
                        'sideInput sideInput       periodTime periodCheckDiv'

@@ -2320,35 +2320,82 @@ require([
   };
 
 /*------------------------------------------------------------------------------------------ av.ptd.muteInputChange --*/
-  av.ptd.muteInputChange = function (value, muteErroTest) {
+  av.ptd.muteInputChange = function (domObj) {
+    var value = domObj.value;
     var muteNum = Number(value);
-    if (av.debug.uil) { console.log('ui: muteNum=', muteNum); }
+    //if (av.debug.uil) { uil: console.log('ui: muteNum=', muteNum); }
+    { console.log('ui: muteNum=', muteNum); }
     if (muteNum >= 0 && muteNum <= 100) {
       av.ptd.validMuteInuput = true;
-      document.getElementById(muteErroTest).style.color = 'black';
-      document.getElementById(muteErroTest).innerHTML = '';
-      document.getElementById(muteErroTest).innerHTML = '';
+      console.log();
+      document.getElementById('muteError').style.color = 'black';
+      document.getElementById('muteError').innerHTML = '';
+      //document.getElementById(muteErroTest).innerHTML = '';
     } else {
       av.ptd.validMuteInuput = false;
-      document.getElementById(muteErroTest).style.color = 'red';
-      document.getElementById(muteErroTest).innerHTML = '';
+      document.getElementById('muteError').style.color = 'red';
+      document.getElementById('muteError').innerHTML = '';
       av.dom.userMsgLabel.innerHTML = '';
       if (muteNum <= 0) {
-        document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be >= than zero percent. ';
+        document.getElementById('muteError').innerHTML += 'Mutation rate must be >= than zero percent. ';
         if (av.debug.popCon) { console.log('<0'); }
       }
       if (muteNum >= 100) {
-        document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be 100% or less. ';
+        document.getElementById('muteError').innerHTML += 'Mutation rate must be 100% or less. ';
         if (av.debug.popCon) { console.log('>0'); }
       }
       if (isNaN(muteNum)) {
-        document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be a valid number. ';
+        document.getElementById('muteError').innerHTML += 'Mutation rate must be a valid number. ';
         if (av.debug.popCon) { console.log('==NaN'); }
       }
     };
   };
 
+//-------------------------------------------------------------------------------------------- $(function slidemute() --
+   $(function slidemute() {
+    // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 2 
+    // this time the scale is in a look up array with stop points where the increment changes
+    // av.ptd.muteScaleAry is defined in globals
+    //console.log('before defaultslide value');
+    var muteDefault = 2;
+    var muteSlideDefault = av.ptd.muteScaleAry.indexOf(muteDefault.toFixed());
+    var muteVal;
+    console.log('mutDefault=', muteDefault);
+    var slides = $('#muteSlide').slider({
+      // range: 'min',   /*causes the left side of the scroll bar to be grey */
+      value: muteSlideDefault,
+      min: 0,
+      max:av.ptd.muteScaleAry.length,
+      slide: function (event, ui) {
+        console.log('ui=', ui);
+        if (0 > ui.value) ui.value = 0;
+        else if (ui.value >= av.ptd.muteScaleAry.length) {ui.value=av.ptd.muteScaleAry.length-1};
+        var muteVal = av.ptd.muteScale[ui.value];
+        av.post.addUser('muteInput =' + muteVal, ' in AvidaED.js line 2539');
+        //$( '#mRate' ).val( ui.value);  /*put slider value in the text above the slider */
+        $('#muteInput').val(muteVal);
+        /*put the value in the text box */
+      }
+    });
+    /* initialize */
+    //$( '#mRate' ).val( ($( '#muteSlide').slider( 'value' )));  //used in testing nonlinear scale
+    $('#muteInput').val(muteDefault);
+    /*update slide based on textbox */
+    $('#muteInput').change(function () {
+      muteVal = parseFloat(this.value);
+      slides.slider('value', muteVal);
+      $('#mRate').val(muteVal);
+
+
+      av.post.addUser('muteInput =' + muteVal.formatNum(1), ' in AvidaED.js line 1865');
+      av.post.usrOneline(av.post.data, 'in AvidaED.js line 1868');
+      //console.log('in mute change');
+
+    });
+  });
+
 /*------------------------------------------------------------------------------------------ av.ptd.randInputChange --*/
+  // part of ex1setupBBlock
   av.ptd.randInputChange = function (value, randErroTest) {
     var randNum = Number(value);
     if (av.debug.uil) { console.log('ui: randNum=', randNum); }
@@ -2512,78 +2559,6 @@ require([
     }
   };
 
-//-------------------------------------------------------------------------------------------- $(function slidemute() --
-   $(function slidemute() {
-    /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
-    /* the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, */
-    /* so I multiplied by 100,000 to get 100.000% to come out even. */
-    //console.log('before defaultslide value');
-    var muteSlideDefault = 109861.0;
-    var muteVal;
-    /* results in 2% as a default */
-    var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3);
-    var slides = $('#muteSlide').slider({
-      // range: 'min',   /*causes the left side of the scroll bar to be grey */
-      value: muteSlideDefault,
-      min: 0.0,
-      max: 461512,
-      slide: function (event, ui) {
-        var muteVal = (Math.pow(Math.E, (ui.value / 100000)) - 1).toFixed(3);
-        av.post.addUser('muteInput =' + muteVal, ' in AvidaED.js line 1855');
-        //$( '#mRate' ).val( ui.value);  /*put slider value in the text above the slider */
-        $('#muteInput').val(muteVal);
-        /*put the value in the text box */
-      }
-    });
-    /* initialize */
-    //$( '#mRate' ).val( ($( '#muteSlide').slider( 'value' )));  //used in testing nonlinear scale
-    $('#muteInput').val(muteDefault);
-    /*update slide based on textbox */
-    $('#muteInput').change(function () {
-      //muteVal = 100000 * Math.log(1 + (parseFloat(this.value)));
-      muteVal = parseFloat(this.value);
-      slides.slider('value', muteVal);
-      $('#mRate').val(muteVal);
-
-
-      //Not sure the section below does anything expcept example about debug data collection.
-      av.post.data1 = {
-        'changed': 'muteInput',
-        'muteInput': muteVal.formatNum(1)
-      };
-      av.post.data2 = {
-        'operation': 'assign',
-        'object': ['muteInput'],
-        'value': [muteVal.formatNum(1)]
-      };
-      av.post.data = {
-        'operation': 'assign',
-        'name': 'muteInput',
-        'vars': ['muteInput', 'person'],
-        'value': [muteVal.formatNum(1), 'fred']
-      };
-
-      av.post.data = {
-        'operation': 'button',
-        'name': 'runPause',
-        'vars': {'update': 5},
-        'assumptions': {'av.dom.runStopButton.textContent': 'Run'}
-      };
-      av.post.data = {
-        'operation': 'DojoDnd',
-        'name': 'fz2Grid',
-        'vars': {'source': 'av.dnd.fzOrgan', 'nodeDir': 'g0', 'target': 'av.dnd.popGrid', 'xGrid': 4, 'yGrid': 9},
-        //// need dom Id associated with @ancestor.
-        'assumptions': {'nodeName': '@ancestor'}    //condition, constraint
-      };
-      //usr:
-      av.post.addUser('muteInput =' + muteVal.formatNum(1), ' in AvidaED.js line 1865');
-      av.post.usrOneline(av.post.data, 'in AvidaED.js line 1868');
-      //console.log('in mute change');
-
-    });
-  });
-
 //xxs------------------------------------------------------------------------------------ dojo controls that will change --
    dojo.connect(dijit.byId('childParentRadio'), 'onClick', function () {
     av.post.addUser('Button: childParentRadio');
@@ -2699,7 +2674,7 @@ require([
     var muteSlideDefault = 109861.0;
     /* results in 2% as a default */
     var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3);
-    var slides = $('#orMuteSlide').slider({
+    var slides = $('#orgMuteSlide').slider({
       // range: 'min',   /*causes the left side of the scroll bar to be grey */
       value: muteSlideDefault,
       min: 0.0,
@@ -2713,7 +2688,7 @@ require([
       }
     });
     /* initialize */
-    //$( '#orMRate' ).val( ($( '#orMuteSlide').slider( 'value' )));
+    //$( '#orMRate' ).val( ($( '#orgMuteSlide').slider( 'value' )));
     //$( '#orMuteInput' ).val(muteDefault+'%');
     $('#orMuteInput').val(muteDefault);
     /*update slide based on textbox */
@@ -3719,3 +3694,36 @@ require([
  </div>
  
  */
+
+      //Not sure the section below does anything except example about debug data collection.
+/*
+      av.post.data1 = {
+        'changed': 'muteInput',
+        'muteInput': muteVal.formatNum(1)
+      };
+      av.post.data2 = {
+        'operation': 'assign',
+        'object': ['muteInput'],
+        'value': [muteVal.formatNum(1)]
+      };
+      av.post.data = {
+        'operation': 'assign',
+        'name': 'muteInput',
+        'vars': ['muteInput', 'person'],
+        'value': [muteVal.formatNum(1), 'fred']
+      };
+
+      av.post.data = {
+        'operation': 'button',
+        'name': 'runPause',
+        'vars': {'update': 5},
+        'assumptions': {'av.dom.runStopButton.textContent': 'Run'}
+      };
+      av.post.data = {
+        'operation': 'DojoDnd',
+        'name': 'fz2Grid',
+        'vars': {'source': 'av.dnd.fzOrgan', 'nodeDir': 'g0', 'target': 'av.dnd.popGrid', 'xGrid': 4, 'yGrid': 9},
+        //// need dom Id associated with @ancestor.
+        'assumptions': {'nodeName': '@ancestor'}    //condition, constraint
+      };
+*/

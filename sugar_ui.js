@@ -444,7 +444,7 @@
     //if (true) { console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; subChanged=', subChanged); }
     // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags=', av.nut.hideFlags); }
     var tmpNum = 1;
-    var onlyGrid = '';
+    var showGeo = '';
     var ndx = av.sgr.logicNames.indexOf(tsk);
     var edTsk = av.sgr.logEdNames[ndx];
     var supplyType;
@@ -454,18 +454,20 @@
     // one line method to get value of select/option struture.
     console.log('onlygrid=', av.sgr.gridOnly, '; mnDebug=', av.doj.mnDebug.style.visibility, '; geoStyle=', document.getElementById(tsk+'0geometry').style.displaly, '; regionLayout=', regionLayout);
     if (av.sgr.gridOnly && 'visible' != av.doj.mnDebug.style.visibility) {
-      onlyGrid = 'onlyGrid';
+      showGeo = 'gridOnly';
       document.getElementById(tsk+'0geometry').style.displaly = 'none';
       if ('1All' == regionLayout) {
         document.getElementById(tsk+'WsupplyType').style.display = 'inline-block';
         document.getElementById(tsk+'1supplyType').style.display = 'none';
       }
       else {
+        showGeo = 'grid';
         document.getElementById(tsk+'WsupplyType').style.display = 'none';
         document.getElementById(tsk+'1supplyType').style.display = 'inline-block';
       }
     }
     else {
+        showGeo = 'grid';
         document.getElementById(tsk+'WsupplyType').style.display = 'inline-block';
         document.getElementById(tsk+'1supplyType').style.display = 'inline-block';
     }
@@ -541,7 +543,7 @@
           document.getElementById(tsk+'1outflowHiText').innerHTML = 'Outflow fraction / cell';
           document.getElementById(tsk+'1chmstatHiDiv').style.display = 'block';
           document.getElementById(tsk+'1chmstatHiText').innerHTML = ' = chemostat when resource not consumed';
-          document.getElementById(tsk+'1subSection').className = 'grid-sugarDetail-globalEqual-container';
+          document.getElementById(tsk+'1subSection').className = 'grid-sugarDetail-globalsugarDetail-chemostat';
           // if (av.dbg.flg.nut) { console.log('task='+tsk, '; sub='+sub, '; get className from dom of ', tsk+'0Details'); }
           // if (av.dbg.flg.nut) { console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'0Details').className); }
           // if (av.dbg.flg.nut) { console.log(tsk+'1periodCheckbox.checked value =', document.getElementById(tsk+'1periodCheck').checked, document.getElementById(tsk+'1periodCheck').value); }
@@ -589,13 +591,18 @@
         //console.log('sub=', sub,'; regionNameList=',  regionNameList);
         regionName = regionNameList[sub];
         document.getElementById(tsk+sub+'regionName').innerHTML = regionName;
+        if (av.sgr.gridOnly && 'visible' != av.doj.mnDebug.style.visibility) {
+          document.getElementById(tsk+'1regionName').style.display = 'none';
+          document.getElementById(tsk+'1diffuseCheckbox').style.display = 'none';
+        }
+
 
         // if (av.dbg.flg.nut) { console.log('tsk=', 'sub=', sub, tsk,'supplyType=', supplyType,'regionLayout=', document.getElementById(tsk+'0regionLayout').value); }
         switch (av.nut[edTsk].uiSub.supplyType[sub].toLowerCase()) {    //for when geometery = local
           case 'none':
           case 'infinite': 
               document.getElementById(tsk+sub+'blank').style.display = 'block';      
-              document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Infinite-container';
+              document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-Infinite-container';
             break;
           case 'finite':   //Local
             // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags.gradient=',av.nut.hideFlags.gradient); }
@@ -609,18 +616,18 @@
               document.getElementById(tsk+sub+'initialHiText').innerHTML = 'High side initial amount / cell';
               document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';
               document.getElementById(tsk+sub+'initialLoDiv').style.display = 'block';
-              document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-FiniteGradient-container';
+              document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-FiniteGradient-container';
            // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
             }
             else {
               //not-gradient; Local
               document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';
               document.getElementById(tsk+sub+'initialHiText').innerHTML = 'Inital amount in each cell';
-              document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-container';
+              document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-Finite-container';
               if (av.nut.hideFlags.gradient) {
                 document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
                 //document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'none';
-                document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-noGradientCheckbox-container';
+                document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-Finite-noGradientCheckbox-container';
               }
               // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
               // if (av.dbg.flg.nut) { console.log('subSection=', document.getElementById(tsk+sub+'subSection')); }
@@ -648,12 +655,12 @@
               document.getElementById(tsk+sub+'chmstatLoText').innerHTML = ' = equilibrium on Low side';
               document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount / cell on high side.';
               document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction / cell on high side';
-              document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualGradient-container';
+              document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-EqualGradient-container';
            // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
               if (true == document.getElementById(tsk+sub+'periodCheck').checked && !av.sgr.hideFlgNames.periodic) {
                 document.getElementById(tsk+sub+'periodTime').style.display = 'block';
                 document.getElementById(tsk+sub+'sideText').innerHTML = 'Side with a higher amount';
-                document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualGradientPeriod-container';            
+                document.getElementById(tsk+sub+'subSection').className = showGeo + 'X';            
              // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
               }
             }
@@ -676,12 +683,12 @@
               else {
                 document.getElementById(tsk+sub+'chmstatHiText').innerHTML = 'outflow must be greater than  0';
               }
-              document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Equal-container';
+              document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-chemostat-container';
            // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
               if (true == document.getElementById(tsk+sub+'periodCheck').checked  && !av.sgr.hideFlgNames.periodic) {
                 document.getElementById(tsk+sub+'periodTime').style.display = 'block';
                 document.getElementById(tsk+sub+'chmstatHiText').innerHTML = ' = equilibrium when not consumed';
-                document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualPeriod-container';            
+                document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-EqualPeriod-container';            
              // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
               }
             }
