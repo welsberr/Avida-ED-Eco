@@ -507,7 +507,7 @@
           'args': [
             //'0,heads_default,' + av.fzr.actOrgan.genome,                                  //genome string
             av.fzr.actOrgan.genome,                                  //genome string
-            dijit.byId('orMuteInput').get('value') / 100,     // point mutation rate
+            dijit.byId('orgMuteInput').get('value') / 100,     // point mutation rate
             seed                                            //seed where 0 = random; >0 to replay that number
           ]
         };

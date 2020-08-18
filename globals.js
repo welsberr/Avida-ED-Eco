@@ -1367,26 +1367,27 @@ av.anl.clearChart();
 
 
 av.ptd.muteScaleAry = [];
-av.ptd.muteScaleAry[0]=0;
+av.ptd.muteScaleAry[0]="0";
 var ii=0;
 var jj=0;
 var kk=0;
 var tmpNum
 var breakpt = [0.01,   0.1,    1, 10,   100, 1000];
-var step =  [0.0005, 0.005, 0.05,  0.5,   5,  50];
+var step =  [0.0005, 0.005, 0.05,  0.5,   5,  10];
 var fxplc = [   4,  3,   2,    1,  0,   0,    0];
 do {
   ii++;
   av.ptd.muteScaleAry[ii] = (Number(av.ptd.muteScaleAry[ii-1]) + step[jj]).toFixed(fxplc[jj]);
-  console.log('ii=', ii, '; jj=', jj, '; kk=', kk, '; scale['+jj+']=', step[jj], '; breakpt['+jj+']=', breakpt[jj], '; av.ptd.muteScaleAry['+ii+']=', av.ptd.muteScaleAry[ii]);
-  if (breakpt[jj] <= av.ptd.muteScaleAry[ii]) {
+  //console.log('ii=', ii, '; jj=', jj, '; kk=', kk, '; scale['+jj+']=', step[jj], '; breakpt['+jj+']=', breakpt[jj], '; av.ptd.muteScaleAry['+ii+']=', av.ptd.muteScaleAry[ii]);
+  if ( breakpt[jj] <= Number(av.ptd.muteScaleAry[ii]) ) {
+   av.ptd.muteScaleAry[ii] = Number(av.ptd.muteScaleAry[ii]).toFixed(fxplc[jj+1]);
+   console.log('kk=', kk, '; muteScale.slice('+kk+')=', av.ptd.muteScaleAry.slice(kk) );
    jj++;
    kk = ii;
-   console.log('kk=', kk, '; muteScale.slice('+kk+')=', av.ptd.muteScaleAry.slice(kk) );
   }
 } 
-while (av.ptd.muteScaleAry[ii] <= 100)
-console.log('length =', av.ptd.muteScaleAry.length);  
+while (av.ptd.muteScaleAry[ii] < 100)
+console.log('length =', av.ptd.muteScaleAry.length, 'max = ', av.ptd.muteScaleAry[av.ptd.muteScaleAry.length-1]);  
 
 console.log('end of globals');
 
