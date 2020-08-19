@@ -2665,28 +2665,33 @@ require([
     av.dom.ExecuteAbout.style.width = '100%';    
   };
   
-//--------------------------------------------------------------------------------------------------- $ slideOrganism --
+  //--------------------------------------------------------------------------------------------------- $ slideOrganism --
   $(function slideOrganism() {
     /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
     /* the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, */
     /* so I multiplied by 100,000 to get 100.000% to come out even. */
     //console.log('before defaultslide value');
+    var muteSlideDefault = 109861.0;
     /* results in 2% as a default */
-    var muteDefault = 2.0;
-    var muteSlideDefault = av.ptd.muteScaleAry.indexOf(muteDefault.toFixed(1));
-    console.log('muteDefault=', muteDefault.toFixed(1), '; muteSlideDefault=', muteSlideDefault, '; max=', av.ptd.muteScaleAry.length-1);
+    var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3);
     var slides = $('#orgMuteSlide').slider({
       // range: 'min',   /*causes the left side of the scroll bar to be grey */
       value: muteSlideDefault,
-      min: 0,
-      max: av.ptd.muteScaleAry.length-1,
+      min: 0.0,
+      max: 461512,
       slide: function (event, ui) {
-        console.log('ui.value=', ui.value, '; scale=',av.ptd.muteScaleAry[ui.value]);
-        //$( '#orMRate' ).val( ui.value);  /*put slider value in the text near slider */
-        $('#orgMuteInput').val( av.ptd.muteScaleAry[ui.value] );
-        /*put the value in the text box */
+        var tmpVal = (Math.pow(Math.E, (ui.value / 100000)) - 1);
+        if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }
+        else if (0.1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
+        else if (0.01 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
+        else {tmpVal = tmpVal.toFixed(3); }
+         console.log('tmpVal=', tmpVal);
+        $('#orgMuteInput').val(tmpVal); //put slider value in the text near slider 
+        //put the value in the text box 
         av.ind.settingsChanged = true;
-        if (av.debug.trace) { console.log('orSlide changed', av.ind.settingsChanged); }
+        if (av.debug.trace) {
+          console.log('orSlide changed', av.ind.settingsChanged);
+        }
       }
     });
     /* initialize */
@@ -2694,20 +2699,59 @@ require([
     //$( '#orgMuteInput' ).val(muteDefault+'%');
     $('#orgMuteInput').val(muteDefault);
     /*update slide based on textbox */
+
+    $('#orgMuteInput').change(function () {
+      slides.slider('value', 100000.0 * Math.log(1 + (parseFloat(this.value))));
+      av.ind.settingsChanged = true;
+      if (av.debug.trace) {
+        console.log('orgMute changed', av.ind.settingsChanged);
+      }
+      //$( '#orMRate' ).val( 100000*Math.log(1+(parseFloat(this.value))) );
+      if (av.debug.trace)
+        console.log('in mute change');
+      av.post.addUser('muteInput =' + document.getElementById('orgMuteInput').value,  '1add ? 949');
+    });
+  });
+
+// need to get error messagse working 
+
+//--------------------------------------------------------------------------------------------------- $ slideOrganism --
+//Slider based on interavals with break points; array defined in globals. 
+    //The problem with this one is that if the value is not the array, it cannot find the index
+/*  $(function slideOrganism() {
+    var muteDefault = 2.0;
+    var muteSlideDefault = av.ptd.muteScaleAry.indexOf(muteDefault.toFixed(1));
+    console.log('muteDefault=', muteDefault.toFixed(1), '; muteSlideDefault=', muteSlideDefault, '; max=', av.ptd.muteScaleAry.length-1);
+    var slides = $('#orgMuteSlide').slider({
+      // range: 'min',   //causes the left side of the scroll bar to be grey 
+      value: muteSlideDefault,
+      min: 0,
+      max: av.ptd.muteScaleAry.length-1,
+      slide: function (event, ui) {
+        console.log('ui.value=', ui.value, '; scale=',av.ptd.muteScaleAry[ui.value]);
+        $('#orgMuteInput').val( av.ptd.muteScaleAry[ui.value] ); //put slider value in the text near slider 
+        //put the value in the text box 
+        av.ind.settingsChanged = true;
+        if (av.debug.trace) { console.log('orSlide changed', av.ind.settingsChanged); }
+      }
+    });
+    // initialize 
+    $('#orgMuteInput').val(muteDefault);
     
+    //The problem with this one is that if the value is not the array, it cannot find the index
     $('#orgMuteInput').change(function () {
       console.log('this.value=', this.value);
       var tmpVal = Number(this.value);
       slides.slider('value', av.ptd.muteScaleAry.indexOf(tmpVal.toFixed(1)) );
       av.ind.settingsChanged = true;
       if (av.debug.trace) { console.log('orgMute changed', av.ind.settingsChanged); }
-      //$( '#orMRate' ).val( 100000*Math.log(1+(parseFloat(this.value))) );
       if (av.debug.trace) console.log('in mute change');
       av.post.addUser('muteInput =' + dijit.byId('orgMuteInput').get('value') + '1949');
       console.log('this.value=', this.value, '; slider=', av.ptd.muteScaleAry.indexOf(tmpVal.toFixed(1)) );
     });
   });
   //console.log(',av.ptd.muteScaleAry=' ,av.ptd.muteScaleAry);
+*/
 
   //triggers flag that requests more data when the settings dialog is closed.
   //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
