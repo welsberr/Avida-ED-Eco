@@ -2665,7 +2665,7 @@ require([
     av.dom.ExecuteAbout.style.width = '100%';    
   };
   
-  //--------------------------------------------------------------------------------------------------- $ slideOrganism --
+//--------------------------------------------------------------------------------------------------- $ slideOrganism --
   $(function slideOrganism() {
     /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
     /* the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, */
@@ -2699,48 +2699,13 @@ require([
       if (av.debug.trace) { console.log('orgMute changed', av.ind.settingsChanged); }
       //$( '#orMRate' ).val( 100000*Math.log(1+(parseFloat(this.value))) );
       if (av.debug.trace) console.log('in mute change');
-      av.post.addUser('muteInput =' + dijit.byId('orgMuteInput').get('value') + '1949');
+      av.post.addUser('muteInput =' + document.getElementById('orgMuteInput').value + '1949');
     });
   });
-  
-  
-  
-//--------------------------------------------------------------------------------------------------- $ slideOrganism --
-  $(function slideOrganism_broken() {
-    // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
-    // Changing from log based function to a lookup table version
-    //console.log('before defaultslide value');
-    var muteDefault = 2;
-    var muteSlideDefault = av.ptd.muteScaleAry.indexOf(muteDefault.toFixed(1));
-    
-    var slides = $('#orgMuteSlide').slider({
-      // range: 'min',   /*causes the left side of the scroll bar to be grey */
-      value: muteSlideDefault,
-      min: 0,
-      max: av.ptd.muteScaleAry.length-1,
-      slide: function (event, ui) {
-        //$( '#orMRate' ).val( ui.value);  /*put slider value in the text near slider */
-        $('#orgMuteInput').val(av.ptd.muteScaleAry[ui.value]);
-        /*put the value in the text box */
-        av.ind.settingsChanged = true;
-        if (av.debug.trace) { console.log('orgSlide changed', av.ind.settingsChanged); }
-      }
-    });
-    /* initialize */
-    //$( '#orgMRate' ).val( ($( '#orgMuteSlide').slider( 'value' )));
-    //$( '#orgMuteInput' ).val(muteDefault+'%');
-    $('#orgMuteInput').val(muteDefault);
-    /*update slide based on textbox */
-    
-    $('#orgMuteInput').change(function () {
-      slides.slider('value', av.ptd.muteScaleAry[parseFloat(this.value)]);
-      av.ind.settingsChanged = true;
-      if (av.debug.trace) { console.log('orgMute changed', av.ind.settingsChanged); }
-      //$( '#orgMRate' ).val( 100000*Math.log(1+(parseFloat(this.value))) );
-      if (av.debug.trace) console.log('in mute change');
-      av.post.addUser('muteInput =' + document.getElementById('orgMuteInput').value);
-    });
-  });
+
+  //triggers flag that requests more data when the settings dialog is closed.
+  //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
+//----------------------------------------------------------------------------------------------------------------------  
 
   //triggers flag that requests more data when the settings dialog is closed.
   //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
