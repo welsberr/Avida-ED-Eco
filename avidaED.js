@@ -2671,17 +2671,19 @@ require([
     /* the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, */
     /* so I multiplied by 100,000 to get 100.000% to come out even. */
     //console.log('before defaultslide value');
-    var muteSlideDefault = 109861.0;
     /* results in 2% as a default */
-    var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3);
+    var muteDefault = 2.0;
+    var muteSlideDefault = av.ptd.muteScaleAry.indexOf(muteDefault.toFixed(1));
+    console.log('muteDefault=', muteDefault.toFixed(1), '; muteSlideDefault=', muteSlideDefault, '; max=', av.ptd.muteScaleAry.length-1);
     var slides = $('#orgMuteSlide').slider({
       // range: 'min',   /*causes the left side of the scroll bar to be grey */
       value: muteSlideDefault,
-      min: 0.0,
-      max: 461512,
+      min: 0,
+      max: av.ptd.muteScaleAry.length-1,
       slide: function (event, ui) {
+        console.log('ui.value=', ui.value, '; scale=',av.ptd.muteScaleAry[ui.value]);
         //$( '#orMRate' ).val( ui.value);  /*put slider value in the text near slider */
-        $('#orgMuteInput').val((Math.pow(Math.E, (ui.value / 100000)) - 1).toFixed(3));
+        $('#orgMuteInput').val( av.ptd.muteScaleAry[ui.value] );
         /*put the value in the text box */
         av.ind.settingsChanged = true;
         if (av.debug.trace) { console.log('orSlide changed', av.ind.settingsChanged); }
@@ -2694,14 +2696,18 @@ require([
     /*update slide based on textbox */
     
     $('#orgMuteInput').change(function () {
-      slides.slider('value', 100000.0 * Math.log(1 + (parseFloat(this.value))));
+      console.log('this.value=', this.value);
+      var tmpVal = Number(this.value);
+      slides.slider('value', av.ptd.muteScaleAry.indexOf(tmpVal.toFixed(1)) );
       av.ind.settingsChanged = true;
       if (av.debug.trace) { console.log('orgMute changed', av.ind.settingsChanged); }
       //$( '#orMRate' ).val( 100000*Math.log(1+(parseFloat(this.value))) );
       if (av.debug.trace) console.log('in mute change');
-      av.post.addUser('muteInput =' + document.getElementById('orgMuteInput').value + '1949');
+      av.post.addUser('muteInput =' + dijit.byId('orgMuteInput').get('value') + '1949');
+      console.log('this.value=', this.value, '; slider=', av.ptd.muteScaleAry.indexOf(tmpVal.toFixed(1)) );
     });
   });
+  //console.log(',av.ptd.muteScaleAry=' ,av.ptd.muteScaleAry);
 
   //triggers flag that requests more data when the settings dialog is closed.
   //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
