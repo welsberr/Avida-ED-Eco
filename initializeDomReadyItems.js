@@ -192,6 +192,7 @@
       av.dom.orgSettings = document.getElementById('orgSettings');
       av.dom.orgDetailID = document.getElementById('orgDetailID');
       av.dom.orgCycle = document.getElementById('orgCycle');
+      av.dom.muteOrgError = document.getElementById('muteOrgError');
 
       //Analysis Page  
       //av.dom.anlChrtSpace = document.getElementById('anlChrtSpace');  //easier handle for div with chart

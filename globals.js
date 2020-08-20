@@ -1365,13 +1365,15 @@ av.anl.clearChart = function () {
 };
 av.anl.clearChart();
 
-
+//The plan was to create a non-linear slider with an array with break points, but I needed a way to convert
+// from any number input as text to the value of the slider and I decided to stay with the log for now rather 
+// dealing with interpulation for real numbers to find the clossest value in the array. 
+/*
 av.ptd.muteScaleAry = [];
 av.ptd.muteScaleAry[0]="0";
 var ii=0;
 var jj=0;
 var kk=0;
-var tmpNum
 var breakpt = [0.01,   0.1,    1, 10,   100, 1000];
 var step =  [0.0005, 0.005, 0.05,  0.5,   5,  10];
 var fxplc = [   4,  3,   2,    1,  0,   0,    0];
@@ -1388,7 +1390,7 @@ do {
 } 
 while (av.ptd.muteScaleAry[ii] < 100)
 console.log('length =', av.ptd.muteScaleAry.length, 'max = ', av.ptd.muteScaleAry[av.ptd.muteScaleAry.length-1]);  
-
+*/
 console.log('end of globals');
 
 //----------------------------------------------------------------------------------------------------------------------

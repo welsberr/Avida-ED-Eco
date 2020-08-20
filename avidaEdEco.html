@@ -723,13 +723,11 @@
                 <div class='even'>
                   <div>
                     <span class='enviroSubHeading lftmargin' >Per Site Mutation Rate:</span>
-                    <input id='mutePopInput' type='text' class='mutePopInputClass' onchange='av.ptd.muteInputChange(this)'>&nbsp;%
+                    <input id='mutePopInput' type='text' class='mutePopInputClass'>&nbsp;%
                   </div>
                   <div><label id='mutePopError'>Error place holder</label>&nbsp;</div>
                   <div id='mutePopSlideHolder'>
-                    Log<span id='muteLogSlide' class='mutePopSlideClas'></span>&nbsp;
-                    Ln<span id='mutePopSlide' class='mutePopSlideClas'></span>&nbsp;
-                    Two<span id='muteTwoSlide' class='mutePopSlideClas'></span>&nbsp;
+                    <span id='mutePopSlide' class='mutePopSlideClass'></span>&nbsp;
                   </div>
                 </div>
                 <div class='odd'><div class='enviroSubHeading'>Ancestral Organism(s):</div>
@@ -2908,6 +2906,7 @@
                 <div class='lftmargin'>Per Site Mutation Rate:</div>
                 <input id='orgMuteInput' type='text'> %
                 <div id='orgMuteSlide'></div>
+                <div><label id='muteOrgError'>Error place holder</label>&nbsp;</div>
               </div>
               <h3>Repeatability Mode:</h3>
               <input  type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganExperimentRadio'

@@ -2319,138 +2319,19 @@ require([
     av.grd.drawGridSetupFn('av.ptd.popSizeFn');
   };
 
-/*------------------------------------------------------------------------------------------ av.ptd.muteInputChange --*/
-  av.ptd.muteInputChange = function (domObj) {
-    var value = domObj.value;
-    var muteNum = Number(value);
-    //if (av.debug.uil) { uil: console.log('ui: muteNum=', muteNum); }
-    { console.log('ui: muteNum=', muteNum); }
-    if (muteNum >= 0 && muteNum <= 100) {
-      av.ptd.validMuteInuput = true;
-      console.log();
-      av.dom.mutePopError.style.color = 'black';
-      av.dom.mutePopError.innerHTML = '';
-      //document.getElementById(muteErroTest).innerHTML = '';
-    } else {
-      av.ptd.validMuteInuput = false;
-      av.dom.mutePopError.style.color = 'red';
-      av.dom.mutePopError.innerHTML = '';
-      av.dom.userMsgLabel.innerHTML = '';
-      if (muteNum <= 0) {
-        av.dom.mutePopError.innerHTML += 'Mutation rate must be >= than zero percent. ';
-        if (av.debug.popCon) { console.log('<0'); }
-      }
-      if (muteNum >= 100) {
-        av.dom.mutePopError.innerHTML += 'Mutation rate must be 100% or less. ';
-        if (av.debug.popCon) { console.log('>0'); }
-      }
-      if (isNaN(muteNum)) {
-        av.dom.mutePopError.innerHTML += 'Mutation rate must be a valid number. ';
-        if (av.debug.popCon) { console.log('==NaN'); }
-      }
-    };
-  };
-
-//-------------------------------------------------------------------------------------------- $(function slidemute() --
-   $(function slidemute() {
-    // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 
-    // the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, 
-    // so I multiplied by 100,000 to get 100.000% to come out even. 
-    //console.log('before defaultslide value');
-    var muteSlideDefault = 109861.0;
-    // results in 2% as a default 
-    var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3);
-    var slides = $('#mutePopSlide').slider({
-      // range: 'min',   /*causes the left side of the scroll bar to be grey */
-      value: muteSlideDefault,
-      min: 0.0,
-      max: 461512,
-      slide: function (event, ui) {
-        var tmpVal = (Math.pow(Math.E, (ui.value / 100000)) - 1);
-        if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }
-        else if (0.1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
-        else if (0.01 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
-        else {tmpVal = tmpVal.toFixed(3); }
-         console.log('tmpVal=', tmpVal);
-        $('#mutePopInput').val(tmpVal); //put slider value in the text near slider 
-        //put the value in the text box 
-        av.ind.settingsChanged = true;
-        if (av.debug.trace) {
-          console.log('orgSlide changed', av.ind.settingsChanged);
-        }
-      }
-    });
-    // initialize
-    $('#mutePopInput').val(muteDefault);
-    
-    /*update slide based on textbox */
-    $('#mutePopInput').change(function () {
-      slides.slider('value', 100000.0 * Math.log(1 + (parseFloat(this.value))));
-      av.ind.settingsChanged = true;
-      if (av.debug.trace) {
-        console.log('orgMute changed', av.ind.settingsChanged);
-      }
-      if (av.debug.trace)
-        console.log('in mute change');
-      av.post.addUser('muteInput =' + document.getElementById('mutePopInput').value,  '1add ? 949');
-    });
-  });
-
-// need to get error messagse working 
-
-//-------------------------------------------------------------------------------------------- $(function slidemute() --
-   $(function slidtwoeMute() {
-    // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 
-    // the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, 
-    // so I multiplied by 100,000 to get 100.000% to come out even. 
-    //console.log('before defaultslide value');
-    var muteSlideDefault = 316.992500144231;
-    // results in 2% as a default 
-    var muteDefault = (Math.pow(1.5, (muteSlideDefault / 200)) - 1).toFixed(3);
-    var slides = $('#muteTwoSlide').slider({
-      // range: 'min',   /*causes the left side of the scroll bar to be grey */
-      value: muteSlideDefault,
-      min: 0.0,
-      max: 2276,         //1331.6,     //1331.64229655036
-      slide: function (event, ui) {
-        var tmpVal = (Math.pow(1.5, (ui.value / 200)) - 1);
-        if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }
-        else if (0.1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
-        else if (0.01 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
-        else {tmpVal = tmpVal.toFixed(3); }
-        //put the value in the text box 
-         console.log('tmpVal=', tmpVal);
-        //$('#mutePopInput').val(tmpVal); //put slider value in the text near slider 
-      }
-    });
-    // initialize
-    // $('#mutePopInput').val(muteDefault);
-    
-    /*update slide based on textbox */
-    $('#mutePopInput').change(function () {
-      slides.slider('value', 200 * av.utl.log(1.5,1 + (parseFloat(this.value))));
-      av.ind.settingsChanged = true;
-      if (av.debug.trace) {
-        console.log('Mute changed', av.ind.settingsChanged);
-      };
-      if (av.debug.trace)
-        console.log('in mute change');
-      av.post.addUser('muteInput =' + document.getElementById('mutePopInput').value,  '1add ? 949');
-    });
-  });
 
 // changing the base does not seem change position on the slider
 
-//-------------------------------------------------------------------------------------------- $(function slidemute() --
-   $(function slideLogMute() {
+//-------------------------------------------------------------------------------------------- $(function slidePopmute() --
+   $(function slidePopMute() {
     // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 
     // the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, 
-    // so I multiplied by 100,000 to get 100.000% to come out even. 
+    // so I multiplied by 200 to get 100.000% to get a reasonable number of values for the pixils in the slide
     //console.log('before defaultslide value');
     var muteSlideDefault = 95.4242509439325;
     // results in 2% as a default 
     var muteDefault = (Math.pow(10, (muteSlideDefault / 200)) - 1).toFixed(3);
-    var slides = $('#muteLogSlide').slider({
+    var slides = $('#mutePopSlide').slider({
       // range: 'min',   /*causes the left side of the scroll bar to be grey */
       value: muteSlideDefault,
       min: 0.0,
@@ -2462,27 +2343,50 @@ require([
         else if (0.01 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
         else {tmpVal = tmpVal.toFixed(3); }
         //put the value in the text box 
-         console.log('tmpVal=', tmpVal);
-        //$('#mutePopInput').val(tmpVal); //put slider value in the text near slider 
+        //console.log('tmpVal=', tmpVal);
+        $('#mutePopInput').val(tmpVal); //put slider value in the text near slider 
       }
     });
     // initialize
-    // $('#mutePopInput').val(muteDefault);
+     $('#mutePopInput').val(muteDefault);
     
     /*update slide based on textbox */
     $('#mutePopInput').change(function () {
-      slides.slider('value', 200 * av.utl.log(10,1 + (parseFloat(this.value))));
-      av.ind.settingsChanged = true;
-      if (av.debug.trace) {
-        console.log('Mute changed', av.ind.settingsChanged);
+      var value = this.value;
+      var muteNum = parseFloat(value);
+      //if (av.debug.uil) { console.log('ui: muteNum=', muteNum); }
+      if (muteNum >= 0 && muteNum <= 100) {
+        av.ptd.validMuteInuput = true;
+        av.dom.mutePopError.style.color = 'black';
+        av.dom.mutePopError.innerHTML = '';
+        //update slide value
+        slides.slider('value', 200 * av.utl.log(10,1 + (muteNum)));
+        //console.log('value=', muteNum, '; slide=', 200 * av.utl.log(10,1 + (muteNum) ) );
+        
+        //av.ind.settingsChanged = true;
+        if (av.debug.trace) { console.log('Mute changed', av.ind.settingsChanged); };
+        av.post.addUser('mutePopInput =' + document.getElementById('mutePopInput').value,  '1add ? 949');
+      } 
+      else {
+        av.ptd.validMuteInuput = false;
+        av.dom.mutePopError.style.color = 'red';
+        av.dom.mutePopError.innerHTML = '';
+        av.dom.userMsgLabel.innerHTML = '';
+        if (muteNum <= 0) {
+          av.dom.mutePopError.innerHTML += 'Mutation rate must be >= than zero percent. ';
+          if (av.debug.popCon) { console.log('<0'); }
+        }
+        if (muteNum >= 100) {
+          av.dom.mutePopError.innerHTML += 'Mutation rate must be 100% or less. ';
+          if (av.debug.popCon) { console.log('>0'); }
+        }
+        if (isNaN(muteNum)) {
+          av.dom.mutePopError.innerHTML += 'Mutation rate must be a valid number. ';
+          if (av.debug.popCon) { console.log('==NaN'); }
+        }
       };
-      if (av.debug.trace)
-        console.log('in mute change');
-      av.post.addUser('muteInput =' + document.getElementById('mutePopInput').value,  '1add ? 949');
     });
   });
-
-// need to get error messagse working 
 
 /*------------------------------------------------------------------------------------------ av.ptd.randInputChange --*/
   // part of ex1setupBBlock
@@ -2791,15 +2695,38 @@ require([
     /*update slide based on textbox */
 
     $('#orgMuteInput').change(function () {
-      slides.slider('value', 100000.0 * Math.log(1 + (parseFloat(this.value))));
-      av.ind.settingsChanged = true;
-      if (av.debug.trace) {
-        console.log('orgMute changed', av.ind.settingsChanged);
+      var value = this.value;
+      var muteNum = Number(value);
+      //if (av.debug.uil) { console.log('ui: muteNum=', muteNum); }
+      if (muteNum >= 0 && muteNum <= 100) {
+        av.ptd.validMuteInuput = true;
+        console.log();
+        av.dom.muteOrgError.style.color = 'black';
+        av.dom.muteOrgError.innerHTML = '';
+        //update slide value
+        slides.slider('value', 100000.0 * Math.log(1 + (parseFloat(this.value))));
+        av.ind.settingsChanged = true;
+        if (av.debug.trace) { console.log('Mute changed', av.ind.settingsChanged); };
+        av.post.addUser('orgMuteInput =' + document.getElementById('orgMuteInput').value,  '1add ? 949');
+      } 
+      else {
+        av.ptd.validMuteInuput = false;
+        av.dom.muteOrgError.style.color = 'red';
+        av.dom.muteOrgError.innerHTML = '';
+        av.dom.userMsgLabel.innerHTML = '';
+        if (muteNum <= 0) {
+          av.dom.muteOrgError.innerHTML += 'Mutation rate must be >= than zero percent. ';
+          if (av.debug.popCon) { console.log('<0'); }
+        }
+        if (muteNum >= 100) {
+          av.dom.muteOrgError.innerHTML += 'Mutation rate must be 100% or less. ';
+          if (av.debug.popCon) { console.log('>0'); }
+        }
+        if (isNaN(muteNum)) {
+          av.dom.muteOrgError.innerHTML += 'Mutation rate must be a valid number. ';
+          if (av.debug.popCon) { console.log('==NaN'); }
+        }
       }
-      //$( '#orMRate' ).val( 100000*Math.log(1+(parseFloat(this.value))) );
-      if (av.debug.trace)
-        console.log('in mute change');
-      av.post.addUser('muteInput =' + document.getElementById('orgMuteInput').value,  '1add ? 949');
     });
   });
 
