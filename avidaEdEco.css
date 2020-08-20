@@ -563,7 +563,7 @@
   display: inline-block; 
   /*background: yellow; */
 }
-#mutePopSlide {
+.mutePopSlideClas {
   width:360px; 
   display: block; 
   vertical-align: top; 

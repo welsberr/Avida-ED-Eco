@@ -124,7 +124,7 @@
   };
   original */
 
-  //siplified form of toLocalString
+  //simplified form of toLocalString
   Number.prototype.formatNum = function(fracDigits, location){
     'use strict';
     var num = this;
@@ -133,6 +133,9 @@
     return num.toLocaleString(local, {minimumFractionDigits: digits, maximumFractionDigits: digits});
   };
 
+av.utl.log = function (base, num) {  
+  return Math.log(num) / Math.log(base);  
+};
 
 
   /*

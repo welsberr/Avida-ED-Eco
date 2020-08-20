@@ -2353,11 +2353,12 @@ require([
 
 //-------------------------------------------------------------------------------------------- $(function slidemute() --
    $(function slidemute() {
-    /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
-    /* the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, */
-    /* so I multiplied by 100,000 to get 100.000% to come out even. */
+    // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 
+    // the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, 
+    // so I multiplied by 100,000 to get 100.000% to come out even. 
+    //console.log('before defaultslide value');
     var muteSlideDefault = 109861.0;
-    /* results in 2% as a default */
+    // results in 2% as a default 
     var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3);
     var slides = $('#mutePopSlide').slider({
       // range: 'min',   /*causes the left side of the scroll bar to be grey */
@@ -2375,13 +2376,11 @@ require([
         //put the value in the text box 
         av.ind.settingsChanged = true;
         if (av.debug.trace) {
-          console.log('orSlide changed', av.ind.settingsChanged);
+          console.log('orgSlide changed', av.ind.settingsChanged);
         }
       }
     });
-    /* initialize */
-    //$( '#orMRate' ).val( ($( '#').slider( 'value' )));
-    //$( '#mutePopInput' ).val(muteDefault+'%');
+    // initialize
     $('#mutePopInput').val(muteDefault);
     
     /*update slide based on textbox */
@@ -2399,6 +2398,91 @@ require([
 
 // need to get error messagse working 
 
+//-------------------------------------------------------------------------------------------- $(function slidemute() --
+   $(function slidtwoeMute() {
+    // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 
+    // the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, 
+    // so I multiplied by 100,000 to get 100.000% to come out even. 
+    //console.log('before defaultslide value');
+    var muteSlideDefault = 316.992500144231;
+    // results in 2% as a default 
+    var muteDefault = (Math.pow(1.5, (muteSlideDefault / 200)) - 1).toFixed(3);
+    var slides = $('#muteTwoSlide').slider({
+      // range: 'min',   /*causes the left side of the scroll bar to be grey */
+      value: muteSlideDefault,
+      min: 0.0,
+      max: 2276,         //1331.6,     //1331.64229655036
+      slide: function (event, ui) {
+        var tmpVal = (Math.pow(1.5, (ui.value / 200)) - 1);
+        if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }
+        else if (0.1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
+        else if (0.01 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
+        else {tmpVal = tmpVal.toFixed(3); }
+        //put the value in the text box 
+         console.log('tmpVal=', tmpVal);
+        //$('#mutePopInput').val(tmpVal); //put slider value in the text near slider 
+      }
+    });
+    // initialize
+    // $('#mutePopInput').val(muteDefault);
+    
+    /*update slide based on textbox */
+    $('#mutePopInput').change(function () {
+      slides.slider('value', 200 * av.utl.log(1.5,1 + (parseFloat(this.value))));
+      av.ind.settingsChanged = true;
+      if (av.debug.trace) {
+        console.log('Mute changed', av.ind.settingsChanged);
+      };
+      if (av.debug.trace)
+        console.log('in mute change');
+      av.post.addUser('muteInput =' + document.getElementById('mutePopInput').value,  '1add ? 949');
+    });
+  });
+
+// changing the base does not seem change position on the slider
+
+//-------------------------------------------------------------------------------------------- $(function slidemute() --
+   $(function slideLogMute() {
+    // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 
+    // the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, 
+    // so I multiplied by 100,000 to get 100.000% to come out even. 
+    //console.log('before defaultslide value');
+    var muteSlideDefault = 95.4242509439325;
+    // results in 2% as a default 
+    var muteDefault = (Math.pow(10, (muteSlideDefault / 200)) - 1).toFixed(3);
+    var slides = $('#muteLogSlide').slider({
+      // range: 'min',   /*causes the left side of the scroll bar to be grey */
+      value: muteSlideDefault,
+      min: 0.0,
+      max: 400,
+      slide: function (event, ui) {
+        var tmpVal = (Math.pow(10, (ui.value / 200)) - 1);
+        if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }
+        else if (0.1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
+        else if (0.01 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
+        else {tmpVal = tmpVal.toFixed(3); }
+        //put the value in the text box 
+         console.log('tmpVal=', tmpVal);
+        //$('#mutePopInput').val(tmpVal); //put slider value in the text near slider 
+      }
+    });
+    // initialize
+    // $('#mutePopInput').val(muteDefault);
+    
+    /*update slide based on textbox */
+    $('#mutePopInput').change(function () {
+      slides.slider('value', 200 * av.utl.log(10,1 + (parseFloat(this.value))));
+      av.ind.settingsChanged = true;
+      if (av.debug.trace) {
+        console.log('Mute changed', av.ind.settingsChanged);
+      };
+      if (av.debug.trace)
+        console.log('in mute change');
+      av.post.addUser('muteInput =' + document.getElementById('mutePopInput').value,  '1add ? 949');
+    });
+  });
+
+// need to get error messagse working 
 
 /*------------------------------------------------------------------------------------------ av.ptd.randInputChange --*/
   // part of ex1setupBBlock
