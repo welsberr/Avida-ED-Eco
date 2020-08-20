@@ -2328,24 +2328,24 @@ require([
     if (muteNum >= 0 && muteNum <= 100) {
       av.ptd.validMuteInuput = true;
       console.log();
-      document.getElementById('muteError').style.color = 'black';
-      document.getElementById('muteError').innerHTML = '';
+      av.dom.mutePopError.style.color = 'black';
+      av.dom.mutePopError.innerHTML = '';
       //document.getElementById(muteErroTest).innerHTML = '';
     } else {
       av.ptd.validMuteInuput = false;
-      document.getElementById('muteError').style.color = 'red';
-      document.getElementById('muteError').innerHTML = '';
+      av.dom.mutePopError.style.color = 'red';
+      av.dom.mutePopError.innerHTML = '';
       av.dom.userMsgLabel.innerHTML = '';
       if (muteNum <= 0) {
-        document.getElementById('muteError').innerHTML += 'Mutation rate must be >= than zero percent. ';
+        av.dom.mutePopError.innerHTML += 'Mutation rate must be >= than zero percent. ';
         if (av.debug.popCon) { console.log('<0'); }
       }
       if (muteNum >= 100) {
-        document.getElementById('muteError').innerHTML += 'Mutation rate must be 100% or less. ';
+        av.dom.mutePopError.innerHTML += 'Mutation rate must be 100% or less. ';
         if (av.debug.popCon) { console.log('>0'); }
       }
       if (isNaN(muteNum)) {
-        document.getElementById('muteError').innerHTML += 'Mutation rate must be a valid number. ';
+        av.dom.mutePopError.innerHTML += 'Mutation rate must be a valid number. ';
         if (av.debug.popCon) { console.log('==NaN'); }
       }
     };
@@ -2353,46 +2353,52 @@ require([
 
 //-------------------------------------------------------------------------------------------- $(function slidemute() --
    $(function slidemute() {
-    // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 2 
-    // this time the scale is in a look up array with stop points where the increment changes
-    // av.ptd.muteScaleAry is defined in globals
-    //console.log('before defaultslide value');
-    var muteDefault = 2;
-    var muteSlideDefault = av.ptd.muteScaleAry.indexOf(muteDefault.toFixed());
-    var muteVal;
-    console.log('mutDefault=', muteDefault);
-    var slides = $('#muteSlide').slider({
+    /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
+    /* the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, */
+    /* so I multiplied by 100,000 to get 100.000% to come out even. */
+    var muteSlideDefault = 109861.0;
+    /* results in 2% as a default */
+    var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3);
+    var slides = $('#mutePopSlide').slider({
       // range: 'min',   /*causes the left side of the scroll bar to be grey */
       value: muteSlideDefault,
-      min: 0,
-      max:av.ptd.muteScaleAry.length,
+      min: 0.0,
+      max: 461512,
       slide: function (event, ui) {
-        console.log('ui=', ui);
-        if (0 > ui.value) ui.value = 0;
-        else if (ui.value >= av.ptd.muteScaleAry.length) {ui.value=av.ptd.muteScaleAry.length-1};
-        var muteVal = av.ptd.muteScale[ui.value];
-        av.post.addUser('muteInput =' + muteVal, ' in AvidaED.js line 2539');
-        //$( '#mRate' ).val( ui.value);  /*put slider value in the text above the slider */
-        $('#muteInput').val(muteVal);
-        /*put the value in the text box */
+        var tmpVal = (Math.pow(Math.E, (ui.value / 100000)) - 1);
+        if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }
+        else if (0.1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
+        else if (0.01 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
+        else {tmpVal = tmpVal.toFixed(3); }
+         console.log('tmpVal=', tmpVal);
+        $('#mutePopInput').val(tmpVal); //put slider value in the text near slider 
+        //put the value in the text box 
+        av.ind.settingsChanged = true;
+        if (av.debug.trace) {
+          console.log('orSlide changed', av.ind.settingsChanged);
+        }
       }
     });
     /* initialize */
-    //$( '#mRate' ).val( ($( '#muteSlide').slider( 'value' )));  //used in testing nonlinear scale
-    $('#muteInput').val(muteDefault);
+    //$( '#orMRate' ).val( ($( '#').slider( 'value' )));
+    //$( '#mutePopInput' ).val(muteDefault+'%');
+    $('#mutePopInput').val(muteDefault);
+    
     /*update slide based on textbox */
-    $('#muteInput').change(function () {
-      muteVal = parseFloat(this.value);
-      slides.slider('value', muteVal);
-      $('#mRate').val(muteVal);
-
-
-      av.post.addUser('muteInput =' + muteVal.formatNum(1), ' in AvidaED.js line 1865');
-      av.post.usrOneline(av.post.data, 'in AvidaED.js line 1868');
-      //console.log('in mute change');
-
+    $('#mutePopInput').change(function () {
+      slides.slider('value', 100000.0 * Math.log(1 + (parseFloat(this.value))));
+      av.ind.settingsChanged = true;
+      if (av.debug.trace) {
+        console.log('orgMute changed', av.ind.settingsChanged);
+      }
+      if (av.debug.trace)
+        console.log('in mute change');
+      av.post.addUser('muteInput =' + document.getElementById('mutePopInput').value,  '1add ? 949');
     });
   });
+
+// need to get error messagse working 
+
 
 /*------------------------------------------------------------------------------------------ av.ptd.randInputChange --*/
   // part of ex1setupBBlock
@@ -2695,7 +2701,7 @@ require([
       }
     });
     /* initialize */
-    //$( '#orMRate' ).val( ($( '#orgMuteSlide').slider( 'value' )));
+    //$( '#orMRate' ).val( ($( '#mutePopSlide').slider( 'value' )));
     //$( '#orgMuteInput' ).val(muteDefault+'%');
     $('#orgMuteInput').val(muteDefault);
     /*update slide based on textbox */

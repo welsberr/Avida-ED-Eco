@@ -93,7 +93,7 @@
       av.dom.sizeCols = document.getElementById('sizeCols');
       av.dom.sizeRows = document.getElementById('sizeRows');
       av.dom.muteInput = document.getElementById('muteInput');
-      av.dom.muteError = document.getElementById('muteError');
+      av.dom.mutePopError = document.getElementById('mutePopError');
       av.dom.childParentRadio = document.getElementById('childParentRadio');
       av.dom.childRandomRadio = document.getElementById('childRandomRadio');
       av.dom.envNone = document.getElementById('envNone');

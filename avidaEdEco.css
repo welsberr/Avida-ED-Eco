@@ -555,17 +555,16 @@
   font-size: 120%;
 }
 
-/* style done here for the slider; margin to keep it from overlapping;
-                      without width the slider is the full width of the browser window-->
-   <input id='muteInput' type='text' style='width: 4em; height:1.6em'></button> */
-#orgMuteInput {
-  width:10px; 
+.mutePopInputClass{
+  width:4em; 
   height:1em;
-  margin: auto;
-  display: inline-block;  
+  margin: 0px 2px;     /* top right bottom left  */   /*top left/right bottom */ /*top/bottom  left/right */
+  /* padding: 0px 0px;   /* top right bottom left  */  /* box padding border margin outside now */
+  display: inline-block; 
+  /*background: yellow; */
 }
-#muteSlide {
-  width:100px; 
+#mutePopSlide {
+  width:360px; 
   display: block; 
   vertical-align: top; 
   margin-left:10px; 
@@ -1212,12 +1211,16 @@ checkbox:focus {
   }
   
   #orgMuteSlide {
-    width:200px; display: inline-block; vertical-align: top; margin-left:20px; margin-right:20px;
+  width:200px; 
+  display: block; 
+  vertical-align: top; 
+  margin-left:10px; 
+  margin-right:20px
+}
+  #orgMuteInput{
+    width: 50px; height:1em;
   }
   
-  #orgMuteInput{
-    width: 4.5em; height:1.6em;
-  }
   
   .analysisArea{
     display: flex;

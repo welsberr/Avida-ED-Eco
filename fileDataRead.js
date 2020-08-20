@@ -1355,10 +1355,10 @@
     
     av.fzr.actConfig.size = av.fzr.actConfig.cols * av.fzr.actConfig.rows;
     
-    document.getElementById('muteInput').value = dict.COPY_MUT_PROB*100;
+    document.getElementById('mutePopInput').value = dict.COPY_MUT_PROB*100;
     //var event = new Event('change');
     var event = new window.CustomEvent('change');
-    document.getElementById('muteInput').dispatchEvent(event);
+    document.getElementById('mutePopInput').dispatchEvent(event);
     if (0==dict.BIRTH_METHOD) {
       dijit.byId('childParentRadio').set('checked', true);
       dijit.byId('childRandomRadio').set('checked', false);
