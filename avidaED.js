@@ -2336,6 +2336,7 @@ require([
       value: muteSlideDefault,
       min: 0.0,
       max: 400,
+      theme: 'summer',
       slide: function (event, ui) {
         var tmpVal = (Math.pow(10, (ui.value / 200)) - 1);
         if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }
@@ -2669,7 +2670,8 @@ require([
     /* results in 2% as a default */
     var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3);
     var slides = $('#orgMuteSlide').slider({
-      // range: 'min',   /*causes the left side of the scroll bar to be grey */
+      orientation: "vertical",
+      range: 'min',   /*causes the left side of the scroll bar to be grey */
       value: muteSlideDefault,
       min: 0.0,
       max: 461512,
@@ -2683,17 +2685,13 @@ require([
         $('#orgMuteInput').val(tmpVal); //put slider value in the text near slider 
         //put the value in the text box 
         av.ind.settingsChanged = true;
-        if (av.debug.trace) {
-          console.log('orSlide changed', av.ind.settingsChanged);
-        }
+        if (av.debug.trace) { console.log('orSlide changed', av.ind.settingsChanged); }
       }
     });
-    /* initialize */
-    //$( '#orMRate' ).val( ($( '#mutePopSlide').slider( 'value' )));
-    //$( '#orgMuteInput' ).val(muteDefault+'%');
+    // initialize
     $('#orgMuteInput').val(muteDefault);
-    /*update slide based on textbox */
-
+    
+    // update slide based on textbox 
     $('#orgMuteInput').change(function () {
       var value = this.value;
       var muteNum = Number(value);
@@ -3441,7 +3439,7 @@ require([
     //set mmDebug to hidden so that when toggle called it will show the development sections x
     av.doj.mnDebug.style.visibility = 'hidden';   //visible
   };
-  //av.ui.toggleDevelopentDisplays('Last_things_done');  //ned to put this back for production
+  av.ui.toggleDevelopentDisplays('Last_things_done');  //ned to put this back for production
   
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
   av.sgr.ChangeAllGeo('global');

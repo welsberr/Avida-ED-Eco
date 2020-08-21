@@ -1074,9 +1074,11 @@
       for (subNum = 1; subNum <= av.nut.numRegionsinHTML; subNum++) {
         //console.log('ocument.getElementById('+tsk+subNum+'supplyType) =', document.getElementById(tsk+subNum+'supplyType') );
         document.getElementById(tsk+subNum+'supplyType').value = av.sgr.nut.dft.uiSub.supplyType;
-        //console.log('ocument.getElementById('+tsk+subNum+'initialHiNp) =', document.getElementById(tsk+subNum+'initialHiNp') );
+        
+        //console.log('document.getElementById('+tsk+subNum+'initialHiNp) =', document.getElementById(tsk+subNum+'initialHiNp').value );
         document.getElementById(tsk+subNum+'initialHiNp').value = av.sgr.nut.dft.uiSub.initialHi;
-        //console.log('document.getElementById('+tsk + subNum + 'inflowHiNp) =', document.getElementById(tsk+subNum+'inflowHi') );
+        //console.log('document.getElementById('+tsk+subNum+'initialHiNp) =', document.getElementById(tsk+subNum+'initialHiNp').value );
+        
         document.getElementById(tsk+subNum+'inflowHiNp').value = av.sgr.nut.dft.uiSub.inflowHi;
         document.getElementById(tsk+subNum+'outflowHiNp').value = av.sgr.nut.dft.uiSub.outflowHi;
         document.getElementById(tsk+subNum+'diffuseCheck').value = av.sgr.nut.dft.uiSub.diffuseCheck;
@@ -1188,15 +1190,33 @@
           // This only works for whole dish until I start parsing cells. 
           // if initial is defined in RESOURCE, use that value, else use the default value from globals.          
           rValue = Number(av.nut[numTsk].resrc.initial[subNum]);
-          if ( !isNaN(rValue) ) {
-            if ( 0 <= rValue ) {
-              document.getElementById(tsk+subNum+'initialHiNp').value = rValue;
-              av.nut[numTsk].uiSub.initialHiNp[subNum] = rValue;
-            };
-          };
+          var rflag = true;
+          //console.log(numTsk+'.resrc.initial=', av.nut[numTsk].resrc.initial[subNum], 'uiSub.initialHi.'+subNum+'=', av.nut[numTsk].uiSubinitialHiNp);
+          if ( isNaN(rValue) ) {rflag = false;}
+          else {
+          // resrc.initial contains a number
+            if ( 0 >rValue ) {rflag = false;}
+            else {
+              // resrc.initial is postive: now test area;
+              if ( !isNaN(Number(av.nut[numTsk].uiSub.area[subNum])) && 0 != Number(av.nut[numTsk].uiSub.area[subNum]) ) {
+                rValue = rValue / Number(av.nut[numTsk].uiSub.area[subNum]);
+              }
+              else if ( !isNaN(Number(av.nut.wrldSize)) &&  0 != Number(av.nut.wrldSize) ){
+                rValue = rValue / Number(av.nut[numTsk].wrldSize);
+                console.log('Initial for '+tsk+' subNum='+subNum+'based on WrldSize, subNum size missing or = 0');
+              }
+            }
+          }
+          if (!rflag) {
+            av.nut[numTsk].uiSub.inital[subNum] = null;
+            if ( NaN(Number(document.getElementById(tsk+subNum+'initialHiNp').value))) {
+                document.getElementById(tsk+subNum+'initialHiNp').value = av.sgr.nut.dft.uiSub.initialHi;
+            }
+          }
 
           //------------------------------------------------------------------------- 
           // if inflow is defined in RESOURCE, use that value, else use the default value from globals.
+          //console.log('av.nut['+numTsk+'].resrc.inflow['+subNum+']=', av.nut[numTsk].resrc.inflow[subNum]);
           rValue = Number(av.nut[numTsk].resrc.inflow[subNum]);
           if ( !isNaN(rValue) ) {
             if ( 0 <= Number(av.nut[numTsk].resrc.inflow[subNum]) ) {

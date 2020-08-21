@@ -775,7 +775,7 @@ av.sgr.makeNutDefault = function () {
   av.sgr.nut.dft.uiSub.initialHi = 1000;  //sugar units/cell guess at an initial value when supplyType='finite'; need to multiply by wrldSize
   av.sgr.nut.dft.uiSub.inflowHi  = 100;   //sugar units/cell guess at an initial value when supplyType='chemostat'; need to multiply by wrldSize
   av.sgr.nut.dft.uiSub.outflowHi = 0.1;   //sugar units (fraction) guess at an initial value when supplyType='chemostat';
-  av.sgr.nut.dft.uiSub.area = 900;   //based on a standard 30 x 30 world
+  av.sgr.nut.dft.uiSub.area = -1;   //based on a standard 30 x 30 world
   av.sgr.nut.dft.uiSub.diffuseCheck = false;    //false = default;  else true.      
   //from event file
   av.sgr.nut.dft.uiSub.periodCheck = false;    //false = default;  else true.
@@ -933,7 +933,7 @@ av.sgr.processHideFlags = function(boolArry, from) {
   for (var ii=0; ii < len; ii++) {
     av.nut.hideFlags[av.sgr.hideFlgNames[ii]] = boolArry[ii];
   };
-  //console.log('av.nut.hideFlags=',av.nut.hideFlags,'-------------------------------------------------------------');
+  console.log('av.nut.hideFlags=',av.nut.hideFlags,'-------------------------------------------------------------');
 };
 //------------------------------------------------------------------------------------ end of av.sgr.processHideFlags --
 

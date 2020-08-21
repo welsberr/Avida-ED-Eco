@@ -307,9 +307,9 @@
           document.getElementById('allSugarGeometry').style.display = 'none'; 
         }
 
-        console.log("document.getElementsByClassName('globalChemostat').length=", document.getElementsByClassName('globalChemostat').length );
-        console.log("document.getElementsByClassName('localChemostat')=", document.getElementsByClassName('localChemostat').length );
-        console.log("document.getElementsByClassName('globalFinite')=", document.getElementsByClassName('globalFinite').length );
+        //console.log("document.getElementsByClassName('globalChemostat').length=", document.getElementsByClassName('globalChemostat').length );
+        //console.log("document.getElementsByClassName('localChemostat')=", document.getElementsByClassName('localChemostat').length );
+        //console.log("document.getElementsByClassName('globalFinite')=", document.getElementsByClassName('globalFinite').length );
         
         //Hide select options that are not yet implemented
         
@@ -322,7 +322,7 @@
         //Hide select options that are not yet implemented
         len = document.getElementsByClassName('globalDebug').length;
         for (ii = 0; ii < len; ii++) {
-          console.log('globalFinite=', document.getElementsByClassName('globalFinite')[ii].id);
+          //console.log('globalFinite=', document.getElementsByClassName('globalFinite')[ii].id);
           document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
           document.getElementsByClassName('globalChemostat')[ii].style.display = 'none';
           document.getElementsByClassName('globalDebug')[ii].style.display = 'none';
@@ -342,7 +342,7 @@
         //document.getElementsByClassName('groupChemostat')[0].style.display = 'none';
         //document.getElementsByClassName('groupFinite')[0].style.display = 'none';     //finite available for local options
         document.getElementsByClassName('groupDebug')[0].style.display = 'none';
-        console.log('dom.groupDebug=', document.getElementsByClassName('groupDebug'));
+        //console.log('dom.groupDebug=', document.getElementsByClassName('groupDebug'));
 
         //debug menu??
         dijit.byId('mnHpDebug').set('label', 'Show debug menu');   //???????

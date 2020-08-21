@@ -355,6 +355,7 @@
               }
               else {
                 cellTxt += ':initial=14400\n'; 
+                console.log('cellTxt = :initial=14400');
               }
             }
           }

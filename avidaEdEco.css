@@ -556,7 +556,7 @@
 }
 
 .mutePopInputClass{
-  width:4em; 
+  width:4em;
   height:1em;
   margin: 0px 2px;     /* top right bottom left  */   /*top left/right bottom */ /*top/bottom  left/right */
   /* padding: 0px 0px;   /* top right bottom left  */  /* box padding border margin outside now */
@@ -564,19 +564,48 @@
   /*background: yellow; */
 }
 .mutePopSlideClass{
-  width:360px; 
+  /* width:360px; */
   display: block; 
-  vertical-align: top; 
+  vertical-align: center; 
   margin-left:10px; 
   margin-right:20px
 }
+/*
+    -webkit-appearance: none;
+  width: 80%;
+  height: 5px;
+  background: black;
+  outline: black;
+  opacity: 1;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width:  5px;
+  height: 5px;
+  background: black;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width:  5px;
+  height: 5px;
+  background: black;
+  cursor: pointer;
+}
+
+.mutePopSlideClass .ui-slider-range { background: #black; }
+.mutePopSlideClass .ui-slider-handle { border-color: #black; }
+
 /*************************************************************************** Sugar Accordion using details and select */
 
 /* Header and controls that change all tasks are here.   /*  background: inherit */
 /* inherit */
 /* #sugarHeaderTitle { grid-area: headerTitle; justify: start ; background: #CCC; font-size: 120%;}   /* may not need or want */
 
-#sugarSetTitle { grid-area:setTitle; justify-self: center; background: inherit; font-size: 110%; }
+#sugarSetTitle { grid-area:setTitle; justify-self: right; background: inherit; font-size: 110%; }
 #allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: center; }
 #allSugarSupplyTypeDiv { grid-area:supplyTypeDiv ; justify-self: center; }
 #allSugarRegionLayoutDiv { grid-area:regionLayoutDiv; justify-self: center; }
@@ -595,9 +624,9 @@
 
 .changeAllSugarsTogetherContainer {
   display: grid;
-  grid-template-areas: 'setTitle    setTitle      showHideSgr     detailDiv'
-                       'geometrySgr supplyTypeSgr regionLayoutSgr diffusionSgr'
-                       'geometryDiv supplyTypeDiv  regionLayoutDiv diffusionDiv';
+  grid-template-areas: 'setTitle    setTitle        showHideSgr     detailDiv'
+                       'geometrySgr regionLayoutSgr supplyTypeSgr diffusionSgr'
+                       'geometryDiv regionLayoutDiv supplyTypeDiv diffusionDiv';
   /*
   grid-template-areas: 'setTitle     headerTitle headerTitle   allSgr5Blnk'
                        'allSgr4Blnk  geometrySgr supplyTypeSgr showHideSgr'
@@ -616,9 +645,9 @@
 
 .changeAllSugarsTogetherNoGlobalContainer {
   display: grid;
-  grid-template-areas: ' setTitle      showHideSgr     detailDiv'
-                       ' supplyTypeSgr regionLayoutSgr diffusionSgr'
-                       ' supplyTypeDiv regionLayoutDiv diffusionDiv';
+  grid-template-areas: ' setTitle        showHideSgr   detailDiv'
+                       ' regionLayoutSgr supplyTypeSgr diffusionSgr'
+                       ' regionLayoutDiv supplyTypeDiv diffusionDiv';
   /*
   grid-template-areas: 'setTitle     headerTitle headerTitle   allSgr5Blnk'
                        'allSgr4Blnk  geometrySgr supplyTypeSgr showHideSgr'
@@ -772,7 +801,7 @@
 
 */
 
-/************************* Sugar controls layout in 'deails' of detail/summary for each task-sugar in sugar according */
+/************************* Sugar controls layout in 'details' of detail/summary for each task-sugar in sugar according */
 
 .initialHiDclass { grid-area: initialHi;}
 .initialLoDclass { grid-area: initialLo;}
@@ -783,14 +812,14 @@
 .outflowHiDclass { grid-area: outflowHi; }
 .outflowLoDclass { grid-area: outflowLo; }
 
-.chmstatHiDclass { grid-area: chmstatHi; }
-.chmstatLoDclass { grid-area: chmstatLo; }
+.chmstatHiDclass { grid-area: chmstatHi; align: center; }
+.chmstatLoDclass { grid-area: chmstatLo; align: center; }
 
 .sideTitleHiDclass { grid-area: sideTitleHi; }
 .sideTitleLoDclass { grid-area: sideTitleLo; }
 
 .sideNclass { grid-area: sideInput; }
-.supplyTypeNclass { grid-area: supplyType; }
+.supplyTypeDivClass { grid-area: supplyDetailDiv; }
 
 .subSectionTitle { grid-area: subSectionTitle; }
 .sgrBlank { grid-area: sgrBlank; }
@@ -803,43 +832,51 @@
 
 .grid-sugarDetail-Infinite-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle supplyType sgrBlank';
+  grid-template-areas: 'subSectionTitle supplyDetailDiv';
+/*  grid-template-areas: 'subSectionTitle supplyDetailDiv sgrBlank'; */
   width: 100%;
 }
 
-.grid-sugarDetail-Infinite-container {
+.gridOnly-sugarDetail-Infinite-container {
   display: none;
 }
 
 .grid-sugarDetail-Finite-noGrradientCheckbox-container {  //not in use
   display: grid;
-  grid-template-areas: 'subSectionTitle supplyType initialHi';
+  grid-template-areas: 'subSectionTitle supplyDetailDiv initialHi';
   width: 100%;
 }
 .grid-sugarDetail-Finite-noGradientCheckboxOneLine-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle supplyType initialHi diffuseCheckDiv';
+  grid-template-areas: 'subSectionTitle supplyDetailDiv initialHi diffuseCheckDiv';
   width: 100%;
 }
 .grid-sugarDetail-Finite-noGradientCheckbox-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv'
-                       'initialHi initialHi sgrBlank';
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
+                       'initialHi initialHi initialHi';
   /* border: 1px solid rgba(128, 128, 128, 0.5); */
   border: 1px solid #888;
   width: 100%;
-  
+}
+.gridOnly-sugarDetail-Finite-noGradientCheckbox-container {
+  display: grid;
+  justify-items: stretch;
+  grid-template-areas: 'initialHi diffuseCheckDiv';
+  /* border: 1px solid rgba(128, 128, 128, 0.5); */
+  border: 1px solid #888;
+  width: 100%;
 }
 
 .grid-sugarDetail-Finite-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv gradientCheckDiv'
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv gradientCheckDiv'
                        'initialHi  initialHi initialHi initialHi';
   width: 100%;
 }
 .grid-sugarDetail-FiniteGradient-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv gradientCheckDiv'
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv gradientCheckDiv'
                        'sideInput sideInput sideInput sideInput'
                        'initialHi  initialHi initialLo initialLo';
   width: 100%;
@@ -847,7 +884,7 @@
 
 .grid-sugarDetail-FiniteGradient-container_md {
   display: grid;
-  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv'
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
                        'initialLo initialLo sideInput'
                        'initialHi  initialHi gradientCheckDiv';
   width: 100%;
@@ -855,7 +892,7 @@
 
 .grid-sugarDetail-FiniteGradient-container_old {
   display: grid;
-  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv'
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
                        'sideInput sideInput sideInput gradientCheckDiv'
                        'initialHi initialHi initialLo initialLo';
   width: 100%;
@@ -863,7 +900,7 @@
 
 .grid-sugarDetailAll-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle supplyType'
+  grid-template-areas: 'subSectionTitle supplyDetailDiv'
                        'sideInput sideInput'
                        'periodCheckDiv periodTime'
                        'gradientCheckDiv diffuseCheckDiv'
@@ -894,22 +931,29 @@
 
 .grid-sugarDetail-chemostat-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv gradientCheckDiv'
-                       'inflowHi inflowHi periodCheckDiv periodCheckDiv'
-                       'outflowHi outflowHi chmstatHi chmstatHi';
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv '
+                       'inflowHi        inflowHi        chmstatHi'
+                       'outflowHi       outflowHi       chmstatHi';
   width: 100%;
+  align-items: stretch;
+}
+.gridOnly-sugarDetail-chemostat-container{
+  display: grid;
+  grid-template-areas: 'inflowHi   diffuseCheckDiv'
+                       'outflowHi  chmstatHi';
+  width: 100%;  
 }
 .grid-sugarDetail-chemostatPeriod-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv gradientCheckDiv'
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv gradientCheckDiv'
                        'inflowHi inflowHi periodCheckDiv periodTime'
                        'outflowHi outflowHi chmstatHi chmstatHi';
   width: 100%;
 }
 
-.grid-sugarDetail-chemostat-Gradient-container {
+.grid-sugarDetail-chemostatGradient-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv gradientCheckDiv'
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv gradientCheckDiv'
                        'sideInput sideInput sideInput      periodCheckDiv'
 /*                     'sideTitleHi sideTitleLo'   */
                        'inflowHi inflowHi    inflowLo inflowLo'
@@ -920,7 +964,7 @@
 }
 .grid-sugarDetail-chemostatGradientPeriod-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle supplyType diffuseCheckDiv gradientCheckDiv'
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv gradientCheckDiv'
                        'sideInput sideInput       periodTime periodCheckDiv'
 /*                     'sideTitleHi sideTitleLo'   */
                        'inflowHi inflowHi    inflowLo inflowLo'
@@ -930,7 +974,7 @@
 }
 .grid-sugarDetail-Flow-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle supplyType'
+  grid-template-areas: 'subSectionTitle supplyDetailDiv'
                        'sideInput sideInput'
                        'inflowHi outflowHi';
   width: 100%;
