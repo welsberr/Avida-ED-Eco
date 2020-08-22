@@ -702,9 +702,10 @@
 .localChemostat { display: inline; }
 .localDebug { display:inline; }
 
-.HalfLftRit{
-  display: inline-block;  
-}
+.2HalfLftRit { display:inline; }
+.3TopLftRit { display:inline; }
+.4Quarters { display:inline; }
+
 .TopLftRit{
   display: inline-block;  
 }
@@ -721,7 +722,8 @@
 }
 
 .sugarDetailSection{
-  background: rgba(255, 255, 255, 0.0);   
+  /* background: rgba(255, 255, 255, 0.0); */
+  background: rgba(128, 128, 128, 0.2);      
 }
 .dishPartLabel{
   font-size: 100%;
@@ -812,8 +814,8 @@
 .outflowHiDclass { grid-area: outflowHi; }
 .outflowLoDclass { grid-area: outflowLo; }
 
-.chmstatHiDclass { grid-area: chmstatHi; align: center; }
-.chmstatLoDclass { grid-area: chmstatLo; align: center; }
+.chmstatHiDclass { grid-area: chmstatHi; place-self: center stretch; }
+.chmstatLoDclass { grid-area: chmstatLo; place-self: center stretch; }
 
 .sideTitleHiDclass { grid-area: sideTitleHi; }
 .sideTitleLoDclass { grid-area: sideTitleLo; }
@@ -980,8 +982,8 @@
   width: 100%;
 }
 .grid-sugarDetail-item{
-  background: rgba(128, 128, 128, 0.2);    
-  border: 1px solid rgba(128, 128, 128, 0.3);
+/*  background: rgba(128, 128, 128, 0.2);    */
+  border: 1px solid rgba(128, 128, 128, 0.1);
   text-align: left;
   padding: 1px 1px;
   min-height: 22px;

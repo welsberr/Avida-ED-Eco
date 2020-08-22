@@ -92,7 +92,7 @@
       av.dom.sizeCells = document.getElementById('sizeCells');
       av.dom.sizeCols = document.getElementById('sizeCols');
       av.dom.sizeRows = document.getElementById('sizeRows');
-      av.dom.muteInput = document.getElementById('muteInput');
+      av.dom.mutePopInput = document.getElementById('mutePopInput');
       av.dom.mutePopError = document.getElementById('mutePopError');
       av.dom.childParentRadio = document.getElementById('childParentRadio');
       av.dom.childRandomRadio = document.getElementById('childRandomRadio');
@@ -326,10 +326,14 @@
           document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
           document.getElementsByClassName('globalChemostat')[ii].style.display = 'none';
           document.getElementsByClassName('globalDebug')[ii].style.display = 'none';
-          document.getElementsByClassName('geometryClass')[ii].style.display = 'none';
+          document.getElementsByClassName('geometryClass')[ii].style.display = 'none';  
         };
         
-        // Will hide later when I get the the 'localOnly' flag working
+        len = document.getElementsByClassName('3TopLftRit').length;
+        for (ii = 0; ii < len; ii++) {
+          document.getElementsByClassName('3TopLftRit')[ii].style.display = 'none';
+          document.getElementsByClassName('4Quarters')[ii].style.display = 'none';
+        }
 /*
         len = document.getElementsByClassName('geometryClass').length;
         for (ii = 0; ii < len; ii++) {
@@ -375,23 +379,26 @@
 
 
         len = av.sgr.logicNames.length;
+        console.log('logicNames.length=', len)
         sub = 1;   //this may change later;
         for (ii = 0; ii < len; ii++) {
           tsk = av.sgr.logicNames[ii];
           av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
+          document.getElementsByClassName('globalChemostat')[ii].style.display = 'inline';
+          document.getElementsByClassName('globalFinite')[ii].style.display = 'inline';
+          document.getElementsByClassName('globalDebug')[ii].style.display = 'inline';
+          document.getElementsByClassName('geometryClass')[ii].style.display = 'inline-block';
         };
 
         //show environment options sill under development.
         document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherContainer';
         
+        
         len = document.getElementsByClassName('localChemostat').length;
+        console.log('localChemostat.len=', len, '; globalChemostat.len=', document.getElementsByClassName('globalChemostat').length);
         for (ii = 0; ii < len; ii++) {
-          document.getElementsByClassName('globalChemostat')[ii].style.display = 'inline';
-          document.getElementsByClassName('globalFinite')[ii].style.display = 'inline';
-          document.getElementsByClassName('globalDebug')[ii].style.display = 'inline';
           document.getElementsByClassName('localChemostat')[ii].style.display = 'inline';
           document.getElementsByClassName('localDebug')[ii].style.display = 'inline';
-          document.getElementsByClassName('geometryClass')[ii].style.display = 'inline-block';
         };
         
          // now show options for changing all sugars (groups)

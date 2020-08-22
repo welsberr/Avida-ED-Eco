@@ -751,21 +751,6 @@
                   <div id='sugarAccordion'>
 
 
-     
-Workspace: Default    | not changed |    
-
-
-
-  
-Freezer
-Configured Dishes
-Organisms
-Populated Dishes
-Test Dishes
-trash can
-Show big text chunks
-Big Text Area to show long text strings:
-
 
                     <details id="not0section" class="sugarAccordionSection">
                       <summary id="not0summary" class="sugarSummary">
@@ -783,14 +768,16 @@ Big Text Area to show long text strings:
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="not0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                           <option id="not0WholeDish" value="1All" selected="">Whole Dish</option>
-                          <option id="not0HalvesLeftRight" value="2LftRit">Halves Left/Right</option>
+                          <option id="not0LftRit" value="2LftRit">Halves Left/Right</option>
+                          <option id="not0TopLftRit" class="3TopLftRit" value="3TopLftRit">Top Left/Right</option>
+                          <option id="not0Quarters" class="4Quarters" value="4Quarters">Quarters</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="notWsupplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                           <option id="notWnone" value="none">None</option>
                           <option id="notWInfinite" value="infinite" selected="">Infinite</option>
                           <option id="notWFinite" value="finite">Finite</option>
-                          <option id="notWChemostat" value="chemostat">Chemostat</option>
-                          <option id="notWDebug" value="debug">All debug</option>
+                          <option id="notWChemostat" class="localChemostat" value="chemostat">Chemostat</option>
+                          <option id="notWDebug" class="localDebug" value="debug">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <span id="not0initialDiv" class="sugarSummarySpan">
                           <input id="not0initial" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
@@ -862,11 +849,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="not1chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="not1chmstatHiValue"></span>
-                            <span id="not1chmstatHiText"> = chemostat if not eaten</span>
+                            <span id="not1chmstatHiText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                           <div id="not1chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="not1chmstatLoValue"></span>
-                            <span id="not1chmstatLoText"> = chemostat if not eaten</span>
+                            <span id="not1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                         </div><span id="not1Section_end" class="displayNone"></span>
 
@@ -934,11 +921,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="not2chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="not2chmstatHiValue"></span>
-                            <span id="not2chmstatHiText"> = equilibrium when no resource has been consumed</span>
+                            <span id="not2chmstatHiText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                           <div id="not2chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="not2chmstatLoValue"></span>
-                            <span id="not2chmstatLoText"> = equilibrium if not consumed</span>
+                            <span id="not2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                         </div><span id="not2Section_end" class="displayNone"></span>
 
@@ -961,14 +948,16 @@ Big Text Area to show long text strings:
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="nan0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                           <option id="nan0WholeDish" value="1All" selected="">Whole Dish</option>
-                          <option id="nan0HalvesLeftRight" value="2LftRit">Halves Left/Right</option>
+                          <option id="nan0LftRit" value="2LftRit">Halves Left/Right</option>
+                          <option id="nan0TopLftRit" class="3TopLftRit" value="3TopLftRit">Top Left/Right</option>
+                          <option id="nan0Quarters" class="4Quarters" value="4Quarters">Quarters</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="nanWsupplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                           <option id="nanWnone" value="none">None</option>
                           <option id="nanWInfinite" value="infinite" selected="">Infinite</option>
                           <option id="nanWFinite" value="finite">Finite</option>
-                          <option id="nanWChemostat" value="chemostat">Chemostat</option>
-                          <option id="nanWDebug" value="debug">All debug</option>
+                          <option id="nanWChemostat" class="localChemostat" value="chemostat">Chemostat</option>
+                          <option id="nanWDebug" class="localDebug" value="debug">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <span id="nan0initialDiv" class="sugarSummarySpan">
                           <input id="nan0initial" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
@@ -1040,11 +1029,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="nan1chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="nan1chmstatHiValue"></span>
-                            <span id="nan1chmstatHiText"> = chemostat if not eaten</span>
+                            <span id="nan1chmstatHiText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                           <div id="nan1chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="nan1chmstatLoValue"></span>
-                            <span id="nan1chmstatLoText"> = chemostat if not eaten</span>
+                            <span id="nan1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                         </div><span id="nan1Section_end" class="displayNone"></span>
 
@@ -1112,11 +1101,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="nan2chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="nan2chmstatHiValue"></span>
-                            <span id="nan2chmstatHiText"> = equilibrium when no resource has been consumed</span>
+                            <span id="nan2chmstatHiText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                           <div id="nan2chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="nan2chmstatLoValue"></span>
-                            <span id="nan2chmstatLoText"> = equilibrium if not consumed</span>
+                            <span id="nan2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                         </div><span id="nan2Section_end" class="displayNone"></span>
 
@@ -1139,14 +1128,16 @@ Big Text Area to show long text strings:
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="and0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                           <option id="and0WholeDish" value="1All" selected="">Whole Dish</option>
-                          <option id="and0HalvesLeftRight" value="2LftRit">Halves Left/Right</option>
+                          <option id="and0LftRit" value="2LftRit">Halves Left/Right</option>
+                          <option id="and0TopLftRit" class="3TopLftRit" value="3TopLftRit">Top Left/Right</option>
+                          <option id="and0Quarters" class="4Quarters" value="4Quarters">Quarters</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="andWsupplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                           <option id="andWnone" value="none">None</option>
                           <option id="andWInfinite" value="infinite" selected="">Infinite</option>
                           <option id="andWFinite" value="finite">Finite</option>
-                          <option id="andWChemostat" value="chemostat">Chemostat</option>
-                          <option id="andWDebug" value="debug">All debug</option>
+                          <option id="andWChemostat" class="localChemostat" value="chemostat">Chemostat</option>
+                          <option id="andWDebug" class="localDebug" value="debug">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <span id="and0initialDiv" class="sugarSummarySpan">
                           <input id="and0initial" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
@@ -1218,11 +1209,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="and1chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="and1chmstatHiValue"></span>
-                            <span id="and1chmstatHiText"> = chemostat if not eaten</span>
+                            <span id="and1chmstatHiText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                           <div id="and1chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="and1chmstatLoValue"></span>
-                            <span id="and1chmstatLoText"> = chemostat if not eaten</span>
+                            <span id="and1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                         </div><span id="and1Section_end" class="displayNone"></span>
 
@@ -1290,11 +1281,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="and2chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="and2chmstatHiValue"></span>
-                            <span id="and2chmstatHiText"> = equilibrium when no resource has been consumed</span>
+                            <span id="and2chmstatHiText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                           <div id="and2chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="and2chmstatLoValue"></span>
-                            <span id="and2chmstatLoText"> = equilibrium if not consumed</span>
+                            <span id="and2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                         </div><span id="and2Section_end" class="displayNone"></span>
 
@@ -1317,14 +1308,16 @@ Big Text Area to show long text strings:
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="orn0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                           <option id="orn0WholeDish" value="1All" selected="">Whole Dish</option>
-                          <option id="orn0HalvesLeftRight" value="2LftRit">Halves Left/Right</option>
+                          <option id="orn0LftRit" value="2LftRit">Halves Left/Right</option>
+                          <option id="orn0TopLftRit" class="3TopLftRit" value="3TopLftRit">Top Left/Right</option>
+                          <option id="orn0Quarters" class="4Quarters" value="4Quarters">Quarters</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="ornWsupplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                           <option id="ornWnone" value="none">None</option>
                           <option id="ornWInfinite" value="infinite" selected="">Infinite</option>
                           <option id="ornWFinite" value="finite">Finite</option>
-                          <option id="ornWChemostat" value="chemostat">Chemostat</option>
-                          <option id="ornWDebug" value="debug">All debug</option>
+                          <option id="ornWChemostat" class="localChemostat" value="chemostat">Chemostat</option>
+                          <option id="ornWDebug" class="localDebug" value="debug">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <span id="orn0initialDiv" class="sugarSummarySpan">
                           <input id="orn0initial" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
@@ -1396,11 +1389,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="orn1chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="orn1chmstatHiValue"></span>
-                            <span id="orn1chmstatHiText" class='sugarText'> = chemostat if not eaten</span>
+                            <span id="orn1chmstatHiText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                           <div id="orn1chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="orn1chmstatLoValue"></span>
-                            <span id="orn1chmstatLoText" class='sugarText'> = chemostat if not eaten</span>
+                            <span id="orn1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                         </div><span id="orn1Section_end" class="displayNone"></span>
 
@@ -1468,11 +1461,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="orn2chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="orn2chmstatHiValue"></span>
-                            <span id="orn2chmstatHiText" class='sugarText'> = equilibrium if not eaten</span>
+                            <span id="orn2chmstatHiText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                           <div id="orn2chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="orn2chmstatLoValue"></span>
-                            <span id="orn2chmstatLoText" class='sugarText'> = equilibrium if not eaten</span>
+                            <span id="orn2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                         </div><span id="orn2Section_end" class="displayNone"></span>
 
@@ -1495,14 +1488,16 @@ Big Text Area to show long text strings:
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="oro0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                           <option id="oro0WholeDish" value="1All" selected="">Whole Dish</option>
-                          <option id="oro0HalvesLeftRight" value="2LftRit">Halves Left/Right</option>
+                          <option id="oro0LftRit" value="2LftRit">Halves Left/Right</option>
+                          <option id="oro0TopLftRit" class="3TopLftRit" value="3TopLftRit">Top Left/Right</option>
+                          <option id="oro0Quarters" class="4Quarters" value="4Quarters">Quarters</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="oroWsupplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                           <option id="oroWnone" value="none">None</option>
                           <option id="oroWInfinite" value="infinite" selected="">Infinite</option>
                           <option id="oroWFinite" value="finite">Finite</option>
-                          <option id="oroWChemostat" value="chemostat">Chemostat</option>
-                          <option id="oroWDebug" value="debug">All debug</option>
+                          <option id="oroWChemostat" class="localChemostat" value="chemostat">Chemostat</option>
+                          <option id="oroWDebug" class="localDebug" value="debug">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <span id="oro0initialDiv" class="sugarSummarySpan">
                           <input id="oro0initial" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
@@ -1574,11 +1569,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="oro1chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="oro1chmstatHiValue"></span>
-                            <span id="oro1chmstatHiText"> = chemostat if not eaten</span>
+                            <span id="oro1chmstatHiText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                           <div id="oro1chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="oro1chmstatLoValue"></span>
-                            <span id="oro1chmstatLoText"> = chemostat if not eaten</span>
+                            <span id="oro1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                         </div><span id="oro1Section_end" class="displayNone"></span>
 
@@ -1646,11 +1641,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="oro2chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="oro2chmstatHiValue"></span>
-                            <span id="oro2chmstatHiText"> = equilibrium when no resource has been consumed</span>
+                            <span id="oro2chmstatHiText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                           <div id="oro2chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="oro2chmstatLoValue"></span>
-                            <span id="oro2chmstatLoText"> = equilibrium if not consumed</span>
+                            <span id="oro2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                         </div><span id="oro2Section_end" class="displayNone"></span>
 
@@ -1673,14 +1668,16 @@ Big Text Area to show long text strings:
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="ant0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                           <option id="ant0WholeDish" value="1All" selected="">Whole Dish</option>
-                          <option id="ant0HalvesLeftRight" value="2LftRit">Halves Left/Right</option>
+                          <option id="ant0LftRit" value="2LftRit">Halves Left/Right</option>
+                          <option id="ant0TopLftRit" class="3TopLftRit" value="3TopLftRit">Top Left/Right</option>
+                          <option id="ant0Quarters" class="4Quarters" value="4Quarters">Quarters</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="antWsupplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                           <option id="antWnone" value="none">None</option>
                           <option id="antWInfinite" value="infinite" selected="">Infinite</option>
                           <option id="antWFinite" value="finite">Finite</option>
-                          <option id="antWChemostat" value="chemostat">Chemostat</option>
-                          <option id="antWDebug" value="debug">All debug</option>
+                          <option id="antWChemostat" class="localChemostat" value="chemostat">Chemostat</option>
+                          <option id="antWDebug" class="localDebug" value="debug">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <span id="ant0initialDiv" class="sugarSummarySpan">
                           <input id="ant0initial" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
@@ -1752,11 +1749,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="ant1chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="ant1chmstatHiValue"></span>
-                            <span id="ant1chmstatHiText"> = chemostat if not eaten</span>
+                            <span id="ant1chmstatHiText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                           <div id="ant1chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="ant1chmstatLoValue"></span>
-                            <span id="ant1chmstatLoText"> = chemostat if not eaten</span>
+                            <span id="ant1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                         </div><span id="ant1Section_end" class="displayNone"></span>
 
@@ -1824,11 +1821,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="ant2chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="ant2chmstatHiValue"></span>
-                            <span id="ant2chmstatHiText"> = equilibrium when no resource has been consumed</span>
+                            <span id="ant2chmstatHiText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                           <div id="ant2chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="ant2chmstatLoValue"></span>
-                            <span id="ant2chmstatLoText"> = equilibrium if not consumed</span>
+                            <span id="ant2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                         </div><span id="ant2Section_end" class="displayNone"></span>
 
@@ -1851,14 +1848,16 @@ Big Text Area to show long text strings:
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="nor0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                           <option id="nor0WholeDish" value="1All" selected="">Whole Dish</option>
-                          <option id="nor0HalvesLeftRight" value="2LftRit">Halves Left/Right</option>
+                          <option id="nor0LftRit" value="2LftRit">Halves Left/Right</option>
+                          <option id="nor0TopLftRit" class="3TopLftRit" value="3TopLftRit">Top Left/Right</option>
+                          <option id="nor0Quarters" class="4Quarters" value="4Quarters">Quarters</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="norWsupplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                           <option id="norWnone" value="none">None</option>
                           <option id="norWInfinite" value="infinite" selected="">Infinite</option>
                           <option id="norWFinite" value="finite">Finite</option>
-                          <option id="norWChemostat" value="chemostat">Chemostat</option>
-                          <option id="norWDebug" value="debug">All debug</option>
+                          <option id="norWChemostat" class="localChemostat" value="chemostat">Chemostat</option>
+                          <option id="norWDebug" class="localDebug" value="debug">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <span id="nor0initialDiv" class="sugarSummarySpan">
                           <input id="nor0initial" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
@@ -1930,11 +1929,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="nor1chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="nor1chmstatHiValue"></span>
-                            <span id="nor1chmstatHiText"> = chemostat if not eaten</span>
+                            <span id="nor1chmstatHiText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                           <div id="nor1chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="nor1chmstatLoValue"></span>
-                            <span id="nor1chmstatLoText"> = chemostat if not eaten</span>
+                            <span id="nor1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                         </div><span id="nor1Section_end" class="displayNone"></span>
 
@@ -2002,11 +2001,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="nor2chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="nor2chmstatHiValue"></span>
-                            <span id="nor2chmstatHiText"> = equilibrium when no resource has been consumed</span>
+                            <span id="nor2chmstatHiText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                           <div id="nor2chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="nor2chmstatLoValue"></span>
-                            <span id="nor2chmstatLoText"> = equilibrium if not consumed</span>
+                            <span id="nor2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                         </div><span id="nor2Section_end" class="displayNone"></span>
 
@@ -2029,14 +2028,16 @@ Big Text Area to show long text strings:
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="xor0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                           <option id="xor0WholeDish" value="1All" selected="">Whole Dish</option>
-                          <option id="xor0HalvesLeftRight" value="2LftRit">Halves Left/Right</option>
+                          <option id="xor0LftRit" value="2LftRit">Halves Left/Right</option>
+                          <option id="xor0TopLftRit" class="3TopLftRit" value="3TopLftRit">Top Left/Right</option>
+                          <option id="xor0Quarters" class="4Quarters" value="4Quarters">Quarters</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="xorWsupplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                           <option id="xorWnone" value="none">None</option>
                           <option id="xorWInfinite" value="infinite" selected="">Infinite</option>
                           <option id="xorWFinite" value="finite">Finite</option>
-                          <option id="xorWChemostat" value="chemostat">Chemostat</option>
-                          <option id="xorWDebug" value="debug">All debug</option>
+                          <option id="xorWChemostat" class="localChemostat" value="chemostat">Chemostat</option>
+                          <option id="xorWDebug" class="localDebug" value="debug">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <span id="xor0initialDiv" class="sugarSummarySpan">
                           <input id="xor0initial" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
@@ -2108,11 +2109,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="xor1chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="xor1chmstatHiValue"></span>
-                            <span id="xor1chmstatHiText"> = chemostat if not eaten</span>
+                            <span id="xor1chmstatHiText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                           <div id="xor1chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="xor1chmstatLoValue"></span>
-                            <span id="xor1chmstatLoText"> = chemostat if not eaten</span>
+                            <span id="xor1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                         </div><span id="xor1Section_end" class="displayNone"></span>
 
@@ -2180,11 +2181,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="xor2chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="xor2chmstatHiValue"></span>
-                            <span id="xor2chmstatHiText"> = equilibrium when no resource has been consumed</span>
+                            <span id="xor2chmstatHiText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                           <div id="xor2chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="xor2chmstatLoValue"></span>
-                            <span id="xor2chmstatLoText"> = equilibrium if not consumed</span>
+                            <span id="xor2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                         </div><span id="xor2Section_end" class="displayNone"></span>
 
@@ -2207,14 +2208,16 @@ Big Text Area to show long text strings:
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="equ0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                           <option id="equ0WholeDish" value="1All" selected="">Whole Dish</option>
-                          <option id="equ0HalvesLeftRight" value="2LftRit">Halves Left/Right</option>
+                          <option id="equ0LftRit" value="2LftRit">Halves Left/Right</option>
+                          <option id="equ0TopLftRit" class="3TopLftRit" value="3TopLftRit">Top Left/Right</option>
+                          <option id="equ0Quarters" class="4Quarters" value="4Quarters">Quarters</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="equWsupplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                           <option id="equWnone" value="none">None</option>
                           <option id="equWInfinite" value="infinite" selected="">Infinite</option>
                           <option id="equWFinite" value="finite">Finite</option>
-                          <option id="equWChemostat" value="chemostat">Chemostat</option>
-                          <option id="equWDebug" value="debug">All debug</option>
+                          <option id="equWChemostat" class="localChemostat" value="chemostat">Chemostat</option>
+                          <option id="equWDebug" class="localDebug" value="debug">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <span id="equ0initialDiv" class="sugarSummarySpan">
                           <input id="equ0initial" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
@@ -2286,11 +2289,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="equ1chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="equ1chmstatHiValue"></span>
-                            <span id="equ1chmstatHiText"> = chemostat if not eaten</span>
+                            <span id="equ1chmstatHiText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                           <div id="equ1chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="equ1chmstatLoValue"></span>
-                            <span id="equ1chmstatLoText"> = chemostat if not eaten</span>
+                            <span id="equ1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
                         </div><span id="equ1Section_end" class="displayNone"></span>
 
@@ -2358,11 +2361,11 @@ Big Text Area to show long text strings:
                           </div>
                           <div id="equ2chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="equ2chmstatHiValue"></span>
-                            <span id="equ2chmstatHiText"> = equilibrium when no resource has been consumed</span>
+                            <span id="equ2chmstatHiText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                           <div id="equ2chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="equ2chmstatLoValue"></span>
-                            <span id="equ2chmstatLoText"> = equilibrium if not consumed</span>
+                            <span id="equ2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
                         </div><span id="equ2Section_end" class="displayNone"></span>
 
@@ -2394,16 +2397,16 @@ Big Text Area to show long text strings:
                     <div id='allSugarRegionLayoutDiv' class='rHeadItem'>
                       <select id="allSugarRegionLayout" onchange='av.sgr.allSugarRegionLayoutChange(this);'>
                           <option value="1All" selected="">Whole Dish</option>
-                          <option class="HalfLftRit" value="2LftRit">Halves (L/R)</option>
-                          <option class="TopLftRit" value="3TopLftRit">Up/Down (L/R)</option>
-                          <option class="Quarters" value="4Quarters">Quarters</option>
+                          <option class='2HalfLftRit' value="2LftRit">Halves (L/R)</option>
+                          <option class='3TopLftRit' value='3TopLftRit'>Top L/R</option>
+                          <option class='4Quarters' value='4Quarters'>Quarters</option>
                           <option value='neutral' selected>----</option>                            
                         </select>
                     </div>
                     <div id='allSugarDiffusionDiv' class='rHeadItem'>
                       <select id="allSugarDiffusion" onchange='av.sgr.allSugarDiffusionChange(this);'>
-                        <option value='allOpen'>Off</option>
-                        <option value='allClose'>On</option>
+                        <option value='false'>Off</option>
+                        <option value='true' >On</option>
                         <option value='neutral' selected>----</option>                            
                       </select> 
                     </div>

@@ -92,13 +92,12 @@
     delete av.dnd.activeConfig.accept['w'];
     av.dnd.fzWorld.accept['w'] = 1;
     av.dnd.fzWorld.accept['b'] = 1;
-    $('#muteSlide').slider({disabled: true});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
+    $('#mutePopSlide').slider({disabled: true});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
     av.dom.sizeCols.disabled = true;
     av.dom.sizeRows.disabled = true;
 
-    av.dom.muteInput.disabled= true;
+    av.dom.mutePopInput.disabled= true;
 
-    av.dom.muteInput.disabled = true;
     av.dom.childParentRadio.disabled = true;
     av.dom.childRandomRadio.disabled = true;
     /*
@@ -147,10 +146,10 @@
     av.dnd.ancestorBoTest.isSource = true;
     av.dnd.ancestorBoTest.copyOnly = true;
     av.dnd.activeConfig.isSource = true;
-    $('#muteSlide').slider({disabled: false});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
     av.dom.sizeCols.disabled = false;
     av.dom.sizeRows.disabled = false;
-    av.dom.muteInput.disabled = false;
+    av.dom.mutePopInput.disabled = false;
+    $('#mutePopSlide').slider({disabled: false});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
     av.dom.childParentRadio.disabled = false;
     av.dom.childRandomRadio.disabled = false;
     console.log('Avida-ED4: need to reset defaults on new Environmental seettings.');

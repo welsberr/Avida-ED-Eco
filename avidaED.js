@@ -3444,7 +3444,7 @@ require([
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
   av.sgr.ChangeAllGeo('global');
   //av.sgr.setSugarColors(true);  //true is to turn colors on;    // set color/grey individually so when 0 resources, grey shades rather than colors
-  av.sgr.ChangeAllsugarSupplyType('Last_things_done');
+  av.sgr.ChangeAllsugarSupplyType('infinite','Last_things_done');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');
   
   // May need to do some things here to get the app to look right on the screen. 

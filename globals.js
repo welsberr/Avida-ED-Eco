@@ -773,7 +773,7 @@ av.sgr.makeNutDefault = function () {
   //defaults for subtasks which must be Grid or Local
   av.sgr.nut.dft.uiSub.supplyType = 'infinite';  // Infinite default from Avida-ED 3: I think Should change to Finite
   av.sgr.nut.dft.uiSub.initialHi = 1000;  //sugar units/cell guess at an initial value when supplyType='finite'; need to multiply by wrldSize
-  av.sgr.nut.dft.uiSub.inflowHi  = 100;   //sugar units/cell guess at an initial value when supplyType='chemostat'; need to multiply by wrldSize
+  av.sgr.nut.dft.uiSub.inflowHi  = 1;   //sugar units/cell guess at an initial value when supplyType='chemostat'; need to multiply by wrldSize
   av.sgr.nut.dft.uiSub.outflowHi = 0.1;   //sugar units (fraction) guess at an initial value when supplyType='chemostat';
   av.sgr.nut.dft.uiSub.area = -1;   //based on a standard 30 x 30 world
   av.sgr.nut.dft.uiSub.diffuseCheck = false;    //false = default;  else true.      
@@ -787,8 +787,8 @@ av.sgr.makeNutDefault = function () {
   av.sgr.nut.dft.uiSub.outflowLo = 0.1;  //sugar units (fraction) guess at an initial value when supplyType='gradient' or 'flow';
   av.sgr.nut.dft.uiSub.initialLo =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
   av.sgr.nut.dft.uiSub.regionNdx = 1;   //index into various region data vectors
-  av.sgr.nut.dft.uiSub.regionCode = '01';
-  av.sgr.nut.dft.uiSub.regionName = 'all';
+  av.sgr.nut.dft.uiSub.regionCode = '000q';
+  av.sgr.nut.dft.uiSub.regionName = '1All';
   av.sgr.nut.dft.uiSub.boxed = true;           //true keeps resources in their subdish; false allows them to flow into the rest of the dish
   av.sgr.nut.dft.uiSub.subRegion = 0;    // this goes with 'all' = regionLayoutName (or 1234 could be used) or 'WholeDish'; tiba check this more than on region allowed
 };                                       // not sure if subregion is in use. 

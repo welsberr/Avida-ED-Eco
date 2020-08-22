@@ -92,14 +92,53 @@
     document.getElementById('allSugarGeometry').value = 'neutral';
   };
   
-  av.sgr.allSugarRegionLayoutChange = function(domObj) {
-    console.log('not yet implemented');
-    document.getElementById('allSugarRegionLayout').value = 'neutral';
+  av.sgr.allSugarDiffusionChange = function(domObj) {
+    var selectedOption = domObj.value;
+    //console.log('selected=', selectedOption);
+    var diffussionFlag = false;
+    if ('true' == domObj.value) { diffussionFlag = true; }
+    var endName = 'diffuseCheck';   
+    var domName = '';
+    var numtasks = av.sgr.logicNames.length;
+    var start =1;   //only grid geometry can have diffusion, item 0 is for global
+    // all tasks
+    //console.log('endName=', endName, '; numtasks=', numtasks, '; sub=', sub, ' numRegons=', av.nut.numRegionsinHTML);
+    for (var ii=0; ii< numtasks; ii++) {  
+      for (var sub=start; sub <= av.nut.numRegionsinHTML; sub++) {
+      //change glabal and all subsections  (only 1 sub secton for now) - this may need to change later; but only allowing None and Infinte for now, so ok.
+        domName = av.sgr.logicNames[ii] + sub + endName;
+        //console.log('domName='+domName, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
+        //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
+        document.getElementById(domName).checked = diffussionFlag;
+        av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarSupplyType');   //only need to do once per task/subsection combo even if it does change both global and subtasks
+        if (10 < sub) break;
+      }
+    }
+    //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
+    document.getElementById('allSugarDiffusion').value = 'neutral';
   };
 
-  av.sgr.allSugarDiffusionChange = function(domObj) {
-    console.log('not yet implemented');
-    document.getElementById('allSugarDiffusion').value = 'neutral';
+//--------------------------------------------------------------------------------- av.sgr.ChangeAllsugarSupplyType --
+
+  av.sgr.allSugarRegionLayoutChange = function(domObj) {
+    //console.log('in av.sgr.allSugarRegionLayoutChange: value=', domObj.value);
+    var selectedOption = domObj.value;
+    var endName = 'regionLayout';   //nan0supplyType  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
+    //console.log(from, ' called av.sgr.ChangeAllsugarSupplyType: selectedOption=',selectedOption);
+    var domName = '';  
+    var numtasks = av.sgr.logicNames.length;
+    var sub=0;   //most will start with 0 for global and also do local section 1
+    // all tasks
+    for (var ii=0; ii< numtasks; ii++) {  
+      //change glabal and all subsections  (only 1 sub secton for now) - this may need to change later; but only allowing None and Infinte for now, so ok.
+        domName = av.sgr.logicNames[ii] + sub + endName;
+        //console.log('domName='+domName, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub, '; value=', domObj.value);
+        //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
+        document.getElementById(domName).value = selectedOption;
+        av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarSupplyType');   //only need to do once per task/subsection combo even if it does change both global and subtasks
+    }
+    //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
+    document.getElementById('allSugarRegionLayout').value = 'neutral';
   };
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
@@ -108,6 +147,35 @@
     var selectedValue = domObj.options[idx].value;   // get the value of the selected option 
     av.sgr.ChangeAllsugarSupplyType(selectedValue, 'av.sgr.allsugarSupplyTypeChange');
     document.getElementById('allsugarSupplyType').value = 'neutral';
+  };
+
+  //--------------------------------------------------------------------------------- av.sgr.ChangeAllsugarSupplyType --
+  av.sgr.ChangeAllsugarSupplyType = function(selectedOption, from) {
+    var endName = 'supplyType';   //nan0supplyType  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
+    //console.log(from, ' called av.sgr.ChangeAllsugarSupplyType: selectedOption=',selectedOption);
+    var domName = '';  
+    var numtasks = av.sgr.logicNames.length;
+    var start = 0;   //most will start with 0 for global and also do local section 1
+    if ('Finite' == selectedOption) { start=1; }   //only local finte implemented for now; global finite not implemented.
+    // all task
+    //console.log('start='+start, '; tsklen='+numtasks, '; endName='+endName, '; value=', selectedOption);
+    for (var ii=0; ii< numtasks; ii++) {  
+      //change glabal and all subsections  (only 1 sub secton for now) - this may need to change later; but only allowing None and Infinte for now, so ok.
+      domName = av.sgr.logicNames[ii] + 'W' + endName;
+      //console.log('domname=', domName);
+      document.getElementById(domName).value = selectedOption;
+      //console.log('document.getElementById('+domName+').value=', document.getElementById(domName).value);
+      av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], 0, 'av.sgr.ChangeAllsugarSupplyType');
+      for (var sub=start; sub<= 2; sub++) {
+        domName = av.sgr.logicNames[ii] + sub + endName;
+        //console.log('domName='+domName, '; selectedOption='+selectedOption+'|');
+        document.getElementById(domName).value = selectedOption;
+        //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
+        //if (0 < sub) av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarSupplyType');   //only need to do once per task/subsection combo even if it does change both global and subtasks
+        av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarSupplyType');   //only need to do once per task/subsection combo even if it does change both global and subtasks
+      }
+    }
+    //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
   };
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
@@ -246,27 +314,6 @@
       av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllGeo');
     }
     //console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption);
-  };
-
-  //--------------------------------------------------------------------------------- av.sgr.ChangeAllsugarSupplyType --
-  av.sgr.ChangeAllsugarSupplyType = function(selectedOption, from) {
-    var endName = 'supplyType';   //nan0supplyType  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
-    //xconsole.log(from, ' called av.sgr.ChangeAllsugarSupplyType: selectedOption=',selectedOption);
-    var domName = '';  
-    var numtasks = av.sgr.logicNames.length;
-    var start = 0;   //most will start with 0 for global and also do local section 1
-    if ('Finite' == selectedOption) { start=1; }   //only local finte implemented for now; global finite not implemented.
-    // all tasks
-    for (var ii=0; ii< numtasks; ii++) {  
-      //change glabal and all subsections  (only 1 sub secton for now) - this may need to change later; but only allowing None and Infinte for now, so ok.
-      for (var sub=start; sub< 2; sub++) {
-        domName = av.sgr.logicNames[ii] + sub + endName;
-        document.getElementById(domName).value = selectedOption;
-        //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
-        if (0 < sub) av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarSupplyType');   //only need to do once per task/subsection combo even if it does change both global and subtasks
-      }
-    }
-      //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
   };
 
   //------------------------------------------------------------------------------------------- av.sgr.setSugarColors --
@@ -463,7 +510,7 @@
       if ('1All' == regionLayout) {
         document.getElementById(tsk+'WsupplyType').style.display = 'inline-block';
         document.getElementById(tsk+'1supplyType').style.display = 'none';
-        console.log(tsk+'1supplyType.class, style=', document.getElementById(tsk+'1supplyType').class, document.getElementById(tsk+'1supplyType').style);
+        //console.log(tsk+'1supplyType.class, style=', document.getElementById(tsk+'1supplyType').class, document.getElementById(tsk+'1supplyType').style.display);
       }
       else {
         showGeo = 'grid';
@@ -643,7 +690,7 @@
               document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-Finite-container';
               if (av.nut.hideFlags.gradient) {
                 document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
-                console.log('id=', tsk+sub+'gradientCheck');
+                //console.log('id=', tsk+sub+'gradientCheck');
                 document.getElementById(tsk+sub+'gradientCheck').checked = false;
                 document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-Finite-noGradientCheckbox-container';
               }

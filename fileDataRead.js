@@ -1208,8 +1208,9 @@
             }
           }
           if (!rflag) {
-            av.nut[numTsk].uiSub.inital[subNum] = null;
-            if ( NaN(Number(document.getElementById(tsk+subNum+'initialHiNp').value))) {
+            console.log()
+            av.nut[numTsk].uiSub.initialHiNp[subNum] = null;
+            if ( isNaN(Number(document.getElementById(tsk+subNum+'initialHiNp').value))) {
                 document.getElementById(tsk+subNum+'initialHiNp').value = av.sgr.nut.dft.uiSub.initialHi;
             }
           }
