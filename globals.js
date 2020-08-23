@@ -7,7 +7,7 @@
 // one global to hold them all.
 var av = av || {};  //incase av already exists
 
-console.log('start of globals on 2020_0818');
+console.log('start of globals on 2020_0821');
 
 Number.prototype.pad = function(size) {
   var ss = String(this);
@@ -630,7 +630,7 @@ av.sgr.ui_subDom_argu = ['supplyType', 'initialHiNp', 'inflowHiNp', 'outflowHiNp
 av.sgr.ui_subDish_argu = ['supplyType', 'initialHiNp', 'inflowHiNp', 'outflowHiNp', 'periodNp'
                         , 'diffuseCheck', 'periodCheck', 'area'
                         , 'gradientCheck', 'hiSide', 'initialLoNp', 'inflowLoNp', 'outflowLoNp'
-                        , 'regionCode', 'regionName', 'boxed' , 'subRegion', 'regionNdx'];  
+                        , 'boxed', 'regionCode', 'regionName', 'regionSet', 'regionNdx'];  
                       //subRegion is not in Dom, so it is at the end; boxed has not been added to the dom yet
                       //I don't think subRegion is in use. 
 //av.sgr.ui values match the dom, so they are amount per cell; av.sgr.Resrce values match avida, so they are amouth per dish/world. (will adust for cell value later)
@@ -670,8 +670,8 @@ av.sgr.reSrc_avidaDft_d = {
   // not ready yet                        <option id="orn0Quarters" class="Quarters" value="4Quarters">Quarters</option>
 
 av.sgr.re_region = /(\D+)(\d+)(.*$)/;
-//av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '2UppLoww', '3TopLftRit', '4Quarters'];
-av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '3TopLftRit', '4Quarters'];
+av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '2UppLow', '3TopLftRit', '4Quarters'];
+//av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '3TopLftRit', '4Quarters'];
 
 //entry zero is blank so index matches subregion number 
 av.sgr.name = {};
@@ -688,13 +688,16 @@ av.sgr.name['4Quarters'] = [null, 'upL', 'upR', 'loL', 'loR'];
 av.sgr.code['4Quarters'] = [null, '001q', '002q', '003q', '004q'];
 
 av.sgr.regionLookup = {};
-av.sgr.regionLookup['000'] = ['1All'];
-av.sgr.regionLookup['013q024q'] = ['2LftRit'];
-av.sgr.regionLookup['012q024q'] = ['2UppLow'];
-av.sgr.regionLookup['001q002q034q'] = ['LftRitLow'];
-av.sgr.regionLookup['001q002q003q004q'] = ['4Quarders'];
-av.sgr.regionLookup['003q004q012q'] = ['3TopLftRit'];
-    
+av.sgr.regionLookup['000'] = '1All';
+av.sgr.regionLookup['000'] = '1All';
+av.sgr.regionLookup['013,024'] = '2LftRit';
+av.sgr.regionLookup['012,024'] = '2UppLow';
+av.sgr.regionLookup['001,002,034'] = 'LftRitLow';
+av.sgr.regionLookup['001,002,003,004'] = '4Quarders';
+av.sgr.regionLookup['003,004,012'] = '3TopLftRit';
+av.sgr.regionLookup['000'] = '1All';   //the same for the tic-tac-toe layout
+
+
 av.sgr.boxArguments = ['boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow']; //flag is true if in use; false if these arguments are not included. 
                       //boxx and boxy are the upper left corner positions of the region in Avida-ED
                       //boxcol and boxrow is the size of the box, so the lower right corner is (boxx+boxcol-1, boxy+boxrow-1]
@@ -703,13 +706,13 @@ av.sgr.boxArguments = ['boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow']; //flag is
 // Region List based on 4 quarters: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
 av.sgr.regionQuarterNames = ['Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
 av.sgr.regionQuarter3Char = ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];   //Use as values when the time comes
-av.sgr.regionQuarterCodes = ['000', '001', '002', '003', '004', '012', '034', '013', '024'];   //These numbers go with the regions above
-av.sgr.regionQuarterCols =  [  1.0,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0,   0.5,   0.5];   //fraction of cols
-av.sgr.regionQuarterRows =  [  1.0,   0.5,   0.5,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0];   //fraction of rows
-av.sgr.regionQuarterColsAdd = [  0,     0,     1,     0,     1,     0,     0,     0,     1];   //add amount if odd cols in world
-av.sgr.regionQuarterRowsAdd = [  0,     0,     0,     1,     1,     0,     1,     0,     0];   //add amount if odd rows in world
-av.sgr.regionQuarterBoxx =  [  0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.5];  
-av.sgr.regionQuarterBoxy =  [  0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.0];  
+av.sgr.regionQuarterCodes = [ '000', '001', '002', '003', '004', '012', '034', '013', '024'];   //These numbers go with the regions above
+av.sgr.regionQuarterCols =  [   1.0,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0,   0.5,   0.5];   //fraction of cols
+av.sgr.regionQuarterRows =  [   1.0,   0.5,   0.5,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0];   //fraction of rows
+av.sgr.regionQuarterColsAdd = [   0,     0,     1,     0,     1,     0,     0,     0,     1];   //add amount if odd cols in world
+av.sgr.regionQuarterRowsAdd = [   0,     0,     0,     1,     1,     0,     1,     0,     0];   //add amount if odd rows in world
+av.sgr.regionQuarterBoxx =  [   0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.5];  
+av.sgr.regionQuarterBoxy =  [   0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.0];  
 
 // Will convert to version below
 
@@ -726,11 +729,11 @@ av.sgr.regionQuarter.Boxx =  [  0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,  
 av.sgr.regionQuarter.Boxy =  [  0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.0];  
 
 av.sgr.regionNine = {};
-av.sgr.regionNine.Codes = ['000n', '001n', '002n', '003n'   //top row: ninth of dish
-                                 , '004n', '005n', '006n'   //middle row
-                                 , '007n', '008n', '009n'   //bottom row
-                                 , '123n', '456n', '789n'   //rows 
-                                 , '147n', '258n', '369n'];  //columns 
+av.sgr.regionNine.Codes = ['000n', '001', '002', '003'   //top row: ninth of dish
+                                 , '004', '005', '006'   //middle row
+                                 , '007', '008', '009'   //bottom row
+                                 , '123', '456', '789'   //rows 
+                                 , '147', '258', '369'];  //columns 
   
 // need to figure out how to assign when reading environment.cfg
   av.sgr.supply3 =      ['non', 'inf',  'fin',  'chm',  'poi', 'flo' ];  //none, infinite, finite, chemostat, poison
@@ -790,8 +793,8 @@ av.sgr.makeNutDefault = function () {
   av.sgr.nut.dft.uiSub.regionCode = '000q';
   av.sgr.nut.dft.uiSub.regionName = '1All';
   av.sgr.nut.dft.uiSub.boxed = true;           //true keeps resources in their subdish; false allows them to flow into the rest of the dish
-  av.sgr.nut.dft.uiSub.subRegion = 0;    // this goes with 'all' = regionLayoutName (or 1234 could be used) or 'WholeDish'; tiba check this more than on region allowed
-};                                       // not sure if subregion is in use. 
+  av.sgr.nut.dft.uiSub.regionSet = 'q';  // q = Quarters = 2x2 subregions
+};                                       // n = Niths = 3x3 subregions
 //---------------------------------------------------------------------------------------end av.sgr.makeNutDefault --
 av.sgr.makeNutDefault();
 console.log('av.sgr.nut =', av.sgr.nut);   //or should there just be a 'dft' task and only ever one region?

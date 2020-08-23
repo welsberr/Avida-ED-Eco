@@ -634,7 +634,7 @@
       //console.log('SubDishes Now -----------------uiSub_txt length=', ui_subDom_txt);
       for (kk=1; kk <= av.nut[numtsk].uiAll.regionsNumOf; kk++) {
         //subregion not currently used. using regionCode, regionName, regionNdx
-        //av.nut[numtsk].uiSub.subRegion[kk] = kk;      //not sure this is needed or make sense. needs work when get past one reagion
+        //av.nut[numtsk].uiSub.regionSet[kk] = kk;      //not sure this is needed or make sense. needs work when get past one reagion
         
         tmpTxt = av.nut[numtsk].uiAll.regionLayout;
         

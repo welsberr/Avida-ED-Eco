@@ -1,144 +1,121 @@
-                        <div id="orn3subSection" class="sugarDishSubsection">
-                          <div id="orn3regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="orn3supplyTypeSelectHolder" class="grid-sugarDetail-item typeInput">
-                            <select id="orn3supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="orn3none" value="None">None</option>
-                              <option id="orn3Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="orn3Finite" class="localFinite" value="Finite">Finite</option>
-                              <option id="orn3Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
-                              <option id="orn3Debug" class="localDebug" value="Debug">All debug</option>
-                            </select>&nbsp;&nbsp;&nbsp;
-                          </div>
-                          <div id="orn3periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
-                            <label><input id="orn3periodCheck" type="checkbox">Periodic&nbsp;&nbsp;</label>
-                          </div>
-                          <div id="orn3gradientCheckbox" class="grid-sugarDetail-item gradientCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
-                            <label><input id="orn3gradientCheck" type="checkbox">Gradient&nbsp;&nbsp;</label>
-                          </div>
-                          <div id="orn3diffuseCheckbox" class="grid-sugarDetail-item diffuseCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
-                            <label><input id="orn3diffuseCheck" type="checkbox">Diffusion&nbsp;&nbsp;</label>
-                          </div>
-                          <div id="orn3hiSideSelectHolder" class="grid-sugarDetail-item sideInput">
-                            <label><select id="orn3sideSelect">
-                              <option value="left" selected="">Left</option>
-                              <option value="right">Right</option>
-                              <option value="top">Top</option>
-                              <option value="bottom">Bottom</option>
-                              <option value="center">Center</option>
-                              <option value="edge">Edge</option>
-                            </select>
-                              <span id="orn3sideText">side text to describe what side means</span></label>
-                          </div>
-                          <div id="orn3periodTime" class="grid-sugarDetail-item periodTime">
-                            <label><input id="orn3periodInput" class="sugPeriodInput" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
-                          </div>
-                          <div id="orn3sideHiText" class="grid-sugarDetail-item sideTitleHi">High Side</div>
-                          <div id="orn3sideLoText" class="grid-sugarDetail-item sideTitleLo">Low Side</div>
-                          <div id="orn3blank" class="grid-sugarDetail-item sgrBlank">&nbsp;&nbsp;&nbsp;&nbsp;</div>  
+  av.frd.reActLineParse = function(lnArray, from) {
+    'use strict';
+    if (av.debug.fio) { console.log('____', from, ' called av.frd.reActLineParse _____'); }
+    var lnError = 'chemostat';     //was it a valid line wihtout errors
+    //console.log('lnArray = ', lnArray);
+    var pear = [];
+    var reSrcNameAry; var reSrcName;
+    var nn;
+    var mm;
 
-                          <div id="orn3initialHiDiv" class="grid-sugarDetail-item initialHi">
-                            <label><input id="orn3initialHiInput" class="sugInitialHiInput" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;
-                              <span id="orn3initialHiText">High side initial amount / cell </span></label>
-                          </div>
-                          <div id="orn3initialLoDiv" class="grid-sugarDetail-item initialLo">
-                            <label><input id="orn3initialLoInput" class="sugInitialLoInput" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;
-                              <span id="orn3initialLoText">Low side initial amount / cell</span></label>
-                          </div>
-                          <div id="orn3inflowHiDiv" class="grid-sugarDetail-item inflowHi">
-                            <label><input id="orn3inflowHiInput" class="sugInflowHiInput" type="text" onchange="av.sgr.inflowChange(this);">&nbsp;
-                              <span id="orn3inflowHiText" class="sugOutflowLabel">Inflow amount / cell</span></label>
-                          </div>
-                          <div id="orn3inflowLoDiv" class="grid-sugarDetail-item inflowLo">
-                            <label><input id="orn3inflowLoInput" class="sugInflowLoInput" type="text" onchange="av.sgr.inflowChange(this);">&nbsp;
-                            <span id="orn3inflowLoText" class="sugOutflowLabel">Inflow amount / cell on low side</span></label>
-                          </div>
-                          <div id="orn3outflowHiDiv" class="grid-sugarDetail-item outflowHi">
-                            <label><input id="orn3outflowHiInput" class="sugOutflowHiInput" type="text" onchange="av.sgr.outflowChange(this);">&nbsp;
-                            <span id="orn3outflowHiText" class="sugOutflowLabel">Outflow fraction / cell.</span></label>
-                          </div>
-                          <div id="orn3outflowLoDiv" class="grid-sugarDetail-item outflowLo">
-                            <label><input id="orn3outflowLoInput" class="sugOutflowLoInput" type="text" onchange="av.sgr.outflowChange(this);">&nbsp;
-                              <span id="orn3outflowLoText" class="sugOutflowLabel">Outflow fraction / cell on low side.</span></label>
-                          </div>
-                          <div id="orn3equalHiDiv" class="grid-sugarDetail-item equalHi">
-                            <span id="orn3equalHiValue"></span>
-                            <span id="orn3equalHiText"> = equilibrium when no resource has been consumed</span>
-                          </div>
-                          <div id="orn3equalLoDiv" class="grid-sugarDetail-item equalLo">
-                            <span id="orn3equalLoValue"></span>
-                            <span id="orn3equalLoText"> = equilibrium if not consumed</span>
-                          </div>
-                        </div><span id="orn3Section_end" class='displayNone'></span>
+    //if (av.dbg.flg.nut) { console.log('reActLineParse: lnArray=', lnArray); }
 
+    //console.log('task = lnArray[2]=',lnArray[2]);
+    var logicindex = av.sgr.logicVnames.indexOf( lnArray[2] );   //task name length is variable so must fined in taht array
+    //console.log('logicindex=',logicindex);
+    if (-1 < logicindex) {
+      var numTsk = av.sgr.logEdNames[logicindex];
+      // Checking for a resource tag
+      //console.log('numTsk=', numTsk);
+      var reActObj = av.nut[numTsk].react;   //objec based on logic type and reaction;
+      //console.log('numTsk=', numTsk,'; lnArray', lnArray);
+      //console.log('av.nut.'+numTsk+'.uiAll.geometry = ');
 
-                        <div id="orn4subSection" class="sugarDishSubsection">
-                          <div id="orn4regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="orn4supplyTypeSelectHolder" class="grid-sugarDetail-item typeInput">
-                            <select id="orn4supplyType" class="sugarSupplyType" onchange="av.sgr.supplyChange(this);">
-                              <option id="orn4none" value="None">None</option>
-                              <option id="orn4Infinite" value="Infinite" selected="">Infinite</option>
-                              <option id="orn4Finite" class="localFinite" value="Finite">Finite</option>
-                              <option id="orn4Equilibrium" class="localEquilibrium" value="Equilibrium">Equilibrium</option>
-                              <option id="orn4Debug" class="localDebug" value="Debug">All debug</option>
-                            </select>&nbsp;&nbsp;&nbsp;
-                          </div>
-                          <div id="orn4periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
-                            <label><input id="orn4periodCheck" type="checkbox">Periodic&nbsp;&nbsp;</label>
-                          </div>
-                          <div id="orn4gradientCheckbox" class="grid-sugarDetail-item gradientCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
-                            <label><input id="orn4gradientCheck" type="checkbox">Gradient&nbsp;&nbsp;</label>
-                          </div>
-                          <div id="orn4diffuseCheckbox" class="grid-sugarDetail-item diffuseCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
-                            <label><input id="orn4diffuseCheck" type="checkbox">Diffusion&nbsp;&nbsp;</label>
-                          </div>
-                          <div id="orn4hiSideSelectHolder" class="grid-sugarDetail-item sideInput">
-                            <label><select id="orn4sideSelect">
-                              <option value="left" selected="">Left</option>
-                              <option value="right">Right</option>
-                              <option value="top">Top</option>
-                              <option value="bottom">Bottom</option>
-                              <option value="center">Center</option>
-                              <option value="edge">Edge</option>
-                            </select>
-                              <span id="orn4sideText">side text to describe what side means</span></label>
-                          </div>
-                          <div id="orn4periodTime" class="grid-sugarDetail-item periodTime">
-                            <label><input id="orn4periodInput" class="sugPeriodInput" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
-                          </div>
-                          <div id="orn4sideHiText" class="grid-sugarDetail-item sideTitleHi">High Side</div>
-                          <div id="orn4sideLoText" class="grid-sugarDetail-item sideTitleLo">Low Side</div>
-                          <div id="orn4blank" class="grid-sugarDetail-item sgrBlank">&nbsp;&nbsp;&nbsp;&nbsp;</div>  
+      if (av.debug.fio) { console.log('av.nut['+numTsk+'].uiAll = ',av.nut[numTsk].uiAll); }
 
-                          <div id="orn4initialHiDiv" class="grid-sugarDetail-item initialHi">
-                            <label><input id="orn4initialHiInput" class="sugInitialHiInput" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;
-                              <span id="orn4initialHiText">High side initial amount / cell </span></label>
-                          </div>
-                          <div id="orn4initialLoDiv" class="grid-sugarDetail-item initialLo">
-                            <label><input id="orn4initialLoInput" class="sugInitialLoInput" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;
-                              <span id="orn4initialLoText">Low side initial amount / cell</span></label>
-                          </div>
-                          <div id="orn4inflowHiDiv" class="grid-sugarDetail-item inflowHi">
-                            <label><input id="orn4inflowHiInput" class="sugInflowHiInput" type="text" onchange="av.sgr.inflowChange(this);">&nbsp;
-                              <span id="orn4inflowHiText" class="sugOutflowLabel">Inflow amount / cell</span></label>
-                          </div>
-                          <div id="orn4inflowLoDiv" class="grid-sugarDetail-item inflowLo">
-                            <label><input id="orn4inflowLoInput" class="sugInflowLoInput" type="text" onchange="av.sgr.inflowChange(this);">&nbsp;
-                            <span id="orn4inflowLoText" class="sugOutflowLabel">Inflow amount / cell on low side</span></label>
-                          </div>
-                          <div id="orn4outflowHiDiv" class="grid-sugarDetail-item outflowHi">
-                            <label><input id="orn4outflowHiInput" class="sugOutflowHiInput" type="text" onchange="av.sgr.outflowChange(this);">&nbsp;
-                            <span id="orn4outflowHiText" class="sugOutflowLabel">Outflow fraction / cell.</span></label>
-                          </div>
-                          <div id="orn4outflowLoDiv" class="grid-sugarDetail-item outflowLo">
-                            <label><input id="orn4outflowLoInput" class="sugOutflowLoInput" type="text" onchange="av.sgr.outflowChange(this);">&nbsp;
-                              <span id="orn4outflowLoText" class="sugOutflowLabel">Outflow fraction / cell on low side.</span></label>
-                          </div>
-                          <div id="orn4equalHiDiv" class="grid-sugarDetail-item equalHi">
-                            <span id="orn4equalHiValue"></span>
-                            <span id="orn4equalHiText"> = equilibrium when no resource has been consumed</span>
-                          </div>
-                          <div id="orn4equalLoDiv" class="grid-sugarDetail-item equalLo">
-                            <span id="orn4equalLoValue"></span>
-                            <span id="orn4equalLoText"> = equilibrium if not consumed</span>
-                          </div>
-                        </div><span id="orn4Section_end" class='displayNone'></span>
+      var ndx = av.frd.findNameIndex(reActObj, lnArray[1], av.nut[numTsk].uiAll.geometry);
+
+      reActObj.name[ndx] = lnArray[1];   //assin the name of the resource. 
+
+      // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file with constants for Avida-ED
+      reActObj.depletable[ndx] = 1;   //This is the default value for Avida
+      reActObj.value[ndx] = 1;      //Avida default = 1; v<0 --> poison; v = 0 --> "None";  v > 0 --> rewarded; this should always be in cfg file
+      reActObj.min[ndx] = 0.99;     //Avida default=0; set slightly below one because i'm not sure how the numbers are represented and wanted to make wure min < max
+      reActObj.max[ndx] = 1.0;      //Avida default=1; Need to talk to curriculum folks about best value for min in Avidea-ED; I'm thinking just less than 1
+      reActObj.max_count[ndx] = 1;         //Avdida-ED default = 1; 
+      reActObj.task[ndx] = lnArray[2];     //from line parcing passed to this method 
+      reActObj.resource[ndx] = "missing";  //if resoucre = missing, no resource was stated and the reaction is global and either none or infinite
+      reActObj.type[ndx] = 'pow';          //Avida-ED default = 'pow'
+
+      var len;
+      var lngth = lnArray.length;
+      //console.log('ndx=',ndx, '; name=lnArray[1]=',lnArray[1],'; task=',lnArray[2], '; numTsk=', numTsk, '; lnArray.length=', lnArray.length);
+      for (var jj=3; jj<lngth ;jj++) {
+        var pairArray = lnArray[jj].split(':');    //this should get process
+        len = pairArray.length;    
+        //console.log('len=',len,'; pairArray=',pairArray);
+        for (var ii=1; ii < len; ii++) {
+          pear = pairArray[ii].split('=');
+          //console.log('React: ii=',ii,'; pear', pear);
+          nn = av.sgr.react_argu.indexOf(pear[0].toLowerCase());
+          if (-1 < nn) {
+            reActObj[av.sgr.react_argu[nn]][ndx] = pear[1];
+          }
+          else {
+              lnError = ' '+pear[0]+' is not a valid reaction keyword. lnArray = '+lnArray;
+              //console.log(lnError);
+          };
+        };
+      };
+      //There are older environment.cfg files that do not include a resource in the reaction statement. 
+      // All of those will be considered to have global resources and they will typically be infinite or none.
+      // 
+      // IF the code word 'missing' is the listed as the name of the resource than there is not resource specified and 
+      // the reaction can only act as if the resource for that task is none or infinite and it must be global. 
+      av.debug.fio = true;
+      if ('missing' === reActObj.resource[ndx]) {
+        av.nut[numTsk].uiAll.regionsNumOf = 1;                 //reaction but no resource so it must be global and none or infinite
+        av.nut[numTsk].uiAll.geometry = 'global';            //grid (if 1 < subdish)
+
+        if (0 < reActObj.value[ndx]) {
+          av.nut[numTsk].uiAll.supplyType = 'infinite';
+          //if (av.debug.fio) { console.log('av.nut['+numTsk+'].uiAll.supplyType =', av.nut[numTsk].uiAll.supplyType); }
+        }
+        else if (0 > reActObj.value[ndx])  {
+          av.nut[numTsk].uiAll.supplyType = 'poison';   //poison or damage. does not kill, but hurts energy aquisition rate (ear). 
+        }
+        else if (0 == reActObj.value[ndx]) {
+          av.nut[numTsk].uiAll.supplyType = 'none';
+          //if (av.debug.fio) { console.log('av.nut['+numTsk+'].uiAll.supplyType =', av.nut[numTsk].uiAll.supplyType); }
+        }
+        //console.log('numTsk=', numTsk, '; ndx=', ndx, '; av.nut[numTsk].uiAll.supplyType[ndx]=', av.nut[numTsk].uiSub.supplyType[ndx]
+        //             , '; av.nut[numTsk].uiAll.regionsNumOf=', av.nut[numTsk].uiAll.regionsNumOf);
+      }
+      else {
+        //console.log('ndx=', ndx, '; av.nut['+numTsk+'].react.depletable=', av.nut[numTsk].react.depletable);
+        if (null == reActObj.depletable[ndx]) { reActObj.depletable[ndx] = 1; }
+        if ( 1 != Number(reActObj.depletable[ndx]) ) {
+          av.nut[numTsk].uiSub.supplyType[ndx] = 'infinite';
+        };
+        //console.log('ndx=', ndx, '; reActObj.depletable=', reActObj.depletable, '; uiSub.supplyType=', av.nut[numTsk].uiSub.supplyType);
+
+/*
+        // Reaction names a Resource; Need to find info about that resource to determine Supply Type. SupplyTypes will
+        // be determined after the entire file has beeen read to make sure the named resource  is in the (nut)rient structure 
+        
+        //if (av.debug.fio) { console.log('____resourceName['+ndx+'] =', reActObj.resource[ndx], '; Name array is', av.nut[numTsk].resrc.name); } 
+        else {
+        reSrcName = reActObj.resource[ndx];
+        reSrcNameAry = av.nut[numTsk].resrc.name;
+        mm = reSrcNameAry.indexOf( reSrcName );
+        console.log('numtsk=', numTsk, '; ndx=', ndx, '; mm=', mm);
+        //if (av.debug.fio) { console.log('reSource  mm  =', mm, '; depletable=', reActObj.depletable[ndx], '; av.nut.'+numTsk +'.uiSub.supplyType=', av.nut[numTsk].uiSub.supplyType); }
+        //if (av.debug.fio) { console.log('av.nut[numTsk]=', av.nut[numTsk]); }
+        
+          if (0 < av.nut[numTsk].uiSub.inflowHi) {
+          av.nut[numTsk].uiSub.supplyType[ndx] = 'infinite';
+          }
+        }
+*/
+      };
+      av.debug.fio = false;
+      //console.log('numTsk',numTsk,'; ndx=',ndx, '; reAct_supplyType All Sub=', av.nut[numTsk].uiAll.supplyType, av.nut[numTsk].uiSub.supplyType[ndx]);
+    }
+    // valid logic name not found;
+    else {
+      lnError = 'react task, '+ lnArray[2]+' not found in av.sgr.logicVnames';
+      console.log(lnError);
+    };
+
+    return lnError;
+  };
