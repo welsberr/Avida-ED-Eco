@@ -772,6 +772,41 @@
         }
         //if (av.dbg.flg.nut) console.log('numTsk=', numTsk,'; av.nut[numTsk].uiAll.geometry=', av.nut[numTsk].uiAll.geometry);
 
+        //Find the supply type
+        if (0 == rSourcObj.initial[ndx]) {
+          av.nut[numTsk].uiSub.supplyType[ndx] = 'none';
+        } 
+        else if (0 < rSourcObj.initial[ndx]) {
+          av.nut[numTsk].uiSub.supplyType[ndx] = 'finite';
+          if (null == av.nut[numTsk].uiSub.area[ndx]) {
+            av.nut[numTsk].uiSub.area[ndx] = av.nut.wrldSize;   //this may get redifned based on cells
+          }
+        };
+        if (0 < rSourcObj.inflow[ndx]) {
+          if (rSourcObj.inflowx1[ndx]===rSourcObj.outflowx1[ndx] && rSourcObj.inflowx2[ndx]===rSourcObj.outflowx2[ndx] && 
+              rSourcObj.inflowy1[ndx]===rSourcObj.outflowy1[ndx] && rSourcObj.inflowy2[ndx]===rSourcObj.outflowy2[ndx] ) {
+            av.nut[numTsk].uiSub.supplyType[ndx] = 'chemostat';
+            if (null == av.nut[numTsk].uiSub.area[ndx]) {
+              rSourcObj.boxcol[ndx] = Math.abs( 1 + Number(rSourcObj.inflowx2[ndx]) - Number(rSourcObj.inflowx1[ndx]) );
+              rSourcObj.boxrow[ndx] = Math.abs( 1 + Number(rSourcObj.inflowy2[ndx]) - Number(rSourcObj.inflowy1[ndx]) );
+              av.nut[numTsk].uiSub.area[ndx] = rSourcObj.boxcol[ndx] * rSourcObj.boxrow[ndx];
+            }            
+          }
+          else { 
+            av.nut[numTsk].uiSub.supplyType[ndx] = 'flow';
+            if (null == av.nut[numTsk].uiSub.area[ndx] 
+                && null != rSourcObj.inflowx1[ndx] && null != rSourcObj.inflowx2[ndx] 
+                && null != rSourcObj.inflowy1[ndx] && null != rSourcObj.inflowy2[ndx] ) {
+              rSourcObj.boxcol[ndx] = Math.abs( 1 + Number(rSourcObj.inflowx2[ndx]) - Number(rSourcObj.inflowx1[ndx]) );
+              rSourcObj.boxrow[ndx] = Math.abs( 1 + Number(rSourcObj.inflowy2[ndx]) - Number(rSourcObj.inflowy1[ndx]) );
+              av.nut[numTsk].uiSub.area[ndx] = rSourcObj.boxcol[ndx] * rSourcObj.boxrow[ndx];
+            }            
+          }
+        }
+        if (0 == rSourcObj.initial[ndx] && 0 == rSourcObj.inflow[ndx]) {
+          av.nut[numTsk].uiSub.supplyType[ndx] = 'none';
+        }
+        //console.log('numTsk',numTsk,'; ndx=',ndx, '; reSrce_supplyType=', av.nut[numTsk].uiSub.supplyType[ndx]);
       }   //end of valid ndx found.
     }  
     // valid logic name not found;
@@ -959,6 +994,8 @@
       console.log('; av.nut_env_cfg = ', av.nut_env_cfg); 
     }
     
+    /// This section should be in a new function. 
+    
     var numTsk, reActNameLen, ndx;
     var len = av.sgr.logEdNames.length;   //9
     var distinctRegions, drLen;
@@ -1013,52 +1050,19 @@
             console.log('ndx jj=', ndx, jj, '; av.nut['+numTsk+'].recrc.name=', av.nut[numTsk].resrc.name, 
                         'av.nut['+numTsk+'].react.resource['+jj+']=', av.nut[numTsk].react.resource[jj] );
           };
+      
           if (-1 < ndx) {
+            //add code from the end of resource here to interpret values
 
-            //Find the supply type
-            if (0 == parseFloat(av.nut[numTsk].resrc.initial[ndx])) {
-              av.nut[numTsk].uiSub.supplyType[ndx] = 'none';
-            } 
-            else if (0 < av.nut[numTsk].resrc.initial[ndx]) {
-              av.nut[numTsk].uiSub.supplyType[ndx] = 'finite';
-              if (null == av.nut[numTsk].uiSub.area[ndx]) {
-                //area needs to be defined based uiSug.area, but not defined yet. 
-                av.nut[numTsk].uiSub.area[ndx] = av.nut.wrldSize;   //this may get redifned based on cells
-              }
-            };
-            if (0 < av.nut[numTsk].resrc.inflow[ndx]) {
-              if (av.nut[numTsk].resrc.inflowx1[ndx]===av.nut[numTsk].resrc.outflowx1[ndx] && av.nut[numTsk].resrc.inflowx2[ndx]===av.nut[numTsk].resrc.outflowx2[ndx] && 
-                  av.nut[numTsk].resrc.inflowy1[ndx]===av.nut[numTsk].resrc.outflowy1[ndx] && av.nut[numTsk].resrc.inflowy2[ndx]===av.nut[numTsk].resrc.outflowy2[ndx] ) {
-                av.nut[numTsk].uiSub.supplyType[ndx] = 'chemostat';
-                if (null == av.nut[numTsk].uiSub.area[ndx]) {
-                  av.nut[numTsk].resrc.boxcol[ndx] = Math.abs( 1 + Number(av.nut[numTsk].resrc.inflowx2[ndx]) - Number(av.nut[numTsk].resrc.inflowx1[ndx]) );
-                  av.nut[numTsk].resrc.boxrow[ndx] = Math.abs( 1 + Number(av.nut[numTsk].resrc.inflowy2[ndx]) - Number(av.nut[numTsk].resrc.inflowy1[ndx]) );
-                  av.nut[numTsk].uiSub.area[ndx] = av.nut[numTsk].resrc.boxcol[ndx] * av.nut[numTsk].resrc.boxrow[ndx];
-                }            
-              }
-              else { 
-                av.nut[numTsk].uiSub.supplyType[ndx] = 'flow';
-                if (null == av.nut[numTsk].uiSub.area[ndx] 
-                    && null != av.nut[numTsk].resrc.inflowx1[ndx] && null != av.nut[numTsk].resrc.inflowx2[ndx] 
-                    && null != av.nut[numTsk].resrc.inflowy1[ndx] && null != av.nut[numTsk].resrc.inflowy2[ndx] ) {
-                  av.nut[numTsk].resrc.boxcol[ndx] = Math.abs( 1 + Number(av.nut[numTsk].resrc.inflowx2[ndx]) - Number(av.nut[numTsk].resrc.inflowx1[ndx]) );
-                  av.nut[numTsk].resrc.boxrow[ndx] = Math.abs( 1 + Number(av.nut[numTsk].resrc.inflowy2[ndx]) - Number(av.nut[numTsk].resrc.inflowy1[ndx]) );
-                  av.nut[numTsk].uiSub.area[ndx] = av.nut[numTsk].resrc.boxcol[ndx] * av.nut[numTsk].resrc.boxrow[ndx];
-                }            
-              }
-            }
-            if (0 == av.nut[numTsk].resrc.initial[ndx] && 0 == av.nut[numTsk].resrc.inflow[ndx]) {
-              av.nut[numTsk].uiSub.supplyType[ndx] = 'none';
-            }
-            //console.log('numTsk',numTsk,'; ndx=',ndx, '; reSrce_supplyType=', av.nut[numTsk].uiSub.supplyType[ndx]);
+            
           }
           console.log('resrc.name not found in react.resource = ERROR------------------------ERROR');
+
+          
+          
           
         };  
-      }; // end of loop react name array
-      
-      
-      
+      }; // end of loop react name array      
     };  // end of logic task loops
     
     if (av.dbg.flg.nut) { console.log('============================================================================== end of nutrientParse =='); }
