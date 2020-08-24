@@ -444,85 +444,7 @@ av.fzr = {};
 //gradient options are false/true
 //
 //Name ideas. not01g00 to 99  for gradients   leading zeros by using padStart
-// or not01q_T00, not003n_L00  where T = top, B = bottom, L = left, R = right as the "high side"
 // q suffix on numbrs is q for quarters or n for ninths
-
-/************************************************************           ideas for regionLayout Names and Region Names --
-// These are ideas tossed about that I'm not currently using - or they are defined lower down. 
-//
-
-
-//Avida resource Arguments that have Defaults I might use probably use. If they are the default, they do not need to be in the Environment.cfg file
-/*
-av.sgr.resrcAvidaDefaultGlobalArgu = [ 'initial', 'inflow', 'outflow', 'geometry'   
-                                     , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'];
-
-av.sgr.resrcAvidaDefaultGlobalValu = [ 0, 0, 0.0, 'global', 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
-
-av.sgr.resrcAvidaDefaultGridValu =   [ 0, 0, 0.0, 'grid',  1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
-av.sgr.resrcAvida_EDdfltGlobValu = [ 100, 0, 0.0, 'global', 0, 0, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
-
-av.sgr.reSrcAvidaDefaultGridLongArgu = [  'initial',    'inflow',   'outflow', 'geometry'   
-                                      ,  'inflowx1',  'inflowx2',  'inflowy1', 'inflowy2'    // not used when geometry = global
-                                      , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'    // not used when geometry = global
-                                      ,  'xdiffuse',  'ydiffuse',  'xgravity', 'ygravity'];
-av.sgr.reSrcAvidaDefaultGridLongValu =  [ 0, 0, 0.0, 'global'
-                                        , 0, 0, 0, 0    //technically deterministic, but Avida-ED is using 0;
-                                        , 0, 0, 0, 0    //unset with the second parametner set equal to the first; again Avida-ED uses 0; 
-                                        , 1, 1, 0, 0];   //diffuse range from 0 to 1; gravity range from -1 to 1
-*/
-/*
-  //not in current use
-  //av.sgr.supply_argu = ['region', 'hiSide', 'grdNum', 'regionCode','regionList'];           //each is an array for region
-
-  //number of subdishis is useful, especially if we only allow one layout per number of subdishes. 
-  //geometry is always the same for all regions, but also part of the avida arguments for resource. 
-  //Different ways to discribe layout, only one desciptor needed per task; most of these are just ideas
-  av.sgr.layout3 = ['glob', 'all', 'haf', 'thr', '4th'];
-  av.sgr.layout = ['Global Dish', 'Whole Dish', 'Halves', 'ThirdsTopLeftRight', 'Quarters'];
-  av.sgr.layoutMany = ['glob', 'all', 'halfLR', 'halfTB', '3top1', '3bot1', '3lft1', '3Rit1', '3book', '3stack', '4th'];
-  //a dictionary to assign the number of regions based on possible names for region layouts in 'summary' section
-
-  av.sgr.regionDct = {};  //more can be added if needed
-  av.sgr.regionDct['all'] = 1;
-  av.sgr.regionDct['WholeDish'] = 1;
-  av.sgr.regionDct['HalvesLeftRight'] = 2;
-  av.sgr.regionDct['ThirdsTopLeftRight'] = 3;
-  av.sgr.regionDct['Quarters'] = 4;
-
-                           //region list does not work at this time. It was to create a way to fill out of the data of all tasks based on region. 
-                           //     I don't think we need it now. It should go away  when that part of ex1 goes away. 
-                           //name will be created from task, subdishnum or region, type and side
-                           // 
-                           // region list was used to state the index into the array of data that goes with the region in the regionlis. 
-                           // so the region lisst for quarters is [empty, 0, 1, 2, 3]
-                           // the region list for top bottom would be [empty, empty, empty, empty, empty, 0, 1]
-
-    av.sgr.regionQuarterNamesLower =  ['whole dish', 'upper left', 'upper right', 'lower left', 'lower right', 'top', 'bottom', 'left', 'right']; 
-    av.sgr.regionValues =  ['WholeDish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
-
-    //region List based on 9 sections like a tic-tac-toe board
-    av.sgr.regionN3chr =   ['all', 'upL', 'upC', 'upR', 'mdL', 'mdC', 'mdR', 'loL', 'loC', 'loR'
-                          , 'lft', 'cen', 'rit', 'top', 'mid', 'bot'];
-    av.sgr.regionNcodes = ['_0_', '_1_', '_2_', '_3_', '_4_', '_5_', '_6_', '_7_', '_8_', '_9_'
-                          , '147', '258', '369', '123', '456', '789'];
-  
-  
-    //thinking about a situation where either 4ths or 9ths were allowed in Avida-ED
-    av.sqr.postfix_q    | 1, 2, |  //layout
-                        | 3, 4  |
-  
-    av.sqr.postfix_n | 1 2 3 |   //sub-sections can be done as for quarters below
-      // layout      | 4 5 6 |   // not123n = top one third row
-                     | 7 8 9 |
-    
-    av.sgr.regions = ['1q, 2q, 3q, 4q, 12q, 34q, 13q, 24q] //leading zeros also work
-  
-    av.sgr.gradient format | 12q_T0, 12q_T1, 12q_T2,   etc //starts at the top (row0)
-      defines rows in teh upper half with a gradient with the hightest concentration at the top. 
-  */
-
-
 
 //----------------------------------------------------------------------------------------------------------------------
 // av.sgr = These are constants; dictionaries and arrays that might be useful to process 
@@ -537,6 +459,13 @@ av.sgr.reSrcAvidaDefaultGridLongValu =  [ 0, 0, 0.0, 'global'
 //       // in implementation. Eventually after all is working with at least 4 subdishes Diane will clean out extra 
 //       // items in av.sgr
 //----------------------------------------------------------------------------------------------------------------------
+// thinking about a situation where either 4ths or 9 ths were allowed in Avida-ED
+// av.sqr.postfix_q    | 1, 2, |  //layout   tsk001q
+//                     | 3, 4  |
+//
+// av.sqr.postfix_n | 1 2 3 |   //sub-sections can be done as for quarters below
+//      layout      | 4 5 6 |   // not123n = top one third row
+//                  | 7 8 9 |
 
 av.sgr = {};   //specific to resource/reactions (sugars); mostly constants. Not all iddeas written here will be used. 
 
@@ -825,6 +754,15 @@ av.fzr.clearEnvironment = function(from) {
   // av.nut is used for normal runs. nut is for nutrients; not used for test runs which run the envornment.cfg file as
   // submitted in the workspace. 
 
+  var grd = [];
+  for (var ii = 0; ii<5;ii++) {
+    grd[ii] = [];
+    for (var jj=0; jj < ii+1; jj++) {
+      grd[ii][jj] = (ii+1) * (jj+1);
+    }
+  };
+    
+  console.log('grd=', grd);
   var logiclen = av.sgr.logicNames.length;
   var rsrcelen = av.sgr.resrc_argu.length; 
   var reactlen = av.sgr.react_argu.length;
@@ -843,14 +781,35 @@ av.fzr.clearEnvironment = function(from) {
       av.nut[tsk]['react'][ av.sgr.react_argu[jj] ] = [];     //Should these actually lbe left blank if they are really avida defaults? 
                                                               //We don't need to write the avida defaults; We do need to write where Avida-ED devaults don't match avida
     };
-    av.nut[tsk]['cells'] = {};
-    av.nut[tsk]['cells'].name = [];
-    av.nut[tsk]['cells'].initial = [];
-    av.nut[tsk]['cells'].inflow = [];
-    av.nut[tsk]['cells'].outflow = [];
-    av.nut[tsk]['cells'].list = [];
+    //cell command
+    av.nut[tsk].cell = {};
+    av.nut[tsk].cell.name = [];
+    av.nut[tsk].cell.list = [];
+    av.nut[tsk].cell.initial = [];
+    av.nut[tsk].cell.inflow = [];
+    av.nut[tsk].cell.outflow = [];
+    av.nut[tsk].cell.gradientFlag = [];
 
+    av.nut[tsk].cell.w_list = grd;
+    av.nut[tsk].cell.x_initial = grd;
+    av.nut[tsk].cell.y_inflow = grd;
+    av.nut[tsk].cell.z_outflow = grd;
+    
+    /* //an idea that was not used
+    cnt = [0, 1, 2, 3, 4];
+    oxe = [1];
 
+    av.nut[tsk].cll = [];
+    for (var jj=0;jj<5;jj++) {
+      av.nut[tsk].cll[jj] = {};
+      av.nut[tsk].cll[jj].ainital = oxe;
+      av.nut[tsk].cll[jj].inflow = cnt;
+      av.nut[tsk].cll[jj].outflow = cnt;
+      av.nut[tsk].cll[jj].alist = oxe;
+    }
+    */
+      
+     
     //for user interface 
     av.nut[tsk]['uiAll'] = {};
     av.nut[tsk]['uiSub'] = {};

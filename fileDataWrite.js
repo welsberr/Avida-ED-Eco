@@ -217,6 +217,32 @@
       tskvar = av.sgr.logicVnames[ii];   // variable length logic tasks names as required by Avida
       //console.log('numtsk=', numtsk, '; tsk=', tsk, '; tskvar=', tskvar, 'uiAll.geometry=', av.nut[numtsk].uiAll.geometry.toLowerCase());
 
+//      if ('nor' == tsk) {
+        if (false) {
+        txt += 'RESOURCE nor000q:geometry=grid:xdiffuse=0:ydiffuse=0\n';
+        txt += 'CELL nor000q:0..39:initial=40\n';
+        txt += 'CELL nor000q:40..79:initial=80\n';
+        txt += 'CELL nor000q:80..119:initial=120\n';
+        txt += 'CELL nor000q:120..159:initial=160\n';
+        txt += 'CELL nor000q:160..199:initial=200\n';
+        txt += 'CELL nor000q:200..239:initial=240\n';
+        txt += 'CELL nor000q:240..279:initial=280\n';
+        txt += 'CELL nor000q:280..319:initial=320\n';
+        txt += 'CELL nor000q:320..359:initial=360\n';
+        txt += 'CELL nor000q:360..399:initial=400\n';
+        txt += 'REACTION nor000q  nor process:resource=nor000q:value=4:type=pow requisite:max_count=1\n\n';
+      }
+      else if (false) {
+        txt += 'RESOURCE nor013q:geometry=grid:xdiffuse=0:ydiffuse=0:inflow=128:outflow=0.04:';
+        txt += 'inflowX1=0:inflowY1=0:inflowX2=19:inflowY2=19:cellbox=0,0,20,20:';
+        txt += 'outflowX1=0:outflowY1=0:outflowX2=19:outflowY2=19\n';
+        txt += 'RESOURCE nor013q:geometry=grid:xdiffuse=0:ydiffuse=0:inflow=144:outflow=0.04:';
+        txt += 'inflowX1=20:inflowY1=0:inflowX2=39:inflowY2=19:cellbox=20,0,20,20:';
+        txt += 'outflowX1=20:outflowY1=0:outflowX2=39:outflowY2=19\n';
+        txt += 'REACTION  nor013q xor  process:resource=nor013q:value=2.0:type=pow:min=0.9:max=1 requisite:max_count=1\n';
+      }
+      else {
+
       if ('global' == av.nut[numtsk].uiAll.geometry.toLowerCase()) {
         jj = 0;
         tmpNum = 1;
@@ -336,7 +362,7 @@
             cellList = ':' + Math.floor(cellBeg) + '..' + Math.floor(cellEnd);  //this is just the first row
           };
           cellTxt += cellList;
-          tmpNum = Number(av.nut[numtsk].cells.initial[jj]);
+          tmpNum = Number(av.nut[numtsk].cell.initial[jj]);
           if (!isNaN( tmpNum) )  {
             cellTxt += av.fwt.existCheck( ':initial=', Math.round(tmpNum).toString(), tmpNum )+ '\n'; 
           } 
@@ -412,7 +438,8 @@
           } // end of switch
         } // end loop through array of each resource/reaction instance
       }  // end of else geometry=grid
-      txt += '#-----\n'; 
+     }   // end of else based on if to run some test code
+     txt += '#-----\n'; 
     }  // end of looping through each sugar
     //console.log(txt);
     if (toActiveConfigFlag) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');
@@ -548,15 +575,15 @@
           switch ( av.nut[numtsk].uiSub.supplyType[jj].toLowerCase() ) {
             case 'infinite':
               av.nut[numtsk].react.depletable[jj] = 0;
-              av.nut[numtsk].cells.initial[jj] = av.nut[numtsk].uiSub.area[jj];
+              av.nut[numtsk].cell.initial[jj] = 1;
               break;
             case 'finite':
-              av.nut[numtsk].cells.name[jj] = av.nut[numtsk].resrc.name[jj];
-              av.nut[numtsk].cells.initial[jj] = Math.round(av.nut[numtsk].uiSub.initialHiNp[jj] * av.nut[numtsk].uiSub.area[jj]);
+              av.nut[numtsk].cell.name[jj] = av.nut[numtsk].resrc.name[jj];
+              av.nut[numtsk].cell.initial[jj] = Math.round(av.nut[numtsk].uiSub.initialHiNp[jj],0);
               break;
             case 'none':
-              av.nut[numtsk].cells.name[jj] = av.nut[numtsk].resrc.name[jj];
-              av.nut[numtsk].cells.initial[jj] = 0;
+              av.nut[numtsk].cell.name[jj] = av.nut[numtsk].resrc.name[jj];
+              av.nut[numtsk].cell.initial[jj] = 0;
               break;
             case 'chemostat': 
               av.nut[numtsk].resrc.inflow[jj] =  Math.round(av.nut[numtsk].uiSub.inflowHiNp[jj] * av.nut[numtsk].uiSub.area[jj]);

@@ -509,15 +509,13 @@
     var lnError = '';     //was it a valid line wihtout errors
     //console.log('lnArray = ', lnArray);
     var pear = [];
-    var reSrcNameAry; var reSrcName;
     var nn;
-    var mm;
 
     //if (av.dbg.flg.nut) { console.log('reActLineParse: lnArray=', lnArray); }
 
     //console.log('task = lnArray[2]=',lnArray[2]);
-    console.log('REACT: lnArray=', lnArray);
-    var logicindex = av.sgr.logicVnames.indexOf( lnArray[2] );   //task name length is variable so must fined in taht array
+    //console.log('REACT: lnArray=', lnArray);
+    var logicindex = av.sgr.logicVnames.indexOf( lnArray[2] );   //task name length is variable so must fined in that the correct list of logic functions
     //console.log('logicindex=',logicindex);
     if (-1 < logicindex) {
       var numTsk = av.sgr.logEdNames[logicindex];
@@ -534,6 +532,8 @@
       reActObj.name[ndx] = lnArray[1];   //assin the name of the resource. 
 
       // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file with constants for Avida-ED
+      // deaults placed in dom rather than in av.nut.react
+      /*
       reActObj.depletable[ndx] = 1;   //This is the default value for Avida
       reActObj.value[ndx] = 1;      //Avida default = 1; v<0 --> poison; v = 0 --> "None";  v > 0 --> rewarded; this should always be in cfg file
       reActObj.min[ndx] = 0.99;     //Avida default=0; set slightly below one because i'm not sure how the numbers are represented and wanted to make wure min < max
@@ -542,10 +542,10 @@
       reActObj.task[ndx] = lnArray[2];     //from line parcing passed to this method 
       reActObj.resource[ndx] = "missing";  //if resoucre = missing, no resource was stated and the reaction is global and either none or infinite
       reActObj.type[ndx] = 'pow';          //Avida-ED default = 'pow'
-
+*/
       var len;
       var lngth = lnArray.length;
-      console.log('REACT: ndx=',ndx, '; name=lnArray[1]=',lnArray[1],'; task=',lnArray[2], '; numTsk=', numTsk, '; lnArray.length=', lnArray.length);
+      //console.log('REACT: ndx=',ndx, '; name=lnArray[1]=',lnArray[1],'; task=',lnArray[2], '; numTsk=', numTsk, '; lnArray.length=', lnArray.length);
       for (var jj=3; jj<lngth ;jj++) {
         var pairArray = lnArray[jj].split(':');    //this should get process
         len = pairArray.length;    
@@ -563,46 +563,7 @@
           };
         };
       };
-      //There are older environment.cfg files that do not include a resource in the reaction statement. 
-      // All of those will be considered to have global resources and they will typically be infinite or none.
-      // 
-      // IF the code word 'missing' is the listed as the name of the resource than there is not resource specified and 
-      // the reaction can only act as if the resource for that task is none or infinite and it must be global. 
-      av.debug.fio = true;
-      if ('missing' === reActObj.resource[ndx]) {
-        av.nut[numTsk].uiAll.regionsNumOf = 1;                 //reaction but no resource so it must be global and none or infinite
-        av.nut[numTsk].uiAll.geometry = 'global';            //grid (if 1 < subdish)
-        if (0 < reActObj.value[ndx]) {
-          console.log('av.nut['+numTsk+'].react.depletable['+ndx+']=', av.nut[numTsk].react.depletable[ndx]);
-          if (isNaN(Number(reActObj.depletable[ndx])) || 0 < reActObj.depletable[ndx]) {
-            av.nut[numTsk].uiAll.supplyType = 'finite';
-          }
-          else { av.nut[numTsk].uiAll.supplyType = 'finite'; }
-          //if (av.debug.fio) { console.log('av.nut['+numTsk+'].uiAll.supplyType =', av.nut[numTsk].uiAll.supplyType); }
-        }
-        else if (0 > reActObj.value[ndx])  {
-          av.nut[numTsk].uiAll.supplyType = 'poison';   //poison or damage. does not kill, but hurts energy aquisition rate (ear). 
-        }
-        else if (0 == reActObj.value[ndx]) {
-          av.nut[numTsk].uiAll.supplyType = 'none';
-          //if (av.debug.fio) { console.log('av.nut['+numTsk+'].uiAll.supplyType =', av.nut[numTsk].uiAll.supplyType); }
-        }
-        //console.log('numTsk=', numTsk, '; ndx=', ndx, '; av.nut[numTsk].uiAll.supplyType[ndx]=', av.nut[numTsk].uiSub.supplyType[ndx]
-        //             , '; av.nut[numTsk].uiAll.regionsNumOf=', av.nut[numTsk].uiAll.regionsNumOf);
-      }
-      else {
-        //console.log('ndx=', ndx, '; av.nut['+numTsk+'].react.depletable=', av.nut[numTsk].react.depletable);
-        if (null == reActObj.depletable[ndx]) { reActObj.depletable[ndx] = 1; }
-        if ( 1 != Number(reActObj.depletable[ndx]) ) {
-          av.nut[numTsk].uiSub.supplyType[ndx] = 'infinite';
-        };
-        //console.log('ndx=', ndx, '; reActObj.depletable=', reActObj.depletable, '; uiSub.supplyType=', av.nut[numTsk].uiSub.supplyType);
-
-        // Reaction names a Resource; Need to find info about that resource to determine Supply Type. SupplyTypes will
-        // be determined after the entire file has beeen read to make sure the named resource  is in the (nut)rient structure 
-      };
-      av.debug.fio = false;
-      //console.log('numTsk',numTsk,'; ndx=',ndx, '; reAct_supplyType All Sub=', av.nut[numTsk].uiAll.supplyType, av.nut[numTsk].uiSub.supplyType[ndx]);
+      
     }
     // valid logic name not found;
     else {
@@ -623,45 +584,15 @@
     var pairArray = lnArray[1].split(':');
     var pear = [];
     var cellboxdata = [];
-    var matchTaskRegion;
-    var matchSide;
-    var matchgradientNdx;
     var len;
     var nn; 
     var numTsk;
     var rSourcObj;
     var regionStr = '';
     var ndx;
-    var re_name = /(\D+)(\d+)([qn])(.*$)/;    // match array = whole line? , task, region number, data about things with a side (gradient, flow), else NULL
-    var re_region = /(\D+)(\d+)(.*$)/;    // match array = whole line? , task, region number, data about things with a side (gradient, flow), else NULL
-    var re_side = /(\D+)(.*$)/;      // applied to the last element of the result if finding task and region above to get side. 
-    var re_gradientNdx = /(\d+)(.*$)/;     //applied to the last element if text for a side is found
-    //var re_gradientNdx = /(\d+)/;        //applied to the last element if text for a side is found
-
-    //not using since I'm leaving the option for enviornemtns that flow (input and output xy coordinates are not identiacal
-    //var re_gradient = /(\D+)(\d+)(.*$)/;  // match array = whole line? , 'gradient side', gradient line number, rest if string if any exists. 
-                                          // match.input = initial string
-                                          // match.length is the length of the array, including null elements 
-    //av.debug.fio = true;
-
-    //if (av.dbg.flg.nut) console.log('Nut: reSrcLineParse: pairArray=', pairArray);
-    //find logic type include test for quarters vs ninths subregion layout. 
-    matchTaskRegion = pairArray[0].match(re_name);  // Matches using re_name pattern: looing for tsk##q_gradientInfo.
-    //if (av.dbg.flg.nut) console.log('nut: pairArra[0]=', pairArray[0],'; re_name=', re_name, ', matchTaskRegion=', matchTaskRegion);
-    if (null == matchTaskRegion) {
-      matchTaskRegion = pairArray[0].match(re_region);  // Matches using re_num pattern.
-      //if (av.dbg.flg.nut) 
-      console.log('nut: reSrc pairArra[0]=', pairArray[0],'; re_region=', re_region, ', matchTaskRegion=', matchTaskRegion);
-      //assume 'q' for quarters if suffix letter indicating subregion layout not included. 
-      matchTaskRegion[4] = matchTaskRegion[3];
-      matchTaskRegion[3] = 'q';
-      //console.log('q missing');
-      if (null == matchTaskRegion) {
-        console.log('ERROR: RESOURCE name format wrong; pairArray=', pairArray);
-      }
-    }
-    //if (av.dbg.flg.nut) console.log('nut: pairArra[0]=', pairArray[0],', matchTaskRegion=', matchTaskRegion);
-    var tsk =  matchTaskRegion[1];
+    
+    var tsk = pairArray[0].substr(0,3);
+    //console.log('name=', pairArray[0], '; tsk=', tsk);
     var logicindex = av.sgr.logicNames.indexOf( tsk );
     if (-1 < logicindex) {
       numTsk = av.sgr.logEdNames[logicindex];
@@ -694,25 +625,23 @@
         rSourcObj.name[ndx] = pairArray[0];    //asign the name of the resource statement. 
 
         // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file with a few exceptions
+        // defaults are put directly in the dom
+        // 
         // boxflag is false indicating there are no box values. 
         // in Avida-ED, geometry=Grid or global; The user interface calls Grid = 'Local'
         //defaults are done in av.fzr.clearEnvironment
 
-        
-
-        // need to update this the ui part of the structure
-        //find region listed in user interface?
-        console.log('RESOURCE: matchTaskRegion=', matchTaskRegion);
-        //to add a leading zero if needed and add if code is based on 4 quarters or 9 octothorpe
-        regionStr = ('000'+ matchTaskRegion[2]).slice(-3);
-        //console.log('regionStr=', regionStr);
-        av.nut[numTsk].uiSub.regionSet[ndx] = matchTaskRegion[3];
-        av.nut[numTsk].uiSub.regionCode[ndx] = regionStr;   //This is a one to three digit string with leading zeros.
-        av.nut[numTsk].uiSub.regionNdx[ndx] = av.sgr.regionQuarterCodes.indexOf(regionStr);
-        //console.log('av.nut['+numTsk+'].uiSub.regionNdx['+ndx+']=', av.nut[numTsk].uiSub.regionNdx[ndx]);
-        av.nut[numTsk].uiSub.regionName[ndx] = av.sgr.regionQuarterNames[av.nut[numTsk].uiSub.regionNdx[ndx]];
-        //if (av.dbg.flg.nut) { console.log('RESOURCE: ndx=',ndx, '; av.nut[numTsk].uiSub.regionCode[ndx]=', av.nut[numTsk].uiSub.regionCode[ndx],'; av.nut[numTsk].uiSub.regionName[ndx]=',av.nut[numTsk].uiSub.regionName[ndx]); }
-        console.log('RESOURCE: rSourcObj.name[ndx]=',rSourcObj.name[ndx],'; numTsk=', numTsk, '; lnArray.length=', lnArray.length);
+/*
+        // i will use cell for all gradients; so this section will not be needed
+        // not using since I'm leaving the option for enviornemtns that flow (input and output xy coordinates are not identiacal
+        // var re_gradient = /(\D+)(\d+)(.*$)/;  // match array = whole line? , 'gradient side', gradient line number, rest if string if any exists. 
+                                          // match.input = initial string
+                                          // match.length is the length of the array, including null elements 
+        var matchSide;
+        var matchgradientNdx;
+        var re_side = /(\D+)(.*$)/;      // applied to the last element of the result if finding task and region above to get side. 
+        var re_gradientNdx = /(\d+)(.*$)/;     //applied to the last element if text for a side is found
+        //var re_gradientNdx = /(\d+)/;        //applied to the last element if text for a side is found
 
         // as of 2020 July 13 no files with gradient data has been parsed. 
         // look for a side if it is flow or gradient   thhis part does not work right.
@@ -733,7 +662,7 @@
             if (0 < matchgradientNdx[2].length) console.log('The name should not have anymore to it ,but here it is ', matchgradientNdx[2]);
           };
         };
-
+*/
         //process all data pairs
         len = pairArray.length;
         //console.log('len=',len,'; pairArray=',pairArray);
@@ -764,48 +693,7 @@
             };
           };
         };
-
-        //console.log('rSourcObj.geometry['+ndx+']=', rSourcObj.geometry[ndx]);
-        //console.log('av.nut['+numTsk+'].uiAll.geometry', av.nut[numTsk].uiAll.geometry);
-        if ('grid' == rSourcObj.geometry[ndx].toLowerCase() || 'global' == rSourcObj.geometry[ndx].toLowerCase() ) {
-          av.nut[numTsk].uiAll.geometry = rSourcObj.geometry[ndx];
-        }
-        //if (av.dbg.flg.nut) console.log('numTsk=', numTsk,'; av.nut[numTsk].uiAll.geometry=', av.nut[numTsk].uiAll.geometry);
-
-        //Find the supply type
-        if (0 == rSourcObj.initial[ndx]) {
-          av.nut[numTsk].uiSub.supplyType[ndx] = 'none';
-        } 
-        else if (0 < rSourcObj.initial[ndx]) {
-          av.nut[numTsk].uiSub.supplyType[ndx] = 'finite';
-          if (null == av.nut[numTsk].uiSub.area[ndx]) {
-            av.nut[numTsk].uiSub.area[ndx] = av.nut.wrldSize;   //this may get redifned based on cells
-          }
-        };
-        if (0 < rSourcObj.inflow[ndx]) {
-          if (rSourcObj.inflowx1[ndx]===rSourcObj.outflowx1[ndx] && rSourcObj.inflowx2[ndx]===rSourcObj.outflowx2[ndx] && 
-              rSourcObj.inflowy1[ndx]===rSourcObj.outflowy1[ndx] && rSourcObj.inflowy2[ndx]===rSourcObj.outflowy2[ndx] ) {
-            av.nut[numTsk].uiSub.supplyType[ndx] = 'chemostat';
-            if (null == av.nut[numTsk].uiSub.area[ndx]) {
-              rSourcObj.boxcol[ndx] = Math.abs( 1 + Number(rSourcObj.inflowx2[ndx]) - Number(rSourcObj.inflowx1[ndx]) );
-              rSourcObj.boxrow[ndx] = Math.abs( 1 + Number(rSourcObj.inflowy2[ndx]) - Number(rSourcObj.inflowy1[ndx]) );
-              av.nut[numTsk].uiSub.area[ndx] = rSourcObj.boxcol[ndx] * rSourcObj.boxrow[ndx];
-            }            
-          }
-          else { 
-            av.nut[numTsk].uiSub.supplyType[ndx] = 'flow';
-            if (null == av.nut[numTsk].uiSub.area[ndx] 
-                && null != rSourcObj.inflowx1[ndx] && null != rSourcObj.inflowx2[ndx] 
-                && null != rSourcObj.inflowy1[ndx] && null != rSourcObj.inflowy2[ndx] ) {
-              rSourcObj.boxcol[ndx] = Math.abs( 1 + Number(rSourcObj.inflowx2[ndx]) - Number(rSourcObj.inflowx1[ndx]) );
-              rSourcObj.boxrow[ndx] = Math.abs( 1 + Number(rSourcObj.inflowy2[ndx]) - Number(rSourcObj.inflowy1[ndx]) );
-              av.nut[numTsk].uiSub.area[ndx] = rSourcObj.boxcol[ndx] * rSourcObj.boxrow[ndx];
-            }            
-          }
-        }
-        if (0 == rSourcObj.initial[ndx] && 0 == rSourcObj.inflow[ndx]) {
-          av.nut[numTsk].uiSub.supplyType[ndx] = 'none';
-        }
+        
         //console.log('numTsk',numTsk,'; ndx=',ndx, '; reSrce_supplyType=', av.nut[numTsk].uiSub.supplyType[ndx]);
       }   //end of valid ndx found.
     }  
@@ -988,83 +876,11 @@
     
           //if (av.dbg.flg.nut) { 
     if (true) { 
-      console.log('After while look looking at all lines of environment.cfg; Before looking for summarny information for each task');
+      console.log('end of av.frd.nutrientParse');
       av.nut_env_cfg = {};
       av.nut_env_cfg = JSON.parse(JSON.stringify(av.nut));
       console.log('; av.nut_env_cfg = ', av.nut_env_cfg); 
-    }
-    
-    /// This section should be in a new function. 
-    
-    var numTsk, reActNameLen, ndx;
-    var len = av.sgr.logEdNames.length;   //9
-    var distinctRegions, drLen;
-    var regStr = '';
-    var regionLayoutLen = av.sgr.regionLayoutValues.length;
-    //find some summary info about nutrients. Need to look at each task separately. 
-    
-    //console.log('regionLayoutLen=', regionLayoutLen,'; regionLayoutValues=', av.sgr.regionLayoutValues);
-    
-    for (var ii=0; ii< len; ii++) {
-      numTsk = av.sgr.logEdNames[ii];
-      //console.log('av.nut['+numTsk+'].resrc=', av.nut[numTsk].resrc);
-      //console.log('av.nut['+numTsk+'].react=', av.nut[numTsk].react);
-      //console.log('av.nut['+numTsk+'].uiAll=', av.nut[numTsk].uiAll);
-      //console.log('av.nut['+numTsk+'].uiSub=', av.nut[numTsk].uiSub);
-
-      //distincRegions will be in more important when gradient is implemented
-      // The regionsNumOf is determined and used to assign default regionLayout
-      // Then a region code, region name need to be assigned in av.nut[tsk]uiSub.regionName      
-      distinctRegions = [...new Set(av.nut[numTsk].uiSub.regionCode.slice(1))];   //ignore index 0 as it is reserved for global data
-      //console.log('numTsk=', numTsk, '; distinctRegions=', distinctRegions);
-      drLen = distinctRegions.length;
-      // this is not fool proof it requires a reaction for every subdish of regionLayout definition
-      if (0<drLen && drLen <= regionLayoutLen) {
-        distinctRegions.sort;
-        regStr = distinctRegions.join();
-        if ('000q' == regStr || '000n' == regStr) { regStr='000'; }
-        //console.log('regionStr='+regStr+'|', '; av.sgr.regionLookup=', av.sgr.regionLookup);
-        av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLookup[regStr];
-        //console.log('sorted regStr=', regStr, '; av.sgr.regionLayoutValues[drLen]=', av.sgr.regionLayoutValues[drLen],
-        //  '; av.nut['+numTsk+'].uiAll.regionLayout=', av.nut[numTsk].uiAll.regionLayout);
-        
-        //av.nut[numTsk].uiAll.regionsLayout = av.sgr.regionLayoutValues[drLen];  //lft/rit & upp/low both have 2 = drlen
-        av.nut[numTsk].uiAll.regionsNumOf = drLen-1;  //region[0] does not count as it is for global
-      }
-      else {
-        if (0 != drLen) {
-          console.log('Distinct Regions Error: numTsk=', numTsk, '; distinctRegions=', distinctRegions, '; uiAll.geometry=', av.nut[numTsk].uiAll.geometry, '; regionLayout=', av.nut[numTsk].uiAll.regionLayout,'==========================');           
-        }
-      }
-      //this will need change to work when gradient is added. 
-      reActNameLen = av.nut[numTsk].react.name.length;
-      for (var jj=0; jj<=reActNameLen; jj++) {
-        // 'missing' is a key word used in this program to indicate that the reaction has no resoucre and is either 0 or infinite.
-        // These should have been fully translated in the parse react routine; only processing those with resource names
-        if ('missing' !== av.nut[numTsk].react.resource[jj] && null != av.nut[numTsk].react.resource[jj]) {
-          //console.log('av.nut['+numTsk+']uiSub.supplyType['+jj+']=', av.nut[numTsk].uiSub.supplyType[jj], '; geometry=', av.nut[numTsk].uiAll.geometry);
-          // Resource should exist
-          ndx = av.nut[numTsk].resrc.name.indexOf(av.nut[numTsk].react.resource[jj]);
-          //if (true) {
-          if (jj != ndx) {
-            console.log('ndx jj=', ndx, jj, '; av.nut['+numTsk+'].recrc.name=', av.nut[numTsk].resrc.name, 
-                        'av.nut['+numTsk+'].react.resource['+jj+']=', av.nut[numTsk].react.resource[jj] );
-          };
-      
-          if (-1 < ndx) {
-            //add code from the end of resource here to interpret values
-
-            
-          }
-          console.log('resrc.name not found in react.resource = ERROR------------------------ERROR');
-
-          
-          
-          
-        };  
-      }; // end of loop react name array      
-    };  // end of logic task loops
-    
+    }    
     if (av.dbg.flg.nut) { console.log('============================================================================== end of nutrientParse =='); }
   };
   //------------------------------------------------------------------------------------- end of av.frd.nutrientParse --
@@ -1106,7 +922,195 @@
   };
   //----------------------------------------------------------------------------------- end av.frd.getInflowAreaResrc --
 
-  //---------------------------------------------------------------------------------------- av.frd.environment2struct --
+  //---------------------------------------------------------------------------------------- av.frd.resourceNameMatch --
+  av.frd.resourceNameMatch = function(numTsk, sub) {
+    var matchStatus = 'unknown';
+    console.log('av.nut['+numTsk+'].react.resource['+sub+']=', av.nut[numTsk].react.resource[sub]);
+    if ( null == av.nut[numTsk].react.resource[sub] ) {
+      matchStatus = 'undefined';
+    }
+    else if ( 'missing' === av.nut[numTsk].react.resource[sub] ) {
+      av.nut[numTsk].uiAll.regionsNumOf = 1;                 //reaction but no resource so it must be global and none or infinite
+      av.nut[numTsk].uiAll.geometry = 'global';            //grid (if 1 < subdish)
+      if (0 < av.nut[numTsk].react.value[sub]) {
+        av.nut[numTsk].uiAll.supplyType = 'finite'; 
+        //if (av.debug.fio) { console.log('av.nut['+numTsk+'].uiAll.supplyType =', av.nut[numTsk].uiAll.supplyType); }
+      }
+      else if (0 > av.nut[numTsk].react.value[sub])  {
+        av.nut[numTsk].uiAll.supplyType = 'poison';   //poison or damage. does not kill, but hurts energy aquisition rate (ear). 
+      }
+      else if (0 == av.nut[numTsk].react.value[sub]) {
+        av.nut[numTsk].uiAll.supplyType = 'none';
+        //if (av.debug.fio) { console.log('av.nut['+numTsk+'].uiAll.supplyType =', av.nut[numTsk].uiAll.supplyType); }
+      }
+      //console.log('numTsk=', numTsk, '; sub=', sub, '; av.nut[numTsk].uiAll.supplyType[sub]=', av.nut[numTsk].uiSub.supplyType[sub]
+      //             , '; av.nut[numTsk].uiAll.regionsNumOf=', av.nut[numTsk].uiAll.regionsNumOf);
+      matchStatus = 'no resource name';
+    }
+    else {
+      // There is a RESOURCE statement; base some things on that. 
+      // make sure react.resource matches resrc.name
+      console.log('av.nut['+numTsk+'].resrc.name=', av.nut[numTsk].resrc.name);
+      ndx = av.nut[numTsk].resrc.name.indexOf(av.nut[numTsk].react.resource[sub]);
+      console.log('av.nut['+numTsk+'].react.resource['+sub+']=', av.nut[numTsk].react.resource[sub], '; ndx=', ndx);
+      if (0 > ndx) {
+        console.log('resrc.name not found in react.resource = ERROR------------------------ERROR');
+        matchStatus = 'not found';
+        //return matchStatus;
+      } 
+      else if (ndx != sub) { 
+        console.log('********************** Name & resource should have the same index: ',
+                 'av.nut['+numTsk+'].react.resource['+sub+']=', av.nut[numTsk].react.resource[sub],
+                 'av.nut['+numTsk+'].resrcName['+ndx+']=', av.nut[numTsk].resrc.name[ndx],
+                 '*****************************');
+        matchStatus = 'index differs';
+        return matchStatus;
+      } else {
+        matchStatus = 'found';
+      //return matchStatus;
+      }
+    }
+    return matchStatus;
+  };
+  //------------------------------------------------------------------------------------ end av.frd.resourceNameMatch --
+
+  //--------------------------------------------------------------------------- av.frd.NutrientCfg2userInterfaceData --
+  // find some summary info about nutrients. Need to look at each task separately. 
+  av.frd.NutrientCfg2userInterfaceData = function() {
+    var re_name = /(\D+)(\d+)([qn])(.*$)/;    // match array = whole line? , task, region number, data about things with a side (gradient, flow), else NULL
+    var re_region = /(\D+)(\d+)(.*$)/;    // match array = whole line? , task, region number, data about things with a side (gradient, flow), else NULL    
+    var matchTaskRegion;
+    var numTsk, tsk, lenRegion, jj;
+    var distinctRegions, drLen;
+    var regionLayoutLen = av.sgr.regionLayoutValues.length;
+    var nameRCR;     // name should be the same for RESPONSE, CELL, REACTION, but name or reaction matters the least.
+    
+    var len = av.sgr.logEdNames.length;   //9
+    console.log('in av.frd.NutrientCfg2userInterfaceData: len=', len);
+    for (var ii=0; ii< len; ii++) {
+      numTsk = av.sgr.logEdNames[ii];
+      lenRegion = av.nut[numTsk].react.resource.length;
+      //console.log('numTsk=', numTsk, '; lenRegon=', lenRegion);
+      for (var jj=0; jj< lenRegion; jj++) {
+        // begin of secton from reAct
+
+        //There are older environment.cfg files that do not include a resource in the reaction statement. 
+        // All of those will be considered to have global resources and they will typically be infinite or none.
+        // 
+        // IF the code word 'missing' is the listed as the name of the resource than there is not resource specified and 
+        // the reaction can only act as if the resource for that task is none or infinite and it must be global. 
+        nameRCR = av.nut[numTsk].react.name[jj];
+        
+        // returns 'found' if react.resource[jj] matches resrc.react[jj];
+        nameMatch = av.frd.resourceNameMatch(numTsk, jj);
+        console.log('nameMatch=', nameMatch);
+        if ('found' == nameMatch ) { 
+          nameRCR = av.nut[numTsk].resrc.name[jj];
+          // resource name matches resource in reaction cfg line.
+          // Reaction names a Resource; Need to find info about that resource to determine Supply Type. SupplyTypes will
+          // be determined after the entire file has beeen read to make sure the named resource  is in the (nut)rient structure 
+          
+          //if (av.dbg.flg.nut) console.log('Nut: reSrcLineParse: pairArray=', pairArray);
+          //find logic type include test for quarters vs ninths subregion layout. 
+          matchTaskRegion = nameRCR.match(re_name);  // Matches using re_name pattern: looing for tsk##q
+          //if (av.dbg.flg.nut) console.log('nut: name =', av.nut[numTsk].resrc.name[jj],'; re_name=', re_name, ', matchTaskRegion=', matchTaskRegion);
+          if (null == matchTaskRegion) {
+            matchTaskRegion = nameRCR.match(re_region);  // Matches using re_num pattern.
+            console.log('nut: reSrc pairArra[0]=', nameRCR,'; re_region=', re_region, ', matchTaskRegion=', matchTaskRegion);
+            if (null != matchTaskRegion) {
+              //assume 'q' for quarters if suffix letter indicating subregion layout not included. 
+              matchTaskRegion[4] = matchTaskRegion[3];
+              matchTaskRegion[3] = 'q';
+            }
+          }
+          if (null == matchTaskRegion) {
+            console.log('ERROR: RESOURCE name format wrong; nameRCR=', nameRCR);
+          } else {
+            console.log('nut: nameRCR=', nameRCR,', matchTaskRegion=', matchTaskRegion);
+            var tsk =  matchTaskRegion[1];
+
+            //Find region
+            console.log('RESOURCE: matchTaskRegion=', matchTaskRegion);
+            //to add a leading zero if needed and add if code is based on 4 quarters or 9 octothorpe
+            regionStr = ('000'+ matchTaskRegion[2]).slice(-3);
+            //console.log('regionStr=', regionStr);
+            av.nut[numTsk].uiSub.regionSet[jj] = matchTaskRegion[3];
+            av.nut[numTsk].uiSub.regionCode[jj] = regionStr;   //This is a one to three digit string with leading zeros.
+            av.nut[numTsk].uiSub.regionNdx[jj] = av.sgr.regionQuarterCodes.indexOf(regionStr);
+
+            //console.log('av.nut['+numTsk+'].uiSub.regionNdx['+jj+']=', av.nut[numTsk].uiSub.regionNdx[jj]);
+            av.nut[numTsk].uiSub.regionName[jj] = av.sgr.regionQuarterNames[av.nut[numTsk].uiSub.regionNdx[jj]];
+            //if (av.dbg.flg.nut) { console.log('RESOURCE: jj=',jj, '; av.nut[numTsk].uiSub.regionCode[jj]=', av.nut[numTsk].uiSub.regionCode[jj],'; av.nut[numTsk].uiSub.regionName[jj]=',av.nut[numTsk].uiSub.regionName[jj]); }
+            console.log('; numTsk=', numTsk, '; lnArray.length=',  '; jjj=', jj);
+            console.log('RESOURCE: av.num[numTsk].name[jj]=',av.nut[numTsk].resrc.name[jj]);
+          }
+      
+          // was in Resource set UI geometery
+          //console.log('av.nut[numTsk].resrc.geometry['+jj+']=', av.nut[numTsk].resrc.geometry[jj]);
+          //console.log('av.nut['+numTsk+'].uiAll.geometry', av.nut[numTsk].uiAll.geometry);
+          if ('grid' == av.nut[numTsk].resrc.geometry[jj].toLowerCase() || 'global' == av.nut[numTsk].resrc.geometry[jj].toLowerCase() ) {
+            av.nut[numTsk].uiAll.geometry = av.nut[numTsk].resrc.geometry[jj];
+          };
+          //if (av.dbg.flg.nut) console.log('numTsk=', numTsk,'; av.nut[numTsk].uiAll.geometry=', av.nut[numTsk].uiAll.geometry);
+          
+          //Find the supply type
+          if (0 == av.nut[numTsk].resrc.initial[jj]) {
+            av.nut[numTsk].uiSub.supplyType[jj] = 'none';
+          } 
+          else if (0 < av.nut[numTsk].resrc.initial[jj]) {
+            av.nut[numTsk].uiSub.supplyType[jj] = 'finite';
+            if (null == av.nut[numTsk].uiSub.area[jj]) {
+              av.nut[numTsk].uiSub.area[jj] = av.nut.wrldSize;   //this may get redifned based on cells
+            }
+          };
+          if (0 < av.nut[numTsk].resrc.inflow[jj]) {
+            if (av.nut[numTsk].resrc.inflowx1[jj]===av.nut[numTsk].resrc.outflowx1[jj] && av.nut[numTsk].resrc.inflowx2[jj]===av.nut[numTsk].resrc.outflowx2[jj] && 
+                av.nut[numTsk].resrc.inflowy1[jj]===av.nut[numTsk].resrc.outflowy1[jj] && av.nut[numTsk].resrc.inflowy2[jj]===av.nut[numTsk].resrc.outflowy2[jj] ) {
+              av.nut[numTsk].uiSub.supplyType[jj] = 'chemostat';
+              if (null == av.nut[numTsk].uiSub.area[jj]) {
+                av.nut[numTsk].resrc.boxcol[jj] = Math.abs( 1 + Number(av.nut[numTsk].resrc.inflowx2[jj]) - Number(av.nut[numTsk].resrc.inflowx1[jj]) );
+                av.nut[numTsk].resrc.boxrow[jj] = Math.abs( 1 + Number(av.nut[numTsk].resrc.inflowy2[jj]) - Number(av.nut[numTsk].resrc.inflowy1[jj]) );
+                av.nut[numTsk].uiSub.area[jj] = av.nut[numTsk].resrc.boxcol[jj] * av.nut[numTsk].resrc.boxrow[jj];
+              }            
+            }
+            else { 
+              av.nut[numTsk].uiSub.supplyType[jj] = 'flow';
+              if (null == av.nut[numTsk].uiSub.area[jj] 
+                  && null != av.nut[numTsk].resrc.inflowx1[jj] && null != av.nut[numTsk].resrc.inflowx2[jj] 
+                  && null != av.nut[numTsk].resrc.inflowy1[jj] && null != av.nut[numTsk].resrc.inflowy2[jj] ) {
+                av.nut[numTsk].resrc.boxcol[jj] = Math.abs( 1 + Number(av.nut[numTsk].resrc.inflowx2[jj]) - Number(av.nut[numTsk].resrc.inflowx1[jj]) );
+                av.nut[numTsk].resrc.boxrow[jj] = Math.abs( 1 + Number(av.nut[numTsk].resrc.inflowy2[jj]) - Number(av.nut[numTsk].resrc.inflowy1[jj]) );
+                av.nut[numTsk].uiSub.area[jj] = av.nut[numTsk].resrc.boxcol[jj] * av.nut[numTsk].resrc.boxrow[jj];
+              }            
+            }
+          }
+          if (0 == av.nut[numTsk].resrc.initial[jj] && 0 == av.nut[numTsk].resrc.inflow[jj]) {
+            av.nut[numTsk].uiSub.supplyType[jj] = 'none';
+          };
+          // console.log('jj=', jj, '; av.nut['+numTsk+'].react.depletable=', av.nut[numTsk].react.depletable);
+          if (null == av.nut[numTsk].react.depletable[jj]) { av.nut[numTsk].react.depletable[jj] = 1; }
+          if ( 1 != Number(av.nut[numTsk].react.depletable[jj]) ) {
+                av.nut[numTsk].uiSub.supplyType[jj] = 'infinite';
+          };
+          //this could be in react, but I thought of it here. 
+          if (null == av.nut[numTsk].react.value[jj]) {
+            av.av.nut[numTsk].react.value[jj] = av.sgr.reactValues[ii];
+          }
+        };  // resource found
+      }; // end of loop react name array      
+    };  // end of logic task loops  
+    //if (av.dbg.flg.nut) { 
+    if (true) { 
+      av.nutUI = {};
+      av.nutUI = JSON.parse(JSON.stringify(av.nut));
+      console.log('end of  av.NutriientCfg2userInterfaceData');
+      console.log('av.nutUI = ', av.nutUI); 
+    }
+
+  };
+  //--------------------------------------------------------------------------- end av.NutriientCfg2userInterfaceData --
+
+  //--------------------------------------------------------------------------------------- av.frd.environment2struct --
   // puts data from the environment.cfg into the structure for the setup form for the population page
   av.frd.environment2struct = function (fileStr, from) {
     'use strict';
@@ -1122,13 +1126,7 @@
       av.nut.wrldSize = av.fzr.actConfig.cols * av.fzr.actConfig.rows;  //  av.fzr.actConfig.size;
 
       av.frd.nutrientParse(fileStr, 'av.frd.environment2struct');    // uses av.nut
-      //if (av.dbg.flg.nut) { 
-      if (true) { 
-        av.nutConfig = {};
-        av.nutConfig = JSON.parse(JSON.stringify(av.nut));
-        console.log('After av.frd.nutrientParse');
-        console.log('av.nutConfig = ', av.nutConfig); 
-      }
+      av.frd.NutrientCfg2userInterfaceData(); //uses. av.nut
     }
     else {
       // using "testConfig"
@@ -1267,9 +1265,9 @@
           // Find area of region or whole dish as needed for inflow  Not sure this statement is needed, as there should alway be an area for dish 1.
           if ("1All" == av.nut[numTsk].uiAll.regionLayout) {
             area = wrldSize;
-            if (!isNaN(parseFloat(av.nut[numTsk].cells.initial[subNum]))) {
-              //console.log('cells.initial=', parseFloat(av.nut[numTsk].cells.initial[subNum]));
-              av.nut[numTsk].uiSub.initialHiNP[subNum] = parseFloat(av.nut[numTsk].cells.initial[subNum])/
+            if (!isNaN(parseFloat(av.nut[numTsk].cell.initial[subNum]))) {
+              //console.log('cell.initial=', parseFloat(av.nut[numTsk].cell.initial[subNum]));
+              av.nut[numTsk].uiSub.initialHiNP[subNum] = parseFloat(av.nut[numTsk].cell.initial[subNum])/
                                                          parseFloat(av.nut.wrldSize);
             }
             else if (!isNaN(parseFloat(av.nut[numTsk].resrc.initial[subNum])) ) {
@@ -1284,7 +1282,7 @@
             }          
           } 
           else {
-            //console.log('numTsk=', numTsk, '; subNum=', subNum, '; cells.initial=', parseFloat(av.nut[numTsk].cells.initial[subNum]), 'reSrc=', av.nut[numTsk].resrc.initial[subNum], '; uiSub=', av.nut[numTsk].uiSub.initialHiNp[subNum]);
+            //console.log('numTsk=', numTsk, '; subNum=', subNum, '; cell.initial=', parseFloat(av.nut[numTsk].cell.initial[subNum]), 'reSrc=', av.nut[numTsk].resrc.initial[subNum], '; uiSub=', av.nut[numTsk].uiSub.initialHiNp[subNum]);
             area = av.nut[numTsk].uiSub.area[subNum];
             //console.log('av.nut['+numTsk+'].uiSub.area['+subNum+']=', av.nut[numTsk].uiSub.area[subNum]);
           };
