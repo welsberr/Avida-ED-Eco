@@ -205,12 +205,50 @@
   av.fwt.nut2cfgFile = function (idStr, toActiveConfigFlag, from) {
     var tsk, tskvar, numtsk, resrcFix, cellboxtxt, cellTxt, cellList, ndx, codeTxt, reactTxt;
     var logicLen = av.sgr.logicNames.length;
-    var txt = '';
     var tmpNum = 0;
     var jj=0;
     var cellBeg = 0; 
     var cellEnd = av.nut.wrldSize-1;
     console.log(from, 'called av.fwt.nut2cfgFile: toActiveConfigFlag=', toActiveConfigFlag, '; cellEnd=', cellEnd, 'logicLen=',logicLen);
+
+    var txt = '# Environment.cfg file for Avida-ED 4: guidelines for hand editing.\n';
+    txt += '\n';
+    txt += '# environment.cfg for information is at https://github.com/devosoft/avida/wiki/Environment-file  \n';
+    txt += '# \n';
+    txt += '# A "name-set" are the set of statements that all use the same resource name. For Avida-ED the REACTION name should match as well. \n';
+    txt += '# name and the reaction name should match as well. Each nam set may contatin:\n';
+    txt += '#    RESCOURCE   \n';
+    txt += '#      - must be the first line of the name-set for Avida-ED\n';
+    txt += '#      - describes the resouce \n';
+    txt += '#      - defines boundaries for inflow and outflow \n';
+    txt += '#      - sets diffusion on or off \n';
+    txt += '#      - needed for all sub-region resources \n';
+    txt += '#      - grid position is based on two dimensional representation where (0,0) is uppper left corner \n';
+    txt += '#    CELL \n';
+    txt += '#      - requires a RESOURCE statement \n';
+    txt += '#      - defines boundaries for initial so needed for Finite\n';
+    txt += '#      - also used to define gradient resources \n';
+    txt += '#      - may have zero or more CELL statements in each name-set \n';
+    txt += '#      - are not named but must have matcing resource name \n';
+    txt += '#      - grid position are based on a one dimensional array from 0 to world size - 1 \n';
+    txt += '#      - \n';
+    txt += '#    REACTION \n';
+    txt += '#      - needed for there to be any effect on Avians\n';
+    txt += '#      - defines tsk needed and the effect \n';
+    txt += '#      - no matching RESOURCE statement:\n';
+    txt += '#      - - when there is no resouce name is stated or there is no matching RESOURCE statement.\n';
+    txt += '#      - - must be none or infinite;\n';
+    txt += '#      - - must be glogal \n';
+    txt += '#      - - could act as "none" even for  global/local or a subregion even if not technically correct\n';
+    txt += '#      - matching RESOURE statement found \n';
+    txt += '#      - - can be global or local; can be any resource option \n';
+    txt += '#      - can be either global or finite (grid) if a RESOURCE is specieifed. \n';
+    txt += '#\n';
+    txt += '# Summary: There must be a REACTION STATEMENT to effect an avidian\n';
+    txt += '#    RESOURCE statement must be first line for each name-set if there is a RESOURCE statement \n';
+    txt += '# \n';
+    txt += '\n';
+    
     for (var ii=0; ii< logicLen; ii++) {      //9
       numtsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
       tsk = av.sgr.logicNames[ii];      //3 letter logic names

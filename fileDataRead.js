@@ -468,9 +468,11 @@
      * return its index if it exists
      * return length + 1 is it does not exist
      */
+    
     //var geometry = String (geometry_);
-    //console.log('rtag=', rtag, '; geometry = ', geometry, '; nutrientObj=',nutrientObj,'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+    console.log('rtag=', rtag, '; geometry = ', geometry, '; nutrientObj=',nutrientObj);
     var defaultindex = nutrientObj.name.length;
+    
     //console.log('rtag=', rtag, '; geometry = ', geometry, '; defaultindex=', defaultindex);
     if (undefined !== geometry) {
       if ('grid' === geometry.toLowerCase() && 1 > defaultindex) {
@@ -528,7 +530,7 @@
       if (av.debug.fio) { console.log('av.nut['+numTsk+'].uiAll = ',av.nut[numTsk].uiAll); }
 
       var ndx = av.frd.findNameIndex(reActObj, lnArray[1], av.nut[numTsk].uiAll.geometry);
-
+      console.log('REACT: ndx = ', ndx, '; lnArray[1]', lnArray[1], 'reactName=', reActObj.name, 'uiAll.geometry=', av.nut[numTsk].uiAll.geometry );
       reActObj.name[ndx] = lnArray[1];   //assin the name of the resource. 
 
       // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file with constants for Avida-ED
@@ -619,7 +621,7 @@
       // check to make sure name is unqiue. If it is not unique then overright the previous data. 
       // index into all the arrays that hold resource/reaction parameters; The name should be unique for all arrays in the object. 
       ndx = av.frd.findNameIndex(rSourcObj, pairArray[0], av.nut[numTsk].uiAll.geometry);   
-      //console.log('ndx=',ndx, '; tsk=',tsk, '; name=', pairArray[0], '-------------------------');
+      console.log('RESROUCE: ndx=',ndx, '; tsk=',tsk, '; name=', pairArray[0], 'resrcName=', rSourcObj.name, 'uiAll.geometry=', av.nut[numTsk].uiAll.geometry );
       //if (av.debug.fio) { console.log('ndx=',ndx); }
       if (-1 < ndx) {
         rSourcObj.name[ndx] = pairArray[0];    //asign the name of the resource statement. 
@@ -735,6 +737,7 @@
       if (av.debug.fio) { console.log('av.nut['+numTsk+'].uiAll = ',av.nut[numTsk].uiAll); }
 
       var ndx = av.frd.findNameIndex(cellObj, lnArray[1], av.nut[numTsk].uiAll.geometry);
+      console.log('CELL: ndx = ', ndx, '; lnArray[1]', lnArray[1], 'cellName=', cellObj.name, 'uiAll.geometry=', av.nut[numTsk].uiAll.geometry );
 
       cellObj.name[ndx] = lnArray[1];   //assin the name of the resource. 
 
@@ -880,7 +883,7 @@
       av.nut_env_cfg = {};
       av.nut_env_cfg = JSON.parse(JSON.stringify(av.nut));
       console.log('; av.nut_env_cfg = ', av.nut_env_cfg); 
-    }    
+    }
     if (av.dbg.flg.nut) { console.log('============================================================================== end of nutrientParse =='); }
   };
   //------------------------------------------------------------------------------------- end of av.frd.nutrientParse --
@@ -925,11 +928,12 @@
   //---------------------------------------------------------------------------------------- av.frd.resourceNameMatch --
   av.frd.resourceNameMatch = function(numTsk, sub) {
     var matchStatus = 'unknown';
-    console.log('av.nut['+numTsk+'].react.resource['+sub+']=', av.nut[numTsk].react.resource[sub]);
     if ( null == av.nut[numTsk].react.resource[sub] ) {
       matchStatus = 'undefined';
     }
-    else if ( 'missing' === av.nut[numTsk].react.resource[sub] ) {
+    else {
+      console.log('av.nut['+numTsk+'].react.resource['+sub+']=', av.nut[numTsk].react.resource[sub]);
+      if ( 'missing' === av.nut[numTsk].react.resource[sub] ) {
       av.nut[numTsk].uiAll.regionsNumOf = 1;                 //reaction but no resource so it must be global and none or infinite
       av.nut[numTsk].uiAll.geometry = 'global';            //grid (if 1 < subdish)
       if (0 < av.nut[numTsk].react.value[sub]) {
@@ -959,16 +963,17 @@
         //return matchStatus;
       } 
       else if (ndx != sub) { 
-        console.log('********************** Name & resource should have the same index: ',
+        console.log('********* Name & resource should have the same index: ',
                  'av.nut['+numTsk+'].react.resource['+sub+']=', av.nut[numTsk].react.resource[sub],
                  'av.nut['+numTsk+'].resrcName['+ndx+']=', av.nut[numTsk].resrc.name[ndx],
-                 '*****************************');
+                 '************');
         matchStatus = 'index differs';
         return matchStatus;
       } else {
         matchStatus = 'found';
       //return matchStatus;
       }
+    };
     }
     return matchStatus;
   };
@@ -1133,7 +1138,7 @@
       var errors =  av.frd.testEnvironmentParse(fileStr, av.frd.environment2struc);    // uses av.fzr.env.react This is in the test tab only and will be removed
       if (1 < errors.length) console.log('errors=', errors);    
     }
-    if (av.dbg.flg.nut) { console.log('------------------------------------------------------------------ end of av.frd.environment2struct --'); }
+    if (av.dbg.flg.nut) { console.log('================================================================== end of av.frd.environment2struct =='); }
   };
   //----------------------------------------------------------------------------------- end av.frd.environment2struct --
 
