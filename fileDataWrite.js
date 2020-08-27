@@ -211,7 +211,8 @@
     var cellEnd = av.nut.wrldSize-1;
     console.log(from, 'called av.fwt.nut2cfgFile: toActiveConfigFlag=', toActiveConfigFlag, '; cellEnd=', cellEnd, 'logicLen=',logicLen);
 
-    var txt = '# Environment.cfg file for Avida-ED 4: guidelines for hand editing.\n';
+    var txt = '\n';
+    txt += '# Environment.cfg file for Avida-ED 4: guidelines for hand editing.\n';
     txt += '\n';
     txt += '# environment.cfg for information is at https://github.com/devosoft/avida/wiki/Environment-file  \n';
     txt += '# \n';

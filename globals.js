@@ -40,7 +40,7 @@ av.debug.userMsg = false; //debug of user messages.
 av.dbg = {};
 av.dbg.flg = {}; 
 av.dbg.flg.frd = false;  //reading file text strings
-av.dbg.flg.nut = true;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
+av.dbg.flg.nut = false;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
 av.dbg.flg.plt = false;  //both popChart and analysis
 av.dbg.flg.root = false;  //statements that look for failers when the code executes outside of functions
 
@@ -472,8 +472,8 @@ av.sgr = {};   //specific to resource/reactions (sugars); mostly constants. Not 
 //Rob Pennock decided that we should only have local/grid resources. This will complicate things as my design is based
 // global characteristic in the "summary" and the rest in the "details" section of the summary/details format. 
 // 
-av.sgr.gridOnly = true;  
-
+av.sgr.gridOnly = true;        // gridOnly true  ++> dftGeometry = grid
+av.sgr.dftgGeometry = 'grid';  // gridOnly false ++> dftGeometry = global
 av.sgr.oseNames = ['Notose', 'Nanose', 'Andose', 'Ornose', 'Orose', 'Antose', 'Norose', 'Xorose', 'Equose'];
 av.sgr.logEdNames = ['0not', '1nan', '2and', '3orn', '4oro', '5ant', '6nor', '7xor', '8equ'];
 av.sgr.logicNames = ['not', 'nan', 'and', 'orn', 'oro', 'ant', 'nor', 'xor', 'equ'];
@@ -696,9 +696,9 @@ av.sgr.makeNutDefault = function () {
     av.sgr.nut.dft.uiAll[ av.sgr.ui_allDish_argu[jj] ] = 'default';
   };
   //defaults for items that describe the whole dish
-  av.sgr.nut.dft.uiAll.geometry = 'global';        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
+  av.sgr.nut.dft.uiAll.geometry = av.sgr.dftgGeometry;  ////Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global
   av.sgr.nut.dft.uiAll.supplyType = 'infinite';    //this is only for whem ui.geometry = global
-  av.sgr.nut.dft.uiAll.regionLayout = '0All';  //only Whole Dish for now; '1All' is the code for 'Whole Dish';
+  av.sgr.nut.dft.uiAll.regionLayout = '1All';  //only Whole Dish for now; '1All' is the code for 'Whole Dish';
   av.sgr.nut.dft.uiAll.regionsNumOf = 1;   // whole dish = there is only one dish 
   av.sgr.nut.dft.uiAll.initial = 1000;      //only used when whem ui.geometry = global and  supplyType = 'finite' 
 
@@ -757,12 +757,12 @@ av.fzr.clearEnvironment = function(from) {
   var grd = [];
   for (var ii = 0; ii<5;ii++) {
     grd[ii] = [];
-    for (var jj=0; jj < ii+1; jj++) {
-      grd[ii][jj] = (ii+1) * (jj+1);
-    }
+    //for (var jj=0; jj < ii+1; jj++) {
+    //  grd[ii][jj] = (ii+1) * (jj+1);
+    //}
   };
     
-  console.log('grd=', grd);
+  //console.log('grd=', grd);
   var logiclen = av.sgr.logicNames.length;
   var rsrcelen = av.sgr.resrc_argu.length; 
   var reactlen = av.sgr.react_argu.length;
@@ -895,7 +895,7 @@ av.sgr.processHideFlags = function(boolArry, from) {
   for (var ii=0; ii < len; ii++) {
     av.nut.hideFlags[av.sgr.hideFlgNames[ii]] = boolArry[ii];
   };
-  console.log('av.nut.hideFlags=',av.nut.hideFlags,'-------------------------------------------------------------');
+  //console.log('av.nut.hideFlags=',av.nut.hideFlags,'-------------------------------------------------------------');
 };
 //------------------------------------------------------------------------------------ end of av.sgr.processHideFlags --
 

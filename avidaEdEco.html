@@ -1299,25 +1299,23 @@
                           <option value="global" selected="">Global</option>
                           <option value="grid">Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
-                        <select id="orn0supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this)">
-                          <option id="orn0none" value="none">None</option>
-                          <option id="orn0Infinite" value="infinite" selected="">Infinite</option>
-                          <option id="orn0Finite" class="globalFinite" value="finite">Finite</option>
-                          <option id="orn0Chemostat" class="globalChemostat" value="chemostat">Chemostat</option>
-                          <option id="orn0Debug" class="globalDebug" value="all">All debug</option>
-                        </select>&nbsp;&nbsp;&nbsp;
                         <select id="orn0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                           <option id="orn0WholeDish" value="1All" selected="">Whole Dish</option>
                           <option id="orn0LftRit" value="2LftRit">Halves Left/Right</option>
                           <option id="orn0TopLftRit" class="3TopLftRit" value="3TopLftRit">Top Left/Right</option>
                           <option id="orn0Quarters" class="4Quarters" value="4Quarters">Quarters</option>
                         </select>&nbsp;&nbsp;&nbsp;
+                        <select id="orn0supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this)">
+                          <option id="orn0none" value="none">None</option>
+                          <option id="orn0Infinite" value="infinite" selected="">Infinite</option>
+                          <option id="orn0Finite" class="globalFinite" value="finite">Finite</option>
+                          <option id="orn0Chemostat" class="globalChemostat" value="chemostat">Chemostat</option>
+                        </select>&nbsp;&nbsp;&nbsp;
                         <select id="ornWsupplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                           <option id="ornWnone" value="none">None</option>
                           <option id="ornWInfinite" value="infinite" selected="">Infinite</option>
                           <option id="ornWFinite" value="finite">Finite</option>
                           <option id="ornWChemostat" class="localChemostat" value="chemostat">Chemostat</option>
-                          <option id="ornWDebug" class="localDebug" value="debug">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <span id="orn0initialDiv" class="sugarSummarySpan">
                           <input id="orn0initial" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
@@ -1333,7 +1331,6 @@
                               <option id="orn1Infinite" value="infinite" selected="">Infinite</option>
                               <option id="orn1Finite" class="localFinite" value="finite">Finite</option>
                               <option id="orn1Chemostat" class="localChemostat" value="chemostat">Chemostat</option>
-                              <option id="orn1Debug" class="localDebug" value="debug">All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="orn1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
@@ -1484,7 +1481,6 @@
                           <option id="oro0Infinite" value="infinite" selected="">Infinite</option>
                           <option id="oro0Finite" class="globalFinite" value="finite">Finite</option>
                           <option id="oro0Chemostat" class="globalChemostat" value="chemostat">Chemostat</option>
-                          <option id="oro0Debug" class="globalDebug" value="all">All debug</option>
                         </select>&nbsp;&nbsp;&nbsp;
                         <select id="oro0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                           <option id="oro0WholeDish" value="1All" selected="">Whole Dish</option>
@@ -2390,7 +2386,6 @@
                         <option value='infinite'>Infinite</option>
                         <option value='finite' class='groupFinite'>Finite</option>
                         <option value='chemostat' class='groupChemostat'>Chemostat</option>
-                        <option value='debug' class='groupDebug'>Debug</option>
                         <option value='neutral' selected>----</option>
                       </select> 
                     </div>
@@ -3065,8 +3060,9 @@
       </div>
     </div>
 
-    <span class='notSeen' id='o__________________________________________________________________Freezer_Dialog_box___'></span>
-    <div  class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='fzDialog' title='What would you like to save to the freezer?'>
+    <span class='notSeen' id='o_____________________need_to_Delete_______________________________Freezer_Dialog_box___'></span>
+    <div id='fzDialog' class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='fzDialog' 
+         title='What would you like to save to the freezer?'>
       <div class='dijitDialogPaneContentArea'>
         <p>Configuration saves the experiment settings only.</p>
         <p>Population saves organisms and experiment history.</p>
@@ -3084,8 +3080,29 @@
     </div>
 
     <span class='notSeen' id='o_______________________________________________________________________example_Modal___'></span>
-    <div id='exampleModalID' class='modal'>
+    <div id='fzDialogModalID' class='modal'>
+      <!-- Modal content -->
+      <div class="modal-content" >
+        <div class="modal-header">
+          <h2>'What would you like to save to the freezer?'</h2>
+        </div>
+        <div class="modal-body">
+          <p>Configured Dish saves the experiment settings only.</p>
+          <p>Populated Dish saves organisms and experiment history.</p>
+        </div>
+        <div class="modal-footer">
+          <button id='fzDialogModCancel'>Cancel</button>
+          <button id='fzDialogModSaveConfig'>Configured Dish</button>
+          <span id='fzDialogModFzOrganismSpan'>
+            <button id='fzDialogModSaveOrganism'>Selected Organism</button>
+          </span>
+          <button id='fzDialogModSaveWorld'>Populated Dish</button>
+        </div>
+      </div>
+    </div><span id='o____________________________________________________________________________end_exampleModalID___'></span>
 
+    <span class='notSeen' id='o_______________________________________________________________________example_Modal___'></span>
+    <div id='exampleModalID' class='modal'>
       <!-- Modal content -->
       <div class="modal-content" >
         <div class="modal-header">
@@ -3106,7 +3123,6 @@
 
     <span class='notSeen' id='o______________________________________________________________________newDishModalID___'></span>
     <div id='newDishModalID' class='modal'>
-
       <!-- Modal content -->
       <div class="modal-content">
         <div class="modal-header">

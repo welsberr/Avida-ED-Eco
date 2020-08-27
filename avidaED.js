@@ -1058,7 +1058,7 @@ require([
       document.getElementById('ritePnlBtnHolder').style.display = 'none';
       document.getElementById('rightInfoHolder').style.display = 'none';
     };
-    console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
+    //console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
   };
 
   // Buttons that call MainBoxSwap
@@ -1351,6 +1351,7 @@ require([
 
   /******************************************* New Button and new Dialog **********************************************/
 
+  //av.dom.newDishDiscard not in avidaEdEco.html
   av.dom.newDishDiscard.onclick = function () {
     av.post.addUser('Button: newDishDiscard');
     av.dom.newDishModalID.style.display = 'none';
@@ -1358,6 +1359,7 @@ require([
     //console.log('newDishDiscard click');
   };
 
+  // av.dom.newDishSaveConfig not in avidaEdEco.html
   av.dom.newDishSaveWorld.onclick = function () {
     av.post.addUser('Button: newDishSaveWorld');
     av.ptd.FrPopulationFn();
@@ -1366,7 +1368,8 @@ require([
     //console.log('newDishSaveWorld click');
   };
 
-  av.dom.newDishSaveConfig.onclick = function () {
+  av.dom.newDishSaveConfig.onclick = function (domObj) {
+    console.log('in av.dom.newDishSaveConfig, domObj = ', domObj);
     av.post.addUser('Button: newDishSaveConfig');
     av.ptd.FrConfigFn('av.dom.newDishSaveConfig.onclick');
     av.dom.newDishModalID.style.display = 'none';
@@ -1402,24 +1405,32 @@ require([
   //Saves either configuration or populated dish
   //Also creates context menu for all new freezer items.*/
   av.dom.freezeButton.onclick = function () {
+    console.log('in av.dom.freezeButton.onclick: av.grd.runState=', av.grd.runState, '; av.msg.ByCellIDgenome=', av.msg.ByCellIDgenome, '; length=', av.msg.ByCellIDgenome.length);
     av.post.addUser('Button: freezeButton');
     if ('prepping' == av.grd.runState)
       av.ptd.FrConfigFn('av.dom.freezeButton.onclick');
     else {
       if (5 > av.msg.ByCellIDgenome.length) {
-        document.getElementById('FzOrganismSpan').style.display = 'none';
-      }  //block
+        document.getElementById('fzDialogModFzOrganismSpan').style.display = 'none';
+      } 
       else
-        document.getElementById('FzOrganismSpan').style.display = 'inline';
-      fzDialog.show();
+        document.getElementById('fzDialogModFzOrganismSpan').style.display = 'inline';
+      console.log('before fzDialog.show()');
+      document.getElementById('fzDialogModalID').style.display = "block";    //fzDialog.show();
     }
   };
 
-  dijit.byId('FzConfigurationButton').on('Click', function () {
-    av.post.addUser('Button: FzConfigurationButton');
-    fzDialog.hide();
-    av.ptd.FrConfigFn('FzConfigurationButton');
-  });
+
+
+
+
+
+  document.getElementById('fzDialogModSaveConfig').onclick = function () {
+//  dijit.byId('FzConfigurationButton').on('Click', function () {
+    av.post.addUser('Button: fzDialogModSaveConfig');
+    document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide();
+    av.ptd.FrConfigFn('fzDialogModSaveConfig.onClick');
+  };
 
   //Drop down menu to save a configuration item
   dijit.byId('mnFzConfig').on('Click', function () {
@@ -1427,19 +1438,24 @@ require([
     av.ptd.FrConfigFn('mnFzConfig');
   });
 
-  //
-  dijit.byId('FzOrganismButton').on('Click', function () {
-    av.post.addUser('Button: FzOrganismButton');
-    fzDialog.hide();
+    document.getElementById('fzDialogModSaveOrganism').onclick = function () {
+//  dijit.byId('FzOrganismButton').on('Click', function () {
+    av.post.addUser('Button: fzDialogModSaveOrganism');
+    document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide
     av.ptd.FrOrganismFn('selected');
-  });
+  };
 
   //button to freeze a population
-  dijit.byId('FzPopulationButton').on('Click', function () {
-    av.post.addUser('Button: FzPopulationButton');
-    fzDialog.hide();
+  document.getElementById('fzDialogModSaveWorld').onclick = function () {  
+  //dijit.byId('FzPopulationButton').on('Click', function () {
+    av.post.addUser('Button: fzDialogModSaveWorld');
+    document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide
     av.ptd.FrPopulationFn();
-  });
+  };
+  
+  document.getElementById('fzDialogModCancel').onclick = function () {
+    av.dom.fzDialogModalID.style.display = 'none';
+  };
 
   dijit.byId('mnFzPopulation').on('Click', function () {
     av.post.addUser('Button: mnFzPopulation');
@@ -3439,10 +3455,10 @@ require([
     //set mmDebug to hidden so that when toggle called it will show the development sections x
     av.doj.mnDebug.style.visibility = 'hidden';   //visible
   };
-  av.ui.toggleDevelopentDisplays('Last_things_done');  //ned to put this back for production
+  av.ui.toggleDevelopentDisplays('Last_things_done');  //need to put this back for production
   
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
-  av.sgr.ChangeAllGeo('global');
+  av.sgr.ChangeAllGeo(av.sgr.dftgGeometry);
   //av.sgr.setSugarColors(true);  //true is to turn colors on;    // set color/grey individually so when 0 resources, grey shades rather than colors
   av.sgr.ChangeAllsugarSupplyType('infinite','Last_things_done');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');

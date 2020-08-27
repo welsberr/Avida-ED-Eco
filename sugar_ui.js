@@ -259,10 +259,10 @@
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.initialChange = function (domObj) {
-    console.log('av.sgr.initialChange domObj=', domObj);
- // if (av.dbg.flg.nut) { console.log('domObj.value=', domObj.value); }
-    var ndx = domObj.id.indexOf('Input');
-    var id = domObj.id.substring(0, ndx) + 'Text';
+ // if (av.dbg.flg.nut) { console.log('domObj.value=', domObj.value, '; id=, domObj.id); }
+    //var ndx = domObj.id.indexOf('Input');
+    //var id = domObj.id.substring(0, ndx) + 'Text';
+    var id = domObj.id;
     // console.log('text id=', id, '; input id=', domObj.id);
     // console.log('Number(domObj.value)=',Number(domObj.value));
     if (isNaN(Number(domObj.value))) {
@@ -280,7 +280,7 @@
       var supplyType = document.getElementById(tsk+sub+'supplyType').value;
       console.log('tsk=', tsk, '; geometry=', geometry, '; supplyType=', supplyType);
       
-     av.sgr.setColorFlagBasedonSugarPresence(supplyType, geometry, tsk, sub, 'av.sgr.initialChange');
+     av.sgr.setColorFlagBasedonSugarPresence(geometry, tsk, 'av.sgr.initialChange');
     }
   };
 
@@ -288,12 +288,52 @@
   av.sgr.inflowChange = function (domObj) {
  // if (av.dbg.flg.nut) { console.log('av.sgr.inflowChange domObj=', domObj); }
  // if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
+    var id = domObj.id;
+    var equilbrium = 1;
+    var preID = id.substr(0,4);
+    var postID = id.substr(-4,2);
+    var textID = preID + 'inflow' + postID + 'Text';
+    console.log('id=', domObj.id, '; domObj.value=', domObj.value, '; preID=', preID, '; postID=', postID, '; textID=', textID);
+    if (isNaN(Number(domObj.value))) {
+      document.getElementById(textID).innerHTML = 'inflow amount must be a number';
+      document.getElementById(textID).style.color = 'red';
+    } else if (0 >= domObj.value) {
+      document.getElementById(textID).innerHTML = 'inflow amount must be >= 0';
+      document.getElementById(textID).style.color = 'red';
+    } else {
+      document.getElementById(textID).innerHTML = 'inflow amount / cell';
+      document.getElementById(textID).style.color = 'black';
+      equilbrium = parseFloat(document.getElementById(preID+'inflow'+ postID + 'Np').value)/
+                   parseFloat(document.getElementById(preID+'outflow'+ postID + 'Np').value);
+      console.log('av.dom.'+preID+'chmstat'+postID+'Text = ', equilbrium.toFixed(1) + ' = equilibrium if not eaten');
+      document.getElementById(preID+'chmstat'+postID +'Text').innerHTML = equilbrium.toFixed(1) + ' = equilibrium if not eaten';
   };
+};
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.outflowChange = function (domObj) {
  // if (av.dbg.flg.nut) { console.log('av.sgr.outflowChange domObj=', domObj); }
  // if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
+    var id = domObj.id;
+    var equilbrium = 1;
+    var preID = id.substr(0,4);
+    var postID = id.substr(-4,2);
+    var textID = preID + 'outflow' + postID + 'Text';
+    console.log('id=', domObj.id, '; domObj.value=', domObj.value, '; preID=', preID, '; postID=', postID, '; textID=', textID);
+    if (isNaN(Number(domObj.value))) {
+      document.getElementById(textID).innerHTML = 'outflow fraction must be a number';
+      document.getElementById(textID).style.color = 'red';
+    } else if (0 >= domObj.value || domObj.value >  1) {
+      document.getElementById(textID).innerHTML = 'Required: 0 < outflow fraction <= 0';
+      document.getElementById(textID).style.color = 'red';
+    } else {
+      document.getElementById(textID).innerHTML = 'outflow fraction / cell';
+      document.getElementById(textID).style.color = 'black';
+      equilbrium = parseFloat(document.getElementById(preID+'inflow'+ postID + 'Np').value)/
+                   parseFloat(document.getElementById(preID+'outflow'+ postID + 'Np').value);
+      console.log('av.dom.'+preID+'chmstat'+postID+'Text = ', equilbrium.toFixed(1) + ' = equilibrium if not eaten');
+      document.getElementById(preID+'chmstat'+postID +'Text').innerHTML = equilbrium.toFixed(1) + ' = equilibrium if not eaten';
+    }
   };
 
   /*********************************************************************************** end calls directly from dom ****/
@@ -451,6 +491,7 @@
     var domObjName;
     var indx = av.sgr.logicNames.indexOf(tsk);
     var edTsk = av.sgr.logEdNames[indx];
+    //console.log('tsk=', tsk, '; indx=', indx, '; edTsk=', edTsk, '; geometry=', geometry);
     av.nut[edTsk].uiAll.regionsNumOf =  Number(av.nut[edTsk].uiAll.regionLayout.substr(0,1) );
     if ('global' == geometry.toLowerCase()) {
       supplyType = document.getElementById(tsk + '0supplyType').value.toLowerCase();
@@ -505,6 +546,8 @@
 //  if (av.sgr.gridOnly && 'visible' != av.doj.mnDebug.style.visibility) {  
     if (av.sgr.gridOnly && 'visible' != av.doj.mnDebug.style.visibility) {
       showGeo = 'gridOnly';
+      document.getElementById(tsk+'0regionLayout').style.display = 'inline-block';
+      //av.nut[edTsk].uiAll.geometry = document.getElementById(tsk+'0geometry').value = 'grid';
       show1SupplyType = false;
       document.getElementById(tsk+'0geometry').style.displaly = 'none';
       if ('1All' == regionLayout) {
@@ -522,6 +565,7 @@
     else {
         showGeo = 'grid';
         show1SupplyType = true;    //showgeo
+        document.getElementById(tsk+'0regionLayout').style.display = 'none';
         document.getElementById(tsk+'WsupplyType').style.display = 'inline-block';
         document.getElementById(tsk+'1supplyType').style.display = 'inline-block';
     }
@@ -550,7 +594,6 @@
 
     //hide everything. Display parts based on what is selected
     document.getElementById(tsk+'0supplyType').style.display = 'none';
-    document.getElementById(tsk+'0regionLayout').style.display = 'none';
     document.getElementById(tsk+'0initialDiv').style.display = 'none';
     //if (av.dbg.flg.nut) { console.log('document.getElementById('+tsk+sub+'supplyTypeSelectHolder) =', document.getElementById(tsk+sub+'supplyTypeSelectHolder')); }
 
@@ -579,6 +622,7 @@
     };
     //console.log('av.nut.'+edTsk+'.uiAll.geometry.tolower()=',av.nut[edTsk].uiAll.geometry.toLowerCase());
     if ('global' == av.nut[edTsk].uiAll.geometry.toLowerCase()) {
+      document.getElementById(tsk+'WsupplyType').style.display = 'none';
       document.getElementById(tsk+'0supplyType').style.display = 'inline-block';  
       av.nut[edTsk].uiAll.supplyType = document.getElementById(tsk + '0supplyType').value;
       switch (av.nut[edTsk].uiAll.supplyType.toLowerCase()) {
@@ -635,7 +679,7 @@
       // geometry = grid
       document.getElementById(tsk+'0regionLayout').style.display = 'inline-block';
       document.getElementById(tsk+'0section').open = true;
-      //console.log('num sub Regions=', av.nut[edTsk].uiAll.regionsNumOf);
+//      console.log('av.nut['+edTsk+'].uiAll.regionsNumOf=', av.nut[edTsk].uiAll.regionsNumOf);
       for (var sub=1; sub <= av.nut[edTsk].uiAll.regionsNumOf; sub++) {
         av.nut[edTsk].uiSub.supplyType[sub] = document.getElementById(tsk + sub + 'supplyType').value;
         //console.log('sub=', sub,'; regionNameList=',  regionNameList);
@@ -796,13 +840,13 @@
          // if (av.dbg.flg.nut) { console.log(tsk+'Details.class=', document.getElementById(tsk+'Details').className); }
             break;
         }; //end of switch
-        console.log('document.getElementById('+tsk+sub+'subSection).className=', document.getElementById(tsk+sub+'subSection').className);
-        //console.log('document.getElementById('+tsk+sub+'gradientCheckbox).className=', document.getElementById(tsk+sub+'gradientCheckbox').className);
-        //console.log('document.getElementById('+tsk+sub+'gradientCheck).style.display=', document.getElementById(tsk+sub+'gradientCheckbox').style.display);
+        //console.log('document.getElementById('+tsk+sub+'subSection).className=', document.getElementById(tsk+sub+'subSection').className);
+          //console.log('document.getElementById('+tsk+sub+'gradientCheckbox).className=', document.getElementById(tsk+sub+'gradientCheckbox').className);
+          //console.log('document.getElementById('+tsk+sub+'gradientCheck).style.display=', document.getElementById(tsk+sub+'gradientCheckbox').style.display);
       };  //end of subregion for loop
     }    //end of global/local if statement
     // if (av.dbg.flg.nut) { console.log('tsk=', tsk, 'sub=', sub, '; geometry=', geometry, '; supplyType =', supplyType, ' ' ,tsk+'0regionLayout=', document.getElementById(tsk+'0regionLayout').value ); }
-    av.sgr.setColorFlagBasedonSugarPresence(av.nut[edTsk].uiAll.geometry.toLowerCase(), tsk, subChanged, 'av.sgr.changeDetailsLayout');
+    av.sgr.setColorFlagBasedonSugarPresence(av.nut[edTsk].uiAll.geometry.toLowerCase(), tsk, 'av.sgr.changeDetailsLayout');
         
     // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
   };

@@ -320,12 +320,12 @@
         };
        
         //Hide select options that are not yet implemented
-        len = document.getElementsByClassName('globalDebug').length;
+        len = document.getElementsByClassName('globalChemostat').length;
         for (ii = 0; ii < len; ii++) {
           //console.log('globalFinite=', document.getElementsByClassName('globalFinite')[ii].id);
           document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
           document.getElementsByClassName('globalChemostat')[ii].style.display = 'none';
-          document.getElementsByClassName('globalDebug')[ii].style.display = 'none';
+          //document.getElementsByClassName('globalDebug')[ii].style.display = 'none';
           document.getElementsByClassName('geometryClass')[ii].style.display = 'none';  
         };
         
@@ -345,7 +345,7 @@
         // now clear options for changing all sugars (groups)
         //document.getElementsByClassName('groupChemostat')[0].style.display = 'none';
         //document.getElementsByClassName('groupFinite')[0].style.display = 'none';     //finite available for local options
-        document.getElementsByClassName('groupDebug')[0].style.display = 'none';
+        //document.getElementsByClassName('groupDebug')[0].style.display = 'none';
         //console.log('dom.groupDebug=', document.getElementsByClassName('groupDebug'));
 
         //debug menu??
@@ -386,26 +386,26 @@
           av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
           document.getElementsByClassName('globalChemostat')[ii].style.display = 'inline';
           document.getElementsByClassName('globalFinite')[ii].style.display = 'inline';
-          document.getElementsByClassName('globalDebug')[ii].style.display = 'inline';
+          //document.getElementsByClassName('globalDebug')[ii].style.display = 'inline';
           document.getElementsByClassName('geometryClass')[ii].style.display = 'inline-block';
         };
 
         //show environment options sill under development.
         document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherContainer';
         
-        
+/*        
         len = document.getElementsByClassName('localChemostat').length;
         console.log('localChemostat.len=', len, '; globalChemostat.len=', document.getElementsByClassName('globalChemostat').length);
         for (ii = 0; ii < len; ii++) {
           document.getElementsByClassName('localChemostat')[ii].style.display = 'inline';
-          document.getElementsByClassName('localDebug')[ii].style.display = 'inline';
+          //document.getElementsByClassName('localDebug')[ii].style.display = 'inline';
         };
         
          // now show options for changing all sugars (groups)
         //document.getElementsByClassName('groupChemostat')[0].style.display = 'inline';
         //document.getElementsByClassName('groupFinite')[0].style.display = 'inline';     //finite available for local options
-        document.getElementsByClassName('groupDebug')[0].style.display = 'inline';
-
+        //document.getElementsByClassName('groupDebug')[0].style.display = 'inline';
+*/
         //Show debug on dropdown menu
         dijit.byId('mnHpDebug').set('label', 'Hide debug menu');   //????????
         av.post.addUser('Button: mnHpDebug: now visible');
