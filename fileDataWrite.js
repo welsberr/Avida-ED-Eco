@@ -196,7 +196,7 @@
       text = str + text;
     }
     if (':value=' == str) {
-      console.log('in av.fwt.existCheck: str=', str, '; data=', data, '; dfltTxt='+dfltTxt+'; text='+text+'|');  
+      //console.log('in av.fwt.existCheck: str=', str, '; data=', data, '; dfltTxt='+dfltTxt+'; text='+text+'|');  
     }
     return text;
   };
@@ -207,9 +207,12 @@
     var logicLen = av.sgr.logicNames.length;
     var tmpNum = 0;
     var jj=0;
-    var cellBeg = 0; 
-    var cellEnd = av.nut.wrldSize-1;
-    console.log(from, 'called av.fwt.nut2cfgFile: toActiveConfigFlag=', toActiveConfigFlag, '; cellEnd=', cellEnd, 'logicLen=',logicLen);
+    var cbeg = 0; 
+    var cend = av.nut.wrldSize-1;
+    var wcol = parseInt(av.nut.wrldCols);
+    var wrow = parseInt(av.nut.wrldRows);
+    var boxx=0, boxy=0, bcol=parseInt(av.nut.wrldCols), brow=parseInt(av.nut.wrldRows);
+    console.log(from, 'called av.fwt.nut2cfgFile: toActiveConfigFlag=', toActiveConfigFlag, '; cellEnd=', cend, 'logicLen=',logicLen);
 
     var txt = '\n';
     txt += '# Environment.cfg file for Avida-ED 4: guidelines for hand editing.\n';
@@ -316,7 +319,6 @@
             txt += av.fwt.existDfltCheck( ':depletable=', av.nut[numtsk].react.depletable[jj], '', 1 );
             txt += av.fwt.existCheck(' requisite:max_count=', av.nut[numtsk].react.max_count[jj], ' requisite:max_count=1') + '\n\n';
 
-            
             txt += 'REACTION ' + av.nut[numtsk].react.name[jj] + ' ' + av.nut[numtsk].react.task[jj];
             txt += ' process:resource='+av.nut[numtsk].react.resource[jj]+':value=' + av.nut[numtsk].react.value[jj];
             txt +=':type=' + av.nut[numtsk].react.type[jj]+':min='+av.nut[numtsk].react.max[jj]+':min='+av.nut[numtsk].react.min[jj];
@@ -361,32 +363,42 @@
           resrcFix =  'RESOURCE ' + av.fwt.existCheck('', av.nut[numtsk].resrc.name[jj], av.fwt.existCheck('', av.nut[numtsk].react.resource[jj], tsk) );
           resrcFix += av.fwt.existCheck(':geometry=', av.nut[numtsk].resrc.geometry[jj], 'grid');
           resrcFix += av.fwt.existDfltCheck(':xdiffuse=', av.nut[numtsk].resrc.xdiffuse[jj], 0, 1); 
-          resrcFix += av.fwt.existDfltCheck(':ydiffuse=', av.nut[numtsk].resrc.ydiffuse[jj], 0, 1) + '\n';
+          resrcFix += av.fwt.existDfltCheck(':ydiffuse=', av.nut[numtsk].resrc.ydiffuse[jj], 0, 1);
 
           cellboxtxt = '';
-          if ( (null == av.nut[numtsk].resrc.boxflag[jj]) && (null == av.nut[numtsk].resrc.boxx[jj]) 
-            && (null == av.nut[numtsk].resrc.boxy[jj]) && (null == av.nut[numtsk].resrct.boxcol[jj]) 
-            && (null == av.nut[numtsk].resrc.boxrow[jj]) ) {
+          boxx = parseInt(av.nut[numtsk].resrc.boxx[jj]);
+          boxy = parseInt(av.nut[numtsk].resrc.boxy[jj]);
+          bcol = parseInt(av.nut[numtsk].resrc.boxcol[jj]);
+          brow = parseInt(av.nut[numtsk].resrc.boxrow[jj]);
+          console.log('boxx=', boxx, '; boxy=', boxy, '; bcol=', bcol, '; brow=', brow, '; wcol=', wcol, 'wrow=', wrow);
+          if (!isNaN(boxx) && !isNaN(boxy) && !isNaN(bcol) && !isNaN(brow) ) {
+          //if ( (null != av.nut[numtsk].resrc.boxflag[jj]) && (null != av.nut[numtsk].resrc.boxx[jj]) 
+          //  && (null != av.nut[numtsk].resrc.boxy[jj]) && (null != av.nut[numtsk].resrc.boxcol[jj]) 
+          //  && (null != av.nut[numtsk].resrc.boxrow[jj]) ) {
             if (av.nut[numtsk].resrc.boxflag[jj]) {
-              cellboxtxt += ':cellbox='+',' + av.nut[numtsk].resrc.boxx[jj] + ',' + av.nut[numtsk].resrc.boxy[jj] + ',';
-              cellboxtxt += ',' + av.nut[numtsk].resrc.boxcol[jj] + ',' + av.nut[numtsk].resrc.boxrow[jj];
+              cellboxtxt += ':cellbox=' + boxx + ',' + boxy + ',' + bcol + ',' + brow;
             }
           };
+          //console.log('cellboxtxt=', cellboxtxt);
+          if (0 != parseInt(av.nut[numtsk].uiSub.regionCode)) {
+            resrcFix = resrcFix + cellboxtxt;
+          }            
+          
           //console.log('av.nut['+numtsk+'].resrc.name['+jj+']=', av.nut[numtsk].resrc.name[jj], '; av.nut['+numtsk+'].react.resource['+jj+']=', av.nut[numtsk].react.resource[jj], 'tsk=', tsk);
           cellTxt = 'CELL ' + av.fwt.existCheck('', av.nut[numtsk].resrc.name[jj], av.fwt.existCheck('', av.nut[numtsk].react.resource[jj], tsk) );
           
           //Find cell description
           codeTxt = av.nut[numtsk].uiSub.regionCode[jj];
           ndx = av.sgr.regionQuarterCodes.indexOf(codeTxt);
+          cellList = ':';
           //lineararray index = x + y * (numcols)
           if ('000' == codeTxt || '012' == codeTxt || '34' == codeTxt) {
             //subdish includes entire rows so it is easier to define. 
-            cellBeg = Number(av.nut[numtsk].resrc.inflowx1[jj]) +
-                      Number(av.nut[numtsk].resrc.inflowy1[jj]) * Number(av.nut.wrldCols);
-                    
-            cellEnd = Number(av.nut[numtsk].resrc.inflowx2[jj]) +
-                      Number(av.nut[numtsk].resrc.inflowy2[jj]) * Number(av.nut.wrldCols);
-            cellList = ':' + Math.floor(cellBeg) + '..' + Math.floor(cellEnd);
+            cbeg = Number(av.nut[numtsk].resrc.inflowx1[jj]) +
+                      Number(av.nut[numtsk].resrc.inflowy1[jj]) * wcol;
+            cend = Number(av.nut[numtsk].resrc.inflowx2[jj]) +
+                      Number(av.nut[numtsk].resrc.inflowy2[jj]) * wcol;
+            cellList = ':' + Math.floor(cbeg) + '..' + Math.floor(cend);
             //console.log('inx1=', Number(av.nut[numtsk].resrc.inflowx1[jj]), 'iny1=', Number(av.nut[numtsk].resrc.inflowy1[jj])
             //          , 'inx2=', Number(av.nut[numtsk].resrc.inflowx2[jj]), 'iny2=', Number(av.nut[numtsk].resrc.inflowy2[jj])  
             //          , 'wld=',  Number(av.nut.wrldCols), '; cellBeg=', cellBeg, '; cellEnd=', cellEnd);
@@ -394,12 +406,24 @@
           else {
             //Need to find cell list in parts for half rows
             //This is wrong as I think it only gives the first row of list in that region
-            cellBeg = Number(av.nut[numtsk].resrc.boxx[jj]) +
-                      Number(av.nut[numtsk].resrc.boxy[jj]) * Number(av.nut.wrldCols);
-            cellEnd = cellBeg + Number(av.nut[numtsk].resrc.boxcol[jj])-1;
-            //console.log('boxx=', Number(av.nut[numtsk].resrc.boxx[jj]), '; boxy=', Number(av.nut[numtsk].resrc.boxy[jj]), '; wldCols=', Number(av.nut.wrldCols) );
-            cellList = ':' + Math.floor(cellBeg) + '..' + Math.floor(cellEnd);  //this is just the first row
+            var cii = 0;
+            var cbeg, cend;
+            for ( cii = 0; cii < brow; cii++) {
+              if (0  < cii) { cellList += ',';}
+              cbeg = boxx + boxy * wcol + cii * wcol;
+              cend = cbeg + bcol - 1;
+              cellList += Math.floor(cbeg) + '..' + Math.floor(cend);  //each row;
+            };
+/*
+           for ( bx = boxx; bx < boxy+brow; bx++) {
+              cellBeg = boxx + boxy * Number(av.nut.wrldCols);
+              cellEnd = cellBeg + bcol-1;
+              //console.log('boxx=', bbox, '; boxy=', boxy, '; wldCols=', Number(av.nut.wrldCols) );
+              cellList += Math.floor(cellBeg) + '..' + Math.floor(cellEnd);  //this is just the first row
+            }
+*/
           };
+          console.log('cellList=', cellList);
           cellTxt += cellList;
           tmpNum = Number(av.nut[numtsk].cell.initial[jj]);
           if (!isNaN( tmpNum) )  {
@@ -419,11 +443,12 @@
                 cellTxt += av.fwt.existCheck( ':initial=', Math.round(tmpNum).toString(), tmpNum )+ '\n'; 
               }
               else {
-                cellTxt += ':initial=14400\n'; 
-                console.log('cellTxt = :initial=14400');
+                cellTxt += ':initial=14400\n';
               }
             }
-          }
+          };
+          console.log('cellTxt=', cellTxt);
+          
           reactTxt = 'REACTION ' + av.fwt.existCheck( '',av.nut[numtsk].react.name[jj],tskvar );
           reactTxt += ' ' + av.fwt.existCheck( '',av.nut[numtsk].react.task[jj], tskvar );
           reactTxt += ' process' + av.fwt.existCheck( ':resource=', av.nut[numtsk].react.resource[jj], '');
@@ -438,14 +463,14 @@
           txt += '# Task = '+ numtsk + '; Geometry = ' + av.nut[numtsk].uiAll.geometry + '; supplyType = '+  av.nut[numtsk].uiSub.supplyType[jj].toLowerCase() + '\n';
           switch ( av.nut[numtsk].uiSub.supplyType[jj].toLowerCase() ) {
             case 'infinite':
-              txt += resrcFix;
+              txt += resrcFix + '\n';
               txt += cellTxt;
               txt += reactTxt;
               console.log('resrcFix=', resrcFix);
               break;
             case 'none':
             case 'finite':
-              txt += resrcFix;
+              txt += resrcFix + '\n';
               txt += cellTxt;
               txt += reactTxt;
               console.log('resrcFix=', resrcFix);
