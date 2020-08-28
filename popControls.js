@@ -581,26 +581,26 @@
     av.grd.popChartClear();
     av.grd.drawGridSetupFn('av.ptd.resetDishFn');
 
-    // reset debug values. 
-      mxNot.textContent = "";
-      mxNan.textContent = "";
-      mxAnd.textContent = "";
-      mxOrn.textContent = "";
-      mxOro.textContent = "";
-      mxAnt.textContent = "";
-      mxNor.textContent = "";
-      mxXor.textContent = "";
-      mxEqu.textContent = "";
+    // reset resource values.
+      document.getElementById('mxNot').innerHTML = "";
+      document.getElementById('mxNan').innerHTML = "";
+      document.getElementById('mxAnd').innerHTML = "";
+      document.getElementById('mxOrn').innerHTML = "";
+      document.getElementById('mxOro').innerHTML = "";
+      document.getElementById('mxAnt').innerHTML = "";
+      document.getElementById('mxNor').innerHTML = "";
+      document.getElementById('mxXor').innerHTML = "";
+      document.getElementById('mxEqu').innerHTML = "";
 
-      cellNot.textContent = "";
-      cellNan.textContent = "";
-      cellAnd.textContent = "";
-      cellOrn.textContent = "";
-      cellOro.textContent = "";
-      cellAnt.textContent = "";
-      cellNor.textContent = "";
-      cellXor.textContent = "";
-      cellEqu.textContent = "";
+      document.getElementById('cellNot').innerHTML = "";
+      document.getElementById('cellNan').innerHTML = "";
+      document.getElementById('cellAnd').innerHTML = "";
+      document.getElementById('cellOrn').innerHTML = "";
+      document.getElementById('cellOro').innerHTML = "";
+      document.getElementById('cellAnt').innerHTML = "";
+      document.getElementById('cellNor').innerHTML = "";
+      document.getElementById('cellXor').innerHTML = "";
+      document.getElementById('cellEqu').innerHTML = "";
   };
 
   //clear logic Buttons

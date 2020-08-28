@@ -673,16 +673,16 @@
 
               <div id="displayGridResourceData" class="debug">
                 <div class="grid-currentSugarAmount-container">
-                  <div class="grid-currentSugarAmount-item">NOT<br /><label id="mxNot"> </label><br /><label id="cellNot" onchange='av.ui.where(this)'></label></div>
-                  <div class="grid-currentSugarAmount-item">NAN<br /><label id="mxNan"> </label><br /><label id="cellNan"></label></div>
-                  <div class="grid-currentSugarAmount-item">AND<br /><label id="mxAnd"> </label><br /><label id="cellAnd"></label></div>  
-                  <div class="grid-currentSugarAmount-item">ORN<br /><label id="mxOrn"> </label><br /><label id="cellOrn"></label></div>
-                  <div class="grid-currentSugarAmount-item">ORO<br /><label id="mxOro"> </label><br /><label id="cellOro"></label></div>
-                  <div class="grid-currentSugarAmount-item">ANT<br /><label id="mxAnt"> </label><br /><label id="cellAnt"></label></div>  
-                  <div class="grid-currentSugarAmount-item">NOR<br /><label id="mxNor"> </label><br /><label id="cellNor"></label></div>
-                  <div class="grid-currentSugarAmount-item">XOR<br /><label id="mxXor"> </label><br /><label id="cellXor"></label></div>
-                  <div class="grid-currentSugarAmount-item">EQU<br /><label id="mxEqu"> </label><br /><label id="cellEqu"></label></div>  
-                  <div class="grid-currentSugarAmount-item">resource<br />highest<br />cell value</div>  
+                  <div id='sgrTop' class='sugarTsk'>Resource</div><div id="mxTop" class='mxTask'>Highest</div><div id="cellTop" class='cellTask'>Cell Value</div>
+                  <div id='sgrNot' class='sugarTsk'>NOT</div><div id="mxNot" class='mxTask'>not</div><div id="cellNot" class='cellTask'>NOt</div>
+                  <div id='sgrNan' class='sugarTsk'>NAN</div><div id="mxNan" class='mxTask'>nan</div><div id="cellNan" class='cellTask'>NAn</div>
+                  <div id='sgrAnd' class='sugarTsk'>AND</div><div id="mxAnd" class='mxTask'>and</div><div id="cellAnd" class='cellTask'>ANd</div>  
+                  <div id='sgrOrn' class='sugarTsk'>ORN</div><div id="mxOrn" class='mxTask'>orn</div><div id="cellOrn" class='cellTask'>ORn</div>
+                  <div id='sgrOro' class='sugarTsk'>ORO</div><div id="mxOro" class='mxTask'>oro</div><div id="cellOro" class='cellTask'>ORo</div>
+                  <div id='sgrAnt' class='sugarTsk'>ANT</div><div id="mxAnt" class='mxTask'>ant</div><div id="cellAnt" class='cellTask'>ANt</div>  
+                  <div id='sgrNor' class='sugarTsk'>NOR</div><div id="mxNor" class='mxTask'>nor</div><div id="cellNor" class='cellTask'>NOr</div>
+                  <div id='sgrXor' class='sugarTsk'>XOR</div><div id="mxXor" class='mxTask'>xor</div><div id="cellXor" class='cellTask'>XOr</div>
+                  <div id='sgrEqu' class='sugarTsk'>EQU</div><div id="mxEqu" class='mxTask'>equ</div><div id="cellEqu" class='cellTask'>EQu</div>  
                 </div>
               </div>
 
@@ -2452,8 +2452,6 @@
                          data-dojo-props='constraints:{min:0, max:100},
                          invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
                          style='width: 4.5em; height:1.6em' onchange='av.ptd.muteInputChange(this.value, "muteErroTest")'> %<br />
-                  <!--; or the slider value is &nbsp;</div>
-                  <input id='mRate' type='text' readonly style='width: 4em; height:1.6em'></button> -->
                   <label id='muteErroTest'>Error place holder</label>
                 </div>
                 <div class='odd'>Ancestral Organism(s):
@@ -2950,36 +2948,33 @@
               </tbody>
             </table><span id='orgTaskDataTable_end' class='displayNone'></span>
             </div>
-            <p>Input Buffer</p>
-            <canvas id='cpuBufferCnvs' class='orgStatCanvas15'></canvas>
-            <p>Registers: AX, BX, CX</p>
-            <canvas id='cpuRegisterCnvs' class='orgStatCanvas15'></canvas>
-            <p>Stack A (first two frames)</p>
-            <canvas id='cpuStackAcnvs' class='orgStatCanvas10'></canvas>
-            <p>Stack B (first two frames)</p>
-            <canvas id='cpuStackBcnvs' class='orgStatCanvas10'></canvas>
-            <p>Last Output</p>
-            <canvas id='cpuOutputCnvs' class='orgStatCanvas5'></canvas>
-            <div id='InstructionDetail'>Instruction Details
-              <details>
-                <summary>Just Executed:</summary>
-                <textarea id='ExecuteJust' class='instructionText' readonly></textarea>
-              </details>
-              <details>
-                <summary>About to Execute:</summary>
-                <textarea id='ExecuteAbout' class='instructionText' readonly></textarea>
-              </details>
+            <div id='lowerOrgInfo'>
+              <p>Input Buffer</p>
+              <canvas id='cpuBufferCnvs' class='orgStatCanvas15'></canvas>
+              <p>Registers: AX, BX, CX</p>
+              <canvas id='cpuRegisterCnvs' class='orgStatCanvas15'></canvas>
+              <p>Stack A (first two frames)</p>
+              <canvas id='cpuStackAcnvs' class='orgStatCanvas10'></canvas>
+              <p>Stack B (first two frames)</p>
+              <canvas id='cpuStackBcnvs' class='orgStatCanvas10'></canvas>
+              <p>Last Output</p>
+              <canvas id='cpuOutputCnvs' class='orgStatCanvas5'></canvas>
+              <div id='InstructionDetail'>Instruction Details
+                <details>
+                  <summary>Just Executed:</summary>
+                  <textarea id='ExecuteJust' class='instructionText' readonly></textarea>
+                </details>
+                <details>
+                  <summary>About to Execute:</summary>
+                  <textarea id='ExecuteAbout' class='instructionText' readonly></textarea>
+                </details>
+              </div>
             </div>
           </div><span id='orgDetailID_end' class='displayNone'></span>
 
           <div id='orgSettings' class='orgSettingClass'>
-              <div class='even'>
-                <div class='lftmargin'>Per Site Mutation Rate:</div>
-                <input id='orgMuteInput' type='text'> %
-                <div id='orgMuteSlide'></div>
-                <div><label id='muteOrgError'>Error place holder</label>&nbsp;</div>
-              </div>
-              <h3>Repeatability Mode:</h3>
+            <div class='repeatMode'>
+            <h3>Repeatability Mode:</h3>
               <input  type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganExperimentRadio'
                      intermediateChanges='false' name='child' checked value='orgExp' iconClass='dijitNoIcon'></button>
               <label id='OrganExperimentLabel'>Experimental (Natural Variation)</label>
@@ -2987,6 +2982,17 @@
               <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganDemoRadio'
                      intermediateChanges='false' name='child' value='orgDemo' iconClass='dijitNoIcon'></button>
               <label id='OrganDemoLabel'>Demo (forces exact replay)</label>
+            </div>
+            <div class='muteOrgHolder'>
+              <div id='muteOrgTextHolder'>
+                <div class='lftmargin'>Per Site Mutation Rate:</div>
+                <input id='orgMuteInput' type='text'> %
+                <div><label id='muteOrgError'>Error place holder</label>&nbsp;</div>
+              </div>
+              <div id='muteOrgSlideHolder'>
+                <div id='orgMuteSlide'></div>
+              </div>
+            </div>
 
           </div><span id='orgSettings_end' class='displayNone'></span>
         </div><span id='orgInfoHolder_end' class='displayNone'></span>

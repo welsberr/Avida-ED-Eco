@@ -174,9 +174,9 @@
   #orgInfoHolder {
     border: 1px solid #AAA;
     background: #F5F5F5;
-    padding: 5px;
     height: 100%;
     width: 100%;
+    background-color: inherit; /*mistyrose;*/
   }
   
 
@@ -532,19 +532,74 @@
     width: 100%;
   }
   
-.grid-currentSugarAmount-container {   /*on stats tab of population page */
-  display: inline-grid;
-  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
-  background: #F5F5F5;     /* #2196F3;  blue */
-/*  justify-content: space-evenly;  */
-  width: 100%;
-}
-
 .grid-currentSugarAmount-item {          /*on data tab of population page */
   background: rgba(255, 255, 255, 0.8);
   border: 1px solid rgba(0, 0, 0, 0.8);
   text-align: center;
   padding: 2px 3px;
+}
+.sugarTsk{
+  background: #DDD; /* #DDD; */
+  border: 1px solid #BBB;   /*lower darker*/
+}
+.mxTask{
+  background: #EEE; /* #EEE; */
+  border: 1px solid #BBB;   /*lower darker*/
+}
+.cellTask{
+  background: #DDD; /*#DDD;*/
+  border: 1px solid #BBB;   /*lower darker*/
+}
+
+ #sgrTop{grid-area: sgrTop}  #sgrNot{grid-area: sgrNot}  #sgrNan{grid-area: sgrNan}  #sgrAnd{grid-area: sgrAnd}  #sgrOrn{grid-area: sgrOrn}  #sgrOro{grid-area: sgrOro}  #sgrAnt{grid-area: sgrAnt}  #sgrNor{grid-area: sgrNor}  #sgrXor{grid-area: sgrXor}  #sgrEqu{grid-area: sgrEqu}
+  #mxTop{grid-area:  mxTop}   #mxNot{grid-area:  mxNot}   #mxNan{grid-area:  mxNan}   #mxAnd{grid-area:  mxAnd}   #mxOrn{grid-area:  mxOrn}   #mxOro{grid-area:  mxOro}   #mxAnt{grid-area:  mxAnt}   #mxNor{grid-area:  mxNor}   #mxXor{grid-area:  mxXor}   #mxEqu{grid-area:  mxEqu}
+#cellTop{grid-area:cellTop} #cellNot{grid-area:cellNot} #cellNan{grid-area:cellNan} #cellAnd{grid-area:cellAnd} #cellOrn{grid-area:cellOrn} #cellOro{grid-area:cellOro} #cellAnt{grid-area:cellAnt} #cellNor{grid-area:cellNor} #cellXor{grid-area:cellXor} #cellEqu{grid-area:cellEqu}
+
+.grid-currentSugarAmount-container {   /*on stats tab of population page */
+  display: grid;
+  grid-template-areas: ' sgrTop  sgrNot  sgrNan  sgrAnd  sgrOrn  sgrOro  sgrAnt  sgrNor  sgrXor  sgrEqu'
+                       '  mxTop   mxNot   mxNan   mxAnd   mxOrn   mxOro   mxAnt   mxNor   mxXor   mxEqu'
+                       'cellTop cellNot cellNan cellAnd cellOrn cellOro cellAnt cellNor cellXor cellEqu';
+  background: mistyrose;
+  width: 100%;
+  justify-content: stretch;
+/*  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+  background: mistyrose;
+  width: 100%;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+/*  background: #FFF;   /* #DDD; */
+}
+
+.grid-sugarDetail-example-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
+                       'initialHi initialHi initialHi';
+  /* border: 1px solid rgba(128, 128, 128, 0.5); */
+  border: 1px solid #888;
+  width: 100%;
+}
+
+
+.changeAllSugarsTogetherGridOnlyContainer {
+  display: grid;
+  grid-template-areas: ' setTitle        showHideSgr   detailDiv'
+                       ' regionLayoutSgr supplyTypeSgr diffusionSgr'
+                       ' regionLayoutDiv supplyTypeDiv diffusionDiv';
+  /*
+  grid-template-areas: 'setTitle     headerTitle headerTitle   allSgr5Blnk'
+                       'allSgr4Blnk  geometrySgr supplyTypeSgr showHideSgr'
+                       'allSgr4Blnk  geometryDiv supplyType  detailDiv';
+
+  grid-template-areas: 'setTitle  geometrySgr supplyTypeSgr showHideSgr'
+                       'setTitle  geometryDiv supplyType  detailDiv';
+  */
+  width: 100%;
+  /* grid-template-columns: 20% 25% 30% 25%;
+    grid-template-rows: 33fr 33fr 33fr; */
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background: #DDD;   /* #DDD; */
 }
 
 #environmentSettingTitle{
@@ -555,6 +610,10 @@
   font-size: 120%;
 }
 
+
+#mutePopInput {
+}
+
 .mutePopInputClass{
   width:4em;
   height:1em;
@@ -562,13 +621,13 @@
   /* padding: 0px 0px;   /* top right bottom left  */  /* box padding border margin outside now */
   display: inline-block; 
   /*background: yellow; */
+  float: left;
 }
 .mutePopSlideClass{
   /* width:360px; */
   display: block; 
   vertical-align: center; 
-  margin-left:10px; 
-  margin-right:20px
+  background: #666;
 }
 /*
     -webkit-appearance: none;
@@ -640,7 +699,7 @@
     grid-template-rows: 33fr 33fr 33fr; */
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  background: #AAA;   /* #DDD; */
+  background: #DDD;   /* #AAA; is too dark now */
 }
 
 .changeAllSugarsTogetherNoGlobalContainer {
@@ -661,7 +720,7 @@
     grid-template-rows: 33fr 33fr 33fr; */
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  background: #AAA;   /* #DDD; */
+  background: #DDD;   /* #DDD; */
 }
 
 
@@ -1222,14 +1281,18 @@ checkbox:focus {
     height: 1.6em;
   }
   .orgDetailClass{
-    width: 100%;     
+    width: 100%;
   }
-  .orgSettingClass{
-    width: 100%;     
+  #orgTaskDataDiv{
+    padding: 5px;
   }
-  
+  #lowerOrgInfo{
+    width: 100%;
+    padding: 5px;    
+  }
   #orgTaskDataDiv {
     background:#DDD;    
+    padding: 5px;
   }
   #InstructionDetail {
     min-width: 1px;
@@ -1256,13 +1319,43 @@ checkbox:focus {
     width: 100%;
     type: text;
   }
+  .orgSettingClass{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+    background: #CCCCCC;
+  }
+  .repeatMode{
+    flex: 0 1 150px;
+    background: #EEEEEE;
+    padding: 1em 0.5em 1em 0.5em;   
+  }
+  .muteOrgHolder{
+    flex: 1;          /* supposed to expand to fill remainting space, but not working */
+    background: #CCCCCC;
+    padding: 1em 0.5em 2em 0.5em;   
+  }
+  /* top, right, bottom, left;  right and left were 0.3 before*/
+  #muteOrgTextHolder{
+    background: inherit;
+    padding: 10px 0px;
+  }
+  #muteOrgSlideHolder{
+    background-color: inherit;
+    width: 100%;
+    height: 450px;
+  }
   
   #orgMuteSlide {
-  width:200px; 
+  /* width:200px; */
+  height: 400px;
   display: block; 
   vertical-align: top; 
-  margin-left:10px; 
-  margin-right:20px
+  padding: 20px auto;
+  margin:auto; 
+  background: #888;
 }
   #orgMuteInput{
     width: 50px; height:1em;

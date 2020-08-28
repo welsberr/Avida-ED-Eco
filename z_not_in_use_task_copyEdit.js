@@ -119,3 +119,85 @@
 
     return lnError;
   };
+  
+//-------------------------------------------------------------------------------------------- $(function slidePopmute() --
+   $(function slidePopMute_() {
+    // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 
+    // the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, 
+    // so I multiplied by 200 to get 100.000% to get a reasonable number of values for the pixils in the slide
+    //console.log('before defaultslide value');
+    var muteSlideDefault = 95.4242509439325;
+    // results in 2% as a default 
+    var muteDefault = (Math.pow(10, (muteSlideDefault / 200)) - 1).toFixed(3);
+    var slides = $('#mutePopSlide').slider({
+      // range: 'min',   /*causes the left side of the scroll bar to be grey */
+      value: muteSlideDefault,
+      min: 0.0,
+      max: 400,
+      theme: 'summer',
+      slide: function (event, ui) {
+        var tmpVal = (Math.pow(10, (ui.value / 200)) - 1);
+        if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }
+        else if (0.1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
+        else if (0.01 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
+        else {tmpVal = tmpVal.toFixed(3); }
+        //put the value in the text box 
+        console.log('input', tmpVal, '; slide=', ui.value);
+        $('#mutePopInput').val(tmpVal); //put slider value in the text near slider 
+      }
+    });
+    // initialize
+     $('#mutePopInput').val(muteDefault);
+    
+    /*update slide based on textbox */
+    $('#mutePopInput').change(function () {
+      var value = this.value;
+      var muteNum = parseFloat(value);
+      //if (av.debug.uil) { console.log('ui: muteNum=', muteNum); }
+      if (muteNum >= 0 && muteNum <= 100) {
+        av.ptd.validMuteInuput = true;
+        av.dom.mutePopError.style.color = 'black';
+        av.dom.mutePopError.innerHTML = '';
+        //update slide value
+        slides.slider('value', 200 * av.utl.log(10,1 + (muteNum)));
+        console.log('value=', muteNum, '; slide=', 200 * av.utl.log(10,1 + (muteNum) ) );
+        
+        //av.ind.settingsChanged = true;
+        if (av.debug.trace) { console.log('Mute changed', av.ind.settingsChanged); };
+        av.post.addUser('mutePopInput =' + document.getElementById('mutePopInput').value,  '1add ? 949');
+      } 
+      else {
+        av.ptd.validMuteInuput = false;
+        av.dom.mutePopError.style.color = 'red';
+        av.dom.mutePopError.innerHTML = '';
+        av.dom.userMsgLabel.innerHTML = '';
+        if (muteNum <= 0) {
+          av.dom.mutePopError.innerHTML += 'Mutation rate must be >= than zero percent. ';
+          if (av.debug.popCon) { console.log('<0'); }
+        }
+        if (muteNum >= 100) {
+          av.dom.mutePopError.innerHTML += 'Mutation rate must be 100% or less. ';
+          if (av.debug.popCon) { console.log('>0'); }
+        }
+        if (isNaN(muteNum)) {
+          av.dom.mutePopError.innerHTML += 'Mutation rate must be a valid number. ';
+          if (av.debug.popCon) { console.log('==NaN'); }
+        }
+      };
+    });
+  });
+  
+  
+  /*            <div class="grid-currentSugarAmount-container">
+                  <div class="grid-currentSugarAmount-item">resource<br />highest<br />cell value</div>  
+                  <div class="grid-currentSugarAmount-item">NOT<br /><label id="mxNot"> </label><br /><label id="cellNot" </label></div>
+                  <div class="grid-currentSugarAmount-item">NAN<br /><label id="mxNan"> </label><br /><label id="cellNan"></label></div>
+                  <div class="grid-currentSugarAmount-item">AND<br /><label id="mxAnd"> </label><br /><label id="cellAnd"></label></div>  
+                  <div class="grid-currentSugarAmount-item">ORN<br /><label id="mxOrn"> </label><br /><label id="cellOrn"></label></div>
+                  <div class="grid-currentSugarAmount-item">ORO<br /><label id="mxOro"> </label><br /><label id="cellOro"></label></div>
+                  <div class="grid-currentSugarAmount-item">ANT<br /><label id="mxAnt"> </label><br /><label id="cellAnt"></label></div>  
+                  <div class="grid-currentSugarAmount-item">NOR<br /><label id="mxNor"> </label><br /><label id="cellNor"></label></div>
+                  <div class="grid-currentSugarAmount-item">XOR<br /><label id="mxXor"> </label><br /><label id="cellXor"></label></div>
+                  <div class="grid-currentSugarAmount-item">EQU<br /><label id="mxEqu"> </label><br /><label id="cellEqu"></label></div>  
+                </div>
+*/  

@@ -910,7 +910,7 @@ require([
   };
 
   av.ui.where = function (domobj) {
-    // placeholder that was to return the cell ID in the grid perhaps never done. 
+    // placeholder that was to return the cell ID in the grid; this was never done. 
     console.log('domobj=', domobj);
   };
 
@@ -2348,19 +2348,19 @@ require([
     // results in 2% as a default 
     var muteDefault = (Math.pow(10, (muteSlideDefault / 200)) - 1).toFixed(3);
     var slides = $('#mutePopSlide').slider({
-      // range: 'min',   /*causes the left side of the scroll bar to be grey */
+      range: 'min',   /*causes the left side of the scroll bar to be grey */
       value: muteSlideDefault,
       min: 0.0,
-      max: 400,
+      max: 401,
       theme: 'summer',
       slide: function (event, ui) {
         var tmpVal = (Math.pow(10, (ui.value / 200)) - 1);
-        if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }
-        else if (0.1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
-        else if (0.01 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
-        else {tmpVal = tmpVal.toFixed(3); }
+        if (12 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }
+        else if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
+        else if (0.3 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
+        else {tmpVal = tmpVal.toFixed(2); }
         //put the value in the text box 
-        //console.log('tmpVal=', tmpVal);
+        //console.log('input', tmpVal, '; slide=', ui.value);
         $('#mutePopInput').val(tmpVal); //put slider value in the text near slider 
       }
     });
@@ -2680,24 +2680,24 @@ require([
   $(function slideOrganism() {
     /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
     /* the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, */
-    /* so I multiplied by 100,000 to get 100.000% to come out even. */
+    /* so I multiplied by 400 to get a range .from 0 to 802 for a slide that uses 800 pixels */
     //console.log('before defaultslide value');
-    var muteSlideDefault = 109861.0;
+    var muteSlideDefault = 190.848501887865
     /* results in 2% as a default */
-    var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3);
+    var muteDefault = (Math.pow(10, (muteSlideDefault / 400)) - 1).toFixed(3);
     var slides = $('#orgMuteSlide').slider({
       orientation: "vertical",
       range: 'min',   /*causes the left side of the scroll bar to be grey */
       value: muteSlideDefault,
       min: 0.0,
-      max: 461512,
+      max: 802,
       slide: function (event, ui) {
-        var tmpVal = (Math.pow(Math.E, (ui.value / 100000)) - 1);
-        if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }
-        else if (0.1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
-        else if (0.01 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
-        else {tmpVal = tmpVal.toFixed(3); }
-         console.log('tmpVal=', tmpVal);
+        var tmpVal = (Math.pow(10, (ui.value / 400)) - 1);
+        if (12 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }
+        else if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
+        else if (0.3 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
+        else {tmpVal = tmpVal.toFixed(2); }
+         //console.log('mutation rate =', tmpVal, 'slider = ', ui.value);
         $('#orgMuteInput').val(tmpVal); //put slider value in the text near slider 
         //put the value in the text box 
         av.ind.settingsChanged = true;
@@ -2718,9 +2718,10 @@ require([
         av.dom.muteOrgError.style.color = 'black';
         av.dom.muteOrgError.innerHTML = '';
         //update slide value
-        slides.slider('value', 100000.0 * Math.log(1 + (parseFloat(this.value))));
+        slides.slider('value', 400 * av.utl.log(10,1 + (muteNum)));
         av.ind.settingsChanged = true;
         if (av.debug.trace) { console.log('Mute changed', av.ind.settingsChanged); };
+        //console.log('value=', muteNum, '; slide=', 400 * av.utl.log(10,1 + (muteNum) ) );
         av.post.addUser('orgMuteInput =' + document.getElementById('orgMuteInput').value,  '1add ? 949');
       } 
       else {
@@ -2777,7 +2778,7 @@ require([
       av.ind.settingsChanged = true;
       if (av.debug.trace) { console.log('orgMute changed', av.ind.settingsChanged); }
       if (av.debug.trace) console.log('in mute change');
-      av.post.addUser('muteInput =' + dijit.byId('orgMuteInput').get('value') + '1949');
+      av.post.addUser('muteInput =' + document.getElementById('orgMuteInput').value + '1949');
       console.log('this.value=', this.value, '; slider=', av.ptd.muteScaleAry.indexOf(tmpVal.toFixed(1)) );
     });
   });

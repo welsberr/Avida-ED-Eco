@@ -79,13 +79,13 @@ div {
 }
 
 div.odd {
-  background: #CCCCCC;
+  background: #EEEEEE;
   padding: 0.5em 0.5em 1em 0.5em;   /* top, right, bottom, left;  right and left were 0.3 before*/
   clear: left;
 }
 
 .even {
-  background: #EEEEEE;
+  background: #CCCCCC;
   padding: 0.5em 0.3em 1em 0.5em;
   clear: left;
 }
@@ -172,24 +172,6 @@ div.popStatsTablePop {
   font-weight: bold;
   max-height: 15px;
 }
-
-#muteSlide {
-  float: left;
-  background: yellow;
-}
-
-#muteInput {
-  float: left;
-}
-
-#mRate {
-  float: left;
-}
-
-#muteSlidedojo {
-  float: left;
-}
-
 button {
   border: 1px solid #aaa;
   display:inline;

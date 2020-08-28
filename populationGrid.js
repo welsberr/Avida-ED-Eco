@@ -72,6 +72,13 @@
   //Sets scale and puts the user selected data type in the grid array. Rob wants the scale to be different at the beginning of a run 
   av.grd.setMapData = function (from) {
     'use strict';
+    var logicLen = av.sgr.logicNames.length;
+    var tskDom;
+    var taskNum=0;
+    var taskStr="";
+    var tskName="";
+    var taskStr="";
+    var cellUnit = "";
     //console.log(from, 'called av.grd.setMapData: av.grd.msg.fitness=',av.grd.msg.fitness);
     if (undefined != av.grd.msg.fitness) {
       //console.log('av.grd.msg', av.grd.msg);
@@ -149,7 +156,7 @@
         av.grd.reScaleRate = 'rescaling';
       }
       else av.grd.reScaleRate = '';  
-
+/*
       if (av.grd.msg.rnot.maxVal) {
         if (100 < av.grd.msg.rnot.maxVal) mxNot.textContent = av.grd.msg.rnot.maxVal.formatNum(1);
         else mxNot.textContent = av.grd.msg.rnot.maxVal.formatNum(2);
@@ -186,8 +193,36 @@
         if (100 < av.grd.msg.requ.maxVal) mxEqu.textContent = av.grd.msg.requ.maxVal.formatNum(1);
         else mxEqu.textContent = av.grd.msg.requ.maxVal.formatNum(2);
       };
-
+*/
       if (av.grd.selectedNdx) {
+        for (var ii=0; ii < logicLen; ii++) {
+          tskDom = av.sgr.logicTitleNames[ii];
+          tskName = av.sgr.logicNames[ii];
+          taskNum = parseFloat(av.grd.msg['r'+tskName].maxVal);
+          if (isNaN(taskNum)) {taskStr = '';}
+           else if (1000000 <= taskNum ) {taskStr = (taskNum/1000000).toFixed(0) + "M"; }
+           else if (100000 <= taskNum ) {taskStr = (taskNum/1000).toFixed(1) + "k"; }
+           else if (10000 <= taskNum ) {taskStr = (taskNum/1000).toFixed(2) + "k"; }
+           else if (1000 <= taskNum ) {taskStr = (taskNum/1000).toFixed(1) + "k"; }
+           else if (100 <= taskNum ) {taskStr = taskNum.toFixed(0); }
+           else if (10 <= taskNum ) {taskStr = taskNum.toFixed(1); }
+           else {taskStr = taskNum.toFixed(2); }
+          document.getElementById('mx'+tskDom).innerHTML = taskStr;
+          
+          taskNum = parseFloat(av.grd.msg['r'+tskName].data[av.grd.selectedNdx]);
+          if (isNaN(taskNum)) {taskStr = '';}
+           else if (1000000 <= taskNum ) {taskStr = (taskNum/1000000).toFixed(0) + "M"; }
+           else if (100000 <= taskNum ) {taskStr = (taskNum/1000).toFixed(1) + "k"; }
+           else if (10000 <= taskNum ) {taskStr = (taskNum/1000).toFixed(2) + "k"; }
+           else if (1000 <= taskNum ) {taskStr = (taskNum/1000).toFixed(1) + "k"; }
+           else if (100 <= taskNum ) {taskStr = taskNum.toFixed(0); }
+           else if (10 <= taskNum ) {taskStr = taskNum.toFixed(1); }
+           else {taskStr = taskNum.toFixed(2); }
+          document.getElementById('cell'+tskDom).innerHTML = taskStr;
+        };
+      };
+        
+        /*   need to delete
         if (undefined !== av.grd.msg.rnot.data[av.grd.selectedNdx]) {
           if (100 < av.grd.msg.rnot.data[av.grd.selectedNdx]) cellNot.textContent = av.grd.msg.rnot.data[av.grd.selectedNdx].formatNum(1);
           else cellNot.textContent = av.grd.msg.rnot.data[av.grd.selectedNdx].formatNum(2);
@@ -224,7 +259,7 @@
           if (100 < av.grd.msg.requ.data[av.grd.selectedNdx]) cellEqu.textContent = av.grd.msg.requ.data[av.grd.selectedNdx].formatNum(1);
           else cellEqu.textContent = av.grd.msg.requ.data[av.grd.selectedNdx].formatNum(2);
         };
-      };
+      };  */
 
       //av.grd.cmap = av.color.Gnuplot2cmap;  //for fitness, offspring cost and energy aquisition rate
       var mapColor = 'greyMap';
