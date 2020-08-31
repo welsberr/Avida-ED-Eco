@@ -201,3 +201,117 @@
                   <div class="grid-currentSugarAmount-item">EQU<br /><label id="mxEqu"> </label><br /><label id="cellEqu"></label></div>  
                 </div>
 */  
+
+  //------------------------------------------------------------------------------------------- av.frd.reSrcLineParse --
+  av.frd.reSrcLineParse = function(lnArray, from ){
+    'use strict';
+    var lineErrors = '';  //was it a valid line wih tout errors
+    if (av.debug.fio) { console.log('____', from, ' called av.frd.reSrcLineParse____'); }
+    //console.log('lnArray = ', lnArray);
+    var pairArray = lnArray[1].split(':');
+    var pear = [];
+    var cellboxdata = [];
+    var len;
+    var nn; 
+    var numTsk;
+    var rSourcObj;
+    var regionStr = '';
+    var geometry = '';
+    var ndx;
+    
+    var tsk = pairArray[0].substr(0,3);
+    //console.log('name=', pairArray[0], '; tsk=', tsk);
+    var logicindex = av.sgr.logicNames.indexOf( tsk );
+    if (-1 < logicindex) {
+      numTsk = av.sgr.logEdNames[logicindex];
+      // Checking for a resource tag
+      rSourcObj = av.nut[numTsk].resrc;
+      //console.log('numTsk='+numTsk,'; rSourcObj=', rSourcObj);
+
+      // find geometry as global tasks are placed in index 0 within av.nut[numTsk].resrc[index]
+      //if (av.dbg.flg.nut) console.log('numTsk=', numTsk,'; av.nut[numTsk].uiAll.geometry=', av.nut[numTsk].uiAll.geometry);
+      len = pairArray.length;
+      for (var ii=1; ii < len; ii++) {
+        pear = pairArray[ii].split('=');
+        //console.log('pear = ', pear);
+        if ('geometry' === pear[0].toLowerCase() ) {
+          geometry = pear[1];
+          break;
+        };   
+      };
+      if (av.debug.fio) { 
+        //console.log('pairArray = ', pairArray);
+        //console.log('; geometry['+numTsk+']=', geometry); 
+      }
+
+      // Set geometry: in Avida-ED, geometry=Grid or global; The user interface calls Grid = 'Local'
+      //console.log('av.nut[numTsk].resrc.geometry['+sub+']=', av.nut[numTsk].resrc.geometry[sub]);
+      //console.log('av.nut['+numTsk+'].uiAll.geometry', av.nut[numTsk].uiAll.geometry);
+      if ('grid' == geometry || 'global' == geometry ) {
+        av.nut[numTsk].uiAll.geometry = geometry;
+      }
+      else { 
+        console.log('ERROR: geometry was not set correctly in environment.cft *********************************');
+        console.log('pairArray=', pairArray);
+      };
+
+      // check to make sure name is unqiue. If it is not unique then overright the previous data. 
+      // index into all the arrays that hold resource/reaction parameters; The name should be unique for all arrays in the object. 
+      ndx = av.frd.findNameIndex(rSourcObj, pairArray[0], av.nut[numTsk].uiAll.geometry);   
+      //console.log('RESROUCE: ndx=',ndx, '; tsk=',tsk, '; name=', pairArray[0], 'resrcName=', rSourcObj.name, 'uiAll.geometry=', av.nut[numTsk].uiAll.geometry );
+      //if (av.debug.fio) { console.log('ndx=',ndx); }
+      if (-1 < ndx) {
+        rSourcObj.name[ndx] = pairArray[0];    //asign the name of the resource statement. 
+        av.nut[numTsk].resrc.geometry[ndx] = geometry;
+
+        //Find information based on resource name
+        av.frd.reSrcNameBasedInfo(numTsk, ndx);
+
+        // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file with a few exceptions
+        // defaults are put directly in the dom
+
+        // boxflag is false indicating there are no box values. 
+        rSourcObj.boxflag[ndx] = false
+
+        //process all data pairs
+        len = pairArray.length;
+        //console.log('len=',len,'; pairArray=',pairArray);
+        for (var ii=1; ii < len; ii++) {
+          pear = pairArray[ii].split('=');
+          nn = av.sgr.resrc_argu.indexOf(pear[0].toLowerCase());
+          //if (av.debug.fio) { console.log('Resource: ii=',ii,'; pear=', pear, '; nn=', nn); }
+          if (-1 < nn) {
+            rSourcObj[av.sgr.resrc_argu[nn]][ndx] = pear[1];
+            //console.log('av.sgr.resrc_argu[nn]=',av.sgr.resrc_argu[nn], '; value =', rSourcObj[av.sgr.resrc_argu[nn]][ndx] );
+          }
+          else {
+            //console.log('pear= ', pear[0]);
+            if ('cellbox' === pear[0].toLowerCase()) {
+              cellboxdata = pear[1].split('|');
+              //console.log('cellboxdata=',cellboxdata);
+              rSourcObj.boxflag[ndx] = true;
+              rSourcObj.boxx[ndx] = cellboxdata[0];
+              rSourcObj.boxy[ndx] = cellboxdata[1];
+              rSourcObj.boxcol[ndx] = cellboxdata[2];
+              rSourcObj.boxrow[ndx] = cellboxdata[3];
+              av.nut[numTsk].uiSub.area[ndx] = Number(rSourcObj.boxcol[ndx]) * Number(rSourcObj.boxrow[ndx]);
+              //console.log('av.nut['+numTsk+'].uiSub.area['+ndx+']=', av.nut[numTsk].uiSub.area[ndx], 'rSourcObj.boxrow[ndx]=', rSourcObj.boxrow[ndx]);
+            }
+            else {
+              lineErrors = 'leftside, '+pear[0]+', not a valid resource keyword. lnArray = '+lnArray;
+              if (av.debug.fio) { console.log(lineErrors); }
+            };
+          };
+        };   //end of proccessing data pairs
+      }  //end of valid ndx found for the subdish names
+    }    //end of valid logic name
+    else {
+      // valid logic name not found;
+      lineErrors = 'RESOURCE: pairArray.substring='+pairArray[0].substring(0,3)+' not found in av.sgr.logicNames';
+      console.log(lineErrors);
+    }
+    av.debug.fio = false;
+    //console.log('RESOURCE: lineErrors=', lineErrors);
+    return lineErrors;
+  };
+  //--------------------------------------------------------------------------------------- end av.frd.reSrcLineParse --

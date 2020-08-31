@@ -553,6 +553,8 @@ av.sgr.uiSubDish_num = ['initialHiNp', 'inflowHiNp', 'outflowHiNp',
 av.sgr.ui_subDom_txt = ['supplyType', 'hiSide'];                      
 
 av.sgr.uiSub_Check = [ 'diffuseCheck', 'periodCheck', 'gradientCheck' ];
+
+av.sgr.ui_cell_argu = ['initial', 'inflow', 'outflow'];
 av.sgr.ui_subDom_argu = ['supplyType', 'initialHiNp', 'inflowHiNp', 'outflowHiNp', 'periodNp'
                         , 'diffuseCheck', 'periodCheck'   //not sure if regionCode and regionName belong in Dom
                         , 'gradientCheck', 'hiSide', 'initialLoNp', 'inflowLoNp', 'outflowLoNp'];
@@ -784,7 +786,7 @@ av.fzr.clearEnvironment = function(from) {
     };
     //cell command
     av.nut[tsk].cell = {};
-    av.nut[tsk].cell.name = [];
+    av.nut[tsk].cell.resource = [];
     av.nut[tsk].cell.list = [];
     av.nut[tsk].cell.initial = [];
     av.nut[tsk].cell.inflow = [];
