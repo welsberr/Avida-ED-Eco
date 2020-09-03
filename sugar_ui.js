@@ -210,7 +210,7 @@
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.regionLayoutChange = function (domObj) {
-  if (av.dbg.flg.nut) { console.log('av.sgr.regionLayoutChange was called by', domObj); }
+  if (av.dbg.flg.nut) { console.log('Nut: av.sgr.regionLayoutChange was called by', domObj); }
     var taskID = domObj.id;
     var task = taskID.substring(0, 3);
     var sub = taskID.substr(3, 1);

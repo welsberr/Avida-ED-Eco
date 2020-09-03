@@ -43,6 +43,132 @@ and open the template in the editor.
         labInfoHolder<br />
         rite  info
       </div>
-    </div>
+    </div>   
   </body>
 </html>
+
+<!DOCTYPE html>
+<html>
+<body>
+<p id="demo"></p>
+
+<script>
+
+function isNumber(n) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); } 
+var notInitialized;
+var emptyStr = '';
+var onespace = ' ';
+var nothing = null;
+var notNum = NaN;
+  var e1 = (undefined === null);
+  var e1 = (undefined == null);
+  var e2 = (undefined == NaN);
+var e3 = (undefined == '');
+var e4 = (null == NaN);
+var e5 = (null == '');
+var e6 = (NaN == '');
+var e7 = (null == notInitialized);
+var e8 = (isNaN(notInitialized));
+var e9 = (isNaN(''));
+
+var n1 = (undefined != null);
+var n2 = (undefined != NaN);
+var n3 = (undefined != '');
+var n4 = (null != NaN);
+var n5 = (null != '');
+var n6 = (NaN != '');
+var n7 = (null != notInitialized);
+var n8 = (!isNaN(notInitialized));
+var n9 = (!isNaN(onespace));
+var n10 = (!isNaN(''));
+
+var p1 = parseInt(parseInt("2.8dogsin 5 kennels"));
+var p2 = parseInt();
+var p3 = parseInt('');
+var p4 = parseFloat("3.14159piin3circle");
+document.getElementById("demo").innerHTML = 
+"(undefined === null) = " + e1 + "<br>" +
+"(undefined == NaN) = " + e2 + "<br>" +
+"(undefined == '') = " + e3 + "<br>" +
+"(null == NaN) = " + e4 + "<br>" +
+"(null == '') = " + e5 + "<br>" +
+"(NaN == '') = " + e6 + "<br>" +
+"(null == unknown) = " + e7 + "<br>" +
+"(isNaN(unknown)) = " + e8 + "<br>" +
+"(isNaN('')) = " + e9 + "<br>" +
+"<br>" +"<br>" +
+"(undefined != null) = " + n1 + "<br>" +
+"(undefined != NaN) = " + n2 + "<br>" +
+"(undefined != '') = " + n3 + "<br>" +
+"(null != NaN) = " + n4 + "<br>" +
+"(null != '') = " + n4 + "<br>" +
+"(NaN != '') = " + n5 + "<br>" +
+"(null != notInitialized) = " + n7 + "<br>" +
+"(!isNaN(notInitialized)) = " + n8 + "<br>" +
+"(!isNaN(onespace)) = " + n9 + "<br>" +
+"(!isNaN('')) = " + n10 + "<br>" +
+"<br>" +"<br>" +
+"parseInt(" + "2.8 dogs" +") = " + p1 + "<br>" +
+"parseInt() = " + p2 + "<br>" +
+"parseInt('') = " + p3 + "<br>"
++ "parseFloat('3.14159 pi') = " + p4 + "<br>" 
++"emptyStr = " +  parseInt(emptyStr) + "<br>"
++ "<br>" +"<br>" 
++ "notInitialized.length = " + notInitialized  +   "<br>"
++ "typeof 1234 = " +  typeof 12.4  + "<br>"
++ "typeof notInitialized = " +  typeof notInitialized  + "<br>"
++ "typeof nothing = " +  typeof nothing  + "<br>"
++ "isNumber(nothing) = " + isNumber(nothing)  + "<br>"
++ "isNumber('2.8 dogs') = " + isNumber("2.8dogs") + "<br>"
++ "isNumber(parseIn('2.2 dogs')) = " + isNumber(parseInt("2.2 dogs"))  + "<br>"
++ "isNumber(parseIn(nothing)) = " + isNumber(parseInt(nothing))  + "<br>"
++ "isNumber(parseIn(notInitialized)) = " + isNumber(parseInt(notInitialized))  + "<br>"
++ "isNumber(parseIn(notNum)) = " + isNumber(parseInt(notNum))  + "<br>"
+;
+</script>
+
+</body>
+</html>
+
+
+
+
+Yields out put of 
+
+(undefined === null) = true
+(undefined == NaN) = false
+(undefined == '') = false
+(null == NaN) = false
+(null == '') = false
+(NaN == '') = false
+(null == unknown) = true
+(isNaN(unknown)) = true
+(isNaN('')) = false
+
+
+(undefined != null) = false
+(undefined != NaN) = true
+(undefined != '') = true
+(null != NaN) = true
+(null != '') = true
+(NaN != '') = true
+(null != notInitialized) = false
+(!isNaN(notInitialized)) = false
+(!isNaN(onespace)) = true
+(!isNaN('')) = true
+
+
+parseInt(2.8 dogs) = 2
+parseInt() = NaN
+parseInt('') = NaN
+parseFloat('3.14159 pi') = 3.14159
+emptyStr = NaN
+
+
+notInitialized.length = undefined
+typeof 1234 = number
+typeof notInitialized = undefined
+typeof nothing = object
+isNumber(nothing) = false
+isNumber('2.8 dogs') = false
+isNumber(parseIn('2.2 dogs')) = true

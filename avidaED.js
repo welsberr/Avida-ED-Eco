@@ -163,6 +163,7 @@ require([
   'popControls.js',
   'mouse.js',
   'mouseDown.js',
+  'nutrients2UI.js',
   'sugar_ui.js',
   'reSizePageParts.js',
   //'restartAvida.js',
@@ -2466,7 +2467,7 @@ require([
 
 //------------------------------------------------------------------------------------------------- av.ptd.gridChange --
   av.ptd.gridChange = function (domObj) {
-    if (av.dbg.flg.nut) { console.log('in av.ptd.gridChange; domObj.id =', domObj.id); }
+    // if (av.dbg.flg.popSetup ) { console.log('popSetup: in av.ptd.gridChange; domObj.id =', domObj.id); }
     var colNum = Number(av.dom.sizeCols.value);
     var rowNum = Number(av.dom.sizeRows.value);
     //console.log('col, row=', colNum, rowNum);
@@ -2488,32 +2489,32 @@ require([
       else
         av.dom.sizeRows.style.color = 'red';
       av.dom.sizeCells.style.color = 'red';
-      if (av.dbg.flg.nut) { console.log('not valid; col, row=', colNum, rowNum); }
+      // if (av.dbg.flg.popSetup ) { console.log('popSetup: not valid; col, row=', colNum, rowNum); }
       av.dom.sizeCells.innerHTML = '';
       av.dom.userMsgLabel.innerHTML = '';
       if (colNum <= 0) {
         av.dom.sizeCells.innerHTML += 'Number of columns must be greater than zero. ';
-        if (av.dbg.flg.nut) { console.log('<0'); }
+        // if (av.dbg.flg.popSetup ) { console.log('popSetup: <0'); }
       }
       if (colNum >= 100) {
         av.dom.sizeCells.innerHTML += 'Number of columns must be 100 or less. ';
-        if (av.dbg.flg.nut) { console.log('>0'); }
+        // if (av.dbg.flg.popSetup ) { console.log('popSetup: >0'); }
       }
       if (isNaN(colNum)) {
         av.dom.sizeCells.innerHTML += 'Number of columns must be a valid number. ';
-        if (av.dbg.flg.nut) { console.log('==NaN'); }
+        // if (av.dbg.flg.popSetup ) { console.log('popSetup: ==NaN'); }
       }
       if (rowNum <= 0) {
-        av.dom.sizeCells.innerHTML += 'Number of rows must be greater than zero. ';
-        if (av.dbg.flg.nut) { console.log('<0'); }
+        av.dom.sizeCells.innerHTML += 'Number rof rows must be greater than zero. ';
+        // if (av.dbg.flg.popSetup ) { console.log('popSetup: <0'); }
       }
       if (rowNum >= 100) {
         av.dom.sizeCells.innerHTML += 'Number of rows must be 100 or less. ';
-        if (av.dbg.flg.nut) { console.log('>0'); }
+        // if (av.dbg.flg.popSetup ) { console.log('popSetup: >0'); }
       }
       if (isNaN(rowNum)) {
         av.dom.sizeCells.innerHTML += 'Number of rows must be a valid number. ';
-        if (av.dbg.flg.nut) { console.log('==NaN'); }
+        // if (av.dbg.flg.popSetup ) { console.log('popSetup: ==NaN'); }
       }
     }
   };
@@ -3469,7 +3470,7 @@ require([
   //av.grd.drawGridSetupFn('initial background'); //Draw initial background
 
   // className should be 'labInfoClass labInfoNone'
-  if (av.dbg.flg.nut) { console.log('av.dom.testSetupBlock.className=', av.dom.testSetupBlock.className); }
+  // if (av.dbg.flg.popSetup ) { console.log('popSetup: av.dom.testSetupBlock.className=', av.dom.testSetupBlock.className); }
 
   // 
   //---------------------------------------------------------------------------------------------------- size testing --

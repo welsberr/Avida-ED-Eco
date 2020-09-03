@@ -5,6 +5,8 @@
   // if (av.dbg.flg.root) { console.log('Root: start of utilities'); }
   var av = av || {};  //incase av already exists
 
+
+  
   //----------------------------------------------------------------------------------------------------------------------
   //http://stackoverflow.com/questions/1295584/most-efficient-way-to-create-a-zero-filled-javascript-array
   av.utl.newFilledArray = function (length, val) {
@@ -16,6 +18,11 @@
     return array;
   };
 
+  //----------------------------------------------------------------------------------------------------------------------
+  av.utl.isNumberRegExpression = function(n) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); };
+  //from https://stackoverflow.com/questions/1303646/check-whether-variable-is-number-or-string-in-javascript
+  av.utl.isNumber = function(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0); };
+  
   //----------------------------------------------------------------------------------------------------------------------
   (function () {
     'use strict';

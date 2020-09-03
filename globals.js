@@ -39,8 +39,9 @@ av.debug.userMsg = false; //debug of user messages.
 
 av.dbg = {};
 av.dbg.flg = {}; 
+av.dbg.flg.popSetup = false;
 av.dbg.flg.frd = false;  //reading file text strings
-av.dbg.flg.nut = false;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
+av.dbg.flg.nut = true;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
 av.dbg.flg.plt = false;  //both popChart and analysis
 av.dbg.flg.root = false;  //statements that look for failers when the code executes outside of functions
 
@@ -434,6 +435,8 @@ av.parents.clearParentsFn = function () {
 
 av.fzr = {};
 
+av.env = {}; //used for functions to process information beteen the environment file and the User Interface (UI)
+
 //Commments in the environment.cfg file?
 //
 //#comment option
@@ -441,9 +444,8 @@ av.fzr = {};
 //region options are in av.sgr.region below   There are several name formats and one dictionary below 
 //supply optoins are in av.sgr.supply 
 //side options are in av.sgr.side3
-//gradient options are false/true
+//gradient options are false/true;  gradient will be implemented using CELL which does not need a name. 
 //
-//Name ideas. not01g00 to 99  for gradients   leading zeros by using padStart
 // q suffix on numbrs is q for quarters or n for ninths
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -453,7 +455,7 @@ av.fzr = {};
 //       // av.nut --> dom (actual values in the dom that the user sees)
 //       // dom --> av.nut.uiAll & uiSub
 //       // av.nut.uiAll & uiSub --> av.nut.reAct & reSrc
-//       // av.nut.reAct & reSrc --> environment. 
+//       // av.nut.reAct & reSrc --> environment.cfg
 //       //
 //       // there are extra items in av.sgr as ideas were put in before implementation and not all ideas were used
 //       // in implementation. Eventually after all is working with at least 4 subdishes Diane will clean out extra 

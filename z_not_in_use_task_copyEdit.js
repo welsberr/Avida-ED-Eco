@@ -315,3 +315,84 @@
     return lineErrors;
   };
   //--------------------------------------------------------------------------------------- end av.frd.reSrcLineParse --
+
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>JavaScript Numbers</h2>
+
+<p>Numbers can be written with or without decimals:</p>
+
+<p id="demo"></p>
+
+<script>
+
+isNumber = function(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) };
+
+var x = 3.14;
+var y = 3;
+var e1 = (undefined == null);
+var e2 = (undefined == NaN);
+var e3 = (undefined == '');
+var e4 = (null == NaN);
+var e5 = (null == '');
+var e6 = (NaN == '');
+
+var n1 = (undefined != null);
+var n2 = (undefined != NaN);
+var n3 = (undefined != '');
+var n4 = (null != NaN);
+var n5 = (null != '');
+var n6 = (NaN != '');
+
+var x1 = parseInt('6 dog');
+var notdef;
+var nothing = null;
+var notde = undefined;
+var notNum = NaN;
+
+
+document.getElementById("demo").innerHTML = 
+ "(undefined == null) = " + e1 + "<br>" 
++ "(undefined == NaN) = " + e2 + "<br>" 
++ "(undefined == '') = " + e3 + "<br>" 
++ "(null == NaN) = " + e4 + "<br>" 
++ "(Nan == '') = " + e5 + "<br>" 
++ "(undefined != null) = " + n1 + "<br>" 
++ "(undefined != NaN) = " + n2 + "<br>" 
++ "(undefined != '') = " + n3 + "<br>" 
++ "(null != NaN) = " + n4 + "<br>" 
++ "(Nan != '') = " + n5 + "<br>" 
++ "isNumber(notdef) = " + isNumber(notdef) + "<br>" 
++ "isNumber(nothing) = " + isNumber(nothing) + "<br>" 
++ "isNumber(notde) = " + isNumber(notde) + "<br>" 
++ "isNumber(notNum) = " + isNumber(notNum) + "<br>" 
++ "isNumber(parseInt'6 dog')) = " + isNumber(x1) + "<br>" 
+;
+</script>
+
+</body>
+</html>
+
+Results below:
+
+JavaScript Numbers
+Numbers can be written with or without decimals:
+
+(undefined == null) = true
+(undefined == NaN) = false
+(undefined == '') = false
+(null == NaN) = false
+(Nan == '') = false
+(undefined != null) = false
+(undefined != NaN) = true
+(undefined != '') = true
+(null != NaN) = true
+(Nan != '') = true
+isNumber(notdef) = false
+isNumber(nothing) = false
+isNumber(notde) = false
+isNumber(notNum) = false
+isNumber(parseInt'6 dog')) = true
