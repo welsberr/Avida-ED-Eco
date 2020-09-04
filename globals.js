@@ -471,11 +471,6 @@ av.env = {}; //used for functions to process information beteen the environment 
 
 av.sgr = {};   //specific to resource/reactions (sugars); mostly constants. Not all iddeas written here will be used. 
 
-//Rob Pennock decided that we should only have local/grid resources. This will complicate things as my design is based
-// global characteristic in the "summary" and the rest in the "details" section of the summary/details format. 
-// 
-av.sgr.gridOnly = true;        // gridOnly true  ++> dftGeometry = grid
-av.sgr.dftgGeometry = 'grid';  // gridOnly false ++> dftGeometry = global
 av.sgr.oseNames = ['Notose', 'Nanose', 'Andose', 'Ornose', 'Orose', 'Antose', 'Norose', 'Xorose', 'Equose'];
 av.sgr.logEdNames = ['0not', '1nan', '2and', '3orn', '4oro', '5ant', '6nor', '7xor', '8equ'];
 av.sgr.logicNames = ['not', 'nan', 'and', 'orn', 'oro', 'ant', 'nor', 'xor', 'equ'];
@@ -514,6 +509,7 @@ av.sgr.reAct_edValu_d = {
   'type' : 'pow'
 };
 
+av.sgr.cell_argu = ['initial', 'inflow', 'outflow'];
 av.sgr.reAct_avidaDft_d = {
     'name' : '',       //name of reaction
     'value' : 1,       //value = 1 through 5 based on number of nan gates needed to do the task. 
@@ -556,7 +552,6 @@ av.sgr.ui_subDom_txt = ['supplyType', 'hiSide'];
 
 av.sgr.uiSub_Check = [ 'diffuseCheck', 'periodCheck', 'gradientCheck' ];
 
-av.sgr.ui_cell_argu = ['initial', 'inflow', 'outflow'];
 av.sgr.ui_subDom_argu = ['supplyType', 'initialHiNp', 'inflowHiNp', 'outflowHiNp', 'periodNp'
                         , 'diffuseCheck', 'periodCheck'   //not sure if regionCode and regionName belong in Dom
                         , 'gradientCheck', 'hiSide', 'initialLoNp', 'inflowLoNp', 'outflowLoNp'];
@@ -684,54 +679,57 @@ av.sgr.regionNine.Codes = ['000n', '001', '002', '003'   //top row: ninth of dis
   av.sgr.hideFlagInit = [true, true];  //true is to hide when areas underdevelopment are hidden. 
   av.sgr.flagInitOpposite = [false, false];  //false in this case is to NOT hide as develpment sections shown.
 
-av.sgr.nut = {}; 
+av.sgr.nutdft = {}; 
+//------------------------------------------------------------------------------------------- av.sgr.makeNutDefault --
+//Rob Pennock decided that we should only have local/grid resources. This will complicate things as my design is based
+// global characteristic in the "summary" and the rest in the "details" section of the summary/details format. 
+// 
+av.sgr.gridOnly = true;        // gridOnly true  ++> dftGeometry = grid
+av.sgr.dftGeometry = 'global';  // gridOnly false ++> dftGeometry = global
+if (av.sgr.gridOnly) av.sgr.dftGeometry = 'grid';
 //------------------------------------------------------------------------------------------- av.sgr.makeNutDefault --
 av.sgr.makeNutDefault = function () {
-  av.sgr.nut.wrldCols = 30;
-  av.sgr.nut.wrldRows = 30;
-  av.sgr.nut.wrldSize = av.sgr.nut.wrldCols * av.sgr.nut.wrldRows;
-
-  av.sgr.nut.dft = {};    
+  av.sgr.nutdft = {};    
 
   //for user interface 
-  av.sgr.nut.dft['uiAll'] = {};
-  av.sgr.nut.dft['uiSub'] = {};
+  av.sgr.nutdft['uiAll'] = {};
+  av.sgr.nutdft['uiSub'] = {};
   var uiAllDishLen = av.sgr.ui_allDish_argu.length;
   for (jj=0; jj < uiAllDishLen; jj++) {
-    av.sgr.nut.dft.uiAll[ av.sgr.ui_allDish_argu[jj] ] = 'default';
+    av.sgr.nutdft.uiAll[ av.sgr.ui_allDish_argu[jj] ] = 'default';
   };
   //defaults for items that describe the whole dish
-  av.sgr.nut.dft.uiAll.geometry = av.sgr.dftgGeometry;  ////Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global
-  av.sgr.nut.dft.uiAll.supplyType = 'infinite';    //this is only for whem ui.geometry = global
-  av.sgr.nut.dft.uiAll.regionLayout = '1All';  //only Whole Dish for now; '1All' is the code for 'Whole Dish';
-  av.sgr.nut.dft.uiAll.regionsNumOf = 1;   // whole dish = there is only one dish 
-  av.sgr.nut.dft.uiAll.initial = 1000;      //only used when whem ui.geometry = global and  supplyType = 'finite' 
+  av.sgr.nutdft.uiAll.geometry = av.sgr.dftGeometry;  ////Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global
+  av.sgr.nutdft.uiAll.supplyType = 'infinite';    //this is only for whem ui.geometry = global
+  av.sgr.nutdft.uiAll.regionLayout = '1All';  //only Whole Dish for now; '1All' is the code for 'Whole Dish';
+  av.sgr.nutdft.uiAll.regionsNumOf = 1;   // whole dish = there is only one dish 
+  av.sgr.nutdft.uiAll.initial = 1000;      //only used when whem ui.geometry = global and  supplyType = 'finite' 
 
   //defaults for subtasks which must be Grid or Local
-  av.sgr.nut.dft.uiSub.supplyType = 'infinite';  // Infinite default from Avida-ED 3: I think Should change to Finite
-  av.sgr.nut.dft.uiSub.initialHi = 1000;  //sugar units/cell guess at an initial value when supplyType='finite'; need to multiply by wrldSize
-  av.sgr.nut.dft.uiSub.inflowHi  = 1;   //sugar units/cell guess at an initial value when supplyType='chemostat'; need to multiply by wrldSize
-  av.sgr.nut.dft.uiSub.outflowHi = 0.1;   //sugar units (fraction) guess at an initial value when supplyType='chemostat';
-  av.sgr.nut.dft.uiSub.area = -1;   //based on a standard 30 x 30 world
-  av.sgr.nut.dft.uiSub.diffuseCheck = false;    //false = default;  else true.      
+  av.sgr.nutdft.uiSub.supplyType = 'infinite';  // Infinite default from Avida-ED 3: I think Should change to Finite
+  av.sgr.nutdft.uiSub.initialHi = 1000;  //sugar units/cell guess at an initial value when supplyType='finite'; need to multiply by wrldSize
+  av.sgr.nutdft.uiSub.inflowHi  = 1;   //sugar units/cell guess at an initial value when supplyType='chemostat'; need to multiply by wrldSize
+  av.sgr.nutdft.uiSub.outflowHi = 0.1;   //sugar units (fraction) guess at an initial value when supplyType='chemostat';
+  av.sgr.nutdft.uiSub.area = -1;   //based on a standard 30 x 30 world
+  av.sgr.nutdft.uiSub.diffuseCheck = false;    //false = default;  else true.      
   //from event file
-  av.sgr.nut.dft.uiSub.periodCheck = false;    //false = default;  else true.
-  av.sgr.nut.dft.uiSub.periodTime = 1000;    //need to play with default time in updates
+  av.sgr.nutdft.uiSub.periodCheck = false;    //false = default;  else true.
+  av.sgr.nutdft.uiSub.periodTime = 1000;    //need to play with default time in updates
 
-  av.sgr.nut.dft.uiSub.gradientCheck = false;    //false = default;  else true.      
-  av.sgr.nut.dft.uiSub.hiSide = 'left';    //only valid for local resources with supply Type = 'gradient' or 'flow';
-  av.sgr.nut.dft.uiSub.inflowLo  =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
-  av.sgr.nut.dft.uiSub.outflowLo = 0.1;  //sugar units (fraction) guess at an initial value when supplyType='gradient' or 'flow';
-  av.sgr.nut.dft.uiSub.initialLo =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
-  av.sgr.nut.dft.uiSub.regionNdx = 1;   //index into various region data vectors
-  av.sgr.nut.dft.uiSub.regionCode = '000q';
-  av.sgr.nut.dft.uiSub.regionName = '1All';
-  av.sgr.nut.dft.uiSub.boxed = true;           //true keeps resources in their subdish; false allows them to flow into the rest of the dish
-  av.sgr.nut.dft.uiSub.regionSet = 'q';  // q = Quarters = 2x2 subregions
+  av.sgr.nutdft.uiSub.gradientCheck = false;    //false = default;  else true.      
+  av.sgr.nutdft.uiSub.hiSide = 'left';    //only valid for local resources with supply Type = 'gradient' or 'flow';
+  av.sgr.nutdft.uiSub.inflowLo  =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
+  av.sgr.nutdft.uiSub.outflowLo = 0.1;  //sugar units (fraction) guess at an initial value when supplyType='gradient' or 'flow';
+  av.sgr.nutdft.uiSub.initialLo =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
+  av.sgr.nutdft.uiSub.regionNdx = 1;   //index into various region data vectors
+  av.sgr.nutdft.uiSub.regionCode = '000q';
+  av.sgr.nutdft.uiSub.regionName = '1All';
+  av.sgr.nutdft.uiSub.boxed = true;           //true keeps resources in their subdish; false allows them to flow into the rest of the dish
+  av.sgr.nutdft.uiSub.regionSet = 'q';  // q = Quarters = 2x2 subregions
 };                                       // n = Niths = 3x3 subregions
 //---------------------------------------------------------------------------------------end av.sgr.makeNutDefault --
-av.sgr.makeNutDefault();
-console.log('av.sgr.nut =', av.sgr.nut);   //or should there just be a 'dft' task and only ever one region?
+av.sgr.makeNutDefault();  // only ever called here.
+//console.log('av.sgr.nutdft =', av.sgr.nutdft);   //or should there just be a 'dft' task and only ever one region?
 
 
 av.nut = {};  // within Nutrients (av.nut) the first element in all arrays refer to the geometry="global". The element has an index = 0;
@@ -822,7 +820,7 @@ av.fzr.clearEnvironment = function(from) {
       av.nut[tsk].uiAll[ av.sgr.ui_allDish_argu[jj] ] = 'default';
     };
     //defaults for items that describe the whole dish
-    // These should be in arrays or dictionaries so that they always match with av.sgr.nut.dft.uiAll - tiba fix later
+    // These should be in arrays or dictionaries so that they always match with av.sgr.nutdft.uiAll - tiba fix later
     av.nut[tsk].uiAll.geometry = 'global';        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
     av.nut[tsk].uiAll.supplyType = 'infinite';    //this is only for whem ui.geometry = global
     av.nut[tsk].uiAll.regionLayout = '1All';  //only whole dish for now

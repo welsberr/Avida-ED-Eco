@@ -642,7 +642,7 @@
               av.nut[numtsk].cell.initial[jj] = 1;
               break;
             case 'finite':
-              av.nut[numtsk].cell.name[jj] = av.nut[numtsk].resrc.name[jj];
+              av.nut[numtsk].cell.resource[jj] = av.nut[numtsk].resrc.name[jj];
               av.nut[numtsk].cell.initial[jj] = Math.round(av.nut[numtsk].uiSub.initialHiNp[jj],0);
               break;
             case 'none':
@@ -864,7 +864,7 @@
             txt += 'REACTION ' + rname + ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:max=1:min=1  requisite:max_count=1 \n';
             break;
           case 'infinite':
-            sgrPerCell = av.sgr.nut.dft.uiSub.initialHi;
+            sgrPerCell = av.sgr.nutdft.uiSub.initialHi;
             regionInit = numCells * sgrPerCell;
             txt += 'RESOURCE ' + rname + ':geometry=grid:initial=' + regionInit + ':xdiffuse=0:ydiffuse=0\n';   //cells should have one, but not deplete any
             txt += 'REACTION ' + rname +  ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:depletable=0 requisite:max_count=1 \n';
