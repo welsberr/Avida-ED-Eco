@@ -686,6 +686,24 @@
             // console.log('av.nut['+numTsk+'].uiAll.geometry=', av.nut[numTsk].uiAll.geometry, '=================');
             if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase()) {
               // move general data from nut.resrc
+              // diffusion
+              if (av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.xdiffuse[sub]))) {
+                if ( 0.4 < parseFloat(av.nut[numTsk].resrc.xdiffuse[sub]) ) {
+                  av.nut[numTsk].uiSub.diffuseCheck[sub] = 1;
+                }
+                else { 
+                  av.nut[numTsk].uiSub.diffuseCheck[sub] = 0;
+                };
+              } else if (av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.ydiffuse[sub]))) {
+                if ( 0.4 < parseFloat(av.nut[numTsk].resrc.xdiffuse[sub]) ) {
+                  av.nut[numTsk].uiSub.diffuseCheck[sub] = 1;
+                }
+                else { 
+                  av.nut[numTsk].uiSub.diffuseCheck[sub] = 0;
+                };
+                
+              } else { av.nut[numTsk].uiSub.diffuseCheck[sub] = 1; }
+              
               // console.log('sub=', sub, '; av.nut['+numTsk+'].uiSub.supplyType=', av.nut[numTsk].uiSub.supplyType);
               supplyType = av.nut[numTsk].uiSub.supplyType[sub].toLowerCase();
               switch (supplyType) {
@@ -704,17 +722,20 @@
                 case 'chemostat':
                   if (av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.inflow[sub])) && av.utl.isNumber(parseInt(av.nut[numTsk].uiSub.area[sub]))) {
                     av.nut[numTsk].uiSub.inflowHiNp[sub] = parseFloat(av.nut[numTsk].resrc.inflow[sub]) / parseInt(av.nut[numTsk].uiSub.area[sub]);
-                  };
+                  } else { av.nut[numTsk].uiSub.inflowHiNp[sub] =  0.11; };
                   if (av.utl.isNumber(parseFloat(av.nut[numTsk].uiSub.initialHiNp[sub])) ) {
-                    av.nut[numTsk].uiSub.inflowHiNp[sub] = av.utl.isNumber(parseFloat(av.nut[numTsk].uiSub.initialHiNp[sub]));
-                  };
+                    av.nut[numTsk].uiSub.outflowHiNp[sub] = parseFloat(av.nut[numTsk].uiSub.outflowHiNp[sub]);
+                  } else { av.nut[numTsk].uiSub.inflowHiNp[sub] =  0.1; };
                   break;
                 case 'infinite':
                   av.nut[numTsk].uiSub.initialHiNp[sub] = 1;
                   break;
                   //
               }; // end of switch statement
-            };  // end of 'grid' == geometry
+            }  // end of 'grid' == geometry
+            else {
+              // not implemented as for now Rob wants all resources to be grid/local
+            };
           };   // end of checking to make sure name is not null
         };    // end of for subregions loop
       };     // end of task loop
@@ -853,10 +874,20 @@
         endLoopSupplyTsk = JSON.parse(JSON.stringify(av.nut[numTsk]));
       console.log('endLoopSupply['+numTsk+']=', endLoopSupplyTsk);      
       };
-        
-    };  // end of logic task loops  
-    //-------------------
-  // Determine regionLayout
+      //-------------------
+      // Determine regionLayout
+      regionCodeAry = JSON.parse(JSON.stringify(av.nut[numTsk].uiSub.regionCode));
+      console.log('av.nut['+numTsk+'].uiSub.regionCode =', av.nut[numTsk].uiSub.regionCode);
+      regionCodeAry.sort();
+      console.log('av.nut['+numTsk+'].uiSub.regionCode.sort =', regionCodeAry);
+      regionCodeGroup = regionCodeAry.join();
+      console.log('regionCodeGroup', regionCodeGroup);
+      if (null != regionCodeGroup) {
+        if (null != av.sgr.regionLookup[regionCodeGroup])
+        av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLookup[regionCodeGroup];
+        console.log('av.nut['+numTsk+'].uiAll.regionLayout=', av.nut[numTsk].uiAll.regionLayout);
+      };
+    };  // end of logic task loops
     if (av.dbg.flg.nut) {
       var pastLopp = {};
       pastLopp = JSON.parse(JSON.stringify(av.nut["0not"]));
@@ -864,16 +895,7 @@
       pastLopp = JSON.parse(JSON.stringify(av.nut["8equ"]));
       console.log('av.nut_postSupply["8equ"]=', pastLopp);      
     };
-    regionCodeAry = av.nut[numTsk].uiSub.regionCode;
-    regionCodeAry.sort();
-    console.log('av.nut['+numTsk+'].uiSub.regionCode.sort =', regionCodeAry);
-    regionCodeGroup = regionCodeAry.join();
-    console.log('regionCodeGroup', regionCodeGroup);
-    if (null != regionCodeGroup) {
-      if (null != av.sgr.regionLookup[regionCodeGroup])
-      av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLookup[regionCodeGroup];
-      console.log('av.nut['+numTsk+'].uiAll.regionLayout=', av.nut[numTsk].uiAll.regionLayout);
-    };
+
     //if (av.dbg.flg.nut) { 
     if (true) { 
       nutSupply = {};
@@ -986,7 +1008,8 @@
       av.frd.resrc2uiSub();  // must be called after SupplyType has been found
 
       av.frd.defaultNut2dom('av.frd.environment2UI');               //put data from defaults in the dom.
-      av.frd.nutrientStruct2dom('av.frd.environment2UI');           //puts data from the structure in the the dom for user interface
+      av.frd.ui2dom('av.frd.environment2UI');
+      //av.frd.nutrientStruct2dom('av.frd.environment2UI');           //puts data from the structure in the the dom for user interface
     }
     else {
       // using "testConfig"
@@ -1009,13 +1032,12 @@
       numTsk = av.sgr.logEdNames[ii];
       tsk = av.sgr.logicNames[ii];
       tskose = av.sgr.oseNames[ii];
-
+      
       document.getElementById(tsk+'0geometry').value = av.sgr.nutdft.uiAll.geometry;
       document.getElementById(tsk+'0supplyType').value = av.sgr.nutdft.uiAll.supplyType;
       document.getElementById(tsk+'0regionLayout').value = av.sgr.nutdft.uiAll.regionLayout;
-      document.getElementById(tsk+'0initial').value = av.sgr.nutdft.uiAll.initial; 
+      document.getElementById(tsk+'0initial').value = av.sgr.nutdft.uiAll.initial;
 
-      //for now only one dish - entire world. Later there will be subdishes initial plan is for 2 and then 4;
       for (subNum = 1; subNum <= av.nut.numRegionsinHTML; subNum++) {
         //console.log('ocument.getElementById('+tsk+subNum+'supplyType) =', document.getElementById(tsk+subNum+'supplyType') );
         document.getElementById(tsk+subNum+'supplyType').value = av.sgr.nutdft.uiSub.supplyType;
@@ -1050,6 +1072,86 @@
     // if (av.dbg.flg.nut) { console.log('Nut: ================================================================== end of av.frd.defaultNut2dom =='); }
   };
   //--------------------------------------------------------------------------------------- end av.frd.defaultNut2dom --
+  
+  //--------------------------------------------------------------------------------------------------- av.frd.ui2dom --
+  av.frd.ui2dom = function(from) {
+    //console.log(from, 'called av.frd.ui2dom --------------------');
+    var sugarLength = av.sgr.logicNames.length;  //
+    var numTsk, tsk, tskose;
+    var sub = 1;                   //Will need to loop throughh all sub later
+    // only one regioin for now, so this works. I may need add at subcode index later.
+    // the data for the regions may not go in the struture in the same order they need to be on the user interface. 
+    var xdiffuse = -1;
+    var ydiffuse = -1;
+    var area = 1;  // area of the world or subsection
+    var cols = Number(av.nut.wrldCols);
+    var rows = Number(av.nut.wrldRows);
+    var wrldSize = cols * rows;
+    
+    for (var ii = 0; ii < sugarLength; ii++) {
+      numTsk = av.sgr.logEdNames[ii];
+      tsk = av.sgr.logicNames[ii];
+      tskose = av.sgr.oseNames[ii];
+      document.getElementById(tsk+'0regionLayout').value = av.nut[numTsk].uiAll.regionLayout;
+      console.log('av.nut['+numTsk+'].uiAll.regionLayout', av.nut[numTsk].uiAll.regionLayout);
+      document.getElementById(tsk+'0geometry').value = av.nut[numTsk].uiAll.geometry;
+      console.log('av.nut['+numTsk+'].uiAll.geometry', av.nut[numTsk].uiAll.geometry);
+      
+            if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+        document.getElementById(tsk+'0supplyType').value = av.nut[numTsk].uiAll.supplyType;
+        //console.log('av.nut['+numTsk+']=', av.nut[numTsk]);
+      }
+      else if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+        subsections = av.nut[numTsk].resrc.name.length;
+        //console.log('subsections=', subsections,'; av.nut['+numTsk+']=', av.nut[numTsk]);
+        
+        //Loop through each subsection. 
+        for (sub = 1; sub < subsections; sub++) {
+          document.getElementById(tsk+sub+'supplyType').value = av.nut[numTsk].uiSub.supplyType[sub]; 
+          
+          // Diffusion  
+          if (av.utl.isNumber(parseFloat(av.nut[numTsk].uiSub.diffuseCheck[sub]))) {
+            if (0 < parseFloat(av.nut[numTsk].uiSub.diffuseCheck[sub])) {
+            document.getElementById(tsk+sub+'diffuseCheck').checked = true;
+            }
+            else { 
+              document.getElementById(tsk+sub+'diffuseCheck').checked = false;
+            };          
+          };
+          
+          switch (av.nut[numTsk].uiSub.supplyType[sub]) {
+            case 'finite':
+              if (av.utl.isNumber(parseFloat(av.nut[numTsk].uiSub.initialHiNp[sub])) ) {
+                document.getElementById(tsk+sub+'initialHiNp').value = av.nut[numTsk].uiSub.initialHiNp[sub];
+              } else document.getElementById(tsk+sub+'initialHiNp').value = 10;
+              break;
+            case 'none':
+              av.nut[numTsk].uiSub.initialHiNp[sub] = 0;
+              break;
+            case 'chemostat':
+              if (av.utl.isNumber(parseFloat(av.nut[numTsk].uiSub.inflowHiNp[sub])) ) {
+                document.getElementById(tsk+sub+'inflowHiNp').value = av.nut[numTsk].uiSub.inflowHiNp[sub];
+              } else { document.getElementById(tsk+sub+'inflowHiNp').value = .11; }
+              if (av.utl.isNumber(parseFloat(av.nut[numTsk].uiSub.outflowHiNp[sub])) ) {
+                document.getElementById(tsk+sub+'inflowHiNp').value = av.nut[numTsk].uiSub.outflowHiNp[sub];
+              } else { document.getElementById(tsk+sub+'inflowHiNp').value = .1; }
+              break;
+            case 'infinite':
+              av.nut[numTsk].uiSub.initialHiNp[sub] = 1;
+              break;
+              //
+          }; // end of switch statement
+          
+          
+          
+          // 
+        };  // end of loop for subsections
+      };  // end of grid section
+
+
+    };
+  };
+  //----------------------------------------------------------------------------------------------- end av.frd.ui2dom --
 
   //Now that structure exists, use that data to update values in the user interface. 
   //--------------------------------------------------------------------------------------- av.frd.nutrientStruct2dom --
