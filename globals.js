@@ -617,13 +617,12 @@ av.sgr.name['4Quarters'] = [null, 'upL', 'upR', 'loL', 'loR'];
 av.sgr.code['4Quarters'] = [null, '001q', '002q', '003q', '004q'];
 
 av.sgr.regionLookup = {};
-av.sgr.regionLookup['000'] = '1All';
-av.sgr.regionLookup['000'] = '1All';
-av.sgr.regionLookup['013,024'] = '2LftRit';
-av.sgr.regionLookup['012,024'] = '2UppLow';
-av.sgr.regionLookup['001,002,034'] = 'LftRitLow';
-av.sgr.regionLookup['001,002,003,004'] = '4Quarders';
-av.sgr.regionLookup['003,004,012'] = '3TopLftRit';
+av.sgr.regionLookup['000,'] = '1All';
+av.sgr.regionLookup['013,024,'] = '2LftRit';
+av.sgr.regionLookup['012,024,'] = '2UppLow';
+av.sgr.regionLookup['001,002,034,'] = 'LftRitLow';
+av.sgr.regionLookup['001,002,003,004,'] = '4Quarders';
+av.sgr.regionLookup['003,004,012,'] = '3TopLftRit';
 av.sgr.regionLookup['000'] = '1All';   //the same for the tic-tac-toe layout
 
 
@@ -692,6 +691,7 @@ av.sgr.makeNutDefault = function () {
   av.sgr.nutdft = {};    
 
   //for user interface 
+  av.sgr.nutdft.react = {};
   av.sgr.nutdft['uiAll'] = {};
   av.sgr.nutdft['uiSub'] = {};
   var uiAllDishLen = av.sgr.ui_allDish_argu.length;
@@ -699,6 +699,10 @@ av.sgr.makeNutDefault = function () {
     av.sgr.nutdft.uiAll[ av.sgr.ui_allDish_argu[jj] ] = 'default';
   };
   //defaults for items that describe the whole dish
+  av.sgr.nutdft.react.min = 0.99;
+  av.sgr.nutdft.react.max = 1.01;
+  av.sgr.nutdft.react.max_count = 1;
+  av.sgr.nutdft.react.type = 'pow';
   av.sgr.nutdft.uiAll.geometry = av.sgr.dftGeometry;  ////Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global
   av.sgr.nutdft.uiAll.supplyType = 'infinite';    //this is only for whem ui.geometry = global
   av.sgr.nutdft.uiAll.regionLayout = '1All';  //only Whole Dish for now; '1All' is the code for 'Whole Dish';
@@ -722,7 +726,7 @@ av.sgr.makeNutDefault = function () {
   av.sgr.nutdft.uiSub.outflowLo = 0.1;  //sugar units (fraction) guess at an initial value when supplyType='gradient' or 'flow';
   av.sgr.nutdft.uiSub.initialLo =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
   av.sgr.nutdft.uiSub.regionNdx = 1;   //index into various region data vectors
-  av.sgr.nutdft.uiSub.regionCode = '000q';
+  av.sgr.nutdft.uiSub.regionCode = '000';
   av.sgr.nutdft.uiSub.regionName = '1All';
   av.sgr.nutdft.uiSub.boxed = true;           //true keeps resources in their subdish; false allows them to flow into the rest of the dish
   av.sgr.nutdft.uiSub.regionSet = 'q';  // q = Quarters = 2x2 subregions
