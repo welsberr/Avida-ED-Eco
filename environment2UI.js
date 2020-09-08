@@ -1,12 +1,12 @@
   // Process environment.cfg
   
-  var av = av || {};  //incase av already exists
-  var dijit = dijit || {};  //incase av already exists
+  var av = av || {};  // variable exists; this just lets the ide konw that av is defnined
+  var dijit = dijit || {};  //variable exists; this just lets the ide konw that dijit is defnined
 
   //============================================================================================ read environment.cfg ==
   // to make nutrient structure; and then to create user controls
-  //-------------------------------------------------------------------------------------------- av.frd.findNameIndex --
-  av.frd.findNameIndex = function(nutrientObj, rtag, geometry) {
+  //-------------------------------------------------------------------------------------------- av.env.findNameIndex --
+  av.env.findNameIndex = function(nutrientObj, rtag, geometry) {
     /*
      * 
      * @param nutrientObj =  the suboabject of av.nut that holds the arrays for logic9 type
@@ -45,7 +45,7 @@
     //if (av.dbg.flg.nut) { console.log('defaultindex=',defaultindex,'; rtag='+rtag, '; found=', found, '; nutrientObj.name=', nutrientObj.name); }
     return defaultindex;  
   };
-  //---------------------------------------------------------------------------------------- end av.frd.findNameIndex --
+  //---------------------------------------------------------------------------------------- end av.env.findNameIndex --
 
   // Avida reacton line format
   // REACTION reactionName taskName process:resource=resourceName:value=2:type=pow:max=1.1:min=0.9 requisite:max_count=1
@@ -54,12 +54,12 @@
   //
   // For now in Avida-ED 4.0 beta; the the Resource MUST be defined before the Reaction for that resource. 
 
-  //------------------------------------------------------------------------------------------- av.frd.reActLineParse --
-  av.frd.reActLineParse = function(lnArray, from) {
+  //------------------------------------------------------------------------------------------- av.env.reActLineParse --
+  av.env.reActLineParse = function(lnArray, from) {
     'use strict';
-    //if (av.dbg.flg.nut) { console.log('Nut: ', from, ' called av.frd.reActLineParse'); }
+    //if (av.dbg.flg.nut) { console.log('Nut: ', from, ' called av.env.reActLineParse'); }
     var lnError = '';     //was it a valid line wihtout errors
-//    if (av.dbg.flg.nut) { console.log('Nut: av.frd.reActLineParse: lnArray = ', lnArray); }
+//    if (av.dbg.flg.nut) { console.log('Nut: av.env.reActLineParse: lnArray = ', lnArray); }
     var pear = [];
     var nn;
 
@@ -75,7 +75,7 @@
 
 //      if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiAll = ',av.nut[numTsk].uiAll); }
 
-      var ndx = av.frd.findNameIndex(reActObj, lnArray[1], av.nut[numTsk].uiAll.geometry);
+      var ndx = av.env.findNameIndex(reActObj, lnArray[1], av.nut[numTsk].uiAll.geometry);
       reActObj.name[ndx] = lnArray[1];   //assin the name of the resource. 
       //console.log('REACT: ndx = ', ndx, '; lnArray[1]', lnArray[1], 'reactName=', reActObj.name, 'uiAll.geometry=', av.nut[numTsk].uiAll.geometry );
 
@@ -109,11 +109,11 @@
 
     return lnError;
   };
-  //--------------------------------------------------------------------------------------- end av.frd.reActLineParse --
+  //--------------------------------------------------------------------------------------- end av.env.reActLineParse --
 
-  //--------------------------------------------------------------------------------------- av.frd.reSrcNameBasedInfo --
+  //--------------------------------------------------------------------------------------- av.env.reSrcNameBasedInfo --
   // this function puts data in av.nut.[numTsk].uiAll and uiSub[sub] based on the name of the resource;
-  av.frd.reSrcNameBasedInfo = function(numTsk, sub) {
+  av.env.reSrcNameBasedInfo = function(numTsk, sub) {
     var re_name = /(\D+)(\d+)([qn])(.*$)/;    // match array = whole line? , task, region number, data about things with a side (gradient, flow), else NULL
     var re_region = /(\D+)(\d+)(.*$)/;    // match array = whole line? , task, region number, data about things with a side (gradient, flow), else NULL    
    
@@ -159,13 +159,13 @@
     }
   };
   
-  //----------------------------------------------------------------------------------- end av.frd.reSrcNameBasedInfo --
+  //----------------------------------------------------------------------------------- end av.env.reSrcNameBasedInfo --
 
-  //------------------------------------------------------------------------------------------- av.frd.reSrcLineParse --
-  av.frd.reSrcLineParse = function(lnArray, from ){
+  //------------------------------------------------------------------------------------------- av.env.reSrcLineParse --
+  av.env.reSrcLineParse = function(lnArray, from ){
     'use strict';
     var lineErrors = '';  //was it a valid line wih tout errors
-    // if (av.dbg.flg.nut) { console.log('nut: ', from, ' called av.frd.reSrcLineParse'); }
+    // if (av.dbg.flg.nut) { console.log('nut: ', from, ' called av.env.reSrcLineParse'); }
     // if (av.dbg.flg.nut) { console.log('lnArray = ', lnArray); }
     var pairArray = lnArray[1].split(':');
     var pear = [];
@@ -215,7 +215,7 @@
 
       // check to make sure name is unqiue. If it is not unique then overright the previous data. 
       // index into all the arrays that hold resource/reaction parameters; The name should be unique for all arrays in the object. 
-      ndx = av.frd.findNameIndex(rSourcObj, pairArray[0], av.nut[numTsk].uiAll.geometry);   
+      ndx = av.env.findNameIndex(rSourcObj, pairArray[0], av.nut[numTsk].uiAll.geometry);   
       //console.log('RESROUCE: ndx=',ndx, '; tsk=',tsk, '; name=', pairArray[0], 'resrcName=', rSourcObj.name, 'uiAll.geometry=', av.nut[numTsk].uiAll.geometry );
       //if (av.dbg.flg.nut) { console.log('ndx=',ndx); }
       if (-1 < ndx) {
@@ -223,7 +223,7 @@
         av.nut[numTsk].resrc.geometry[ndx] = geometry;
 
         //Find information based on resource name
-        av.frd.reSrcNameBasedInfo(numTsk, ndx);
+        av.env.reSrcNameBasedInfo(numTsk, ndx);
 
         // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file with a few exceptions
         // defaults are put directly in the dom
@@ -273,12 +273,12 @@
     //console.log('RESOURCE: lineErrors=', lineErrors);
     return lineErrors;
   };
-  //--------------------------------------------------------------------------------------- end av.frd.reSrcLineParse --
+  //--------------------------------------------------------------------------------------- end av.env.reSrcLineParse --
 
-  //------------------------------------------------------------------------------------------- av.frd.cell_LineParse --
-  av.frd.cell_LineParse = function(lnArray, from) {
+  //------------------------------------------------------------------------------------------- av.env.cell_LineParse --
+  av.env.cell_LineParse = function(lnArray, from) {
     'use strict';
-    //if (av.dbg.flg.nut) { console.log('____', from, ' called av.frd.cell_LineParse _____'); }
+    //if (av.dbg.flg.nut) { console.log('____', from, ' called av.env.cell_LineParse _____'); }
     var lnError = '';     //was it a valid line wihtout errors
     var pair = lnArray[1].split(':');
     var len = pair.length;
@@ -336,13 +336,13 @@
     // console.log('CELL: numtsk=', numTsk, '; nut.cell=', av.nut[numTsk].cell);
     return lnError;
   };
-  //--------------------------------------------------------------------------------------- end av.frd.cell_LineParse --
+  //--------------------------------------------------------------------------------------- end av.env.cell_LineParse --
 
-  //-------------------------------------------------------------------------------------------- av.frd.nutrientParse --
+  //-------------------------------------------------------------------------------------------- av.env.nutrientParse --
   // Uses environment.cfg file to create a structure to hold environment variables.   uses av.nut
-  av.frd.nutrientParse = function (filestr, from) {
+  av.env.nutrientParse = function (filestr, from) {
     'use strict';
-    if (av.dbg.flg.nut) { console.log('Nut:', from + ' called av.frd.nutrientParse =='); }
+    if (av.dbg.flg.nut) { console.log('Nut:', from + ' called av.env.nutrientParse =='); }
     var errors='';
     var reacError='', rsrcError='', cellError='';
     var eolfound;
@@ -360,7 +360,7 @@
     var lineArray;
     var ii = 0;
     if (true) {
-      console.log('start of av.frd.nutrientParse');
+      console.log('start of av.env.nutrientParse');
       av.nut_beforeParse = {};
       av.nut_beforeParse = JSON.parse(JSON.stringify(av.nut));
       console.log('av.nut_beforeParse = ', av.nut_beforeParse); 
@@ -403,7 +403,7 @@
         matchResult = lineArray[0].match(re_RESOURCE);
         //consolen('matchResource=', matchResult);
         if (null !== matchResult) { 
-          rsrcError = av.frd.reSrcLineParse(lineArray, 'av.frd.nutrientParse');
+          rsrcError = av.env.reSrcLineParse(lineArray, 'av.env.nutrientParse');
           if ('' != rsrcError) console.log('reSrcLineParse: lineArray=', lineArray, '; rsrcError=', rsrcError);          
         }
         else {rsrcError = '';}
@@ -413,7 +413,7 @@
         //console.log('matchReaction=', matchResult);
         if (null !== matchResult) { 
           //if (av.dbg.flg.nut) { console.log('reActLineParse: lnArray=', lineArray); }
-          reacError = av.frd.reActLineParse(lineArray, 'av.frd.nutrientParse');
+          reacError = av.env.reActLineParse(lineArray, 'av.env.nutrientParse');
           if ('' != reacError)console.log('reActLineParse: lineArray=', lineArray, '; reacError=', reacError);          
         }
         else {
@@ -426,7 +426,7 @@
         //console.log('matchReaction=', matchResult);
         if (null !== matchResult) { 
           //if (av.dbg.flg.nut) { console.log('cell_LineParse: lnArray=', lineArray); }
-          cellError = av.frd.cell_LineParse(lineArray, 'av.frd.nutrientParse');
+          cellError = av.env.cell_LineParse(lineArray, 'av.env.nutrientParse');
           if ('' != cellError) console.log('CELL_LineParse: lineArray=', lineArray, '; cellError=', cellError);          
         }
         else {
@@ -446,19 +446,19 @@
     
           //if (av.dbg.flg.nut) { 
     if (true) {
-      console.log('end of av.frd.nutrientParse');
+      console.log('end of av.env.nutrientParse');
       av.nut_env_cfg = {};
       av.nut_env_cfg = JSON.parse(JSON.stringify(av.nut));
       console.log('av.nut_env_cfg = ', av.nut_env_cfg); 
     }
     if (av.dbg.flg.nut) { console.log('Nut: ================================ end of nutrientParse:  all environment.cfg lines processed =='); }
   };
-  //------------------------------------------------------------------------------------- end of av.frd.nutrientParse --
+    //------------------------------------------------------------------------------------- end of av.env.nutrientParse --
     
   //Find subarea based on inflow x, y coordinates
-  //--------------------------------------------------------------------------------------- av.frd.getInflowAreaResrc --
-  av.frd.getInflowAreaResrc = function(numTsk, subnum) {
-    //console.log('in av.frd.getInflowAreaResrc: numTsk=', numTsk, '; subnum=', subnum);
+  //--------------------------------------------------------------------------------------- av.env.getInflowAreaResrc --
+  av.env.getInflowAreaResrc = function(numTsk, subnum) {
+    //console.log('in av.env.getInflowAreaResrc: numTsk=', numTsk, '; subnum=', subnum);
     var area = 1;
     var corner = '';
     var coordinates = {};
@@ -490,10 +490,10 @@
       }
     }
   };
-  //----------------------------------------------------------------------------------- end av.frd.getInflowAreaResrc --
+  //----------------------------------------------------------------------------------- end av.env.getInflowAreaResrc --
 
-  av.frd.findReactOnlyUIdata = function(numTsk, sub) {
-    console.log('in av.frd.findReactOnlyUIdata: numTsk=', numTsk, '; sub=', sub);
+  av.env.findReactOnlyUIdata = function(numTsk, sub) {
+    console.log('in av.env.findReactOnlyUIdata: numTsk=', numTsk, '; sub=', sub);
     if (0 != sub) { console.log('Reaction only Data should position 0 in the array, sub = ', sub); }
     av.nut[numTsk].uiAll.regionsNumOf = 1;         //reaction but no resource so it must be global and none or infinite
     av.nut[numTsk].uiAll.geometry = 'global';
@@ -512,8 +512,8 @@
     //             , '; av.nut[numTsk].uiAll.regionsNumOf=', av.nut[numTsk].uiAll.regionsNumOf);
   };
   
-  //---------------------------------------------------------------------------------------- av.frd.resourceNameMatch --
-  av.frd.resourceNameMatch = function(numTsk, sub) {
+  //---------------------------------------------------------------------------------------- av.env.resourceNameMatch --
+  av.env.resourceNameMatch = function(numTsk, sub) {
     var matchStatus = 'unknown';
     if ( null == av.nut[numTsk].react.resource[sub] ) {
       matchStatus = 'undefined';
@@ -548,7 +548,7 @@
   };
         return matchStatus;
   };
-  //------------------------------------------------------------------------------------ end av.frd.resourceNameMatch --
+  //------------------------------------------------------------------------------------ end av.env.resourceNameMatch --
 
   //------------------------------------------------------------------------------------------------- av.env.findArea -
   //
@@ -658,14 +658,14 @@
   
   //--------------------------------------------------------------------------------------------- end av.env.findArea --
 
-  //---------------------------------------------------------------------------------------------- av.frd.resrc2uiSub --
+  //---------------------------------------------------------------------------------------------- av.env.resrc2uiSub --
   // Region information was found when RESOURCE line was parced. 
   // Witout a RECOURSE line, geometry = global and region = 1All (or whole dish)
   // called after supply types have been found
   // moves the relevant data from resource and cell to uiSub
   // for now this only works for geometry = grid
   
-    av.frd.resrc2uiSub = function() { 
+    av.env.resrc2uiSub = function() { 
       var supplyType = '';
       var area = parseInt(av.nut.wrldSize);
       var numTsk='', lenNames = 1, sub = 1;
@@ -674,7 +674,7 @@
       var len = av.sgr.logEdNames.length;   //9
       // console.log('av.nut["4oro"].uiAll.geometry=', av.nut["4oro"].uiAll.geometry, '+++++++++++++++++ ');
 
-      //console.log('in av.frd.resrc2uiSub: len=', len);
+      //console.log('in av.env.resrc2uiSub: len=', len);
       for (var ii=0; ii< len; ii++) {
         numTsk = av.sgr.logEdNames[ii];
         lenNames = av.nut[numTsk].resrc.name.length;       // There is data for all reaction statements.
@@ -742,14 +742,14 @@
       if (true) { 
         av.nutUI = {};
         av.nutUI = JSON.parse(JSON.stringify(av.nut));
-        console.log('end of av.frd.resrc2uiSub');
+        console.log('end of av.env.resrc2uiSub');
         console.log('av.nutUI = ', av.nutUI); 
-        console.log('========================================================================================== end of av.frd.resrc2uiSub ==');
+        console.log('========================================================================================== end of av.env.resrc2uiSub ==');
       }
     };
-  //------------------------------------------------------------------------------------------ end av.frd.resrc2uiSub --
+  //------------------------------------------------------------------------------------------ end av.env.resrc2uiSub --
   
-  //--------------------------------------------------------------------------- av.env.findSupplyType --
+  //------------------------------------------------------------------------------------------- av.env.findSupplyType --
   // find some summary info about nutrients. Need to look at each task separately. 
   av.env.findSupplyType = function() {
     var nameMatch;
@@ -775,12 +775,12 @@
           nameRCR = av.nut[numTsk].react.name[sub];
 
           // returns 'found' if react.resource[sub] matches resrc.react[sub];
-          nameMatch = av.frd.resourceNameMatch(numTsk, sub);
+          nameMatch = av.env.resourceNameMatch(numTsk, sub);
           console.log('nameMatch=', nameMatch);
           if ('missing' == nameMatch) { 
             // Avida Avida-ED 3 workspaces do not have Resourc statements;
             // Some Avida-ED 4 workspaces are missing Resource statements;
-            av.frd.findReactOnlyUIdata(numTsk, sub); 
+            av.env.findReactOnlyUIdata(numTsk, sub); 
           }
           else if ('found' == nameMatch ) { 
             // There is a matching resource statement.
@@ -866,7 +866,7 @@
           };
         }; // processing index into array with a reaction name 
         if (av.sgr.gridOnly && 'global' == av.nut[numTsk].uiAll.geometry) {
-          av.convertGlobal2grid(numTsk, sub);
+          av.env.convertGlobal2grid(numTsk, sub);
         };
       };   //  end of loop through list of subIndex with a reaction name
       if (av.dbg.flg.nut) {
@@ -898,19 +898,19 @@
 
     //if (av.dbg.flg.nut) { 
     if (true) { 
-      nutSupply = {};
-      nutSupply = JSON.parse(JSON.stringify(av.nut));
+      av.nutSupply = {};
+      av.nutSupply = JSON.parse(JSON.stringify(av.nut));
       console.log('end of av.env.findSupplyType');
       console.log('av.nutSupply = ', av.nutSupply); 
       console.log('======================================= end of av.Nut.find Supply Type ===================');
     };
 
   };
-  //--------------------------------------------------------------------------- end av.NutriientCfg2userInterfaceData --
- 
-  //------------------------------------------------------------------------------------------- av.convertGlobal2grid --
-  av.convertGlobal2grid = function(numTsk, sub, nameMatch) {
-    console.log('av.convertGlobal2grid: numTsk=', numTsk, '; sub=', sub, '; nameMatch=', nameMatch);
+  //--------------------------------------------------------------------------------------- end av.env.findSupplyType --
+   
+  //--------------------------------------------------------------------------------------- av.env.convertGlobal2grid --
+  av.env.convertGlobal2grid = function(numTsk, sub, nameMatch) {
+    console.log('av.env.convertGlobal2grid: numTsk=', numTsk, '; sub=', sub, '; nameMatch=', nameMatch);
     if (av.dbg.flg.nut) {
       var preConverTsk = {};
       preConverTsk = JSON.parse(JSON.stringify(av.nut[numTsk]));
@@ -925,7 +925,7 @@
     av.nut[numTsk].uiAll.geometry = 'grid';
     if ('found' != nameMatch) {
       // convert a REACTION only statement to a geometry=grid
-      if (0 != sub) { console.log('in av.convertGlobal2grid; REACTION only; sub=', sub); }
+      if (0 != sub) { console.log('in av.env.convertGlobal2grid; REACTION only; sub=', sub); }
       av.nut[numTsk].uiAll.geometry = 'grid';
       for (var ii=0; ii < reactLen; ii++) {
         argue = av.sgr.react_argu[ii];
@@ -983,46 +983,46 @@
       // I need to figure out how to get the amount of global resources for this to be useful.
     };
   };
-  //--------------------------------------------------------------------------------------- end av.convertGlobal2grid --
+  //----------------------------------------------------------------------------------- end av.env.convertGlobal2grid --
 
-  //------------------------------------------------------------------------------------------- av.frd.environment2UI --
+  //------------------------------------------------------------------------------------------- av.env.environment2UI --
   // puts data from the environment.cfg into the structure for the setup form for the population page
-  av.frd.environment2UI = function (fileStr, from) {
+  av.env.environment2UI = function (fileStr, from) {
     'use strict';
-    if (av.dbg.flg.nut) { console.log('Nut: ', from, ' called av.frd.environment2UI'); }
+    if (av.dbg.flg.nut) { console.log('Nut: ', from, ' called av.env.environment2UI'); }
     
     if ('test' != av.dnd.configFlag) {
       // using 'normal' activeConfiguration 
-      av.fzr.clearEnvironment('av.frd.environment2UI');
+      av.fzr.clearEnvironment('av.env.environment2UI');
       //should the dom be loaded from the clean environment and then load the data from the file? 
 
       av.nut.wrldCols = av.fzr.actConfig.cols;  //came from  Number(dict.WORLD_X)
       av.nut.wrldRows = av.fzr.actConfig.rows;  //came from  Number(dict.WORLD_Y)
       av.nut.wrldSize = av.fzr.actConfig.cols * av.fzr.actConfig.rows;  //  av.fzr.actConfig.size;
 
-      av.frd.nutrientParse(fileStr, 'av.frd.environment2UI');    // uses av.nut
+      av.env.nutrientParse(fileStr, 'av.env.environment2UI');    // uses av.nut
       console.log('av.nut["0not"].uiSub=', av.nut["0not"].uiSub);
       av.env.findSupplyType();
       
       // now that region as and supply types have been defined, move relevant data from RESOURCE and CELL to uiSub
-      av.frd.resrc2uiSub();  // must be called after SupplyType has been found
+      av.env.resrc2uiSub();  // must be called after SupplyType has been found
 
-      av.frd.defaultNut2dom('av.frd.environment2UI');               //put data from defaults in the dom.
-      av.frd.ui2dom('av.frd.environment2UI');
-      //av.frd.nutrientStruct2dom('av.frd.environment2UI');           //puts data from the structure in the the dom for user interface
+      av.env.defaultNut2dom('av.env.environment2UI');               //put data from defaults in the dom.
+      av.env.ui2dom('av.env.environment2UI');
+      //av.env.nutrientStruct2dom('av.env.environment2UI');           //puts data from the structure in the the dom for user interface
     }
     else {
       // using "testConfig"
-      var errors =  av.frd.testEnvironmentParse(fileStr, av.frd.environment2struc);    // uses av.fzr.env.react This is in the test tab only and will be removed
+      //need to just put text of environment.cfg into the text box on the test tab
       if (1 < errors.length) console.log('errors=', errors);    
     }
-    if (av.dbg.flg.nut) { console.log('Nut: ================================================================== end of av.frd.environment2UI =='); }
+    if (av.dbg.flg.nut) { console.log('Nut: ================================================================== end of av.env.environment2UI =='); }
   };
-  //----------------------------------------------------------------------------------- end av.frd.environment2UI --
+  //----------------------------------------------------------------------------------- end av.env.environment2UI --
 
   //Load defaults in the dom from the defaults in the av.nut structure. 
-  //------------------------------------------------------------------------------------------- av.frd.defaultNut2dom --
-  av.frd.defaultNut2dom = function(from) {
+  //------------------------------------------------------------------------------------------- av.env.defaultNut2dom --
+  av.env.defaultNut2dom = function(from) {
     var sugarLength = av.sgr.logicNames.length;
     var numTsk, tsk, tskose;
     // only one regioin for now, so this works. I may need add at subcode index later.
@@ -1069,13 +1069,13 @@
       }  // end of subregion list
       //if (av.dbg.flg.nut) { console.log('Nut: ----------------------------------------------------------- end of each task in default to dome =='); }
     };
-    // if (av.dbg.flg.nut) { console.log('Nut: ================================================================== end of av.frd.defaultNut2dom =='); }
+    // if (av.dbg.flg.nut) { console.log('Nut: ================================================================== end of av.env.defaultNut2dom =='); }
   };
-  //--------------------------------------------------------------------------------------- end av.frd.defaultNut2dom --
+  //--------------------------------------------------------------------------------------- end av.env.defaultNut2dom --
   
-  //--------------------------------------------------------------------------------------------------- av.frd.ui2dom --
-  av.frd.ui2dom = function(from) {
-    //console.log(from, 'called av.frd.ui2dom --------------------');
+  //--------------------------------------------------------------------------------------------------- av.env.ui2dom --
+  av.env.ui2dom = function(from) {
+    //console.log(from, 'called av.env.ui2dom --------------------');
     var sugarLength = av.sgr.logicNames.length;  //
     var numTsk, tsk, tskose;
     var sub = 1;                   //Will need to loop throughh all sub later
@@ -1094,6 +1094,7 @@
       tskose = av.sgr.oseNames[ii];
       document.getElementById(tsk+'0regionLayout').value = av.nut[numTsk].uiAll.regionLayout;
       console.log('av.nut['+numTsk+'].uiAll.regionLayout', av.nut[numTsk].uiAll.regionLayout);
+      console.log(tsk+'0regionLayout =', document.getElementById(tsk+'0regionLayout').value);
       document.getElementById(tsk+'0geometry').value = av.nut[numTsk].uiAll.geometry;
       console.log('av.nut['+numTsk+'].uiAll.geometry', av.nut[numTsk].uiAll.geometry);
       
@@ -1141,22 +1142,26 @@
               break;
               //
           }; // end of switch statement
-          
-          
-          
-          // 
         };  // end of loop for subsections
-      };  // end of grid section
-
-
+      };   // end of grid section
+      sub = 0;
+      // update layout for the "sugar" area of UI, based on nutrient structure (nut) from envrironment.cfg
+      av.sgr.changeDetailsLayout(tsk, sub, 'av.env.ui2dom');  // sub is not used in this function; need to update. 
+    };    // end of task loop
+    if (av.dbg.flg.nut) { 
+      av.nut_ui2dom = {};
+      av.nut_ui2dom = JSON.parse(JSON.stringify(av.nut));
+      console.log('end of av.env.ui2dom');
+      console.log('av.nut_ui2dom = ', av.nut_ui2dom); 
     };
   };
-  //----------------------------------------------------------------------------------------------- end av.frd.ui2dom --
+  //----------------------------------------------------------------------------------------------- end av.env.ui2dom --
 
   //Now that structure exists, use that data to update values in the user interface. 
-  //--------------------------------------------------------------------------------------- av.frd.nutrientStruct2dom --
-  av.frd.nutrientStruct2dom = function(from) {
-    //console.log(from, 'called av.frd.nutrientStruct2dom --------------------');
+  // This function will be deleted
+  //--------------------------------------------------------------------------------------- av.env.nutrientStruct2dom --
+  av.env.nutrientStruct2dom = function(from) {
+    //console.log(from, 'called av.env.nutrientStruct2dom --------------------');
     var sugarLength = av.sgr.logicNames.length;  //
     var numTsk, tsk, tskose;
     var subNum = 1;                   //Will need to loop throughh all subNum later
@@ -1168,7 +1173,7 @@
     var cols = Number(av.nut.wrldCols);
     var rows = Number(av.nut.wrldRows);
     var wrldSize = cols * rows;
-    //if (av.dbg.flg.nut) { console.log('Nut: ', from, ' called av.frd.nutrientStruct2dom: cols = ', cols, '; rows = ', rows, '; wrldSize = ', wrldSize); }
+    //if (av.dbg.flg.nut) { console.log('Nut: ', from, ' called av.env.nutrientStruct2dom: cols = ', cols, '; rows = ', rows, '; wrldSize = ', wrldSize); }
     
     for (var ii = 0; ii < sugarLength; ii++) {
       numTsk = av.sgr.logEdNames[ii];
@@ -1322,7 +1327,7 @@
       }
       // must be called outside the subsections loop
       //console.log('av.nut['+numTsk+']', av.nut[numTsk]);
-      av.sgr.changeDetailsLayout(tsk, 1, 'av.frd.nutrientStruct2dom');  //the one in this case is for subsection, but it is not used. 
+      av.sgr.changeDetailsLayout(tsk, 1, 'av.env.nutrientStruct2dom');  //the one in this case is for subsection, but it is not used. 
     }
     /*
     var debuglen = av.sgr.logicNames.length;
@@ -1335,14 +1340,13 @@
       } 
     }
     */
-        //if (av.dbg.flg.nut) { 
     if (av.dbg.flg.nut) { 
       av.nutdom = {};
       av.nutdom = JSON.parse(JSON.stringify(av.nut));
-      console.log('end of av.frd.nutrientStruct2dom');
+      console.log('end of av.env.nutrientStruct2dom');
       console.log('av.nutDom = ', av.nutdom); 
     }
-    if (av.dbg.flg.nut) { console.log('Nut: ================================================================== end of av.frd.nutrientStruct2dom =='); }
+    if (av.dbg.flg.nut) { console.log('Nut: ================================================================== end of av.env.nutrientStruct2dom =='); }
   };
-  //----------------------------------------------------------------------------------- end av.frd.nutrientStruct2dom --
+  //----------------------------------------------------------------------------------- end av.env.nutrientStruct2dom --
   

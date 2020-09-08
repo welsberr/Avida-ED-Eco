@@ -163,7 +163,7 @@ require([
   'popControls.js',
   'mouse.js',
   'mouseDown.js',
-  'nutrients2UI.js',
+  'environment2UI.js',
   'sugar_ui.js',
   'reSizePageParts.js',
   //'restartAvida.js',

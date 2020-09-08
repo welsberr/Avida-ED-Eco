@@ -350,7 +350,7 @@
 
     doctext = av.fzr.file[dir + '/environment.cfg'];
     if (av.dbg.flg.frd) { console.log(dir + '/environment.cfg:  ', doctext); }
-    av.frd.environment2UI(doctext, 'av.frd.updateSetup');      //puts environment in a structure
+    av.env.environment2UI(doctext, 'av.frd.updateSetup');      //puts environment in a structure
     
     doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
     if (undefined !== doctext) { av.frd.pauseRunAtTXT2form(doctext); }

@@ -646,7 +646,7 @@
               av.nut[numtsk].cell.initial[jj] = Math.round(av.nut[numtsk].uiSub.initialHiNp[jj],0);
               break;
             case 'none':
-              av.nut[numtsk].cell.name[jj] = av.nut[numtsk].resrc.name[jj];
+              av.nut[numtsk].cell.resource[jj] = av.nut[numtsk].resrc.name[jj];
               av.nut[numtsk].cell.initial[jj] = 0;
               break;
             case 'chemostat': 
