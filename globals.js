@@ -632,7 +632,7 @@ av.sgr.boxArguments = ['boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow']; //flag is
   
 // Still using this version
 // Region List based on 4 quarters: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
-av.sgr.regionQuarterNames = ['Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
+av.sgr.regionQuarterNames = ['Whole Dish', 'Upper Left', 'Upper Right', 'Lower Left', 'Lower Right', 'Top', 'Bottom', 'Left', 'Right']; 
 av.sgr.regionQuarter3Char = ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];   //Use as values when the time comes
 av.sgr.regionQuarterCodes = [ '000', '001', '002', '003', '004', '012', '034', '013', '024'];   //These numbers go with the regions above
 av.sgr.regionQuarterCols =  [   1.0,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0,   0.5,   0.5];   //fraction of cols
@@ -739,10 +739,9 @@ av.sgr.makeNutDefault();  // only ever called here.
 av.nut = {};  // within Nutrients (av.nut) the first element in all arrays refer to the geometry="global". The element has an index = 0;
               // when geometry="grid", Avida-ED calls it "local" and there can be up to 9 subdishes. 
               // subscripts 1-9 can refer upto 9 subsections within a dish. They are actually elements 2-10, but the subscript is 1-9. 
-              // at this time, I'm only implementing 1 local section, which like global, covers the "Whole Dish". 
               // av.uiALL.regionLayout has various options which define both how many subdishes can be defined and where in the dish those subdishes are located. 
               // the dom elelment tsk#regionLayout.value will determine number and labels for the subsections. 
-              // When more subdishes are implemented, an array or dictionary will be defined for each of the tsk#regionLayout values. 
+              // When more subdishes are implemented, an array or dictionary will be defined for each of the tsk.regionLayout values. 
 
 //----------------------------------------------------------------------------------------- av.fzr.clearEnvironment --
 // used to create several structures used in defining parameters for the environment.cfg file

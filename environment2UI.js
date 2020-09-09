@@ -209,7 +209,7 @@
         av.nut[numTsk].uiAll.geometry = geometry;
       }
       else { 
-        console.log('ERROR: geometry was not set correctly in environment.cft *********************************');
+        console.log('ERROR: geometry was not set correctly in environment.cfg *********************************');
         console.log('pairArray=', pairArray);
       };
 
@@ -492,25 +492,31 @@
   };
   //----------------------------------------------------------------------------------- end av.env.getInflowAreaResrc --
 
+  //-------------------------------------------------------------------------------------- av.env.findReactOnlyUIdata --
   av.env.findReactOnlyUIdata = function(numTsk, sub) {
     console.log('in av.env.findReactOnlyUIdata: numTsk=', numTsk, '; sub=', sub);
     if (0 != sub) { console.log('Reaction only Data should position 0 in the array, sub = ', sub); }
-    av.nut[numTsk].uiAll.regionsNumOf = 1;         //reaction but no resource so it must be global and none or infinite
-    av.nut[numTsk].uiAll.geometry = 'global';
-    if (0 < av.nut[numTsk].react.value[sub]) {
-      av.nut[numTsk].uiAll.supplyType = 'finite'; 
-      //if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiAll.supplyType =', av.nut[numTsk].uiAll.supplyType); }
+    else {
+      av.nut[numTsk].uiAll.regionsNumOf = 1;         //reaction but no resource so it must be global and none or infinite
+      av.nut[numTsk].uiAll.geometry = 'global';
+      if (0 < av.nut[numTsk].react.value[sub]) {
+        av.nut[numTsk].uiAll.supplyType = 'infinite'; 
+        //if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiAll.supplyType =', av.nut[numTsk].uiAll.supplyType); }
+      }
+      else if (0 > av.nut[numTsk].react.value[sub])  {
+        av.nut[numTsk].uiAll.supplyType = 'poison';   //poison or damage. does not kill, but hurts energy aquisition rate (ear). 
+      }
+      else if (0 == av.nut[numTsk].react.value[sub]) {
+        av.nut[numTsk].uiAll.supplyType = 'none';
+        //if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiAll.supplyType =', av.nut[numTsk].uiAll.supplyType); }
+      }
+      else { console.log('should not be here'); }
+      console.log('numTsk=', numTsk, '; sub=', sub, '; av.nut[numTsk].uiAll.supplyType[sub]=', av.nut[numTsk].uiAll.supplyType
+                   , '; av.nut[numTsk].uiAll.regionsNumOf=', av.nut[numTsk].uiAll.regionsNumOf
+                   , '; react.value=', av.nut[numTsk].react.value[sub], '==========');
     }
-    else if (0 > av.nut[numTsk].react.value[sub])  {
-      av.nut[numTsk].uiAll.supplyType = 'poison';   //poison or damage. does not kill, but hurts energy aquisition rate (ear). 
-    }
-    else if (0 == av.nut[numTsk].react.value[sub]) {
-      av.nut[numTsk].uiAll.supplyType = 'none';
-      //if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiAll.supplyType =', av.nut[numTsk].uiAll.supplyType); }
-    }
-    //console.log('numTsk=', numTsk, '; sub=', sub, '; av.nut[numTsk].uiAll.supplyType[sub]=', av.nut[numTsk].uiSub.supplyType[sub]
-    //             , '; av.nut[numTsk].uiAll.regionsNumOf=', av.nut[numTsk].uiAll.regionsNumOf);
   };
+  //---------------------------------------------------------------------------------- end av.env.findReactOnlyUIdata --
   
   //---------------------------------------------------------------------------------------- av.env.resourceNameMatch --
   av.env.resourceNameMatch = function(numTsk, sub) {
@@ -583,7 +589,7 @@
           area = av.nut.wrldSize;
           // console.log('av.nut['+numTsk+'].uiAll.geometry=', av.nut[numTsk].uiAll.geometry, '________________________');
           
-          console.log('Nut: REACTION statement only; area is wrldSize =', av.nut.wrldSize);
+          console.log('Nut: REACTION statement only; av.nut['+numTsk+'].uiSub['+sub+'].area is wrldSize =', av.nut.wrldSize);
           return area;
         }
       };
@@ -636,7 +642,7 @@
           }
         };
 
-        // Area base on wrldSize and region definitons. This will be used in writing environment.cfg
+        // Area based on wrldSize and region definitons. This will be used in writing environment.cfg
         if ( av.utl.isNumber(parseInt(av.nut[numTsk].uiSub.regionNdx[sub])) ) {
           // sub regiona index exist so use that to fine area from regiona type;
           ndx = parseInt(av.nut[numTsk].uiSub.regionNdx[sub]);
@@ -660,13 +666,13 @@
 
   //---------------------------------------------------------------------------------------------- av.env.resrc2uiSub --
   // Region information was found when RESOURCE line was parced. 
-  // Witout a RECOURSE line, geometry = global and region = 1All (or whole dish)
+  // Witout a RESOURSE line, geometry = global and region = 1All (or whole dish)
   // called after supply types have been found
   // moves the relevant data from resource and cell to uiSub
   // for now this only works for geometry = grid
   
     av.env.resrc2uiSub = function() { 
-      var supplyType = '';
+      var supplyType = ''; var ndx;
       var area = parseInt(av.nut.wrldSize);
       var numTsk='', lenNames = 1, sub = 1;
       var nameRCR;     // name should be the same for RESPONSE, CELL, REACTION, but name or reaction matters the least.
@@ -705,7 +711,21 @@
               } else { av.nut[numTsk].uiSub.diffuseCheck[sub] = 1; }
               
               // console.log('sub=', sub, '; av.nut['+numTsk+'].uiSub.supplyType=', av.nut[numTsk].uiSub.supplyType);
-              supplyType = av.nut[numTsk].uiSub.supplyType[sub].toLowerCase();
+              if(null == av.nut[numTsk].uiSub.supplyType[sub]) {
+                if (null != av.nut[numTsk].uiAll.supplyType && av.sgr.supplylower.includes(av.nut[numTsk].uiAll.supplyType)
+                           && '1All' == av.nut[numTsk].uiAll.regionLayout){
+                    supplyType = av.nut[numTsk].uiAll.supplyType.toLowerCase();
+                    console.log('Error: sub=', sub, 'av.nut.['+numTsk+'].uiAll=', supplyType, 'should be from uiSub');
+                }
+                else {
+                  supplyType  = 'none';
+                  av.nut[numTsk].uiSub.supplyType[sub] = 'none';
+                  console.log('Error: supplyType defined wrong: av.nut['+numTsk+'].uiSub.supplyType['+sub+'] is null. uiAll.supplyType='
+                                , av.nut[numTsk].uiAll.supplyType);
+                }
+              } else {
+                supplyType = av.nut[numTsk].uiSub.supplyType[sub].toLowerCase();
+              }
               switch (supplyType) {
                 case 'finite':
                   if (av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.initial[sub])) && av.utl.isNumber(parseInt(av.nut[numTsk].uiSub.area[sub]))) {
@@ -791,10 +811,9 @@
             // Look for finite or none
             // Look at RESOURCE initial first. 
             console.log('av.nut['+numTsk+'].resrc.initial['+sub+']=', av.nut[numTsk].resrc.initial[sub]);
-            if (null != av.nut[numTsk].resrc.initial[sub]) {
+            if ( av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.initial[sub])) ) {
               if (0 == parseFloat(av.nut[numTsk].resrc.initial[sub]) ) {
                 av.nut[numTsk].uiSub.supplyType[sub] = 'none';
-                av.nut[numTsk].uiAll.supplyType = 'uiSub';
               } 
               else if (0 < av.nut[numTsk].resrc.initial[sub]) {
                 av.nut[numTsk].uiSub.supplyType[sub] = 'finite';
@@ -802,21 +821,23 @@
                   av.nut[numTsk].uiSub.area[sub] = av.nut.wrldSize;   //this may get redifned based on cells
                 }
               }
+              av.nut[numTsk].uiAll.supplyType = 'uiSub';
             };
             //If there is also CELL initial, CELL over writes RESOURCE inital for Avida-ED. In avida, they are additive
             console.log('av.nut['+numTsk+'].cell.initial['+sub+']=', av.nut[numTsk].cell.initial[sub]);
-            if (null != av.nut[numTsk].cell.initial[sub]) {
+            if ( av.utl.isNumber(parseFloat(av.nut[numTsk].cell.initial[sub])) ) {
               if (0 == parseFloat(av.nut[numTsk].cell.initial[sub]) ) {
-                av.nut[numTsk].uiSub.supplyType[sub] = 'none';
+                av.nut[numTsk].uiSub.supplyType[sub] = 'none';                        //None
                 av.nut[numTsk].uiAll.supplyType = 'uiSub';
               } 
               else if (0 < av.nut[numTsk].cell.initial[sub]) {
-                av.nut[numTsk].uiSub.supplyType[sub] = 'finite';
+                av.nut[numTsk].uiSub.supplyType[sub] = 'finite';                      //Finite
                 av.nut[numTsk].uiAll.supplyType = 'uiSub';
                 if (null == av.nut[numTsk].uiSub.area[sub]) {
                   av.nut[numTsk].uiSub.area[sub] = av.nut.wrldSize;   //this may get redifned based on cells
                 }
               }
+              av.nut[numTsk].uiAll.supplyType = 'uiSub';
             };
             console.log('av.nut['+numTsk+'].resrc.inflow['+sub+']=', av.nut[numTsk].resrc.inflow[sub]);
             if (av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.inflow[sub])) && av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.outflow[sub])) ) {
@@ -877,16 +898,18 @@
       //-------------------
       // Determine regionLayout
       regionCodeAry = JSON.parse(JSON.stringify(av.nut[numTsk].uiSub.regionCode));
-      console.log('av.nut['+numTsk+'].uiSub.regionCode =', av.nut[numTsk].uiSub.regionCode);
+      //console.log('av.nut['+numTsk+'].uiSub.regionCode =', av.nut[numTsk].uiSub.regionCode);
       regionCodeAry.sort();
-      console.log('av.nut['+numTsk+'].uiSub.regionCode.sort =', regionCodeAry);
+      //console.log('av.nut['+numTsk+'].uiSub.regionCode.sort =', regionCodeAry);
       regionCodeGroup = regionCodeAry.join();
       console.log('regionCodeGroup', regionCodeGroup);
       if (null != regionCodeGroup) {
         if (null != av.sgr.regionLookup[regionCodeGroup])
         av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLookup[regionCodeGroup];
         console.log('av.nut['+numTsk+'].uiAll.regionLayout=', av.nut[numTsk].uiAll.regionLayout);
-      };
+      } else { 
+        console.log('Error: Why is regionCode empty? regionCode = ', av.nut[numTsk].uiSub.regionCode); 
+      }
     };  // end of logic task loops
     if (av.dbg.flg.nut) {
       var pastLopp = {};
@@ -922,6 +945,7 @@
     var tsk = av.sgr.logicNames[ndx];
     var reactLen = av.sgr.react_argu.length;
     var argue  = '';
+    var allDishNdx = 0;
     av.nut[numTsk].uiAll.geometry = 'grid';
     if ('found' != nameMatch) {
       // convert a REACTION only statement to a geometry=grid
@@ -938,13 +962,14 @@
         av.nut[numTsk].resrc.initial[1] = av.nut.wrldSize;
         av.nut[numTsk].cell.initial[1] = 1;
         av.nut[numTsk].uiSub.initialHiNp[1] = 1;
-        av.nut[numTsk].uiAll.supplyType = 'infinite';
+        av.nut[numTsk].uiSub.supplyType[1] = 'infinite';
       } else {
         av.nut[numTsk].resrc.initial[1] = 0;
         av.nut[numTsk].cell.initial[1] = 0;
         av.nut[numTsk].uiSub.initialHiNp[1] = 0;
-        av.nut[numTsk].uiAll.supplyType = 'none';
+        av.nut[numTsk].uiSub.supplyType[1] = 'none';
       };
+      av.nut[numTsk].uiAll.supplyType = 'uiSub';
       if (av.dbg.flg.nut) {
         var tempUIsub = {};
         tempUIsub = JSON.parse(JSON.stringify(av.nut[numTsk].uiSub));
@@ -966,11 +991,10 @@
         tmpUIsub = JSON.parse(JSON.stringify(av.nut[numTsk].uiSub));
         console.log('av.nut['+numTsk+']=', tmpUIsub);
       };
-      av.nut[numTsk].uiSub.regionName[1] = '1All';
-      av.nut[numTsk].uiSub.regionNdx[1] = 0;
+      av.nut[numTsk].uiSub.regionNdx[1] = allDishNdx;
+      av.nut[numTsk].uiSub.regionName[1] = av.sgr.regionQuarterNames[allDishNdx];
       av.nut[numTsk].uiSub.regionSet[1] = 'q';
       av.nut[numTsk].uiSub.initialHiNp[1] = av.nut.wrldSize;
-      av.nut[numTsk].uiSub.supplyType[1] = av.nut[numTsk].uiAll.supplyType;
       if (av.dbg.flg.nut) {
         var postConverTsk = {};
         postConverTsk = JSON.parse(JSON.stringify(av.nut[numTsk]));
@@ -1093,23 +1117,21 @@
       tsk = av.sgr.logicNames[ii];
       tskose = av.sgr.oseNames[ii];
       document.getElementById(tsk+'0regionLayout').value = av.nut[numTsk].uiAll.regionLayout;
-      console.log('av.nut['+numTsk+'].uiAll.regionLayout', av.nut[numTsk].uiAll.regionLayout);
-      console.log(tsk+'0regionLayout =', document.getElementById(tsk+'0regionLayout').value);
       document.getElementById(tsk+'0geometry').value = av.nut[numTsk].uiAll.geometry;
-      console.log('av.nut['+numTsk+'].uiAll.geometry', av.nut[numTsk].uiAll.geometry);
-      
-            if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+            
+      if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         document.getElementById(tsk+'0supplyType').value = av.nut[numTsk].uiAll.supplyType;
         //console.log('av.nut['+numTsk+']=', av.nut[numTsk]);
       }
       else if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         subsections = av.nut[numTsk].resrc.name.length;
-        //console.log('subsections=', subsections,'; av.nut['+numTsk+']=', av.nut[numTsk]);
-        
+        console.log('av.nut['+numTsk+'].uiAll.geometry', av.nut[numTsk].uiAll.geometry
+                , '; av.nut['+numTsk+'].uiAll.regionLayout', av.nut[numTsk].uiAll.regionLayout
+                , '; av.nut['+numTsk+'].uiSub.supplyType=', av.nut[numTsk].uiSub.supplyType );
+        document.getElementById(tsk+'WsupplyType').value = av.nut[numTsk].uiSub.supplyType[1]; 
         //Loop through each subsection. 
         for (sub = 1; sub < subsections; sub++) {
           document.getElementById(tsk+sub+'supplyType').value = av.nut[numTsk].uiSub.supplyType[sub]; 
-          
           // Diffusion  
           if (av.utl.isNumber(parseFloat(av.nut[numTsk].uiSub.diffuseCheck[sub]))) {
             if (0 < parseFloat(av.nut[numTsk].uiSub.diffuseCheck[sub])) {
@@ -1119,15 +1141,18 @@
               document.getElementById(tsk+sub+'diffuseCheck').checked = false;
             };          
           };
-          
+          console.log('document.getElementById('+tsk+sub+'supplyType).value=', document.getElementById(tsk+sub+'supplyType').value);
           switch (av.nut[numTsk].uiSub.supplyType[sub]) {
             case 'finite':
               if (av.utl.isNumber(parseFloat(av.nut[numTsk].uiSub.initialHiNp[sub])) ) {
                 document.getElementById(tsk+sub+'initialHiNp').value = av.nut[numTsk].uiSub.initialHiNp[sub];
-              } else document.getElementById(tsk+sub+'initialHiNp').value = 10;
+              } else { 
+                document.getElementById(tsk+sub+'initialHiNp').value = 10;
+                console.log('Error: av.nut['+numTsk+'].uiSub.initialHiNp['+sub+'] should be a number');
+              }
               break;
             case 'none':
-              av.nut[numTsk].uiSub.initialHiNp[sub] = 0;
+              //av.nut[numTsk].uiSub.initialHiNp[sub] = 0;
               break;
             case 'chemostat':
               if (av.utl.isNumber(parseFloat(av.nut[numTsk].uiSub.inflowHiNp[sub])) ) {
@@ -1143,6 +1168,7 @@
               //
           }; // end of switch statement
         };  // end of loop for subsections
+        
       };   // end of grid section
       sub = 0;
       // update layout for the "sugar" area of UI, based on nutrient structure (nut) from envrironment.cfg

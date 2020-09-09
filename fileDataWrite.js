@@ -524,7 +524,7 @@
     var tskvar;  // avida uses variable length logic9 names
     var logiclen = av.sgr.logicNames.length;
     var tmpNum = 1;
-    var tmpTxt = '';
+    var regionLayout = '';
     var ndx = 1;
     var jj = 0;
     var react_arguLen = av.sgr.react_argu.length;
@@ -690,11 +690,10 @@
     var uiSub_checkLen = av.sgr.uiSub_Check.length;
     var ui_subDom_txt = av.sgr.ui_subDom_txt.length;
     var tmpNum = 1;
-    var tmpTxt = '';
+    var regionLayout = '';
     var ndx = 1;
     var react_arguLen = av.sgr.react_argu.length;
     var rslt;
-    var tmpText = '';
     
     if (false) {
       console.log(from,'called av.fwt.dom2nutUIfields: react_arguLen=',react_arguLen, 
@@ -727,20 +726,20 @@
         //subregion not currently used. using regionCode, regionName, regionNdx
         //av.nut[numtsk].uiSub.regionSet[kk] = kk;      //not sure this is needed or make sense. needs work when get past one reagion
         
-        tmpTxt = av.nut[numtsk].uiAll.regionLayout;
+        regionLayout = av.nut[numtsk].uiAll.regionLayout;
         
         //seemed to have inconsistent error, but it went away. left the debug consol.logs for now
-        //console.log('tmpTxt = av.nut['+numtsk+'].uiAll.regionLayout=', av.nut[numtsk].uiAll.regionLayout);
+        //console.log('regionLayout = av.nut['+numtsk+'].uiAll.regionLayout=', av.nut[numtsk].uiAll.regionLayout);
         
         //console.log('av.nut['+numtsk+'].uiSub.regionName['+kk+']=', av.nut[numtsk].uiSub.regionName[kk]);
-        //console.log('av.sgr.name['+tmpTxt+']['+kk+']=', av.sgr.name[tmpTxt][kk]);
+        //console.log('av.sgr.name['+regionLayout+']['+kk+']=', av.sgr.name[regionLayout][kk]);
 
-        av.nut[numtsk].uiSub.regionName[kk] = av.sgr.name[tmpTxt][kk];
-                                      //tmptext = av.sgr.name[tmpTxt][kk];
+        av.nut[numtsk].uiSub.regionName[kk] = av.sgr.name[regionLayout][kk];
+                                      //tmptext = av.sgr.name[regionLayout][kk];
           //av.nut[numtsk].uiSub.regionName[kk] = tmpText;
         //console.log('av.nut['+numtsk+'].uiSub.regionName['+kk+']=', av.nut[numtsk].uiSub.regionName[kk]);
           
-        ndx = av.sgr.regionQuarterNames.indexOf(av.sgr.name[tmpTxt][kk]);
+        ndx = av.sgr.regionQuarterNames.indexOf(av.sgr.name[regionLayout][kk]);
         av.nut[numtsk].uiSub.regionNdx[kk] = ndx;
         
         av.nut[numtsk].uiSub.regionCode[kk] = av.sgr.regionQuarterCodes[ndx];
@@ -810,7 +809,7 @@
     var ndx = 1;           // only using the first subsection for now
     var tsk; var etsk; var atsk;
     var regionCode = '00';
-    var regionName = 'Whole Dish';
+    var regionName = '1All';  //for whole dish
     var region_ndx = 1;
     var domName; 
     var sgrPerCell =1;
@@ -835,7 +834,7 @@
       geometry = document.getElementById(domName).value;
       //console.log('domName=', domName, '; value=', geometry);
       if ('global' == geometry.toLowerCase()) {
-        regionName = 'Whole Dish';           //alway the case for global.
+        regionName = '1All';  //for whole dish;           //alway the case for global.
         region_ndx = av.sgr.regionQuarterCodes.indexOf(regionName);
         regionCode = '00';        //will need to find later based subdish+regionName
         rname = tsk + regionCode;
