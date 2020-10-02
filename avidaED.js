@@ -1861,6 +1861,7 @@ require([
   };
 
   // Zoom slide - display only not avida
+  /*
   av.grd.zoomSlide = new HorizontalSlider({
     name: 'zoomSlide',
     value: 1,
@@ -1875,6 +1876,7 @@ require([
       av.grd.drawGridSetupFn('av.grd.zoomSlide');
     }
   }, 'zoomSlide');
+  */
 
   av.grd.colorMap = 'Gnuplot2';
   /*
@@ -2329,7 +2331,7 @@ require([
     av.grd.gridWasCols = Number(av.dom.sizeColTest.value);
     av.grd.gridWasRows = Number(av.dom.sizeRowTest.value);
     //reset zoom power to 1
-    av.grd.zoomSlide.set('value', 1);
+    // av.grd.zoomSlide.set('value', 1);   //zoom not enabled
     av.parents.placeAncestors();
     //are any parents on the same cell?
     av.grd.cellConflict(av.grd.setupCols, av.grd.setupRows);
@@ -2337,9 +2339,7 @@ require([
   };
 
 
-// changing the base does not seem change position on the slider
-
-//-------------------------------------------------------------------------------------------- $(function slidePopmute() --
+//----------------------------------------------------------------------------------------- $(function slidePopmute() --
    $(function slidePopMute() {
     // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 
     // the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, 
@@ -2405,6 +2405,7 @@ require([
       };
     });
   });
+//------------------------------------------------------------------------------------- end $(function slidePopmute() --
 
 /*------------------------------------------------------------------------------------------ av.ptd.randInputChange --*/
   // part of ex1setupBBlock

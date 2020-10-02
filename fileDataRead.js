@@ -370,7 +370,6 @@
     av.frd.avidaTestform(doctext, 'av.frd.updateTestSetup');
     doctext = av.fzr.file[dir + '/environment.cfg'];
     console.log('Test files only --------------------------------------------------------------');
-    av.frd.environment2UI(doctext, 'av.frd.updateTestSetup');     
     //av.frd.environmentTestform(doctext);     //for now editing the whole file
     //console.log('av.dom.environConfigEdit=',av.dom.environConfigEdit);
 
