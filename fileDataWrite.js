@@ -357,7 +357,7 @@
         }  //end switch
       }
       else {
-        // geometery = grid
+        // geometery = grid (local in Avida-ED = grid in avida)
         len = av.nut[numtsk].uiSub.regionCode.length;
         for (jj=1; jj< len; jj++) {
           resrcFix =  'RESOURCE ' + av.fwt.existCheck('', av.nut[numtsk].resrc.name[jj], av.fwt.existCheck('', av.nut[numtsk].react.resource[jj], tsk) );
@@ -371,7 +371,7 @@
           bcol = parseInt(av.nut[numtsk].resrc.boxcol[jj]);
           brow = parseInt(av.nut[numtsk].resrc.boxrow[jj]);
           console.log('boxx=', boxx, '; boxy=', boxy, '; bcol=', bcol, '; brow=', brow, '; wcol=', wcol, 'wrow=', wrow);
-          if (!isNaN(boxx) && !isNaN(boxy) && !isNaN(bcol) && !isNaN(brow) ) {
+          if (av.utl.isNumber(boxx) && av.utl.isNumber(boxy) && av.utl.isNumber(bcol) && av.utl.isNumber(brow) ) {
           //if ( (null != av.nut[numtsk].resrc.boxflag[jj]) && (null != av.nut[numtsk].resrc.boxx[jj]) 
           //  && (null != av.nut[numtsk].resrc.boxy[jj]) && (null != av.nut[numtsk].resrc.boxcol[jj]) 
           //  && (null != av.nut[numtsk].resrc.boxrow[jj]) ) {
@@ -392,7 +392,7 @@
           ndx = av.sgr.regionQuarterCodes.indexOf(codeTxt);
           cellList = ':';
           //lineararray index = x + y * (numcols)
-          if ('000' == codeTxt || '012' == codeTxt || '34' == codeTxt) {
+          if ('000' == codeTxt || '012' == codeTxt || '034' == codeTxt) {
             //subdish includes entire rows so it is easier to define. 
             cbeg = Number(av.nut[numtsk].resrc.inflowx1[jj]) +
                       Number(av.nut[numtsk].resrc.inflowy1[jj]) * wcol;
@@ -426,25 +426,23 @@
           console.log('cellList=', cellList);
           cellTxt += cellList;
           tmpNum = Number(av.nut[numtsk].cell.initial[jj]);
-          if (!isNaN( tmpNum) )  {
+          if (av.utl.isNumber( tmpNum) )  {
             cellTxt += av.fwt.existCheck( ':initial=', Math.round(tmpNum).toString(), tmpNum )+ '\n'; 
           } 
           else {
             tmpNum = Number(av.nut[numtsk].resrc.initial[jj]);
-            if (!isNaN( tmpNum) )  {
+            if (av.utl.isNumber( tmpNum) )  {
               cellTxt += av.fwt.existCheck( ':initial=', Math.round(tmpNum).toString(), tmpNum )+ '\n'; 
             }
             else if ('none' == av.nut[numtsk].uiSub.supplyType[jj].toLowerCase()) {
               cellTxt += ':initial=0\n'; 
             }
             else if ('infinite' == av.nut[numtsk].uiSub.supplyType[jj].toLowerCase()) {
-              tmpNum = Number(av.nut.wrldSize);
-              if (!isNaN( tmpNum) )  {
-                cellTxt += av.fwt.existCheck( ':initial=', Math.round(tmpNum).toString(), tmpNum )+ '\n'; 
-              }
-              else {
-                cellTxt += ':initial=14400\n';
-              }
+                cellTxt += av.fwt.existCheck( ':initial=', Math.round(), 10 )+ '\n'; 
+                console.log('should never reach this location; ');
+            }
+            else {
+              cellTxt += ':initial=14400\n';
             }
           };
           console.log('cellTxt=', cellTxt);
@@ -774,7 +772,7 @@
           arguDom = av.sgr.uiSubDom_num[jj];
           //console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
           //console.log('; dom=',document.getElementById(tsk+kk+arguDom).value ); 
-          if (!isNaN(Number(document.getElementById(tsk+kk+arguDom).value))) {
+          if (av.utl.isNumber(Number(document.getElementById(tsk+kk+arguDom).value))) {
             tmpNum = Number(document.getElementById(tsk+kk+arguDom).value);
             if ('in' == arguDom.substr(0,2)) {
               tmpNum = tmpNum / area;   //need to find area first
@@ -803,7 +801,7 @@
   // the function av.fwt.form2NutrientTxt needs to be replaced with av.fwt.NutStruct2environment_cfg
   //----------------------------------------------------------------------------------------- av.fwt.form2NutrientTxt --
   av.fwt.form2NutrientTxt = function (idStr, toActiveConfigFlag, from) {
-    //console.log(from + ' called av.fwt.form2NutrientTxt');
+    console.log(from + ' called av.fwt.form2NutrientTxt ==============================================================');
     var geometry = 'global';
     var supplyType = 'Infinite';
     var ndx = 1;           // only using the first subsection for now

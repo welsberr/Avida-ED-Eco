@@ -162,6 +162,7 @@ av.dnd.nameParent = function(name) {
 av.dnd.lndTestConfig = function (move) {
   'use strict';
   av.dnd.configFlag = 'test';
+  console.log('In av.dnd.lndTestConfig: move=', move);
   av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
   var ndx = -1;
   var klen = 0;
@@ -193,9 +194,16 @@ av.dnd.lndTestConfig = function (move) {
   }
   
   //The types are reassigned to indicate that they might be the populated form of the dishes.
+  if ('c' == move.target.map[domid].type[0] || 'w' == move.target.map[domid].type[0]) {
+    move.target.map[domid].type[0]= 'b';
+    av.frd.updateSetup('av.dnd.lndActiveConfig');                  //call the avida-ED normal style setup page
+    av.msg.setupType = 'standard';
+  }
+  else {
     move.target.map[domid].type[0] = 'v';   //type is test or populated test
     av.frd.updateTestSetup('av.dnd.lndActiveConfig');               //call the test version of Setup
     av.msg.setupType = 'test';
+  };
 
   //Clear ancestorBox
   av.dnd.ancestorBox.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source

@@ -748,7 +748,7 @@
                   } else { av.nut[numTsk].uiSub.inflowHiNp[sub] =  0.1; };
                   break;
                 case 'infinite':
-                  av.nut[numTsk].uiSub.initialHiNp[sub] = 1;
+                  av.nut[numTsk].uiSub.initialHiNp[sub] = 2;
                   break;
                   //
               }; // end of switch statement
@@ -1038,7 +1038,7 @@
     else {
       // using "testConfig"
       //need to just put text of environment.cfg into the text box on the test tab
-      if (1 < errors.length) console.log('errors=', errors);    
+      console.log('not sure anything needs to  be done for Test');    
     }
     if (av.dbg.flg.nut) { console.log('Nut: ================================================================== end of av.env.environment2UI =='); }
   };
@@ -1163,7 +1163,7 @@
               } else { document.getElementById(tsk+sub+'inflowHiNp').value = .1; }
               break;
             case 'infinite':
-              av.nut[numTsk].uiSub.initialHiNp[sub] = 1;
+              av.nut[numTsk].uiSub.initialHiNp[sub] = 2;
               break;
               //
           }; // end of switch statement

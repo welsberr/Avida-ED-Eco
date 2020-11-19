@@ -1,7 +1,7 @@
 
  // this version uses grid box layout for major sections (toop, left side, main, right side)  
  // if (av.dbg.flg.root) { console.log('Root: avidaED.js at beginning of file on 2020_0111 @ 20:21'); };
- console.log('Root: avidaED.js at beginning of file on 2020_0518 @ 17:44'); 
+ console.log('Root: avidaED.js at beginning of file on 2020_0921_Mon'); 
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
@@ -626,12 +626,11 @@ require([
   //********************************************************************************************************************
   // Error logging
   //********************************************************************************************************************
-
-  //--------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------
   //https://bugsnag.com/blog/js-stacktracess
   //http://blog.bugsnag.com/js-stacktraces
   window.onerror = function (message, file, line, col, error) {
-    console.log('in window.onerror');
+    console.log('in window.onerror 633');
     av.dom.runStopButton.innerHTML = 'Run';  //av.msg.pause('now');
     av.debug.finalizeDtail();
     av.debug.triggered = 'errorTriggered';
@@ -647,8 +646,102 @@ require([
     av.ui.problemWindow('window.onerror');
   };
 
+  //--------------------------------------------------------------------------------------------------------------------
+  //More usefull websites to catch errors
+  // https://davidwalsh.name/javascript-stack-trace
+  // https://danlimerick.wordpress.com/2014/01/18/how-to-catch-javascript-errors-with-window-onerror-even-on-chrome-and-firefox/
+  //to send e-mail  http://stackoverflow.com/questions/7381150/how-to-send-an-email-from-javascript
+
+  // how to send e-mail
+  // http://www.codeproject.com/Questions/303284/How-to-send-email-in-HTML-or-Javascript
+
+  // selected text
+  // http://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
+  // http://www.javascriptkit.com/javatutors/copytoclipboard.shtml
+  
+  // if (av.dbg.flg.root) { console.log('Root: defore av.ui.problemWindow'); }
+  //process problme pop-up window
+  av.ui.problemWindow = function (from) {
+    console.log(from, 'called av.ui.problemWindow 665');
+    av.debug.vars = {
+      isBlink: av.brs.isBlink,
+      isChrome: av.brs.isChrome,
+      isEdge: av.brs.isEdge,
+      isFirefox: av.brs.isFirefox,
+      isIE: av.brs.isIE,
+      isOpera: av.brs.isOpera,
+      isSafari: av.brs.isSafari
+    };
+
+    av.debug.postData = {
+      version: av.ui.version,
+      userInfo: window.navigator.userAgent,
+      screenSize: av.brs.userData.screen,
+      comment: 'userComment',
+      error: av.debug.error,
+      email: 'user email if provided',
+      triggered: av.debug.triggered,
+      logs: {
+        details: av.debug.dTail,
+        session: av.debug.log
+      },
+      freezer: JSON.stringify(av.fzr),
+      vars: av.debug.vars
+    };
+    //console.log('postData=', av.debug.postData); 
+
+    //Until we get sending data to database figure out. Switch between post and e-mail session log
+    if (false) {
+      //Need to be able to get rid of these three lines for postPost. will crash without them now.
+      document.getElementById('sendLogModalID').style.display = "block";  //textarea must be visable first
+      av.dom.sendLogTextarea.focus();   //must not be commented out or extra error
+      document.getElementById('sendLogModalID').style.display = "none";   //sendLogDialog.hide();  
+      av.post.sendWindow();
+    }
+    //e-mail in production version until database worked out.
+    else {
+      av.post.emailWindow();
+    }
+  };
+
+  av.post.emailWindow = function () {
+    console.log('in av.post.emailWindow 708');
+    av.dom.sendLogTextarea.textContent = av.debug.sendLogTextarea;
+    av.dom.sendLogPara.textContent = av.debug.sendLogPara;
+
+    //document.getElementById('postLogTextarea').textContent = av.debug.sendLogTextarea;
+    //document.getElementById('postLogPara').textContent = av.debug.sendLogPara;
+
+    document.getElementById('sendLogModalID').style.display = 'block';  //sendLogDialog.show();  //textarea must be visable first
+    av.dom.sendLogTextarea.focus();
+    av.dom.sendLogTextarea.select();  //https://css-tricks.com/snippets/javascript/auto-select-textarea-text/
+  };
+  
+  document.getElementById('sendLogModalCancel').onclick = function(){
+    document.getElementById('sendLogModalID').style.display = 'none';
+  }
+  
+  //--------------------------------------------------------------------------------------------------------------------
+    
+  av.post.sendWindow = function () {
+    console.log('in av.post.sendWindow; used for database; not email');
+    postLogDialog.show();  //textarea must be visable first
+    av.dom.postLogPara.textContent = av.post.postLogPara;
+    av.dom.postVersionLabel.textContent = av.ui.version;
+    av.dom.postScreenSize.textContent = av.brs.userData.screen;
+    av.dom.postUserInfoLabel.textContent = window.navigator.userAgent.toString();
+    av.dom.postError.textContent = av.debug.error;
+    av.dom.postError.style.color = 'red';
+    av.dom.postEmailLabel.textContent = av.debug.postEmailLabel;
+    av.dom.postNoteLabel.textContent = av.debug.postNoteLabel;
+    av.dom.postStatus.textContent = av.debug.postStatus;
+    av.dom.postLogTextarea.textContent = av.debug.log;
+    av.dom.postdTailTextarea.textContent = av.debug.dTail;
+    av.dom.postProblemError.textContent = '';
+  };
+  
   window.addEventListener('error', function (evt) {
-    console.log('In window.addEventListener: event listener', evt);
+    console.log('In window.addEventListener: event listener 739', evt);
   });
   //--------------------------------------------------------------------------------------------
   //http://www.technicaladvices.com/2012/03/26/detecting-the-page-leave-event-in-javascript/
@@ -689,94 +782,9 @@ require([
   }); // End on's function and on statement
 
   //--------------------------------------------------------------------------------------------------------------------
-  //--------------------------------------------------------------------------------------------------------------------
-  //More usefull websites to catch errors
-  // https://davidwalsh.name/javascript-stack-trace
-  // https://danlimerick.wordpress.com/2014/01/18/how-to-catch-javascript-errors-with-window-onerror-even-on-chrome-and-firefox/
-  //to send e-mail  http://stackoverflow.com/questions/7381150/how-to-send-an-email-from-javascript
-
-  // how to send e-mail
-  // http://www.codeproject.com/Questions/303284/How-to-send-email-in-HTML-or-Javascript
-
-  // selected text
-  // http://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
-  // http://www.javascriptkit.com/javatutors/copytoclipboard.shtml
-  
-  // if (av.dbg.flg.root) { console.log('Root: defore av.ui.problemWindow'); }
-  //process problme pop-up window
-  av.ui.problemWindow = function (from) {
-    console.log(from, 'called av.ui.problemWindow');
-    av.debug.vars = {
-      isBlink: av.brs.isBlink,
-      isChrome: av.brs.isChrome,
-      isEdge: av.brs.isEdge,
-      isFirefox: av.brs.isFirefox,
-      isIE: av.brs.isIE,
-      isOpera: av.brs.isOpera,
-      isSafari: av.brs.isSafari
-    };
-
-    av.debug.postData = {
-      version: av.ui.version,
-      userInfo: window.navigator.userAgent,
-      screenSize: av.brs.userData.screen,
-      comment: 'userComment',
-      error: av.debug.error,
-      email: 'user email if provided',
-      triggered: av.debug.triggered,
-      logs: {
-        details: av.debug.dTail,
-        session: av.debug.log
-      },
-      freezer: JSON.stringify(av.fzr),
-      vars: av.debug.vars
-    };
-    //console.log('postData=', av.debug.postData); 
-
-    //Until we get sending data to database figure out. Switch between post and e-mail session log
-    if (true) {
-      //Need to be able to get rid of these three lines for postPost. will crash without them now.
-      sendLogDialog.show();  //textarea must be visable first
-      av.dom.sendLogTextarea.focus();   //must not be commented out or extra error
-      sendLogDialog.hide();  //
-      av.post.sendWindow();
-    }
-    //e-mail in production version until database worked out.
-    else {
-      av.post.emailWindow();
-    }
-  };
-
-  av.post.sendWindow = function () {
-    console.log('in av.post.sendWindow');
-    postLogDialog.show();  //textarea must be visable first
-    av.dom.postLogPara.textContent = av.post.postLogPara;
-    av.dom.postVersionLabel.textContent = av.ui.version;
-    av.dom.postScreenSize.textContent = av.brs.userData.screen;
-    av.dom.postUserInfoLabel.textContent = window.navigator.userAgent.toString();
-    av.dom.postError.textContent = av.debug.error;
-    av.dom.postError.style.color = 'red';
-    av.dom.postEmailLabel.textContent = av.debug.postEmailLabel;
-    av.dom.postNoteLabel.textContent = av.debug.postNoteLabel;
-    av.dom.postStatus.textContent = av.debug.postStatus;
-    av.dom.postLogTextarea.textContent = av.debug.log;
-    av.dom.postdTailTextarea.textContent = av.debug.dTail;
-    av.dom.postProblemError.textContent = '';
-  };
-
-  av.post.emailWindow = function () {
-    console.log('in av.post.emailWindow');
-    av.dom.sendLogTextarea.textContent = av.debug.sendLogTextarea;
-    av.dom.sendLogPara.textContent = av.debug.sendLogPara;
-
-    //document.getElementById('postLogTextarea').textContent = av.debug.sendLogTextarea;
-    //document.getElementById('postLogPara').textContent = av.debug.sendLogPara;
-
-    sendLogDialog.show();  //textarea must be visable first
-    av.dom.sendLogTextarea.focus();
-    av.dom.sendLogTextarea.select();  //https://css-tricks.com/snippets/javascript/auto-select-textarea-text/
-  };
     
+  
+
   //********************************************************************************************************************
   // Menu Buttons handling
   //********************************************************************************************s************************
@@ -919,15 +927,29 @@ require([
   //--------------------------------------------------------------------------------------------------------------------
   // Help Drop down menu buttons
   //--------------------------------------------------------------------------------------------------------------------
+
   dijit.byId('mnHpAbout').on('Click', function () {
+    ///console.log('in Button: mnHpAbout.click');
     av.post.addUser('Button: mnHpAbout');
-    mnHpAboutDialog.show();
+    av.clk.aboutAvidaED();
   });
 
   dijit.byId('mnAeAbout').on('Click', function () {
     av.post.addUser('Button: mnAeAbout');
-    mnHpAboutDialog.show();
+    //console.log('in mnAeAbout.click');
+    av.clk.aboutAvidaED();
   });
+
+  // onclick='av.clk.aboutAvidaED'
+  av.clk.aboutAvidaED = function() {
+    av.post.addUser('Button: display About Avida-ED');
+    document.getElementById('aboutAvidaED_ModalID').style.display = "block";
+    console.log('in av.clk.aboutAvidaED');    
+  };
+
+  document.getElementById('aboutAvidaED_Cancel').onclick = function () {
+    document.getElementById('aboutAvidaED_ModalID').style.display = 'none';
+  };
 
   dijit.byId('mnHpProblem').on('Click', function () {
     av.post.addUser('Button: mnHpProblem');
@@ -946,7 +968,7 @@ require([
   });
 
   //http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
-  dijit.byId('sendEmail').on('Click', function () {
+  document.getElementById('sendEmail').onclick = function () {
     av.ui.sendEmailFlag = true;
     av.post.addUser('Button: sendEmail');
     var link = 'mailto:' + av.fio.mailAddress +
@@ -955,9 +977,10 @@ require([
       '&body=' + escape(av.debug.log);
     window.location.href = link;
     av.ui.sendEmailFlag = false;
-  });
+  };
 
-  //http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
+/* 
+//http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
   dijit.byId('sendEmail').on('Click', function () {
     av.ui.sendEmailFlag = true;
     av.post.addUser('Button: sendEmail');
@@ -968,6 +991,7 @@ require([
     window.location.href = link;
     av.ui.sendEmailFlag = false;
   });
+*/
 
   av.debug.finalizeDtail = function () {
     //finalize dTail
@@ -1423,9 +1447,6 @@ require([
 
 
 
-
-
-
   document.getElementById('fzDialogModSaveConfig').onclick = function () {
 //  dijit.byId('FzConfigurationButton').on('Click', function () {
     av.post.addUser('Button: fzDialogModSaveConfig');
@@ -1455,7 +1476,7 @@ require([
   };
   
   document.getElementById('fzDialogModCancel').onclick = function () {
-    av.dom.fzDialogModalID.style.display = 'none';
+    document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide
   };
 
   dijit.byId('mnFzPopulation').on('Click', function () {
@@ -1567,13 +1588,7 @@ require([
     console.log('parents', av.parents);
     console.log('av.grd.msg', av.grd.msg);
     console.log('av.grd.popStatsMsg', av.grd.popStatsMsg);
-    console.log('av.dnd.fzConfig', av.dnd.fzConfig);
-    console.log('av.dnd.fzOrgan', av.dnd.fzOrgan);
-    console.log('av.dnd.fzWorld', av.dnd.fzWorld);
-    console.log('av.dnd.fzTdish', av.dnd.fzTdish);
-    console.log('av.dnd.activeConfig', av.dnd.activeConfig);
-    console.log('av.dnd.activeOrgan', av.dnd.activeOrgan);
-    console.log('av.dnd.ancestorBox', av.dnd.ancestorBox);
+    console.log('av.grd.DataByCellID =', av.grd.DataByCellID);
   };
 
   document.getElementById('mnDbThrowError').onclick = function () {
@@ -1861,7 +1876,6 @@ require([
   };
 
   // Zoom slide - display only not avida
-  /*
   av.grd.zoomSlide = new HorizontalSlider({
     name: 'zoomSlide',
     value: 1,
@@ -1876,7 +1890,6 @@ require([
       av.grd.drawGridSetupFn('av.grd.zoomSlide');
     }
   }, 'zoomSlide');
-  */
 
   av.grd.colorMap = 'Gnuplot2';
   /*
@@ -2331,7 +2344,7 @@ require([
     av.grd.gridWasCols = Number(av.dom.sizeColTest.value);
     av.grd.gridWasRows = Number(av.dom.sizeRowTest.value);
     //reset zoom power to 1
-    // av.grd.zoomSlide.set('value', 1);   //zoom not enabled
+    av.grd.zoomSlide.set('value', 1);
     av.parents.placeAncestors();
     //are any parents on the same cell?
     av.grd.cellConflict(av.grd.setupCols, av.grd.setupRows);
@@ -2339,7 +2352,9 @@ require([
   };
 
 
-//----------------------------------------------------------------------------------------- $(function slidePopmute() --
+// changing the base does not seem change position on the slider
+
+//-------------------------------------------------------------------------------------------- $(function slidePopmute() --
    $(function slidePopMute() {
     // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 
     // the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, 
@@ -2405,7 +2420,6 @@ require([
       };
     });
   });
-//------------------------------------------------------------------------------------- end $(function slidePopmute() --
 
 /*------------------------------------------------------------------------------------------ av.ptd.randInputChange --*/
   // part of ex1setupBBlock
@@ -3451,7 +3465,7 @@ require([
 
   // Avida-ED 4.0.0 Alpha Testing fix this too. 
   //true when diane is working; false for all production releases even in alpha testsing.  
-  if (false) {
+  if (true) {
     console.log('testing mode; set to true before public release for Avida-ED 4.0.0 Alpha Testing. ');
     av.dom.xorLabel.onclick();   //now only turns grid resource value table on and off
     //

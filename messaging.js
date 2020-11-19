@@ -82,6 +82,7 @@
           //av.debug.log += '\n - - end webGridData: update:' + av.grd.msg.update;
           break;
         case 'webOrgDataByCellID':
+          av.grd.DataByCellID = msg;        //debug only should be commented out when in user mode
           av.msg.ByCellIDgenome = msg.genome;
           av.grd.updateSelectedOrganismType(msg);  //in messaging
           stub = 'name: webOrgDataByCellID; genotypeName: ' + msg.genotypeName.toString();  //may not display anyway

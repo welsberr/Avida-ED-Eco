@@ -1,4 +1,4 @@
-/*one data tap of population page */
+/*on data tab of population page */
 /*
   {
     box-sizing: border-box;  /* include padding and border in the elements width/size */
@@ -532,12 +532,15 @@
     width: 100%;
   }
   
-.grid-currentSugarAmount-item {          /*on data tab of population page */
+/*   not in use  
+.grid-currentSugarAmount-item {          /*on data tab of population page 
   background: rgba(255, 255, 255, 0.8);
   border: 1px solid rgba(0, 0, 0, 0.8);
   text-align: center;
   padding: 2px 3px;
 }
+*/
+
 .sugarTsk{
   background: #DDD; /* #DDD; */
   border: 1px solid #BBB;   /*lower darker*/
@@ -1453,6 +1456,11 @@ checkbox:focus {
     margin: 10px 2px 5px 10px;    /* top right bottom left */
   }
   
+ .AviaEDaboutP {
+  font-size: 120%;
+}
+
+  
 /**********************************************************************************************************************/
 /* the class model is used to create dialog boxes without dojo                                                        */
 /**********************************************************************************************************************/
@@ -1498,6 +1506,16 @@ checkbox:focus {
     background: lightgray;
     color: black;
 }
+#AvidaEDaboutModalContainer{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  /*justify-content: center */
+  width: 100%;
+  hieght: auto;
+}
+
+
 /************************************************************************************************* end of model class */                                                                         */
 
 /*************************************************************************************************** no longer in use */

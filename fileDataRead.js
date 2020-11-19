@@ -361,8 +361,8 @@
   //update config data from file data stored in freezer for test setup page 
   av.frd.updateTestSetup = function (from) {
     'use strict';
-    //console.log(from, ' called av.frd.updateTestSetup; dir=', dir);
     var dir = av.fzr.actConfig.dir;
+    console.log(from, ' called av.frd.updateTestSetup; dir=', dir);
     var path = dir + '/avida.cfg';
     var doctext = av.fzr.file[path];
     //console.log('actConfig: path=', path);
@@ -370,7 +370,7 @@
     av.frd.avidaTestform(doctext, 'av.frd.updateTestSetup');
     doctext = av.fzr.file[dir + '/environment.cfg'];
     console.log('Test files only --------------------------------------------------------------');
-    //av.frd.environmentTestform(doctext);     //for now editing the whole file
+    // av.frd.environmentTestform(doctext);     //for now editing the whole file
     //console.log('av.dom.environConfigEdit=',av.dom.environConfigEdit);
 
     if (av.fzr.file[av.dnd.move.dir+'/'+ 'environment.cfg'] ) {
@@ -576,9 +576,9 @@
     };
   };
   //-------------------------------------------------------------------------------------------- av.frd.avidaTestform --
-  av.frd.avidaTestform = function (fileStr){
+  av.frd.avidaTestform = function (fileStr, from){
     'use strict';
-    //console.log('in av.frd.avidaTestform');
+    console.log(from, 'called av.frd.avidaTestform');
     var dict = av.frd.avidaCFGparse(fileStr);
     document.getElementById('sizeColTest').value = dict.WORLD_X;
     //av.grd.gridWasCols = dict.WORLD_X;
@@ -617,9 +617,10 @@
     }
     */
   };
-  //------------------------------------------------------------------------------------------ end processing avida.cfg --
+  //---------------------------------------------------------------------------------------- end av.frd.avidaTestform --
 
-  //--------------------- puts data from the av.frd.pauseRun.txt file into the setup form for the population page---------
+  //puts data from the av.frd.pauseRun.txt file into the test setup form for the population page
+  //-------------------------------------------------------------------------------------- av.frd.pauseRunAtTest2form --
   av.frd.pauseRunAtTest2form = function (fileStr) {
     'use strict';
     var update = parseInt(fileStr);
@@ -634,9 +635,11 @@
       dijit.byId('autoUpdateSpinneTest').set('value', '1000');
     }
   };
+  //---------------------------------------------------------------------------------- end av.frd.pauseRunAtTest2form --
 
-  //--------------------- puts data from the av.frd.pauseRun.txt file into the setup form for the population page---------
-  // this uses the value from the last ine in pauseRunAt.txt if the line has more than one char.
+  // puts data from the av.frd.pauseRun.txt file into the setup form for the population page
+  // this uses the value from the last ine in pauseRunAt.txt if the line has more than one line.
+  //--------------------------------------------------------------------------------------- av.frd.pauseRunAtTXT2form --
   av.frd.pauseRunAtTXT2form = function (fileStr) {
     'use strict';
     //if (av.dbg.flg.nut) { console.log('av.frd.pauseRunAtTXT2form: fileStr=', fileStr); }
@@ -663,10 +666,11 @@
       } // for
     }
   };
+  //----------------------------------------------------------------------------------- end av.frd.pauseRunAtTXT2form --
 
-  //----------------------- section to put data from ancestors file into ancestorBox and placeparents auto ---------------
-
+  // section to put data from ancestors file into ancestorBox and placeparents auto
   // makes a list out of a ancestor file
+  //---------------------------------------------------------------------------------------- av.fio.autoAncestorParse --
   av.fio.autoAncestorParse = function (filestr) {
     'use strict';
     var rslt = {};
@@ -690,7 +694,9 @@
     } // for
     return rslt;
   };
+  //------------------------------------------------------------------------------------ end av.fio.autoAncestorParse --
 
+  //----------------------------------------------------------------------------------------- av.fio.autoAncestorLoad --
   // puts data from the ancestor into parents file using autoplace
   av.fio.autoAncestorLoad = function(fileStr) {
     'use strict';
@@ -724,10 +730,11 @@
       if (av.dbg.flg.frd) console.log('av.parents:  name', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]);
     }
   };
+  //------------------------------------------------------------------------------------- end av.fio.autoAncestorLoad --
 
-  //---------------- section to put data from ancestors_manual.txt' file into ancestorBox and placeparents hand ---------------
-
+  //---------------------------------------------------------------------------------------- av.fio.handAncestorParse --
   // makes a listing out of a ancestors_manual.txt' file
+  // section to put data from ancestors_manual.txt' file into ancestorBox and placeparents hand
   av.fio.handAncestorParse = function (filestr) {
     'use strict';
     if (av.dbg.flg.frd) { console.log('filestr=', filestr); }
@@ -759,8 +766,10 @@
     } // for
     return rslt;
   };
+  //------------------------------------------------------------------------------------ end av.fio.handAncestorParse --
 
-  // puts data from the ancestor into parents file by hand
+  //----------------------------------------------------------------------------------------- av.fio.handAncestorLoad --
+  // puts data from the ancestor(s) plaed by hand into parents file
   av.fio.handAncestorLoad = function(fileStr) {
     'use strict';
     if (av.dbg.flg.frd) { console.log('in av.fio.handAncestorLoad'); }
@@ -801,9 +810,9 @@
     }
     if (av.dbg.flg.frd) console.log('parents', av.parents);
   };
+  //------------------------------------------------------------------------------------- end av.fio.handAncestorLoad --
 
-  //----------------------- section to put data from clade.ssg into parents ----------------------------------------------
-
+  //---------------------------------------------------- two function section to put data from clade.ssg into parents --
   // makes a dictionary out of a clade.ssg file
   av.frd.cladeSSGparse = function (filestr) {
     'use strict';
@@ -843,8 +852,9 @@
     av.dnd.ancestorBox.sync();
     //console.log('parents', av.parents);
   };
+  //------------------------------------------------ end two function section to put data from clade.ssg into parents --
 
-  //----------------------- section to put data from timeRecorder.csv file into data from charts ----------------------
+  //------------------------------- two function section to put data from timeRecorder.csv file into data from charts --
 
   // makes arrays out of a time recorder file
   av.frd.timeRecorder2chart = function (filestr) {
@@ -952,8 +962,9 @@
       if (av.dbg.flg.frd) { console.log('av.pch.fnBinary = ', av.pch.fnBinary); }
     }
   };
+  //--------------------------- end two function section to put data from timeRecorder.csv file into data from charts --
 
-  //----------------------- section to put data from time recorder (tr) files into data from charts ----------------------
+  //---------------------------- two function section to put data from time recorder (tr) files into data from charts --
 
   // makes a dictionary out of a time recorder file
   av.frd.tr2chartParse = function (filestr) {
@@ -980,6 +991,7 @@
     if (undefined !== fileStr) { data = av.frd.tr2chartParse(fileStr); }
     return data;
   };
+  //------------------------ end two function section to put data from time recorder (tr) files into data from charts --
 
   //------------------------------------------------------------------------------------------ regular expression notes --
 
@@ -1279,90 +1291,4 @@
     //co/nsole.log('lineErrors=', lineErrors);
     return lineErrors;
   };
-
-  // uses av.fzr.env.react
-  // Uses environment.cfg file to create a structure to hold environment variables. 
-  // if (av.dbg.flg.root) { console.log('Root: before  av.frd.testEnvironmentParse'); }
-   av.frd.testEnvironmentParse = function (filestr, from) {
-    //console.log(from, 'called  av.frd.testEnvironmentParse');
-    'use strict';
-    var errors = '';
-    var reacError, rsrcError;
-    var eolfound;
-    var lineobj;
-    var aline;
-    var lines = filestr.split('\n');
-    var lngth = lines.length;
-    var matchComment, matchContinue, matchResult, metaData;
-    var re_metaData = /^(.*?)#.*$/;
-    var re_comment = /^(.*?)#.*$/;   //look at begining of the line and look until #; used to get the stuff before the #
-    var re_continue = /^(.*?)\\/;  //look for continuation line
-    var re_REACTION = /^(.*?)REACTION/i;
-    var re_RESOURCE = /RESOURCE/i;
-    var lineArray;
-    var ii = 0;
-    while (ii < lngth) {
-      eolfound = false;
-      //console.log("lines["+ii+"]=", lines[ii]);
-      matchComment = lines[ii].match(re_comment);
-      //console.log('matchComment=',matchComment);
-
-      if (null !== matchComment) {
-        aline = matchComment[1];
-      } else
-        aline = lines[ii];
-      if (3 < aline.length) {
-        //console.log('aline.length=', aline.length,'; aline=', aline);
-        do {
-          //console.log('ii', ii, '; eolfound=', eolfound,'; aline=', aline);
-          if (ii + 1 < lngth) {
-            matchContinue = aline.match(re_continue);
-            //console.log('matchContinue=',matchContinue);
-            if (null !== matchContinue) {
-              ii++;
-              //console.log('ii=', ii);
-              matchComment = lines[ii].match(re_comment);
-              //console.log('matchComment=',matchComment);
-              if (null !== matchComment) {
-                aline = matchContinue[1] + matchComment[1];
-              } else
-                aline = matchContinue[1] + lines[ii];
-            } else
-              eolfound = true;
-          } else
-            eolfound = true;
-          //console.log('ii', ii, '; eolfound=', eolfound,'; aline=', aline);
-        } while (!eolfound)  //end of subloop for continuation lines
-        //console.log('ii', ii, '; aline=', aline);
-        // look for valid starting keyword
-        lineArray = av.utl.spaceSplit(aline).split('~');      //change , to !; remove leading and trailing space and replaces white space with a ~, then splits on ~
-        //console.log('lineArray=', lineArray);
-        matchResult = lineArray[0].match(re_REACTION);
-        //console.log('matchReaction=', matchResult);
-        if (null !== matchResult)
-          reacError = av.frd.testReActLineParse(lineArray, ' av.frd.testEnvironmentParse');
-        else {
-          reacError = '';
-        }
-
-        matchResult = lineArray[0].match(re_RESOURCE);
-        //consolen('matchResource=', matchResult);
-        if (null !== matchResult)
-          rsrcError = av.frd.testResrcLineParse(lineArray, "av.frd.testEnvironmentParse");
-        else {
-          rsrcError = '';
-        }
-
-        if ('' !== rsrcError || '' !== reacError) {
-          //console.log('errors in line: ii=', ii, '; aline=', aline);
-          errors += 'ii=' + ii + '; rsrcError=' + rsrcError + '; reacError=' + reacError + '\n';
-        }
-      }  //end of processing lines longer than 3 characters
-      ii++;
-    } // while that goes through lines in file. 
-    // console.log('----------------------------------------------------------------------------------------------------');
-    // console.log('av.fzr.env=', av.fzr.env);
-    return errors;
-  };
-  // will delete later - end of section to put data from environment.cfg into av.fzr.env.react & av.fzr.rsrce Structure --
 

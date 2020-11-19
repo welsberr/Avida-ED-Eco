@@ -2,7 +2,7 @@
 <html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <head>
-    <title>Avida-ED-ecoWeb active</title>
+    <title>Avida-ED-ecoWeb msg</title>
     <meta charset='utf-8' />
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <script type='text/javascript' src='lib/dojo-release-1.16.2/dojo/dojo.js'
@@ -3184,41 +3184,33 @@
       </div>
     </div>
 
-    <span class='notSeen' id='o______________________________Delete_later _____________________Need_Ancestor_Dialog___'></span>
-    <div class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='NeedAncestorDialog'
-         title='Unable to resume experiment; there is no start organism in the petri dish.'>
-      <div class='dijitDialogPaneContentArea'>
-        <p>Please drag an organism from the freezer into the settings panel or the petri dish.</p>
-      </div>
-      <div class='dijitDialogPaneActionBar'>
-        <button data-dojo-type='dijit/form/Button' type='button'
-                data-dojo-props='onClick:function(){NeedAncestorDialog.hide();}'
-                id='NeedAncestorCancel'>OK
-        </button>
-      </div>
-    </div>
+    <span class='notSeen' id='o_________________________________________________________________Need_Ancestor_Modal___'></span>
+    <div class="modal" id='aboutAvidaED_ModalID'>
 
-    <span class='notSeen' id='o___________________________________________________________________Help_About_Dialog___'></span>
-    <div class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='mnHpAboutDialog'
-         title='Avida-ED: written in javascript with Avida in C++ via Emscripten'>
-      <div class='dijitDialogPaneContentArea' align='center'>
-        <img src='images/Avida-ED-logo.png' alt='logo for Avida-ED'/>
-        <p>An educational artificial life platform developed at Michigan State University for <br />
-          learning evolution and the nature of science using digital organisms.</p>
-        <br />
-        <strong>Avida-ED 4.0.0 Alpha Testing</strong><br />
-        <strong>2008-2020<br />http://Avida-ED.msu.edu/</strong><br />
-        Send mail to: avida-ed-development@googlegroups.com<br />
-        for bug reports or for questions about program function<br />
-        <br />
-        <p>Developed under NSF Grant #0341484,<br />
-          Cooperative Agreement DBI-093945 and <br />
-          Howard Hughes Medical Institute HHMI #52008102
-        </p><br />
-        <textarea rows='10' cols='100'>
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Avida-ED: written in javascript with Avida in C++ via Emscripten</h2>
+        </div>
+        <div class="modal-body" id='AvidaEDaboutModalContainer'>
+            <img src='images/Avida-ED-logo.png' alt='logo for Avida-ED'/>
+            <div class='AviaEDaboutP'>An educational artificial life platform developed at Michigan State University for </div>
+            <div class='AviaEDaboutP'>learning evolution and the nature of science using digital organisms.</div>
+            <br />&nbsp;
+            <div class='AviaEDaboutP'><strong>Avida-ED 4.0.0 Alpha Testing</strong></div>
+            <div class='AviaEDaboutP'>http://Avida-ED.msu.edu</div>
+            <div class='AviaEDaboutP'>Send mail to: avida-ed-development@googlegroups.com</div>
+            <div class='AviaEDaboutP'>for bug reports or for questions about program function</div>
+            <br />&nbsp;
+            <div class='AviaEDaboutP'>Developed under NSF Grant #0341484,</div>
+            <div class='AviaEDaboutP'>Cooperative Agreement DBI-093945 and</div>
+            <div class='AviaEDaboutP'>Howard Hughes Medical Institute HHMI #52008102</div>
+            <br />&nbsp;
+
+            <textarea rows='10' cols='100' style='resize:both'>
       Avida-ED (avida/apps/viewer-macos)
 
-Copyright 2010-2016 Michigan State University. All rights reserved.
+Copyright 2010-2020 Michigan State University. All rights reserved.
 http://avida.devosoft.org/viewer-macos
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -3533,16 +3525,13 @@ Redistribution and use in source and binary forms, with or without modification,
  3.  Neither the name of the Core Plot Project nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-        </textarea>
-
+            </textarea>
+        </div>
+        <div class="modal-footer">
+          <button id='aboutAvidaED_Cancel'>Ok</button>
+        </div>
       </div>
-      <div class='dijitDialogPaneActionBar'>
-        <button data-dojo-type='dijit/form/Button' type='button'
-                data-dojo-props='onClick:function(){mnHpAboutDialog.hide();}'
-                id='mnHpAboutCancel'>OK
-        </button>
-      </div>
-    </div><span id='end_mnHpAboutDialog'></span>
+    </div>
 
     <span class='notSeen' id='o________________________________________Restart_Avida_with_in_same_browser_Session__Does_NOT_work___'></span>
     <div class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='restartAvidaDialog'
@@ -3571,13 +3560,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
       </div>
     </div><span id='end_appReloadDialog_______________________________________________________________________________'></span>
 
-    <span class='notSeen' id='o___________________________________________________Send Log Data via e-mail client___'></span>
+    <span class='notSeen' id='o_________old_Delete__________________________Send Log Data via e-mail client___'></span>
     <div class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='sendLogDialog'
          title='Avida-ED Problem Report - help us make Avida-ED better'>
       <div class='dijitDialogPaneContentArea'>
         <p id='sendLogPara'>
           Please describe the problem and put that at the beginning of the e-mail along with the session log from the text
-          area seeen below.
+          area seen below.
         </p>
         <p>
           Please send the text below to 'Avida-ED-development@googlegroups.com'. Either copy and paste
@@ -3596,7 +3585,85 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
       </div>
     </div>
 
-    <span class='notSeen' id='o________________________________________________Send_Log_Data_by_posting_to_database___'></span>
+    <span class='notSeen' id='o_______________________________________________Send_Log_Data_via_e-mail_client_Modal___'></span>
+    <div class="modal" id='sendLogModalID'>
+
+      <!-- Modal content -->
+      <div class="modal-content" >
+        <div class="modal-header">
+          <h2>Avida-ED Problem e-mail Report - help us make Avida-ED better.</h2>
+        </div>
+        <div class="modal-body">
+        <p id='sendLogPara'>
+          Please describe the problem and put that at the beginning of the e-mail along with the session log from the text
+          area seen below.
+        </p>
+        <p>
+          Please send the text below to 'Avida-ED-development@googlegroups.com'. Either copy and paste
+          selected text or click on the send e-mail button.
+        </p>
+        <br />
+        <textarea id='sendLogTextarea' cols='90' rows='20' ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button id='sendPost' style = 'visibility: hidden'>Send POST</button>
+          <button id='sendLogEmail'>Send email</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button id='sendLogModalCancel'>Cancel</button>
+        </div>
+      </div>
+    </div>
+    
+    <span class='notSeen' id='o______________________________to_replace_postLogDialog________________postLogModalID___'></span>
+    <div id='postLogModalID' class='modal'>
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <p>Avida-ED Problem Report - help us make Avida-ED better</p>
+        </div>
+        <div class="modal-body">
+          <div>
+            <div class='lftWide'>
+              <p id='postLogPara'>
+                Please send the data below to help us make Avida-ED better by clicking on the [Send] button.&nbsp;
+              </p>
+              <br />
+              <label id='postEmailLabel'>Please include your e-mail so we can discuss your problem or suggestion further.</label><br />
+              <input type='text' id='postEmailInput' style='width: 40em' />
+            </div>
+            <div class='ritThin'>
+              <button data-dojo-type='dijit/form/Button' type='button' id='postLogModalPost'>Send</button>
+              <br />
+              <label id='postStatus'></label>&nbsp;
+              <br />
+              <button id='postLogModalCancel'>Cancel</button>
+            </div>
+          </div>
+          <br /><br /><br /><br />
+          <label id='postProblemError' style='color: red'></label><br />
+          <br />
+          <label id='postNoteLabel'>Please describe the problem or suggestion in the comment field below.</label><br />
+          <textarea id='postComment' cols='90' rows='5'></textarea><br />
+          Version: <label id='postVersionLabel'></label>
+          Screen size: <label id='postScreenSize'></label><br />
+          User Info: <label id='postUserInfoLabel'></label><br />
+          <label id='postError' stype='color: red'></label><br />
+          Session Log:<br />
+          <textarea id='postLogTextarea' cols='90' rows='20' ></textarea><br /><br />
+          Debug Details:<br />
+        <textarea id='postdTailTextarea' cols='90' rows='20' ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button id='oldDishCancel'>Cancel</button>
+          <button id='oldDishDiscard'>Discard</button>
+          <button id='oldDishSaveConfig'>Save Configured Dish</button>
+          <button id='oldDishSaveWorld'>Save Populated Dish</button>
+        </div>
+      </div>
+    </div><span class='notSeen' id='o____________________________________________________________end_newDishModalID___'></span>
+
+    
+    
+    <span class='notSeen' id='o________Delete_after_postLogModalID_works_______Send_Log_Data_by_posting_to_database___'></span>
     <span class='notSeen' id='o____________________________________Saving_session_log_when_no_e_mail_client present___'></span>
     <div class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='postLogDialog'
          title='Avida-ED Problem Report - help us make Avida-ED better'>
@@ -3635,11 +3702,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <textarea id='postdTailTextarea' cols='90' rows='20' ></textarea>
 
       </div>
-      <div class='dijitDialogPaneActionBar'>
-      </div>
+      <div class='dijitDialogPaneActionBar'></div>
     </div>
 
-    <span class='notSeen' id='o_______________________________________________Save_time_recorder_data_to_a_csv_file___'></span>
+    <span class='notSeen' id='o______delete_when_SaveCSVfileModal_works_______Save_time_recorder_data_to_a_csv_file___'></span>
     <div class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='saveCSVdialog'
          title='write a file'>
       <div class='dijitDialogPaneContentArea'>
@@ -3654,8 +3720,27 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
     </div>
 
 
-    <span class='notSeen' id='o____________________________________________________________________closing_the_file___'></span>
+    <span class='notSeen' id='o____________replaces_SaveCSVdialog_____________Save_time_recorder_data_to_a_csv_file___'></span>
+    <div id='saveCSVdataModalID' class='modal'>
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <p>Write a data Recorder file</p>
+        </div>
+        <div class="modal-body">
+        The file name will be 'unknown' in safari
+          <p>paragraph 2</p>
+        </div>
+        <div class="modal-footer">
+          <button id='saveCSVdataModalCancel'>Cancel</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button id='saveCSVdataModalSave'>Save</button>
+        </div>
+      </div>
+    </div><span class='notSeen' id='o____________________________________________________________end_newDishModalID___'></span>
 
+    
+    
+    
  </body>
 
               

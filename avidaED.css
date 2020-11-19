@@ -68,6 +68,10 @@ h2, h3 {
   font-family: Trebuchet MS, sans-serif;
 }
 
+textarea {
+  outline: none;
+}
+
 div {
   margin: 0;
   padding: 0;

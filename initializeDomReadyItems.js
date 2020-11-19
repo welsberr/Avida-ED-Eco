@@ -371,7 +371,7 @@
 
         av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopentDisplays.onclick_show');
 
-        if (av.sgr.gridOnly) {
+        if (av.sgr.gridOnly) {    //In devvelopment
           document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherContainer';
           document.getElementById('geometrySgr').style.displaly = 'inline-block';
           document.getElementById('allSugarGeometryDiv').style.displaly = 'inline-block';

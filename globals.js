@@ -7,7 +7,7 @@
 // one global to hold them all.
 var av = av || {};  //incase av already exists
 
-console.log('start of globals on 2020_0821');
+console.log('start of globals on 2020_1113 Fri msg_working');
 
 Number.prototype.pad = function(size) {
   var ss = String(this);
@@ -69,6 +69,7 @@ av.post.usrOut = function (jStr, comment) {
   av.debug.log += '\n--usr: ' + '~|~' + str0.replace(/\\n/g, "\n") + '~.~' + note;
 };
 
+av.clk = {};
 av.mouse = {};
 
 function clearmouse(av) {
@@ -683,7 +684,7 @@ av.sgr.nutdft = {};
 //Rob Pennock decided that we should only have local/grid resources. This will complicate things as my design is based
 // global characteristic in the "summary" and the rest in the "details" section of the summary/details format. 
 // 
-av.sgr.gridOnly = true;        // gridOnly true  ++> dftGeometry = grid
+av.sgr.gridOnly = false;        // gridOnly true  ++> dftGeometry = grid
 av.sgr.dftGeometry = 'global';  // gridOnly false ++> dftGeometry = global
 if (av.sgr.gridOnly) av.sgr.dftGeometry = 'grid';
 //------------------------------------------------------------------------------------------- av.sgr.makeNutDefault --
