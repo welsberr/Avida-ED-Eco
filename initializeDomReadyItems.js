@@ -379,7 +379,7 @@
 
 
         len = av.sgr.logicNames.length;
-        console.log('logicNames.length=', len)
+        console.log('logicNames.length=', len);
         sub = 1;   //this may change later;
         for (ii = 0; ii < len; ii++) {
           tsk = av.sgr.logicNames[ii];

@@ -635,9 +635,10 @@
           if (av.utl.isNumber(parseInt(av.nut[numTsk].resrc.boxcol[sub])) && av.utl.isNumber(parseInt(av.nut[numTsk].resrc.boxrow[sub]) ) 
               && 0 < (parseInt(av.nut[numTsk].resrc.boxcol[sub])) && (parseInt(av.nut[numTsk].resrc.boxcol[sub])) <= av.nut.wrldSize
               && 0 < (parseInt(av.nut[numTsk].resrc.boxrow[sub])) && (parseInt(av.nut[numTsk].resrc.boxrow[sub])) <= av.nut.wrldSize) {
-            av.nut[numTsk].uiSub.area[ndx] = parseInt(av.nut[numTsk].resrc.boxcol[ndx]) * parseInt(av.nut[numTsk].resrc.boxrow[ndx]);
-            area = av.nut[numTsk].uiSub.area[ndx];
-            console.log('Nut: use cellbox - av.nut['+numTsk+'].uiSub.area['+sub+'] =', av.nut[numTsk].uiSub.area[sub]);
+            av.nut[numTsk].uiSub.area[sub] = parseInt(av.nut[numTsk].resrc.boxcol[sub]) * parseInt(av.nut[numTsk].resrc.boxrow[sub]);
+            area = av.nut[numTsk].uiSub.area[sub];
+            console.log('Nut: use cellbox - av.nut['+numTsk+'].uiSub.area['+sub+'] =', av.nut[numTsk].uiSub.area[sub], 
+                        '; col =', av.nut[numTsk].resrc.boxcol[sub], '; row =', av.nut[numTsk].resrc.boxrow[sub]);
             return area;
           }
         };
@@ -654,6 +655,7 @@
           if (height < parseInt(av.sgr.regionQuarterRows[ndx]) * parseInt(av.nut.wrldRows)) {
             height += av.sgr.regionQuarterRowsAdd;
           }
+          console.log('area based on world size and region definitions: Area = ', area);
           area = width * height;
           return area;
         };
@@ -715,7 +717,7 @@
                 if (null != av.nut[numTsk].uiAll.supplyType && av.sgr.supplylower.includes(av.nut[numTsk].uiAll.supplyType)
                            && '1All' == av.nut[numTsk].uiAll.regionLayout){
                     supplyType = av.nut[numTsk].uiAll.supplyType.toLowerCase();
-                    console.log('Error: sub=', sub, 'av.nut.['+numTsk+'].uiAll=', supplyType, 'should be from uiSub');
+                    console.log('Error: sub=', sub, 'av.nut.['+numTsk+'].uiAll=', supplyType, 'should be from uiSub_________________________Error');
                 }
                 else {
                   supplyType  = 'none';
@@ -734,7 +736,10 @@
                   // if both Cell & RESOURCE initial are defined CELL overwrites RESOURCE in Avida-ED. In avida they are addative;
                   if (av.utl.isNumber(parseFloat(av.nut[numTsk].cell.initial[sub])) ) {
                     av.nut[numTsk].uiSub.initialHiNp[sub] = parseInt(av.nut[numTsk].cell.initial[sub]);
-                  };
+                  }
+                  else {
+                   console.log('Error: av.nut['+numTsk+'].cell.initial['+sub+']=', av.nut[numTsk].cell.initial[sub],'; should be a number:______________________________ Error'); 
+                  }
                   break;
                 case 'none':
                   av.nut[numTsk].uiSub.initialHiNp[sub] = 0;
@@ -810,7 +815,7 @@
             //if (av.dbg.flg.nut) { console.log('Nut: regionCode is ', av.nut[numTsk].uiSub.regionCode[sub]); }
             // Look for finite or none
             // Look at RESOURCE initial first. 
-            console.log('av.nut['+numTsk+'].resrc.initial['+sub+']=', av.nut[numTsk].resrc.initial[sub]);
+            // console.log('av.nut['+numTsk+'].resrc.initial['+sub+']=', av.nut[numTsk].resrc.initial[sub]);
             if ( av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.initial[sub])) ) {
               if (0 == parseFloat(av.nut[numTsk].resrc.initial[sub]) ) {
                 av.nut[numTsk].uiSub.supplyType[sub] = 'none';
@@ -839,7 +844,7 @@
               }
               av.nut[numTsk].uiAll.supplyType = 'uiSub';
             };
-            console.log('av.nut['+numTsk+'].resrc.inflow['+sub+']=', av.nut[numTsk].resrc.inflow[sub]);
+            //console.log('av.nut['+numTsk+'].resrc.inflow['+sub+']=', av.nut[numTsk].resrc.inflow[sub]);
             if (av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.inflow[sub])) && av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.outflow[sub])) ) {
               //console.log('av.nut['+numTsk+'].resrc.outflow['+sub+']=', av.nut[numTsk].resrc.outflow[sub]);
               //console.log('0 < parseFloat(av.nut[numTsk].resrc.inflow[sub]) is ', (0 < parseFloat(av.nut[numTsk].resrc.inflow[sub])));
@@ -911,13 +916,6 @@
         console.log('Error: Why is regionCode empty? regionCode = ', av.nut[numTsk].uiSub.regionCode); 
       }
     };  // end of logic task loops
-    if (av.dbg.flg.nut) {
-      var pastLopp = {};
-      pastLopp = JSON.parse(JSON.stringify(av.nut["0not"]));
-      console.log('av.nut_postSupply["0not"]=', pastLopp);      
-      pastLopp = JSON.parse(JSON.stringify(av.nut["8equ"]));
-      console.log('av.nut_postSupply["8equ"]=', pastLopp);      
-    };
 
     //if (av.dbg.flg.nut) { 
     if (true) { 
@@ -1025,7 +1023,7 @@
       av.nut.wrldSize = av.fzr.actConfig.cols * av.fzr.actConfig.rows;  //  av.fzr.actConfig.size;
 
       av.env.nutrientParse(fileStr, 'av.env.environment2UI');    // uses av.nut
-      console.log('av.nut["0not"].uiSub=', av.nut["0not"].uiSub);
+      //console.log('av.nut["0not"].uiSub=', av.nut["0not"].uiSub);
       av.env.findSupplyType();
       
       // now that region as and supply types have been defined, move relevant data from RESOURCE and CELL to uiSub

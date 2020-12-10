@@ -143,7 +143,62 @@
 av.utl.log = function (base, num) {  
   return Math.log(num) / Math.log(base);  
 };
+//------------------------------------------------------------------
+// The largest number dispalyed in my test was     512P = 512345678901235000
+// in number in the the environment.cfg CELL statement was 512345678901234567
+  av.utl.toMetric = function (standardNotationNum, significantDigits) {
+    var stdNum = NaN;
+    var sigBase = 0;
+    var numStr = 'NaN';
+    if ( av.utl.isNumber(Number(significantDigits)) ) {
+      var sigBase = parseFloat(significantDigits);
+      //console.log('significantDigits=', significantDigits);
+    };
+    //console.log('10**update = 10**',av.grd.msg.update, '=', 10**av.grd.msg.update);
+    if ( av.utl.isNumber(Number(standardNotationNum)) ) {
+      stdNum = parseFloat(standardNotationNum);
+      if (10**27 <= stdNum ) {numStr = (stdNum/10**27).toFixed(0) + "?"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
 
+      else if (10**26 <= stdNum ) {numStr = (stdNum/10**24).toFixed(0) + "Y"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**25 <= stdNum ) {numStr = (stdNum/10**24).toFixed(1) + "Y"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**24 <= stdNum ) {numStr = (stdNum/10**24).toFixed(2) + "Y"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (10**23 <= stdNum ) {numStr = (stdNum/10**21).toFixed(0) + "Z"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**22 <= stdNum ) {numStr = (stdNum/10**21).toFixed(1) + "Z"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**21 <= stdNum ) {numStr = (stdNum/10**21).toFixed(2) + "Z"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (10**20 <= stdNum ) {numStr = (stdNum/10**18).toFixed(0) + "E"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**19 <= stdNum ) {numStr = (stdNum/10**18).toFixed(1) + "E"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**18 <= stdNum ) {numStr = (stdNum/10**18).toFixed(2) + "E"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (10**17 <= stdNum ) {numStr = (stdNum/10**15).toFixed(0) + "P"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**16 <= stdNum ) {numStr = (stdNum/10**15).toFixed(1) + "P"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**15 <= stdNum ) {numStr = (stdNum/10**15).toFixed(2) + "P"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (10**14 <= stdNum ) {numStr = (stdNum/10**12).toFixed(0) + "T"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**13 <= stdNum ) {numStr = (stdNum/10**12).toFixed(1) + "T"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**12 <= stdNum ) {numStr = (stdNum/10**12).toFixed(2) + "T"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (10**11 <= stdNum ) {numStr = (stdNum/10**9).toFixed(0) + "G"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**10 <= stdNum ) {numStr = (stdNum/10**9).toFixed(1) + "G"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**9 <= stdNum )  {numStr = (stdNum/10**9).toFixed(2) + "G"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (10**8 <= stdNum ) {numStr = (stdNum/10**6).toFixed(0) + "M"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**7 <= stdNum ) {numStr = (stdNum/10**6).toFixed(1) + "M"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**6 <= stdNum ) {numStr = (stdNum/10**6).toFixed(2) + "M"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (10**5 <= stdNum ) {numStr = (stdNum/10**3).toFixed(0) + "k"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**4 <= stdNum ) {numStr = (stdNum/10**3).toFixed(1) + "k"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**3 <= stdNum ) {numStr = (stdNum/10**3).toFixed(2) + "k"; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (100 <= stdNum ) {numStr = stdNum.toFixed(1) ; console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10 <= stdNum ) {numStr = stdNum.toFixed(2); console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (1 <= stdNum ) {numStr = stdNum.toFixed(3); console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else {numStr = stdNum.toFixed(3); console.log('stdNum =',stdNum,'; numStr=', numStr); }
+    };
+    return numStr;
+  };
+//--------------------------------------------------------------
 
   /*
    av.utl.wsb(target, thestring)

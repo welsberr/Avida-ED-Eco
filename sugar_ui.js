@@ -198,6 +198,7 @@
     //does av.sgr.changeDetailsLayout need a 'sub' value? 
   };
 
+/* not in use delete by 2021
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.supplyChange_placeholder = function (domObj) {
     var taskID = domObj.id;
@@ -207,7 +208,7 @@
     sub = 1; //only whole dish  for now
     av.sgr.changeDetailsLayout(task, sub, 'supplyChange_placeholder');
   };
-
+*/
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.regionLayoutChange = function (domObj) {
   if (av.dbg.flg.nut) { console.log('Nut: av.sgr.regionLayoutChange was called by', domObj); }
@@ -532,17 +533,19 @@
     //if (true) { console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; subChanged=', subChanged); }
     // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags=', av.nut.hideFlags); }
     var tmpNum = 1;
-    var show1SupplyType=false;
+    var scrapStr;
     var ndx = av.sgr.logicNames.indexOf(tsk);
     var edTsk = av.sgr.logEdNames[ndx];
     var supplyType;
     var regionName;
+    var numRegions;
     var regionLayout = document.getElementById(tsk+'0regionLayout').value;
     var regionNameList;
+    var showGeo = "geoBoth";
     // one line method to get value of select/option struture.
     //console.log('onlygrid=', av.sgr.gridOnly, '; mnDebug=', av.doj.mnDebug.style.visibility, '; geoStyle=', document.getElementById(tsk+'0geometry').style.displaly, '; regionLayout=', regionLayout);
     //console.log('onlygrid=', av.sgr.gridOnly, '; mnDebug=', av.doj.mnDebug.style.visibility, '; regionLayout=', regionLayout);
-
+    //av.sgr.gridOnly = true;
 //  if (av.sgr.gridOnly && 'visible' != av.doj.mnDebug.style.visibility) {  
     if (av.sgr.gridOnly && 'visible' != av.doj.mnDebug.style.visibility) {
       showGeo = 'gridOnly';
@@ -556,36 +559,43 @@
         //console.log(tsk+'1supplyType.class, style=', document.getElementById(tsk+'1supplyType').class, document.getElementById(tsk+'1supplyType').style.display);
       }
       else {
-        showGeo = 'grid';
+        showGeo = 'geoBoth';
         show1SupplyType = true;
         document.getElementById(tsk+'WsupplyType').style.display = 'none';
         document.getElementById(tsk+'1supplyType').style.display = 'inline-block';
       }
     }
-    else {
-        showGeo = 'grid';
-        show1SupplyType = true;    //showgeo
+    else if (av.sgr.gridOnly && 'visible' == av.doj.mnDebug.style.visibility) {
+        showGeo = 'gridOnly';
+        show1SupplyType = true;    
         document.getElementById(tsk+'0regionLayout').style.display = 'none';
         document.getElementById(tsk+'WsupplyType').style.display = 'inline-block';
         document.getElementById(tsk+'1supplyType').style.display = 'inline-block';
     }
+    else {
+        showGeo = 'geoBoth';
+        document.getElementById(tsk+'0regionLayout').style.display = 'inline-block';
+        document.getElementById(tsk+'WsupplyType').style.display = 'none';
+        document.getElementById(tsk+'1supplyType').style.display = 'inline-block';
+    };
+    
     av.nut[edTsk].uiAll.geometry = document.getElementById(tsk+'0geometry').value;
     av.nut[edTsk].uiAll.regionLayout = document.getElementById(tsk+'0regionLayout').value;
     //console.log('layout =', av.nut[tsk].uiAll.regionLayout, '; tsk=', tsk, ' subChanged=', subChanged, '; from=', from);
     av.nut[edTsk].uiAll.regionsNumOf =  Number(av.nut[edTsk].uiAll.regionLayout.substr(0,1) );
     //console.log('num sub Regions=', av.nut[edTsk].uiAll.regionsNumOf, 'layoutName=', '|'+av.nut[edTsk].uiAll.regionLayout+'|');
-    
+    numRegions = 'multi'
     regionNameList = av.sgr[av.nut[edTsk].uiAll.regionLayout];
     switch (av.nut[edTsk].uiAll.regionLayout) {
       case '1All':
         regionNameList = av.sgr.name['1All'];
-        
+        numRegions = '1All';
         break;
       case '2LftRit':
         regionNameList = av.sgr.name['2LftRit'];
         break;
     };
-
+ 
     //console.log('regionNameList=', regionNameList);
     //this 2 line method woks to get the value of the option in the select structure, but so does the one line method;
     //var idx = document.getElementById(tsk+'0geometry').selectedIndex;
@@ -685,15 +695,18 @@
         //console.log('sub=', sub,'; regionNameList=',  regionNameList);
         regionName = regionNameList[sub];
         document.getElementById(tsk+sub+'regionName').innerHTML = regionName;
-//        if (av.sgr.gridOnly && 'visible' != av.doj.mnDebug.style.visibility) {
         if ('gridOnly'== showGeo) {
           document.getElementById(tsk+'1regionName').style.display = 'none';
           document.getElementById(tsk+'1supplyTypeSelectHolder').style.display = 'none';
         }
-        else {
-          document.getElementById(tsk+sub+'regionName').style.display = 'block';
+        else if ('1All' == numRegions) {
+          document.getElementById(tsk+sub+'regionName').style.display = 'none';
           document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'block';
+        } else {
+          document.getElementById(tsk+sub+'regionName').style.display = 'block';
+          document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'block';          
         }
+        
         if (av.nut.hideFlags.gradient) {
           document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
           document.getElementById(tsk+sub+'gradientCheck').checked = false;
@@ -710,7 +723,7 @@
           case 'none':
           case 'infinite': 
               //document.getElementById(tsk+sub+'blank').style.display = 'block';      
-              document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-Infinite-container';
+              document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-' + numRegions+ '-Infinite-container';
             break;
           case 'finite':   //Local
             // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags.gradient=',av.nut.hideFlags.gradient); }
@@ -723,7 +736,7 @@
               document.getElementById(tsk+sub+'sideText').innerHTML = 'Choose the side to have the a higher initla amount';
               document.getElementById(tsk+sub+'initialHiText').innerHTML = 'High side initial amount / cell';
               document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';
-              document.getElementById(tsk+sub+'initialLoDiv').style.display = 'block';
+              document.getElementById(tsk+sub+'initialLoDiv').style.display = 'block'; 
               document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-FiniteGradient-container';
            // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
             }
@@ -731,12 +744,13 @@
               //not-gradient; Local
               document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';
               document.getElementById(tsk+sub+'initialHiText').innerHTML = 'Inital amount in each cell';
-              document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-Finite-container';
+              // document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-Finite-container';
+              document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-container';
               if (av.nut.hideFlags.gradient) {
                 document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
                 //console.log('id=', tsk+sub+'gradientCheck');
                 document.getElementById(tsk+sub+'gradientCheck').checked = false;
-                document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-Finite-noGradientCheckbox-container';
+                document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-' + numRegions+ '-Finite-noGradientCheckbox-container';
               }
               // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
               // if (av.dbg.flg.nut) { console.log('subSection=', document.getElementById(tsk+sub+'subSection')); }
@@ -747,6 +761,7 @@
             // if (!av.nut.hideFlags.gradient) { document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';}
             // if (!av.nut.hideFlags.periodic) { document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';  }
             document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'inline-block';
+            document.getElementById(tsk+sub+'regionName').style.display = 'block';
             //if (av.dbg.flg.nut) { console.log(tsk+sub+'gradientCheck', document.getElementById(tsk+sub+'gradientCheck').checked, '; av.sgr.hideFlgNames.gradient=', av.sgr.hideFlgNames.gradient); }
             if (true == document.getElementById(tsk+sub+'gradientCheck').checked && !av.sgr.hideFlgNames.gradient) {
               //gradient
@@ -848,6 +863,7 @@
     // if (av.dbg.flg.nut) { console.log('tsk=', tsk, 'sub=', sub, '; geometry=', geometry, '; supplyType =', supplyType, ' ' ,tsk+'0regionLayout=', document.getElementById(tsk+'0regionLayout').value ); }
     av.sgr.setColorFlagBasedonSugarPresence(av.nut[edTsk].uiAll.geometry.toLowerCase(), tsk, 'av.sgr.changeDetailsLayout');
         
+    //av.sgr.gridOnly = false;
     // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
   };
   //---------------------------------------------------------------------------------- end av.sgr.changeDetailsLayout --

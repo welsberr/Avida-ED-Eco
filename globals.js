@@ -609,7 +609,7 @@ av.sgr.code = {};
 av.sgr.name['1All'] = [null, 'Whole Dish'];
 av.sgr.code['1All'] = [null, '000'];
 av.sgr.name['2LftRit'] = [null,'Left', 'Right']; 
-av.sgr.code['2LftRit'] = [null, '013q', '024q']; 
+av.sgr.code['2LftRit'] = [null, '013q', '024q'];
 av.sgr.name['2UppLow'] = [null,'Upper', 'Lower']; 
 av.sgr.code['2UppLow'] = [null, '012q', '034q']; 
 av.sgr.name['3TopLftRit'] = [null, 'Top', 'loL', 'loR'];
@@ -683,7 +683,9 @@ av.sgr.nutdft = {};
 //------------------------------------------------------------------------------------------- av.sgr.makeNutDefault --
 //Rob Pennock decided that we should only have local/grid resources. This will complicate things as my design is based
 // global characteristic in the "summary" and the rest in the "details" section of the summary/details format. 
-// 
+
+av.sgr.showGeoSelect = false;   // This will allow the use of both global and grid; but with no selection element
+                                // if "Whole Dish" then infinite and none are global. All else is grid. 
 av.sgr.gridOnly = false;        // gridOnly true  ++> dftGeometry = grid
 av.sgr.dftGeometry = 'global';  // gridOnly false ++> dftGeometry = global
 if (av.sgr.gridOnly) av.sgr.dftGeometry = 'grid';

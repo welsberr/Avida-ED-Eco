@@ -78,6 +78,11 @@
           stub = 'name: webGridData; type: ' + msg.type.toString() + '; update:' + msg.update;  //may not display anyway
           av.debug.log += '\n--Aui:  ' + stub;
           //av.msg.sync('webGridData:' + msg.update.toString());
+          
+          //use only one = as one maybe number and the other string
+          if (av.grd.oldUpdate == msg.update && 0 <= msg.update) {  
+            console.log('webGridData repeat update=', av.grd.msg.update);
+          }
           av.grd.drawGridSetupFn('av.msg.readMsg: case=webGridData');  //needs to be called always as some calculations need to happen even if nothing is displayed (for logic data)
           //av.debug.log += '\n - - end webGridData: update:' + av.grd.msg.update;
           break;
@@ -658,7 +663,7 @@
     };
   };
 
-  //---------------------------------
+  //------------------------------------------------------------------------------------------- av.msg.updatePopStats --
   av.msg.updatePopStats = function (msg) {
     'use strict';
     var place = 2;
@@ -736,7 +741,9 @@
     xorPop.textContent = msg.xor;
     equPop.textContent = msg.equ;
   };
+  //--------------------------------------------------------------------------------------- end av.msg.updatePopStats --
 
+  //-------------------------------------------------------------------------------------------- av.ptd.updateLogicFn --
   av.ptd.updateLogicFn = function (mUpdate){
     'use strict';
     //console.log('in updateLogicFn: mUpdate = ', mUpdate);
@@ -811,6 +818,7 @@
     }
     */
   }
+  //---------------------------------------------------------------------------------------- end av.ptd.updateLogicFn --
 
   //writes out data for WebOrgDataByCellID
   av.grd.updateSelectedOrganismType = function (msg) {

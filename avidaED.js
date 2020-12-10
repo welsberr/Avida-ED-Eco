@@ -2453,9 +2453,11 @@ require([
 
   /********************************************************************************** enviornment (sugar) settings ****/
 
+// delte by 2021
 /*----------------------------------------------------------------------------------------- av.ui.ex1setSugarColors --*/
-  av.ui.ex1setSugarColors = function () {
-    var sugarSection = ['ex1notSection', 'ex1nanSection', 'ex1andSection', 'ex1ornSection', 'ex1oroSection', 'ex1antSection', 'ex1norSection', 'ex1xorSection', 'ex1equSection'];
+
+/*av.ui.ex1setSugarColors = function () {
+     var sugarSection = ['ex1notSection', 'ex1nanSection', 'ex1andSection', 'ex1ornSection', 'ex1oroSection', 'ex1antSection', 'ex1norSection', 'ex1xorSection', 'ex1equSection'];
     var len = av.sgr.sugarColors.length;
     var ndx = av.sgr.sugarBackgroundShade;
     for (ii = 0; ii < len; ii++) {
@@ -2468,13 +2470,13 @@ require([
     };
   };
 
-/*-------------------------------------------------------------------------------------- ex1allSugarChange.onChange --*/
   document.getElementById('ex1allSugarChange').onchange = function () {
     var allSugar = document.getElementById('ex1allSugarChange').value;
     av.ptd.ex1allSugarChange(allSugar);
     av.ui.ex1setSugarColors();
     document.getElementById('ex1allSugarChange').value = 'allNeutral';
   };
+*/
 
 // end of ex1 and tst2 page stuff
 
@@ -3380,7 +3382,7 @@ require([
     var value = domObj.value;
     var side = id.substr(1,4).toLowerCase();
     console.log('id=', id, '; value=', value, '; side=', side);
-    if ('left' !== side) {side = 'right'};
+    if ('left' !== side) {side = 'right';};
     av.post.addUser('Button: ' + id + ' is ' + value);
     av.anl.yLeftTitle = value;
     //need to get correct array to plot from freezer
@@ -3396,6 +3398,17 @@ require([
     av.anl.color[ndx] = av.color.names[domObj.value];
     av.post.addUser('Button:' + domObj.id);
     console.log('av.anl.color[ndx]=', av.anl.color[ndx]);
+    var tstText = 'not0Details';
+    av.dom.test = document.getElementById(tstText);
+    console.log(tstText+'.domObj =', av.dom.test);
+    var sugarlist = av.dom.test.children;
+    console.log('children of '+tstText+' =', sugarlist);
+    var leng = sugarlist.length;
+    for (var ii = 0; ii < leng; ii++) {
+      console.log('coloroption ['+ii+'] =', sugarlist[ii].id);
+    }
+      
+    
     av.anl.AnaChartFn();    //redraw chart which will get new color from dom
   };
   
@@ -3443,7 +3456,7 @@ require([
   av.sgr.buildHtml();
   // av.sgr.defaults;
 
-  av.ui.ex1setSugarColors();   //example 1     //delete later
+  //av.ui.ex1setSugarColors();   //example 1     //delete 2021
 
   //av.ui.removeVerticalScrollbar('popTopRw', 'popTopRw');
   

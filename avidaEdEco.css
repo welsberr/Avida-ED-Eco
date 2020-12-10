@@ -800,13 +800,13 @@
   width: 3.5em; height:1.5em;
 }
 .sugInitialNclass{
-  width: 4em; height:1.5em;
+  width: 5em; height:1.5em;
 }
 .sugInitialHiNclass{
-  width: 4em; height:1.5em;
+  width: 5em; height:1.5em;
 }
 .sugInitialLoNclass{
-  width: 4em; height:1.5em;
+  width: 5em; height:1.5em;
 }
 .sugInflowHiNclass{
   width: 3.5em; height:1.5em;
@@ -902,8 +902,15 @@
   width: 100%;
 }
 
-.gridOnly-sugarDetail-Infinite-container {
-  display: none;
+.grid-sugarDetail-1All-Infinite-container {
+  display: grid;
+  grid-template-areas: 'supplyDetailDiv';
+  width: 100%;
+}
+.grid-sugarDetail-multi-Infinite-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv';
+  width: 100%;
 }
 
 .grid-sugarDetail-Finite-noGrradientCheckbox-container {  //not in use
@@ -911,12 +918,7 @@
   grid-template-areas: 'subSectionTitle supplyDetailDiv initialHi';
   width: 100%;
 }
-.grid-sugarDetail-Finite-noGradientCheckboxOneLine-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle supplyDetailDiv initialHi diffuseCheckDiv';
-  width: 100%;
-}
-.grid-sugarDetail-Finite-noGradientCheckbox-container {
+.geoBoth-grid-sugarDetail-Finite-noGradientCheckbox-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
                        'initialHi initialHi initialHi';
@@ -924,15 +926,29 @@
   border: 1px solid #888;
   width: 100%;
 }
-.gridOnly-sugarDetail-Finite-noGradientCheckbox-container {
+.grid-sugarDetail-Finite-noGradientCheckboxOneLine-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv initialHi diffuseCheckDiv';
+  width: 100%;
+}
+.grid-sugarDetail-1All-Finite-noGradientCheckbox-container {
   display: grid;
   justify-items: stretch;
-  grid-template-areas: 'initialHi diffuseCheckDiv';
+/*  grid-template-areas: 'subSectionTitle initialHi diffuseCheckDiv'; */
+  grid-template-areas: 'supplyDetailDiv diffuseCheckDiv initialHi';
+/*                       'initialHi       initialHi       initialHi';*/
+  border: 1px solid #888;
+  width: 100%;
+}
+.grid-sugarDetail-multi-Finite-noGradientCheckbox-container {
+  display: grid;
+  justify-items: stretch;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
+                       'initialHi       initialHi       initialHi';
   /* border: 1px solid rgba(128, 128, 128, 0.5); */
   border: 1px solid #888;
   width: 100%;
 }
-
 .grid-sugarDetail-Finite-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv gradientCheckDiv'
@@ -995,6 +1011,14 @@
 }
 
 .grid-sugarDetail-chemostat-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv '
+                       'inflowHi        inflowHi        chmstatHi'
+                       'outflowHi       outflowHi       chmstatHi';
+  width: 100%;
+  align-items: stretch;
+}
+.geoBoth-sugarDetail-chemostat-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv '
                        'inflowHi        inflowHi        chmstatHi'
@@ -1254,7 +1278,7 @@ checkbox:focus {
     flex-direction: row;
   }
   .orgTopLt{
-    flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+    flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} fx prevent resize */
     display: flex;
     flex-direction: row;
     background: #F5F5F5; /* linen; */
@@ -1486,14 +1510,14 @@ checkbox:focus {
 .modal-content {
     background: #fefefe;
     margin: auto;
-    padding: 0px;
+    padding: 2px;
     border: 1px solid #888;
-    width: 80%;
+    width: 90%;
 }
 
 .modal-header {
-    padding: 8px 8px;
-    font-size: 130%;
+    padding: 4s px 4px;
+    font-size: 150%;
     font-weight: bold;
     background: lightgray;
     color: black;
@@ -1502,7 +1526,7 @@ checkbox:focus {
 .modal-body {padding: 8px 8px;}
 
 .modal-footer {
-    padding: 8px 8px;
+    padding: 4px 4spx;
     background: lightgray;
     color: black;
 }
