@@ -508,6 +508,7 @@
 
   // the function av.fwt.form2NutrientTxt needs to be replaced with av.fwt.NutStruct2environment_cfg
   //----------------------------------------------------------------------------------------- av.fwt.form2NutrientTxt --
+  /* delete in 2021
   av.fwt.form2NutrientTxt = function (idStr, toActiveConfigFlag, from) {
     console.log(from + ' called av.fwt.form2NutrientTxt ==============================================================');
     var geometry = 'global';
@@ -601,6 +602,7 @@
     if (toActiveConfigFlag) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');
     else {av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.form2NutrientTxt');}
   };
+*/
   /*---------------------------------------------------------------------------------- End of av.fwt.form2NutrientTxt --*/
 
   //--------------------------------------------------------------------------------------------- av.fwt.nut2cfgFile  --
@@ -913,8 +915,8 @@
     //console.log(txt);
     console.log('-------------------------------------- End of av.fwt.nut2cfgFile -------------------------------');
     
-    if (toActiveConfigFlag) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');
-    else {av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.form2NutrientTxt');}
+    if (toActiveConfigFlag) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.nut2cfgFile');
+    else {av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.nut2cfgFile');}
 
   };
   //----------------------------------------------------------------------------------------- end av.fwt.nut2cfgFile  --

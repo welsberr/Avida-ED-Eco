@@ -3492,6 +3492,7 @@ require([
   //av.sgr.setSugarColors(true);  //true is to turn colors on;    // set color/grey individually so when 0 resources, grey shades rather than colors
   av.sgr.ChangeAllsugarSupplyType('infinite','Last_things_done');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');
+  document.getElementById('displayGridResourceData').style.display = 'flex';   //display local resource data
   
   // May need to do some things here to get the app to look right on the screen. 
   //av.grd.popChartFn();

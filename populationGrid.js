@@ -164,47 +164,18 @@
 
           //taskNum = parseFloat(av.grd.msg['r'+tskName].data[av.grd.selectedNdx]);
           taskNum = av.grd.msg['r'+tskName].data[av.grd.selectedNdx];
-          console.log('cell'+tskDom + '=', taskNum);
+          //console.log('cell'+tskDom + '=', taskNum);
           taskStr = av.utl.toMetric(taskNum, 0);
           document.getElementById('cell'+tskDom).innerHTML = taskStr;
           
           //taskNum = parseFloat(av.grd.msg['r'+tskName].maxVal);
           taskNum = av.grd.msg['r'+tskName].maxVal;
-          console.log('max'+tskDom + ' =', taskNum);
+          //console.log('max'+tskDom + ' =', taskNum);
           taskStr = av.utl.toMetric(taskNum, 0);
           document.getElementById('mx'+tskDom).innerHTML = taskStr;
         };
       };
 
-      /*
-      if (av.grd.selectedNdx) {
-        for (var ii=0; ii < logicLen; ii++) {
-          tskDom = av.sgr.logicTitleNames[ii];
-          tskName = av.sgr.logicNames[ii];
-          taskNum = parseFloat(av.grd.msg['r'+tskName].maxVal);
-          if (isNaN(taskNum)) {taskStr = '';}
-           else if (1000000 <= taskNum ) {taskStr = (taskNum/1000000).toFixed(0) + "M"; }
-           else if (100000 <= taskNum ) {taskStr = (taskNum/1000).toFixed(1) + "k"; }
-           else if (10000 <= taskNum ) {taskStr = (taskNum/1000).toFixed(2) + "k"; }
-           else if (1000 <= taskNum ) {taskStr = (taskNum/1000).toFixed(1) + "k"; }
-           else if (100 <= taskNum ) {taskStr = taskNum.toFixed(0); }
-           else if (10 <= taskNum ) {taskStr = taskNum.toFixed(1); }
-           else {taskStr = taskNum.toFixed(2); }
-          document.getElementById('mx'+tskDom).innerHTML = taskStr;
-          
-          taskNum = parseFloat(av.grd.msg['r'+tskName].data[av.grd.selectedNdx]);
-          if (isNaN(taskNum)) {taskStr = '';}
-           else if (1000000 <= taskNum ) {taskStr = (taskNum/1000000).toFixed(0) + "M"; }
-           else if (100000 <= taskNum ) {taskStr = (taskNum/1000).toFixed(1) + "k"; }
-           else if (10000 <= taskNum ) {taskStr = (taskNum/1000).toFixed(2) + "k"; }
-           else if (1000 <= taskNum ) {taskStr = (taskNum/1000).toFixed(1) + "k"; }
-           else if (100 <= taskNum ) {taskStr = taskNum.toFixed(0); }
-           else if (10 <= taskNum ) {taskStr = taskNum.toFixed(1); }
-           else {taskStr = taskNum.toFixed(2); }
-          document.getElementById('cell'+tskDom).innerHTML = taskStr;
-        };
-      };
-   */     
       //av.grd.cmap = av.color.Gnuplot2cmap;  //for fitness, offspring cost and energy aquisition rate
       var mapColor = 'greyMap';
       switch (document.getElementById("colorMode").value) {

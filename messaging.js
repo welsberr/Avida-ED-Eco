@@ -712,21 +712,18 @@
     }
     TimeLabel.textContent = msg.update.formatNum(0) + ' updates';
     av.grd.updateNum = msg.update;
-    popSizeLabel.textContent = msg.organisms.formatNum(0);
-    aFitLabel.textContent = msg.ave_fitness.formatNum(place);
+    
+    popSizeLabel.textContent = av.utl.toMetric(msg.organisms, 0);
+    aFitLabel.textContent = av.utl.toMetric(msg.ave_fitness, 0);
 
-      if (987654321 < Number(msg.ave_metabolic_rate)){
-        aEnergyAcqRateLabel.textContent = msg.ave_metabolic_rate.formatNum(0);
-      }
-      else {
-        aEnergyAcqRateLabel.textContent = msg.ave_metabolic_rate.formatNum(place);
-      }
-    if (0 < msg.ave_gestation_time) {aOffspringCostLabel.textContent = msg.ave_gestation_time.formatNum(place);}
+    aEnergyAcqRateLabel.textContent = av.utl.toMetric(msg.ave_metabolic_rate, 0);
+    if (0 < msg.ave_gestation_time) {
+      aOffspringCostLabel.textContent = av.utl.toMetric(msg.ave_gestation_time, 0);
+    }
     else {aOffspringCostLabel.textContent = 'non-viable';}
-      aAgeLabel.textContent = msg.ave_age.formatNum(place);
+      aAgeLabel.textContent = av.utl.toMetric(msg.ave_age, 0);
 
-    parentNumLabel.textContent = av.parents.name.length;
-    //console.log('update', msg.update, '; logNum[update]',av.pch.logNum[Number(msg.update)-1], '; logNum', av.pch.logNum);
+    parentNumLabel.textContent = av.parents.name.length;  //number of original ancesstors
 
     //update viable number on webpage
     viableNumLabel.textContent = msg.viables.formatNum(0);
@@ -829,18 +826,15 @@
     else prefix = '';
     nameLabel.textContent = msg.genotypeName;
     if (null === msg.fitness) fitLabel.textContent = ' ';
-    else fitLabel.textContent = prefix + msg.fitness.formatNum(2);
+    else fitLabel.textContent = prefix + av.utl.toMetric(msg.fitness, 0);
     if (null === msg.metabolism) energyAcqRateLabel.textContent = ' ';
     else {
-      if (987654321 < Number(msg.metabolism)){
-        energyAcqRateLabel.textContent = prefix + msg.metabolism.formatNum(0);
-      }
-      else {
-        energyAcqRateLabel.textContent = prefix + msg.metabolism.formatNum(2);
-      }
+      energyAcqRateLabel.textContent = prefix + av.utl.toMetric(msg.metabolism, 0);
     }
     if (null === msg.gestation) offspringCostLabel.textContent = ' ';
-    else if (0 < msg.gestation) {offspringCostLabel.textContent = prefix + msg.gestation.formatNum(2);}
+    else if (0 < msg.gestation) {
+      offspringCostLabel.textContent = prefix + av.utl.toMetric(msg.gestation, 0);
+    }
     else {offspringCostLabel.textContent = 'non-viable';}
     if (null == msg.age) ageLabel.textContent = ' ';
       else ageLabel.textContent = msg.age;
@@ -856,7 +850,7 @@
     }
     //else ancestorLabel.textContent = av.parents.name[msg.ancestor];
     else ancestorLabel.textContent = msg.ancestor;
-    //add + or - to text of logic function
+
     if (null != msg.tasks) {
       //now put in the actual numbers
       notTime.textContent = msg.tasks.not;
@@ -870,6 +864,7 @@
       equTime.textContent = msg.tasks.equ;
     }
     else {
+/*     delete this section in 2021
       notLabel.textContent = 'NOT';
       nanLabel.textContent = 'NAN';
       andLabel.textContent = 'AND';
@@ -879,7 +874,7 @@
       norLabel.textContent = 'NOR';
       xorLabel.textContent = 'XOR';
       equLabel.textContent = 'EQU';
-
+*/
       notTime.textContent = '-';
       nanTime.textContent = '-';
       andTime.textContent = '-';
@@ -896,8 +891,10 @@
     else if (0 < msg.isViable) viableLabel.textContent = 'yes';
     else viableLabel.textContent = 'unknown';
 
-    av.msg.fillColorBlock(msg);
+    av.msg.fillColorBlock(msg);   // make the color block next to name contain the color that is on the grid for that cell
     if (av.debug.msg) console.log('Kidstatus', av.grd.kidStatus);
+    
+    //set status of selected grid locaton to know if an organism is present to drag and drop
     if ('getgenome' == av.grd.kidStatus) {
       if (av.debug.msg) console.log('in kidStatus');
       av.grd.kidStatus = 'havegenome';
