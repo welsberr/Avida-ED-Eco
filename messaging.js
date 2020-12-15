@@ -713,7 +713,7 @@
     TimeLabel.textContent = msg.update.formatNum(0) + ' updates';
     av.grd.updateNum = msg.update;
     
-    popSizeLabel.textContent = av.utl.toMetric(msg.organisms, 0);
+    popSizeLabel.textContent = msg.organisms.formatNum(0);
     aFitLabel.textContent = av.utl.toMetric(msg.ave_fitness, 0);
 
     aEnergyAcqRateLabel.textContent = av.utl.toMetric(msg.ave_metabolic_rate, 0);

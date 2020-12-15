@@ -90,7 +90,7 @@
   };
 
   // if (av.dbg.flg.root) { console.log('Root: before av.mouse.downGridCanvasFn'); }
-  av.mouse.downGridCanvasFn = function (evt) {
+  av.mouse.downGridCanvasFn = funsction (evt) {
     av.mouse.DnGridPos = [evt.offsetX, evt.offsetY];
     av.mouse.Dn = true;
     // Select if it is in the grid
