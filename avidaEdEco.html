@@ -1315,6 +1315,12 @@
                           <option id="ornWFinite" value="finite">Finite</option>
                           <option id="ornWChemostat" class="localChemostat" value="chemostat">Chemostat</option>
                         </select>&nbsp;&nbsp;&nbsp;
+                        <div id="orn0periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
+                          <label><input id="orn0periodCheck" type="checkbox">Periodic&nbsp;&nbsp;</label>
+                        </div>
+                        <div id="orn0periodTimeHolder" class="grid-sugarDetail-item periodTimeDivClass">
+                          <label><input id="orn0periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                        </div>
                         <span id="orn0initialDiv" class="sugarSummarySpan">
                           <input id="orn0initial" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
                         </span>
@@ -1331,6 +1337,19 @@
                               <option id="orn1Chemostat" class="localChemostat" value="chemostat">Chemostat</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
+                          
+                          <div id="orn1supplyModifyHolder" class="grid-sugarDetail-item supplyModifyDivClass">
+                            <select id="orn1supplyModifySelect" class="supplyModSelClass" onchange="av.sgr.supplyModChange(this);">
+                              <option id="orn1none" value="default" selected=''>Default</option>
+                              <option id="orn1diffuse" value="diffuse">Diffusion</option>
+                              <option id="orn1gradient" class="gradient" value="finite">Gradient</option>
+                              <option id="orn1periodic" class="periodic" value="chemostat">Periodic</option>
+                            </select>&nbsp;&nbsp;&nbsp;
+                          </div>
+                          <div id="orn1periodTimeHolder" class="grid-sugarDetail-item periodTimeDivClass">
+                            <label><input id="orn1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                          </div>
+
                           <div id="orn1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
                             <label><input id="orn1periodCheck" type="checkbox">Periodic&nbsp;&nbsp;</label>
                           </div>
@@ -1351,9 +1370,6 @@
                             </select>
                               <span id="orn1sideText">side text to describe what side means</span></label>
                           </div>
-                          <div id="orn1periodTime" class="grid-sugarDetail-item periodTime">
-                            <label><input id="orn1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
-                          </div>
                           <div id="orn1sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="orn1sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
                           <div id="orn1blank" class="grid-sugarDetail-item sgrBlank">&nbsp;&nbsp;&nbsp;&nbsp;</div>  
@@ -1368,27 +1384,27 @@
                           </div>
                           <div id="orn1inflowHiDiv" class="grid-sugarDetail-item inflowHiDclass">
                             <label><input id="orn1inflowHiNp" class="sugInflowHiNclass" type="text" onchange="av.sgr.inflowChange(this);">&nbsp;
-                              <span id="orn1inflowHiText" class="sugOutflowLabel">Inflow amount / cell</span></label>
+                              <span id="orn1inflowHiText" class="sugOutflowLabel">Inflow</span></label>
                           </div>
                           <div id="orn1inflowLoDiv" class="grid-sugarDetail-item inflowLoDclass">
                             <label><input id="orn1inflowLoNp" class="sugInflowLoNclass" type="text" onchange="av.sgr.inflowChange(this);">&nbsp;
-                            <span id="orn1inflowLoText" class="sugOutflowLabel">Inflow amount / cell on low side</span></label>
+                            <span id="orn1inflowLoText" class="sugOutflowLabel">Inflow</span></label>
                           </div>
                           <div id="orn1outflowHiDiv" class="grid-sugarDetail-item outflowHiDclass">
                             <label><input id="orn1outflowHiNp" class="sugOutflowHiNclass" type="text" onchange="av.sgr.outflowChange(this);">&nbsp;
-                            <span id="orn1outflowHiText" class="sugOutflowLabel">Outflow fraction / cell.</span></label>
+                            <span id="orn1outflowHiText" class="sugOutflowLabel">% Outflow</span></label>
                           </div>
                           <div id="orn1outflowLoDiv" class="grid-sugarDetail-item outflowLoDclass">
                             <label><input id="orn1outflowLoNp" class="sugOutflowLoNclass" type="text" onchange="av.sgr.outflowChange(this);">&nbsp;
-                              <span id="orn1outflowLoText" class="sugOutflowLabel">Outflow fraction / cell on low side.</span></label>
+                              <span id="orn1outflowLoText" class="sugOutflowLabel">% Outflow</span></label>
                           </div>
                           <div id="orn1chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="orn1chmstatHiValue"></span>
-                            <span id="orn1chmstatHiText" class="sugarText"> = chemostat if not eaten</span>
+                            <span id="orn1chmstatHiText" class="sugarText"> = equilibrium</span>
                           </div>
                           <div id="orn1chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="orn1chmstatLoValue"></span>
-                            <span id="orn1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
+                            <span id="orn1chmstatLoText" class="sugarText"> = equilibrium</span>
                           </div>
                         </div><span id="orn1Section_end" class="displayNone"></span>
 
@@ -1400,9 +1416,20 @@
                               <option id="orn2Infinite" value="infinite" selected="">Infinite</option>
                               <option id="orn2Finite" value="finite">Finite</option>
                               <option id="orn2Chemostat" value="chemostat">Chemostat</option>
-                              <option id="orn2Debug" value="debug">All debug</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
+                         <div id="orn2supplyModifyHolder" class="grid-sugarDetail-item supplyModifyDivClass">
+                            <select id="orn2supplyModifySelect" class="supplyModSelClass" onchange="av.sgr.supplyModChange(this);">
+                              <option id="orn2none" value="default" selected=''>Default</option>
+                              <option id="orn2diffuse" value="diffuse">Diffusion</option>
+                              <option id="orn2gradient" class="gradient" value="finite">Gradient</option>
+                              <option id="orn2periodic" class="periodic" value="chemostat">Periodic</option>
+                            </select>&nbsp;&nbsp;&nbsp;
+                          </div>
+                          <div id="orn2periodTimeHolder" class="grid-sugarDetail-item periodTimeDivClass">
+                            <label><input id="orn2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                          </div>
+
                           <div id="orn2periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
                             <label><input id="orn2periodCheck" type="checkbox">Periodic&nbsp;&nbsp;</label>
                           </div>
@@ -1423,9 +1450,6 @@
                             </select>
                               <span id="orn2sideText">side text to describe what side means</span></label>
                           </div>
-                          <div id="orn2periodTime" class="grid-sugarDetail-item periodTimeClass">
-                            <label><input id="orn2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
-                          </div>
                           <div id="orn2sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="orn2sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
                           <div id="orn2blank" class="grid-sugarDetail-item sgrBlank">&nbsp;&nbsp;&nbsp;&nbsp;</div>  
@@ -1440,27 +1464,27 @@
                           </div>
                           <div id="orn2inflowHiDiv" class="grid-sugarDetail-item inflowHiDclass">
                             <label><input id="orn2inflowHiNp" class="sugInflowHiNclass" type="text" onchange="av.sgr.inflowChange(this);">&nbsp;
-                              <span id="orn2inflowHiText" class="sugOutflowLabel">Inflow amount / cell</span></label>
+                              <span id="orn2inflowHiText" class="sugOutflowLabel">Inflow</span></label>
                           </div>
                           <div id="orn2inflowLoDiv" class="grid-sugarDetail-item inflowLoDclass">
                             <label><input id="orn2inflowLoNp" class="sugInflowLoNclass" type="text" onchange="av.sgr.inflowChange(this);">&nbsp;
-                            <span id="orn2inflowLoText" class="sugOutflowLabel">Inflow amount / cell on low side</span></label>
+                            <span id="orn2inflowLoText" class="sugOutflowLabel">Inflow</span></label>
                           </div>
                           <div id="orn2outflowHiDiv" class="grid-sugarDetail-item outflowHiDclass">
                             <label><input id="orn2outflowHiNp" class="sugOutflowHiNclass" type="text" onchange="av.sgr.outflowChange(this);">&nbsp;
-                            <span id="orn2outflowHiText" class="sugOutflowLabel">Outflow fraction / cell.</span></label>
+                            <span id="orn2outflowHiText" class="sugOutflowLabel">% Outflow</span></label>
                           </div>
                           <div id="orn2outflowLoDiv" class="grid-sugarDetail-item outflowLoDclass">
                             <label><input id="orn2outflowLoNp" class="sugOutflowLoNclass" type="text" onchange="av.sgr.outflowChange(this);">&nbsp;
-                              <span id="orn2outflowLoText" class="sugOutflowLabel">Outflow fraction / cell on low side.</span></label>
+                              <span id="orn2outflowLoText" class="sugOutflowLabel">% Outflow</span></label>
                           </div>
                           <div id="orn2chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
                             <span id="orn2chmstatHiValue"></span>
-                            <span id="orn2chmstatHiText" class="sugarText"> = equilibrium if not eaten</span>
+                            <span id="orn2chmstatHiText" class="sugarText"> = equilibrium</span>
                           </div>
                           <div id="orn2chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="orn2chmstatLoValue"></span>
-                            <span id="orn2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
+                            <span id="orn2chmstatLoText" class="sugarText"> = equilibrium</span>
                           </div>
                         </div><span id="orn2Section_end" class="displayNone"></span>
 

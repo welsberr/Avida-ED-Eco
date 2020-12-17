@@ -797,7 +797,7 @@
   display: inline-block;
 }
 .sugPeriodNclass{
-  width: 3.5em; height:1.5em;
+  width: 5em; height:1.5em;
 }
 .sugInitialNclass{
   width: 5em; height:1.5em;
@@ -809,16 +809,16 @@
   width: 5em; height:1.5em;
 }
 .sugInflowHiNclass{
-  width: 3.5em; height:1.5em;
+  width: 5em; height:1.5em;
 }
 .sugInflowLoNclass{
-  width: 3.5em; height:1.5em;
+  width: 5em; height:1.5em;
 }
 .sugOutflowHiNclass{
-  width: 3.5em; height:1.5em;
+  width: 5em; height:1.5em;
 }
 .sugOutflowLoNclass{
-  width: 3.5em; height:1.5em;
+  width: 5em; height:1.5em;
 }
 /*   Not in use as of 2020 july 22
 #notSection{
@@ -889,11 +889,13 @@
 .subSectionTitle { grid-area: subSectionTitle; }
 .sgrBlank { grid-area: sgrBlank; }
 
-.periodCheckDiv { grid-area: periodCheckDiv; }
-.periodTimeClass { grid-area: periodTime; }
+.supplyModifyDivClass {grid-area: supplyModifyDivClass}
+.periodTimeDivClass { grid-area: periodTime; }
 
-.gradientCheckDiv { grid-area: gradientCheckDiv; }
-.diffuseCheckDiv { grid-area: diffuseCheckDiv; }
+/* period, gradient and diffuse were check boxes; now they are part of a drop down */
+.periodCheckDiv { grid-area: periodCheckDiv; display: none; }
+.gradientCheckDiv { grid-area: gradientCheckDiv; display: none; }
+.diffuseCheckDiv { grid-area: diffuseCheckDiv; display: none; }
 
 .grid-sugarDetail-Infinite-container {
   display: grid;
@@ -916,6 +918,14 @@
 .grid-sugarDetail-Finite-noGrradientCheckbox-container {  //not in use
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv initialHi';
+  width: 100%;
+}
+.geoBoth-grid-sugarDetail-Finite-noGradientCheckbox-container_checkbox {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
+                       'initialHi initialHi initialHi';
+  /* border: 1px solid rgba(128, 128, 128, 0.5); */
+  border: 1px solid #888;
   width: 100%;
 }
 .geoBoth-grid-sugarDetail-Finite-noGradientCheckbox-container {
@@ -1018,11 +1028,18 @@
   width: 100%;
   align-items: stretch;
 }
-.geoBoth-sugarDetail-chemostat-container {
+.geoBoth-sugarDetail-chemostat-container_checkbox {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv '
                        'inflowHi        inflowHi        chmstatHi'
                        'outflowHi       outflowHi       chmstatHi';
+  width: 100%;
+  align-items: stretch;
+}
+.geoBoth-sugarDetail-chemostat-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyModifyDivClass periodTime'
+                       'inflowHi        inflowHi        outflowHi       chmstatHi';
   width: 100%;
   align-items: stretch;
 }
