@@ -9,9 +9,9 @@
     background: #F5F5F5; /* cyan; */
     padding: 0;
   }
-  .displayNone{
-    display: none;
-  }
+  .display_none { display: none; }
+  .display_inline-block{ display: inline-block }
+  
   .thin{
     margin: 0;
     padding: 0;
@@ -612,10 +612,7 @@
   display: inline;
   font-size: 120%;
 }
-
-
-#mutePopInput {
-}
+#mutePopError { text-align: left; width: 90%; }
 
 .mutePopInputClass{
   width:4em;
@@ -671,13 +668,15 @@
 #allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: center; }
 #allSugarSupplyTypeDiv { grid-area:supplyTypeDiv ; justify-self: center; }
 #allSugarRegionLayoutDiv { grid-area:regionLayoutDiv; justify-self: center; }
-#allSugarDiffusionDiv  { grid-area:diffusionDiv; justify-self: center; }
 #allSugarDetailsDiv { grid-area:detailDiv; justify-self: lefts; }
+#allSugarPatternDiv { grid-area:patternDiv; justify-self: center; }
+
+/* delete in 2021 #allSugarDiffusionDiv  { grid-area:diffusionDiv; justify-self: center; } */
 
 #geometrySgr { grid-area:geometrySgr; justify-self: center; background: inherit;}
 #supplyTypeSgr { grid-area:supplyTypeSgr; justify-self: center; background: inherit;}
 #regionLayoutSgr { grid-area:regionLayoutSgr; justify-self: center; background: inherit;}
-#diffusionSgr { grid-area:diffusionSgr; justify-self: center; background: inherit;}
+#patternSgr { grid-area:patternSgr; justify-self: center; background: inherit;}
 #showHideSgr { grid-area:showHideSgr; justify-self: right; background: inherit;}
 
 #allSgr4Blnk { grid-area: allSgr3Blnk; }
@@ -686,9 +685,9 @@
 
 .changeAllSugarsTogetherContainer {
   display: grid;
-  grid-template-areas: 'setTitle    setTitle        showHideSgr     detailDiv'
-                       'geometrySgr regionLayoutSgr supplyTypeSgr diffusionSgr'
-                       'geometryDiv regionLayoutDiv supplyTypeDiv diffusionDiv';
+  grid-template-areas: 'setTitle    setTitle        showHideSgr   detailDiv'
+                       'geometrySgr regionLayoutSgr supplyTypeSgr patternSgr'
+                       'geometryDiv regionLayoutDiv supplyTypeDiv patternDiv';
   /*
   grid-template-areas: 'setTitle     headerTitle headerTitle   allSgr5Blnk'
                        'allSgr4Blnk  geometrySgr supplyTypeSgr showHideSgr'
@@ -889,13 +888,16 @@
 .subSectionTitle { grid-area: subSectionTitle; }
 .sgrBlank { grid-area: sgrBlank; }
 
-.supplyModifyDivClass {grid-area: supplyModifyDivClass}
+.supplyPatternDivClass {grid-area: supplyPatternDivClass}
 .periodTimeDivClass { grid-area: periodTime; }
 
 /* period, gradient and diffuse were check boxes; now they are part of a drop down */
 .periodCheckDiv { grid-area: periodCheckDiv; display: none; }
 .gradientCheckDiv { grid-area: gradientCheckDiv; display: none; }
 .diffuseCheckDiv { grid-area: diffuseCheckDiv; display: none; }
+
+/* used as global resources can be periodic, but not */
+.periodCheckGlobal { grid-area: periodCheckGlobal; }
 
 .grid-sugarDetail-Infinite-container {
   display: grid;
@@ -915,6 +917,11 @@
   width: 100%;
 }
 
+.grid-sugarDetail-Finite-noGrradientCheckbox-container {  //not in use
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv initialHi';
+  width: 100%;
+}
 .grid-sugarDetail-Finite-noGrradientCheckbox-container {  //not in use
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv initialHi';
@@ -950,7 +957,7 @@
   border: 1px solid #888;
   width: 100%;
 }
-.grid-sugarDetail-multi-Finite-noGradientCheckbox-container {
+.grid-sugarDetail-multi-Finite-noGradientCheckbox-container {  /* not in use on Dec 16 */
   display: grid;
   justify-items: stretch;
   grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
@@ -961,8 +968,8 @@
 }
 .grid-sugarDetail-Finite-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv gradientCheckDiv'
-                       'initialHi  initialHi initialHi initialHi';
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyPatternDivClass periodTime'
+                       'initialHi       initialHi       initialHi            initialHi';
   width: 100%;
 }
 .grid-sugarDetail-FiniteGradient-container {
@@ -1004,8 +1011,7 @@
 }
 .grid-sugarDetail-globalsugarDetail-chemostat {
   display: grid;
-  grid-template-areas: 'inflowHi periodCheckDiv'
-                       'outflowHi chmstatHi';
+  grid-template-areas: 'inflowHi outflowHi chmstatHi';
   width: 100%;
 }
 .grid-sugarDetail-globalEqualPeriod-container {
@@ -1038,7 +1044,7 @@
 }
 .geoBoth-sugarDetail-chemostat-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyModifyDivClass periodTime'
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyPatternDivClass periodTime'
                        'inflowHi        inflowHi        outflowHi       chmstatHi';
   width: 100%;
   align-items: stretch;
@@ -1175,7 +1181,7 @@ select:focus{
 }
 
 select:option { 
-    padding: 0px 2px;    /*top/bottom  left/right  */
+    padding: 0px 1px;    /*top/bottom  left/right  */
     background: #eee;
 } 
 /* for IE and Edge */ 

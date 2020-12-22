@@ -93,20 +93,20 @@
     document.getElementById('allSugarGeometry').value = 'neutral';
   };
   
-  av.sgr.allSugarDiffusionChange = function(domObj) {
+  av.sgr.allSugarPatternChange = function(domObj) {
     var selectedOption = domObj.value;
-    //console.log('selected=', selectedOption);
+    console.log('selected=', selectedOption);
     var diffussionFlag = false;
-    if ('true' == domObj.value) { diffussionFlag = true; }
-    var endName = 'diffuseCheck';   
+    if ('diffusion' == domObj.value.toLowerCase()) { diffussionFlag = true; }
+    var endName = 'supplyPatternSelect';   
     var domName = '';
     var numtasks = av.sgr.logicNames.length;
-    var start =1;   //only grid geometry can have diffusion, item 0 is for global
+    var start =0;   //only grid geometry can have diffusion, item 0 is for global
     // all tasks
     //console.log('endName=', endName, '; numtasks=', numtasks, '; sub=', sub, ' numRegons=', av.nut.numRegionsinHTML);
     for (var ii=0; ii< numtasks; ii++) {  
       for (var sub=start; sub <= av.nut.numRegionsinHTML; sub++) {
-      //change glabal and all subsections  (only 1 sub secton for now) - this may need to change later; but only allowing None and Infinte for now, so ok.
+      //change all subsections; Global can have periodic but not gradient or diffusion. 
         domName = av.sgr.logicNames[ii] + sub + endName;
         //console.log('domName='+domName, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
         //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
@@ -116,7 +116,7 @@
       }
     }
     //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
-    document.getElementById('allSugarDiffusion').value = 'neutral';
+    document.getElementById('allSugarPattern').value = 'neutral';
   };
 
 //--------------------------------------------------------------------------------- av.sgr.ChangeAllsugarSupplyType --
@@ -240,13 +240,13 @@
   };
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.supplyModChange = function (domObj) {
-  if (av.dbg.flg.nut) { console.log('Nut: av.sgr.supplyModChange was called by', domObj); }
+  av.sgr.supplyPatternChange = function (domObj) {
+  if (av.dbg.flg.nut) { console.log('Nut: av.sgr.supplyPatternChange was called by', domObj); }
     var taskID = domObj.id;
     var task = taskID.substring(0, 3);
     var sub = taskID.substr(3, 1);
-    //console.log('taskID=', taskID, 'task=', task, '; subsection=', sub);
-    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyModChange');
+    console.log('taskID=', taskID, 'task=', task, '; subsection=', sub);
+    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyPatternChange');
   };
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
@@ -631,7 +631,9 @@
     //hide everything. Display parts based on what is selected
     document.getElementById(tsk+'0supplyType').style.display = 'none';
     document.getElementById(tsk+'0initialDiv').style.display = 'none';
+    document.getElementById(tsk+'0periodCheckbox').style.display = 'none';
     document.getElementById(tsk+'0periodTimeHolder').style.display = 'none';
+    
     //if (av.dbg.flg.nut) { console.log('document.getElementById('+tsk+sub+'supplyTypeSelectHolder) =', document.getElementById(tsk+sub+'supplyTypeSelectHolder')); }
 
     // hide for all subsections possible not just the number based on the regon layout type
@@ -642,7 +644,7 @@
       document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
       document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'none';
       document.getElementById(tsk+sub+'periodCheckbox').style.display = 'none';
-      document.getElementById(tsk+sub+'supplyModifyHolder').style.display = 'none';
+      document.getElementById(tsk+sub+'supplyPatternHolder').style.display = 'none';
       document.getElementById(tsk+sub+'periodTimeHolder').style.display = 'none';
       document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'none';
       document.getElementById(tsk+sub+'sideHiText').style.display = 'none';
@@ -672,23 +674,22 @@
         case 'finite': 
           document.getElementById(tsk+'0initialDiv').style.display = 'inline-block';
           document.getElementById(tsk+'0section').open = false;
+          if (false) { document.getElementById(tsk+'0periodTimeHolder').style.display = 'block'; }
           break;
         case 'chemostat':
-          //document.getElementById(tsk+'1periodCheckbox').style.display = 'block';
+          document.getElementById(tsk+'0periodCheckbox').style.display = 'inline-block';
           document.getElementById(tsk+'1inflowHiDiv').style.display = 'block';
           document.getElementById(tsk+'1outflowHiDiv').style.display = 'block';
-          document.getElementById(tsk+'1inflowHiText').innerHTML = 'Inflow amount / cell';
-          document.getElementById(tsk+'1outflowHiText').innerHTML = 'Outflow fraction / cell';
+          document.getElementById(tsk+'1inflowHiText').innerHTML = 'Inflow';
+          document.getElementById(tsk+'1outflowHiText').innerHTML = 'Outflow %';
           document.getElementById(tsk+'1chmstatHiDiv').style.display = 'block';
-          document.getElementById(tsk+'1chmstatHiText').innerHTML = ' = chemostat when resource not consumed';
+          document.getElementById(tsk+'1chmstatHiText').innerHTML = '=equilibrium';
           document.getElementById(tsk+'1subSection').className = 'grid-sugarDetail-globalsugarDetail-chemostat';
           // if (av.dbg.flg.nut) { console.log('task='+tsk, '; sub='+sub, '; get className from dom of ', tsk+'0Details'); }
           // if (av.dbg.flg.nut) { console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'0Details').className); }
           // if (av.dbg.flg.nut) { console.log(tsk+'1periodCheckbox.checked value =', document.getElementById(tsk+'1periodCheck').checked, document.getElementById(tsk+'1periodCheck').value); }
-          if (true == document.getElementById(tsk+'1periodCheck').checked) {
-            document.getElementById(tsk+'1periodTimeHolder').style.display = 'block';
-            document.getElementById(tsk+'1chmstatHiText').innerHTML = ' = chemostat when resource not consumed';
-            document.getElementById(tsk+'1subSection').className = 'grid-sugarDetail-globalEqualPeriod-container';
+          if (true == document.getElementById(tsk+'0periodCheck').checked) {
+            document.getElementById(tsk+'0periodTimeHolder').style.display = 'inline-block';
           };
           document.getElementById(tsk+'0section').open = true;
           break;
@@ -756,7 +757,7 @@
             break;
           case 'finite':   //Local
             // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags.gradient=',av.nut.hideFlags.gradient); }
-            document.getElementById(tsk+sub+'supplyModifyHolder').style.display = 'block';
+            document.getElementById(tsk+sub+'supplyPatternHolder').style.display = 'block';
             // document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'block';
             // document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'block';
             // if (av.dbg.flg.nut) { console.log('task=',tsk, '; sub=', sub, '; gradientCheck.checked=', document.getElementById(tsk+sub+'gradientCheck').checked); }
@@ -776,7 +777,14 @@
               document.getElementById(tsk+sub+'initialHiText').innerHTML = 'Inital amount in each cell';
               // document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-Finite-container';
               document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-container';
-              if (av.nut.hideFlags.gradient) {
+              //console.log('document.getElementById('+tsk+sub+'supplyPatternSelect).value =');
+              //console.log(document.getElementById(tsk+sub+'supplyPatternSelect').value);
+              
+              if ('periodic' == document.getElementById(tsk+sub+'supplyPatternSelect').value.toLowerCase() ) {
+                document.getElementById(tsk+sub+'periodTimeHolder').style.display = 'block';
+              }
+//              if (av.nut.hideFlags.gradient) {
+              if (false) {
                 document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
                 //console.log('id=', tsk+sub+'gradientCheck');
                 document.getElementById(tsk+sub+'gradientCheck').checked = false;
@@ -792,7 +800,7 @@
             // if (!av.nut.hideFlags.periodic) { document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';  }
             // document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'inline-block';
             document.getElementById(tsk+sub+'regionName').style.display = 'block';
-            document.getElementById(tsk+sub+'supplyModifyHolder').style.display = 'block';
+            document.getElementById(tsk+sub+'supplyPatternHolder').style.display = 'block';
 
             //if (av.dbg.flg.nut) { console.log(tsk+sub+'gradientCheck', document.getElementById(tsk+sub+'gradientCheck').checked, '; av.sgr.hideFlgNames.gradient=', av.sgr.hideFlgNames.gradient); }
             if (true == document.getElementById(tsk+sub+'gradientCheck').checked && !av.sgr.hideFlgNames.gradient) {

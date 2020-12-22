@@ -83,8 +83,8 @@
           <img id='lftPnlButtonImg' src='images/lftPnlBtn2.png'/>
         </div>
         <div id="mainMenu">
-          <input id='putWS' type='file' class='displayNone' onchange='av.fio.userPickZipRead()' />
-          <input id='importFzrItem' type='file' class='displayNone' onchange='av.fio.importZipRead()' />
+          <input id='putWS' type='file' class='display_none' onchange='av.fio.userPickZipRead()' />
+          <input id='importFzrItem' type='file' class='display_none' onchange='av.fio.importZipRead()' />
 
           <input type='hidden' value='mymail@gmail.com' id='mailto' />
 
@@ -178,7 +178,7 @@
               </span>
             </span>
           </span>     
-        </div>  <span id='mainMenu_end' class='displayNone'></span>
+        </div>  <span id='mainMenu_end' class='display_none'></span>
 
         <div id="headerMsg">
           <div id='msgHolder'>
@@ -195,7 +195,7 @@
         <div id='ritePnlBtnHolder' class='ritePnlBtnHlderShow'>
           <img id='rtPnlButtonImg' src='images/rtPnlBtn2.png' alt='image to indicate button to open/close the right information panel'/>
         </div>
-      </div><span id='headerMain_end' class='displayNone'></span>
+      </div><span id='headerMain_end' class='display_none'></span>
 
         <div id="navColId" class="navColClass">
           <div id='mainButtons' class="mainPageButtons">
@@ -237,7 +237,7 @@
                 </div>
               </div>
             </details >
-          </div><span id='freezerClass_end' class='displayNone'></span>
+          </div><span id='freezerClass_end' class='display_none'></span>
 
           <div id="trashDiv" class='trash-grid-container'>
             <div id='trashCan'>
@@ -250,7 +250,7 @@
               <input id='developmentToggle' class='devoShow' type='button' value=' in Development View ' onclick='av.ui.toggleDevelopentDisplays()' />
             </div>
           </div>
-        </div><span id='navColID_end' class='displayNone'></span>
+        </div><span id='navColID_end' class='display_none'></span>
 
         <div class="mainBlockHolder">
 
@@ -322,9 +322,9 @@
                   </div>
                 </div>
                 
-              </div><span id='benchPopBot_end' class='displayNone'></span>
-            </div><span id='mapHolder_end' class='displayNone'></span>
-          </div>  <span id='populationBlock_end' class='displayNone'></span>
+              </div><span id='benchPopBot_end' class='display_none'></span>
+            </div><span id='mapHolder_end' class='display_none'></span>
+          </div>  <span id='populationBlock_end' class='display_none'></span>
           
           <div id='organismBlock' class='mainBlockClassRow'>
             <div id='oranismRunCol' class="orgBenchCol">
@@ -442,8 +442,8 @@
                   <option value='Number Viable'>Number Viable</option>
                 </select> Thinner line; right y-axis
               </div><span value="anaYaxis"></span>
-            </div><span id='anaControls_end' class='displayNone'></span>
-          </div> <span id='analysisBlock_end' class='displayNone'></span>
+            </div><span id='anaControls_end' class='display_none'></span>
+          </div> <span id='analysisBlock_end' class='display_none'></span>
           
           <div id='showTextDebugBlock' class="analysisArea">
             <form id='showTextForm'>
@@ -455,8 +455,8 @@
                 </div>
               </div>
             </form>
-          </div> <span id='showTextDebugBlock_end' class='displayNone'></span>  
-        </div> <span id='mainBlockHolder_end' class='displayNone'></span>
+          </div> <span id='showTextDebugBlock_end' class='display_none'></span>  
+        </div> <span id='mainBlockHolder_end' class='display_none'></span>
 
       <div id='rightInfoHolder'> 
         <div id='popInfoVert' vertical layout>
@@ -569,7 +569,7 @@
                       </tbody>
                     </table>
                     <label id='dnaLabel'></label>
-                  </div><span id='selOrgType_end' class='displayNone'></span>
+                  </div><span id='selOrgType_end' class='display_none'></span>
 
                   <div id="popStats4grid">
                     <div class='popStatsTitle'>
@@ -666,10 +666,10 @@
                           </tr>
                         </tbody>
                       </table>
-                    </div> <span id='popTskChartPick_end' class='displayNone'></span>
+                    </div> <span id='popTskChartPick_end' class='display_none'></span>
                   </div> <span></span>
-                </div> <span id='popStatistics_id' class='displayNone'></span>
-              </div><span id='popStatHolder_end' class='displayNone'></span>
+                </div> <span id='popStatistics_id' class='display_none'></span>
+              </div><span id='popStatHolder_end' class='display_none'></span>
 
               <div id="displayGridResourceData">
                 <div class="grid-currentSugarAmount-container">
@@ -700,14 +700,14 @@
                   <option value='Number Viable'>Number Viable</option>
                   <option value='none'>None</option>
                 </select>
-              </div><span id='miniChartYaxis_end' class='displayNone'></span>
+              </div><span id='miniChartYaxis_end' class='display_none'></span>
 
               <div id='pauseOptions'>
                 Pause Run at Update:&nbsp;
                 <label><input id='autoPauseNum' type='text' value='1000' style='width:80px'> when checked
                 <input id="autoPauseCheck" type="checkbox"> </label>
               </div>
-            </div>  <span id='popStatsBlock_end' class='displayNone'></span>
+            </div>  <span id='popStatsBlock_end' class='display_none'></span>
 
             <div id='setupBlock' class="labInfoClass labInfoFlex">
               <form id='setupForm'>
@@ -725,7 +725,7 @@
                     <span class='enviroSubHeading lftmargin' >Per Site Mutation Rate:</span>
                     <input id='mutePopInput' type='text' class='mutePopInputClass'>&nbsp;%
                   </div>
-                  <div><label id='mutePopError'>Error place holder</label>&nbsp;</div>
+                  <div id='mutePopError' onclick='av.ui.toggleDisplayGeometryControls()'>Error place holder s&nbsp;&nbsp;&nbsp;</div>
                   <div id='mutePopSlideHolder'>
                     <span id='mutePopSlide' class='mutePopSlideClass'></span>&nbsp;
                   </div>
@@ -753,7 +753,7 @@
                     <details id="not0section" class="sugarAccordionSection">
                       <summary id="not0summary" class="sugarSummary">
                         <span id="not0title" class="sugarTitle">Notose</span>&nbsp;
-                        <select id="not0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
+                        <select id="not0geometry" class='geometryClass' onchange="av.sgr.geometryChange(this);">
                           <option value="global" selected="">Global</option>
                           <option value="grid">Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
@@ -853,7 +853,7 @@
                             <span id="not1chmstatLoValue"></span>
                             <span id="not1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
-                        </div><span id="not1Section_end" class="displayNone"></span>
+                        </div><span id="not1Section_end" class="display_none"></span>
 
                         <div id="not2subSection" class="sugarDishSubsection">
                           <div id="not2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
@@ -925,15 +925,15 @@
                             <span id="not2chmstatLoValue"></span>
                             <span id="not2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
-                        </div><span id="not2Section_end" class="displayNone"></span>
+                        </div><span id="not2Section_end" class="display_none"></span>
 
-                      </div><span id="not0Details_end" class="displayNone"></span>
+                      </div><span id="not0Details_end" class="display_none"></span>
                     </details>
 
                     <details id="nan0section" class="sugarAccordionSection">
                       <summary id="nan0summary" class="sugarSummary">
                         <span id="nan0title" class="sugarTitle">Nanose</span>&nbsp;
-                        <select id="nan0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
+                        <select id="nan0geometry" class='geometryClass' onchange="av.sgr.geometryChange(this);">
                           <option value="global" selected="">Global</option>
                           <option value="grid">Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
@@ -1033,7 +1033,7 @@
                             <span id="nan1chmstatLoValue"></span>
                             <span id="nan1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
-                        </div><span id="nan1Section_end" class="displayNone"></span>
+                        </div><span id="nan1Section_end" class="display_none"></span>
 
                         <div id="nan2subSection" class="sugarDishSubsection">
                           <div id="nan2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
@@ -1105,15 +1105,15 @@
                             <span id="nan2chmstatLoValue"></span>
                             <span id="nan2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
-                        </div><span id="nan2Section_end" class="displayNone"></span>
+                        </div><span id="nan2Section_end" class="display_none"></span>
 
-                      </div><span id="nan0Details_end" class="displayNone"></span>
+                      </div><span id="nan0Details_end" class="display_none"></span>
                     </details>
 
                     <details id="and0section" class="sugarAccordionSection">
                       <summary id="and0summary" class="sugarSummary">
                         <span id="and0title" class="sugarTitle">Andose</span>&nbsp;
-                        <select id="and0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
+                        <select id="and0geometry" class='geometryClass' onchange="av.sgr.geometryChange(this);">
                           <option value="global" selected="">Global</option>
                           <option value="grid">Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
@@ -1213,7 +1213,7 @@
                             <span id="and1chmstatLoValue"></span>
                             <span id="and1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
-                        </div><span id="and1Section_end" class="displayNone"></span>
+                        </div><span id="and1Section_end" class="display_none"></span>
 
                         <div id="and2subSection" class="sugarDishSubsection">
                           <div id="and2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
@@ -1285,45 +1285,47 @@
                             <span id="and2chmstatLoValue"></span>
                             <span id="and2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
-                        </div><span id="and2Section_end" class="displayNone"></span>
+                        </div><span id="and2Section_end" class="display_none"></span>
 
-                      </div><span id="and0Details_end" class="displayNone"></span>
+                      </div><span id="and0Details_end" class="display_none"></span>
                     </details>
 
                     <details id="orn0section" class="sugarAccordionSection">
                       <summary id="orn0summary" class="sugarSummary">
-                        <span id="orn0title" class="sugarTitle">Ornose</span>&nbsp;
-                        <select id="orn0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
-                          <option value="global" selected="">Global</option>
-                          <option value="grid">Local</option>
-                        </select>&nbsp;&nbsp;&nbsp;
-                        <select id="orn0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
-                          <option id="orn0WholeDish" value="1All" selected="">Whole Dish</option>
-                          <option id="orn0LftRit" value="2LftRit">Halves Left/Right</option>
-                          <option id="orn0TopLftRit" class="3TopLftRit" value="3TopLftRit">Top Left/Right</option>
-                          <option id="orn0Quarters" class="4Quarters" value="4Quarters">Quarters</option>
-                        </select>&nbsp;&nbsp;&nbsp;
-                        <select id="orn0supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this)">
-                          <option id="orn0none" value="none">None</option>
-                          <option id="orn0Infinite" value="infinite" selected="">Infinite</option>
-                          <option id="orn0Finite" class="globalFinite" value="finite">Finite</option>
-                          <option id="orn0Chemostat" class="globalChemostat" value="chemostat">Chemostat</option>
-                        </select>&nbsp;&nbsp;&nbsp;
-                        <select id="ornWsupplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
-                          <option id="ornWnone" value="none">None</option>
-                          <option id="ornWInfinite" value="infinite" selected="">Infinite</option>
-                          <option id="ornWFinite" value="finite">Finite</option>
-                          <option id="ornWChemostat" class="localChemostat" value="chemostat">Chemostat</option>
-                        </select>&nbsp;&nbsp;&nbsp;
-                        <div id="orn0periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
-                          <label><input id="orn0periodCheck" type="checkbox">Periodic&nbsp;&nbsp;</label>
+                        <div id='orn0summaryDiv'>
+                          <span id="orn0title" class="sugarTitle">Ornose</span>&nbsp;
+                          <select id="orn0geometry" class='geometryClass' onchange="av.sgr.geometryChange(this);">
+                            <option value="global" selected="">Global</option>
+                            <option value="grid">Local</option>
+                          </select>&nbsp;&nbsp;&nbsp;
+                          <select id="orn0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
+                            <option id="orn0WholeDish" value="1All" selected="">Whole Dish</option>
+                            <option id="orn0LftRit" value="2LftRit">Halves Left/Right</option>
+                            <option id="orn0TopLftRit" class="3TopLftRit" value="3TopLftRit">Top Left/Right</option>
+                            <option id="orn0Quarters" class="4Quarters" value="4Quarters">Quarters</option>
+                          </select>&nbsp;&nbsp;&nbsp;
+                          <select id="orn0supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this)">
+                            <option id="orn0none" value="none">None</option>
+                            <option id="orn0Infinite" value="infinite" selected="">Infinite</option>
+                            <option id="orn0Finite" class="globalFinite" value="finite">Finite</option>
+                            <option id="orn0Chemostat" class="globalChemostat" value="chemostat">Chemostat</option>
+                          </select>&nbsp;&nbsp;&nbsp;
+                          <select id="ornWsupplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
+                            <option id="ornWnone" value="none">None</option>
+                            <option id="ornWInfinite" value="infinite" selected="">Infinite</option>
+                            <option id="ornWFinite" value="finite">Finite</option>
+                            <option id="ornWChemostat" class="localChemostat" value="chemostat">Chemostat</option>
+                          </select>&nbsp;&nbsp;&nbsp;
+                          <div id="orn0periodCheckbox" class="grid-sugarDetail-item periodCheckGlobal" onchange="av.sgr.eachSugarCheckBoxChange(this);">
+                            <label><input id="orn0periodCheck" type="checkbox">Periodic&nbsp;&nbsp;</label>
+                          </div>
+                          <div id="orn0periodTimeHolder" class="grid-sugarDetail-item periodTimeDivClass">
+                            <label><input id="orn0periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                          </div>
+                          <span id="orn0initialDiv" class="sugarSummarySpan">
+                            <input id="orn0initial" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
+                          </span>
                         </div>
-                        <div id="orn0periodTimeHolder" class="grid-sugarDetail-item periodTimeDivClass">
-                          <label><input id="orn0periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
-                        </div>
-                        <span id="orn0initialDiv" class="sugarSummarySpan">
-                          <input id="orn0initial" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
-                        </span>
                       </summary>
 
                       <div id="orn0Details" class="sugarDetailSection">
@@ -1338,9 +1340,9 @@
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           
-                          <div id="orn1supplyModifyHolder" class="grid-sugarDetail-item supplyModifyDivClass">
-                            <select id="orn1supplyModifySelect" class="supplyModSelClass" onchange="av.sgr.supplyModChange(this);">
-                              <option id="orn1none" value="default" selected=''>Default</option>
+                          <div id="orn1supplyPatternHolder" class="grid-sugarDetail-item supplyPatternDivClass">
+                            <select id="orn1supplyPatternSelect" class="supplyModSelClass" onchange="av.sgr.supplyPatternChange(this);">
+                              <option id="orn1default" value="default" selected=''>Default</option>
                               <option id="orn1diffuse" value="diffuse">Diffusion</option>
                               <option id="orn1gradient" class="gradient" value="finite">Gradient</option>
                               <option id="orn1periodic" class="periodic" value="chemostat">Periodic</option>
@@ -1363,7 +1365,7 @@
                             <label><select id="orn1hiSide">
                               <option value="left" selected="">Left</option>
                               <option value="right">Right</option>
-                              <option value="top">Top</option>
+                              <option value="top">Top</option>x
                               <option value="bottom">Bottom</option>
                               <option value="center">Center</option>
                               <option value="edge">Edge</option>
@@ -1406,7 +1408,7 @@
                             <span id="orn1chmstatLoValue"></span>
                             <span id="orn1chmstatLoText" class="sugarText"> = equilibrium</span>
                           </div>
-                        </div><span id="orn1Section_end" class="displayNone"></span>
+                        </div><span id="orn1Section_end" class="display_none"></span>
 
                         <div id="orn2subSection" class="sugarDishSubsection">
                           <div id="orn2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
@@ -1418,9 +1420,9 @@
                               <option id="orn2Chemostat" value="chemostat">Chemostat</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
-                         <div id="orn2supplyModifyHolder" class="grid-sugarDetail-item supplyModifyDivClass">
-                            <select id="orn2supplyModifySelect" class="supplyModSelClass" onchange="av.sgr.supplyModChange(this);">
-                              <option id="orn2none" value="default" selected=''>Default</option>
+                         <div id="orn2supplyPatternHolder" class="grid-sugarDetail-item supplyPatternDivClass">
+                            <select id="orn2supplyPatternSelect" class="supplyModSelClass" onchange="av.sgr.supplyPatternChange(this);">
+                              <option id="orn2default" value="default" selected=''>Default</option>
                               <option id="orn2diffuse" value="diffuse">Diffusion</option>
                               <option id="orn2gradient" class="gradient" value="finite">Gradient</option>
                               <option id="orn2periodic" class="periodic" value="chemostat">Periodic</option>
@@ -1486,15 +1488,15 @@
                             <span id="orn2chmstatLoValue"></span>
                             <span id="orn2chmstatLoText" class="sugarText"> = equilibrium</span>
                           </div>
-                        </div><span id="orn2Section_end" class="displayNone"></span>
+                        </div><span id="orn2Section_end" class="display_none"></span>
 
-                      </div><span id="orn0Details_end" class="displayNone"></span>
+                      </div><span id="orn0Details_end" class="display_none"></span>
                     </details>
 
                     <details id="oro0section" class="sugarAccordionSection">
                       <summary id="oro0summary" class="sugarSummary">
                         <span id="oro0title" class="sugarTitle">Orose</span>&nbsp;
-                        <select id="oro0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
+                        <select id="oro0geometry" class='geometryClass' onchange="av.sgr.geometryChange(this);">
                           <option value="global" selected="">Global</option>
                           <option value="grid">Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
@@ -1593,7 +1595,7 @@
                             <span id="oro1chmstatLoValue"></span>
                             <span id="oro1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
-                        </div><span id="oro1Section_end" class="displayNone"></span>
+                        </div><span id="oro1Section_end" class="display_none"></span>
 
                         <div id="oro2subSection" class="sugarDishSubsection">
                           <div id="oro2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
@@ -1665,15 +1667,15 @@
                             <span id="oro2chmstatLoValue"></span>
                             <span id="oro2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
-                        </div><span id="oro2Section_end" class="displayNone"></span>
+                        </div><span id="oro2Section_end" class="display_none"></span>
 
-                      </div><span id="oro0Details_end" class="displayNone"></span>
+                      </div><span id="oro0Details_end" class="display_none"></span>
                     </details>
 
                     <details id="ant0section" class="sugarAccordionSection">
                       <summary id="ant0summary" class="sugarSummary">
                         <span id="ant0title" class="sugarTitle">Antose</span>&nbsp;
-                        <select id="ant0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
+                        <select id="ant0geometry" class='geometryClass' onchange="av.sgr.geometryChange(this);">
                           <option value="global" selected="">Global</option>
                           <option value="grid">Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
@@ -1773,7 +1775,7 @@
                             <span id="ant1chmstatLoValue"></span>
                             <span id="ant1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
-                        </div><span id="ant1Section_end" class="displayNone"></span>
+                        </div><span id="ant1Section_end" class="display_none"></span>
 
                         <div id="ant2subSection" class="sugarDishSubsection">
                           <div id="ant2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
@@ -1845,15 +1847,15 @@
                             <span id="ant2chmstatLoValue"></span>
                             <span id="ant2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
-                        </div><span id="ant2Section_end" class="displayNone"></span>
+                        </div><span id="ant2Section_end" class="display_none"></span>
 
-                      </div><span id="ant0Details_end" class="displayNone"></span>
+                      </div><span id="ant0Details_end" class="display_none"></span>
                     </details>
 
                     <details id="nor0section" class="sugarAccordionSection">
                       <summary id="nor0summary" class="sugarSummary">
                         <span id="nor0title" class="sugarTitle">Norose</span>&nbsp;
-                        <select id="nor0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
+                        <select id="nor0geometry" class='geometryClass' onchange="av.sgr.geometryChange(this);">
                           <option value="global" selected="">Global</option>
                           <option value="grid">Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
@@ -1953,7 +1955,7 @@
                             <span id="nor1chmstatLoValue"></span>
                             <span id="nor1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
-                        </div><span id="nor1Section_end" class="displayNone"></span>
+                        </div><span id="nor1Section_end" class="display_none"></span>
 
                         <div id="nor2subSection" class="sugarDishSubsection">
                           <div id="nor2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
@@ -2025,15 +2027,15 @@
                             <span id="nor2chmstatLoValue"></span>
                             <span id="nor2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
-                        </div><span id="nor2Section_end" class="displayNone"></span>
+                        </div><span id="nor2Section_end" class="display_none"></span>
 
-                      </div><span id="nor0Details_end" class="displayNone"></span>
+                      </div><span id="nor0Details_end" class="display_none"></span>
                     </details>
 
                     <details id="xor0section" class="sugarAccordionSection">
                       <summary id="xor0summary" class="sugarSummary">
                         <span id="xor0title" class="sugarTitle">Xorose</span>&nbsp;
-                        <select id="xor0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
+                        <select id="xor0geometry" class='geometryClass' onchange="av.sgr.geometryChange(this);">
                           <option value="global" selected="">Global</option>
                           <option value="grid">Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
@@ -2133,7 +2135,7 @@
                             <span id="xor1chmstatLoValue"></span>
                             <span id="xor1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
-                        </div><span id="xor1Section_end" class="displayNone"></span>
+                        </div><span id="xor1Section_end" class="display_none"></span>
 
                         <div id="xor2subSection" class="sugarDishSubsection">
                           <div id="xor2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
@@ -2205,15 +2207,15 @@
                             <span id="xor2chmstatLoValue"></span>
                             <span id="xor2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
-                        </div><span id="xor2Section_end" class="displayNone"></span>
+                        </div><span id="xor2Section_end" class="display_none"></span>
 
-                      </div><span id="xor0Details_end" class="displayNone"></span>
+                      </div><span id="xor0Details_end" class="display_none"></span>
                     </details>
 
                     <details id="equ0section" class="sugarAccordionSection">
                       <summary id="equ0summary" class="sugarSummary">
                         <span id="equ0title" class="sugarTitle">Equose</span>&nbsp;
-                        <select id="equ0geometry" class="geometryClass" onchange="av.sgr.geometryChange(this);">
+                        <select id="equ0geometry" class='geometryClass' onchange="av.sgr.geometryChange(this);">
                           <option value="global" selected="">Global</option>
                           <option value="grid">Local</option>
                         </select>&nbsp;&nbsp;&nbsp;
@@ -2313,7 +2315,7 @@
                             <span id="equ1chmstatLoValue"></span>
                             <span id="equ1chmstatLoText" class="sugarText"> = chemostat if not eaten</span>
                           </div>
-                        </div><span id="equ1Section_end" class="displayNone"></span>
+                        </div><span id="equ1Section_end" class="display_none"></span>
 
                         <div id="equ2subSection" class="sugarDishSubsection">
                           <div id="equ2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
@@ -2385,25 +2387,25 @@
                             <span id="equ2chmstatLoValue"></span>
                             <span id="equ2chmstatLoText" class="sugarText"> = equilibrium if not eaten</span>
                           </div>
-                        </div><span id="equ2Section_end" class="displayNone"></span>
+                        </div><span id="equ2Section_end" class="display_none"></span>
 
-                      </div><span id="equ0Details_end" class="displayNone"></span>
+                      </div><span id="equ0Details_end" class="display_none"></span>
                     </details>
 
-                  </div><span id='sugarAccordion_end' class='displayNone'></span>
+                  </div><span id='sugarAccordion_end' class='display_none'></span>
 
                   <div id='sugarFooter' class='changeAllSugarsTogetherContainer'>
                     <div id='sugarSetTitle' class='rHeadItem'>Set all Resources</div>
 
                     <div id="allSugarGeometryDiv" class='rHeadItem'>
-                      <select id="allSugarGeometry" onchange='av.sgr.allSugarGeometryChange(this);'>
+                      <select id="allSugarGeometry" class='geometryClass' onchange='av.sgr.allSugarGeometryChange(this);'>
                         <option value='global'>Global</option>
                         <option value='grid'>Local</option>
                         <option value='neutral' selected>----</option>                            
                       </select>
                     </div>
                     <div id='allSugarSupplyTypeDiv' class='rHeadItem'>
-                      <select id='allsugarSupplyType' onchange='av.sgr.allsugarSupplyTypeChange(this);'>
+                      <select id='allsugarSupplyType' class="supplyTypeSelClass" onchange='av.sgr.allsugarSupplyTypeChange(this);'>
                         <option value='none'>None</option>
                         <option value='infinite'>Infinite</option>
                         <option value='finite' class='groupFinite'>Finite</option>
@@ -2420,10 +2422,12 @@
                           <option value='neutral' selected>----</option>                            
                         </select>
                     </div>
-                    <div id='allSugarDiffusionDiv' class='rHeadItem'>
-                      <select id="allSugarDiffusion" onchange='av.sgr.allSugarDiffusionChange(this);'>
-                        <option value='false'>Off</option>
-                        <option value='true' >On</option>
+                    <div id='allSugarPatternDiv' class='rHeadItem'>
+                      <select id="allSugarPattern" onchange='av.sgr.allSugarPatternChange(this);'>
+                        <option id="alldefault" value="default" selected=''>Default</option>
+                        <option id="alldiffuse" value="diffuse">Diffusion</option>
+                        <option id="allgradient" class="gradient" value="finite">Gradient</option>
+                        <option id="allperiodic" class="periodic" value="chemostat">Periodic</option>
                         <option value='neutral' selected>----</option>                            
                       </select> 
                     </div>
@@ -2434,12 +2438,12 @@
                         <option value='neutral' selected>----</option>                            
                       </select> 
                     </div>
-                    <div id='geometrySgr'>Geometry &nbsp;</div>
+                    <div id='geometrySgr' class='geometryClass'>Geometry &nbsp;</div>
                     <div id='supplyTypeSgr'>Supply Type &nbsp;</div>
                     <div id='regionLayoutSgr'>Region Layout &nbsp;</div>
-                    <div id='diffusionSgr'>Diffusion &nbsp;</div>
+                    <div id='patternSgr'>Pattern &nbsp;</div>
                     <div id='showHideSgr'>Details: </div>
-                  </div><span id='sugarFooter_end' class='displayNone'></span>
+                  </div><span id='sugarFooter_end' class='display_none'></span>
 
                 </div> <span tag='end of odd'></span>
 
@@ -2455,7 +2459,7 @@
                 </div>
 
               </form>
-            </div><span id='setupBlock_end' class='displayNone'></span>
+            </div><span id='setupBlock_end' class='display_none'></span>
 
             <div id="testSetupBlock" class="labInfoClass labInfoFlex">
               <form id="testSetupForm">
@@ -2474,7 +2478,7 @@
                          data-dojo-props='constraints:{min:0, max:100},
                          invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
                          style='width: 4.5em; height:1.6em' onchange='av.ptd.muteInputChange(this.value, "muteErroTest")'> %<br />
-                  <label id='muteErroTest'>Error place holder</label>
+                  <label id='muteErroTest'></label>
                 </div>
                 <div class='odd'>Ancestral Organism(s):
                   <div class='ancestorContainer' id='ancestorBoTest'></div>
@@ -2511,7 +2515,7 @@
                          data-dojo-props='constraints:{min:-1, max:100},
                          invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid random seed."'
                          style='width: 4.5em; height:1.6em' onchange='av.ptd.randInputChange(this.value, "randErroTest")'><br />
-                  <label id='randErroTest'>Error place holder</label>
+                  <label id='randErroTest'>&nbsp;&nbsp;&nbsp;&nbsp;</label>
                 </div>
                 <div class='odd'>
                   Pause Run:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -2525,7 +2529,7 @@
                   <input type='text' id='autoUpdateSpinneTest' style='width:80px'>
                 </div>
               </form>
-            </div><span id='testSetupBlock_end' class='displayNone'></span>
+            </div><span id='testSetupBlock_end' class='display_none'></span>
 
             <div id='ex1setupBlock' class="labInfoClass labInfoFlex">
               <form id='ex1setupForm'>
@@ -2551,7 +2555,7 @@
                          style='width: 4.5em; height:1.6em')'> %<br />
                   <!--; or the slider value is &nbsp;</div>
                   <input id='ex1mRate' type='text' readonly style='width: 4em; height:1.6em'></button> -->
-                  <label id='ex1muteError'>Error place holder</label>
+                  <label id='ex1muteError'> &nbsp;</label>
                 </div>
                 <div class='odd'>Ancestral Organism(s):
                   <div class='ancestorContainer' id='ex1ancestorBox'></div>
@@ -2901,8 +2905,8 @@
                          intermediateChanges='false' iconClass='dijitNoIcon' name='repeat' value='demo'>
                   <label id='ex1demoLabel'>Demo</label>
                 </div>
-              </form><span id='ex1setupForm_end' class='displayNone'></span>
-            </div> <span id='ex1setupBlock_end' class='displayNone'></span>
+              </form><span id='ex1setupForm_end' class='display_none'></span>
+            </div> <span id='ex1setupBlock_end' class='display_none'></span>
 
 
             <div id='tst2setupBlock' class="labInfoClass labInfoFlex">
@@ -2915,11 +2919,11 @@
                   </div>
                 </div>
 
-              </form><span id='tst2setupForm_end' class='displayNone'></span>
-            </div> <span id='tst2setupBlock_end' class='displayNone'></span>  
+              </form><span id='tst2setupForm_end' class='display_none'></span>
+            </div> <span id='tst2setupBlock_end' class='display_none'></span>  
 
-          </div><span id='labInfoHolder_end' class='displayNone'></span>
-        </div><span id='popInfoVert_end' class='displayNone'></span>
+          </div><span id='labInfoHolder_end' class='display_none'></span>
+        </div><span id='popInfoVert_end' class='display_none'></span>
 
         <div id='orgInfoHolder'>
           <div id='orgDetailID' class='orgDetailClass'>
@@ -2968,7 +2972,7 @@
                   <td><label id='equPerf'>0</label></td>
                 </tr>
               </tbody>
-            </table><span id='orgTaskDataTable_end' class='displayNone'></span>
+            </table><span id='orgTaskDataTable_end' class='display_none'></span>
             </div>
             <div id='lowerOrgInfo'>
               <p>Input Buffer</p>
@@ -2992,7 +2996,7 @@
                 </details>
               </div>
             </div>
-          </div><span id='orgDetailID_end' class='displayNone'></span>
+          </div><span id='orgDetailID_end' class='display_none'></span>
 
           <div id='orgSettings' class='orgSettingClass'>
             <div class='repeatMode'>
@@ -3009,17 +3013,17 @@
               <div id='muteOrgTextHolder'>
                 <div class='lftmargin'>Per Site Mutation Rate:</div>
                 <input id='orgMuteInput' type='text'> %
-                <div><label id='muteOrgError'>Error place holder</label>&nbsp;</div>
+                <div><label id='muteOrgError'> &nbsp;</label>&nbsp;</div>
               </div>
               <div id='muteOrgSlideHolder'>
                 <div id='orgMuteSlide'></div>
               </div>
             </div>
 
-          </div><span id='orgSettings_end' class='displayNone'></span>
-        </div><span id='orgInfoHolder_end' class='displayNone'></span>
+          </div><span id='orgSettings_end' class='display_none'></span>
+        </div><span id='orgInfoHolder_end' class='display_none'></span>
 
-      </div><span id='rightInfoHolder_end' class='displayNone'></span>
+      </div><span id='rightInfoHolder_end' class='display_none'></span>
        
     </div><span id='allAvidaContainer_end'></span>
 
