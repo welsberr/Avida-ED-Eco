@@ -600,27 +600,6 @@
     if ('1All' == av.sgr[av.nut[edTsk].uiAll.regionLayout]) { numRegions = '1All'; }
     regionNameList = av.sgr.name[av.nut[edTsk].uiAll.regionLayout];
     //console.log('av.sgr[av.nut['+edTsk+'].uiAll.regionLayout]=', av.nut[edTsk].uiAll.regionLayout, '; regionNameList',regionNameList);
-    
-    // I think this is the same as the two lines above
-/*    switch (av.nut[edTsk].uiAll.regionLayout) {
-      case '1All':
-        regionNameList = av.sgr.name['1All'];
-        numRegions = '1All';
-        break;
-      case '2LftRit':
-        regionNameList = av.sgr.name['2LftRit'];
-        break;
-      case '2UppLow':
-        regionNameList = av.sgr.name['2uppLow'];
-        break;
-      case '3TopLftRit':
-        regionNameList = av.sgr.name['3TopLftRit'];
-        break;
-      case '4Quarters':
-        regionNameList = av.sgr.name['4Quarters'];
-        break;
-    };
- */
 
     //console.log('regionNameList=', regionNameList);
     //this 2 line method woks to get the value of the option in the select structure, but so does the one line method;
@@ -633,6 +612,7 @@
     document.getElementById(tsk+'0initialDiv').style.display = 'none';
     document.getElementById(tsk+'0periodCheckbox').style.display = 'none';
     document.getElementById(tsk+'0periodTimeHolder').style.display = 'none';
+    document.getElementById(tsk+'0summaryFooterText').style.display = 'none';
     
     //if (av.dbg.flg.nut) { console.log('document.getElementById('+tsk+sub+'supplyTypeSelectHolder) =', document.getElementById(tsk+sub+'supplyTypeSelectHolder')); }
 
@@ -662,6 +642,7 @@
     };
     //console.log('av.nut.'+edTsk+'.uiAll.geometry.tolower()=',av.nut[edTsk].uiAll.geometry.toLowerCase());
     if ('global' == av.nut[edTsk].uiAll.geometry.toLowerCase()) {
+      document.getElementById(tsk+'0summaryDiv').className = 'grid-sugar-summary-geo-global-container';
       document.getElementById(tsk+'WsupplyType').style.display = 'none';
       document.getElementById(tsk+'0supplyType').style.display = 'inline-block';  
       document.getElementById(tsk+'0regionLayout').style.display = 'none';
@@ -677,7 +658,10 @@
           if (false) { document.getElementById(tsk+'0periodTimeHolder').style.display = 'block'; }
           break;
         case 'chemostat':
-          document.getElementById(tsk+'0periodCheckbox').style.display = 'inline-block';
+          document.getElementById(tsk+'0summaryDiv').className = 'grid-sugar-summary-geo-global-chemostat-container';
+          //document.getElementById(tsk+'0periodCheckbox').style.display = 'inline-block';
+          document.getElementById(tsk+'0periodTimeHolder').style.display = 'inline-block';
+          document.getElementById(tsk+'0summaryFooterText').style.display = 'inline-block';
           document.getElementById(tsk+'1inflowHiDiv').style.display = 'block';
           document.getElementById(tsk+'1outflowHiDiv').style.display = 'block';
           document.getElementById(tsk+'1inflowHiText').innerHTML = 'Inflow';

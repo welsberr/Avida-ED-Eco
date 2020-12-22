@@ -785,7 +785,7 @@
                       <div id="not0Details" class="sugarDetailSection">
                         <div id="not1subSection" class="sugarDishSubsection">
                           <div id="not1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="not1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="not1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="not1supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="not1none" value="none">None</option>
                               <option id="not1Infinite" value="infinite" selected="">Infinite</option>
@@ -857,7 +857,7 @@
 
                         <div id="not2subSection" class="sugarDishSubsection">
                           <div id="not2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="not2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="not2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="not2supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="not2none" value="none">None</option>
                               <option id="not2Infinite" value="infinite" selected="">Infinite</option>
@@ -965,7 +965,7 @@
                       <div id="nan0Details" class="sugarDetailSection">
                         <div id="nan1subSection" class="sugarDishSubsection">
                           <div id="nan1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="nan1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="nan1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="nan1supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="nan1none" value="none">None</option>
                               <option id="nan1Infinite" value="infinite" selected="">Infinite</option>
@@ -1037,7 +1037,7 @@
 
                         <div id="nan2subSection" class="sugarDishSubsection">
                           <div id="nan2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="nan2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="nan2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="nan2supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="nan2none" value="none">None</option>
                               <option id="nan2Infinite" value="infinite" selected="">Infinite</option>
@@ -1145,7 +1145,7 @@
                       <div id="and0Details" class="sugarDetailSection">
                         <div id="and1subSection" class="sugarDishSubsection">
                           <div id="and1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="and1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="and1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="and1supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="and1none" value="none">None</option>
                               <option id="and1Infinite" value="infinite" selected="">Infinite</option>
@@ -1217,7 +1217,7 @@
 
                         <div id="and2subSection" class="sugarDishSubsection">
                           <div id="and2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="and2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="and2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="and2supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="and2none" value="none">None</option>
                               <option id="and2Infinite" value="infinite" selected="">Infinite</option>
@@ -1291,47 +1291,58 @@
                     </details>
 
                     <details id="orn0section" class="sugarAccordionSection">
-                      <summary id="orn0summary" class="sugarSummary">
-                        <div id='orn0summaryDiv'>
-                          <span id="orn0title" class="sugarTitle">Ornose</span>&nbsp;
-                          <select id="orn0geometry" class='geometryClass' onchange="av.sgr.geometryChange(this);">
-                            <option value="global" selected="">Global</option>
-                            <option value="grid">Local</option>
-                          </select>&nbsp;&nbsp;&nbsp;
-                          <select id="orn0regionLayout" class="regionLayout" onchange="av.sgr.regionLayoutChange(this)">
-                            <option id="orn0WholeDish" value="1All" selected="">Whole Dish</option>
-                            <option id="orn0LftRit" value="2LftRit">Halves Left/Right</option>
-                            <option id="orn0TopLftRit" class="3TopLftRit" value="3TopLftRit">Top Left/Right</option>
-                            <option id="orn0Quarters" class="4Quarters" value="4Quarters">Quarters</option>
-                          </select>&nbsp;&nbsp;&nbsp;
-                          <select id="orn0supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this)">
-                            <option id="orn0none" value="none">None</option>
-                            <option id="orn0Infinite" value="infinite" selected="">Infinite</option>
-                            <option id="orn0Finite" class="globalFinite" value="finite">Finite</option>
-                            <option id="orn0Chemostat" class="globalChemostat" value="chemostat">Chemostat</option>
-                          </select>&nbsp;&nbsp;&nbsp;
-                          <select id="ornWsupplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
-                            <option id="ornWnone" value="none">None</option>
-                            <option id="ornWInfinite" value="infinite" selected="">Infinite</option>
-                            <option id="ornWFinite" value="finite">Finite</option>
-                            <option id="ornWChemostat" class="localChemostat" value="chemostat">Chemostat</option>
-                          </select>&nbsp;&nbsp;&nbsp;
-                          <div id="orn0periodCheckbox" class="grid-sugarDetail-item periodCheckGlobal" onchange="av.sgr.eachSugarCheckBoxChange(this);">
-                            <label><input id="orn0periodCheck" type="checkbox">Periodic&nbsp;&nbsp;</label>
+                      <summary id="orn0summary" class="sugarSummary"> 
+                        <div id='orn0summaryHolderDiv' class='sumHolderDiv' style='border: 1px solid yellow'>
+                        <div id='orn0summaryDiv' class='sugarSummaryContainer' style='border: 1px solid red'>
+                          <div id="orn0title" class="sugarTitle">Ornose</div>&nbsp;
+                          <div id ='orn0geometryDiv' class='geometryClass'>
+                            <select id="orn0geometry" onchange="av.sgr.geometryChange(this);">
+                              <option value="global" selected="">Global</option>
+                              <option value="grid">Local</option>
+                            </select>
                           </div>
-                          <div id="orn0periodTimeHolder" class="grid-sugarDetail-item periodTimeDivClass">
-                            <label><input id="orn0periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                          <div id ='orn0regionLayoutDiv' class="regionLayoutClass">
+                            <select id="orn0regionLayout" onchange="av.sgr.regionLayoutChange(this)">
+                              <option id="orn0WholeDish" value="1All" selected="">Whole Dish</option>
+                              <option id="orn0LftRit" value="2LftRit">Halves Left/Right</option>
+                              <option id="orn0TopLftRit" class="3TopLftRit" value="3TopLftRit">Top Left/Right</option>
+                              <option id="orn0Quarters" class="4Quarters" value="4Quarters">Quarters</option>
+                            </select>
                           </div>
-                          <span id="orn0initialDiv" class="sugarSummarySpan">
+                          <div id="orn0supplyTypeDiv" class="grid-sugarDetail-item supplyTypeDivClass">
+                            <select id="orn0supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
+                              <option id="orn1none" value="none">None</option>
+                              <option id="orn1Infinite" value="infinite" selected="">Infinite</option>
+                              <option id="orn1Finite" class="localFinite" value="finite">Finite</option>
+                              <option id="orn1Chemostat" class="localChemostat" value="chemostat">Chemostat</option>
+                            </select>
+                          </div>
+                          <div id="ornWsupplyTypeDiv" class="supplyTypeDiv_W_Class">
+                            <select id="ornWsupplyType" onchange="av.sgr.supplyChange(this);">
+                              <option id="ornWnone" value="none">None</option>
+                              <option id="ornWInfinite" value="infinite" selected="">Infinite</option>
+                              <option id="ornWFinite" value="finite">Finite</option>
+                              <option id="ornWChemostat" class="localChemostat" value="chemostat">Chemostat</option>
+                            </select>
+                          </div>
+                          <div id="orn0periodCheckbox" class='periodGlobalCheck' onchange="av.sgr.eachSugarCheckBoxChange(this);">
+                            <label><input id="orn0periodCheck" type="checkbox">Periodic</label>
+                          </div>
+                          <div id="orn0periodTimeHolder" class='periodTimeDivClass'>
+                            <label><input id="orn0periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);">Period</label>
+                          </div>
+                          <div id="orn0initialDiv" class='initialGlobalClass'>
                             <input id="orn0initial" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
-                          </span>
+                          </div>
+                          <div id='orn0summaryFooterText' class='sumFootTxtClass'>period < 1 indicates that the chemostat is non-periodic</div>
+                        </div>
                         </div>
                       </summary>
 
                       <div id="orn0Details" class="sugarDetailSection">
                         <div id="orn1subSection" class="sugarDishSubsection">
                           <div id="orn1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="orn1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="orn1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="orn1supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="orn1none" value="none">None</option>
                               <option id="orn1Infinite" value="infinite" selected="">Infinite</option>
@@ -1365,7 +1376,7 @@
                             <label><select id="orn1hiSide">
                               <option value="left" selected="">Left</option>
                               <option value="right">Right</option>
-                              <option value="top">Top</option>x
+                              <option value="top">Top</option>
                               <option value="bottom">Bottom</option>
                               <option value="center">Center</option>
                               <option value="edge">Edge</option>
@@ -1412,7 +1423,7 @@
 
                         <div id="orn2subSection" class="sugarDishSubsection">
                           <div id="orn2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="orn2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="orn2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="orn2supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="orn2none" value="none">None</option>
                               <option id="orn2Infinite" value="infinite" selected="">Infinite</option>
@@ -1527,7 +1538,7 @@
                       <div id="oro0Details" class="sugarDetailSection">
                         <div id="oro1subSection" class="sugarDishSubsection">
                           <div id="oro1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="oro1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="oro1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="oro1supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="oro1none" value="none">None</option>
                               <option id="oro1Infinite" value="infinite" selected="">Infinite</option>
@@ -1599,7 +1610,7 @@
 
                         <div id="oro2subSection" class="sugarDishSubsection">
                           <div id="oro2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="oro2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="oro2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="oro2supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="oro2none" value="none">None</option>
                               <option id="oro2Infinite" value="infinite" selected="">Infinite</option>
@@ -1707,7 +1718,7 @@
                       <div id="ant0Details" class="sugarDetailSection">
                         <div id="ant1subSection" class="sugarDishSubsection">
                           <div id="ant1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="ant1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="ant1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="ant1supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="ant1none" value="none">None</option>
                               <option id="ant1Infinite" value="infinite" selected="">Infinite</option>
@@ -1779,7 +1790,7 @@
 
                         <div id="ant2subSection" class="sugarDishSubsection">
                           <div id="ant2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="ant2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="ant2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="ant2supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="ant2none" value="none">None</option>
                               <option id="ant2Infinite" value="infinite" selected="">Infinite</option>
@@ -1887,7 +1898,7 @@
                       <div id="nor0Details" class="sugarDetailSection">
                         <div id="nor1subSection" class="sugarDishSubsection">
                           <div id="nor1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="nor1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="nor1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="nor1supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="nor1none" value="none">None</option>
                               <option id="nor1Infinite" value="infinite" selected="">Infinite</option>
@@ -1959,7 +1970,7 @@
 
                         <div id="nor2subSection" class="sugarDishSubsection">
                           <div id="nor2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="nor2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="nor2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="nor2supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="nor2none" value="none">None</option>
                               <option id="nor2Infinite" value="infinite" selected="">Infinite</option>
@@ -2067,7 +2078,7 @@
                       <div id="xor0Details" class="sugarDetailSection">
                         <div id="xor1subSection" class="sugarDishSubsection">
                           <div id="xor1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="xor1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="xor1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="xor1supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="xor1none" value="none">None</option>
                               <option id="xor1Infinite" value="infinite" selected="">Infinite</option>
@@ -2139,7 +2150,7 @@
 
                         <div id="xor2subSection" class="sugarDishSubsection">
                           <div id="xor2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="xor2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="xor2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="xor2supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="xor2none" value="none">None</option>
                               <option id="xor2Infinite" value="infinite" selected="">Infinite</option>
@@ -2247,7 +2258,7 @@
                       <div id="equ0Details" class="sugarDetailSection">
                         <div id="equ1subSection" class="sugarDishSubsection">
                           <div id="equ1regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="equ1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="equ1supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="equ1supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="equ1none" value="none">None</option>
                               <option id="equ1Infinite" value="infinite" selected="">Infinite</option>
@@ -2319,7 +2330,7 @@
 
                         <div id="equ2subSection" class="sugarDishSubsection">
                           <div id="equ2regionName" class="grid-sugarDetail-item subSectionTitle">Whole Dish</div>
-                          <div id="equ2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeDivClass">
+                          <div id="equ2supplyTypeSelectHolder" class="grid-sugarDetail-item supplyTypeHoldClass">
                             <select id="equ2supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="equ2none" value="none">None</option>
                               <option id="equ2Infinite" value="infinite" selected="">Infinite</option>

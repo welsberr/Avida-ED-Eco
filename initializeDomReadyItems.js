@@ -401,8 +401,8 @@
       for (ii = 0; ii < len; ii++) {
         tsk = av.sgr.logicNames[ii];
         av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
-        document.getElementsByClassName('globalChemostat')[ii].style.display = 'inline';
-        document.getElementsByClassName('globalFinite')[ii].style.display = 'inline';
+        //document.getElementsByClassName('globalChemostat')[ii].style.display = 'inline';
+        //document.getElementsByClassName('globalFinite')[ii].style.display = 'inline';
         //document.getElementsByClassName('globalDebug')[ii].style.display = 'inline';
         //document.getElementsByClassName('geometryClass')[ii].style.display = 'inline-block';
       };

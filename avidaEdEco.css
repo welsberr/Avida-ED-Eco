@@ -574,37 +574,6 @@
 /*  background: #FFF;   /* #DDD; */
 }
 
-.grid-sugarDetail-example-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
-                       'initialHi initialHi initialHi';
-  /* border: 1px solid rgba(128, 128, 128, 0.5); */
-  border: 1px solid #888;
-  width: 100%;
-}
-
-
-.changeAllSugarsTogetherGridOnlyContainer {
-  display: grid;
-  grid-template-areas: ' setTitle        showHideSgr   detailDiv'
-                       ' regionLayoutSgr supplyTypeSgr diffusionSgr'
-                       ' regionLayoutDiv supplyTypeDiv diffusionDiv';
-  /*
-  grid-template-areas: 'setTitle     headerTitle headerTitle   allSgr5Blnk'
-                       'allSgr4Blnk  geometrySgr supplyTypeSgr showHideSgr'
-                       'allSgr4Blnk  geometryDiv supplyType  detailDiv';
-
-  grid-template-areas: 'setTitle  geometrySgr supplyTypeSgr showHideSgr'
-                       'setTitle  geometryDiv supplyType  detailDiv';
-  */
-  width: 100%;
-  /* grid-template-columns: 20% 25% 30% 25%;
-    grid-template-rows: 33fr 33fr 33fr; */
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  background: #DDD;   /* #DDD; */
-}
-
 #environmentSettingTitle{
   font-size: 130%;
 }
@@ -659,79 +628,6 @@
 .mutePopSlideClass .ui-slider-handle { border-color: #black; }
 
 /*************************************************************************** Sugar Accordion using details and select */
-
-/* Header and controls that change all tasks are here.   /*  background: inherit */
-/* inherit */
-/* #sugarHeaderTitle { grid-area: headerTitle; justify: start ; background: #CCC; font-size: 120%;}   /* may not need or want */
-
-#sugarSetTitle { grid-area:setTitle; justify-self: right; background: inherit; font-size: 110%; }
-#allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: center; }
-#allSugarSupplyTypeDiv { grid-area:supplyTypeDiv ; justify-self: center; }
-#allSugarRegionLayoutDiv { grid-area:regionLayoutDiv; justify-self: center; }
-#allSugarDetailsDiv { grid-area:detailDiv; justify-self: lefts; }
-#allSugarPatternDiv { grid-area:patternDiv; justify-self: center; }
-
-/* delete in 2021 #allSugarDiffusionDiv  { grid-area:diffusionDiv; justify-self: center; } */
-
-#geometrySgr { grid-area:geometrySgr; justify-self: center; background: inherit;}
-#supplyTypeSgr { grid-area:supplyTypeSgr; justify-self: center; background: inherit;}
-#regionLayoutSgr { grid-area:regionLayoutSgr; justify-self: center; background: inherit;}
-#patternSgr { grid-area:patternSgr; justify-self: center; background: inherit;}
-#showHideSgr { grid-area:showHideSgr; justify-self: right; background: inherit;}
-
-#allSgr4Blnk { grid-area: allSgr3Blnk; }
-#allSgr4Blnk { grid-area: allSgr4Blnk; }
-#allSgr5Blnk { grid-area: allSgr5Blnk; }
-
-.changeAllSugarsTogetherContainer {
-  display: grid;
-  grid-template-areas: 'setTitle    setTitle        showHideSgr   detailDiv'
-                       'geometrySgr regionLayoutSgr supplyTypeSgr patternSgr'
-                       'geometryDiv regionLayoutDiv supplyTypeDiv patternDiv';
-  /*
-  grid-template-areas: 'setTitle     headerTitle headerTitle   allSgr5Blnk'
-                       'allSgr4Blnk  geometrySgr supplyTypeSgr showHideSgr'
-                       'allSgr4Blnk  geometryDiv supplyType  detailDiv';
-
-  grid-template-areas: 'setTitle  geometrySgr supplyTypeSgr showHideSgr'
-                       'setTitle  geometryDiv supplyType  detailDiv';
-  */
-  width: 100%;
-  /* grid-template-columns: 20% 25% 30% 25%;
-    grid-template-rows: 33fr 33fr 33fr; */
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  background: #DDD;   /* #AAA; is too dark now */
-}
-
-.changeAllSugarsTogetherNoGlobalContainer {
-  display: grid;
-  grid-template-areas: ' setTitle        showHideSgr   detailDiv'
-                       ' regionLayoutSgr supplyTypeSgr diffusionSgr'
-                       ' regionLayoutDiv supplyTypeDiv diffusionDiv';
-  /*
-  grid-template-areas: 'setTitle     headerTitle headerTitle   allSgr5Blnk'
-                       'allSgr4Blnk  geometrySgr supplyTypeSgr showHideSgr'
-                       'allSgr4Blnk  geometryDiv supplyType  detailDiv';
-
-  grid-template-areas: 'setTitle  geometrySgr supplyTypeSgr showHideSgr'
-                       'setTitle  geometryDiv supplyType  detailDiv';
-  */
-  width: 100%;
-  /* grid-template-columns: 20% 25% 30% 25%;
-    grid-template-rows: 33fr 33fr 33fr; */
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  background: #DDD;   /* #DDD; */
-}
-
-
-
-/* not in current use
-                    <div id='allSgr3Blnk'>&nbsp;&nbsp;&nbsp;</div>
-                    <div id='allSgr4Blnk'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                    <div id='allSgr5Blnk'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-*/
 /* Accodion using details/summary and hidden sections also defined here; one detail/summary for each logic task = surgar type */
 
 #sugarAccordion{
@@ -783,7 +679,7 @@
   display: none;
 }
 
-.sugarDetailSection{
+.sugarDetailSection {
   /* background: rgba(255, 255, 255, 0.0); */
   background: rgba(128, 128, 128, 0.2);      
 }
@@ -793,77 +689,60 @@
   color: #444;
 }
 .sugarSummarySpan{
-  display: inline-block;
+  display: inline-block;s
 }
-.sugPeriodNclass{
-  width: 5em; height:1.5em;
-}
-.sugInitialNclass{
-  width: 5em; height:1.5em;
-}
-.sugInitialHiNclass{
-  width: 5em; height:1.5em;
-}
-.sugInitialLoNclass{
-  width: 5em; height:1.5em;
-}
-.sugInflowHiNclass{
-  width: 5em; height:1.5em;
-}
-.sugInflowLoNclass{
-  width: 5em; height:1.5em;
-}
-.sugOutflowHiNclass{
-  width: 5em; height:1.5em;
-}
-.sugOutflowLoNclass{
-  width: 5em; height:1.5em;
-}
-/*   Not in use as of 2020 july 22
-#notSection{
-  background: rgba(255,153,178, 1);  /* bigger number is closer to white; 0,0,0 is black
-}
-#nanSection{
-  background: rgba(255,204,153, 1);
-}
-#andSection{
-  background: rgba(255,255,153, 1);
-}
-#ornSection{
-  background: rgba(153,255,153, 1);
-}
-#oroSection{-sugarDetail-chemostat-container
-  background: rgba(153,255,153, 1);
-}
-#antSection{
-  background: rgba(153,255,153, 1);
-}
-#norSection{
-  background: rgba(153,255,153, 1);
-}
-#xorSection{
-  background: rgba(153,255,153, 1);
-}
-#equSection{
-  background: rgba(153,255,153, 1);
-}
-/****************************************** layout for header area for Resource controls in Setup for Population Page */
-/* 
-    Deal with these later: now sure what we want yet.
-#sugarRewardStr { grid-area: rewardstr; }
-#sugarReward02x { grid-area: reward02x; }
-#sugarReward04x { grid-area: reward04x; }
-#sugarReward08x { grid-area: reward08x; }
-#sugarReward16x { grid-area: reward16x; }
-#sugarReward32x { grid-area: reward32x; }
-                          <div id='sugarRewardStr'>(strength of energy reward shown in parentheses)</div>
-                          <div id='sugarReward02x'>Easy (x2) notose/nanose</div>
-                          <div id='sugarReward04x'>Moderate (x4) andose/ornose</div>
-                          <div id='sugarReward08x'>Hard (x8) orose/antose</div>
-                          <div id='sugarReward16x'>Very Hard (x16) norose/xorose</div>
-                          <div id='sugarReward32x'>Brutal (x32) equose</div>
 
+/*   Not in use as of 2020 july 22 bigger number is closer to white; 0,0,0 is black
+#notSection{ background: rgba(255,153,178, 1); }
+#nanSection{ background: rgba(255,204,153, 1); }
+#andSection{ background: rgba(255,255,153, 1); }
+#ornSection{ background: rgba(153,255,153, 1); }
+#oroSection{ background: rgba(153,255,153, 1); }
+#antSection{ background: rgba(153,255,153, 1); }
+#norSection{ background: rgba(153,255,153, 1); }
+#xorSection{ background: rgba(153,255,153, 1); }
+#equSection{ background: rgba(153,255,153, 1); }
 */
+/************************* Sugar controls layout in 'summary' of detail/summary for each task-sugar in sugar according */
+.sumHolderDiv { display: inline-block; position: absolute; }
+
+.sugarTitle { grid-area: sugarTitle; display: inline-block; }
+.geometryClass { grid-area: geometryClass; display: inline-block; }
+.regionLayoutClass { grid-area: regionLayoutClass; display: inline-block; }
+/*
+.supplyHoldDivClass { grid-area: supplyTypeDivClass; display: inline-block; }
+*/
+.supplyTypeDivClass { grid-area: supplyTypeDivClass; display: inline-block; }
+.periodGlobalCheck { grid-area: periodGlobalCheck; display: inline-block; }
+.periodTimeDivClass { grid-area: periodTimeDivClass; display: inline-block; }
+.initialGlobalClass { grid-area: initialGlobalClass; display: inline-block; }
+.sumFootTxtClass { grid-area: sumFootTxtClass; display: inline-block; }
+
+.temp_grid-sugar-summary-geo-global-container { display: inline-block; }
+
+.grid-sugar-summary-geo-global-container {
+  display: inline-grid;
+  grid-template-areas: 'sugarTitle geometryClass supplyTypeDivClass initialGlobalClass';
+  width: 100%;
+}
+
+.grid-sugar-summary-geo-global-chemostat-container {
+  display: inline-grid;
+  grid-template-areas: 'sugarTitle geometryClass supplyTypeDivClass periodTimeDivClass'
+                       'sumFootTxtClass sumFootTxtClass sumFootTxtClass sumFootTxtClass';
+  width: 100%;
+}
+
+/*------------------------------------------------------------------------------------- sugar input class formatting --*/
+.sugPeriodNclass{ width: 5em; height:1.5em; }
+.sugInitialNclass{ width: 5em; height:1.5em;}
+.sugInitialHiNclass{ width: 5em; height:1.5em; }
+.sugInitialLoNclass{ width: 5em; height:1.5em; }
+.sugInflowHiNclass{ width: 5em; height:1.5em; }
+.sugInflowLoNclass{ width: 5em; height:1.5em; }
+.sugOutflowHiNclass{ width: 5em; height:1.5em; }
+.sugOutflowLoNclass{ width: 5em; height:1.5em; }
+
 
 /************************* Sugar controls layout in 'details' of detail/summary for each task-sugar in sugar according */
 
@@ -883,7 +762,7 @@
 .sideTitleLoDclass { grid-area: sideTitleLo; }
 
 .sideNclass { grid-area: sideInput; }
-.supplyTypeDivClass { grid-area: supplyDetailDiv; }
+.supplyTypeHoldClass { grid-area: supplyDetailDiv; }
 
 .subSectionTitle { grid-area: subSectionTitle; }
 .sgrBlank { grid-area: sgrBlank; }
@@ -1125,6 +1004,76 @@
   color: #666;   /* a nice dark grey for bold text that should not be as prominiate as black bold text */
 }
 
+/* ----------------------------------------------------------------- Footer controls that change all tasks are here --*/
+/* background: inherit */
+
+#sugarSetTitle { grid-area:setTitle; justify-self: right; background: inherit; font-size: 110%; }
+#allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: center; }
+#allSugarSupplyTypeDiv { grid-area:supplyTypeDiv ; justify-self: center; }
+#allSugarRegionLayoutDiv { grid-area:regionLayoutDiv; justify-self: center; }
+#allSugarDetailsDiv { grid-area:detailDiv; justify-self: lefts; }
+#allSugarPatternDiv { grid-area:patternDiv; justify-self: center; }
+
+/* delete in 2021 #allSugarDiffusionDiv  { grid-area:diffusionDiv; justify-self: center; } */
+
+#geometrySgr { grid-area:geometrySgr; justify-self: center; background: inherit;}
+#supplyTypeSgr { grid-area:supplyTypeSgr; justify-self: center; background: inherit;}
+#regionLayoutSgr { grid-area:regionLayoutSgr; justify-self: center; background: inherit;}
+#patternSgr { grid-area:patternSgr; justify-self: center; background: inherit;}
+#showHideSgr { grid-area:showHideSgr; justify-self: right; background: inherit;}
+
+#allSgr4Blnk { grid-area: allSgr3Blnk; }
+#allSgr4Blnk { grid-area: allSgr4Blnk; }
+#allSgr5Blnk { grid-area: allSgr5Blnk; }
+
+.changeAllSugarsTogetherContainer {
+  display: grid;
+  grid-template-areas: 'setTitle    setTitle        showHideSgr   detailDiv'
+                       'geometrySgr regionLayoutSgr supplyTypeSgr patternSgr'
+                       'geometryDiv regionLayoutDiv supplyTypeDiv patternDiv';
+  /*
+  grid-template-areas: 'setTitle     headerTitle headerTitle   allSgr5Blnk'
+                       'allSgr4Blnk  geometrySgr supplyTypeSgr showHideSgr'
+                       'allSgr4Blnk  geometryDiv supplyType  detailDiv';
+
+  grid-template-areas: 'setTitle  geometrySgr supplyTypeSgr showHideSgr'
+                       'setTitle  geometryDiv supplyType  detailDiv';
+  */
+  width: 100%;
+  /* grid-template-columns: 20% 25% 30% 25%;
+    grid-template-rows: 33fr 33fr 33fr; */
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background: #DDD;   /* #AAA; is too dark now */
+}
+
+.changeAllSugarsTogetherNoGlobalContainer {
+  display: grid;
+  grid-template-areas: ' setTitle        showHideSgr   detailDiv'
+                       ' regionLayoutSgr supplyTypeSgr diffusionSgr'
+                       ' regionLayoutDiv supplyTypeDiv diffusionDiv';
+  /*
+  grid-template-areas: 'setTitle     headerTitle headerTitle   allSgr5Blnk'
+                       'allSgr4Blnk  geometrySgr supplyTypeSgr showHideSgr'
+                       'allSgr4Blnk  geometryDiv supplyType  detailDiv';
+
+  grid-template-areas: 'setTitle  geometrySgr supplyTypeSgr showHideSgr'
+                       'setTitle  geometryDiv supplyType  detailDiv';
+  */
+  width: 100%;
+  /* grid-template-columns: 20% 25% 30% 25%;
+    grid-template-rows: 33fr 33fr 33fr; */
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background: #DDD;   /* #DDD; */
+}
+
+/* not in current use
+                    <div id='allSgr3Blnk'>&nbsp;&nbsp;&nbsp;</div>
+                    <div id='allSgr4Blnk'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div id='allSgr5Blnk'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+*/
+
 /*********************************************************************** End Sugar Accordion using details and select */
 
 /********************************************************************************* End Custom Select/Options DropDown */
@@ -1255,6 +1204,7 @@ checkbox:focus {
 }
 
 .ex1sugarTitle{
+  display: inline-block;
   font-size: 110%;
   font-weight: bolder;
 }
