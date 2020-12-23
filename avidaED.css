@@ -275,13 +275,6 @@ button {
   width: 100%;
 }
 
-.ancestorContainer {
-  min-height: 30px;
-  width: 200px;
-  border: 1px solid black;
-  background: white;
-}
-
 /* dojo css */
 
 .dijitBorderContainer {

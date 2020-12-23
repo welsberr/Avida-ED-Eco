@@ -642,7 +642,11 @@
     };
     //console.log('av.nut.'+edTsk+'.uiAll.geometry.tolower()=',av.nut[edTsk].uiAll.geometry.toLowerCase());
     if ('global' == av.nut[edTsk].uiAll.geometry.toLowerCase()) {
-      document.getElementById(tsk+'0summaryDiv').className = 'grid-sugar-summary-geo-global-container';
+      // I was not able to get a grid container to start in the top row of the summary secion. 
+      // I tried absolute postion, but then the grid contain did not change the sise of the summary section. 
+      // never got tried with one surrounding div an then two. finally Applied display: grid to the summary element
+      // changing the summary element to display: grid causes the arrow to disapper, but the detials will still open
+      document.getElementById(tsk+'0summary').className = 'grid-sugar-summary-geo-global-container';
       document.getElementById(tsk+'WsupplyType').style.display = 'none';
       document.getElementById(tsk+'0supplyType').style.display = 'inline-block';  
       document.getElementById(tsk+'0regionLayout').style.display = 'none';
@@ -655,13 +659,11 @@
         case 'finite': 
           document.getElementById(tsk+'0initialDiv').style.display = 'inline-block';
           document.getElementById(tsk+'0section').open = false;
-          if (false) { document.getElementById(tsk+'0periodTimeHolder').style.display = 'block'; }
           break;
         case 'chemostat':
-          document.getElementById(tsk+'0summaryDiv').className = 'grid-sugar-summary-geo-global-chemostat-container';
           //document.getElementById(tsk+'0periodCheckbox').style.display = 'inline-block';
           document.getElementById(tsk+'0periodTimeHolder').style.display = 'inline-block';
-          document.getElementById(tsk+'0summaryFooterText').style.display = 'inline-block';
+          //document.getElementById(tsk+'0summaryFooterText').style.display = 'inline-block';
           document.getElementById(tsk+'1inflowHiDiv').style.display = 'block';
           document.getElementById(tsk+'1outflowHiDiv').style.display = 'block';
           document.getElementById(tsk+'1inflowHiText').innerHTML = 'Inflow';
@@ -683,7 +685,7 @@
           document.getElementById(tsk+'1gradientCheckbox').style.display = 'inline-block';
           document.getElementById(tsk+'1diffuseCheckbox').style.display = 'inline-block';
           document.getElementById(tsk+'0initialDiv').style.display = 'inline-block';
-          document.getElementById(tsk+'1periodTimeHolder').style.display = 'block';
+          document.getElementById(tsk+'1periodTimeHolder').style.display = 'inline-block';
           document.getElementById(tsk+'1initialHiDiv').style.display = 'block';
           document.getElementById(tsk+'1initialLoDiv').style.display = 'block';
           document.getElementById(tsk+'1inflowHiDiv').style.display = 'block';
@@ -700,7 +702,8 @@
       }    
     }        // end global 
     else {
-      // geometry = grid
+      // geometry = grid 
+      document.getElementById(tsk+'0summary').className = 'grid-sugar-summary-geo-local-container';
       document.getElementById(tsk+'0regionLayout').style.display = 'inline-block';
       document.getElementById(tsk+'0section').open = true;
 //      console.log('av.nut['+edTsk+'].uiAll.regionsNumOf=', av.nut[edTsk].uiAll.regionsNumOf);

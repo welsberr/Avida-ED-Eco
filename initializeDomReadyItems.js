@@ -286,7 +286,6 @@
     for (ii = 0; ii < len; ii++) {
       listGeoClass[ii].style.display = willbe;
     }
-    document
   };
 
   av.ui.toggleDevelopentDisplays = function () {

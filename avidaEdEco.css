@@ -626,6 +626,63 @@
 
 .mutePopSlideClass .ui-slider-range { background: #black; }
 .mutePopSlideClass .ui-slider-handle { border-color: #black; }
+*/
+
+.ancestorContainer {
+  grid-area: ancestorContainer;
+  display: inline-block;
+  min-height: 30px;
+  width: 200px;
+  border: 1px solid black;
+  background: white;
+}
+
+.#geometyHideButton {
+  grid-area: geometyHideButton;
+  display: inline-block;
+  min-height: 30px;
+  min-width: 30px;
+}
+
+#ancestorRow {
+  display: grid;
+  grid-template-areas: 'ancestorContainer geometyHideButton';
+  grid-template-columns: auto auto;
+  grid-column-gap: 1px;
+  width: 100%;
+  justify-content: start;
+}
+
+
+
+/* from: https://stackoverflow.com/questions/51131818/how-to-vertically-align-detailss-arrow-with-summarys-content */
+/* this section formats the details summary */
+/* I'm not sure it is a good idea */
+/* This works for the Freezer detail-summary, 
+    but the in summary with dispaly: grid the triangle wer on the right. They were Not in the grid-template-areas: */
+
+summary::-webkit-details-marker {
+  display: none
+}
+
+summary > div {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+summary {
+  display: block
+}
+
+summary:before {
+  grid-area: detailArrow;
+  content: "►";
+  margin: 0px;
+}
+
+details[open] summary:before {
+  content: "▼";
+}
 
 /*************************************************************************** Sugar Accordion using details and select */
 /* Accodion using details/summary and hidden sections also defined here; one detail/summary for each logic task = surgar type */
@@ -637,11 +694,6 @@
   width: 100%;
   border-bottom: 1px solid #222;   /* #000 is black  */
   display: inline-block;
-}
-.sugarSummary{
-  background: rgba(128, 128, 128, 0.0); 
-  min-height: 20px;
-  width: 100%;
 }
 
 .geometryClass{
@@ -688,10 +740,12 @@
   font-weight: bold;
   color: #444;
 }
-.sugarSummarySpan{
-  display: inline-block;s
-}
 
+/* old classes that do not seem to be in use. 
+.sugarSummarySpan{
+  display: inline-block;
+}
+*/
 /*   Not in use as of 2020 july 22 bigger number is closer to white; 0,0,0 is black
 #notSection{ background: rgba(255,153,178, 1); }
 #nanSection{ background: rgba(255,204,153, 1); }
@@ -704,32 +758,40 @@
 #equSection{ background: rgba(153,255,153, 1); }
 */
 /************************* Sugar controls layout in 'summary' of detail/summary for each task-sugar in sugar according */
+/* I could not get a div with a dispay of inline-gid start on the top line of the summary. 
 .sumHolderDiv { display: inline-block; position: absolute; }
+.sugarSummary { display: grid; }
+                       'sumFootTxtClass sumFootTxtClass sumFootTxtClass     ssumFootTxtClass';
+*/
+
 
 .sugarTitle { grid-area: sugarTitle; display: inline-block; }
 .geometryClass { grid-area: geometryClass; display: inline-block; }
 .regionLayoutClass { grid-area: regionLayoutClass; display: inline-block; }
-/*
-.supplyHoldDivClass { grid-area: supplyTypeDivClass; display: inline-block; }
-*/
 .supplyTypeDivClass { grid-area: supplyTypeDivClass; display: inline-block; }
 .periodGlobalCheck { grid-area: periodGlobalCheck; display: inline-block; }
-.periodTimeDivClass { grid-area: periodTimeDivClass; display: inline-block; }
+.periodTimeGlobClass { grid-area: periodTimeGlobClass; display: inline-block; }
 .initialGlobalClass { grid-area: initialGlobalClass; display: inline-block; }
 .sumFootTxtClass { grid-area: sumFootTxtClass; display: inline-block; }
+
 
 .temp_grid-sugar-summary-geo-global-container { display: inline-block; }
 
 .grid-sugar-summary-geo-global-container {
   display: inline-grid;
-  grid-template-areas: 'sugarTitle geometryClass supplyTypeDivClass initialGlobalClass';
+  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeDivClass initialGlobalClass periodTimeGlobClass';
   width: 100%;
 }
 
 .grid-sugar-summary-geo-global-chemostat-container {
   display: inline-grid;
-  grid-template-areas: 'sugarTitle geometryClass supplyTypeDivClass periodTimeDivClass'
-                       'sumFootTxtClass sumFootTxtClass sumFootTxtClass sumFootTxtClass';
+  grid-template-areas: 'detailArrow sugarTitle geometryClass   supplyTypeDivClass periodTimeGlobClass';
+  width: 100%;
+}
+
+.grid-sugar-summary-geo-local-container {
+  display: inline-grid;
+  grid-template-areas: 'detailArrow sugarTitle geometryClass regionLayoutClass';
   width: 100%;
 }
 

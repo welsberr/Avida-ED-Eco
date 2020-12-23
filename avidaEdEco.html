@@ -244,7 +244,7 @@
               <img id='trashCanImage' src='images/Avida-ED-trash-icon.png' style='width: 32px;' alt='trash can' />
             </div>
             <div id='showTextDebugButtonDiv'>
-              <input id='showTextDebugButton' type='button' value='Big Text'/>
+              <button id='showTextDebugButton' type='button' value='Big Text'>Big Text</button>
             </div>
             <div id='developmentToggleDiv'>
               <input id='developmentToggle' class='devoShow' type='button' value=' in Development View ' onclick='av.ui.toggleDevelopentDisplays()' />
@@ -725,13 +725,16 @@
                     <span class='enviroSubHeading lftmargin' >Per Site Mutation Rate:</span>
                     <input id='mutePopInput' type='text' class='mutePopInputClass'>&nbsp;%
                   </div>
-                  <div id='mutePopError' onclick='av.ui.toggleDisplayGeometryControls()'>Error place holder s&nbsp;&nbsp;&nbsp;</div>
+                  <div id='mutePopError'>&nbsp;&nbsp;&nbsp;</div>
                   <div id='mutePopSlideHolder'>
                     <span id='mutePopSlide' class='mutePopSlideClass'></span>&nbsp;
                   </div>
                 </div>
                 <div class='odd'><div class='enviroSubHeading'>Ancestral Organism(s):</div>
-                  <div class='ancestorContainer' id='ancestorBox'></div>
+                  <div id='ancestorRow'>
+                    <div id='ancestorBox' class='ancestorContainer'></div>
+                    <button id='geometyHideButton' type='button' onclick='av.ui.toggleDisplayGeometryControls()'>hideGeo</button>
+                  </div>
                 </div>
                 <div class='even'>
                   <span class='enviroSubHeading'>Place Offspring:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -1292,9 +1295,7 @@
 
                     <details id="orn0section" class="sugarAccordionSection">
                       <summary id="orn0summary" class="sugarSummary"> 
-                        <div id='orn0summaryHolderDiv' class='sumHolderDiv' style='border: 1px solid yellow'>
-                        <div id='orn0summaryDiv' class='sugarSummaryContainer' style='border: 1px solid red'>
-                          <div id="orn0title" class="sugarTitle">Ornose</div>&nbsp;
+                          <div id='orn0title' class='sugarTitle'>Ornose</div>&nbsp;
                           <div id ='orn0geometryDiv' class='geometryClass'>
                             <select id="orn0geometry" onchange="av.sgr.geometryChange(this);">
                               <option value="global" selected="">Global</option>
@@ -1326,17 +1327,16 @@
                             </select>
                           </div>
                           <div id="orn0periodCheckbox" class='periodGlobalCheck' onchange="av.sgr.eachSugarCheckBoxChange(this);">
-                            <label><input id="orn0periodCheck" type="checkbox">Periodic</label>
+                            <label><input id="orn0periodCheck" type="checkbox"> Periodic</label>
                           </div>
-                          <div id="orn0periodTimeHolder" class='periodTimeDivClass'>
-                            <label><input id="orn0periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);">Period</label>
+                          <div id="orn0periodTimeHolder" class='periodTimeGlobClass'>
+                            <label><input id="orn0periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
                           </div>
                           <div id="orn0initialDiv" class='initialGlobalClass'>
                             <input id="orn0initial" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
                           </div>
-                          <div id='orn0summaryFooterText' class='sumFootTxtClass'>period < 1 indicates that the chemostat is non-periodic</div>
-                        </div>
-                        </div>
+                          <div id='orn0summaryFooterText' class='sumFootTxtClass'> period < 1 ==> non-periodic</div>
+
                       </summary>
 
                       <div id="orn0Details" class="sugarDetailSection">
