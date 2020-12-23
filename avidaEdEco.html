@@ -733,7 +733,9 @@
                 <div class='odd'><div class='enviroSubHeading'>Ancestral Organism(s):</div>
                   <div id='ancestorRow'>
                     <div id='ancestorBox' class='ancestorContainer'></div>
-                    <button id='geometyHideButton' type='button' onclick='av.ui.toggleDisplayGeometryControls()'>hideGeo</button>
+                    <div id='geometyHideButton' type='button' onclick='av.ui.toggleDisplayGeometryControls()'>
+                      Hide Geometry
+                    </div>
                   </div>
                 </div>
                 <div class='even'>
@@ -1312,10 +1314,11 @@
                           </div>
                           <div id="orn0supplyTypeDiv" class="grid-sugarDetail-item supplyTypeDivClass">
                             <select id="orn0supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
-                              <option id="orn1none" value="none">None</option>
-                              <option id="orn1Infinite" value="infinite" selected="">Infinite</option>
-                              <option id="orn1Finite" class="localFinite" value="finite">Finite</option>
-                              <option id="orn1Chemostat" class="localChemostat" value="chemostat">Chemostat</option>
+                              <option id="orn0none" value="none">None</option>
+                              <option id="orn0Infinite" value="infinite" selected="">Infinite</option>
+                              <option id="orn0Finite" class="localFinite" value="finite">Finite</option>
+                              <option id="orn0Chemostat" class="localChemostat" value="chemostat">Chemostat</option>
+                              <option id="orn0Debug" value="all" disabled>debug</option>
                             </select>
                           </div>
                           <div id="ornWsupplyTypeDiv" class="supplyTypeDiv_W_Class">
@@ -1324,7 +1327,7 @@
                               <option id="ornWInfinite" value="infinite" selected="">Infinite</option>
                               <option id="ornWFinite" value="finite">Finite</option>
                               <option id="ornWChemostat" class="localChemostat" value="chemostat">Chemostat</option>
-                            </select>
+                             </select>
                           </div>
                           <div id="orn0periodCheckbox" class='periodGlobalCheck' onchange="av.sgr.eachSugarCheckBoxChange(this);">
                             <label><input id="orn0periodCheck" type="checkbox"> Periodic</label>

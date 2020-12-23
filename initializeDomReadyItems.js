@@ -297,6 +297,7 @@
       av.doj.mnDebug.style.visibility = 'hidden';
       document.getElementById('showTextDebugButtonDiv').style.visibility = 'hidden';
       document.getElementById('developmentToggle').className = 'devoCammo';  
+      document.getElementById('geometyHideButton').className = 'geoButtonCammo';  
       document.getElementById('ritePnlBtnHolder').className = 'pnlBtnHldrHide';
 
       document.getElementById('fzTdishSec').style.visibility = 'hidden';
@@ -374,6 +375,7 @@
       av.doj.mnDebug.style.visibility = 'visible';
       document.getElementById('showTextDebugButtonDiv').style.visibility = 'visible';
       document.getElementById('developmentToggle').className = 'devoShow';
+      document.getElementById('geometyHideButton').className = 'devoShow';
       document.getElementById('ritePnlBtnHolder').className = 'ritePnlBtnHlderShow';
 
       document.getElementById('fzTdishSec').style.visibility = 'visible';

@@ -3478,7 +3478,7 @@ require([
 
   // Avida-ED 4.0.0 Alpha Testing fix this too. 
   //true when diane is working; false for all production releases even in alpha testsing.  
-  if (true) {
+  if (false) {
     console.log('testing mode; set to true before public release for Avida-ED 4.0.0 Alpha Testing. ');
     av.dom.xorLabel.onclick();   //now only turns grid resource value table on and off
     //
