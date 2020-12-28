@@ -86,7 +86,7 @@
 //------------------------------------------------------------------------------------------------- Sugar Accordion ----
 //Global or Local in Ed speak = Global or Grid in Avida Environment file.
   av.sgr.allSugarGeometryChange = function (domObj) {
-    var idx = domObj.selectedIndex;        // get the index of the selected option 
+    var idx = domObj.selectedIndex;        // get the index of the selected option
     var which = domObj.options[idx].value;   // get the value of the selected option 
     av.sgr.ChangeAllGeo(which);
     //av.sgr.setSugarColors(true);  //true is to turn colors on;    //color now dependent on presence absence of resources for that task
@@ -95,8 +95,7 @@
   
   av.sgr.allSugarPatternChange = function(domObj) {
     var selectedOption = domObj.value;
-    console.log('selected=', selectedOption);
-    var diffussionFlag = false;
+    console.log('pattern=', selectedOption);
     if ('diffusion' == domObj.value.toLowerCase()) { diffussionFlag = true; }
     var endName = 'supplyPatternSelect';   
     var domName = '';
@@ -108,10 +107,7 @@
       for (var sub=start; sub <= av.nut.numRegionsinHTML; sub++) {
       //change all subsections; Global can have periodic but not gradient or diffusion. 
         domName = av.sgr.logicNames[ii] + sub + endName;
-        //console.log('domName='+domName, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
-        //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
-        document.getElementById(domName).checked = diffussionFlag;
-        av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarSupplyType');   //only need to do once per task/subsection combo even if it does change both global and subtasks
+        av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarSupplyType');   //need to do once per task/subsection combo even if it does change both global and subtasks
         if (10 < sub) break;
       }
     }
@@ -124,7 +120,7 @@
   av.sgr.allSugarRegionLayoutChange = function(domObj) {
     //console.log('in av.sgr.allSugarRegionLayoutChange: value=', domObj.value);
     var selectedOption = domObj.value;
-    var endName = 'regionLayout';   //nan0supplyType  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
+    var endName = 'regionLayoutDiv';   //nan0supplyTypeDiv  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
     //console.log(from, ' called av.sgr.ChangeAllsugarSupplyType: selectedOption=',selectedOption);
     var domName = '';  
     var numtasks = av.sgr.logicNames.length;
@@ -152,7 +148,7 @@
 
   //--------------------------------------------------------------------------------- av.sgr.ChangeAllsugarSupplyType --
   av.sgr.ChangeAllsugarSupplyType = function(selectedOption, from) {
-    var endName = 'supplyType';   //nan0supplyType  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
+    var endName = 'supplyType';   //nan0supplyTypeDiv  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
     //console.log(from, ' called av.sgr.ChangeAllsugarSupplyType: selectedOption=',selectedOption);
     var domName = '';  
     var numtasks = av.sgr.logicNames.length;
@@ -413,7 +409,7 @@
       tsk = av.sgr.logicNames[ii];
       geometry = document.getElementById(tsk+'0geometry').value;
       if ('global' == geometry.toLowerCase()) {
-        supplyType = document.getElementById(tsk + '0supplyType').value.toLowerCase();
+        supplyType = document.getElementById(tsk + '0supplyTypeDiv').value.toLowerCase();
         if ('none' == supplyType.toLowerCase() ) {
           colorFlg = false;
         }
@@ -549,47 +545,50 @@
     var edTsk = av.sgr.logEdNames[ndx];
     var regionName;
     var numRegions = 'multi';   //this flag was put in when Rob wanted the 'supplyType' to be in the summary anytime the layout = whole dish
-    //var regionLayout = document.getElementById(tsk+'0regionLayout').value;
+    //var regionLayoutDiv = document.getElementById(tsk+'0regionLayoutDiv').value;
     var regionNameList;
     var showGeo = "geoBoth";
     // update nut.txt.uiAll. uiAll.regionLayout is used to find name list. 
     av.nut[edTsk].uiAll.geometry = document.getElementById(tsk+'0geometry').value;
-    av.nut[edTsk].uiAll.regionLayout = document.getElementById(tsk+'0regionLayout').value;
+    av.nut[edTsk].uiAll.regionLayout = document.getElementById(tsk+'0regionLayout').value;    
+    //console.log('av.nut['+edTsk+'].uiAll.regionLayout=', av.nut[edTsk].uiAll.regionLayout);
     av.nut[edTsk].uiAll.regionsNumOf =  Number(av.nut[edTsk].uiAll.regionLayout.substr(0,1) );
+    av.nut[edTsk].uiAll.supplyType = document.getElementById(tsk + '0supplyType').value;
+    //console.log('av.nut['+edTsk+'].uiAll.supplyType=', av.nut[edTsk].uiAll.supplyType);
     
     // one line method to get value of select/option struture.
-    //console.log('onlygrid=', av.sgr.gridOnly, '; mnDebug=', av.doj.mnDebug.style.visibility, '; geoStyle=', document.getElementById(tsk+'0geometry').style.displaly, '; regionLayout=', regionLayout);
-    //console.log('onlygrid=', av.sgr.gridOnly, '; mnDebug=', av.doj.mnDebug.style.visibility, '; regionLayout=', regionLayout);
+    //console.log('onlygrid=', av.sgr.gridOnly, '; mnDebug=', av.doj.mnDebug.style.visibility, '; geoStyle=', document.getElementById(tsk+'0geometry').style.displaly, '; regionLayoutDiv=', regionLayoutDiv);
+    //console.log('onlygrid=', av.sgr.gridOnly, '; mnDebug=', av.doj.mnDebug.style.visibility, '; regionLayoutDiv=', regionLayoutDiv);
     //av.sgr.gridOnly = true;
 //  if (av.sgr.gridOnly && 'visible' != av.doj.mnDebug.style.visibility) {  
     if (av.sgr.gridOnly && 'visible' != av.doj.mnDebug.style.visibility) {
       showGeo = 'gridOnly';
-      document.getElementById(tsk+'0regionLayout').style.display = 'inline-block';
+      document.getElementById(tsk+'0regionLayoutDiv').style.display = 'inline-block';
       show1SupplyType = false;
       document.getElementById(tsk+'0geometry').style.displaly = 'none';
-      if ('1All' == regionLayout) {
-        document.getElementById(tsk+'WsupplyType').style.display = 'inline-block';
+      if ('1All' == regionLayoutDiv) {
+        document.getElementById(tsk+'WsupplyTypeDiv').style.display = 'inline-block';
         document.getElementById(tsk+'1supplyType').style.display = 'none';
         //console.log(tsk+'1supplyType.class, style=', document.getElementById(tsk+'1supplyType').class, document.getElementById(tsk+'1supplyType').style.display);
       }
       else {
         showGeo = 'geoBoth';
         show1SupplyType = true;
-        document.getElementById(tsk+'WsupplyType').style.display = 'none';
+        document.getElementById(tsk+'WsupplyTypeDiv').style.display = 'none';
         document.getElementById(tsk+'1supplyType').style.display = 'inline-block';
       }
     }
     else if (av.sgr.gridOnly && 'visible' == av.doj.mnDebug.style.visibility) {
         showGeo = 'gridOnly';
         show1SupplyType = true;    
-        document.getElementById(tsk+'0regionLayout').style.display = 'none';
-        document.getElementById(tsk+'WsupplyType').style.display = 'inline-block';
+        document.getElementById(tsk+'0regionLayoutDiv').style.display = 'none';
+        document.getElementById(tsk+'WsupplyTypeDiv').style.display = 'inline-block';
         document.getElementById(tsk+'1supplyType').style.display = 'inline-block';
     }
     else {
         showGeo = 'geoBoth';
-        document.getElementById(tsk+'0regionLayout').style.display = 'inline-block';
-        document.getElementById(tsk+'WsupplyType').style.display = 'none';
+        document.getElementById(tsk+'0regionLayoutDiv').style.display = 'inline-block';
+        document.getElementById(tsk+'WsupplyTypeDiv').style.display = 'none';
         document.getElementById(tsk+'1supplyType').style.display = 'inline-block';
     };
     
@@ -608,7 +607,7 @@
     // if (av.dbg.flg.nut) { console.log('geometry=', geometry, '; geoOption=', geoOption); }
 
     //hide everything. Display parts based on what is selected
-    document.getElementById(tsk+'0supplyType').style.display = 'none';
+    document.getElementById(tsk+'0supplyTypeDiv').style.display = 'none';
     document.getElementById(tsk+'0initialDiv').style.display = 'none';
     document.getElementById(tsk+'0periodCheckbox').style.display = 'none';
     document.getElementById(tsk+'0periodTimeHolder').style.display = 'none';
@@ -647,10 +646,9 @@
       // never got tried with one surrounding div an then two. finally Applied display: grid to the summary element
       // changing the summary element to display: grid causes the arrow to disapper, but the detials will still open
       document.getElementById(tsk+'0summary').className = 'grid-sugar-summary-geo-global-container';
-      document.getElementById(tsk+'WsupplyType').style.display = 'none';
-      document.getElementById(tsk+'0supplyType').style.display = 'inline-block';  
-      document.getElementById(tsk+'0regionLayout').style.display = 'none';
-      av.nut[edTsk].uiAll.supplyType = document.getElementById(tsk + '0supplyType').value;
+      document.getElementById(tsk+'WsupplyTypeDiv').style.display = 'none';
+      document.getElementById(tsk+'0supplyTypeDiv').style.display = 'inline-block';  
+      document.getElementById(tsk+'0regionLayoutDiv').style.display = 'none';
       switch (av.nut[edTsk].uiAll.supplyType.toLowerCase()) {
         case 'none': 
         case 'infinite': 
@@ -704,7 +702,7 @@
     else {
       // geometry = grid 
       document.getElementById(tsk+'0summary').className = 'grid-sugar-summary-geo-local-container';
-      document.getElementById(tsk+'0regionLayout').style.display = 'inline-block';
+      document.getElementById(tsk+'0regionLayoutDiv').style.display = 'inline-block';
       document.getElementById(tsk+'0section').open = true;
 //      console.log('av.nut['+edTsk+'].uiAll.regionsNumOf=', av.nut[edTsk].uiAll.regionsNumOf);
       for (var sub=1; sub <= av.nut[edTsk].uiAll.regionsNumOf; sub++) {
@@ -735,7 +733,7 @@
         //console.log('supplyType ui =', document.getElementById(tsk + sub + 'supplyType').value);
         //console.log('tsk=', tsk, 'edTsk=', edTsk, 'sub=', sub, '; uiSub=', av.nut[edTsk].uiSub) ;
         //console.log('supplyType nut =', av.nut[edTsk].uiSub.supplyType[sub]);
-        // if (av.dbg.flg.nut) { console.log('Nut: tsk=', 'sub=', sub, tsk,'supplyType=', av.nut[edTsk].uiSub.supplyType[sub].toLowerCase(),'regionLayout=', document.getElementById(tsk+'0regionLayout').value); }
+        // if (av.dbg.flg.nut) { console.log('Nut: tsk=', 'sub=', sub, tsk,'supplyType=', av.nut[edTsk].uiSub.supplyType[sub].toLowerCase(),'regionLayoutDiv=', document.getElementById(tsk+'0regionLayoutDiv').value); }
         switch (av.nut[edTsk].uiSub.supplyType[sub].toLowerCase()) {    //for when geometery = local
           case 'none':
           case 'infinite': 
@@ -747,8 +745,14 @@
             document.getElementById(tsk+sub+'supplyPatternHolder').style.display = 'block';
             // document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'block';
             // document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'block';
-            // if (av.dbg.flg.nut) { console.log('task=',tsk, '; sub=', sub, '; gradientCheck.checked=', document.getElementById(tsk+sub+'gradientCheck').checked); }
-            if (true == document.getElementById(tsk+sub+'gradientCheck').checked) {  
+            document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';
+            document.getElementById(tsk+sub+'initialHiText').innerHTML = 'Inital amount';
+            document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-container';
+              //console.log('document.getElementById('+tsk+sub+'supplyPatternSelect).value =');
+              //console.log(document.getElementById(tsk+sub+'supplyPatternSelect').value);
+              console.log(tsk+sub+'supplyPatternSelect.value.toLowerCase()=',
+                           document.getElementById(tsk+sub+'supplyPatternSelect').value.toLowerCase() );
+            if ('gradient' == document.getElementById(tsk+sub+'supplyPatternSelect').value.toLowerCase()) {  
               //gradient
               document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'block';
               document.getElementById(tsk+sub+'sideText').innerHTML = 'Choose the side to have the a higher initla amount';
@@ -757,28 +761,6 @@
               document.getElementById(tsk+sub+'initialLoDiv').style.display = 'block'; 
               document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-FiniteGradient-container';
            // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
-            }
-            else {
-              //not-gradient; Local
-              document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';
-              document.getElementById(tsk+sub+'initialHiText').innerHTML = 'Inital amount in each cell';
-              // document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-Finite-container';
-              document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-container';
-              //console.log('document.getElementById('+tsk+sub+'supplyPatternSelect).value =');
-              //console.log(document.getElementById(tsk+sub+'supplyPatternSelect').value);
-              
-              if ('periodic' == document.getElementById(tsk+sub+'supplyPatternSelect').value.toLowerCase() ) {
-                document.getElementById(tsk+sub+'periodTimeHolder').style.display = 'block';
-              }
-//              if (av.nut.hideFlags.gradient) {
-              if (false) {
-                document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
-                //console.log('id=', tsk+sub+'gradientCheck');
-                document.getElementById(tsk+sub+'gradientCheck').checked = false;
-                document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-' + numRegions+ '-Finite-noGradientCheckbox-container';
-              }
-              // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
-              // if (av.dbg.flg.nut) { console.log('subSection=', document.getElementById(tsk+sub+'subSection')); }
             }
             break;
           case 'chemostat':
@@ -860,7 +842,7 @@
             break;
             */
           case 'Debug':
-            document.getElementById(tsk+'0regionLayout').style.display = 'inline-block';
+            document.getElementById(tsk+'0regionLayoutDiv').style.display = 'inline-block';
             document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
             document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
             document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'inline-block';
@@ -887,7 +869,7 @@
           //console.log('document.getElementById('+tsk+sub+'gradientCheck).style.display=', document.getElementById(tsk+sub+'gradientCheckbox').style.display);
       };  //end of subregion for loop
     }    //end of global/local if statement
-    // if (av.dbg.flg.nut) { console.log('tsk=', tsk, 'sub=', sub, '; geometry=', geometry, '; supplyType =', supplyType, ' ' ,tsk+'0regionLayout=', document.getElementById(tsk+'0regionLayout').value ); }
+    // if (av.dbg.flg.nut) { console.log('tsk=', tsk, 'sub=', sub, '; geometry=', geometry, '; supplyType =', supplyType, ' ' ,tsk+'0regionLayoutDiv=', document.getElementById(tsk+'0regionLayoutDiv').value ); }
     av.sgr.setColorFlagBasedonSugarPresence(av.nut[edTsk].uiAll.geometry.toLowerCase(), tsk, 'av.sgr.changeDetailsLayout');
         
     //av.sgr.gridOnly = false;

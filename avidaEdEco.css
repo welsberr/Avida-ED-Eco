@@ -642,7 +642,7 @@
   display: inline-block;
   min-height: 30px;
   min-width: 30px;
-  color: #EEEEEE;
+  color: grey;   /* #EEEEEE; background color of 'odd' rows */
 }
 
 #ancestorRow {
@@ -654,6 +654,7 @@
   justify-content: start;
 }
 
+/* Evidently cannot click a button with visibility: hidden or display;none */
 .geoButtonShow {
   background: inherit;
   color: black;
@@ -661,7 +662,7 @@
 .geoButtonCammo {        /* #notation with 4 or 8 chars should have opacity as the last section should work, but NetBeans does not like it*/  
   border: none;                             /* #F5F5F500 should work, but net beans does not like it so some browsers might not like it */
   background-color: inherit;    /*  rgba(245,245,245,0)  is #F5F5F5 with opacity set to 0.0;   */  
-  color: #EEEEEE;               /* 0.0 (fully transparent) to 1.0 (fully opaque); */
+  color: grey;           /* 0.0 (fully transparent) to 1.0 (fully opaque); background color of odd row is #EEEEEE; */
   
 }
 
