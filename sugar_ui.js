@@ -120,20 +120,21 @@
   av.sgr.allSugarRegionLayoutChange = function(domObj) {
     //console.log('in av.sgr.allSugarRegionLayoutChange: value=', domObj.value);
     var selectedOption = domObj.value;
-    var endName = 'regionLayoutDiv';   //nan0supplyTypeDiv  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
+    var endName = 'regionLayout';   //nan0supplyTypeDiv  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
     //console.log(from, ' called av.sgr.ChangeAllsugarSupplyType: selectedOption=',selectedOption);
     var domName = '';  
     var numtasks = av.sgr.logicNames.length;
     var sub=0;   //most will start with 0 for global and also do local section 1
     // all tasks
     for (var ii=0; ii< numtasks; ii++) {  
-      //change glabal and all subsections  (only 1 sub secton for now) - this may need to change later; but only allowing None and Infinte for now, so ok.
-        domName = av.sgr.logicNames[ii] + sub + endName;
-        //console.log('domName='+domName, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub, '; value=', domObj.value);
-        //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
-        document.getElementById(domName).value = selectedOption;
-        av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarSupplyType');   //only need to do once per task/subsection combo even if it does change both global and subtasks
-    }
+      //change global
+      domName = av.sgr.logicNames[ii] + sub + endName;
+      //console.log('domName='+domName, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub, '; value=', domObj.value);
+      //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
+      document.getElementById(domName).value = selectedOption;
+      av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarSupplyType');   //only need to do once per task/subsection combo even if it does change both global and subtasks
+      //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value);
+    }   
     //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
     document.getElementById('allSugarRegionLayout').value = 'neutral';
   };
@@ -261,8 +262,11 @@
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
   av.sgr.periodChange = function (domObj) {
-    //console.log('av.sgr.periodChange domObj=', domObj);
- // if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
+    var txtNum = domObj.value;
+    console.log('av.sgr.periodChange domObj.id=', domObj.id, '; value = ', domObj.value);
+    if ( !av.utl.isNumber(txtNum) ) {
+      
+    }
   };
 
 //------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
@@ -271,7 +275,7 @@
     //var ndx = domObj.id.indexOf('Input');
     //var id = domObj.id.substring(0, ndx) + 'Text';
     var id = domObj.id;
-    // console.log('text id=', id, '; input id=', domObj.id);
+    console.log('text id=', id, '; input id=', domObj.id);
     // console.log('Number(domObj.value)=',Number(domObj.value));
     if (isNaN(Number(domObj.value))) {
       document.getElementById(id).innerHTML = 'inital amount must be a number';
