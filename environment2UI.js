@@ -1068,11 +1068,11 @@
         document.getElementById(tsk+subNum+'initialHiNp').value = av.sgr.nutdft.uiSub.initialHi;
         //console.log('document.getElementById('+tsk+subNum+'initialHiNp) =', document.getElementById(tsk+subNum+'initialHiNp').value );
         
-        document.getElementById(tsk+subNum+'inflowHiNp').value = av.sgr.nutdft.uiSub.inflowHi;
+        document.getElementById(tsk+subNum+'inflowHiNp').value = av.sgr.nutdft.uiSub.inflowHi; 
         document.getElementById(tsk+subNum+'outflowHiNp').value = av.sgr.nutdft.uiSub.outflowHi;
-        document.getElementById(tsk+subNum+'diffuseCheck').checked = av.sgr.nutdft.uiSub.diffuseCheck;
-        document.getElementById(tsk+subNum+'periodCheck').checked = av.sgr.nutdft.uiSub.periodCheck;
-        document.getElementById(tsk+subNum+'gradientCheck').checked = av.sgr.nutdft.uiSub.gradientCheck;
+        //document.getElementById(tsk+subNum+'diffuseCheck').checked = av.sgr.nutdft.uiSub.diffuseCheck;
+        //document.getElementById(tsk+subNum+'periodCheck').checked = av.sgr.nutdft.uiSub.periodCheck;
+        //document.getElementById(tsk+subNum+'gradientCheck').checked = av.sgr.nutdft.uiSub.gradientCheck;
         //console.log('av.dom.'+tsk+subNum+'.diffuseChecked=', document.getElementById(tsk+subNum+'diffuseCheck').checked, 
         //                          '; period=', document.getElementById(tsk+subNum+'periodCheck').checked, 
         //                          '; gradient=',document.getElementById(tsk+subNum+'gradientCheck').checked);
@@ -1133,10 +1133,10 @@
           // Diffusion  
           if (av.utl.isNumber(parseFloat(av.nut[numTsk].uiSub.diffuseCheck[sub]))) {
             if (0 < parseFloat(av.nut[numTsk].uiSub.diffuseCheck[sub])) {
-            document.getElementById(tsk+sub+'diffuseCheck').checked = true;
+//            document.getElementById(tsk+sub+'diffuseCheck').checked = true;
             }
             else { 
-              document.getElementById(tsk+sub+'diffuseCheck').checked = false;
+//              document.getElementById(tsk+sub+'diffuseCheck').checked = false;
             };          
           };
           console.log('document.getElementById('+tsk+sub+'supplyType).value=', document.getElementById(tsk+sub+'supplyType').value);
@@ -1246,11 +1246,11 @@
           diffuse = Math.round((xdiffuse+ydiffuse)/2);
           //console.log(tsk+subNum+'.xdiffuse=', xdiffuse, '; ydiffuse', ydiffuse, '; diffuse=', diffuse);
           if (0 < diffuse) {
-            document.getElementById(tsk+subNum+'diffuseCheck').checked = true;
+//            document.getElementById(tsk+subNum+'diffuseCheck').checked = true;
             av.nut[numTsk].uiSub.diffuseCheck[subNum] = true;
           }
           else { 
-            document.getElementById(tsk+subNum+'diffuseCheck').checked = false;
+//            document.getElementById(tsk+subNum+'diffuseCheck').checked = false;
             av.nut[numTsk].uiSub.diffuseCheck[subNum] = false;
           }
 
@@ -1338,8 +1338,8 @@
           if ( !isNaN(rValue) ) {
             if ( 0 <= rValue && rValue <= 1 ) {
               //console.log('av.nut['+numTsk+'].uiSub.outflowHiNp['+subNum+']=', tsk+subNum+'outflowHiNp).value=', rValue);
-              document.getElementById(tsk+subNum+'outflowHiNp').value = rValue;
-              av.nut[numTsk].uiSub.outflowHiNp[subNum] = rValue;
+              document.getElementById(tsk+subNum+'outflowHiNp').value = rValue/100;  //Rob had me change the lable from fraction to %
+              av.nut[numTsk].uiSub.outflowHiNp[subNum] = rValue;   //Rob had me change the lable from fraction to %
             };
           };
         

@@ -823,17 +823,17 @@ details[open] summary:before {
 .initialHiDclass { grid-area: initialHi;}
 .initialLoDclass { grid-area: initialLo;}
 
-.inflowHiDclass { grid-area: inflowHi; }
-.inflowLoDclass { grid-area: inflowLo; }
+.inflowHiDclass { grid-area: inflowHi; align-self: center stretch; }
+.inflowLoDclass { grid-area: inflowLo; align-self: center stretch; }
 
-.outflowHiDclass { grid-area: outflowHi; }
-.outflowLoDclass { grid-area: outflowLo; }
+.outflowHiDclass { grid-area: outflowHi; align-self: center stretch; }
+.outflowLoDclass { grid-area: outflowLo; align-self: center stretch; }
 
-.chmstatHiDclass { grid-area: chmstatHi; place-self: center stretch; }
-.chmstatLoDclass { grid-area: chmstatLo; place-self: center stretch; }
+.chmstatHiDclass { grid-area: chmstatHi; align-self: center stretch; }
+.chmstatLoDclass { grid-area: chmstatLo; align-self: center stretch; }
 
-.sideTitleHiDclass { grid-area: sideTitleHi; }
-.sideTitleLoDclass { grid-area: sideTitleLo; }
+.sideTitleHiDclass { grid-area: sideTitleHi; align-self: center stretch; }
+.sideTitleLoDclass { grid-area: sideTitleLo; align-self: center stretch; }
 
 .sideNclass { grid-area: sideInput; }
 .supplyTypeHoldClass { grid-area: supplyDetailDiv; }
@@ -852,10 +852,119 @@ details[open] summary:before {
 /* used as global resources can be periodic, but not */
 .periodCheckGlobal { grid-area: periodCheckGlobal; }
 
+.grid-sugarDetail-globalsugarDetail-chemostat {
+  display: grid;
+  grid-template-areas: 'inflowHi outflowHi chmstatHi';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-multi-Infinite-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-Finite-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyPatternDivClass periodTime'
+                       'initialHi       initialHi       initialHi            initialHi';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.sugarColsDetail-finite-gradient-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyDetailDiv supplyPatternDivClass supplyPatternDivClass periodTime'
+                       'initialHi       initialHi       sideInput       sideInput             initialLo             initialLo';
+  justify-items: start;  justify-content: start; width: 100%;
+  align-items: stretch;
+}
+.sugarColsDetail-finite-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyDetailDiv supplyPatternDivClass supplyPatternDivClass periodTime'
+                       'initialHi       initialHi       initialHi       initialHi             initialHi             initialHi';
+  justify-items: start;  justify-content: start; width: 100%;
+  align-items: stretch;
+}
+
+.sugarColsDetail-chemostat-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyDetailDiv supplyPatternDivClass supplyPatternDivClass periodTime'
+                       'inflowHi        inflowHi        outflowHi       outflowHi             chmstatHi             chmstatHi';
+  justify-items: start;  justify-content: start; width: 100%;
+  align-items: stretch;
+}
+.sugarColsDetail-chemostat-gradient-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyDetailDiv supplyPatternDivClass supplyPatternDivClass sideInput'
+                       'inflowHi        inflowHi        outflowHi       outflowHi             chmstatHi             chmstatHi';
+                       'inflowLo        inflowLo        outflowLo       outflowLo             chmstatLo             chmstatLo';
+  justify-items: start;  justify-content: start; width: 100%;
+  align-items: stretch;
+}
+
+.grid-sugarDetailAll-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv'
+                       'sideInput sideInput'
+                       'periodCheckDiv periodTime'
+                       'gradientCheckDiv diffuseCheckDiv'
+                       'sideTitleHi sideTitleLo'   
+                       'initialHi initialLo'
+                       'inflowHi inflowLo'
+                       'outflowHi outflowLo'
+                       'chmstatHi chmstatLo';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+/* not in use */
+/*
+.geoBoth-sugarDetail-chemostat-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyDetailDiv supplyPatternDivClass supplyPatternDivClass periodTime'
+                       'inflowHi        inflowHi        outflowHi       outflowHi             chmstatHi             chmstatHi';
+  justify-items: start;  justify-content: start; width: 100%;
+  align-items: stretch;
+}
+
+.geoBoth-sugarDetail-chemostat-container-0 {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyPatternDivClass periodTime'
+                       'inflowHi        inflowHi        outflowHi       chmstatHi';
+  justify-items: start;  justify-content: start; width: 100%;
+  align-items: stretch;
+}
+
+.geoBoth-sugarDetail-chemostat-container_checkbox {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv '
+                       'inflowHi        inflowHi        chmstatHi'
+                       'outflowHi       outflowHi       chmstatHi';
+  justify-items: start;  justify-content: start; width: 100%;
+  align-items: stretch;
+}
+
+.geoBoth-grid-sugarDetail-Finite-noGradientCheckbox-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
+                       'initialHi initialHi initialHi';
+  /* border: 1px solid rgba(128, 128, 128, 0.5); 
+  border: 1px solid #888;
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.geoBoth-grid-sugarDetail-Finite-noGradientCheckbox-container_checkbox {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
+                       'initialHi initialHi initialHi';
+  /* border: 1px solid rgba(128, 128, 128, 0.5); 
+  border: 1px solid #888;
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
 .grid-sugarDetail-Infinite-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv';
-/*  grid-template-areas: 'subSectionTitle supplyDetailDiv sgrBlank'; */
+/*  grid-template-areas: 'subSectionTitle supplyDetailDiv sgrBlank'; 
   justify-items: start;  justify-content: start; width: 100%;
 }
 
@@ -864,67 +973,39 @@ details[open] summary:before {
   grid-template-areas: 'supplyDetailDiv';
   justify-items: start;  justify-content: start; width: 100%;
 }
-.grid-sugarDetail-multi-Infinite-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle supplyDetailDiv';
-  justify-items: start;  justify-content: start; width: 100%;
-}
 
 .grid-sugarDetail-Finite-noGrradientCheckbox-container {  //not in use
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv initialHi';
   justify-items: start;  justify-content: start; width: 100%;
 }
-.grid-sugarDetail-Finite-noGrradientCheckbox-container {  //not in use
-  display: grid;
-  grid-template-areas: 'subSectionTitle supplyDetailDiv initialHi';
-  justify-items: start;  justify-content: start; width: 100%;
-}
-.geoBoth-grid-sugarDetail-Finite-noGradientCheckbox-container_checkbox {
-  display: grid;
-  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
-                       'initialHi initialHi initialHi';
-  /* border: 1px solid rgba(128, 128, 128, 0.5); */
-  border: 1px solid #888;
-  justify-items: start;  justify-content: start; width: 100%;
-}
-.geoBoth-grid-sugarDetail-Finite-noGradientCheckbox-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
-                       'initialHi initialHi initialHi';
-  /* border: 1px solid rgba(128, 128, 128, 0.5); */
-  border: 1px solid #888;
-  justify-items: start;  justify-content: start; width: 100%;
-}
+
 .grid-sugarDetail-Finite-noGradientCheckboxOneLine-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv initialHi diffuseCheckDiv';
   justify-items: start;  justify-content: start; width: 100%;
 }
+
 .grid-sugarDetail-1All-Finite-noGradientCheckbox-container {
   display: grid;
   justify-items: stretch;
-/*  grid-template-areas: 'subSectionTitle initialHi diffuseCheckDiv'; */
+/*  grid-template-areas: 'subSectionTitle initialHi diffuseCheckDiv'; 
   grid-template-areas: 'supplyDetailDiv diffuseCheckDiv initialHi';
-/*                       'initialHi       initialHi       initialHi';*/
+/*                       'initialHi       initialHi       initialHi';
   border: 1px solid #888;
   justify-items: start;  justify-content: start; width: 100%;
 }
-.grid-sugarDetail-multi-Finite-noGradientCheckbox-container {  /* not in use on Dec 16 */
+
+.grid-sugarDetail-multi-Finite-noGradientCheckbox-container {  /* not in use on Dec 16 
   display: grid;
   justify-items: stretch;
   grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
                        'initialHi       initialHi       initialHi';
-  /* border: 1px solid rgba(128, 128, 128, 0.5); */
+  /* border: 1px solid rgba(128, 128, 128, 0.5); 
   border: 1px solid #888;
   justify-items: start;  justify-content: start; width: 100%;
 }
-.grid-sugarDetail-Finite-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyPatternDivClass periodTime'
-                       'initialHi       initialHi       initialHi            initialHi';
-  justify-items: start;  justify-content: start; width: 100%;
-}
+
 .grid-sugarDetail-FiniteGradient-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv gradientCheckDiv'
@@ -949,30 +1030,13 @@ details[open] summary:before {
   justify-items: start;  justify-content: start; width: 100%;
 }
 
-.grid-sugarDetailAll-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle supplyDetailDiv'
-                       'sideInput sideInput'
-                       'periodCheckDiv periodTime'
-                       'gradientCheckDiv diffuseCheckDiv'
-                       'sideTitleHi sideTitleLo'   
-                       'initialHi initialLo'
-                       'inflowHi inflowLo'
-                       'outflowHi outflowLo'
-                       'chmstatHi chmstatLo';
-  justify-items: start;  justify-content: start; width: 100%;
-}
-.grid-sugarDetail-globalsugarDetail-chemostat {
-  display: grid;
-  grid-template-areas: 'inflowHi outflowHi chmstatHi';
-  justify-items: start;  justify-content: start; width: 100%;
-}
 .grid-sugarDetail-globalEqualPeriod-container {
   display: grid;
   grid-template-areas: 'inflowHi periodCheckDiv periodTime'
                        'outflowHi chmstatHi chmstatHi';
   justify-items: start;  justify-content: start; width: 100%;
 }
+
 .grid-sugarDetail-None-container {
   display: grid;
   grid-template-areas: 'supplyType sgrBlank sgrBlank sgrBlank sgrBlank';
@@ -987,35 +1051,11 @@ details[open] summary:before {
   justify-items: start;  justify-content: start; width: 100%;
   align-items: stretch;
 }
-.geoBoth-sugarDetail-chemostat-container_checkbox {
-  display: grid;
-  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv '
-                       'inflowHi        inflowHi        chmstatHi'
-                       'outflowHi       outflowHi       chmstatHi';
-  justify-items: start;  justify-content: start; width: 100%;
-  align-items: stretch;
-}
-.geoBoth-sugarDetail-chemostat-container-0 {
-  display: grid;
-  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyPatternDivClass periodTime'
-                       'inflowHi        inflowHi        outflowHi       chmstatHi';
-  justify-items: start;  justify-content: start; width: 100%;
-  align-items: stretch;
-}
-.geoBoth-sugarDetail-chemostat-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyDetailDiv supplyPatternDivClass supplyPatternDivClass periodTime'
-                       'inflowHi        inflowHi        outflowHi       outflowHi             chmstatHi             chmstatHi';
-  justify-items: start;  justify-content: start; width: 100%;
-  align-items: stretch;
-}
 
-/* not in use */
-/*
 .gridOnly-sugarDetail-chemostat-container{
   display: grid;
   grid-template-areas: 'inflowHi   diffuseCheckDiv'
-                       'outflowHi  chmstatHi';
+                       'outflowHi  chmstatHi';-
   justify-items: start;  justify-content: start; width: 100%;
 }
 

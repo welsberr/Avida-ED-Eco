@@ -820,7 +820,7 @@
                               <span id="not1sideText">side text</span></label>
                           </div>
                           <div id="not1periodTime" class="grid-sugarDetail-item periodTime">
-                            <label><input id="not1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="not1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
                           <div id="not1sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="not1sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -892,7 +892,7 @@
                               <span id="not2sideText">side text</span></label>
                           </div>
                           <div id="not2periodTime" class="grid-sugarDetail-item periodTimeClass">
-                            <label><input id="not2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="not2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
                           <div id="not2sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="not2sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -1000,7 +1000,7 @@
                               <span id="nan1sideText">side text</span></label>
                           </div>
                           <div id="nan1periodTime" class="grid-sugarDetail-item periodTime">
-                            <label><input id="nan1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="nan1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
                           <div id="nan1sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="nan1sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -1072,7 +1072,7 @@
                               <span id="nan2sideText">side text</span></label>
                           </div>
                           <div id="nan2periodTime" class="grid-sugarDetail-item periodTimeClass">
-                            <label><input id="nan2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="nan2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
                           <div id="nan2sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="nan2sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -1180,7 +1180,7 @@
                               <span id="and1sideText">side text</span></label>
                           </div>
                           <div id="and1periodTime" class="grid-sugarDetail-item periodTime">
-                            <label><input id="and1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="and1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
                           <div id="and1sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="and1sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -1252,7 +1252,7 @@
                               <span id="and2sideText">side text</span></label>
                           </div>
                           <div id="and2periodTime" class="grid-sugarDetail-item periodTimeClass">
-                            <label><input id="and2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="and2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
                           <div id="and2sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="and2sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -1358,33 +1358,20 @@
                             <select id="orn1supplyPatternSelect" class="supplyModSelClass" onchange="av.sgr.supplyPatternChange(this);">
                               <option id="orn1default" value="default" selected=''>Default</option>
                               <option id="orn1diffuse" value="diffuse">Diffusion</option>
-                              <option id="orn1gradient" class="gradient" value="finite">Gradient</option>
-                              <option id="orn1periodic" class="periodic" value="chemostat">Periodic</option>
+                              <option id="orn1gradient" class="gradient" value="gradient">Gradient</option>
+                              <option id="orn1periodic" class="periodic" value="periodic">Periodic</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="orn1periodTimeHolder" class="grid-sugarDetail-item periodTimeDivClass">
-                            <label><input id="orn1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="orn1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
 
-                          <div id="orn1periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
-                            <label><input id="orn1periodCheck" type="checkbox">Periodic&nbsp;&nbsp;</label>
-                          </div>
-                          <div id="orn1gradientCheckbox" class="grid-sugarDetail-item gradientCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
-                            <label><input id="orn1gradientCheck" type="checkbox">Gradient&nbsp;&nbsp;</label>
-                          </div>
-                          <div id="orn1diffuseCheckbox" class="grid-sugarDetail-item diffuseCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
-                            <label><input id="orn1diffuseCheck" type="checkbox">Diffusion&nbsp;&nbsp;</label>
-                          </div>
                           <div id="orn1hiSideSelectHolder" class="grid-sugarDetail-item sideNclass">
                             <label><select id="orn1hiSide">
-                              <option value="left" selected="">Left</option>
-                              <option value="right">Right</option>
                               <option value="top">Top</option>
                               <option value="bottom">Bottom</option>
-                              <option value="center">Center</option>
-                              <option value="edge">Edge</option>
                             </select>
-                              <span id="orn1sideText">side text</span></label>
+                              <span id="orn1sideText">high side</span></label>
                           </div>
                           <div id="orn1sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="orn1sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -1392,11 +1379,11 @@
 
                           <div id="orn1initialHiDiv" class="grid-sugarDetail-item initialHiDclass">
                             <label><input id="orn1initialHiNp" class="sugInitialHiNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;
-                              <span id="orn1initialHiText">High side amount</span></label>
+                              <span id="orn1initialHiText">High amount</span></label>
                           </div>
                           <div id="orn1initialLoDiv" class="grid-sugarDetail-item initialLoDclass">
                             <label><input id="orn1initialLoNp" class="sugInitialLoNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;
-                              <span id="orn1initialLoText">Low side amount</span></label>
+                              <span id="orn1initialLoText">Low initial</span></label>
                           </div>
                           <div id="orn1inflowHiDiv" class="grid-sugarDetail-item inflowHiDclass">
                             <label><input id="orn1inflowHiNp" class="sugInflowHiNclass" type="text" onchange="av.sgr.inflowChange(this);">&nbsp;
@@ -1408,13 +1395,13 @@
                           </div>
                           <div id="orn1outflowHiDiv" class="grid-sugarDetail-item outflowHiDclass">
                             <label><input id="orn1outflowHiNp" class="sugOutflowHiNclass" type="text" onchange="av.sgr.outflowChange(this);">&nbsp;
-                            <span id="orn1outflowHiText" class="sugOutflowLabel">% Outflow</span></label>
+                            <span id="orn1outflowHiText" class="sugOutflowLabel">Outflow fract</span></label>
                           </div>
                           <div id="orn1outflowLoDiv" class="grid-sugarDetail-item outflowLoDclass">
                             <label><input id="orn1outflowLoNp" class="sugOutflowLoNclass" type="text" onchange="av.sgr.outflowChange(this);">&nbsp;
-                              <span id="orn1outflowLoText" class="sugOutflowLabel">% Outflow</span></label>
+                              <span id="orn1outflowLoText" class="sugOutflowLabel">Outflow fract</span></label>
                           </div>
-                          <div id="orn1chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
+                          <div id="orn1chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">&nbsp;&nbsp;&nbsp;
                             <span id="orn1chmstatHiValue"></span>
                             <span id="orn1chmstatHiText" class="sugarText"> = equilibrium</span>
                           </div>
@@ -1438,31 +1425,18 @@
                             <select id="orn2supplyPatternSelect" class="supplyModSelClass" onchange="av.sgr.supplyPatternChange(this);">
                               <option id="orn2default" value="default" selected=''>Default</option>
                               <option id="orn2diffuse" value="diffuse">Diffusion</option>
-                              <option id="orn2gradient" class="gradient" value="finite">Gradient</option>
-                              <option id="orn2periodic" class="periodic" value="chemostat">Periodic</option>
+                              <option id="orn2gradient" class="gradient" value="gradient">Gradient</option>
+                              <option id="orn2periodic" class="periodic" value="periodic">Periodic</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
                           <div id="orn2periodTimeHolder" class="grid-sugarDetail-item periodTimeDivClass">
-                            <label><input id="orn2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="orn2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
 
-                          <div id="orn2periodCheckbox" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
-                            <label><input id="orn2periodCheck" type="checkbox">Periodic&nbsp;&nbsp;</label>
-                          </div>
-                          <div id="orn2gradientCheckbox" class="grid-sugarDetail-item gradientCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
-                            <label><input id="orn2gradientCheck" type="checkbox">Gradient&nbsp;&nbsp;</label>
-                          </div>
-                          <div id="orn2diffuseCheckbox" class="grid-sugarDetail-item diffuseCheckDiv" onchange="av.sgr.eachSugarCheckBoxChange(this);">
-                            <label><input id="orn2diffuseCheck" type="checkbox">Diffusion&nbsp;&nbsp;</label>
-                          </div>
                           <div id="orn2hiSideSelectHolder" class="grid-sugarDetail-item sideNclass">
                             <label><select id="orn2hiSide">
-                              <option value="left" selected="">Left</option>
-                              <option value="right">Right</option>
                               <option value="top">Top</option>
                               <option value="bottom">Bottom</option>
-                              <option value="center">Center</option>
-                              <option value="edge">Edge</option>
                             </select>
                               <span id="orn2sideText">side text</span></label>
                           </div>
@@ -1488,13 +1462,13 @@
                           </div>
                           <div id="orn2outflowHiDiv" class="grid-sugarDetail-item outflowHiDclass">
                             <label><input id="orn2outflowHiNp" class="sugOutflowHiNclass" type="text" onchange="av.sgr.outflowChange(this);">&nbsp;
-                            <span id="orn2outflowHiText" class="sugOutflowLabel">% Outflow</span></label>
+                            <span id="orn2outflowHiText" class="sugOutflowLabel">Outflow fract</span></label>
                           </div>
                           <div id="orn2outflowLoDiv" class="grid-sugarDetail-item outflowLoDclass">
                             <label><input id="orn2outflowLoNp" class="sugOutflowLoNclass" type="text" onchange="av.sgr.outflowChange(this);">&nbsp;
-                              <span id="orn2outflowLoText" class="sugOutflowLabel">% Outflow</span></label>
+                              <span id="orn2outflowLoText" class="sugOutflowLabel">Outflow fract</span></label>
                           </div>
-                          <div id="orn2chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">
+                          <div id="orn2chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">&nbsp;&nbsp;&nbsp;
                             <span id="orn2chmstatHiValue"></span>
                             <span id="orn2chmstatHiText" class="sugarText"> = equilibrium</span>
                           </div>
@@ -1571,7 +1545,7 @@
                               <span id="oro1sideText">side text</span></label>
                           </div>
                           <div id="oro1periodTime" class="grid-sugarDetail-item periodTime">
-                            <label><input id="oro1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="oro1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
                           <div id="oro1sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="oro1sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -1643,7 +1617,7 @@
                               <span id="oro2sideText">side text</span></label>
                           </div>
                           <div id="oro2periodTime" class="grid-sugarDetail-item periodTimeClass">
-                            <label><input id="oro2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="oro2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
                           <div id="oro2sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="oro2sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -1751,7 +1725,7 @@
                               <span id="ant1sideText">side text</span></label>
                           </div>
                           <div id="ant1periodTime" class="grid-sugarDetail-item periodTime">
-                            <label><input id="ant1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="ant1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
                           <div id="ant1sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="ant1sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -1823,7 +1797,7 @@
                               <span id="ant2sideText">side text</span></label>
                           </div>
                           <div id="ant2periodTime" class="grid-sugarDetail-item periodTimeClass">
-                            <label><input id="ant2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="ant2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
                           <div id="ant2sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="ant2sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -1931,7 +1905,7 @@
                               <span id="nor1sideText">side text</span></label>
                           </div>
                           <div id="nor1periodTime" class="grid-sugarDetail-item periodTime">
-                            <label><input id="nor1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="nor1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
                           <div id="nor1sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="nor1sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -2003,7 +1977,7 @@
                               <span id="nor2sideText">side text</span></label>
                           </div>
                           <div id="nor2periodTime" class="grid-sugarDetail-item periodTimeClass">
-                            <label><input id="nor2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="nor2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
                           <div id="nor2sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="nor2sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -2111,7 +2085,7 @@
                               <span id="xor1sideText">side text</span></label>
                           </div>
                           <div id="xor1periodTime" class="grid-sugarDetail-item periodTime">
-                            <label><input id="xor1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="xor1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
                           <div id="xor1sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="xor1sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -2183,7 +2157,7 @@
                               <span id="xor2sideText">side text</span></label>
                           </div>
                           <div id="xor2periodTime" class="grid-sugarDetail-item periodTimeClass">
-                            <label><input id="xor2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="xor2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
                           <div id="xor2sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="xor2sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -2291,7 +2265,7 @@
                               <span id="equ1sideText">side text</span></label>
                           </div>
                           <div id="equ1periodTime" class="grid-sugarDetail-item periodTime">
-                            <label><input id="equ1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="equ1periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
                           <div id="equ1sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="equ1sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -2363,7 +2337,7 @@
                               <span id="equ2sideText">side text</span></label>
                           </div>
                           <div id="equ2periodTime" class="grid-sugarDetail-item periodTimeClass">
-                            <label><input id="equ2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period (updates)</label>
+                            <label><input id="equ2periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
                           <div id="equ2sideHiText" class="grid-sugarDetail-item sideTitleHiDclass">High Side</div>
                           <div id="equ2sideLoText" class="grid-sugarDetail-item sideTitleLoDclass">Low Side</div>
@@ -2644,7 +2618,7 @@
                           <span class='ex1periodCheckbox' id='ex1nan1periodHold'>
                             <input type='checkbox' id='ex1nan1periodCheck' checked>Periodic&nbsp;
                             <span>
-                              <input id='ex1nanEperiod' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '1000'/> Period (updates)
+                              <input id='ex1nanEperiod' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '1000'/> time
                             </span>
                           </span>
                           <br>
@@ -2683,7 +2657,7 @@
                           <span id='ex1and1periodHold' class='ex1periodCheckbox'>
                             <input id='ex1and1periodCheck' type='checkbox' checked>Periodic&nbsp;
                             <span>
-                              <input id='ex1and1period' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '1000'/> Period (updates)
+                              <input id='ex1and1period' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '1000'/> time
                             </span>
                           </span>
                           <br>

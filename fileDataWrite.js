@@ -312,7 +312,7 @@
           arguDom = av.sgr.uiSub_Check[jj];
           //console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
           //console.log('; dom=',document.getElementById(tsk+kk+arguDom).checked ); 
-          av.nut[numtsk].uiSub[arguDom][kk] = document.getElementById(tsk+kk+arguDom).checked;
+//          av.nut[numtsk].uiSub[arguDom][kk] = document.getElementById(tsk+kk+arguDom).checked;
         };
         
         // error in this section
