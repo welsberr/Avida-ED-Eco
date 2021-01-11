@@ -563,6 +563,46 @@
   };
   //--------------------------------------------------------------------- end av.sgr.setColorFlagBasedonSugarPresence --
 
+  //-------------------------------------------------------------------------------------- av.sgr.changeDetailsLayout --
+  av.sgr.complexityChangeProcess = function () {
+    var ii, tsk;
+    var geoDisplay = 'inline-bloack';
+    var subnum = 1;
+    var len = av.sgr.logicNames.length;
+    var clssnam = 'changeAllSugarsTogetherContainer';
+    if ('sgrBasic' == av.sgr.complexityLevel) {
+      geoDisplay = 'none';
+      clssnam = 'changeAllSugarsBasic';
+    }
+    console.log('geoDispay=', geoDisplay);
+    document.getElementById('sugarFooter').className = clssnam;
+    document.getElementById('allSugarDetailsDiv').style.display = geoDisplay;
+    document.getElementById('allSugarPatternDiv').style.display = geoDisplay;
+    document.getElementById('allSugarRegionLayoutDiv').style.display = geoDisplay;
+    document.getElementById('allSugarGeometry').style.display = geoDisplay;
+    document.getElementById('allsgrFinite').disabled = true;
+    document.getElementById('allsgrChemostat').disabled = true;
+    document.getElementById('allTopLftRit').style.display = geoDisplay;
+    document.getElementById('allQuarters').style.display = geoDisplay;
+    document.getElementById('regionLayoutSgr').style.display = geoDisplay;
+    document.getElementById('patternSgr').style.display = geoDisplay;
+    document.getElementById('showHideSgr').style.display = geoDisplay;
+    document.getElementById('geometrySgr').style.display = geoDisplay;
+    document.getElementById('displayGridResourceData').style.display = geoDisplay;
+    for (ii = 0; ii < len; ii++) {
+      tsk = av.sgr.logicNames[ii];
+      document.getElementById(tsk+'0geometryDiv').style.display = geoDisplay;
+      document.getElementById(tsk+'0geometryDiv').value = 'global';      
+      document.getElementById(tsk+'0Debug').style.display = geoDisplay;
+      document.getElementById(tsk+'0Finite').disabled = true;
+      document.getElementById(tsk+'0Chemostat').disabled = true;
+      document.getElementById(tsk+'0TopLftRit').style.display = geoDisplay;
+      document.getElementById(tsk+'0Quarters').style.display = geoDisplay;
+      document.getElementById('rs'+tsk).style.display = geoDisplay;
+      av.sgr.changeDetailsLayout(tsk, subnum, 'av.sgr.complexityChangeProcess');
+    };    
+  };
+
 
   //if (av.dbg.flg.root) { console.log('Root: before av.sgr.changeDetailsLayout'); }
   //-------------------------------------------------------------------------------------- av.sgr.changeDetailsLayout --
@@ -588,7 +628,7 @@
     //console.log('av.nut['+edTsk+'].uiAll.supplyType=', av.nut[edTsk].uiAll.supplyType);
     
     // one line method to get value of select/option struture.
-    //console.log('onlygrid=', av.sgr.gridOnly, '; mnDebug=', av.doj.mnDebug.style.visibility, '; geoStyle=', document.getElementById(tsk+'0geometry').style.displaly, '; regionLayoutDiv=', regionLayoutDiv);
+    //console.log('onlygrid=', av.sgr.gridOnly, '; mnDebug=', av.doj.mnDebug.style.visibility, '; geoStyle=', document.getElementById(tsk+'0geometry').style.display, '; regionLayoutDiv=', regionLayoutDiv);
     //console.log('onlygrid=', av.sgr.gridOnly, '; mnDebug=', av.doj.mnDebug.style.visibility, '; regionLayoutDiv=', regionLayoutDiv);
     //av.sgr.gridOnly = true;
 //  if (av.sgr.gridOnly && 'visible' != av.doj.mnDebug.style.visibility) {  
@@ -596,7 +636,7 @@
       showGeo = 'gridOnly';
       document.getElementById(tsk+'0regionLayoutDiv').style.display = 'inline-block';
       show1SupplyType = false;
-      document.getElementById(tsk+'0geometry').style.displaly = 'none';
+      document.getElementById(tsk+'0geometry').style.display = 'none';
       if ('1All' == regionLayoutDiv) {
         document.getElementById(tsk+'WsupplyTypeDiv').style.display = 'inline-block';
         document.getElementById(tsk+'1supplyType').style.display = 'none';
@@ -643,6 +683,7 @@
     document.getElementById(tsk+'0periodCheckbox').style.display = 'none';
     document.getElementById(tsk+'0periodTimeHolder').style.display = 'none';
     document.getElementById(tsk+'0summaryFooterText').style.display = 'none';
+    document.getElementById('sgrEngergyReportLabel').style.display = 'none';
     
     //if (av.dbg.flg.nut) { console.log('document.getElementById('+tsk+sub+'supplyTypeSelectHolder) =', document.getElementById(tsk+sub+'supplyTypeSelectHolder')); }
 
@@ -682,8 +723,12 @@
       document.getElementById(tsk+'0regionLayoutDiv').style.display = 'none';
       switch (av.nut[edTsk].uiAll.supplyType.toLowerCase()) {
         case 'none': 
-        case 'infinite': 
+        case 'infinite':
+          //console.log('av.sgr.describe['+tsk+']', av.sgr.describe[tsk]);
+          document.getElementById(tsk+'0summaryFooterText').innerHTML = av.sgr.describe[tsk];
+          document.getElementById(tsk+'0summaryFooterText').style.display = 'inline-block';
           document.getElementById(tsk+'0section').open = false;
+          document.getElementById('sgrEngergyReportLabel').style.display = 'inline';
           break;
         case 'finite': 
           document.getElementById(tsk+'0initialDiv').style.display = 'inline-block';
@@ -830,8 +875,6 @@
               // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
               if ('periodic' == document.getElementById(tsk+sub+'supplyPatternSelect').value.toLowerCase() ) {
                 document.getElementById(tsk+sub+'periodTimeHolder').style.display = 'block';
-                document.getElementById(tsk+sub+'sideText').innerHTML = 'Hi Edge';
-                document.getElementById(tsk+sub+'subSection').className = showGeo + 'X';            
                 // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
               }
             }

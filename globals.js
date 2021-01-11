@@ -626,6 +626,17 @@ av.sgr.regionLookup['001,002,003,004,'] = '4Quarders';
 av.sgr.regionLookup['003,004,012,'] = '3TopLftRit';
 av.sgr.regionLookup['000'] = '1All';   //the same for the tic-tac-toe layout
 
+av.sgr.describe = {};
+av.sgr.describe.not = ' Easy (x2)';
+av.sgr.describe.nan = ' Easy (x2)';
+av.sgr.describe.and = ' Moderate (x4)';
+av.sgr.describe.orn = ' Moderate (x4)';
+av.sgr.describe.oro = ' Hard (x8)';
+av.sgr.describe.ant = ' Hard (x8)';
+av.sgr.describe.nor = ' Very Hard (x16)';
+av.sgr.describe.xor = ' Very Hard (x16)';
+av.sgr.describe.equ = ' Brutal (x32)';
+
 
 av.sgr.boxArguments = ['boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow']; //flag is true if in use; false if these arguments are not included. 
                       //boxx and boxy are the upper left corner positions of the region in Avida-ED
@@ -689,6 +700,7 @@ av.sgr.showGeoSelect = false;   // This will allow the use of both global and gr
 av.sgr.gridOnly = false;        // gridOnly true  ++> dftGeometry = grid
 av.sgr.dftGeometry = 'global';  // gridOnly false ++> dftGeometry = global
 if (av.sgr.gridOnly) av.sgr.dftGeometry = 'grid';
+av.sgr.complexityLevel = 'sgrBasic';
 //------------------------------------------------------------------------------------------- av.sgr.makeNutDefault --
 av.sgr.makeNutDefault = function () {
   av.sgr.nutdft = {};    

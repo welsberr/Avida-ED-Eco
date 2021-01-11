@@ -92,6 +92,7 @@
             <span data-dojo-type='dijit/PopupMenuBarItem' label='Avida-ED' iconClass='dijitNoIcon' id='mnAvidaEd'>
               <span data-dojo-type='dijit/Menu'>
                 <span data-dojo-type='dijit/MenuItem' id='mnAeAbout' label='About'></span>
+                <span data-dojo-type='dijit/MenuItem' id='mnAePreferences' label='Preferences'></span>
               </span>
             </span>
             <span data-dojo-type='dijit/PopupMenuBarItem' label='File' iconClass='dijitNoIcon' id='mnFile'>
@@ -292,16 +293,16 @@
                       <option value='Offspring Cost'>Offspring Cost</option>
                       <option value='Energy Acq. Rate'>Energy Acq. Rate</option>
                       <option value='Ancestor Organism'>Ancestor Organism</option>
-                      <option value='rnot'>Resource: Notose</option>
-                      <option value='rnan'>Resource: Nanose</option>
-                      <option value='rand'>Resource: Andose</option>
-                      <option value='rorn'>Resource: Ornose</option>
-                      <option value='roro'>Resource: Orose</option>
-                      <option value='rant'>Resource: Antose</option>
-                      <option value='rnor'>Resource: Norose</option>
-                      <option value='rxor'>Resource: Xorose</option>
-                      <option value='requ'>Resource: Equose</option>
-                      <option value='none'>None</option>
+                      <option id='rsnot' value='rnot'>Resource: Notose</option>
+                      <option id='rsnan' value='rnan'>Resource: Nanose</option>
+                      <option id='rsand' value='rand'>Resource: Andose</option>
+                      <option id='rsorn' value='rorn'>Resource: Ornose</option>
+                      <option id='rsoro' value='roro'>Resource: Orose</option>
+                      <option id='rsant' value='rant'>Resource: Antose</option>
+                      <option id='rsnor' value='rnor'>Resource: Norose</option>
+                      <option id='rsxor' value='rxor'>Resource: Xorose</option>
+                      <option id='rsequ' value='requ'>Resource: Equose</option>
+                      <option id='rnone' value='none'>None</option>
                     </select>
                   </div>
                   <div id='gridButtons' class='gridButtonClass'>
@@ -733,7 +734,7 @@
                 <div class='odd'><div class='enviroSubHeading'>Ancestral Organism(s):</div>
                   <div id='ancestorRow'>
                     <div id='ancestorBox' class='ancestorContainer'></div>
-                    <div id='geometyHideButton' onclick='av.ui.toggleDisplayGeometryControls()'>
+                    <div id='geometyHideButton' onclick='av.ui.toggleDisplayGeometryControls(this)'>
                       &nbsp;&nbsp; Show / Hide Geometry menus
                     </div>
                   </div>
@@ -751,8 +752,8 @@
                 </div>
 
                 <div class='odd'>
-                  <div id='sugarHeaderTitle' class='enviroSubHeading'>Resource Options: </div>
-
+                  <span id='sugarHeaderTitle' class='enviroSubHeading'>Resource Options: </span>
+                  <span id='sgrEngergyReportLabel'> (strength of energy reward shown in parentheses)</span>
                   <div id='sugarAccordion'>
 
                     <details id="not0section" class="sugarAccordionSection">
@@ -1316,9 +1317,9 @@
                             <select id="orn0supplyType" class="supplyTypeSelClass" onchange="av.sgr.supplyChange(this);">
                               <option id="orn0none" value="none">None</option>
                               <option id="orn0Infinite" value="infinite" selected="">Infinite</option>
-                              <option id="orn0Finite" class="localFinite" value="finite">Finite</option>
-                              <option id="orn0Chemostat" class="localChemostat" value="chemostat">Chemostat</option>
-                              <option id="orn0Debug" value="all" disabled>debug</option>
+                              <option id="orn0Finite"   value="finite">Finite</option>
+                              <option id="orn0Chemostat" value="chemostat">Chemostat</option>
+                              <option id="orn0Debug"    value="all" disabled>debug</option>
                             </select>
                           </div>
                           <div id="ornWsupplyTypeDiv" class="supplyTypeDiv_W_Class">
@@ -2385,7 +2386,7 @@
                   <div id='sugarFooter' class='changeAllSugarsTogetherContainer'>
                     <div id='sugarSetTitle' class='rHeadItem'>Set all Resources</div>
 
-                    <div id="allSugarGeometryDiv" class='rHeadItem'>
+                    <div id='allSugarGeometryDiv' class='rHeadItem'>
                       <select id="allSugarGeometry" class='geometryClass' onchange='av.sgr.allSugarGeometryChange(this);'>
                         <option value='global'>Global</option>
                         <option value='grid'>Local</option>
@@ -2394,19 +2395,19 @@
                     </div>
                     <div id='allSugarSupplyTypeDiv' class='rHeadItem'>
                       <select id='allsugarSupplyType' class="supplyTypeSelClass" onchange='av.sgr.allsugarSupplyTypeChange(this);'>
-                        <option value='none'>None</option>
-                        <option value='infinite'>Infinite</option>
-                        <option value='finite' class='groupFinite'>Finite</option>
-                        <option value='chemostat' class='groupChemostat'>Chemostat</option>
-                        <option value='neutral' selected>----</option>
+                        <option id='allsgrNone' value='none'>None</option>
+                        <option id='allsgrInfinite' value='infinite'>Infinite</option>
+                        <option id='allsgrFinite' value='finite' class='groupFinite'>Finite</option>
+                        <option id='allsgrChemostat' value='chemostat' class='groupChemostat'>Chemostat</option>
+                        <option id='allsgrneutral' value='neutral' selected>----</option>
                       </select> 
                     </div>
                     <div id='allSugarRegionLayoutDiv' class='rHeadItem'>
                       <select id="allSugarRegionLayout" onchange='av.sgr.allSugarRegionLayoutChange(this);'>
                           <option value="1All" selected="">Whole Dish</option>
-                          <option class='2HalfLftRit' value="2LftRit">Halves (L/R)</option>
-                          <option class='3TopLftRit' value='3TopLftRit'>Top L/R</option>
-                          <option class='4Quarters' value='4Quarters'>Quarters</option>
+                          <option id='allHalfLftRit' class='2HalfLftRit' value="2LftRit">Halves (L/R)</option>
+                          <option id='allTopLftRit' class='3TopLftRit' value='3TopLftRit'>Top L/R</option>
+                          <option id='allQuarters' class='4Quarters' value='4Quarters'>Quarters</option>
                           <option value='neutral' selected>----</option>                            
                         </select>
                     </div>
@@ -3198,6 +3199,38 @@
       </div>
     </div>
 
+    <span class='notSeen' id='o_________________________________________________________________Preferences_ModalID___'></span>
+    <div class="modal" id='Preferences_ModalID'>
+
+      <!-- Modal content -->
+      <div class="modal-content" >
+        <div class="modal-header">
+          <h2>Preferences</h2>
+        </div>
+        <div class="modal-body">
+          <p>Please select Ecology (resource) complexity level</p>
+          <select id='resrcComplexity' onchange='av.sgr.complexityChange(this)'>
+            <option id='sgrBasic' value='sgrBasic' selected >Basic</option>
+            <option id='sgrAdvanced' value='sgrAdvanced'>Advanced</option>
+          </select>&nbsp;&nbsp;&nbsp;
+          <br><br>
+          <p>Please select your language preference</p>
+          <select id='language' onchange='av.ui.language(this)'>
+            <option id='sgrBasic' value='english' selected >English</option>
+            <option id='sgrAdvanced' value='spanish'>Español</option>
+            <option id='sgrAdvanced' value='German' disabled>Deutsch</option>
+            <option id='sgrAdvanced' value='French' disabled>Français</option>
+            <option id='sgrAdvanced' value='Portuguese' disabled>Português</option>
+          </select>&nbsp;&nbsp;&nbsp;
+          <br><br>
+        </div>
+        <div class="modal-footer">
+          <button id='PreferencesCancel' onclick='av.ui.closePreferences'>Ok</button>
+        </div>
+      </div>
+    </div>
+    
+    
     <span class='notSeen' id='o_________________________________________________________________Need_Ancestor_Modal___'></span>
     <div class="modal" id='aboutAvidaED_ModalID'>
 

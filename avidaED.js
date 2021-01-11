@@ -1,7 +1,7 @@
 
  // this version uses grid box layout for major sections (toop, left side, main, right side)  
  // if (av.dbg.flg.root) { console.log('Root: avidaED.js at beginning of file on 2020_0111 @ 20:21'); };
- console.log('Root: avidaED.js at beginning of file on 2021_102'); 
+ console.log('Root: avidaED.js at beginning of file on 2021_111'); 
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
@@ -950,6 +950,30 @@ require([
   document.getElementById('aboutAvidaED_Cancel').onclick = function () {
     document.getElementById('aboutAvidaED_ModalID').style.display = 'none';
   };
+
+  dijit.byId('mnAePreferences').on('Click', function () {
+    av.post.addUser('Button: mnAePreferences');
+    //console.log('in mnAePreferences.click');
+    document.getElementById('Preferences_ModalID').style.display = "block";
+  });
+
+  /*
+  av.sgr.complexityChange = function (domObj) {
+    console.log('the complexity requested is:', domObj.value);
+    av.sgr.complexityLevel = domObj.value;
+    av.sgr.complexityChangeProcess();
+  };
+  */
+ 
+  av.ui.language = function (domObj) {
+    av.ui.language = domObj.value;
+    console.log('not yet implemented: the language requested is:', domObj.value);
+  };
+ 
+  av.ui.closePreferences = function () {
+    document.getElementById('Preferences_ModalID').style.display = "none";
+  };
+
 
   dijit.byId('mnHpProblem').on('Click', function () {
     av.post.addUser('Button: mnHpProblem');
@@ -3493,7 +3517,10 @@ require([
   av.sgr.ChangeAllsugarSupplyType('infinite','Last_things_done');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');
   document.getElementById('displayGridResourceData').style.display = 'flex';   //display local resource data
-  
+
+  document.getElementById('resrcComplexity').value = av.sgr. complexityLevel;
+  av.sgr.complexityChangeProcess();
+
   // May need to do some things here to get the app to look right on the screen. 
   //av.grd.popChartFn();
   //av.grd.drawGridSetupFn('initial background'); //Draw initial background

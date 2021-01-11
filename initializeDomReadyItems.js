@@ -273,19 +273,20 @@
   };
 
   av.ui.toggleDisplayGeometryControls = function(){ 
-    var listGeoClass = document.getElementsByClassName('geometryClass');
-    //var len = document.getElementsByClassName('geometryClass').length;
-    var len = listGeoClass.length;
-    var willbe;
-    console.log('len='+len, '; listGeoClass=', listGeoClass);
-    if ('none' === listGeoClass[0].style.display) {
+    var len = av.sgr.logicNames.length;
+    var willbe = 'none';
+    if ('none' === document.getElementById('orn0geometryDiv').style.display) {
       willbe = 'inline-block';
     } else {
       willbe = 'none';
     };
+    //console.log('willbe=', willbe);  
     for (ii = 0; ii < len; ii++) {
-      listGeoClass[ii].style.display = willbe;
-    }
+      tsk = av.sgr.logicNames[ii];
+      document.getElementById(tsk+'0geometryDiv').style.display = willbe;
+    };
+    document.getElementById('geometrySgr').style.display = willbe;
+    document.getElementById('allSugarGeometryDiv').style.display = willbe;
   };
 
   av.ui.toggleDevelopentDisplays = function () {
@@ -394,6 +395,13 @@
         document.getElementById('geometrySgr').style.displaly = 'inline-block';
         document.getElementById('allSugarGeometryDiv').style.displaly = 'inline-block';
       }
+
+      len = document.getElementsByClassName('3TopLftRit').length;
+      for (ii = 0; ii < len; ii++) {
+        document.getElementsByClassName('3TopLftRit')[ii].style.display = 'inline-block';
+        document.getElementsByClassName('4Quarters')[ii].style.display = 'inline-block';
+      }
+
 
 
       len = av.sgr.logicNames.length;

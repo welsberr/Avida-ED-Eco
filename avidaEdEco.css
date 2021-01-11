@@ -642,7 +642,7 @@
   display: inline-block;
   min-height: 30px;
   min-width: 30px;
-  color: grey;   /* #EEEEEE; background color of 'odd' rows */
+  color: #EEEEEE; /*background color of 'odd' rows */
 }
 
 #ancestorRow {
@@ -662,7 +662,7 @@
 .geoButtonCammo {        /* #notation with 4 or 8 chars should have opacity as the last section should work, but NetBeans does not like it*/  
   border: none;                             /* #F5F5F500 should work, but net beans does not like it so some browsers might not like it */
   background-color: inherit;    /*  rgba(245,245,245,0)  is #F5F5F5 with opacity set to 0.0;   */  
-  color: grey;           /* 0.0 (fully transparent) to 1.0 (fully opaque); background color of odd row is #EEEEEE; */
+  color: #EEEEEE;          /* 0.0 (fully transparent) to 1.0 (fully opaque); background color of odd row is #EEEEEE; */
   
 }
 
@@ -784,14 +784,11 @@ details[open] summary:before {
 .periodGlobalCheck { grid-area: periodGlobalCheck; display: inline-block; }
 .periodTimeGlobClass { grid-area: periodTimeGlobClass; display: inline-block; }
 .initialGlobalClass { grid-area: initialGlobalClass; display: inline-block; }
-.sumFootTxtClass { grid-area: sumFootTxtClass; display: inline-block; }
-
-
-.temp_grid-sugar-summary-geo-global-container { display: inline-block; }
+.sumFootTxtClass { grid-area: sumFootTxtClass; display: inline-block; justify-self: end; }
 
 .grid-sugar-summary-geo-global-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeDivClass initialGlobalClass periodTimeGlobClass';
+  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeDivClass initialGlobalClass periodTimeGlobClass sumFootTxtClass';
   justify-items: start;  justify-content: start; width: 100%;
 }
 
@@ -1153,6 +1150,15 @@ details[open] summary:before {
 #allSgr4Blnk { grid-area: allSgr3Blnk; }
 #allSgr4Blnk { grid-area: allSgr4Blnk; }
 #allSgr5Blnk { grid-area: allSgr5Blnk; }
+
+.changeAllSugarsBasic {
+  display: grid;
+  grid-template-areas: 'setTitle    supplyTypeSgr   supplyTypeDiv';
+  width: 100%;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background: #DDD;   /* #AAA; is too dark now */  
+}
 
 .changeAllSugarsTogetherContainer {
   display: grid;
@@ -1600,7 +1606,7 @@ checkbox:focus {
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
+    /* width: 100%;  Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background: rgb(0,0,0); /* Fallback color */
@@ -1612,12 +1618,12 @@ checkbox:focus {
     background: #fefefe;
     margin: auto;
     padding: 2px;
-    border: 1px solid #888;
+    border: 1px solid black; /* #888; */
     width: 90%;
 }
 
 .modal-header {
-    padding: 4s px 4px;
+    padding: 4px 4px;
     font-size: 150%;
     font-weight: bold;
     background: lightgray;
