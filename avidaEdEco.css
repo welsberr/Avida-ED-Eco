@@ -784,11 +784,11 @@ details[open] summary:before {
 .periodGlobalCheck { grid-area: periodGlobalCheck; display: inline-block; }
 .periodTimeGlobClass { grid-area: periodTimeGlobClass; display: inline-block; }
 .initialGlobalClass { grid-area: initialGlobalClass; display: inline-block; }
-.sumFootTxtClass { grid-area: sumFootTxtClass; display: inline-block; justify-self: end; }
+.sumFootTxtClass { grid-area: sumFootTxtClass; display: inline-block; justify-self: end; width: 95px; }
 
 .grid-sugar-summary-geo-global-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeDivClass initialGlobalClass periodTimeGlobClass sumFootTxtClass';
+  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeDivClass sumFootTxtClass initialGlobalClass periodTimeGlobClass';
   justify-items: start;  justify-content: start; width: 100%;
 }
 

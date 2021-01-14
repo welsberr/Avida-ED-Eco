@@ -183,8 +183,8 @@
 
         <div id="headerMsg">
           <div id='msgHolder'>
-            Workspace: <label id='wsNameMsg'>Default</label> &nbsp;&nbsp;&nbsp;|
-            <label id='wsSavedMsg'>saved</label> | &nbsp;&nbsp;&nbsp;
+            Workspace: `<label id='wsNameMsg'>Default</label>`
+            <label id='wsSavedMsg'> is saved</label> &nbsp;&nbsp;&nbsp;
             <span style='text-align: right'><label id='userMsgLabel' style='color: red; text-align: right'> </label></span>
           </div>
         </div>
@@ -714,7 +714,7 @@
               <form id='setupForm'>
                 <div id='environmentSettingTitle'>Environmental Settings</div>
                 <div  class='odd'>
-                  <div class='enviroSubHeading'>Dish Size:</div>
+                  <div id='suDishSize' class='enviroSubHeading'>Dish Size:</div>
                     <input id='sizeCols' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '10';/>
                     &nbsp; x &nbsp;
                     <input id='sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '10'/>

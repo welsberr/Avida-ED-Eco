@@ -247,7 +247,8 @@
   //after Run button pushed for population
   av.ptd.runPopFn = function (from) {
     'use strict';
-    if (av.debug.popCon) console.log(from, 'called av.ptd.runPopFn: runPopFn runState =', av.grd.runState);
+    if (av.debug.popCon) { console.log('popCon:', from, 'called av.ptd.runPopFn: runPopFn runState =', av.grd.runState); }
+    console.log(from, 'called av.ptd.runPopFn: runPopFn runState =', av.grd.runState);
     //check for ancestor organism in configuration data
     var namelist;
     // used only for testing new dish configurations don't work in the current computer interface

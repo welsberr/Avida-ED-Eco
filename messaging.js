@@ -11,7 +11,7 @@
     //console.log('av.msg.readMsg: msg', msg);
 
     if ('data' == msg.type) {
-      if (av.debug.userMsg) userMsgLabel.textContent = 'Avida type:data; name:' + msg.name;
+      if (av.debug.userMsg) userMsgLabel.textContent = '| Avida type:data; name:' + msg.name;
       switch (msg.name) {
         case 'exportExpr':
           av.debug.log += '\n--Aui: \n' + av.utl.json2stringFn(msg);
@@ -23,7 +23,7 @@
           break;
         case 'reset':
           av.debug.log += '\n--Aui: \n' + av.utl.json2stringFn(msg);
-          if (av.debug.userMsg) userMsgLabel.textContent = 'Avida: ' + msg.name;
+          if (av.debug.userMsg) userMsgLabel.textContent = '| Avida: ' + msg.name;
           if (true === av.msg.uiReqestedReset) {
             av.ptd.resetDishFn();
             av.msg.uiReqestedReset = false;
@@ -102,11 +102,11 @@
     }
     else if ('userFeedback' == msg.type) {
       av.debug.log += '\nAui: userFeedback \n' + av.utl.json2stringFn(msg);
-      if (av.debug.userMsg) userMsgLabel.textContent = 'Avida userFeedback: ' + msg.level + ' at ' + av.grd.oldUpdate.toString() + ' is ' + msg.message;
+      if (av.debug.userMsg) userMsgLabel.textContent = '| Avida userFeedback: ' + msg.level + ' at ' + av.grd.oldUpdate.toString() + ' is ' + msg.message;
       //console.log('userFeedback', msg);
       switch (msg.level) {
         case 'error':
-          userMsgLabel.textContent = 'Avida error at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);
+          userMsgLabel.textContent = '| Avida error at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);
           //console.log('type:userFeedback; level:error');
           if (msg.isFatal) {
             //kill and restart avida worker
@@ -120,7 +120,7 @@
           if (av.debug.msg) console.log('avida:notify: ',msg.message);
           console.log('avida:notify:', msg.message);
           console.log('================================================================================================');
-          if (av.debug.msg) userMsgLabel.textContent = 'Avidia notification: ' + msg.message; //with splash screen no longer need ready message
+          if (av.debug.msg) userMsgLabel.textContent = '| Avidia notification: ' + msg.message; //with splash screen no longer need ready message
           // Worked on a better splash screen gif. Used licecap, an application on the Mac to record the gif.
           // Then used http://gifmaker.me/reverser/ to make a gif in reverse time order. Then Wesley used gifsicle
           // to combine the forward and reverse gif.
@@ -131,11 +131,11 @@
           av.grd.popChartInit('Message: notification');
           break;
         case 'warning':
-          userMsgLabel.textContent = 'Avida warning at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);
+          userMsgLabel.textContent = '| Avida warning at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);
           if (av.debug.msg) console.log('Avida warn: ',msg);
           break;
         case 'fatal':
-          userMsgLabel.textContent = 'Avida fatal error at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);
+          userMsgLabel.textContent = '| Avida fatal error at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);
           if (av.debug.msg) console.log('Avida fatal: ',msg.message);
           break;
         default:
@@ -619,7 +619,7 @@
       'name': 'reset',
       'triggerType': 'immediate'
     };
-    if (av.debug.userMsg) userMsgLabel.textContent = 'ui-->Avida: reset requested';
+    if (av.debug.userMsg) userMsgLabel.textContent = '| ui-->Avida: reset requested';
     av.aww.uiWorker.postMessage(request);
     av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request);
   };
