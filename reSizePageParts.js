@@ -358,3 +358,92 @@ window.addEventListener('resize', function() {
   // if (av.dbg.flg.root) { console.log('Root: end of reSizePageParts'); }
 
 
+//---------------------------------------------------------------------------------- notes on different types of size --
+//
+// div objects have size with width (x) and height (y) directions. 
+// there are several size modifies and trying to figure out which is which can be confusing. 
+
+// dom box model and size info   
+// https://stackoverflow.com/questions/21064101/understanding-offsetwidth-clientwidth-scrollwidth-and-height-respectively
+// There is a nested set of boxes with every div
+// margin
+//   border
+//     padding
+//       box (with actual content or guts
+// the size of stuff around the box gets added twice, once for each side
+// 
+// dom.name.offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
+// dom.name.clientWidth = box + 2*padding - scrollbar_width    
+// dom.name.scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
+// cssWidth = box only nothing else
+// dom.name.width
+// 
+// 
+// $('#name').innerWidth()
+//    where name is from the id='name'   of the dom objecte in the html
+//  .height() - returns the height of element excludes padding, border and margin.
+//  .innerHeight() - returns the height of element includes padding but excludes border and margin.
+//  .outerHeight() - returns the height of the div including border but excludes margin.
+//  .outerHeight(true) - returns the height of the div including margin.
+// 
+// The difference between .css( "height" ) and .height() is that the former returns a value with units intact (for example, 400px).
+// while the latter returns a unit-less pixel value (for example, 400)
+// https://api.jquery.com/height/
+//   
+// var av.dom.nameQ = $("#name"); // ariable is longer than $ version so no real need to use
+//  
+// scrollbarWidth = offsetWidth - clientWidth - getComputedStyle().borderLeftWidth - getComputedStyle().borderRightWidth
+//  
+//
+// get css values
+//     //https://stackoverflow.com/questions/590602/padding-or-margin-value-in-pixels-as-integer-using-jquery
+//     //https://stackoverflow.com/questions/9592575/get-height-of-div-with-no-height-set-in-css
+//     
+// an example: the 10 at the end is to say base 10 rather than octal.
+//     console.log('av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight, 
+//       av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'),10));
+
+
+// should this move to an init page ui function?
+//get size of screen availbe for Avida-ED; used to keep on screen and get rid of scroll bars
+//http://ryanve.com/lab/dimensions/
+//https://andylangton.co.uk/blog/development/get-viewportwindow-size-width-and-height-javascript
+//https://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
+//window.screen.availWidth
+//window.innerWidth    or    window.outerWidth
+//console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight, 
+//  document.documentElement.clientHeight);
+//if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
+//  document.documentElement.style.height = document.documentElement.clientHeight + 'px';
+//}
+//
+// Targeting common screen sizes   https://www.websitedimensions.com/
+
+// looks like tool-tip
+// https://www.w3schools.com/howto/howto_js_popup.asp
+// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup
+
+//
+// jQurey resize() Method
+// https://www.w3schools.com/jquery/event_resize.asp
+//
+// html reize element: 
+// https://codepen.io/sol0mka/pen/FnizC
+// 
+// Position relative to ancestor:
+// https://www.w3schools.com/cssref/pr_pos_right.asp
+//
+// Document Ready Examples
+// https://www.sitepoint.com/types-document-ready/
+// 
+// Forcing windows resize to fire
+// https://stackoverflow.com/questions/1861109/forcing-windows-resize-to-fire
+// https://stackoverflow.com/questions/23567483/jquery-fake-a-window-resize
+// https://stackoverflow.com/questions/277759/html-onresizeend-event-or-equivalent-way-to-detect-end-of-resize
+// https://stackoverflow.com/questions/2996431/detect-when-a-window-is-resized-using-javascript
+// https://stackoverflow.com/questions/14504079/jquery-trigger-function-above-a-certain-window-width
+
+
+
+
+

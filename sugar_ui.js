@@ -564,7 +564,7 @@
   //--------------------------------------------------------------------- end av.sgr.setColorFlagBasedonSugarPresence --
 
   //-------------------------------------------------------------------------------------- av.sgr.changeDetailsLayout --
-  av.sgr.complexityChangeProcess = function () {
+  av.sgr.complexityChangeProcess = function (from) {
     var ii, tsk;
     var geoDisplay = 'inline-bloack';
     var optionDisabled = false;
@@ -575,8 +575,9 @@
       geoDisplay = 'none';
       clssnam = 'changeAllSugarsBasic';
       optionDisabled = true;
-    }
-    console.log('geoDispay=', geoDisplay);
+    };
+    console.log(from, 'called av.sgr.complexityChangeProcess: av.sgr.complexityLevel=', av.sgr.complexityLevel);
+    console.log('------------------------------------------------------------------------------geoDispay=', geoDisplay);
     document.getElementById('sugarFooter').className = clssnam;
     document.getElementById('allSugarDetailsDiv').style.display = geoDisplay;
     document.getElementById('allSugarPatternDiv').style.display = geoDisplay;
@@ -824,7 +825,7 @@
         //console.log('supplyType ui =', document.getElementById(tsk + sub + 'supplyType').value);
         //console.log('tsk=', tsk, 'edTsk=', edTsk, 'sub=', sub, '; uiSub=', av.nut[edTsk].uiSub) ;
         //console.log('supplyType nut =', av.nut[edTsk].uiSub.supplyType[sub]);
-        if (av.dbg.flg.nut) { console.log('Nut: tsk=', 'sub=', sub, tsk,'supplyType=', av.nut[edTsk].uiSub.supplyType[sub].toLowerCase(),'regionLayoutDiv=', document.getElementById(tsk+'0regionLayout').value); }
+        // if (av.dbg.flg.nut) { console.log('Nut: tsk=', 'sub=', sub, tsk,'supplyType=', av.nut[edTsk].uiSub.supplyType[sub].toLowerCase(),'regionLayoutDiv=', document.getElementById(tsk+'0regionLayout').value); }
         switch (av.nut[edTsk].uiSub.supplyType[sub].toLowerCase()) {    //for when geometery = local
           case 'none':
           case 'infinite': 
@@ -977,48 +978,6 @@
   //---------------------------------------------------------------------------------------------- end sugars for Eco --
   if (av.dbg.flg.root) { console.log('Root: end sugars for Eco'); }
 
-
-  //------------------------------------------------------------------------------------------ ex1 and tst2 delete later --
-  //in tst2 page now
-  av.ptd.ex1allSugarChange = function (allmode) {
-    var onoff = 'none';
-    var geometry = 'Local';
- // if (av.dbg.flg.nut) { console.log('ex1_allmode=', allmode); }
-    if ( ('allon' == allmode) || ('alloff' == allmode) ) {
-      geometry = 'global';
-      if ('allon' == allmode) {
-        onoff = 'Infinite';
-      }
-      else if ('alloff' == allmode) {
-        onoff = 'none';
-      };
-      document.getElementById('ex1notGlobRsrcType').value = onoff;
-      //document.getElementById('ex1nanGlobRsrcType').value = onoff;
-      //document.getElementById('ex1andGlobRsrcType').value = onoff;
-      //document.getElementById('ex1ornGlobRsrcType').value = onoff;
-      document.getElementById('ex1oroGlobRsrcType').value = onoff;
-      document.getElementById('ex1antGlobRsrcType').value = onoff;
-      //document.getElementById('ex1norGlobRsrcType').value = onoff;
-      document.getElementById('ex1xorGlobRsrcType').value = onoff;
-      document.getElementById('ex1equGlobRsrcType').value = onoff;
-
-      document.getElementById('ex1notGlobalLocal').value = geometry;
-      document.getElementById('ex1nanGlobalLocal').value = geometry;
-      document.getElementById('ex1andGlobalLocal').value = geometry;
-      document.getElementById('ex1ornGlobalLocal').value = geometry;
-      document.getElementById('ex1oroGlobalLocal').value = geometry;
-      document.getElementById('ex1antGlobalLocal').value = geometry;
-      document.getElementById('ex1norGlobalLocal').value = geometry;
-      document.getElementById('ex1xorGlobalLocal').value = geometry;
-      document.getElementById('ex1equGlobalLocal').value = geometry;
-    }
-    else if ('allLocal' == allmode){
-      //local was picked
-      //would change to grey if this part was implemented 
-    }
-  };
-
-  //in tst2 page now
   if (av.dbg.flg.root) { console.log('Root: before av.ptd.allSugarCheckBox'); }
   av.ptd.allSugarCheckBox = function (allmode) {
     var onflag = true;

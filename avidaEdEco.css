@@ -526,7 +526,7 @@
   }
 
   #displayGridResourceData{
-    display: flex;
+    display: flex;  /* none; */
     flex: 0 0 auto;
     border: 1px solid #AAA;
     width: 100%;
@@ -630,7 +630,9 @@
 
 .ancestorContainer {
   grid-area: ancestorContainer;
-  display: inline-block;
+  display: block;
+  resize:both;
+  overflow:auto;
   min-height: 30px;
   width: 200px;
   border: 1px solid black;
@@ -1319,62 +1321,29 @@ checkbox:focus {
 
 /************************************************************************ used in examples will be deleted eventually */
 
-.ex1oddSugarPart{
-  border-top: 1px solid #888;
-  background: rgba(128, 128, 128, 0.2);  /*LtSteelBlue=b0cedE=176, 196, 180 */
-}  /*#89a9d9;*/
-.ex1evenSugar{ 
-  background: rgba(128, 128, 128, 0.4);  /*228, 241, 254, */
-  border-top: 1px solid #888;
-}
-
-.ex1sugarAccordionSection{
-  border-bottom: 1px solid #222;   /* #000 is black  */
-}
-
-.ex1sugarSummary{
-  background: rgba(128, 128, 128, 0.1);  
-  height: 22px;
-}
-
-.ex1sugarTitle{
+.ex1center {
   display: inline-block;
-  font-size: 110%;
-  font-weight: bolder;
+  vertical-align: middle;
+  width: 300px;
+  padding: 10px 15px;
+  border: #a0a0a0 solid 1px;
+  background: #f5f5f5;
 }
-.ex1dishPartLabel{
-  font-size: 100%;
-  font-weight: bold;
-  color: #444;
-}
-
-#ex1notSection{
-  background: rgba(255,153,178, 1);  /* bigger number is closer to white; 0,0,0 is black*/
-}
-#ex1nanSection{
-  background: rgba(255,204,153, 1);
-}
-#ex1andSection{
-  background: rgba(255,255,153, 1);
-}
-#ex1ornSection{
-  background: rgba(153,255,153, 1);
-}
-#ex1oroSection{
-  background: rgba(153,255,153, 1);
-}
-#ex1antSection{
-  background: rgba(153,255,153, 1);
-}
-#ex1norSection{
-  background: rgba(153,255,153, 1);
-}
-#ex1xorSection{
-  background: rgba(153,255,153, 1);
-}
-#ex1equSection{
-  background: rgba(153,255,153, 1);
-}
+ .ex1holder {
+  white-space: nowrap;  /* May want to do this if there is risk the container may be narrower than the element inside */
+  text-align: center;
+  background: #c0c0c0;
+  border: black solid 1px;
+  margin: 20px;
+ }
+.ex1holder:before {
+ content: '\200B';
+/*   content: '';
+  margin-left: -0.25em; */
+  display: inline-block;
+  height: 100%; 
+  vertical-align: middle;
+}  
 
 /*Organism Block css */
 .orgBenchTopRow{
@@ -1606,7 +1575,7 @@ checkbox:focus {
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
-    /* width: 100%;  Full width */
+    width: 100%;   /*   Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background: rgb(0,0,0); /* Fallback color */
@@ -1619,12 +1588,12 @@ checkbox:focus {
     margin: auto;
     padding: 2px;
     border: 1px solid black; /* #888; */
-    width: 90%;
+    width: 50%;
 }
 
 .modal-header {
     padding: 4px 4px;
-    font-size: 150%;
+    font-size: 130%;
     font-weight: bold;
     background: lightgray;
     color: black;

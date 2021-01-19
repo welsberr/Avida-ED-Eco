@@ -36,7 +36,7 @@ html, body {
   margin: 0;
   padding:0;
   background: #F5F5F5; /* cyan; */
-  font-family: Trebuchet MS, sans-serif;
+  font-family: Tahoma, Trebuchet MS, sans-serif;
 }
 
 .bit32 {                       /* not in use */
@@ -47,25 +47,25 @@ html, body {
 p {
   margin-top: 0px;
   margin-bottom: 0px;
-  font-family: Trebuchet MS, sans-serif;
+  font-family: Tahoma, Trebuchet MS, sans-serif;
 }
 
 li {
   margin: 0px 0px 0px 0px;
-  font-family: Trebuchet MS, sans-serif;
+  font-family: Tahoma, Trebuchet MS, sans-serif;
 }
 
 ul {
   margin-top: 0px;
   margin-bottom: 0px;
-  font-family: Trebuchet MS, sans-serif;
+  font-family: Tahoma, Trebuchet MS, sans-serif;
 }
 
 h2, h3 {
   margin-top: 0px;
   margin-bottom: 0px;
   margin-left: 10px;
-  font-family: Trebuchet MS, sans-serif;
+  font-family: Tahoma, Trebuchet MS, sans-serif;
 }
 
 textarea {
@@ -193,7 +193,7 @@ button {
   display: block;
   text-align: center;
 /*
-  font: 11px sans-serif;
+  font-family: Tahoma, Trebuchet MS, sans-serif;
   text-decoration: none;
 */
 }
@@ -209,7 +209,7 @@ button {
   display: block;
   text-align: center;
 /*
-  font: 11px sans-serif;
+  font-family: Tahoma, Trebuchet MS, sans-serif;
   text-decoration: none;
 */
 }

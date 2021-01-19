@@ -64,9 +64,9 @@
     av.dom.popStatsBlock = document.getElementById('popStatsBlock');
     av.dom.StatsButton = document.getElementById('StatsButton');
 
+    av.dom.popChrtHolder = document.getElementById('popChrtHolder'); 
     av.dom.popChart = document.getElementById('popChart');  //easier handle for div with chart
-    av.dom.popChrtHolder = document.getElementById('popChrtHolder');
-
+    av.dom.popChartDiv = document.getElementById('popChartDiv');
     av.dom.cycleSlider = document.getElementById('cycleSlider');
     av.dom.runStopButton = document.getElementById('runStopButton');
     av.dom.oneUpdateButton = document.getElementById('oneUpdateButton');
@@ -439,10 +439,25 @@
     //console.log('in av.ui.hideDevelopment=', av.ui.hideDevelopment, 'at end of function');
   };
 
+  // if (av.dbg.flg.root) { console.log('Root: before av.ui.antLabel'); }
+  //----------------------------------------------------------------------------------------------------------------------
+  //toggles showing resource data in right info panel (Stats window) in Populaton View
+  av.ui.antLabel = function (from) {
+    console.log(from, 'called av.ui.antLabel to run av.grd.popChartInit'); 
+    
+    console.log('ht: popChrtHolder, popChart, popChartDiv', $('#popChrtHolder').outerHeight(true), $('#popChartDiv').outerHeight(true), $('#popChart').outerHeight(true) );
+    var htnum = Number($('#popChrtHolder').outerHeight(true))-1;
+    av.dom.popChart.style.maxheight = htnum +'px;';
+    console.log('ht: popChrtHolder, popChart, popChartDiv', $('#popChrtHolder').outerHeight(true), $('#popChartDiv').outerHeight(true), $('#popChart').outerHeight(true) );
+    av.grd.popChartInit('av.ui.antLabel');
+    console.log('ht: popChrtHolder, popChart, popChartDiv', $('#popChrtHolder').outerHeight(true), $('#popChartDiv').outerHeight(true), $('#popChart').outerHeight(true) );
+  };
+  
   // if (av.dbg.flg.root) { console.log('Root: before av.ui.xorLabel'); }
   //----------------------------------------------------------------------------------------------------------------------
   //toggles showing resource data in right info panel (Stats window) in Populaton View
-  av.ui.xorLabel = function () {
+  av.ui.xorLabel = function (from) {
+    console.log(from, 'called av.ui.xorLabel to to toggle dipslay of resource data');
     if ('none' === document.getElementById('displayGridResourceData').style.display) {
       document.getElementById('displayGridResourceData').style.display = 'flex';
     } else {

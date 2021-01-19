@@ -1194,7 +1194,7 @@ require([
         // if the miniplot on the populaton page needs to be updated.
         if ( $(av.dom.popStatsBlock).is(":visible")) {
           if (av.dbg.flg.plt) { console.log('need to call av.grd.popChartInit'); }
-        av.grd.popChartFn('av.ptd.rightInfoPanelToggleButton');
+          av.grd.popChartFn('av.ptd.rightInfoPanelToggleButton');
         }
       };
       //console.log('Stats.class=', document.getElementById('StatsButton').className, '; Setup.class=', document.getElementById('SetupButton').className);
@@ -1239,7 +1239,9 @@ require([
       tablinks[ii].className = tablinks[ii].className = 'tablinks';
       //console.log('tablinks[ii].className =', tablinks[ii].className);
     };
-    //console.log('contentType=',contentType,'; evt=', evt);  //keep because evt info looks useful for improving mouse code.
+    // keep console example because evt info looks useful for improving mouse code.
+    // console.log('contentType=',contentType,'; evt=', evt);
+    console.log('contentType=', contentType);
     document.getElementById(contentType).className = 'labInfoClass labInfoFlex';;
     evt.currentTarget.className = "tablinks active";
     //console.log('id=', evt.currentTarget.id);
@@ -2000,9 +2002,9 @@ require([
   
   // if (av.dbg.flg.root) { console.log('Root: before av.grd.popChartInit defined'); }
   av.grd.popChartInit = function (from) {
-    //console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
-    //                '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display, '; av.ui.page=', av.ui.page, 
-    //                '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
+    console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
+                   '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display, '; av.ui.page=', av.ui.page, 
+                    '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
     
     if (av.dbg.flg.plt) { 
       console.log(from , 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
@@ -2013,6 +2015,7 @@ require([
     if ( !$(av.dom.popStatsBlock).is(":visible") ) {
       av.pch.needInit = true;
       if (av.dbg.flg.plt) { console.log('PopPlot:',from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit); }
+      console.log('PopPlot:',from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit);
       return;
     };
     
@@ -2033,7 +2036,8 @@ require([
       if (av.dbg.flg.plt) { console.log('PopPlot: av.pch.widg=', av.pch.widg); }
       if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
       
-      Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
+      //Plotly.plot is where the size of popChrtHolder gets messed up.
+      //Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
       
       if (av.debug.uil) { console.log('ui: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
       if (av.dbg.flg.plt) console.log('after plotly.plot in poChartInit');
@@ -2065,7 +2069,7 @@ require([
       }
     }
     av.dom.popChart.style.visibility = 'hidden';
-    if (av.dbg.flg.plt) { console.log('PopPlot: layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width); }
+    //if (av.dbg.flg.plt) { console.log('PopPlot: layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width); }
     av.pch.needInit = false;
   };
   // if (av.dbg.flg.root) { console.log('Root: after av.grd.popChartInit defined'); }
@@ -2078,8 +2082,8 @@ require([
     //                  '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display,
     //                  '; av.ui.page=', av.ui.page,
     //                  '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));      
-    //console.log('PopPlot:',from, 'called popChartFn: av.pch.needInit= ', av.pch.needInit, 
-    //                  '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));      
+    console.log('PopPlot:',from, 'called popChartFn: av.pch.needInit= ', av.pch.needInit, 
+                      '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));      
     if (av.pch.needInit) {
       //console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, '; av.ui.page=', av.ui.page);
       // if the miniplot on the populaton page needs to be initiated call that funciton.
@@ -2445,65 +2449,7 @@ require([
     });
   });
 
-/*------------------------------------------------------------------------------------------ av.ptd.randInputChange --*/
-  // part of ex1setupBBlock
-  av.ptd.randInputChange = function (value, randErroTest) {
-    var randNum = Number(value);
-    if (av.debug.uil) { console.log('ui: randNum=', randNum); }
-    if (randNum >= -1 && randNum <= 1000000) {
-      av.ptd.validMuteInuput = true;
-      document.getElementById(randErroTest).style.color = 'black';
-      document.getElementById(randErroTest).innerHTML = '';
-      document.getElementById(randErroTest).innerHTML = '';
-    } else {
-      av.ptd.validMuteInuput = false;
-      document.getElementById(randErroTest).style.color = 'red';
-      document.getElementById(randErroTest).innerHTML = '';
-      av.dom.userMsgLabel.innerHTML = '';
-      if (randNum <= -1) {
-        document.getElementById(randErroTest).innerHTML += 'Random Seed must be > -1. ';
-        if (av.debug.popCon) { console.log('<0'); }
-      }
-      if (randNum >= 1000000) {
-        document.getElementById(randErroTest).innerHTML += 'Random Seed must be 1,000,000 or less. ';
-        if (av.debug.popCon) { console.log('>0'); }
-      }
-      if (isNaN(randNum)) {
-        document.getElementById(randErroTest).innerHTML += 'Random Seed must be a valid number. ';
-        if (av.debug.popCon) { console.log('==NaN'); }
-      }
-    };
-  };
-
   /********************************************************************************** enviornment (sugar) settings ****/
-
-// delte by 2021
-/*----------------------------------------------------------------------------------------- av.ui.ex1setSugarColors --*/
-
-/*av.ui.ex1setSugarColors = function () {
-     var sugarSection = ['ex1notSection', 'ex1nanSection', 'ex1andSection', 'ex1ornSection', 'ex1oroSection', 'ex1antSection', 'ex1norSection', 'ex1xorSection', 'ex1equSection'];
-    var len = av.sgr.sugarColors.length;
-    var ndx = av.sgr.sugarBackgroundShade;
-    for (ii = 0; ii < len; ii++) {
-      //console.log('ii=',ii,'SugarSection=', sugarSection[ii]);
-      if ('allLocal' != document.getElementById('ex1allSugarChange').value) {
-        document.getElementById(sugarSection[ii]).style.backgroundColor = av.color.greyMap[ndx];
-      } else {
-        document.getElementById(sugarSection[ii]).style.backgroundColor = av.color[av.sgr.sugarColors[ii]][ndx];
-      }
-    };
-  };
-
-  document.getElementById('ex1allSugarChange').onchange = function () {
-    var allSugar = document.getElementById('ex1allSugarChange').value;
-    av.ptd.ex1allSugarChange(allSugar);
-    av.ui.ex1setSugarColors();
-    document.getElementById('ex1allSugarChange').value = 'allNeutral';
-  };
-*/
-
-// end of ex1 and tst2 page stuff
-
   /**************************************************************************** Tests for Population Setup section ****/
 
 //------------------------------------------------------------------------------------------------- av.ptd.gridChange --
@@ -3050,28 +2996,23 @@ require([
 
   //on 2018_0823 this is where height gets messed up when loading the program. 
    av.pch.divSize = function (from) {
-    if (av.debug.uil) { console.log('ui: PopPlotSize: ',from, 'called av.pch.divSize, not in if statement.'); }
-    //av.debug.uil = false;
-    if (av.debug.uil) { console.log('ui: PopPlotSize: ',from, 'called av.pch.divSize'); }
-    if (av.debug.uil) { 
-      console.log('ui: popChrtHolder css.wd ht border padding margin=', $("#popChrtHolder").css('width'), $("#popChrtHolder").css('height')
-        , $("#popChrtHolder").css('border'), $("#popChrtHolder").css('padding'), $("#popChrtHolder").css('margin'));
-    } 
-    if (av.debug.uil) {
-      console.log('ui: PopPlotSize: av.dom.popChrtHolder.ht offset, client ht=', av.dom.popChrtHolder.offsetHeight,
-        av.dom.popChrtHolder.clientHeight, '; parseInt(padding)=', parseInt($("#popChrtHolder").css('padding'), 10));
-    }
-    
-    av.pch.pixel.ht = av.dom.popChrtHolder.clientHeight - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
-    av.pch.pixel.wd = av.dom.popChrtHolder.clientWidth - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
+    if (av.dbg.flg.plt) { console.log('plt: PopPlotSize: ',from, 'called av.pch.divSize +++++++++++++++++++++++++++++++');
+      console.log('plt: popChrtHolder: css.h=', $("#popChrtHolder").css('height'), '; ht=', $('#popChrtHolder').height(), 
+          '; innerHt=', $('#popChrtHolder').innerHeight(), '; outerHt=', $('#popChrtHolder').outerHeight(), 
+          '; outherHt(true)=', $('#popChrtHolder').outerHeight(true), '; offsetHt=', av.dom.popChrtHolder.offsetHeight );
+      console.log('plt: popChrtHolder: css.wd, wd, innerWd, outerWd, outherWd(true)', $("#popChrtHolder").css('width'), 
+            $('#popChrtHolder').innerWidth(), $('#popChrtHolder').outerWidth(), $('#popChrtHolder').outerWidth(true) );
+      console.log('plt: ');
+    };
+        
+    av.pch.pixel.ht = $('#popChrtHolder').height();
+    av.pch.pixel.wd = $('#popChrtHolder').width();
     //console.log(from, 'called av.pch.divSize: av.pch.pixel.wd=', av.pch.pixel.wd, '; av.pch.pixel.ht=', av.pch.pixel.ht);
     av.pch.layout.height = av.pch.pixel.ht - av.pch.pixel.hdif;  //leave a bit more vertical space for plot;
     av.pch.layout.width = av.pch.pixel.wd - av.pch.pixel.wdif;   //leave more horizontal space to right of plot;
-    if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
-    if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
+    if (av.dbg.flg.plt) { console.log('plt: PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
+    if (av.dbg.flg.plt) { console.log('plt: PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
 
-    //av.dom.popChrtHolder.style.width = av.dom.popChrtHolder.clientWidth + 'px';  //seems redundent  djb said to delete as of 2018_0827
-    //av.dom.popChrtHolder.style.height = av.dom.popChrtHolder.clientHeight + 'px';  //seems redundent djb said to delete as of 2018_0827
     av.dom.popChart.style.height = av.pch.layout.height + 'px';
     av.dom.popChart.style.width = av.pch.layout.width + 'px';
     if (av.debug.uil) {
@@ -3480,8 +3421,6 @@ require([
   av.sgr.buildHtml();
   // av.sgr.defaults;
 
-  //av.ui.ex1setSugarColors();   //example 1     //delete 2021
-
   //av.ui.removeVerticalScrollbar('popTopRw', 'popTopRw');
   
   // * offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
@@ -3509,17 +3448,17 @@ require([
     //set mmDebug to hidden so that when toggle called it will show the development sections x
     av.doj.mnDebug.style.visibility = 'hidden';   //visible
   };
-  av.ui.toggleDevelopentDisplays('Last_things_done');  //need to put this back for production
+  av.ui.toggleDevelopentDisplays('Last_things_done');  // this needs to b called in production version
   
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
   av.sgr.ChangeAllGeo(av.sgr.dftgGeometry);
   //av.sgr.setSugarColors(true);  //true is to turn colors on;    // set color/grey individually so when 0 resources, grey shades rather than colors
   av.sgr.ChangeAllsugarSupplyType('infinite','Last_things_done');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');
-  document.getElementById('displayGridResourceData').style.display = 'flex';   //display local resource data
+  //document.getElementById('displayGridResourceData').style.display = 'flex';   //display local resource data
 
   document.getElementById('resrcComplexity').value = av.sgr. complexityLevel;
-  av.sgr.complexityChangeProcess();
+  av.sgr.complexityChangeProcess('last-things-done');
 
   // May need to do some things here to get the app to look right on the screen. 
   //av.grd.popChartFn();

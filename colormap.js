@@ -282,7 +282,7 @@ av.color.Gnuplot2cmap = [
 , 'rgb(255, 255, 255)' */
   ];
 
-//does not match color order at this time.
+//Early list; not useing now
 av.color.parentColorNames = [
   'A blue'    //1               website #7
   ,'B yellow'  //2            website #15 modified was 255, 255, 109

@@ -494,7 +494,7 @@
 
   //-------------------------------------------------------------------------------------- av.env.findReactOnlyUIdata --
   av.env.findReactOnlyUIdata = function(numTsk, sub) {
-    console.log('in av.env.findReactOnlyUIdata: numTsk=', numTsk, '; sub=', sub);
+    //console.log('in av.env.findReactOnlyUIdata: numTsk=', numTsk, '; sub=', sub);
     if (0 != sub) { console.log('Reaction only Data should position 0 in the array, sub = ', sub); }
     else {
       av.nut[numTsk].uiAll.regionsNumOf = 1;         //reaction but no resource so it must be global and none or infinite
@@ -511,9 +511,9 @@
         //if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiAll.supplyType =', av.nut[numTsk].uiAll.supplyType); }
       }
       else { console.log('should not be here'); }
-      console.log('numTsk=', numTsk, '; sub=', sub, '; av.nut[numTsk].uiAll.supplyType[sub]=', av.nut[numTsk].uiAll.supplyType
-                   , '; av.nut[numTsk].uiAll.regionsNumOf=', av.nut[numTsk].uiAll.regionsNumOf
-                   , '; react.value=', av.nut[numTsk].react.value[sub], '==========');
+      //console.log('numTsk=', numTsk, '; sub=', sub, '; av.nut[numTsk].uiAll.supplyType[sub]=', av.nut[numTsk].uiAll.supplyType
+      //             , '; av.nut[numTsk].uiAll.regionsNumOf=', av.nut[numTsk].uiAll.regionsNumOf
+      //             , '; react.value=', av.nut[numTsk].react.value[sub], '==========');
     }
   };
   //---------------------------------------------------------------------------------- end av.env.findReactOnlyUIdata --
@@ -801,7 +801,7 @@
 
           // returns 'found' if react.resource[sub] matches resrc.react[sub];
           nameMatch = av.env.resourceNameMatch(numTsk, sub);
-          console.log('nameMatch=', nameMatch);
+          //console.log('nameMatch=', nameMatch);
           if ('missing' == nameMatch) { 
             // Avida Avida-ED 3 workspaces do not have Resourc statements;
             // Some Avida-ED 4 workspaces are missing Resource statements;
@@ -898,7 +898,7 @@
       if (av.dbg.flg.nut) {
         var endLoopSupplyTsk = {};
         endLoopSupplyTsk = JSON.parse(JSON.stringify(av.nut[numTsk]));
-      console.log('endLoopSupply['+numTsk+']=', endLoopSupplyTsk);      
+      //console.log('endLoopSupply['+numTsk+']=', endLoopSupplyTsk);      
       };
       //-------------------
       // Determine regionLayout
@@ -907,11 +907,11 @@
       regionCodeAry.sort();
       //console.log('av.nut['+numTsk+'].uiSub.regionCode.sort =', regionCodeAry);
       regionCodeGroup = regionCodeAry.join();
-      console.log('regionCodeGroup', regionCodeGroup);
+      //console.log('regionCodeGroup', regionCodeGroup);
       if (null != regionCodeGroup) {
         if (null != av.sgr.regionLookup[regionCodeGroup])
         av.nut[numTsk].uiAll.regionLayout = av.sgr.regionLookup[regionCodeGroup];
-        console.log('av.nut['+numTsk+'].uiAll.regionLayout=', av.nut[numTsk].uiAll.regionLayout);
+        //console.log('av.nut['+numTsk+'].uiAll.regionLayout=', av.nut[numTsk].uiAll.regionLayout);
       } else { 
         console.log('Error: Why is regionCode empty? regionCode = ', av.nut[numTsk].uiSub.regionCode); 
       }
