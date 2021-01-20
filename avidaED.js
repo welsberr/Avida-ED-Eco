@@ -2390,7 +2390,7 @@ require([
     //console.log('before defaultslide value');
     var muteSlideDefault = 95.4242509439325;
     // results in 2% as a default 
-    var muteDefault = (Math.pow(10, (muteSlideDefault / 200)) - 1).toFixed(3);
+    var muteDefault = (Math.pow(10, (muteSlideDefault / 200)) - 1).toFixed(1);
     var slides = $('#mutePopSlide').slider({
       range: 'min',   /*causes the left side of the scroll bar to be grey */
       value: muteSlideDefault,
@@ -2399,12 +2399,12 @@ require([
       theme: 'summer',
       slide: function (event, ui) {
         var tmpVal = (Math.pow(10, (ui.value / 200)) - 1);
-        if (12 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }
+        if (10 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }     //had been 12, but 10 is more consistent with 2 sig figs
         else if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
         else if (0.3 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
         else {tmpVal = tmpVal.toFixed(2); }
         //put the value in the text box 
-        //console.log('input', tmpVal, '; slide=', ui.value);
+        // console.log('input', tmpVal, '; slide=', ui.value);
         $('#mutePopInput').val(tmpVal); //put slider value in the text near slider 
       }
     });
@@ -2426,7 +2426,7 @@ require([
         
         //av.ind.settingsChanged = true;
         if (av.debug.trace) { console.log('Mute changed', av.ind.settingsChanged); };
-        av.post.addUser('mutePopInput =' + document.getElementById('mutePopInput').value,  '1add ? 949');
+        av.post.addUser('mutePopInput =' + av.dom.mutePopInput.value,  '1add ? 949');
       } 
       else {
         av.ptd.validMuteInuput = false;
@@ -2672,7 +2672,7 @@ require([
     //console.log('before defaultslide value');
     var muteSlideDefault = 190.848501887865
     /* results in 2% as a default */
-    var muteDefault = (Math.pow(10, (muteSlideDefault / 400)) - 1).toFixed(3);
+    var muteDefault = (Math.pow(10, (muteSlideDefault / 400)) - 1).toFixed(1);
     var slides = $('#orgMuteSlide').slider({
       orientation: "vertical",
       range: 'min',   /*causes the left side of the scroll bar to be grey */
@@ -2732,46 +2732,6 @@ require([
       }
     });
   });
-
-// need to get error messagse working 
-
-//--------------------------------------------------------------------------------------------------- $ slideOrganism --
-//Slider based on interavals with break points; array defined in globals. 
-    //The problem with this one is that if the value is not the array, it cannot find the index
-/*  $(function slideOrganism() {
-    var muteDefault = 2.0;
-    var muteSlideDefault = av.ptd.muteScaleAry.indexOf(muteDefault.toFixed(1));
-    console.log('muteDefault=', muteDefault.toFixed(1), '; muteSlideDefault=', muteSlideDefault, '; max=', av.ptd.muteScaleAry.length-1);
-    var slides = $('#orgMuteSlide').slider({
-      // range: 'min',   //causes the left side of the scroll bar to be grey 
-      value: muteSlideDefault,
-      min: 0,
-      max: av.ptd.muteScaleAry.length-1,
-      slide: function (event, ui) {
-        console.log('ui.value=', ui.value, '; scale=',av.ptd.muteScaleAry[ui.value]);
-        $('#orgMuteInput').val( av.ptd.muteScaleAry[ui.value] ); //put slider value in the text near slider 
-        //put the value in the text box 
-        av.ind.settingsChanged = true;
-        if (av.debug.trace) { console.log('orSlide changed', av.ind.settingsChanged); }
-      }
-    });
-    // initialize 
-    $('#orgMuteInput').val(muteDefault);
-    
-    //The problem with this one is that if the value is not the array, it cannot find the index
-    $('#orgMuteInput').change(function () {
-      console.log('this.value=', this.value);
-      var tmpVal = Number(this.value);
-      slides.slider('value', av.ptd.muteScaleAry.indexOf(tmpVal.toFixed(1)) );
-      av.ind.settingsChanged = true;
-      if (av.debug.trace) { console.log('orgMute changed', av.ind.settingsChanged); }
-      if (av.debug.trace) console.log('in mute change');
-      av.post.addUser('muteInput =' + document.getElementById('orgMuteInput').value + '1949');
-      console.log('this.value=', this.value, '; slider=', av.ptd.muteScaleAry.indexOf(tmpVal.toFixed(1)) );
-    });
-  });
-  //console.log(',av.ptd.muteScaleAry=' ,av.ptd.muteScaleAry);
-*/
 
   //triggers flag that requests more data when the settings dialog is closed.
   //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button

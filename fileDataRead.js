@@ -553,10 +553,17 @@
     
     av.fzr.actConfig.size = av.fzr.actConfig.cols * av.fzr.actConfig.rows;
     
-    document.getElementById('mutePopInput').value = dict.COPY_MUT_PROB*100;
-    //var event = new Event('change');
+    av.dom.mutePopInput.value = '2.0';
+    if (av.utl.isNumber( dict.COPY_MUT_PROB) ) {
+      document.getElementById('mutePopInput').value = dict.COPY_MUT_PROB*100;
+      av.dom.mutePopInput.value = (dict.COPY_MUT_PROB*100).toFixed(1);
+    };
+    
+    // I think this creates an event so the slider gets updated
     var event = new window.CustomEvent('change');
     document.getElementById('mutePopInput').dispatchEvent(event);
+    
+    
     if (0==dict.BIRTH_METHOD) {
       dijit.byId('childParentRadio').set('checked', true);
       dijit.byId('childRandomRadio').set('checked', false);

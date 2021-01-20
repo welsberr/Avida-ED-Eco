@@ -79,7 +79,7 @@
     var taskStr='';
     var tmpStr='';
     var cellUnit = '';
-    //console.log(from, 'called av.grd.setMapData: av.grd.msg.fitness=',av.grd.msg.fitness);
+    console.log(from, 'called av.grd.setMapData: av.grd.msg.fitness=',av.grd.msg.fitness);
     if (undefined != av.grd.msg.fitness) {
       //console.log('av.grd.msg', av.grd.msg);
       //console.log('av.grd.mxFit=', av.grd.mxFit, '; av.grd.msg.fitness.maxVal=', av.grd.msg.fitness.maxVal, '; low limit=',
@@ -317,7 +317,7 @@
     //console.log('mode', document.getElementById("colorMode").value, '; fill', av.grd.fill);
     lngth = av.grd.fill.length;
     //console.log('av.grd.fill.length=',av.grd.fill.length);
-    if (0<av.grd.fill.length){
+    if (0 < av.grd.fill.length){
       if ("Ancestor Organism" == document.getElementById("colorMode").value) {
         for (ii = 0; ii < lngth; ii++) {
           cc = ii % av.grd.cols;
@@ -349,15 +349,15 @@
             //console.log('ii', ii, '; msg.ancestor.data[ii]',av.grd.msg.ancestor.data[ii]);
             if ('-' === av.grd.msg.ancestor.data[ii]) av.grd.cntx.fillStyle = '#000';  //not there
             else {
-              av.grd.cntx.fillStyle = '#0B0';
-              console.log('fill[', ii, '] = ', av.grd.fill[ii], 'ancestor != -;   =======================================');
+              av.grd.cntx.fillStyle = '#0B0';    //non-viable grey
+              //console.log('fill[', ii, '] = ', av.grd.fill[ii], 'ancestor != -;   =======================================');
             } //not viable
           }
           else if (0 == av.grd.fill[ii] && 'Ancestor Organism' == document.getElementById("colorMode").value) {
             //console.log('fill[', ii, '] = ', av.grd.fill[ii], 'default kid color');
             av.grd.cntx.fillStyle = av.color.defaultKidColor;
           }
-          else if (0 > av.grd.fill[ii]) {
+          else if (0 >= av.grd.fill[ii]) {
             //console.log('fill[', ii, '] = ', av.grd.fill[ii], '; type=',document.getElementById("colorMode").value,'; fill out of bounds');
             //console.log('fill out of bounds');
             av.grd.fill[ii] = 0;
@@ -368,6 +368,9 @@
             //console.log('fill[', ii, '] = ', av.grd.fill[ii], 'Offspring Cost out of bounds');
             console.log('Offspring Cost out of bounds');
             av.grd.cntx.fillStyle = '#090';
+          }
+          else if ('Offspring Cost' == document.getElementById("colorMode").value && 0 >= av.grd.fill[ii]) {
+            av.grd.cntx.fillStyle = '#0B0';    //non-viable grey
           }
           else {  //av.utl.get_color0 = function(cmap, dx, d1, d2)
             av.grd.cntx.fillStyle = av.utl.get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax);
@@ -742,19 +745,14 @@
       av.grd.sCtx.font = "14px Arial";
       av.grd.sCtx.fillStyle = "#000";
       var maxTxtWd = gradWidth / 5;
-      var place = 2;
       var xx = 0;
       var marks = 4;
       var txt = "";
-      if (av.grd.fillmax > 1000) {
-        place = 0;
-      }
-      else if (av.grd.fillmax > 100) {
-        place = 1;
-      }
+
       for (var ii = 0; ii <= marks; ii++) {
         xx = ii * av.grd.fillmax / marks;
-        txt = xx.formatNum(place);  //2 in this case is number of decimal places
+        txt = av.utl.toMetric( xx, 0);
+        if (0.0004 > xx ) { txt = xx.formatNum(0); } //2 in this case is number of decimal places
         var txtW = av.grd.sCtx.measureText(txt).width;
         xx = xStart + ii * gradWidth / marks - txtW / 2;
         av.grd.sCtx.fillText(txt, xx, legendHt - 2, maxTxtWd);
