@@ -79,7 +79,7 @@
     var taskStr='';
     var tmpStr='';
     var cellUnit = '';
-    console.log(from, 'called av.grd.setMapData: av.grd.msg.fitness=',av.grd.msg.fitness);
+    //console.log(from, 'called av.grd.setMapData: av.grd.msg.fitness=',av.grd.msg.fitness);
     if (undefined != av.grd.msg.fitness) {
       //console.log('av.grd.msg', av.grd.msg);
       //console.log('av.grd.mxFit=', av.grd.mxFit, '; av.grd.msg.fitness.maxVal=', av.grd.msg.fitness.maxVal, '; low limit=',
@@ -318,6 +318,8 @@
     lngth = av.grd.fill.length;
     //console.log('av.grd.fill.length=',av.grd.fill.length);
     if (0 < av.grd.fill.length){
+      //console.log('in av.grd.drawKids: data type =', document.getElementById("colorMode").value);
+      //console.log('av.grd.fill=',av.grd.fill);
       if ("Ancestor Organism" == document.getElementById("colorMode").value) {
         for (ii = 0; ii < lngth; ii++) {
           cc = ii % av.grd.cols;
@@ -344,33 +346,34 @@
           rr = Math.floor(ii / av.grd.cols);     //was trunc
           xx = av.grd.marginX + av.grd.xOffset + cc * av.grd.cellWd;
           yy = av.grd.marginY + av.grd.yOffset + rr * av.grd.cellHt;
-
           if (null === av.grd.fill[ii]) {
             //console.log('ii', ii, '; msg.ancestor.data[ii]',av.grd.msg.ancestor.data[ii]);
-            if ('-' === av.grd.msg.ancestor.data[ii]) av.grd.cntx.fillStyle = '#000';  //not there
+            if ('-' === av.grd.msg.ancestor.data[ii]) av.grd.cntx.fillStyle = '#000';  //not there = black
             else {
-              av.grd.cntx.fillStyle = '#0B0';    //non-viable grey
-              //console.log('fill[', ii, '] = ', av.grd.fill[ii], 'ancestor != -;   =======================================');
-            } //not viable
+              //data error
+              av.grd.cntx.fillStyle = '#0B0';    //Green
+              console.log('fill[', ii, '] = ', av.grd.fill[ii], 'ancestor != -;   ======================================');
+            } 
           }
-          else if (0 == av.grd.fill[ii] && 'Ancestor Organism' == document.getElementById("colorMode").value) {
-            //console.log('fill[', ii, '] = ', av.grd.fill[ii], 'default kid color');
+          else if (0 >= av.grd.fill[ii] && 'Ancestor Organism' == document.getElementById("colorMode").value) {
+            console.log('fill[', ii, '] = ', av.grd.fill[ii], 'default kid color, this should not happen');
             av.grd.cntx.fillStyle = av.color.defaultKidColor;
           }
-          else if (0 >= av.grd.fill[ii]) {
+          else if (0 > av.grd.fill[ii]) {
             //console.log('fill[', ii, '] = ', av.grd.fill[ii], '; type=',document.getElementById("colorMode").value,'; fill out of bounds');
-            //console.log('fill out of bounds');
+            console.log('Error: fill out of bounds =====================================================================');
             av.grd.fill[ii] = 0;
             av.grd.cntx.fillStyle = av.utl.get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax);
 
           }
           else if ('Offspring Cost' == document.getElementById("colorMode").value && 999 < av.grd.fill[ii]) {
             //console.log('fill[', ii, '] = ', av.grd.fill[ii], 'Offspring Cost out of bounds');
-            console.log('Offspring Cost out of bounds');
-            av.grd.cntx.fillStyle = '#090';
+            console.log('Error: Offspring Cost out of bounds');
+            av.grd.cntx.fillStyle = '#090';   //green
           }
-          else if ('Offspring Cost' == document.getElementById("colorMode").value && 0 >= av.grd.fill[ii]) {
-            av.grd.cntx.fillStyle = '#0B0';    //non-viable grey
+          else if (0 >= av.grd.msg.gestation.data[ii]) {
+            av.grd.cntx.fillStyle = '#888';    //non-viable grey. added recently
+            //console.log('non-viable found');
           }
           else {  //av.utl.get_color0 = function(cmap, dx, d1, d2)
             av.grd.cntx.fillStyle = av.utl.get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax);
@@ -643,7 +646,7 @@
     av.grd.cntx.fillRect(av.grd.xOffset, av.grd.yOffset, av.grd.sizeX, av.grd.sizeY);
 
     av.grd.backgroundSquares();
-  }
+  };
 
   //--------------- Draw legend --------------------------------------
   //Draws the color and name of each Ancestor (parent) organism
