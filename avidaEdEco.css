@@ -1293,7 +1293,7 @@ select:disabled::-ms-expand {
     background: #ccc;
   }
 
-/* Checkbox next */
+/* Checkbox this code creates a black circle version instead of the blue check
 
 input[type="checkbox"] {
   box-shadow:none !important;
@@ -1309,14 +1309,14 @@ input[type="checkbox"] {
   box-shadow:none;
 }
 input[type="checkbox"]:checked {
-  background: white;
+  background: red;
   border: 4px solid black;
   box-shadow:none;
 }
 checkbox:focus {
   box-shadow:none;
 }
-
+*/
 /********************************************************************************* End Custom Select/Options DropDown */
 
 /************************************************************************ used in examples will be deleted eventually */
