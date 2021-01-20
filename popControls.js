@@ -100,6 +100,38 @@
 
     av.dom.childParentRadio.disabled = true;
     av.dom.childRandomRadio.disabled = true;
+    
+    var tsk='neq';
+    var len = av.sgr.logicNames.length;
+    for (var ndx=0; ndx<len; ndx++) {
+      tsk = av.sgr.logicNames[ndx];
+      document.getElementById(tsk+'0geometry').disabled = true;
+      document.getElementById(tsk+'0regionLayout').disabled = true;
+      document.getElementById(tsk+'0supplyType').disabled = true;
+      document.getElementById(tsk+'WsupplyType').disabled = true;
+      document.getElementById(tsk+'0periodCheckbox').disabled = true;
+      document.getElementById(tsk+'0periodTimeHolder').disabled = true;
+      document.getElementById(tsk+'0initial').disabled = true;
+      for (var sub=1; sub<av.nut.numRegionsinHTML; sub++) {
+        document.getElementById(tsk+sub+'supplyType').disabled = true;
+        //console.log('html:', tsk+sub+'supplyPatternSelect');
+        document.getElementById(tsk+sub+'supplyPatternSelect').disabled = true;
+        document.getElementById(tsk+sub+'periodNp').disabled = true;
+        document.getElementById(tsk+sub+'hiSide').disabled = true;
+        document.getElementById(tsk+sub+'initialHiNp').disabled = true;
+        document.getElementById(tsk+sub+'initialLoNp').disabled = true;
+        document.getElementById(tsk+sub+'inflowHiNp').disabled = true;
+        document.getElementById(tsk+sub+'inflowLoNp').disabled = true;
+        document.getElementById(tsk+sub+'outflowHiNp').disabled = true;
+        document.getElementById(tsk+sub+'outflowLoNp').disabled = true;
+      };
+    };
+    document.getElementById('allSugarGeometry').disabled = true;
+    document.getElementById('allsugarSupplyType').disabled = true;
+    document.getElementById('allSugarRegionLayout').disabled = true;
+    document.getElementById('allSugarPattern').disabled = true;
+    document.getElementById('allSugarDetails').disabled = true;
+
     /*
      * These checkboxes no longer exist; tiba delete by 2021
     av.dom.notose.disabled = true;
@@ -156,6 +188,37 @@
 
     av.dom.experimentRadio.disabled = false;
     av.dom.demoRadio.disabled = false;
+
+    var tsk='neq';
+    var len = av.sgr.logicNames.length;
+    for (var ndx=0; ndx<len; ndx++) {
+      tsk = av.sgr.logicNames[ndx];
+      document.getElementById(tsk+'0geometry').disabled = false;
+      document.getElementById(tsk+'0regionLayout').disabled = false;
+      document.getElementById(tsk+'0supplyType').disabled = false;
+      document.getElementById(tsk+'WsupplyType').disabled = false;
+      document.getElementById(tsk+'0periodCheckbox').disabled = false;
+      document.getElementById(tsk+'0periodTimeHolder').disabled = false;
+      document.getElementById(tsk+'0initial').disabled = false;
+      for (var sub=1; sub<av.nut.numRegionsinHTML; sub++) {
+        document.getElementById(tsk+sub+'supplyType').disabled = false;
+        document.getElementById(tsk+sub+'supplyPatternSelect').disabled = false;
+        document.getElementById(tsk+sub+'periodNp').disabled = false;
+        document.getElementById(tsk+sub+'hiSide').disabled = false;
+        document.getElementById(tsk+sub+'initialHiNp').disabled = false;
+        document.getElementById(tsk+sub+'initialLoNp').disabled = false;
+        document.getElementById(tsk+sub+'inflowHiNp').disabled = false;
+        document.getElementById(tsk+sub+'inflowLoNp').disabled = false;
+        document.getElementById(tsk+sub+'outflowHiNp').disabled = false;
+        document.getElementById(tsk+sub+'outflowLoNp').disabled = false;
+      };
+    };
+
+    document.getElementById('allSugarGeometry').disabled = false;
+    document.getElementById('allsugarSupplyType').disabled = false;
+    document.getElementById('allSugarRegionLayout').disabled = false;
+    document.getElementById('allSugarPattern').disabled = false;
+    document.getElementById('allSugarDetails').disabled = false;
 
     //reset Ancestor Color stack
     //av.parents.Colors = av.color.parentColorList.slice();   //delete this later
@@ -296,7 +359,7 @@
         else {
           //collect setup data to send to avida in a normal run.  
           //Order matters. Files must be created first. Then files must be sent before some other stuff.
-          av.fwt.form2cfgFolder();          //creates avida.cfg and environment.cfg and ancestor.txt and ancestors_manual.txt from form
+          av.fwt.form2cfgFolder();  //creates avida.cfg and environment.cfg and ancestor.txt and ancestors_manual.txt from form
         };
         if ('prepping' === av.grd.runState) {
           av.msg.importConfigExpr('av.ptd.runPopFn ln301');   // send importExpr message to avida
