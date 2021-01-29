@@ -241,6 +241,7 @@
     var ndx = 1;
     var react_arguLen = av.sgr.react_argu.length;
     var rslt;
+    var kk=0; // indext into uiSub
     
     if (false) {
       console.log(from,'called av.fwt.dom2nutUIfields: react_arguLen=',react_arguLen, 
@@ -248,9 +249,9 @@
         '; uiSub_checkLen=', uiSub_checkLen, '; ui_subDom_txt=', ui_subDom_txt);
     }
     for (var ii=0; ii< logiclen; ii++) {      //9
-      numtsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
-      tsk = av.sgr.logicNames[ii];      //3 letter logic names
-      tskvar = av.sgr.logicVnames[ii];   // variable length logic tasks names as required by Avida
+      numtsk = av.sgr.logEdNames[ii];     //puts names in order they are on avida-ed user interface
+      tsk = av.sgr.logicNames[ii];        //3 letter logic names
+      tskvar = av.sgr.logicVnames[ii];    // variable length logic tasks names as required by Avida
       // need an argument list to hold data relevant to getting data from dom or need to do each individually
       
       for (jj=0; jj < uiAllDomLen; jj++) {
@@ -261,21 +262,16 @@
         //console.log('av.nut['+numtsk+'].uiAll['+arguDom+']=');
         //console.log(av.nut[numtsk].uiAll[arguDom]);
       };
-      //console.log('av.nut['+numtsk+'].uiAll=',av.nut[numtsk].uiAll);
       av.nut[numtsk].uiAll.regionsNumOf = av.nut[numtsk].uiAll.regionLayout[0];
-      
-      //console.log('av.nut['+numtsk+'].uiAll.regionsNumOf=', av.nut[numtsk].uiAll.regionsNumOf, '; rLayout', av.nut[numtsk].uiAll.regionLayout);
-      // will need to go through a list of names later so maybe I should make the dictionary
-       
+      console.log('av.nut['+numtsk+'].uiAll=',av.nut[numtsk].uiAll);
+             
       //start on the potential subdishes next
       //console.log('SubDishes Now -----------------uiSub_txt length=', ui_subDom_txt);
-      for (kk=1; kk <= av.nut[numtsk].uiAll.regionsNumOf; kk++) {
-        //subregion not currently used. using regionCode, regionName, regionNdx
-        //av.nut[numtsk].uiSub.regionSet[kk] = kk;      //not sure this is needed or make sense. needs work when get past one reagion
-        
+      for (var nn=1; nn <= av.nut[numtsk].uiAll.regionsNumOf; nn++) {
+        if ('global' == av.nut[numtsk].uiAll.geometry ) { kk = 0; } else { kk = nn; };
         regionLayout = av.nut[numtsk].uiAll.regionLayout;
         
-        //seemed to have inconsistent error, but it went away. left the debug consol.logs for now
+        //seemed to have inconsistent error, but it went away. left the debug console.logs for now
         //console.log('regionLayout = av.nut['+numtsk+'].uiAll.regionLayout=', av.nut[numtsk].uiAll.regionLayout);
         
         //console.log('av.nut['+numtsk+'].uiSub.regionName['+kk+']=', av.nut[numtsk].uiSub.regionName[kk]);
@@ -396,7 +392,7 @@
         av.nut[numtsk].resrc.outflowx2[jj] += av.nut.wrldCols-1;
         av.nut[numtsk].resrc.outflowy2[jj] += av.nut.wrldRows-1;
         
-        console.log('av.nut['+numtsk+'].uiAll.supplyType=', av.nut[numtsk].uiAll.supplyType);
+        //console.log('av.nut['+numtsk+'].uiAll.supplyType=', av.nut[numtsk].uiAll.supplyType);
         switch ( av.nut[numtsk].uiAll.supplyType.toLowerCase() ) {
           case 'none':
             av.nut[numtsk].react.value[0] = 0;
@@ -459,18 +455,6 @@
           //   'y2=', av.nut[numtsk].resrc.inflowy2[jj]);
           //av.nut[numtsk].resrc.inflow[jj] = av.nut[numtsk].uiSub.[jj];
           
- /*
-          av.nut[numtsk].react.max[jj] = 1;
-          av.nut[numtsk].react.max_count[jj] = 1;
-          av.nut[numtsk].react.min[jj] = 0.99;
-          av.nut[numtsk].react.name[jj] = tsk+'000';
-          av.nut[numtsk].react.resource[jj] = av.nut[numtsk].react.name[jj];
-          av.nut[numtsk].react.resource[jj] = tsk+'000';
-          av.nut[numtsk].react.task[jj] = tskvar;
-          av.nut[numtsk].react.type[jj] = 'pow';
-          av.nut[numtsk].react.depletable[jj] = 1;
-*/ 
-
           console.log('av.nut['+numtsk+'].uiSub.supplyType['+jj+']=', av.nut[numtsk].uiSub.supplyType[jj]);
           switch ( av.nut[numtsk].uiSub.supplyType[jj].toLowerCase() ) {
             case 'infinite':
@@ -505,105 +489,6 @@
     };
   };
   //---------------------------------------------------------------------------------------- end nutUI2cftParameters  --
-
-  // the function av.fwt.form2NutrientTxt needs to be replaced with av.fwt.NutStruct2environment_cfg
-  //----------------------------------------------------------------------------------------- av.fwt.form2NutrientTxt --
-  /* delete in 2021
-  av.fwt.form2NutrientTxt = function (idStr, toActiveConfigFlag, from) {
-    console.log(from + ' called av.fwt.form2NutrientTxt ==============================================================');
-    var geometry = 'global';
-    var supplyType = 'Infinite';
-    var ndx = 1;           // only using the first subsection for now
-    var tsk; var etsk; var atsk;
-    var regionCode = '00';
-    var regionName = '1All';  //for whole dish
-    var region_ndx = 1;
-    var domName; 
-    var sgrPerCell =1;
-    var regionInit = 1;
-    var rname = 'unk';
-    var numtasks = av.sgr.logEdNames.length;
-    var txt = '';
-    var cols = 1 ; var rows = 1; var numCells = 1; 
-
-    //Find grid size;
-    cols = Number(av.dom.sizeCols.value);
-    rows = Number(av.dom.sizeRows.value);
-    numCells = cols * rows; 
-    //console.log('cols=', av.dom.sizeCols.value, '; rows=', av.dom.sizeRows.value, '; numDCells=',  numCells);
-
-    for (var ii=0; ii< numtasks; ii++) {
-    //for (var ii=0; ii< 0; ii++) {
-      etsk = av.sgr.logEdNames[ii];
-      tsk = av.sgr.logicNames[ii];
-      atsk = av.sgr.logicVnames[ii];
-      domName = tsk + '0geometry';
-      geometry = document.getElementById(domName).value;
-      //console.log('domName=', domName, '; value=', geometry);
-      if ('global' == geometry.toLowerCase()) {
-        regionName = '1All';  //for whole dish;           //alway the case for global.
-        region_ndx = av.sgr.regionQuarterCodes.indexOf(regionName);
-        regionCode = '00';        //will need to find later based subdish+regionName
-        rname = tsk + regionCode;
-        supplyType = document.getElementById(tsk+'0supplyType').value.toLowerCase();
-        //console.log('regionCode=', regionCode, '; regionName=', regionName, '; rname=', rname, '; suppplyType=', supplyType);      
-        switch (supplyType) {
-          case 'none':
-            txt += 'REACTION ' + rname + ' ' + atsk + ' process:value=0:type=pow  requisite:max_count=1\n';
-            break;
-          case 'infinite':
-            txt += 'REACTION ' + rname + ' ' + atsk + ' process:value=' + av.sgr.reactValues[ii] + ':type=pow  requisite:max_count=1\n';
-            break;
-        }; // end of glbal switch
-      }
-      else {   // local   using avida defaults for now will separate out diffusion later.    
-        ndx = 1;   // only doing the first subsection for now
-        regionName = document.getElementById(tsk+ndx+'regionName').textContent;
-        region_ndx = av.sgr.regionQuarterNames.indexOf(regionName);
-        regionCode = av.sgr.regionQuarterCodes[region_ndx];
-        rname = tsk + regionCode;
-        supplyType = document.getElementById(tsk+ndx+'supplyType').value.toLowerCase();
-        //console.log('regionCode=', regionCode, '; regionName=', regionName, '; rname=', rname, '; suppplyType=', supplyType);
-        switch (supplyType) {
-          case 'none':
-            txt += 'RESOURCE ' + rname + ':geometry=grid:initial=0' + ' \n';
-            txt += 'REACTION ' + rname + ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:max=1:min=1  requisite:max_count=1 \n';
-            break;
-          case 'infinite':
-            sgrPerCell = av.sgr.nutdft.uiSub.initialHi;
-            regionInit = numCells * sgrPerCell;
-            txt += 'RESOURCE ' + rname + ':geometry=grid:initial=' + regionInit + ':xdiffuse=0:ydiffuse=0\n';   //cells should have one, but not deplete any
-            txt += 'REACTION ' + rname +  ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:depletable=0 requisite:max_count=1 \n';
-            break;
-          case 'finite':
-            // later will get from av.nut
-            sgrPerCell = Number(document.getElementById(tsk+ndx+'initialHiNp').value);
-            regionInit = numCells * sgrPerCell;
-            //console.log('tsk=',tsk,'; ndx=',ndx,'; sgrPerCell=', sgrPerCell, '; diffusion checkbox = ', document.getElementById(tsk+ndx+'diffuseCheck').checked );
-
-            //only have diffusion = 0 implemented at this time
-            txt += 'RESOURCE ' + rname + ':geometry=grid:initial=' + regionInit + ':xdiffuse=0:ydiffuse=0\n';
-            txt += 'REACTION ' + rname +  ' ' + atsk + ' process:resource='+ rname +':value=' + av.sgr.reactValues[ii] + ':type=pow:max=1:min=1 requisite:max_count=1 \n';
-            break;
-        };  // end of LOCAL swtich
-      };
-
-    }// end of loop to go thru all the logic functions. 
- 
-     if (true) { 
-      console.log('end of End of av.fwt.form2NutrientTxt');   //av.debug.fio
-      av.nut_dom_cfg = {};
-      av.nut_dom_cfg = JSON.parse(JSON.stringify(av.nut));
-      console.log('av.nut_dom_cfg = ', av.nut_dom_cfg); 
-      console.log('av=', av);
-    }
-   
-    //  if ('cfg'==idStr) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');  // 
-    if (toActiveConfigFlag) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.form2NutrientTxt');
-    else {av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.form2NutrientTxt');}
-  };
-*/
-  /*---------------------------------------------------------------------------------- End of av.fwt.form2NutrientTxt --*/
 
   //--------------------------------------------------------------------------------------------- av.fwt.nut2cfgFile  --
   av.fwt.nut2cfgFile = function (idStr, toActiveConfigFlag, from) {

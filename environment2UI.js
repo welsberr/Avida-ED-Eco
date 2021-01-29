@@ -166,7 +166,7 @@
     'use strict';
     var lineErrors = '';  //was it a valid line wih tout errors
     // if (av.dbg.flg.nut) { console.log('nut: ', from, ' called av.env.reSrcLineParse'); }
-    // if (av.dbg.flg.nut) { console.log('lnArray = ', lnArray); }
+    //if (av.dbg.flg.nut) { console.log('lnArray = ', lnArray); }
     var pairArray = lnArray[1].split(':');
     var pear = [];
     var cellboxdata = [];
@@ -198,7 +198,7 @@
         };   
       };
       if (av.dbg.flg.nut) { 
-        //console.log('pairArray = ', pairArray);
+        console.log('reSrce: pairArray = ', pairArray);
         //console.log('; geometry['+numTsk+']=', geometry); 
       }
 
@@ -360,7 +360,7 @@
     var lineArray;
     var ii = 0;
     if (true) {
-      console.log('start of av.env.nutrientParse');
+      console.log('------------------------------------ start of av.env.nutrientParse');
       av.nut_beforeParse = {};
       av.nut_beforeParse = JSON.parse(JSON.stringify(av.nut));
       console.log('av.nut_beforeParse = ', av.nut_beforeParse); 
@@ -414,7 +414,7 @@
         if (null !== matchResult) { 
           //if (av.dbg.flg.nut) { console.log('reActLineParse: lnArray=', lineArray); }
           reacError = av.env.reActLineParse(lineArray, 'av.env.nutrientParse');
-          if ('' != reacError)console.log('reActLineParse: lineArray=', lineArray, '; reacError=', reacError);          
+          if ('' != reacError) console.log('reActLineParse: lineArray=', lineArray, '; reacError=', reacError);          
         }
         else {
           reacError='';
@@ -435,8 +435,9 @@
         };
 
         if ('' !== rsrcError || '' !== reacError || '' != cellError) {
-          console.log('-------------------------------------------------------errors in line: ii=', ii, '; aline=', aline);
+          console.log('------------------------------------------------------- aline=', aline);
           errors += 'ii='+ii+'; rsrcError='+rsrcError+'; reacError='+reacError+'; cellError='+cellError+'\n';
+          console.log('ii='+ii+'; rsrcError='+rsrcError+'; reacError='+reacError+'; cellError='+cellError);
         };
 
       //if (av.dbg.flg.nut) console.log('--------------------- end of processing a line that was longer than 3 characters -------------------------------');
@@ -818,7 +819,7 @@
             // console.log('av.nut['+numTsk+'].resrc.initial['+sub+']=', av.nut[numTsk].resrc.initial[sub]);
             if ( av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.initial[sub])) ) {
               if (0 == parseFloat(av.nut[numTsk].resrc.initial[sub]) ) {
-                av.nut[numTsk].uiSub.supplyType[sub] = 'none';
+                av.nut[numTsk].uiSub.supplyType[sub] = 'none'; 
               } 
               else if (0 < av.nut[numTsk].resrc.initial[sub]) {
                 av.nut[numTsk].uiSub.supplyType[sub] = 'finite';
@@ -828,8 +829,8 @@
               }
               av.nut[numTsk].uiAll.supplyType = 'uiSub';
             };
+            
             //If there is also CELL initial, CELL over writes RESOURCE inital for Avida-ED. In avida, they are additive
-            console.log('av.nut['+numTsk+'].cell.initial['+sub+']=', av.nut[numTsk].cell.initial[sub]);
             if ( av.utl.isNumber(parseFloat(av.nut[numTsk].cell.initial[sub])) ) {
               if (0 == parseFloat(av.nut[numTsk].cell.initial[sub]) ) {
                 av.nut[numTsk].uiSub.supplyType[sub] = 'none';                        //None
@@ -843,7 +844,11 @@
                 }
               }
               av.nut[numTsk].uiAll.supplyType = 'uiSub';
+            } 
+            else if ( 1 < av.nut[numTsk].uiAll.regionsNumOf ) { 
+              console.log('av.nut['+numTsk+'].cell.initial['+sub+']=', av.nut[numTsk].cell.initial[sub]); 
             };
+
             //console.log('av.nut['+numTsk+'].resrc.inflow['+sub+']=', av.nut[numTsk].resrc.inflow[sub]);
             if (av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.inflow[sub])) && av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.outflow[sub])) ) {
               //console.log('av.nut['+numTsk+'].resrc.outflow['+sub+']=', av.nut[numTsk].resrc.outflow[sub]);
@@ -853,19 +858,27 @@
               if (0 < parseFloat(av.nut[numTsk].resrc.inflow[sub]) && 
                   0.0 < parseFloat(av.nut[numTsk].resrc.outflow[sub]) && parseFloat(av.nut[numTsk].resrc.outflow[sub]) <= 1) {
                   
-                // inflow and outflow exist and are numbers; do the defined areas match?   
-                console.log('av.nut['+numTsk+'].resrc.inflowx1['+sub+']=', av.nut[numTsk].resrc.inflowx1[sub]);
-                if (av.nut[numTsk].resrc.inflowx1[sub]===av.nut[numTsk].resrc.outflowx1[sub] && av.nut[numTsk].resrc.inflowx2[sub]===av.nut[numTsk].resrc.outflowx2[sub] && 
-                    av.nut[numTsk].resrc.inflowy1[sub]===av.nut[numTsk].resrc.outflowy1[sub] && av.nut[numTsk].resrc.inflowy2[sub]===av.nut[numTsk].resrc.outflowy2[sub] ) {
-                  console.log('av.nut['+numTsk+'].resrc.outflowx1['+sub+']=', av.nut[numTsk].resrc.outflowx1[sub]);
+                if ('global' != av.nut[numTsk]) {
+                  // grid: if inflow and outflow xy coordinates match then it is chemostate
+                  // inflow and outflow exist and are numbers; do the defined areas match?
+                  console.log('av.nut['+numTsk+'].resrc.inflowx1['+sub+']=', av.nut[numTsk].resrc.inflowx1[sub]);
+                  if (av.nut[numTsk].resrc.inflowx1[sub]===av.nut[numTsk].resrc.outflowx1[sub] && av.nut[numTsk].resrc.inflowx2[sub]===av.nut[numTsk].resrc.outflowx2[sub] && 
+                      av.nut[numTsk].resrc.inflowy1[sub]===av.nut[numTsk].resrc.outflowy1[sub] && av.nut[numTsk].resrc.inflowy2[sub]===av.nut[numTsk].resrc.outflowy2[sub] ) {
+                    console.log('av.nut['+numTsk+'].resrc.outflowx1['+sub+']=', av.nut[numTsk].resrc.outflowx1[sub]);
+                    av.nut[numTsk].uiSub.supplyType[sub] = 'chemostat';
+                    av.nut[numTsk].uiAll.supplyType = 'uiSub';
+                  }
+                  else { 
+                    console.log('av.nut['+numTsk+'].resrc.inflowy1['+sub+']=', av.nut[numTsk].resrc.inflowy1[sub]);
+                    av.nut[numTsk].uiSub.supplyType[sub] = 'flow';  //not implemented
+                    av.nut[numTsk].uiAll.supplyType = 'uiSub';
+                  };
+                } else {
+                  // global no check for matching xy coordinates
                   av.nut[numTsk].uiSub.supplyType[sub] = 'chemostat';
-                  av.nut[numTsk].uiAll.supplyType = 'uiSub';
-                }
-                else { 
-                  console.log('av.nut['+numTsk+'].resrc.inflowy1['+sub+']=', av.nut[numTsk].resrc.inflowy1[sub]);
-                  av.nut[numTsk].uiSub.supplyType[sub] = 'flow';  //not implemented
-                  av.nut[numTsk].uiAll.supplyType = 'uiSub';
-                };
+                  av.nut[numTsk].uiAll.supplyType = 'chemostat';
+                  console.log('av.nut['+numTsk+'].resrc.inflow['+sub+']=', av.nut[numTsk].resrc.inflow[sub]);
+                }  
               };  // end section where inflow and outflow have contains a numbers in the correct range
             }   // end of section where inflow exists and is a number
             

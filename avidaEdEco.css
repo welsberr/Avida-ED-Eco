@@ -778,19 +778,31 @@ details[open] summary:before {
                        'sumFootTxtClass sumFootTxtClass sumFootTxtClass     ssumFootTxtClass';
 */
 
-
 .sugarTitle { grid-area: sugarTitle; display: inline-block; width: 15px; }
 .geometryClass { grid-area: geometryClass; display: inline-block; }
 .regionLayoutClass { grid-area: regionLayoutClass; display: inline-block; }
 .supplyTypeDivClass { grid-area: supplyTypeDivClass; display: inline-block; }
+.supplyTypeDivWclass { grid-area: supplyTypeWClass; display: inline-block; }
 .periodGlobalCheck { grid-area: periodGlobalCheck; display: inline-block; }
 .periodTimeGlobClass { grid-area: periodTimeGlobClass; display: inline-block; }
 .initialGlobalClass { grid-area: initialGlobalClass; display: inline-block; }
 .sumFootTxtClass { grid-area: sumFootTxtClass; display: inline-block; justify-self: end; width: 95px; }
 
+.grid-sugar-summary-geo-basic-container {
+  display: inline-grid;
+  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeWClass supplyType0Class sumFootTxtClass initialGlobalClass';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
 .grid-sugar-summary-geo-global-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeDivClass sumFootTxtClass initialGlobalClass periodTimeGlobClass';
+  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeDivClass sumFootTxtClass initialGlobalClass';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugar-summary-geo-basic-chemostat-container {
+  display: inline-grid;
+  grid-template-areas: 'detailArrow sugarTitle geometryClass   supplyTypeWClass periodTimeGlobClass';
   justify-items: start;  justify-content: start; width: 100%;
 }
 

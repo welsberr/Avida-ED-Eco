@@ -1,0 +1,5 @@
+_globalTest
+
+AvidaED writes this file, but does not read it. 
+Changing this file by hand will not change the entryname. 
+You must change the file entryname.txt, to change the name within Avida-ED
