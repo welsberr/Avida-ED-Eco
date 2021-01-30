@@ -549,7 +549,7 @@ av.sgr.uiSubDom_num = ['initialHiNp', 'inflowHiNp', 'outflowHiNp',
                     'initialLoNp', 'inflowLoNp', 'outflowLoNp', 'periodNp'];  //names of arguements that have numerical values in the dom for each subdish
 av.sgr.uiSubDish_num = ['initialHiNp', 'inflowHiNp', 'outflowHiNp', 
                       , 'initialLoNp', 'inflowLoNp', 'outflowLoNp', 'periodNp', 'area'];  //names of arguements that have numerical values in av.nut[numtsk].uiSub
-av.sgr.ui_subDom_txt = ['supplyType', 'hiSide'];                      
+av.sgr.ui_subDom_txt = ['supplyType', 'hiSide'];
 
 av.sgr.uiSub_Check = [ 'diffuseCheck', 'periodCheck', 'gradientCheck' ];
 

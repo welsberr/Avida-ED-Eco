@@ -743,7 +743,8 @@
           document.getElementById(tsk+'0initialDiv').style.display = 'inline-block';
           document.getElementById(tsk+'0section').open = false;
           break;
-        case 'chemostat':
+        case 'chemostat': 
+          document.getElementById(tsk+'0summary').className = 'grid-sugar-summary-geo-basic-chemostat-container';
           //document.getElementById(tsk+'0periodCheckbox').style.display = 'inline-block';
           document.getElementById(tsk+'0periodTimeHolder').style.display = 'inline-block';
           //document.getElementById(tsk+'0summaryFooterText').style.display = 'inline-block';

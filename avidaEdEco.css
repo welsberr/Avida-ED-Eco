@@ -790,25 +790,24 @@ details[open] summary:before {
 
 .grid-sugar-summary-geo-basic-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeWClass supplyType0Class sumFootTxtClass initialGlobalClass';
+  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeWClass supplyTypeDivClass sumFootTxtClass initialGlobalClass';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+.grid-sugar-summary-geo-basic-chemostat-container {
+  display: inline-grid;
+  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeWClass supplyTypeDivClass sumFootTxtClass periodTimeGlobClass';
   justify-items: start;  justify-content: start; width: 100%;
 }
 
 .grid-sugar-summary-geo-global-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeDivClass sumFootTxtClass initialGlobalClass';
-  justify-items: start;  justify-content: start; width: 100%;
-}
-
-.grid-sugar-summary-geo-basic-chemostat-container {
-  display: inline-grid;
-  grid-template-areas: 'detailArrow sugarTitle geometryClass   supplyTypeWClass periodTimeGlobClass';
+  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeWClass supplyTypeDivClass sumFootTxtClass initialGlobalClass';
   justify-items: start;  justify-content: start; width: 100%;
 }
 
 .grid-sugar-summary-geo-global-chemostat-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sugarTitle geometryClass   supplyTypeDivClass periodTimeGlobClass';
+  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeDivClass supplyTypeDivClass periodTimeGlobClass';
   justify-items: start;  justify-content: start; width: 100%;
 }
 

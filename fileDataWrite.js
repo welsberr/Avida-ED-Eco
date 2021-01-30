@@ -298,33 +298,43 @@
         av.nut[numtsk].resrc.boxy[kk] = rslt.boxy;
         //console.log('av.nut['+numtsk+'].resrc.boxx['+kk+']; boxy =', av.nut[numtsk].resrc.boxx[kk], ';', av.nut[numtsk].resrc.boxy[kk]);
         
-        for (jj=0; jj< ui_subDom_txt; jj++) {
-          arguDom = av.sgr.ui_subDom_txt[jj];
-          //console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
-          //console.log('; dom=',document.getElementById(tsk+kk+arguDom).value ); 
-          av.nut[numtsk].uiSub[arguDom][kk] = document.getElementById(tsk+kk+arguDom).value;
-        };
+        if (0 == kk) {
+          if ('sgrBasic' == av.sgr.complexityLevel) { 
+            av.nut[numtsk].uiSub.supplyType[kk] = document.getElementById(tsk+'WsupplyType').value;
+          } else 
+            av.nut[numtsk].uiSub.supplyType[kk] = document.getElementById(tsk+'0supplyType').value;
+        } else {
+          for (jj=0; jj< ui_subDom_txt; jj++) {
+            arguDom = av.sgr.ui_subDom_txt[jj];
+            console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
+            console.log('; dom=',document.getElementById(tsk+kk+arguDom).value ); 
+            av.nut[numtsk].uiSub[arguDom][kk] = document.getElementById(tsk+kk+arguDom).value;
+
+          // error in this section - I think just does not work in summary section
+          //Need to fine area of subregions first. 
+          for (jj=0; jj< uiSubDom_numLen; jj++) {
+            arguDom = av.sgr.uiSubDom_num[jj];
+            console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
+            console.log('; dom=',document.getElementById(tsk+kk+arguDom).value ); 
+            if (av.utl.isNumber(Number(document.getElementById(tsk+kk+arguDom).value))) {
+              tmpNum = Number(document.getElementById(tsk+kk+arguDom).value);
+              if ('in' == arguDom.substr(0,2)) {
+                tmpNum = tmpNum / area;   //need to find area first
+              };
+              av.nut[numtsk].uiSub[arguDom][kk] = tmpNum;
+            }
+        };  //end uiSubDom_num 
+          };
+        }
+/* not in use right now
         for (jj=0; jj< uiSub_checkLen; jj++) {
           arguDom = av.sgr.uiSub_Check[jj];
-          //console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
-          //console.log('; dom=',document.getElementById(tsk+kk+arguDom).checked ); 
-//          av.nut[numtsk].uiSub[arguDom][kk] = document.getElementById(tsk+kk+arguDom).checked;
+          console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
+          console.log('; dom=',document.getElementById(tsk+kk+arguDom).checked ); 
+          av.nut[numtsk].uiSub[arguDom][kk] = document.getElementById(tsk+kk+arguDom).checked;
         };
+*/
         
-        // error in this section
-        //Need to fine area of subregions first. 
-        for (jj=0; jj< uiSubDom_numLen; jj++) {
-          arguDom = av.sgr.uiSubDom_num[jj];
-          //console.log('jj='+jj, '; av.nut['+numtsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
-          //console.log('; dom=',document.getElementById(tsk+kk+arguDom).value ); 
-          if (av.utl.isNumber(Number(document.getElementById(tsk+kk+arguDom).value))) {
-            tmpNum = Number(document.getElementById(tsk+kk+arguDom).value);
-            if ('in' == arguDom.substr(0,2)) {
-              tmpNum = tmpNum / area;   //need to find area first
-            };
-            av.nut[numtsk].uiSub[arguDom][kk] = tmpNum;
-          }
-        };        
       };   //end for kk   
 
     };  //end for ii
