@@ -191,7 +191,8 @@
         <div id='CanPutButtonHere'>
         </div>
         <div id='RtSideToggleButtons'>
-          <input type='button' id='StatsButton' class='toggleLftButton' value='Stats' onclick='av.ptd.rightInfoPanelToggleButton(this)'/><input id='SetupButton' type='button' class='toggleRitButton' value='Setup' onclick='av.ptd.rightInfoPanelToggleButton(this)'/>
+          <input type='button' id='StatsButton' class='toggleLftButton' value='Stats' onclick='av.ptd.rightInfoPanelToggleButton(this)'/>
+          <input id='SetupButton' type='button' class='toggleRitButton' value='Setup' onclick='av.ptd.rightInfoPanelToggleButton(this)'/>
         </div>
         <div id='ritePnlBtnHolder' class='ritePnlBtnHlderShow'>
           <img id='rtPnlButtonImg' src='images/rtPnlBtn2.png' alt='image to indicate button to open/close the right information panel'/>
@@ -715,16 +716,16 @@
                 <div id='environmentSettingTitle'>Environmental Settings</div>
                 <div  class='odd'>
                   <div id='suDishSize' class='enviroSubHeading'>Dish Size:</div>
-                    <input id='sizeCols' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '10';/>
+                    <input id='sizeCols' type='text' class='colrow' onchange='av.ptd.gridChange(this)' value = '10';/>
                     &nbsp; x &nbsp;
-                    <input id='sizeRows' type='text' onchange='av.ptd.gridChange(this.value)' style='width: 4.5em; height:1.6em' value = '10'/>
-                    cells&nbsp;<br />
+                    <input id='sizeRows' type='text' class='colrow' onchange='av.ptd.gridChange(this)' value = '10'/>
+                    cells&nbsp; 
                     <label id='sizeCells'>There are 900 cells by default</label>
                 </div>
                 <div class='even'>
                   <div>
                     <span class='enviroSubHeading lftmargin' >Per Site Mutation Rate:</span>
-                    <input id='mutePopInput' type='text' class='mutePopInputClass'>&nbsp;%
+                    <input id='mutePopInput' type='text' class='mutePopInputClass'>&nbsp;%                    
                   </div>
                   <div id='mutePopError'>&nbsp;&nbsp;&nbsp;</div>
                   <div id='mutePopSlideHolder'>
@@ -1327,7 +1328,8 @@
                           </div>
                           <div id="orn0regionLayoutDiv" class="regionLayoutClass">
                             <select id="orn0regionLayout" onchange="av.sgr.regionLayoutChange(this)">
-                              <option id="orn0WholeDish" value="1All" selected="">Whole Dish</option>
+                              <option id='orn0GlobalDish' value='1Global' selected=''>Global Dish</option>
+                              <option id="orn0WholeDish" value="1All">Whole Dish</option>
                               <option id="orn0LftRit" value="2LftRit">Halves L/R</option>
                               <option id="orn0TopLftRit" class="3TopLftRit" value="3TopLftRit">Top L/R</option>
                               <option id="orn0Quarters" class="4Quarters" value="4Quarters">Quarters</option>
@@ -2505,9 +2507,9 @@
                 Test Setup section - this section will be debug only
                 <div  class='odd'>
                   Dish Size:
-                  <input id='sizeColTest' type='text' onchange='av.ptd.gridChangTest(this.value)' style='width: 4.5em; height:1.6em' value = '10';/>
+                  <input id='sizeColTest' type='text' class='colrow' onchange='av.ptd.gridChangTest(this.value)' value = '5';/>
                   &nbsp; x &nbsp;
-                  <input id='sizeRowTest' type='text' onchange='av.ptd.gridChangTest(this.value)' style='width: 4.5em; height:1.6em' value = '10'/>
+                  <input id='sizeRowTest' type='text' class='colrow' onchange='av.ptd.gridChangTest(this.value)' value = '5'/>
                   cells&nbsp;<br />
                   <label id='sizeCellTest'>There are 900 cells by default</label>
                 </div>
@@ -2878,8 +2880,8 @@
       </div>
     </div>
 
-    <span class='notSeen' id='o_________________________________________________________________Preferences_ModalID___'></span>
-    <div class="modal" id='Preferences_ModalID'>
+    <span class='notSeen' id='o_________________________________________________________________preferences_ModalID___'></span>
+    <div class="modal" id='preferences_ModalID'>
 
       <!-- Modal content -->
       <div class="modal-content" >
@@ -2904,21 +2906,21 @@
           <br><br>
         </div>
         <div class="modal-footer">
-          <button id='PreferencesCancel' onclick='av.ui.closePreferences'>Ok</button>
+          <button id='PreferencesCancel' onclick='av.ui.closePreferences()'>Ok</button>
         </div>
       </div>
     </div>
     
     
     <span class='notSeen' id='o_________________________________________________________________Need_Ancestor_Modal___'></span>
-    <div class="modal" id='aboutAvidaED_ModalID'>
+    <div class="modalBig" id='aboutAvidaED_ModalID'>
 
       <!-- Modal content -->
-      <div class="modal-content">
-        <div class="modal-header">
+      <div class="modalBig-content">
+        <div class="modalBig-header">
           <h2>Avida-ED: written in javascript with Avida in C++ via Emscripten</h2>
         </div>
-        <div class="modal-body" id='AvidaEDaboutModalContainer'>
+        <div class="modalBig-body" id='AvidaEDaboutModalContainer'>
             <img src='images/Avida-ED-logo.png' alt='logo for Avida-ED'/>
             <div class='AviaEDaboutP'>An educational artificial life platform developed at Michigan State University for </div>
             <div class='AviaEDaboutP'>learning evolution and the nature of science using digital organisms.</div>
@@ -3253,8 +3255,8 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </textarea>
         </div>
-        <div class="modal-footer">
-          <button id='aboutAvidaED_Cancel'>Ok</button>
+        <div class="modalBig-footer">
+          <button id='aboutAvidaED_Cancel' onclick='av.ui.aboutAvidaED_Close();'>Ok</button>
         </div>
       </div>
     </div>

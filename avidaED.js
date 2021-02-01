@@ -947,33 +947,32 @@ require([
     console.log('in av.clk.aboutAvidaED');    
   };
 
-  document.getElementById('aboutAvidaED_Cancel').onclick = function () {
+  //document.getElementById('aboutAvidaED_Cancel').onclick = function () {
+  av.ui.aboutAvidaED_Close = function() {
     document.getElementById('aboutAvidaED_ModalID').style.display = 'none';
   };
 
   dijit.byId('mnAePreferences').on('Click', function () {
     av.post.addUser('Button: mnAePreferences');
     //console.log('in mnAePreferences.click');
-    document.getElementById('Preferences_ModalID').style.display = "block";
+    document.getElementById('preferences_ModalID').style.display = "block";
   });
 
-  /*
+  
   av.sgr.complexityChange = function (domObj) {
     console.log('the complexity requested is:', domObj.value);
     av.sgr.complexityLevel = domObj.value;
-    av.sgr.complexityChangeProcess();
+    av.sgr.complexityChangeProcess('av.sgr.complexityChange');
   };
-  */
- 
+   
   av.ui.language = function (domObj) {
     av.ui.language = domObj.value;
     console.log('not yet implemented: the language requested is:', domObj.value);
   };
  
   av.ui.closePreferences = function () {
-    document.getElementById('Preferences_ModalID').style.display = "none";
+    document.getElementById('preferences_ModalID').style.display = 'none';
   };
-
 
   dijit.byId('mnHpProblem').on('Click', function () {
     av.post.addUser('Button: mnHpProblem');
@@ -2457,6 +2456,7 @@ require([
     // if (av.dbg.flg.popSetup ) { console.log('popSetup: in av.ptd.gridChange; domObj.id =', domObj.id); }
     var colNum = Number(av.dom.sizeCols.value);
     var rowNum = Number(av.dom.sizeRows.value);
+    var gridSize = colNum * rowNum;
     //console.log('col, row=', colNum, rowNum);
     if (colNum > 0 && colNum <= 100 && rowNum > 0 && rowNum <= 100) {
       //console.log('valid response');
@@ -2467,8 +2467,10 @@ require([
       av.grd.drawGridSetupFn('av.ptd.gridChange');
     } else {
       av.ptd.validGridSize = false;
-      if (colNum > 0 && colNum <= 100)
+      if (colNum > 0 && colNum <= 100) {
         av.dom.sizeCols.style.color = 'black';
+        av.dom.sizeCells.innerHTML += 'there are '+ gridSize;
+      }
       else
         av.dom.sizeCols.style.color = 'red';
       if (rowNum > 0 && rowNum <= 100)
@@ -3417,6 +3419,7 @@ require([
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');
   //document.getElementById('displayGridResourceData').style.display = 'flex';   //display local resource data
 
+  av.ui.aboutAvidaED_Close();
   document.getElementById('resrcComplexity').value = av.sgr. complexityLevel;
   av.sgr.complexityChangeProcess('last-things-done');
 

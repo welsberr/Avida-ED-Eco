@@ -606,6 +606,8 @@ av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '2UppLow', '3TopLftRi
 //entry zero is blank so index matches subregion number 
 av.sgr.name = {};
 av.sgr.code = {};
+av.sgr.name['1Global'] = ['Global Dish'];
+av.sgr.code['1Global'] = ['100'];
 av.sgr.name['1All'] = [null, 'Whole Dish'];
 av.sgr.code['1All'] = [null, '000'];
 av.sgr.name['2LftRit'] = [null,'Left', 'Right']; 
@@ -618,6 +620,7 @@ av.sgr.name['4Quarters'] = [null, 'upL', 'upR', 'loL', 'loR'];
 av.sgr.code['4Quarters'] = [null, '001q', '002q', '003q', '004q'];
 
 av.sgr.regionLookup = {};
+av.sgr.regionLookup['100,'] = '1Global';
 av.sgr.regionLookup['000,'] = '1All';
 av.sgr.regionLookup['013,024,'] = '2LftRit';
 av.sgr.regionLookup['012,024,'] = '2UppLow';
@@ -625,18 +628,29 @@ av.sgr.regionLookup['001,002,034,'] = 'LftRitLow';
 av.sgr.regionLookup['001,002,003,004,'] = '4Quarders';
 av.sgr.regionLookup['003,004,012,'] = '3TopLftRit';
 av.sgr.regionLookup['000'] = '1All';   //the same for the tic-tac-toe layout
+av.sgr.regionLookup['100'] = '1Global';
 
-av.sgr.describe = {};
-av.sgr.describe.not = ' Easy (x2)';
-av.sgr.describe.nan = ' Easy (x2)';
-av.sgr.describe.and = ' Moderate (x4)';
-av.sgr.describe.orn = ' Moderate (x4)';
-av.sgr.describe.oro = ' Hard (x8)';
-av.sgr.describe.ant = ' Hard (x8)';
-av.sgr.describe.nor = ' Very Hard (x16)';
-av.sgr.describe.xor = ' Very Hard (x16)';
-av.sgr.describe.equ = ' Brutal (x32)';
+av.sgr.describeBasic = {};
+av.sgr.describeBasic.not = ' Easy (x2)';
+av.sgr.describeBasic.nan = ' Easy (x2)';
+av.sgr.describeBasic.and = ' Moderate (x4)';
+av.sgr.describeBasic.orn = ' Moderate (x4)';
+av.sgr.describeBasic.oro = ' Hard (x8)';
+av.sgr.describeBasic.ant = ' Hard (x8)';
+av.sgr.describeBasic.nor = ' Very Hard (x16)';
+av.sgr.describeBasic.xor = ' Very Hard (x16)';
+av.sgr.describeBasic.equ = ' Brutal (x32)';
 
+av.sgr.describeAdv = {};            //advanced
+av.sgr.describeAdv.not = ' (x2)';
+av.sgr.describeAdv.nan = ' (x2)';
+av.sgr.describeAdv.and = ' ( x4)';
+av.sgr.describeAdv.orn = ' ( x4)';
+av.sgr.describeAdv.oro = ' (x 8)';
+av.sgr.describeAdv.ant = ' (x 8)';
+av.sgr.describeAdv.nor = ' (x16)';
+av.sgr.describeAdv.xor = ' (x16)';
+av.sgr.describeAdv.equ = ' (x32)';
 
 av.sgr.boxArguments = ['boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow']; //flag is true if in use; false if these arguments are not included. 
                       //boxx and boxy are the upper left corner positions of the region in Avida-ED
@@ -701,6 +715,7 @@ av.sgr.gridOnly = false;        // gridOnly true  ++> dftGeometry = grid
 av.sgr.dftGeometry = 'global';  // gridOnly false ++> dftGeometry = global
 if (av.sgr.gridOnly) av.sgr.dftGeometry = 'grid';
 av.sgr.complexityLevel = 'sgrBasic';
+av.sgr.complexityLevel = 'sgrAdvanced';
 //------------------------------------------------------------------------------------------- av.sgr.makeNutDefault --
 av.sgr.makeNutDefault = function () {
   av.sgr.nutdft = {};    

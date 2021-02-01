@@ -581,6 +581,11 @@
   display: inline;
   font-size: 120%;
 }
+
+.colrow {
+  width: 4.5em; height:1.6em;
+}
+
 #mutePopError { text-align: left; width: 90%; height: 15px; }
 
 .mutePopInputClass{
@@ -801,22 +806,22 @@ details[open] summary:before {
 
 .grid-sugar-summary-geo-global-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeWClass supplyTypeDivClass sumFootTxtClass initialGlobalClass';
+  grid-template-areas: 'detailArrow sugarTitle geometryClass regionLayoutClass supplyTypeWClass supplyTypeDivClass sumFootTxtClass initialGlobalClass';
   justify-items: start;  justify-content: start; width: 100%;
 }
 
 .grid-sugar-summary-geo-global-chemostat-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeDivClass supplyTypeDivClass periodTimeGlobClass';
+  grid-template-areas: 'detailArrow sugarTitle geometryClass regionLayoutClass supplyTypeWClass supplyTypeDivClass sumFootTxtClass periodTimeGlobClass';
   justify-items: start;  justify-content: start; width: 100%;
 }
-
+/*
 .grid-sugar-summary-geo-local-container {
   display: inline-grid;
   grid-template-areas: 'detailArrow sugarTitle geometryClass regionLayoutClass';
   justify-items: start;  justify-content: start; width: 100%;
 }
-
+*/
 /*------------------------------------------------------------------------------------- sugar input class formatting --*/
 .sugPeriodNclass{ width: 5em; height:1.5em; }
 .sugInitialNclass{ width: 5em; height:1.5em;}
@@ -1571,7 +1576,6 @@ checkbox:focus {
   font-size: 120%;
 }
 
-  
 /**********************************************************************************************************************/
 /* the class model is used to create dialog boxes without dojo                                                        */
 /**********************************************************************************************************************/
@@ -1625,9 +1629,62 @@ checkbox:focus {
   width: 100%;
   hieght: auto;
 }
-
-
 /************************************************************************************************* end of model class */                                                                         */
+
+/**********************************************************************************************************************/
+/* the class modelBig is used to create dialog boxes without dojo                                                     */
+/**********************************************************************************************************************/
+/* https://www.w3schools.com/howto/howto_css_modals.asp                                                               */
+/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal                                                */
+/* 
+/* The Modal (background) */
+.modelBig {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;   /*   Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background: rgb(0,0,0); /* Fallback color */
+    background: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modelBig-content {
+    background: #fefefe;
+    margin: auto;
+    padding: 2px;
+    border: 1px solid black; /* #888; */
+    width: 90%;
+}
+
+.modelBig-header {
+    padding: 4px 4px;
+    font-size: 130%;
+    font-weight: bold;
+    background: lightgray;
+    color: black;
+}
+
+.modelBig-body {padding: 8px 8px;}
+
+.modelBig-footer {
+    padding: 4px 4spx;
+    background: lightgray;
+    color: black;
+}
+#AvidaEDaboutModalContainer{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  /*justify-content: center */
+  width: 100%;
+  hieght: auto;
+}
+/********************************************************************************************** end of modelBig class */                                                                         */
 
 /*************************************************************************************************** no longer in use */
 
