@@ -711,7 +711,7 @@ details[open] summary:before {
 }
 .sugarAccordionSection{
   width: 100%;
-  border-bottom: 1px solid #222;   /* #000 is black  */
+  border-bottom: 1px solid #888;   /* #000 is black  */
   display: inline-block;
 }
 
@@ -763,31 +763,76 @@ details[open] summary:before {
 /* old classes that do not seem to be in use. 
 .sugarSummarySpan{
   display: inline-block;
-}
-*/
 /*   Not in use as of 2020 july 22 bigger number is closer to white; 0,0,0 is black
-#notSection{ background: rgba(255,153,178, 1); }
-#nanSection{ background: rgba(255,204,153, 1); }
-#andSection{ background: rgba(255,255,153, 1); }
-#ornSection{ background: rgba(153,255,153, 1); }
-#oroSection{ background: rgba(153,255,153, 1); }
-#antSection{ background: rgba(153,255,153, 1); }
-#norSection{ background: rgba(153,255,153, 1); }
-#xorSection{ background: rgba(153,255,153, 1); }
-#equSection{ background: rgba(153,255,153, 1); }
+#not0Section{ background: rgba(255,153,178, 1); }
+#nan0Section{ background: rgba(255,204,153, 1); }
+#and0Section{ background: rgba(255,255,153, 1); }
+#orn0Section{ background: rgba(153,255,153, 1); }
+#oro0Section{ background: rgba(153,255,153, 1); }
+#ant0Section{ background: rgba(153,255,153, 1); }
+#nor0Section{ background: rgba(153,255,153, 1); }
+#xor0Section{ background: rgba(153,255,153, 1); }
+#equ0Section{ background: rgba(153,255,153, 1); }
 */
+
+*/
+#not0section{ border-bottom: 1px solid; #888; }
+#nan0section{ border-bottom: 2px solid; #222; }  /* #000 = black */
+#and0section{ border-bottom: 1px solid; #888; }
+#orn0section{ border-bottom: 2px solid; #222; }  /* #000 = black */
+#oro0section{ border-bottom: 1px solid; #888; }
+#ant0section{ border-bottom: 2px solid; #222; }  /* #000 = black */
+#nor0section{ border-bottom: 1px solid; #888; }
+#xor0section{ border-bottom: 2px solid; #222; }  /* #000 = black */
+#equ0section{ border-bottom: 1px solid; #888; }
+}
 /************************* Sugar controls layout in 'summary' of detail/summary for each task-sugar in sugar according */
 /* I could not get a div with a dispay of inline-gid start on the top line of the summary. 
 .sumHolderDiv { display: inline-block; position: absolute; }
 .sugarSummary { display: grid; }
                        'sumFootTxtClass sumFootTxtClass sumFootTxtClass     ssumFootTxtClass';
 */
+/*
+.sugarTitle { grid-area: sugarTitle; display: inline-block; width: 15px; justify-self: start; border: solid 1px red; }
+.geometryClass { grid-area: geometryClass; display: inline-block; justify-self: start; border: solid 1px red; }
+.regionLayoutClass { grid-area: regionLayoutClass; display: inline-block; justify-self: start; border: solid 1px red; }
+.supplyTypeDivClass { grid-area: supplyTypeDivClass; display: inline-block; justify-self: start; border: solid 1px red; }
+.supplyTypeDiv_W_Class { grid-area: supplyTypeWClass; display: inline-block; justify-self: start; border: solid 1px red; }
+.periodGlobalCheck { grid-area: periodGlobalCheck; display: inline-block; justify-self: start; border: solid 1px red; }
+.periodTimeGlobClass { grid-area: periodTimeGlobClass; display: inline-block; justify-self: start; border: solid 1px red; }
+.initialGlobalClass { grid-area: initialGlobalClass; display: inline-block; justify-self: start; border: solid 1px red; }
+.sumFootTxtClass { grid-area: sumFootTxtClass; display: inline-block; justify-self: end; border: solid 1px red; }
+
+.grid-sugar-summary-geo-basic-container {
+  display: inline-grid;
+  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeWClass supplyTypeDivClass sumFootTxtClass initialGlobalClass';
+  justify-content: space-between; width: 100%;
+}
+.grid-sugar-summary-geo-basic-chemostat-container {
+  display: inline-grid;
+  grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeWClass supplyTypeDivClass sumFootTxtClass periodTimeGlobClass';
+  justify-content: space-between; width: 100%;
+}
+
+.grid-sugar-summary-geo-global-container {
+  display: inline-grid;
+  grid-template-areas: 'detailArrow sugarTitle geometryClass regionLayoutClass supplyTypeWClass supplyTypeDivClass sumFootTxtClass initialGlobalClass';
+  justify-content: stretch; width: 100%;
+}
+
+.grid-sugar-summary-geo-global-chemostat-container {
+  display: inline-grid;
+  grid-template-areas: 'detailArrow sugarTitle geometryClass regionLayoutClass supplyTypeWClass supplyTypeDivClass sumFootTxtClass periodTimeGlobClass';
+  justify-content: stretch; width: 100%;
+}
+*/
+ pushes all to left
 
 .sugarTitle { grid-area: sugarTitle; display: inline-block; width: 15px; }
 .geometryClass { grid-area: geometryClass; display: inline-block; }
 .regionLayoutClass { grid-area: regionLayoutClass; display: inline-block; }
 .supplyTypeDivClass { grid-area: supplyTypeDivClass; display: inline-block; }
-.supplyTypeDivWclass { grid-area: supplyTypeWClass; display: inline-block; }
+.supplyTypeDiv_W_Class { grid-area: supplyTypeWClass; display: inline-block; }
 .periodGlobalCheck { grid-area: periodGlobalCheck; display: inline-block; }
 .periodTimeGlobClass { grid-area: periodTimeGlobClass; display: inline-block; }
 .initialGlobalClass { grid-area: initialGlobalClass; display: inline-block; }
@@ -797,23 +842,27 @@ details[open] summary:before {
   display: inline-grid;
   grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeWClass supplyTypeDivClass sumFootTxtClass initialGlobalClass';
   justify-items: start;  justify-content: start; width: 100%;
+  min-height: 23px;
 }
 .grid-sugar-summary-geo-basic-chemostat-container {
   display: inline-grid;
   grid-template-areas: 'detailArrow sugarTitle geometryClass supplyTypeWClass supplyTypeDivClass sumFootTxtClass periodTimeGlobClass';
   justify-items: start;  justify-content: start; width: 100%;
+  min-height: 23px;
 }
 
 .grid-sugar-summary-geo-global-container {
   display: inline-grid;
   grid-template-areas: 'detailArrow sugarTitle geometryClass regionLayoutClass supplyTypeWClass supplyTypeDivClass sumFootTxtClass initialGlobalClass';
   justify-items: start;  justify-content: start; width: 100%;
+  min-height: 23px;
 }
 
 .grid-sugar-summary-geo-global-chemostat-container {
   display: inline-grid;
   grid-template-areas: 'detailArrow sugarTitle geometryClass regionLayoutClass supplyTypeWClass supplyTypeDivClass sumFootTxtClass periodTimeGlobClass';
   justify-items: start;  justify-content: start; width: 100%;
+  min-height: 23px;
 }
 /*
 .grid-sugar-summary-geo-local-container {
@@ -1277,8 +1326,10 @@ select:hover::after {
   background:  #0f0;  /*can't tell that this does anything'*/
 }
 
-select:focus{
-  background: white;  /*changes background off all the options not the one highlighted */
+/* select:focus{    /*https://stackoverflow.com/questions/8352867/how-to-disable-chrome-details-label-default-behavior 
+              web site gave me clue to not hide the arrow when selected. Need to not change the background */
+  /* background: white;  /*changes background off all the options not the one highlighted */
+  /* border: solid 1px black;   /*does have effect, but 1px looks the same as withoutsx . */
 }
 
 select:option { 

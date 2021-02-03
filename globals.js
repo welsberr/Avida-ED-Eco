@@ -545,11 +545,12 @@ av.sgr.resrc_num = ['initial', 'inflow', 'outflow',
 av.sgr.uiMin = [-2, -2, 1, -2, -2, 0, -2];  //need to document this tiba                  
 av.sgr.uiMax = [ 0,  0, 0,  0,  0, 0, 1];
 
+av.sgr.uiSummaryDom_num = ['initial', 'outflowHiNp','periodNp'];  //names of arguements that have numerical values in the dom for whole dish
 av.sgr.uiSubDom_num = ['initialHiNp', 'inflowHiNp', 'outflowHiNp',                
                     'initialLoNp', 'inflowLoNp', 'outflowLoNp', 'periodNp'];  //names of arguements that have numerical values in the dom for each subdish
 av.sgr.uiSubDish_num = ['initialHiNp', 'inflowHiNp', 'outflowHiNp', 
                       , 'initialLoNp', 'inflowLoNp', 'outflowLoNp', 'periodNp', 'area'];  //names of arguements that have numerical values in av.nut[numtsk].uiSub
-av.sgr.ui_subDom_txt = ['supplyType', 'hiSide'];
+av.sgr.uiSubDom_txt = ['supplyType', 'hiSide'];
 
 av.sgr.uiSub_Check = [ 'diffuseCheck', 'periodCheck', 'gradientCheck' ];
 
@@ -600,7 +601,7 @@ av.sgr.reSrc_avidaDft_d = {
   // not ready yet                        <option id="orn0Quarters" class="Quarters" value="4Quarters">Quarters</option>
 
 av.sgr.re_region = /(\D+)(\d+)(.*$)/;
-av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '2UppLow', '3TopLftRit', '4Quarters'];
+av.sgr.regionLayoutValues = ['1Global', '1All', '2LftRit', '2UppLow', '3TopLftRit', '4Quarters'];
 //av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '3TopLftRit', '4Quarters'];
 
 //entry zero is blank so index matches subregion number 
@@ -630,27 +631,28 @@ av.sgr.regionLookup['003,004,012,'] = '3TopLftRit';
 av.sgr.regionLookup['000'] = '1All';   //the same for the tic-tac-toe layout
 av.sgr.regionLookup['100'] = '1Global';
 
-av.sgr.describeBasic = {};
-av.sgr.describeBasic.not = ' Easy (x2)';
-av.sgr.describeBasic.nan = ' Easy (x2)';
-av.sgr.describeBasic.and = ' Moderate (x4)';
-av.sgr.describeBasic.orn = ' Moderate (x4)';
-av.sgr.describeBasic.oro = ' Hard (x8)';
-av.sgr.describeBasic.ant = ' Hard (x8)';
-av.sgr.describeBasic.nor = ' Very Hard (x16)';
-av.sgr.describeBasic.xor = ' Very Hard (x16)';
-av.sgr.describeBasic.equ = ' Brutal (x32)';
+av.sgr.describe = ['basic', 'global', 'adv'];
+av.sgr.describe.basic = {};
+av.sgr.describe.basic.not = ' Easy (x2)';
+av.sgr.describe.basic.nan = ' Easy (x2)';
+av.sgr.describe.basic.and = ' Moderate (x4)';
+av.sgr.describe.basic.orn = ' Moderate (x4)';
+av.sgr.describe.basic.oro = ' Hard (x8)';
+av.sgr.describe.basic.ant = ' Hard (x8)';
+av.sgr.describe.basic.nor = ' Very Hard (x16)';
+av.sgr.describe.basic.xor = ' Very Hard (x16)';
+av.sgr.describe.basic.equ = ' Brutal (x32)';
 
-av.sgr.describeAdv = {};            //advanced
-av.sgr.describeAdv.not = ' (x2)';
-av.sgr.describeAdv.nan = ' (x2)';
-av.sgr.describeAdv.and = ' ( x4)';
-av.sgr.describeAdv.orn = ' ( x4)';
-av.sgr.describeAdv.oro = ' (x 8)';
-av.sgr.describeAdv.ant = ' (x 8)';
-av.sgr.describeAdv.nor = ' (x16)';
-av.sgr.describeAdv.xor = ' (x16)';
-av.sgr.describeAdv.equ = ' (x32)';
+av.sgr.describe.adv = {};            //advanced
+av.sgr.describe.adv.not = ' (x2)';
+av.sgr.describe.adv.nan = ' (x2)';
+av.sgr.describe.adv.and = ' ( x4)';
+av.sgr.describe.adv.orn = ' ( x4)';
+av.sgr.describe.adv.oro = ' (x 8)';
+av.sgr.describe.adv.ant = ' (x 8)';
+av.sgr.describe.adv.nor = ' (x16)';
+av.sgr.describe.adv.xor = ' (x16)';
+av.sgr.describe.adv.equ = ' (x32)';
 
 av.sgr.boxArguments = ['boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow']; //flag is true if in use; false if these arguments are not included. 
                       //boxx and boxy are the upper left corner positions of the region in Avida-ED
@@ -857,8 +859,8 @@ av.fzr.clearEnvironment = function(from) {
     av.nut[tsk].uiAll.geometry = 'global';        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
     av.nut[tsk].uiAll.supplyType = 'infinite';    //this is only for whem ui.geometry = global
     av.nut[tsk].uiAll.regionLayout = '1All';  //only whole dish for now
-    av.nut[tsk].uiAll.regionsNumOf = 1;   // whole dishß
-    av.nut[tsk].uiAll.initial = -1;      //only used whem ui.geometry = global and  supplyType = 'finite' 
+    av.nut[tsk].uiAll.regionsNumOf = 1;   // whole dish
+    //av.nut[tsk].uiAll.initial = -1;      //only used whem ui.geometry = global and  supplyType = 'finite' 
 
     for (jj=0; jj < uiSubDishLen; jj++) {
       av.nut[tsk]['uiSub'][av.sgr.ui_subDish_argu[jj] ] = [];

@@ -230,7 +230,7 @@
     av.dom.ExecuteJust = document.getElementById('ExecuteJust');       //check for code repeats might be able to do a function and clean things tiba
     av.dom.ExecuteAbout = document.getElementById('ExecuteAbout');
 
-    av.dom.xorLabel = document.getElementById('xorLabel');          //used to toggle debug menu
+    av.dom.xorLabel = document.getElementById('xorLabel');          //no longer in use. 
 
     //av.dom. = document.getElementById('');
     // Modal Dialogs 
@@ -344,7 +344,6 @@
         document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
         document.getElementsByClassName('globalChemostat')[ii].style.display = 'none';
         //document.getElementsByClassName('globalDebug')[ii].style.display = 'none';
-//          document.getElementsByClassName('geometryClass')[ii].style.display = 'none';  
       };
 
       len = document.getElementsByClassName('3TopLftRit').length;
@@ -352,14 +351,7 @@
         document.getElementsByClassName('3TopLftRit')[ii].style.display = 'none';
         document.getElementsByClassName('4Quarters')[ii].style.display = 'none';
       }
-/*
-      len = document.getElementsByClassName('geometryClass').length;
-      for (ii = 0; ii < len; ii++) {
-        //console.log('ii=',ii,'dom element=',document.getElementsByClassName('geometryClass')[ii]);
-        document.getElementsByClassName('geometryClass')[ii].style.display = 'none';
-      }
-*/
-
+      
       // now clear options for changing all sugars (groups)
       //document.getElementsByClassName('groupChemostat')[0].style.display = 'none';
       //document.getElementsByClassName('groupFinite')[0].style.display = 'none';     //finite available for local options
@@ -413,7 +405,6 @@
         //document.getElementsByClassName('globalChemostat')[ii].style.display = 'inline';
         //document.getElementsByClassName('globalFinite')[ii].style.display = 'inline';
         //document.getElementsByClassName('globalDebug')[ii].style.display = 'inline';
-        //document.getElementsByClassName('geometryClass')[ii].style.display = 'inline-block';
       };
 
       //show environment options sill under development.
@@ -441,7 +432,7 @@
 
   // if (av.dbg.flg.root) { console.log('Root: before av.ui.antLabel'); }
   //----------------------------------------------------------------------------------------------------------------------
-  //toggles showing resource data in right info panel (Stats window) in Populaton View
+  //Forces popChartInit
   av.ui.antLabel = function (from) {
     console.log(from, 'called av.ui.antLabel to run av.grd.popChartInit'); 
     
@@ -453,17 +444,36 @@
     console.log('ht: popChrtHolder, popChart, popChartDiv', $('#popChrtHolder').outerHeight(true), $('#popChartDiv').outerHeight(true), $('#popChart').outerHeight(true) );
   };
   
-  // if (av.dbg.flg.root) { console.log('Root: before av.ui.xorLabel'); }
+  // if (av.dbg.flg.root) { console.log('Root: before av.ui.toggleResourceData'); }
   //----------------------------------------------------------------------------------------------------------------------
   //toggles showing resource data in right info panel (Stats window) in Populaton View
-  av.ui.xorLabel = function (from) {
-    console.log(from, 'called av.ui.xorLabel to to toggle dipslay of resource data');
+  av.ui.toggleResourceData = function (from) {
+    console.log(from, 'called av.ui.toggleResourceData to to toggle dipslay of resource data');
     if ('none' === document.getElementById('displayGridResourceData').style.display) {
       document.getElementById('displayGridResourceData').style.display = 'flex';
     } else {
       document.getElementById('displayGridResourceData').style.display = 'none';
-    }
+    };
+    av.sgr.complexityChangeProcess('last-things-done');
   };
+
+  // if (av.dbg.flg.root) { console.log('Root: before av.ui.toggleResourceComplexity'); }
+  //----------------------------------------------------------------------------------------------------------------------
+  //toggles showing resource data in right info panel (Stats window) in Populaton View
+  av.ui.toggleResourceComplexity = function (from) {
+    console.log(from, 'called av.ui.toggleResourceComplexity to to toggle dipslay of complexityLevel');
+    if ('sgrBasic' === av.sgr.complexityLevel) {
+      av.sgr.complexityLevel = 'sgrAdvanced';
+    } else {
+        av.sgr.complexityLevel = 'sgrBasic';
+    }
+    av.ui.setResourceComplexity(av.sgr.complexityLevel, 'av.ui.toggleResourceComplexity');
+  };
+  
+av.ui.setResourceComplexity = function (level, from) {
+  document.getElementById('resrcComplexity').value = level;
+  av.sgr.complexityChangeProcess('av.ui.setResourceComplexity');
+};
 
 //=========================================================================================== simulated dom action ===
 // https://stackoverflow.com/questions/6157929/how-to-simulate-a-mouse-click-using-javascript?fbclid=IwAR0Ht17-ZP6Rb6paHLZUFoLPf_Hz0-WXRTv-dKS3SsZsymY8TsM7OJYinmQ

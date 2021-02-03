@@ -549,7 +549,7 @@
                           <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         </tr>
                         <tr>
-                          <td><div class='noWrap1'><label id='antLabel' onclick="av.ui.antLabel('antLable')">ANT</label></div></td>
+                          <td><div class='noWrap1'><label id='antLabel' onclick="av.ui.toggleResourceComplexity('antLable')">ANT</label></div></td>
                           <td><div class='noWrap2'><label id='antTime'></label></div></td>
                           <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         </tr>
@@ -559,7 +559,7 @@
                           <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         </tr>
                         <tr>
-                          <td><div class='noWrap1'><label id='xorLabel' onclick="av.ui.xorLabel('xorLabel')">XOR</label></div></td>
+                          <td><div class='noWrap1'><label id='xorLabel' onclick="av.ui.toggleResourceData('xorLabel')">XOR</label></div></td>
                           <td><div class='noWrap2'><label id='xorTime'></label></div></td>
                           <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         </tr>
@@ -1425,7 +1425,7 @@
                           </div>
                           <div id="orn1chmstatHiDiv" class="grid-sugarDetail-item chmstatHiDclass">&nbsp;&nbsp;&nbsp;
                             <span id="orn1chmstatHiValue"></span>
-                            <span id="orn1chmstatHiText" class="sugarText"> = equilibrium</span>
+                            <span id="orn1chmstatHiText" class="sugarText">equilibrium</span>
                           </div>
                           <div id="orn1chmstatLoDiv" class="grid-sugarDetail-item chmstatLoDclass">
                             <span id="orn1chmstatLoValue"></span>
@@ -2439,7 +2439,7 @@
                     <div id='sugarSetTitle' class='rHeadItem'>Set all Resources</div>
 
                     <div id='allSugarGeometryDiv' class='rHeadItem'>
-                      <select id="allSugarGeometry" class='geometryClass' onchange='av.sgr.allSugarGeometryChange(this);'>
+                      <select id="allSugarGeometry" class='geometryClassAll' onchange='av.sgr.allSugarGeometryChange(this);'>
                         <option value='global'>Global</option>
                         <option value='grid'>Local</option>
                         <option value='neutral' selected>----</option>                            
@@ -2456,7 +2456,8 @@
                     </div>
                     <div id='allSugarRegionLayoutDiv' class='rHeadItem'>
                       <select id="allSugarRegionLayout" onchange='av.sgr.allSugarRegionLayoutChange(this);'>
-                          <option value="1All" selected="">Whole Dish</option>
+                          <option id='allGlobalDish' class='1Global' value='1Global' selected=''>Global Dish</option>
+                          <option id='allWholeDish'  class='1All' value="1All" selected="">Whole Dish</option>
                           <option id='allHalfLftRit' class='2HalfLftRit' value="2LftRit">Halves (L/R)</option>
                           <option id='allTopLftRit' class='3TopLftRit' value='3TopLftRit'>Top L/R</option>
                           <option id='allQuarters' class='4Quarters' value='4Quarters'>Quarters</option>
@@ -2479,7 +2480,7 @@
                         <option value='neutral' selected>----</option>                            
                       </select> 
                     </div>
-                    <div id='geometrySgr' class='geometryClass'>Geometry &nbsp;</div>
+                    <div id='geometrySgr'>Geometry &nbsp;</div>
                     <div id='supplyTypeSgr'>Supply Type &nbsp;</div>
                     <div id='regionLayoutSgr'>Region Layout &nbsp;</div>
                     <div id='patternSgr'>Pattern &nbsp;</div>

@@ -630,7 +630,7 @@ require([
   //https://bugsnag.com/blog/js-stacktracess
   //http://blog.bugsnag.com/js-stacktraces
   window.onerror = function (message, file, line, col, error) {
-    console.log('in window.onerror 633');
+    //console.log('in window.onerror 633');
     av.dom.runStopButton.innerHTML = 'Run';  //av.msg.pause('now');
     av.debug.finalizeDtail();
     av.debug.triggered = 'errorTriggered';
@@ -662,7 +662,7 @@ require([
   // if (av.dbg.flg.root) { console.log('Root: defore av.ui.problemWindow'); }
   //process problme pop-up window
   av.ui.problemWindow = function (from) {
-    console.log(from, 'called av.ui.problemWindow 665');
+    //console.log(from, 'called av.ui.problemWindow 665');
     av.debug.vars = {
       isBlink: av.brs.isBlink,
       isChrome: av.brs.isChrome,
@@ -705,7 +705,7 @@ require([
   };
 
   av.post.emailWindow = function () {
-    console.log('in av.post.emailWindow 708');
+    //console.log('in av.post.emailWindow 708');
     av.dom.sendLogTextarea.textContent = av.debug.sendLogTextarea;
     av.dom.sendLogPara.textContent = av.debug.sendLogPara;
 
@@ -3383,12 +3383,6 @@ require([
   av.sgr.buildHtml();
   // av.sgr.defaults;
 
-  //av.ui.removeVerticalScrollbar('popTopRw', 'popTopRw');
-  
-  // * offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
-  // * clientWidth = box + 2*padding - scrollbar_width    
-  // * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
-  // * csssWidth = box only nothing else
   if (av.debug.ind) {
     console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
     av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
@@ -3405,7 +3399,7 @@ require([
   //true when diane is working; false for all production releases even in alpha testsing.  
   if (false) {
     console.log('testing mode; set to true before public release for Avida-ED 4.0.0 Alpha Testing. ');
-    av.dom.xorLabel.onclick();   //now only turns grid resource value table on and off
+    av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x
     av.doj.mnDebug.style.visibility = 'hidden';   //visible
@@ -3419,10 +3413,16 @@ require([
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');
   //document.getElementById('displayGridResourceData').style.display = 'flex';   //display local resource data
 
-  av.ui.aboutAvidaED_Close();
-  document.getElementById('resrcComplexity').value = av.sgr. complexityLevel;
-  av.sgr.complexityChangeProcess('last-things-done');
+  //problem as now av.ui.about does not desplay at all
+  av.ui.aboutAvidaED_Close();    //should not needd this as display = 'none' but it is needed for now.
 
+  av.ui.setResourceComplexity(av.sgr.complexityLevel, 'last-things-done');
+
+  //Geometry is no longer a drop down. Now it is an opton in Supply Type
+  document.getElementById('allSugarGeometry').style.display = 'none';
+  document.getElementById('geometrySgr').style.display = 'none';
+
+  //---------------------------------------------------------------------------------------------------- size testing --
   // May need to do some things here to get the app to look right on the screen. 
   //av.grd.popChartFn();
   //av.grd.drawGridSetupFn('initial background'); //Draw initial background
@@ -3430,7 +3430,15 @@ require([
   // className should be 'labInfoClass labInfoNone'
   // if (av.dbg.flg.popSetup ) { console.log('popSetup: av.dom.testSetupBlock.className=', av.dom.testSetupBlock.className); }
 
-  // 
+
+  //---------------------------------------------------------------------------------------------------- size testing --
+  //av.ui.removeVerticalScrollbar('popTopRw', 'popTopRw');
+  
+  // * offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
+  // * clientWidth = box + 2*padding - scrollbar_width    
+  // * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
+  // * csssWidth = box only nothing else
+
   //---------------------------------------------------------------------------------------------------- size testing --
   /*   An attempt to look for which dom objects cause scroll bars
   var docWidth = document.documentElement.offsetWidth;

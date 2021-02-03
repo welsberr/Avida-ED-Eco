@@ -9,7 +9,7 @@
     var stub = '';
     var msg = ee.data;  //passed as object rather than string so JSON.parse is not needed.
     //console.log('av.msg.readMsg: msg', msg);
-    console.log('msg.type=', msg.type, '; msg.name=', msg.name, '; msg.level=', msg.level);
+    //console.log('msg.type=', msg.type, '; msg.name=', msg.name, '; msg.level=', msg.level);
     if ('data' == msg.type) {
       if (av.debug.userMsg) userMsgLabel.textContent = '| Avida type:data; name:' + msg.name;
       switch (msg.name) {
