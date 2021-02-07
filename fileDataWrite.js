@@ -276,70 +276,78 @@
       //console.log('numTsk=', numTsk, '; regionLayout=', regionLayout, '; ndx=', ndx, ';subBegin=', subBegin, '; subEnd=', subEnd);
       //start on the potential subdishes next
       for (var nn=subBegin; nn <= subEnd; nn++) {
-        kk=nn;
+        nn=nn;
                 
         //seemed to have inconsistent error, but it went away. left the debug console.logs for now
         //console.log('regionLayout = av.nut['+numTsk+'].uiAll.regionLayout=', av.nut[numTsk].uiAll.regionLayout);
         
-        //console.log('av.nut['+numTsk+'].uiSub.regionName['+kk+']=', av.nut[numTsk].uiSub.regionName[kk]);
-        //console.log('av.sgr.name['+regionLayout+']['+kk+']=', av.sgr.name[regionLayout][kk]);
+        //console.log('av.nut['+numTsk+'].uiSub.regionName['+nn+']=', av.nut[numTsk].uiSub.regionName[nn]);
+        //console.log('av.sgr.name['+regionLayout+']['+nn+']=', av.sgr.name[regionLayout][nn]);
 
-        av.nut[numTsk].uiSub.regionName[kk] = av.sgr.name[regionLayout][kk];
-                                      //tmptext = av.sgr.name[regionLayout][kk];
-          //av.nut[numTsk].uiSub.regionName[kk] = tmpText;
-        console.log('av.nut['+numTsk+'].uiSub.regionName['+kk+']=', av.nut[numTsk].uiSub.regionName[kk]);
+        av.nut[numTsk].uiSub.regionName[nn] = av.sgr.name[regionLayout][nn];
+                                      //tmptext = av.sgr.name[regionLayout][nn];
+          //av.nut[numTsk].uiSub.regionName[nn] = tmpText;
+        console.log('av.nut['+numTsk+'].uiSub.regionName['+nn+']=', av.nut[numTsk].uiSub.regionName[nn]);
           
-        ndx = av.sgr.regionQuarterNames.indexOf(av.sgr.name[regionLayout][kk]);
-        av.nut[numTsk].uiSub.regionNdx[kk] = ndx;
+        ndx = av.sgr.regionQuarterNames.indexOf(av.sgr.name[regionLayout][nn]);
+        av.nut[numTsk].uiSub.regionNdx[nn] = ndx;
         
-        av.nut[numTsk].uiSub.regionCode[kk] = av.sgr.regionQuarterCodes[ndx];
-        //av.nut[numTsk].uiSub.area[kk] = av.nut.wrldCols * av.sgr.regionQuarterCols[ndx]
+        av.nut[numTsk].uiSub.regionCode[nn] = av.sgr.regionQuarterCodes[ndx];
+        //av.nut[numTsk].uiSub.area[nn] = av.nut.wrldCols * av.sgr.regionQuarterCols[ndx]
         //                    * av.nut.wrldRows * av.sgr.regionQuarterRows[ndx];
         
 
-        rslt = av.fwt.getInflowRegionArea(numTsk, kk);
-        av.nut[numTsk].uiSub.area[kk] = rslt.area;
-        av.nut[numTsk].resrc.boxcol[kk] = rslt.cols;
-        av.nut[numTsk].resrc.boxrow[kk] = rslt.rows;
-        av.nut[numTsk].resrc.boxx[kk] = rslt.boxx;
-        av.nut[numTsk].resrc.boxy[kk] = rslt.boxy;
-        //console.log('av.nut['+numTsk+'].resrc.boxx['+kk+']; boxy =', av.nut[numTsk].resrc.boxx[kk], ';', av.nut[numTsk].resrc.boxy[kk]);
-
-        if (0 == kk) {
-          if ('sgrBasic' == av.sgr.complexityLevel) { 
-            av.nut[numTsk].uiSub.supplyTypeSlct[kk] = document.getElementById(tsk+'WsupplyTypeSlct').value;
-          } else 
-            av.nut[numTsk].uiSub.supplyTypeSlct[kk] = document.getElementById(tsk+'_supplyTypeSlct').value;
-        } else {
-          av.nut[numTsk].uiSub['supplyTypeSlct'][kk] = document.getElementById(tsk+kk+'supplyTypeSlct').value;          
-          av.nut[numTsk].uiSub['hiSide'][kk] = document.getElementById(tsk+kk+'hiSide').value;
-        }
+        rslt = av.fwt.getInflowRegionArea(numTsk, nn);
+        av.nut[numTsk].uiSub.area[nn] = rslt.area;
+        av.nut[numTsk].resrc.boxcol[nn] = rslt.cols;
+        av.nut[numTsk].resrc.boxrow[nn] = rslt.rows;
+        av.nut[numTsk].resrc.boxx[nn] = rslt.boxx;
+        av.nut[numTsk].resrc.boxy[nn] = rslt.boxy;
+        //console.log('av.nut['+numTsk+'].resrc.boxx['+nn+']; boxy =', av.nut[numTsk].resrc.boxx[nn], ';', av.nut[numTsk].resrc.boxy[nn]);
 
         // error in this section - I think just does not work in summary section
         //Need to fine area of subregions first. 
         for (jj=0; jj< uiSubDom_numLen; jj++) {
           arguDom = av.sgr.uiSubDom_num[jj];
-          //console.log('jj='+jj, '; av.nut['+numTsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
-          //console.log('; dom=',document.getElementById(tsk+kk+arguDom).value ); 
-          if (av.utl.isNumber(Number(document.getElementById(tsk+kk+arguDom).value))) {
-            tmpNum = Number(document.getElementById(tsk+kk+arguDom).value);
+          //console.log('jj='+jj, '; av.nut['+numTsk+'].uiSub['+arguDom+']['+nn+']=', 'dom of', '|'+tsk+nn+arguDom+'|');
+          //console.log('; dom=',document.getElementById(tsk+nn+arguDom).value ); 
+          if (av.utl.isNumber(Number(document.getElementById(tsk+nn+arguDom).value))) {
+            tmpNum = Number(document.getElementById(tsk+nn+arguDom).value);
             if ('in' == arguDom.substr(0,2)) {
               tmpNum = tmpNum / area;   //need to find area first
             };
-            av.nut[numTsk].uiSub[arguDom][kk] = tmpNum;
+            av.nut[numTsk].uiSub[arguDom][nn] = tmpNum;
           }
         };  //end uiSubDom_num for loop (jj)
         
         /* no longer using check boxes; I have not yet implemented the new select box 
         for (jj=0; jj< uiSub_checkLen; jj++) {
           arguDom = av.sgr.uiSub_Check[jj];
-          console.log('jj='+jj, '; av.nut['+numTsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
-          console.log('; dom=',document.getElementById(tsk+kk+arguDom).checked ); 
-          av.nut[numTsk].uiSub[arguDom][kk] = document.getElementById(tsk+kk+arguDom).checked;
+          console.log('jj='+jj, '; av.nut['+numTsk+'].uiSub['+arguDom+']['+nn+']=', 'dom of', '|'+tsk+nn+arguDom+'|');
+          console.log('; dom=',document.getElementById(tsk+nn+arguDom).checked ); 
+          av.nut[numTsk].uiSub[arguDom][nn] = document.getElementById(tsk+nn+arguDom).checked;
         };
         */
-        
-      };   //end for kk   
+       
+        if (0 == nn) {
+          if ('sgrBasic' == av.sgr.complexityLevel) { 
+            av.nut[numTsk].uiSub.supplyTypeSlct[nn] = document.getElementById(tsk+'WsupplyTypeSlct').value;
+          } else {
+            av.nut[numTsk].uiSub.supplyTypeSlct[nn] = document.getElementById(tsk+'_supplyTypeSlct').value;
+            if ('finite' == av.nut[numTsk].uiSub.supplyTypeSlct[nn].toLowerCase() ) {
+              tmpNum = parseFloat(document.getElementById(tsk+'_supplyTypeSlct').value);
+              if ( av.utl.isNumber(tmpNum) ) {
+                av.nut[numTsk].resrc.inflowHi[nn] = tmpNum * av.nut.wrld.size;
+              }
+            }
+          }
+          //resource for this task is not global
+        } else {
+          av.nut[numTsk].uiSub['supplyTypeSlct'][nn] = document.getElementById(tsk+nn+'supplyTypeSlct').value;          
+          av.nut[numTsk].uiSub['hiSide'][nn] = document.getElementById(tsk+nn+'hiSide').value;
+        }
+
+      };   //end for subDishes   
 
     };  //end for ii
     if (true) { 
@@ -375,7 +383,7 @@
       tsk = av.sgr.logicNames[ii];      //3 letter logic names
       tskVar = av.sgr.logicVnames[ii];   // variable length logic tasks names as required by Avida
       
-      if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase()) {
+      if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         jj = 0;
         av.nut[numTsk].resrc.geometry[jj] = av.nut[numTsk].uiAll.geometry;
         av.nut[numTsk].resrc.boxflag[jj] = false;
@@ -636,8 +644,7 @@
             txt += av.fwt.existCheck(':outflowy2=', av.nut[numTsk].resrc.outflowy2[jj], ':outflowy2='+(av.nut.wrldRows-1) ); 
             
             txt += av.fwt.existDfltCheck(':xdiffuse=', av.nut[numTsk].resrc.xdiffuse[jj], 0, 1); 
-            txt += av.fwt.existDfltCheck(':ydiffuse=', av.nut[numTsk].resrc.ydiffuse[jj], 0, 1); 
-            txt +=  + '\n';
+            txt += av.fwt.existDfltCheck(':ydiffuse=', av.nut[numTsk].resrc.ydiffuse[jj], 0, 1) + '\n\n'; 
             
             // Reaction is the same for finite and chemostate
             txt += 'REACTION ' + av.nut[numTsk].react.name[jj] + ' ' + av.nut[numTsk].react.task[jj];

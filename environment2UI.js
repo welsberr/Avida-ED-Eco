@@ -303,7 +303,7 @@
       if (0> ndx) {
         // console.log('CELL resource=', pair[0], 'is not in RESOURCE name list = ', av.nut[numTsk].resrc.name); 
         if ( av.nut[numTsk].resrc.name.length > av.nut[numTsk].cell.resrc.length) {
-          ndx = av.nut[numTsk].resrc.name.length;s
+          ndx = av.nut[numTsk].resrc.name.length;
         }
         else { ndx = av.nut[numTsk].cell.resrc.length; }
       };

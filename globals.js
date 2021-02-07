@@ -868,7 +868,7 @@ av.fzr.clearEnvironment = function(from) {
     av.nut[tsk].uiAll.supplyTypeSlct = 'infinite';    //this is only for whem ui.geometry = global
     av.nut[tsk].uiAll.regionLayout = '1All';  //only whole dish for now
     av.nut[tsk].uiAll.regionsNumOf = 1;   // whole dish
-    //av.nut[tsk].uiAll.initial = -1;      //only used whem ui.geometry = global and  supplyTypeSlct = 'finite' 
+    av.nut[tsk].uiAll.initial = 1000;      //only used whem ui.geometry = global and  supplyTypeSlct = 'finite' 
 
     for (jj=0; jj < uiSubDishLen; jj++) {
       av.nut[tsk]['uiSub'][av.sgr.ui_subDish_argu[jj] ] = [];
