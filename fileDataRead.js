@@ -538,7 +538,7 @@
   av.frd.avidaCFG2form = function (fileStr, from){
     'use strict';
     var dict = av.frd.avidaCFGparse(fileStr);
-    console.log(from, 'called av.frd.avidaCFG2form; dict=', dict);
+    //console.log(from, 'called av.frd.avidaCFG2form; dict=', dict);
     av.dom.sizeCols.value = parseInt(dict.WORLD_X);
     av.grd.gridWasCols = parseInt(dict.WORLD_X);  
     av.grd.setupCols = parseInt(dict.WORLD_X);  

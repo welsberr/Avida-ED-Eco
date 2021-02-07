@@ -133,12 +133,12 @@
     av.dom.xorButton = document.getElementById('xorButton');
 
     av.dom.sugarAccordion = document.getElementById('sugarAccordion');
-    av.dom.orn0section = document.getElementById('orn0section');
-    av.dom.orn0summary = document.getElementById('orn0summary');
-    av.dom.orn0title = document.getElementById('orn0title');
-    av.dom.orn0Details = document.getElementById('orn0Details');
+    av.dom.orn_section = document.getElementById('orn_section');
+    av.dom.orn_summary = document.getElementById('orn_summary');
+    av.dom.orn_title = document.getElementById('orn_title');
+    av.dom.orn_detailsHolder = document.getElementById('orn_detailsHolder');
     av.dom.orn1subSection = document.getElementById('orn1subSection');
-    av.dom.showTextarea = document.getElementById('showTextarea');
+    av.dom.showBigTextarea = document.getElementById('showBigTextarea');
 
     /*
      * Not in use any longer; might use to create new vars
@@ -275,7 +275,7 @@
   av.ui.toggleDisplayGeometryControls = function(){ 
     var len = av.sgr.logicNames.length;
     var willbe = 'none';
-    if ('none' === document.getElementById('orn0geometryDiv').style.display) {
+    if ('none' === document.getElementById('orn_geometryDiv').style.display) {
       willbe = 'inline-block';
     } else {
       willbe = 'none';
@@ -283,7 +283,7 @@
     //console.log('willbe=', willbe);  
     for (ii = 0; ii < len; ii++) {
       tsk = av.sgr.logicNames[ii];
-      document.getElementById(tsk+'0geometryDiv').style.display = willbe;
+      document.getElementById(tsk+'_geometryDiv').style.display = willbe;
     };
     document.getElementById('geometrySgr').style.display = willbe;
     document.getElementById('allSugarGeometryDiv').style.display = willbe;
@@ -291,7 +291,7 @@
 
   av.ui.toggleDevelopentDisplays = function () {
     var len, tsk, sub;
-    var tmp;
+    var visibleTxt = 'visible';
     if ('visible' === av.doj.mnDebug.style.visibility) {
       //hide all development elements
       av.ui.hideDevelopment = true;

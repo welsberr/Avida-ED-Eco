@@ -503,7 +503,7 @@ av.sgr.reAct_edValu_d = {
   'value' : 1,
   'depletable' : 1,
   'resource' : 'missing',
-  'min' : 0.999, 
+  'min' : 0.0, 
   'max' : 1.0,
   'task' : '',
   'max_count' : 1,
@@ -545,20 +545,21 @@ av.sgr.resrc_num = ['initial', 'inflow', 'outflow',
 av.sgr.uiMin = [-2, -2, 1, -2, -2, 0, -2];  //need to document this tiba                  
 av.sgr.uiMax = [ 0,  0, 0,  0,  0, 0, 1];
 
-av.sgr.uiSummaryDom_num = ['initial', 'outflowHiNp','periodNp'];  //names of arguements that have numerical values in the dom for whole dish
+av.sgr.uiSummaryDom_num = ['initial', 'outflowHiNp','periodNp'];  //names of arguements that have numerical values in the dom for global dish
+av.sgr.uiSubGlobalDom_num = ['inflowHiNp', 'outflowHiDiv'];  //names of arguements that have numerical values in the dom for globa dish
 av.sgr.uiSubDom_num = ['initialHiNp', 'inflowHiNp', 'outflowHiNp',                
                     'initialLoNp', 'inflowLoNp', 'outflowLoNp', 'periodNp'];  //names of arguements that have numerical values in the dom for each subdish
 av.sgr.uiSubDish_num = ['initialHiNp', 'inflowHiNp', 'outflowHiNp', 
                       , 'initialLoNp', 'inflowLoNp', 'outflowLoNp', 'periodNp', 'area'];  //names of arguements that have numerical values in av.nut[numtsk].uiSub
-av.sgr.uiSubDom_txt = ['supplyType', 'hiSide'];
+av.sgr.uiSubDom_txt = ['supplyTypeSlct', 'hiSide'];
 
 av.sgr.uiSub_Check = [ 'diffuseCheck', 'periodCheck', 'gradientCheck' ];
 
-av.sgr.ui_subDom_argu = ['supplyType', 'initialHiNp', 'inflowHiNp', 'outflowHiNp', 'periodNp'
+av.sgr.ui_subDom_argu = ['supplyTypeSlct', 'initialHiNp', 'inflowHiNp', 'outflowHiNp', 'periodNp'
                         , 'diffuseCheck', 'periodCheck'   //not sure if regionCode and regionName belong in Dom
                         , 'gradientCheck', 'hiSide', 'initialLoNp', 'inflowLoNp', 'outflowLoNp'];
 
-av.sgr.ui_subDish_argu = ['supplyType', 'initialHiNp', 'inflowHiNp', 'outflowHiNp', 'periodNp'
+av.sgr.ui_subDish_argu = ['supplyTypeSlct', 'initialHiNp', 'inflowHiNp', 'outflowHiNp', 'periodNp'
                         , 'diffuseCheck', 'periodCheck', 'area'
                         , 'gradientCheck', 'hiSide', 'initialLoNp', 'inflowLoNp', 'outflowLoNp'
                         , 'boxed', 'regionCode', 'regionName', 'regionSet', 'regionNdx'];  
@@ -566,8 +567,8 @@ av.sgr.ui_subDish_argu = ['supplyType', 'initialHiNp', 'inflowHiNp', 'outflowHiN
                       //I don't think subRegion is in use. 
 //av.sgr.ui values match the dom, so they are amount per cell; av.sgr.Resrce values match avida, so they are amouth per dish/world. (will adust for cell value later)
 //one each task if I make a data structure from the UI that is separate from what goes in thhe config file.
-av.sgr.ui_allDom_argu = ['geometry', 'supplyType', 'regionLayout', 'initial'];  //'regionsNumOf' is not in dom but found using regionLayout (region layout in the dish)
-av.sgr.ui_allDish_argu = ['geometry', 'supplyType', 'regionLayout', 'initial', 'regionsNumOf'];   //'regionsNumOf' is not in dom, so it is at the end of the list.
+av.sgr.ui_allDom_argu = ['geometry', 'supplyTypeSlct', 'regionLayout', 'initialHiNp'];  //'regionsNumOf' is not in dom but found using regionLayout (region layout in the dish)
+av.sgr.ui_allDish_argu = ['geometry', 'supplyTypeSlct', 'regionLayout', 'initial', 'regionsNumOf'];   //'regionsNumOf' is not in dom, so it is at the end of the list.
 // 'inflow', 'outflow', 'periodFlag';  could be in global, but won't fit on one line in the sumary/details accordian.
 
 
@@ -597,14 +598,18 @@ av.sgr.reSrc_avidaDft_d = {
 
 
 //Region Layout in use as of 2019 Dec
-  // not ready yet                        <option id="orn0TopLeftRight" class="TopLftRit" value="3TopLftRit">Top/Bottom(L/R)</option>
-  // not ready yet                        <option id="orn0Quarters" class="Quarters" value="4Quarters">Quarters</option>
+  // not ready yet                        <option id="orn_TopLeftRight" class="TopLftRit" value="3TopLftRit">Top/Bottom(L/R)</option>
+  // not ready yet                        <option id="orn_quarters" class="Quarters" value="4Quarters">Quarters</option>
 
 av.sgr.re_region = /(\D+)(\d+)(.*$)/;
-av.sgr.regionLayoutValues = ['1Global', '1All', '2LftRit', '2UppLow', '3TopLftRit', '4Quarters'];
-//av.sgr.regionLayoutValues = ['0Global', '1All', '2LftRit', '3TopLftRit', '4Quarters'];
 
-//entry zero is blank so index matches subregion number 
+// These are the values for the options in region layout based on a region divided into quarters. 
+// Diane could make one for ninths (tic-tac-toe), but I don't think Rob will ever approve.
+av.sgr.regionLayoutValues = ['1Global', '1All', '2LftRit', '2UppLow', '3TopLftRit', '4Quarters'];  //The first character is the number of regions; 
+av.sgr.regionQuarterSubBeg =[        0,      1,         1,         1,            1,          1 ];  // start of sub regions useed 
+av.sgr.regionQuarterSubEnd =[        0,      1,         2,         2,            3,          4 ];  //End sub region used
+
+//entry zero isf for global so index matches subregion number, when dish is finite. 
 av.sgr.name = {};
 av.sgr.code = {};
 av.sgr.name['1Global'] = ['Global Dish'];
@@ -631,58 +636,36 @@ av.sgr.regionLookup['003,004,012,'] = '3TopLftRit';
 av.sgr.regionLookup['000'] = '1All';   //the same for the tic-tac-toe layout
 av.sgr.regionLookup['100'] = '1Global';
 
-av.sgr.describe = ['basic', 'global', 'adv'];
-av.sgr.describe.basic = {};
-av.sgr.describe.basic.not = ' Easy (x2)';
-av.sgr.describe.basic.nan = ' Easy (x2)';
-av.sgr.describe.basic.and = ' Moderate (x4)';
-av.sgr.describe.basic.orn = ' Moderate (x4)';
-av.sgr.describe.basic.oro = ' Hard (x8)';
-av.sgr.describe.basic.ant = ' Hard (x8)';
-av.sgr.describe.basic.nor = ' Very Hard (x16)';
-av.sgr.describe.basic.xor = ' Very Hard (x16)';
-av.sgr.describe.basic.equ = ' Brutal (x32)';
-
-av.sgr.describe.adv = {};            //advanced
-av.sgr.describe.adv.not = ' (x2)';
-av.sgr.describe.adv.nan = ' (x2)';
-av.sgr.describe.adv.and = ' ( x4)';
-av.sgr.describe.adv.orn = ' ( x4)';
-av.sgr.describe.adv.oro = ' (x 8)';
-av.sgr.describe.adv.ant = ' (x 8)';
-av.sgr.describe.adv.nor = ' (x16)';
-av.sgr.describe.adv.xor = ' (x16)';
-av.sgr.describe.adv.equ = ' (x32)';
-
 av.sgr.boxArguments = ['boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow']; //flag is true if in use; false if these arguments are not included. 
                       //boxx and boxy are the upper left corner positions of the region in Avida-ED
                       //boxcol and boxrow is the size of the box, so the lower right corner is (boxx+boxcol-1, boxy+boxrow-1]
   
-// Still using this version
+ // Still using this version
 // Region List based on 4 quarters: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
-av.sgr.regionQuarterNames = ['Whole Dish', 'Upper Left', 'Upper Right', 'Lower Left', 'Lower Right', 'Top', 'Bottom', 'Left', 'Right']; 
-av.sgr.regionQuarter3Char = ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];   //Use as values when the time comes
-av.sgr.regionQuarterCodes = [ '000', '001', '002', '003', '004', '012', '034', '013', '024'];   //These numbers go with the regions above
-av.sgr.regionQuarterCols =  [   1.0,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0,   0.5,   0.5];   //fraction of cols
-av.sgr.regionQuarterRows =  [   1.0,   0.5,   0.5,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0];   //fraction of rows
-av.sgr.regionQuarterColsAdd = [   0,     0,     1,     0,     1,     0,     0,     0,     1];   //add amount if odd cols in world
-av.sgr.regionQuarterRowsAdd = [   0,     0,     0,     1,     1,     0,     1,     0,     0];   //add amount if odd rows in world
-av.sgr.regionQuarterBoxx =  [   0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.5];  
-av.sgr.regionQuarterBoxy =  [   0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.0];  
+
+av.sgr.regionQuarterNames = ['Global Dish', 'Whole Dish', 'Upper Left', 'Upper Right', 'Lower Left', 'Lower Right', 'Top', 'Bottom', 'Left', 'Right']; 
+av.sgr.regionQuarter3Char = [ 'gbl', 'all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];   //Use as values when the time comes
+av.sgr.regionQuarterCodes = [ '100', '000', '001', '002', '003', '004', '012', '034', '013', '024'];   //These numbers go with the regions above
+av.sgr.regionQuarterCols =  [   1.0,   1.0,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0,   0.5,   0.5];   //fraction of cols
+av.sgr.regionQuarterRows =  [   1.0,   1.0,   0.5,   0.5,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0];   //fraction of rows
+av.sgr.regionQuarterColsAdd = [   0,     0,     0,     1,     0,     1,     0,     0,     0,     1];   //add amount if odd cols in world
+av.sgr.regionQuarterRowsAdd = [   0,     0,     0,     0,     1,     1,     0,     1,     0,     0];   //add amount if odd rows in world
+av.sgr.regionQuarterBoxx =  [   0.0,   0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.5];  
+av.sgr.regionQuarterBoxy =  [   0.0,   0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.0];  
 
 // Will convert to version below
 
 // Region List based on 4 quarters: entire dish, upper left, upper right, lower left, lower right, upper half, lower half, left half, right half
 av.sgr.regionQuarter = {};
-av.sgr.regionQuarter.Names = ['Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
-av.sgr.regionQuarter['3Char'] = ['all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];   //Use as values when the time comes
-av.sgr.regionQuarter.Codes = ['000', '001', '002', '003', '004', '012', '034', '013', '024'];   //These numbers go with the regions above
-av.sgr.regionQuarter.Cols =  [  1.0,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0,   0.5,   0.5];   //fraction of cols
-av.sgr.regionQuarter.Rows =  [  1.0,   0.5,   0.5,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0];   //fraction of rows
-av.sgr.regionQuarter.ColsAdd = [  0,     0,     1,     0,     1,     0,     0,     0,     1];   //add amount if odd cols in world
-av.sgr.regionQuarter.RowsAdd = [  0,     0,     0,     1,     1,     0,     1,     0,     0];   //add amount if odd rows in world
-av.sgr.regionQuarter.Boxx =  [  0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.5];  
-av.sgr.regionQuarter.Boxy =  [  0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.0];  
+av.sgr.regionQuarter.Names = ['Global Dish', 'Whole Dish', 'Upper Left', 'Upper Right', 'LowerLeft', 'LowerRight', 'Top', 'Bottom', 'Left', 'Right']; 
+av.sgr.regionQuarter['3Char'] = ['glb', 'all', 'upL', 'upR', 'loL', 'loR', 'top', 'bot', 'lft', 'rit'];   //Use as values when the time comes
+av.sgr.regionQuarter.Codes = [   '100', '000', '001', '002', '003', '004', '012', '034', '013', '024'];   //These numbers go with the regions above
+av.sgr.regionQuarter.Cols =  [     1.0,  1.0,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0,   0.5,   0.5];   //fraction of cols
+av.sgr.regionQuarter.Rows =  [     1.0,  1.0,   0.5,   0.5,   0.5,   0.5,   0.5,   0.5,   1.0,   1.0];   //fraction of rows
+av.sgr.regionQuarter.ColsAdd = [     0,    0,     0,     1,     0,     1,     0,     0,     0,     1];   //add amount if odd cols in world
+av.sgr.regionQuarter.RowsAdd = [     0,    0,     0,     0,     1,     1,     0,     1,     0,     0];   //add amount if odd rows in world
+av.sgr.regionQuarter.Boxx =  [     0.0,  0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.5];  
+av.sgr.regionQuarter.Boxy =  [     0.0,  0.0,   0.0,   0.5,   0.0,   0.5,   0.0,   0.0,   0.0,   0.0];  
 
 av.sgr.regionNine = {};
 av.sgr.regionNine.Codes = ['000n', '001', '002', '003'   //top row: ninth of dish
@@ -690,7 +673,7 @@ av.sgr.regionNine.Codes = ['000n', '001', '002', '003'   //top row: ninth of dis
                                  , '007', '008', '009'   //bottom row
                                  , '123', '456', '789'   //rows 
                                  , '147', '258', '369'];  //columns 
-  
+ 
 // need to figure out how to assign when reading environment.cfg
   av.sgr.supply3 =      ['non', 'inf',  'fin',  'chm',  'poi', 'flo' ];  //none, infinite, finite, chemostat, poison
   av.sgr.supply4 =      ['none', 'infn', 'fint', 'chst', 'pois', 'flow'];
@@ -707,7 +690,7 @@ av.sgr.regionNine.Codes = ['000n', '001', '002', '003'   //top row: ninth of dis
   av.sgr.flagInitOpposite = [false, false];  //false in this case is to NOT hide as develpment sections shown.
 
 av.sgr.nutdft = {}; 
-//------------------------------------------------------------------------------------------- av.sgr.makeNutDefault --
+//---------------------------------------------------------------------------------- odd flags to try to get Rob's UI --
 //Rob Pennock decided that we should only have local/grid resources. This will complicate things as my design is based
 // global characteristic in the "summary" and the rest in the "details" section of the summary/details format. 
 
@@ -717,7 +700,32 @@ av.sgr.gridOnly = false;        // gridOnly true  ++> dftGeometry = grid
 av.sgr.dftGeometry = 'global';  // gridOnly false ++> dftGeometry = global
 if (av.sgr.gridOnly) av.sgr.dftGeometry = 'grid';
 av.sgr.complexityLevel = 'sgrBasic';
+av.sgr.complexityLevel = 'sgrGlobal';
 av.sgr.complexityLevel = 'sgrAdvanced';
+
+av.sgr.describe = ['basic', 'global', 'adv'];
+av.sgr.describe.long = {};
+av.sgr.describe.long.not = ' Easy (x2)';
+av.sgr.describe.long.nan = ' Easy (x2)';
+av.sgr.describe.long.and = ' Moderate (x4)';
+av.sgr.describe.long.orn = ' Moderate (x4)';
+av.sgr.describe.long.oro = ' Hard (x8)';
+av.sgr.describe.long.ant = ' Hard (x8)';
+av.sgr.describe.long.nor = ' Very Hard (x16)';
+av.sgr.describe.long.xor = ' Very Hard (x16)';
+av.sgr.describe.long.equ = ' Brutal (x32)';
+
+av.sgr.describe.short = {};            //advanced
+av.sgr.describe.short.not = ' (x2)';
+av.sgr.describe.short.nan = ' (x2)';
+av.sgr.describe.short.and = ' ( x4)';
+av.sgr.describe.short.orn = ' ( x4)';
+av.sgr.describe.short.oro = ' (x 8)';
+av.sgr.describe.short.ant = ' (x 8)';
+av.sgr.describe.short.nor = ' (x16)';
+av.sgr.describe.short.xor = ' (x16)';
+av.sgr.describe.short.equ = ' (x32)';
+
 //------------------------------------------------------------------------------------------- av.sgr.makeNutDefault --
 av.sgr.makeNutDefault = function () {
   av.sgr.nutdft = {};    
@@ -731,21 +739,21 @@ av.sgr.makeNutDefault = function () {
     av.sgr.nutdft.uiAll[ av.sgr.ui_allDish_argu[jj] ] = 'default';
   };
   //defaults for items that describe the whole dish
-  av.sgr.nutdft.react.min = 0.99;
-  av.sgr.nutdft.react.max = 1.01;
+  av.sgr.nutdft.react.min = 0.01;
+  av.sgr.nutdft.react.max = 1.0;
   av.sgr.nutdft.react.max_count = 1;
   av.sgr.nutdft.react.type = 'pow';
   av.sgr.nutdft.uiAll.geometry = av.sgr.dftGeometry;  ////Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global
-  av.sgr.nutdft.uiAll.supplyType = 'infinite';    //this is only for whem ui.geometry = global
+  av.sgr.nutdft.uiAll.supplyTypeSlct = 'infinite';    //this is only for whem ui.geometry = global
   av.sgr.nutdft.uiAll.regionLayout = '1All';  //only Whole Dish for now; '1All' is the code for 'Whole Dish';
   av.sgr.nutdft.uiAll.regionsNumOf = 1;   // whole dish = there is only one dish 
-  av.sgr.nutdft.uiAll.initial = 1000;      //only used when whem ui.geometry = global and  supplyType = 'finite' 
+  av.sgr.nutdft.uiAll.initial = 1000;      //only used when whem ui.geometry = global and  supplyTypeSlct = 'finite' 
 
   //defaults for subtasks which must be Grid or Local
-  av.sgr.nutdft.uiSub.supplyType = 'infinite';  // Infinite default from Avida-ED 3: I think Should change to Finite
-  av.sgr.nutdft.uiSub.initialHi = 1000;  //sugar units/cell guess at an initial value when supplyType='finite'; need to multiply by wrldSize
-  av.sgr.nutdft.uiSub.inflowHi  = 1;   //sugar units/cell guess at an initial value when supplyType='chemostat'; need to multiply by wrldSize
-  av.sgr.nutdft.uiSub.outflowHi = 0.1;   //sugar units (fraction) guess at an initial value when supplyType='chemostat';
+  av.sgr.nutdft.uiSub.supplyTypeSlct = 'infinite';  // Infinite default from Avida-ED 3: I think Should change to Finite
+  av.sgr.nutdft.uiSub.initialHi = 1000;  //sugar units/cell guess at an initial value when supplyTypeSlct='finite'; need to multiply by wrldSize
+  av.sgr.nutdft.uiSub.inflowHi  = 1;   //sugar units/cell guess at an initial value when supplyTypeSlct='chemostat'; need to multiply by wrldSize
+  av.sgr.nutdft.uiSub.outflowHi = 0.1;   //sugar units (fraction) guess at an initial value when supplyTypeSlct='chemostat';
   av.sgr.nutdft.uiSub.area = -1;   //based on a standard 30 x 30 world
   av.sgr.nutdft.uiSub.diffuseCheck = false;    //false = default;  else true.      
   //from event file
@@ -754,9 +762,9 @@ av.sgr.makeNutDefault = function () {
 
   av.sgr.nutdft.uiSub.gradientCheck = false;    //false = default;  else true.      
   av.sgr.nutdft.uiSub.hiSide = 'left';    //only valid for local resources with supply Type = 'gradient' or 'flow';
-  av.sgr.nutdft.uiSub.inflowLo  =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
-  av.sgr.nutdft.uiSub.outflowLo = 0.1;  //sugar units (fraction) guess at an initial value when supplyType='gradient' or 'flow';
-  av.sgr.nutdft.uiSub.initialLo =   0;  //sugar units/cell guess at an initial value when supplyType='gradient' or 'flow';
+  av.sgr.nutdft.uiSub.inflowLo  =   0;  //sugar units/cell guess at an initial value when supplyTypeSlct='gradient' or 'flow';
+  av.sgr.nutdft.uiSub.outflowLo = 0.1;  //sugar units (fraction) guess at an initial value when supplyTypeSlct='gradient' or 'flow';
+  av.sgr.nutdft.uiSub.initialLo =   0;  //sugar units/cell guess at an initial value when supplyTypeSlct='gradient' or 'flow';
   av.sgr.nutdft.uiSub.regionNdx = 1;   //index into various region data vectors
   av.sgr.nutdft.uiSub.regionCode = '000';
   av.sgr.nutdft.uiSub.regionName = '1All';
@@ -857,17 +865,17 @@ av.fzr.clearEnvironment = function(from) {
     //defaults for items that describe the whole dish
     // These should be in arrays or dictionaries so that they always match with av.sgr.nutdft.uiAll - tiba fix later
     av.nut[tsk].uiAll.geometry = 'global';        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
-    av.nut[tsk].uiAll.supplyType = 'infinite';    //this is only for whem ui.geometry = global
+    av.nut[tsk].uiAll.supplyTypeSlct = 'infinite';    //this is only for whem ui.geometry = global
     av.nut[tsk].uiAll.regionLayout = '1All';  //only whole dish for now
     av.nut[tsk].uiAll.regionsNumOf = 1;   // whole dish
-    //av.nut[tsk].uiAll.initial = -1;      //only used whem ui.geometry = global and  supplyType = 'finite' 
+    //av.nut[tsk].uiAll.initial = -1;      //only used whem ui.geometry = global and  supplyTypeSlct = 'finite' 
 
     for (jj=0; jj < uiSubDishLen; jj++) {
       av.nut[tsk]['uiSub'][av.sgr.ui_subDish_argu[jj] ] = [];
     };
   };   //end of looping through the logic tasks.
   //if (av.dbg.flg.nut) {
-  if (true) {
+  if (false) {
     av.cleanNut = {};
     av.cleanNut = JSON.parse(JSON.stringify(av.nut));
     // section to verifiy that av.nut and av.cleanNut are different structurs; console.log statements verified that they are different

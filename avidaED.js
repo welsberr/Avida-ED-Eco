@@ -1240,7 +1240,8 @@ require([
     };
     // keep console example because evt info looks useful for improving mouse code.
     // console.log('contentType=',contentType,'; evt=', evt);
-    console.log('contentType=', contentType);
+    // console.log('contentType=', contentType);
+    
     document.getElementById(contentType).className = 'labInfoClass labInfoFlex';;
     evt.currentTarget.className = "tablinks active";
     //console.log('id=', evt.currentTarget.id);
@@ -3397,7 +3398,7 @@ require([
 
   // Avida-ED 4.0.0 Alpha Testing fix this too. 
   //true when diane is working; false for all production releases even in alpha testsing.  
-  if (false) {
+  if (true) {
     console.log('testing mode; set to true before public release for Avida-ED 4.0.0 Alpha Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
@@ -3409,7 +3410,7 @@ require([
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
   av.sgr.ChangeAllGeo(av.sgr.dftgGeometry);
   //av.sgr.setSugarColors(true);  //true is to turn colors on;    // set color/grey individually so when 0 resources, grey shades rather than colors
-  av.sgr.ChangeAllsugarSupplyType('infinite','Last_things_done');
+  av.sgr.ChangeAllsugarsupplyTypeSlct('infinite','Last_things_done');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');
   //document.getElementById('displayGridResourceData').style.display = 'flex';   //display local resource data
 

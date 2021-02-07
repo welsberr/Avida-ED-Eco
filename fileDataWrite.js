@@ -241,7 +241,9 @@
     var ndx = 1;
     var react_arguLen = av.sgr.react_argu.length;
     var rslt;
-    var kk=0; // indext into uiSub
+    var kk=0; // index into uiSub
+    var subBegin= 0; //must be positive
+    var subEnd = av.nut.numRegionsinHTML;  // cannot be more than the number of html slots
     
     if (false) {
       console.log(from,'called av.fwt.dom2nutUIfields: react_arguLen=',react_arguLen, 
@@ -252,27 +254,30 @@
       numTsk = av.sgr.logEdNames[ii];     //puts names in order they are on avida-ed user interface
       tsk = av.sgr.logicNames[ii];        //3 letter logic names
       tskVar = av.sgr.logicVnames[ii];    // variable length logic tasks names as required by Avida
-      // need an argument list to hold data relevant to getting data from dom or need to do each individually
+      //argument lists to hold data relevant to getting data from dom
       
       for (jj=0; jj < uiAllDomLen; jj++) {
         arguDom = av.sgr.ui_allDom_argu[jj];
-        //console.log('ii='+ii+'; jj='+jj, '; av.nut['+numTsk+'].uiAll['+arguDom+']=', 'dom of', tsk+'0'+arguDom);
-        //console.log('domList length=', uiAllDomLen,'; value=',document.getElementById(tsk+'0'+arguDom).value);    
-        av.nut[numTsk].uiAll[arguDom] = document.getElementById(tsk+'0'+arguDom).value;
+        //console.log('ii='+ii+'; jj='+jj, '; av.nut['+numTsk+'].uiAll['+arguDom+']=', 'dom of', tsk+'_'+arguDom);
+        //console.log('domList length=', uiAllDomLen,'; value=',document.getElementById(tsk+'_'+arguDom).value);    
+
+        av.nut[numTsk].uiAll[arguDom] = document.getElementById(tsk+'_'+arguDom).value;
         //console.log('av.nut['+numTsk+'].uiAll['+arguDom+']=');
         //console.log(av.nut[numTsk].uiAll[arguDom]);
       };
-      av.nut[numTsk].uiAll.regionsNumOf = av.nut[numTsk].uiAll.regionLayout[0];
-      //console.log('av.nut['+numTsk+'].uiAll=',av.nut[numTsk].uiAll);
-             
+      regionLayout = document.getElementById(tsk+'_regionLayout').value;
+      av.nut[numTsk].uiAll.regionLayout = regionLayout;
+      //console.log('numTsk=', numTsk, '; regionLayout=', regionLayout);
+      av.nut[numTsk].uiAll.regionsNumOf = regionLayout[0];
+      ndx = av.sgr.regionLayoutValues.indexOf(regionLayout);
+
+      subBegin = av.sgr.regionQuarterSubBeg[ndx];
+      subEnd = av.sgr.regionQuarterSubEnd[ndx];
+      //console.log('numTsk=', numTsk, '; regionLayout=', regionLayout, '; ndx=', ndx, ';subBegin=', subBegin, '; subEnd=', subEnd);
       //start on the potential subdishes next
-      //console.log('SubDishes Now -----------------uiSub_txt length=', uiSubDom_txtLen);
-      for (var nn=1; nn <= av.nut[numTsk].uiAll.regionsNumOf; nn++) {
-        if ('global' == av.nut[numTsk].uiAll.geometry ) { kk = 0; } else { kk = nn; };
-        
-        //this needs to be based on regionsNumOf 
-        regionLayout = av.nut[numTsk].uiAll.regionLayout;
-        
+      for (var nn=subBegin; nn <= subEnd; nn++) {
+        kk=nn;
+                
         //seemed to have inconsistent error, but it went away. left the debug console.logs for now
         //console.log('regionLayout = av.nut['+numTsk+'].uiAll.regionLayout=', av.nut[numTsk].uiAll.regionLayout);
         
@@ -282,7 +287,7 @@
         av.nut[numTsk].uiSub.regionName[kk] = av.sgr.name[regionLayout][kk];
                                       //tmptext = av.sgr.name[regionLayout][kk];
           //av.nut[numTsk].uiSub.regionName[kk] = tmpText;
-        //console.log('av.nut['+numTsk+'].uiSub.regionName['+kk+']=', av.nut[numTsk].uiSub.regionName[kk]);
+        console.log('av.nut['+numTsk+'].uiSub.regionName['+kk+']=', av.nut[numTsk].uiSub.regionName[kk]);
           
         ndx = av.sgr.regionQuarterNames.indexOf(av.sgr.name[regionLayout][kk]);
         av.nut[numTsk].uiSub.regionNdx[kk] = ndx;
@@ -302,11 +307,11 @@
 
         if (0 == kk) {
           if ('sgrBasic' == av.sgr.complexityLevel) { 
-            av.nut[numTsk].uiSub.supplyType[kk] = document.getElementById(tsk+'WsupplyType').value;
+            av.nut[numTsk].uiSub.supplyTypeSlct[kk] = document.getElementById(tsk+'WsupplyTypeSlct').value;
           } else 
-            av.nut[numTsk].uiSub.supplyType[kk] = document.getElementById(tsk+'0supplyType').value;
+            av.nut[numTsk].uiSub.supplyTypeSlct[kk] = document.getElementById(tsk+'_supplyTypeSlct').value;
         } else {
-          av.nut[numTsk].uiSub['supplyType'][kk] = document.getElementById(tsk+kk+'supplyType').value;          
+          av.nut[numTsk].uiSub['supplyTypeSlct'][kk] = document.getElementById(tsk+kk+'supplyTypeSlct').value;          
           av.nut[numTsk].uiSub['hiSide'][kk] = document.getElementById(tsk+kk+'hiSide').value;
         }
 
@@ -314,8 +319,8 @@
         //Need to fine area of subregions first. 
         for (jj=0; jj< uiSubDom_numLen; jj++) {
           arguDom = av.sgr.uiSubDom_num[jj];
-          console.log('jj='+jj, '; av.nut['+numTsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
-          console.log('; dom=',document.getElementById(tsk+kk+arguDom).value ); 
+          //console.log('jj='+jj, '; av.nut['+numTsk+'].uiSub['+arguDom+']['+kk+']=', 'dom of', '|'+tsk+kk+arguDom+'|');
+          //console.log('; dom=',document.getElementById(tsk+kk+arguDom).value ); 
           if (av.utl.isNumber(Number(document.getElementById(tsk+kk+arguDom).value))) {
             tmpNum = Number(document.getElementById(tsk+kk+arguDom).value);
             if ('in' == arguDom.substr(0,2)) {
@@ -347,12 +352,6 @@
   };
   //----------------------------------------------------------------------------------- End of av.fwt.dom2nutUIfields --
 
-  //------------------------------------------------------------------------------- av.fwt.NutStruct2environment_cfg  --
-  av.fwt.NutStruct2environment_cfg = function (idStr, toActiveConfigFlag, from) {
-    
-  };
-  //--------------------------------------------------------------------------- end av.fwt.NutStruct2environment_cfg  --
-  
   //-------------------------------------------------------------------------------------- av.fwt.nutUI2cfgStructure  --
   // This function takes values in the uiAll and uiSub substructures and creates the data for the parameters that are 
   // needed to write the evironment file. Iniital and inflow amounts are per cell in the ui and total aount in the environment
@@ -369,6 +368,7 @@
     var ndx = 1;
     var jj = 0;
     var react_arguLen = av.sgr.react_argu.length;
+    console.log('world col, row, area=', av.nut.wrldCols, av.nut.wrldRows, av.nut.wrldSize);
 
     for (var ii=0; ii< logiclen; ii++) {      //9
       numTsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
@@ -396,13 +396,13 @@
         av.nut[numTsk].resrc.outflowx1[jj] = 0;
         av.nut[numTsk].resrc.outflowy1[jj] = 0;
 
-        av.nut[numTsk].resrc.inflowx2[jj] += av.nut.wrldCols-1;
-        av.nut[numTsk].resrc.inflowy2[jj] += av.nut.wrldRows-1;
-        av.nut[numTsk].resrc.outflowx2[jj] += av.nut.wrldCols-1;
-        av.nut[numTsk].resrc.outflowy2[jj] += av.nut.wrldRows-1;
+        av.nut[numTsk].resrc.inflowx2[jj] = av.nut.wrldCols-1;
+        av.nut[numTsk].resrc.inflowy2[jj] = av.nut.wrldRows-1;
+        av.nut[numTsk].resrc.outflowx2[jj] = av.nut.wrldCols-1;
+        av.nut[numTsk].resrc.outflowy2[jj] = av.nut.wrldRows-1;
         
-        //console.log('av.nut['+numTsk+'].uiAll.supplyType=', av.nut[numTsk].uiAll.supplyType);
-        switch ( av.nut[numTsk].uiAll.supplyType.toLowerCase() ) {
+        //console.log('av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
+        switch ( av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
           case 'none':
             av.nut[numTsk].react.value[0] = 0;
             break;
@@ -415,6 +415,8 @@
             break;
           case 'chemostat': 
             av.nut[numTsk].react.resource[0] = tsk+'000';
+            av.nut[numTsk].resrc.inflow[jj] = av.nut[numTsk].uiSub.inflowHiNp[jj];
+            av.nut[numTsk].resrc.outflow[jj] = av.nut[numTsk].uiSub.outflowHiNp[jj];
             break;
         }
       }
@@ -464,8 +466,8 @@
           //   'y2=', av.nut[numTsk].resrc.inflowy2[jj]);
           //av.nut[numTsk].resrc.inflow[jj] = av.nut[numTsk].uiSub.[jj];
           
-          console.log('av.nut['+numTsk+'].uiSub.supplyType['+jj+']=', av.nut[numTsk].uiSub.supplyType[jj]);
-          switch ( av.nut[numTsk].uiSub.supplyType[jj].toLowerCase() ) {
+          console.log('av.nut['+numTsk+'].uiSub.supplyTypeSlct['+jj+']=', av.nut[numTsk].uiSub.supplyTypeSlct[jj]);
+          switch ( av.nut[numTsk].uiSub.supplyTypeSlct[jj].toLowerCase() ) {
             case 'infinite':
               av.nut[numTsk].react.depletable[jj] = 0;
               av.nut[numTsk].cell.initial[jj] = 10;
@@ -556,7 +558,7 @@
       tsk = av.sgr.logicNames[ii];      //3 letter logic names
       tskVar = av.sgr.logicVnames[ii];   // variable length logic tasks names as required by Avida
       //console.log('numTsk=', numTsk, '; tsk=', tsk, '; tskVar=', tskVar, 'uiAll.geometry=', av.nut[numTsk].uiAll.geometry.toLowerCase());
-
+/*
 //      if ('nor' == tsk) {
         if (false) {
         txt += 'RESOURCE nor000q:geometry=grid:xdiffuse=0:ydiffuse=0\n';
@@ -582,13 +584,14 @@
         txt += 'REACTION  nor013q xor  process:resource=nor013q:value=2.0:type=pow:min=0.9:max=1 requisite:max_count=1\n';
       }
       else {
+*/    if (true) {     
 
       if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase()) {
         jj = 0;
         tmpNum = 1;
-        //console.log('numTsk=', numTsk, '; jj=', jj, '; supplyType=', av.nut[numTsk].uiAll.supplyType.toLowerCase());
-        txt += '# Task = '+ numTsk + '; Geometry = ' + av.nut[numTsk].uiAll.geometry + '; supplyType = '+  av.nut[numTsk].uiAll.supplyType.toLowerCase() + '\n';
-        switch ( av.nut[numTsk].uiAll.supplyType.toLowerCase() ) {
+        //console.log('numTsk=', numTsk, '; jj=', jj, '; supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase());
+        txt += '# Task = '+ numTsk + '; Geometry = ' + av.nut[numTsk].uiAll.geometry + '; supplyTypeSlct = '+  av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() + '\n';
+        switch ( av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
           case 'none':
             tmpNum = 0;
           case 'infinite':
@@ -610,13 +613,6 @@
             txt += av.fwt.existCheck(':initial=', av.nut[numTsk].resrc.initial[jj], '')+ '\n'; 
             
             // Reaction is the same for finite and chemostate
-            txt += 'REACTION ' + av.fwt.existCheck( '',av.nut[numTsk].react.name[jj],tskVar );
-            txt += ' ' + av.fwt.existCheck( '',av.nut[numTsk].react.task[jj], tskVar );
-            txt += ' process' + av.fwt.existCheck( ':value=', av.nut[numTsk].react.value[jj], '');
-            txt += av.fwt.existCheck( ':type=', av.nut[numTsk].react.type[jj], ':type=pow' );
-            txt += av.fwt.existDfltCheck( ':depletable=', av.nut[numTsk].react.depletable[jj], '', 1 );
-            txt += av.fwt.existCheck(' requisite:max_count=', av.nut[numTsk].react.max_count[jj], ' requisite:max_count=1') + '\n\n';
-
             txt += 'REACTION ' + av.nut[numTsk].react.name[jj] + ' ' + av.nut[numTsk].react.task[jj];
             txt += ' process:resource='+av.nut[numTsk].react.resource[jj]+':value=' + av.nut[numTsk].react.value[jj];
             txt +=':type=' + av.nut[numTsk].react.type[jj]+':min='+av.nut[numTsk].react.max[jj]+':min='+av.nut[numTsk].react.min[jj];
@@ -644,13 +640,20 @@
             txt +=  + '\n';
             
             // Reaction is the same for finite and chemostate
+            txt += 'REACTION ' + av.nut[numTsk].react.name[jj] + ' ' + av.nut[numTsk].react.task[jj];
+            txt += ' process:resource='+av.nut[numTsk].react.resource[jj]+':value=' + av.nut[numTsk].react.value[jj];
+            txt +=':type=' + av.nut[numTsk].react.type[jj]+':min='+av.nut[numTsk].react.max[jj]+':min='+av.nut[numTsk].react.min[jj];
+            txt += ' requisite:max_count=' + av.nut[numTsk].react.max_count[jj] + '\n\n';
+/*
+            // Reaction is the same for finite and chemostate
             txt += 'REACTION ' + av.fwt.existCheck( '',av.nut[numTsk].react.name[jj],tskVar );
             txt += ' ' + av.fwt.existCheck( '',av.nut[numTsk].react.task[jj], tskVar );
             txt += ' process' + av.fwt.existCheck( ':value=', av.nut[numTsk].react.value[jj], '');
             txt += av.fwt.existCheck( ':type=', av.nut[numTsk].react.type[jj], ':type=pow' );
             txt += av.fwt.existDfltCheck( ':depletable=', av.nut[numTsk].react.depletable[jj], '', 1 );
             txt += av.fwt.existCheck(' requisite:max_count=', av.nut[numTsk].react.max_count[jj], ' requisite:max_count1'+av.sgr.reactValues[ii]);
-            txt += '\n\n';
+*/
+            txt += '\n';
             break;
         }  //end switch
       }
@@ -735,12 +738,12 @@
               cellTxt += av.fwt.existCheck( ':initial=', Math.round(tmpNum).toString(), tmpNum )+ '\n'; 
               console.log('tmpnum is a number: cellTxt=', cellTxt);
             }
-            else if ('none' == av.nut[numTsk].uiSub.supplyType[jj].toLowerCase()) {
+            else if ('none' == av.nut[numTsk].uiSub.supplyTypeSlct[jj].toLowerCase()) {
               cellTxt += ':initial=0\n'; 
               console.log('none: cellTxt=', cellTxt);
 
             }
-            else if ('infinite' == av.nut[numTsk].uiSub.supplyType[jj].toLowerCase()) {
+            else if ('infinite' == av.nut[numTsk].uiSub.supplyTypeSlct[jj].toLowerCase()) {
                 cellTxt += av.fwt.existCheck( ':initial=', Math.round(), 10 )+ '\n'; 
                 console.log('should never reach this location: cellTxt=', cellTxt);
             }
@@ -760,9 +763,9 @@
           reactTxt += av.fwt.existCheck(' requisite:max_count=', av.nut[numTsk].react.max_count[jj], ' requisite:max_count1'+av.sgr.reactValues[ii]);
           reactTxt += '\n\n';
 
-          //console.log('numTsk=', numTsk, '; jj=', jj, '; supplyType=',av.nut[numTsk].uiSub.supplyType[jj].toLowerCase());
-          txt += '# Task = '+ numTsk + '; Geometry = ' + av.nut[numTsk].uiAll.geometry + '; supplyType = '+  av.nut[numTsk].uiSub.supplyType[jj].toLowerCase() + '\n';
-          switch ( av.nut[numTsk].uiSub.supplyType[jj].toLowerCase() ) {
+          //console.log('numTsk=', numTsk, '; jj=', jj, '; supplyTypeSlct=',av.nut[numTsk].uiSub.supplyTypeSlct[jj].toLowerCase());
+          txt += '# Task = '+ numTsk + '; Geometry = ' + av.nut[numTsk].uiAll.geometry + '; supplyTypeSlct = '+  av.nut[numTsk].uiSub.supplyTypeSlct[jj].toLowerCase() + '\n';
+          switch ( av.nut[numTsk].uiSub.supplyTypeSlct[jj].toLowerCase() ) {
             case 'infinite':
               txt += resrcFix + '\n';
               txt += cellTxt;
@@ -1458,7 +1461,7 @@
       etsk = av.sgr.logEdNames[ii];
       tsk = av.sgr.logicNames[ii];
       atsk = av.sgr.logicVnames[ii];
-      domName = tsk + '0geometry';
+      domName = tsk + '_geometry';
       av.nut[etsk].geometry = document.getElementById(domName).value;
       av.nut[etsk].uiAll.regionLayout = document.getElementById(tsk +'0regionLayout').value.toLowerCase();
       if ('global' == av.nut[etsk].geometry.toLowerCase()) {
@@ -1472,12 +1475,12 @@
 
       }
       else {
-        // local so there could be subdishes; later the number of subdishes will come from av.dom.orn0regionLayout.value
+        // local so there could be subdishes; later the number of subdishes will come from av.dom.orn_regionLayout.value
         // for now there is just one option, the whole dish so len = 1
         for (sub = 1; sub <= 1; sub++) {   //yes this loop starts at 1 instead of zero
-          av.nut[etsk].uiSub.supplyType[sub] = document.getElementById(tsk + sub +'supplyType').value.toLowerCase();
+          av.nut[etsk].uiSub.supplyTypeSlct[sub] = document.getElementById(tsk + sub +'supplyTypeSlct').value.toLowerCase();
           av.nut[etsk].resrc.initial[sub];
-          av.nut[etsk].uiAll.supplyType[0] = document.getElementById(tsk + '0supplyType').value.toLowerCase();
+          av.nut[etsk].uiAll.supplyTypeSlct[0] = document.getElementById(tsk + '_supplyTypeSlct').value.toLowerCase();
           av.nut[etsk].resrc.name = tsk + '00';  // this may change later
           av.nut[etsk].resrc.initial[0] = 0;  //different if finite
           av.nut[etsk].resrc.xdiffuse = 0;
