@@ -675,34 +675,53 @@
 
               <div id="displayGridResourceData">
                 <div class="grid-currentSugarAmount-container">
-                  <div id='sgrTop' class='sugarTsk'>Resource</div><div id="mxTop" class='mxTask'>Highest</div><div id="cellTop" class='cellTask'>Cell Value</div>
-                  <div id='sgrNot' class='sugarTsk'>NOT</div><div id="mxNot" class='mxTask'>not</div><div id="cellNot" class='cellTask'>NOt</div>
-                  <div id='sgrNan' class='sugarTsk'>NAN</div><div id="mxNan" class='mxTask'>nan</div><div id="cellNan" class='cellTask'>NAn</div>
-                  <div id='sgrAnd' class='sugarTsk'>AND</div><div id="mxAnd" class='mxTask'>and</div><div id="cellAnd" class='cellTask'>ANd</div>  
-                  <div id='sgrOrn' class='sugarTsk'>ORN</div><div id="mxOrn" class='mxTask'>orn</div><div id="cellOrn" class='cellTask'>ORn</div>
-                  <div id='sgrOro' class='sugarTsk'>ORO</div><div id="mxOro" class='mxTask'>oro</div><div id="cellOro" class='cellTask'>ORo</div>
-                  <div id='sgrAnt' class='sugarTsk'>ANT</div><div id="mxAnt" class='mxTask'>ant</div><div id="cellAnt" class='cellTask'>ANt</div>  
-                  <div id='sgrNor' class='sugarTsk'>NOR</div><div id="mxNor" class='mxTask'>nor</div><div id="cellNor" class='cellTask'>NOr</div>
-                  <div id='sgrXor' class='sugarTsk'>XOR</div><div id="mxXor" class='mxTask'>xor</div><div id="cellXor" class='cellTask'>XOr</div>
-                  <div id='sgrEqu' class='sugarTsk'>EQU</div><div id="mxEqu" class='mxTask'>equ</div><div id="cellEqu" class='cellTask'>EQu</div>  
+                  <div id='sgrTop' class='sugarTsk'>Resource</div><div id="mxTop" class='mxTask'>Highest</div><div id="cellTop" class='cellTask'>Cell Value</div><div id='totTop' class='totTask'>Global</div>
+                  <div id='sgrNot' class='sugarTsk'>NOT</div><div id="mxNot" class='mxTask'>not</div><div id="cellNot" class='cellTask'>NOt</div><div id="totNot" class='totTask'>Not</div>
+                  <div id='sgrNan' class='sugarTsk'>NAN</div><div id="mxNan" class='mxTask'>nan</div><div id="cellNan" class='cellTask'>NAn</div><div id="totNan" class='totTask'>naN</div>
+                  <div id='sgrAnd' class='sugarTsk'>AND</div><div id="mxAnd" class='mxTask'>and</div><div id="cellAnd" class='cellTask'>ANd</div><div id="totAnd" class='totTask'>anD</div>
+                  <div id='sgrOrn' class='sugarTsk'>ORN</div><div id="mxOrn" class='mxTask'>orn</div><div id="cellOrn" class='cellTask'>ORn</div><div id="totOrn" class='totTask'>orN</div>
+                  <div id='sgrOro' class='sugarTsk'>ORO</div><div id="mxOro" class='mxTask'>oro</div><div id="cellOro" class='cellTask'>ORo</div><div id="totOro" class='totTask'>orO</div>
+                  <div id='sgrAnt' class='sugarTsk'>ANT</div><div id="mxAnt" class='mxTask'>ant</div><div id="cellAnt" class='cellTask'>ANt</div><div id="totAnt" class='totTask'>anT</div>
+                  <div id='sgrNor' class='sugarTsk'>NOR</div><div id="mxNor" class='mxTask'>nor</div><div id="cellNor" class='cellTask'>NOr</div><div id="totNor" class='totTask'>noR</div>
+                  <div id='sgrXor' class='sugarTsk'>XOR</div><div id="mxXor" class='mxTask'>xor</div><div id="cellXor" class='cellTask'>XOr</div><div id="totXor" class='totTask'>xoR</div>
+                  <div id='sgrEqu' class='sugarTsk'>EQU</div><div id="mxEqu" class='mxTask'>equ</div><div id="cellEqu" class='cellTask'>EQu</div><div id="totEqu" class='totTask'>eqU</div>
                 </div>
               </div>
 
-              <div id="popChrtHolder">
-                <div id='popChart'></div>
-                <div id='popChartDiv'></div>
-              </div>
-              <div id='miniChartYaxis'>
-                <label id='yaxisLabel'>Y-axis</label>
-                <select  id='yaxis'>
-                  <option value='Average Fitness' selected>Average Fitness</option>
-                  <option value='Average Offspring Cost'>Average Offspring Cost</option>
-                  <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
-                  <option value='Number of Organisms'>Number of Organisms</option>
-                  <option value='Number Viable'>Number Viable</option>
-                  <option value='none'>None</option>
-                </select>
-              </div><span id='miniChartYaxis_end' class='display_none'></span>
+              <div id='allMiniChrtHolder'>
+                <div id="popChrtHolder">
+                  <div id='popMiniChart'></div>
+                  <div id='miniChartYaxis'>
+                    <label id='yaxisLabel'>Y-axis
+                      <select  id='yaxis'>
+                        <option value='Average Fitness' selected>Average Fitness</option>
+                        <option value='Average Offspring Cost'>Average Offspring Cost</option>
+                        <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
+                        <option value='Number of Organisms'>Number of Organisms</option>
+                        <option value='Number Viable'>Number Viable</option>
+                        <option value='none'>None</option>
+                      </select>
+                    </label>
+                  </div><span id='miniChartYaxis_end' class='display_none'></span>
+                </div><span id="popChrtHolder_end"></span>
+                <div id='resrcMiniChrtHolder'>
+                  <div id='resrcMiniChart'></div>
+                </div><span 'resrcMiniChrtHolder_end'></span> 
+              </div><span id="allMiniChrtHolder_end"></span>
+              
+              <div id='miniChartControls'>
+                <div id='miniChartOptions'>
+                  <label id='miniChartOptionsLabel'>Options
+                    <select  id='miniCharts' onchange='av.ui.miniChartOptionsFn(this)'>
+                      <option value='organism' selected>organism Data</option>
+                      <option value='resource'>Resource Data</option>
+                      <option value='both'>Both</option>
+                      <option value='combine'>Combine</option>
+                      <option value='none'>None</option>
+                    </select>
+                  </label>
+                </div>
+              </div><span in-'miniChartControls_end' class='display_none'></span>
 
               <div id='pauseOptions'>
                 Pause Run at Update:&nbsp;

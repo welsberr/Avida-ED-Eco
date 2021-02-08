@@ -65,8 +65,8 @@
     av.dom.StatsButton = document.getElementById('StatsButton');
 
     av.dom.popChrtHolder = document.getElementById('popChrtHolder'); 
-    av.dom.popChart = document.getElementById('popChart');  //easier handle for div with chart
-    av.dom.popChartDiv = document.getElementById('popChartDiv');
+    av.dom.popMiniChart = document.getElementById('popMiniChart');  //easier handle for div with chart
+    av.dom.resrcMiniChart = document.getElementById('resrcMiniChart');
     av.dom.cycleSlider = document.getElementById('cycleSlider');
     av.dom.runStopButton = document.getElementById('runStopButton');
     av.dom.oneUpdateButton = document.getElementById('oneUpdateButton');
@@ -436,12 +436,12 @@
   av.ui.antLabel = function (from) {
     console.log(from, 'called av.ui.antLabel to run av.grd.popChartInit'); 
     
-    console.log('ht: popChrtHolder, popChart, popChartDiv', $('#popChrtHolder').outerHeight(true), $('#popChartDiv').outerHeight(true), $('#popChart').outerHeight(true) );
+    console.log('ht: popChrtHolder, popMiniChart, resrcMiniChart', $('#popChrtHolder').outerHeight(true), $('#resrcMiniChart').outerHeight(true), $('#popMiniChart').outerHeight(true) );
     var htnum = Number($('#popChrtHolder').outerHeight(true))-1;
-    av.dom.popChart.style.maxheight = htnum +'px;';
-    console.log('ht: popChrtHolder, popChart, popChartDiv', $('#popChrtHolder').outerHeight(true), $('#popChartDiv').outerHeight(true), $('#popChart').outerHeight(true) );
+    av.dom.popMiniChart.style.maxheight = htnum +'px;';
+    console.log('ht: popChrtHolder, popMiniChart, resrcMiniChart', $('#popChrtHolder').outerHeight(true), $('#resrcMiniChart').outerHeight(true), $('#popMiniChart').outerHeight(true) );
     av.grd.popChartInit('av.ui.antLabel');
-    console.log('ht: popChrtHolder, popChart, popChartDiv', $('#popChrtHolder').outerHeight(true), $('#popChartDiv').outerHeight(true), $('#popChart').outerHeight(true) );
+    console.log('ht: popChrtHolder, popMiniChart, resrcMiniChart', $('#popChrtHolder').outerHeight(true), $('#resrcMiniChart').outerHeight(true), $('#popMiniChart').outerHeight(true) );
   };
   
   // if (av.dbg.flg.root) { console.log('Root: before av.ui.toggleResourceData'); }
@@ -450,7 +450,7 @@
   av.ui.toggleResourceData = function (from) {
     console.log(from, 'called av.ui.toggleResourceData to to toggle dipslay of resource data');
     if ('none' === document.getElementById('displayGridResourceData').style.display) {
-      document.getElementById('displayGridResourceData').style.display = 'flex';
+      document.getElementById('displayGridResourceData').style.display = 'block';
     } else {
       document.getElementById('displayGridResourceData').style.display = 'none';
     };

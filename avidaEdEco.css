@@ -494,7 +494,7 @@
 
   #popStatHolder{
     flex: 1 1 280px;
-    min-height: 280px;
+    height: 280px;
   }
   #popStatistics{
     display: flex;
@@ -516,17 +516,17 @@
     border: 1px solid #AAA;
   }
   #popChrtHolder{
-    flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+    flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {flex:1;} both prevent resize */
     border: 1px solid #AAA;
     height: 100%;
   }
-  #miniChartYaxis{
+  #miniChartControls{
     flex: 0 0 60px;
     border: 1px solid #AAA;
   }
 
   #displayGridResourceData{
-    display: flex;  /* none; */
+    display: block;  /* none; */
     flex: 0 0 auto;
     border: 1px solid #AAA;
     width: 100%;
@@ -553,10 +553,16 @@
   background: #DDD; /*#DDD;*/
   border: 1px solid #BBB;   /*lower darker*/
 }
+.totTask{
+  display: none;
+  background: #EEE; /* #EEE; */
+  border: 1px solid #BBB;   /*lower darker*/
+}
 
  #sgrTop{grid-area: sgrTop}  #sgrNot{grid-area: sgrNot}  #sgrNan{grid-area: sgrNan}  #sgrAnd{grid-area: sgrAnd}  #sgrOrn{grid-area: sgrOrn}  #sgrOro{grid-area: sgrOro}  #sgrAnt{grid-area: sgrAnt}  #sgrNor{grid-area: sgrNor}  #sgrXor{grid-area: sgrXor}  #sgrEqu{grid-area: sgrEqu}
   #mxTop{grid-area:  mxTop}   #mxNot{grid-area:  mxNot}   #mxNan{grid-area:  mxNan}   #mxAnd{grid-area:  mxAnd}   #mxOrn{grid-area:  mxOrn}   #mxOro{grid-area:  mxOro}   #mxAnt{grid-area:  mxAnt}   #mxNor{grid-area:  mxNor}   #mxXor{grid-area:  mxXor}   #mxEqu{grid-area:  mxEqu}
 #cellTop{grid-area:cellTop} #cellNot{grid-area:cellNot} #cellNan{grid-area:cellNan} #cellAnd{grid-area:cellAnd} #cellOrn{grid-area:cellOrn} #cellOro{grid-area:cellOro} #cellAnt{grid-area:cellAnt} #cellNor{grid-area:cellNor} #cellXor{grid-area:cellXor} #cellEqu{grid-area:cellEqu}
+ #totTop{grid-area: totTop}  #totNot{grid-area: totNot}  #totNan{grid-area: totNan}  #totAnd{grid-area: totAnd}  #totOrn{grid-area: totOrn}  #totOro{grid-area: totOro}  #totAnt{grid-area: totAnt}  #totNor{grid-area: totNor}  #totXor{grid-area: totXor}  #totEqu{grid-area: totEqu}
 
 .grid-currentSugarAmount-container {   /*on stats tab of population page */
   display: grid;
@@ -566,12 +572,26 @@
   background: mistyrose;
   width: 100%;
   justify-content: stretch;
-/*  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+}
+
+.grid-currentSugarGlobal-container {   /*on stats tab of population page */
+  display: grid;
+  grid-template-areas: ' sgrTop  sgrNot  sgrNan  sgrAnd  sgrOrn  sgrOro  sgrAnt  sgrNor  sgrXor  sgrEqu'
+                       ' totTop  totNot  totNan  totAnd  totOrn  totOro  totAnt  totNor  totXor  totEqu';
   background: mistyrose;
   width: 100%;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-/*  background: #FFF;   /* #DDD; */
+  justify-content: stretch;
+}
+
+.grid-currentSugarBoth-container {   /*on stats tab of population page */
+  display: grid;
+  grid-template-areas: ' sgrTop  sgrNot  sgrNan  sgrAnd  sgrOrn  sgrOro  sgrAnt  sgrNor  sgrXor  sgrEqu'
+                       '  mxTop   mxNot   mxNan   mxAnd   mxOrn   mxOro   mxAnt   mxNor   mxXor   mxEqu'
+                       'cellTop cellNot cellNan cellAnd cellOrn cellOro cellAnt cellNor cellXor cellEqu'
+                       ' totTop  totNot  totNan  totAnd  totOrn  totOro  totAnt  totNor  totXor  totEqu';
+  background: mistyrose;
+  width: 100%;
+  justify-content: stretch;
 }
 
 #environmentSettingTitle{
