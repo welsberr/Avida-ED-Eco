@@ -387,6 +387,8 @@ window.addEventListener('resize', function() {
 //  .innerHeight() - returns the height of element includes padding but excludes border and margin.
 //  .outerHeight() - returns the height of the div includes padding & border but excludes margin.
 //  .outerHeight(true) - returns the height of the div including margin.
+//  .scrollHeight = returns the ht of an element including overflow & padding, but NOT margin.
+// 
 // 
 // The difference between .css( "height" ) and .height() is that the former returns a value with units intact (for example, 400px).
 // while the latter returns a unit-less pixel value (for example, 400)

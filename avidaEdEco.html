@@ -471,7 +471,7 @@
               <button class="tablinks" id="tst2Tab" onclick="av.ptd.processTab(event, 'tst2setupBlock')">Test 2</button>
             </div>
           </div>
-          <div id='labInfoHolder' class='labInfoHolder'>  
+          <div id='labInfoHolder' class='labInfoHoldCls'>  
             <div id='popStatsBlock' class="labInfoClass labInfoFlex"> 
               <div id='popStatHolder'>
                 <div id='popStatistics'>
@@ -689,27 +689,27 @@
               </div>
 
               <div id='allMiniChrtHolder'>
-                <div id="popChrtHolder">
-                  <div id='popMiniChart'></div>
-                  <div id='miniChartYaxis'>
-                    <label id='yaxisLabel'>Y-axis
-                      <select  id='yaxis'>
-                        <option value='Average Fitness' selected>Average Fitness</option>
-                        <option value='Average Offspring Cost'>Average Offspring Cost</option>
-                        <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
-                        <option value='Number of Organisms'>Number of Organisms</option>
-                        <option value='Number Viable'>Number Viable</option>
-                        <option value='none'>None</option>
-                      </select>
-                    </label>
-                  </div><span id='miniChartYaxis_end' class='display_none'></span>
-                </div><span id="popChrtHolder_end"></span>
                 <div id='resrcMiniChrtHolder'>
                   <div id='resrcMiniChart'></div>
                 </div><span 'resrcMiniChrtHolder_end'></span> 
+                <div id="popChrtHolder">
+                  <div id='popMiniChart'></div>
+                </div><span id="popChrtHolder_end"></span>
               </div><span id="allMiniChrtHolder_end"></span>
               
-              <div id='miniChartControls'>
+              <div id='miniChartYaxis'>
+                <label id='yaxisLabel'>Y-axis
+                  <select  id='yaxis'>
+                    <option value='Average Fitness' selected>Average Fitness</option>
+                    <option value='Average Offspring Cost'>Average Offspring Cost</option>
+                    <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
+                    <option value='Number of Organisms'>Number of Organisms</option>
+                    <option value='Number Viable'>Number Viable</option>
+                    <option value='none'>None</option>
+                  </select>
+                </label>
+              </div><span id='miniChartYaxis_end' class='display_none'></span>
+              <div id='miniChartOptHolder'>
                 <div id='miniChartOptions'>
                   <label id='miniChartOptionsLabel'>Options
                     <select  id='miniCharts' onchange='av.ui.miniChartOptionsFn(this)'>
@@ -721,12 +721,12 @@
                     </select>
                   </label>
                 </div>
-              </div><span in-'miniChartControls_end' class='display_none'></span>
+              </div><span in-'miniChartOptHolder_end' class='display_none'></span>
 
               <div id='pauseOptions'>
                 Pause Run at Update:&nbsp;
                 <label><input id='autoPauseNum' type='text' value='1000' style='width:80px'> when checked
-                <input id="autoPauseCheck" type="checkboxHolder"> </label>
+                <input id="autoPauseCheck" type="checkbox"> </label>
               </div>
             </div>  <span id='popStatsBlock_end' class='display_none'></span>
 

@@ -1998,7 +1998,7 @@ require([
   };
   
   av.ui.miniChartOptionsFn = function(domObj) {
-    console.log('miniChartControls.value=', miniChartControls.value);
+    console.log('miniChartOptHolder.value=', miniChartOptHolder.value);
     console.log('Ht: allMiniChrtHolder popChrtHolder resrcMiniChrtHolder' );
     console.log(    $('#allMiniChrtHolder').height(), $('#popChrtHolder').outerHeight(true), $('#resrcMiniChrtHolder').outerHeight(true) );
   };
@@ -3379,51 +3379,7 @@ require([
   // **************************************************************************************************************** */
   //                                       end of Analysis Page
   // **************************************************************************************************************** */
-
-  //Resize tools might be called here or after "Last_things_done"
-  
-  av.ui.HtAdjust = function() {
-    //var _ht = $('#').height();
-    //var _outerHt_t = $('#').outerHeight(true);
-    console.log('in av.ui.HtAdjust');
-    var rightInfoHolder_ht = $('#rightInfoHolder').height();
-    var rightInfoHolder_outerHt_t = $('#rightInfoHolder').outerHeight(true);
-    console.log('Ht: rightInfoHolder ht outerht(true)', rightInfoHolder_ht, rightInfoHolder_outerHt_t); 
-    var popInfoVert_outerHt_t = $('#popInfoVert').outerHeight(true);
-    var popInfoTabHolder_outerHt_t = $('#popInfoVert').outerHeight(true);
-    var labInfoHolder_outerHt_t = $('#labInfoHolder').outerHeight(true);
-    var popStatistics_outerHt_t = $('#popStatistics').outerHeight(true);
-    var popStatsBlock_ht = $('#popStatsBlock').height();
-    var popStatsBlock_outerHt_t = $('#popStatsBlock').outerHeight(true);
-    var selOrgType_outerHt_t = $('#selOrgType').outerHeight(true);
-    var popStatHolder_outerHt_t = $('#popStatHolder').outerHeight(true);
-    
-    console.log('outHt_t: popInfoVert=', popInfoVert_outerHt_t, '; popInfoTabHolder=', popInfoTabHolder_outerHt_t
-       , '; labInfoHolder=', labInfoHolder_outerHt_t
-       , '; popStatHolder=', popStatHolder_outerHt_t, '; selOrgType=', selOrgType_outerHt_t);
-    console.log(' ');    
-    console.log('Ht popStatsBlock ht outerht(true)', popStatsBlock_ht, popStatsBlock_outerHt_t ); 
-    
-    var displayGridResourceData_outerHt_t = $('#displayGridResourceData').outerHeight(true);
-    var allMiniChrtHolder_outerHt_t = $('#allMiniChrtHolder').outerHeight(true);
-    var pauseOptions_outerHt_t = $('#pauseOptions').outerHeight(true);
-    var dif = popStatistics_outerHt_t + displayGridResourceData_outerHt_t + allMiniChrtHolder_outerHt_t + pauseOptions_outerHt_t - popStatsBlock_ht;
-  
-    console.log('outerHt_t: popStatistics=', popStatistics_outerHt_t
-                , '; displayGridResourceData=', displayGridResourceData_outerHt_t
-                , '; allMiniChrtHolder=', allMiniChrtHolder_outerHt_t
-                , '; pauseOptions=', pauseOptions_outerHt_t, '; dif=', dif);
-    console.log(' ');
-    console.log('Ht: allMiniChrtHolder popChrtHolder resrcMiniChrtHolder miniChartControls ' );
-    console.log($('#allMiniChrtHolder').height(), $('#popChrtHolder').outerHeight(true), $('#resrcMiniChrtHolder').outerHeight(true), $('#miniChartControls').outerHeight(true) );
-    //dif = 5-dif;
-    document.getElementById('allMiniChrtHolder').style.minHeight = (5-dif)+'px';
-    document.getElementById('popChrtHolder').style.minHeight = (10-dif)+'px';
-  };
-  av.ui.HtAdjust();
-  
-  
-  
+  //   
   // **************************************************************************************************************** */
   //                                          Last_things_done; Last things done; Last done last done
   // **************************************************************************************************************** */
@@ -3470,6 +3426,64 @@ require([
   //Geometry is no longer a drop down. Now it is an opton in Supply Type
   document.getElementById('allSugarGeometry').style.display = 'none';
   document.getElementById('geometrySgr').style.display = 'none';
+
+  //Resize tools might be called here or after "Last_things_done"
+  
+  av.ui.HtAdjust = function() {
+    //var _ht = $('#').height();
+    //var _outerHt_t = $('#').outerHeight(true);
+    console.log('in av.ui.HtAdjust ----------------------------------- put break point 0 here');
+    var rightInfoHolder_ht = $('#rightInfoHolder').height();
+    var rightInfoHolder_outerHt_f = $('#rightInfoHolder').outerHeight();
+    var rightInfoHolder_outerHt_t = $('#rightInfoHolder').outerHeight(true);
+    var rightInfoHolder_scrollHeight = document.getElementById('rightInfoHolder').scrollHeight;
+    console.log('rightInfoHolder_ht _outerht_f _outerht_t  scrollHeight', 
+       rightInfoHolder_ht, rightInfoHolder_outerHt_f, rightInfoHolder_outerHt_t, rightInfoHolder_scrollHeight);
+    console.log('Pause ----------------------------------- put break point 1 here');
+    var scrollHideHt = rightInfoHolder_scrollHeight - rightInfoHolder_outerHt_t;
+    console.log('rightInfoHolder_scrollHeight - rightInfoHolder_outerHt_t='+rightInfoHolder_scrollHeight+'-'+rightInfoHolder_outerHt_t+' '+scrollHideHt);
+    console.log('Pause ----------------------------------- put break point 2 here');
+    var popInfoVert_outerHt_t = $('#popInfoVert').outerHeight(true);
+    var popInfoTabHolder_outerHt_t = $('#popInfoTabHolder').outerHeight(true);
+    var labInfoHolder_outerHt_t = $('#labInfoHolder').outerHeight(true);
+    var popStatistics_outerHt_t = $('#popStatistics').outerHeight(true);
+    var popStatsBlock_ht = $('#popStatsBlock').height();
+    var popStatsBlock_outerHt_t = $('#popStatsBlock').outerHeight(true);
+    var selOrgType_outerHt_t = $('#selOrgType').outerHeight(true);
+    var popStatHolder_outerHt_t = $('#popStatHolder').outerHeight(true);
+    
+    console.log('outHt_t: popInfoVert=', popInfoVert_outerHt_t, '; popInfoTabHolder=', popInfoTabHolder_outerHt_t
+       , '; labInfoHolder=', labInfoHolder_outerHt_t
+       , '; popStatHolder=', popStatHolder_outerHt_t, '; selOrgType=', selOrgType_outerHt_t);
+    console.log(' ');    
+    console.log('Ht popStatsBlock ht outerht(true)', popStatsBlock_ht, popStatsBlock_outerHt_t ); 
+    
+    var displayGridResourceData_outerHt_t = $('#displayGridResourceData').outerHeight(true);
+    var allMiniChrtHolder_outerHt_t = $('#allMiniChrtHolder').outerHeight(true);
+    var miniChartOptHolder_outerHt_t = $('#miniChartOptHolder').outerHeight(true);
+    var pauseOptions_outerHt_t = $('#pauseOptions').outerHeight(true);
+    var dif = popStatsBlock_ht - (popStatistics_outerHt_t + displayGridResourceData_outerHt_t + miniChartOptHolder_outerHt_t + pauseOptions_outerHt_t);
+    
+    console.log('outerHt_t: popStatistics=', popStatistics_outerHt_t
+                , '; displayGridResourceData=', displayGridResourceData_outerHt_t
+                , '; allMiniChrtHolder=', allMiniChrtHolder_outerHt_t
+                , '; miniChartOptHolder', miniChartOptHolder_outerHt_t
+                , '; pauseOptions=', pauseOptions_outerHt_t, '; new_allMiniChrtHolder_ht=', dif);
+    console.log(' ');
+    var allMiniChrtHolder_ht = $('#allMiniChrtHolder').height();
+    var popChrtHolder_outerHt_t = $('#popChrtHolder').outerHeight(true);
+    var resrcMiniChrtHolder_outerHt_t = $('#resrcMiniChrtHolder').outerHeight(true);
+    console.log('outerHt_t: allMiniChrtHolder_ht', allMiniChrtHolder_ht, '; popChrtHolder', popChrtHolder_outerHt_t
+            , '; resrcMiniChrtHolder' , resrcMiniChrtHolder_outerHt_t);
+    console.log('Pause ----------------------------------- put break point 3 here');
+    dif = dif-5;
+    console.log('Pause ----------------------------------- put break point 4 here: dif =', dif);
+    document.getElementById('allMiniChrtHolder').style.minHeight = dif+'px';
+    document.getElementById('popChrtHolder').style.minHeight = dif+'px';
+    //document.getElementById('popChrtHolder').style.height = '792px';    //nees a calculated value
+
+  };
+  av.ui.HtAdjust();
 
   //---------------------------------------------------------------------------------------------------- size testing --
   // May need to do some things here to get the app to look right on the screen. 
