@@ -201,6 +201,51 @@
     return text;
   };
 
+  //------------------------------------------------------------------------------------- av.fwt.setResourceConstants --
+
+  av.fwt.setResourceConstants = function() {
+    var logLen = av.sgr.logicNames.length;
+    var numTsk;
+    var task;
+    var tskTitle;
+    var regionStr;
+    for (var ii=0; ii < logLen; ii++) {
+      numTsk = av.sgr.logEdNames[ii];
+      task = av.sgr.logicNames[ii];
+      tskTitle = av.sgr.logicTitleNames[ii];
+      regionStr = av.nut[numTsk].uiAll.regionLayout;
+      console.log('first char of region=', regionStr[0]);
+      if ( 'global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+        if ('infinite' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
+          document.getElementById('cell'+tskTitle).innerHTML = 'Global';
+          document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;&nbsp;&infin; ';
+          document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;&nbsp;&infin; ';
+        } else if ('none' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
+          document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;none';
+          document.getElementById('mx'+tskTitle).innerHTML = 'Global';
+          document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;0.0 ';
+        } else {
+          document.getElementById('cell'+tskTitle).innerHTML = 'Global';
+          document.getElementById('mx'+tskTitle).innerHTML = 'Global';
+          document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;-';
+        };
+      } else if (1 >= av.nut[numTsk].uiAll.regionsNumOf ) { 
+        // grid
+        av.sgr.cellFlag = false;   //but these need to be arrays
+        av.sgr.mxFlag = false;
+        if ('infinite' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
+          document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;&infin; ';
+          document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;&infin; ';
+          document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;&infin; ';
+        } else if ('none' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
+          document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;0 ';
+          document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;0 ';
+          document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;Grid ';
+        };
+      };
+    };
+  };
+
   //------------------------------------------------------------------------------------ av.fwt.makeFzrEnvironmentCfg --
   av.fwt.makeFzrEnvironmentCfg = function (idStr, toActiveConfigFlag, from) {
     'use strict';
@@ -212,10 +257,9 @@
     av.fwt.nut2cfgFile(idStr, toActiveConfigFlag, 'av.fwt.makeFzrEnvironmentCfg');
     console.log('after calling av.fwt.nut2cfgFile');
     
-    //will change to av.fwt.nutStruct2Nuttxt later;
-    //av.fwt.form2NutrientTxt(idStr, toActiveConfigFlag, 'av.fwt.makeFzrEnvironmentCfg');  
+    av.fwt.setResourceConstants();    
   };
-
+  
   //------------------------------------------------------------------------------------------ av.fwt.dom2nutUIfields --
   //convert dom data into nutUI data fields
   av.fwt.dom2nutUIfields = function (from) {

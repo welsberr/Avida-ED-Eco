@@ -666,8 +666,12 @@
   //------------------------------------------------------------------------------------------- av.msg.updatePopStats --
   av.msg.updatePopStats = function (msg) {
     'use strict';
-    var place = 2;
-    var vari = 2;
+    var tskDom='';
+    var taskNum=0;
+    var tskName='';
+    var taskStr='';
+    var ndx=0;
+    
     //update graph arrays
     if (0 <= msg.update) {  //normal start to loop
       av.pch.aveFit[msg.update] = msg.ave_fitness;
@@ -737,6 +741,19 @@
     norPop.textContent = msg.nor;
     xorPop.textContent = msg.xor;
     equPop.textContent = msg.equ;
+    
+    //console.log('msg.globalResourceAmount=', msg.globalResourceAmount);
+    var obj = msg.globalResourceAmount;
+    for (var tskName in obj) {
+      if (obj.hasOwnProperty(tskName)) {
+        ndx = av.sgr.logicNames.indexOf(tskName);
+        tskDom = av.sgr.logicTitleNames[ndx];
+        taskNum = obj[tskName];
+        taskStr = av.utl.toMetric(taskNum, 0);
+        //console.log('key=', tskName, '; val=', taskNum, '; taskStr=', taskStr, '; dom = '+tskDom);
+        document.getElementById('tot'+tskDom).innerHTML = taskStr;
+      }
+    };
   };
   //--------------------------------------------------------------------------------------- end av.msg.updatePopStats --
 

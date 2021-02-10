@@ -476,64 +476,100 @@
               <div id='popStatHolder'>
                 <div id='popStatistics'>
                   <div id='selOrgType'>
-                    <div id='sotLabel' class='popStatsTitle'>Selected Organism Type</div>
-                      <div id='sotTopTable' class='topSotTable'>
-                        <div class='sotL sotodd'>Name:&nbsp;<canvas id='sotColorCanvas' width='10' height='10'></canvas></div>
-                        <div class='sotR sotodd'><label id='nameLabel'></label>.</div>
-
-                        <div class='sotL sotEven'>Fitness:&nbsp;</div>
-                        <div class='sotR sotEven'><label id='fitLabel'></label>.</div>
-                      
-                        <div class='sotL sotodd'>Energy Acq. Rate:&nbsp;</div>
-                        <div class='sotR sotodd'><label id='energyAcqRateLabel'></label>.</div>
-                      
-                        <div class='sotL sotEven'>Offspring Cost:&nbsp;</div>
-                        <div class='sotR sotEven'><label id='offspringCostLabel'></label>.</div>
-                      
-                        <div class='sotL sotodd'>Age (updates):&nbsp;</div>
-                        <div class='sotR sotodd'><label id='ageLabel'></label>&nbsp;&nbsp;&nbsp;</div>
-                      
-                        <div class='sotL sotEven'>Ancestor:&nbsp;</div>
-                        <div class='sotR sotEven'><label id='ancestorLabel'></label>.</div>
-                      
-                        <div class='sotL sotodd'>Viable:&nbsp;</div>
-                        <div class='sotR sotodd'><label id='viableLabel'></label>.</div>
+                    <div class='popStatsTitle'>
+                      <label id='sotLabel'>Selected Organism Type</label>
                     </div>
-                    <div id='sotBotTable' class='botSotTable' style="background: white;">
-                      <div class='noWrapF' id='sotFn'>Function</div>
-                      <div class='noWrapN' id='sotTimes'>Times Done</div>
-
-                      <div class='noWrap1' id='notLabel'>NOT</div>
-                      <div class='noWrap2' id='notTime'></div>
-
-                      <div class='noWrap1' id='nanLabel'>NAN</div>
-                      <div class='noWrap2' id='nanTime'></div>
-
-                      <div class='noWrap1' id='andLabel'>AND</div>
-                      <div class='noWrap2' id='andTime'></div>
-
-                      <div class='noWrap1' id='ornLabel'>ORN</div>
-                      <div class='noWrap2' id='ornTime'></div>
-
-                      <div class='noWrap1' id='oroLabel'>ORO</div>
-                      <div class='noWrap2' id='oroTime'></div>
-
-                      <div class='noWrap1' id='antLabel' onclick="av.ui.toggleResourceComplexity('antLable')">ANT</div>
-                      <div class='noWrap2' id='antTime'></div>
-
-                      <div class='noWrap1' id='norLabel'>NOR</div>
-                      <div class='noWrap2' id='norTime'></div>
-
-                      <div class='noWrap1' id='xorLabel' onclick="av.ui.toggleResourceData('xorLabel')">XOR</div>
-                      <div class='noWrap2' id='xorTime'></div>
-                      
-                      <div class='noWrap1' id='equLabel'>ORO</div>
-                      <div class='noWrap2' id='equTime'></div>
-                      <div id='blank_11'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                    </div><span id='sotBotTable_end'>
-                      
-                      
-
+                    <table id='sotTopTable' class='topSotTable'>
+                      <tbody>
+                        <tr>
+                          <td><div class='sotL'>Name:&nbsp;<canvas id='sotColorCanvas' width='10' height='10'></canvas></div></td>
+                          <td colspan='2'><div class='noWrapR'><label id='nameLabel'></label></div></td>
+                        </tr>
+                        <tr>
+                          <td><div class='sotL'>Fitness:&nbsp;</div></td>
+                          <td><div class='sotR'><label id='fitLabel'></label></div></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td><div class='sotL'>Energy Acq. Rate:&nbsp;</div></td>
+                          <td><div class='sotR'><label id='energyAcqRateLabel'></label></div></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td><div class='sotL'>Offspring Cost:&nbsp;</div></td>
+                          <td><div class='sotR'><label id='offspringCostLabel'></label></div></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td><div class='sotL'>Age (updates):&nbsp;</div></td>
+                          <td><div class='sotR'><label id='ageLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td><div class='sotL'>Ancestor:&nbsp;</div></td>
+                          <td colspan='2'><div class='noWrapR'><label id='ancestorLabel'></label></div></td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class='sotL'>Viable:&nbsp;</div></td>
+                          <td colspan='2'><div class='noWrapR'><label id='viableLabel'></label></div></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table id='sotBotTable' class='botSotTable' style="background: white;">
+                      <tbody>
+                        <tr>
+                          <th>
+                            <div class='noWrapF'><label id='sotFn'>Function&nbsp;&nbsp;</label></div></th>
+                          <th colspan='2' style='min-width: 110px; background: #fff'><div class='noWrapN'><label id='sotTimes'>Times Performed</label></div></th>
+                        </tr>
+                        <tr>
+                          <td><div class='noWrap1'><label id='notLabel'>NOT</label></div></td>
+                          <td><div class='noWrap2'><label id='notTime'></label></div></td>
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td><div class='noWrap1'><label id='nanLabel'>NAN</label></div></td>
+                          <td><div class='noWrap2'><label id='nanTime'></label></div></td>
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td><div class='noWrap1'><label id='andLabel'>AND</label></div></td>
+                          <td><div class='noWrap2'><label id='andTime'></label></div></td>
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td><div class='noWrap1'><label id='ornLabel'>ORN</label></div></td>
+                          <td><div class='noWrap2'><label id='ornTime'></label></div></td>
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td><div class='noWrap1'><label id='oroLabel'>ORO</label></div></td>
+                          <td><div class='noWrap2'><label id='oroTime'></label></div></td>
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td><div class='noWrap1'><label id='antLabel' onclick="av.ui.toggleResourceComplexity('antLable')">ANT</label></div></td>
+                          <td><div class='noWrap2'><label id='antTime'></label></div></td>
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td><div class='noWrap1'><label id='norLabel'>NOR</label></div></td>
+                          <td><div class='noWrap2'><label id='norTime'></label></div></td>
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td><div class='noWrap1'><label id='xorLabel' onclick="av.ui.toggleResourceData('xorLabel')">XOR</label></div></td>
+                          <td><div class='noWrap2'><label id='xorTime'></label></div></td>
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td><div class='noWrap1'><label id='equLabel'>EQU</label></div></td>
+                          <td><div class='noWrap2'><label id='equTime'></label></div></td>
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        </tr>
+                      </tbody>
+                    </table>
                     <label id='dnaLabel'></label>
                   </div><span id='selOrgType_end' class='display_none'></span>
 

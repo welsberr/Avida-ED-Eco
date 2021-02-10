@@ -164,15 +164,18 @@
 
           //taskNum = parseFloat(av.grd.msg['r'+tskName].data[av.grd.selectedNdx]);
           taskNum = av.grd.msg['r'+tskName].data[av.grd.selectedNdx];
-          //console.log('cell'+tskDom + '=', taskNum);
-          taskStr = av.utl.toMetric(taskNum, 0);
-          document.getElementById('cell'+tskDom).innerHTML = taskStr;
-          
+          if (av.utl.isNumber(parseFloat(taskNum)) ) {
+            //console.log('cell'+tskDom + '=', taskNum);
+            taskStr = av.utl.toMetric(taskNum, 0);
+            document.getElementById('cell'+tskDom).innerHTML = taskStr;
+          };
           //taskNum = parseFloat(av.grd.msg['r'+tskName].maxVal);
           taskNum = av.grd.msg['r'+tskName].maxVal;
-          //console.log('max'+tskDom + ' =', taskNum);
-          taskStr = av.utl.toMetric(taskNum, 0);
-          document.getElementById('mx'+tskDom).innerHTML = taskStr;
+          if (av.utl.isNumber(parseFloat(taskNum)) ) {
+            //console.log('max'+tskDom + ' =', taskNum);
+            taskStr = av.utl.toMetric(taskNum, 0);
+            document.getElementById('mx'+tskDom).innerHTML = taskStr;
+          };
         };
       };
 

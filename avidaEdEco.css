@@ -511,56 +511,33 @@
   }
   /* contains SelOrgType & PopStats4Grid horizontal */
   
-  #selOrgType {
-    flex: 1 1 175px;        /*was 170 */
-  }  
-  .sotL {
-  text-align:right;
-  max-height: 15px;
-  /* width: 110px;  */
-  overflow: hidden;
-}
-.sotR {
-  text-align:left;
-  padding-left: 1px;
-  /* max-height: 125px;  */
-  width: 60px; 
-  overflow: hidden;
-}
-  .sotodd {
-    background: #BBB;   /* #D7D7D7;    */
-    align-self: center;
+  #selOrgType{
+    flex: 0 1 190px;        /*was 170 */
+    border: 1px solid #AAA;
+/*    resize: horizontal;  */
+    overflow: auto;
   }
-  .sotEven {
-    background: #DDD;
-    align-self: center;
+  #popStats4grid{
+    flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+    border: 1px solid #AAA;
+  }
+  #popChrtHolder{
+    flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+    border: 1px solid #AAA;
+    height: 100%;
+  }
+  #miniChartYaxis{
+    flex: 0 0 60px;
+    border: 1px solid #AAA;
   }
 
-  #sotTopTable {  
-    display: grid;
-    grid-template-columns: 66% 33%;
-/*    grid-template-rows: 15px 15px 15px 15px 15px 15px 15px;  */
-    justify-items: stretch;
-    column-gap: 0px;
-    row-gap: 0px;
-    height: 105px;
+  #displayGridResourceData{
+    display: flex;  /* none; */
+    flex: 0 0 auto;
     border: 1px solid #AAA;
-    overflow: auto;
     width: 100%;
-    background: #CCC;
   }
   
-/*  
-                        <div class='sotodd'>                         
-                      </div>
-  
-  #sotBotTable {
-   
-  }
-  
- */ 
-  
- 
   /* ---------------------- Population (right) side of tables */)
   #popStats4grid{           /* inside horizontal flexbox*/
     flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
@@ -592,9 +569,9 @@
     align-self: flext-end;
   }
   #pauseOptions {
-    flex: 0 0 20px;
+    flex: 0 0 40px;
     border: 1px solid #AAA;
-    background: pink;
+    /* background: pink; */
   }
 
 /*--------------------------------------------------------------------------------------------- Resource Data Table --*/
