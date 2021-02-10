@@ -461,7 +461,7 @@
         </div> <span id='mainBlockHolder_end' class='display_none'></span>
 
       <div id='rightInfoHolder'> 
-        <div id='popInfoVert' vertical layout>
+        <div id='popInfoVert' class='verticalFlexBox'>
           <div id='popInfoTabHolder' class='tabHolderShow'>
             <div class="tab">
               <button class="tablinks active" id="statsTab" onclick="av.ptd.processTab(event, 'popStatsBlock')">Stats</button>
@@ -476,104 +476,68 @@
               <div id='popStatHolder'>
                 <div id='popStatistics'>
                   <div id='selOrgType'>
-                    <div class='popStatsTitle'>
-                      <label id='sotLabel'>Selected Organism Type</label>
+                    <div id='sotLabel' class='popStatsTitle'>Selected Organism Type</div>
+                      <div id='sotTopTable' class='topSotTable'>
+                        <div class='sotL sotodd'>Name:&nbsp;<canvas id='sotColorCanvas' width='10' height='10'></canvas></div>
+                        <div class='sotR sotodd'><label id='nameLabel'></label>.</div>
+
+                        <div class='sotL sotEven'>Fitness:&nbsp;</div>
+                        <div class='sotR sotEven'><label id='fitLabel'></label>.</div>
+                      
+                        <div class='sotL sotodd'>Energy Acq. Rate:&nbsp;</div>
+                        <div class='sotR sotodd'><label id='energyAcqRateLabel'></label>.</div>
+                      
+                        <div class='sotL sotEven'>Offspring Cost:&nbsp;</div>
+                        <div class='sotR sotEven'><label id='offspringCostLabel'></label>.</div>
+                      
+                        <div class='sotL sotodd'>Age (updates):&nbsp;</div>
+                        <div class='sotR sotodd'><label id='ageLabel'></label>&nbsp;&nbsp;&nbsp;</div>
+                      
+                        <div class='sotL sotEven'>Ancestor:&nbsp;</div>
+                        <div class='sotR sotEven'><label id='ancestorLabel'></label>.</div>
+                      
+                        <div class='sotL sotodd'>Viable:&nbsp;</div>
+                        <div class='sotR sotodd'><label id='viableLabel'></label>.</div>
                     </div>
-                    <table id='sotTopTable' class='topSotTable'>
-                      <tbody>
-                        <tr>
-                          <td><div class='sotL'>Name:&nbsp;<canvas id='sotColorCanvas' width='10' height='10'></canvas></div></td>
-                          <td colspan='2'><div class='noWrapR'><label id='nameLabel'></label></div></td>
-                        </tr>
-                        <tr>
-                          <td><div class='sotL'>Fitness:&nbsp;</div></td>
-                          <td><div class='sotR'><label id='fitLabel'></label></div></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <td><div class='sotL'>Energy Acq. Rate:&nbsp;</div></td>
-                          <td><div class='sotR'><label id='energyAcqRateLabel'></label></div></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <td><div class='sotL'>Offspring Cost:&nbsp;</div></td>
-                          <td><div class='sotR'><label id='offspringCostLabel'></label></div></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <td><div class='sotL'>Age (updates):&nbsp;</div></td>
-                          <td><div class='sotR'><label id='ageLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <td><div class='sotL'>Ancestor:&nbsp;</div></td>
-                          <td colspan='2'><div class='noWrapR'><label id='ancestorLabel'></label></div></td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class='sotL'>Viable:&nbsp;</div></td>
-                          <td colspan='2'><div class='noWrapR'><label id='viableLabel'></label></div></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <table id='sotBotTable' class='botSotTable' style="background: white;">
-                      <tbody>
-                        <tr>
-                          <th>
-                            <div class='noWrapF'><label id='sotFn'>Function&nbsp;&nbsp;</label></div></th>
-                          <th colspan='2' style='min-width: 110px; background: #fff'><div class='noWrapN'><label id='sotTimes'>Times Performed</label></div></th>
-                        </tr>
-                        <tr>
-                          <td><div class='noWrap1'><label id='notLabel'>NOT</label></div></td>
-                          <td><div class='noWrap2'><label id='notTime'></label></div></td>
-                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td><div class='noWrap1'><label id='nanLabel'>NAN</label></div></td>
-                          <td><div class='noWrap2'><label id='nanTime'></label></div></td>
-                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td><div class='noWrap1'><label id='andLabel'>AND</label></div></td>
-                          <td><div class='noWrap2'><label id='andTime'></label></div></td>
-                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td><div class='noWrap1'><label id='ornLabel'>ORN</label></div></td>
-                          <td><div class='noWrap2'><label id='ornTime'></label></div></td>
-                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td><div class='noWrap1'><label id='oroLabel'>ORO</label></div></td>
-                          <td><div class='noWrap2'><label id='oroTime'></label></div></td>
-                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td><div class='noWrap1'><label id='antLabel' onclick="av.ui.toggleResourceComplexity('antLable')">ANT</label></div></td>
-                          <td><div class='noWrap2'><label id='antTime'></label></div></td>
-                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td><div class='noWrap1'><label id='norLabel'>NOR</label></div></td>
-                          <td><div class='noWrap2'><label id='norTime'></label></div></td>
-                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td><div class='noWrap1'><label id='xorLabel' onclick="av.ui.toggleResourceData('xorLabel')">XOR</label></div></td>
-                          <td><div class='noWrap2'><label id='xorTime'></label></div></td>
-                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td><div class='noWrap1'><label id='equLabel'>EQU</label></div></td>
-                          <td><div class='noWrap2'><label id='equTime'></label></div></td>
-                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <div id='sotBotTable' class='botSotTable' style="background: white;">
+                      <div class='noWrapF' id='sotFn'>Function</div>
+                      <div class='noWrapN' id='sotTimes'>Times Done</div>
+
+                      <div class='noWrap1' id='notLabel'>NOT</div>
+                      <div class='noWrap2' id='notTime'></div>
+
+                      <div class='noWrap1' id='nanLabel'>NAN</div>
+                      <div class='noWrap2' id='nanTime'></div>
+
+                      <div class='noWrap1' id='andLabel'>AND</div>
+                      <div class='noWrap2' id='andTime'></div>
+
+                      <div class='noWrap1' id='ornLabel'>ORN</div>
+                      <div class='noWrap2' id='ornTime'></div>
+
+                      <div class='noWrap1' id='oroLabel'>ORO</div>
+                      <div class='noWrap2' id='oroTime'></div>
+
+                      <div class='noWrap1' id='antLabel' onclick="av.ui.toggleResourceComplexity('antLable')">ANT</div>
+                      <div class='noWrap2' id='antTime'></div>
+
+                      <div class='noWrap1' id='norLabel'>NOR</div>
+                      <div class='noWrap2' id='norTime'></div>
+
+                      <div class='noWrap1' id='xorLabel' onclick="av.ui.toggleResourceData('xorLabel')">XOR</div>
+                      <div class='noWrap2' id='xorTime'></div>
+                      
+                      <div class='noWrap1' id='equLabel'>ORO</div>
+                      <div class='noWrap2' id='equTime'></div>
+                      <div id='blank_11'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    </div><span id='sotBotTable_end'>
+                      
+                      
+
                     <label id='dnaLabel'></label>
                   </div><span id='selOrgType_end' class='display_none'></span>
 
-                  <div id="popStats4grid">
+                  <div id='popStats4grid'>
                     <div class='popStatsTitle'>
                       <label id='popStat'>Population Statistics</label>
                     </div>
@@ -586,19 +550,19 @@
                           </tr>
                           <tr>
                             <td><div class='noWrapL'>Avg. Fitness:&nbsp;</div></td>
-                            <td><div class='noWrapN'><label id='aFitLabel'></label></div></td>
+                            <td><div class='noWrapN'><label id='aFitLabel'></label>.</div></td>
                           </tr>
                           <tr>
                             <td><div class='noWrapL'>Avg. Energy Acq. Rate:&nbsp;</div></td>
-                            <td><div class='noWrapN'><label id='aEnergyAcqRateLabel'></label></div></td>
+                            <td><div class='noWrapN'><label id='aEnergyAcqRateLabel'></label>.</div></td>
                           </tr>
                           <tr>
                             <td><div class='noWrapL'>Avg. Offspring Cost:&nbsp;</div></td>
-                            <td><div class='noWrap'><label id='aOffspringCostLabel'></label></div></td>
+                            <td><div class='noWrap'><label id='aOffspringCostLabel'></label>.</div></td>
                           </tr>
                           <tr>
                             <td><div class='noWrap'>Avg. Age (updates):&nbsp;</div></td>
-                            <td><div class='noWrap'><label id='aAgeLabel'></label></div></td>
+                            <td><div class='noWrap'><label id='aAgeLabel'></label>.</div></td>
                           </tr>
                           <tr>
                             <td><div class='noWrap'># Ancestor(s) at start:&nbsp;</div></td>
@@ -669,12 +633,12 @@
                         </tbody>
                       </table>
                     </div> <span id='popTskChartPick_end' class='display_none'></span>
-                  </div> <span></span>
+                  </div> <span id='popStats4grid_end'></span>
                 </div> <span id='popStatistics_id' class='display_none'></span>
               </div><span id='popStatHolder_end' class='display_none'></span>
 
-              <div id="displayGridResourceData">
-                <div class="grid-currentSugarAmount-container">
+              <div id="resourceDataTable">
+                <div class='grid-currentSugarBoth-container'>
                   <div id='sgrTop' class='sugarTsk'>Resource</div><div id="mxTop" class='mxTask'>Highest</div><div id="cellTop" class='cellTask'>Cell Value</div><div id='totTop' class='totTask'>Global</div>
                   <div id='sgrNot' class='sugarTsk'>NOT</div><div id="mxNot" class='mxTask'>not</div><div id="cellNot" class='cellTask'>NOt</div><div id="totNot" class='totTask'>Not</div>
                   <div id='sgrNan' class='sugarTsk'>NAN</div><div id="mxNan" class='mxTask'>nan</div><div id="cellNan" class='cellTask'>NAn</div><div id="totNan" class='totTask'>naN</div>
@@ -688,40 +652,38 @@
                 </div>
               </div>
 
-              <div id='allMiniChrtHolder'>
-                <div id='resrcMiniChrtHolder'>
-                  <div id='resrcMiniChart'></div>
-                </div><span 'resrcMiniChrtHolder_end'></span> 
-                <div id="popChrtHolder">
-                  <div id='popMiniChart'></div>
-                </div><span id="popChrtHolder_end"></span>
-              </div><span id="allMiniChrtHolder_end"></span>
+              <div id="popChrtHolder">
+                <div id='popChart'></div>
+                <div id='popChartDiv'></div>
+              </div>
               
-              <div id='miniChartYaxis'>
-                <label id='yaxisLabel'>Y-axis
-                  <select  id='yaxis'>
-                    <option value='Average Fitness' selected>Average Fitness</option>
-                    <option value='Average Offspring Cost'>Average Offspring Cost</option>
-                    <option value='Average Energy Acq. Rate'>Average Energy Acq. Rate</option>
-                    <option value='Number of Organisms'>Number of Organisms</option>
-                    <option value='Number Viable'>Number Viable</option>
-                    <option value='none'>None</option>
-                  </select>
-                </label>
-              </div><span id='miniChartYaxis_end' class='display_none'></span>
-              <div id='miniChartOptHolder'>
-                <div id='miniChartOptions'>
-                  <label id='miniChartOptionsLabel'>Options
-                    <select  id='miniCharts' onchange='av.ui.miniChartOptionsFn(this)'>
-                      <option value='organism' selected>organism Data</option>
-                      <option value='resource'>Resource Data</option>
-                      <option value='both'>Both</option>
-                      <option value='combine'>Combine</option>
+             <div id='miniChartControls'>
+                <div id='miniChartYaxis'>
+                  <label id='yaxisLabel'>Y-axis
+                    <select  id='yaxis'>
+                      <option value='Average Fitness' selected>Ave. Fitness</option>
+                      <option value='Average Offspring Cost'>Ave. Offspring Cost</option>
+                      <option value='Average Energy Acq. Rate'>Ave. Energy Acq. Rate</option>
+                      <option value='Number of Organisms'># of Organisms</option>
+                      <option value='Number Viable'># Viable</option>
                       <option value='none'>None</option>
                     </select>
-                  </label>
-                </div>
-              </div><span in-'miniChartOptHolder_end' class='display_none'></span>
+                    </label>
+                </div><span id='miniChartYaxis_end' class='display_none'></span>
+                <div id='miniChartOptHolder'>
+                  <div id='miniChartOptions'>
+                    <label id='miniChartOptionsLabel'>Options
+                      <select  id='miniCharts' onchange='av.ui.miniChartOptionsFn(this)'>
+                        <option value='organism' selected>organism Data</option>
+                        <option value='resource'>Resource Data</option>
+                        <option value='both'>Both</option>
+                        <option value='combine'>Combine</option>
+                        <option value='none'>None</option>
+                      </select>
+                    </label>
+                  </div>
+                </div><span id='miniChartOptHolder_end' class='display_none'></span>
+               </div><span id='miniChartConrols_end' class='display_none'></span>
 
               <div id='pauseOptions'>
                 Pause Run at Update:&nbsp;
@@ -776,11 +738,7 @@
                   <span id='sgrEngergyReportLabel'> (strength of energy reward shown in parentheses)</span>
                   <div id='sugarAccordion'>
 
-
-
-
-
-                    <div id="sugarInsideWrapper">   
+                   <div id="sugarInsideWrapper">   
                     <details id="not_section" class="sugarAccordionSection">
                       <summary id="not_summary" class="sugarSummary"> 
                           <div id="not_title" class="sugarTitle">Notose</div>&nbsp;
@@ -1032,7 +990,7 @@
                           </div>
                         </div><span id="not2Section_end" class="display_none"></span>
 
-                      </div><span id="orn2_detailsHolder_end" class="display_none"></span>
+                      </div><span id="not_detailsHolder_end" class="display_none"></span>
                     </details>
 
                     <details id="nan_section" class="sugarAccordionSection">
@@ -1286,7 +1244,7 @@
                           </div>
                         </div><span id="nan2Section_end" class="display_none"></span>
 
-                      </div><span id="orn2_detailsHolder_end" class="display_none"></span>
+                      </div><span id="nan_detailsHolder_end" class="display_none"></span>
                     </details>
 
                     <details id="and_section" class="sugarAccordionSection">
@@ -1540,7 +1498,7 @@
                           </div>
                         </div><span id="and2Section_end" class="display_none"></span>
 
-                      </div><span id="orn2_detailsHolder_end" class="display_none"></span>
+                      </div><span id="and_detailsHolder_end" class="display_none"></span>
                     </details>
 
                     <details id="orn_section" class="sugarAccordionSection">
@@ -1793,7 +1751,7 @@
                           </div>
                         </div><span id="orn2Section_end" class="display_none"></span>
 
-                      </div><span id="orn2_detailsHolder_end" class="display_none"></span>
+                      </div><span id="orn_detailsHolder_end" class="display_none"></span>
                     </details>
 
                     <details id="oro_section" class="sugarAccordionSection">
@@ -2047,7 +2005,7 @@
                           </div>
                         </div><span id="oro2Section_end" class="display_none"></span>
 
-                      </div><span id="orn2_detailsHolder_end" class="display_none"></span>
+                      </div><span id="oro_detailsHolder_end" class="display_none"></span>
                     </details>
 
                     <details id="ant_section" class="sugarAccordionSection">
@@ -2301,7 +2259,7 @@
                           </div>
                         </div><span id="ant2Section_end" class="display_none"></span>
 
-                      </div><span id="orn2_detailsHolder_end" class="display_none"></span>
+                      </div><span id="ant_detailsHolder_end" class="display_none"></span>
                     </details>
 
                     <details id="nor_section" class="sugarAccordionSection">
@@ -2555,7 +2513,7 @@
                           </div>
                         </div><span id="nor2Section_end" class="display_none"></span>
 
-                      </div><span id="orn2_detailsHolder_end" class="display_none"></span>
+                      </div><span id="nor_detailsHolder_end" class="display_none"></span>
                     </details>
 
                     <details id="xor_section" class="sugarAccordionSection">
@@ -2809,7 +2767,7 @@
                           </div>
                         </div><span id="xor2Section_end" class="display_none"></span>
 
-                      </div><span id="orn2_detailsHolder_end" class="display_none"></span>
+                      </div><span id="xor_detailsHolder_end" class="display_none"></span>
                     </details>
 
                     <details id="equ_section" class="sugarAccordionSection">
@@ -3063,9 +3021,9 @@
                           </div>
                         </div><span id="equ2Section_end" class="display_none"></span>
 
-                      </div><span id="orn2_detailsHolder_end" class="display_none"></span>
+                      </div><span id="equ_detailsHolder_end" class="display_none"></span>
                     </details>
-                  <div><span id="sugarInsideWrapper_end" class="display_none"></span>
+                   </div><span id="sugarInsideWrapper_end" class="display_none"></span>
 
                   </div><span id='sugarAccordion_end' class='display_none'></span>
 

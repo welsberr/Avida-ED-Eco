@@ -118,6 +118,7 @@ div.popStatsTitle {
   background:#ffffff;
   min-width: 170px;
   text-align:left;
+  height:18px;
   font-weight: bold;
 }
 
@@ -140,19 +141,26 @@ div.popStatsTablePop {
 .noWrapN {
   text-align:left;
   font-weight: bold;
-  max-height: 15px;
+  max-height: 12px;
   max-width: 99%;
   overflow: hidden;
 }
 
 .sotL {
+  text-align:right;
+  max-height: 12px;
+  width: 110px;
+  overflow: hidden;
+}
+.sotR {
   text-align:left;
-  max-height: 15px;
-  max-width: 99%;
+  padding-left: 2px;
+  max-height: 12px;
+  width: 64px; 
   overflow: hidden;
 }
 
-.noWrapRn {
+.noWrapR {
   text-align:right;
   max-height: 15px;
   max-width: 99%;

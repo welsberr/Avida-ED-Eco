@@ -5,8 +5,22 @@
   // if (av.dbg.flg.root) { console.log('Root: start of utilities'); }
   var av = av || {};  //incase av already exists
 
+  //----------------------------------------------------------------------------------------------------------------------
+    //http://nelsonwells.net/2011/10/swap-object-key-and-values-in-javascript/
+  av.utl.invertHash = function (obj) {
+    var new_obj = {};
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(prop)) {
+        new_obj[obj[prop]] = prop;
+      }
+    }
+    return new_obj;
+  };
+  //------- not in use = example
+  //var hexColor = av.ui.invertHash(av.color.names);
+  //var theColor = hexColor['#000000'];  //This should get 'Black'
+  //console.log('theColor=', theColor);
 
-  
   //----------------------------------------------------------------------------------------------------------------------
   //http://stackoverflow.com/questions/1295584/most-efficient-way-to-create-a-zero-filled-javascript-array
   av.utl.newFilledArray = function (length, val) {

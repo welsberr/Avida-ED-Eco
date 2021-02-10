@@ -61,19 +61,17 @@
     if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
     if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
 
-  //----------------------------------------------------------------------------------------------------------------------
-
     //av.dom.popChrtHolder.style.width = av.dom.popChrtHolder.clientWidth + 'px';  //seems redundent  djb said to delete as of 2018_0827
     //av.dom.popChrtHolder.style.height = av.dom.popChrtHolder.clientHeight + 'px';  //seems redundent djb said to delete as of 2018_0827
-    av.dom.popMiniChart.style.height = av.pch.layout.height + 'px';
-    av.dom.popMiniChart.style.width = av.pch.layout.width + 'px';
+    av.dom.popChart.style.height = av.pch.layout.height + 'px';
+    av.dom.popChart.style.width = av.pch.layout.width + 'px';
     if (av.debug.uil) {
-      console.log('ui: PopPlotSize: popMiniChart css.wd, border, padding, margin=', $("#popMiniChart").css('width'), $("#popMiniChart").css('height')
-        , $("#popMiniChart").css('border'), $("#popMiniChart").css('padding'), $("#popMiniChart").css('margin'));
+      console.log('ui: PopPlotSize: popChart css.wd, border, padding, margin=', $("#popChart").css('width'), $("#popChart").css('height')
+        , $("#popChart").css('border'), $("#popChart").css('padding'), $("#popChart").css('margin'));
     }
     if (av.debug.uil) {
-      console.log('ui: PopPlotSize: av.dom.popMiniChart.ht offset, client ht=', av.dom.popMiniChart.offsetHeight,
-        av.dom.popMiniChart.clientHeight, '; parseInt(padding)=', parseInt($("#popMiniChart").css('padding'), 10));
+      console.log('ui: PopPlotSize: av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight,
+        av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'), 10));
     }
     if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
     if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
@@ -186,7 +184,7 @@ window.addEventListener('resize', function() {
     av.ui.popBotHd = av.dom.popBot.offsetHeight;
 
     //https://stackoverflow.com/questions/590602/padding-or-margin-value-in-pixels-as-integer-using-jquery
-    //console.log('gridHolder_margin' ,$("#gridHolder").css("margin"), '; popMiniChart=', $("#popMiniChart").css('margin'));
+    //console.log('gridHolder_margin' ,$("#gridHolder").css("margin"), '; popChart=', $("#popChart").css('margin'));
 
     if (av.debug.uil) { 
       console.log('ui: Wd: allAvida navColId mapHolder gridHolder rightInfoHolder, sum', av.dom.allAvida.offsetWidth,
@@ -385,10 +383,8 @@ window.addEventListener('resize', function() {
 //    where name is from the id='name'   of the dom objecte in the html
 //  .height() - returns the height of element excludes padding, border and margin.
 //  .innerHeight() - returns the height of element includes padding but excludes border and margin.
-//  .outerHeight() - returns the height of the div includes padding & border but excludes margin.
+//  .outerHeight() - returns the height of the div including border but excludes margin.
 //  .outerHeight(true) - returns the height of the div including margin.
-//  .scrollHeight = returns the ht of an element including overflow & padding, but NOT margin.
-// 
 // 
 // The difference between .css( "height" ) and .height() is that the former returns a value with units intact (for example, 400px).
 // while the latter returns a unit-less pixel value (for example, 400)
@@ -404,8 +400,8 @@ window.addEventListener('resize', function() {
 //     //https://stackoverflow.com/questions/9592575/get-height-of-div-with-no-height-set-in-css
 //     
 // an example: the 10 at the end is to say base 10 rather than octal.
-//     console.log('av.dom.popMiniChart.ht offset, client ht=', av.dom.popMiniChart.offsetHeight, 
-//       av.dom.popMiniChart.clientHeight, '; parseInt(padding)=', parseInt($("#popMiniChart").css('padding'),10));
+//     console.log('av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight, 
+//       av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'),10));
 
 
 // should this move to an init page ui function?

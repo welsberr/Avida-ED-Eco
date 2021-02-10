@@ -591,7 +591,7 @@ s
     document.getElementById('regionLayoutSgr').style.display = geoDisplay;
     document.getElementById('patternSgr').style.display = geoDisplay;
     document.getElementById('showHideSgr').style.display = geoDisplay;
-    document.getElementById('displayGridResourceData').style.display = geoDisplay;
+    document.getElementById('resourceDataTable').style.display = geoDisplay;
     for (ii = 0; ii < len; ii++) {
       tsk = av.sgr.logicNames[ii];
       document.getElementById(tsk+'_geometryDiv').style.display = 'none';
