@@ -151,12 +151,11 @@ s
     var endName = 'regionLayout';   //nan_supplyTypeSlctHolder  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
     //console.log(from, ' called av.sgr.ChangeAllsugarsupplyTypeSlct: selectedOption=',selectedOption);
     var domName = '';  
-    var numtasks = av.sgr.logicNames.length;
     var sub=0;   //most will start with 0 for global and also do local section 1
     // all tasks
-    for (var ii=0; ii< numtasks; ii++) {  
+    for (var ii=0; ii< av.sgr.numTasks; ii++) {  
       //change global
-      domName = av.sgr.logicNames[ii] + sub + endName;
+      domName = av.sgr.logicNames[ii] + '_' + endName;
       //console.log('domName='+domName, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub, '; value=', domObj.value);
       //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
       document.getElementById(domName).value = selectedOption;
@@ -345,8 +344,8 @@ s
       document.getElementById(textID).style.color = 'black';
       equilbrium = parseFloat(document.getElementById(preID+'inflow'+ postID + 'Np').value)/
                    parseFloat(document.getElementById(preID+'outflow'+ postID + 'Np').value);
-      console.log('av.dom.'+preID+'chmstat'+postID+'Text = ', equilbrium.toFixed(1) + ' = equilibrium if not eaten');
-      document.getElementById(preID+'chmstat'+postID +'Text').innerHTML = equilbrium.toFixed(1) + ' = equilibrium if not eaten';
+      console.log('av.dom.'+preID+'chmstat'+postID+'Text = ', equilbrium.toFixed(1) + ' = equilibrium');
+      document.getElementById(preID+'chmstat'+postID +'Text').innerHTML = equilbrium.toFixed(1) + ' = equilibrium';
   };
 };
 
@@ -616,6 +615,7 @@ s
     //these are not as usefull, turn on the one after the first if ('global' statement if problems
     //if (true) { console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; subChanged=', subChanged); }
     // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags=', av.nut.hideFlags); }
+    var dom = '';
     var tmpTxt = '';
     var tmpNum = 1;
     var inflow = 0.5;
@@ -873,6 +873,8 @@ s
         document.getElementById(tsk+'_section').open = true;
   //      console.log('av.nut['+edTsk+'].uiAll.regionsNumOf=', av.nut[edTsk].uiAll.regionsNumOf);
         for (var sub=1; sub <= av.nut[edTsk].uiAll.regionsNumOf; sub++) {
+          dom = tsk + sub + 'supplyTypeSlct';
+          //console.log('dom is', dom, '=', tsk + sub + 'supplyTypeSlct');
           av.nut[edTsk].uiSub.supplyTypeSlct[sub] = document.getElementById(tsk + sub + 'supplyTypeSlct').value;
           //console.log('sub=', sub,'; regionNameList=',  regionNameList);
           regionName = regionNameList[sub];

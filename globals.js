@@ -471,22 +471,26 @@ av.env = {}; //used for functions to process information beteen the environment 
 //                  | 7 8 9 |
 
 av.sgr = {};   //specific to resource/reactions (sugars); mostly constants. Not all iddeas written here will be used. 
-
+av.sgr.typeDefault = 'infinite';
+av.sgr.lineDash = ['solid', 'dot', 'solid', 'longdash', 'solid',  'dash', 'solid', 'dashdot', 'longdashdot'];
 av.sgr.oseNames = ['Notose', 'Nanose', 'Andose', 'Ornose', 'Orose', 'Antose', 'Norose', 'Xorose', 'Equose'];
+av.sgr.resrcTyp = ['infinite', 'infinite', 'infinite', 'infinite', 'infinite', 'infinite', 'infinite', 'infinite', 'infinite'];
 av.sgr.logEdNames = ['0not', '1nan', '2and', '3orn', '4oro', '5ant', '6nor', '7xor', '8equ'];
 av.sgr.logicNames = ['not', 'nan', 'and', 'orn', 'oro', 'ant', 'nor', 'xor', 'equ'];
 av.sgr.logicTitleNames = ['Not', 'Nan', 'And', 'Orn', 'Oro', 'Ant', 'Nor', 'Xor', 'Equ'];
 av.sgr.logicVnames = ['not', 'nand', 'and', 'orn', 'or', 'andn', 'nor', 'xor', 'equ'];
+av.sgr.numTasks = av.sgr.logicNames.length;
 av.sgr.reactValues = [ 1.0,   1.0,   2.0,   2.0,   3.0,   3.0,   4.0,   4.0,   5.0];
 av.sgr.monoChromeMaps = ['reddMap', 'orngMap', 'yllwMap', 'lawnMap',  'grenMap', 'seagMap', 'cyanMap', 
                          'cornMap', 'blueMap', 'purpMap', 'mgntMap',  'pinkMap', 'redvMap', 'greyMap'];
 //av.sgr.sugarColors = ['redvMap', 'orngMap',  'yllwMap', 'grenMap',  'cyanMap', 'cornMap',  'blueMap', 'purpMap', 'mgntMap'];
 //av.sgr.sugarColors = ['purpMap', 'blueMap',  'cornMap', 'cyanMap',  'seagMap', 'lawnMap',  'yllwMap', 'orngMap',  'pinkMap'];
-  av.sgr.sugarColors = ['blueMap', 'cornMap',  'cyanMap', 'grenMap',  'yllwMap', 'orngMap',  'reddMap', 'pinkMap',  'mgntMap'];
-  av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'lawnMap',  'yllwMap', 'orngMap',  'reddMap', 'pinkMap',  'mgntMap'];
-  av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'grenMap',  'yllwMap', 'orngMap',  'reddMap', 'mgntMap',  'purpMap'];
-  av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'grenMap',  'yllwMap', 'orngMap',  'redvMap', 'mgntMap',  'purpMap'];
+//  av.sgr.sugarColors = ['blueMap', 'cornMap',  'cyanMap', 'grenMap',  'yllwMap', 'orngMap',  'reddMap', 'pinkMap',  'mgntMap'];
+//  av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'lawnMap',  'yllwMap', 'orngMap',  'reddMap', 'pinkMap',  'mgntMap'];
+//  av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'grenMap',  'yllwMap', 'orngMap',  'reddMap', 'mgntMap',  'purpMap'];
+//  av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'grenMap',  'yllwMap', 'orngMap',  'redvMap', 'mgntMap',  'purpMap'];
   av.sgr.sugarColors = ['grenMap', 'seagMap',  'cornMap', 'blueMap',  'purpMap', 'mgntMap',  'redvMap', 'orngMap',  'yllwMap'];
+  av.sgr.lineColors =  ['green', 'green', 'blue', 'blue', 'red', 'red', 'orange', 'orange', 'yellow'];
 //console.log('sugarColors=', av.sgr.sugarColors);
 av.sgr.sugarBackgroundShade = 40;  //was 30
 av.sgr.sugarNameShade = 345;   //was 365   265 too light for yellow&greens; 300 green ok; yellow still too light (Rob liked 340)
@@ -809,13 +813,12 @@ av.fzr.clearEnvironment = function(from) {
   };
     
   //console.log('grd=', grd);
-  var logiclen = av.sgr.logicNames.length;
   var rsrcelen = av.sgr.resrc_argu.length; 
   var reactlen = av.sgr.react_argu.length;
   var tsk;
   var uiAllDishLen = av.sgr.ui_allDish_argu.length;
   var uiSubDishLen = av.sgr.ui_subDish_argu.length;
-  for (var ii=0; ii< logiclen; ii++) {      //9
+  for (var ii=0; ii< av.sgr.numTasks; ii++) {      //9
     tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
     av.nut[tsk] = {};    
     av.nut[tsk]['resrc'] = {};
@@ -827,6 +830,7 @@ av.fzr.clearEnvironment = function(from) {
       av.nut[tsk]['react'][ av.sgr.react_argu[jj] ] = [];     //Should these actually lbe left blank if they are really avida defaults? 
                                                               //We don't need to write the avida defaults; We do need to write where Avida-ED devaults don't match avida
     };
+    
     //cell command
     av.nut[tsk].cell = {};
     av.nut[tsk].cell.resource = [];
@@ -895,9 +899,8 @@ av.fzr.clearEnvironment = function(from) {
   av.fzr.env.react = {}; 
   av.fzr.env.supply = {};
 
-  for (var ii=0; ii< logiclen; ii++) {      //9
+  for (var ii=0; ii< av.sgr.numTasks; ii++) {      //9
     tsk = av.sgr.logEdNames[ii];   //puts names in order they are on avida-ed user interface
-    //var vnm = av.sgr.logicVnames[ii];  
     av.fzr.env.supply[tsk] = [];
     av.fzr.env.rsrce[tsk] = {};    
     for (var jj=0; jj<rsrcelen; jj++){
@@ -1118,6 +1121,8 @@ av.grd.clearGrd();
 
 av.pch = {};   // related to the chart on the population page
 av.pch.dadMax = 16;
+av.pch.resrcGlobal = {};
+av.pch.sgr = {};
 
 av.pch.clearPopChrt = function () {
   av.pch.needInit = true; //Added on 2019 Dec 10 Tues; not sure if it belongs here or not
@@ -1149,6 +1154,18 @@ av.pch.clearPopChrt = function () {
   av.pch.logMaxEar = 0;
   av.pch.logMaxNum = 0;
 
+//  console.log('av.sgr.numTasks=', av.sgr.numTasks);
+  for (var ii=0; ii< av.sgr.numTasks; ii++) {
+    numTsk = av.sgr.logEdNames[ii];
+    tsk = av.sgr.logicNames[ii];
+    av.pch.resrcGlobal[tsk] = [0];
+    av.pch.sgr[numTsk] = [0];
+  //  console.log('av.pch.resrcGlobal['+tsk+']=', av.pch.resrcGlobal[tsk]);
+  };
+  console.log('______________________________________________________________________________');
+  console.log('av.pch.resrcGlobal=', av.pch.resrcGlobal);
+
+
   av.pch.fnBinary = '000000000';
   av.pch.dadFit = {};
   av.pch.dadCst = {};
@@ -1171,7 +1188,10 @@ av.pch.clearPopChrt = function () {
     this.line.dash = texture;    //solid  dot  dash    dashdot
   };
 
-  av.pch.trace0 = new av.pch.makeTrace(av.pch.xx, av.pch.popY, 'scatter', 'lines', 'Population', 'rgb(2, 2, 2)', 1, 'solid');
+  av.pch.trc = {};
+
+  av.pch.trace0 = new av.pch.makeTrace(av.pch.xx, av.pch.popY, 
+               'scatter', 'lines', 'Population', 'rgb(2, 2, 2)', 1, 'solid');
 /*
   av.pch.trace0 = {
     x:av.pch.xx, y:av.pch.popY, type:'scatter', mode: 'lines', name: 'Population',
@@ -1182,10 +1202,31 @@ av.pch.clearPopChrt = function () {
     x:av.pch.xx, y:av.pch.logY, type:'scatter', mode: 'lines', name: 'Function Subset',
     //line: {color: 'rgb(0, 255, 0)', width: 1 }
     //line: {color: '#00FF00', width: 1, dash: 'solid' }   //dash: (solid   dot    dashdot   dash
-    line: {color: '#00FF00', width: 1, dash: 'solid' }
+    line: {color: 'rgb(2, 2, 2)', width: 1, dash: 'dot' }
   };
+  
+  var sgrName;
+  var dashtype;
+  for (var ii=0; ii < av.sgr.numTasks; ii++) {
+    numTsk = av.sgr.logEdNames[ii];
+    tsk = av.sgr.logicNames[ii];
+    numTsk = av.sgr.logEdNames[ii];
+    dashtype = av.sgr.lineDash[ii];
+    sgrName = av.sgr.oseNames[ii];
+    av.pch.trc[numTsk] = {
+      x:av.pch.xx, y:av.pch.sgr[numTsk], type:'scatter', mode: 'lines', name: sgrName, yaxis: "y2",
+//      line: {color: av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade+10], width: 1, dash: dashtype }
+      line: {color: av.sgr.lineColors[ii], width: 1, dash: dashtype }
+    };
+    console.log('av.pch.resrcGlobal['+tsk+']=', av.pch.resrcGlobal[tsk] );
+  };
+  
   av.pch.pixel = {wd: 310, ht: 202, wdif:10, hdif:2};
   av.pch.data = [av.pch.trace0, av.pch.trace1];
+  for (var ii=0; ii < av.sgr.numTasks-7; ii++) {
+    numTsk = av.sgr.logEdNames[ii];
+    av.pch.data[ii+2] = av.pch.trc[numTsk];
+  }
   av.pch.layout = {
     autosize: true,     //false
     width: 300,
@@ -1214,7 +1255,15 @@ av.pch.clearPopChrt = function () {
       autotick: true,
       ticks: '',
       showticklabels: true
+    },
+    yaxis2: {
+      //title: 'yaxis2 title',
+      titlefont: {color: 'rgb(148, 103, 189)'},
+      tickfont: {color: 'rgb(148, 103, 189)'},
+      overlaying: 'y',
+      side: 'right'
     }
+    
   };
   
     // Plotly configuration including that of the modebar

@@ -77,6 +77,7 @@
   };
 
 
+  //---------------------------------------------------------------------------------------- av.ptd.popRunningStateUi --
   av.ptd.popRunningStateUi = function () {
     'use strict';
     av.grd.runState = 'started';  //the run has now started
@@ -150,7 +151,9 @@
     //there will be a population so it can now be frozen.
     dijit.byId('mnFzPopulation').attr('disabled', false);
   };
-
+  //------------------------------------------------------------------------------------ end av.ptd.popRunningStateUi --
+  
+  //-------------------------------------------------------------------------------------------- av.ptd.popNewExState --
   av.ptd.popNewExState = function () {
     'use strict';
     //set configuation to default
@@ -200,6 +203,8 @@
       document.getElementById(tsk+'_periodcheckboxHolder').disabled = false;
       document.getElementById(tsk+'_periodTimeHolder').disabled = false;
       document.getElementById(tsk+'_initialHiNp').disabled = false;
+      //clear the resource series graphs
+      av.pch.resrcGlobal[tsk] = [];
       for (var sub=1; sub<av.nut.numRegionsinHTML; sub++) {
         document.getElementById(tsk+sub+'supplyTypeSlct').disabled = false;
         document.getElementById(tsk+sub+'supplyModifierSelect').disabled = false;
@@ -407,7 +412,9 @@
     if (av.debug.popCon) console.log('end of av.ptd.runPopFn 331');
     //update screen based on data from C++
   };
+  //---------------------------------------------------------------------------------------- end av.ptd.popNewExState --
 
+  //------------------------------------------------------------------------------------------------ av.ptd.runStopFn --
   av.ptd.runStopFn = function () {
     if ('Run' == av.dom.runStopButton.innerHTML) {
       av.ptd.makeRunState('av.ptd.runStopFn');
@@ -420,10 +427,11 @@
       //console.log('pop size  = av.pch.aveNum);
     }
   };
+  //-------------------------------------------------------------------------------------------- end av.ptd.runStopFn --
 
-  //----------------------------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------
   // Freezer Button functions
-  //----------------------------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------
 
   //Freeze the selected organism
   av.ptd.FrOrganismFn = function (trigger) {
@@ -599,6 +607,7 @@
     // send reset to Avida adaptor
     //if (need2sendRest2avida) {av.msg.reset();} //Take this out if we only reset when avida resets After sending a request for reset.
 
+    var Tsk;
     console.log('in resetDishFn');
     av.msg.pause('now');
     av.ptd.makePauseState();
@@ -646,25 +655,12 @@
     av.grd.drawGridSetupFn('av.ptd.resetDishFn');
 
     // reset resource values.
-      document.getElementById('mxNot').innerHTML = "";
-      document.getElementById('mxNan').innerHTML = "";
-      document.getElementById('mxAnd').innerHTML = "";
-      document.getElementById('mxOrn').innerHTML = "";
-      document.getElementById('mxOro').innerHTML = "";
-      document.getElementById('mxAnt').innerHTML = "";
-      document.getElementById('mxNor').innerHTML = "";
-      document.getElementById('mxXor').innerHTML = "";
-      document.getElementById('mxEqu').innerHTML = "";
-
-      document.getElementById('cellNot').innerHTML = "";
-      document.getElementById('cellNan').innerHTML = "";
-      document.getElementById('cellAnd').innerHTML = "";
-      document.getElementById('cellOrn').innerHTML = "";
-      document.getElementById('cellOro').innerHTML = "";
-      document.getElementById('cellAnt').innerHTML = "";
-      document.getElementById('cellNor').innerHTML = "";
-      document.getElementById('cellXor').innerHTML = "";
-      document.getElementById('cellEqu').innerHTML = "";
+    for (var ii=0; ii < av.sgr.numTasks; ii++) {
+      Tsk = av.sgr.logicTitleNames[ii];
+      document.getElementById('mx'+Tsk).innerHTML = '';
+      document.getElementById('cell'+Tsk).innerHTML = '';
+      document.getElementById('tot'+Tsk).innerHTML = '';
+    };
   };
 
   //clear logic Buttons

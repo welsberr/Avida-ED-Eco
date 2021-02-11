@@ -666,11 +666,12 @@
   //------------------------------------------------------------------------------------------- av.msg.updatePopStats --
   av.msg.updatePopStats = function (msg) {
     'use strict';
-    var tskDom='';
-    var taskNum=0;
+    var tskDom= '';
+    var resrcAmount= 0;
     var tskName='';
-    var taskStr='';
-    var ndx=0;
+    var resrcMetric= '';
+    var ndx= 0;
+    var numTsk = 0;
     
     //update graph arrays
     if (0 <= msg.update) {  //normal start to loop
@@ -744,15 +745,20 @@
     
     //console.log('msg.globalResourceAmount=', msg.globalResourceAmount);
     var obj = msg.globalResourceAmount;
+    console.log('av.pch.resrcGlobal=', av.pch.resrcGlobal);
     for (var tskName in obj) {
-      if (obj.hasOwnProperty(tskName)) {
+      if ( obj.hasOwnProperty(tskName) ) {
         ndx = av.sgr.logicNames.indexOf(tskName);
-        tskDom = av.sgr.logicTitleNames[ndx];
-        taskNum = obj[tskName];
-        taskStr = av.utl.toMetric(taskNum, 0);
-        //console.log('key=', tskName, '; val=', taskNum, '; taskStr=', taskStr, '; dom = '+tskDom);
-        document.getElementById('tot'+tskDom).innerHTML = taskStr;
-      }
+        numTsk = av.sgr.logEdNames[ndx];
+        resrcAmount = obj[tskName];
+        if ( av.utl.isNumber(parseFloat(resrcAmount)) && 'global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+          tskDom = av.sgr.logicTitleNames[ndx];
+          resrcMetric = av.utl.toMetric(resrcAmount, 0);
+          av.pch.resrcGlobal[tskName][msg.update] = parseFloat(resrcAmount);
+          //console.log('key=', tskName, '; val=', resrcAmount, '; resrcMetric=', resrcMetric, '; dom = '+tskDom);
+          document.getElementById('tot'+tskDom).innerHTML = resrcMetric;
+        };
+      };
     };
   };
   //--------------------------------------------------------------------------------------- end av.msg.updatePopStats --
@@ -831,7 +837,7 @@
         '; Gnl', av.pch.logCst[mUpdate].formatNum(0), '; Met', av.pch.logEar[mUpdate].formatNum(0));
     }
     */
-  }
+  };
   //---------------------------------------------------------------------------------------- end av.ptd.updateLogicFn --
 
   //writes out data for WebOrgDataByCellID

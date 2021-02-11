@@ -1,1 +1,1 @@
-LR_local_globalDish
+global_vary

@@ -169,7 +169,7 @@ av.utl.log = function (base, num) {
       //console.log('fixedBase=', fixedBase);
     };
     //console.log('10**update = 10**',av.grd.msg.update, '=', 10**av.grd.msg.update);
-    if ( av.utl.isNumber(Number(standardNotationNum)) ) {
+    if ( av.utl.isNumber(parseFloat(standardNotationNum)) ) {
       stdNum = parseFloat(standardNotationNum);
       if (10**27 <= stdNum ) {numStr = (stdNum/10**27).toFixed(fixBase+0) + "?"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
 

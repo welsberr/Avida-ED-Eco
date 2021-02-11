@@ -560,7 +560,7 @@
     border: 1px solid #AAA;    
   }
   #miniChartYaxis{
-    flex: 0 0 auot;
+    flex: 0 0 200px;
     border: 1px solid #AAA;
   }
   #miniChartOptHolder{
@@ -571,7 +571,7 @@
   #pauseOptions {
     flex: 0 0 40px;
     border: 1px solid #AAA;
-    /* background: pink; */
+    /*background: rgb( 0 ,  155 ,  0 ); */
   }
 
 /*--------------------------------------------------------------------------------------------- Resource Data Table --*/

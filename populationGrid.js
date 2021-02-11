@@ -72,13 +72,10 @@
   //Sets scale and puts the user selected data type in the grid array. Rob wants the scale to be different at the beginning of a run 
   av.grd.setMapData = function (from) {
     'use strict';
-    var logicLen = av.sgr.logicNames.length;
-    var tskDom;
+    var tskDom='';
     var taskNum=0;
     var tskName='';
     var taskStr='';
-    var tmpStr='';
-    var cellUnit = '';
     //console.log(from, 'called av.grd.setMapData: av.grd.msg.fitness=',av.grd.msg.fitness);
     if (undefined != av.grd.msg.fitness) {
       //console.log('av.grd.msg', av.grd.msg);
@@ -157,8 +154,9 @@
       }
       else av.grd.reScaleRate = '';  
 
+      //need to make an infinity grid so we know where to put the infinity color and value for the grid
       if (av.grd.selectedNdx) {
-        for (var ii=0; ii < logicLen; ii++) {
+        for (var ii=0; ii < av.sgr.numTasks; ii++) {
           tskDom = av.sgr.logicTitleNames[ii];
           tskName = av.sgr.logicNames[ii];
 

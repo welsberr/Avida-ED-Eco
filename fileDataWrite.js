@@ -208,39 +208,33 @@
     var numTsk;
     var task;
     var tskTitle;
-    var regionStr;
+    console.log('resource type =', av.sgr.resrcTyp);
     for (var ii=0; ii < logLen; ii++) {
       numTsk = av.sgr.logEdNames[ii];
       task = av.sgr.logicNames[ii];
       tskTitle = av.sgr.logicTitleNames[ii];
-      regionStr = av.nut[numTsk].uiAll.regionLayout;
-      console.log('first char of region=', regionStr[0]);
       if ( 'global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
-        if ('infinite' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
-          document.getElementById('cell'+tskTitle).innerHTML = 'Global';
+        document.getElementById('cell'+tskTitle).innerHTML = 'Global';
+        if ('infinite' == av.sgr.resrcTyp[ii] ) {
           document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;&nbsp;&infin; ';
           document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;&nbsp;&infin; ';
         } else if ('none' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
-          document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;none';
-          document.getElementById('mx'+tskTitle).innerHTML = 'Global';
+          document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;0.0 ';
           document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;0.0 ';
         } else {
-          document.getElementById('cell'+tskTitle).innerHTML = 'Global';
-          document.getElementById('mx'+tskTitle).innerHTML = 'Global';
+          document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;-';
           document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;-';
         };
-      } else if (1 >= av.nut[numTsk].uiAll.regionsNumOf ) { 
-        // grid
-        av.sgr.cellFlag = false;   //but these need to be arrays
-        av.sgr.mxFlag = false;
-        if ('infinite' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
-          document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;&infin; ';
-          document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;&infin; ';
-          document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;&infin; ';
-        } else if ('none' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
-          document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;0 ';
-          document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;0 ';
-          document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;Grid ';
+      } else {
+        document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;Grid ';
+          if (1 >= av.nut[numTsk].uiAll.regionsNumOf ) { 
+          if ('infinite' == av.sgr.resrcTyp[ii] ) {
+            document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;&infin; ';
+            document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;&infin; ';
+          } else {
+            document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;0 ';
+            document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;0 ';
+          }
         };
       };
     };
@@ -256,7 +250,6 @@
     console.log('before calling av.fwt.nut2cfgFile');
     av.fwt.nut2cfgFile(idStr, toActiveConfigFlag, 'av.fwt.makeFzrEnvironmentCfg');
     console.log('after calling av.fwt.nut2cfgFile');
-    
     av.fwt.setResourceConstants();    
   };
   
@@ -610,6 +603,7 @@
       tsk = av.sgr.logicNames[ii];      //3 letter logic names
       tskVar = av.sgr.logicVnames[ii];   // variable length logic tasks names as required by Avida
       //console.log('numTsk=', numTsk, '; tsk=', tsk, '; tskVar=', tskVar, 'uiAll.geometry=', av.nut[numTsk].uiAll.geometry.toLowerCase());
+      av.sgr.resrcTyp[ii] = av.sgr.typeDefault;
 /*
 //      if ('nor' == tsk) {
         if (false) {
@@ -632,7 +626,7 @@
         txt += 'outflowX1=0:outflowY1=0:outflowX2=19:outflowY2=19\n';
         txt += 'RESOURCE nor013q:geometry=grid:xdiffuse=0:ydiffuse=0:inflow=144:outflow=0.04:';
         txt += 'inflowX1=20:inflowY1=0:inflowX2=39:inflowY2=19:cellbox=20,0,20,20:';
-        txt += 'outflowX1=20:outflowY1=0:outflowX2=39:outflowY2=19\n';
+        txt += 'outflowX1=20av:outflowY1=0:outflowX2=39:outflowY2=19\n';
         txt += 'REACTION  nor013q xor  process:resource=nor013q:value=2.0:type=pow:min=0.9:max=1 requisite:max_count=1\n';
       }
       else {
@@ -643,6 +637,7 @@
         tmpNum = 1;
         //console.log('numTsk=', numTsk, '; jj=', jj, '; supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase());
         txt += '# Task = '+ numTsk + '; Geometry = ' + av.nut[numTsk].uiAll.geometry + '; supplyTypeSlct = '+  av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() + '\n';
+        av.sgr.resrcTyp[ii] = av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase();
         switch ( av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
           case 'none':
             tmpNum = 0;
@@ -706,9 +701,10 @@
 */
             txt += '\n';
             break;
-        }  //end switch
-      }
-      else {
+        };  //end switch
+        // initialize Resource data table. 
+        
+      } else {
         // geometery = grid (local in Avida-ED = grid in avida)
         len = av.nut[numTsk].uiSub.regionCode.length;
         for (jj=1; jj< len; jj++) {
@@ -824,13 +820,16 @@
               console.log('resrcFix=', resrcFix);
               break;
             case 'none':
+              av.sgr.resrcTyp[ii] = 'none';
             case 'finite':
+              av.sgr.resrcTyp[ii] = 'finite';
               txt += resrcFix + '\n';
               txt += cellTxt;
               txt += reactTxt;
               console.log('resrcFix=', resrcFix);
               break;
             case 'chemostat': 
+              av.sgr.resrcTyp[ii] = 'chemosat';
               txt += 'RESOURCE ' + av.fwt.existCheck('', av.nut[numTsk].resrc.name[jj], av.fwt.existCheck('', av.nut[numTsk].react.resource[jj], tsk) );
               txt += av.fwt.existCheck(':geometry=', av.nut[numTsk].resrc.geometry[jj], '');
               // Since fileDataRead looks for inflow/outflow to see if the catagory is chemostat, 
@@ -854,13 +853,14 @@
 
               // Reaction is the same for finite and chemostate
               break;
-          } // end of switch
-        } // end loop through array of each resource/reaction instance
-      }  // end of else geometry=grid
-     }   // end of else based on if to run some test code
+          }; // end of switch
+        }; // end loop through array of each resource/reaction instance
+      };  // end of else geometry=grid
+     };   // end of else based on if to run some test code
      txt += '#-----\n'; 
-    }  // end of looping through each sugar
-    //console.log(txt);
+    };  // end of looping through each sugar
+    
+    
     console.log('-------------------------------------- End of av.fwt.nut2cfgFile -------------------------------');
     
     if (toActiveConfigFlag) av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.nut2cfgFile');
@@ -868,26 +868,6 @@
 
   };
   //----------------------------------------------------------------------------------------- end av.fwt.nut2cfgFile  --
-
-  /*--------------------------------------------------------------------------------- av.fwt.makeFzrOldEnvironmentCfg --
-   *  This function is not loner in use. delete by 2021
-   
-  av.fwt.makeFzrOldEnvironmentCfg = function (idStr, from) {
-    'use strict';
-    if (av.debug.fio) console.log(from, ' called av.fwt.makeFzrOldEnvironmentCfg *************************************************');
-    var txt = '';
-    if (av.dom.notose.checked) txt += 'REACTION  NOT  not   process:value=1:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NOT  not   process:value=0:type=pow  requisite:max_count=1\n';
-    if (av.dom.nanose.checked) txt += 'REACTION  NAND nand  process:value=1:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NAND nand  process:value=0:type=pow  requisite:max_count=1\n';
-    if (av.dom.andose.checked) txt += 'REACTION  AND  and   process:value=2:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  AND  and   process:value=0:type=pow  requisite:max_count=1\n';
-    if (av.dom.ornose.checked) txt += 'REACTION  ORN  orn   process:value=2:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  ORN  orn   process:value=0:type=pow  requisite:max_count=1\n';
-    if (av.dom.orose.checked)  txt += 'REACTION  OR   or    process:value=3:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  OR   or    process:value=0:type=pow  requisite:max_count=1\n';
-    if (av.dom.andnose.checked) txt += 'REACTION  ANDN andn  process:value=3:type=pow  requisite:max_count=1\n'; else txt += 'REACTION  ANDN andn  process:value=0:type=pow  requisite:max_count=1\n';
-    if (av.dom.norose.checked) txt += 'REACTION  NOR  nor   process:value=4:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  NOR  nor   process:value=0:type=pow  requisite:max_count=1\n';
-    if (av.dom.xorose.checked) txt += 'REACTION  XOR  xor   process:value=4:type=pow  requisite:max_count=1\n';  else txt += 'REACTION  XOR  xor   process:value=0:type=pow  requisite:max_count=1\n';
-    if (av.dom.equose.checked) txt += 'REACTION  EQU  equ   process:value=5:type=pow  requisite:max_count=1';    else txt += 'REACTION  EQU  equ   process:value=0:type=pow  requisite:max_count=1';
-    if (true) {av.fwt.makeActConfigFile('environment.cfg', txt, 'av.fwt.makeFzrOldEnvironmentCfg');}
-    else  { av.fwt.makeFzrFile(idStr+'/environment.cfg', txt, 'av.fwt.makeFzrOldEnvironmentCfg');}
-  };
 
   /*----------------------------------------------------------------------------------- av.fwt.makeFzrEnvironmentTest --*/
   av.fwt.makeFzrEnvironmentTest = function (idStr, from) {
@@ -1111,7 +1091,7 @@
     console.log('name is ', idStr + '/entryname.txt');
     var fileNm = av.fzr.file[idStr + '/entryname.txt'];
     console.log('fileName = ', fileNm, '; idStr=', idStr,'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
-    av.fwt.makeCSV(fileNm);
+    av.fwt.makeCSV(fileNm, 'av.fwt.makeFzrCSV');
     // only ever makes in the active Config area
     if (false) {av.fwt.makeActConfigFile('/timeRecorder.csv', av.fwt.csvStrg, 'av.fwt.popExpWrite');}
     else {av.fwt.makeFzrFile(idStr+'/timeRecorder.csv', av.fwt.csvStrg, 'av.fwt.popExpWrite');}  
@@ -1122,14 +1102,15 @@
   /*------------------------------------------------------------------------------------------ av.fwt.writeCurrentCSV --*/
   av.fwt.writeCurrentCSV = function(idStr) {  
     "use strict";
-    av.fwt.makeCSV(idStr);
+    av.fwt.makeCSV(idStr, 'av.fwt.writeCurrentCSV');
     av.fio.fzSaveCsvfn();
   };
 
   // if (av.dbg.flg.root) { console.log('Root: before av.fwt.makeCSV'); }
   /*-------------------------------------------------------------------------------------------------- av.fwt.makeCSV --*/
-  av.fwt.makeCSV = function(fileNm) {
+  av.fwt.makeCSV = function(fileNm, from) {
     'use strict';
+    console.log(from, 'called av.fwt.makeCSV: fileNm=', fileNm);
     if ('populationBlock' === av.ui.page) {
       //  '@default at update 141 Average Fitness,@default at update 141 Average Gestation Time,' +
       //  '@default at update 141 Average Energy Acq. Rate,@default at update 141 Count of Organisms in the World';
