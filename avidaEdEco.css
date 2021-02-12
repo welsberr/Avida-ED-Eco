@@ -890,6 +890,29 @@ grid-template-areas: "detailArrow sugarTitle regionLayCls geometryCls  supplyWdC
   min-height: 23px;  width: 100%;
 }
 
+.grd-sgr-sum-global-container {
+  display: inline-grid;
+  grid-template-areas: 'detailArrow sugarTitle regionLayCls geometryCls supplyWdCls supplyHoldCls sumFtTxtCls ';
+  justify-content: start; 
+  min-height: 23px;  width: 100%;
+}
+
+.grd-sgr-sum-global-finite-container {
+  display: grid;
+  grid-template-areas: "detailArrow sugarTitle regionLayCls geometryCls  supplyWdCls supplyHoldCls initialGlobalClass"
+                       "detailArrow sugarTitle tskAboutCls  tskAboutCls  tskAboutCls tskAboutCls   initialGlobalClass";
+  justify-content: start; 
+  min-height: 23px;  width: 100%;
+}
+
+.grd-sgr-sum-global-chemo-container {
+  display: grid;
+  grid-template-areas: "detailArrow sugarTitle  regionLayCls geometryCls supplyWdCls supplyHoldCls periodTimeGlobClass"
+                       "detailArrow sumFtTxtCls sumFtTxtCls  sumFtTxtCls sumFtTxtCls sumFtTxtCls   sumFtTxtCls";
+  justify-content: start; 
+  min-height: 23px;  width: 100%;
+}
+
 .grid-sugar-summary-geo-basic-container {
   display: inline-grid;
   grid-template-areas: 'detailArrow sugarTitle geometryCls supplyWdCls supplyHoldCls sumFtTxtCls initialGlobalClass';
@@ -1275,6 +1298,15 @@ grid-template-areas: "detailArrow sugarTitle regionLayCls geometryCls  supplyWdC
 #allSgr4Blnk { grid-area: allSgr3Blnk; }
 #allSgr4Blnk { grid-area: allSgr4Blnk; }
 #allSgr5Blnk { grid-area: allSgr5Blnk; }
+
+.changeAllSugarsGlobal {
+  display: grid;
+  grid-template-areas: 'setTitle    supplyTypeSlctSgr   supplyTypeSlctHolder';
+  width: 100%;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background: #DDD;   /* #AAA; is too dark now */    
+}
 
 .changeAllSugarsBasic {
   display: grid;

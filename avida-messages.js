@@ -12,7 +12,7 @@
   be points to strings of JSON objects.
 */
 
-var show_msg = false;
+var show_msg = true;
 
 var avida_update = -1;  //Holds the current update as notified
 var msg_queue = [];     //Holds the current messages to send to avida
@@ -96,7 +96,10 @@ function doGetMessage() {
   pointer-to-string-to-json conversion occurs here.
 */
 function doPostMessage(msg_str) {
+  console.log('doPostMsg: msg_str=', msg_str);
+  console.log('pring this');
   if (show_msg) console.log("doPostMessage: msg_str=", msg_str);
+  /*
   var json_msg = JSON.parse(msg_str);
   switch(json_msg.type){
     case 'update':
@@ -111,4 +114,6 @@ function doPostMessage(msg_str) {
   }
   sendDiagMsg('av', 'out', json_msg);
   postMessage(json_msg);
-}
+   * 
+   */
+};

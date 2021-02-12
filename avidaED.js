@@ -3410,8 +3410,8 @@ require([
 
   // Avida-ED 4.0.0 Alpha Testing fix this too. 
   //true when diane is working; false for all production releases even in alpha testsing.  
-  if (true) {
-    console.log('testing mode; set to true before public release for Avida-ED 4.0.0 Alpha Testing. ');
+  if (false) {
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.0 Alpha Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x

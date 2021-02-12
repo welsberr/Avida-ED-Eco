@@ -704,8 +704,10 @@ av.sgr.gridOnly = false;        // gridOnly true  ++> dftGeometry = grid
 av.sgr.dftGeometry = 'global';  // gridOnly false ++> dftGeometry = global
 if (av.sgr.gridOnly) av.sgr.dftGeometry = 'grid';
 av.sgr.complexityLevel = 'sgrBasic';
-av.sgr.complexityLevel = 'sgrGlobal';
 av.sgr.complexityLevel = 'sgrAdvanced';
+av.sgr.complexityLevel = 'sgrGlobal';
+av.sgr.complexSumGridPrefix = 'grd-sgr-sum-adv-';
+
 
 av.sgr.describe = ['basic', 'global', 'adv'];
 av.sgr.describe.long = {};

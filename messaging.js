@@ -98,7 +98,7 @@
           if (av.debug.msg) {console.log('____________UnknownRequest: ', msg);}
           av.debug.log += '\nAui: in default in messaging on line 84 \n' + av.utl.json2stringFn(msg);   //fix format
           break;
-      }
+      };
     }
     else if ('userFeedback' == msg.type) {
       av.debug.log += '\nAui: userFeedback \n' + av.utl.json2stringFn(msg);

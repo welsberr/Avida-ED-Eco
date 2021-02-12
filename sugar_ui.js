@@ -571,11 +571,18 @@ s
     var subnum = 1;
     var len = av.sgr.logicNames.length;
     var clssnam = 'changeAllSugarsTogetherContainer';
+    av.sgr.complexSumGridPrefix = 'grd-sgr-sum-adv-';
     
     if ('sgrBasic' == av.sgr.complexityLevel) {
       geoDisplay = 'none';
       clssnam = 'changeAllSugarsBasic';
       optionDisabled = true;
+      av.sgr.complexSumGridPrefix = '.grid-sugar-summary-geo-basic-';
+    } else if ('sgrGlobal' == av.sgr.complexityLevel) {
+      geoDisplay = 'none';
+      clssnam = 'changeAllSugarsGlobal';
+      optionDisabled = true;
+      av.sgr.complexSumGridPrefix = '.grd-sgr-sum-global-';
     };
     console.log(from, 'called av.sgr.complexityChangeProcess: av.sgr.complexityLevel=', av.sgr.complexityLevel);
     console.log('------------------------------------------------------------------------------geoDispay=', geoDisplay);
@@ -791,26 +798,26 @@ s
         // I tried absolute postion, but then the grid contain did not change the sise of the summary section. 
         // never got tried with one surrounding div an then two. finally Applied display: grid to the summary element
         // changing the summary element to display: grid causes the arrow to disapper, but the detials will still open
-        document.getElementById(tsk+'_summary').className = 'grd-sgr-sum-adv-container';
+        document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
         document.getElementById(tsk+'_supplyTypeSlctHolder').style.display = 'inline-block';
         document.getElementById('sgrEngergyReportLabel').style.display = 'inline';
         switch (av.nut[edTsk].uiAll.supplyTypeSlct.toLowerCase()) {
           case 'none': 
           case 'infinite':
-            document.getElementById(tsk+'_summary').className = 'grd-sgr-sum-adv-container';
+            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
             document.getElementById(tsk+'_summaryFooterText').innerHTML = av.sgr.describe.long[tsk];
             document.getElementById(tsk+'_summaryFooterText').style.display = 'inline-block';
             document.getElementById(tsk+'_section').open = false;
             break;
           case 'finite': 
-            document.getElementById(tsk+'_summary').className = 'grd-sgr-sum-adv-finite-container';
+            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'finite-container';
             document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.long[tsk];
             document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
             document.getElementById(tsk+'_initialHiHolder').style.display = 'inline-block';
             document.getElementById(tsk+'_section').open = false;
             break;
           case 'chemostat':
-            document.getElementById(tsk+'_summary').className = 'grd-sgr-sum-adv-chemo-container';
+            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'chemo-container';
             tmpTxt = av.sgr.describe.long[tsk] + ': . . . .  When 0 < period, chemostat becomes periodic';
             document.getElementById(tsk+'_summaryFooterText').innerHTML = tmpTxt;
             document.getElementById(tsk+'_summaryFooterText').style.display = 'none';
@@ -836,7 +843,7 @@ s
                 document.getElementById(tsk+'0chmstatHiText').innerHTML = 'outflow or inflow value is not valid';
               }
             };
-            document.getElementById(tsk+'0subSection').className = 'adv-glob-chemo-container';
+            document.getElementById(tsk+'0subSection').className = av.sgr.complexSumGridPrefix + '-chemo-container';
             // if (av.dbg.flg.nut) { console.log('task='+tsk, '; sub='+sub, '; get className from dom of ', tsk+'0Details'); }
             // if (av.dbg.flg.nut) { console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'0Details').className); }
             // if (av.dbg.flg.nut) { console.log(tsk+'0periodcheckboxHolder.checked value =', document.getElementById(tsk+'0periodCheck').checked, document.getElementById(tsk+'0periodCheck').value); }
@@ -867,7 +874,7 @@ s
       }        // end global 
       else {
         // geometry = grid 
-        document.getElementById(tsk+'_summary').className = 'grd-sgr-sum-adv-container';
+        document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
         //document.getElementById(tsk+'_summary').className = 'grid-sugar-summary-geo-local-container';
         document.getElementById(tsk+'_regionLayoutHolder').style.display = 'inline-block';
         document.getElementById(tsk+'_section').open = true;
