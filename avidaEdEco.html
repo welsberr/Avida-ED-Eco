@@ -674,8 +674,8 @@
               </div><span id='popStatHolder_end' class='display_none'></span>
 
               <div id="resourceDataTable">
-                <div class='grid-currentSugarBoth-container'>
-                  <div id='sgrTop' class='sugarTsk'>Resource</div><div id="mxTop" class='mxTask'>Highest</div><div id="cellTop" class='cellTask'>Cell Value</div><div id='totTop' class='totTask'>Global</div>
+                <div class='sugarGlobal-gridContainer'>
+                  <div id='sgrTop' class='sugarTsk'>Resource</div><div id="mxTop" class='mxTask'>Highest</div><div id="cellTop" class='cellTask'>Sugar</div><div id='totTop' class='totTask'>Amount</div>
                   <div id='sgrNot' class='sugarTsk'>NOT</div><div id="mxNot" class='mxTask'>not</div><div id="cellNot" class='cellTask'>NOt</div><div id="totNot" class='totTask'>Not</div>
                   <div id='sgrNan' class='sugarTsk'>NAN</div><div id="mxNan" class='mxTask'>nan</div><div id="cellNan" class='cellTask'>NAn</div><div id="totNan" class='totTask'>naN</div>
                   <div id='sgrAnd' class='sugarTsk'>AND</div><div id="mxAnd" class='mxTask'>and</div><div id="cellAnd" class='cellTask'>ANd</div><div id="totAnd" class='totTask'>anD</div>
@@ -817,7 +817,7 @@
                             <label><input id="not_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
                           </div>
                           <div id="not_initialHiHolder" class="initialGlobalClass">
-                            <input id="not_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
+                            <input id="not_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / Dish
                           </div>
                           <div id="not_summaryFooterText" class="sumFootTxtClass"> period &lt; 1 ==&gt; non-periodic</div>
                       </summary>
@@ -1071,7 +1071,7 @@
                             <label><input id="nan_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
                           </div>
                           <div id="nan_initialHiHolder" class="initialGlobalClass">
-                            <input id="nan_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
+                            <input id="nan_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / Dish
                           </div>
                           <div id="nan_summaryFooterText" class="sumFootTxtClass"> period &lt; 1 ==&gt; non-periodic</div>
                       </summary>
@@ -1325,7 +1325,7 @@
                             <label><input id="and_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
                           </div>
                           <div id="and_initialHiHolder" class="initialGlobalClass">
-                            <input id="and_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
+                            <input id="and_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / Dish
                           </div>
                           <div id="and_summaryFooterText" class="sumFootTxtClass"> period &lt; 1 ==&gt; non-periodic</div>
                       </summary>
@@ -1579,7 +1579,7 @@
                             <label><input id="orn_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
                           </div>
                           <div id="orn_initialHiHolder" class="initialGlobalClass">
-                            <input id="orn_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
+                            <input id="orn_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / Dish
                           </div>
                           <div id="orn_taskAboutText" class="taskDescribeCls">Hard (x8)</div>
                           <div id="orn_summaryFooterText" class="sumFootTxtClass"> period &lt; 1 ==&gt; non-periodic</div>
@@ -1832,7 +1832,7 @@
                             <label><input id="oro_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
                           </div>
                           <div id="oro_initialHiHolder" class="initialGlobalClass">
-                            <input id="oro_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
+                            <input id="oro_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / Dish
                           </div>
                           <div id="oro_summaryFooterText" class="sumFootTxtClass"> period &lt; 1 ==&gt; non-periodic</div>
                       </summary>
@@ -2086,7 +2086,7 @@
                             <label><input id="ant_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
                           </div>
                           <div id="ant_initialHiHolder" class="initialGlobalClass">
-                            <input id="ant_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
+                            <input id="ant_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / Dish
                           </div>
                           <div id="ant_summaryFooterText" class="sumFootTxtClass"> period &lt; 1 ==&gt; non-periodic</div>
                       </summary>
@@ -2340,7 +2340,7 @@
                             <label><input id="nor_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
                           </div>
                           <div id="nor_initialHiHolder" class="initialGlobalClass">
-                            <input id="nor_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
+                            <input id="nor_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / Dish
                           </div>
                           <div id="nor_summaryFooterText" class="sumFootTxtClass"> period &lt; 1 ==&gt; non-periodic</div>
                       </summary>
@@ -2594,7 +2594,7 @@
                             <label><input id="xor_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
                           </div>
                           <div id="xor_initialHiHolder" class="initialGlobalClass">
-                            <input id="xor_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
+                            <input id="xor_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / Dish
                           </div>
                           <div id="xor_summaryFooterText" class="sumFootTxtClass"> period &lt; 1 ==&gt; non-periodic</div>
                       </summary>
@@ -2848,7 +2848,7 @@
                             <label><input id="equ_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
                           </div>
                           <div id="equ_initialHiHolder" class="initialGlobalClass">
-                            <input id="equ_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / cell
+                            <input id="equ_initialHiNp" class="sugInitialNclass" type="text" value="100" onchange="av.sgr.initialChange(this);">&nbsp;Initial / Dish
                           </div>
                           <div id="equ_summaryFooterText" class="sumFootTxtClass"> period &lt; 1 ==&gt; non-periodic</div>
                       </summary>

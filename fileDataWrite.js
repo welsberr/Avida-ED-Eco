@@ -455,7 +455,7 @@
             av.nut[numTsk].react.depletable[0] = 0;
             break;
           case 'finite':
-            av.nut[numTsk].resrc.initial[jj] = av.nut[numTsk].uiAll.initial;
+            av.nut[numTsk].resrc.initial[jj] = av.nut[numTsk].uiAll.initialHiNp;
             av.nut[numTsk].react.resource[0] = tsk+'000';
             break;
           case 'chemostat': 

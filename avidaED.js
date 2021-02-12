@@ -3353,7 +3353,7 @@ require([
     av.anl.AnaChartFn();    //redraw chart which will get new color from dom
   };
   
-  /*
+  /* commented out prior to 2021
    av.dom.pop0color.onclick = function () {
    av.anl.color[0] = av.color.names[av.dom.pop0color.value];
    av.post.addUser('Button: pop0color');

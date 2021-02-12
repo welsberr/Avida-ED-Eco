@@ -7,7 +7,7 @@
 // one global to hold them all.
 var av = av || {};  //incase av already exists
 
-console.log('start of globals on 2020_1113 Fri msg_working');
+console.log('start of globals on 2021_212 Fri msg_working');
 
 Number.prototype.pad = function(size) {
   var ss = String(this);
@@ -549,7 +549,7 @@ av.sgr.resrc_num = ['initial', 'inflow', 'outflow',
 av.sgr.uiMin = [-2, -2, 1, -2, -2, 0, -2];  //need to document this tiba                  
 av.sgr.uiMax = [ 0,  0, 0,  0,  0, 0, 1];
 
-av.sgr.uiSummaryDom_num = ['initial', 'outflowHiNp','periodNp'];  //names of arguements that have numerical values in the dom for global dish
+av.sgr.uiSummaryDom_num = ['initialHiNp', 'outflowHiNp','periodNp'];  //names of arguements that have numerical values in the dom for global dish
 av.sgr.uiSubGlobalDom_num = ['inflowHiNp', 'outflowHiDiv'];  //names of arguements that have numerical values in the dom for globa dish
 av.sgr.uiSubDom_num = ['initialHiNp', 'inflowHiNp', 'outflowHiNp',                
                     'initialLoNp', 'inflowLoNp', 'outflowLoNp', 'periodNp'];  //names of arguements that have numerical values in the dom for each subdish
@@ -572,12 +572,12 @@ av.sgr.ui_subDish_argu = ['supplyTypeSlct', 'initialHiNp', 'inflowHiNp', 'outflo
 //av.sgr.ui values match the dom, so they are amount per cell; av.sgr.Resrce values match avida, so they are amouth per dish/world. (will adust for cell value later)
 //one each task if I make a data structure from the UI that is separate from what goes in thhe config file.
 av.sgr.ui_allDom_argu = ['geometry', 'supplyTypeSlct', 'regionLayout', 'initialHiNp'];  //'regionsNumOf' is not in dom but found using regionLayout (region layout in the dish)
-av.sgr.ui_allDish_argu = ['geometry', 'supplyTypeSlct', 'regionLayout', 'initial', 'regionsNumOf'];   //'regionsNumOf' is not in dom, so it is at the end of the list.
+av.sgr.ui_allDish_argu = ['geometry', 'supplyTypeSlct', 'regionLayout', 'initialHiNp', 'regionsNumOf'];   //'regionsNumOf' is not in dom, so it is at the end of the list.
 // 'inflow', 'outflow', 'periodFlag';  could be in global, but won't fit on one line in the sumary/details accordian.
 
 
 av.sgr.reSrc_avidaDft_d = {
-    'initial' : 0
+    'initialHiNp' : 0
   , 'inflow' : 0
   , 'outflow' : 0.0
   , 'geometry' : 'global' // Avida-ED 'global' = global; Avida-ED 'local = grid; Avida-ED does not used torus
@@ -751,11 +751,11 @@ av.sgr.makeNutDefault = function () {
   av.sgr.nutdft.uiAll.supplyTypeSlct = 'infinite';    //this is only for whem ui.geometry = global
   av.sgr.nutdft.uiAll.regionLayout = '1All';  //only Whole Dish for now; '1All' is the code for 'Whole Dish';
   av.sgr.nutdft.uiAll.regionsNumOf = 1;   // whole dish = there is only one dish 
-  av.sgr.nutdft.uiAll.initial = 1000;      //only used when whem ui.geometry = global and  supplyTypeSlct = 'finite' 
+  av.sgr.nutdft.uiAll.initialHiNp = 144000;      //only used when whem ui.geometry = global and  supplyTypeSlct = 'finite' 
 
   //defaults for subtasks which must be Grid or Local
   av.sgr.nutdft.uiSub.supplyTypeSlct = 'infinite';  // Infinite default from Avida-ED 3: I think Should change to Finite
-  av.sgr.nutdft.uiSub.initialHi = 1000;  //sugar units/cell guess at an initial value when supplyTypeSlct='finite'; need to multiply by wrldSize
+  av.sgr.nutdft.uiSub.initialHiNp = 140000;  //sugar units/cell guess at an initial value when supplyTypeSlct='finite'; need to multiply by wrldSize
   av.sgr.nutdft.uiSub.inflowHi  = 1;   //sugar units/cell guess at an initial value when supplyTypeSlct='chemostat'; need to multiply by wrldSize
   av.sgr.nutdft.uiSub.outflowHi = 0.1;   //sugar units (fraction) guess at an initial value when supplyTypeSlct='chemostat';
   av.sgr.nutdft.uiSub.area = -1;   //based on a standard 30 x 30 world
@@ -872,7 +872,7 @@ av.fzr.clearEnvironment = function(from) {
     av.nut[tsk].uiAll.supplyTypeSlct = 'infinite';    //this is only for whem ui.geometry = global
     av.nut[tsk].uiAll.regionLayout = '1All';  //only whole dish for now
     av.nut[tsk].uiAll.regionsNumOf = 1;   // whole dish
-    av.nut[tsk].uiAll.initial = 1000;      //only used whem ui.geometry = global and  supplyTypeSlct = 'finite' 
+    av.nut[tsk].uiAll.initialHiNp = 144000;      //only used whem ui.geometry = global and  supplyTypeSlct = 'finite' 
 
     for (jj=0; jj < uiSubDishLen; jj++) {
       av.nut[tsk]['uiSub'][av.sgr.ui_subDish_argu[jj] ] = [];
@@ -1214,11 +1214,12 @@ av.pch.clearPopChrt = function () {
     dashtype = av.sgr.lineDash[ii];
     sgrName = av.sgr.oseNames[ii];
     av.pch.trc[numTsk] = {
-      x:av.pch.xx, y:av.pch.sgr[numTsk], type:'scatter', mode: 'lines', name: sgrName, yaxis: "y2",
+//      x:av.pch.xx, y:av.pch.sgr[numTsk], type:'scatter', mode: 'lines', name: sgrName, yaxis: "y2",
 //      line: {color: av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade+10], width: 1, dash: dashtype }
+      x:av.pch.xx, y:av.pch.sgr[numTsk], type:'scatter', mode: 'lines', name: sgrName, yaxis: "y2",
       line: {color: av.sgr.lineColors[ii], width: 1, dash: dashtype }
     };
-    console.log('av.pch.resrcGlobal['+tsk+']=', av.pch.resrcGlobal[tsk] );
+    //console.log('av.pch.resrcGlobal['+tsk+']=', av.pch.resrcGlobal[tsk] );
   };
   
   av.pch.pixel = {wd: 310, ht: 202, wdif:10, hdif:2};
@@ -1231,7 +1232,7 @@ av.pch.clearPopChrt = function () {
     autosize: true,     //false
     width: 300,
     height: 200,
-    margin: { l: 35, r: 2, b:40, t: 2},   //l was 85 to show all-functions
+    margin: { l: 25, r: 20, b:40, t: 2},   //l was 85 to show a y-axis title, r: was 2 to go to edge
     showlegend: false,
     xaxis: {
       title: 'Time (updates)',
@@ -1242,7 +1243,7 @@ av.pch.clearPopChrt = function () {
       zeroline: true,
       showline: true,
       autotick: true,
-      ticks: '',
+      ticks: 'inside',
       showticklabels: true
     },
     yaxis: {
@@ -1254,17 +1255,30 @@ av.pch.clearPopChrt = function () {
       showline: true,
       autotick: true,
       ticks: '',
+      tickangle: -90,
+      gridcolor: '#ccc',
       showticklabels: true
     },
     yaxis2: {
-      //title: 'yaxis2 title',
-      titlefont: {color: 'rgb(148, 103, 189)'},
-      tickfont: {color: 'rgb(148, 103, 189)'},
+      // title: {text: 'Resource Amount' },
+      //titlefont: {color: 'black'},
+      //tickfont: {color: 'black'},
+      rangemode: 'nonnegative', 
+      autorange: true,
       overlaying: 'y',
-      side: 'right'
+      side: 'right',
+      showgrid: true,
+      zeroline: true,
+      showline: true,
+      autotick: true,
+      ticks: 'inside',
+      showticklabels: true,
+      tickangle: -90,
+      exponentformat: 'SI',
+      visible: true
     }
-    
   };
+  av.pch.yRightTitle = 'Resource Amount';
   
     // Plotly configuration including that of the modebar
     // https://plot.ly/javascript/configuration-options/#hide-the-modebar-with-plotly.js

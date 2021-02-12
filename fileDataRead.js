@@ -1228,7 +1228,7 @@
       rSourcObj.boxflag[ndx] = false;
       rSourcObj.inflow[ndx] = 0;
       rSourcObj.outflow[ndx] = 0;
-      rSourcObj.initial[ndx] = 0;
+      rSourcObj.initialHiNp[ndx] = 0;
       //rSourcObj.geometry[ndx] = "Grid";
       rSourcObj.inflowx1[ndx] = 0;                     //techincally should be rand between 0 and cols-1
       rSourcObj.inflowx2[ndx] = rSourcObj.inflowx1[ndx];
@@ -1278,7 +1278,7 @@
       //rSourcObj.region[ndx] = subCode;
       //rSourcObj.regionList[subCode] = ndx;
 
-      if (0 < rSourcObj.initial[ndx]) {
+      if (0 < rSourcObj.initialHiNp[ndx]) {
         av.fzr.env.supply[numTsk][ndx] = 'fin';
         //av.fzr.env.rsrce[numTsk].supply[ndx] = 'fin';
       } else if (0 < rSourcObj.inflow[ndx]) {
