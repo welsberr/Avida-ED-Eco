@@ -1,6 +1,4 @@
-//
-// change color and change data line select/item don't work in Analysis page
-//
+
 //
 ////***************************************
 // Defaults and Constants

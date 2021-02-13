@@ -509,7 +509,8 @@
     av.frd.eventsCFGparse(fileStr, 'av.frd.eventsCFG2form' );
   };
 
-  //------------------------------------------- section to put data from avida.cfg into setup form of population page --
+  //------------------------------------------------------------------------------------------------- parse avida.cfg --
+  //section to put data from avida.cfg into setup form of population page 
   //makes a dictionary entry out of line if the key and value are the first two items.
   av.frd.avidaCFGlineParse = function(instr){
     'use strict';
@@ -552,6 +553,8 @@
     av.fzr.actConfig.rows = parseInt(dict.WORLD_Y);    // move to av.nut.wrldRows in environment.cfg to struct
     
     av.fzr.actConfig.size = av.fzr.actConfig.cols * av.fzr.actConfig.rows;
+    av.dom.sizeCells.innerHTML = 'there are '+ av.fzr.actConfig.size + ' cells';
+    
     
     av.dom.mutePopInput.value = '2.0';
     if (av.utl.isNumber( dict.COPY_MUT_PROB) ) {
@@ -581,7 +584,9 @@
       dijit.byId('experimentRadio').set('checked', false);
       dijit.byId('demoRadio').set('checked', true);
     };
+    
   };
+  
   //-------------------------------------------------------------------------------------------- av.frd.avidaTestform --
   av.frd.avidaTestform = function (fileStr, from){
     'use strict';

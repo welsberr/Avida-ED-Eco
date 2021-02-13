@@ -843,7 +843,7 @@ s
                 document.getElementById(tsk+'0chmstatHiText').innerHTML = 'outflow or inflow value is not valid';
               }
             };
-            document.getElementById(tsk+'0subSection').className = av.sgr.complexSumGridPrefix + '-chemo-container';
+            document.getElementById(tsk+'0subSection').className = 'sgr-detail-global-chemo-grid-container';
             // if (av.dbg.flg.nut) { console.log('task='+tsk, '; sub='+sub, '; get className from dom of ', tsk+'0Details'); }
             // if (av.dbg.flg.nut) { console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'0Details').className); }
             // if (av.dbg.flg.nut) { console.log(tsk+'0periodcheckboxHolder.checked value =', document.getElementById(tsk+'0periodCheck').checked, document.getElementById(tsk+'0periodCheck').value); }

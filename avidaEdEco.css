@@ -984,7 +984,14 @@ grid-template-areas: "detailArrow sugarTitle regionLayCls geometryCls  supplyWdC
 .supplyModifierDivClass {grid-area: supplyModifierDivClass}
 .periodTimeDivClass { grid-area: periodTime; }
 
-.adv-glob-chemo-container {
+.sgr-detail-adv-grd-container {
+  display: grid;
+  grid-template-areas: 'detailTxtCls detailTxtCls detailTxtCls'
+                       'inflowHi outflowHi chmstatHi';
+  justify-content: start; width: 100%;  
+}
+
+.sgr-detail-global-chemo-grid-container {
   display: grid;
   grid-template-areas: 'detailTxtCls detailTxtCls detailTxtCls'
                        'inflowHi outflowHi chmstatHi';
