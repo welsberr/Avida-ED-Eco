@@ -742,7 +742,7 @@ s
       av.nut[edTsk].uiAll.supplyTypeSlct = document.getElementById(tsk + 'WsupplyTypeSlct').value;
       //console.log('av.nut['+edTsk+'].uiAll.supplyTypeSlct=', av.nut[edTsk].uiAll.supplyTypeSlct);
   
-      document.getElementById(tsk+'_summary').className = 'grid-sugar-summary-geo-basic-container';
+      document.getElementById(tsk+'_sumLeft').className = 'grid-sugar-summary-geo-basic-container';
       document.getElementById(tsk+'WsupplyTypeSlctHolder').style.display = 'inline-block';
       document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.long[tsk];
       document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
@@ -757,9 +757,10 @@ s
         case 'finite': 
           document.getElementById(tsk+'_initialDiv').style.display = 'inline-block';
           document.getElementById(tsk+'_section').open = false;
+          document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.short[tsk];
           break;
         case 'chemostat': 
-          document.getElementById(tsk+'_summary').className = 'grid-sugar-summary-geo-basic-chemostat-container';
+          document.getElementById(tsk+'_sumLeft').className = 'grid-sugar-summary-geo-basic-chemostat-container';
           //document.getElementById(tsk+'_periodcheckboxHolder').style.display = 'inline-block';
           //document.getElementById(tsk+'_summaryFooterText').style.display = 'inline-block';
           document.getElementById(tsk+'1inflowHiDiv').style.display = 'block';
@@ -798,26 +799,26 @@ s
         // I tried absolute postion, but then the grid contain did not change the sise of the summary section. 
         // never got tried with one surrounding div an then two. finally Applied display: grid to the summary element
         // changing the summary element to display: grid causes the arrow to disapper, but the detials will still open
-        document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
+        document.getElementById(tsk+'_sumLeft').className = av.sgr.complexSumGridPrefix + 'container';
         document.getElementById(tsk+'_supplyTypeSlctHolder').style.display = 'inline-block';
         document.getElementById('sgrEngergyReportLabel').style.display = 'inline';
         switch (av.nut[edTsk].uiAll.supplyTypeSlct.toLowerCase()) {
           case 'none': 
           case 'infinite':
-            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
+            document.getElementById(tsk+'_sumLeft').className = av.sgr.complexSumGridPrefix + 'container';
             document.getElementById(tsk+'_summaryFooterText').innerHTML = av.sgr.describe.long[tsk];
             document.getElementById(tsk+'_summaryFooterText').style.display = 'inline-block';
             document.getElementById(tsk+'_section').open = false;
             break;
           case 'finite': 
-            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'finite-container';
-            document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.long[tsk];
+            document.getElementById(tsk+'_sumLeft').className = av.sgr.complexSumGridPrefix + 'finite-container';
+            document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.short[tsk];
             document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
             document.getElementById(tsk+'_initialHiHolder').style.display = 'inline-block';
             document.getElementById(tsk+'_section').open = false;
             break;
           case 'chemostat':
-            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'chemo-container';
+            document.getElementById(tsk+'_sumLeft').className = av.sgr.complexSumGridPrefix + 'chemo-container';
             tmpTxt = av.sgr.describe.long[tsk] + ': . . . .  When 0 < period, chemostat becomes periodic';
             document.getElementById(tsk+'_summaryFooterText').innerHTML = tmpTxt;
             document.getElementById(tsk+'_summaryFooterText').style.display = 'none';
@@ -874,8 +875,8 @@ s
       }        // end global 
       else {
         // geometry = grid 
-        document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
-        //document.getElementById(tsk+'_summary').className = 'grid-sugar-summary-geo-local-container';
+        document.getElementById(tsk+'_sumLeft').className = av.sgr.complexSumGridPrefix + 'container';
+        //document.getElementById(tsk+'_sumLeft').className = 'grid-sugar-summary-geo-local-container';
         document.getElementById(tsk+'_regionLayoutHolder').style.display = 'inline-block';
         document.getElementById(tsk+'_section').open = true;
   //      console.log('av.nut['+edTsk+'].uiAll.regionsNumOf=', av.nut[edTsk].uiAll.regionsNumOf);

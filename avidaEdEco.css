@@ -753,9 +753,9 @@ summary > div {
 }
 
 summary {
-  display: block
+  display: inline-block;
 }
-
+/*
 summary:before {
   grid-area: detailArrow;
   content: "►";
@@ -765,7 +765,7 @@ summary:before {
 details[open] summary:before {
   content: "▼";
 }
-
+*/
 /*************************************************************************** Sugar Accordion using details and select */
 /* Accodion using details/summary and hidden sections also defined here; one detail/summary for each logic task = surgar type */
 
@@ -849,6 +849,20 @@ details[open] summary:before {
 #xor_section{ border-bottom: 2px solid #222; }  /* #000 = black */
 #equ_section{ border-bottom: 1px solid #888; }
 }
+
+
+
+.sgrSumLftCls {grid-area: sgrSumLftCls; display: inline-block; border: 3px solid green; }
+.tskAboutCls { grid-area: tskAboutCls; display: inline-block; border: 1px solid red; }
+
+/* sgr-summary-adv-grid-container */
+.sugarSummary {
+  display: inline-grid;
+  grid-template-areas: 'sgrSumLftCls tskAboutCls';
+  justify-content: space-between;   
+  min-height: 23px;  width: 100%;  
+}
+
 /************************* Sugar controls layout in 'summary' of detail/summary for each task-sugar in sugar according */
 /* I could not get a div with a dispay of inline-gid start on the top line of the summary. 
 .sumHolderDiv { display: inline-block; position: absolute; }
@@ -856,6 +870,7 @@ details[open] summary:before {
                        'sumFtTxtCls sumFtTxtCls sumFtTxtCls     sumFtTxtCls';
 */
 
+.arroCls { grid-area: arroCls; display: inline-block; }
 .sugarTitle { grid-area: sugarTitle; display: inline-block;  border: 0px none red; width: 15px; }
 .geometryCls { grid-area: geometryCls; display: inline-block;  border: 0px none red; }
 .regionLayoutClass { grid-area: regionLayCls; display: inline-block;  border: 0px none red; }
@@ -864,12 +879,11 @@ details[open] summary:before {
 .periodGlobalCheck { grid-area: periodGlobalCheck; display: inline-block;  border: 0px none red; }
 .periodTimeGlobClass { grid-area: periodTimeGlobClass; display: inline-block;  border: 0px none red; }
 .initialGlobalClass { grid-area: initialGlobalClass; display: inline-block;  border: 0px none red; }
-.taskDescribeCls { grid-area: tskAboutCls; display: inline-block;  border: 0px none red; }
 .sumFootTxtClass { grid-area: sumFtTxtCls; display: inline-block;  border: 0px none blue; justify-stretch: end; min-width: 95px; }
 
 .grd-sgr-sum-adv-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sugarTitle regionLayCls geometryCls supplyWdCls supplyHoldCls sumFtTxtCls ';
+  grid-template-areas: 'arroCls sugarTitle regionLayCls geometryCls supplyWdCls supplyHoldCls sumFtTxtCls ';
   justify-content: start; 
   min-height: 23px;  width: 100%;
 }
@@ -892,7 +906,7 @@ grid-template-areas: "detailArrow sugarTitle regionLayCls geometryCls  supplyWdC
 
 .grd-sgr-sum-global-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sugarTitle regionLayCls geometryCls supplyWdCls supplyHoldCls sumFtTxtCls ';
+  grid-template-areas: 'arroCls sugarTitle regionLayCls geometryCls supplyWdCls supplyHoldCls sumFtTxtCls ';
   justify-content: start; 
   min-height: 23px;  width: 100%;
 }
