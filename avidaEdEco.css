@@ -892,7 +892,7 @@ grid-template-areas: "detailArrow sugarTitle regionLayCls geometryCls  supplyWdC
 
 .grd-sgr-sum-global-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sugarTitle regionLayCls supplyWdCls supplyHoldCls tskAboutCls sumFtTxtCls';
+  grid-template-areas: 'detailArrow sugarTitle regionLayCls supplyHoldCls tskAboutCls sumFtTxtCls';
   justify-content: start; 
   min-height: 23px;  width: 100%;
 }
@@ -906,8 +906,7 @@ grid-template-areas: "detailArrow sugarTitle regionLayCls geometryCls  supplyWdC
 
 .grd-sgr-sum-global-chemo-container {
   display: grid;
-  grid-template-areas: "detailArrow sugarTitle  regionLayCls supplyHoldCls periodTimeGlobClass"
-                       "detailArrow sumFtTxtCls sumFtTxtCls  sumFtTxtCls sumFtTxtCls sumFtTxtCls   sumFtTxtCls";
+  grid-template-areas: "detailArrow sugarTitle  regionLayCls supplyHoldCls tskAboutCls periodTimeGlobClass";
   justify-content: start; 
   min-height: 23px;  width: 100%;
 }

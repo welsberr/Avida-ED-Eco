@@ -561,7 +561,7 @@
     av.fzr.actConfig.rows = parseInt(dict.WORLD_Y);    // move to av.nut.wrldRows in environment.cfg to struct
     
     av.fzr.actConfig.size = av.fzr.actConfig.cols * av.fzr.actConfig.rows;
-    av.dom.sizeCells.innerHTML = 'there are '+ av.fzr.actConfig.size + ' cells';
+    av.dom.sizeCells.innerHTML = '= Dish size with '+ av.fzr.actConfig.size + ' cells';
     
     
     av.dom.mutePopInput.value = '2.0';
