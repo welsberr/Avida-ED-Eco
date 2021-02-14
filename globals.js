@@ -718,6 +718,7 @@ av.sgr.describe.long.ant = ' Hard (x8)';
 av.sgr.describe.long.nor = ' Very Hard (x16)';
 av.sgr.describe.long.xor = ' Very Hard (x16)';
 av.sgr.describe.long.equ = ' Brutal (x32)';
+av.sgr.describe.long.width = '96px';
 
 av.sgr.describe.short = {};            //advanced
 av.sgr.describe.short.not = ' (x2)';
@@ -729,6 +730,7 @@ av.sgr.describe.short.ant = ' (x 8)';
 av.sgr.describe.short.nor = ' (x16)';
 av.sgr.describe.short.xor = ' (x16)';
 av.sgr.describe.short.equ = ' (x32)';
+av.sgr.describe.short.width = '33px';
 
 //------------------------------------------------------------------------------------------- av.sgr.makeNutDefault --
 av.sgr.makeNutDefault = function () {

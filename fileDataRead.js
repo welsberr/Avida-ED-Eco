@@ -340,6 +340,7 @@
     if (true) { console.log(from, 'called av.frd.updateSetup; dir=', dir); }
 
     var doctext = av.fzr.file[dir + '/avida.cfg'];
+    console.log('')
     av.frd.avidaCFG2form(doctext, 'av.frd.updateSetup');
 
     doctext = av.fzr.file[dir + '/events.cfg'];
@@ -448,6 +449,11 @@
   //======================================================================================== end read environment.cfg ==
 //======================================================================================================================
 
+  av.frd.setPeriodicInflowLineParse = function (lineArray) {
+    console.log('in av.frd.setPeriodicInflowLineParse');
+    console.log(lineArray);
+  };
+
   av.frd.eventsCFGparse = function (filestr, from) {
     if (av.dbg.flg.frd) { console.log('frd: ', from, 'called av.frd.eventsCFGparse'); }
     var matchComment, matchContinue, matchResult;
@@ -523,8 +529,9 @@
   };
 
   // makes a dictionary out of a avida.cfg file
-  av.frd.avidaCFGparse = function (filestr) {
+  av.frd.avidaCFGparse = function (filestr, from) {
     'use strict';
+    console.log(from, 'called av.frd.avidaCFGparse: filestr.length=', filestr.length);
     var rslt = {};
     var lines = filestr.split('\n');
     var lngth = lines.length;
@@ -538,7 +545,8 @@
   // puts data from the avida.cfg into the setup form for the population page
   av.frd.avidaCFG2form = function (fileStr, from){
     'use strict';
-    var dict = av.frd.avidaCFGparse(fileStr);
+    console.log(from, 'called av.frd.avidaCFG2form');
+    var dict = av.frd.avidaCFGparse(fileStr, 'av.frd.avidaCFG2form');
     //console.log(from, 'called av.frd.avidaCFG2form; dict=', dict);
     av.dom.sizeCols.value = parseInt(dict.WORLD_X);
     av.grd.gridWasCols = parseInt(dict.WORLD_X);  
@@ -591,7 +599,7 @@
   av.frd.avidaTestform = function (fileStr, from){
     'use strict';
     console.log(from, 'called av.frd.avidaTestform');
-    var dict = av.frd.avidaCFGparse(fileStr);
+    var dict = av.frd.avidaCFGparse(fileStr, 'av.frd.avidaTestform');
     document.getElementById('sizeColTest').value = dict.WORLD_X;
     //av.grd.gridWasCols = dict.WORLD_X;
     av.grd.gridWasCols = parseInt(dict.WORLD_X);  
