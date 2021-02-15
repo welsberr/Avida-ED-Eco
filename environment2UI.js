@@ -19,8 +19,6 @@
      * return length + 1 is it does not exist
      */
     
-    //var geometry = String (geometry_);
-    //console.log('rtag=', rtag, '; geometry = ', geometry, '; nutrientObj=',nutrientObj);
     var defaultindex = nutrientObj.name.length;
     
     //console.log('rtag=', rtag, '; geometry = ', geometry, '; defaultindex=', defaultindex);
@@ -210,7 +208,7 @@
       }
       else { 
         console.log('ERROR: geometry was not set correctly in environment.cfg *********************************');
-        console.log('pairArray=', pairArray);
+        console.log('pairArray=', pairArray, '; av.nut['+numTsk+'].uiAll.geometry=', av.nut[numTsk].uiAll.geometry);
       };
 
       // check to make sure name is unqiue. If it is not unique then overright the previous data. 
@@ -850,7 +848,7 @@
 
   //---------------------------------------------------------------------------------------------- av.env.resrc2uiSub --
   // Region information was found when RESOURCE line was parced. 
-  // Witout a RESOURSE line, geometry = global and region = 1All (or whole dish)
+  // Witout a RESOURSE line, geometry = global and region = 1Global
   // called after supply types have been found
   // moves the relevant data from resource and cell to uiSub
   // for now this only works for geometry = grid
@@ -1009,6 +1007,8 @@
   //------------------------------------------------------------------------------------------ end av.env.resrc2uiSub --
      
   //--------------------------------------------------------------------------------------- av.env.convertGlobal2grid --
+  // Probably will not be used now that we know the test environment works best with no resource statement.
+
   av.env.convertGlobal2grid = function(numTsk, sub, nameMatch) {
     console.log('av.env.convertGlobal2grid: numTsk=', numTsk, '; sub=', sub, '; nameMatch=', nameMatch);
     if (av.dbg.flg.nut) {
@@ -1133,7 +1133,7 @@
       tsk = av.sgr.logicNames[ii];
       tskose = av.sgr.oseNames[ii];
       
-      document.getElementById(tsk+'_geometry').value = av.sgr.nutdft.uiAll.geometry;
+      //document.getElementById(tsk+'_geometry').value = av.sgr.nutdft.uiAll.geometry;    tiba should be deleted in 2021
       document.getElementById(tsk+'_supplyTypeSlct').value = av.sgr.nutdft.uiAll.supplyTypeSlct;
       document.getElementById(tsk+'_regionLayout').value = av.sgr.nutdft.uiAll.regionLayout;
       document.getElementById(tsk+'_initialHiNp').value = av.sgr.nutdft.uiAll.initialHiNp;
@@ -1343,185 +1343,4 @@
 
   //Now that structure exists, use that data to update values in the user interface. 
   // This function will be deleted Delete soon
-  //--------------------------------------------------------------------------------------- av.env.nutrientStruct2dom --
-/*
-    av.env.nutrientStruct2dom = function(from) {
-    //console.log(from, 'called av.env.nutrientStruct2dom --------------------');
-    var sugarLength = av.sgr.logicNames.length;  //
-    var numTsk, tsk, tskose;
-    var subNum = 1;                   //Will need to loop throughh all subNum later
-    // only one regioin for now, so this works. I may need add at subcode index later.
-    // the data for the regions may not go in the struture in the same order they need to be on the user interface. 
-    var xdiffuse = -1;
-    var ydiffuse = -1;
-    var area = 1;  // area of the world or subsection
-    var cols = Number(av.nut.wrldCols);
-    var rows = Number(av.nut.wrldRows);
-    var wrldSize = cols * rows;
-    //if (av.dbg.flg.nut) { console.log('Nut: ', from, ' called av.env.nutrientStruct2dom: cols = ', cols, '; rows = ', rows, '; wrldSize = ', wrldSize); }
-    
-    for (var ii = 0; ii < sugarLength; ii++) {
-      numTsk = av.sgr.logEdNames[ii];
-      tsk = av.sgr.logicNames[ii];
-      tskose = av.sgr.oseNames[ii];
-
-      document.getElementById(tsk+'0regionLayout').value = av.nut[numTsk].uiAll.regionLayout;
-      //console.log('av.nut['+numTsk+'].uiAll.regionLayout', av.nut[numTsk].uiAll.regionLayout);
-      document.getElementById(tsk+'_geometry').value = av.nut[numTsk].uiAll.geometry;
-
-      if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
-        document.getElementById(tsk+'_supplyTypeSlct').value = av.nut[numTsk].uiAll.supplyTypeSlct;
-        //console.log('av.nut['+numTsk+']=', av.nut[numTsk]);
-      }
-      else if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
-        subsections = av.nut[numTsk].resrc.name.length;
-        //console.log('subsections=', subsections,'; av.nut['+numTsk+']=', av.nut[numTsk]);
-        
-        //Loop through each subsection. 
-        for (subNum = 1; subNum < subsections; subNum++) {
-
-          // regionCode will need to be converted to regionName or need to get regionName from xy cooredinates
-          //console.log('numTsk=', numTsk, 'av.nut[numTsk].uiSub=', av.nut[numTsk].uiSub);
-          //document.getElementById(tsk+subNum+'regionName').value = av.nut[numTsk].uiSub.regionName[subNum];
-
-          // console.log('document.getElementById('+tsk+subNum+'supplyTypeSlct)',document.getElementById(tsk+subNum+'supplyTypeSlct') );
-          // var tmpstr = JSON.stringify(av.nut[numTsk].uiSub.supplyTypeSlct);
-          // console.log('av.nut['+numTsk+'].uiSub.supplyTypeSlct['+subNum+'] =',av.nut[numTsk].uiSub.supplyTypeSlct[subNum], '; supplyTypeSlct=', tmpstr);
-          document.getElementById(tsk+subNum+'supplyTypeSlct').value = av.nut[numTsk].uiSub.supplyTypeSlct[subNum]; 
-
-          //console.log('numTsk=',numTsk,'; subNum=',subNum,'; resrc.xdiffuse=',av.nut[numTsk].resrc.xdiffuse[subNum], '; resrc.ydiffuse=',av.nut[numTsk].resrc.ydiffuse[subNum]);
-          if (av.nut[numTsk].resrc.xdiffuse[subNum]) {
-            if (!isNaN(parseFloat(av.nut[numTsk].resrc.xdiffuse[subNum]))) {
-              xdiffuse = parseFloat(av.nut[numTsk].resrc.xdiffuse[subNum]);
-            }
-            else {xdiffuse = 1;}
-          } 
-          else {xdiffuse = 1;}
-          if (av.nut[numTsk].resrc.ydiffuse[subNum]) {
-            if (!isNaN(parseFloat(av.nut[numTsk].resrc.ydiffuse[subNum]))) {
-              ydiffuse = parseFloat(av.nut[numTsk].resrc.ydiffuse[subNum]);
-            }
-            else {ydiffuse = 1;}
-          }
-          else {ydiffuse = 1;}
-          diffuse = Math.round((xdiffuse+ydiffuse)/2);
-          //console.log(tsk+subNum+'.xdiffuse=', xdiffuse, '; ydiffuse', ydiffuse, '; diffuse=', diffuse);
-          if (0 < diffuse) {
-//            document.getElementById(tsk+subNum+'diffuseCheck').checked = true;
-            av.nut[numTsk].uiSub.diffuseCheck[subNum] = true;
-          }
-          else { 
-//            document.getElementById(tsk+subNum+'diffuseCheck').checked = false;
-            av.nut[numTsk].uiSub.diffuseCheck[subNum] = false;
-          }
-
-          //------------------------------------------------------------------------- 
-          // Find area of region or whole dish as needed for inflow  Not sure this statement is needed, as there should alway be an area for dish 1.
-          if ('1All' == av.nut[numTsk].uiAll.regionLayout) {
-            area = wrldSize;
-            if (!isNaN(parseFloat(av.nut[numTsk].cell.initial[subNum]))) {
-              console.log('av.nut['+numTsk+'].cell.initial['+subNum+']=', parseFloat(av.nut[numTsk].cell.initial[subNum]));
-              console.log('av.nut['+numTsk+'].uiSub.initialHiNp['+subNum+']=', av.nut[numTsk].uiSub.initialHiNp[subNum]);
-              av.nut[numTsk].uiSub.initialHiNp[subNum] = parseFloat(av.nut[numTsk].cell.initial[subNum]);
-            }
-            else if (!isNaN(parseFloat(av.nut[numTsk].resrc.initial[subNum])) ) {
-              //console.log('reSrc=', av.nut[numTsk].resrc.initial[subNum], '; wrldSize=', av.nut.wrldSize, 'Num(wrldSize=', parseFloat(av.nut.wrldSize) );
-              av.nut[numTsk].uiSub.initialHiNp[subNum] = parseFloat(av.nut[numTsk].resrc.initial[subNum])/
-                                                         parseFloat(av.nut.wrldSize);
-              //console.log( 'tsk='+numTsk, 'reSrc=' , parseFloat(av.nut[numTsk].resrc.initial[subNum]) );
-            }
-            if (!isNaN(parseFloat(av.nut[numTsk].uiSub.initialHiNp[subNum]))) {
-              //console.log('; uiSub=', av.nut[numTsk].uiSub.initialHiNp[subNum]);
-              document.getElementById(tsk+subNum+'initialHiNp').value = av.nut[numTsk].uiSub.initialHiNp[subNum];
-            }          
-          } 
-          else {
-            //console.log('numTsk=', numTsk, '; subNum=', subNum, '; cell.initial=', parseFloat(av.nut[numTsk].cell.initial[subNum]), 'reSrc=', av.nut[numTsk].resrc.initial[subNum], '; uiSub=', av.nut[numTsk].uiSub.initialHiNp[subNum]);
-            area = av.nut[numTsk].uiSub.area[subNum];
-            //console.log('av.nut['+numTsk+'].uiSub.area['+subNum+']=', av.nut[numTsk].uiSub.area[subNum]);
-          };
-
-          //------------------------------------------------------------------------- 
-          // This only works for whole dish until I start parsing cells. 
-          // if initial is defined in RESOURCE, use that value, else use the default value from globals.          
-          rValue = parseFloat(av.nut[numTsk].resrc.initial[subNum]);
-          var rflag = true;
-          //console.log(numTsk+'.resrc.initial=', av.nut[numTsk].resrc.initial[subNum], 'uiSub.initialHiNpHi.'+subNum+'=', av.nut[numTsk].uiSubinitialHiNp);
-          if ( isNaN(rValue) ) {rflag = false;}
-          else {
-          // resrc.initialHiNp contains a number
-            if ( 0 >rValue ) {rflag = false;}
-            else {
-              // resrc.initialHiNp is postive: now test area;
-              if ( !isNaN(parseFloat(av.nut[numTsk].uiSub.area[subNum])) && 
-                     0 != parseFloat(av.nut[numTsk].uiSub.area[subNum]) ) {
-                rValue = rValue / parseFloat(av.nut[numTsk].uiSub.area[subNum]);
-              }
-              else if ( !isNaN(parseFloat(av.nut.wrldSize)) &&  0 != parseFloat(av.nut.wrldSize) ){
-                rValue = rValue / parseFloat(av.nut.wrldSize);
-                //console.log('Initial for '+tsk+' subNum='+subNum+'based on WrldSize, subNum size missing or = 0');
-              }
-            }
-          }
-          if (!rflag) {
-            // inital value not assigned in config file for this task;
-            av.nut[numTsk].uiSub.initialHiNp[subNum] = null;
-            //if ( isNaN(parseFloat(document.getElementById(tsk+subNum+'initialHiNp').value))) {
-            //    document.getElementById(tsk+subNum+'initialHiNp').value = av.sgr.nutdft.uiSub.initialHiNpHi;
-            //}
-          }
-
-          //------------------------------------------------------------------------- 
-          // if inflow is defined in RESOURCE, use that value, else use the default value from globals.
-          //console.log('av.nut['+numTsk+'].resrc.inflow['+subNum+']=', av.nut[numTsk].resrc.inflow[subNum]);
-          rValue = parseFloat(av.nut[numTsk].resrc.inflow[subNum]);
-          if ( !isNaN(rValue) ) {
-            if ( 0 <= parseFloat(av.nut[numTsk].resrc.inflow[subNum]) ) {
-              //dom and nut contain inflow value per cell; 
-              //RESOURCE contains inflow amount for all cells defined (whole world or subsection)
-              if (0 < area) { rValue = rValue / area; }
-              else { console.log('ERROR: area must be greater than zero'); }
-            }
-            else {
-              rValue = av.sgr.nutdft.uiSub.inflowHi;
-            }
-          }
-          else {
-              rValue = av.sgr.nutdft.uiSub.inflowHi;           
-          };
-          //console.log('id=', tsk+subNum+'inflowHiNp');
-          document.getElementById(tsk+subNum+'inflowHiNp').value = rValue;
-          av.nut[numTsk].uiSub.inflowHiNp[subNum] = rValue;
-
-          //------------------------------------------------------------------------- 
-          // if outflow is defined in RESOURCE, use that value, else use the default value from globals.
-          rValue = parseFloat(av.nut[numTsk].resrc.outflow[subNum]);
-          if ( !isNaN(rValue) ) {
-            if ( 0 <= rValue && rValue <= 1 ) {
-              //console.log('av.nut['+numTsk+'].uiSub.outflowHiNp['+subNum+']=', tsk+subNum+'outflowHiNp).value=', rValue);
-              document.getElementById(tsk+subNum+'outflowHiNp').value = rValue;  //I changged back to fraction
-              av.nut[numTsk].uiSub.outflowHiNp[subNum] = rValue;   //Rob had me change the lable from fraction to %
-            };
-          };
-        
-          // this is all that is being set now; I'll set more later
-        }  //loop thru subsections
-      }
-      else {
-        console.log('Error: geometry unrecognized');
-      }
-      // must be called outside the subsections loop
-      //console.log('av.nut['+numTsk+']', av.nut[numTsk]);
-      av.sgr.changeDetailsLayout(tsk, 1, 'av.env.nutrientStruct2dom');  //the one in this case is for subsection, but it is not used. 
-    }
-    if (av.dbg.flg.nut) { 
-      av.nutdom = {};
-      av.nutdom = JSON.parse(JSON.stringify(av.nut));
-      console.log('end of av.env.nutrientStruct2dom');
-      console.log('av.nutDom = ', av.nutdom); 
-    }
-    if (av.dbg.flg.nut) { console.log('Nut: ================================================================== end of av.env.nutrientStruct2dom =='); }
-  };
-  */
-  //----------------------------------------------------------------------------------- end av.env.nutrientStruct2dom --
   

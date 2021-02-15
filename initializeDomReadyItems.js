@@ -377,7 +377,7 @@
       document.getElementById('avidianOutline').style.display = 'inline-block'; 
 
       document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
-      //document.getElementById('resourceDataTable').style.display = 'flex';
+      document.getElementById('resourceDataTable').style.display = 'flex';
 
       av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopentDisplays.onclick_show');
 
@@ -451,7 +451,7 @@
     if ('none' === document.getElementById('resourceDataTable').style.display) {
       document.getElementById('resourceDataTable').style.display = 'flex';
     } else {
-      document.getElementById('resourceDataTable').style.display = 'none';
+      document.getElementById('resourceDataTable').style.display = 'flex';  //flex
     };
     av.sgr.complexityChangeProcess('last-things-done');
   };

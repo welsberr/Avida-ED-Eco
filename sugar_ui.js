@@ -102,8 +102,7 @@
                             <label><input id="orn1diffuseCheck" type="checkboxHolder">Diffusion&nbsp;&nbsp;</label>
                           </div>
 
-                          <div id="orn_summaryFooterText" class="sumFootTxtClass"> 0 < period then periodic </div>
-s  
+                          <div id="orn_summaryFooterText" class="sumFootTxtClass"> 0 < period then periodic </div>Re  
   */
   //-------------------------------------------------------------------------------------------------- sugars for Eco --
   //Code for adaptable user interface for environment layout witn upto 9 subsections. 
@@ -121,6 +120,7 @@ s
     document.getElementById('allSugarGeometry').value = 'neutral';
   };
   
+  //This looks like it needs work
   av.sgr.allSugarModifierChange = function(domObj) {
     var selectedOption = domObj.value;
     //console.log('pattern=', selectedOption);
@@ -128,10 +128,10 @@ s
     var endName = 'supplyModifierSelect';   
     var domName = '';
     var numtasks = av.sgr.logicNames.length;
-    var start =0;   //only grid geometry can have diffusion, item 0 is for global
+    var start = 1;   //only grid geometry can have diffusion, item 0 is for global
     // all tasks
     // console.log('endName=', endName, '; numtasks=', numtasks, '; sub=', sub, ' numRegons=', av.nut.numRegionsinHTML);
-    for (var ii=0; ii< numtasks; ii++) {  
+    for (var ii=start; ii< numtasks; ii++) {  
       for (var sub=start; sub <= av.nut.numRegionsinHTML; sub++) {
       //change all subsections; Global can have periodic but not gradient or diffusion. 
         domName = av.sgr.logicNames[ii] + sub + endName;
@@ -148,6 +148,10 @@ s
   av.sgr.allSugarRegionLayoutChange = function(domObj) {
     //console.log('in av.sgr.allSugarRegionLayoutChange: value=', domObj.value);
     var selectedOption = domObj.value;
+    av.changeAllSgrRegionLayout(selectedOption, 'av.sgr.allSugarRegionLayoutChange');
+  }
+  
+  av.changeAllSgrRegionLayout = function(selectedOption, from) {
     var endName = 'regionLayout';   //nan_supplyTypeSlctHolder  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
     //console.log(from, ' called av.sgr.allSugarRegionLayoutChange: selectedOption=',selectedOption);
     var domName = '';  
@@ -166,7 +170,7 @@ s
     document.getElementById('allSugarRegionLayout').value = 'neutral';
   };
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//------------------------------------------------------------------------------- av.sgr.allsugarsupplyTypeSlctChange --
   av.sgr.allsugarsupplyTypeSlctChange = function (domObj) {
     var tsk = 'not';
     var idx = domObj.selectedIndex;        // get the index of the selected option 
@@ -211,7 +215,7 @@ s
     //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
   };
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//----------------------------------------------------------------------------------- av.sgr.allSugarDetailsOpenClose --
   av.sgr.allSugarDetailsOpenClose = function (domObj) {
     var idx = domObj.selectedIndex;        // get the index of the selected option 
     var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
@@ -219,7 +223,7 @@ s
     document.getElementById('allSugarDetails').value = 'neutral';
   };
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//--------------------------------------------------------------------------------------------- av.sgr.geometryChange --
   av.sgr.geometryChange = function (selectObj) {
     //need to find subregion Number in the future - set to 1 for now.;
     var taskID = selectObj.id;
@@ -232,7 +236,7 @@ s
   };
 
 /* not in use delete by 2021
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//----------------------------------------------------------------------------------- av.sgr.supplyChange_placeholder --
   av.sgr.supplyChange_placeholder = function (domObj) {
     var taskID = domObj.id;
     var task = taskID.substring(0, 3);
@@ -242,7 +246,7 @@ s
     av.sgr.changeDetailsLayout(task, sub, 'supplyChange_placeholder');
   };
 */
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//----------------------------------------------------------------------------------------- av.sgr.regionLayoutChange --
   av.sgr.regionLayoutChange = function (domObj) {
   //if (av.dbg.flg.nut) { console.log('Nut: av.sgr.regionLayoutChange was called by', domObj); }
     var taskID = domObj.id;
@@ -252,7 +256,7 @@ s
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.regionLayoutChange');
   };
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//----------------------------------------------------------------------------------------------- av.sgr.supplyChange --
   av.sgr.supplyChange = function (domObj) {
     var taskID = domObj.id;
     var value = domObj.value;
@@ -271,7 +275,7 @@ s
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
   };
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//--------------------------------------------------------------------------------------- av.sgr.supplyModifierChange --
   av.sgr.supplyModifierChange = function (domObj) {
   if (av.dbg.flg.nut) { console.log('Nut: av.sgr.supplyModifierChange value', domObj.value); }
     var taskID = domObj.id;
@@ -281,7 +285,7 @@ s
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyModifierChange');
   };
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//------------------------------------------------------------------------------ av.sgr.eachSugarcheckboxHolderChange --
   av.sgr.eachSugarcheckboxHolderChange = function (domObj) {
   //av.sgr.re_region = /(\D+)(\d+)(.*$)/;
     var taskID = domObj.id;
@@ -295,7 +299,7 @@ s
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.eachSugarcheckboxHolderChange');
   };
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//----------------------------------------------------------------------------------------------- av.sgr.periodChange --
   av.sgr.periodChange = function (domObj) {
     var txtNum = domObj.value;
     console.log('av.sgr.periodChange domObj.id=', domObj.id, '; value = ', domObj.value);
@@ -304,11 +308,12 @@ s
     }
   };
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//---------------------------------------------------------------------------------------------- av.sgr.initialChange --
   av.sgr.initialChange = function (domObj) {
- // if (av.dbg.flg.nut) { console.log('domObj.value=', domObj.value, '; id=, domObj.id); }
+    // if (av.dbg.flg.nut) { console.log('domObj.value=', domObj.value, '; id=, domObj.id); }
     //var ndx = domObj.id.indexOf('Input');
     //var id = domObj.id.substring(0, ndx) + 'Text';
+    var geometry;
     var id = domObj.id;
     console.log('text id=', id, '; input id=', domObj.id);
     // console.log('Number(domObj.value)=',Number(domObj.value));
@@ -323,7 +328,9 @@ s
       document.getElementById(id).style.color = 'black';
       var tsk = domObj.id.substring(0, 3);  //start and end (does not inlcude end)
       var sub = domObj.id.substr(3, 1);     //start and number of characters
-      var geometry = document.getElementById(tsk+'_geometry').value;
+      if ('1Global' == document.getElementById(tsk+'_geometry').value) {
+        var geometry = 'global';
+      } else { geometry = 'grid'; }
       var supplyTypeSlct = document.getElementById(tsk+sub+'supplyTypeSlct').value;
       console.log('tsk=', tsk, '; geometry=', geometry, '; supplyTypeSlct=', supplyTypeSlct);
       
@@ -331,10 +338,10 @@ s
     }
   };
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//----------------------------------------------------------------------------------------------- av.sgr.inflowChange --
   av.sgr.inflowChange = function (domObj) {
- // if (av.dbg.flg.nut) { console.log('av.sgr.inflowChange domObj=', domObj); }
- // if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
+  // if (av.dbg.flg.nut) { console.log('av.sgr.inflowChange domObj=', domObj); }
+  // if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
     var id = domObj.id;
     var equilbrium = 1;
     var preID = id.substr(0,4);
@@ -357,7 +364,7 @@ s
   };
 };
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//---------------------------------------------------------------------------------------------- av.sgr.outflowChange --
   av.sgr.outflowChange = function (domObj) {
  // if (av.dbg.flg.nut) { console.log('av.sgr.outflowChange domObj=', domObj); }
  // if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
@@ -388,7 +395,7 @@ s
 
 
   //--------------------------------------------------------------------------------------------- av.sgr.ChangeAllGeo --
-  //This does  not deal with complement, I'll do that later if asked. 
+  // Geometry no longer an opton on the UI
   av.sgr.ChangeAllGeo = function(selectedOption){
     var sub = 1;  //need to figure out subsections later
     var idName = '';
@@ -414,7 +421,6 @@ s
     for (ii = 0; ii < len; ii++) {
       //need to think this thru as eventually there will be up to 4 subsections. Just one for now.
       idname = av.sgr.logicNames[ii]+'_section';
-      //if ('Local' == document.getElementById('allSugarGeometry').value) {    //when determined by local vs global 
       if (colorFlg) {
         backgndColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarBackgroundShade];
         nameColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade]; 
@@ -439,30 +445,33 @@ s
   // not called as of 2020_0124
   av.sgr.updateSugarColors = function() {
     var tsk;
-    var sub = 1;
+    var sub = 0;
     var colorFlg = true;
     var from = 'av.sgr.update.colors';
-    var geometry, supplyTypeSlct, initial;
+    var supplyTypeSlct, initial;
     var len = av.sgr.logicNames.length;
     for (ii = 0; ii < len; ii++) {
       tsk = av.sgr.logicNames[ii];
-      geometry = document.getElementById(tsk+'_geometry').value;
-      if ('global' == geometry.toLowerCase()) {
-        supplyTypeSlct = document.getElementById(tsk + '_supplyTypeSlctHolder').value.toLowerCase();
+      if ('1Global' == document.getElementById(tsk+'_regionLayout').value ) {
+        //global dish
+        supplyTypeSlct = document.getElementById(tsk + '_regionLayout').value.toLowerCase();
         if ('none' == supplyTypeSlct.toLowerCase() ) {
           colorFlg = false;
         }
       }
       // now look at local resources that might be different in the different subSections in the future. 
       else {
-        supplyTypeSlct = document.getElementById(tsk + sub + 'supplyTypeSlct').value.toLowerCase();
-        if ('none' == supplyTypeSlct.toLowerCase() ) {
-          colorFlg = false;
-        }
-        else if ('finite' == supplyTypeSlct.toLowerCase() ) {
-          initial = document.getElementById(tsk+sub+'initialHiNp').value;
-          if (0 >= initial) {
+        //local (grid dish)
+        for (sub = 0; sub <= av.nut.numRegionsinHTML; sub++) {
+          supplyTypeSlct = document.getElementById(tsk + sub + 'supplyTypeSlct').value.toLowerCase();
+          if ('none' == supplyTypeSlct.toLowerCase() ) {
             colorFlg = false;
+          }
+          else if ('finite' == supplyTypeSlct.toLowerCase() ) {
+            initial = document.getElementById(tsk+sub+'initialHiNp').value;
+            if (0 >= initial) {
+              colorFlg = false;
+            }
           }
         }
       }
@@ -475,7 +484,7 @@ s
   //if (av.dbg.flg.root) { console.log('Root: av.sgr.OpenCloseAllSugarDetails'); }
   //--------------------------------------------------------------------------------- av.sgr.OpenCloseAllSugarDetails --
   av.sgr.OpenCloseAllSugarDetails = function(selectedOption, from) {
-    var endName = '_section';   //nanGeometry
+    var endName = '_section';   
     var idName = '';
     var openFlag = false;
     var numtasks = av.sgr.logicNames.length;
@@ -500,7 +509,6 @@ s
     var darkColor = '#eee';
       //need to think this thru as eventually there will be up to 4 subsections. Just one for now.
       idname = av.sgr.logicNames[tskNum]+'_section';
-      //if ('Local' == document.getElementById('allSugarGeometry').value) {    //when determined by local vs global 
       if (colorFlg) {
         backgndColor = av.color[av.sgr.sugarColors[tskNum]][av.sgr.sugarBackgroundShade];
         nameColor = av.color[av.sgr.sugarColors[tskNum]][av.sgr.sugarNameShade]; 
@@ -605,13 +613,10 @@ s
     document.getElementById('regionLayoutSgr').style.display = geoDisplay;
     document.getElementById('patternSgr').style.display = geoDisplay;
     document.getElementById('showHideSgr').style.display = geoDisplay;
-    document.getElementById('resourceDataTable').style.display = geoDisplay;
     for (ii = 0; ii < len; ii++) {
       tsk = av.sgr.logicNames[ii];
-      document.getElementById(tsk+'_geometryDiv').style.display = 'none';
       document.getElementById(tsk+'_regionLayout').value = '1Global';      
-      document.getElementById(tsk+'_regionLayout').style.display = geoDisplay;      
-      document.getElementById(tsk+'_geometryDiv').value = 'global';      
+      document.getElementById(tsk+'_regionLayout').style.display = geoDisplay;
       document.getElementById(tsk+'_debugTyp').style.display = geoDisplay;
       //document.getElementById(tsk+'_finite').disabled = optionDisabled;
       //document.getElementById(tsk+'_chemostat').disabled = optionDisabled;
@@ -649,7 +654,6 @@ s
     av.nut[edTsk].uiAll.regionsNumOf =  Number(av.nut[edTsk].uiAll.regionLayout.substr(0,1) );
     
     // one line method to get value of select/option struture.
-    //console.log('onlygrid=', av.sgr.gridOnly, '; mnDebug=', av.doj.mnDebug.style.visibility, '; geoStyle=', document.getElementById(tsk+'_geometry').style.display, '; regionLayoutDiv=', regionLayoutDiv);
     //console.log('onlygrid=', av.sgr.gridOnly, '; mnDebug=', av.doj.mnDebug.style.visibility, '; regionLayoutDiv=', regionLayoutDiv);
     //av.sgr.gridOnly = true;
     //
@@ -659,7 +663,6 @@ s
       showGeo = 'gridOnly';
       document.getElementById(tsk+'_regionLayoutHolder').style.display = 'inline-block';
       show1supplyTypeSlct = false;
-      document.getElementById(tsk+'_geometry').style.display = 'none';
       if ('1All' == regionLayoutDiv) {
         document.getElementById(tsk+'WsupplyTypeSlctHolder').style.display = 'inline-block';
         document.getElementById(tsk+'1supplyTypeSlct').style.display = 'none';
@@ -699,8 +702,7 @@ s
     //console.log('regionNameList=', regionNameList);
     //this 2 line method woks to get the value of the option in the select structure, but so does the one line method;
     //var idx = document.getElementById(tsk+'_geometry').selectedIndex;
-    //var geoOption = document.getElementById(tsk+'_geometry').options[idx].value;   // get the value of the selected option   
-    // if (av.dbg.flg.nut) { console.log('geometry=', geometry, '; geoOption=', geoOption); }
+    // if (av.dbg.flg.nut) { console.log('geometry=', geometry); }
 
     //hide everything. Display parts based on what is selected
     document.getElementById(tsk+'_supplyTypeSlctHolder').style.display = 'none';

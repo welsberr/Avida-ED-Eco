@@ -857,7 +857,7 @@ details[open] summary:before {
 */
 
 .sugarTitle { grid-area: sugarTitle; display: inline-block;  border: 0px none red; width: 15px; }
-.geometryCls { grid-area: geometryCls; display: inline-block;  border: 0px none red; }
+.geometryCls { grid-area: geometryCls; display: none;  border: 0px none red; }
 .regionLayoutClass { grid-area: regionLayCls; display: inline-block;  border: 0px none red; }
 .supplyHoldCls { grid-area: supplyHoldCls; display: inline-block;  border: 0px none red; }
 .supplyWildHolderClass { grid-area: supplyWdCls; display: inline-block;  border: 0px none red; }
@@ -906,7 +906,7 @@ grid-template-areas: "detailArrow sugarTitle regionLayCls geometryCls  supplyWdC
 
 .grd-sgr-sum-global-chemo-container {
   display: grid;
-  grid-template-areas: "detailArrow sugarTitle  regionLayCls supplyHoldCls tskAboutCls periodTimeGlobClass";
+  grid-template-areas: "detailArrow sugarTitle regionLayCls supplyHoldCls tskAboutCls periodTimeGlobClass";
   justify-content: start; 
   min-height: 23px;  width: 100%;
 }

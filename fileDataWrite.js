@@ -1430,98 +1430,10 @@
   */
 
   /**********************************************************************************************************************/
-  /* OpenJSCAD.org  There is a github site for this. 
-
-  Can apparently save files in Safari from javascript
-    Used some ideas from here and I can save a file that is the correct size, but I still cannot read it.
-
-    For saving look at:
-   generateOutputFileBlobUrl: function() {
-   if (OpenJsCad.isSafari()) {
-   //console.log('Trying download via DATA URI');
-   // convert BLOB to DATA URI
-   var blob = this.currentObjectToBlob();
-   var that = this;
-   var reader = new FileReader();
-   reader.onloadend = function() {
-   if (reader.result) {
-   that.hasOutputFile = true;
-   that.downloadOutputFileLink.href = reader.result;
-   that.downloadOutputFileLink.innerHTML = that.downloadLinkTextForCurrentObject();
-   var ext = that.selectedFormatInfo().extension;
-   that.downloadOutputFileLink.setAttribute('download','openjscad.'+ext);
-   that.downloadOutputFileLink.setAttribute('target', '_blank');
-   that.enableItems();
-   }
-   };
-   reader.readAsDataURL(blob);
-
-
 
   /***********************************************************************************************************************
                                     Code Not in use  may delte later. 
   /***********************************************************************************************************************
-
-
-
-  /*  put here in 2019 Dec
-  av.fwt.loadEnvDefaults = function (geometry, ndx, etsk) {
-    var len; //var tmp;
-    len = av.sgr.react_argu.length;
-    for (var ii=0; ii< len; ii++) {
-      av.nut[etsk].react[av.sgr.react_argu[ii]][ndx] = av.sgr.reacDefaultValu[ii];
-    };
-    if ('global' == geometry) {
-      len = av.sgr.resrcAvidaDefaultArgu.length;
-      for (var ii=0; ii< len; ii++) {
-        av.nut[etsk].resrc[av.sgr.resrcAvidaDefaultArgu[ii]][ndx] = av.sgr.resrcAvidaDefaultGlobalValu[ii];
-      };
-    } // now for the 'grid' defaults
-    else {
-        av.nut[etsk].resrc[av.sgr.resrcAvidaDefaultLocalArgu[ii]][ndx] = av.sgr.resrcAvidaDefaultLocallValu[ii];    
-    };
-  };
-  */
-
-  /*  put here in 2019 Dec
-  av.fwt.form2Nutrients = function() {
-    console.log('in av.fwt.form2Nutrients');
-    var tsk; var etsk; var atsk; var domName; 
-    var len = 1;
-    var numtasks = av.sgr.logEdNames.length;
-    for (var ii=0; ii< numtasks; ii++) {
-      etsk = av.sgr.logEdNames[ii];
-      tsk = av.sgr.logicNames[ii];
-      atsk = av.sgr.logicVnames[ii];
-      domName = tsk + '_geometry';
-      av.nut[etsk].geometry = document.getElementById(domName).value;
-      av.nut[etsk].uiAll.regionLayout = document.getElementById(tsk +'0regionLayout').value.toLowerCase();
-      if ('global' == av.nut[etsk].geometry.toLowerCase()) {
-
-          av.sgr.resrc_argu = ['name', 'initial', 'inflow', 'outflow', 'geometry'           //technically name is not an argument, but it starts the list. 
-                              ,  'inflowx1',  'inflowx2',  'inflowy1',  'inflowy2'  
-                              , 'outflowx1', 'outflowx2', 'outflowy1', 'outflowy2'
-                              , 'xdiffuse', 'ydiffuse', 'xgravity', 'ygravity'
-                              ,'boxflag', 'boxx', 'boxy', 'boxcol', 'boxrow',     //theste are new for Avida-ED and not in the wiki. 
-                              , 'region', 'side', 'grdNum', 'regionCode','regionList'];  // this last row is not in the argurments for avida; used for 'multi-dish'
-
-      }
-      else {
-        // local so there could be subdishes; later the number of subdishes will come from av.dom.orn_regionLayout.value
-        // for now there is just one option, the whole dish so len = 1
-        for (sub = 1; sub <= 1; sub++) {   //yes this loop starts at 1 instead of zero
-          av.nut[etsk].uiSub.supplyTypeSlct[sub] = document.getElementById(tsk + sub +'supplyTypeSlct').value.toLowerCase();
-          av.nut[etsk].resrc.initial[sub];
-          av.nut[etsk].uiAll.supplyTypeSlct[0] = document.getElementById(tsk + '_supplyTypeSlct').value.toLowerCase();
-          av.nut[etsk].resrc.name = tsk + '00';  // this may change later
-          av.nut[etsk].resrc.initial[0] = 0;  //different if finite
-          av.nut[etsk].resrc.xdiffuse = 0;
-          av.nut[etsk].resrc.ydiffuse = 0;
-        };
-      };
-    };
-  };
-  */
 
 
   // if (av.dbg.flg.root) { console.log('Root: end of fileDataWrite'); }

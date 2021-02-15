@@ -1120,20 +1120,20 @@
   ///---------------------------------------------------------------------------------------------------------------------
   //                                                                                           Only used for Test files --
   ///---------------------------------------------------------------------------------------------------------------------
-
+/*
   // only called by by files using av.fzr.env
   av.frd.rNameIndex = function(avfzrenvLog, rtag) {  
-     /*
-     * 
-     * @param avfzrenv =  the suboabject of av.fzr.env that holds the arrays for logic9 type
-     * @param rtag       the string that we are looking for. If the string is found data will be over written. 
-     *                     if not, create a new entry in the arrays
-     * @returns {Int}
-     * 
-     * Look for rtag in structure
-     * return its index if it exists
-     * return length + 1 is it does not exist
-     */
+
+    // 
+    // @param avfzrenv =  the suboabject of av.fzr.env that holds the arrays for logic9 type
+    // @param rtag       the string that we are looking for. If the string is found data will be over written. 
+    //                     if not, create a new entry in the arrays
+    // @returns {Int}
+    // 
+    // Look for rtag in structure
+    // return its index if it exists
+    // return length + 1 is it does not exist
+    //
     //console.log('avfzrenvLog=',avfzrenvLog,'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
     var defaultindex = avfzrenvLog.name.length;
     //console.log('defaultindex='defaultindex);
@@ -1148,6 +1148,7 @@
   };
 
   // all av.frd.test files will be deleted eventually. 
+/*
   av.frd.testReActLineParse = function (lnArray, from) {
     //console.log(from, 'called av.frd.testReActLineParse');
     'use strict';
@@ -1208,107 +1209,4 @@
     };
     return lnError;
   };
-
-  //uses av.fzr.env.react 
-  av.frd.testResrcLineParse = function (lnArray, from) {
-    'use strict';
-    //console.log(from, 'called av.frd.testResrcLineParse');
-    var lineErrors = '';  //was it a valid line wihtout errors
-    //console.log('lnArray = ', lnArray);
-    var pairArray = lnArray[1].split(':');
-    var pear = [];
-    var cellboxdata = [];
-    var nn;
-    //console.log('pairArray=', pairArray);
-    //find logic type
-    var logicindex = av.sgr.logicNames.indexOf(pairArray[0].substring(0, 3));
-    //console.log('logicindex=',logicindex);
-    if (-1 < logicindex) {
-      var numTsk = av.sgr.logEdNames[logicindex];
-      // Checking for a resource tag
-      var rSourcObj = av.fzr.env.rsrce[numTsk];
-      //console.log('numTsk='+numTsk,'; rSourcObj=', rSourcObj);
-      var ndx = av.frd.rNameIndex(rSourcObj, pairArray[0]);
-      //console.log('ndx=',ndx);
-      //assin the name of the resource. 
-      rSourcObj.name[ndx] = pairArray[0];
-
-      // assign default values are from https://github.com/devosoft/avida/wiki/Environment-file witha few exceptions
-      // boxflag is false indicating there are no box values. 
-      // in Avida-ED, geometry=grid; 
-      //console.log('av.fzr.env=', av.fzr.env);
-      //console.log('rSourcObj=', rSourcObj);
-      rSourcObj.boxflag[ndx] = false;
-      rSourcObj.inflow[ndx] = 0;
-      rSourcObj.outflow[ndx] = 0;
-      rSourcObj.initialHiNp[ndx] = 0;
-      //rSourcObj.geometry[ndx] = "Grid";
-      rSourcObj.inflowx1[ndx] = 0;                     //techincally should be rand between 0 and cols-1
-      rSourcObj.inflowx2[ndx] = rSourcObj.inflowx1[ndx];
-      rSourcObj.inflowy1[ndx] = 0;                     //techincally should be rand between 0 and rows-1
-      rSourcObj.inflowy2[ndx] = rSourcObj.inflowy1[ndx];
-      rSourcObj.outflowx1[ndx] = 0;                     //techincally should be rand between 0 and cols-1
-      rSourcObj.outflowx2[ndx] = rSourcObj.inflowx1[ndx];
-      rSourcObj.outflowy1[ndx] = 0;                     //techincally should be rand between 0 and rows-1
-      rSourcObj.outflowy2[ndx] = rSourcObj.inflowy1[ndx];
-      rSourcObj.xdiffuse[ndx] = 0;
-      rSourcObj.ydiffuse[ndx] = 0;
-      rSourcObj.xgravity[ndx] = 0;
-      rSourcObj.ygravity[ndx] = 0;
-      //rSourcObj.region[ndx] = 'all';
-      //rSourcObj.side[ndx] = 'unk';
-      //av.fzr.env.rsrce[numTsk][ndx] = 'unk';
-
-      //process all data pairs
-      var len = pairArray.length;
-      //console.log('len=',len,'; pairArray=',pairArray);
-      for (var ii = 1; ii < len; ii++) {
-        pear = pairArray[ii].split('=');
-        //console.log('Resource: ii=',ii,'; pear', pear);
-        nn = av.sgr.resrc_argu.indexOf(pear[0].toLowerCase());
-        if (-1 < nn) {
-          rSourcObj[av.sgr.resrc_argu[nn]][ndx] = pear[1];
-        } else {
-          if ('cellbox' == pear[0].toLowerCase()) {
-            cellboxdata = pear[1].split('|');
-            //console.log('cellboxdata=',cellboxdata);
-            rSourcObj.boxflag[ndx] = true;
-            rSourcObj.boxx[ndx] = cellboxdata[0];
-            rSourcObj.boxy[ndx] = cellboxdata[1];
-            rSourcObj.boxcol[ndx] = cellboxdata[2];
-            rSourcObj.boxrow[ndx] = cellboxdata[3];
-            av.nut[numTsk].uiSub.area[ndx] = parseFloat(rSourcObj.boxcol[ndx]) * parseFloat(rSourcObj.boxrow[ndx]);
-            console.log('av.nut['+numTsk+'].uiSub.area['+ndx+']=', av.nut[numTsk].uiSub.area[ndx], 'rSourcObj.boxrow[ndx]=', rSourcObj.boxrow[ndx]);
-          } else {
-            lineErrors = 'pear[0]=, ' + pear[0] + ', not a valid resource keyword. lnArray = ' + lnArray;
-            //console.log(lineErrors);
-          }
-        }
-      }
-      ;
-
-      var subCode = rSourcObj.name[ndx].substring(3).toString();
-      //rSourcObj.region[ndx] = subCode;
-      //rSourcObj.regionList[subCode] = ndx;
-
-      if (0 < rSourcObj.initialHiNp[ndx]) {
-        av.fzr.env.supply[numTsk][ndx] = 'fin';
-        //av.fzr.env.rsrce[numTsk].supply[ndx] = 'fin';
-      } else if (0 < rSourcObj.inflow[ndx]) {
-        av.fzr.env.supply[numTsk][ndx] = 'equ';
-        //av.fzr.env.rsrce[numTsk].supply[ndx] = 'equ';
-      }
-
-      //now assign an index to the region list. 
-
-      //console.log('matchNum=', matchNum,'; numTsk=', numTsk,'ndx=',ndx,'av.fzr.env.rsrce['+numTsk+'].regionList=', av.fzr.env.rsrce[numTsk].regionList);
-    }
-    // valid logic name not found;
-    else {
-      lineErrors = 'resource,' + pairArray[0].substring(0, 3) + ' not found in av.sgr.logicNames';
-    }
-
-    //co/nsole.log('lineErrors=', lineErrors);
-    return lineErrors;
-  };
-
+*/

@@ -3420,7 +3420,8 @@ require([
   av.ui.toggleDevelopentDisplays('Last_things_done');  // this needs to b called in production version
   
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
-  av.sgr.ChangeAllGeo(av.sgr.dftgGeometry);
+  //av.sgr.ChangeAllGeo(av.sgr.dftGeometry);   //tiba delete in 2021
+  av.changeAllSgrRegionLayout(av.sgr.nutdft.uiAll.regionLayout, 'last_things_done');
   //av.sgr.setSugarColors(true);  //true is to turn colors on;    // set color/grey individually so when 0 resources, grey shades rather than colors
   av.sgr.ChangeAllsugarsupplyTypeSlct('infinite','Last_things_done');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');
@@ -3440,7 +3441,6 @@ require([
   // **************************************************************************************************************** */
 
   // **************************************************************************************************************** */
-
 
   //---------------------------------------------------------------------------------------------------- size testing --
   // May need to do some things here to get the app to look right on the screen. 

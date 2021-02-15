@@ -219,11 +219,39 @@
       };
     };
 
+    var tsk='neq';
+    var len = av.sgr.logicNames.length;
+    for (var ndx=0; ndx<len; ndx++) {
+      tsk = av.sgr.logicNames[ndx];
+      document.getElementById(tsk+'_geometry').disabled = false;
+      document.getElementById(tsk+'_regionLayout').disabled = false;
+      document.getElementById(tsk+'_supplyTypeSlct').disabled = false;
+      document.getElementById(tsk+'WsupplyTypeSlct').disabled = false;
+      document.getElementById(tsk+'_periodcheckboxHolder').disabled = false;
+      document.getElementById(tsk+'_periodTimeHolder').disabled = false;
+      document.getElementById(tsk+'_initialHiNp').disabled = false;
+      //clear the resource series graphs
+      av.pch.resrcGlobal[tsk] = [];
+      for (var sub=0; sub<av.nut.numRegionsinHTML; sub++) {
+        document.getElementById(tsk+sub+'supplyTypeSlct').disabled = false;
+        document.getElementById(tsk+sub+'supplyModifierSelect').disabled = false;
+        document.getElementById(tsk+sub+'periodNp').disabled = false;
+        document.getElementById(tsk+sub+'hiSide').disabled = false;
+        document.getElementById(tsk+sub+'initialHiNp').disabled = false;
+        document.getElementById(tsk+sub+'initialLoNp').disabled = false;
+        document.getElementById(tsk+sub+'inflowHiNp').disabled = false;
+        document.getElementById(tsk+sub+'inflowLoNp').disabled = false;
+        document.getElementById(tsk+sub+'outflowHiNp').disabled = false;
+        document.getElementById(tsk+sub+'outflowLoNp').disabled = false;
+      };
+    };
     document.getElementById('allSugarGeometry').disabled = false;
     document.getElementById('allsugarsupplyTypeSlct').disabled = false;
     document.getElementById('allSugarRegionLayout').disabled = false;
     document.getElementById('allSugarModifier').disabled = false;
     document.getElementById('allSugarDetails').disabled = false;
+    console.log('environment settings should now be enabled ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+
 
     //reset Ancestor Color stack
     //av.parents.Colors = av.color.parentColorList.slice();   //delete this later

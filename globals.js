@@ -677,19 +677,19 @@ av.sgr.regionNine.Codes = ['000n', '001', '002', '003'   //top row: ninth of dis
                                  , '147', '258', '369'];  //columns 
  
 // need to figure out how to assign when reading environment.cfg
-  av.sgr.supply3 =      ['non', 'inf',  'fin',  'chm',  'poi', 'flo' ];  //none, infinite, finite, chemostat, poison
-  av.sgr.supply4 =      ['none', 'infn', 'fint', 'chst', 'pois', 'flow'];
-  av.sgr.supplyProper = ['None', 'Infinite', 'Finite', 'Chemostat', 'Flow'];    //only using the first 3 for now; 
-  av.sgr.supplylower  = ['none', 'infinite', 'finite', 'chemostat', 'flow'];    //only using the first 3 for now; 
-  //Flow would be from the source in a diffrent place fromt he sink: that is input x,y coordinaes are different from those of output. 
-  av.sgr.supplyLetter = ['N'  , 'I'  , 'F'  , 'E', 'P', 'S'];   
-  av.sgr.side1 = ['L', 'R', 'T', 'B', 'C', 'E', 'U'];
-  av.sgr.side3 = ['Lft', 'Rit', 'Top', 'Bot', 'Cen', 'Edg', 'Unk']; //left, right, top, bottom, center, edge, unknown
-  av.sgr.side = ['left', 'rite', 'top', 'bottom', 'center', 'edges', 'unknown'];
+av.sgr.supply3 =      ['non', 'inf',  'fin',  'chm',  'poi', 'flo' ];  //none, infinite, finite, chemostat, poison
+av.sgr.supply4 =      ['none', 'infn', 'fint', 'chst', 'pois', 'flow'];
+av.sgr.supplyProper = ['None', 'Infinite', 'Finite', 'Chemostat', 'Flow'];    //only using the first 3 for now; 
+av.sgr.supplylower  = ['none', 'infinite', 'finite', 'chemostat', 'flow'];    //only using the first 3 for now; 
+//Flow would be from the source in a diffrent place fromt he sink: that is input x,y coordinaes are different from those of output. 
+av.sgr.supplyLetter = ['N'  , 'I'  , 'F'  , 'E', 'P', 'S'];   
+av.sgr.side1 = ['L', 'R', 'T', 'B', 'C', 'E', 'U'];
+av.sgr.side3 = ['Lft', 'Rit', 'Top', 'Bot', 'Cen', 'Edg', 'Unk']; //left, right, top, bottom, center, edge, unknown
+av.sgr.side = ['left', 'rite', 'top', 'bottom', 'center', 'edges', 'unknown'];
 
-  av.sgr.hideFlgNames = ['gradient', 'periodic'];  
-  av.sgr.hideFlagInit = [true, true];  //true is to hide when areas underdevelopment are hidden. 
-  av.sgr.flagInitOpposite = [false, false];  //false in this case is to NOT hide as develpment sections shown.
+av.sgr.hideFlgNames = ['gradient', 'periodic'];  
+av.sgr.hideFlagInit = [true, true];  //true is to hide when areas underdevelopment are hidden. 
+av.sgr.flagInitOpposite = [false, false];  //false in this case is to NOT hide as develpment sections shown.
 
 av.sgr.nutdft = {}; 
 //---------------------------------------------------------------------------------- odd flags to try to get Rob's UI --
@@ -708,30 +708,71 @@ av.sgr.complexSumGridPrefix = 'grd-sgr-sum-adv-';
 
 
 av.sgr.describe = ['basic', 'global', 'adv'];
+
+av.sgr.describe = ['basic', 'global', 'adv'];
 av.sgr.describe.long = {};
-av.sgr.describe.long.not = ' Easy (x2)';
-av.sgr.describe.long.nan = ' Easy (x2)';
-av.sgr.describe.long.and = ' Moderate (x4)';
-av.sgr.describe.long.orn = ' Moderate (x4)';
-av.sgr.describe.long.oro = ' Hard (x8)';
-av.sgr.describe.long.ant = ' Hard (x8)';
-av.sgr.describe.long.nor = ' Very Hard (x16)';
-av.sgr.describe.long.xor = ' Very Hard (x16)';
-av.sgr.describe.long.equ = ' Brutal (x32)';
+av.sgr.describe.long.not = '&nbsp;(x2) Easy';
+av.sgr.describe.long.nan = '&nbsp;(x2) Easy';
+av.sgr.describe.long.and = '&nbsp;(x4) Moderate';
+av.sgr.describe.long.orn = '&nbsp;(x4) Moderate';
+av.sgr.describe.long.oro = '&nbsp;(x8) Hard';
+av.sgr.describe.long.ant = '&nbsp;(x8) Hard';
+av.sgr.describe.long.nor = '(x16) Very Hard';
+av.sgr.describe.long.xor = '(x16) Very Hard';
+av.sgr.describe.long.equ = '(x32) Brutal';
 av.sgr.describe.long.width = '96px';
 
-av.sgr.describe.short = {};            //advanced
-av.sgr.describe.short.not = ' (x2)';
-av.sgr.describe.short.nan = ' (x2)';
-av.sgr.describe.short.and = ' ( x4)';
-av.sgr.describe.short.orn = ' ( x4)';
-av.sgr.describe.short.oro = ' (x 8)';
-av.sgr.describe.short.ant = ' (x 8)';
-av.sgr.describe.short.nor = ' (x16)';
-av.sgr.describe.short.xor = ' (x16)';
-av.sgr.describe.short.equ = ' (x32)';
+av.sgr.describe.short = {};
+av.sgr.describe.short.not = '&nbsp;(x2)';
+av.sgr.describe.short.nan = '&nbsp;(x2)';
+av.sgr.describe.short.and = '&nbsp;(x4)';
+av.sgr.describe.short.orn = '&nbsp;(x4)';
+av.sgr.describe.short.oro = '&nbsp;(x8)';
+av.sgr.describe.short.ant = '&nbsp;(x8)';
+av.sgr.describe.short.nor = '(x16)';
+av.sgr.describe.short.xor = '(x16)';
+av.sgr.describe.short.equ = '(x32)';
 av.sgr.describe.short.width = '33px';
 
+/*
+av.sgr.describe.xlast = {};
+av.sgr.describe.xlast.not = ' Easy (x2)';
+av.sgr.describe.xlast.nan = ' Easy (x2)';
+av.sgr.describe.xlast.and = ' Moderate (x4)';
+av.sgr.describe.xlast.orn = ' Moderate (x4)';
+av.sgr.describe.xlast.oro = ' Hard (x8)';
+av.sgr.describe.xlast.ant = ' Hard (x8)';
+av.sgr.describe.xlast.nor = ' Very Hard (x16)';
+av.sgr.describe.xlast.xor = ' Very Hard (x16)';
+av.sgr.describe.xlast.equ = ' Brutal (x32)';
+av.sgr.describe.xlast.width = '96px';
+
+av.sgr.describe = ['basic', 'global', 'adv'];
+av.sgr.describe.long = {};
+av.sgr.describe.long.not = '&nbsp;(x2) Easy';
+av.sgr.describe.long.nan = '&nbsp;(x2) Easy';
+av.sgr.describe.long.and = '(&nbsp;x4) Moderate';
+av.sgr.describe.long.orn = '(&nbsp;x4) Moderate';
+av.sgr.describe.long.oro = '(x&nbsp;8) Hard';
+av.sgr.describe.long.ant = '(x&nbsp;8) Hard';
+av.sgr.describe.long.nor = '(x16) Very Hard';
+av.sgr.describe.long.xor = '(x16) Very Hard';
+av.sgr.describe.long.equ = '(x32) Brutal';
+av.sgr.describe.long.width = '96px';
+
+av.sgr.describe.xlast = {};
+av.sgr.describe.xlast.not = ' Easy (x2)';
+av.sgr.describe.xlast.nan = ' Easy (x2)';
+av.sgr.describe.xlast.and = ' Moderate (x4)';
+av.sgr.describe.xlast.orn = ' Moderate (x4)';
+av.sgr.describe.xlast.oro = ' Hard (x8)';
+av.sgr.describe.xlast.ant = ' Hard (x8)';
+av.sgr.describe.xlast.nor = ' Very Hard (x16)';
+av.sgr.describe.xlast.xor = ' Very Hard (x16)';
+av.sgr.describe.xlast.equ = ' Brutal (x32)';
+av.sgr.describe.xlast.width = '96px';
+
+ */
 //------------------------------------------------------------------------------------------- av.sgr.makeNutDefault --
 av.sgr.makeNutDefault = function () {
   av.sgr.nutdft = {};    
@@ -751,7 +792,7 @@ av.sgr.makeNutDefault = function () {
   av.sgr.nutdft.react.type = 'pow';
   av.sgr.nutdft.uiAll.geometry = av.sgr.dftGeometry;  ////Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global
   av.sgr.nutdft.uiAll.supplyTypeSlct = 'infinite';    //this is only for whem ui.geometry = global
-  av.sgr.nutdft.uiAll.regionLayout = '1All';  //only Whole Dish for now; '1All' is the code for 'Whole Dish';
+  av.sgr.nutdft.uiAll.regionLayout = '1Global';  //only Whole Dish for now; '1All' is the code for 'Whole Dish';
   av.sgr.nutdft.uiAll.regionsNumOf = 1;   // whole dish = there is only one dish 
   av.sgr.nutdft.uiAll.initialHiNp = 144000;      //only used when whem ui.geometry = global and  supplyTypeSlct = 'finite' 
 
@@ -774,6 +815,7 @@ av.sgr.makeNutDefault = function () {
   av.sgr.nutdft.uiSub.regionNdx = 1;   //index into various region data vectors
   av.sgr.nutdft.uiSub.regionCode = '000';
   av.sgr.nutdft.uiSub.regionName = '1All';
+  av.sgr.nutdft.uiSub.regionsNumOf = 1;
   av.sgr.nutdft.uiSub.boxed = true;           //true keeps resources in their subdish; false allows them to flow into the rest of the dish
   av.sgr.nutdft.uiSub.regionSet = 'q';  // q = Quarters = 2x2 subregions
 };                                       // n = Niths = 3x3 subregions
@@ -846,22 +888,7 @@ av.fzr.clearEnvironment = function(from) {
     av.nut[tsk].cell.x_initial = grd;
     av.nut[tsk].cell.y_inflow = grd;
     av.nut[tsk].cell.z_outflow = grd;
-    
-    /* //an idea that was not used
-    cnt = [0, 1, 2, 3, 4];
-    oxe = [1];
-
-    av.nut[tsk].cll = [];
-    for (var jj=0;jj<5;jj++) {
-      av.nut[tsk].cll[jj] = {};
-      av.nut[tsk].cll[jj].ainital = oxe;
-      av.nut[tsk].cll[jj].inflow = cnt;
-      av.nut[tsk].cll[jj].outflow = cnt;
-      av.nut[tsk].cll[jj].alist = oxe;
-    }
-    */
-      
-     
+         
     //for user interface 
     av.nut[tsk]['uiAll'] = {};
     av.nut[tsk]['uiSub'] = {};
@@ -870,11 +897,11 @@ av.fzr.clearEnvironment = function(from) {
     };
     //defaults for items that describe the whole dish
     // These should be in arrays or dictionaries so that they always match with av.sgr.nutdft.uiAll - tiba fix later
-    av.nut[tsk].uiAll.geometry = 'global';        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
-    av.nut[tsk].uiAll.supplyTypeSlct = 'infinite';    //this is only for whem ui.geometry = global
-    av.nut[tsk].uiAll.regionLayout = '1All';  //only whole dish for now
-    av.nut[tsk].uiAll.regionsNumOf = 1;   // whole dish
-    av.nut[tsk].uiAll.initialHiNp = 144000;      //only used whem ui.geometry = global and  supplyTypeSlct = 'finite' 
+    av.nut[tsk].uiAll.geometry = av.sgr.dftGeometry;        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
+    av.nut[tsk].uiAll.supplyTypeSlct = av.sgr.nutdft.uiAll.supplyTypeSlct    //this is only for whem ui.geometry = global
+    av.nut[tsk].uiAll.regionLayout = av.sgr.nutdft.uiAll.regionLayout;  //only whole dish for now; default is global;
+    av.nut[tsk].uiAll.regionsNumOf = av.sgr.nutdft.uiAll.regionsNumOf;   // whole dish
+    av.nut[tsk].uiAll.initialHiNp = av.sgr.nutdft.uiAll.initialHiNp;      //only used whem ui.geometry = global and  supplyTypeSlct = 'finite' 
 
     for (jj=0; jj < uiSubDishLen; jj++) {
       av.nut[tsk]['uiSub'][av.sgr.ui_subDish_argu[jj] ] = [];
@@ -885,14 +912,12 @@ av.fzr.clearEnvironment = function(from) {
     av.cleanNut = {};
     av.cleanNut = JSON.parse(JSON.stringify(av.nut));
     // section to verifiy that av.nut and av.cleanNut are different structurs; console.log statements verified that they are different
-    // av.cleanNut[tsk].uiAll.geometry = 'grid';
     // console.log('av.nut[tsk].uiAll.geometry', av.nut[tsk].uiAll.geometry, '; tsk=', tsk);
     // console.log('av.cleanNut[tsk].uiAll.geometry', av.cleanNut[tsk].uiAll.geometry, '; tsk=', tsk);
-    //console.log('near end of av.fzr.clearEnvironment');
+    // console.log('near end of av.fzr.clearEnvironment');
     console.log('av.oldNut =', av.oldNut);
     console.log('av.cleanNut=', av.cleanNut);
   }
-  //console.log('av =',av);
 
   //--------------------------------------------- av.fzr.env section mighht be delted in future. used for Test Dishes --
   // av.fzr.env is only used for Test Dishes. 
