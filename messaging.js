@@ -745,7 +745,7 @@
     
     //console.log('msg.globalResourceAmount=', msg.globalResourceAmount);
     var obj = msg.globalResourceAmount;
-    console.log('av.pch.resrcGlobal=', av.pch.resrcGlobal);
+    //console.log('av.pch.resrcGlobal=', av.pch.resrcGlobal);
     for (var tskName in obj) {
       if ( obj.hasOwnProperty(tskName) ) {
         ndx = av.sgr.logicNames.indexOf(tskName);

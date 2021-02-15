@@ -1013,7 +1013,7 @@
   };
   //------------------------ end two function section to put data from time recorder (tr) files into data from charts --
 
-  //------------------------------------------------------------------------------------------ regular expression notes --
+  //---------------------------------------------------------------------------------------- regular expression notes --
 
   // examples from avdia-ed 
   /*  

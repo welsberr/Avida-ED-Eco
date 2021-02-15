@@ -578,20 +578,20 @@ require([
     switch (source.node.id) {
       case 'popDish0':
         av.post.addUser('DnD: delete_from: popDish0?');
-        av.anl.pop[0].left = [];       //remove lines from population 1
-        av.anl.pop[0].right = [];
+        av.anl.wrld[0].left = [];       //remove lines from population 1
+        av.anl.wrld[0].right = [];
         av.anl.AnaChartFn();
         break;
       case 'popDish1':
         av.post.addUser('DnD: delete_from: popDish1?');
-        av.anl.pop[1].left = [];       //remove lines from population 2
-        av.anl.pop[1].right = [];
+        av.anl.wrld[1].left = [];       //remove lines from population 2
+        av.anl.wrld[1].right = [];
         av.anl.AnaChartFn();
         break;
       case 'popDish2':
         av.post.addUser('DnD: delete_from: popDish2?');
-        av.anl.pop[2].left = [];       //remove lines from population 3
-        av.anl.pop[2].right = [];
+        av.anl.wrld[2].left = [];       //remove lines from population 3
+        av.anl.wrld[2].right = [];
         av.anl.AnaChartFn();
         break;
     }
@@ -2096,7 +2096,7 @@ require([
       // console.log('popStatsBlock = ', $(av.dom.popStatsBlock).css('display'), '; av.pch.needInit=', av.pch.needInit);
       //if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
 
-      
+      //initialize if block is visible
       if ( !$(av.dom.popStatsBlock).is(":visible") ) {
         if (av.dbg.flg.plt) { console.log('PopPlot: if $popStatsBlock is visible & needInit - then call popChartInit'); }
         av.grd.popChartInit('av.grd.popChartFn');
@@ -2114,7 +2114,7 @@ require([
     
     if (av.dbg.flg.plt) { console.log('PopPlot: av.grd.runState = ', av.grd.runState); }
     if ('prepping' === av.grd.runState) {   //values can be prepping, started, or world
-      av.dom.popChart.style.visibility = 'hidden';  //hide mini-chart when a dish is not running
+      av.dom.popChart.style.visibility = 'hidden';  //hide mini-chart when an experiment is not running. 
     } else {
       av.dom.popChart.style.visibility = 'visible';
       if ('none' === document.getElementById('yaxis').value) {
@@ -2130,14 +2130,16 @@ require([
           //if (av.dbg.flg.plt) { console.log('PopPlot: before purge in popChartFn'); }
           //Plotly.purge(av.dom.popChart);      //does not seem to work once plotly.animate has been used
           //if (av.dbg.flg.plt) { console.log('PopPlot: after purge in popChartFn'); }
-        }
+          console.log('av.dom.popChart.data is', av.dom.popChart.data);
+        };
       } else {
         // this is the adust the size. Seems like the size should only change when window/div changes size rather than checking very time. 
         av.pch.divSize('av.grd.popChartFn');
+        console.log('after av.pch.divSize');
 
-        if (document.getElementById('yaxis').value === av.pch.yValue)
+        if (document.getElementById('yaxis').value === av.pch.yValue) {
           av.pch.yChange = false;
-        else {
+        } else {
           av.pch.yChange = true;
           av.pch.yValue = document.getElementById('yaxis').value;
         };
@@ -2184,14 +2186,14 @@ require([
         av.pch.trace0.y = av.pch.popY;
         av.pch.trace1.x = av.pch.xx;
         av.pch.trace1.y = av.pch.logY;
-        //console.log('trace0',av.pch.trace0);
+        console.log('trace0',av.pch.trace0);
         //console.log('trace1',av.pch.trace1);
 
         //var popData = [av.pch.trace0];
         var popData = [av.pch.trace0, av.pch.trace1];
-        var rstl = [];
-        rstl[0] = {x: [av.pch.xx], y: [av.pch.popY]};
-        rstl[1] = {x: [av.pch.xx], y: [av.pch.logY]};
+        av.pch.rstl = [];
+        av.pch.rstl[0] = {x: [av.pch.xx], y: [av.pch.popY]};
+        av.pch.rstl[1] = {x: [av.pch.xx], y: [av.pch.logY]};
 
         for (var ii=0; ii < av.sgr.numTasks; ii++) {
           numTsk = av.sgr.logEdNames[ii];
@@ -2200,7 +2202,7 @@ require([
            av.pch.trc[numTsk].x = av.pch.xx;
            av.pch.trc[numTsk].y = av.pch.sgr[numTsk];
            popData[ii+2] = av.pch.trc[numTsk];
-           rstl[ii+2] = {x: [av.pch.xx], y: [ av.pch.sgr[numTsk] ]};
+           av.pch.rstl[ii+2] = {x: [av.pch.xx], y: [ av.pch.sgr[numTsk] ]};
         };
 
         //if (av.pch.yChange) {
@@ -2220,7 +2222,7 @@ require([
           if (av.dbg.flg.plt) { console.log('PopPlot: purge chart.popData=', av.dom.popChart.data); }
           //console.log('purge chart.layout=', av.dom.popChart.layout);
         } else {
-          var numof = rstl.length;
+          var numof = av.pch.rstl.length;
           //av.pch.update = {
           //  xaxis: {range: [0, av.pch.popY.length + 1]}, yaxis: {range: [0, 1.1 * av.pch.maxY]},
           //  width: av.pch.layout.width,
@@ -2239,6 +2241,8 @@ require([
           //console.log('before relayout in update grid chart');
           if (av.dbg.flg.plt) { console.log('PopPlot: av.pch.update', av.pch.update); }
 
+          console.log('av.dom.popChart.data=', av.dom.popChart.data);
+          if (av.dom.popChart.data) console.log('av.dom.popChart.data.length=', av.dom.popChart.data.length);
           if (undefined == av.dom.popChart.data) {
             if (av.dbg.flg.plt) { console.log('PopPlot: before plot'); }
             av.debug.log += '\n     --uiD: Plotly: Plotly.plot("popChart", popData, av.pch.layout, av.pch.widg)  in AvidaED.js at 1714';
@@ -2246,24 +2250,25 @@ require([
             Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
             if (av.dbg.flg.plt) { console.log('PopPlot: after plot'); }
           } else if (0 == av.dom.popChart.data.length) {
+            
             if (av.dbg.flg.plt) { console.log('PopPlot: before plot'); }
             av.debug.log += '\n     --uiD: Plotly: Plotly.plot("popChart", popData, av.pch.layout, av.pch.widg) in AvidaED.js at 1724';
             av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'popData, av.pch.layout, av.pch.widg', [popData, av.pch.layout, av.pch.widg]);
             Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
           } else {
             if (av.brs.isChrome) {
-              av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", rstl[0], [0]) at 1734';
-              av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'rstl[0]', [rstl[0]]);
-              Plotly.restyle('popChart', rstl[0], [0]);
-              av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", rstl[1], [1])  in AvidaED.js at 1738';
-              av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'rstl[1]', [rstl[1]]);
-              Plotly.restyle('popChart', rstl[1], [1]);
+              av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", av.pch.rstl[0], [0]) at 1734';
+              av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.pch.rstl[0]', [av.pch.rstl[0]]);
+              Plotly.restyle('popChart', av.pch.rstl[0], [0]);
+              av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", av.pch.rstl[1], [1])  in AvidaED.js at 1738';
+              av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.pch.rstl[1]', [av.pch.rstl[1]]);
+              Plotly.restyle('popChart', av.pch.rstl[1], [1]);
               av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in AvidaED.js at 1741';
               
               for (var ii=2; ii< numof; ii++) {
-                av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", rstl[0], ['+ii+'])';
-                av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'rstl[]', [rstl[ii]]);
-                Plotly.restyle('popChart', rstl[ii], [ii]);
+                av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", av.pch.rstl[0], ['+ii+'])';
+                av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.pch.rstl[]', [av.pch.rstl[ii]]);
+                Plotly.restyle('popChart', av.pch.rstl[ii], [ii]);
               }
               av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
               Plotly.relayout(av.dom.popChart, av.pch.update);
@@ -3237,18 +3242,18 @@ require([
         }
       } else {
         if (av.dbg.flg.plt) { console.log('AnaPlot: in AnaChartFn'); }
-        av.anl.trace0.x = av.anl.xx.slice(0, av.anl.pop[0].left.length);
-        av.anl.trace1.x = av.anl.xx.slice(0, av.anl.pop[0].right.length);
-        av.anl.trace2.x = av.anl.xx.slice(0, av.anl.pop[1].left.length);
-        av.anl.trace3.x = av.anl.xx.slice(0, av.anl.pop[1].right.length);
-        av.anl.trace4.x = av.anl.xx.slice(0, av.anl.pop[2].left.length);
-        av.anl.trace5.x = av.anl.xx.slice(0, av.anl.pop[2].right.length);
-        av.anl.trace0.y = av.anl.pop[0].left;
-        av.anl.trace1.y = av.anl.pop[0].right;
-        av.anl.trace2.y = av.anl.pop[1].left;
-        av.anl.trace3.y = av.anl.pop[1].right;
-        av.anl.trace4.y = av.anl.pop[2].left;
-        av.anl.trace5.y = av.anl.pop[2].right;
+        av.anl.trace0.x = av.anl.xx.slice(0, av.anl.wrld[0].left.length);
+        av.anl.trace1.x = av.anl.xx.slice(0, av.anl.wrld[0].right.length);
+        av.anl.trace2.x = av.anl.xx.slice(0, av.anl.wrld[1].left.length);
+        av.anl.trace3.x = av.anl.xx.slice(0, av.anl.wrld[1].right.length);
+        av.anl.trace4.x = av.anl.xx.slice(0, av.anl.wrld[2].left.length);
+        av.anl.trace5.x = av.anl.xx.slice(0, av.anl.wrld[2].right.length);
+        av.anl.trace0.y = av.anl.wrld[0].left;
+        av.anl.trace1.y = av.anl.wrld[0].right;
+        av.anl.trace2.y = av.anl.wrld[1].left;
+        av.anl.trace3.y = av.anl.wrld[1].right;
+        av.anl.trace4.y = av.anl.wrld[2].left;
+        av.anl.trace5.y = av.anl.wrld[2].right;
         av.anl.trace0.line.color = av.anl.color[0];
         av.anl.trace1.line.color = av.anl.color[0];
         av.anl.trace2.line.color = av.anl.color[1];
@@ -3290,27 +3295,27 @@ require([
   /* Chart buttons ****************************************/
   document.getElementById('pop0delete').onclick = function () {
     av.post.addUser('Button: pop0delete');
-    av.anl.hasPopData[0] = false;
-    av.anl.pop[0].left = [];
-    av.anl.pop[0].right = [];
+    av.anl.hasWrldData[0] = false;
+    av.anl.wrld[0].left = [];
+    av.anl.wrld[0].right = [];
     av.anl.clearWorldData(0);
     av.dnd.popDish0.selectAll().deleteSelectedNodes();
     av.anl.AnaChartFn();
   };
   document.getElementById('pop1delete').onclick = function () {
     av.post.addUser('Button: pop1delete');
-    av.anl.hasPopData[1] = false;
-    av.anl.pop[1].left = [];
-    av.anl.pop[1].right = [];
+    av.anl.hasWrldData[1] = false;
+    av.anl.wrld[1].left = [];
+    av.anl.wrld[1].right = [];
     av.anl.clearWorldData(1);
     av.dnd.popDish1.selectAll().deleteSelectedNodes();
     av.anl.AnaChartFn();
   };
   document.getElementById('pop2delete').onclick = function () {
     av.post.addUser('Button: pop2delete');
-    av.anl.hasPopData[2] = false;
-    av.anl.pop[2].left = [];
-    av.anl.pop[2].right = [];
+    av.anl.hasWrldData[2] = false;
+    av.anl.wrld[2].left = [];
+    av.anl.wrld[2].right = [];
     av.anl.clearWorldData(2);
     av.dnd.popDish2.selectAll().deleteSelectedNodes();
     av.anl.AnaChartFn(); 
@@ -3333,7 +3338,7 @@ require([
     av.anl.AnaChartFn('av.anl.yScaleSelect_onChange');
   };
 
-  av.anl.popColorOnChange = function (domObj) {
+  av.anl.wrldColorOnChange = function (domObj) {
     var ndx = Number(domObj.id.substr(3, 1));
     console.log('domObj.id=', domObj.id, '; ndx=', ndx, '; domObj.value', domObj.value, '; av.color.names[]=', av.color.names[domObj.value]);
     av.anl.color[ndx] = av.color.names[domObj.value];

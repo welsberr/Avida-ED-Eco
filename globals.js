@@ -1344,8 +1344,8 @@ av.pch.clearPopChrt();
 
 av.anl = {};  //Analysis page functions and data
 av.anl.color = [];   //holds the three colors for the three populations
-av.anl.pop = [];
-av.anl.hasPopData = [];
+av.anl.wrld = [];
+av.anl.hasWrldData = [];     //I don't think this does anythig useful
 av.anl.abbreviate = {};
 av.anl.abbreviate['Average Fitness'] = 'Fitness';
 av.anl.abbreviate['Average Offspring Cost'] = 'Cost';
@@ -1354,43 +1354,43 @@ av.anl.abbreviate['Number of Organisms'] = 'Num';
 
 av.anl.clearChart = function () {
   for (var ii = 0; ii < 3; ii++) {
-    av.anl.pop[ii] = {};
-    av.anl.pop[ii].left = [];
-    av.anl.pop[ii].right = [];
-    av.anl.hasPopData[ii] = false;
+    av.anl.wrld[ii] = {};
+    av.anl.wrld[ii].left = [];
+    av.anl.wrld[ii].right = [];
+    av.anl.hasWrldData[ii] = false;
 
   }
   av.anl.xx = [];
   //av.anl.xx = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  //av.anl.pop[0].left = [1, 3, 2, 5, 4, 7, 6];
-  //av.anl.pop[0].right = [3, 5, 4, 7, 6, 9, 8, 11, 10];
+  //av.anl.wrld[0].left = [1, 3, 2, 5, 4, 7, 6];
+  //av.anl.wrld[0].right = [3, 5, 4, 7, 6, 9, 8, 11, 10];
 
   av.anl.trace0 = {
-      x: av.anl.xx.slice(0,av.anl.pop[0].left.length)
-    , y: av.anl.pop[0].left
+      x: av.anl.xx.slice(0,av.anl.wrld[0].left.length)
+    , y: av.anl.wrld[0].left
     , type: 'scatter'
     , mode: 'lines'
     , name: 'tr0',
     line: {color: av.color.names['Red'], width: 3}
   };
   av.anl.trace1 = {
-    x: av.anl.xx.slice(0,av.anl.pop[0].right.length), y: av.anl.pop[0].right, type: 'scatter', mode: 'lines', name: 'tr1', yaxis: 'y2',
+    x: av.anl.xx.slice(0,av.anl.wrld[0].right.length), y: av.anl.wrld[0].right, type: 'scatter', mode: 'lines', name: 'tr1', yaxis: 'y2',
     line: {color: av.color.names['Red'], width: 1}
   };
   av.anl.trace2 = {
-    x: av.anl.xx.slice(0,av.anl.pop[1].left.length), y: av.anl.pop[1].left, type: 'scatter', mode: 'lines', name: 'tr2',
+    x: av.anl.xx.slice(0,av.anl.wrld[1].left.length), y: av.anl.wrld[1].left, type: 'scatter', mode: 'lines', name: 'tr2',
     line: {color: av.color.names['Blue'], width: 3}
   };
   av.anl.trace3 = {
-    x: av.anl.xx.slice(0,av.anl.pop[1].right.length), y: av.anl.pop[1].right, type: 'scatter', mode: 'lines', name: 'tr1', yaxis: 'y2',
+    x: av.anl.xx.slice(0,av.anl.wrld[1].right.length), y: av.anl.wrld[1].right, type: 'scatter', mode: 'lines', name: 'tr1', yaxis: 'y2',
     line: {color: av.color.names['Blue'], width: 1}
   };
   av.anl.trace4 = {
-    x: av.anl.xx.slice(0,av.anl.pop[2].left.length), y: av.anl.pop[2].left, type: 'scatter', mode: 'lines', name: 'tr4',
+    x: av.anl.xx.slice(0,av.anl.wrld[2].left.length), y: av.anl.wrld[2].left, type: 'scatter', mode: 'lines', name: 'tr4',
     line: {color: av.color.names['Black'], width: 3}
   };
   av.anl.trace5 = {
-    x: av.anl.xx.slice(0,av.anl.pop[2].right.length), y: av.anl.pop[2].right, type: 'scatter', mode: 'lines', name: 'tr1', yaxis: 'y2',
+    x: av.anl.xx.slice(0,av.anl.wrld[2].right.length), y: av.anl.wrld[2].right, type: 'scatter', mode: 'lines', name: 'tr1', yaxis: 'y2',
     line: {color: av.color.names['Black'], width: 1}
   };
 

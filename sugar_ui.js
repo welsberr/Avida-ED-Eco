@@ -582,7 +582,7 @@
   //-------------------------------------------------------------------------------------- av.sgr.changeDetailsLayout --
   av.sgr.complexityChangeProcess = function (from) {
     var ii, tsk;
-    var geoDisplay = 'inline-bloack';
+    var displaySetting = 'inline-bloack';
     var optionDisabled = false;
     var subnum = 1;
     var len = av.sgr.logicNames.length;
@@ -590,40 +590,40 @@
     av.sgr.complexSumGridPrefix = 'grd-sgr-sum-adv-';
     
     if ('sgrBasic' == av.sgr.complexityLevel) {
-      geoDisplay = 'none';
+      displaySetting = 'none';
       clssnam = 'changeAllSugarsBasic';
       optionDisabled = true;
       av.sgr.complexSumGridPrefix = 'grid-sugar-summary-geo-basic-';
     } else if ('sgrGlobal' == av.sgr.complexityLevel) {
-      geoDisplay = 'none';
+      displaySetting = 'none';
       clssnam = 'changeAllSugarsGlobal';
       optionDisabled = true;
       av.sgr.complexSumGridPrefix = 'grd-sgr-sum-global-';
     };
     console.log(from, 'called av.sgr.complexityChangeProcess: av.sgr.complexityLevel=', av.sgr.complexityLevel);
-    console.log('------------------------------------------------------------------------------geoDispay=', geoDisplay);
+    console.log('------------------------------------------------------------------------------geoDispay=', displaySetting);
     document.getElementById('sugarFooter').className = clssnam;
-    document.getElementById('allSugarDetailsDiv').style.display = geoDisplay;
-    document.getElementById('allSugarModifierDiv').style.display = geoDisplay;
-    document.getElementById('allSugarRegionLayoutDiv').style.display = geoDisplay;
+    document.getElementById('allSugarDetailsDiv').style.display = displaySetting;
+    document.getElementById('allSugarModifierDiv').style.display = displaySetting;
+    document.getElementById('allSugarRegionLayoutDiv').style.display = displaySetting;
     //document.getElementById('allsgrFinite').disabled = optionDisabled;
     //document.getElementById('allsgrChemostat').disabled = optionDisabled;
-    document.getElementById('allTopLftRit').style.display = geoDisplay;
-    document.getElementById('allQuarters').style.display = geoDisplay;
-    document.getElementById('regionLayoutSgr').style.display = geoDisplay;
-    document.getElementById('patternSgr').style.display = geoDisplay;
-    document.getElementById('showHideSgr').style.display = geoDisplay;
+    document.getElementById('allTopLftRit').style.display = displaySetting;
+    document.getElementById('allQuarters').style.display = displaySetting;
+    document.getElementById('regionLayoutSgr').style.display = displaySetting;
+    document.getElementById('patternSgr').style.display = displaySetting;
+    document.getElementById('showHideSgr').style.display = displaySetting;
     for (ii = 0; ii < len; ii++) {
       tsk = av.sgr.logicNames[ii];
       document.getElementById(tsk+'_regionLayout').value = '1Global';      
-      document.getElementById(tsk+'_regionLayout').style.display = geoDisplay;
-      document.getElementById(tsk+'_debugTyp').style.display = geoDisplay;
+      document.getElementById(tsk+'_regionLayout').style.display = displaySetting;
+      document.getElementById(tsk+'_debugTyp').style.display = displaySetting;
       //document.getElementById(tsk+'_finite').disabled = optionDisabled;
       //document.getElementById(tsk+'_chemostat').disabled = optionDisabled;
-      document.getElementById(tsk+'_topLftRit').style.display = geoDisplay;
-      document.getElementById(tsk+'_quarters').style.display = geoDisplay;
+      document.getElementById(tsk+'_topLftRit').style.display = displaySetting;
+      document.getElementById(tsk+'_quarters').style.display = displaySetting;
       document.getElementById(tsk+'_section').open = false;
-      document.getElementById('rs'+tsk).style.display = geoDisplay;       //dropDown Display
+      document.getElementById('rs'+tsk).style.display = displaySetting;       //dropDown Display
       av.sgr.changeDetailsLayout(tsk, subnum, 'av.sgr.complexityChangeProcess');
     };    
   };

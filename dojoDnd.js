@@ -1226,22 +1226,22 @@ av.anl.loadSelectedData = function (worldNum, axisSide, side, from) {
   var dataType = document.getElementById(axisSide).value.toLowerCase();
   switch(dataType) {
     case 'none':
-      av.anl.pop[worldNum][side] = [];
+      av.anl.wrld[worldNum][side] = [];
       break;
     case 'average fitness':
-      av.anl.pop[worldNum][side] = av.fzr.pop[worldNum].fit;
+      av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].fit;
       break;
     case 'average offspring cost':
-      av.anl.pop[worldNum][side] = av.fzr.pop[worldNum].ges;
+      av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].ges;
       break;
     case 'average energy acq. rate':
-      av.anl.pop[worldNum][side] = av.fzr.pop[worldNum].met;
+      av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].met;
       break;
     case 'number of organisms':
-      av.anl.pop[worldNum][side] = av.fzr.pop[worldNum].num;
+      av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].num;
       break;
     case 'number viable':
-      av.anl.pop[worldNum][side] = av.fzr.pop[worldNum].via;
+      av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].via;
       break;
   }
   var begin = av.anl.xx.length;
