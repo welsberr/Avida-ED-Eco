@@ -2191,20 +2191,23 @@ require([
 
         //var popData = [av.pch.trace0];
         var popData = [av.pch.trace0, av.pch.trace1];
-        av.pch.rstl = [];
-        av.pch.rstl[0] = {x: [av.pch.xx], y: [av.pch.popY]};
-        av.pch.rstl[1] = {x: [av.pch.xx], y: [av.pch.logY]};
+        av.pch.traceList = [];
+        av.pch.traceList[0] = {x: [av.pch.xx], y: [av.pch.popY]};
+        av.pch.traceList[1] = {x: [av.pch.xx], y: [av.pch.logY]};
 
-        for (var ii=0; ii < av.sgr.numTasks; ii++) {
-          numTsk = av.sgr.logEdNames[ii];
-          tsk = av.sgr.logicNames[ii];
-           av.pch.sgr[numTsk] = av.pch.resrcGlobal[tsk];
-           av.pch.trc[numTsk].x = av.pch.xx;
-           av.pch.trc[numTsk].y = av.pch.sgr[numTsk];
-           popData[ii+2] = av.pch.trc[numTsk];
-           av.pch.rstl[ii+2] = {x: [av.pch.xx], y: [ av.pch.sgr[numTsk] ]};
+        // need to check to see if there are any valid global resources before adding them to the structure
+        if (0< av.nut.cntGlobalDataTasks) {
+          for (var ii=0; ii < av.sgr.numTasks; ii++) {
+            numTsk = av.sgr.logEdNames[ii];
+            tsk = av.sgr.logicNames[ii];
+             av.pch.sgr[numTsk] = av.pch.resrcGlobal[tsk];
+             av.pch.trc[numTsk].x = av.pch.xx;
+             av.pch.trc[numTsk].y = av.pch.sgr[numTsk];
+             popData[ii+2] = av.pch.trc[numTsk];
+             av.pch.traceList[ii+2] = {x: [av.pch.xx], y: [ av.pch.sgr[numTsk] ]};
+          };
         };
-
+      
         //if (av.pch.yChange) {
         if (false) {
           av.pch.yChange = false;
@@ -2222,7 +2225,7 @@ require([
           if (av.dbg.flg.plt) { console.log('PopPlot: purge chart.popData=', av.dom.popChart.data); }
           //console.log('purge chart.layout=', av.dom.popChart.layout);
         } else {
-          var numof = av.pch.rstl.length;
+          var numof = av.pch.traceList.length;
           //av.pch.update = {
           //  xaxis: {range: [0, av.pch.popY.length + 1]}, yaxis: {range: [0, 1.1 * av.pch.maxY]},
           //  width: av.pch.layout.width,
@@ -2257,18 +2260,18 @@ require([
             Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
           } else {
             if (av.brs.isChrome) {
-              av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", av.pch.rstl[0], [0]) at 1734';
-              av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.pch.rstl[0]', [av.pch.rstl[0]]);
-              Plotly.restyle('popChart', av.pch.rstl[0], [0]);
-              av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", av.pch.rstl[1], [1])  in AvidaED.js at 1738';
-              av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.pch.rstl[1]', [av.pch.rstl[1]]);
-              Plotly.restyle('popChart', av.pch.rstl[1], [1]);
+              av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", av.pch.traceList[0], [0]) at 1734';
+              av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.pch.traceList[0]', [av.pch.traceList[0]]);
+              Plotly.restyle('popChart', av.pch.traceList[0], [0]);
+              av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", av.pch.traceList[1], [1])  in AvidaED.js at 1738';
+              av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.pch.traceList[1]', [av.pch.traceList[1]]);
+              Plotly.restyle('popChart', av.pch.traceList[1], [1]);
               av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in AvidaED.js at 1741';
               
               for (var ii=2; ii< numof; ii++) {
-                av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", av.pch.rstl[0], ['+ii+'])';
-                av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.pch.rstl[]', [av.pch.rstl[ii]]);
-                Plotly.restyle('popChart', av.pch.rstl[ii], [ii]);
+                av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", av.pch.traceList[0], ['+ii+'])';
+                av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.pch.traceList[]', [av.pch.traceList[ii]]);
+                Plotly.restyle('popChart', av.pch.traceList[ii], [ii]);
               }
               av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
               Plotly.relayout(av.dom.popChart, av.pch.update);
@@ -2993,6 +2996,7 @@ require([
     if (av.dbg.flg.plt) { console.log('plt: PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
     if (av.dbg.flg.plt) { console.log('plt: PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
 
+    console.log('av.pch.layout. wt & ht:', av.pch.layout.width, av.pch.layout.height, '~~~~~~~~~~~~~~~~~~~~~');
     av.dom.popChart.style.height = av.pch.layout.height + 'px';
     av.dom.popChart.style.width = av.pch.layout.width + 'px';
     if (av.debug.uil) {

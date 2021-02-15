@@ -127,11 +127,6 @@ div.popStatsTableSot {
   background: #DDD;
 }
 
-div.popStatsTablePop {
-  min-width: 168px;
-  background: #DDD;
-}
-
 .noWrapF {
   text-align:center;
   font-weight: bold;
@@ -142,14 +137,12 @@ div.popStatsTablePop {
   text-align:left;
   font-weight: bold;
   max-height: 12px;
-  max-width: 99%;
-  overflow: hidden;
+]  overflow: hidden;
 }
 
 .noWrapR {
   text-align:right;
   max-height: 15px;
-  max-width: 99%;
   overflow: hidden;
   font-family: monospace;
   font-size: 1.2em;
@@ -315,7 +308,6 @@ table.topPopTable {
   text-align: left;
   font-family: monospace;
   font-size: 1.2em;
-  width: 40px;
 }
 .topPopTable tr:nth-child(odd) {background: #D7D7D7}
 .topPopTable tr:nth-child(even) {background: #DDDDDD}
@@ -333,15 +325,26 @@ table.botSotTable {
 
 .botSotTable tr *:nth-child(1) { text-align: center;  }
 .botSotTable tr *:nth-child(2) {  text-align: right;  }
-.botSoyTable tr *:nth-child(3) {  width: 80%;  }
+.botSotTable tr *:nth-child(3) {  width: 80%;  }
+
+.table.topPopTable {
+/*  margin: auto;  /* centers table in div */
+  border: 0;
+  padding: 0;
+  border-collapse: collapse;
+  /*  width: 100%;  */
+  table-layout: fixed;
+
+}
 
 table.botPopTable {
 /*  margin: auto;  /* centers table in div */
   border: 0;
   padding: 0;
   border-collapse: collapse;
-  table-layout: auto;
   /*  width: 100%;  */
+  table-layout: auto;
+
 }
 
 .botPopTable tr:nth-child(even) {background: #FAFAFA}

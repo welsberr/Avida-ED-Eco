@@ -158,7 +158,7 @@
     border: 1px solid #AAA;      /*sot stat = 190;  popstat =234  for  424 */
     background: #F5F5F5;
     height: 100%;
-    overflow:scroll;
+    overflow: hidden;    /* scroll;  */
   }  /* Contain the blocks popInfoVert and orgInfoHolder  */
   
   #orgInfoHolder {
@@ -460,7 +460,9 @@
 #popInfoVert {
     display: flex;
     flex-direction: column;
+    width: 438px;
     height: 100%;
+    overflow: auto;
   } /* contains: popInfoTabHolder & labInfoHolder */
 
   #popInfoTabHolder {
@@ -470,6 +472,7 @@
   .labInfoHoldCls {
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
     height: 100%;
+    width: 100%;
   }
     
   #popStatsBlock{
@@ -515,20 +518,57 @@
     /* flex: 0 1 190px;        /*was 170 */
     flex: 1 1 auto;      /* fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
     border: 1px solid #AAA;
-/*    resize: horizontal;  */
     overflow: auto;
   }  /*contains sotTopTable and sotBotTable  */
   #sotTopTable { width: 100%; }
-  #sotBopTable { width: 100%; }
-
+  #sotBopTable { width: 100%; background: white; }
+  .timePerform { min-width: 120px; background: #fff }
+  
   #popStats4grid{
-    flex: 1 1 240;      
+    flex: 1 1 210px;      
     border: 1px solid #AAA;
     min-width: 200px;
-  } /* contains popsTopTable & popsBotTable */
-  #popsTopTable { width: 100%; }
-  #popsBotTable { width: 100%; }
-    
+  } /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
+div.popsTopTableHold { min-width: 168px;  background: #DDD; }
+  .table.topPopTable {
+/*  margin: auto;  /* centers table in div */
+  border: 0;  padding: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+  min-width: 200px;
+}
+  .popsTopTblcol1 {min-width: 120px; }
+  .popsTopTblcol2 {min-width: 45px; }
+  
+  #popsBotTableHold { width: 100%; background:white; }
+  table.botPopTable {
+  /*  margin: auto;  /* centers table in div */
+    border: 0;   padding: 0;
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: auto;
+}
+  .popsBotTblcol1 {min-width: 47px; }
+  .popsBotTblcol2 {min-width: 13px; }
+  .popsBotTblcol3 {min-width: 130px; }
+  .numAvidains {  background: #fff }   /* min-width: 110px; */
+  
+  
+
+
+.botPopTable tr:nth-child(even) {background: #FAFAFA}
+.botPopTable th {
+  font-weight: bold;
+}
+.botPopTable td {  line-height: 15px;  }   /* added in javascript */
+
+.botPopTable tr *:nth-child(2) {  text-align: right;  }
+.botPopTable tr *:nth-child(3) {  width: 80%;  }
+
+
+  
+  
+
   #popChrtHolder{
     flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
     border: 1px solid #AAA;
@@ -821,7 +861,7 @@ details[open] summary:before {
   display: none;
 }
 
-.sugarDetailSection {
+.sgrDetailHoldCls {
   /* background: rgba(255, 255, 255, 0.0); */
   background: rgba(128, 128, 128, 0.2);      
 }
@@ -916,32 +956,12 @@ grid-template-areas: "detailArrow sugarTitle regionLayCls geometryCls  supplyWdC
   display: grid;
   grid-template-areas: "detailArrow sugarTitle regionLayCls supplyHoldCls tskAboutCls periodTimeGlobClass";
   justify-content: start; 
-  min-height: 23px;  width: 100%;
+  height: 23px;  width: 100%;
 }
 
 .grid-sugar-summary-geo-basic-container {
   display: inline-grid;
   grid-template-areas: 'detailArrow sugarTitle geometryCls supplyWdCls supplyHoldCls sumFtTxtCls initialGlobalClass';
-  justify-items: start;  justify-content: start; width: 100%;
-  min-height: 23px;
-}
-.grid-sugar-summary-geo-basic-chemostat-container {
-  display: inline-grid;
-  grid-template-areas: 'detailArrow sugarTitle geometryCls supplyWdCls supplyHoldCls sumFtTxtCls periodTimeGlobClass';
-  justify-items: start;  justify-content: start; width: 100%;
-  min-height: 23px;
-}
-
-.grid-sugar-summary-geo-global-container {
-  display: inline-grid;
-  grid-template-areas: 'detailArrow sugarTitle geometryCls regionLayCls supplyWdCls supplyHoldCls sumFtTxtCls initialGlobalClass';
-  justify-items: start;  justify-content: start; width: 100%;
-  min-height: 23px;
-}
-
-.grid-sugar-summary-geo-global-chemostat-container {
-  display: inline-grid;
-  grid-template-areas: 'detailArrow sugarTitle geometryCls regionLayCls supplyWdCls supplyHoldCls sumFtTxtCls periodTimeGlobClass';
   justify-items: start;  justify-content: start; width: 100%;
   min-height: 23px;
 }
@@ -999,7 +1019,7 @@ grid-template-areas: "detailArrow sugarTitle regionLayCls geometryCls  supplyWdC
 
 .sgr-detail-global-chemo-grid-container {
   display: grid;
-  grid-template-areas: 'detailTxtCls detailTxtCls detailTxtCls'
+  grid-template-areas: 'detailTxtCls detailTxtCls periodGlobalCheck'
                        'inflowHi outflowHi chmstatHi';
   justify-content: start; width: 100%;  
 }

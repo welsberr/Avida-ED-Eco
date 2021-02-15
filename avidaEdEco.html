@@ -481,6 +481,7 @@
                     </div>
                     <table id='sotTopTable' class='topSotTable'>
                       <tbody>
+                        
                         <tr>
                           <td><div class='sotL'>Name:&nbsp;<canvas id='sotColorCanvas' width='10' height='10'></canvas></div></td>
                           <td colspan='2'><div class='noWrapR'><label id='nameLabel'></label></div></td>
@@ -521,7 +522,7 @@
                         <tr>
                           <th>
                             <div class='noWrapF'><label id='sotFn'>Function&nbsp;&nbsp;</label></div></th>
-                          <th colspan='2' style='min-width: 110px; background: #fff'><div class='noWrapN'><label id='sotTimes'>Times Performed</label></div></th>
+                          <th class='timePerform' colspan='2' ><div class='noWrapN'><label id='sotTimes'>Times Performed</label></div></th>
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='notLabel'>NOT</label></div></td>
@@ -577,9 +578,10 @@
                     <div class='popStatsTitle'>
                       <label id='popStat'>Population Statistics</label>
                     </div>
-                    <div class='popStatsTablePop'>
+                    <div class='popsTopTableHold'>
                       <table id='popsTopTable' class='topPopTable'>
                         <tbody>
+                        <colgroup><col class='popsTopTblcol1'><col class='popsTopTblcol2'></colgroup>
                           <tr>
                             <td><div class='noWrapL'>Size (# of organisms):&nbsp;</div></td>
                             <td><div class='noWrapW'><label id='popSizeLabel'>&nbsp;&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;</div></td>
@@ -612,12 +614,13 @@
                         </tbody>
                       </table>
                     </div>
-                    <div id='popTskChartPick' class='popB' style="background: white;">
+                    <div id='popsBotTableHold' style="background: white;">
                       <table id='popsBotTable' class='botPopTable'>
+                        <colgroup><col class='popsBotTblcol1'><col class='popsBotTblcol2'><col class='popsBotTblcol3'></colgroup>
                         <tbody>
                           <tr>
                             <th><div class='noWrapF'><label id='psFn'>Function&nbsp;&nbsp;</label></div></th>
-                            <th colspan='2' style='min-width: 100px; background: #fff'>
+                            <th colspan='2' class='numAvidains'>
                               <div class='noWrapN'><label id='psNumOrg'># of Organisms</label></div></th>
                             <td></td>
                           </tr>
@@ -668,14 +671,14 @@
                           </tr>
                         </tbody>
                       </table>
-                    </div> <span id='popTskChartPick_end' class='display_none'></span>
+                    </div> <span id='popsBotTableHold_end' class='display_none'></span>
                   </div> <span id='popStats4grid_end'></span>
                 </div> <span id='popStatistics_id' class='display_none'></span>
               </div><span id='popStatHolder_end' class='display_none'></span>
 
               <div id='resourceDataTable'>
                 <div class='sugarGlobal-gridContainer'>
-                  <div id='sgrTop' class='sugarTsk'>Resource</div><div id="mxTop" class='mxTask'>Highest</div><div id="cellTop" class='cellTask'>Sugar</div><div id='totTop' class='totTask'>Amount</div>
+                  <div id='sgrTop' class='sugarTsk'>Resource</div><div id="mxTop" class='mxTask'>Highest</div><div id="cellTop" class='cellTask'>Type</div><div id='totTop' class='totTask'>Amount</div>
                   <div id='sgrNot' class='sugarTsk'>NOT</div><div id="mxNot" class='mxTask'>not</div><div id="cellNot" class='cellTask'>NOt</div><div id="totNot" class='totTask'>Not</div>
                   <div id='sgrNan' class='sugarTsk'>NAN</div><div id="mxNan" class='mxTask'>nan</div><div id="cellNan" class='cellTask'>NAn</div><div id="totNan" class='totTask'>naN</div>
                   <div id='sgrAnd' class='sugarTsk'>AND</div><div id="mxAnd" class='mxTask'>and</div><div id="cellAnd" class='cellTask'>ANd</div><div id="totAnd" class='totTask'>anD</div>
@@ -811,7 +814,7 @@
                              </select>
                           </div>
                           <div id="not_periodcheckboxHolder" class="periodGlobalCheck" onchange="av.sgr.eachSugarcheckboxHolderChange(this);">
-                            <label><input id="not_periodCheck" type="checkboxHolder"> Periodic</label>
+                            <label><input id="not_periodCheck" type='checkbox'> Periodic</label>
                           </div>
                           <div id="not_periodTimeHolder" class="periodTimeGlobClass">
                             <label><input id="not_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
@@ -1065,7 +1068,7 @@
                              </select>
                           </div>
                           <div id="nan_periodcheckboxHolder" class="periodGlobalCheck" onchange="av.sgr.eachSugarcheckboxHolderChange(this);">
-                            <label><input id="nan_periodCheck" type="checkboxHolder"> Periodic</label>
+                            <label><input id="nan_periodCheck" type='checkbox'> Periodic</label>
                           </div>
                           <div id="nan_periodTimeHolder" class="periodTimeGlobClass">
                             <label><input id="nan_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
@@ -1319,7 +1322,7 @@
                              </select>
                           </div>
                           <div id="and_periodcheckboxHolder" class="periodGlobalCheck" onchange="av.sgr.eachSugarcheckboxHolderChange(this);">
-                            <label><input id="and_periodCheck" type="checkboxHolder"> Periodic</label>
+                            <label><input id="and_periodCheck" type='checkbox'> Periodic</label>
                           </div>
                           <div id="and_periodTimeHolder" class="periodTimeGlobClass">
                             <label><input id="and_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
@@ -1573,7 +1576,7 @@
                              </select>
                           </div>
                           <div id="orn_periodcheckboxHolder" class="periodGlobalCheck" onchange="av.sgr.eachSugarcheckboxHolderChange(this);">
-                            <label><input id="orn_periodCheck" type="checkboxHolder"> Periodic</label>
+                            <label><input id="orn_periodCheck" type='checkbox'> Periodic</label>
                           </div>
                           <div id="orn_periodTimeHolder" class="periodTimeGlobClass">
                             <label><input id="orn_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
@@ -1605,6 +1608,9 @@
                               <option id="orn0gradient" class="gradient" value="gradient">Gradient</option>
                               <option id="orn0periodic" class="periodic" value="periodic">Periodic</option>
                             </select>&nbsp;&nbsp;&nbsp;
+                          </div>
+                          <div id="orn0periodcheckboxHolder" class="periodGlobalCheck" onchange="av.sgr.eachSugarcheckboxHolderChange(this);">
+                            <label><input id="orn0periodCheck" type='checkbox'> Periodic</label>
                           </div>
                           <div id="orn0periodTimeHolder" class="grid-sugarDetail-item periodTimeDivClass">
                             <label><input id="orn0periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> time</label>
@@ -1826,7 +1832,7 @@
                              </select>
                           </div>
                           <div id="oro_periodcheckboxHolder" class="periodGlobalCheck" onchange="av.sgr.eachSugarcheckboxHolderChange(this);">
-                            <label><input id="oro_periodCheck" type="checkboxHolder"> Periodic</label>
+                            <label><input id="oro_periodCheck" type='checkbox'> Periodic</label>
                           </div>
                           <div id="oro_periodTimeHolder" class="periodTimeGlobClass">
                             <label><input id="oro_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
@@ -2080,7 +2086,7 @@
                              </select>
                           </div>
                           <div id="ant_periodcheckboxHolder" class="periodGlobalCheck" onchange="av.sgr.eachSugarcheckboxHolderChange(this);">
-                            <label><input id="ant_periodCheck" type="checkboxHolder"> Periodic</label>
+                            <label><input id="ant_periodCheck" type='checkbox'> Periodic</label>
                           </div>
                           <div id="ant_periodTimeHolder" class="periodTimeGlobClass">
                             <label><input id="ant_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
@@ -2334,7 +2340,7 @@
                              </select>
                           </div>
                           <div id="nor_periodcheckboxHolder" class="periodGlobalCheck" onchange="av.sgr.eachSugarcheckboxHolderChange(this);">
-                            <label><input id="nor_periodCheck" type="checkboxHolder"> Periodic</label>
+                            <label><input id="nor_periodCheck" type='checkbox'> Periodic</label>
                           </div>
                           <div id="nor_periodTimeHolder" class="periodTimeGlobClass">
                             <label><input id="nor_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
@@ -2588,7 +2594,7 @@
                              </select>
                           </div>
                           <div id="xor_periodcheckboxHolder" class="periodGlobalCheck" onchange="av.sgr.eachSugarcheckboxHolderChange(this);">
-                            <label><input id="xor_periodCheck" type="checkboxHolder"> Periodic</label>
+                            <label><input id="xor_periodCheck" type='checkbox'> Periodic</label>
                           </div>
                           <div id="xor_periodTimeHolder" class="periodTimeGlobClass">
                             <label><input id="xor_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>
@@ -2842,7 +2848,7 @@
                              </select>
                           </div>
                           <div id="equ_periodcheckboxHolder" class="periodGlobalCheck" onchange="av.sgr.eachSugarcheckboxHolderChange(this);">
-                            <label><input id="equ_periodCheck" type="checkboxHolder"> Periodic</label>
+                            <label><input id="equ_periodCheck" type='checkbox'> Periodic</label>
                           </div>
                           <div id="equ_periodTimeHolder" class="periodTimeGlobClass">
                             <label><input id="equ_periodNp" class="sugPeriodNclass" type="text" onchange="av.sgr.periodChange(this);"> Period</label>

@@ -1185,8 +1185,8 @@ av.pch.clearPopChrt = function () {
   for (var ii=0; ii< av.sgr.numTasks; ii++) {
     numTsk = av.sgr.logEdNames[ii];
     tsk = av.sgr.logicNames[ii];
-    av.pch.resrcGlobal[tsk] = [0];
-    av.pch.sgr[numTsk] = [0];
+    av.pch.resrcGlobal[tsk] = [];
+    av.pch.sgr[numTsk] = [];
   //  console.log('av.pch.resrcGlobal['+tsk+']=', av.pch.resrcGlobal[tsk]);
   };
   console.log('______________________________________________________________________________');
@@ -1249,7 +1249,7 @@ av.pch.clearPopChrt = function () {
     //console.log('av.pch.resrcGlobal['+tsk+']=', av.pch.resrcGlobal[tsk] );
   };
   
-  av.pch.pixel = {wd: 310, ht: 202, wdif:10, hdif:2};
+  av.pch.pixel = {wd: 310, ht: 202, wdif:10, hdif:10 };  //hdif:2
   av.pch.data = [av.pch.trace0, av.pch.trace1];
   for (var ii=0; ii < av.sgr.numTasks-7; ii++) {
     numTsk = av.sgr.logEdNames[ii];

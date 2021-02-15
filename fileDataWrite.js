@@ -208,6 +208,7 @@
     var numTsk;
     var task;
     var tskTitle;
+    av.nut.cntGlobalDataTasks = 0;
     console.log('resource type =', av.sgr.resrcTyp);
     for (var ii=0; ii < logLen; ii++) {
       numTsk = av.sgr.logEdNames[ii];
@@ -224,8 +225,10 @@
         } else {
           document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;-';
           document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;-';
+          av.nut.cntGlobalDataTasks++;
         };
       } else {
+        // grid
         document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;Grid ';
           if (1 >= av.nut[numTsk].uiAll.regionsNumOf ) { 
           if ('infinite' == av.sgr.resrcTyp[ii] ) {
@@ -236,8 +239,9 @@
             document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;0 ';
           }
         };
-      };
-    };
+      };  // end of else grid
+    };  // end of loop thru tasks
+    console.log('av.nut.cntGlobalDataTasks=', av.nut.cntGlobalDataTasks);
   };
 
   //------------------------------------------------------------------------------------ av.fwt.makeFzrEnvironmentCfg --

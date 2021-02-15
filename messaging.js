@@ -743,9 +743,12 @@
     xorPop.textContent = msg.xor;
     equPop.textContent = msg.equ;
     
+    //create resource arrays
     //console.log('msg.globalResourceAmount=', msg.globalResourceAmount);
     var obj = msg.globalResourceAmount;
-    //console.log('av.pch.resrcGlobal=', av.pch.resrcGlobal);
+    //console.log(av.pch.resrcCnt, 'obj.length=', obj.length, '; obj=', obj);
+    //console.log('length=', av.pch.resrcGlobal.length, '; av.pch.resrcGlobal=', av.pch.resrcGlobal);
+    
     for (var tskName in obj) {
       if ( obj.hasOwnProperty(tskName) ) {
         ndx = av.sgr.logicNames.indexOf(tskName);
@@ -759,7 +762,8 @@
           document.getElementById('tot'+tskDom).innerHTML = resrcMetric;
         };
       };
-    };
+    };  // end of for items in object
+    console.log('length=', av.pch.resrcGlobal.length, '; av.pch.resrcGlobal=', av.pch.resrcGlobal);
   };
   //--------------------------------------------------------------------------------------- end av.msg.updatePopStats --
 
