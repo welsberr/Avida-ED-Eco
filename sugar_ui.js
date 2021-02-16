@@ -712,7 +712,7 @@
     document.getElementById(tsk+'_periodTimeHolder').style.display = 'none';
     document.getElementById(tsk+'_summaryFooterText').style.display = 'none';
     document.getElementById(tsk+'_taskAboutText').style.display = 'none';
-
+    document.getElementById(tsk+'0periodcheckboxHolder').style.display = 'none';
     //document.getElementById('sgrEngergyReportLabel').style.display = 'none';
     document.getElementById(tsk+'_section').open = false;
     
@@ -831,21 +831,22 @@
           case 'chemostat':
             document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'chemo-container';
             //tmpTxt = av.sgr.describe.long[tsk] + ': . . . .  When 0 < period, chemostat becomes periodic';
-            tmpTxt = 'When 0 < period, chemostat becomes periodic';
+            //tmpTxt = 'When 0 < period, chemostat becomes periodic';
             document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.short[tsk];
             document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.short.width;
             document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
-            document.getElementById(tsk+'0detailText').innerHTML = tmpTxt;
-            document.getElementById(tsk+'0detailText').style.display = 'inline-block';
-            document.getElementById(tsk+'0periodcheckboxHolder').style.display = 'inline-block';
-            document.getElementById(tsk+'_periodTimeHolder').style.display = 'inline-block';
-            document.getElementById(tsk+'_periodTimeHolder').style.display = 'inline-block';
             document.getElementById(tsk+'0inflowHiDiv').style.display = 'block';
             document.getElementById(tsk+'0outflowHiDiv').style.display = 'block';
             document.getElementById(tsk+'0inflowHiText').innerHTML = 'Inflow';
             document.getElementById(tsk+'0outflowHiText').innerHTML = 'Outflow fract';
             document.getElementById(tsk+'0chmstatHiDiv').style.display = 'block';
-  
+            if (!av.ui.hideDevelopment) {
+              document.getElementById(tsk+'_periodTimeHolder').style.display = 'inline-block';
+              document.getElementById(tsk+'0detailText').innerHTML = tmpTxt;
+              document.getElementById(tsk+'0detailText').style.display = 'inline-block';
+              document.getElementById(tsk+'0periodcheckboxHolder').style.display = 'inline-block';
+            }
+            document.getElementById(tsk+'_section').open = true;
             if ( av.utl.isNumber(Number(document.getElementById(tsk+'0inflowHiNp').value))  && 
                  av.utl.isNumber(Number(document.getElementById(tsk+'0outflowHiNp').value)) ) {
               if ( 0 < Number(document.getElementById(tsk+'0outflowHiNp').value)  && 
@@ -862,8 +863,6 @@
             // if (av.dbg.flg.nut) { console.log('task='+tsk, '; sub='+sub, '; get className from dom of ', tsk+'0Details'); }
             // if (av.dbg.flg.nut) { console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'0Details').className); }
             // if (av.dbg.flg.nut) { console.log(tsk+'0periodcheckboxHolder.checked value =', document.getElementById(tsk+'0periodCheck').checked, document.getElementById(tsk+'0periodCheck').value); }
-            document.getElementById(tsk+'_periodTimeHolder').style.display = 'inline-block';
-            document.getElementById(tsk+'_section').open = true;
             break;
           case 'debug':
             document.getElementById(tsk+'_section').open = true;

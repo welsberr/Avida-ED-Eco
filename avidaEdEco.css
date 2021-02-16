@@ -137,7 +137,7 @@
     border: 1px solid #AAA;
     hight: 100%;
     resize: horizontal;
-    overflow:scroll;
+    overflow:auto;
   }
 
 /*contains pages (population, Organsims, Analysis) */
@@ -258,10 +258,9 @@
 .freezerClass{
   border: 1px solid #BABABA;
   flex: 1;                /* fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
-  overflow:scroll;
   height: 100%;
   width: 100%;
-  overflow:scroll;
+  overflow:auto;
 }
 #FreezerTitle {
   font-size: 190%;
@@ -359,7 +358,7 @@
   flex-direction: column;
   width: 100%;
   max-height: 100%;
-  overflow:scroll;
+  overflow:hidden;
   /*max-width: 430px;   /* tiba; temp fix will need to change this later */
 }
 
@@ -966,14 +965,14 @@ grid-template-areas: "detailArrow sugarTitle regionLayCls geometryCls  supplyWdC
   min-height: 23px;
 }
 /*------------------------------------------------------------------------------------- sugar input class formatting --*/
-.sugPeriodNclass{ width: 5em; height:1.5em; }
-.sugInitialNclass{ width: 5em; height:1.5em;}
-.sugInitialHiNclass{ width: 5em; height:1.5em; }
-.sugInitialLoNclass{ width: 5em; height:1.5em; }
-.sugInflowHiNclass{ width: 5em; height:1.5em; }
-.sugInflowLoNclass{ width: 5em; height:1.5em; }
-.sugOutflowHiNclass{ width: 5em; height:1.5em; }
-.sugOutflowLoNclass{ width: 5em; height:1.5em; }
+.sugPeriodNclass { width: 5em; height:1.5em; text-align:right; }
+.sugInitialNclass { width: 5em; height:1.5em; text-align:right; }
+.sugInitialHiNclass { width: 5em; height:1.5em; text-align:right; }
+.sugInitialLoNclass { width: 5em; height:1.5em; text-align:right; }
+.sugInflowHiNclass { width: 5em; height:1.5em; text-align:right; }
+.sugInflowLoNclass { width: 5em; height:1.5em; text-align:right; }
+.sgrOutflwHiNcls { width: 5em; height:1.5em; text-align:right; }
+.sgrOutflwLoNcls { width: 5em; height:1.5em; text-align:right; }
 
 
 /************************* Sugar controls layout in 'details' of detail/summary for each task-sugar in sugar according */
@@ -986,23 +985,24 @@ grid-template-areas: "detailArrow sugarTitle regionLayCls geometryCls  supplyWdC
 .periodCheckGlobal { grid-area: periodCheckGlobal; display: none; }
 .detailTxtCls { grid-area: detailTxtCls; place-self: center stretch; }
 
-.initialHiDclass { grid-area: initialHi;}
-.initialLoDclass { grid-area: initialLo;}
+.initialHiDcls { grid-area: initialHi;}
+.initialLoDcls { grid-area: initialLo;}
 
-.inflowHiDclass { grid-area: inflowHi; align-self: center stretch; }
-.inflowLoDclass { grid-area: inflowLo; align-self: center stretch; }
+.inflwHiDcls { grid-area: inflowHi; place-self: center stretch; }
+.inflwLoDcls { grid-area: inflowLo; place-self: center stretch; }
 
-.outflowHiDclass { grid-area: outflowHi; align-self: center stretch; }
-.outflowLoDclass { grid-area: outflowLo; align-self: center stretch; }
+.outflwHiDcls { grid-area: outflowHi; place-self: center stretch; }
+.outflwLoDcls { grid-area: outflowLo; place-self: center stretch; }
 
-.chmstatHiDclass { grid-area: chmstatHi; align-self: center stretch; }
-.chmstatLoDclass { grid-area: chmstatLo; align-self: center stretch; }
+ /* top right bottom left */  
+.chmsttHiDcls { grid-area: chmstatHi; place-self: center stretch; padding: 10px; }
+.chmsttLoDcls { grid-area: chmstatLo; place-self: center stretch; padding: 10px; }
 
-.sideTitleHiDclass { grid-area: sideTitleHi; align-self: center stretch; }
-.sideTitleLoDclass { grid-area: sideTitleLo; align-self: center stretch; }
+.sideTitleHiDcls { grid-area: sideTitleHi; place-self: center stretch; }
+.sideTitleLoDcls { grid-area: sideTitleLo; place-self: center stretch; }
 
 .sideNclass { grid-area: sideInput; }
-.supplyTypeSlctHoldClass { grid-area: supplyDetailDiv; }
+.supplyTypeSlctHoldCls { grid-area: supplyDetailDiv; }
 
 .subSectionTitle { grid-area: subSectionTitle; width: 70px;}
 .sgrBlank { grid-area: sgrBlank; }
@@ -1917,5 +1917,5 @@ checkbox:focus {
     width: 100%;
     height: 100%;
     background: #F5F5F5; /* red; */
-    overflow:scroll;
+    overflow:hidden;
   }

@@ -215,21 +215,28 @@
       task = av.sgr.logicNames[ii];
       tskTitle = av.sgr.logicTitleNames[ii];
       if ( 'global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
-        document.getElementById('cell'+tskTitle).innerHTML = 'Global';
         if ('infinite' == av.sgr.resrcTyp[ii] ) {
+          document.getElementById('cell'+tskTitle).innerHTML = 'inf';
           document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;&nbsp;&infin; ';
           document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;&nbsp;&infin; ';
         } else if ('none' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
+          document.getElementById('cell'+tskTitle).innerHTML = 'none';
           document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;0.0 ';
           document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;0.0 ';
         } else {
           document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;-';
           document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;-';
           av.nut.cntGlobalDataTasks++;
+          if ('finite' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
+            document.getElementById('cell'+tskTitle).innerHTML = 'finite';
+          } else {
+            document.getElementById('cell'+tskTitle).innerHTML = 'chmst';
+          }
         };
       } else {
         // grid
         document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;Grid ';
+        document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;';
           if (1 >= av.nut[numTsk].uiAll.regionsNumOf ) { 
           if ('infinite' == av.sgr.resrcTyp[ii] ) {
             document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;&infin; ';
