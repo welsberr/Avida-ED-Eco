@@ -140,19 +140,6 @@ div.popStatsTableSot {
   overflow: hidden;
 }
 
-.noWrapR {
-  text-align:right;
-  max-height: 15px;
-  overflow: hidden;
-  font-family: monospace;
-  font-size: 1.2em;
-
-}
-
-.noWrap1 {
-  text-align:center;
-  max-height: 15px;
-}
 .noWrap2r {
   text-align:center;
   max-height: 15px;
@@ -327,6 +314,42 @@ table.botSotTable {
 .botSotTable tr *:nth-child(2) {  text-align: right;  }
 .botSotTable tr *:nth-child(3) {  width: 80%;  }
 
+.sotR {
+  text-align:left;
+  padding-left: 1px;
+  /* max-height: 125px;  */
+  width: 70px; 
+  overflow: hidden;
+}
+  .sotL {
+  text-align:right;
+  max-height: 15px;
+  /* width: 110px;  */
+  overflow: hidden;
+}
+  .sotodd {
+    background: #BBB;   /* #D7D7D7;    */
+    align-self: center;
+  }
+  .sotEven {
+    background: #DDD;
+    align-self: center;
+  }
+.noWrapR {
+  text-align:left;
+  max-height: 15px;
+  overflow: hidden;
+}
+.popButCls{
+  padding: 0px; 2px; 0px; 2px;  
+  max-height: 15px;
+}
+.noWrap1 {
+  text-align:center;
+}
+
+
+
 /*
 web pages about style sheets that are changed with javascript
 https://www.w3.org/wiki/Dynamic_style_-_manipulating_CSS_with_JavaScript
@@ -406,27 +429,6 @@ http://www.shawnolson.net/a/503/altering_css_class_attributes_with_javascript.ht
   #selOrgType {
     flex: 1 1 175px;        /*was 170 
   }  
-  .sotL {
-  text-align:right;
-  max-height: 15px;
-  /* width: 110px;  
-  overflow: hidden;
-}
-.sotR {
-  text-align:left;
-  padding-left: 1px;
-  /* max-height: 125px;  
-  width: 60px; 
-  overflow: hidden;
-}
-  .sotodd {
-    background: #BBB;   /* #D7D7D7;    
-    align-self: center;
-  }
-  .sotEven {
-    background: #DDD;
-    align-self: center;
-  }
 
   #sotTopTable {  
     display: grid;

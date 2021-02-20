@@ -706,7 +706,6 @@ av.sgr.complexityLevel = 'sgrAdvanced';
 av.sgr.complexityLevel = 'sgrGlobal';
 av.sgr.complexSumGridPrefix = 'grd-sgr-sum-adv-';
 
-
 av.sgr.describe = ['basic', 'global', 'adv'];
 
 av.sgr.describe = ['basic', 'global', 'adv'];
@@ -786,20 +785,20 @@ av.sgr.makeNutDefault = function () {
     av.sgr.nutdft.uiAll[ av.sgr.ui_allDish_argu[jj] ] = 'default';
   };
   //defaults for items that describe the whole dish
-  av.sgr.nutdft.react.min = 0.01;
-  av.sgr.nutdft.react.max = 1.0;
+  av.sgr.nutdft.react.min = 0.9999;
+  av.sgr.nutdft.react.max = 1;
   av.sgr.nutdft.react.max_count = 1;
   av.sgr.nutdft.react.type = 'pow';
   av.sgr.nutdft.uiAll.geometry = av.sgr.dftGeometry;  ////Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global
   av.sgr.nutdft.uiAll.supplyTypeSlct = 'infinite';    //this is only for whem ui.geometry = global
   av.sgr.nutdft.uiAll.regionLayout = '1Global';  //only Whole Dish for now; '1All' is the code for 'Whole Dish';
   av.sgr.nutdft.uiAll.regionsNumOf = 1;   // whole dish = there is only one dish 
-  av.sgr.nutdft.uiAll.initialHiNp = 144000;      //only used when whem ui.geometry = global and  supplyTypeSlct = 'finite' 
+  av.sgr.nutdft.uiAll.initialHiNp = 100;      //only used when whem ui.geometry = global and  supplyTypeSlct = 'finite' set per cell ; need to multiply by wrldSize
 
   //defaults for subtasks which must be Grid or Local
   av.sgr.nutdft.uiSub.supplyTypeSlct = 'infinite';  // Infinite default from Avida-ED 3: I think Should change to Finite
-  av.sgr.nutdft.uiSub.initialHiNp = 140000;  //sugar units/cell guess at an initial value when supplyTypeSlct='finite'; need to multiply by wrldSize
-  av.sgr.nutdft.uiSub.inflowHi  = 1;   //sugar units/cell guess at an initial value when supplyTypeSlct='chemostat'; need to multiply by wrldSize
+  av.sgr.nutdft.uiSub.initialHiNp = 100;  //sugar units/cell guess at an initial value when supplyTypeSlct='finite'; need to multiply by wrldSize
+  av.sgr.nutdft.uiSub.inflowHi  = 0.1;   //sugar units/cell guess at an initial value when supplyTypeSlct='chemostat'; need to multiply by wrldSize
   av.sgr.nutdft.uiSub.outflowHi = 0.1;   //sugar units (fraction) guess at an initial value when supplyTypeSlct='chemostat';
   av.sgr.nutdft.uiSub.area = -1;   //based on a standard 30 x 30 world
   av.sgr.nutdft.uiSub.diffuseCheck = false;    //false = default;  else true.      
@@ -809,7 +808,7 @@ av.sgr.makeNutDefault = function () {
 
   av.sgr.nutdft.uiSub.gradientCheck = false;    //false = default;  else true.      
   av.sgr.nutdft.uiSub.hiSide = 'left';    //only valid for local resources with supply Type = 'gradient' or 'flow';
-  av.sgr.nutdft.uiSub.inflowLo  =   0;  //sugar units/cell guess at an initial value when supplyTypeSlct='gradient' or 'flow';
+  av.sgr.nutdft.uiSub.inflowLo  = 0;     //sugar units/cell guess at an initial value when supplyTypeSlct='gradient' or 'flow';
   av.sgr.nutdft.uiSub.outflowLo = 0.1;  //sugar units (fraction) guess at an initial value when supplyTypeSlct='gradient' or 'flow';
   av.sgr.nutdft.uiSub.initialLo =   0;  //sugar units/cell guess at an initial value when supplyTypeSlct='gradient' or 'flow';
   av.sgr.nutdft.uiSub.regionNdx = 1;   //index into various region data vectors
@@ -1249,7 +1248,7 @@ av.pch.clearPopChrt = function () {
     //console.log('av.pch.resrcGlobal['+tsk+']=', av.pch.resrcGlobal[tsk] );
   };
   
-  av.pch.pixel = {wd: 310, ht: 202, wdif:10, hdif:10 };  //hdif:2
+  av.pch.pixel = {wd: 310, ht: 202, wdif:10, hdif:8};  //hdif:2
   av.pch.data = [av.pch.trace0, av.pch.trace1];
   for (var ii=0; ii < av.sgr.numTasks-7; ii++) {
     numTsk = av.sgr.logEdNames[ii];
@@ -1259,7 +1258,7 @@ av.pch.clearPopChrt = function () {
     autosize: true,     //false
     width: 300,
     height: 200,
-    margin: { l: 25, r: 20, b:40, t: 2},   //l was 85 to show a y-axis title, r: was 2 to go to edge
+    margin: { l: 25, r: 20, b:40, t: 8},   //l was 85 to show a y-axis title, r: was 2 to go to edge
     showlegend: false,
     xaxis: {
       title: 'Time (updates)',

@@ -1259,16 +1259,26 @@
             break;
           case 'chemostat':
             if (av.utl.isNumber(parseFloat(av.nut[numTsk].uiSub.inflowHiNp[sub])) ) {
+              document.getElementById(tsk+'_inflowHiNp').value = av.nut[numTsk].uiSub.inflowHiNp[sub];
               document.getElementById(tsk+'0inflowHiNp').value = av.nut[numTsk].uiSub.inflowHiNp[sub];
             } else if (av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.inflow[sub])) ) {
+              document.getElementById(tsk+'_inflowHiNp').value = Number(av.nut[numTsk].resrc.inflow[sub])/Number(av.nut.wrldSize);
               document.getElementById(tsk+'0inflowHiNp').value = Number(av.nut[numTsk].resrc.inflow[sub])/Number(av.nut.wrldSize);
-            } else { document.getElementById(tsk+'0inflowHiNp').value = 0.44444; }
+            } else { 
+              document.getElementById(tsk+'_inflowHiNp').value = 0.44444; 
+              document.getElementById(tsk+'0inflowHiNp').value = 0.44444; 
+            }
             
             if (av.utl.isNumber(parseFloat(av.nut[numTsk].uiSub.outflowHiNp[sub])) ) {
+              document.getElementById(tsk+'_outflowHiNp').value = av.nut[numTsk].uiSub.outflowHiNp[sub];
               document.getElementById(tsk+'0outflowHiNp').value = av.nut[numTsk].uiSub.outflowHiNp[sub];
             } else if (av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.outflow[sub])) ) {
+              document.getElementById(tsk+'_outflowHiNp').value = av.nut[numTsk].resrc.outflow[sub];
               document.getElementById(tsk+'0outflowHiNp').value = av.nut[numTsk].resrc.outflow[sub];
-            } else { document.getElementById(tsk+'0outflowHiNp').value = 0.44444; }
+            } else { 
+              document.getElementById(tsk+'_outflowHiNp').value = 0.44444; 
+              document.getElementById(tsk+'0outflowHiNp').value = 0.44444; 
+            }
             break;
           case 'infinite':
             av.nut[numTsk].uiSub.initialHiNp[sub] = 2;

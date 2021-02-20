@@ -271,6 +271,24 @@
     av.anl.yRightTitle = document.getElementById('yRightSelect').value;
   };
 
+  av.ui.toggleRegionLayoutControls = function(){ 
+    var len = av.sgr.logicNames.length;
+    var willbe = 'none';
+    if ('none' === document.getElementById('orn_regionLayHolder').style.display) {
+      willbe = 'inline-block';
+    } else {
+      willbe = 'none';
+    };
+    console.log('willbe=', willbe);  
+    for (ii = 0; ii < len; ii++) {
+      tsk = av.sgr.logicNames[ii];
+      document.getElementById(tsk+'_regionLayHolder').style.display = willbe;
+    };
+    document.getElementById('regionLayoutSgr').style.display = willbe;
+    document.getElementById('allSugarRegionLayoutDiv').style.display = willbe;
+  };
+
+  //No longer in uses as Geometry and Region Layout are now combined
   av.ui.toggleDisplayGeometryControls = function(){ 
     var len = av.sgr.logicNames.length;
     var willbe = 'none';

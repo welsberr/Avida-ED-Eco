@@ -1,7 +1,7 @@
 
  // this version uses grid box layout for major sections (toop, left side, main, right side)  
  // if (av.dbg.flg.root) { console.log('Root: avidaED.js at beginning of file on 2020_0111 @ 20:21'); };
- console.log('Root: avidaED.js at beginning of file on 2021_111'); 
+ console.log('Root: avidaED.js at beginning of file on 2021_218'); 
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
@@ -1616,6 +1616,7 @@ require([
     console.log('av.grd.popStatsMsg', av.grd.popStatsMsg);
     console.log('av.grd.DataByCellID =', av.grd.DataByCellID);
     console.log('av.pch =', av.pch);
+    console.log('av.dom.popChart.data=', av.dom.popChart.data);
     console.log('av.anl =', av.anl);
   };
 
@@ -2076,8 +2077,8 @@ require([
     //                  '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display,
     //                  '; av.ui.page=', av.ui.page,
     //                  '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));      
-    console.log('PopPlot:',from, 'called popChartFn: av.pch.needInit= ', av.pch.needInit, 
-                      '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));      
+    //console.log('PopPlot:',from, 'called popChartFn: av.pch.needInit= ', av.pch.needInit, 
+    //                  '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));      
     if (av.pch.needInit) {
       //console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, '; av.ui.page=', av.ui.page);
       // if the miniplot on the populaton page needs to be initiated call that funciton.
@@ -2135,7 +2136,7 @@ require([
       } else {
         // this is the adust the size. Seems like the size should only change when window/div changes size rather than checking very time. 
         av.pch.divSize('av.grd.popChartFn');
-        console.log('after av.pch.divSize');
+        //console.log('after av.pch.divSize');
 
         if (document.getElementById('yaxis').value === av.pch.yValue) {
           av.pch.yChange = false;
@@ -2186,7 +2187,7 @@ require([
         av.pch.trace0.y = av.pch.popY;
         av.pch.trace1.x = av.pch.xx;
         av.pch.trace1.y = av.pch.logY;
-        console.log('trace0',av.pch.trace0);
+        //console.log('trace0',av.pch.trace0);
         //console.log('trace1',av.pch.trace1);
 
         //var popData = [av.pch.trace0];
@@ -2244,7 +2245,7 @@ require([
           //console.log('before relayout in update grid chart');
           if (av.dbg.flg.plt) { console.log('PopPlot: av.pch.update', av.pch.update); }
 
-          console.log('av.dom.popChart.data=', av.dom.popChart.data);
+          //console.log('av.dom.popChart.data=', av.dom.popChart.data);
           if (av.dom.popChart.data) console.log('av.dom.popChart.data.length=', av.dom.popChart.data.length);
           if (undefined == av.dom.popChart.data) {
             if (av.dbg.flg.plt) { console.log('PopPlot: before plot'); }
@@ -2693,7 +2694,7 @@ require([
     /* the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, */
     /* so I multiplied by 400 to get a range .from 0 to 802 for a slide that uses 800 pixels */
     //console.log('before defaultslide value');
-    var muteSlideDefault = 190.848501887865
+    var muteSlideDefault = 190.848501887865;
     /* results in 2% as a default */
     var muteDefault = (Math.pow(10, (muteSlideDefault / 400)) - 1).toFixed(1);
     var slides = $('#orgMuteSlide').slider({
@@ -3440,6 +3441,8 @@ require([
   av.ui.aboutAvidaED_Close();    //should not needd this as display = 'none' but it is needed for now.
 
   av.ui.setResourceComplexity(av.sgr.complexityLevel, 'last-things-done');
+
+  av.fwt.clearResourceConstants();
 
   //Geometry is no longer a drop down. Now it is an opton in Supply Type
   document.getElementById('allSugarGeometry').style.display = 'none';

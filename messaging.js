@@ -784,6 +784,8 @@
       logTit4.textContent = '';
       logTit5.textContent = '';
       logTit6.textContent = '';
+      logTit7.textContent = '';
+      logTit8.textContent = '';
       numLog.textContent = '';
       av.pch.logMaxFit = 0;
       av.pch.logMaxCst = 0;
@@ -801,6 +803,8 @@
       logTit4.textContent = 'Selected';
       logTit5.textContent = 'Logic';
       logTit6.textContent = 'Functions';
+      logTit7.textContent = 'Dotted';
+      logTit8.textContent = 'Line';
 
       //console.log('out_', av.grd.logicOutline );
       //console.log('gest', av.grd.msg.gestation.data);

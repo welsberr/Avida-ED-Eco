@@ -203,47 +203,61 @@
 
   //------------------------------------------------------------------------------------- av.fwt.setResourceConstants --
 
+  av.fwt.clearResourceConstants = function() {
+    var logLen = av.sgr.logicNames.length;
+    var tskTitle;
+    console.log('resource type =', av.sgr.resrcTyp);
+    for (var ii=0; ii < logLen; ii++) {
+      tskTitle = av.sgr.logicTitleNames[ii];
+      document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;';
+      document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;';
+      document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;';
+    }
+  };
+  
   av.fwt.setResourceConstants = function() {
     var logLen = av.sgr.logicNames.length;
     var numTsk;
-    var task;
     var tskTitle;
     av.nut.cntGlobalDataTasks = 0;
     console.log('resource type =', av.sgr.resrcTyp);
     for (var ii=0; ii < logLen; ii++) {
       numTsk = av.sgr.logEdNames[ii];
-      task = av.sgr.logicNames[ii];
       tskTitle = av.sgr.logicTitleNames[ii];
+      document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;';
+      document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;';
+      document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;';
+      
       if ( 'global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         if ('infinite' == av.sgr.resrcTyp[ii] ) {
           document.getElementById('cell'+tskTitle).innerHTML = 'inf';
-          document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;&nbsp;&infin; ';
-          document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;&nbsp;&infin; ';
+          document.getElementById('mx'+tskTitle).innerHTML = '&infin; ';
+          document.getElementById('tot'+tskTitle).innerHTML = '&infin; ';
         } else if ('none' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
           document.getElementById('cell'+tskTitle).innerHTML = 'none';
-          document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;0.0 ';
-          document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;0.0 ';
+          document.getElementById('mx'+tskTitle).innerHTML = '0.0 ';
+          document.getElementById('tot'+tskTitle).innerHTML = '0.0 ';
         } else {
-          document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;-';
-          document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;-';
+          document.getElementById('mx'+tskTitle).innerHTML = '-';
+          document.getElementById('tot'+tskTitle).innerHTML = '-';
           av.nut.cntGlobalDataTasks++;
           if ('finite' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
             document.getElementById('cell'+tskTitle).innerHTML = 'finite';
           } else {
-            document.getElementById('cell'+tskTitle).innerHTML = 'chmst';
+            document.getElementById('cell'+tskTitle).innerHTML = 'chem';
           }
         };
       } else {
         // grid
-        document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;Grid ';
-        document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;';
+        document.getElementById('tot'+tskTitle).innerHTML = 'Grid ';
+        document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;';
           if (1 >= av.nut[numTsk].uiAll.regionsNumOf ) { 
           if ('infinite' == av.sgr.resrcTyp[ii] ) {
-            document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;&infin; ';
-            document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;&infin; ';
+            document.getElementById('cell'+tskTitle).innerHTML = '&infin; ';
+            document.getElementById('mx'+tskTitle).innerHTML = '&infin; ';
           } else {
-            document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;0 ';
-            document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;0 ';
+            document.getElementById('cell'+tskTitle).innerHTML = '0 ';
+            document.getElementById('mx'+tskTitle).innerHTML = '0 ';
           }
         };
       };  // end of else grid
@@ -334,8 +348,8 @@
 
         av.nut[numTsk].uiSub.regionName[nn] = av.sgr.name[regionLayout][nn];
                                       //tmptext = av.sgr.name[regionLayout][nn];
-          //av.nut[numTsk].uiSub.regionName[nn] = tmpText;
-        console.log('av.nut['+numTsk+'].uiSub.regionName['+nn+']=', av.nut[numTsk].uiSub.regionName[nn]);
+        //av.nut[numTsk].uiSub.regionName[nn] = tmpText;
+        //console.log('av.nut['+numTsk+'].uiSub.regionName['+nn+']=', av.nut[numTsk].uiSub.regionName[nn]);
           
         ndx = av.sgr.regionQuarterNames.indexOf(av.sgr.name[regionLayout][nn]);
         av.nut[numTsk].uiSub.regionNdx[nn] = ndx;
@@ -655,7 +669,7 @@
           case 'infinite':
             txt += 'REACTION ' + av.fwt.existCheck( '',av.nut[numTsk].react.name[jj],tskVar );
             txt += ' ' + av.fwt.existCheck( '',av.nut[numTsk].react.task[jj], tskVar );
-            console.log('av.nut['+numTsk+'].react.value['+jj+']=', av.nut[numTsk].react.value[jj]);
+            //console.log('av.nut['+numTsk+'].react.value['+jj+']=', av.nut[numTsk].react.value[jj]);
             txt += ' process' + av.fwt.existCheck( ':value=', av.nut[numTsk].react.value[jj], tmpNum);
             txt += av.fwt.existCheck( ':type=', av.nut[numTsk].react.type[jj], ':type=pow' );
             txt += av.fwt.existDfltCheck( ':depletable=', av.nut[numTsk].react.depletable[jj], '', 1 );
@@ -664,16 +678,15 @@
           case 'finite':
             txt += 'RESOURCE ' + av.fwt.existCheck('', av.nut[numTsk].resrc.name[jj], av.fwt.existCheck('', av.nut[numTsk].react.resource[jj], tsk) );
             txt += av.fwt.existCheck(':geometry=', av.nut[numTsk].resrc.geometry[jj], '');
-            txt += av.fwt.existDfltCheck(':xdiffuse=', av.nut[numTsk].resrc.xdiffuse[jj], 0, 1); 
-            txt += av.fwt.existDfltCheck(':ydiffuse=', av.nut[numTsk].resrc.ydiffuse[jj], 0, 1); 
             // Since fileDataRead looks for initial to see if the catagory is finite, 
             // initial needs to be in the file even if it is the default value = 0
-            txt += av.fwt.existCheck(':initial=', av.nut[numTsk].resrc.initial[jj], '')+ '\n'; 
+            tmpNum = parseFloat(av.nut[numTsk].resrc.initial[jj]) * av.nut.wrldSize;
+            txt += av.fwt.existCheck(':initial=', tmpNum, '')+ '\n'; 
             
-            // Reaction is the same for finite and chemostate
+            // Reaction is the same for finite and chemostat
             txt += 'REACTION ' + av.nut[numTsk].react.name[jj] + ' ' + av.nut[numTsk].react.task[jj];
             txt += ' process:resource='+av.nut[numTsk].react.resource[jj]+':value=' + av.nut[numTsk].react.value[jj];
-            txt +=':type=' + av.nut[numTsk].react.type[jj]+':min='+av.nut[numTsk].react.max[jj]+':min='+av.nut[numTsk].react.min[jj];
+            txt +=':type=' + av.nut[numTsk].react.type[jj]+':min='+av.nut[numTsk].react.max[jj]+':max='+av.nut[numTsk].react.max[jj];
             txt += ' requisite:max_count=' + av.nut[numTsk].react.max_count[jj] + '\n\n';
             break;
           case 'chemostat': 
@@ -681,26 +694,15 @@
             txt += av.fwt.existCheck(':geometry=', av.nut[numTsk].resrc.geometry[jj], '');
             // Since fileDataRead looks for inflow/outflow to see if the catagory is chemostat, 
             // initial must not exist in file
-            txt += av.fwt.existCheck(':inflow=', av.nut[numTsk].resrc.inflow[jj], ':inflow='+av.nut.wrldSize); 
-            txt += av.fwt.existCheck(':outflow=', av.nut[numTsk].resrc.inflow[jj], ':outflow='+av.nut.wrldSize); 
-            txt += av.fwt.existCheck(':inflowx1=', av.nut[numTsk].resrc.inflowx1[jj], ':inflowx1=0' ); 
-            txt += av.fwt.existCheck(':inflowy1=', av.nut[numTsk].resrc.inflowy1[jj], ':inflowy1=0' ); 
-            txt += av.fwt.existCheck(':inflowx2=', av.nut[numTsk].resrc.inflowx2[jj], ':inflowx2='+(av.nut.wrldCols-1)); 
-            txt += av.fwt.existCheck(':inflowy2=', av.nut[numTsk].resrc.inflowy2[jj], ':inflowy2='+(av.nut.wrldRows-1) ); 
-
-            txt += av.fwt.existCheck(':outflowx1=', av.nut[numTsk].resrc.outflowx1[jj], ':outflowx1=0' ); 
-            txt += av.fwt.existCheck(':outflowy1=', av.nut[numTsk].resrc.outflowy1[jj], ':outflowy1=0' ); 
-            txt += av.fwt.existCheck(':outflowx2=', av.nut[numTsk].resrc.outflowx2[jj], ':outflowx2='+(av.nut.wrldCols-1)); 
-            txt += av.fwt.existCheck(':outflowy2=', av.nut[numTsk].resrc.outflowy2[jj], ':outflowy2='+(av.nut.wrldRows-1) ); 
-            
-            txt += av.fwt.existDfltCheck(':xdiffuse=', av.nut[numTsk].resrc.xdiffuse[jj], 0, 1); 
-            txt += av.fwt.existDfltCheck(':ydiffuse=', av.nut[numTsk].resrc.ydiffuse[jj], 0, 1) + '\n\n'; 
-            
+            tmpNum = parseFloat(av.nut[numTsk].resrc.inflow[jj]) * av.nut.wrldSize;
+            txt += av.fwt.existCheck(':inflow=', tmpNum, ':inflow=' + av.nut.wrldSize); 
+            txt += av.fwt.existCheck(':outflow=', av.nut[numTsk].resrc.outflow[jj], ':outflow=0.5')  + '\n';
+                        
             // Reaction is the same for finite and chemostate
             txt += 'REACTION ' + av.nut[numTsk].react.name[jj] + ' ' + av.nut[numTsk].react.task[jj];
             txt += ' process:resource='+av.nut[numTsk].react.resource[jj]+':value=' + av.nut[numTsk].react.value[jj];
-            txt +=':type=' + av.nut[numTsk].react.type[jj]+':min='+av.nut[numTsk].react.max[jj]+':min='+av.nut[numTsk].react.min[jj];
-            txt += ' requisite:max_count=' + av.nut[numTsk].react.max_count[jj] + '\n\n';
+            txt +=':type=' + av.nut[numTsk].react.type[jj]+':min='+av.nut[numTsk].react.min[jj]+':max='+av.nut[numTsk].react.max[jj];
+            txt += ' requisite:max_count=' + av.nut[numTsk].react.max_count[jj] + '\n';
 /*
             // Reaction is the same for finite and chemostate
             txt += 'REACTION ' + av.fwt.existCheck( '',av.nut[numTsk].react.name[jj],tskVar );
@@ -846,7 +848,7 @@
               // Since fileDataRead looks for inflow/outflow to see if the catagory is chemostat, 
               // initial must not exist in file
               txt += av.fwt.existCheck(':inflow=', av.nut[numTsk].resrc.inflow[jj], ':inflow='+av.nut.wrldSize); 
-              txt += av.fwt.existCheck(':outflow=', av.nut[numTsk].resrc.outflow[jj], ':outflow='+av.nut.wrldSize); 
+              txt += av.fwt.existCheck(':outflow=', av.nut[numTsk].resrc.outflow[jj], ':outflow=0.5'); 
               txt += av.fwt.existCheck(':inflowx1=', av.nut[numTsk].resrc.inflowx1[jj], ':inflowx1=0' ); 
               txt += av.fwt.existCheck(':inflowy1=', av.nut[numTsk].resrc.inflowy1[jj], ':inflowy1=0' ); 
               txt += av.fwt.existCheck(':inflowx2=', av.nut[numTsk].resrc.inflowx2[jj], ':inflowx2='+(av.nut.wrldCols-1)); 
