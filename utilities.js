@@ -171,7 +171,7 @@ av.utl.log = function (base, num) {
     //console.log('10**update = 10**',av.grd.msg.update, '=', 10**av.grd.msg.update);
     if ( av.utl.isNumber(parseFloat(standardNotationNum)) ) {
       stdNum = parseFloat(standardNotationNum);
-      if (10**27 <= stdNum ) {numStr = (stdNum/10**27).toFixed(fixBase+0) + "?"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      if (10**27 <= stdNum ) {numStr = stdNum.toExponential(3); }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
 
       else if (10**26 <= stdNum ) {numStr = (stdNum/10**24).toFixed(fixBase+0) + "Y"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
       else if (10**25 <= stdNum ) {numStr = (stdNum/10**24).toFixed(fixBase+1) + "Y"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
@@ -208,8 +208,43 @@ av.utl.log = function (base, num) {
       else if (100 <= stdNum ) {numStr = stdNum.toFixed(fixBase+1) ; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
       else if (10 <= stdNum ) {numStr = stdNum.toFixed(fixBase+2); }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
       else if (1 <= stdNum ) {numStr = stdNum.toFixed(fixBase+3); }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
-      else {numStr = stdNum.toFixed(3); }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (0.1 <= stdNum) {numStr = (stdNum/10**(-3)).toFixed(fixBase+0) + "m"; } 
+      else if (0.01 <= stdNum) {numStr = (stdNum/10**(-3)).toFixed(fixBase+1) + "m"; } 
+      else if (0.001 <= stdNum) {numStr = (stdNum/10**(-3)).toFixed(fixBase+2) + "m"; } 
+
+      else if (10**(-4) <= stdNum) {numStr = (stdNum/10**(-6)).toFixed(fixBase+0) + '&micro;'; }
+      else if (10**(-5) <= stdNum) {numStr = (stdNum/10**(-6)).toFixed(fixBase+1) + '&micro;'; }
+      else if (10**(-6) <= stdNum) {numStr = (stdNum/10**(-6)).toFixed(fixBase+2) + '&micro;'; }
+
+      else if (10**(-7) <= stdNum) {numStr = (stdNum/10**(-9)).toFixed(fixBase+0) + 'n'; }
+      else if (10**(-8) <= stdNum) {numStr = (stdNum/10**(-9)).toFixed(fixBase+1) + 'n'; }
+      else if (10**(-9) <= stdNum) {numStr = (stdNum/10**(-9)).toFixed(fixBase+2) + 'n'; }
+
+      else if (10**(-10) <= stdNum) {numStr = (stdNum/10**(-12)).toFixed(fixBase+0) + 'p'; }
+      else if (10**(-11) <= stdNum) {numStr = (stdNum/10**(-12)).toFixed(fixBase+1) + 'p'; }
+      else if (10**(-12) <= stdNum) {numStr = (stdNum/10**(-12)).toFixed(fixBase+2) + 'p'; }
+
+      else if (10**(-13) <= stdNum) {numStr = (stdNum/10**(-15)).toFixed(fixBase+0) + 'f'; }
+      else if (10**(-14) <= stdNum) {numStr = (stdNum/10**(-15)).toFixed(fixBase+1) + 'f'; }
+      else if (10**(-15) <= stdNum) {numStr = (stdNum/10**(-15)).toFixed(fixBase+2) + 'f'; }
+
+      else if (10**(-16) <= stdNum) {numStr = (stdNum/10**(-18)).toFixed(fixBase+0) + 'a'; }
+      else if (10**(-17) <= stdNum) {numStr = (stdNum/10**(-18)).toFixed(fixBase+1) + 'a'; }
+      else if (10**(-18) <= stdNum) {numStr = (stdNum/10**(-18)).toFixed(fixBase+2) + 'a'; }
+
+      else if (10**(-19) <= stdNum) {numStr = (stdNum/10**(-21)).toFixed(fixBase+0) + 'z'; }
+      else if (10**(-20) <= stdNum) {numStr = (stdNum/10**(-21)).toFixed(fixBase+1) + 'z'; }
+      else if (10**(-21) <= stdNum) {numStr = (stdNum/10**(-21)).toFixed(fixBase+2) + 'z'; }
+
+      else if (10**(-22) <= stdNum) {numStr = (stdNum/10**(-24)).toFixed(fixBase+0) + 'y'; }
+      else if (10**(-23) <= stdNum) {numStr = (stdNum/10**(-24)).toFixed(fixBase+1) + 'y'; }
+      else if (10**(-24) <= stdNum) {numStr = (stdNum/10**(-24)).toFixed(fixBase+2) + 'y'; }
+
+      else {numStr = stdNum.toExponential(3); }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
     };
+    //console.log('stdNum =',stdNum,'; numStr=', numStr);
     return numStr;
   };
 //----------------------------------------------------------------------------------------------- end av.utl.toMetric --

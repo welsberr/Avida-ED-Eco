@@ -895,19 +895,19 @@ details[open] summary:before {
                        'sumFtTxtCls sumFtTxtCls sumFtTxtCls     sumFtTxtCls';
 */
 
-.sgrTitleCls { grid-area: sgrTitleCls; display: inline-block; border: 1px solid red; width: 54px; }
-.geometryCls { grid-area: geometryCls; display: none; border: 1px solid red; }
-.regionLaySumCls { grid-area: regionLayCls; display: inline-block; border: 1px solid magenta; }
-.supply_HoldCls { grid-area: supply_HoldCls; display: inline-block; border: 1px solid cyan; }
-.supplyWHoldCls { grid-area: supplyWdCls; display: inline-block; border: 1px solid red; }
-.inflwSumCls { grid-area: inflwSumCls; display: inline-block; border: 1px solid magenta; }
-.outflwSumCls { grid-area: outflwSumCls; display: inline-block; border: 1px solid cyan; }
-.chmsttSumCls { grid-area: chmsttSumCls; display: inline-block; border: 1px solid red; }
-.periodGlobalCheck { grid-area: periodGlobalCheck; display: inline-block; border: 1px solid red; }
-.periodTimeGlobClass { grid-area: periodTimeGlobClass; display: inline-block; border: 1px solid red; }
-.initialGlobCls { grid-area: initialGlobCls; display: inline-block; border: 1px solid red; }
-.taskAboutCls { grid-area: tskAboutCls; display: inline-block; border: 1px solid red; }
-.sumFootTxtClass { grid-area: sumFtTxtCls; display: inline-block; border: 0px none blue; justify-stretch: end; min-width: 95px; }
+.sgrTitleCls { grid-area: sgrTitleCls; display: inline-block; border: 0px none red; width: 54px; }
+.geometryCls { grid-area: geometryCls; display: none; border: 0px none red; }
+.regionLaySumCls { grid-area: regionLayCls; display: inline-block; border: 0px none magenta; }
+.supply_HoldCls { grid-area: supply_HoldCls; display: inline-block; border: 0px none cyan; }
+.supplyWHoldCls { grid-area: supplyWdCls; display: inline-block; border: 0px none red; }
+.inflwSumCls { grid-area: inflwSumCls; display: inline-block; border: 0px none magenta; }
+.outflwSumCls { grid-area: outflwSumCls; display: inline-block; border: 0px none cyan; }
+.chmsttSumCls { grid-area: chmsttSumCls; display: inline-block; border: 0px none red; }
+.periodGlobalCheck { grid-area: periodGlobalCheck; display: inline-block; border: 0px none red; }
+.periodTimeGlobClass { grid-area: periodTimeGlobClass; display: inline-block; border: 0px none red; }
+.initialGlobCls { grid-area: initialGlobCls; display: inline-block; border: 0px none red; }
+.taskAboutCls { grid-area: tskAboutCls; display: inline-block; border: 0px none red; }
+.sumFtTxtCls { grid-area: sumFtTxtCls; display: inline-block; border: 0px none blue; justify-stretch: end; min-width: 95px; }
 
 .grd-sgr-sum-adv-container_ {
   display: inline-grid;
@@ -944,16 +944,16 @@ grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdC
   justify-content: start; 
   height: 23px;  width: 100%;
 }
-.grd-sgr-sum-global-chemo-container_linear {
+.grd-sgr-sum-global-chemo-container {
   display: grid;
-  grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls tskAboutCls periodTimeGlobClass";
+  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls tskAboutCls';
   justify-content: start; 
   height: 23px;  width: 100%;
 }
 .grd-sgr-sum-global-chemo-container_block {
   display: block;
 }
-.grd-sgr-sum-global-chemo-container {
+.grd-sgr-sum-global-chemo-container_columns {
   display: grid;
   grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls  chmsttSumCls inflwSumCls outflwSumCls";
   justify-content: start; 
@@ -985,20 +985,20 @@ grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdC
 
 /* used as global resources can be periodic, but not in use now */
 .periodCheckGlobal { grid-area: periodCheckGlobal; display: none; }
-.detailTxtCls { grid-area: detailTxtCls; place-self: center;  border: 1px solid green; }
+.detailTxtCls { grid-area: detailTxtCls; place-self: center;  border: 0px none green; }
 
 .initialHiDcls { grid-area: initialHi;}
 .initialLoDcls { grid-area: initialLo;}
 
-.inflwHiDcls { grid-area: inflowHi; place-self: center; border: 1px solid blue; }
+.inflwHiDcls { grid-area: inflowHi; place-self: center; border: 0px none blue; }
 .inflwLoDcls { grid-area: inflowLo; place-self: center stretch; }
 
-.outflwHiDcls { grid-area: outflowHi; place-self: center; border: 1px solid cyan; }
-.outflwLoDcls { grid-area: outflowLo; place-self: center; border: 1px solid red; }
+.outflwHiDcls { grid-area: outflowHi; place-self: center; border: 0px none cyan; }
+.outflwLoDcls { grid-area: outflowLo; place-self: center; border: 0px none red; }
 
  /* top right bottom left */  
-.chmsttHiDcls { grid-area: chmstatHi; place-self: center; border: 1px solid red; }
-.chmsttLoDcls { grid-area: chmstatLo; place-self: center; border: 1px solid red; }
+.chmsttHiDcls { grid-area: chmstatHi; place-self: center; border: 0px none red; }
+.chmsttLoDcls { grid-area: chmstatLo; place-self: center; border: 0px none red; }
 
 .sideTitleHiDcls { grid-area: sideTitleHi; place-self: center stretch; }
 .sideTitleLoDcls { grid-area: sideTitleLo; place-self: center stretch; }
@@ -1019,16 +1019,22 @@ grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdC
   justify-content: start; width: 100%;  
 }
 
-.sgr-detail-global-chemo-grid-containerblock { display: block; height: 20pxs}
+.sgr-detail-global-chemo-grid-container_block { display: block; height: 20pxs}
 
-.sgr-detail-global-chemo-grid-container_linear {
+.sgr-detail-global-chemo-grid-container {
   display: grid;
-  grid-template-areas: 'detailTxtCls detailTxtCls periodGlobalCheck'
+  grid-template-areas: 'inflowHi outflowHi chmstatHi';
+  justify-content: start; width: 100%;  
+}
+
+.sgr-detail-global-chemo-grid-container_periodic {
+  display: grid;
+  grid-template-areas: 'periodGlobalCheck periodTime periodTime'
                        'inflowHi outflowHi chmstatHi';
   justify-content: start; width: 100%;  
 }
 
-.sgr-detail-global-chemo-grid-container {
+.sgr-detail-global-chemo-grid-container_control_in_summary {
   display: grid;
   grid-template-areas: 'detailTxtCls chmstatHi inflowHi outflowHi';
   grid-template-columns: 150px 65px 65px 65px;
@@ -1161,9 +1167,7 @@ grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdC
   display: grid;
   grid-template-areas: 'setTitle supplyTypeSlctSgr supplyTypeHolder showHideSgr detailDiv'
                        'setTitle regionLayoutSgr   regionLayoutDiv  patternSgr  patternDiv';
-  width: 100%;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
+  justify-items: start;  justify-content: start; width: 100%;
   background: #DDD;   /* #AAA; is too dark now */    
 }
 

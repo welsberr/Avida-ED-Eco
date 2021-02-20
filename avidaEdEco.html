@@ -778,10 +778,10 @@
                   <div id='sugarAccordion'>
 
                    <div id="sugarInsideWrapper">   
-                    <details id="not_section" class='sgrAccordSectionCls'>
+                    <details id="not_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
                       <summary id="not_summary" class='sgrSumCls'> 
                           <div id="not_title" class='sgrTitleCls'>Notose</div>&nbsp;
-                          <div id="not_geometryDiv" class="geometryCls">
+                          <div id="not_geometryDiv" class='geometryCls'>
                             <select id="not_geometry" onchange="av.sgr.geometryChange(this);">
                               <option value="global" selected=''>Global</option>
                               <option value="grid">Local</option>
@@ -1032,10 +1032,10 @@
                       </div><span id="not_detailsHolder_end" class="display_none"></span>
                     </details>
 
-                    <details id="nan_section" class='sgrAccordSectionCls'>
+                    <details id="nan_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
                       <summary id="nan_summary" class='sgrSumCls'> 
                           <div id="nan_title" class='sgrTitleCls'>Nanose</div>&nbsp;
-                          <div id="nan_geometryDiv" class="geometryCls">
+                          <div id="nan_geometryDiv" class='geometryCls'>
                             <select id="nan_geometry" onchange="av.sgr.geometryChange(this);">
                               <option value="global" selected=''>Global</option>
                               <option value="grid">Local</option>
@@ -1286,10 +1286,10 @@
                       </div><span id="nan_detailsHolder_end" class="display_none"></span>
                     </details>
 
-                    <details id="and_section" class='sgrAccordSectionCls'>
+                    <details id="and_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
                       <summary id="and_summary" class='sgrSumCls'> 
                           <div id="and_title" class='sgrTitleCls'>Andose</div>&nbsp;
-                          <div id="and_geometryDiv" class="geometryCls">
+                          <div id="and_geometryDiv" class='geometryCls'>
                             <select id="and_geometry" onchange="av.sgr.geometryChange(this);">
                               <option value="global" selected=''>Global</option>
                               <option value="grid">Local</option>
@@ -1540,10 +1540,10 @@
                       </div><span id="and_detailsHolder_end" class="display_none"></span>
                     </details>
 
-                    <details id="orn_section" class='sgrAccordSectionCls'>
-                      <summary id="orn_summary" class='sgrSumCls'> 
-                          <div id="orn_title" class='sgrTitleCls'>Ornose</div>
-                          <div id="orn_geometryDiv" class="geometryCls">
+                    <details id='orn_section' class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
+                      <summary id='orn_summary' class='sgrSumCls'> 
+                          <div id='orn_title' class='sgrTitleCls'>Ornose</div>
+                          <div id='orn_geometryDiv' class='geometryCls'>
                             <select id="orn_geometry" onchange="av.sgr.geometryChange(this);">
                               <option value="global" selected=''>Global</option>
                               <option value="grid">Local</option>
@@ -1559,7 +1559,7 @@
                             </select>
                           </div>
                           <div id="orn_supplyTypeHolder" class='supply_HoldCls'>
-                            <select id="orn_supplyTypeSlct" class='supplyTypeSClass' onchange='av.sgr.supplyChange(this);'>
+                            <select id='orn_supplyTypeSlct' class='supplyTypeSClass' onchange='av.sgr.supplyChange(this);'>
                               <option id="orn_none" value=none'>None</option>
                               <option id="orn_Infinite" value='infinite' selected=''>Infinite</option>
                               <option id="orn_finite" value="finite">Finite</option>
@@ -1654,7 +1654,7 @@
                             <span id="orn0inflowLoText" class='sugOutflowLabel'>Inflow/cell &nbsp;</span></label>
                           </div>
                           <div id="orn0outflowHiDiv" class='sgrDetail_grid-item outflwHiDcls'>
-                            <label><input id="orn0outflowHiNp" class='sgrOutflwHiNcls' type='text' onchange="av.sgr.outflowChange(this);">&nbsp;
+                            <label><input id='orn0outflowHiNp' class='sgrOutflwHiNcls' type='text' onchange="av.sgr.outflowChange(this);">&nbsp;
                             <span id="orn0outflowHiText" class='sugOutflowLabel'>Outflow fract</span></label>
                           </div>
                           <div id="orn0outflowLoDiv" class='sgrDetail_grid-item outflwLoDcls'>
@@ -1807,10 +1807,10 @@
                       </div><span id="orn_detailsHolder_end" class="display_none"></span>
                     </details>
 
-                    <details id="oro_section" class='sgrAccordSectionCls'>
+                    <details id="oro_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
                       <summary id="oro_summary" class='sgrSumCls'> 
                           <div id="oro_title" class='sgrTitleCls'>Orose</div>&nbsp;
-                          <div id="oro_geometryDiv" class="geometryCls">
+                          <div id="oro_geometryDiv" class='geometryCls'>
                             <select id="oro_geometry" onchange="av.sgr.geometryChange(this);">
                               <option value="global" selected=''>Global</option>
                               <option value="grid">Local</option>
@@ -2061,10 +2061,10 @@
                       </div><span id="oro_detailsHolder_end" class="display_none"></span>
                     </details>
 
-                    <details id="ant_section" class='sgrAccordSectionCls'>
+                    <details id="ant_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
                       <summary id="ant_summary" class='sgrSumCls'> 
                           <div id="ant_title" class='sgrTitleCls'>Antose</div>&nbsp;
-                          <div id="ant_geometryDiv" class="geometryCls">
+                          <div id="ant_geometryDiv" class='geometryCls'>
                             <select id="ant_geometry" onchange="av.sgr.geometryChange(this);">
                               <option value="global" selected=''>Global</option>
                               <option value="grid">Local</option>
@@ -2315,10 +2315,10 @@
                       </div><span id="ant_detailsHolder_end" class="display_none"></span>
                     </details>
 
-                    <details id="nor_section" class='sgrAccordSectionCls'>
+                    <details id="nor_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
                       <summary id="nor_summary" class='sgrSumCls'> 
                           <div id="nor_title" class='sgrTitleCls'>Norose</div>&nbsp;
-                          <div id="nor_geometryDiv" class="geometryCls">
+                          <div id="nor_geometryDiv" class='geometryCls'>
                             <select id="nor_geometry" onchange="av.sgr.geometryChange(this);">
                               <option value="global" selected=''>Global</option>
                               <option value="grid">Local</option>
@@ -2569,10 +2569,10 @@
                       </div><span id="nor_detailsHolder_end" class="display_none"></span>
                     </details>
 
-                    <details id="xor_section" class='sgrAccordSectionCls'>
+                    <details id="xor_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
                       <summary id="xor_summary" class='sgrSumCls'> 
                           <div id="xor_title" class='sgrTitleCls'>Xorose</div>&nbsp;
-                          <div id="xor_geometryDiv" class="geometryCls">
+                          <div id="xor_geometryDiv" class='geometryCls'>
                             <select id="xor_geometry" onchange="av.sgr.geometryChange(this);">
                               <option value="global" selected=''>Global</option>
                               <option value="grid">Local</option>
@@ -2823,10 +2823,10 @@
                       </div><span id="xor_detailsHolder_end" class="display_none"></span>
                     </details>
 
-                    <details id="equ_section" class='sgrAccordSectionCls'>
+                    <details id="equ_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
                       <summary id="equ_summary" class='sgrSumCls'> 
                           <div id="equ_title" class='sgrTitleCls'>Equose</div>&nbsp;
-                          <div id="equ_geometryDiv" class="geometryCls">
+                          <div id="equ_geometryDiv" class='geometryCls'>
                             <select id="equ_geometry" onchange="av.sgr.geometryChange(this);">
                               <option value="global" selected=''>Global</option>
                               <option value="grid">Local</option>
@@ -3081,7 +3081,7 @@
                   </div><span id='sugarAccordion_end' class='display_none'></span>
 
                   <div id='sugarFooter' class='changeAllSugarsTogetherContainer'>
-                    <div id='sugarSetTitle' class='rHeadItem'>Set all Resources</div>
+                    <div id='sugarSetTitle' class='rHeadItem'>Set all Resources:&nbsp;</div>
 
                     <div id='allSugarGeometryDiv' class='rHeadItem'>
                       <select id="allSugarGeometry" class='geometryClsAll' onchange='av.sgr.allSugarGeometryChange(this);'>
@@ -3119,7 +3119,7 @@
                       </select> 
                     </div>
                     <div id='allSugarDetailsDiv' class='rHeadItem'>
-                      <select id="allSugarDetails" onchange='av.sgr.allSugarDetailsOpenClose(this);'>
+                      <select id='allSugarDetails' onchange='av.sgr.allSugarDetailsOpenClose(this);'>
                         <option value='allOpen'>Show</option>
                         <option value='allClose'>Hide</option>
                         <option value='neutral' selected>----</option>                            
@@ -4090,7 +4090,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                 id='saveCSVdialogCancel'>Cancel
         </button>
       </div>
-      <span><button data-dojo-type='dijit/form/Button' type='button' id='sendLogDialogSave'>Save</button>></span>
+      <span><button data-dojo-type='dijit/form/Button' type='button' id='sendLogDialogSave'>Save</button></span>
     </div>
 
 
