@@ -507,12 +507,14 @@
     var numTsk = av.sgr.logEdNames[ndx];
     var chemoSummary = '';
     var tmpnum = '';
+    var notestr = '';
     console.log('type=', document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase(), '; !optioin=', !openFlag);
     if ('chemostat'  == document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase() && !openFlag) {
       chemoSummary = av.sgr.describe.short[tsk] + ' ' + document.getElementById(tsk+'0inflowHiNp').value + ' / '
                    + document.getElementById(tsk+'0outflowHiNp').value + ' = '
                    + av.utl.toMetric(av.nut[numTsk].uiAll.equil,0);
       //console.log('new width is', tmpnum);
+      notestr = 'Inflow / Outflow = Equilibrium';
     } else if ('chemostat'  == document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase() && openFlag) {
       chemoSummary = av.sgr.describe.long[tsk];
     };
@@ -520,6 +522,7 @@
     //console.log('new width is', tmpnum);
     document.getElementById(tsk+'_taskAboutText').style.width = tmpnum;
     document.getElementById(tsk+'_taskAboutText').innerHTML = chemoSummary;    
+    document.getElementById('sugarNote').innerHTML = notestr;    
   };
   
   
