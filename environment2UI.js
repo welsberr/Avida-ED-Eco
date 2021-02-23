@@ -970,9 +970,10 @@
               switch (supplyTypeSlct) {
                 case 'finite':
                   if (av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.initial[sub])) ) {
-                    av.nut[numTsk].uiSub.initialHiNp[sub] = parseInt(av.nut[numTsk].resrc.initial[sub]);
-                    av.nut[numTsk].uiAll.initialHiNp = parseInt(av.nut[numTsk].resrc.initial[sub]);
-                  }
+                    av.nut[numTsk].uiSub.initialHiNp[sub] = parseFloat(av.nut[numTsk].resrc.initial[sub]/
+                                                            parseFloat(av.nut.wrldSize));
+                    av.nut[numTsk].uiAll.initialHiNp = parseFloat(av.nut[numTsk].resrc.initial[sub]/
+                                                            parseFloat(av.nut.wrldSize));                  }
                   break;
                 case 'none':
                   av.nut[numTsk].uiSub.initialHiNp[sub] = 0;

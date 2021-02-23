@@ -222,6 +222,7 @@
       var request = {
         'type': 'addEvent',
         'name': 'importExpr',
+        'amend': 'false',
         'triggerType': 'immediate',
         'files': [
   //      { 'name': 'avida.cfg', 'data': av.fzr.actConfig.file['avida.cfg'] },

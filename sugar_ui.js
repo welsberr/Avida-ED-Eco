@@ -508,7 +508,7 @@
     var chemoSummary = '';
     var tmpnum = '';
     var notestr = '';
-    console.log('type=', document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase(), '; !optioin=', !openFlag);
+    //console.log('type=', document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase(), '; !optioin=', !openFlag);
     if ('chemostat'  == document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase() && !openFlag) {
       chemoSummary = av.sgr.describe.short[tsk] + ' ' + document.getElementById(tsk+'0inflowHiNp').value + ' / '
                    + document.getElementById(tsk+'0outflowHiNp').value + ' = '

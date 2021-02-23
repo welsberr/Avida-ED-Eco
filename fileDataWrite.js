@@ -181,6 +181,7 @@
     return text;
   };
   
+  //----------------------------------------------------------------------------------------------- av.fwt.existCheck --
   av.fwt.existCheck = function(str, data, dfltTxt){
     var text = '';
     if (null !=  data) {
@@ -220,7 +221,7 @@
     var numTsk;
     var tskTitle;
     av.nut.cntGlobalDataTasks = 0;
-    console.log('resource type =', av.sgr.resrcTyp);
+    //console.log('resource type =', av.sgr.resrcTyp);
     for (var ii=0; ii < logLen; ii++) {
       numTsk = av.sgr.logEdNames[ii];
       tskTitle = av.sgr.logicTitleNames[ii];
@@ -262,7 +263,7 @@
         };
       };  // end of else grid
     };  // end of loop thru tasks
-    console.log('av.nut.cntGlobalDataTasks=', av.nut.cntGlobalDataTasks);
+    //console.log('av.nut.cntGlobalDataTasks=', av.nut.cntGlobalDataTasks);
   };
 
   //------------------------------------------------------------------------------------ av.fwt.makeFzrEnvironmentCfg --
@@ -454,6 +455,7 @@
         for (var ll = 0; ll < react_arguLen; ll++) {
           av.nut[numTsk].react[ av.sgr.react_argu[ll] ][jj] = av.sgr.reAct_edValu_d[av.sgr.react_argu[ll]];
         }
+        //sconsole.log('av.nut['+numTsk+'].react', av.nut[numTsk].react);
         
         av.nut[numTsk].react.value[jj] = av.sgr.reactValues[ii];
         av.nut[numTsk].react.name[jj] = tsk+'000';
@@ -485,7 +487,7 @@
             break;
           case 'chemostat': 
             av.nut[numTsk].react.resource[0] = tsk+'000';
-            av.nut[numTsk].resrc.inflow[jj] = av.nut[numTsk].uiSub.inflowHiNp[jj];
+            av.nut[numTsk].resrc.inflow[jj] = av.nut[numTsk].uiSub.inflowHiNp[jj]*av.nut.wrldSize;
             av.nut[numTsk].resrc.outflow[jj] = av.nut[numTsk].uiSub.outflowHiNp[jj];
             break;
         }
@@ -692,11 +694,10 @@
           case 'chemostat': 
             txt += 'RESOURCE ' + av.fwt.existCheck('', av.nut[numTsk].resrc.name[jj], av.fwt.existCheck('', av.nut[numTsk].react.resource[jj], tsk) );
             txt += av.fwt.existCheck(':geometry=', av.nut[numTsk].resrc.geometry[jj], '');
-            // Since fileDataRead looks for inflow/outflow to see if the catagory is chemostat, 
-            // initial must not exist in file
-            tmpNum = parseFloat(av.nut[numTsk].resrc.inflow[jj]) * av.nut.wrldSize;
-            txt += av.fwt.existCheck(':inflow=', tmpNum, ':inflow=' + av.nut.wrldSize); 
+            //console.log('inflow=', parseFloat(av.nut[numTsk].resrc.inflow[jj]) );
+            txt += av.fwt.existCheck(':inflow=', parseFloat(av.nut[numTsk].resrc.inflow[jj]), ':inflow=' + av.nut.wrldSize);
             txt += av.fwt.existCheck(':outflow=', av.nut[numTsk].resrc.outflow[jj], ':outflow=0.5')  + '\n';
+            //console.log('numTsk=', numTsk, '; inflow=', tmpNum, '; outflow=', av.nut[numTsk].resrc.outflow[jj]);
                         
             // Reaction is the same for finite and chemostate
             txt += 'REACTION ' + av.nut[numTsk].react.name[jj] + ' ' + av.nut[numTsk].react.task[jj];

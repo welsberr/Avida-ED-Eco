@@ -908,7 +908,7 @@ details[open] summary:before {
 .outflwSumCls { grid-area: outflwSumCls; display: inline-block; border: 0px none cyan; }
 .chmsttSumCls { grid-area: chmsttSumCls; display: inline-block; border: 0px none red; }
 .periodGlobalCheck { grid-area: periodGlobalCheck; display: inline-block; border: 0px none red; }
-.periodTimeGlobClass { grid-area: periodTimeGlobClass; display: inline-block; border: 0px none red; }
+.periodTimGlobCls { grid-area: periodTimGlobCls; display: inline-block; border: 0px none red; }
 .initialGlobCls { grid-area: initialGlobCls; display: inline-block; border: 0px none red; }
 .taskAboutCls { grid-area: tskAboutCls; display: inline-block; border: 0px none red; }
 .sumFtTxtCls { grid-area: sumFtTxtCls; display: inline-block; border: 0px none blue; justify-stretch: end; min-width: 95px; }
@@ -930,7 +930,7 @@ grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdC
 
 .grd-sgr-sum-adv-chemo-container_ {
   display: grid;
-  grid-template-areas: "detailArrow sgrTitleCls  regionLayCls geometryCls supplyWdCls supply_HoldCls periodTimeGlobClass"
+  grid-template-areas: "detailArrow sgrTitleCls  regionLayCls geometryCls supplyWdCls supply_HoldCls periodTimGlobCls"
                        "detailArrow sumFtTxtCls sumFtTxtCls  sumFtTxtCls sumFtTxtCls sumFtTxtCls   sumFtTxtCls";
   justify-content: start; 
   min-height: 23px;  width: 100%;
@@ -938,7 +938,7 @@ grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdC
 
 .grd-sgr-sum-global-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls tskAboutCls';
+  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls tskAboutCls periodTimGlobCls';
   justify-content: start; 
   height: 23px;  width: 100%;
 }

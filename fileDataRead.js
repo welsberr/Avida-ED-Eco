@@ -245,6 +245,7 @@
                 av.frd.environmentCFG2form(av.fio.thisfile.asText().trim());
               }
               else if ('c0/events.cfg' === av.fio.anID) {
+                //must be callsed after environment, but c0/events is empty
                 av.frd.eventsCFG2form(av.fio.thisfile.asText().trim(), 'av.fio.processFiles');
               }
             };
@@ -340,19 +341,20 @@
     if (true) { console.log(from, 'called av.frd.updateSetup; dir=', dir); }
 
     var doctext = av.fzr.file[dir + '/avida.cfg'];
-    console.log('')
+    console.log('');
     av.frd.avidaCFG2form(doctext, 'av.frd.updateSetup');
-
-    doctext = av.fzr.file[dir + '/events.cfg'];
-    if (av.dbg.flg.frd) { console.log('events.cfg = ', doctext, '; length = ', doctext.length); }
-    if (2 < doctext.length) {
-      av.frd.eventsCFG2form(doctext, 'av.frd.updateSetup');
-    }
 
     doctext = av.fzr.file[dir + '/environment.cfg'];
     if (av.dbg.flg.frd) { console.log(dir + '/environment.cfg:  ', doctext); }
     av.env.environment2UI(doctext, 'av.frd.updateSetup');      //puts environment in a structure
     
+    doctext = av.fzr.file[dir + '/events.cfg'];
+    if (av.dbg.flg.frd) { console.log('events.cfg = ', doctext, '; length = ', doctext.length); }
+    if (2 < doctext.length) {
+      //must be processed after environment.cfg
+      av.frd.eventsCFG2form(doctext, 'av.frd.updateSetup');
+    };
+
     doctext = av.fzr.file[dir + '/pauseRunAt.txt'];
     if (undefined !== doctext) { av.frd.pauseRunAtTXT2form(doctext); }
   };
@@ -450,8 +452,18 @@
 //======================================================================================================================
 
   av.frd.setPeriodicInflowLineParse = function (lineArray) {
-    console.log('in av.frd.setPeriodicInflowLineParse');
-    console.log(lineArray);
+    // line started wtih SETPERIODICRESOURCEINFLOW befor parsing. 
+    var taskName = lineArray[3];
+    var tsk = taskName.substr(0,3);
+    var ndx = av.sgr.logicNames.indexOf(tsk);
+    var numTsk = av.sgr.logEdNames[ndx];
+    console.log('In av.frd.setPeriodicInflowLineParse', lineArray, 'taskName=', taskName, '; tsk=', tsk, '; ndx=', ndx, '; numTsk=', numTsk);
+    
+    var regionCode = taskName.substr(3,3);
+    var regionSet = taskName.substr(6,1);
+    var sub = av.nut[numTsk].uiSub.regionCode.indexOf(regionCode);
+    console.log('numTsk=', numTsk, '; regionCode=', regionCode, '; regionSet=', regionSet, '; sub=', sub );
+    av.nut[numTsk].uiSub.periodNp[sub] = lineArray[4];
   };
 
   av.frd.eventsCFGparse = function (filestr, from) {

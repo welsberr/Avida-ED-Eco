@@ -40,8 +40,9 @@ av.dbg.flg = {};
 av.dbg.flg.popSetup = false;
 av.dbg.flg.frd = false;  //reading file text strings
 av.dbg.flg.nut = true;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
-av.dbg.flg.plt = false;  //both popChart and analysis
+av.dbg.flg.plt = true;  //both popChart and analysis
 av.dbg.flg.root = false;  //statements that look for failers when the code executes outside of functions
+av.dbg.flg.divsize = false;
 
 av.debug.usr = ''; //working on log for user actions.
 
@@ -470,7 +471,6 @@ av.env = {}; //used for functions to process information beteen the environment 
 
 av.sgr = {};   //specific to resource/reactions (sugars); mostly constants. Not all iddeas written here will be used. 
 av.sgr.typeDefault = 'infinite';
-av.sgr.lineDash = ['solid', 'dot', 'solid', 'longdash', 'solid',  'dash', 'solid', 'dashdot', 'longdashdot'];
 av.sgr.oseNames = ['Notose', 'Nanose', 'Andose', 'Ornose', 'Orose', 'Antose', 'Norose', 'Xorose', 'Equose'];
 av.sgr.resrcTyp = ['infinite', 'infinite', 'infinite', 'infinite', 'infinite', 'infinite', 'infinite', 'infinite', 'infinite'];
 av.sgr.logEdNames = ['0not', '1nan', '2and', '3orn', '4oro', '5ant', '6nor', '7xor', '8equ'];
@@ -488,7 +488,6 @@ av.sgr.monoChromeMaps = ['reddMap', 'orngMap', 'yllwMap', 'lawnMap',  'grenMap',
 //  av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'grenMap',  'yllwMap', 'orngMap',  'reddMap', 'mgntMap',  'purpMap'];
 //  av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'grenMap',  'yllwMap', 'orngMap',  'redvMap', 'mgntMap',  'purpMap'];
   av.sgr.sugarColors = ['grenMap', 'seagMap',  'cornMap', 'blueMap',  'purpMap', 'mgntMap',  'redvMap', 'orngMap',  'yllwMap'];
-  av.sgr.lineColors =  ['green', 'green', 'blue', 'blue', 'red', 'red', 'orange', 'orange', 'yellow'];
 //console.log('sugarColors=', av.sgr.sugarColors);
 av.sgr.sugarBackgroundShade = 40;  //was 30
 av.sgr.sugarNameShade = 345;   //was 365   265 too light for yellow&greens; 300 green ok; yellow still too light (Rob liked 340)
@@ -505,7 +504,7 @@ av.sgr.reAct_edValu_d = {
   'value' : 1,
   'depletable' : 1,
   'resource' : 'missing',
-  'min' : 0.0, 
+  'min' : 1.0,
   'max' : 1.0,
   'task' : '',
   'max_count' : 1,
@@ -518,7 +517,7 @@ av.sgr.reAct_avidaDft_d = {
     'value' : 1,       //value = 1 through 5 based on number of nan gates needed to do the task. 
     'depletable' : 1,  // depletable = 1 = yes resources are eaten; 0 = no they are not eaten
     'resource' : '',  // name or resource that needs to be present for reaction. if none stated assume infinate
-    'min' : 0.0,      // min will be a constant probably 0.9
+    'min' : 1.0,      // min will be a constant probably 0.9
     'max' : 1.0,      // max will be a constang probably 1.1
     'task' : '',      // one of the logic. s
     'max_count' : 1,  // max_count = 1 always in Avida-ED
@@ -785,7 +784,7 @@ av.sgr.makeNutDefault = function () {
     av.sgr.nutdft.uiAll[ av.sgr.ui_allDish_argu[jj] ] = 'default';
   };
   //defaults for items that describe the whole dish
-  av.sgr.nutdft.react.min = 0.9999;
+  av.sgr.nutdft.react.min = 1;
   av.sgr.nutdft.react.max = 1;
   av.sgr.nutdft.react.max_count = 1;
   av.sgr.nutdft.react.type = 'pow';
@@ -897,7 +896,7 @@ av.fzr.clearEnvironment = function(from) {
     //defaults for items that describe the whole dish
     // These should be in arrays or dictionaries so that they always match with av.sgr.nutdft.uiAll - tiba fix later
     av.nut[tsk].uiAll.geometry = av.sgr.dftGeometry;        //Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global 
-    av.nut[tsk].uiAll.supplyTypeSlct = av.sgr.nutdft.uiAll.supplyTypeSlct    //this is only for whem ui.geometry = global
+    av.nut[tsk].uiAll.supplyTypeSlct = av.sgr.nutdft.uiAll.supplyTypeSlct;    //this is only for whem ui.geometry = global
     av.nut[tsk].uiAll.regionLayout = av.sgr.nutdft.uiAll.regionLayout;  //only whole dish for now; default is global;
     av.nut[tsk].uiAll.regionsNumOf = av.sgr.nutdft.uiAll.regionsNumOf;   // whole dish
     av.nut[tsk].uiAll.initialHiNp = av.sgr.nutdft.uiAll.initialHiNp;      //only used whem ui.geometry = global and  supplyTypeSlct = 'finite' 
@@ -1150,6 +1149,9 @@ av.pch.dadMax = 16;
 av.pch.resrcGlobal = {};
 av.pch.sgr = {};
 
+av.sgr.lineDash = ['solid', 'dot', 'solid', 'longdash', 'solid',  'dash', 'solid', 'dashdot', 'longdashdot'];
+av.sgr.lineColors =  ['green', 'green', 'blue', 'blue', 'red', 'red', 'orange', 'orange', 'yellow'];
+
 av.pch.clearPopChrt = function () {
   av.pch.needInit = true; //Added on 2019 Dec 10 Tues; not sure if it belongs here or not
   av.pch.ht = 10;
@@ -1239,11 +1241,15 @@ av.pch.clearPopChrt = function () {
     numTsk = av.sgr.logEdNames[ii];
     dashtype = av.sgr.lineDash[ii];
     sgrName = av.sgr.oseNames[ii];
+    nameColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade]; 
+    darkColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade+10];
+    pureColor = av.color[av.sgr.sugarColors[ii]][255]; 
+    console.log('tsk=', tsk, '; nameColo345r=', nameColor, '; color_255', av.color[av.sgr.sugarColors[ii]][255] );
     av.pch.trc[numTsk] = {
 //      x:av.pch.xx, y:av.pch.sgr[numTsk], type:'scatter', mode: 'lines', name: sgrName, yaxis: "y2",
 //      line: {color: av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade+10], width: 1, dash: dashtype }
       x:av.pch.xx, y:av.pch.sgr[numTsk], type:'scatter', mode: 'lines', name: sgrName, yaxis: "y2",
-      line: {color: av.sgr.lineColors[ii], width: 1, dash: dashtype }
+      line: {color: pureColor, width: 1, dash: dashtype }
     };
     //console.log('av.pch.resrcGlobal['+tsk+']=', av.pch.resrcGlobal[tsk] );
   };
