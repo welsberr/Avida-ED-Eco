@@ -263,16 +263,17 @@
     var value = domObj.value;
     var task = taskID.substring(0, 3);
     var sub = taskID.substr(3, 1);
-    if ('1' == sub) {
+    if ('_' == sub) {
       var tmpstr = task + 'W' + taskID.substr(4);
-      console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub, '; suffix=', taskID.substr(4), '; value=', value, '; tmpstr = '+tmpstr);
+      //console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub, '; suffix=', taskID.substr(4), '; value=', value, '; tmpstr = '+tmpstr);
       document.getElementById(tmpstr).value = domObj.value;
     }
     else if ('W' == sub) {
       var tmpstr = task + '1' + taskID.substr(4);
-      console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub, '; suffix=', taskID.substr(4), '; value=', value, '; tmpstr = '+tmpstr);
+      //console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub, '; suffix=', taskID.substr(4), '; value=', value, '; tmpstr = '+tmpstr);
       document.getElementById(tmpstr).value = domObj.value;      
     }
+    //console.log('taskID=', taskID, '; value=', value, '; task=', task, '; sub=', sub);
     av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
   };
 

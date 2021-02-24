@@ -462,7 +462,7 @@
     var regionCode = taskName.substr(3,3);
     var regionSet = taskName.substr(6,1);
     var sub = av.nut[numTsk].uiSub.regionCode.indexOf(regionCode);
-    console.log('numTsk=', numTsk, '; regionCode=', regionCode, '; regionSet=', regionSet, '; sub=', sub );
+    //console.log('numTsk=', numTsk, '; regionCode=', regionCode, '; regionSet=', regionSet, '; sub=', sub );
     av.nut[numTsk].uiSub.periodNp[sub] = lineArray[4];
   };
 

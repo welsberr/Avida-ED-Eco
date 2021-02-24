@@ -68,203 +68,6 @@ av.post.usrOut = function (jStr, comment) {
   av.debug.log += '\n--usr: ' + '~|~' + str0.replace(/\\n/g, "\n") + '~.~' + note;
 };
 
-av.clk = {};
-av.mouse = {};
-
-function clearmouse(av) {
-  'use strict';
-  av.mouse.Dn = false;
-  av.mouse.DnGridPos = [];
-  av.mouse.UpGridPos = [];
-  av.mouse.DnOrganPos = [];
-  av.mouse.Move = false;
-  av.mouse.Drag = false;
-  av.mouse.ParentNdx = -1;
-  av.mouse.ParentSelected = false;
-  av.mouse.Picked = "";
-};
-clearmouse(av);
-
-//offspring on grid
-av.mouse.kidTarget = ['gridCanvas'   //canvas must be first in the list for conditional to work in av.mouse.kidMouse
-  , 'organIcon'
-  , 'organismsFzSec'
-  , 'fzOrgan'
-];
-
-//parent on grid
-av.mouse.dadTarget = ['organIcon'
-  , 'gridCanvas'
-  , 'trashCanImage'
-  , 'activeOrgan'
-];
-
-//offspring on Organism View
-av.mouse.sonTarget = ['organIcon'
-  , 'organCanvas'
-  , 'activeOrgan'
-  , 'actOrgImg'
-//    , 'activeOrgImg'
-  ];
-
-  av.mouse.dndTarget = ['organIcon'
-    , 'organCanvas'
-    , 'gridCanvas'
-    , 'trashCanImage'
-  ];
-
-//list of dom elements on the Population page that need to have the mouse over shape/style changed for the drag n drop to look right
-av.mouse.notDndPopList = ['colorMode'
-  , 'TimeLabel'
-  , 'popStatsBlock'
-  , 'setupBlock'
-  , 'populationBlock'
-  , 'scaleCanvas'
-  , 'trashDiv'
-  , 'trashCanImage'
-  , 'gridHolder'
-  //freezer
-  , 'fzOrgan'
-  //menu Buttons
-  , 'mnFile'
-  , 'mnFreezer'
-  , 'mnControl'
-  , 'mnHelp'
-  , 'mnDebug'
-  , 'wsSavedMsg'
-  , 'wsNameMsg'
-  //Buttons
-  , 'mainButtons'
-  , 'rtPnlButtonImg'
-  , 'populationButton'
-  , 'organismButton'
-  , 'analysisButton'
-  , 'newDishButton'
-  , 'runStopButton'
-  , 'freezeButton'
-  , 'rescaleLabel'
-  , 'zoomSlide'
-  //statistics section
-  , 'sotLabel'
-  , 'nameLabel'
-  , 'sotColorCanvas'
-  , 'fitLabel'
-  , 'energyAcqRateLabel'
-  , 'offspringCostLabel'
-  , 'ageLabel'
-  , 'ancestorLabel'
-  , 'viableLabel'
-  , 'sotFn'
-  , 'sotTimes'
-  , 'notLabel'
-  , 'nanLabel'
-  , 'andLabel'
-  , 'ornLabel'
-  , 'oroLabel'
-  , 'antLabel'
-  , 'norLabel'
-  , 'xorLabel'
-  , 'equLabel'
-  , 'notTime'
-  , 'nanTime'
-  , 'andTime'
-  , 'ornTime'
-  , 'oroTime'
-  , 'antTime'
-  , 'norTime'
-  , 'xorTime'
-  , 'equTime'
-  , 'popStat'
-  , 'popSizeLabel'
-  , 'aFitLabel'
-  , 'aEnergyAcqRateLabel'
-  , 'aOffspringCostLabel'
-  , 'aAgeLabel'
-  , 'psFn'
-  , 'psNumOrg'
-  , 'notButton'
-  , 'nanButton'
-  , 'andButton'
-  , 'ornButton'
-  , 'oroButton'
-  , 'antButton'
-  , 'norButton'
-  , 'xorButton'
-  , 'equButton'
-  , 'notPop'
-  , 'nanPop'
-  , 'andPop'
-  , 'ornPop'
-  , 'oroPop'
-  , 'antPop'
-  , 'norPop'
-  , 'xorPop'
-  , 'equPop'
-  // chart
-  , 'yaxis'
-  , 'yaxisLabel'
-];
-var lngth = av.mouse.notDndPopList.length;
-av.mouse.notDndPopShape = [];
-for (var ii = 0; ii < lngth; ii++) {
-  av.mouse.notDndPopShape[ii] = 'default';
-};
-
-//Ind is for individual organism page
-av.mouse.notDndIndList = ['colorMode'
-  , 'populationBlock'
-  , 'setupBlock'
-  , 'popStatsBlock'
-  , 'scaleCanvas'
-  , 'trashCan'
-  , 'organismCanvasHolder'
-  , 'organCanvas'
-  // Stats
-  , 'notOrg'
-  , 'nanOrg'
-  , 'andOrg'
-  , 'ornOrg'
-  , 'oroOrg'
-  , 'antOrg'
-  , 'norOrg'
-  , 'xorOrg'
-  , 'equOrg'
-  , 'notPerf'
-  , 'nanPerf'
-  , 'andPerf'
-  , 'ornPerf'
-  , 'oroPerf'
-  , 'antPerf'
-  , 'norPerf'
-  , 'xorPerf'
-  , 'equPerf'
-  , 'cpuBufferCnvs'
-  , 'cpuRegisterCnvs'
-  , 'cpuStackAcnvs'
-  , 'cpuStackBcnvs'
-  , 'cpuOutputCnvs'
-  , 'InstructionDetail'
-  , 'ExecuteJust'
-  , 'ExecuteAbout'
-  //Buttons
-  , 'populationButton'
-  , 'organismButton'
-  , 'analysisButton'
-  //, 'orgSetting'
-  , 'cycleSlider'
-  , 'orgCycle'
-  , 'orgReset'
-  , 'orgBack'
-  , 'orgRun'
-  , 'orgForward'
-  , 'orgEnd'
-];
-var lngth = av.mouse.notDndIndList.length;
-av.mouse.notDndIndShape = [];
-for (var ii = 0; ii < lngth; ii++) {
-  av.mouse.notDndIndShape[ii] = 'default';
-};
-
 //initialize globals needed to hold Organism Trace Data
 var traceObj = {}; //global that holds the traceObject that was sent from Avida
 
@@ -487,9 +290,27 @@ av.sgr.monoChromeMaps = ['reddMap', 'orngMap', 'yllwMap', 'lawnMap',  'grenMap',
 //  av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'lawnMap',  'yllwMap', 'orngMap',  'reddMap', 'pinkMap',  'mgntMap'];
 //  av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'grenMap',  'yllwMap', 'orngMap',  'reddMap', 'mgntMap',  'purpMap'];
 //  av.sgr.sugarColors = ['blueMap', 'cornMap',  'seagMap', 'grenMap',  'yllwMap', 'orngMap',  'redvMap', 'mgntMap',  'purpMap'];
+// list of colors
+// lawn
+// gren -
+// sea
+// cyan =
+// corn
+// blue -
+// purp
+// mgnt =
+// pink
+// redv
+// redd -
+// orng
+// yllw =
+// 
+// 13 colors?
+
   av.sgr.sugarColors = ['grenMap', 'seagMap',  'cornMap', 'blueMap',  'purpMap', 'mgntMap',  'redvMap', 'orngMap',  'yllwMap'];
 //console.log('sugarColors=', av.sgr.sugarColors);
 av.sgr.sugarBackgroundShade = 40;  //was 30
+av.sgr.pureShade = 255;
 av.sgr.sugarNameShade = 345;   //was 365   265 too light for yellow&greens; 300 green ok; yellow still too light (Rob liked 340)
 av.sgr.monoColormaplength = av.color.reddMap.length;
 av.sgr.darkEnd = av.sgr.monoColormaplength-30;          //last color used in the the array for color scale
@@ -732,45 +553,6 @@ av.sgr.describe.short.xor = '(x16)';
 av.sgr.describe.short.equ = '(x32)';
 av.sgr.describe.short.width = '33px';
 
-/*
-av.sgr.describe.xlast = {};
-av.sgr.describe.xlast.not = ' Easy (x2)';
-av.sgr.describe.xlast.nan = ' Easy (x2)';
-av.sgr.describe.xlast.and = ' Moderate (x4)';
-av.sgr.describe.xlast.orn = ' Moderate (x4)';
-av.sgr.describe.xlast.oro = ' Hard (x8)';
-av.sgr.describe.xlast.ant = ' Hard (x8)';
-av.sgr.describe.xlast.nor = ' Very Hard (x16)';
-av.sgr.describe.xlast.xor = ' Very Hard (x16)';
-av.sgr.describe.xlast.equ = ' Brutal (x32)';
-av.sgr.describe.xlast.width = '96px';
-
-av.sgr.describe = ['basic', 'global', 'adv'];
-av.sgr.describe.long = {};
-av.sgr.describe.long.not = '&nbsp;(x2) Easy';
-av.sgr.describe.long.nan = '&nbsp;(x2) Easy';
-av.sgr.describe.long.and = '(&nbsp;x4) Moderate';
-av.sgr.describe.long.orn = '(&nbsp;x4) Moderate';
-av.sgr.describe.long.oro = '(x&nbsp;8) Hard';
-av.sgr.describe.long.ant = '(x&nbsp;8) Hard';
-av.sgr.describe.long.nor = '(x16) Very Hard';
-av.sgr.describe.long.xor = '(x16) Very Hard';
-av.sgr.describe.long.equ = '(x32) Brutal';
-av.sgr.describe.long.width = '96px';
-
-av.sgr.describe.xlast = {};
-av.sgr.describe.xlast.not = ' Easy (x2)';
-av.sgr.describe.xlast.nan = ' Easy (x2)';
-av.sgr.describe.xlast.and = ' Moderate (x4)';
-av.sgr.describe.xlast.orn = ' Moderate (x4)';
-av.sgr.describe.xlast.oro = ' Hard (x8)';
-av.sgr.describe.xlast.ant = ' Hard (x8)';
-av.sgr.describe.xlast.nor = ' Very Hard (x16)';
-av.sgr.describe.xlast.xor = ' Very Hard (x16)';
-av.sgr.describe.xlast.equ = ' Brutal (x32)';
-av.sgr.describe.xlast.width = '96px';
-
- */
 //------------------------------------------------------------------------------------------- av.sgr.makeNutDefault --
 av.sgr.makeNutDefault = function () {
   av.sgr.nutdft = {};    
@@ -837,11 +619,12 @@ av.fzr.clearEnvironment = function(from) {
   av.oldNut = JSON.parse(JSON.stringify(av.nut));
   av.nut = {};
   av.nut.hideFlags = {};
+  av.nut.resrcTyp = av.sgr.resrcTyp;
   av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.fzr.clearEnvironment');
   av.nut.numRegionsinHTML = 2;
   av.nut.wrldCols = 30;
   av.nut.wrldRows = 30;
-  av.nut.wrldSize = av.nut.wrldCols * av.nut.wrldRows;
+  //av.nut.wrldSize = av.nut.wrldCols * av.nut.wrldRows;
   // more about environment variables can be found at https://github.com/devosoft/avida/wiki/Environment-file#RESOURCE
   // av.nut is used for normal runs. nut is for nutrients; not used for test runs which run the envornment.cfg file as
   // submitted in the workspace. 
@@ -1067,6 +850,7 @@ av.fzr.clearMainFzrFn = function () {
 };
 
 
+//--------------------------------------------------------------------------------------------------- av.grd.clearGrd --
 av.grd = {};         //data about the grid canvas
 av.grd.popStatsMsg = {};
 av.dom = {};    //dom id shortcuts
@@ -1144,13 +928,19 @@ av.grd.clearGrd = function () {
 };
 av.grd.clearGrd();
 
+// Plotly: useful urls
+// https://plotly.com/javascript/reference/scatter/
+// https://plotly.com/javascript/reference/scatter/#scatter-marker-line
+//----------------------------------------------------------------------------------------------- av.pch.clearPopChrt --
 av.pch = {};   // related to the chart on the population page
 av.pch.dadMax = 16;
 av.pch.resrcGlobal = {};
 av.pch.sgr = {};
 
 av.sgr.lineDash = ['solid', 'dot', 'solid', 'longdash', 'solid',  'dash', 'solid', 'dashdot', 'longdashdot'];
-av.sgr.lineColors =  ['green', 'green', 'blue', 'blue', 'red', 'red', 'orange', 'orange', 'yellow'];
+av.sgr.lineDash = ['solid', 'dot', 'solid', 'longdashdot', 'solid',  '10px,5px', 'solid', 'dashdot', 'solid'];
+
+//av.sgr.lineColors =  ['green', 'green', 'blue', 'blue', 'red', 'red', 'orange', 'orange', 'yellow'];
 
 av.pch.clearPopChrt = function () {
   av.pch.needInit = true; //Added on 2019 Dec 10 Tues; not sure if it belongs here or not
@@ -1190,8 +980,8 @@ av.pch.clearPopChrt = function () {
     av.pch.sgr[numTsk] = [];
   //  console.log('av.pch.resrcGlobal['+tsk+']=', av.pch.resrcGlobal[tsk]);
   };
-  console.log('______________________________________________________________________________');
-  console.log('av.pch.resrcGlobal=', av.pch.resrcGlobal);
+  //console.log('______________________________________________________________________________');
+  //console.log('av.pch.resrcGlobal=', av.pch.resrcGlobal);
 
 
   av.pch.fnBinary = '000000000';
@@ -1218,15 +1008,15 @@ av.pch.clearPopChrt = function () {
 
   av.pch.trc = {};
 
-  av.pch.trace0 = new av.pch.makeTrace(av.pch.xx, av.pch.popY, 
+  av.pch.tracePop = new av.pch.makeTrace(av.pch.xx, av.pch.popY, 
                'scatter', 'lines', 'Population', 'rgb(2, 2, 2)', 1, 'solid');
 /*
-  av.pch.trace0 = {
+  av.pch.tracePop = {
     x:av.pch.xx, y:av.pch.popY, type:'scatter', mode: 'lines', name: 'Population',
     line: {color: 'rgb(2, 2, 2)', width: 1, dash: 'solid' }
   };
 */
-  av.pch.trace1 = {
+  av.pch.traceLog = {
     x:av.pch.xx, y:av.pch.logY, type:'scatter', mode: 'lines', name: 'Function Subset',
     //line: {color: 'rgb(0, 255, 0)', width: 1 }
     //line: {color: '#00FF00', width: 1, dash: 'solid' }   //dash: (solid   dot    dashdot   dash
@@ -1243,7 +1033,8 @@ av.pch.clearPopChrt = function () {
     sgrName = av.sgr.oseNames[ii];
     nameColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade]; 
     darkColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade+10];
-    pureColor = av.color[av.sgr.sugarColors[ii]][255]; 
+    pureColor = av.color[av.sgr.sugarColors[ii]][av.sgr.pureShade];
+    if (ii+1 == av.sgr.numTasks) { pureColor = nameColor; };
     console.log('tsk=', tsk, '; nameColo345r=', nameColor, '; color_255', av.color[av.sgr.sugarColors[ii]][255] );
     av.pch.trc[numTsk] = {
 //      x:av.pch.xx, y:av.pch.sgr[numTsk], type:'scatter', mode: 'lines', name: sgrName, yaxis: "y2",
@@ -1255,7 +1046,7 @@ av.pch.clearPopChrt = function () {
   };
   
   av.pch.pixel = {wd: 310, ht: 202, wdif:10, hdif:8};  //hdif:2
-  av.pch.data = [av.pch.trace0, av.pch.trace1];
+  av.pch.data = [av.pch.tracePop, av.pch.traceLog];
   for (var ii=0; ii < av.sgr.numTasks-7; ii++) {
     numTsk = av.sgr.logEdNames[ii];
     av.pch.data[ii+2] = av.pch.trc[numTsk];
@@ -1347,6 +1138,7 @@ av.pch.clearPopChrt = function () {
 
 av.pch.clearPopChrt();
 
+//------------------------------------------------------------------------------------------------- av.anl.clearChart --
 av.anl = {};  //Analysis page functions and data
 av.anl.color = [];   //holds the three colors for the three populations
 av.anl.wrld = [];
@@ -1494,6 +1286,206 @@ do {
 while (av.ptd.muteScaleAry[ii] < 100)
 console.log('length =', av.ptd.muteScaleAry.length, 'max = ', av.ptd.muteScaleAry[av.ptd.muteScaleAry.length-1]);  
 */
+
+  //-------------------------------------------------------------------------------------------- av.mousse.clearMouse --
+
+av.clk = {};
+av.mouse = {};
+
+av.mouse.clearMouse = function (av) {
+  'use strict';
+  av.mouse.Dn = false;
+  av.mouse.DnGridPos = [];
+  av.mouse.UpGridPos = [];
+  av.mouse.DnOrganPos = [];
+  av.mouse.Move = false;
+  av.mouse.Drag = false;
+  av.mouse.ParentNdx = -1;
+  av.mouse.ParentSelected = false;
+  av.mouse.Picked = "";
+};
+av.mouse.clearMouse(av);
+
+//offspring on grid
+av.mouse.kidTarget = ['gridCanvas'   //canvas must be first in the list for conditional to work in av.mouse.kidMouse
+  , 'organIcon'
+  , 'organismsFzSec'
+  , 'fzOrgan'
+];
+
+//parent on grid
+av.mouse.dadTarget = ['organIcon'
+  , 'gridCanvas'
+  , 'trashCanImage'
+  , 'activeOrgan'
+];
+
+//offspring on Organism View
+av.mouse.sonTarget = ['organIcon'
+  , 'organCanvas'
+  , 'activeOrgan'
+  , 'actOrgImg'
+//    , 'activeOrgImg'
+  ];
+
+  av.mouse.dndTarget = ['organIcon'
+    , 'organCanvas'
+    , 'gridCanvas'
+    , 'trashCanImage'
+  ];
+
+//list of dom elements on the Population page that need to have the mouse over shape/style changed for the drag n drop to look right
+av.mouse.notDndPopList = ['colorMode'
+  , 'TimeLabel'
+  , 'popStatsBlock'
+  , 'setupBlock'
+  , 'populationBlock'
+  , 'scaleCanvas'
+  , 'trashDiv'
+  , 'trashCanImage'
+  , 'gridHolder'
+  //freezer
+  , 'fzOrgan'
+  //menu Buttons
+  , 'mnFile'
+  , 'mnFreezer'
+  , 'mnControl'
+  , 'mnHelp'
+  , 'mnDebug'
+  , 'wsSavedMsg'
+  , 'wsNameMsg'
+  //Buttons
+  , 'mainButtons'
+  , 'rtPnlButtonImg'
+  , 'populationButton'
+  , 'organismButton'
+  , 'analysisButton'
+  , 'newDishButton'
+  , 'runStopButton'
+  , 'freezeButton'
+  , 'rescaleLabel'
+  , 'zoomSlide'
+  //statistics section
+  , 'sotLabel'
+  , 'nameLabel'
+  , 'sotColorCanvas'
+  , 'fitLabel'
+  , 'energyAcqRateLabel'
+  , 'offspringCostLabel'
+  , 'ageLabel'
+  , 'ancestorLabel'
+  , 'viableLabel'
+  , 'sotFn'
+  , 'sotTimes'
+  , 'notLabel'
+  , 'nanLabel'
+  , 'andLabel'
+  , 'ornLabel'
+  , 'oroLabel'
+  , 'antLabel'
+  , 'norLabel'
+  , 'xorLabel'
+  , 'equLabel'
+  , 'notTime'
+  , 'nanTime'
+  , 'andTime'
+  , 'ornTime'
+  , 'oroTime'
+  , 'antTime'
+  , 'norTime'
+  , 'xorTime'
+  , 'equTime'
+  , 'popStat'
+  , 'popSizeLabel'
+  , 'aFitLabel'
+  , 'aEnergyAcqRateLabel'
+  , 'aOffspringCostLabel'
+  , 'aAgeLabel'
+  , 'psFn'
+  , 'psNumOrg'
+  , 'notButton'
+  , 'nanButton'
+  , 'andButton'
+  , 'ornButton'
+  , 'oroButton'
+  , 'antButton'
+  , 'norButton'
+  , 'xorButton'
+  , 'equButton'
+  , 'notPop'
+  , 'nanPop'
+  , 'andPop'
+  , 'ornPop'
+  , 'oroPop'
+  , 'antPop'
+  , 'norPop'
+  , 'xorPop'
+  , 'equPop'
+  // chart
+  , 'yaxis'
+  , 'yaxisLabel'
+];
+var lngth = av.mouse.notDndPopList.length;
+av.mouse.notDndPopShape = [];
+for (var ii = 0; ii < lngth; ii++) {
+  av.mouse.notDndPopShape[ii] = 'default';
+};
+
+//Ind is for individual organism page
+av.mouse.notDndIndList = ['colorMode'
+  , 'populationBlock'
+  , 'setupBlock'
+  , 'popStatsBlock'
+  , 'scaleCanvas'
+  , 'trashCan'
+  , 'organismCanvasHolder'
+  , 'organCanvas'
+  // Stats
+  , 'notOrg'
+  , 'nanOrg'
+  , 'andOrg'
+  , 'ornOrg'
+  , 'oroOrg'
+  , 'antOrg'
+  , 'norOrg'
+  , 'xorOrg'
+  , 'equOrg'
+  , 'notPerf'
+  , 'nanPerf'
+  , 'andPerf'
+  , 'ornPerf'
+  , 'oroPerf'
+  , 'antPerf'
+  , 'norPerf'
+  , 'xorPerf'
+  , 'equPerf'
+  , 'cpuBufferCnvs'
+  , 'cpuRegisterCnvs'
+  , 'cpuStackAcnvs'
+  , 'cpuStackBcnvs'
+  , 'cpuOutputCnvs'
+  , 'InstructionDetail'
+  , 'ExecuteJust'
+  , 'ExecuteAbout'
+  //Buttons
+  , 'populationButton'
+  , 'organismButton'
+  , 'analysisButton'
+  //, 'orgSetting'
+  , 'cycleSlider'
+  , 'orgCycle'
+  , 'orgReset'
+  , 'orgBack'
+  , 'orgRun'
+  , 'orgForward'
+  , 'orgEnd'
+];
+var lngth = av.mouse.notDndIndList.length;
+av.mouse.notDndIndShape = [];
+for (var ii = 0; ii < lngth; ii++) {
+  av.mouse.notDndIndShape[ii] = 'default';
+};
+
 console.log('end of globals');
 
 //----------------------------------------------------------------------------------------------------------------------

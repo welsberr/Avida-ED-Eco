@@ -205,10 +205,10 @@
   //------------------------------------------------------------------------------------- av.fwt.setResourceConstants --
 
   av.fwt.clearResourceConstants = function() {
-    var logLen = av.sgr.logicNames.length;
     var tskTitle;
-    console.log('resource type =', av.sgr.resrcTyp);
-    for (var ii=0; ii < logLen; ii++) {
+    av.nut.resrcTyp = av.sgr.resrcTyp;
+    console.log('resource type =', av.nut.resrcTyp);
+    for (var ii=0; ii < av.sgr.numTasks; ii++) {
       tskTitle = av.sgr.logicTitleNames[ii];
       document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;';
       document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;';
@@ -221,28 +221,30 @@
     var numTsk;
     var tskTitle;
     av.nut.cntGlobalDataTasks = 0;
-    //console.log('resource type =', av.sgr.resrcTyp);
+    //console.log('resource type =', av.nut.resrcTyp);
     for (var ii=0; ii < logLen; ii++) {
       numTsk = av.sgr.logEdNames[ii];
       tskTitle = av.sgr.logicTitleNames[ii];
+      //console.log('numTsk', numTsk, '; nut_resr type =', av.nut[numTsk].uiAll.supplyTypeSlct);
       document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;';
       document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;';
       document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;';
-      
+      //console.log('tsk=', numTsk, '; geo=', av.nut[numTsk].uiAll.geometry.toLowerCase() );
       if ( 'global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
-        if ('infinite' == av.sgr.resrcTyp[ii] ) {
+        if ('infinite' == av.nut.resrcTyp[ii] ) {
           document.getElementById('cell'+tskTitle).innerHTML = 'inf';
           document.getElementById('mx'+tskTitle).innerHTML = '&infin; ';
           document.getElementById('tot'+tskTitle).innerHTML = '&infin; ';
-        } else if ('none' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
+        } else if ('none' == av.nut.resrcTyp[ii].toLowerCase() ) {
           document.getElementById('cell'+tskTitle).innerHTML = 'none';
-          document.getElementById('mx'+tskTitle).innerHTML = '0.0 ';
-          document.getElementById('tot'+tskTitle).innerHTML = '0.0 ';
-        } else {
           document.getElementById('mx'+tskTitle).innerHTML = '-';
           document.getElementById('tot'+tskTitle).innerHTML = '-';
+        } else {
+          document.getElementById('mx'+tskTitle).innerHTML = '+';
+          document.getElementById('tot'+tskTitle).innerHTML = '+';
           av.nut.cntGlobalDataTasks++;
-          if ('finite' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
+          if ('finite' == av.nut.resrcTyp[ii].toLowerCase() ) {
+//          if ('finite' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
             document.getElementById('cell'+tskTitle).innerHTML = 'finite';
           } else {
             document.getElementById('cell'+tskTitle).innerHTML = 'chem';
@@ -253,7 +255,7 @@
         document.getElementById('tot'+tskTitle).innerHTML = 'Grid ';
         document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;';
           if (1 >= av.nut[numTsk].uiAll.regionsNumOf ) { 
-          if ('infinite' == av.sgr.resrcTyp[ii] ) {
+          if ('infinite' == av.nut.resrcTyp[ii] ) {
             document.getElementById('cell'+tskTitle).innerHTML = '&infin; ';
             document.getElementById('mx'+tskTitle).innerHTML = '&infin; ';
           } else {
@@ -339,7 +341,6 @@
       //console.log('numTsk=', numTsk, '; regionLayout=', regionLayout, '; ndx=', ndx, ';subBegin=', subBegin, '; subEnd=', subEnd);
       //start on the potential subdishes next
       for (var nn=subBegin; nn <= subEnd; nn++) {
-        nn=nn;
                 
         //seemed to have inconsistent error, but it went away. left the debug console.logs for now
         //console.log('regionLayout = av.nut['+numTsk+'].uiAll.regionLayout=', av.nut[numTsk].uiAll.regionLayout);
@@ -630,7 +631,7 @@
       tsk = av.sgr.logicNames[ii];      //3 letter logic names
       tskVar = av.sgr.logicVnames[ii];   // variable length logic tasks names as required by Avida
       //console.log('numTsk=', numTsk, '; tsk=', tsk, '; tskVar=', tskVar, 'uiAll.geometry=', av.nut[numTsk].uiAll.geometry.toLowerCase());
-      av.sgr.resrcTyp[ii] = av.sgr.typeDefault;
+      av.nut.resrcTyp[ii] = av.sgr.typeDefault;
 /*
 //      if ('nor' == tsk) {
         if (false) {
@@ -664,7 +665,7 @@
         tmpNum = 1;
         //console.log('numTsk=', numTsk, '; jj=', jj, '; supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase());
         txt += '# Task = '+ numTsk + '; Geometry = ' + av.nut[numTsk].uiAll.geometry + '; supplyTypeSlct = '+  av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() + '\n';
-        av.sgr.resrcTyp[ii] = av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase();
+        av.nut.resrcTyp[ii] = av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase();
         switch ( av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
           case 'none':
             tmpNum = 0;
@@ -834,16 +835,16 @@
               console.log('resrcFix=', resrcFix);
               break;
             case 'none':
-              av.sgr.resrcTyp[ii] = 'none';
+              av.nut.resrcTyp[ii] = 'none';
             case 'finite':
-              av.sgr.resrcTyp[ii] = 'finite';
+              av.nut.resrcTyp[ii] = 'finite';
               txt += resrcFix + '\n';
               txt += cellTxt;
               txt += reactTxt;
               console.log('resrcFix=', resrcFix);
               break;
             case 'chemostat': 
-              av.sgr.resrcTyp[ii] = 'chemosat';
+              av.nut.resrcTyp[ii] = 'chemosat';
               txt += 'RESOURCE ' + av.fwt.existCheck('', av.nut[numTsk].resrc.name[jj], av.fwt.existCheck('', av.nut[numTsk].react.resource[jj], tsk) );
               txt += av.fwt.existCheck(':geometry=', av.nut[numTsk].resrc.geometry[jj], '');
               // Since fileDataRead looks for inflow/outflow to see if the catagory is chemostat, 
