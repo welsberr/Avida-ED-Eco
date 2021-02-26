@@ -418,7 +418,8 @@
       console.log('------------------------------------------------------------------ Now write nutrient structure --');
       av.nut_ui = {};
       av.nut_ui = JSON.parse(JSON.stringify(av.nut));
-      console.log('av.nut_ui = ', av.nut_ui); 
+      console.log('av.nut_ui = ', av.nut_ui);
+      //console.log('size=', Object.keys(av.nut_ui.keys).length );
       console.log('----------------------------------------------End of av.fwt.dom2nutUIfields, when called by ', from);
     }
   };

@@ -573,10 +573,6 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
     border: 1px solid #AAA;
     height: 100%;
   }
-  #miniChartYaxis{
-    flex: 0 0 60px;
-    border: 1px solid #AAA;
-  }
 
   #displayGridResourceData{
     display: flex;  /* none; */
@@ -607,12 +603,13 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
     border: 1px solid #AAA;    
   }
   #miniChartYaxis{
-    flex: 0 0 200px;
+    flex: 0 0 220px;
     border: 1px solid #AAA;
   }
   #miniChartOptHolder{
     flex: 0 0 auto;
     border: 1px solid #AAA;
+    width: 100%;
     align-self: flext-end;
   }
   #pauseOptions {

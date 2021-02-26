@@ -2011,18 +2011,18 @@ require([
   //--------------------------------------------------------------------------------------------- av.grd.popChartInit --
   // Should be done before av.grd.popChartFn is run.  
   av.grd.popChartInit = function (from) {
-    console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
-                   '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display, '; av.ui.page=', av.ui.page, 
-                    '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
-    
+    //console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
+    //               '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display, '; av.ui.page=', av.ui.page, 
+    //                '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
     if (av.dbg.flg.plt) { 
       console.log(from , 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
                     '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
-    }
+    };
     //
-    //look to see if poplulation page mini-chart is showing
+    // only initialize when visible
     //if ('flex' != av.dom.popStatsBlock.style.display || ('populationBlock' !== av.ui.page)) {
     if ( !$(av.dom.popStatsBlock).is(":visible") ) {
+      console.log('popStatsBlock is not visible: av.pch.needInit=', av.pch.needInit);
       av.pch.needInit = true;
       return;
       // chart is not visible don't try to write chart
@@ -2031,26 +2031,24 @@ require([
     //minichart is visible on population page
     av.pch.clearPopChrt();
     av.pch.divSize('av.grd.popChartInit');
-    av.pch.popData = av.pch.data;
+    //av.pch.popData = av.pch.data;                //this initiates as combo data. 
 
-    //if (av.dbg.flg.plt) { console.log('PopPlot: dom of popChart=', document.getElementById('popChart') ); }
     if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart=', av.dom.popChart); }
-    if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
+    av.pch.update = {
+      autorange: true,
+      width: av.pch.layout.width,
+      height: av.pch.layout.height
+    };
     
     if (null == av.dom.popChart.data) {
-      av.pch.update = {
-        autorange: true,
-        width: av.pch.layout.width,
-        height: av.pch.layout.height
-      };
-
-      if (undefined != av.dom.popChart.data[0]) {
-        Plotly.deleteTraces(av.dom.popChart, [0, 1]);
-        Plotly.relayout(av.dom.popChart, av.pch.update);
-        if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
-      }
+      if (av.dbg.flg.plt) { console.log('PopPlot: null == av.dom.popChart.data=',av.dom.popChart.data); }
+    } else {
+      if (av.dbg.flg.plt) { console.log('PopPlot: null != av.dom.popChart.data=',av.dom.popChart.data); }
+      Plotly.deleteTraces(av.dom.popChart, [0, 1]);
+      Plotly.relayout(av.dom.popChart, av.pch.update);
+      if (av.dbg.flg.plt) { console.log('PopPlot: null != av.dom.popChart.data=',av.dom.popChart.data, 'deleteTraces deleteTraces deleteTraces deleteTraces deleteTraces '); }
     };
-    av.dom.popChart.style.visibility = 'hidden';
+    //av.dom.popChart.style.visibility = 'hidden';    
     //if (av.dbg.flg.plt) { console.log('PopPlot: layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width); }
     av.pch.needInit = false;
   };
@@ -2060,7 +2058,7 @@ require([
   //----------------------------------------------------------------------------------------------- av.grd.popChartFn --
   av.grd.popChartFn = function (from) {
     'use strict';
-    var popData;
+    var popData;   //needed because Plotly.animate statement does now allow variable with dots  or [ in the name
     var numof;
     var jj = 0; //count y data arrays
     //console.log(from, 'called popChartFn: av.pch.needInit= ', av.pch.needInit, 
@@ -2069,20 +2067,21 @@ require([
     //                  '; av.ui.page=', av.ui.page,
     //                  '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));      
     //console.log('PopPlot:',from, 'called popChartFn: av.pch.needInit= ', av.pch.needInit, 
-    //                  '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));      
+    //                  '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible")); 
+    
+    // initialize if flag indicates that initialization is needed. 
     if (av.pch.needInit) {
       //console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, '; av.ui.page=', av.ui.page);
 
       //initialize if block is visible
-      if ( !$(av.dom.popStatsBlock).is(":visible") ) {
+      console.log('is popStatsBlock visible?', $(av.dom.popStatsBlock).is(":visible"));
+      if ( $(av.dom.popStatsBlock).is(":visible") ) {
         if (av.dbg.flg.plt) { console.log('PopPlot: if $popStatsBlock is visible & needInit - then call popChartInit'); }
         av.grd.popChartInit('av.grd.popChartFn');
         if (av.dbg.flg.plt) { console.log('PopPlot: av.grd.runState = ', av.grd.runState); }
       };
-    };
-
-    // Do not display chart if the chart is not on the screen. Data seems to be getting updated. need to verify this.
-    if ( !$(av.dom.popStatsBlock).is(":visible") ) {
+    } else {
+      // Do not display chart if the chart is not on the screen. Data seems to be getting updated. need to verify this.
       if (av.dbg.flg.plt) { console.log('PopPlot: Not visible: so skip rest of function'); }
       return;
     };
@@ -2142,24 +2141,24 @@ require([
           av.pch.maxY = (av.pch.aveMaxCst > av.pch.logMaxCst) ? av.pch.aveMaxCst : av.pch.logMaxCst;
           break;
         case 'Average Energy Acq. Rate':
-        av.pch.popY = av.pch.aveEar;
-        av.pch.logY = av.pch.logEar;
-        av.pch.maxY = (av.pch.aveMaxEar > av.pch.logMaxEar) ? av.pch.aveMaxEar : av.pch.logMaxEar;
+          av.pch.popY = av.pch.aveEar;
+          av.pch.logY = av.pch.logEar;
+          av.pch.maxY = (av.pch.aveMaxEar > av.pch.logMaxEar) ? av.pch.aveMaxEar : av.pch.logMaxEar;
           break;
         case 'Number of Organisms':
-        av.pch.popY = av.pch.aveNum;
-        av.pch.logY = av.pch.logNum;
-        av.pch.maxY = (av.pch.aveMaxNum > av.pch.logMaxNum) ? av.pch.aveMaxNum : av.pch.logMaxNum;
+          av.pch.popY = av.pch.aveNum;
+          av.pch.logY = av.pch.logNum;
+          av.pch.maxY = (av.pch.aveMaxNum > av.pch.logMaxNum) ? av.pch.aveMaxNum : av.pch.logMaxNum;
           break;
         case 'Number Viable':
-        av.pch.popY = av.pch.aveVia;
-        av.pch.logY = av.pch.logNum;
-        av.pch.maxY = (av.pch.aveMaxVia > av.pch.logMaxNum) ? av.pch.aveMaxVia : av.pch.logMaxNum;
+          av.pch.popY = av.pch.aveVia;
+          av.pch.logY = av.pch.logNum;
+          av.pch.maxY = (av.pch.aveMaxVia > av.pch.logMaxNum) ? av.pch.aveMaxVia : av.pch.logMaxNum;
         default:
-        av.pch.yValue = 'none';
-        av.pch.popY = [];
-        av.pch.logY = [];
-        av.pch.maxY = 0.1;
+          av.pch.yValue = 'none';
+          av.pch.popY = [];
+          av.pch.logY = [];
+          av.pch.maxY = 0.1;
           break;
       }; //end switch
       
@@ -2270,14 +2269,14 @@ require([
           //Plotly.animate('popChart', {av.pch.popData});
           av.debug.log += '\n     --uiD: Plotly.animate("popChart", {av.pch.popData}) in AvidaED.js at 1757';
           av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.pch.popData', [av.pch.popData]);
-          popData = av.pch.popData;
-          Plotly.animate('popChart', {popData});
-//              Plotly.animate('popChart', {av.pch.popData});
+          popData = av.pch.popData;   //needed because Plotly.animate statement does now allow variable with dots  or [ in the name
+          Plotly.animate( 'popChart', {popData} );
           if (av.dbg.flg.plt) { console.log('PopPlot: after animate in update grid chart'); }
         }
-      };
-      if (av.dbg.flg.plt) { console.log('PopPlot: chart.av.pch.popData=', av.dom.popChart.data); }
-      if (av.dbg.flg.plt) { console.log('PopPlot: chart.layout=', av.dom.popChart.layout); }
+      };  //end of av.dom.popChart.data defined
+      if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart', av.dom.popChart); }
+      if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=', av.dom.popChart.data); }
+      if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.layout=', av.dom.popChart.layout); }
     };  //end of true
   };
 
