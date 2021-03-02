@@ -1,6 +1,5 @@
 
-//
-////***************************************
+//s
 // Defaults and Constants
 // one global to hold them all.
 var av = av || {};  //incase av already exists
@@ -936,13 +935,13 @@ av.pch = {};   // related to the chart on the population page
 av.pch.dadMax = 16;
 av.pch.resrcGlobal = {};
 av.pch.sgr = {};
+
 av.sgr.lineDash = ['solid', 'dot', 'solid', 'longdash', 'solid',  'dash', 'solid', 'dashdot', 'longdashdot'];
 av.sgr.lineDash = ['solid', 'dot', 'solid', 'longdashdot', 'solid',  '10px,5px', 'solid', 'dashdot', 'solid'];
 
 //av.sgr.lineColors =  ['green', 'green', 'blue', 'blue', 'red', 'red', 'orange', 'orange', 'yellow'];
 
 av.pch.clearPopChrt = function () {
-  av.pch.popData = {};
   av.pch.needInit = true; //Added on 2019 Dec 10 Tues; not sure if it belongs here or not
   av.pch.ht = 10;
   av.pch.wd = 10; 
@@ -980,7 +979,7 @@ av.pch.clearPopChrt = function () {
     av.pch.sgr[numTsk] = [];
   //  console.log('av.pch.resrcGlobal['+tsk+']=', av.pch.resrcGlobal[tsk]);
   };
-  //console.log('_______________________________________________________');
+  //console.log('______________________________________________________________________________');
   //console.log('av.pch.resrcGlobal=', av.pch.resrcGlobal);
 
 
@@ -994,23 +993,26 @@ av.pch.clearPopChrt = function () {
 
   av.pch.maxX = 10;
   av.pch.maxY = 1;
-  av.pch.traceList = [];
-  av.pch.trc = {};
+  
+  av.pch.chartContains = 'organism';
+  av.pch.chartContained = 'organism';
+  av.pch.organismTrait = 'Average Fitness';
+  av.pch.organismWasTrait = 'Average Fitness';
 
-  // only used to create av.pch.tracePop
-  // structure of a trace used in plotly in javascript; keep to show technique
   av.pch.makeTrace = function(xx, yy, type, mode, name, color, width, texture) {
     this.x = xx;
     this.y = yy;
     this.type = type;
-    this.mode = mode;
     this.name = name;
     this.line = {};
     this.line.color = color;
     this.line.width = width;
     this.line.dash = texture;    //solid  dot  dash    dashdot
   };
-  
+
+  av.pch.trc = {};
+  av.pch.traceList = {};
+
   av.pch.tracePop = new av.pch.makeTrace(av.pch.xx, av.pch.popY, 
                'scatter', 'lines', 'Population', 'rgb(2, 2, 2)', 1, 'solid');
 /*
@@ -1019,14 +1021,13 @@ av.pch.clearPopChrt = function () {
     line: {color: 'rgb(2, 2, 2)', width: 1, dash: 'solid' }
   };
 */
-  //creation of trace to hold data from group of avidians that perform the selected logic functions
   av.pch.traceLog = {
     x:av.pch.xx, y:av.pch.logY, type:'scatter', mode: 'lines', name: 'Function Subset',
     //line: {color: 'rgb(0, 255, 0)', width: 1 }
-    //line: {color: '#00FF00', width: 1, dash: 'solid' }  //    
-    line: {color: 'rgb(2, 2, 2)', width: 1, dash: 'dot' } //dash: (solid   dot    dashdot   dash
+    //line: {color: '#00FF00', width: 1, dash: 'solid' }   //dash: (solid   dot    dashdot   dash
+    line: {color: 'rgb(2, 2, 2)', width: 1, dash: 'dot' }
   };
-
+  
   var sgrName;
   var dashtype;
   for (var ii=0; ii < av.sgr.numTasks; ii++) {
@@ -1049,13 +1050,20 @@ av.pch.clearPopChrt = function () {
     //console.log('av.pch.resrcGlobal['+tsk+']=', av.pch.resrcGlobal[tsk] );
   };
   
+  // used to set the size of #popChrtHolder and the chart
+  av.pch.pixel = {wd: 310, ht: 202, wdif:20, hdif:8};  //hdif:2  //wdif was 10 which is not enough
+  
   av.pch.data = [av.pch.tracePop, av.pch.traceLog];
   for (var ii=0; ii < av.sgr.numTasks-7; ii++) {
     numTsk = av.sgr.logEdNames[ii];
     av.pch.data[ii+2] = av.pch.trc[numTsk];
   };
   
-  av.pch.pixel = {wd: 310, ht: 202, wdif:10, hdif:8};  //hdif:2  used to define size of div to hold chart
+  // not sure that we need both av.pch.popData and av.pch.data. 
+  // Probalby could change all av.pch.popData to av.pch.data.  Tiba check this and fix later
+  av.pch.popData = av.pch.data;
+  
+  
   av.pch.layout = {
     autosize: true,     //false
     width: 300,
@@ -1140,8 +1148,8 @@ av.pch.clearPopChrt = function () {
     ]
   };
 };
+
 av.pch.clearPopChrt();
-//------------------------------------------------------------------------------------------- end av.pch.clearPopChrt --
 
 //------------------------------------------------------------------------------------------------- av.anl.clearChart --
 av.anl = {};  //Analysis page functions and data

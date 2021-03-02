@@ -130,14 +130,13 @@
   .navColClass {
     grid-area:navColClass;
     place-self: stretch;
-    min-width: 240px;        /*was 152   340px*/
+    width: 238px;        /*was 152   340px*/
     display: flex;
     flex-direction: column;
     background: #F5F5F5; /* lavender; */
     border: 1px solid #AAA;
     hight: 100%;
     resize: horizontal;
-    overflow:auto;
   }
 
 /*contains pages (population, Organsims, Analysis) */
@@ -259,7 +258,7 @@
   border: 1px solid #BABABA;
   flex: 1;                /* fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
   height: 100%;
-  width: 100%;
+  width: 99%;
   overflow:auto;
 }
 #FreezerTitle {
@@ -278,6 +277,7 @@
 }
 .freezerContainer {
   padding-left: 10px;
+  overflow: auto;
 }
 /* trash area below freezer */
 #trashCan { 
@@ -354,7 +354,6 @@
   //flex: 0 1 auto;       //should scale with window size, but does not do what I want????
   border: 1px solid #AAA;
   display: flex;
-  overflow:auto;
   flex-direction: column;
   width: 100%;
   max-height: 100%;
@@ -459,7 +458,7 @@
 #popInfoVert {
     display: flex;
     flex-direction: column;
-    width: 438px;
+    width: 442px;
     height: 100%;
     overflow: auto;
   } /* contains: popInfoTabHolder & labInfoHolder */
@@ -473,7 +472,7 @@
     height: 100%;
     width: 100%;
   }
-    
+  
   #popStatsBlock{
     flex-direction: column;
     height: 100%;
@@ -552,8 +551,6 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
   .popsBotTblcol3 {width: 110px; }
   .numAvidains {  background: #fff }   /* min-width: 110px; */
   
-  
-
 
 .botPopTable tr:nth-child(even) {background: #FAFAFA}
 .botPopTable th {
@@ -564,23 +561,12 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
 .botPopTable tr *:nth-child(2) {  text-align: right;  }
 .botPopTable tr *:nth-child(3) {  width: 80%;  }
 
-
-  
-  
-
   #popChrtHolder{
     flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
     border: 1px solid #AAA;
     height: 100%;
   }
-
-  #displayGridResourceData{
-    display: flex;  /* none; */
-    flex: 0 0 auto;
-    border: 1px solid #AAA;
-    width: 100%;
-  }
-  
+ 
   /* ---------------------- Population (right) side of tables */)
   #popStats4grid{           /* inside horizontal flexbox*/
     flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
@@ -590,7 +576,7 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
     display: block;  /* none; */
     flex: 0 0 53;
     border: 1px solid #AAA;
-    width: 100%;
+    width: 99%;
   }
   #popChrtHolder{
     flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
@@ -603,13 +589,11 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
     border: 1px solid #AAA;    
   }
   #miniChartYaxis{
-    flex: 0 0 220px;
+    flex: 0 0 240px;
     border: 1px solid #AAA;
   }
   #miniChartOptHolder{
     flex: 0 0 auto;
-    border: 1px solid #AAA;
-    width: 100%;
     align-self: flext-end;
   }
   #pauseOptions {
@@ -654,7 +638,7 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
   grid-template-areas: ' sgrTop  sgrNot  sgrNan  sgrAnd  sgrOrn  sgrOro  sgrAnt  sgrNor  sgrXor  sgrEqu'
                        '  mxTop   mxNot   mxNan   mxAnd   mxOrn   mxOro   mxAnt   mxNor   mxXor   mxEqu'
                        'cellTop cellNot cellNan cellAnd cellOrn cellOro cellAnt cellNor cellXor cellEqu';
-  width: 100%;
+  width: 99%;
   justify-content: stretch;
 }
 
@@ -664,7 +648,6 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
                        ' totTop  totNot  totNan  totAnd  totOrn  totOro  totAnt  totNor  totXor  totEqu'
                        'cellTop cellNot cellNan cellAnd cellOrn cellOro cellAnt cellNor cellXor cellEqu';
   grid-template-columns: 3fr,      2fr,    2fr,    2fr,    2fr,    2fr,    2fr,    2fr,    2fr,    2fr; 
-  background: mistyrose;
   width: 100%;
   justify-content: stretch;
 }
