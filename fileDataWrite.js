@@ -97,6 +97,17 @@
     txt += '#include instset.cfg\n';
     txt += 'PRECALC_PHENOTYPE 1\n';
     txt += 'VERSION_ID 2.14.0 \n';
+    txt += 'APPLY_ENERGY_METHOD 1 \n';
+    txt += 'MERIT_INC_APPLY_IMMEDIATE 1';
+    
+    //lines below this are just for commments
+    //txt += 'APPLY_ENERGY_METHOD 1 # When should rewarded energy be applied to current energy? \n';
+    //txt += '                      # 0 = on divide \n';
+    //txt += '                      # 1 = on completion of task \n';
+    //txt += 'MERIT_INC_APPLY_IMMEDIATE 0  # Should merit increases (above current) be applied immediately, or delayed until divide? \n';
+    //txt += '                             # 1 = immediatly; 0 is delayed til divide for  \n';
+    //txt += 'TASK_REFRACTORY_PERIOD 0.0   # Number of updates after taske until regain full value \n';s
+
     console.log(from, ' called av.fwt.makeFzrAvidaCfg; idStr=', idStr, '; toActiveConfigFlag=', toActiveConfigFlag);
     if (toActiveConfigFlag) av.fwt.makeActConfigFile('avida.cfg', txt, 'av.fwt.makeFzrAvidaCfg');  // 
     else {av.fwt.makeFzrFile(idStr+'/avida.cfg', txt, 'av.fwt.makeFzrAvidaCfg');}
@@ -123,6 +134,16 @@
     txt += '#include instset.cfg\n';
     txt += 'PRECALC_PHENOTYPE 1\n';
     txt += 'VERSION_ID 2.14.0 \n';
+    txt += 'APPLY_ENERGY_METHOD 1 \n';
+    txt += 'MERIT_INC_APPLY_IMMEDIATE 1';
+    
+    //lines below this are just for commments
+    //txt += 'APPLY_ENERGY_METHOD 1 # When should rewarded energy be applied to current energy? \n';
+    //txt += '                      # 0 = on divide \n';
+    //txt += '                      # 1 = on completion of task \n';
+    //txt += 'MERIT_INC_APPLY_IMMEDIATE 0  # Should merit increases (above current) be applied immediately, or delayed until divide? \n';
+    //txt += '                             # 1 = immediatly; 0 is delayed til divide for  \n';
+    //txt += 'TASK_REFRACTORY_PERIOD 0.0   # Number of updates after taske until regain full value \n';s
     console.log(from, ' called av.fwt.makeFzrAvidaTest', '; col, row = ', av.dom.sizeCols.value, av.dom.sizeRows.value, '; toActiveConfigFlag', toActiveConfigFlag);
     if (toActiveConfigFlag) {av.fwt.makeActConfigFile('avida.cfg', txt, 'av.fwt.makeFzrAvidaTest');}  // always false for now 2017 July
     else {av.fwt.makeFzrFile(idStr+'/avida.cfg', txt, 'av.fwt.makeFzrAvidaTest');}

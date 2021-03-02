@@ -2106,6 +2106,7 @@ require([
       if (undefined !== av.dom.popChart.data) {
         console.log('av.dom.popChart.data is', av.dom.popChart.data);
       };
+      console.log('chart containts none');
       return;
     };
     

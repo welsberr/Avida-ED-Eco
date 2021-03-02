@@ -764,7 +764,7 @@
         };
       };
     };  // end of for items in object
-    console.log('length=', av.pch.resrcGlobal.length, '; av.pch.resrcGlobal=', av.pch.resrcGlobal);
+    //console.log('av.pch.resrcGlobal=', av.pch.resrcGlobal);
   };
   //--------------------------------------------------------------------------------------- end av.msg.updatePopStats --
 

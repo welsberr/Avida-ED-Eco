@@ -1023,9 +1023,9 @@ av.pch.clearPopChrt = function () {
 */
   av.pch.traceLog = {
     x:av.pch.xx, y:av.pch.logY, type:'scatter', mode: 'lines', name: 'Function Subset',
-    //line: {color: 'rgb(0, 255, 0)', width: 1 }
+    //line: {color: 'rgb(2, 2, 2)', width: 1, dash: 'dot' }
     //line: {color: '#00FF00', width: 1, dash: 'solid' }   //dash: (solid   dot    dashdot   dash
-    line: {color: 'rgb(2, 2, 2)', width: 1, dash: 'dot' }
+    line: {color: '#00FF00', width: 1, dash: 'dot' }
   };
   
   var sgrName;
