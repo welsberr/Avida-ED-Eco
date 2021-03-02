@@ -289,6 +289,41 @@
     //console.log('av.nut.cntGlobalDataTasks=', av.nut.cntGlobalDataTasks);
   };
 
+  //----------------------------------------------------------------------------------- av.fwt.setResourceGridDisplay --
+  av.fwt.setResourceGridDisplay = function (from) {
+    console.log(from, 'called av.fwt.setResourceGridDisplay');
+    var hideFlag = [false, false, false, false, false, false, false, false, false];
+    var hideResourceGrid = true;  // show resource grid;
+    var numTsk = '0not';
+    var supplyType = 'other';
+    
+    for (var ii=1; ii < av.sgr.numTasks; ii++) {
+      numTsk = av.sgr.logEdNames[ii];
+      if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase()) {
+        supplyType = av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase();
+        if ('infinite' == supplyType || 'none' == supplyType) {
+          hideFlag[ii] = true;
+        };
+      };
+      //console.log('hideFlag['+ii+'] =', hideFlag[ii]);
+      hideResourceGrid = hideResourceGrid && hideFlag[ii];
+    }  // end of for loop. 
+    console.log('hideResourceGrid is', hideResourceGrid);
+    
+    if (hideResourceGrid) {
+      document.getElementById('resrceDataHolder').style.display = 'none';
+      document.getElementById('resrceDataHolder').style.visibility = 'hidden';
+      document.getElementById('resourceDataGrid').class = 'visibility_hidden';
+    } else {
+      document.getElementById('resrceDataHolder').style.display = 'none';
+      document.getElementById('resrceDataHolder').style.visibility = 'hidden';
+      document.getElementById('resourceDataGrid').class = 'visibility_hidden';
+//      document.getElementById('resrceDataHolder').style.display = 'block';
+//      document.getElementById('resrceDataHolder').style.visibility = 'visible';
+//      document.getElementById('resourceDataGrid').class = 'sugarGlobal-gridContainer';
+    }
+  };
+  
   //------------------------------------------------------------------------------------ av.fwt.makeFzrEnvironmentCfg --
   av.fwt.makeFzrEnvironmentCfg = function (idStr, toActiveConfigFlag, from) {
     'use strict';
@@ -296,6 +331,7 @@
     console.log(from, ' called av.fwt.makeFzrEnvironmentCfg; idStr=', idStr);
     av.fwt.dom2nutUIfields('av.fwt.makeFzrEnvironmentCfg');
     av.fwt.nutUI2cfgStructure('av.fwt.makeFzrEnvironmentCfg');
+    av.fwt.setResourceGridDisplay('av.fwt.makeFzrEnvironmentCfg');
     console.log('before calling av.fwt.nut2cfgFile');
     av.fwt.nut2cfgFile(idStr, toActiveConfigFlag, 'av.fwt.makeFzrEnvironmentCfg');
     console.log('after calling av.fwt.nut2cfgFile');
@@ -356,6 +392,13 @@
       //console.log('numTsk=', numTsk, '; regionLayout=', regionLayout);
       av.nut[numTsk].uiAll.regionsNumOf = regionLayout[0];
       ndx = av.sgr.regionLayoutValues.indexOf(regionLayout);
+      
+      if ('1Global' == regionLayout) {
+        av.nut[numTsk].uiAll.geometry = 'global';
+      }
+      else {
+        av.nut[numTsk].uiAll.geometry = 'grid';
+      }
 
       subBegin = av.sgr.regionQuarterSubBeg[ndx];
       subEnd = av.sgr.regionQuarterSubEnd[ndx];

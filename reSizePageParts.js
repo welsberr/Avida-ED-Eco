@@ -41,6 +41,7 @@
   //on 2018_0823 this is where height gets messed up when loading the program. 
   //----------------------------------------------------------------------------------------------------------------------
   //on 2018_0823 this is where height gets messed up when loading the program. 
+/*
    av.pch.divSize = function (from) {
     //av.debug.uil = true;
     if (av.debug.uil) { console.log('ui: PopPlotSize: ',from, 'called av.pch.divSize'); }
@@ -77,7 +78,7 @@
     if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
     //av.debug.uil = false;
   };
-
+*/
   av.anl.divSize = function (from) {
     if (av.debug.alo) { console.log('alo: ', from, 'called av.anl.divSize'); }
     //console.log(from,'anaChrtHolder Ht client scroll ', av.dom.anaChrtHolder.clientHeight, av.dom.anaChrtHolder.scrollHeight);

@@ -4,7 +4,7 @@
 // one global to hold them all.
 var av = av || {};  //incase av already exists
 
-console.log('start of globals on 2021_212 Fri msg_working');
+console.log('start of globals on 2021_301 Mon msg_working');
 
 Number.prototype.pad = function(size) {
   var ss = String(this);
@@ -1023,7 +1023,7 @@ av.pch.clearPopChrt = function () {
 */
   av.pch.traceLog = {
     x:av.pch.xx, y:av.pch.logY, type:'scatter', mode: 'lines', name: 'Function Subset',
-    //line: {color: 'rgb(2, 2, 2)', width: 1, dash: 'dot' }
+    // line: {color: 'rgb(2, 2, 2)', width: 1, dash: 'dot' }
     //line: {color: '#00FF00', width: 1, dash: 'solid' }   //dash: (solid   dot    dashdot   dash
     line: {color: '#00FF00', width: 1, dash: 'dot' }
   };
@@ -1052,6 +1052,7 @@ av.pch.clearPopChrt = function () {
   
   // used to set the size of #popChrtHolder and the chart
   av.pch.pixel = {wd: 310, ht: 202, wdif:20, hdif:8};  //hdif:2  //wdif was 10 which is not enough
+  av.pch.pixel.htremove = 53;
   
   av.pch.data = [av.pch.tracePop, av.pch.traceLog];
   for (var ii=0; ii < av.sgr.numTasks-7; ii++) {

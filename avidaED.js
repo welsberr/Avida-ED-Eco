@@ -3391,9 +3391,12 @@ require([
   //av.sgr.setSugarColors(true);  //true is to turn colors on;    // set color/grey individually so when 0 resources, grey shades rather than colors
   av.sgr.ChangeAllsugarsupplyTypeSlct('infinite','Last_things_done');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');
-  document.getElementById('resourceDataTable').style.display = 'flex';   //display local resource data
+  //document.getElementById('resrceDataHolder').style.display = 'block';   //display local resource data
+  av.pch.popChrtHolder_Ht = $('popChrtHolder').innerHeight();
+  av.pch.popStatsBlock_Ht = $('popStatsBlock').innerHeight();
+  av.pch.pop_statsBlock_ChrtHolder_noResrceGrid = av.pch.popStatsBlock_Ht - av.pch.popChrtHolder_Ht;
 
-  //problem as now av.ui.about does not desplay at all
+//problem as now av.ui.about does not desplay at all
   av.ui.aboutAvidaED_Close();    //should not needd this as display = 'none' but it is needed for now.
 
   av.ui.setResourceComplexity(av.sgr.complexityLevel, 'last-things-done');

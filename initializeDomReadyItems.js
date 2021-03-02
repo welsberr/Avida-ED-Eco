@@ -325,7 +325,7 @@
       document.getElementById('avidianOutline').style.display = 'none';
 
       document.getElementById('popInfoTabHolder').className = 'tabHolderHide';
-      //document.getElementById('resourceDataTable').style.display = 'none';
+      //document.getElementById('resrceDataHolder').style.display = 'none';
 
       av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopentDisplays');
       len = av.sgr.logicNames.length;
@@ -395,7 +395,7 @@
       document.getElementById('avidianOutline').style.display = 'inline-block'; 
 
       document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
-      document.getElementById('resourceDataTable').style.display = 'flex';
+      document.getElementById('resrceDataHolder').style.display = 'block';
 
       av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopentDisplays.onclick_show');
 
@@ -466,10 +466,10 @@
   //toggles showing resource data in right info panel (Stats window) in Populaton View
   av.ui.toggleResourceData = function (from) {
     console.log(from, 'called av.ui.toggleResourceData to to toggle dipslay of resource data');
-    if ('none' === document.getElementById('resourceDataTable').style.display) {
-      document.getElementById('resourceDataTable').style.display = 'flex';
+    if ('none' === document.getElementById('resrceDataHolder').style.display) {
+      document.getElementById('resrceDataHolder').style.display = 'block';
     } else {
-      document.getElementById('resourceDataTable').style.display = 'flex';  //flex
+      document.getElementById('resrceDataHolder').style.display = 'none';  //flex
     };
     av.sgr.complexityChangeProcess('last-things-done');
   };

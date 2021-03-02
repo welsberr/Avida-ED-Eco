@@ -11,6 +11,7 @@
   }
   .display_none { display: none; }
   .display_inline-block{ display: inline-block }
+  .visibility_hidden {visibility: hidden; }
   
   .thin{
     margin: 0;
@@ -572,15 +573,15 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
     flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
     border: 1px solid #AAA;
   }
-  #resourceDataTable{
-    display: block;  /* none; */
+  #resrceDataHolder{
+    display: none;  /* none; */
     flex: 0 0 53;
     border: 1px solid #AAA;
     width: 99%;
+/*    visibility: hidden; */
   }
   #popChrtHolder{
     flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-    border: 1px solid #AAA;
     height: 100%;
   }
   #miniChartControls{
@@ -589,11 +590,11 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
     border: 1px solid #AAA;    
   }
   #miniChartYaxis{
-    flex: 0 0 240px;
-    border: 1px solid #AAA;
+    flex: 0 0 220px;
   }
   #miniChartOptHolder{
     flex: 0 0 auto;
+    padding-left: 15px;
     align-self: flext-end;
   }
   #pauseOptions {
@@ -642,7 +643,7 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
   justify-content: stretch;
 }
 
-.sugarGlobal-gridContainer {   /*on stats tab of population page */
+.sugarGlobal-gridContainer {   /*on stats tab of population page   resourceDataGrid held by resrceDataHolder */
   display: grid;
   grid-template-areas: ' sgrTop  sgrNot  sgrNan  sgrAnd  sgrOrn  sgrOro  sgrAnt  sgrNor  sgrXor  sgrEqu'
                        ' totTop  totNot  totNan  totAnd  totOrn  totOro  totAnt  totNor  totXor  totEqu'
