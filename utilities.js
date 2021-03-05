@@ -241,6 +241,7 @@ av.utl.log = function (base, num) {
       else if (10**(-23) <= stdNum) {numStr = (stdNum/10**(-24)).toFixed(fixBase+1) + 'y'; }
       else if (10**(-24) <= stdNum) {numStr = (stdNum/10**(-24)).toFixed(fixBase+2) + 'y'; }
 
+      else if (0 == stdNum) { numStr = stdNum.toFixed(0); }
       else {numStr = stdNum.toExponential(3); }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
 
     };

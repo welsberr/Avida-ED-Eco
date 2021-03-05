@@ -1575,8 +1575,10 @@ checkbox:focus {
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
+    bottom: 0;
+
     z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+    //padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
     width: 100%;   /*   Full width */
@@ -1596,7 +1598,7 @@ checkbox:focus {
 }
 
 .modal-header {
-    padding: 4px 4px;
+    padding: 2px 2px;
     font-size: 130%;
     font-weight: bold;
     background: lightgray;
@@ -1610,14 +1612,7 @@ checkbox:focus {
     background: lightgray;
     color: black;
 }
-#AvidaEDaboutModalContainer{
-  display:flex;
-  flex-direction: column;
-  align-items: center;
-  /*justify-content: center */
-  width: 100%;
-  hieght: auto;
-}
+
 /************************************************************************************************* end of model class */                                                                         */
 
 #saveCSVdataModalID {
@@ -1627,7 +1622,7 @@ checkbox:focus {
 
 
 /**********************************************************************************************************************/
-/* the class modelBig is used to create dialog boxes without dojo                                                     */
+/* the class modelBig is used to create big dialog boxes without dojo                                                     */
 /**********************************************************************************************************************/
 /* https://www.w3schools.com/howto/howto_css_modals.asp                                                               */
 /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal                                                */
@@ -1635,11 +1630,11 @@ checkbox:focus {
 /* The Modal (background) */
 .modelBig {
     display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+    position: fixed; /* Stay in place */
     left: 0;
     top: 0;
+    padding-top: 100px; /* Location of the box */
     width: 100%;   /*   Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
@@ -1671,6 +1666,7 @@ checkbox:focus {
     background: lightgray;
     color: black;
 }
+
 #AvidaEDaboutModalContainer{
   display:flex;
   flex-direction: column;

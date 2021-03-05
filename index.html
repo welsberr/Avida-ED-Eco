@@ -91,7 +91,7 @@
           <span data-dojo-type='dijit/MenuBar' tabIndex='0'>
             <span data-dojo-type='dijit/PopupMenuBarItem' label='Avida-ED' iconClass='dijitNoIcon' id='mnAvidaEd'>
               <span data-dojo-type='dijit/Menu'>
-                <span data-dojo-type='dijit/MenuItem' id='mnAeAbout' label='About'></span>
+                <span data-dojo-type='dijit/MenuItem' id='mnAeAbout' label='About' onclick='av.ui.aboutAvidaED("mnAeAbout")'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnAePreferences' label='Preferences'></span>
               </span>
             </span>
@@ -139,7 +139,7 @@
             </span>
             <span data-dojo-type='dijit/PopupMenuBarItem' label='Help' id='mnHelp'>
               <span data-dojo-type='dijit/Menu'>
-                <span data-dojo-type='dijit/MenuItem' id='mnHpAbout' label='About'></span>
+                <span data-dojo-type='dijit/MenuItem' id='mnHpAbout' label='About' onclick='av.ui.aboutAvidaED("mnHpAbout")'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnHpManual'>
                   <a href='images/Avida-ED_UserManualv3.0.pdf' target='_blank'>Quick Start Manual</a></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnHpHardware'>
@@ -151,9 +151,7 @@
                   <a href='https://docs.google.com/document/d/1si3tVEjo2A_1PSvFosNPxk-_Qio00uvmwokQLEpdB-E/' target='_blank'>Environment file Help</a>
                 </span>
                 <span data-dojo-type='dijit/MenuItem' id='mnHpProblem' label='Report Problem(s)'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnHpEmail'>
-                   <a href="mailto:Avida-ED-development@googlegroups.com?subject=Avida-ED Problem(s)/Question(s)">email: questions/comments</a>
-               </span>  
+                <span data-dojo-type='dijit/MenuItem' id='mnHpEmail'>email with questions or comments</span>
 
                 <div id='hide_menu_lines_for_development' style='display: none'>
                   <span data-dojo-type='dijit/MenuItem' id='mnHpDebug' label='Toggle Debug Menu'></span>
@@ -691,7 +689,7 @@
                 </div>
               </div>
 
-              <div id="popChrtHolder">
+              <div id='popChrtHolder'>
                 <div id='popChart'></div>
                 <div id='popChartDiv'></div>
               </div>
@@ -3526,6 +3524,26 @@
       </div>
     </div>
 
+    
+    <span class='notSeen' id='o________________________________________________________________________email__Modal___'></span>
+    <div class="modal" id='email_ModalID'>
+
+      <!-- Modal content -->
+      <div class="modal-content" >
+        <div class="modal-header">
+          <h2>Please send us your questions or comments</h2>
+        </div>
+        <div class="modal-body">
+          <p>Our developers can be reached at: Avida-ED-development@googlegroups.com</p>
+          <a href="mailto:Avida-ED-development@googlegroups.com?subject=Avida-ED Problem(s)/Question(s)">email: questions/comments</a>
+        </div>
+        <div class="modal-footer">
+          <button id='email_Cancel' onclick='document.getElementById('email_ModalID').style.display = 'none';'>Ok</button>
+        </div>
+      </div>
+    </div>
+
+    
     <span class='notSeen' id='o_________________________________________________________________preferences_ModalID___'></span>
     <div class="modal" id='preferences_ModalID'>
 
@@ -3559,7 +3577,7 @@
     
     
     <span class='notSeen' id='o_________________________________________________________________Need_Ancestor_Modal___'></span>
-    <div class="modalBig" id='aboutAvidaED_ModalID'>
+    <div class="modalBig" id='aboutAvidaED_ModalID' >
 
       <!-- Modal content -->
       <div class="modalBig-content">

@@ -608,16 +608,16 @@ require([
   //                                    End of dojo based DND triggered functions
   //----------------------------------------------------------------------------------------------------------------------
   window.onbeforeunload = function (event) {
-  console.log('window.onbeforeunload');
+  console.log('window.onbeforeunload: av.ui.sendEmailFlag =', av.ui.sendEmailFlag, '; av.fzr.saveState = ', av.fzr.saveState);
     if (!av.ui.sendEmailFlag) {
       if ('no' === av.fzr.saveState || 'maybe' === av.fzr.saveState) {
         return 'Your workspace may have changed sine you last saved. Do you want to save first?';
+      };
 
-        //e.stopPropagation works in Firefox.
-        if (event.stopPropagation) {
-          event.stopPropagation();
-          event.preventDefault();
-        };
+      //e.stopPropagation works in Firefox.
+      if (event.stopPropagation) {
+        event.stopPropagation();
+        event.preventDefault();
       };
     };
   };
@@ -927,24 +927,32 @@ require([
   //--------------------------------------------------------------------------------------------------------------------
   // Help Drop down menu buttons
   //--------------------------------------------------------------------------------------------------------------------
-
+/*
   dijit.byId('mnHpAbout').on('Click', function () {
     ///console.log('in Button: mnHpAbout.click');
     av.post.addUser('Button: mnHpAbout');
-    av.clk.aboutAvidaED();
+    av.ui.aboutAvidaED();
+    console.log('in dijit.byId(mn Help About).on(Click)' );
   });
 
   dijit.byId('mnAeAbout').on('Click', function () {
     av.post.addUser('Button: mnAeAbout');
-    //console.log('in mnAeAbout.click');
-    av.clk.aboutAvidaED();
+    console.log('in dijit.byId(mnHp)About-avida).on(Click)' );
+    av.ui.aboutAvidaED();
   });
-
-  // onclick='av.clk.aboutAvidaED'
-  av.clk.aboutAvidaED = function() {
-    av.post.addUser('Button: display About Avida-ED');
+*/
+  // onclick='av.ui.aboutAvidaED'
+  av.ui.aboutAvidaED = function(from) {
+    av.post.addUser('Button: display About Avida-ED from:', from);
     document.getElementById('aboutAvidaED_ModalID').style.display = "block";
-    console.log('in av.clk.aboutAvidaED');    
+    console.log('in av.ui.aboutAvidaED: from=', from);    
+  };
+
+av.ui.email = function() {
+    av.post.addUser('Button: mnHpAbout');
+    av.ui.emailAvidaED();
+    document.getElementById('email_ModalID').style.display = "block";
+    console.log('in av.ui.email');    
   };
 
   //document.getElementById('aboutAvidaED_Cancel').onclick = function () {
@@ -2008,6 +2016,7 @@ require([
   //--------------------------------------------------------------------------------------------- av.grd.popChartInit --
   // Should be done before av.grd.popChartFn is run.  
   av.grd.popChartInit = function (from) {
+    var data;
     console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
                    '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display, '; av.ui.page=', av.ui.page, 
                     '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
@@ -2034,19 +2043,24 @@ require([
     if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart=', av.dom.popChart); }
     if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
     
-    if (null == av.dom.popChart.data) {
+//    if (null == av.dom.popChart.data) {
+    if (true) {
       av.pch.update = {
         autorange: true,
         width: av.pch.layout.width,
         height: av.pch.layout.height
       };
-
+      data = [];
+      Plotly.newPlot(av.dom.popChart, data, av.pch.update);
+    } 
+    else {
       if (undefined != av.dom.popChart.data[0]) {
         Plotly.deleteTraces(av.dom.popChart, [0, 1]);
         Plotly.relayout(av.dom.popChart, av.pch.update);
         if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
-      }
+      };
     };
+
     av.dom.popChart.style.visibility = 'hidden';
     //if (av.dbg.flg.plt) { console.log('PopPlot: layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width); }
     av.pch.needInit = false;

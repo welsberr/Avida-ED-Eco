@@ -91,6 +91,7 @@ av.msg.setupType = 'normal';
 // so use the below updated condition
 
 av.ui = {};  //user interface functions and variables
+av.ui.sendEmailFlag = true;
 av.ui.popStatFlag = true;  //flag that determines if the stats panel is visible.
 av.ui.orgStatFlag = true;  //flag that determines if the stats panel is visible.
 av.ui.orgInfoHolderMinWidth = 250; //need to cross check with orgInfoHolder in avidaEdEco.css
@@ -1303,7 +1304,6 @@ console.log('length =', av.ptd.muteScaleAry.length, 'max = ', av.ptd.muteScaleAr
 
   //-------------------------------------------------------------------------------------------- av.mousse.clearMouse --
 
-av.clk = {};
 av.mouse = {};
 
 av.mouse.clearMouse = function (av) {

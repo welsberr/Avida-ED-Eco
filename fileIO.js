@@ -420,7 +420,7 @@
       //console.log('newSaveState', newSaveState)
       if ('no' === av.fzr.saveState) {
         //console.log('oldSaveState', av.fzr.saveState)
-        av.fzr.saveState = 'maybe';
+        //av.fzr.saveState = 'maybe';
       }
     } 
     else {
