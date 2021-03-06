@@ -40,7 +40,7 @@
     av.dom.showTextDebugButton = document.getElementById('showTextDebugButton');
     av.dom.allAvida = document.getElementById('allAvida');
 
-    av.dom.lftPnlButtonImg = document.getElementById('lftPnlButtonImg');
+    av.dom.leftPanelButton = document.getElementById('leftPanelButton');
     av.dom.rtPnlButtonImg = document.getElementById('rtPnlButtonImg');
 
     av.dom.orgInfoHolder = document.getElementById('orgInfoHolder');

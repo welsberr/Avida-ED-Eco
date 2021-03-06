@@ -1,6 +1,7 @@
   // if (av.dbg.flg.root) { console.log('Root: start of messaging'); }  
   var av = av || {};  //incase av already exists
   var dijit = dijit || {};  //to let file know dijit is defined
+  var tmpStr;
 
   // if (av.dbg.flg.root) { console.log('Root: before av.msg.readMsg'); }
   av.msg.readMsg = function (ee) {
@@ -8,8 +9,8 @@
 
     var stub = '';
     var msg = ee.data;  //passed as object rather than string so JSON.parse is not needed.
-    console.log('msg.type=', msg.type, '; msg.name=', msg.name, '; msg.level=', msg.level);
-    console.log('av.msg.readMsg: msg', msg);
+    //console.log('msg.type=', msg.type, '; msg.name=', msg.name, '; msg.level=', msg.level);
+    //console.log('av.msg.readMsg: msg', msg);
     if ('data' == msg.type) {
       if (av.debug.userMsg) userMsgLabel.textContent = '| Avida type:data; name:' + msg.name;
       switch (msg.name) {
@@ -118,8 +119,12 @@
           break;
         case 'notification':
           if (av.debug.msg) console.log('avida:notify: ',msg.message);
-          console.log('avida:notify:', msg.message);
+          console.log('avida:notify:', msg.message, '; inhtml=', document.getElementById('avidaVersion').innerHTML );
+          tmpStr = msg.message;
+          tmpStr = 'avida version:' + tmpStr.substr(tmpStr.length - 13, 13);
           console.log('================================================================================================');
+          console.log('tmpStr=', tmpStr);
+          document.getElementById('avidaVersion').innerHTML = tmpStr;
           if (av.debug.msg) userMsgLabel.textContent = '| Avidia notification: ' + msg.message; //with splash screen no longer need ready message
           // Worked on a better splash screen gif. Used licecap, an application on the Mac to record the gif.
           // Then used http://gifmaker.me/reverser/ to make a gif in reverse time order. Then Wesley used gifsicle
@@ -674,6 +679,8 @@
     var ndx= 0;
     var numTsk = 0;
     
+    console.log('Fit=', msg.ave_fitness, '; Cst=', msg.ave_gestation_time, '; Ear=', msg.ave_metabolic_rate, '; via=', msg.viables);
+    
     //update graph arrays
     if (0 <= msg.update) {  //normal start to loop
       av.pch.aveFit[msg.update] = msg.ave_fitness;
@@ -681,6 +688,12 @@
       av.pch.aveEar[msg.update] = msg.ave_metabolic_rate;
       av.pch.aveNum[msg.update] = msg.organisms;
       av.pch.aveVia[msg.update] = msg.viables;
+      
+      av.pch.aveDadFit[msg.update] = msg.ave_repro_fitness;
+      av.pch.aveDadCst[msg.update] = msg.ave_repro_gestation_time;
+      av.pch.aveDadEar[msg.update] = msg.ave_repro_metabolic_rate;
+      av.pch.aveDadVia[msg.update] = msg.with_offspring;
+
       av.pch.xx[msg.update] = msg.update;
 
       //console.log('av.parents.name.length = ',av.parents.name.length, '; av.pch.numDads=', av.pch.numDads);
@@ -713,9 +726,15 @@
       if (av.pch.aveEar[msg.update] > av.pch.aveMaxEar) av.pch.aveMaxEar = av.pch.aveEar[msg.update];
       if (av.pch.aveNum[msg.update] > av.pch.aveMaxNum) av.pch.aveMaxNum = av.pch.aveNum[msg.update];
       if (av.pch.aveVia[msg.update] > av.pch.aveMaxVia) av.pch.aveMaxVia = av.pch.aveVia[msg.update];
-
+      
+      if (av.pch.aveDadFit[msg.update] > av.pch.aveDadMaxFit) av.pch.aveDadMaxFit = av.pch.aveFit[msg.update];
+      if (av.pch.aveDadCst[msg.update] > av.pch.aveDadMaxCst) av.pch.aveDadMaxCst = av.pch.aveCst[msg.update];
+      if (av.pch.aveDadEar[msg.update] > av.pch.aveDadMaxEar) av.pch.aveDadMaxEar = av.pch.aveEar[msg.update];
+      if (av.pch.aveDadVia[msg.update] > av.pch.aveDadMaxVia) av.pch.aveDadMaxVia = av.pch.aveVia[msg.update];
+      
       av.ptd.updateLogicFn(msg.update);  //for graph data  switch to run with grid data since the data is from the grid data
-    }
+    };
+    
     TimeLabel.textContent = msg.update.formatNum(0) + ' updates';
     av.grd.updateNum = msg.update;
     

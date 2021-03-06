@@ -1269,10 +1269,10 @@ av.ui.email = function() {
   // ------- end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
 
   //----------------------------------------------------------------------------------------show/hide left side panel --
-  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.lftPnlButtonImg'); }
-  av.ptd.lftPnlButtonImg = function () {
+  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.leftPanelButton'); }
+  av.ptd.leftPanelButton = function () {
     if (av.ui.lftSidePnlShowing) {
-      av.post.addUser('Button: lftPnlButtonImg: start hidding left side panel');
+      av.post.addUser('Button: leftPanelButton: start hidding left side panel');
       av.ui.lftSidePnlShowing = false;
       //av.ui.navColId = av.dom.navColId.offsetWidth;
       //av.dom.navColId.style.display = 'none';
@@ -1280,7 +1280,7 @@ av.ui.email = function() {
         document.getElementById('allAvidaContainer').className = 'all2rit';
       }
     } else {
-      av.post.addUser('Button: lftPnlButtonImg: start showing left side panel');
+      av.post.addUser('Button: leftPanelButton: start showing left side panel');
       av.ui.lftSidePnlShowing = true;
       //av.dom.navColId.style.display = 'flex';
       //av.dom.rightInfoHolder.style.width = av.ui.navColId + 'px';
@@ -1290,9 +1290,9 @@ av.ui.email = function() {
     }
   };
   
-  av.dom.lftPnlButtonImg.onclick = function () {
-    ///av.post.addUser('Button: lftPnlButtonImg');   //done in popStatView
-    av.ptd.lftPnlButtonImg();
+  av.dom.leftPanelButton.onclick = function () {
+    ///av.post.addUser('Button: leftPanelButton');   //done in popStatView
+    av.ptd.leftPanelButton();
   };
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -2130,7 +2130,8 @@ av.ui.email = function() {
     av.pch.divSize('av.grd.popChartFn');
     //console.log('after av.pch.divSize');
     
-    if ('organism' == av.pch.chartContains || 'combined' == av.pch.chartContains) {
+    if ('organism' == av.pch.chartContains || 'combined' == av.pch.chartContains
+      || 'offspring' == av.pch.chartContains ) {
       
       //not in current use. Seems if the y-axis had not changed we might not need to redo case statement
       if (document.getElementById('yaxis').value === av.pch.yValue) {
@@ -2145,30 +2146,35 @@ av.ui.email = function() {
       switch (av.pch.organismTrait) {
         case 'Average Fitness':
           av.pch.popY = av.pch.aveFit;
+          av.pch.dadY = av.pch.aveDadFit;
           av.pch.logY = av.pch.logFit;
-          //console.log('av.pch.maxFit=',av.pch.aveMaxFit, '; av.pch.logMaxFit=',av.pch.logMaxFit);
           av.pch.maxY = (av.pch.aveMaxFit > av.pch.logMaxFit) ? av.pch.aveMaxFit : av.pch.logMaxFit;
+          //console.log('av.pch.maxFit=',av.pch.aveMaxFit, '; av.pch.logMaxFit=',av.pch.logMaxFit);
           //console.log('aveMaxFit=', av.pch.aveMaxFit, '; logMaxFit=', av.pch.logMaxFit, '; maxY=', av.pch.maxY);
           //console.log('aveFit', av.pch.aveFit);
           //console.log('logFit', av.pch.logFit);
           break;
         case 'Average Offspring Cost':
           av.pch.popY = av.pch.aveCst;
+          av.pch.dadY = av.pch.aveDadCst;
           av.pch.logY = av.pch.logCst;
           av.pch.maxY = (av.pch.aveMaxCst > av.pch.logMaxCst) ? av.pch.aveMaxCst : av.pch.logMaxCst;
           break;
         case 'Average Energy Acq. Rate':
         av.pch.popY = av.pch.aveEar;
+        av.pch.dadY = av.pch.aveDadEar;
         av.pch.logY = av.pch.logEar;
         av.pch.maxY = (av.pch.aveMaxEar > av.pch.logMaxEar) ? av.pch.aveMaxEar : av.pch.logMaxEar;
           break;
         case 'Number of Organisms':
         av.pch.popY = av.pch.aveNum;
+        av.pch.dadY = av.pch.aveDadVia;
         av.pch.logY = av.pch.logNum;
         av.pch.maxY = (av.pch.aveMaxNum > av.pch.logMaxNum) ? av.pch.aveMaxNum : av.pch.logMaxNum;
           break;
         case 'Number Viable':
         av.pch.popY = av.pch.aveVia;
+        av.pch.dadY = av.pch.aveDadVia;
         av.pch.logY = av.pch.logNum;
         av.pch.maxY = (av.pch.aveMaxVia > av.pch.logMaxNum) ? av.pch.aveMaxVia : av.pch.logMaxNum;
         default:
@@ -2194,16 +2200,22 @@ av.ui.email = function() {
       //console.log('trace1',av.pch.traceLog);
     
       //av.pch.tracePop = {x:av.pch.xx, y:av.pch.popY, type:'scatter', mode: 'lines', name: 'Population'};
-      av.pch.tracePop.y = av.pch.popY;
       //av.pch.traceLog = {x:av.pch.xx, y:av.pch.logY, type:'scatter', mode: 'lines', name: 'Function Subset'};
-      av.pch.traceLog.y = av.pch.logY;
       //av.pch.popData = [av.pch.tracePop];
+    
+      av.pch.tracePop.y = av.pch.popY;
+      av.pch.traceLog.y = av.pch.logY;
       av.pch.popData = [av.pch.tracePop, av.pch.traceLog]; //popData
       av.pch.traceList = [];
       
       av.pch.traceList[jj] = {x: [av.pch.xx], y: [av.pch.popY]};
       av.pch.traceList[jj+1] = {x: [av.pch.xx], y: [av.pch.logY]};
       jj = jj+2;
+      if ('offspring' == av.pch.chartContains) {
+        av.pch.traceDad.y = av.pch.dadY;
+        av.pch.popData = [av.pch.tracePop, av.pch.traceLog, av.pch.traceDad]; //popData
+        jj++;
+      }
     }; // chart contains trait determined by yaxis select dom-object
     console.log('jj=', jj, '; av.pch.popData=', av.pch.popData, '; av.pch.chartContains=', av.pch.chartContains );
 

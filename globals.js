@@ -938,7 +938,7 @@ av.pch.resrcGlobal = {};
 av.pch.sgr = {};
 
 av.sgr.lineDash = ['solid', 'dot', 'solid', 'longdash', 'solid',  'dash', 'solid', 'dashdot', 'longdashdot'];
-av.sgr.lineDash = ['solid', 'dot', 'solid', 'longdashdot', 'solid',  '10px,5px', 'solid', 'dashdot', 'solid'];
+av.sgr.lineDash = ['10px,5px', 'dot', 'solid', 'longdashdot', 'solid',  'dot', 'solid', 'dashdot', 'solid'];
 
 //av.sgr.lineColors =  ['green', 'green', 'blue', 'blue', 'red', 'red', 'orange', 'orange', 'yellow'];
 
@@ -961,12 +961,23 @@ av.pch.clearPopChrt = function () {
   av.pch.aveNum = [0];
   av.pch.logNum = [0];
   av.pch.aveVia = [0];
-  av.pch.nUpdate = [];    //not sure if this is needed.  
+  av.pch.nUpdate = [];    //not sure if this is needed.
   av.pch.aveMaxFit = 0.1;
   av.pch.aveMaxCst = 0.1;
   av.pch.aveMaxEar = 0.1;
   av.pch.aveMaxNum = 0.1;
   av.pch.aveMaxVia = 0.1;
+  
+  av.pch.aveDadFit = [0];  //Dad is for all avidians that have produced offspring
+  av.pch.aveDadCst = [0];  //Offspring Cost - used to be gestation
+  av.pch.aveDadEar = [0];
+  av.pch.aveDadVia = [0];
+  av.pch.aveDadMaxFit = 0.1;
+  av.pch.aveDadMaxCst = 0.1;
+  av.pch.aveDadMaxEar = 0.1;
+  av.pch.aveDadMaxEar = 0.1;
+  av.pch.aveDadMaxVia = 0.1;
+
   av.pch.logMaxFit = 0;
   av.pch.logMaxCst = 0;
   av.pch.logMaxEar = 0;
@@ -1027,6 +1038,12 @@ av.pch.clearPopChrt = function () {
     // line: {color: 'rgb(2, 2, 2)', width: 1, dash: 'dot' }
     //line: {color: '#00FF00', width: 1, dash: 'solid' }   //dash: (solid   dot    dashdot   dash
     line: {color: '#00FF00', width: 1, dash: 'dot' }
+  };
+  av.pch.traceDad = {
+    x:av.pch.xx, y:av.pch.logY, type:'scatter', mode: 'lines', name: 'Have Offspring',
+    // line: {color: 'rgb(2, 2, 2)', width: 1, dash: 'dot' }
+    //line: {color: '#00FF00', width: 1, dash: 'solid' }   //dash: (solid   dot    dashdot   dash
+    line: {color: 'rgb(122, 0, 0)', width: 1, dash: 'solid' }
   };
   
   var sgrName;

@@ -188,11 +188,20 @@
     padding: 2px 6px 2px 4px;    /* top right bottom left */  
     visibility: visible;
 }
-  #lftPnlButtonImg{
+#leftPanelButton{
+    border: 1px solid black;  
+    padding: 2px;
+    marign: auto;
     height: 20px;
-    border: 2px solid black;  
+    text-align: center;
+      
+}
+  #leftPanelButton{
+    height: 20px;
+    border: 1px solid black;  
     alt: 'button to open/close left panel'; 
     float: left;
+    //<img id='leftPanelButton' src='images/Lft_Btn3.png'/>
   }
   #rtPnlButtonImg{
     height: 20px;
@@ -214,15 +223,20 @@
   #wsSavedMsg{
     color: blue;
   }
-  /* not used as of 2020 July 23 
-  #RtSideSelectHolder{
-    height: 20px;
-    margin: auto;
-  }
-  */
   #RtSideToggleButtons{
     height: 20px;
     margin: auto;
+  }
+  #CanPutButtonHere{
+    padding-top: 5px;
+    height: 25px;
+    display: inline-block;
+    width: 180px;
+  }
+  
+  #avidaVersion{
+    text-align: center;
+    vertical-align: middle;
   }
   
 /* structures in the left side panel */

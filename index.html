@@ -80,7 +80,7 @@
     <div id='allAvidaContainer' class='all3pop'>
       <div id='headerMain' class='headerRow'>
         <div id='leftPnlBtnHolder' class='leftPnlBtnHlderShow'>
-          <img id='lftPnlButtonImg' src='images/lftPnlBtn2.png'/>
+          <div id='leftPanelButton'><<</div>
         </div>
         <div id="mainMenu">
           <input id='putWS' type='file' class='display_none' onchange='av.fio.userPickZipRead()' />
@@ -183,10 +183,13 @@
           <div id='msgHolder'>
             Workspace: `<label id='wsNameMsg'>Default</label>`
             <label id='wsSavedMsg'> is saved</label> &nbsp;&nbsp;&nbsp;
-            <span style='text-align: right'><label id='userMsgLabel' style='color: red; text-align: right'> </label></span>
+            <span style='text-align: right'>
+              <label id='userMsgLabel'> </label>
+            </span>
           </div>
         </div>
         <div id='CanPutButtonHere'>
+              <span id='avidaVersion'> avida: </span>
         </div>
         <div id='RtSideToggleButtons'>
           <input type='button' id='StatsButton' class='toggleLftButton' value='Stats' onclick='av.ptd.rightInfoPanelToggleButton(this)'/>
@@ -714,6 +717,7 @@
                         <option value='combined' selected>Combined</option>
                         <option value='organism'>Organism</option>
                         <option value='resource'>Resource</option>
+                        <option value='offspring'>Offspring</option>
                         <option value='both' disabled='true'>Both</option>
                         <option value='none'>None</option>
                       </select>
