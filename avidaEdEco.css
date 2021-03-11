@@ -58,6 +58,28 @@
 .tab button.active {
   background: #ccc;
 }
+
+.headerRow { grid-area: headerRow; }
+.mainBlockHolder { grid-area: mainBlockHolder; }
+.rightInfoHolder { grid-area: rightInfoHolder; }
+.navColClass {grid-area: navColID; }
+
+
+ .all2rit{
+    display: grid;
+    grid-template-rows: 2.5em auto;
+    grid-template-columns: auto 680px;
+    grid-template-areas: 'headerRow headerRow'
+                         'mainBlockHolder rightInfoHolder';
+    height: 100vh;
+    width: 100vw;
+    min-height: 100vh;
+    min-width: 100vw;
+    max-height: 100vh;
+    max-width: 100vw;
+    margin: 0;
+    background:  #F5F5F5;   /* lightsalmon;  */
+  }
   
   .all2lft{
     display: grid;
@@ -67,24 +89,24 @@
                           'navColClass mainBlockHolder';
     height: 100vh;
     width: 100vw;
-    max-height: 100vh;
-    max-width: 100vw;
-    min-height: 100vh;
+    min-height: 98vh;
     min-width: 100vw;
+    max-height: 99vh;
+    max-width: 100vw;
     margin: 0;
     background:  #F5F5F5;   /* lightsalmon;  */
   }
- .all2rit{
+  .all3pop{
     display: grid;
     grid-template-rows: 2.5em auto;
-    grid-template-columns: auto 250px;
-    grid-template-areas: 'headerRow headerRow'
-                         'mainBlockHolder rightInfoHolder';
+    grid-template-columns: 240px auto 440px;    /* 440px */
+    grid-template-areas: 'headerRow headerRow headerRow'
+                          'navColClass mainBlockHolder rightInfoHolder';
     height: 100vh;
     width: 100vw;
-    min-height: 100vh;
+    min-height: 98vh;
     min-width: 100vw;
-    max-height: 100vh;
+    max-height: 99vh;
     max-width: 100vw;
     margin: 0;
     background:  #F5F5F5;   /* lightsalmon;  */
@@ -105,21 +127,6 @@
     background:  #F5F5F5;   /* lightsalmon;  */
   }
 
-  .all3pop{
-    display: grid;
-    grid-template-rows: 2.5em auto;
-    grid-template-columns: 240px auto 440px;    /* 440px */
-    grid-template-areas: 'headerRow headerRow headerRow'
-                          'navColClass mainBlockHolder rightInfoHolder';
-    height: 100vh;
-    width: 100vw;
-    min-height: 98vh;
-    min-width: 100vw;
-    max-height: 99vh;
-    max-width: 100vw;
-    margin: 0;
-    background:  #F5F5F5;   /* lightsalmon;  */
-  }
   .headerRow {
     grid-area:headerRow;
     display: flex;
@@ -172,12 +179,36 @@
   
 
 /* structures in the headerRow */  
+#leftPanelButton{
+    border-radius: 5px 5px 5px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 18px;
+    padding: 0px 4px 4px 4px;  /* top right bottom left */
+    alt: 'button to open/close left panel'; 
+    text-align: center;
+    vertical-align: middle;
+}
+.scaleImg{
+  height: 80px;
+  object-fit: contain;
+}  
+.scaleImgTest{
+  display: none;
+  height: 40px;
+  object-fit: contain;
+}  
+#lftPnlButtonImg{
+  display: none;
+  height: 10px;
+  alt: 'button to open/close left panel'; 
+  float: left;
+}
 .leftPnlBtnHlderShow{
-    background: #eee;     /* #eee; better color ? */
-    flex: 0 1 50px;
-    padding: 2px 4px 2px 6px;    /* top right bottom left */
-    visibility: visible;
-  }
+  height: 20px;
+  padding: 2px 6px 2px 4px;    /* top right bottom left */  
+  margin: auto;
+  background: inherit;     /* #eee; better color ? */
+  flex: 0 1 50px;
+}
 .pnlBtnHldrHide{
     flex: 0 1 50px;
     padding: 2px 6px 2px 4px;    /* top right bottom left */  
@@ -188,21 +219,7 @@
     padding: 2px 6px 2px 4px;    /* top right bottom left */  
     visibility: visible;
 }
-#leftPanelButton{
-    border: 1px solid black;  
-    padding: 2px;
-    marign: auto;
-    height: 20px;
-    text-align: center;
-      
-}
-  #leftPanelButton{
-    height: 20px;
-    border: 1px solid black;  
-    alt: 'button to open/close left panel'; 
-    float: left;
-    //<img id='leftPanelButton' src='images/Lft_Btn3.png'/>
-  }
+
   #rtPnlButtonImg{
     height: 20px;
     border: 2px solid black;  
@@ -227,6 +244,22 @@
     height: 20px;
     margin: auto;
   }
+  .toggleLftButton {
+    border-radius: 5px 0px 0px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 18px;
+    padding: 1px 4px 3px 4px;  /* top right bottom left */
+  }
+
+  .toggleRitButton {
+    border-radius: 0px 5px 5px 0px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 18px;
+    padding: 1px 4px 3px 4px;  /* top right bottom left */
+    background: inherit;
+  }
+  .activeBtn {
+    background: #ccc;
+  }
+
   #CanPutButtonHere{
     padding-top: 5px;
     height: 25px;
@@ -269,10 +302,10 @@
     border-radius: 5px;
     min-width: 82px;
   }
-.freezerClass{
+#freezerSection{
   border: 1px solid #BABABA;
   flex: 1;                /* fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
-  height: 100%;
+  height: 99%;
   width: 99%;
   overflow:auto;
 }
@@ -445,7 +478,7 @@
   height: 30px;
   border: 1px solid #DDDDDD;
 }
-.benchPopBot{
+#benchPopBot{
   flex: 0 1 60px;
   border: 1px solid #AAA;
   min-height: 41px;
@@ -538,7 +571,7 @@
   .timePerform { min-width: 120px; background: #fff }
   
   #popStats4grid{
-    flex: 1 1 200px;      
+    flex: 1 1 240px;      
     border: 1px solid #AAA;
     min-width: 200px;
   } /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
@@ -618,6 +651,7 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
 
     /*background: rgb( 0 ,  155 ,  0 ); */
   }
+  #pausePrefix {display: inline-block; }
 
 /*--------------------------------------------------------------------------------------------- Resource Data Table --*/
 
@@ -1296,21 +1330,6 @@ select:disabled::-ms-expand {
     background: #fff; 
 }
 
-  .toggleLftButton {
-    border-radius: 5px 0px 0px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 18px;
-    padding: 1px 4px 3px 4px;  /* top right bottom left */
-  }
-
-  .toggleRitButton {
-    border-radius: 0px 5px 5px 0px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 18px;
-    padding: 1px 4px 3px 4px;  /* top right bottom left */
-    background: inherit;
-  }
-  .activeBtn {
-    background: #ccc;
-  }
 
 /* Checkbox this code creates a black circle version instead of the blue check
 

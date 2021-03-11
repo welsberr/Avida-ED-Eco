@@ -4,7 +4,7 @@
 // one global to hold them all.
 var av = av || {};  //incase av already exists
 
-console.log('start of globals on 2021_301 Mon msg_working');
+console.log('start of globals on 2021_310_13:47 Thurs');
 
 Number.prototype.pad = function(size) {
   var ss = String(this);
@@ -112,7 +112,6 @@ av.ui.autoStopValue = 987654321;
 av.ui.gridHolderSideBuffer = 0;
 av.ui.popGridCtlWdMin = 380;   //was 430
 av.ui.rightInfoHolderMinWd = 338;
-av.ui.popBotHtMin = 90;
 av.ui.navColIdMinWd = 152;
 
 //not really ui, but not sure where to put them

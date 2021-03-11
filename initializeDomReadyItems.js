@@ -25,10 +25,21 @@
     av.dom.wsNameMsg = document.getElementById('wsNameMsg');
 
 
-    av.dom.allAvida = document.getElementById('allAvida');
     av.dom.navColId = document.getElementById('navColId');
+    av.dom.allAvidaContainer = document.getElementById('allAvidaContainer');
+    av.dom.popInfoVert = document.getElementById('popInfoVert');
+    av.dom.labInfoHolder = document.getElementById('labInfoHolder');
+    av.dom.popStatsBlock = document.getElementById('popStatsBlock');
+    av.dom.popStatHolder = document.getElementById('popStatHolder');
+    av.dom.popStatistics = document.getElementById('popStatistics');
+    av.dom.popStats4grid = document.getElementById('popStats4grid');
+    av.dom.selOrgType = document.getElementById('selOrgType');
+    av.dom.resrceDataHolder = document.getElementById('resrceDataHolder');
+    av.dom.miniChartControls = document.getElementById('miniChartControls');
+    av.dom.pauseOptions = document.getElementById('pauseOptions');
 
     av.dom.populationButton = document.getElementById('populationButton');
+    av.dom.freezerSection = document.getElementById('freezerSection');
     av.dom.freezeButton = document.getElementById('freezeButton');
     av.dom.populationBlock = document.getElementById('populationBlock');
     av.dom.organismBlock = document.getElementById('organismBlock');
@@ -44,7 +55,6 @@
     av.dom.rtPnlButtonImg = document.getElementById('rtPnlButtonImg');
 
     av.dom.orgInfoHolder = document.getElementById('orgInfoHolder');
-    av.dom.popInfoVert = document.getElementById('popInfoVert');
 
 
     //Population Page
@@ -56,11 +66,10 @@
     av.dom.testSetupBlock = document.getElementById('testSetupBlock');
     av.dom.mapHolder = document.getElementById('mapHolder');
     av.dom.popTopRw = document.getElementById('popTopRw');
-    av.dom.popBot = document.getElementById('popBot');
     av.dom.gridHolder = document.getElementById('gridHolder');
     av.dom.gridCanvas = document.getElementById('gridCanvas');
     av.dom.scaleCanvas = document.getElementById('scaleCanvas');
-    av.dom.popBot = document.getElementById('popBot');
+    av.dom.benchPopBot = document.getElementById('benchPopBot');
     av.dom.popStatsBlock = document.getElementById('popStatsBlock');
     av.dom.StatsButton = document.getElementById('StatsButton');
 
@@ -74,7 +83,6 @@
     av.dom.avidianOutline = document.getElementById('avidianOutline');
 
 
-    av.dom.selOrgType = document.getElementById('selOrgType');
     av.dom.gridControlContainer = document.getElementById('gridControlContainer');
 
     //Test setup page
@@ -401,8 +409,8 @@
 
       if (av.sgr.gridOnly) {    //In devvelopment
         document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherContainer';
-        document.getElementById('geometrySgr').style.displaly = 'inline-block';
-        document.getElementById('allSugarGeometryDiv').style.displaly = 'inline-block';
+        document.getElementById('geometrySgr').style.display = 'inline-block';
+        document.getElementById('allSugarGeometryDiv').style.display = 'inline-block';
       }
 
       len = document.getElementsByClassName('3TopLftRit').length;

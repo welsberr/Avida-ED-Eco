@@ -1269,32 +1269,62 @@ av.ui.email = function() {
   // ------- end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
 
   //----------------------------------------------------------------------------------------show/hide left side panel --
-  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.leftPanelButton'); }
-  av.ptd.leftPanelButton = function () {
+  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.lftPanelBtnFn'); }
+  av.ptd.lftPanelBtnFn = function () {
+    var sizeStr;
+    av.ui.popInfoVert_wd = $('#popInfoVert').width();
+    console.log('av.dom.popInfoVert_width=', av.ui.popInfoVert_wd, '; av.dom.allAvidaContainer.className=', av.dom.allAvidaContainer.className);
     if (av.ui.lftSidePnlShowing) {
       av.post.addUser('Button: leftPanelButton: start hidding left side panel');
       av.ui.lftSidePnlShowing = false;
+
+      av.dom.navColId.style.display = 'none';
+
       //av.ui.navColId = av.dom.navColId.offsetWidth;
       //av.dom.navColId.style.display = 'none';
-      if ('all3pop' == document.getElementById('allAvidaContainer').className) {
-        document.getElementById('allAvidaContainer').className = 'all2rit';
+      av.dom.allAvidaContainer = document.getElementById('allAvidaContainer');
+      av.dom.popInfoVert = document.getElementById('popInfoVert');
+      if ('all3pop' == av.dom.allAvidaContainer.className || 'all3org' == av.dom.allAvidaContainer.className) {
+        av.dom.allAvidaContainer.className = 'all2rit';
+                sizeStr= 670;
+        av.dom.popInfoVert.style.width = sizeStr+'px';
+        av.dom.labInfoHolder.style.width = sizeStr+'px';
+        av.dom.popStatsBlock.style.width = sizeStr+'px';
+        av.dom.popStatHolder.style.width = sizeStr+'px';
+        av.dom.popStatistics.style.width = (sizeStr-2)+'px';
+        av.dom.resrceDataHolder.style.width = (sizeStr-2)+'px';
+        av.dom.miniChartControls.style.width = (sizeStr-2)+'px';
+        av.dom.pauseOptions.style.width = (sizeStr-2)+'px';
+        av.dom.popStats4grid.style.width = (sizeStr-190)+'px';
+        av.dom.selOrgType.style.wd = (sizeStr-240)+'px';
+
       }
     } else {
       av.post.addUser('Button: leftPanelButton: start showing left side panel');
       av.ui.lftSidePnlShowing = true;
+      document.getElementById('navColId').style.display = 'block';
       //av.dom.navColId.style.display = 'flex';
       //av.dom.rightInfoHolder.style.width = av.ui.navColId + 'px';
       if ('all2rit' == document.getElementById('allAvidaContainer').className) {
-        document.getElementById('allAvidaContainer').className = 'all3pop';
+        av.dom.allAvidaContainer.className = 'all3pop';
+        sizeStr= 442;
+        av.dom.freezerSection.style.height = av.ui.freezerSection_ht+'px';
+        av.dom.popInfoVert.style.width = sizeStr+'px';
+        av.dom.labInfoHolder.style.width = sizeStr+'px';
+        av.dom.popStatsBlock.style.width = sizeStr+'px';
+        av.dom.popStatHolder.style.width = sizeStr+'px';
+        av.dom.popStatistics.style.width = (sizeStr-2)+'px';
+        av.dom.resrceDataHolder.style.width = (sizeStr-2)+'px';
+        av.dom.miniChartControls.style.width = (sizeStr-2)+'px';
+        av.dom.pauseOptions.style.width = (sizeStr-2)+'px';
+        av.dom.popStats4grid.style.width = (sizeStr-190)+'px';
+        av.dom.selOrgType.style.wd = (sizeStr-240)+'px';
+        console.log('popStatSide_wd=', sizeStr-190, 'selOrgType_wd=', sizeStr-240);
+        console.log('popInfoVert.wd=', $("#popInfoVert").width(), '; popInfoVert_wd=', sizeStr);
       }
     }
   };
   
-  av.dom.leftPanelButton.onclick = function () {
-    ///av.post.addUser('Button: leftPanelButton');   //done in popStatView
-    av.ptd.leftPanelButton();
-  };
-
 //----------------------------------------------------------------------------------------------------------------------
 //                                             Population page Buttons
 //----------------------------------------------------------------------------------------------------------------------
@@ -1764,7 +1794,7 @@ av.ui.email = function() {
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
     //if (true) {console.log(from, 'called av.grd.drawGridSetupFn'); }
-    av.dom.popBot.style.height = '5px';
+    av.dom.benchPopBot.style.height = '60px';
 
     //size testing box = mainButtons
     av.dsz.mainButtonsWd = parseInt($("#mainButtons").css("width"));
@@ -1822,8 +1852,8 @@ av.ui.email = function() {
         }
         //console.log('after drawing scale or legend. update=',av.grd.oldUpdate);
 
-        av.dom.popBot.style.height = av.dom.popBot.scrollHeight + 'px';
-        if (av.debug.uil) { console.log('ui: change ht of popBot'); }
+        av.dom.benchPopBot.style.height = av.dom.benchPopBot.scrollHeight + 'px';
+        if (av.debug.uil) { console.log('ui: change ht of benchPopBot'); }
         //if (av.debug.uil) { console.log('ui: w:', parseInt($("#gridHolder").css('width')), parseInt($("#gridHolder").css('height')),'= av.dom.gridHolder jQuery.cssWd ht ~ outer ~ offset'); }
 
         //av.dsz.gridHolderWd = parseInt($("#gridHolder").css("width"));   //this seems to match offsetht
@@ -1990,6 +2020,20 @@ av.ui.email = function() {
   };
   document.getElementById('equButton').onclick = function () {
     av.ptd.bitToggle('equButton');
+  };
+  
+  av.ptd.pauseSlctFn = function(from) {
+    var stopWhen = document.getElementById('pauseSelect').value;
+    console.log(from, 'called av.ptd.pauseSlctFn: value=', stopWhen);
+    if ('update' == stopWhen) {
+      document.getElementById('pausePrefix').innerHTML = 'Pause Run at';
+      document.getElementById('firstSugar').style.display = 'none';
+      document.getElementById('autoPauseNum').style.display = 'inline-block';
+    } else {
+      document.getElementById('pausePrefix').innerHTML = 'Pause Run when';
+      document.getElementById('firstSugar').style.display = 'inline-block';
+      document.getElementById('autoPauseNum').style.display = 'none';
+    };
   };
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -3058,7 +3102,7 @@ av.ui.email = function() {
     av.ui.mapHolderHd = av.dom.mapHolder.offsetHeight;
     av.ui.popTopHd = av.dom.popTopRw.offsetHeight;
     av.ui.gridHolderHd = av.dom.gridHolder.offsetHeight;
-    av.ui.popBotHd = av.dom.popBot.offsetHeight;
+    av.ui.benchPopBotHd = av.dom.benchPopBot.offsetHeight;
 
     //https://stackoverflow.com/questions/590602/padding-or-margin-value-in-pixels-as-integer-using-jquery
     //console.log('gridHolder_margin' ,$("#gridHolder").css("margin"), '; popChart=', $("#popChart").css('margin'));
@@ -3070,9 +3114,9 @@ av.ui.email = function() {
       console.log('ui: Wd: popStatsBlock selOrgType sum', av.dom.popStatsBlock.offsetWidth, av.dom.selOrgType.clientWidth,
         av.dom.popStatsBlock.offsetWidth + av.dom.selOrgType.clientWidth);
 
-      console.log('ui: Ht; allAvida, mapHolder, popTopRw, gridHolder, popBot sum', av.dom.allAvida.offsetHeight,
+      console.log('ui: Ht; allAvida, mapHolder, popTopRw, gridHolder, benchPopBot sum', av.dom.allAvida.offsetHeight,
         av.dom.mapHolder.offsetHeight, av.dom.popTopRw.offsetHeight, av.dom.gridHolder.offsetHeight,
-        av.dom.popBot.offsetHeight, av.dom.popTopRw.offsetHeight + av.dom.gridHolder.offsetHeight + av.dom.popBot.offsetHeight);
+        av.dom.benchPopBot.offsetHeight, av.dom.popTopRw.offsetHeight + av.dom.gridHolder.offsetHeight + av.dom.benchPopBot.offsetHeight);
       }
     if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight && av.dom.gridHolder.offsetWidth > av.ui.popGridCtlWdMin) {
       //set grid size based on height and distribute extra width.
@@ -3397,9 +3441,9 @@ av.ui.email = function() {
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
   av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
   av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
-   
+  av.ptd.pauseSlctFn('last_things_done');
+  
   av.doj.mnDebug.style.visibility = 'visible';   // set visiable so that av.ui.toggleDevelopentDisplays will hide devo stuff
-
   // Avida-ED 4.0.0 Alpha Testing fix this too. 
   //true when diane is working; false for all production releases even in alpha testsing.  
   if (false) {

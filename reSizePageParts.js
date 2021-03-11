@@ -42,7 +42,7 @@
   //----------------------------------------------------------------------------------------------------------------------
   //on 2018_0823 this is where height gets messed up when loading the program. 
 /*
-   av.pch.divSize = function (from) {
+   av.pch.divSize_ = function (from) {
     //av.debug.uil = true;
     if (av.debug.uil) { console.log('ui: PopPlotSize: ',from, 'called av.pch.divSize'); }
     if (av.debug.uil) { 
@@ -182,7 +182,7 @@ window.addEventListener('resize', function() {
     av.ui.mapHolderHd = av.dom.mapHolder.offsetHeight;
     av.ui.popTopHd = av.dom.popTopRw.offsetHeight;
     av.ui.gridHolderHd = av.dom.gridHolder.offsetHeight;
-    av.ui.popBotHd = av.dom.popBot.offsetHeight;
+    av.ui.benchPopBotHd = av.dom.benchPopBot.offsetHeight;
 
     //https://stackoverflow.com/questions/590602/padding-or-margin-value-in-pixels-as-integer-using-jquery
     //console.log('gridHolder_margin' ,$("#gridHolder").css("margin"), '; popChart=', $("#popChart").css('margin'));
@@ -194,9 +194,9 @@ window.addEventListener('resize', function() {
       console.log('ui: Wd: popStatsBlock selOrgType sum', av.dom.popStatsBlock.offsetWidth, av.dom.selOrgType.clientWidth,
         av.dom.popStatsBlock.offsetWidth + av.dom.selOrgType.clientWidth);
 
-      console.log('ui: Ht; allAvida, mapHolder, popTopRw, gridHolder, popBot sum', av.dom.allAvida.offsetHeight,
+      console.log('ui: Ht; allAvida, mapHolder, popTopRw, gridHolder, benchPopBot sum', av.dom.allAvida.offsetHeight,
         av.dom.mapHolder.offsetHeight, av.dom.popTopRw.offsetHeight, av.dom.gridHolder.offsetHeight,
-        av.dom.popBot.offsetHeight, av.dom.popTopRw.offsetHeight + av.dom.gridHolder.offsetHeight + av.dom.popBot.offsetHeight);
+        av.dom.benchPopBot.offsetHeight, av.dom.popTopRw.offsetHeight + av.dom.gridHolder.offsetHeight + av.dom.benchPopBot.offsetHeight);
       }
     if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight && av.dom.gridHolder.offsetWidth > av.ui.popGridCtlWdMin) {
       //set grid size based on height and distribute extra width.
@@ -325,7 +325,7 @@ window.addEventListener('resize', function() {
   };
   //Use later ??
   //av.ui.removeVerticalScrollbar('popStats4grid', 'popStatistics');
-  //av.ui.removeVerticalScrollbar('popBot', 'popBot');
+  //av.ui.removeVerticalScrollbar('benchPopBot', 'benchPopBot');
 
 
   //----------------------------------------------------------------------------------------------------------------------
@@ -379,6 +379,7 @@ window.addEventListener('resize', function() {
 // cssWidth = box only nothing else
 // dom.name.width
 // 
+// https://www.w3schools.com/jquery/css_width.asp
 // 
 // $('#name').innerWidth()
 //    where name is from the id='name'   of the dom objecte in the html
