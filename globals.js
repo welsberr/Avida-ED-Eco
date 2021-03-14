@@ -1,10 +1,11 @@
 
-//s
+//
 // Defaults and Constants
 // one global to hold them all.
 var av = av || {};  //incase av already exists
 
-console.log('start of globals on 2021_310_13:47 Thurs');
+//console.log('start of globals on 2021_310_04:22 Thurs');
+console.log('start of globals on 2021_313_00:38 Sat');
 
 Number.prototype.pad = function(size) {
   var ss = String(this);
@@ -852,7 +853,7 @@ av.fzr.clearMainFzrFn = function () {
 //--------------------------------------------------------------------------------------------------- av.grd.clearGrd --
 av.grd = {};         //data about the grid canvas
 av.grd.popStatsMsg = {};
-av.dom = {};    //dom id shortcuts
+av.dom = {};    //dom id shortcuts and dimensions
 av.dsz = {};    //dom size of elements in the dom
 av.doj = {};    //dom dojo id shortcuts
 
@@ -1025,7 +1026,7 @@ av.pch.clearPopChrt = function () {
   av.pch.traceList = {};
 
   av.pch.tracePop = new av.pch.makeTrace(av.pch.xx, av.pch.popY, 
-               'scatter', 'lines', 'Population', 'rgb(2, 2, 2)', 1, 'solid');
+               'scatter', 'lines', 'Population', 'black', 1, 'solid');
 /*
   av.pch.tracePop = {
     x:av.pch.xx, y:av.pch.popY, type:'scatter', mode: 'lines', name: 'Population',
@@ -1034,9 +1035,9 @@ av.pch.clearPopChrt = function () {
 */
   av.pch.traceLog = {
     x:av.pch.xx, y:av.pch.logY, type:'scatter', mode: 'lines', name: 'Function Subset',
-    // line: {color: 'rgb(2, 2, 2)', width: 1, dash: 'dot' }
+    line: {color: 'rgb(2, 2, 2)', width: 1, dash: 'dot' }
     //line: {color: '#00FF00', width: 1, dash: 'solid' }   //dash: (solid   dot    dashdot   dash
-    line: {color: '#00FF00', width: 1, dash: 'dot' }
+    //line: {color: '#00FF00', width: 1, dash: 'dot' }
   };
   av.pch.traceDad = {
     x:av.pch.xx, y:av.pch.logY, type:'scatter', mode: 'lines', name: 'Have Offspring',

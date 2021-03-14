@@ -212,7 +212,7 @@ require([
       document.getElementById('appReloadDialog').style.display = 'show';
     }
   }, 121000);
-
+ 
   //initiallize default mouse shapes
   //av.mouse.getOriginalShapes(); only gets empty strings
 
@@ -1268,63 +1268,6 @@ av.ui.email = function() {
   };
   // ------- end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
 
-  //----------------------------------------------------------------------------------------show/hide left side panel --
-  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.lftPanelBtnFn'); }
-  av.ptd.lftPanelBtnFn = function () {
-    var sizeStr;
-    av.ui.popInfoVert_wd = $('#popInfoVert').width();
-    console.log('av.dom.popInfoVert_width=', av.ui.popInfoVert_wd, '; av.dom.allAvidaContainer.className=', av.dom.allAvidaContainer.className);
-    if (av.ui.lftSidePnlShowing) {
-      av.post.addUser('Button: leftPanelButton: start hidding left side panel');
-      av.ui.lftSidePnlShowing = false;
-
-      av.dom.navColId.style.display = 'none';
-
-      //av.ui.navColId = av.dom.navColId.offsetWidth;
-      //av.dom.navColId.style.display = 'none';
-      av.dom.allAvidaContainer = document.getElementById('allAvidaContainer');
-      av.dom.popInfoVert = document.getElementById('popInfoVert');
-      if ('all3pop' == av.dom.allAvidaContainer.className || 'all3org' == av.dom.allAvidaContainer.className) {
-        av.dom.allAvidaContainer.className = 'all2rit';
-                sizeStr= 670;
-        av.dom.popInfoVert.style.width = sizeStr+'px';
-        av.dom.labInfoHolder.style.width = sizeStr+'px';
-        av.dom.popStatsBlock.style.width = sizeStr+'px';
-        av.dom.popStatHolder.style.width = sizeStr+'px';
-        av.dom.popStatistics.style.width = (sizeStr-2)+'px';
-        av.dom.resrceDataHolder.style.width = (sizeStr-2)+'px';
-        av.dom.miniChartControls.style.width = (sizeStr-2)+'px';
-        av.dom.pauseOptions.style.width = (sizeStr-2)+'px';
-        av.dom.popStats4grid.style.width = (sizeStr-190)+'px';
-        av.dom.selOrgType.style.wd = (sizeStr-240)+'px';
-
-      }
-    } else {
-      av.post.addUser('Button: leftPanelButton: start showing left side panel');
-      av.ui.lftSidePnlShowing = true;
-      document.getElementById('navColId').style.display = 'block';
-      //av.dom.navColId.style.display = 'flex';
-      //av.dom.rightInfoHolder.style.width = av.ui.navColId + 'px';
-      if ('all2rit' == document.getElementById('allAvidaContainer').className) {
-        av.dom.allAvidaContainer.className = 'all3pop';
-        sizeStr= 442;
-        av.dom.freezerSection.style.height = av.ui.freezerSection_ht+'px';
-        av.dom.popInfoVert.style.width = sizeStr+'px';
-        av.dom.labInfoHolder.style.width = sizeStr+'px';
-        av.dom.popStatsBlock.style.width = sizeStr+'px';
-        av.dom.popStatHolder.style.width = sizeStr+'px';
-        av.dom.popStatistics.style.width = (sizeStr-2)+'px';
-        av.dom.resrceDataHolder.style.width = (sizeStr-2)+'px';
-        av.dom.miniChartControls.style.width = (sizeStr-2)+'px';
-        av.dom.pauseOptions.style.width = (sizeStr-2)+'px';
-        av.dom.popStats4grid.style.width = (sizeStr-190)+'px';
-        av.dom.selOrgType.style.wd = (sizeStr-240)+'px';
-        console.log('popStatSide_wd=', sizeStr-190, 'selOrgType_wd=', sizeStr-240);
-        console.log('popInfoVert.wd=', $("#popInfoVert").width(), '; popInfoVert_wd=', sizeStr);
-      }
-    }
-  };
-  
 //----------------------------------------------------------------------------------------------------------------------
 //                                             Population page Buttons
 //----------------------------------------------------------------------------------------------------------------------
@@ -2020,20 +1963,6 @@ av.ui.email = function() {
   };
   document.getElementById('equButton').onclick = function () {
     av.ptd.bitToggle('equButton');
-  };
-  
-  av.ptd.pauseSlctFn = function(from) {
-    var stopWhen = document.getElementById('pauseSelect').value;
-    console.log(from, 'called av.ptd.pauseSlctFn: value=', stopWhen);
-    if ('update' == stopWhen) {
-      document.getElementById('pausePrefix').innerHTML = 'Pause Run at';
-      document.getElementById('firstSugar').style.display = 'none';
-      document.getElementById('autoPauseNum').style.display = 'inline-block';
-    } else {
-      document.getElementById('pausePrefix').innerHTML = 'Pause Run when';
-      document.getElementById('firstSugar').style.display = 'inline-block';
-      document.getElementById('autoPauseNum').style.display = 'none';
-    };
   };
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -3441,9 +3370,9 @@ av.ui.email = function() {
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
   av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
   av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
-  av.ptd.pauseSlctFn('last_things_done');
-  
+   
   av.doj.mnDebug.style.visibility = 'visible';   // set visiable so that av.ui.toggleDevelopentDisplays will hide devo stuff
+
   // Avida-ED 4.0.0 Alpha Testing fix this too. 
   //true when diane is working; false for all production releases even in alpha testsing.  
   if (false) {
@@ -3476,11 +3405,37 @@ av.ui.email = function() {
   //Geometry is no longer a drop down. Now it is an opton in Supply Type
   document.getElementById('allSugarGeometry').style.display = 'none';
   document.getElementById('geometrySgr').style.display = 'none';
-
+  av.dom.storeInitialSize();
+  
   // **************************************************************************************************************** */
   //Resize tools might be called here or after "Last_things_done"
   // **************************************************************************************************************** */
 
+  var ro = new ResizeObserver(entries => {
+//    console.log('in ResizeObserver');
+    for (let entry of entries) {
+      const cr = entry.contentRect;
+      console.log(entry.target.id, `size wd, ht: ${cr.width}px  ${cr.height}px`);
+      console.log(entry.target.id,'contntRect: ', cr);
+      console.log(entry.target.id, 'size wd, ht:', cr.width-cr.left, cr.height-cr.top, 'might need to multiply left and top by two');
+    }
+  });
+
+  // Observe one or multiple elements
+  //ro.observe(document.querySelector('div'));
+  ro.observe(document.querySelector('#gridHolder'));
+  
+/*
+ var outputsize =  av.dom.divSizeFn = function() {
+    console.log('in ResizeObserver');
+      var cr = popChrtHolder.contentRect;
+      //console.log('Element:', entry.target);
+      console.log(`Element size: ${cr.width}px ${cr.height}px`);
+      console.log(`Element padding: ${cr.top}px ; ${cr.left}px`);
+    return cr;
+  };
+  new ResizeObserver(outputsize).observe(popChrtHolder);
+*/
   // **************************************************************************************************************** */
 
   //---------------------------------------------------------------------------------------------------- size testing --

@@ -36,6 +36,7 @@
     av.dom.selOrgType = document.getElementById('selOrgType');
     av.dom.resrceDataHolder = document.getElementById('resrceDataHolder');
     av.dom.miniChartControls = document.getElementById('miniChartControls');
+    av.dom.popChrtHolder = document.getElementById('popChrtHolder');
     av.dom.pauseOptions = document.getElementById('pauseOptions');
 
     av.dom.populationButton = document.getElementById('populationButton');
@@ -49,9 +50,9 @@
     av.dom.organismButton = document.getElementById('organismButton');
     av.dom.analysisButton = document.getElementById('analysisButton');
     av.dom.showTextDebugButton = document.getElementById('showTextDebugButton');
-    av.dom.allAvida = document.getElementById('allAvida');
 
     av.dom.leftPanelButton = document.getElementById('leftPanelButton');
+    av.dom.lftSidePnlShowing = true;
     av.dom.rtPnlButtonImg = document.getElementById('rtPnlButtonImg');
 
     av.dom.orgInfoHolder = document.getElementById('orgInfoHolder');
@@ -409,8 +410,8 @@
 
       if (av.sgr.gridOnly) {    //In devvelopment
         document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherContainer';
-        document.getElementById('geometrySgr').style.display = 'inline-block';
-        document.getElementById('allSugarGeometryDiv').style.display = 'inline-block';
+        document.getElementById('geometrySgr').style.displaly = 'inline-block';
+        document.getElementById('allSugarGeometryDiv').style.displaly = 'inline-block';
       }
 
       len = document.getElementsByClassName('3TopLftRit').length;

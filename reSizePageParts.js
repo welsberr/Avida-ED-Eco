@@ -1,11 +1,140 @@
-  /* 
-   * To change this license header, choose License Headers in Project Properties.
-   * To change this template file, choose Tools | Templates
-   * and open the template in the editor.
-   */
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-  // if (av.dbg.flg.root) { console.log('Root: start of reSizePageParts'); }
-  var av = av || {};  //because av already exists
+// if (av.dbg.flg.root) { console.log('Root: start of reSizePageParts'); }
+var av = av || {};  //because av already exists
+
+//------------------------------------------------------------------------------------------- av.dom.storeInitialSize --
+av.dom.storeInitialSize = function() {
+  av.dom.freezerSection_wd_was = $("#freezerSection").width();
+  av.dom.freezerSection_ht_was = $("#freezerSection").height();
+  av.dom.navColId_wd_was = $("#navColId").width();
+  av.dom.navColId_ht_was = $("#navColId").height();
+  av.dom.popInfoVert_wd_was = $("#popInfoVert").width();
+  av.dom.popInfoVert_ht_was = $("#popInfoVert").height();
+  av.dom.popChrtHolder_wd_was = $("#popChrtHolder").width();
+  av.dom.popChrtHolder_ht_was = $("#popChrtHolder").height();
+  
+  console.log('was: navColId_wd,       ht =', av.dom.navColId_wd, ',', av.dom.navColId_ht);
+  console.log('was: freezerSection_wd, ht =', av.dom.freezerSection_wd, ',', av.dom.freezerSection_ht);
+  console.log('was: popInfoVert_wd,    ht =', av.dom.popInfoVert_wd, ',', av.dom.popInfoVert_ht);
+  console.log('was: popChrtHolder_wd,  ht =', av.dom.popChrtHolder_wd, ',', av.dom.popChrtHolder_ht);
+};
+
+  //----------------------------------------------------------------------------------------show/hide left side panel --
+  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.lftPanelBtnFn'); }
+ 
+ av.ptd.lftPanelBtnFn = function () {
+    var sizeStr;
+    
+    av.dom.freezerSection_ht_was = parseFloat(av.dom.freezerSection_ht_now);
+    av.dom.freezerSection_wd_was = parseFloat(av.dom.freezerSection_wd_now);
+    av.dom.navColId_ht_was = parseFloat(av.dom.navColId_ht_now);
+    av.dom.navColId_wd_was = parseFloat(av.dom.navColId_wd_now);
+    av.dom.popInfoVert_ht_was = parseFloat(av.dom.popInfoVert_ht_now);
+    av.dom.popInfoVert_wd_was = parseFloat(av.dom.popInfoVert_wd_now);
+    av.dom.popChrtHolder_ht_was = parseFloat(av.dom.popChrtHolder_ht_now);
+    av.dom.popChrtHolder_wd_was = parseFloat(av.dom.popChrtHolder_wd_now);
+
+      av.dom.navColId_wd_now = ($("#navColId").width()).toString();
+      av.dom.navColId_ht_now = ($("#navColId").height()).toString();
+      av.dom.freezerSection_wd_now = $("#freezerSection").width().toString();
+      av.dom.freezerSection_ht_now = $("#freezerSection").height().toString();
+      av.dom.popInfoVert_wd_now = $("#popInfoVert").width().toString();
+      av.dom.popInfoVert_ht_now = $("#popInfoVert").height().toString();
+      av.dom.popChrtHolder_wd_now = $("#popChrtHolder").width().toString();
+      av.dom.popChrtHolder_ht_now = $("#popChrtHolder").height().toString();
+
+    setTimeout(function() {
+    }, 80);  
+    
+    av.dom.popInfoVert_wd = $('#popInfoVert').width();
+    console.log('av.dom.lftSidePnlShowing=', av.dom.lftSidePnlShowing, '; av.dom.allAvidaContainer.className=', av.dom.allAvidaContainer.className);
+    if (av.dom.lftSidePnlShowing) {
+      av.post.addUser('Button: leftPanelButton: start hidding left side panel');
+      av.dom.lftSidePnlShowing = false;
+      av.dom.navColId.style.display = 'none';
+      av.dom.leftPanelButton.value = '>> ';
+      av.dom.leftPanelButton.style.background = '#ccc';
+
+      if ('all3pop' == av.dom.allAvidaContainer.className || 'all3org' == av.dom.allAvidaContainer.className) {
+        av.dom.allAvidaContainer.className = 'all2rit';
+        console.log('popChrtHolder_wd_was,   ht =', av.dom.popChrtHolder_wd_was, ',', av.dom.popChrtHolder_ht_was);
+        av.dom.popChrtHolder.style.height = av.dom.popChrtHolder_ht_was+'px';
+
+        sizeStr= 670;        
+        av.dom.popInfoVert.style.width = sizeStr+'px';
+        av.dom.labInfoHolder.style.width = sizeStr+'px';
+        av.dom.popStatsBlock.style.width = sizeStr+'px';
+        av.dom.popStatHolder.style.width = sizeStr+'px';
+        av.dom.popStatistics.style.width = (sizeStr-2)+'px';
+        av.dom.resrceDataHolder.style.width = (sizeStr-2)+'px';
+        av.dom.miniChartControls.style.width = (sizeStr-2)+'px';
+        av.dom.pauseOptions.style.width = (sizeStr-2)+'px';
+        av.dom.popStats4grid.style.width = (sizeStr-190)+'px';
+        av.dom.selOrgType.style.wd = (sizeStr-240)+'px';
+
+      }
+    } else {
+      av.post.addUser('Button: leftPanelButton: start showing left side panel');
+      av.dom.lftSidePnlShowing = true;
+      document.getElementById('navColId').style.display = 'block';
+      av.dom.leftPanelButton.value = '<< ';
+      av.dom.leftPanelButton.style.background = 'inherit';
+
+      if ('all2rit' == document.getElementById('allAvidaContainer').className) {
+        av.dom.allAvidaContainer.className = 'all3pop';
+        sizeStr= 442;
+        av.dom.freezerSection.style.height = av.dom.freezerSection_ht+'px';
+        av.dom.popChrtHolder.style.height = av.dom.popChrtHolder_ht_was+'px';
+        av.dom.popInfoVert.style.height = av.dom.popInfoVert_ht_was+'px';
+
+        av.dom.popInfoVert.style.width = sizeStr+'px';
+        av.dom.labInfoHolder.style.width = sizeStr+'px';
+        av.dom.popStatsBlock.style.width = sizeStr+'px';
+        av.dom.popStatHolder.style.width = sizeStr+'px';
+        av.dom.popStatistics.style.width = (sizeStr-2)+'px';
+        av.dom.resrceDataHolder.style.width = (sizeStr-2)+'px';
+        av.dom.miniChartControls.style.width = (sizeStr-2)+'px';
+        av.dom.pauseOptions.style.width = (sizeStr-2)+'px';
+        av.dom.popStats4grid.style.width = (sizeStr-190)+'px';
+        av.dom.selOrgType.style.width = (sizeStr-240)+'px';
+
+        console.log('popStatSide_wd=', sizeStr-190, 'selOrgType_wd=', sizeStr-240);
+        console.log('popInfoVert.wd=', $("#popInfoVert").width(), '; popInfoVert_wd=', sizeStr);
+      };
+    };
+   
+    av.dom.navColId_wd = $("#navColId").width().toString();
+    av.dom.navColId_ht = $("#navColId").height().toString();
+    av.dom.freezerSection_wd = $("#freezerSection").width().toString();
+    av.dom.freezerSection_ht = $("#freezerSection").height().toString();
+    av.dom.popInfoVert_wd = $("#popInfoVert").width().toString();
+    av.dom.popInfoVert_ht = $("#popInfoVert").height().toString();
+    av.dom.popChrtHolder_wd = $("#popChrtHolder").width().toString();
+    av.dom.popChrtHolder_ht = $("#popChrtHolder").height().toString();
+
+    console.log('av.dom.navColId_wd_now,   ht =', av.dom.navColId_wd_now, ',', av.dom.navColId_ht_now);
+    console.log('av.dom.navColId_wd_after, ht =', av.dom.navColId_wd, ',', av.dom.navColId_ht);
+    console.log('freezerSection_wd_now,   ht =', av.dom.freezerSection_wd_now, ',', av.dom.freezerSection_ht_now);
+    console.log('freezerSection_wd_after, ht =', av.dom.freezerSection_wd, ',', av.dom.freezerSection_ht);
+    console.log('popInfoVert_wd_now,   ht =', av.dom.popInfoVert_wd_now, ',', av.dom.popInfoVert_ht_now);
+    console.log('popInfoVert_wd_after, ht =', av.dom.popInfoVert_wd, ',', av.dom.popInfoVert_ht);
+    console.log('popChrtHolder_wd_now,   ht =', av.dom.popChrtHolder_wd_now, ',', av.dom.popChrtHolder_ht_now);
+    console.log('popChrtHolder_wd_after, ht =', av.dom.popChrtHolder_wd, ',', av.dom.popChrtHolder_ht);
+  };
+
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------
+//  Code below this is old and might not be in use
+//
 
   //********************************************************************************************************************
   //                                             Resize window helpers 
@@ -380,6 +509,7 @@ window.addEventListener('resize', function() {
 // dom.name.width
 // 
 // https://www.w3schools.com/jquery/css_width.asp
+// https://www.w3schools.com/jquery/jquery_dimensions.asp
 // 
 // $('#name').innerWidth()
 //    where name is from the id='name'   of the dom objecte in the html
@@ -447,5 +577,8 @@ window.addEventListener('resize', function() {
 
 
 
-
-
+//  cursor shapes:
+// use: col-resize   for changing the width between divs
+// use: row-resize   for changing the height between divs
+// https://developer.mozilla.org/en-US/docs/Web/CSS/cursor
+// https://www.w3schools.com/css/tryit.asp?filename=trycss_cursor

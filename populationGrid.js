@@ -173,6 +173,7 @@
             //console.log('max'+tskDom + ' =', taskNum);
             taskStr = av.utl.toMetric(taskNum, 0);
             document.getElementById('mx'+tskDom).innerHTML = taskStr;
+            document.getElementById('mx'+tskDom).style.backgroundColor
           };
         };
       };
@@ -683,6 +684,7 @@
       legendRows = Math.floor(av.parents.name.length / legendCols) + 1;    //was trunc
     }
     //set canvas height based on space needed
+    console.log('scale canvas ht:', RowHt * legendRows);
     av.dom.scaleCanvas.height = RowHt * legendRows;
     av.grd.sCtx.fillStyle = av.color.names["ltGrey"];
     av.grd.sCtx.fillRect(0, 0, av.dom.scaleCanvas.width, av.dom.scaleCanvas.height);

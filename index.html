@@ -202,7 +202,7 @@
 
         <div id="navColId" class="navColClass">
           <div id='mainButtons' class="mainPageButtons">
-            <div id='popPageHuttonHolder' class='PageButtonHolder'>
+            <div id='popPageButtonHolder' class='PageButtonHolder'>
               <div class='pageImgDiv'><img src='images/Avida-ED-population-icon.png' class='pageButtonImg' /></div>
               <div class='pageButtonDiv'><input type='button' id='populationButton' class='pageButton' value='Population'/></div>
             </div>
@@ -253,7 +253,7 @@
               <input id='developmentToggle' class='devoShow' type='button' value=' in Development View ' onclick='av.ui.toggleDevelopentDisplays()' />
             </div>
           </div>
-        </div><span id='navColID_end' class='display_none'></span>
+        </div><span id='navColId_end' class='display_none'></span>
 
         <div class="mainBlockHolder">
 
@@ -277,7 +277,7 @@
                 </div>
               </div>
               
-              <div class="benchPopMid" id='gridHolder' data-dojo-type='dijit/layout/ContentPane'>
+              <div id='gridHolder' class='benchPopMid'>
                 <canvas data-dojo-type='dojo.dnd.Target' id='gridCanvas'></canvas>
               </div>
               <div id='scaleCanvasHolder' class='scaleCanvasHolderClass'>
@@ -319,8 +319,6 @@
                       <button id='avidianOutline' onclick='av.ui.avidianOutlineOnclick(this);'>Resource Mode: show Avidian Outlines</button>
                       <label id='rescaleLabel'> </label><br />
                       <div id='zoomSlide' class='zoomSlide'>
-                        <!--<div data-dojo-type='dijit/form/HorizontalRule' container='bottomDecoration' style='height: 5px;'></div>-->
-                        <!--<ol data-dojo-type='dijit/form/HorizontalRuleLabels' container='bottomDecoration' labels='1x,20x' style='height: 20px;'>-->
                       </div>
                   </div>
                 </div>
@@ -360,8 +358,6 @@
 
           <div id='analysisBlock' class="analysisArea">
             <div id='anaChrtHolder' class="anaTop" >
-              <img class='scaleImg' src='images/Lft_Btn4.png'/><br>
-              <img class='scaleImg' src='images/Lft_Btn3.png' id='lftPnlButtonImg' />
               <div id='anlDndChart'></div>
             </div>
             
@@ -720,7 +716,7 @@
                         <option value='combined'>Combined</option>
                         <option value='resource'>Resource</option>
                         <option value='offspring'>Offspring</option>
-                        <option value='both' disabled='true'>Both</option>
+                        <option value='both' disabled>Both</option>
                         <option value='none'>None</option>
                       </select>
                     </label>
@@ -742,15 +738,18 @@
                   <option value='equ'>EQU</option>
                   <option value='picked'>selected</option>
                 </select>
-                <select id='pauseSelect' onchange='av.ptd.pauseSlctFn(this)'>
+                <span id='pauseCriteriaHolder'>
+                <select id='pauseCriteria' onchange='av.ptd.pauseSlctFn(this)'>
                   <option value='update' selected>Update</option>
                   <option value='firstSgr'>1st done</option>
                 </select>
+                </span>
                 &nbsp;
                 <input id='autoPauseNum' type='text' value='1000' style='width:80px'>
                 <span id='pauseChkTxt'> when checked </span>
                 <input id="autoPauseCheck" type="checkbox"> </label>
               </div>
+               
             </div>  <span id='popStatsBlock_end' class='display_none'></span>
 
             <div id='setupBlock' class="labInfoClass labInfoFlex">

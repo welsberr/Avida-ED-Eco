@@ -4,6 +4,18 @@
     box-sizing: border-box;  /* include padding and border in the elements width/size */
   }
 */
+
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+  }
+
   body {
     margin: 0;
     background: #F5F5F5; /* cyan; */
@@ -181,30 +193,21 @@
 /* structures in the headerRow */  
 #leftPanelButton{
     border-radius: 5px 5px 5px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 18px;
-    padding: 0px 4px 4px 4px;  /* top right bottom left */
+    height: 16px;
+    padding: 0px 4px 0px 2px;  /* top right bottom left */
     alt: 'button to open/close left panel'; 
     text-align: center;
     vertical-align: middle;
 }
+/* not in use - used to get image to fit in a space better
 .scaleImg{
   height: 80px;
   object-fit: contain;
 }  
-.scaleImgTest{
-  display: none;
-  height: 40px;
-  object-fit: contain;
-}  
-#lftPnlButtonImg{
-  display: none;
-  height: 10px;
-  alt: 'button to open/close left panel'; 
-  float: left;
-}
+*/
 .leftPnlBtnHlderShow{
-  height: 20px;
-  padding: 2px 6px 2px 4px;    /* top right bottom left */  
+  height: 18px;
+  padding: 0px 6px 0px 4px;    /* top right bottom left */  
   margin: auto;
   background: inherit;     /* #eee; better color ? */
   flex: 0 1 50px;
@@ -630,7 +633,7 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
   #popChrtHolder{
     flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
     height: 100%;
-  }
+  } 
   #miniChartControls{
     flex: 0 0 20px;
     display: flex;
@@ -642,17 +645,17 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
   #miniChartOptHolder{
     flex: 0 0 auto;
     padding-left: 15px;
-    align-self: flext-end;
+    align-self: flex-end;
   }
   #pauseOptions {
     flex: 0 0 20px;
     border: 1px solid #AAA;
-    background: #CCCCCC;
-
-    /*background: rgb( 0 ,  155 ,  0 ); */
+    background: #DDD;
   }
-  #pausePrefix {display: inline-block; }
-
+  #pausePrefix { display: inline-block; }
+  #firstSugar { display: none; }
+  #pauseCriteriaHolder { }  /* tried to use to give a white background to select box rather than a inherit background */
+  
 /*--------------------------------------------------------------------------------------------- Resource Data Table --*/
 
 .sugarTsk{
@@ -1292,7 +1295,8 @@ grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdC
 select {
 /*  background: url("https://i.ibb.co/b7xjLrB/selectbox-arrow.png") right center no-repeat;  */
   height: 18px;
-  border-bottom: 1px solid #aaa;      
+  border-bottom: 1px solid #aaa;
+  background-color: white;  
   background: url('images/select_white_on_black_V_150x200.png') right center no-repeat;
   background-size:  auto 99%;    /* was 20 x 20 */
   -webkit-appearance: none;
@@ -1309,7 +1313,7 @@ select:hover{
   box-shadow:none;
 }
 select:hover::after {
-  background:  #0f0;  /*can't tell that this does anything'*/
+  background:  #F5F5F5;  /*can't tell that this does anything'*/
 }
 
 /* select:focus{    /*https://stackoverflow.com/questions/8352867/how-to-disable-chrome-details-label-default-behavior 

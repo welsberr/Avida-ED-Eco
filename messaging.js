@@ -134,15 +134,8 @@
           av.ui.loadOK = true;
           if (av.debug.msg) console.log('before calling av.grd.popChartInit');
           //av.grd.popChartInit('Message: notification');
-          av.ui.navColId_wd = $("#navColID").width();
-          av.ui.navColId_ht = $("#navColID").height();
-          console.log('av.ui.navColId_wd, ht =', av.ui.navColId_wd, ',', av.ui.navColId_ht);
-          av.ui.freezerSection_wd = $("#freezerSection").width();
-          av.ui.freezerSection_ht = $("#freezerSection").height();
-          console.log('freezerSection_wd, ht =', av.ui.freezerSection_wd, ',', av.ui.freezerSection_ht);
-          av.ui.popInfoVert_wd = $("#popInfoVert").width();
-          av.ui.popInfoVert_ht = $("#popInfoVert").height();
-          console.log('popInfoVert_wd, ht =', av.ui.popInfoVert_wd, ',', av.ui.popInfoVert_ht);
+
+          
           break;
         case 'warning':
           userMsgLabel.textContent = '| Avida warning at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);
