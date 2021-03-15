@@ -656,16 +656,46 @@
   //allow for the width of the color box to see how many columns fit across
   //the width of av.dom.scaleCanvas. We will need to increase the size of the
   //legend box by the height of a line for each additional line.
-  av.grd.drawLegend = function () {
+
+  av.grd.drawLegend = function() {
+    av.dom.sclCnvsHldr.style.display = 'none';
+    av.dom.dadLegendHldr.style.display = 'grid';
+    var numtxt = '00';
+    av.dom.dadInfo00.innerHTML;
+    var dadDivTxt = '';
+    
+    var dadListLngth = av.parents.name.length;
+    for (var ii=0; ii < dadListLngth; ii++) {
+      if (10 > ii) numtxt = '0' + ii;
+      else numtxt = ii.toString();
+      dadDivTxt += "<div id='dadInfo"+numtxt+"' class='dadInfoCls'> \n";
+      dadDivTxt += "  <div id='dadColor"+numtxt+"' class='dadColorCls' style='background:"+av.parents.color[ii]+"'></div> \n";
+      dadDivTxt += "  <p id='dadName"+numtxt+"' class='dadNameCls'>"+av.parents.name[ii]+"</p> \n";
+      dadDivTxt += "</div> \n";
+      
+ /*     
+      document.getElementById('dadInfo'+numtxt).className = '';
+      document.getElementById('dadName'+numtxt).innerHTML = ;
+      document.getElementById('dadName'+numtxt).style.color = ;
+      document.getElementById('dadColor'+numtxt).style.background = 
+//      document.getElementById('dadColor'+numtxt).style.border = '1px solid ' + av.parents.color[0];    //1px solid #AAA;
+      */
+    };
+    av.dom.dadLegendHldr.innerHTML = dadDivTxt;
+    console.log('dadDivTxt=', dadDivTxt);
+  };
+  
+  av.grd.drawLegend_ = function () {
     'use strict';
     var legendPad = 10;   //padding on left so it is not right at edge of canvas
     var colorWide = 13;   //width and heigth of color square
-    var RowHt = 20;       //height of each row of text
+    var RowHt = 10;       //height of each row of text
     var textOffset = 15;  //vertical offset to get to the bottom of the text
     var leftPad = 10;     //padding to allow space between each column of text in the legend
     var legendCols = 1;   //max number of columns based on width of canvas and longest name
     var txtWide = 0;      //width of text for an ancestor (parent) name
     var maxWide = 0;      //maximum width needed for any of the ancestor names in this set
+   
     //console.log('in drawLedgend')
     av.grd.sCtx.font = "14px Arial";
     //find out how much space is needed
@@ -674,8 +704,9 @@
       txtWide = av.grd.sCtx.measureText(av.parents.name[ii]).width;
       if (txtWide > maxWide) {
         maxWide = txtWide;
-      }
-    }
+      };
+    };
+        
     legendCols = Math.floor((av.dom.scaleCanvas.width - leftPad) / (maxWide + colorWide + legendPad));  //was trunc
     if (Math.floor(av.parents.name.length / legendCols) == av.parents.name.length / legendCols) {          //was trunc
       var legendRows = Math.floor(av.parents.name.length / legendCols);
@@ -685,7 +716,7 @@
     }
     //set canvas height based on space needed
     console.log('scale canvas ht:', RowHt * legendRows);
-    av.dom.scaleCanvas.height = RowHt * legendRows;
+    //av.dom.scaleCanvas.height = RowHt * legendRows;
     av.grd.sCtx.fillStyle = av.color.names["ltGrey"];
     av.grd.sCtx.fillRect(0, 0, av.dom.scaleCanvas.width, av.dom.scaleCanvas.height);
     var colWide = (av.dom.scaleCanvas.width - leftPad) / legendCols;
@@ -704,13 +735,15 @@
       av.grd.sCtx.font = "14px Arial";
       av.grd.sCtx.fillStyle = 'black';
       av.grd.sCtx.fillText(av.parents.name[ii], xx + colorWide + legendPad / 2, yy);
-    }
+    };
   };
 
   av.grd.gradientScale = function (from) {
     'use strict';
     if (av.debug.uil) { console.log('ui: ', from, 'called av.grd.gradientScale. w:',av.dom.scaleCanvas.width, av.dom.scaleCanvas.height, '= scaleCanvas Wd Ht; start gradientScale '); }
     if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset; start gradientScale'); }
+    av.dom.sclCnvsHldr.style.display = 'block';
+    av.dom.dadLegendHldr.style.display = 'none';
 
     //finding the dimensions needed for the legend. 
     av.dom.scaleCanvas.height = 30;

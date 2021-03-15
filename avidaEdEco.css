@@ -325,6 +325,7 @@ html {
   font-size: 130%;
   background: #EEE;      /* was #EEE; */
   width: 100%;
+  overflow: auto;
 }
 .freezerContainer {
   padding-left: 10px;
@@ -450,36 +451,70 @@ html {
   overflow: visible;
 }
 #popTopMsgSpace {
-  flex: 1 1 auto;          /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+  flex: 1 1 auto;          /* fills remaining space; {flex:1 1 auto;} is the same as {flex:1;} both prevent resize */
   text-align: left;
   padding-left: 4px;
   margin: auto;
 }
 
-.benchPopMid {
+#gridHolder {
   border: 1px solid #AAA;
-  flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+  flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {flex:1;} both prevent resize */
   background: #F5F5F5; /* blue; */
   overflow:auto;
+  min-width: 20px;
+  margin: 0px;
+  padding: 3px;
+  background: darkgrey;
 }
-#gridHolder {
-    min-width: 200px;
-    overflow: auto;
-    margin: 0px;
-    padding: 3px;
-    background: darkgrey;
+#gridCnvsHldr{
+  margin: auto;
+  padding: auto;
 }
-.scaleCanvasHolderClass { 
-  flex: 0 1 20px;
+#ledgendHolder {
+  flex: 0 1 30px;  
+}
+#sclCnvsHldr { 
   min-height: 30px;
   grid-area: scaleCanvas; 
   width: 100%
 }
-
-.scaleCanvasClass {
+#scaleCanvas {
   width: 100%;
   height: 30px;
   border: 1px solid #DDDDDD;
+}
+#dadLegendHldr{
+  width: 99%;
+  height: 30spx;
+}
+.dadColorCls{
+  display: inline-block;
+  width: 15px;
+  height: 11px;
+  margin-top: 6px;
+}
+.dadNameCls {
+  display: inline-block;
+  min-width: 15px;
+  height: 15px;
+  padding-bottom: 2px;
+}
+.dadInfoCls {
+  display: inline-block;
+  height: 18px;
+  padding: 0px 4px;
+}
+.dad-grid-container {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr));
+ // grid-template-rows: repeat(auto-fit, minmax(10px, 1fr));  
+  grid-auto-flow: column;
+  place-items: center;  place-content: center; 
+  min-width: 30px;
+  min-height: 20px;
+  grid-gap: 2px;
 }
 #benchPopBot{
   flex: 0 1 60px;
@@ -488,6 +523,8 @@ html {
   overflow: auto;
   background: #F5F5F5; /* peachpuff;*/
 }
+
+
   .zoomSlideClass { grid-area: zoomSlide; visibility: hidden; }
   .timeUpdateClass { grid-area: timeUpdate;}
   .freezeButtonDivClass { grid-area: freezeButton;}
@@ -495,7 +532,8 @@ html {
   .gridButtonClass { grid-area: gridButton;}
   .rescalingClass { grid-area: rescaling;}
   .popBotRiteClas { grid-area: popBotRite;}
-  .gridControlContainerClass{
+
+.gridControlContainerClass{
   display: grid;
   grid-template-areas: 'timeUpdate  modeHolder  rescaling'
                        'freezeButton gridButton popBotRite';

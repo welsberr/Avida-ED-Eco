@@ -69,7 +69,10 @@
     av.dom.popTopRw = document.getElementById('popTopRw');
     av.dom.gridHolder = document.getElementById('gridHolder');
     av.dom.gridCanvas = document.getElementById('gridCanvas');
+    av.dom.sclCnvsHldr = document.getElementById('sclCnvsHldr');
     av.dom.scaleCanvas = document.getElementById('scaleCanvas');
+    av.dom.dadLegendHldr = document.getElementById('dadLegendHldr');
+    av.dom.dadInfo00 = document.getElementById('dadInfo00');
     av.dom.benchPopBot = document.getElementById('benchPopBot');
     av.dom.popStatsBlock = document.getElementById('popStatsBlock');
     av.dom.StatsButton = document.getElementById('StatsButton');
@@ -410,8 +413,8 @@
 
       if (av.sgr.gridOnly) {    //In devvelopment
         document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherContainer';
-        document.getElementById('geometrySgr').style.displaly = 'inline-block';
-        document.getElementById('allSugarGeometryDiv').style.displaly = 'inline-block';
+        document.getElementById('geometrySgr').style.display = 'inline-block';
+        document.getElementById('allSugarGeometryDiv').style.display = 'inline-block';
       }
 
       len = document.getElementsByClassName('3TopLftRit').length;

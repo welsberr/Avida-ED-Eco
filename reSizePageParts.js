@@ -18,10 +18,16 @@ av.dom.storeInitialSize = function() {
   av.dom.popChrtHolder_wd_was = $("#popChrtHolder").width();
   av.dom.popChrtHolder_ht_was = $("#popChrtHolder").height();
   
-  console.log('was: navColId_wd,       ht =', av.dom.navColId_wd, ',', av.dom.navColId_ht);
-  console.log('was: freezerSection_wd, ht =', av.dom.freezerSection_wd, ',', av.dom.freezerSection_ht);
-  console.log('was: popInfoVert_wd,    ht =', av.dom.popInfoVert_wd, ',', av.dom.popInfoVert_ht);
-  console.log('was: popChrtHolder_wd,  ht =', av.dom.popChrtHolder_wd, ',', av.dom.popChrtHolder_ht);
+  console.log('was: navColId wd,       ht =', av.dom.navColId_wd_was, ',', av.dom.navColId_ht_was);
+  console.log('was: freezerSection wd, ht =', av.dom.freezerSection_wd_was, ',', av.dom.freezerSection_ht_was);
+  console.log('was: popInfoVert wd,    ht =', av.dom.popInfoVert_wd_was, ',', av.dom.popInfoVert_ht_was);
+  console.log('was: popChrtHolder wd,  ht =', av.dom.popChrtHolder_wd_was, ',', av.dom.popChrtHolder_ht_was);
+  
+  av.dom.sclCnvsHldr_wd_was = $('#sclCnvsHldr').width();
+  av.dom.sclCnvsHldr_ht_was = $('#sclCnvsHldr').height();
+  console.log('was: sclCnvsHldr_wd, ht =', av.dom.sclCnvsHldr_wd_was, ',', av.dom.sclCnvsHldr_ht_was);
+
+
 };
 
   //----------------------------------------------------------------------------------------show/hide left side panel --

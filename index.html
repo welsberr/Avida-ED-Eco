@@ -276,25 +276,35 @@
                   <div id='anArrowWasHere'></div>
                 </div>
               </div>
-              
+
               <div id='gridHolder' class='benchPopMid'>
-                <canvas data-dojo-type='dojo.dnd.Target' id='gridCanvas'></canvas>
+                <div id='gridCnvsHldr'>
+                 <canvas data-dojo-type='dojo.dnd.Target' id='gridCanvas'></canvas>
+                </div>
               </div>
-              <div id='scaleCanvasHolder' class='scaleCanvasHolderClass'>
-                <canvas id='scaleCanvas' class='scaleCanvasClass' width='30 px' height='30 px' style='border:1px solid #DDDDDD;'></canvas>
+              <div id='legendHolder'>
+                <div id='dadLegendHldr' class='dad-grid-container'>
+                  <div id='dadInfo00' class='display_none'>
+                    <div id='dadColor00' class='dadColorCls'></div>
+                    <p id='dadName00' class='dadNameCls'><p/>
+                  </div> 
+                </div>
+                <div id='sclCnvsHldr'>
+                  <canvas id='scaleCanvas'></canvas>
+                </div>
               </div>
-              <div id='benchPopBot'>
                 
+              <div id='benchPopBot'>
                 <div id='gridControlContainer' class='gridControlContainerClass'>
                   <div id='timeUpdates' class='timeUpdateClass'>Time: <label id='TimeLabel'>(not started)</label></div>
                   <div id='freezeButtonDiv' class='freezeButtonDivClass'><button id='freezeButton'>Freeze</button></div>
                   <div id='modeHolder' class='modeHolderClass'>
                     Mode:
                     <select  id='colorMode'>
-                      <option value='Fitness' selected>Fitness</option>
+                      <option value='Fitness' >Fitness</option>
                       <option value='Offspring Cost'>Offspring Cost</option>
                       <option value='Energy Acq. Rate'>Energy Acq. Rate</option>
-                      <option value='Ancestor Organism'>Ancestor Organism</option>
+                      <option value='Ancestor Organism' selected>Ancestor Organism</option>
                       <option id='rsnot' value='rnot'>Resource: Notose</option>
                       <option id='rsnan' value='rnan'>Resource: Nanose</option>
                       <option id='rsand' value='rand'>Resource: Andose</option>

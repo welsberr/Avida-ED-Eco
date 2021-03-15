@@ -1740,14 +1740,14 @@ av.ui.email = function() {
     av.dom.benchPopBot.style.height = '60px';
 
     //size testing box = mainButtons
-    av.dsz.mainButtonsWd = parseInt($("#mainButtons").css("width"));
-    av.dsz.mainButtonsHt = parseInt($("#mainButtons").css("height"));
-    if (av.debug.uil) { console.log('ui: w:', av.dsz.mainButtonsWd, av.dsz.mainButtonsHt, '= mainButtons'); }
+    av.dsz.mainButtonsWd = parseInt($("#mainButtons").outerWidth());
+    av.dsz.mainButtonsHt = parseInt($("#mainButtons").outerHeight());
+    console.log('ui: w:', av.dsz.mainButtonsWd, av.dsz.mainButtonsHt, '= mainButtons'); 
 
     //about total window size
     av.dsz.windowWd = window.innerWidth || document.documentElement.clientWidth  || document.body.clientWidth;
     av.dsz.windowHd = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-    if (av.debug.uil)
+    //if (av.debug.uil)
       console.log('w:', av.dsz.windowWd, av.dsz.windowHd, '= window');
 
     if (undefined != av.grd.msg) {
@@ -1793,32 +1793,40 @@ av.ui.email = function() {
           av.grd.setColorMapOnly('draw gradient scale in av.grd.drawGridSetupFn');  //to set color scales for resources
           av.grd.gradientScale('av.grd.drawGridSetupFn');
         }
-        //console.log('after drawing scale or legend. update=',av.grd.oldUpdate);
+        
+        console.log('scaleCanvas ht =', av.dom.scaleCanvas.height);
+        //av.dom.gridCanvas.width = 10;
+        av.dom.gridCanvas.height = 10;
+        //av.dom.gridHolder.style.width = '10px';
+        av.dom.gridHolder.style.height = '10px';
+        
+        $('#sclCnvsHldr').height(av.dom.scaleCanvas.height);
+        
+        console.log($('#sclCnvsHldr').height(), '= sclCnvsHldr ht');
+        
+        console.log('--------------- gridHolder ht =',$('#gridHolder').height().toFixed(1));
 
         av.dom.benchPopBot.style.height = av.dom.benchPopBot.scrollHeight + 'px';
-        if (av.debug.uil) { console.log('ui: change ht of benchPopBot'); }
-        //if (av.debug.uil) { console.log('ui: w:', parseInt($("#gridHolder").css('width')), parseInt($("#gridHolder").css('height')),'= av.dom.gridHolder jQuery.cssWd ht ~ outer ~ offset'); }
 
-        //av.dsz.gridHolderWd = parseInt($("#gridHolder").css("width"));   //this seems to match offsetht
-        //av.dsz.gridHolderHt = parseInt($("#gridHolder").css("height"));
-        //if (av.debug.uil) { console.log('ui: w:',av.dsz.gridHolderWd,av.dsz.gridHolderHt, '= gridHolder jQuery.width ht ~ outer ~ css ~ offset'); }
-
-        if (av.debug.uil) {
-          console.log('plain, client, offset, scroll, style, jq_innner, jq_reg, jq_outter ______________ Before testing to see if gridHolder ht/width is larger');
-          console.log('gridHolder: w: _,',  av.dom.gridHolder.clientWidth, av.dom.gridHolder.offsetWidth, av.dom.gridHolder.scrollWidth, 
-                   av.dom.gridHolder.style.width, $("#gridHolder").innerWidth(), $("#gridHolder").width(), $("#gridHolder").outerWidth(),
-                  '  h: ___, ',  av.dom.gridHolder.clientHeight, av.dom.gridHolder.offsetHeight, av.dom.gridHolder.scrollHeight, 
-                  av.dom.gridHolder.style.height, $("#gridHolder").innerHeight(), $("#gridHolder").height(), $("#gridHolder").outerHeight());
-          console.log('gridCanvas w:', av.dom.gridCanvas.width, av.dom.gridCanvas.clientWidth, av.dom.gridCanvas.offsetWidth, av.dom.gridCanvas.scrollWidth, av.dom.gridCanvas.style.width,
-                        ';  h:', av.dom.gridCanvas.height, av.dom.gridCanvas.clientHeight, av.dom.gridCanvas.offsetHeight, av.dom.gridCanvas.scrollHeight, av.dom.gridCanvas.style.height);
-        }
         if ($("#gridHolder").height() < $("#gridHolder").width()) {
           av.grd.canvasSize = Math.floor( $("#gridHolder").height() ) - 4;
           //console.log('smaller height: canvasSize = ', av.grd.canvasSize);
         } else {
           av.grd.canvasSize = Math.floor( $("#gridHolder").width() ) - 2;
           //console.log('smaller width: canvasSize = ', av.grd.canvasSize);
-        }
+        };
+        
+        var sum_ht_in = $('#popTopRw').height() + $('#gridHolder').height() + $('#sclCnvsHldr').height() + $('#benchPopBot').height();
+        var sum_ht_ot = $('#popTopRw').outerHeight(true) + $('#gridHolder').outerHeight(true) + $('#sclCnvsHldr').outerHeight(true) + $('#benchPopBot').outerHeight(true);
+        sum_ht_in = parseFloat(sum_ht_in).toFixed(1);
+        sum_ht_ot = parseFloat(sum_ht_ot).toFixed(1);
+
+        console.log('wd ht:   mapHolder: ', $('#mapHolder').width().toFixed(1), $('#mapHolder').height().toFixed(1), $('#mapHolder').outerHeight(true).toFixed(1) );
+        console.log('wd ht:    popTopRw: ', $('#popTopRw').width().toFixed(1), $('#popTopRw').height().toFixed(1), $('#popTopRw').outerHeight(true).toFixed(1) );
+        console.log('wd ht:  gridHolder: ', $('#gridHolder').width().toFixed(1), $('#gridHolder').height().toFixed(1), $('#gridHolder').outerHeight(true).toFixed(1) );
+        console.log('wd ht: sclCnvsHldr:', $('#sclCnvsHldr').width().toFixed(1), $('#sclCnvsHldr').height().toFixed(1), $('#sclCnvsHldr').outerHeight(true).toFixed(1) );
+        console.log('wd ht: benchPopBot:', $('#benchPopBot').width().toFixed(1), $('#benchPopBot').height().toFixed(1), $('#benchPopBot').outerHeight(true).toFixed(1) );
+        console.log('wd ht:         sum: width', sum_ht_in, sum_ht_ot );
 
         av.dom.gridCanvas.width = av.grd.canvasSize;
         av.dom.gridCanvas.height = av.grd.canvasSize;
@@ -1856,17 +1864,8 @@ av.ui.email = function() {
         //if (false) { console.log('before av.grd.drawGridUpdate'); }
         av.grd.drawGridUpdate();   //in populationGrid.js
 
-        rescaleLabel.textContent = av.grd.fillRescale;       //Tiba look at later
+        rescaleLabel.textContent = av.grd.fillRescale;
         av.grd.need2DrawGrid = true;
-        if (av.debug.uil) {
-        console.log('plain, client, offset, scroll, style, jq_innner, jq_reg, jq_outter ______________  After av.grd.drawGridUpdate');
-        console.log('gridHolder: w: _,',  av.dom.gridHolder.clientWidth, av.dom.gridHolder.offsetWidth, av.dom.gridHolder.scrollWidth, 
-                 av.dom.gridHolder.style.width, $("#gridHolder").innerWidth(), $("#gridHolder").width(), $("#gridHolder").outerWidth(),
-                '  h: ___, ',  av.dom.gridHolder.clientHeight, av.dom.gridHolder.offsetHeight, av.dom.gridHolder.scrollHeight, 
-                av.dom.gridHolder.style.height, $("#gridHolder").innerHeight(), $("#gridHolder").height(), $("#gridHolder").outerHeight());
-        console.log('gridCanvas w:', av.dom.gridCanvas.width, av.dom.gridCanvas.clientWidth, av.dom.gridCanvas.offsetWidth, av.dom.gridCanvas.scrollWidth, av.dom.gridCanvas.style.width,
-                      ';  h:', av.dom.gridCanvas.height, av.dom.gridCanvas.clientHeight, av.dom.gridCanvas.offsetHeight, av.dom.gridCanvas.scrollHeight, av.dom.gridCanvas.style.height);
-        }
       }
     }
   };
@@ -3405,7 +3404,6 @@ av.ui.email = function() {
   //Geometry is no longer a drop down. Now it is an opton in Supply Type
   document.getElementById('allSugarGeometry').style.display = 'none';
   document.getElementById('geometrySgr').style.display = 'none';
-  av.dom.storeInitialSize();
   
   // **************************************************************************************************************** */
   //Resize tools might be called here or after "Last_things_done"
