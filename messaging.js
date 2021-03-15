@@ -121,10 +121,10 @@
           if (av.debug.msg) console.log('avida:notify: ',msg.message);
           console.log('avida:notify:', msg.message, '; inhtml=', document.getElementById('avidaVersion').innerHTML );
           tmpStr = msg.message;
-          tmpStr = 'avida version:' + tmpStr.substr(tmpStr.length - 13, 13);
+          tmpStr = 'avida V:' + tmpStr.substr(tmpStr.length - 13, 13);
           console.log('================================================================================================');
           console.log('tmpStr=', tmpStr);
-          document.getElementById('avidaVersion').innerHTML = tmpStr;
+          //document.getElementById('avidaVersion').innerHTML = tmpStr;
           if (av.debug.msg) userMsgLabel.textContent = '| Avidia notification: ' + msg.message; //with splash screen no longer need ready message
           // Worked on a better splash screen gif. Used licecap, an application on the Mac to record the gif.
           // Then used http://gifmaker.me/reverser/ to make a gif in reverse time order. Then Wesley used gifsicle

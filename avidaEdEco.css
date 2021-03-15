@@ -1,10 +1,8 @@
 /*on data tab of population page */
 /*
   {
-    box-sizing: border-box;  /* include padding and border in the elements width/size */
+    box-sizing: border-box;  /* include padding and border in the elements width/size 
   }
-*/
-
 html {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -15,6 +13,9 @@ html {
   -moz-box-sizing: inherit;
   box-sizing: inherit;
   }
+
+*/
+
 
   body {
     margin: 0;
@@ -213,8 +214,8 @@ html {
   flex: 0 1 50px;
 }
 .pnlBtnHldrHide{
-    flex: 0 1 50px;
-    padding: 2px 6px 2px 4px;    /* top right bottom left */  
+  flex: 0 1 50px;
+  padding: 0px 6px 0px 4px;    /* top right bottom left */  
   visibility: hidden;    
 }
 .ritePnlBtnHlderShow{
@@ -244,20 +245,26 @@ html {
     color: blue;
   }
   #RtSideToggleButtons{
-    height: 20px;
+    background: inherit;     /* #eee; better color ? */
     margin: auto;
+    flex: 1;
+    height: 18px;
   }
   .toggleLftButton {
     border-radius: 5px 0px 0px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 18px;
-    padding: 1px 4px 3px 4px;  /* top right bottom left */
+    height: 16px;
+    padding: 0px 2px 3px 2px;    /* top right bottom left */  
+    text-align: center;
+    vertical-align: middle;
   }
 
   .toggleRitButton {
     border-radius: 0px 5px 5px 0px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 18px;
-    padding: 1px 4px 3px 4px;  /* top right bottom left */
-    background: inherit;
+    height: 16px;
+    padding: 0px 2px 0px 2px;    /* top right bottom left */  
+    text-align: center;
+    vertical-align: middle;
+    margin-left: -4px;
   }
   .activeBtn {
     background: #ccc;
@@ -267,7 +274,6 @@ html {
     padding-top: 5px;
     height: 25px;
     display: inline-block;
-    width: 180px;
   }
   
   #avidaVersion{
@@ -506,8 +512,9 @@ html {
   display: grid;
   grid-gap: 4px;
   min-width: 30px;
-  min-height: 60px;
+  min-height: 20px;
   width: 99%;
+  margin-bottom: 5px;
 }
 
 #benchPopBot{
