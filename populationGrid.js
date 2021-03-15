@@ -659,7 +659,7 @@
 
   av.grd.drawLegend = function() {
     av.dom.sclCnvsHldr.style.display = 'none';
-    av.dom.dadLegendHldr.style.display = 'flex';  //'grid';
+    av.dom.dadLegendHldr.style.display = 'grid';  //'grid';
     var numtxt = '00';
     var tmpNum = 0;
     var dadDivTxt = '';
@@ -690,13 +690,15 @@
       if (tmpNum > maxWidth) maxWidth = tmpNum;
     };
     av.dom.dadLegendHldr_wd = $('#dadLegendHldr').outerWidth(true);
-    numCols = Math.floor((av.dom.dadLegendHldr_wd-leftPad)/maxWidth);
+    numCol = Math.floor((av.dom.dadLegendHldr_wd-leftPad)/maxWidth);
     if (Math.floor(dadListLngth/numCol) == dadListLngth/numCol) {
       numRow = Math.floor(dadListLngth / numCol);
     } else {
       numRow = Math.floor(dadListLngth / numCol) + 1;
     };
-    
+    av.dom.dadLegendHldr.style.gridTemplateColumns = 'repeat('+numCol+', '+maxWidth+'px'+')';
+    av.dom.dadLegendHldr.style.gridTemplateRows = 'repeat('+numRow+', 18px)';
+
   };
   
   av.grd.drawLegend_ = function () {
