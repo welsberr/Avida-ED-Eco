@@ -659,10 +659,17 @@
 
   av.grd.drawLegend = function() {
     av.dom.sclCnvsHldr.style.display = 'none';
-    av.dom.dadLegendHldr.style.display = 'grid';
+    av.dom.dadLegendHldr.style.display = 'flex';  //'grid';
     var numtxt = '00';
-    av.dom.dadInfo00.innerHTML;
+    var tmpNum = 0;
     var dadDivTxt = '';
+    var maxWidth = 0;
+    var leftPad = 10;
+    var row = 0;
+    var col = 0;
+    var numCol = 1;
+    var numRow = 1;
+    var rowHt = 20;
     
     var dadListLngth = av.parents.name.length;
     for (var ii=0; ii < dadListLngth; ii++) {
@@ -672,17 +679,24 @@
       dadDivTxt += "  <div id='dadColor"+numtxt+"' class='dadColorCls' style='background:"+av.parents.color[ii]+"'></div> \n";
       dadDivTxt += "  <p id='dadName"+numtxt+"' class='dadNameCls'>"+av.parents.name[ii]+"</p> \n";
       dadDivTxt += "</div> \n";
-      
- /*     
-      document.getElementById('dadInfo'+numtxt).className = '';
-      document.getElementById('dadName'+numtxt).innerHTML = ;
-      document.getElementById('dadName'+numtxt).style.color = ;
-      document.getElementById('dadColor'+numtxt).style.background = 
-//      document.getElementById('dadColor'+numtxt).style.border = '1px solid ' + av.parents.color[0];    //1px solid #AAA;
-      */
     };
     av.dom.dadLegendHldr.innerHTML = dadDivTxt;
-    console.log('dadDivTxt=', dadDivTxt);
+//    console.log('dadDivTxt=', dadDivTxt);
+    for (var ii=0; ii < dadListLngth; ii++) {
+      if (10 > ii) numtxt = '0' + ii;
+      else numtxt = ii.toString();
+      tmpNum = $('#dadColor'+numtxt).outerWidth(true) + $('#dadName'+numtxt).outerWidth(true) + 4;
+      document.getElementById('dadInfo'+numtxt).style.width = tmpNum + 'px';
+      if (tmpNum > maxWidth) maxWidth = tmpNum;
+    };
+    av.dom.dadLegendHldr_wd = $('#dadLegendHldr').outerWidth(true);
+    numCols = Math.floor((av.dom.dadLegendHldr_wd-leftPad)/maxWidth);
+    if (Math.floor(dadListLngth/numCol) == dadListLngth/numCol) {
+      numRow = Math.floor(dadListLngth / numCol);
+    } else {
+      numRow = Math.floor(dadListLngth / numCol) + 1;
+    };
+    
   };
   
   av.grd.drawLegend_ = function () {

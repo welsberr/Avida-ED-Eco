@@ -5,7 +5,7 @@
 var av = av || {};  //incase av already exists
 
 //console.log('start of globals on 2021_310_04:22 Thurs');
-console.log('start of globals on 2021_313_00:38 Sat');
+console.log('start of globals on 2021_314_00:38 Sun');
 
 Number.prototype.pad = function(size) {
   var ss = String(this);
