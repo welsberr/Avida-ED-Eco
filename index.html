@@ -195,8 +195,9 @@
           <input id='StatsButton' type='button' class='toggleLftButton' value='Stats' onclick='av.ptd.rightInfoPanelToggleButton(this)'/>
           <input id='SetupButton' type='button' class='toggleRitButton' value='Setup' onclick='av.ptd.rightInfoPanelToggleButton(this)'/>
         </div>
+
         <div id='ritePnlBtnHolder' class='ritePnlBtnHlderShow'>
-          <img id='rtPnlButtonImg' src='images/rtPnlBtn2.png' alt='image to indicate button to open/close the right information panel'/>
+          <input id='ritePanelButton' type='button' value='&nbsp;>>' onclick='av.ptd.lftPanelBtnFn();'/>
         </div>
       </div><span id='headerMain_end' class='display_none'></span>
 
@@ -301,10 +302,10 @@
                   <div id='modeHolder' class='modeHolderClass'>
                     Mode:
                     <select  id='colorMode'>
-                      <option value='Fitness' >Fitness</option>
+                      <option value='Fitness' selected>Fitness</option>
                       <option value='Offspring Cost'>Offspring Cost</option>
                       <option value='Energy Acq. Rate'>Energy Acq. Rate</option>
-                      <option value='Ancestor Organism' selected>Ancestor Organism</option>
+                      <option value='Ancestor Organism'>Ancestor Organism</option>
                       <option id='rsnot' value='rnot'>Resource: Notose</option>
                       <option id='rsnan' value='rnan'>Resource: Nanose</option>
                       <option id='rsand' value='rand'>Resource: Andose</option>
@@ -736,8 +737,9 @@
 
               <div id='pauseOptions' class='pauseGridContainer'>
                 <p id='pausePrefix'>Pause Run at</p>
-                <select id='firstSugar' onchange='av.ptd.pauseSlctFn("onchange")'>
-                  <option value='not' selected>NOT</option>
+                <select id='itemDone1st' onchange='av.ptd.sgr1stSlctFn("onchange")'>
+                  <option value='task' selected>any task</option>
+                  <option value='not'>NOT</option>
                   <option value='nan'>NAN</option>
                   <option value='and'>AND</option>
                   <option value='orn'>ORN</option>
@@ -746,18 +748,18 @@
                   <option value='nor'>NOR</option>
                   <option value='xor'>XOR</option>
                   <option value='equ'>EQU</option>
-                  <option value='picked'>selected</option>
+                  <option value='picked' disabled>selected</option>
                 </select>
+                <p id='pauseMidText'></p>
                 <span id='pauseCriteriaHolder'>
-                <select id='pauseCriteria' onchange='av.ptd.pauseSlctFn(this)'>
-                  <option value='update' selected>Update</option>
-                  <option value='firstSgr'>1st done</option>
-                </select>
+                  <select id='pauseCriteria' onchange='av.ptd.pauseSlctFn(this)'>
+                    <option value='update' selected>Update</option>
+                    <option value='firstDone'>1st done</option>
+                  </select>
                 </span>
-                &nbsp;
                 <input id='autoPauseNum' type='text' value='1000' style='width:80px'>
                 <span id='pauseChkTxt'> when checked </span>
-                <input id="autoPauseCheck" type="checkbox"> </label>
+                <input id="autoPauseCheck" type="checkbox" class="blk_wite_checkbox"> </label>
               </div>
                
             </div>  <span id='popStatsBlock_end' class='display_none'></span>
@@ -3235,17 +3237,7 @@
                          style='width: 4.5em; height:1.6em' onchange='av.ptd.randInputChange(this.value, "randErroTest")'><br />
                   <label id='randErroTest'>&nbsp;&nbsp;&nbsp;&nbsp;</label>
                 </div>
-                <div class='odd'>
-                  Pause Run:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='manualUpdateRadiTest'
-                         intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' checked
-                         value='manual' />
-                  Manually:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='autoUpdateRadiTest'
-                         intermediateChanges='false' iconClass='dijitNoIcon' name='pauseType' value='setupdate' />
-                  At update:
-                  <input type='text' id='autoUpdateSpinneTest' style='width:80px'>
-                </div>
+                
               </form>
             </div><span id='testSetupBlock_end' class='display_none'></span>
 

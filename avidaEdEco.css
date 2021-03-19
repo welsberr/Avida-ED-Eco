@@ -3,6 +3,9 @@
   {
     box-sizing: border-box;  /* include padding and border in the elements width/size 
   }
+
+*/
+
 html {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -14,7 +17,6 @@ html {
   box-sizing: inherit;
   }
 
-*/
 
 
   body {
@@ -218,18 +220,23 @@ html {
   padding: 0px 6px 0px 4px;    /* top right bottom left */  
   visibility: hidden;    
 }
-.ritePnlBtnHlderShow{
-    flex: 0 1 50px;
-    padding: 2px 6px 2px 4px;    /* top right bottom left */  
-    visibility: visible;
+#ritePanelButton{
+    border-radius: 5px 5px 5px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 16px;
+    padding: 0px 4px 0px 2px;  /* top right bottom left */
+    alt: 'button to open/close right panel'; 
+    text-align: center;
+    vertical-align: middle;
 }
 
-  #rtPnlButtonImg{
-    height: 20px;
-    border: 2px solid black;  
-    alt: 'button to open/close right panel'; 
-    float: right;
-  }
+.ritePnlBtnHlderShow{
+  height: 18px;
+  padding: 0px 6px 0px 4px;    /* top right bottom left */  
+  margin: auto;
+  background: inherit;     /* #eee; better color ? */
+  flex: 0 1 50px;
+}
+
   #mainMenu{
     flex: 0 1 350px;
     height: 2.5em;
@@ -245,9 +252,9 @@ html {
     color: blue;
   }
   #RtSideToggleButtons{
+    flex: 0 0 82px;
     background: inherit;     /* #eee; better color ? */
     margin: auto;
-    flex: 1;
     height: 18px;
   }
   .toggleLftButton {
@@ -271,6 +278,7 @@ html {
   }
 
   #CanPutButtonHere{
+    flex: 0 0 2px;
     padding-top: 5px;
     height: 25px;
     display: inline-block;
@@ -691,7 +699,8 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
     background: #DDD;
   }
   #pausePrefix { display: inline-block; }
-  #firstSugar { display: none; }
+  #pauseMidText { display: inline-block; }
+  #itemDone1st { display: none; }
   #pauseCriteriaHolder { }  /* tried to use to give a white background to select box rather than a inherit background */
   
 /*--------------------------------------------------------------------------------------------- Resource Data Table --*/
@@ -1372,31 +1381,61 @@ select:disabled::-ms-expand {
     background: #fff; 
 }
 
+/* this creates a grey checkbox */
+.blk_wite_checkbox {
+	-webkit-appearance: none;
+	background-color: #fafafa;
+	border: 1px solid #cacece;
+	/* box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05); */
+	padding: 8px;
+	border-radius: 3px;
+	display: inline-block;
+	position: relative;
+  margin-top: 4px;
+}
+.blk_wite_checkbox:active, .blk_wite_checkbox:checked:active {
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
 
-/* Checkbox this code creates a black circle version instead of the blue check
+.blk_wite_checkbox:checked {
+	background-color: #e9ecee;
+	border: 1px solid #adb8c0;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+	color: #99a1a7;
+}
+.blk_wite_checkbox:checked:after {
+	content: '\2714';
+	font-size: 100%;
+	position: absolute;
+	top: 0px;
+	left: 3px;
+	color: black;    /* #99a1a7;  */
+}
+.big-checkbox {
+	padding: 18px;
+}
+
+.big-checkbox:checked:after {
+	font-size: 28px;
+	left: 6px;
+}
+
+/*Checkbox this code creates a black circle version instead of the blue check
 
 input[type="checkbox"] {
   box-shadow:none !important;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  border: 1px solid black;
-  border-radius: 50%;
-  background: white;
-  margin: 0px 2px;
-  width: 13px;
-  height: 13px;
-  box-shadow:none;
-}
+
 input[type="checkbox"]:checked {
-  background: red;
-  border: 4px solid black;
+/*  border: 4px solid black; */
   box-shadow:none;
 }
 checkbox:focus {
   box-shadow:none;
 }
-*/
+
 /********************************************************************************* End Custom Select/Options DropDown */
 
 /************************************************************************ used in examples will be deleted eventually */

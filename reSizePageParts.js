@@ -9,23 +9,23 @@ var av = av || {};  //because av already exists
 
 //------------------------------------------------------------------------------------------- av.dom.storeInitialSize --
 av.dom.storeInitialSize = function() {
-  av.dom.freezerSection_wd_was = $("#freezerSection").width();
-  av.dom.freezerSection_ht_was = $("#freezerSection").height();
-  av.dom.navColId_wd_was = $("#navColId").width();
-  av.dom.navColId_ht_was = $("#navColId").height();
-  av.dom.popInfoVert_wd_was = $("#popInfoVert").width();
-  av.dom.popInfoVert_ht_was = $("#popInfoVert").height();
-  av.dom.popChrtHolder_wd_was = $("#popChrtHolder").width();
-  av.dom.popChrtHolder_ht_was = $("#popChrtHolder").height();
+  av.dom.freezerSection_wd_now = $("#freezerSection").width();
+  av.dom.freezerSection_ht_now = $("#freezerSection").height();
+  av.dom.navColId_wd_now = $("#navColId").width();
+  av.dom.navColId_ht_now = $("#navColId").height();
+  av.dom.popInfoVert_wd_now = $("#popInfoVert").width();
+  av.dom.popInfoVert_ht_now = $("#popInfoVert").height();
+  av.dom.popChrtHolder_wd_now = $("#popChrtHolder").width();
+  av.dom.popChrtHolder_ht_now = $("#popChrtHolder").height();
   
-  console.log('was: navColId wd,       ht =', av.dom.navColId_wd_was, ',', av.dom.navColId_ht_was);
-  console.log('was: freezerSection wd, ht =', av.dom.freezerSection_wd_was, ',', av.dom.freezerSection_ht_was);
-  console.log('was: popInfoVert wd,    ht =', av.dom.popInfoVert_wd_was, ',', av.dom.popInfoVert_ht_was);
-  console.log('was: popChrtHolder wd,  ht =', av.dom.popChrtHolder_wd_was, ',', av.dom.popChrtHolder_ht_was);
+  if (av.dbg.flg.dsz) { console.log('dsz: now: navColId wd,       ht =', av.dom.navColId_wd_now, ',', av.dom.navColId_ht_now); }
+  if (av.dbg.flg.dsz) { console.log('dsz: now: freezerSection wd, ht =', av.dom.freezerSection_wd_now, ',', av.dom.freezerSection_ht_now); }
+  if (av.dbg.flg.dsz) { console.log('dsz: now: popInfoVert wd,    ht =', av.dom.popInfoVert_wd_now, ',', av.dom.popInfoVert_ht_now); }
+  if (av.dbg.flg.dsz) { console.log('dsz: now: popChrtHolder wd,  ht =', av.dom.popChrtHolder_wd_now, ',', av.dom.popChrtHolder_ht_now); }
   
-  av.dom.sclCnvsHldr_wd_was = $('#sclCnvsHldr').width();
-  av.dom.sclCnvsHldr_ht_was = $('#sclCnvsHldr').height();
-  console.log('was: sclCnvsHldr_wd, ht =', av.dom.sclCnvsHldr_wd_was, ',', av.dom.sclCnvsHldr_ht_was);
+  av.dom.sclCnvsHldr_wd_now = $('#sclCnvsHldr').width();
+  av.dom.sclCnvsHldr_ht_now = $('#sclCnvsHldr').height();
+  if (av.dbg.flg.dsz) { console.log('dsz: now: sclCnvsHldr_wd, ht =', av.dom.sclCnvsHldr_wd_now, ',', av.dom.sclCnvsHldr_ht_now); }
 
 
 };
@@ -58,7 +58,7 @@ av.dom.storeInitialSize = function() {
     }, 80);  
     
     av.dom.popInfoVert_wd = $('#popInfoVert').width();
-    console.log('av.dom.lftSidePnlShowing=', av.dom.lftSidePnlShowing, '; av.dom.allAvidaContainer.className=', av.dom.allAvidaContainer.className);
+    if (av.dbg.flg.dsz) { console.log('av.dom.lftSidePnlShowing=', av.dom.lftSidePnlShowing, '; av.dom.allAvidaContainer.className=', av.dom.allAvidaContainer.className); }
     if (av.dom.lftSidePnlShowing) {
       av.post.addUser('Button: leftPanelButton: start hidding left side panel');
       av.dom.lftSidePnlShowing = false;
@@ -68,7 +68,7 @@ av.dom.storeInitialSize = function() {
 
       if ('all3pop' == av.dom.allAvidaContainer.className || 'all3org' == av.dom.allAvidaContainer.className) {
         av.dom.allAvidaContainer.className = 'all2rit';
-        console.log('popChrtHolder_wd_was,   ht =', av.dom.popChrtHolder_wd_was, ',', av.dom.popChrtHolder_ht_was);
+        if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_was,   ht =', av.dom.popChrtHolder_wd_was, ',', av.dom.popChrtHolder_ht_was); }
         av.dom.popChrtHolder.style.height = av.dom.popChrtHolder_ht_was+'px';
 
         sizeStr= 670;        
@@ -109,8 +109,8 @@ av.dom.storeInitialSize = function() {
         av.dom.popStats4grid.style.width = (sizeStr-190)+'px';
         av.dom.selOrgType.style.width = (sizeStr-240)+'px';
 
-        console.log('popStatSide_wd=', sizeStr-190, 'selOrgType_wd=', sizeStr-240);
-        console.log('popInfoVert.wd=', $("#popInfoVert").width(), '; popInfoVert_wd=', sizeStr);
+        if (av.dbg.flg.dsz) { console.log('dsz: popStatSide_wd=', sizeStr-190, 'selOrgType_wd=', sizeStr-240); }
+        if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert.wd=', $("#popInfoVert").width(), '; popInfoVert_wd=', sizeStr); }
       };
     };
    
@@ -123,14 +123,14 @@ av.dom.storeInitialSize = function() {
     av.dom.popChrtHolder_wd = $("#popChrtHolder").width().toString();
     av.dom.popChrtHolder_ht = $("#popChrtHolder").height().toString();
 
-    console.log('av.dom.navColId_wd_now,   ht =', av.dom.navColId_wd_now, ',', av.dom.navColId_ht_now);
-    console.log('av.dom.navColId_wd_after, ht =', av.dom.navColId_wd, ',', av.dom.navColId_ht);
-    console.log('freezerSection_wd_now,   ht =', av.dom.freezerSection_wd_now, ',', av.dom.freezerSection_ht_now);
-    console.log('freezerSection_wd_after, ht =', av.dom.freezerSection_wd, ',', av.dom.freezerSection_ht);
-    console.log('popInfoVert_wd_now,   ht =', av.dom.popInfoVert_wd_now, ',', av.dom.popInfoVert_ht_now);
-    console.log('popInfoVert_wd_after, ht =', av.dom.popInfoVert_wd, ',', av.dom.popInfoVert_ht);
-    console.log('popChrtHolder_wd_now,   ht =', av.dom.popChrtHolder_wd_now, ',', av.dom.popChrtHolder_ht_now);
-    console.log('popChrtHolder_wd_after, ht =', av.dom.popChrtHolder_wd, ',', av.dom.popChrtHolder_ht);
+    if (av.dbg.flg.dsz) { console.log('dsz: av.dom.navColId_wd_now,   ht =', av.dom.navColId_wd_now, ',', av.dom.navColId_ht_now); }
+    if (av.dbg.flg.dsz) { console.log('dsz: av.dom.navColId_wd_after, ht =', av.dom.navColId_wd, ',', av.dom.navColId_ht); }
+    if (av.dbg.flg.dsz) { console.log('dsz: freezerSection_wd_now,   ht =', av.dom.freezerSection_wd_now, ',', av.dom.freezerSection_ht_now); }
+    if (av.dbg.flg.dsz) { console.log('dsz: freezerSection_wd_after, ht =', av.dom.freezerSection_wd, ',', av.dom.freezerSection_ht); }
+    if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert_wd_now,   ht =', av.dom.popInfoVert_wd_now, ',', av.dom.popInfoVert_ht_now); }
+    if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert_wd_after, ht =', av.dom.popInfoVert_wd, ',', av.dom.popInfoVert_ht); }
+    if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_now,   ht =', av.dom.popChrtHolder_wd_now, ',', av.dom.popChrtHolder_ht_now); }
+    if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_after, ht =', av.dom.popChrtHolder_wd, ',', av.dom.popChrtHolder_ht); }
   };
 
 

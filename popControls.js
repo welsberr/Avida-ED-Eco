@@ -427,8 +427,8 @@
       }; // end if section to deal with starting a new run
 
       if (av.dom.autoPauseCheck.checked) {
-        av.ui.autoStopFlag = true;
-        av.ui.autoStopValue = av.dom.autoPauseNum.value;
+        av.ui.autoStopFlag = true;                          // switching to using check box directly
+        av.ui.autoStopValue = av.dom.autoPauseNum.value;    // swithcing to using dom value
         //console.log('stop at  = av.dom.autoPauseNum.value;
       };
       //console.log('before call av.ptd.makeRunState');

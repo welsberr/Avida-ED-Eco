@@ -164,27 +164,88 @@
 
   av.msg.check4anotherUpdate = function () {
     'use strict';
-    //console.log('newUpdate? stopflag=', av.ui.autoStopFlag, '; bar=', av.ui.autoStopValue, '; update=',av.grd.popStatsMsg.update);
-    if (av.ui.autoStopFlag) {
-      if (av.ui.autoStopValue <= av.grd.popStatsMsg.update) {
-        //make pause state
-        av.ptd.makePauseState();
-        av.ui.autoStopFlag = false;
-        av.dom.autoPauseCheck.checked = false;      
-        //test dishes only
-        dijit.byId('manualUpdateRadiTest').set('checked', true);
-        dijit.byId('autoUpdateRadiTest').set('checked', false);
-        if (av.ui.oneUpdateFlag) av.ui.oneUpdateFlag = false;
-      }
-      else {
-        if (av.ui.oneUpdateFlag) {
-          av.ui.oneUpdateFlag = false;
+    var task = 'not';
+    var sum = 0;
+    var ndx = 0;
+    //console.log('newUpdate? stopflag=', av.ui.autoStopFlag, '; stopLimit=', av.dom.autoPauseNum.value, '; update=',av.grd.popStatsMsg.update);
+    if (av.dom.autoPauseCheck.checked) {
+      if ('update' == av.dom.pauseCriteria.value) {
+        if (av.dom.autoPauseNum.value <= av.grd.popStatsMsg.update) {
+          //make pause state
           av.ptd.makePauseState();
+          av.ui.autoStopFlag = false;
+          av.dom.autoPauseCheck.checked = false;
+          if (av.ui.oneUpdateFlag) av.ui.oneUpdateFlag = false;
         }
-        else {av.msg.stepUpdate();}
-      }
-    }
+        else {
+          // pause run based on up update number not met, check oneupdateflag
+          if (av.ui.oneUpdateFlag) {
+            av.ui.oneUpdateFlag = false;
+            av.ptd.makePauseState();
+          }
+          else { av.msg.stepUpdate();}
+        }
+      } else {
+        // first done 
+        if ('task' == av.dom.itemDone1st.value) {
+          for (var ii=0; ii < av.sgr.numTasks; ii++) {
+            task = av.sgr.logicVnames[ii];
+            sum += av.grd.popStatsMsg[task];
+          };
+          //console.log('sum=', sum, '; av.grd.popStatsMsg=', av.grd.popStatsMsg);
+          if ( 0 < sum ) {
+            //make pause state
+            av.ptd.makePauseState();
+            av.ui.autoStopFlag = false;
+            av.dom.autoPauseCheck.checked = false;
+            if (av.ui.oneUpdateFlag) av.ui.oneUpdateFlag = false;   
+            //console.log('sum=', sum);
+          } else {
+            // pause run based on up any task done not met, check oneupdateflag
+            if (av.ui.oneUpdateFlag) {
+              av.ui.oneUpdateFlag = false;
+              av.ptd.makePauseState();
+            }
+            else { av.msg.stepUpdate();}
+          }
+        } else if ('picked' == av.dom.itemDone1st.value) {
+          // test to see if picked combo done
+          if (0 < av.pch.logNumFnd) {
+            //make pause state
+            av.ptd.makePauseState();
+            av.ui.autoStopFlag = false;
+            av.dom.autoPauseCheck.checked = false;
+            if (av.ui.oneUpdateFlag) av.ui.oneUpdateFlag = false;            
+          } else {
+            // pause run based on up any picked combo done not met, check oneupdateflag
+            if (av.ui.oneUpdateFlag) {
+              av.ui.oneUpdateFlag = false;
+              av.ptd.makePauseState();
+            }
+            else { av.msg.stepUpdate();}
+          }
+        } else {
+          // check for an individual logic task
+          ndx = av.sgr.logicNames.indexOf(av.dom.itemDone1st.value);
+          if (0 < av.grd.popStatsMsg[av.sgr.logicVnames[ndx]]) {
+            //make pause state
+            av.ptd.makePauseState();
+            av.ui.autoStopFlag = false;
+            av.dom.autoPauseCheck.checked = false;
+            if (av.ui.oneUpdateFlag) av.ui.oneUpdateFlag = false;                        
+          } else {
+            // pause run based on up any picked combo done not met, check oneupdateflag
+            if (av.ui.oneUpdateFlag) {
+              av.ui.oneUpdateFlag = false;
+              av.ptd.makePauseState();
+            }
+            else { av.msg.stepUpdate();}
+          };
+        };  //end of indidual logic task
+      };  //end of first done 
+    }  // end of pause flag checked 
     else {
+      // not checked so check for oneUpdateFlag
       if (av.ui.oneUpdateFlag) {
         av.ui.oneUpdateFlag = false;
         av.ptd.makePauseState();
@@ -680,7 +741,7 @@
     var ndx= 0;
     var numTsk = 0;
     
-    console.log('Fit=', msg.ave_fitness, '; Cst=', msg.ave_gestation_time, '; Ear=', msg.ave_metabolic_rate, '; via=', msg.viables);
+    if (av.debug.msg) { console.log('Fit=', msg.ave_fitness, '; Cst=', msg.ave_gestation_time, '; Ear=', msg.ave_metabolic_rate, '; via=', msg.viables); }
     
     //update graph arrays
     if (0 <= msg.update) {  //normal start to loop

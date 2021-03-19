@@ -637,7 +637,6 @@
       dijit.byId('childParentRadiTest').set('checked', false);
       dijit.byId('childRandomRadiTest').set('checked', true);
     }
-    av.dom.manualUpdateRadiTest.value = dict.RANDOM_SEED;
   /*
     if (-1 == dict.RANDOM_SEED) {
       dijit.byId('experimentRadiTest').set('checked', true);
@@ -653,20 +652,6 @@
 
   //puts data from the av.frd.pauseRun.txt file into the test setup form for the population page
   //-------------------------------------------------------------------------------------- av.frd.pauseRunAtTest2form --
-  av.frd.pauseRunAtTest2form = function (fileStr) {
-    'use strict';
-    var update = parseInt(fileStr);
-    if (0 < update) {
-      dijit.byId('manualUpdateRadiTest').set('checked', false);
-      dijit.byId('autoUpdateRadiTest').set('checked', true);
-      dijit.byId('autoUpdateSpinneTest').set('value', update);
-    }
-    else {
-      dijit.byId('manualUpdateRadiTest').set('checked', true);
-      dijit.byId('autoUpdateRadiTest').set('checked', false);
-      dijit.byId('autoUpdateSpinneTest').set('value', '1000');
-    }
-  };
   //---------------------------------------------------------------------------------- end av.frd.pauseRunAtTest2form --
 
   // puts data from the av.frd.pauseRun.txt file into the setup form for the population page

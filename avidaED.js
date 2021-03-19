@@ -1273,41 +1273,41 @@ av.ui.email = function() {
 //----------------------------------------------------------------------------------------------------------------------
 
 // hides and shows the population and selected organsim data on right of population page with 'Stats/mpa' button
-  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.rtPnlButtonImg'); }
-  av.ptd.rtPnlButtonImg = function () {
-    //console.log('rtPnlButtonImg: av.ui.page=', av.ui.page);
+  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.ritePanelButton'); }
+  av.ptd.ritePanelButton = function () {
+    //console.log('ritePanelButton: av.ui.page=', av.ui.page);
     if ('populationBlock' == av.ui.page) {
       if (av.ui.popStatFlag) {
-        av.post.addUser('Button: rtPnlButtonImg: start hidding population stats');
+        av.post.addUser('Button: ritePanelButton: start hidding population stats');
         av.ui.popStatFlag = false;
         av.ptd.rightInfoHolderWd = av.dom.rightInfoHolder.offsetWidth;
         av.dom.rightInfoHolder.style.display = 'none';
       } else {
-        av.post.addUser('Button: rtPnlButtonImg: start showing population stats');
+        av.post.addUser('Button: ritePanelButton: start showing population stats');
         av.ui.popStatFlag = true;
         av.dom.rightInfoHolder.style.display = 'flex';
         //reset info pane dimensions. Try rightInfoHolderWd = 395px; selOrgTypeWd = 150px
         av.dom.rightInfoHolder.style.width = av.ptd.rightInfoHolderWd + 'px';
-        av.ui.adjustpopInfoSize('av.ptd.rtPnlButtonImg');
+        av.ui.adjustpopInfoSize('av.ptd.ritePanelButton');
       };
     }
     else if ('organismBlock' == av.ui.page) {
       //console.log('av.ui.orgStatFlag=', av.ui.orgStatFlag);
       if (av.ui.orgStatFlag) {
-        av.post.addUser('Button: rtPnlButtonImg: start hidding oranism stats');
+        av.post.addUser('Button: ritePanelButton: start hidding oranism stats');
         av.ui.orgStatFlag = false;
         //console.log('av.dom.orgInfoHolder.offsetWidth=', av.dom.orgInfoHolder.offsetWidth);
         av.ui.orgInfoHolderWd = (av.ui.orgInfoHolderMinWidth > av.dom.orgInfoHolder.offsetWidth) ? 
                                                          av.ui.orgInfoHolderMinWidth : av.dom.orgInfoHolder.offsetWidth;
         av.dom.orgInfoHolder.style.display = 'none';
       } else {
-        av.post.addUser('Button: rtPnlButtonImg: start showing oranism stats');
+        av.post.addUser('Button: ritePanelButton: start showing oranism stats');
         av.ui.orgStatFlag = true;
         av.dom.orgInfoHolder.style.display = 'flex';
         //reset info pane dimensions. 
         //console.log('av.ui.orgInfoHolderWd=', av.ui.orgInfoHolderWd);
         av.dom.orgInfoHolder.style.width = av.ui.orgInfoHolderWd + 'px';
-        //av.ui.adjustOrgInfoSize('av.ptd.rtPnlButtonImg');
+        //av.ui.adjustOrgInfoSize('av.ptd.ritePanelButton');
       };
     }
     else {
@@ -1316,7 +1316,7 @@ av.ui.email = function() {
     };
   };
 
-  av.dom.rtPnlButtonImg.onclick = function () { av.ptd.rtPnlButtonImg(); };
+  av.dom.ritePanelButton.onclick = function () { av.ptd.ritePanelButton(); };
 
   //--------------------------------------------------------------------------------------------------------------------
   ///   Map Grid buttons - New  Run/Pause Freeze
@@ -1742,13 +1742,13 @@ av.ui.email = function() {
     //size testing box = mainButtons
     av.dsz.mainButtonsWd = parseInt($("#mainButtons").outerWidth());
     av.dsz.mainButtonsHt = parseInt($("#mainButtons").outerHeight());
-    console.log('ui: w:', av.dsz.mainButtonsWd, av.dsz.mainButtonsHt, '= mainButtons'); 
+    if (av.dbg.flg.dsz) { console.log('dsz: w:', av.dsz.mainButtonsWd, av.dsz.mainButtonsHt, '= mainButtons'); }
 
     //about total window size
     av.dsz.windowWd = window.innerWidth || document.documentElement.clientWidth  || document.body.clientWidth;
     av.dsz.windowHd = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-    //if (av.debug.uil)
-      console.log('w:', av.dsz.windowWd, av.dsz.windowHd, '= window');
+
+    if (av.dbg.flg.dsz) { console.log('dsz: w:', av.dsz.windowWd, av.dsz.windowHd, '= window'); }
 
     if (undefined != av.grd.msg) {
       if ('prepping' != av.grd.runState && undefined != av.grd.msg.fitness) {
@@ -1779,12 +1779,6 @@ av.ui.email = function() {
           av.dom.scaleCanvas.width = (av.dom.gridControlContainer.clientWidth - 22);  //works for canvas; need to use .style for divs
         } else
           av.dom.scaleCanvas.width = $("#gridHolder").height() - 22;  //the 22 was determined by trial and error and works on a mac
-        
-        if (av.debug.uil) {
-          console.log('plain, client, offset, scroll, style, jq_innner, jq_reg, jq_outter ______________ after assigning scaleCanvasWidth');
-          console.log('scaleCanvas w:', av.dom.scaleCanvas.width, av.dom.scaleCanvas.clientWidth, av.dom.scaleCanvas.offsetWidth, av.dom.scaleCanvas.scrollWidth, av.dom.scaleCanvas.style.width,
-                      ';  h:', av.dom.scaleCanvas.height, av.dom.scaleCanvas.clientHeight, av.dom.scaleCanvas.offsetHeight, av.dom.scaleCanvas.scrollHeight, av.dom.scaleCanvas.style.height);
-        }
 
         //figure out scale or legend
         if ('Ancestor Organism' == document.getElementById('colorMode').value) {
@@ -1794,7 +1788,7 @@ av.ui.email = function() {
           av.grd.gradientScale('av.grd.drawGridSetupFn');
         }
         
-        console.log('scaleCanvas ht =', av.dom.scaleCanvas.height);
+        if (av.dbg.flg.dsz) { console.log('dsz: scaleCanvas ht =', av.dom.scaleCanvas.height); }
         //av.dom.gridCanvas.width = 10;
         av.dom.gridCanvas.height = 10;
         //av.dom.gridHolder.style.width = '10px';
@@ -1802,9 +1796,9 @@ av.ui.email = function() {
         
         $('#sclCnvsHldr').height(av.dom.scaleCanvas.height);
         
-        console.log($('#sclCnvsHldr').height(), '= sclCnvsHldr ht');
+        if (av.dbg.flg.dsz) { console.log('dsz: ', $('#sclCnvsHldr').height(), '= sclCnvsHldr ht'); }
         
-        console.log('--------------- gridHolder ht =',$('#gridHolder').height().toFixed(1));
+        if (av.dbg.flg.dsz) { console.log('--------------- gridHolder ht =',$('#gridHolder').height().toFixed(1)); }
 
         av.dom.benchPopBot.style.height = av.dom.benchPopBot.scrollHeight + 'px';
 
@@ -1821,38 +1815,20 @@ av.ui.email = function() {
         sum_ht_in = parseFloat(sum_ht_in).toFixed(1);
         sum_ht_ot = parseFloat(sum_ht_ot).toFixed(1);
 
-        console.log('wd ht:   mapHolder: ', $('#mapHolder').width().toFixed(1), $('#mapHolder').height().toFixed(1), $('#mapHolder').outerHeight(true).toFixed(1) );
-        console.log('wd ht:    popTopRw: ', $('#popTopRw').width().toFixed(1), $('#popTopRw').height().toFixed(1), $('#popTopRw').outerHeight(true).toFixed(1) );
-        console.log('wd ht:  gridHolder: ', $('#gridHolder').width().toFixed(1), $('#gridHolder').height().toFixed(1), $('#gridHolder').outerHeight(true).toFixed(1) );
-        console.log('wd ht: sclCnvsHldr:', $('#sclCnvsHldr').width().toFixed(1), $('#sclCnvsHldr').height().toFixed(1), $('#sclCnvsHldr').outerHeight(true).toFixed(1) );
-        console.log('wd ht: benchPopBot:', $('#benchPopBot').width().toFixed(1), $('#benchPopBot').height().toFixed(1), $('#benchPopBot').outerHeight(true).toFixed(1) );
-        console.log('wd ht:         sum: width', sum_ht_in, sum_ht_ot );
+        if (av.dbg.flg.dsz) { console.log('dsz: wd ht:   mapHolder: ', $('#mapHolder').width().toFixed(1), $('#mapHolder').height().toFixed(1), $('#mapHolder').outerHeight(true).toFixed(1) ); }
+        if (av.dbg.flg.dsz) { console.log('dsz: wd ht:    popTopRw: ', $('#popTopRw').width().toFixed(1), $('#popTopRw').height().toFixed(1), $('#popTopRw').outerHeight(true).toFixed(1) ); }
+        if (av.dbg.flg.dsz) { console.log('dsz: wd ht:  gridHolder: ', $('#gridHolder').width().toFixed(1), $('#gridHolder').height().toFixed(1), $('#gridHolder').outerHeight(true).toFixed(1) ); }
+        if (av.dbg.flg.dsz) { console.log('dsz: wd ht: sclCnvsHldr:', $('#sclCnvsHldr').width().toFixed(1), $('#sclCnvsHldr').height().toFixed(1), $('#sclCnvsHldr').outerHeight(true).toFixed(1) ); }
+        if (av.dbg.flg.dsz) { console.log('dsz: wd ht: benchPopBot:', $('#benchPopBot').width().toFixed(1), $('#benchPopBot').height().toFixed(1), $('#benchPopBot').outerHeight(true).toFixed(1) ); }
+        if (av.dbg.flg.dsz) {  console.log('dsz: wd ht:         sum: width', sum_ht_in, sum_ht_ot ); }
 
         av.dom.gridCanvas.width = av.grd.canvasSize;
         av.dom.gridCanvas.height = av.grd.canvasSize;
         av.grd.spaceX = av.grd.canvasSize;
         av.grd.spaceY = av.grd.canvasSize;
 
-        if (av.debug.uil) {
-          console.log('plain, client, offset, scroll, style, jq_innner, jq_reg, jq_outter ______________  Before findGridSize');
-          console.log('gridHolder: w: _,',  av.dom.gridHolder.clientWidth, av.dom.gridHolder.offsetWidth, av.dom.gridHolder.scrollWidth, 
-                   av.dom.gridHolder.style.width, $("#gridHolder").innerWidth(), $("#gridHolder").width(), $("#gridHolder").outerWidth(),
-                  '  h: ___, ',  av.dom.gridHolder.clientHeight, av.dom.gridHolder.offsetHeight, av.dom.gridHolder.scrollHeight, 
-                  av.dom.gridHolder.style.height, $("#gridHolder").innerHeight(), $("#gridHolder").height(), $("#gridHolder").outerHeight());
-          console.log('gridCanvas w:', av.dom.gridCanvas.width, av.dom.gridCanvas.clientWidth, av.dom.gridCanvas.offsetWidth, av.dom.gridCanvas.scrollWidth, av.dom.gridCanvas.style.width,
-                        ';  h:', av.dom.gridCanvas.height, av.dom.gridCanvas.clientHeight, av.dom.gridCanvas.offsetHeight, av.dom.gridCanvas.scrollHeight, av.dom.gridCanvas.style.height);
-        }
         av.grd.findGridSize(av.grd, av.parents);
 
-        if (av.debug.uil) {
-        console.log('plain, client, offset, scroll, style, jq_innner, jq_reg, jq_outter ______________  After findGridSize');
-        console.log('gridHolder: w: _,',  av.dom.gridHolder.clientWidth, av.dom.gridHolder.offsetWidth, av.dom.gridHolder.scrollWidth, 
-                 av.dom.gridHolder.style.width, $("#gridHolder").innerWidth(), $("#gridHolder").width(), $("#gridHolder").outerWidth(),
-                '  h: ___, ',  av.dom.gridHolder.clientHeight, av.dom.gridHolder.offsetHeight, av.dom.gridHolder.scrollHeight, 
-                av.dom.gridHolder.style.height, $("#gridHolder").innerHeight(), $("#gridHolder").height(), $("#gridHolder").outerHeight());
-        console.log('gridCanvas w:', av.dom.gridCanvas.width, av.dom.gridCanvas.clientWidth, av.dom.gridCanvas.offsetWidth, av.dom.gridCanvas.scrollWidth, av.dom.gridCanvas.style.width,
-                      ';  h:', av.dom.gridCanvas.height, av.dom.gridCanvas.clientHeight, av.dom.gridCanvas.offsetHeight, av.dom.gridCanvas.scrollHeight, av.dom.gridCanvas.style.height);
-        }
         //Need to fix for scrolling   // This was commented out in Avida-ED 3.1
         //if (av.dom.gridHolder.scrollHeight == av.dom.gridHolder.clientHeight + 17) {
         //  var numGH = av.dom.gridHolder.clientHeight;
@@ -1861,7 +1837,6 @@ av.ui.email = function() {
         //  consold.log('inside DrawGridSetupFn in odd if statement ----------------------------------');
         //}
 
-        //if (false) { console.log('before av.grd.drawGridUpdate'); }
         av.grd.drawGridUpdate();   //in populationGrid.js
 
         rescaleLabel.textContent = av.grd.fillRescale;
@@ -2083,7 +2058,7 @@ av.ui.email = function() {
     av.pch.organismWasTrait = av.pch.organismTrait;
     av.pch.chartContains = document.getElementById('miniCharts').value;
     av.pch.organismTrait = document.getElementById('yaxis').value;
-    console.log('av.pch.chartContains=', av.pch.chartContains, '; av.pch.organismTrait=', av.pch.organismTrait);
+    if (av.dbg.flg.plt) { console.log('av.pch.chartContains=', av.pch.chartContains, '; av.pch.organismTrait=', av.pch.organismTrait); }
 
     if ('none' === av.pch.chartContains) {
       av.pch.noneWas = av.pch.noneNow;
@@ -2112,7 +2087,7 @@ av.ui.email = function() {
         av.pch.yChange = true;
         av.pch.yValue = document.getElementById('yaxis').value;
       };
-      console.log('av.pch.yChange=', av.pch.yChange, '; av.pch.chartContains=', av.pch.chartContains, '; jj=', jj);
+      if (av.dbg.flg.plt) { console.log('av.pch.yChange=', av.pch.yChange, '; av.pch.chartContains=', av.pch.chartContains, '; jj=', jj); }
       //console.log('av.pch.maxFit=',av.pch.aveMaxFit, '; av.pch.logMaxFit=',av.pch.logMaxFit, '; av.pch.aveFit = ', av.pch.aveFit);
       //console.log('av.pch.logFit = ', av.pch.logFit);
       switch (av.pch.organismTrait) {
@@ -2189,7 +2164,7 @@ av.ui.email = function() {
         jj++;
       }
     }; // chart contains trait determined by yaxis select dom-object
-    console.log('jj=', jj, '; av.pch.popData=', av.pch.popData, '; av.pch.chartContains=', av.pch.chartContains );
+    if (av.dbg.flg.plt) { console.log('jj=', jj, '; av.pch.popData=', av.pch.popData, '; av.pch.chartContains=', av.pch.chartContains ); }
 
     if ('resource' == av.pch.chartContains || 'combined' == av.pch.chartContains) {
 
@@ -2236,7 +2211,7 @@ av.ui.email = function() {
           av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
           Plotly.relayout(av.dom.popChart, av.pch.update);
         } else {
-          console.log('av.brs.isChrome=', av.brs.isChrome, );
+          if (av.dbg.flg.plt) { console.log('av.brs.isChrome=', av.brs.isChrome, ); }
           //Plotly.restyle(graphDiv, update, [1, 2]);
           //Plotly.restyle(av.dom.popChart, av.pch.tracePop, [0]);
           //Plotly.restyle(av.dom.popChart, av.pch.traceLog, [1]);
@@ -2587,20 +2562,35 @@ av.ui.email = function() {
 
   av.dom.autoPauseNum.onchange = function () {
     av.post.addUser(': autoPauseNum = ' + av.dom.autoPauseNum.value);
-    av.ui.autoStopValue = av.dom.autoPauseNum.value;
+    av.ui.autoStopValue = av.dom.autoPauseNum.value;   //switching to using av.dom.autoPauseNum.value directly
     //console.log('autoPauseNum=', av.dom.autoPauseNum.value);
   };
-
-
-  dojo.connect(dijit.byId('manualUpdateRadiTest'), 'onClick', function () {
-    av.post.addUser('Button: manualUpdateRadiTest');
-    av.ui.autoStopFlag = false;
-  });
 
   dojo.connect(dijit.byId('autoUpdateRadiTest'), 'onClick', function () {
     av.post.addUser('Button: autoUpdateRadiTest');
     av.ui.autoStopFlag = true;
   });
+
+  av.ptd.pauseSlctFn = (domObj) => {
+    var value = document.getElementById('pauseCriteria').value;
+    console.log('puaseCriteria=', value);
+    if ('update' == value ) {
+      av.dom.itemDone1st.style.display = 'none';
+      av.dom.autoPauseNum.style.display = 'inline-block';
+      av.dom.pausePrefix.innerHTML = 'Pause Run at ';
+      av.dom.pauseMidText.innerHTML = '';
+    } else {
+      // stop based on first task criteria
+      av.dom.itemDone1st.style.display = 'inline-block';
+      av.dom.autoPauseNum.style.display = 'none';
+      av.dom.pausePrefix.innerHTML = 'Pause Run when ';
+      av.dom.pauseMidText.innerHTML = ' is ';
+    };
+  };
+  
+  av.ptd.sgr1stSlctFn = () => {
+    var value = document.getElementById('itemDone1st').value;
+  };
 
   //********************************************************************************************************************
   //  Read Default Workspace as part of initialization
@@ -3413,9 +3403,9 @@ av.ui.email = function() {
 //    console.log('in ResizeObserver');
     for (let entry of entries) {
       const cr = entry.contentRect;
-      console.log(entry.target.id, `size wd, ht: ${cr.width}px  ${cr.height}px`);
-      console.log(entry.target.id,'contntRect: ', cr);
-      console.log(entry.target.id, 'size wd, ht:', cr.width-cr.left, cr.height-cr.top, 'might need to multiply left and top by two');
+      if (av.dbg.flg.dsz) { console.log(entry.target.id, `size wd, ht: ${cr.width}px  ${cr.height}px`); }
+      if (av.dbg.flg.dsz) { console.log(entry.target.id,'contntRect: ', cr); }
+      if (av.dbg.flg.dsz) { console.log(entry.target.id, 'size wd, ht:', cr.width-cr.left, cr.height-cr.top, 'might need to multiply left and top by two'); }
     }
   });
 

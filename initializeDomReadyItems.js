@@ -53,7 +53,7 @@
 
     av.dom.leftPanelButton = document.getElementById('leftPanelButton');
     av.dom.lftSidePnlShowing = true;
-    av.dom.rtPnlButtonImg = document.getElementById('rtPnlButtonImg');
+    av.dom.ritePanelButton = document.getElementById('ritePanelButton');
 
     av.dom.orgInfoHolder = document.getElementById('orgInfoHolder');
 
@@ -96,7 +96,6 @@
     av.dom.childParentRadiTest = document.getElementById('childParentRadiTest');
     av.dom.experimentRadiTest = document.getElementById('experimentRadiTest');
     av.dom.randInpuTest = document.getElementById('randInpuTest');
-    av.dom.manualUpdateRadiTest = document.getElementById('manualUpdateRadiTest');
     //av.dom.Test = document.getElementById('Test');
     //av.dom.Test = document.getElementById('Test');
 
@@ -189,7 +188,11 @@
     av.dom.demoRadio = document.getElementById('demoRadio');
     av.dom.autoPauseCheck = document.getElementById('autoPauseCheck');
     av.dom.autoPauseNum = document.getElementById('autoPauseNum');
-
+    av.dom.itemDone1st = document.getElementById('itemDone1st');
+    av.dom.pausePrefix = document.getElementById('pausePrefix');
+    av.dom.pauseMidText = document.getElementById('pauseMidText');
+    av.dom.pauseCriteria = document.getElementById('pauseCriteria');
+    
     //test dishes setup
     av.dom.environConfigEdit = document.getElementById('environConfigEdit');
     av.dom.tst2textarea = document.getElementById('tst2textarea');
