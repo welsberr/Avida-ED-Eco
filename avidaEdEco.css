@@ -1879,13 +1879,20 @@ checkbox:focus {
 #aboutAvidaEDcloseButton {
   padding: 1px 2x 1px 2px;
 }
-#aboutAvidaEDlogoHolder
 
-#aboutAvidaEDupperTextHolder {  grid-area: aboutTxtHold; display: inline-block; }
-#aboutAvidaEDlogoHolder { grid-area: aboutLogoHold; display: inline-block; } 
+#aboutAvidaEDupperTextHolder { 
+  grid-area: aboutTxtHold; 
+  display: inline-block; 
+  padding: 20px;
+}
+#aboutAvidaEDlogoHolder { 
+  grid-area: aboutLogoHold; 
+  display: inline-block; 
+  padding: 10px;
+} 
 #aboutAvidaED_grid_container {
   display: grid;
-  grid-template-areas: 'aboutTxtHold  aboutLogoHold';
+  grid-template-areas: 'aboutLogoHold aboutTxtHold ';
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;}
 
@@ -1900,16 +1907,30 @@ checkbox:focus {
   resize: both;
   height: 100px;
 }
+#funding {
+  display: block;
+  padding-left: 70px;
+}
 .aboutCls{
   text-decoration: underline;
   text-align: center;
 }
 .negIndent{
-  text-indent: -10px;
+  text-indent: -70px;
 }
 .marginBelow{
   margin-bottom: 10px;
 }
+.centerP{ text-align: center; justify-self: center; }
+.centerPbig{ text-align: center; justify-self: center; font-size: 140%;}
+.centerImg{ 
+  display: block;
+  text-align: center; 
+  justify-self: center;
+  margin: auto;
+  width: 50%;
+}
+
 /********************************************************************************************** end of modelBig class */                                                                         */
 
 /*************************************************************************************************** no longer in use */
