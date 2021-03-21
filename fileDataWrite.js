@@ -830,7 +830,7 @@
             //console.log('inx1=', Number(av.nut[numTsk].resrc.inflowx1[jj]), 'iny1=', Number(av.nut[numTsk].resrc.inflowy1[jj])
             //          , 'inx2=', Number(av.nut[numTsk].resrc.inflowx2[jj]), 'iny2=', Number(av.nut[numTsk].resrc.inflowy2[jj])  
             //          , 'wld=',  Number(av.nut.wrldCols), '; cellBeg=', cellBeg, '; cellEnd=', cellEnd);
-            console.log('cellList=', cellList);
+            //console.log('cellList=', cellList);
           }
           else {
             //Need to find cell list in parts for half rows
@@ -852,7 +852,7 @@
             }
 */
           };
-          console.log('cellList=', cellList);
+          //console.log('cellList=', cellList);
           cellTxt += cellList;
           tmpNum = Number(av.nut[numTsk].cell.initial[jj]);
           if (av.utl.isNumber( tmpNum) )  {
@@ -863,20 +863,20 @@
             tmpNum = Number(av.nut[numTsk].resrc.initial[jj]);
             if (av.utl.isNumber( tmpNum) )  {
               cellTxt += av.fwt.existCheck( ':initial=', Math.round(tmpNum).toString(), tmpNum )+ '\n'; 
-              console.log('tmpnum is a number: cellTxt=', cellTxt);
+              //console.log('tmpnum is a number: cellTxt=', cellTxt);
             }
             else if ('none' == av.nut[numTsk].uiSub.supplyTypeSlct[jj].toLowerCase()) {
               cellTxt += ':initial=0\n'; 
-              console.log('none: cellTxt=', cellTxt);
+              //console.log('none: cellTxt=', cellTxt);
 
             }
             else if ('infinite' == av.nut[numTsk].uiSub.supplyTypeSlct[jj].toLowerCase()) {
                 cellTxt += av.fwt.existCheck( ':initial=', Math.round(), 10 )+ '\n'; 
-                console.log('should never reach this location: cellTxt=', cellTxt);
+                //console.log('should never reach this location: cellTxt=', cellTxt);
             }
             else {
               cellTxt += ':initial=14400\n';
-              console.log('else cellTxt=', cellTxt);
+              //console.log('else cellTxt=', cellTxt);
             }
           };
           
@@ -897,7 +897,7 @@
               txt += resrcFix + '\n';
               txt += cellTxt;
               txt += reactTxt;
-              console.log('resrcFix=', resrcFix);
+              //console.log('resrcFix=', resrcFix);
               break;
             case 'none':
               av.nut.resrcTyp[ii] = 'none';
@@ -906,7 +906,7 @@
               txt += resrcFix + '\n';
               txt += cellTxt;
               txt += reactTxt;
-              console.log('resrcFix=', resrcFix);
+              //console.log('resrcFix=', resrcFix);
               break;
             case 'chemostat': 
               av.nut.resrcTyp[ii] = 'chemosat';
@@ -1096,7 +1096,7 @@
         case 'events.cfg':
         case 'environment.cfg':
         case 'avida.cfg':
-          console.log('ii', ii, '; name', msg.files[ii].name);
+          //console.log('ii', ii, '; name', msg.files[ii].name);
           av.fwt.makeFzrFile(msg.popName + '/' + msg.files[ii].name, msg.files[ii].data, 'av.fwt.popExpWrite');
           break;
       };

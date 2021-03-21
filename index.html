@@ -219,12 +219,12 @@
           
           <div id="freezerSection">
             <div id='FreezerTitle'>Freezer</div>
-            <details class='frzAccordion'>
+            <details class='frzAccordion' open>
               <summary id='fzConfigureSec' class="freezerSumCls">Configured Dishes</summary>
               <div id='fzConfig' class='freezerContainer'>
               </div>
             </details>
-            <details class='frzAccordion'>
+            <details class='frzAccordion' open>
               <summary id='organismsFzSec' class="freezerSumCls">Organisms</summary>
               <div id='fzOrgan' class='freezerContainer'>
               </div>
@@ -3646,9 +3646,26 @@
           <br>
           <div id='aboutAvidaEDscrllTextHldr'>
             <div id='avidaEDaboutScrollBox'>
-<h1 class='aboutCls'><u>Avida-ED interface</u></h1> 
+<h1 class='aboutCls'><u>Avida-ED</u></h1> 
+<p>Copyright 2006-2021 Michigan State University</p>
+<br>
+<p>THIS SOFTWARE IS PROVIDED BY MICHIGAN STATE UNIVERSITY AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL MICHIGAN STATE UNIVERSITY OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+
+<h1 class='aboutCls'><u>Avida-ED Web Interface</u></h1> 
 <p>Copyright 2015-2021 Michigan State University</p>
-<p>https://github.com/dBlackwood</p>
+<p>https://github.com/dBlackwood/Avida-ED-Eco</p>
+<p>Avida-ED Web Interface  is licensed under the GNU General Public License v3.0</p>
+<br>
+<p>Permissions of this strong copyleft license are conditioned on making available complete source code of licensed works and modifications, which include larger works using a licensed work, under the same license. Copyright and license notices must be preserved. Contributors provide an express grant of patent rights.</p>
+<br>
+<p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
+<ol>
+<li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+<li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
+<li>Neither the name of Michigan State University, nor the names of contributors may be used to endorse or promote products derived from this software without specific prior written permission.</li>
+</ol>
+
+<p>THIS SOFTWARE IS PROVIDED BY MICHIGAN STATE UNIVERSITY AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL MICHIGAN STATE UNIVERSITY OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 
 <h1 class='aboutCls'>Avida-ED (avida/apps/viewer-macos)</h1>
 <p>Copyright 2010-2021 Michigan State University. All rights reserved.</p>
@@ -4028,10 +4045,10 @@
 
       </div>
       <div class='dijitDialogPaneActionBar'>
-        <button data-dojo-type='dijit/form/Button' type='button' id='sendPost' style = 'visibility: hidden'>Send POST</button>
-        <button data-dojo-type='dijit/form/Button' type='button' id='sendEmail'>Send email</button>
-        <button data-dojo-type='dijit/form/Button' type='button' data-dojo-props='onClick:function(){sendLogDialog.hide();}'
-                id='sendLogDialogCancel'>Cancel
+        <button type='button' id='sendPost' style = 'visibility: hidden'>Send POST</button>
+        <button type='button' id='sendEmail'>Send email</button>
+        <button type='button' onClick='function(){sendLogDialog.hide();}'
+                id='sendLogDialogCancel'>Close
         </button>
       </div>
     </div>

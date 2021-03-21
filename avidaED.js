@@ -253,7 +253,7 @@ require([
   
   // if (av.dbg.flg.root) { console.log('Root: before fzWorld'); };
   av.dnd.fzWorld = new dndSource('fzWorld', {
-    //accept: ['b', 'w'],   //b=both; w=world  //only after the population started running
+    accept: ['b', 'w'],   //b=both; w=world  //only after the population started running
     singular: true,
     copyOnly: true,
     selfAccept: false
@@ -1150,6 +1150,7 @@ av.ui.email = function() {
     av.ui.mainBoxSwap('analysisBlock');
     //console.log('after mainBoxSwap to analysisBlock');
     av.anl.AnaChartFn();
+    //console.log('fzWorld wd =', document.getElementById('fzWld').style.width );
   };
 
   // if (av.dbg.flg.root) { console.log('Root: before showTextDebugButton.onclick'); }

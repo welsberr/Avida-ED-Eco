@@ -1859,6 +1859,7 @@ checkbox:focus {
 }
 #aboutAvidaED_header{
   display: flex;
+  flex-direction: row-reverse;
   width: 100%;
   align-items: center;
   height: 30px; 
