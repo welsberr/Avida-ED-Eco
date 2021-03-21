@@ -9,6 +9,10 @@ var av = av || {};  //because av already exists
 
 //------------------------------------------------------------------------------------------- av.dom.storeInitialSize --
 av.dom.storeInitialSize = function() {
+  av.dom.window_ht_now = $(window).height();
+  av.dom.window_wd_now = $(window).width();
+  av.dom.document_ht_now = $(document).height();
+  av.dom.document_wd_now = $(document).width();
   av.dom.freezerSection_wd_now = $("#freezerSection").width();
   av.dom.freezerSection_ht_now = $("#freezerSection").height();
   av.dom.navColId_wd_now = $("#navColId").width();
@@ -17,21 +21,79 @@ av.dom.storeInitialSize = function() {
   av.dom.popInfoVert_ht_now = $("#popInfoVert").height();
   av.dom.popChrtHolder_wd_now = $("#popChrtHolder").width();
   av.dom.popChrtHolder_ht_now = $("#popChrtHolder").height();
+  av.dom.sclCnvsHldr_wd_now = $('#sclCnvsHldr').width();
+  av.dom.sclCnvsHldr_ht_now = $('#sclCnvsHldr').height();
   
   if (av.dbg.flg.dsz) { console.log('dsz: now: navColId wd,       ht =', av.dom.navColId_wd_now, ',', av.dom.navColId_ht_now); }
   if (av.dbg.flg.dsz) { console.log('dsz: now: freezerSection wd, ht =', av.dom.freezerSection_wd_now, ',', av.dom.freezerSection_ht_now); }
   if (av.dbg.flg.dsz) { console.log('dsz: now: popInfoVert wd,    ht =', av.dom.popInfoVert_wd_now, ',', av.dom.popInfoVert_ht_now); }
   if (av.dbg.flg.dsz) { console.log('dsz: now: popChrtHolder wd,  ht =', av.dom.popChrtHolder_wd_now, ',', av.dom.popChrtHolder_ht_now); }
-  
-  av.dom.sclCnvsHldr_wd_now = $('#sclCnvsHldr').width();
-  av.dom.sclCnvsHldr_ht_now = $('#sclCnvsHldr').height();
   if (av.dbg.flg.dsz) { console.log('dsz: now: sclCnvsHldr_wd, ht =', av.dom.sclCnvsHldr_wd_now, ',', av.dom.sclCnvsHldr_ht_now); }
 
+  av.dom.headerMain_ht_ot_now = $('#headerMain').outerHeight(true);
+  av.dom.navColId_ht_ot_now = $('#navColId').outerHeight(true);
+  av.dom.navColId_ht_now = $('#navColId').height();
+  av.dom.mainButtons_ht_ot_now = $('#mainButtons').outerHeight(true);
+  av.dom.freezerSection_ht_ot_now = $('#freezerSection').outerHeight(true);
+  av.dom.trashDiv_ht_ot_now = $('#trashDiv').outerHeight(true);
+  av.dom.window_ht_now = $(window).height();
 
+  console.log('Ht: header=', av.dom.headerMain_ht_ot_now, '; navColID=', av.dom.navColId_ht_ot_now
+              , '; sum=', (av.dom.headerMain_ht_ot_now+av.dom.navColId_ht_ot_now) );
+  console.log('mainButtons=', av.dom.mainButtons_ht_ot_now, '; freezer=', av.dom.freezerSection_ht_ot_now
+              , '; trash=', av.dom.trashDiv_ht_ot_now, '; navColID_now=', av.dom.navColId_ht_now
+              , '; sum=',(av.dom.mainButtons_ht_ot_now+av.dom.freezerSection_ht_ot_now+av.dom.trashDiv_ht_ot_now) );
+  
+  //  call other size related function when initializing 
+  av.ui.freezerSizeHtFn(); 
+  console.log('sizes=', av.dom.sizes() );
 };
 
-  //----------------------------------------------------------------------------------------show/hide left side panel --
-  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.lftPanelBtnFn'); }
+//----------------------------------------------------------------------------------------show/hide left side panel --
+// fix Freezer div size
+av.ui.freezerSizeHtFn = () => {
+  var dif = 0;
+  console.log('window=', $(window).height(), '; docu=', $(document).height() );
+  if ( $(window).height() < $(document).height() ) {
+    console.log('fix Freezer Size jquery');
+
+    dif = $(document).height - $(window).height();
+    if ( dif < $("#freezerSection").height() ) {
+      av.dom.gridCanvas.height = 10;
+      av.dom.gridHolder.style.height = '10px';
+      
+      av.dom.freezerSection.style.overflow = 'scroll';
+      av.dom.freezerSection.style.height = ($("#freezerSection").height() - dif) +'px';
+      
+      av.grd.drawGridSetupFn('av.ui.freezerSizeHtFn');
+    }
+  };
+    
+};
+
+//------------------------------------------------------------------------------------------------------ av.dom.sizes --
+// https://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
+av.dom.sizes = () => {
+  let contentWidth = [...document.body.children].reduce( 
+    (a, el) => Math.max(a, el.getBoundingClientRect().right), 0) 
+    - document.body.getBoundingClientRect().x;
+
+  return {
+    windowWidth:  document.documentElement.clientWidth,
+    windowHeight: document.documentElement.clientHeight,
+    pageWidth:    Math.min(document.body.scrollWidth, contentWidth),
+    pageHeight:   document.body.scrollHeight,
+    screenWidth:  window.screen.width,
+    screenHeight: window.screen.height,
+    pageX:        document.body.getBoundingClientRect().x,
+    pageY:        document.body.getBoundingClientRect().y,
+    screenX:     -window.screenX,
+    screenY:     -window.screenY - (window.outerHeight-window.innerHeight)
+  };
+};
+
+//----------------------------------------------------------------------------------------show/hide left side panel --
+// if (av.dbg.flg.root) { console.log('Root: before av.ptd.lftPanelBtnFn'); }
  
  av.ptd.lftPanelBtnFn = function () {
     var sizeStr;
@@ -494,97 +556,3 @@ window.addEventListener('resize', function() {
   // if (av.dbg.flg.root) { console.log('Root: end of reSizePageParts'); }
 
 
-//---------------------------------------------------------------------------------- notes on different types of size --
-//
-// div objects have size with width (x) and height (y) directions. 
-// there are several size modifies and trying to figure out which is which can be confusing. 
-
-// dom box model and size info   
-// https://stackoverflow.com/questions/21064101/understanding-offsetwidth-clientwidth-scrollwidth-and-height-respectively
-// There is a nested set of boxes with every div
-// margin
-//   border
-//     padding
-//       box (with actual content or guts
-// the size of stuff around the box gets added twice, once for each side
-// 
-// dom.name.offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
-// dom.name.clientWidth = box + 2*padding - scrollbar_width    
-// dom.name.scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
-// cssWidth = box only nothing else
-// dom.name.width
-// 
-// https://www.w3schools.com/jquery/css_width.asp
-// https://www.w3schools.com/jquery/jquery_dimensions.asp
-// 
-// $('#name').innerWidth()
-//    where name is from the id='name'   of the dom objecte in the html
-//  .height() - returns the height of element excludes padding, border and margin.
-//  .innerHeight() - returns the height of element includes padding but excludes border and margin.
-//  .outerHeight() - returns the height of the div including border but excludes margin.
-//  .outerHeight(true) - returns the height of the div including margin.
-// 
-// The difference between .css( "height" ) and .height() is that the former returns a value with units intact (for example, 400px).
-// while the latter returns a unit-less pixel value (for example, 400)
-// https://api.jquery.com/height/
-//   
-// var av.dom.nameQ = $("#name"); // ariable is longer than $ version so no real need to use
-//  
-// scrollbarWidth = offsetWidth - clientWidth - getComputedStyle().borderLeftWidth - getComputedStyle().borderRightWidth
-//  
-//
-// get css values
-//     //https://stackoverflow.com/questions/590602/padding-or-margin-value-in-pixels-as-integer-using-jquery
-//     //https://stackoverflow.com/questions/9592575/get-height-of-div-with-no-height-set-in-css
-//     
-// an example: the 10 at the end is to say base 10 rather than octal.
-//     console.log('av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight, 
-//       av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'),10));
-
-
-// should this move to an init page ui function?
-//get size of screen availbe for Avida-ED; used to keep on screen and get rid of scroll bars
-//http://ryanve.com/lab/dimensions/
-//https://andylangton.co.uk/blog/development/get-viewportwindow-size-width-and-height-javascript
-//https://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
-//window.screen.availWidth
-//window.innerWidth    or    window.outerWidth
-//console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight, 
-//  document.documentElement.clientHeight);
-//if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
-//  document.documentElement.style.height = document.documentElement.clientHeight + 'px';
-//}
-//
-// Targeting common screen sizes   https://www.websitedimensions.com/
-
-// looks like tool-tip
-// https://www.w3schools.com/howto/howto_js_popup.asp
-// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup
-
-//
-// jQurey resize() Method
-// https://www.w3schools.com/jquery/event_resize.asp
-//
-// html reize element: 
-// https://codepen.io/sol0mka/pen/FnizC
-// 
-// Position relative to ancestor:
-// https://www.w3schools.com/cssref/pr_pos_right.asp
-//
-// Document Ready Examples
-// https://www.sitepoint.com/types-document-ready/
-// 
-// Forcing windows resize to fire
-// https://stackoverflow.com/questions/1861109/forcing-windows-resize-to-fire
-// https://stackoverflow.com/questions/23567483/jquery-fake-a-window-resize
-// https://stackoverflow.com/questions/277759/html-onresizeend-event-or-equivalent-way-to-detect-end-of-resize
-// https://stackoverflow.com/questions/2996431/detect-when-a-window-is-resized-using-javascript
-// https://stackoverflow.com/questions/14504079/jquery-trigger-function-above-a-certain-window-width
-
-
-
-//  cursor shapes:
-// use: col-resize   for changing the width between divs
-// use: row-resize   for changing the height between divs
-// https://developer.mozilla.org/en-US/docs/Web/CSS/cursor
-// https://www.w3schools.com/css/tryit.asp?filename=trycss_cursor

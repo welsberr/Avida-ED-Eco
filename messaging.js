@@ -129,12 +129,12 @@
           // Worked on a better splash screen gif. Used licecap, an application on the Mac to record the gif.
           // Then used http://gifmaker.me/reverser/ to make a gif in reverse time order. Then Wesley used gifsicle
           // to combine the forward and reverse gif.
-          $('#splash').remove(); //hides splace screen.
+          $('#splash').remove(); //hides splash screen.
           document.getElementById("appReloadDialog").style.display="none";
           av.ui.loadOK = true;
           if (av.debug.msg) console.log('before calling av.grd.popChartInit');
           //av.grd.popChartInit('Message: notification');
-          av.dom.storeInitialSize();          
+          av.dom.storeInitialSize();
           break;
         case 'warning':
           userMsgLabel.textContent = '| Avida warning at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);
@@ -192,14 +192,18 @@
             task = av.sgr.logicVnames[ii];
             sum += av.grd.popStatsMsg[task];
           };
-          //console.log('sum=', sum, '; av.grd.popStatsMsg=', av.grd.popStatsMsg);
+          console.log('sum='+sum, '; not='+ av.grd.popStatsMsg.not, '; nan='+ av.grd.popStatsMsg.nand 
+                      ,'; and='+ av.grd.popStatsMsg.and, '; orn='+ av.grd.popStatsMsg.orn
+                      ,'; oro='+ av.grd.popStatsMsg.or, '; ant='+ av.grd.popStatsMsg.andn
+                      ,'; nor='+ av.grd.popStatsMsg.nor, '; xor='+ av.grd.popStatsMsg.xor
+                      ,'; equ='+ av.grd.popStatsMsg.equ);
           if ( 0 < sum ) {
             //make pause state
             av.ptd.makePauseState();
             av.ui.autoStopFlag = false;
             av.dom.autoPauseCheck.checked = false;
             if (av.ui.oneUpdateFlag) av.ui.oneUpdateFlag = false;   
-            //console.log('sum=', sum);
+            console.log('sum=', sum);
           } else {
             // pause run based on up any task done not met, check oneupdateflag
             if (av.ui.oneUpdateFlag) {
@@ -860,6 +864,7 @@
 
     //console.log('av.ptd.allOff',av.ptd.allOff);
     if (av.ptd.allOff) {    logTit1.textContent = '';
+      logTit0.textContent = '';
       logTit1.textContent = '';
       logTit2.textContent = '';
       logTit3.textContent = '';
@@ -867,7 +872,6 @@
       logTit5.textContent = '';
       logTit6.textContent = '';
       logTit7.textContent = '';
-      logTit8.textContent = '';
       numLog.textContent = '';
       av.pch.logMaxFit = 0;
       av.pch.logMaxCst = 0;
@@ -879,14 +883,15 @@
       av.pch.logNum[mUpdate] = null;
     }
     else {
+      logTit0.textContent = '';
       logTit1.textContent = 'Number';
       logTit2.textContent = 'Performing';
       logTit3.textContent = 'All';
       logTit4.textContent = 'Selected';
-      logTit5.textContent = 'Logic';
-      logTit6.textContent = 'Functions';
-      logTit7.textContent = 'Dotted';
-      logTit8.textContent = 'Line';
+      logTit5.textContent = 'Functions';
+      logTit6.textContent = '';
+    //logTit7.textContent = 'dashed line';
+      logTit7.textContent = 'black dotted line';
 
       //console.log('out_', av.grd.logicOutline );
       //console.log('gest', av.grd.msg.gestation.data);

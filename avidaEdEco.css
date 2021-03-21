@@ -240,7 +240,17 @@ html {
   #mainMenu{
     flex: 0 1 350px;
     height: 2.5em;
+    border: 1px solid #888;
   }
+  /* looks bad
+  #mnAvidaEd {border: 1px solid #999;}
+  #mnFile {border: 1px solid #999;}
+  #mnFreezer {border: 1px solid #999;}
+  #mnControl {border: 1px solid #999;}
+  #mnHelp {border: 1px solid #999;}
+  #mnDebug {border: 1px solid #999;}
+  */
+  
   #headerMsg{
     flex: 1 1 auto;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
   }
@@ -278,14 +288,14 @@ html {
   }
 
   #CanPutButtonHere{
-    flex: 0 0 2px;
+    flex: 0 0 110px;
     padding-top: 5px;
     height: 25px;
     display: inline-block;
   }
   
   #avidaVersion{
-    text-align: center;
+    text-align: left;
     vertical-align: middle;
   }
   
@@ -334,17 +344,24 @@ html {
 }
 .frzAccordion {
   width: 100%;
+  overflow: auto;
 }
-.freezerSummaryClass{
+.freezerSumCls{
   font-size: 130%;
   background: #EEE;      /* was #EEE; */
   width: 100%;
-  overflow: auto;
 }
 .freezerContainer {
   padding-left: 10px;
   overflow: auto;
 }
+.freezerContainer:hover {
+  overflow-y: auto;
+}
+.freezerContainer>* {
+  max-width: 98%;
+}
+
 /* trash area below freezer */
 #trashCan { 
   grid-area: trashCan;
@@ -657,6 +674,12 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
 
 .botPopTable tr *:nth-child(2) {  text-align: right;  }
 .botPopTable tr *:nth-child(3) {  width: 80%;  }
+
+#logTit6 { font-style: italic; color: dimgray; }
+#logTit7 { font-style: italic; color: dimgray; }
+
+
+
 
   #popChrtHolder{
     flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
@@ -1686,6 +1709,48 @@ checkbox:focus {
 /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal                                                */
 /* 
 /* The Modal (background) */
+.modalBig {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    bottom: 0;
+
+    z-index: 1; /* Sit on top */
+    //padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;   /*   Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background: rgb(0,0,0); /* Fallback color */
+    background: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modalBig-content {
+    background: #fefefe;
+    margin: auto;
+    padding: 2px;
+    border: 1px solid black; /* #888; */
+    width: 80%;
+}
+
+.modalBig-header {
+    padding: 2px 2px;
+    font-size: 130%;
+    font-weight: bold;
+    background: lightgray;
+    color: black;
+}
+
+.modalBig-body {padding: 8px 8px;}
+
+.modal-footer {
+    padding: 4px 4spx;
+    background: lightgray;
+    color: black;
+}
+
+/* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -1727,6 +1792,8 @@ checkbox:focus {
     color: black;
 }
 
+//----------------------------------------------------------------------------------------------------------------------
+
 /************************************************************************************************* end of model class */                                                                         */
 
 #saveCSVdataModalID {
@@ -1747,8 +1814,8 @@ checkbox:focus {
     z-index: 1; /* Sit on top */
     position: fixed; /* Stay in place */
     left: 0;
-    top: 0;
-    padding-top: 100px; /* Location of the box */
+    top: 20px;
+    padding-top: 50px; /* Location of the box */
     width: 100%;   /*   Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
@@ -1759,14 +1826,14 @@ checkbox:focus {
 /* Modal Content */
 .modelBig-content {
     background: #fefefe;
-    margin: auto;
-    padding: 2px;
+    padding: 10px;
     border: 1px solid black; /* #888; */
-    width: 90%;
+    width: 95%;
 }
 
 .modelBig-header {
-    padding: 4px 4px;
+    height: 20px; 
+    padding: 2px;
     font-size: 130%;
     font-weight: bold;
     background: lightgray;
@@ -1777,6 +1844,7 @@ checkbox:focus {
 
 .modelBig-footer {
     padding: 4px 4spx;
+    width: 90%;
     background: lightgray;
     color: black;
 }
@@ -1786,8 +1854,61 @@ checkbox:focus {
   flex-direction: column;
   align-items: center;
   /*justify-content: center */
+  width: 99%;
+  height: auto;
+}
+#aboutAvidaED_header{
+  display: flex;
   width: 100%;
-  hieght: auto;
+  align-items: center;
+  justify-content: space-between;
+}
+#aboutAvidaEDtitle { 
+  flex: 0 0 600px;  
+  display: inline-block; 
+  align-self: flex-start;
+}
+#aboutAvidaEDcloseHldr { 
+  flex: 0 0 fr1; 
+  display: inline-block;
+  align-self: flex-end;
+  height: 30px;
+  width: 50px;
+  padding: 0px 8px 2px 0px;
+}
+#aboutAvidaEDcloseButton {
+  padding: 1px 2x 1px 2px;
+}
+#aboutAvidaEDlogoHolder
+
+#aboutAvidaEDupperTextHolder {  grid-area: aboutTxtHold; display: inline-block; }
+#aboutAvidaEDlogoHolder { grid-area: aboutLogoHold; display: inline-block; } 
+#aboutAvidaED_grid_container {
+  display: grid;
+  grid-template-areas: 'aboutTxtHold  aboutLogoHold';
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;}
+
+.AvidaEDaboutP {
+  font-weight: bold;
+}
+#aboutAvidaEDscrllTextHldr {  }
+#avidaEDaboutScrollBox {
+  border: 1px solid #aaa;
+  padding: 10px;
+  overflow: auto;
+  resize: both;
+  height: 100px;
+}
+.aboutCls{
+  text-decoration: underline;
+  text-align: center;
+}
+.negIndent{
+  text-indent: -10px;
+}
+.marginBelow{
+  margin-bottom: 10px;
 }
 /********************************************************************************************** end of modelBig class */                                                                         */
 

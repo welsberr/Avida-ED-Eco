@@ -948,13 +948,6 @@ require([
     console.log('in av.ui.aboutAvidaED: from=', from);    
   };
 
-av.ui.email = function() {
-    av.post.addUser('Button: mnHpAbout');
-    av.ui.emailAvidaED();
-    document.getElementById('email_ModalID').style.display = "block";
-    console.log('in av.ui.email');    
-  };
-
   //document.getElementById('aboutAvidaED_Cancel').onclick = function () {
   av.ui.aboutAvidaED_Close = function() {
     document.getElementById('aboutAvidaED_ModalID').style.display = 'none';
@@ -966,6 +959,12 @@ av.ui.email = function() {
     document.getElementById('preferences_ModalID').style.display = "block";
   });
 
+av.ui.email = function() {
+    av.post.addUser('Button: mnHpAbout');
+    av.ui.emailAvidaED();
+    document.getElementById('email_ModalID').style.display = "block";
+    console.log('in av.ui.email');    
+  };
   
   av.sgr.complexityChange = function (domObj) {
     console.log('the complexity requested is:', domObj.value);
@@ -1736,7 +1735,7 @@ av.ui.email = function() {
 
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
-    //if (true) {console.log(from, 'called av.grd.drawGridSetupFn'); }
+    if (true) { console.log(from, 'called av.grd.drawGridSetupFn__________________________________________________'); }
     av.dom.benchPopBot.style.height = '60px';
 
     //size testing box = mainButtons
@@ -2196,7 +2195,7 @@ av.ui.email = function() {
 
       if (av.pch.chartContained != av.pch.chartContains) { av.dom.popChart.data = null; }
 
-      if (av.dom.popChart.data) console.log('av.dom.popChart.data.length=', av.dom.popChart.data.length);
+      //if (av.dom.popChart.data) console.log('av.dom.popChart.data.length=', av.dom.popChart.data.length);
       if (null == av.dom.popChart.data || 0 == av.dom.popChart.data.length) {
         Plotly.plot('popChart', av.pch.popData, av.pch.layout, av.pch.widg);
         console.log('av.dom.popChart.data is', av.dom.popChart.data);
@@ -2584,7 +2583,7 @@ av.ui.email = function() {
       av.dom.itemDone1st.style.display = 'inline-block';
       av.dom.autoPauseNum.style.display = 'none';
       av.dom.pausePrefix.innerHTML = 'Pause Run when ';
-      av.dom.pauseMidText.innerHTML = ' is ';
+      av.dom.pauseMidText.innerHTML = ' ';
     };
   };
   
@@ -3384,8 +3383,8 @@ av.ui.email = function() {
   av.pch.popStatsBlock_Ht = $('popStatsBlock').innerHeight();
   av.pch.pop_statsBlock_ChrtHolder_noResrceGrid = av.pch.popStatsBlock_Ht - av.pch.popChrtHolder_Ht;
 
-//problem as now av.ui.about does not desplay at all
-  av.ui.aboutAvidaED_Close();    //should not needd this as display = 'none' but it is needed for now.
+  //problem as now av.ui.about does not desplay at all
+  //av.ui.aboutAvidaED_Close();    //should not needd this as display = 'none' but it is needed for now.
 
   av.ui.setResourceComplexity(av.sgr.complexityLevel, 'last-things-done');
 
@@ -3715,12 +3714,12 @@ av.ui.email = function() {
  * 
  https://stackoverflow.com/questions/24977965/collapsible-lists-using-html-and-css
  <details class='debugDetails' id='fzMdishDetails'>
- <summary id='fzMdishSec' class="freezerSummaryClass">Multi-Dishes</summary>
+ <summary id='fzMdishSec' class="freezerSumCls">Multi-Dishes</summary>
  <ul id='fzMdish' class='container'>
  </ul>
  </details>
  <details class='debugDetails' id='fzRdishDetails'>
- <summary id='fzRdishSec' class="freezerSummaryClass">Resource setup</summary>
+ <summary id='fzRdishSec' class="freezerSumCls">Resource setup</summary>
  <ul id='fzRdish' class='container'>
  </ul>
  </details>
