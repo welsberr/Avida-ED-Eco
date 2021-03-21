@@ -1832,7 +1832,7 @@ checkbox:focus {
 }
 
 .modelBig-header {
-    height: 20px; 
+    height: 30px; 
     padding: 2px;
     font-size: 130%;
     font-weight: bold;
@@ -1861,20 +1861,24 @@ checkbox:focus {
   display: flex;
   width: 100%;
   align-items: center;
+  height: 30px; 
   justify-content: space-between;
 }
 #aboutAvidaEDtitle { 
   flex: 0 0 600px;  
   display: inline-block; 
-  align-self: flex-start;
+  align-self: flex-center;
+  text-align: center;
+  padding: 1px auto;
+  margin: 0px;
 }
-#aboutAvidaEDcloseHldr { 
-  flex: 0 0 fr1; 
+.aboutAvidaEDcloseHldr { 
+  flex: 0 0 70px; 
   display: inline-block;
-  align-self: flex-end;
   height: 30px;
   width: 50px;
-  padding: 0px 8px 2px 0px;
+  padding: 4px 8px;
+  margin: 0px;
 }
 #aboutAvidaEDcloseButton {
   padding: 1px 2x 1px 2px;
@@ -1887,8 +1891,10 @@ checkbox:focus {
 }
 #aboutAvidaEDlogoHolder { 
   grid-area: aboutLogoHold; 
-  display: inline-block; 
+  display: inline-block;
+  place-self: center;
   padding: 10px;
+  margin:auto;
 } 
 #aboutAvidaED_grid_container {
   display: grid;
@@ -1899,13 +1905,18 @@ checkbox:focus {
 .AvidaEDaboutP {
   font-weight: bold;
 }
-#aboutAvidaEDscrllTextHldr {  }
+#aboutAvidaEDscrllTextHldr {
+  width: 100%
+  padding: 1px auto;
+}
 #avidaEDaboutScrollBox {
   border: 1px solid #aaa;
-  padding: 10px;
+  padding: 15px;
   overflow: auto;
   resize: both;
   height: 100px;
+  margin: auto;
+  width: 90%;
 }
 #funding {
   display: block;
