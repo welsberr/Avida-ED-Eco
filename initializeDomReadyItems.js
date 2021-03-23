@@ -198,7 +198,7 @@
     av.dom.tst2textarea = document.getElementById('tst2textarea');
 
     av.dom.sendLogPara = document.getElementById('sendLogPara');
-    av.dom.sendLogTextarea = document.getElementById('sendLogTextarea');
+    av.dom.sendLogScrollBox = document.getElementById('sendLogScrollBox');
 
     //Organism Page
     av.dom.orgBotId = document.getElementById('orgBotId');

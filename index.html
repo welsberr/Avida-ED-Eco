@@ -3642,33 +3642,6 @@
       </div>
       <div class='dijitDialogPaneActionBar'></div>
     </div>
-
-    <span class='notSeen' id='o____________________________________________Send_Log_Data_via_e-mail_client_modalBig___'></span>
-    <div id='sendLogModalID' class='modalBig'>
-
-      <div class='modalBig-content'>
-        <div class='modalBig-header'>
-          <h1 id='sendLogTitle'>Avida-ED Problem Report Email - help us make Avida-ED better.</h1>
-        </div>
-        <div class='modalBig-body'>
-        <p id='sendLogPara'>
-          Please describe the problem and put that at the beginning of the e-mail along with the session log from the text
-          area seen below.
-        </p>
-        <p>
-          Please send the text below to 'Avida-ED-development@googlegroups.com'. Either copy and paste
-          selected text or click on the send e-mail button.
-        </p>
-        <br />
-        <textarea id='sendLogTextarea' cols='90' rows='20' ></textarea>
-        </div>
-        <div class='modalBig-footer'>
-          <button id='sendPost' style = 'visibility: hidden'>Send POST</button>
-          <button id='sendLogEmail' onclick='av.ui.sendLogEmailFn()'>Send email</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button id='sendLogmodalClose' onclick='av.ui.closeSendModalFn()'>Close</button>
-        </div>
-      </div>
-    </div>
     
     <span class='notSeen' id='o______________________________to_replace_postLogDialog_____________postLogmodalBigID___'></span>
     <div id='postLogmodalBigID' class='modalBig'>
@@ -3717,6 +3690,35 @@
         </div>
       </div>
     </div><span class='notSeen' id='o____________________________________________________________end_postLogModalID___'></span>
+
+    <span class='notSeen' id='o____________________________________________Send_Log_Data_via_e-mail_client_modal___'></span>
+    <div id='sendLogModalID' class='modal'>
+
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <h1 id='sendLogTitle'>Avida-ED Problem Report Email<br>help us make Avida-ED better.</h1>
+        </div>
+        <div class='modal-body'>
+          <p id='sendLogPara' class='sendLogP'>
+            Please describe the problem and put that at the beginning of the e-mail along with the session log from the text
+            area seen below.
+          </p>
+          <p id='sendLogPara2' class='sendLogP'>
+            Please send the text below to 'Avida-ED-development@googlegroups.com'. Either copy and paste
+            selected text or click on the send e-mail button.
+          </p>
+          <br />
+          <div id='sendLogtTxtAreaHldr'>
+            <textarea id='sendLogScrollBox' ols='80' rows='10'></textarea>
+        </div>
+          <br><br>
+        <div class='modal-footer'>
+          <button id='sendPost' style = 'visibility: hidden'>Send POST</button>
+          <button id='sendLogEmail' onclick='av.ui.sendLogEmailFn()'>Send email</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button id='sendLogmodalClose' onclick='av.ui.closeSendModalFn()'>Close</button>
+        </div>
+      </div>
+    </div>
     
     <span class='notSeen' id='o________________________________________________________________aboutAvidaED_ModalID___'></span>
     <div id='aboutAvidaED_ModalID' class='modalBig'>

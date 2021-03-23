@@ -640,7 +640,7 @@ require([
     av.debug.postNoteLabel = 'Please include any additional comments in the field below.';
     av.debug.postEmailLabel = 'Please include your e-mail for feedback or so we can discuss the problem further';
     av.debug.error = 'Error: ' + message + ' from ' + file + ':' + line + ':' + col;
-    av.debug.sendLogTextarea = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail + '\n\n' + av.debug.error;
+    av.debug.sendLogScrollBox = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail + '\n\n' + av.debug.error;
 
     //console.log('inside Window.on_Error: before call problemWindow');
     av.ui.problemWindow('window.onerror');
@@ -695,7 +695,7 @@ require([
       console.log('sendLogModalID=', document.getElementById('sendLogModalID') );
       //Need to be able to get rid of these three lines for postPost. will crash without them now.
       document.getElementById('sendLogModalID').style.display = "block";  //textarea must be visable first
-      av.dom.sendLogTextarea.focus();   //must not be commented out or extra error
+      av.dom.sendLogScrollBox.focus();   //must not be commented out or extra error
       document.getElementById('sendLogModalID').style.display = "none";   //sendLogDialog.hide();  
       av.post.sendWindow();
     }
@@ -707,15 +707,15 @@ require([
 
   av.post.emailWindow = function () {
     //console.log('in av.post.emailWindow 708');
-    av.dom.sendLogTextarea.textContent = av.debug.sendLogTextarea;
+    av.dom.sendLogScrollBox.textContent = av.debug.sendLogScrollBox;
     av.dom.sendLogPara.textContent = av.debug.sendLogPara;
 
-    //document.getElementById('postLogTextarea').textContent = av.debug.sendLogTextarea;
+    //document.getElementById('postLogTextarea').textContent = av.debug.sendLogScrollBox;
     //document.getElementById('postLogPara').textContent = av.debug.sendLogPara;
 
     document.getElementById('sendLogModalID').style.display = 'block';  //sendLogDialog.show();  //textarea must be visable first
-    av.dom.sendLogTextarea.focus();
-    av.dom.sendLogTextarea.select();  //https://css-tricks.com/snippets/javascript/auto-select-textarea-text/
+    av.dom.sendLogScrollBox.focus();
+    //av.dom.sendLogScrollBox.select();  //https://css-tricks.com/snippets/javascript/auto-select-textarea-text/
   };
   
   av.ui.closeSendModalFn = function(){
@@ -930,10 +930,10 @@ require([
   // onclick='av.ui.aboutAvidaED'
   av.ui.aboutAvidaED = function(from) {
     av.post.addUser('Button: display About Avida-ED from:', from);
-    document.getElementById('aboutAvidaED_ModalID').style.display = "block";
-    var num = $('#aboutAvidaED_content').height() - 410;
+    document.getElementById('aboutAvidaED_ModalID').style.display = 'block';
+    var num = $('#aboutAvidaED_content').height() - ($('#aboutAvidaED_grid_container').height() + 80);
     console.log('ht = ', num);
-    document.getElementById('avidaEDaboutScrollBox').style.height = num + 'px';
+    //document.getElementById('avidaEDaboutScrollBox').style.height = num + 'px';
     console.log('in av.ui.aboutAvidaED: from=', from);    
   };
 
@@ -945,15 +945,19 @@ require([
   dijit.byId('mnAePreferences').on('Click', function () {
     av.post.addUser('Button: mnAePreferences');
     //console.log('in mnAePreferences.click');
-    document.getElementById('preferences_ModalID').style.display = "block";
+    document.getElementById('preferences_ModalID').style.display = 'block';
   });
 
 av.ui.email = function() {
     av.post.addUser('Button: mnHpAbout');
     av.ui.emailAvidaED();
-    document.getElementById('email_ModalID').style.display = "block";
+    document.getElementById('email_ModalID').style.display = 'block';
     console.log('in av.ui.email');    
   };
+  
+av.ui.closeSendModalFn = () => {
+  document.getElementById('sendLogModalID').style.display = 'none';
+}
   
   av.sgr.complexityChange = function (domObj) {
     console.log('the complexity requested is:', domObj.value);
@@ -979,7 +983,7 @@ av.ui.email = function() {
     av.debug.sendLogPara = 'Please describe the problem and put that at the beginning of the e-mail along with the session log from the text area seeen below.';
     av.debug.postNoteLabel = 'Please describe the problem or suggestion in the comment field below.';
     av.debug.postEmailLabel = 'Please include your e-mail so we can discuss your problem or suggeston further.';
-    av.debug.sendLogTextarea = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail;
+    av.debug.sendLogScrollBox = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail;
     av.debug.error = '';
     av.dom.postError.style.color = 'grey';
     av.ui.problemWindow("dijit.byId('mnHpProblem').on('Click', function ()");
