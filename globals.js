@@ -100,9 +100,9 @@ av.ui.orgInfo = 'details';   //settings is the other option
 av.ui.beginFlag = true;
 av.ui.oneUpdateFlag = false;
 av.ui.lftSidePnlShowing = true;
-av.ui.version = '2017_0323';
+av.ui.version = '4.0.0 beta';
 av.debug.log = '';
-av.debug.log = '--hed: message and error log: version Beta Test ' + av.ui.version;
+av.debug.log = '--hed: message and error log: Version:' + av.ui.version;
 av.debug.triggered = 'unknown';
 
 av.ui.page = 'populationBlock';

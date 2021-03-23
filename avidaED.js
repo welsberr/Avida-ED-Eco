@@ -635,12 +635,12 @@ require([
     av.debug.finalizeDtail();
     av.debug.triggered = 'errorTriggered';
     av.post.postLogPara = 'Please send the info below to help us make Avida-ED better by clicking on the [Send] button';
-    av.debug.sendLogPara = 'The error is the last line in the session log in the text below.';
+    av.debug.sendLogPara = 'The error is at the beginning and end of the session log in the text below.';
     av.debug.postEmailLabel = 'Please include your e-mail if you would like feed back or are willing to further assist in debug';
     av.debug.postNoteLabel = 'Please include any additional comments in the field below.';
     av.debug.postEmailLabel = 'Please include your e-mail for feedback or so we can discuss the problem further';
     av.debug.error = 'Error: ' + message + ' from ' + file + ':' + line + ':' + col;
-    av.debug.sendLogScrollBox = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail + '\n\n' + av.debug.error;
+    av.debug.sendLogScrollBox = av.debug.error + '\n\n' + av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail + '\n\n' + av.debug.error;
 
     //console.log('inside Window.on_Error: before call problemWindow');
     av.ui.problemWindow('window.onerror');
@@ -662,7 +662,7 @@ require([
   // if (av.dbg.flg.root) { console.log('Root: defore av.ui.problemWindow'); }
   //process problme pop-up window
   av.ui.problemWindow = function (from) {
-    //console.log(from, 'called av.ui.problemWindow 665');
+    console.log(from, 'called av.ui.problemWindow 665');
     av.debug.vars = {
       isBlink: av.brs.isBlink,
       isChrome: av.brs.isChrome,
@@ -742,7 +742,7 @@ require([
   };
   
   window.addEventListener('error', function (evt) {
-    console.log('In window.addEventListener: event listener 739', evt);
+    console.log('In window.addEventListener: event listener', evt);
   });
   //--------------------------------------------------------------------------------------------
   //http://www.technicaladvices.com/2012/03/26/detecting-the-page-leave-event-in-javascript/
@@ -933,7 +933,7 @@ require([
     document.getElementById('aboutAvidaED_ModalID').style.display = 'block';
     var num = $('#aboutAvidaED_content').height() - ($('#aboutAvidaED_grid_container').height() + 80);
     console.log('ht = ', num);
-    //document.getElementById('avidaEDaboutScrollBox').style.height = num + 'px';
+    document.getElementById('avidaEDaboutScrollBox').style.height = num + 'px';
     console.log('in av.ui.aboutAvidaED: from=', from);    
   };
 
@@ -957,7 +957,7 @@ av.ui.email = function() {
   
 av.ui.closeSendModalFn = () => {
   document.getElementById('sendLogModalID').style.display = 'none';
-}
+};
   
   av.sgr.complexityChange = function (domObj) {
     console.log('the complexity requested is:', domObj.value);
@@ -992,12 +992,13 @@ av.ui.closeSendModalFn = () => {
 
   //http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
   av.ui.sendLogEmailFn = function () {
+    console.log('in sendLogEmailFn');
     av.ui.sendEmailFlag = true;
     av.post.addUser('Button: sendEmail');
     var link = 'mailto:' + av.fio.mailAddress +
       //'?cc=CCaddress@example.com' +
       '?subject=' + escape('Avida-ED session log') +
-      '&body=' + escape(av.debug.log);
+      '&body=' + escape(av.debug.sendLogScrollBox);
     window.location.href = link;
     av.ui.sendEmailFlag = false;
   };
@@ -1143,7 +1144,7 @@ av.ui.closeSendModalFn = () => {
     av.ui.mainBoxSwap('analysisBlock');
     //console.log('after mainBoxSwap to analysisBlock');
     av.anl.AnaChartFn();
-    console.log('fzWorld wd =', document.getElementById('fzWld').style.width );
+    //console.log('fzWorld wd =', document.getElementById('fzWld').style.width );
   };
 
   // if (av.dbg.flg.root) { console.log('Root: before showTextDebugButton.onclick'); }
