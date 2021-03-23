@@ -692,6 +692,7 @@ require([
 
     //Until we get sending data to database figure out. Switch between post and e-mail session log
     if (false) {
+      console.log('sendLogModalID=', document.getElementById('sendLogModalID') );
       //Need to be able to get rid of these three lines for postPost. will crash without them now.
       document.getElementById('sendLogModalID').style.display = "block";  //textarea must be visable first
       av.dom.sendLogTextarea.focus();   //must not be commented out or extra error
@@ -717,16 +718,16 @@ require([
     av.dom.sendLogTextarea.select();  //https://css-tricks.com/snippets/javascript/auto-select-textarea-text/
   };
   
-  document.getElementById('sendLogModalCancel').onclick = function(){
-    document.getElementById('sendLogModalID').style.display = 'none';
-  }
+  av.ui.closeSendModalFn = function(){
+    document.getElementById('sendLogmodalID').style.display = 'none';
+  };
   
   //--------------------------------------------------------------------------------------------------------------------
     
   av.post.sendWindow = function () {
     console.log('in av.post.sendWindow; used for database; not email');
-    postLogDialog.show();  //textarea must be visable first
-    av.dom.postLogPara.textContent = av.post.postLogPara;
+    av.dom.postLogPara.textContent = av.post.postLogPara;  //textarea must be visable first
+    document.getElementById('postLogModalID').style.display = 'block';
     av.dom.postVersionLabel.textContent = av.ui.version;
     av.dom.postScreenSize.textContent = av.brs.userData.screen;
     av.dom.postUserInfoLabel.textContent = window.navigator.userAgent.toString();
@@ -783,8 +784,6 @@ require([
 
   //--------------------------------------------------------------------------------------------------------------------
     
-  
-
   //********************************************************************************************************************
   // Menu Buttons handling
   //********************************************************************************************s************************
@@ -927,24 +926,14 @@ require([
   //--------------------------------------------------------------------------------------------------------------------
   // Help Drop down menu buttons
   //--------------------------------------------------------------------------------------------------------------------
-/*
-  dijit.byId('mnHpAbout').on('Click', function () {
-    ///console.log('in Button: mnHpAbout.click');
-    av.post.addUser('Button: mnHpAbout');
-    av.ui.aboutAvidaED();
-    console.log('in dijit.byId(mn Help About).on(Click)' );
-  });
-
-  dijit.byId('mnAeAbout').on('Click', function () {
-    av.post.addUser('Button: mnAeAbout');
-    console.log('in dijit.byId(mnHp)About-avida).on(Click)' );
-    av.ui.aboutAvidaED();
-  });
-*/
+  
   // onclick='av.ui.aboutAvidaED'
   av.ui.aboutAvidaED = function(from) {
     av.post.addUser('Button: display About Avida-ED from:', from);
     document.getElementById('aboutAvidaED_ModalID').style.display = "block";
+    var num = $('#aboutAvidaED_content').height() - 410;
+    console.log('ht = ', num);
+    document.getElementById('avidaEDaboutScrollBox').style.height = num + 'px';
     console.log('in av.ui.aboutAvidaED: from=', from);    
   };
 
@@ -998,7 +987,7 @@ av.ui.email = function() {
   });
 
   //http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
-  document.getElementById('sendEmail').onclick = function () {
+  av.ui.sendLogEmailFn = function () {
     av.ui.sendEmailFlag = true;
     av.post.addUser('Button: sendEmail');
     var link = 'mailto:' + av.fio.mailAddress +
@@ -1150,7 +1139,7 @@ av.ui.email = function() {
     av.ui.mainBoxSwap('analysisBlock');
     //console.log('after mainBoxSwap to analysisBlock');
     av.anl.AnaChartFn();
-    //console.log('fzWorld wd =', document.getElementById('fzWld').style.width );
+    console.log('fzWorld wd =', document.getElementById('fzWld').style.width );
   };
 
   // if (av.dbg.flg.root) { console.log('Root: before showTextDebugButton.onclick'); }

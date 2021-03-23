@@ -219,12 +219,12 @@
           
           <div id="freezerSection">
             <div id='FreezerTitle'>Freezer</div>
-            <details class='frzAccordion' open>
+            <details class='frzAccordion'>
               <summary id='fzConfigureSec' class="freezerSumCls">Configured Dishes</summary>
               <div id='fzConfig' class='freezerContainer'>
               </div>
             </details>
-            <details class='frzAccordion' open>
+            <details class='frzAccordion'>
               <summary id='organismsFzSec' class="freezerSumCls">Organisms</summary>
               <div id='fzOrgan' class='freezerContainer'>
               </div>
@@ -726,7 +726,7 @@
                         <option value='organism'>Organism</option>
                         <option value='combined' selected>Combined</option>
                         <option value='resource'>Resource</option>
-                        <option value='offspring'>Offspring</option>
+                        <option id='offspring' value='offspring'>Offspring</option>
                         <option value='both' disabled>Both</option>
                         <option value='none'>None</option>
                       </select>
@@ -3601,12 +3601,129 @@
     </div>
     
     
+    <span class='notSeen' id='o________Delete_after_postLogModalID_works_______Send_Log_Data_by_posting_to_database___'></span>
+    <span class='notSeen' id='o____________________________________Saving_session_log_when_no_e_mail_client present___'></span>
+    <div class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='postLogDialog'
+         title='Avida-ED Problem Report - help us make Avida-ED better'>
+      <div class='dijitDialogPaneContentArea'>
+        <div>
+          <div class='lftWide'>
+            <p id='postLogPara'>
+              Please send the data below to help us make Avida-ED better by clicking on the [Send] button.&nbsp;
+            </p>
+            <br />
+            <label id='postEmailLabel'>Please include your e-mail so we can discuss your problem or suggestion further.</label><br />
+            <input type='text' id='postEmailInputDigit' style='width: 40em' />
+          </div>
+          <div class='ritThin'>
+            <button data-dojo-type='dijit/form/Button' type='button' id='postPost'>Send</button>
+            <br />
+            <label id='postStatus'></label>&nbsp;
+            <br />
+            <button data-dojo-type='dijit/form/Button' type='button' data-dojo-props='onClick:function(){postLogDialog.hide();}'
+                    id='postLogDialogCancel'>Cancel
+            </button>
+          </div>
+        </div>
+        <br /><br /><br /><br />
+        <label id='postProblemError' style='color: red'></label><br />
+        <br />
+        <label id='postNoteLabel'>Please describe the problem or suggestion in the comment field below.</label><br />
+        <textarea id='postComment' cols='90' rows='5'></textarea><br />
+        Version: <label id='postVersionLabel'></label>
+        Screen size: <label id='postScreenSize'></label><br />
+        User Info: <label id='postUserInfoLabel'></label><br />
+        <label id='postError' stype='color: red'></label><br />
+        Session Log:<br />
+        <textarea id='postLogTextarea' cols='90' rows='20' ></textarea><br /><br />
+        Debug Details:<br />
+        <textarea id='postdTailTextarea' cols='90' rows='20' ></textarea>
+
+      </div>
+      <div class='dijitDialogPaneActionBar'></div>
+    </div>
+
+    <span class='notSeen' id='o____________________________________________Send_Log_Data_via_e-mail_client_modalBig___'></span>
+    <div id='sendLogModalID' class='modalBig'>
+
+      <div class='modalBig-content'>
+        <div class='modalBig-header'>
+          <h1 id='sendLogTitle'>Avida-ED Problem Report Email - help us make Avida-ED better.</h1>
+        </div>
+        <div class='modalBig-body'>
+        <p id='sendLogPara'>
+          Please describe the problem and put that at the beginning of the e-mail along with the session log from the text
+          area seen below.
+        </p>
+        <p>
+          Please send the text below to 'Avida-ED-development@googlegroups.com'. Either copy and paste
+          selected text or click on the send e-mail button.
+        </p>
+        <br />
+        <textarea id='sendLogTextarea' cols='90' rows='20' ></textarea>
+        </div>
+        <div class='modalBig-footer'>
+          <button id='sendPost' style = 'visibility: hidden'>Send POST</button>
+          <button id='sendLogEmail' onclick='av.ui.sendLogEmailFn()'>Send email</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button id='sendLogmodalClose' onclick='av.ui.closeSendModalFn()'>Close</button>
+        </div>
+      </div>
+    </div>
+    
+    <span class='notSeen' id='o______________________________to_replace_postLogDialog_____________postLogmodalBigID___'></span>
+    <div id='postLogmodalBigID' class='modalBig'>
+      <!-- modalBig content -->
+      <div class="modalBig-content">
+        <div class="modalBig-header">
+          <h1 id='postLogTitle'>Avida-ED Problem Report - help us make Avida-ED better</h1>
+        </div>
+        <div class="modalBig-body">
+          <div>
+            <div class='lftWide'>
+              <p id='postLogPara'>
+                Please send the data below to help us make Avida-ED better by clicking on the [Send] button.&nbsp;
+              </p>
+              <br />
+              <label id='postEmailLabel'>Please include your e-mail so we can discuss your problem or suggestion further.</label><br />
+              <input type='text' id='postEmailInput' style='width: 40em' />
+            </div>
+            <div class='ritThin'>
+              <button data-dojo-type='dijit/form/Button' type='button' id='postLogModalPost'>Send</button>
+              <br />
+              <label id='postStatus'></label>&nbsp;
+              <br />
+              <button id='postLogModalCancel'>Cancel</button>
+            </div>
+          </div>
+          <br /><br /><br /><br />
+          <label id='postProblemError' style='color: red'></label><br />
+          <br />
+          <label id='postNoteLabel'>Please describe the problem or suggestion in the comment field below.</label><br />
+          <textarea id='postComment' cols='90' rows='5'></textarea><br />
+          Version: <label id='postVersionLabel'></label>
+          Screen size: <label id='postScreenSize'></label><br />
+          User Info: <label id='postUserInfoLabel'></label><br />
+          <label id='postError' stype='color: red'></label><br />
+          Session Log:<br />
+          <textarea id='postLogTextarea' cols='90' rows='20' ></textarea><br /><br />
+          Debug Details:<br />
+        <textarea id='postdTailTextarea' cols='90' rows='20' ></textarea>
+        </div>
+        <div class="modalBig-footer">
+          <button id='oldDishCancel'>Cancel</button>
+          <button id='oldDishDiscard'>Discard</button>
+          <button id='oldDishSaveConfig'>Save Configured Dish</button>
+          <button id='oldDishSaveWorld'>Save Populated Dish</button>
+        </div>
+      </div>
+    </div><span class='notSeen' id='o____________________________________________________________end_postLogModalID___'></span>
+    
     <span class='notSeen' id='o________________________________________________________________aboutAvidaED_ModalID___'></span>
     <div id='aboutAvidaED_ModalID' class='modalBig'>
 
       <!-- Modal content -->
-      <div class='modalBig-content'>
-        <div id='aboutAvidaED_header' class="modalBig-header">
+      <div id='aboutAvidaED_content' class='modalBig-content'>
+        <div id='aboutAvidaED_header' class='modalBig-header'>
           <span class='aboutAvidaEDcloseHldr'></span>
           <h2 id='aboutAvidaEDtitle'>Avida-ED 4.0.0 beta</h2> 
           <span class='aboutAvidaEDcloseHldr'>
@@ -3997,6 +4114,7 @@
 <p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
             </div><span id='AvidaedaboutScrollBox_end' class='notSeen'></span>
           </div><span id='aboutAvidaEDscrllTextHldr_end' class='notSeen'></span>
+          <br><br>
         </div><span id='AvidaEDaboutModalContainer_end' class='notSeen'></span>
       </div><span id='modalBig-content_end' class='notSeen'></span>
     </div><span id='aboutAvidaED_ModalID_end' class='notSeen'></span>
@@ -4027,151 +4145,6 @@
         </button>
       </div>
     </div><span id='end_appReloadDialog_______________________________________________________________________________'></span>
-
-    <span class='notSeen' id='o_________old_Delete__________________________Send Log Data via e-mail client___'></span>
-    <div class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='sendLogDialog'
-         title='Avida-ED Problem Report - help us make Avida-ED better'>
-      <div class='dijitDialogPaneContentArea'>
-        <p id='sendLogPara'>
-          Please describe the problem and put that at the beginning of the e-mail along with the session log from the text
-          area seen below.
-        </p>
-        <p>
-          Please send the text below to 'Avida-ED-development@googlegroups.com'. Either copy and paste
-          selected text or click on the send e-mail button.
-        </p>
-        <br />
-        <textarea id='sendLogTextarea' cols='90' rows='20' ></textarea>
-
-      </div>
-      <div class='dijitDialogPaneActionBar'>
-        <button type='button' id='sendPost' style = 'visibility: hidden'>Send POST</button>
-        <button type='button' id='sendEmail'>Send email</button>
-        <button type='button' onClick='function(){sendLogDialog.hide();}'
-                id='sendLogDialogCancel'>Close
-        </button>
-      </div>
-    </div>
-
-    <span class='notSeen' id='o_______________________________________________Send_Log_Data_via_e-mail_client_Modal___'></span>
-    <div class="modal" id='sendLogModalID'>
-
-      <!-- Modal content -->
-      <div class="modal-content" >
-        <div class="modal-header">
-          <h2>Avida-ED Problem e-mail Report - help us make Avida-ED better.</h2>
-        </div>
-        <div class="modal-body">
-        <p id='sendLogPara'>
-          Please describe the problem and put that at the beginning of the e-mail along with the session log from the text
-          area seen below.
-        </p>
-        <p>
-          Please send the text below to 'Avida-ED-development@googlegroups.com'. Either copy and paste
-          selected text or click on the send e-mail button.
-        </p>
-        <br />
-        <textarea id='sendLogTextarea' cols='90' rows='20' ></textarea>
-        </div>
-        <div class="modal-footer">
-          <button id='sendPost' style = 'visibility: hidden'>Send POST</button>
-          <button id='sendLogEmail'>Send email</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button id='sendLogModalCancel'>Cancel</button>
-        </div>
-      </div>
-    </div>
-    
-    <span class='notSeen' id='o______________________________to_replace_postLogDialog________________postLogModalID___'></span>
-    <div id='postLogModalID' class='modal'>
-      <!-- Modal content -->
-      <div class="modal-content">
-        <div class="modal-header">
-          <p>Avida-ED Problem Report - help us make Avida-ED better</p>
-        </div>
-        <div class="modal-body">
-          <div>
-            <div class='lftWide'>
-              <p id='postLogPara'>
-                Please send the data below to help us make Avida-ED better by clicking on the [Send] button.&nbsp;
-              </p>
-              <br />
-              <label id='postEmailLabel'>Please include your e-mail so we can discuss your problem or suggestion further.</label><br />
-              <input type='text' id='postEmailInput' style='width: 40em' />
-            </div>
-            <div class='ritThin'>
-              <button data-dojo-type='dijit/form/Button' type='button' id='postLogModalPost'>Send</button>
-              <br />
-              <label id='postStatus'></label>&nbsp;
-              <br />
-              <button id='postLogModalCancel'>Cancel</button>
-            </div>
-          </div>
-          <br /><br /><br /><br />
-          <label id='postProblemError' style='color: red'></label><br />
-          <br />
-          <label id='postNoteLabel'>Please describe the problem or suggestion in the comment field below.</label><br />
-          <textarea id='postComment' cols='90' rows='5'></textarea><br />
-          Version: <label id='postVersionLabel'></label>
-          Screen size: <label id='postScreenSize'></label><br />
-          User Info: <label id='postUserInfoLabel'></label><br />
-          <label id='postError' stype='color: red'></label><br />
-          Session Log:<br />
-          <textarea id='postLogTextarea' cols='90' rows='20' ></textarea><br /><br />
-          Debug Details:<br />
-        <textarea id='postdTailTextarea' cols='90' rows='20' ></textarea>
-        </div>
-        <div class="modal-footer">
-          <button id='oldDishCancel'>Cancel</button>
-          <button id='oldDishDiscard'>Discard</button>
-          <button id='oldDishSaveConfig'>Save Configured Dish</button>
-          <button id='oldDishSaveWorld'>Save Populated Dish</button>
-        </div>
-      </div>
-    </div><span class='notSeen' id='o____________________________________________________________end_postLogModalID___'></span>
-
-    
-    
-    <span class='notSeen' id='o________Delete_after_postLogModalID_works_______Send_Log_Data_by_posting_to_database___'></span>
-    <span class='notSeen' id='o____________________________________Saving_session_log_when_no_e_mail_client present___'></span>
-    <div class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='postLogDialog'
-         title='Avida-ED Problem Report - help us make Avida-ED better'>
-      <div class='dijitDialogPaneContentArea'>
-        <div>
-          <div class='lftWide'>
-            <p id='postLogPara'>
-              Please send the data below to help us make Avida-ED better by clicking on the [Send] button.&nbsp;
-            </p>
-            <br />
-            <label id='postEmailLabel'>Please include your e-mail so we can discuss your problem or suggestion further.</label><br />
-            <input type='text' id='postEmailInputDigit' style='width: 40em' />
-          </div>
-          <div class='ritThin'>
-            <button data-dojo-type='dijit/form/Button' type='button' id='postPost'>Send</button>
-            <br />
-            <label id='postStatus'></label>&nbsp;
-            <br />
-            <button data-dojo-type='dijit/form/Button' type='button' data-dojo-props='onClick:function(){postLogDialog.hide();}'
-                    id='postLogDialogCancel'>Cancel
-            </button>
-          </div>
-        </div>
-        <br /><br /><br /><br />
-        <label id='postProblemError' style='color: red'></label><br />
-        <br />
-        <label id='postNoteLabel'>Please describe the problem or suggestion in the comment field below.</label><br />
-        <textarea id='postComment' cols='90' rows='5'></textarea><br />
-        Version: <label id='postVersionLabel'></label>
-        Screen size: <label id='postScreenSize'></label><br />
-        User Info: <label id='postUserInfoLabel'></label><br />
-        <label id='postError' stype='color: red'></label><br />
-        Session Log:<br />
-        <textarea id='postLogTextarea' cols='90' rows='20' ></textarea><br /><br />
-        Debug Details:<br />
-        <textarea id='postdTailTextarea' cols='90' rows='20' ></textarea>
-
-      </div>
-      <div class='dijitDialogPaneActionBar'></div>
-    </div>
 
     <span class='notSeen' id='o______delete_when_SaveCSVfileModal_works_______Save_time_recorder_data_to_a_csv_file___'></span>
     <div class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='saveCSVdialog'

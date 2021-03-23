@@ -329,12 +329,14 @@
     equPop.textContent = '';
 
     numLog.textContent = '';
+    logTit0.textContent = '';
     logTit1.textContent = '';
     logTit2.textContent = '';
     logTit3.textContent = '';
     logTit4.textContent = '';
     logTit5.textContent = '';
     logTit6.textContent = '';
+    logTit7.textContent = '';
     av.grd.flagSelected = false;
     dijit.byId('mnCnOrganismTrace').attr('disabled', true);
     dijit.byId('mnFzOrganism').attr('disabled', true);

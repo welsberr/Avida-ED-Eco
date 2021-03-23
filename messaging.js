@@ -889,9 +889,9 @@
       logTit3.textContent = 'All';
       logTit4.textContent = 'Selected';
       logTit5.textContent = 'Functions';
-      logTit6.textContent = '';
-    //logTit7.textContent = 'dashed line';
-      logTit7.textContent = 'black dotted line';
+    //logTit6.textContent = 'dashed line';
+      logTit6.textContent = '(black dotted line';
+      logTit7.textContent = 'in graph below)';
 
       //console.log('out_', av.grd.logicOutline );
       //console.log('gest', av.grd.msg.gestation.data);

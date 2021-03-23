@@ -1709,48 +1709,6 @@ checkbox:focus {
 /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal                                                */
 /* 
 /* The Modal (background) */
-.modalBig {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    bottom: 0;
-
-    z-index: 1; /* Sit on top */
-    //padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%;   /*   Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background: rgb(0,0,0); /* Fallback color */
-    background: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modalBig-content {
-    background: #fefefe;
-    margin: auto;
-    padding: 2px;
-    border: 1px solid black; /* #888; */
-    width: 80%;
-}
-
-.modalBig-header {
-    padding: 2px 2px;
-    font-size: 130%;
-    font-weight: bold;
-    background: lightgray;
-    color: black;
-}
-
-.modalBig-body {padding: 8px 8px;}
-
-.modal-footer {
-    padding: 4px 4spx;
-    background: lightgray;
-    color: black;
-}
-
-/* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -1793,7 +1751,6 @@ checkbox:focus {
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-
 /************************************************************************************************* end of model class */                                                                         */
 
 #saveCSVdataModalID {
@@ -1801,54 +1758,69 @@ checkbox:focus {
   padding-top: 200px;
 }
 
-
 /**********************************************************************************************************************/
-/* the class modelBig is used to create big dialog boxes without dojo                                                     */
+/* the class modalBig is used to create big dialog boxes without dojo                                                     */
 /**********************************************************************************************************************/
 /* https://www.w3schools.com/howto/howto_css_modals.asp                                                               */
 /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal                                                */
 /* 
 /* The Modal (background) */
-.modelBig {
+.modalBig {
     display: none; /* Hidden by default */
     z-index: 1; /* Sit on top */
     position: fixed; /* Stay in place */
-    left: 0;
-    top: 20px;
-    padding-top: 50px; /* Location of the box */
+    left: 0px;
+    top: 0px;
+    padding-left: 5%; /* Location of the box */
+    padding-top: 5%; /* Location of the box */
     width: 100%;   /*   Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background: rgb(0,0,0); /* Fallback color */
     background: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
-
-/* Modal Content */
-.modelBig-content {
-    background: #fefefe;
-    padding: 10px;
-    border: 1px solid black; /* #888; */
-    width: 95%;
+/* The Modal (background) */
+.modalBig__ {
+    bottom: 0;
 }
 
-.modelBig-header {
-    height: 30px; 
-    padding: 2px;
+/* Modal Content */
+.modalBig-content {
+    background: #fefefe;
+    padding: 0px;   //was 2
+    border: 1px solid black; /* #888; */
+    width: 94%;
+    height: 90%;
+}
+.modalBig-header {
+    padding: 0px;
+    height: 30px;
     font-size: 130%;
-    font-weight: bold;
     background: lightgray;
     color: black;
 }
 
-.modelBig-body {padding: 8px 8px;}
 
-.modelBig-footer {
-    padding: 4px 4spx;
+.modalBig-body {padding: 8px 8px;}
+
+.modalBig-footer {
+    padding: 4px 4px;
     width: 90%;
     background: lightgray;
     color: black;
 }
+/* ---------------------------------------------------------------------- markup for Error Form that uses modalBig -- */
 
+#sendLogTitle { 
+  flex: 0 0 600px;  
+  display: inline-block; 
+  align-self: flex-center;
+  text-align: center;
+  padding: 1px auto;      /*top-bottom; left-right */
+  margin: 0px;
+}
+
+/* ------------------------------------------------------------------ markup for About Avida-ED that uses modalBig -- */
 #AvidaEDaboutModalContainer{
   display:flex;
   flex-direction: column;
@@ -1907,7 +1879,6 @@ checkbox:focus {
   font-weight: bold;
 }
 #aboutAvidaEDscrllTextHldr {
-  width: 100%
   padding: 1px auto;
 }
 #avidaEDaboutScrollBox {
@@ -1915,10 +1886,10 @@ checkbox:focus {
   padding: 15px;
   overflow: auto;
   resize: both;
-  height: 100px;
   margin: auto;
   width: 90%;
-}
+  height: 100px;
+ }
 #funding {
   display: block;
   padding-left: 70px;
@@ -1943,7 +1914,7 @@ checkbox:focus {
   width: 50%;
 }
 
-/********************************************************************************************** end of modelBig class */                                                                         */
+/********************************************************************************************** end of modalBig class */                                                                         */
 
 /*************************************************************************************************** no longer in use */
 
