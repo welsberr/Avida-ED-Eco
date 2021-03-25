@@ -3283,21 +3283,21 @@ av.ui.closeSendModalFn = () => {
 
   av.anl.wrldColorOnChange = function (domObj) {
     var ndx = Number(domObj.id.substr(3, 1));
+    var popDishName = 'popDish' + ndx;
     console.log('domObj.id=', domObj.id, '; ndx=', ndx, '; domObj.value', domObj.value, '; av.color.names[]=', av.color.names[domObj.value]);
     av.anl.color[ndx] = av.color.names[domObj.value];
     av.post.addUser('Button:' + domObj.id);
-    console.log('av.anl.color[ndx]=', av.anl.color[ndx]);
-    var tstText = 'not0Details';
+    console.log('av.anl.color[ndx]=', av.anl.color[ndx], '; popDishName=', popDishName);
+    console.log('popDish_dom=', document.getElementById(popDishName));
+    console.log('');
+    
+/*  
+  var tstText = 'not0Details';
     av.dom.test = document.getElementById(tstText);
     console.log(tstText+'.domObj =', av.dom.test);
     var sugarlist = av.dom.test.children;
     console.log('children of '+tstText+' =', sugarlist);
-    var leng = sugarlist.length;
-    for (var ii = 0; ii < leng; ii++) {
-      console.log('coloroption ['+ii+'] =', sugarlist[ii].id);
-    }
-      
-    
+*/
     av.anl.AnaChartFn();    //redraw chart which will get new color from dom
   };
   
