@@ -685,10 +685,12 @@
     for (var ii=0; ii < dadListLngth; ii++) {
       if (10 > ii) numtxt = '0' + ii;
       else numtxt = ii.toString();
-      tmpNum = $('#dadColor'+numtxt).outerWidth(true) + $('#dadName'+numtxt).outerWidth(true) + 4;
+      tmpNum = $('#dadColor'+numtxt).outerWidth(true) + $('#dadName'+numtxt).outerWidth(true) + 20;
       document.getElementById('dadInfo'+numtxt).style.width = tmpNum + 'px';
       if (tmpNum > maxWidth) maxWidth = tmpNum;
     };
+    console.log('dadInfoCls_wd', maxWidth);
+    $('.dadInfoCls').css('width',maxWidth+'px');
     av.dom.dadLegendHldr_wd = $('#dadLegendHldr').outerWidth(true);
     numCol = Math.floor((av.dom.dadLegendHldr_wd-leftPad)/maxWidth);
     if (Math.floor(dadListLngth/numCol) == dadListLngth/numCol) {
@@ -701,7 +703,7 @@
 
   };
   
-  av.grd.drawLegend_ = function () {
+  av.grd.drawLegend_canvas = function () {
     'use strict';
     var legendPad = 10;   //padding on left so it is not right at edge of canvas
     var colorWide = 13;   //width and heigth of color square
