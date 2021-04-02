@@ -359,59 +359,62 @@
   av.mouse.arrowKeysOnGrid = function (event) {
     'use strict';
     var arrowkey = true;
-    if (av.grd.flagSelected) {
-      var moved = false;
-      switch (event.which) {
-        case 37: // left
-          av.post.addUser('key: arrowLeft');
-          if (0 < av.grd.selectedCol) {
-            av.grd.selectedCol = av.grd.selectedCol - 1;
-            moved = true;
+    console.log('document.activeElement', document.activeElement, document.activeElement.tagName);
+    if ('INPUT' != document.activeElement.tagName && 'TEXTAREA' != document.activeElement.tagName) {
+      if (av.grd.flagSelected) {
+        var moved = false;
+        switch (event.which) {
+          case 37: // left
+            av.post.addUser('key: arrowLeft');
+            if (0 < av.grd.selectedCol) {
+              av.grd.selectedCol = av.grd.selectedCol - 1;
+              moved = true;
+            }
+            break;
+          case 38: // up
+            av.post.addUser('key: arrowUp');
+            if (0 < av.grd.selectedRow) {
+              av.grd.selectedRow = av.grd.selectedRow - 1;
+              moved = true;
+            }
+            break;
+          case 39: // right
+            av.post.addUser('key: arrowRight');
+            if (av.grd.selectedCol < av.grd.cols - 1) {
+              av.grd.selectedCol++;
+              moved = true;
+            }
+            break;
+          case 40: // down
+            av.post.addUser('key: arrowDown');
+            if (av.grd.selectedRow < av.grd.rows - 1) {
+              av.grd.selectedRow = av.grd.selectedRow + 1;
+              moved = true;
+            }
+            break;
+          default:
+            arrowkey = false;
+            break;
+        };
+        if (arrowkey) {
+          //event.preventDefault(); // prevent the default action (scroll / move caret)
+          av.grd.selectedNdx = av.grd.selectedRow * av.grd.cols + av.grd.selectedCol;
+          if (moved && 'prepping' != av.grd.runState) {  //look for decendents (kids)
+            //find out if there is a kid in that cell
+            //if which ancestor is not null then there is a 'kid' there.
+            if (null != av.grd.msg.ancestor.data[av.grd.selectedNdx]) {
+              av.grd.kidStatus = 'getgenome';
+              av.post.addUser('ArrowKey was used to pick kid cellID=' + av.grd.selectedNdx);
+              av.msg.doWebOrgDataByCell();
+              if (av.debug.mouse) console.log('kid', av.grd.kidName, av.grd.kidGenome);
+              dijit.byId("mnFzOrganism").attr("disabled", false);  //When an organism is selected, then it can be save via the menu
+              dijit.byId("mnCnOrganismTrace").attr("disabled", false);
+            }
           }
-          break;
-        case 38: // up
-          av.post.addUser('key: arrowUp');
-          if (0 < av.grd.selectedRow) {
-            av.grd.selectedRow = av.grd.selectedRow - 1;
-            moved = true;
-          }
-          break;
-        case 39: // right
-          av.post.addUser('key: arrowRight');
-          if (av.grd.selectedCol < av.grd.cols - 1) {
-            av.grd.selectedCol++;
-            moved = true;
-          }
-          break;
-        case 40: // down
-          av.post.addUser('key: arrowDown');
-          if (av.grd.selectedRow < av.grd.rows - 1) {
-            av.grd.selectedRow = av.grd.selectedRow + 1;
-            moved = true;
-          }
-          break;
-        default:
-          arrowkey = false;
-          break;
-      };
-      if (arrowkey) {
-        event.preventDefault(); // prevent the default action (scroll / move caret)
-        av.grd.selectedNdx = av.grd.selectedRow * av.grd.cols + av.grd.selectedCol;
-        if (moved && 'prepping' != av.grd.runState) {  //look for decendents (kids)
-          //find out if there is a kid in that cell
-          //if which ancestor is not null then there is a 'kid' there.
-          if (null != av.grd.msg.ancestor.data[av.grd.selectedNdx]) {
-            av.grd.kidStatus = 'getgenome';
-            av.post.addUser('ArrowKey was used to pick kid cellID=' + av.grd.selectedNdx);
-            av.msg.doWebOrgDataByCell();
-            if (av.debug.mouse) console.log('kid', av.grd.kidName, av.grd.kidGenome);
-            dijit.byId("mnFzOrganism").attr("disabled", false);  //When an organism is selected, then it can be save via the menu
-            dijit.byId("mnCnOrganismTrace").attr("disabled", false);
-          }
-        }
-        av.grd.drawGridSetupFn('av.mouse.arrowKeysOnGrid');
-      }
-    }
+          av.grd.drawGridSetupFn('av.mouse.arrowKeysOnGrid');
+        }  // end arrowkey
+      }   // grid flag selected
+    }    // focus is not in an input or textarea element
   };
 
   //No longer in use delete later
