@@ -94,7 +94,7 @@
     av.mouse.DnGridPos = [evt.offsetX, evt.offsetY];
     av.mouse.Dn = true;
     // Select if it is in the grid
-    av.mouse.findSelected(evt, av.grd);
+    av.mouse.findSelected(evt);
     //check to see if in the grid part of the canvas
     if (av.debug.mouse) { console.log('av.mousedown', av.grd.selectedNdx); }
     //if (av.debug.mouse) console.log('grid Canvas; selectedNdx', av.grd.selectedNdx,'________________________________');

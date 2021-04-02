@@ -1626,12 +1626,14 @@ av.ui.closeSendModalFn = () => {
   //if a cell is selected, arrow keys can move the selection
   $(document).keydown(function (event) {
     //av.post.addUser(' ');   //in av.mouse.arrowKeyOnGrid
+    //console.log('keydown.event=', event);
     av.mouse.arrowKeysOnGrid(event);
   });
 
   //av.mouse down on the grid
   $(av.dom.gridCanvas).on('mousedown', function (evt) {
     av.post.addUser('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
+    console.log('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
     av.mouse.downGridCanvasFn(evt);
   });
 
@@ -3356,10 +3358,10 @@ av.ui.closeSendModalFn = () => {
    
   av.doj.mnDebug.style.visibility = 'visible';   // set visiable so that av.ui.toggleDevelopentDisplays will hide devo stuff
 
-  // Avida-ED Avida-ED 4.0.01 Beta Testing fix this too. 
+  // Avida-ED 4.0.01 Beta Testing fix this too. 
   //true when diane is working; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; set to false before public release for Avida-ED Avida-ED 4.0.01 Beta Testing. ');
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.01 Beta Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x

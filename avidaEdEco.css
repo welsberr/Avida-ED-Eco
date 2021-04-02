@@ -725,6 +725,10 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
   #itemDone1st { display: none; }
   #pauseCriteriaHolder { }  /* tried to use to give a white background to select box rather than a inherit background */
   
+input:focus {
+/*  background-color: yellow;  */
+}
+
 /*--------------------------------------------------------------------------------------------- Resource Data Table --*/
 
 .sugarTsk{
