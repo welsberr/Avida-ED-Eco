@@ -1732,7 +1732,7 @@ av.ui.closeSendModalFn = () => {
 
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
-    if (true) { console.log(from, 'called av.grd.drawGridSetupFn__________________________________________________'); }
+    if (av.dbg.flg.dsz) { console.log(from, 'called av.grd.drawGridSetupFn__________________________________________________'); }
     av.dom.benchPopBot.style.height = '60px';
 
     //size testing box = mainButtons

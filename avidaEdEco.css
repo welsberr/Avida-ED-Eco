@@ -112,7 +112,7 @@ html {
   }
   .all3pop{
     display: grid;
-    grid-template-rows: 2.5em auto;
+    grid-template-rows: 2.5em 1fr;   /* 2.5em */
     grid-template-columns: 240px auto 440px;    /* 440px */
     grid-template-areas: 'headerRow headerRow headerRow'
                           'navColClass mainBlockHolder rightInfoHolder';
@@ -287,7 +287,7 @@ html {
   }
 
   #CanPutButtonHere{
-    flex: 0 0 110px;
+    flex: 0 0 130px;
     padding-top: 5px;
     height: 25px;
     display: inline-block;
