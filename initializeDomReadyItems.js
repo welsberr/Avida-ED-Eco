@@ -291,16 +291,21 @@
     var willbe = 'none';
     if ('none' === document.getElementById('orn_regionLayHolder').style.display) {
       willbe = 'inline-block';
+      av.sgr.complexityLevel = 'sgrAdvance';
     } else {
       willbe = 'none';
+      av.sgr.complexityLevel = 'sgrGlobal';
     };
     console.log('willbe=', willbe);  
+    av.sgr.complexityChangeProcess('av.ui.toggleRegionLayoutControls');
+/*
     for (ii = 0; ii < len; ii++) {
       tsk = av.sgr.logicNames[ii];
       document.getElementById(tsk+'_regionLayHolder').style.display = willbe;
     };
     document.getElementById('regionLayoutSgr').style.display = willbe;
     document.getElementById('allSugarRegionLayoutDiv').style.display = willbe;
+*/
   };
 
   //No longer in uses as Geometry and Region Layout are now combined

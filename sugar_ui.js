@@ -628,6 +628,10 @@
       clssnam = 'changeAllSugarsGlobal';
       optionDisabled = true;
       av.sgr.complexSumGridPrefix = 'grd-sgr-sum-global-';
+    } else {
+      displaySetting = 'inline-block';
+      clssnam = 'changeAllSugarsAdvanced';
+      optionDisabled = false;
     };
     console.log(from, 'called av.sgr.complexityChangeProcess: av.sgr.complexityLevel=', av.sgr.complexityLevel);
     console.log('------------------------------------------------------------------------------geoDispay=', displaySetting);
