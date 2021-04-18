@@ -87,7 +87,7 @@ and open the template in the editor.
 # ========================================================================================
 # Basic Examples of Difference statements. 
 #----------------------------------------------------------------------------------
-# Old way to specify infinite resources, or resources that are not rewarded. 
+# Old way to specify unlimited resources, or resources that are not rewarded. 
 # I'm using this any time tasks are not rewarded as they still need to be defined.
 #
 # format on the next line
@@ -110,17 +110,17 @@ and open the template in the editor.
 # REACTION  EQU  equ process:value=0.0:type=pow requisite:max_count=1  #value=5.0
 #
 #----------------------------------------------------------------------------------
-# Example infinite resources in 40x40 dish the way I have to parse anyway.
+# Example unlimited resources in 40x40 dish the way I have to parse anyway.
 
 RESOURCE not1:geometry=grid:initial=1600
 REACTION  NOT  not process:resource=not1:value=1.0:type=pow:depletable=0 requisite:max_count=1
 
 # this REACTION specifies a resource and making depletable=0 means it does not consume the
-# resource and so acts like the resource is infinite. In this case, initial is all of the 
+# resource and so acts like the resource is unlimited. In this case, initial is all of the 
 # resource spread out in all the cells and needs to be the number of cells in the dish 
 # 
 # ----------------------------------------------------------------------------------------
-# Example infinite resources in 40x40 dish using CELL which otherwise I need not parse
+# Example unlimited resources in 40x40 dish using CELL which otherwise I need not parse
 # The number after the .. is the number of cells in the dish - 1, as we start counting at 0. 
 # The avida world can also be represented as a one dimensional array from 0 to worldsize-1.
 #
@@ -154,7 +154,7 @@ REACTION  AND  and process:resource=and1:value=1.0:type=pow:max=1:min=0.5  requi
 
 # min is the minimum amount of the resource, and1, that can be consumed. If the cell contains
 # less than 0.5 units, nothing is consumed. max is the maximum amount that is consumed. I 
-# think that with our "infinite" resources they are rewarded as if they consumed 1 unit of
+# think that with our "unlimited" resources they are rewarded as if they consumed 1 unit of
 # resource. You might wish to experiment with different values for min. I have generally
 # used between 0.5 and 0.9 for min and 1 or 1.1 for max. 
 

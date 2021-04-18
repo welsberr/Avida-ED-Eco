@@ -496,7 +496,7 @@
     //console.log('in av.env.findReactOnlyUIdata: numTsk=', numTsk, '; sub=', sub, '?????????????????????');
     if (0 != sub) { console.log('Reaction only Data should position 0 in the array, sub = ', sub); }
     else {
-      //reaction but no resource so it must be global and none or infinite
+      //reaction but no resource so it must be global and none or unlimited
       av.nut[numTsk].uiAll.geometry = 'global';
       av.nut[numTsk].uiAll.regionLayout = '1Global';
       av.nut[numTsk].uiSub.regionCode[sub] = '100';
@@ -505,7 +505,7 @@
       av.nut[numTsk].uiSub.regionSet[sub] = 'q';
       av.nut[numTsk].uiAll.regionsNumOf = 1;         
       if (0 < av.nut[numTsk].react.value[sub]) {
-        av.nut[numTsk].uiAll.supplyTypeSlct = 'infinite'; 
+        av.nut[numTsk].uiAll.supplyTypeSlct = 'unlimited'; 
         //if (av.dbg.flg.nut) { console.log('av.nut['+numTsk+'].uiAll.supplyTypeSlct =', av.nut[numTsk].uiAll.supplyTypeSlct); }
       }
       else if (0 > av.nut[numTsk].react.value[sub])  {
@@ -683,10 +683,10 @@
         // begin of secton from reAct
 
         //There are older environment.cfg files that do not include a resource in the reaction statement. 
-        // All of those will be considered to have global resources and they will typically be infinite or none.
+        // All of those will be considered to have global resources and they will typically be unlimited or none.
         // 
         // IF the code word 'missing' is the listed as the name of the resource than there is not resource specified and 
-        // the reaction can only act as if the resource for that task is none or infinite and it must be global. 
+        // the reaction can only act as if the resource for that task is none or unlimited and it must be global. 
         if (null != av.nut[numTsk].react.name[sub]) {
           nameRCR = av.nut[numTsk].react.name[sub];
 
@@ -704,7 +704,7 @@
 
             //Find the supply type ------------------------------------------
             //if (av.dbg.flg.nut) { console.log('Nut: regionCode is ', av.nut[numTsk].uiSub.regionCode[sub]); }
-            // Look for finite or none
+            // Look for limited or none
             // Look at RESOURCE initial first. 
             // console.log('av.nut['+numTsk+'].resrc.initial['+sub+']=', av.nut[numTsk].resrc.initial[sub]);
             if ( av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.initial[sub])) ) {
@@ -713,8 +713,8 @@
                 av.nut[numTsk].uiAll.supplyTypeSlct = 'none';
               } 
               else if (0 < av.nut[numTsk].resrc.initial[sub]) {
-                av.nut[numTsk].uiSub.supplyTypeSlct[sub] = 'finite';
-                av.nut[numTsk].uiAll.supplyTypeSlct = 'finite';
+                av.nut[numTsk].uiSub.supplyTypeSlct[sub] = 'limited';
+                av.nut[numTsk].uiAll.supplyTypeSlct = 'limited';
                 if (null == av.nut[numTsk].uiSub.area[sub]) {
                   av.nut[numTsk].uiSub.area[sub] = av.nut.wrldSize;   //this may get redifned based on cells
                   //console.log('set av.nut['+numTsk+'].uiSub.area['+sub+'] to wrldSize=', av.nut.wrldSize);
@@ -729,8 +729,8 @@
                 av.nut[numTsk].uiAll.supplyTypeSlct = 'none';
               } 
               else if (0 < av.nut[numTsk].cell.initial[sub]) {
-                av.nut[numTsk].uiSub.supplyTypeSlct[sub] = 'finite';                      //Finite
-                av.nut[numTsk].uiAll.supplyTypeSlct = 'finite';
+                av.nut[numTsk].uiSub.supplyTypeSlct[sub] = 'limited';                      //Limited
+                av.nut[numTsk].uiAll.supplyTypeSlct = 'limited';
                 if (null == av.nut[numTsk].uiSub.area[sub]) {
                   av.nut[numTsk].uiSub.area[sub] = av.nut.wrldSize;   //this may get redifned based on cells (need to think about how to parse)
                   console.log('set av.nut['+numTsk+'].uiSub.area['+sub+'] to wrldSize=', av.nut.wrldSize);
@@ -802,10 +802,10 @@
           if (null == av.nut[numTsk].react.value[sub]) {
             av.av.nut[numTsk].react.value[sub] = av.sgr.reactValues[ii];
           };
-          // Depleatable set to 0 is used to make a resource infinite
+          // Depleatable set to 0 is used to make a resource unlimited
           if ( 0 == Number(av.nut[numTsk].react.depletable[sub]) ) {
             //console.log('av.nut['+numTsk+'].react.depletable['+sub+']=', av.nut[numTsk].react.depletable[sub]);
-            av.nut[numTsk].uiSub.supplyTypeSlct[sub] = 'infinite';
+            av.nut[numTsk].uiSub.supplyTypeSlct[sub] = 'unlimited';
             av.nut[numTsk].uiAll.supplyTypeSlct = 'uiSub';
           };
         }; // processing index into array with a reaction name 
@@ -916,7 +916,7 @@
             };
 
             switch (supplyTypeSlct) {
-              case 'finite':
+              case 'limited':
                 if ( av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.initial[sub])) ) {
                   av.nut[numTsk].uiSub.initialHiNp[sub] = parseInt(av.nut[numTsk].resrc.initial[sub]) / area;
                 };
@@ -946,7 +946,7 @@
                   console.log('av.nut['+numTsk+'].resrc.outflow['+sub+']=', av.nut[numTsk].resrc.outflow[sub]);
                 };
                 break;
-              case 'infinite':
+              case 'unlimited':
                 av.nut[numTsk].uiSub.initialHiNp[sub] = 2;
                 break;
                 //
@@ -968,7 +968,7 @@
               //supply  type specific actions
               supplyTypeSlct = av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase();
               switch (supplyTypeSlct) {
-                case 'finite':
+                case 'limited':
                   if (av.utl.isNumber(parseFloat(av.nut[numTsk].resrc.initial[sub])) ) {
                     av.nut[numTsk].uiSub.initialHiNp[sub] = parseFloat(av.nut[numTsk].resrc.initial[sub]/
                                                             parseFloat(av.nut.wrldSize));
@@ -987,7 +987,7 @@
                     av.nut[numTsk].uiSub.outflowHiNp[sub] = parseFloat(av.nut[numTsk].uiSub.outflowHiNp[sub]);
                   } else { av.nut[numTsk].uiSub.inflowHiNp[sub] =  0.111; };
                   break;
-                case 'infinite':
+                case 'unlimited':
                   av.nut[numTsk].uiSub.initialHiNp[sub] = av.sgr.nutdft.uiAll.initialHiNp;
                   break;
                   //
@@ -1040,7 +1040,7 @@
         av.nut[numTsk].resrc.initial[1] = av.nut.wrldSize;
         av.nut[numTsk].cell.initial[1] = 1;
         av.nut[numTsk].uiSub.initialHiNp[1] = 1;
-        av.nut[numTsk].uiSub.supplyTypeSlct[1] = 'infinite';
+        av.nut[numTsk].uiSub.supplyTypeSlct[1] = 'unlimited';
       } else {
         av.nut[numTsk].resrc.initial[1] = 0;
         av.nut[numTsk].cell.initial[1] = 0;
@@ -1203,7 +1203,7 @@
         //console.log('document.getElementById('+tsk+'_supplyTypeSlct).value=', document.getElementById(tsk+'_supplyTypeSlct').value);
         //console.log('document.getElementById('+tsk+'WsupplyTypeSlct).value=', document.getElementById(tsk+'WsupplyTypeSlct').value);
         switch (av.nut[numTsk].uiAll.supplyTypeSlct) {
-          case 'finite':
+          case 'limited':
             if (av.utl.isNumber(parseFloat(av.nut[numTsk].uiSub.initialHiNp[sub])) ) {
               document.getElementById(tsk+'1initialHiNp').value = av.nut[numTsk].uiSub.initialHiNp[sub];
             } else { 
@@ -1227,7 +1227,7 @@
               document.getElementById(tsk+'1outflowHiNp').value = av.nut[numTsk].resrc.outflow[sub];
             } else { document.getElementById(tsk+'1outflowHiNp').value = 0.44444; }
             break;
-          case 'infinite':
+          case 'unlimited':
             av.nut[numTsk].uiSub.initialHiNp[sub] = 2;
             break;
           default :
@@ -1247,7 +1247,7 @@
         //console.log('document.getElementById('+tsk+'_supplyTypeSlct).value=', document.getElementById(tsk+'_supplyTypeSlct').value);
         //console.log('document.getElementById('+tsk+'WsupplyTypeSlct).value=', document.getElementById(tsk+'WsupplyTypeSlct').value);
         switch (av.nut[numTsk].uiAll.supplyTypeSlct) {
-          case 'finite':
+          case 'limited':
             if (av.utl.isNumber(parseFloat(av.nut[numTsk].uiSub.initialHiNp[sub])) ) {
               document.getElementById(tsk+'_initialHiNp').value = av.nut[numTsk].uiSub.initialHiNp[sub];
             } else { 
@@ -1281,7 +1281,7 @@
               document.getElementById(tsk+'0outflowHiNp').value = 0.44444; 
             }
             break;
-          case 'infinite':
+          case 'unlimited':
             av.nut[numTsk].uiSub.initialHiNp[sub] = 2;
             break;
           default :
@@ -1311,7 +1311,7 @@
           };
           console.log('document.getElementById('+tsk+sub+'supplyTypeSlct).value=', document.getElementById(tsk+sub+'supplyTypeSlct').value);
           switch (av.nut[numTsk].uiSub.supplyTypeSlct[sub]) {
-            case 'finite':
+            case 'limited':
               if (av.utl.isNumber(parseFloat(av.nut[numTsk].uiSub.initialHiNp[sub])) ) {
                 document.getElementById(tsk+sub+'initialHiNp').value = av.nut[numTsk].uiSub.initialHiNp[sub];
               } else { 
@@ -1330,7 +1330,7 @@
                 document.getElementById(tsk+sub+'outflowHiNp').value = av.nut[numTsk].uiSub.outflowHiNp[sub];
               } else { document.getElementById(tsk+sub+'outflowHiNp').value = .1111; }
               break;
-            case 'infinite':
+            case 'unlimited':
               av.nut[numTsk].uiSub.initialHiNp[sub] = 2;
               break;
               //

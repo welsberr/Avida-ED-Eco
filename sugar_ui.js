@@ -200,7 +200,7 @@
     var endName = 'supplyTypeSlct';   //nan_supplyTypeHolder  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
     //console.log(from, ' called av.sgr.ChangeAllsugarsupplyTypeSlct: selectedOption=',selectedOption);
     var domName = '';
-    var start = 1;   //sub sections start with 0, because global finite is in the summary (_)
+    var start = 1;   //sub sections start with 0, because global limited is in the summary (_)
     
     //console.log('start='+start, '; numTasks='+av.sgr.numTasks, '; endName='+endName, '; value=', selectedOption);
     for (var ii=0; ii< av.sgr.numTasks; ii++) {
@@ -469,7 +469,7 @@
           if ('none' == supplyTypeSlct.toLowerCase() ) {
             colorFlg = false;
           }
-          else if ('finite' == supplyTypeSlct.toLowerCase() ) {
+          else if ('limited' == supplyTypeSlct.toLowerCase() ) {
             initial = document.getElementById(tsk+sub+'initialHiNp').value;
             if (0 >= initial) {
               colorFlg = false;
@@ -595,7 +595,7 @@
         if ('none' != supplyTypeSlct.toLowerCase() ) {
           colorFlg = true;
         }
-        if ('finite' == supplyTypeSlct.toLowerCase() ) {
+        if ('limited' == supplyTypeSlct.toLowerCase() ) {
           initial = document.getElementById(tsk+ii+'initialHiNp').value;
           if (0 < initial) {
             colorFlg = true;
@@ -638,7 +638,7 @@
     document.getElementById('sugarFooter').className = clssnam;
     document.getElementById('allSugarModifierDiv').style.display = displaySetting;
     document.getElementById('allSugarRegionLayoutDiv').style.display = displaySetting;
-    //document.getElementById('allsgrFinite').disabled = optionDisabled;
+    //document.getElementById('allsgrLimited').disabled = optionDisabled;
     //document.getElementById('allsgrChemostat').disabled = optionDisabled;
     document.getElementById('allTopLftRit').style.display = displaySetting;
     document.getElementById('allQuarters').style.display = displaySetting;
@@ -651,7 +651,7 @@
       document.getElementById(tsk+'_regionLayout').value = '1Global';      
       document.getElementById(tsk+'_regionLayHolder').style.display = displaySetting;
       document.getElementById(tsk+'_debugTyp').style.display = displaySetting;
-      //document.getElementById(tsk+'_finite').disabled = optionDisabled;
+      //document.getElementById(tsk+'_limited').disabled = optionDisabled;
       //document.getElementById(tsk+'_chemostat').disabled = optionDisabled;
       document.getElementById(tsk+'_topLftRit').style.display = displaySetting;
       document.getElementById(tsk+'_quarters').style.display = displaySetting;
@@ -800,10 +800,10 @@
 
       switch (av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase()) {
         case 'none': 
-        case 'infinite':
+        case 'unlimited':
           document.getElementById(tsk+'_section').open = false;
           break;
-        case 'finite': 
+        case 'limited': 
           document.getElementById(tsk+'_initialDiv').style.display = 'inline-block';
           document.getElementById(tsk+'_section').open = false;
           break;
@@ -854,15 +854,15 @@
         document.getElementById('sgrEngergyReportLabel').style.display = 'inline';
         switch (av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase()) {
           case 'none': 
-          case 'infinite':
+          case 'unlimited':
             document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
             document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.long[tsk];
             document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.long.width;
             document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
             document.getElementById(tsk+'_section').open = false;
             break;
-          case 'finite': 
-            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'finite-container';
+          case 'limited': 
+            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'limited-container';
             document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.short[tsk];
             document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.short.width;
             document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
@@ -968,19 +968,19 @@
           // if (av.dbg.flg.nut) { console.log('Nut: tsk=', 'sub=', sub, tsk,'supplyTypeSlct=', av.nut[numTsk].uiSub.supplyTypeSlct[sub].toLowerCase(),'regionLayoutDiv=', document.getElementById(tsk+'_regionLayout').value); }
           switch (av.nut[numTsk].uiSub.supplyTypeSlct[sub].toLowerCase()) {    //for when geometery = local
             case 'none':
-            case 'infinite': 
+            case 'unlimited': 
                 //document.getElementById(tsk+sub+'blank').style.display = 'block';      
-                document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-' + numRegions+ '-Infinite-container';
+                document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-' + numRegions+ '-unlimited-container';
               break;
-            case 'finite':   //Local
+            case 'limited':   //Local
               // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags.gradient=',av.nut.hideFlags.gradient); }
               document.getElementById(tsk+sub+'supplyModifierHolder').style.display = 'block';
               // document.getElementById(tsk+sub+'gradientcheckboxHolder').style.display = 'block';
               // document.getElementById(tsk+sub+'diffusecheckboxHolder').style.display = 'block';
               document.getElementById(tsk+sub+'initialHiHolder').style.display = 'block';
               document.getElementById(tsk+sub+'initialHiText').innerHTML = 'Inital amount';
-              document.getElementById(tsk+sub+'subSection').className = 'sugarColsDetail-finite-container';
-              //document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-container';
+              document.getElementById(tsk+sub+'subSection').className = 'sugarColsDetail-limited-container';
+              //document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Limited-container';
                 //console.log('document.getElementById('+tsk+sub+'supplyModifierSelect).value =');
                 //console.log(document.getElementById(tsk+sub+'supplyModifierSelect').value);
                 console.log(tsk+sub+'supplyModifierSelect.value.toLowerCase()=',
@@ -992,8 +992,8 @@
                 document.getElementById(tsk+sub+'initialHiText').innerHTML = 'High initial';
                 document.getElementById(tsk+sub+'initialHiHolder').style.display = 'block';
                 document.getElementById(tsk+sub+'initialLoDiv').style.display = 'block'; 
-                document.getElementById(tsk+sub+'subSection').className = 'sugarColsDetail-finite-gradient-container';
-                //document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-FiniteGradient-container';
+                document.getElementById(tsk+sub+'subSection').className = 'sugarColsDetail-limited-gradient-container';
+                //document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-LimitedGradient-container';
                 // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
               }
               break;
@@ -1183,7 +1183,7 @@
         ii++;
       };
 
-      if ('Finite' == av.ui.envDistribute) {  
+      if ('Limited' == av.ui.envDistribute) {  
         av.dom.envInitial.value  = envobj.initial[ndx];
       }
       else if ('Chemostat' == av.ui.envDistribute) {
@@ -1231,7 +1231,7 @@
   align-items: stretch;
 }
 
-.geoBoth-grid-sugarDetail-Finite-noGradientcheckboxHolder-container {
+.geoBoth-grid-sugarDetail-Limited-noGradientcheckboxHolder-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
                        'initialHi initialHi initialHi';
@@ -1240,7 +1240,7 @@
   justify-items: start;  justify-content: start; width: 100%;
 }
 
-.geoBoth-grid-sugarDetail-Finite-noGradientcheckboxHolder-container_checkboxHolder {
+.geoBoth-grid-sugarDetail-Limited-noGradientcheckboxHolder-container_checkboxHolder {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
                        'initialHi initialHi initialHi';
@@ -1249,32 +1249,32 @@
   justify-items: start;  justify-content: start; width: 100%;
 }
 
-.grid-sugarDetail-Infinite-container {
+.grid-sugarDetail-unlimited-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv';
 /*  grid-template-areas: 'subSectionTitle supplyDetailDiv sgrBlank'; 
   justify-items: start;  justify-content: start; width: 100%;
 }
 
-.grid-sugarDetail-1All-Infinite-container {
+.grid-sugarDetail-1All-unlimited-container {
   display: grid;
   grid-template-areas: 'supplyDetailDiv';
   justify-items: start;  justify-content: start; width: 100%;
 }
 
-.grid-sugarDetail-Finite-noGrradientcheckboxHolder-container {  //not in use
+.grid-sugarDetail-Limited-noGrradientcheckboxHolder-container {  //not in use
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv initialHi';
   justify-items: start;  justify-content: start; width: 100%;
 }
 
-.grid-sugarDetail-Finite-noGradientcheckboxHolderOneLine-container {
+.grid-sugarDetail-Limited-noGradientcheckboxHolderOneLine-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv initialHi diffuseCheckDiv';
   justify-items: start;  justify-content: start; width: 100%;
 }
 
-.grid-sugarDetail-1All-Finite-noGradientcheckboxHolder-container {
+.grid-sugarDetail-1All-Limited-noGradientcheckboxHolder-container {
   display: grid;
   justify-items: stretch;
 /*  grid-template-areas: 'subSectionTitle initialHi diffuseCheckDiv'; 
@@ -1284,7 +1284,7 @@
   justify-items: start;  justify-content: start; width: 100%;
 }
 
-.grid-sugarDetail-multi-Finite-noGradientcheckboxHolder-container {  /* not in use on Dec 16 
+.grid-sugarDetail-multi-Limited-noGradientcheckboxHolder-container {  /* not in use on Dec 16 
   display: grid;
   justify-items: stretch;
   grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
@@ -1294,7 +1294,7 @@
   justify-items: start;  justify-content: start; width: 100%;
 }
 
-.grid-sugarDetail-FiniteGradient-container {
+.grid-sugarDetail-LimitedGradient-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv gradientCheckDiv'
                        'sideInput sideInput sideInput sideInput'
@@ -1302,7 +1302,7 @@
   justify-items: start;  justify-content: start; width: 100%;
 }
 
-.grid-sugarDetail-FiniteGradient-container_md {
+.grid-sugarDetail-LimitedGradient-container_md {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
                        'initialLo initialLo sideInput'
@@ -1310,7 +1310,7 @@
   justify-items: start;  justify-content: start; width: 100%;
 }
 
-.grid-sugarDetail-FiniteGradient-container_old {
+.grid-sugarDetail-LimitedGradient-container_old {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
                        'sideInput sideInput sideInput gradientCheckDiv'

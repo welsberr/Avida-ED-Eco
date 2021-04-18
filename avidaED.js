@@ -70,14 +70,14 @@
 //  
 //  the avidaDataRecorder.csv does not export correctly, but is created correctly when the population is frozen
 //  
-//  In the environment.cfg file I wrote, I put one unit or resouce in each cell for grid; infinite. I need to have 
+//  In the environment.cfg file I wrote, I put one unit or resouce in each cell for grid; unlimited. I need to have 
 //  the same amount of resouce as in the default so it will default to the corret courrect amount if the user changes from 
-//  infimite to finite in the UI. 
+//  infimite to limited in the UI. 
 //  
 //  I think it will write to have the default amount of resource for that region. 
 //  
-//  Looking at loading default files and perhaps we need to add default values for finite when finite is selected even 
-//  there is no finite in the config file. 
+//  Looking at loading default files and perhaps we need to add default values for limited when limited is selected even 
+//  there is no limited in the config file. 
 //  
 //  Oraganism Page -------
 //  
@@ -2165,7 +2165,7 @@ av.ui.closeSendModalFn = () => {
     if ('resource' == av.pch.chartContains || 'combined' == av.pch.chartContains) {
 
       // need to check to see if there are any valid global resources before adding them to the structure
-      console.log('cntGlobalDataTask=', av.nut.cntGlobalDataTasks, '; av.pch.resrcGlobal=', av.pch.resrcGlobal);
+      //console.log('cntGlobalDataTask=', av.nut.cntGlobalDataTasks, '; av.pch.resrcGlobal=', av.pch.resrcGlobal);
       if (0 < av.nut.cntGlobalDataTasks) {
         for (var ii=0; ii < av.sgr.numTasks; ii++) {
           numTsk = av.sgr.logEdNames[ii];
@@ -3373,7 +3373,7 @@ av.ui.closeSendModalFn = () => {
   //av.sgr.ChangeAllGeo(av.sgr.dftGeometry);   //tiba delete in 2021
   av.changeAllSgrRegionLayout(av.sgr.nutdft.uiAll.regionLayout, 'last_things_done');
   //av.sgr.setSugarColors(true);  //true is to turn colors on;    // set color/grey individually so when 0 resources, grey shades rather than colors
-  av.sgr.ChangeAllsugarsupplyTypeSlct('infinite','Last_things_done');
+  av.sgr.ChangeAllsugarsupplyTypeSlct('unlimited','Last_things_done');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');
   //document.getElementById('resrceDataHolder').style.display = 'block';   //display local resource data
   av.pch.popChrtHolder_Ht = $('popChrtHolder').innerHeight();

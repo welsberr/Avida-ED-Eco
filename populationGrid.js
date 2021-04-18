@@ -78,24 +78,26 @@
     var taskStr='';
     //console.log(from, 'called av.grd.setMapData: av.grd.msg.fitness=',av.grd.msg.fitness);
     if (undefined != av.grd.msg.fitness) {
+      if (av.grd.mxFitHist < av.grd.msg.fitness.maxVal) { av.grd.mxFitHist = av.grd.msg.fitness.maxVal; }
       //console.log('av.grd.msg', av.grd.msg);
       //console.log('av.grd.mxFit=', av.grd.mxFit, '; av.grd.msg.fitness.maxVal=', av.grd.msg.fitness.maxVal, '; low limit=',
       //  (1 - av.grd.rescaleTolerance) * av.grd.mxFit, '; lo2 limit = ', (1 - 2*av.grd.rescaleTolerance) * av.grd.mxFit );
-      if (av.grd.mxFit < av.grd.msg.fitness.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxFit > av.grd.msg.fitness.maxVal) ) {
+      
+      if (av.grd.mxFit < av.grd.msg.fitness.maxVal || ( av.grd.updateNum >10000 && (1 - av.grd.rescaleTolerance) * av.grd.mxFit > av.grd.msg.fitness.maxVal) ) {
         av.grd.mxFit = av.grd.mxFit + ((1 + av.grd.rescaleTolerance) * av.grd.msg.fitness.maxVal - av.grd.mxFit) / av.grd.rescaleTimeConstant;
         av.grd.reScaleFit = 'rescaling';
-        //console.log('rescaling')
+        console.log('rescaling: av.grd.msg.fitness.maxVal=', av.grd.msg.fitness.maxVal);
       }
       else av.grd.reScaleFit = '';
 
       if (av.grd.mxCost < av.grd.msg.gestation.maxVal || (1 - av.grd.rescaleTolerance) * av.grd.mxCost > av.grd.msg.gestation.maxVal) {
         av.grd.mxCost = av.grd.mxCost + ((1 + av.grd.rescaleTolerance) * av.grd.msg.gestation.maxVal - av.grd.mxCost) / av.grd.rescaleTimeConstant;
-        if (1000 < av.grd.mxCost) av.grd.mxCost = 1000;
+        //if (1000 < av.grd.mxCost) av.grd.mxCost = 1000;
         av.grd.reScaleGest = 'rescaling';
       }
       else av.grd.reScaleGest = '';
 
-      if (av.grd.mxRate < av.grd.msg.metabolism.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRate > av.grd.msg.metabolism.maxVal)) {
+      if (av.grd.mxRate < av.grd.msg.metabolism.maxVal || ( av.grd.updateNum >10000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRate > av.grd.msg.metabolism.maxVal)) {
         av.grd.mxRate = av.grd.mxRate + ((1 + av.grd.rescaleTolerance) * av.grd.msg.metabolism.maxVal - av.grd.mxRate) / av.grd.rescaleTimeConstant;
         av.grd.reScaleRate = 'rescaling';
       }
@@ -114,7 +116,7 @@
       else av.grd.reScaleRate = '';
       if (av.grd.mxRand < av.grd.msg.rand.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRand > av.grd.msg.rand.maxVal)) {
         av.grd.mxRand = av.grd.mxRand + ((1 + av.grd.rescaleTolerance) * av.grd.msg.rand.maxVal - av.grd.mxRand) / av.grd.rescaleTimeConstant;
-        av.grd.reScaleRate =    'rescaling';
+        av.grd.reScaleRate = 'rescaling';
       }
       else av.grd.reScaleRate = '';
 

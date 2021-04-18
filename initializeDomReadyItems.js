@@ -108,7 +108,7 @@
     av.dom.childParentRadio = document.getElementById('childParentRadio');
     av.dom.childRandomRadio = document.getElementById('childRandomRadio');
     av.dom.envNone = document.getElementById('envNone');
-    av.dom.envFinite = document.getElementById('envFinite');
+    av.dom.envLimited = document.getElementById('envLimited');
     av.dom.envGradient = document.getElementById('envGradient');
     av.dom.envChemostat = document.getElementById('envChemostat');
     av.dom.envSourceSink = document.getElementById('envSourceSink');
@@ -364,7 +364,7 @@
 
       //console.log("document.getElementsByClassName('globalChemostat').length=", document.getElementsByClassName('globalChemostat').length );
       //console.log("document.getElementsByClassName('localChemostat')=", document.getElementsByClassName('localChemostat').length );
-      //console.log("document.getElementsByClassName('globalFinite')=", document.getElementsByClassName('globalFinite').length );
+      //console.log("document.getElementsByClassName('globalLimited')=", document.getElementsByClassName('globalLimited').length );
 
       //Hide select options that are not yet implemented
 
@@ -377,8 +377,8 @@
       //Hide select options that are not yet implemented
       len = document.getElementsByClassName('globalChemostat').length;
       for (ii = 0; ii < len; ii++) {
-        //console.log('globalFinite=', document.getElementsByClassName('globalFinite')[ii].id);
-        document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
+        //console.log('globalLimited=', document.getElementsByClassName('globalLimited')[ii].id);
+        document.getElementsByClassName('globalLimited')[ii].style.display = 'none';
         document.getElementsByClassName('globalChemostat')[ii].style.display = 'none';
         //document.getElementsByClassName('globalDebug')[ii].style.display = 'none';
       };
@@ -391,7 +391,7 @@
       
       // now clear options for changing all sugars (groups)
       //document.getElementsByClassName('groupChemostat')[0].style.display = 'none';
-      //document.getElementsByClassName('groupFinite')[0].style.display = 'none';     //finite available for local options
+      //document.getElementsByClassName('groupLimited')[0].style.display = 'none';     //limited available for local options
       //document.getElementsByClassName('groupDebug')[0].style.display = 'none';
       //console.log('dom.groupDebug=', document.getElementsByClassName('groupDebug'));
 
@@ -440,7 +440,7 @@
         tsk = av.sgr.logicNames[ii];
         av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
         //document.getElementsByClassName('globalChemostat')[ii].style.display = 'inline';
-        //document.getElementsByClassName('globalFinite')[ii].style.display = 'inline';
+        //document.getElementsByClassName('globalLimited')[ii].style.display = 'inline';
         //document.getElementsByClassName('globalDebug')[ii].style.display = 'inline';
       };
 
@@ -457,7 +457,7 @@
 
        // now show options for changing all sugars (groups)
       //document.getElementsByClassName('groupChemostat')[0].style.display = 'inline';
-      //document.getElementsByClassName('groupFinite')[0].style.display = 'inline';     //finite available for local options
+      //document.getElementsByClassName('groupLimited')[0].style.display = 'inline';     //limited available for local options
       //document.getElementsByClassName('groupDebug')[0].style.display = 'inline';
 */
       //Show debug on dropdown menu

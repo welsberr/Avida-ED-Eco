@@ -946,10 +946,10 @@ details[open] summary:before {
 }
 
 .groupDebug{  display: inline; }
-.grooupFinite { display: inline; }
+.grooupLimited { display: inline; }
 .groupChemostat { display: inline; }
 
-.globalFinite { display: inline; }
+.globalLimited { display: inline; }
 .globalChemostat { display: inline; }
 .globalDebug { display:inline; }
 
@@ -1025,7 +1025,7 @@ details[open] summary:before {
   min-height: 23px;  width: 100%;
 }
 
-.grd-sgr-sum-adv-finite-container_ {
+.grd-sgr-sum-adv-limited-container_ {
   display: grid;
 grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdCls supply_HoldCls initialGlobCls"
                      "detailArrow sgrTitleCls tskAboutCls  tskAboutCls tskAboutCls tskAboutCls   initialGlobCls";
@@ -1047,7 +1047,7 @@ grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdC
   justify-content: start; 
   height: 23px;  width: 100%;
 }
-.grd-sgr-sum-global-finite-container {
+.grd-sgr-sum-global-limited-container {
   display: grid;
   grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls tskAboutCls initialGlobCls";
   justify-content: start; 
@@ -1158,27 +1158,27 @@ grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdC
   width: 100%; height: 23px;
 }
 
-.grid-sugarDetail-multi-Infinite-container {
+.grid-sugarDetail-multi-unlimited-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv';
   justify-items: start;  justify-content: start; width: 100%;
 }
 
-.grid-sugarDetail-Finite-container {
+.grid-sugarDetail-Limited-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv supplyModifierDivClass periodTime'
                        'initialHi       initialHi       initialHi            initialHi';
   justify-items: start;  justify-content: start; width: 100%;
 }
 
-.sugarColsDetail-finite-gradient-container {
+.sugarColsDetail-limited-gradient-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv supplyDetailDiv supplyModifierDivClass supplyModifierDivClass periodTime'
                        'initialHi       initialHi       sideInput       sideInput             initialLo             initialLo';
   justify-items: start;  justify-content: start; width: 100%;
   align-items: stretch;
 }
-.sugarColsDetail-finite-container {
+.sugarColsDetail-limited-container {
   display: grid;
   grid-template-areas: 'subSectionTitle supplyDetailDiv supplyDetailDiv supplyModifierDivClass supplyModifierDivClass periodTime'
                        'initialHi       initialHi       initialHi       initialHi             initialHi             initialHi';

@@ -253,7 +253,7 @@
       document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;';
       //console.log('tsk=', numTsk, '; geo=', av.nut[numTsk].uiAll.geometry.toLowerCase() );
       if ( 'global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
-        if ('infinite' == av.nut.resrcTyp[ii] ) {
+        if ('unlimited' == av.nut.resrcTyp[ii] ) {
           document.getElementById('cell'+tskTitle).innerHTML = 'inf';
           document.getElementById('mx'+tskTitle).innerHTML = '&infin; ';
           document.getElementById('tot'+tskTitle).innerHTML = '&infin; ';
@@ -265,9 +265,9 @@
           document.getElementById('mx'+tskTitle).innerHTML = '+';
           document.getElementById('tot'+tskTitle).innerHTML = '+';
           av.nut.cntGlobalDataTasks++;
-          if ('finite' == av.nut.resrcTyp[ii].toLowerCase() ) {
-//          if ('finite' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
-            document.getElementById('cell'+tskTitle).innerHTML = 'finite';
+          if ('limited' == av.nut.resrcTyp[ii].toLowerCase() ) {
+//          if ('limited' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
+            document.getElementById('cell'+tskTitle).innerHTML = 'limited';
           } else {
             document.getElementById('cell'+tskTitle).innerHTML = 'chem';
           }
@@ -277,7 +277,7 @@
         document.getElementById('tot'+tskTitle).innerHTML = 'Grid ';
         document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;';
           if (1 >= av.nut[numTsk].uiAll.regionsNumOf ) { 
-          if ('infinite' == av.nut.resrcTyp[ii] ) {
+          if ('unlimited' == av.nut.resrcTyp[ii] ) {
             document.getElementById('cell'+tskTitle).innerHTML = '&infin; ';
             document.getElementById('mx'+tskTitle).innerHTML = '&infin; ';
           } else {
@@ -302,7 +302,7 @@
       numTsk = av.sgr.logEdNames[ii];
       if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase()) {
         supplyType = av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase();
-        if ('infinite' == supplyType || 'none' == supplyType) {
+        if ('unlimited' == supplyType || 'none' == supplyType) {
           hideFlag[ii] = true;
         };
       };
@@ -463,7 +463,7 @@
             av.nut[numTsk].uiSub.supplyTypeSlct[nn] = document.getElementById(tsk+'WsupplyTypeSlct').value;
           } else {
             av.nut[numTsk].uiSub.supplyTypeSlct[nn] = document.getElementById(tsk+'_supplyTypeSlct').value;
-            if ('finite' == av.nut[numTsk].uiSub.supplyTypeSlct[nn].toLowerCase() ) {
+            if ('limited' == av.nut[numTsk].uiSub.supplyTypeSlct[nn].toLowerCase() ) {
               tmpNum = parseFloat(document.getElementById(tsk+'_supplyTypeSlct').value);
               if ( av.utl.isNumber(tmpNum) ) {
                 av.nut[numTsk].resrc.inflowHi[nn] = tmpNum * av.nut.wrld.size;
@@ -544,10 +544,10 @@
           case 'none':
             av.nut[numTsk].react.value[0] = 0;
             break;
-          case 'infinite':
+          case 'unlimited':
             av.nut[numTsk].react.depletable[0] = 0;
             break;
-          case 'finite':
+          case 'limited':
             av.nut[numTsk].resrc.initial[jj] = av.nut[numTsk].uiAll.initialHiNp;
             av.nut[numTsk].react.resource[0] = tsk+'000';
             break;
@@ -606,11 +606,11 @@
           
           console.log('av.nut['+numTsk+'].uiSub.supplyTypeSlct['+jj+']=', av.nut[numTsk].uiSub.supplyTypeSlct[jj]);
           switch ( av.nut[numTsk].uiSub.supplyTypeSlct[jj].toLowerCase() ) {
-            case 'infinite':
+            case 'unlimited':
               av.nut[numTsk].react.depletable[jj] = 0;
               av.nut[numTsk].cell.initial[jj] = 10;
               break;
-            case 'finite':
+            case 'limited':
               av.nut[numTsk].cell.resource[jj] = av.nut[numTsk].resrc.name[jj];
               av.nut[numTsk].cell.initial[jj] = Math.round(av.nut[numTsk].uiSub.initialHiNp[jj],0);
               break;
@@ -668,7 +668,7 @@
     txt += '#      - grid position is based on two dimensional representation where (0,0) is uppper left corner \n';
     txt += '#    CELL \n';
     txt += '#      - requires a RESOURCE statement \n';
-    txt += '#      - defines boundaries for initial so needed for Finite\n';
+    txt += '#      - defines boundaries for initial so needed for Limited\n';
     txt += '#      - also used to define gradient resources \n';
     txt += '#      - may have zero or more CELL statements in each name-set \n';
     txt += '#      - are not named but must have matcing resource name \n';
@@ -679,12 +679,12 @@
     txt += '#      - defines tsk needed and the effect \n';
     txt += '#      - no matching RESOURCE statement:\n';
     txt += '#      - - when there is no resouce name is stated or there is no matching RESOURCE statement.\n';
-    txt += '#      - - must be none or infinite;\n';
+    txt += '#      - - must be none or unlimited;\n';
     txt += '#      - - must be glogal \n';
     txt += '#      - - could act as "none" even for  global/local or a subregion even if not technically correct\n';
     txt += '#      - matching RESOURE statement found \n';
     txt += '#      - - can be global or local; can be any resource option \n';
-    txt += '#      - can be either global or finite (grid) if a RESOURCE is specieifed. \n';
+    txt += '#      - can be either global or limited (grid) if a RESOURCE is specieifed. \n';
     txt += '#\n';
     txt += '# Summary: There must be a REACTION STATEMENT to effect an avidian\n';
     txt += '#    RESOURCE statement must be first line for each name-set if there is a RESOURCE statement \n';
@@ -734,7 +734,7 @@
         switch ( av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
           case 'none':
             tmpNum = 0;
-          case 'infinite':
+          case 'unlimited':
             txt += 'REACTION ' + av.fwt.existCheck( '',av.nut[numTsk].react.name[jj],tskVar );
             txt += ' ' + av.fwt.existCheck( '',av.nut[numTsk].react.task[jj], tskVar );
             //console.log('av.nut['+numTsk+'].react.value['+jj+']=', av.nut[numTsk].react.value[jj]);
@@ -743,15 +743,15 @@
             txt += av.fwt.existDfltCheck( ':depletable=', av.nut[numTsk].react.depletable[jj], '', 1 );
             txt += ' requisite' + av.fwt.existCheck(':max_count=', av.nut[numTsk].react.max_count[jj], ':max_count=1') + '\n\n';
             break;
-          case 'finite':
+          case 'limited':
             txt += 'RESOURCE ' + av.fwt.existCheck('', av.nut[numTsk].resrc.name[jj], av.fwt.existCheck('', av.nut[numTsk].react.resource[jj], tsk) );
             txt += av.fwt.existCheck(':geometry=', av.nut[numTsk].resrc.geometry[jj], '');
-            // Since fileDataRead looks for initial to see if the catagory is finite, 
+            // Since fileDataRead looks for initial to see if the catagory is limited, 
             // initial needs to be in the file even if it is the default value = 0
             tmpNum = parseFloat(av.nut[numTsk].resrc.initial[jj]) * av.nut.wrldSize;
             txt += av.fwt.existCheck(':initial=', tmpNum, '')+ '\n'; 
             
-            // Reaction is the same for finite and chemostat
+            // Reaction is the same for limited and chemostat
             txt += 'REACTION ' + av.nut[numTsk].react.name[jj] + ' ' + av.nut[numTsk].react.task[jj];
             txt += ' process:resource='+av.nut[numTsk].react.resource[jj]+':value=' + av.nut[numTsk].react.value[jj];
             txt +=':type=' + av.nut[numTsk].react.type[jj]+':min='+av.nut[numTsk].react.max[jj]+':max='+av.nut[numTsk].react.max[jj];
@@ -765,13 +765,13 @@
             txt += av.fwt.existCheck(':outflow=', av.nut[numTsk].resrc.outflow[jj], ':outflow=0.5')  + '\n';
             //console.log('numTsk=', numTsk, '; inflow=', tmpNum, '; outflow=', av.nut[numTsk].resrc.outflow[jj]);
                         
-            // Reaction is the same for finite and chemostate
+            // Reaction is the same for limited and chemostate
             txt += 'REACTION ' + av.nut[numTsk].react.name[jj] + ' ' + av.nut[numTsk].react.task[jj];
             txt += ' process:resource='+av.nut[numTsk].react.resource[jj]+':value=' + av.nut[numTsk].react.value[jj];
             txt +=':type=' + av.nut[numTsk].react.type[jj]+':min='+av.nut[numTsk].react.min[jj]+':max='+av.nut[numTsk].react.max[jj];
             txt += ' requisite:max_count=' + av.nut[numTsk].react.max_count[jj] + '\n';
 /*
-            // Reaction is the same for finite and chemostate
+            // Reaction is the same for limited and chemostate
             txt += 'REACTION ' + av.fwt.existCheck( '',av.nut[numTsk].react.name[jj],tskVar );
             txt += ' ' + av.fwt.existCheck( '',av.nut[numTsk].react.task[jj], tskVar );
             txt += ' process' + av.fwt.existCheck( ':value=', av.nut[numTsk].react.value[jj], '');
@@ -870,7 +870,7 @@
               //console.log('none: cellTxt=', cellTxt);
 
             }
-            else if ('infinite' == av.nut[numTsk].uiSub.supplyTypeSlct[jj].toLowerCase()) {
+            else if ('unlimited' == av.nut[numTsk].uiSub.supplyTypeSlct[jj].toLowerCase()) {
                 cellTxt += av.fwt.existCheck( ':initial=', Math.round(), 10 )+ '\n'; 
                 //console.log('should never reach this location: cellTxt=', cellTxt);
             }
@@ -893,7 +893,7 @@
           //console.log('numTsk=', numTsk, '; jj=', jj, '; supplyTypeSlct=',av.nut[numTsk].uiSub.supplyTypeSlct[jj].toLowerCase());
           txt += '# Task = '+ numTsk + '; Geometry = ' + av.nut[numTsk].uiAll.geometry + '; supplyTypeSlct = '+  av.nut[numTsk].uiSub.supplyTypeSlct[jj].toLowerCase() + '\n';
           switch ( av.nut[numTsk].uiSub.supplyTypeSlct[jj].toLowerCase() ) {
-            case 'infinite':
+            case 'unlimited':
               txt += resrcFix + '\n';
               txt += cellTxt;
               txt += reactTxt;
@@ -901,8 +901,8 @@
               break;
             case 'none':
               av.nut.resrcTyp[ii] = 'none';
-            case 'finite':
-              av.nut.resrcTyp[ii] = 'finite';
+            case 'limited':
+              av.nut.resrcTyp[ii] = 'limited';
               txt += resrcFix + '\n';
               txt += cellTxt;
               txt += reactTxt;
@@ -931,7 +931,7 @@
               txt += '\n';
               txt += reactTxt;
 
-              // Reaction is the same for finite and chemostate
+              // Reaction is the same for limited and chemostate
               break;
           }; // end of switch
         }; // end loop through array of each resource/reaction instance

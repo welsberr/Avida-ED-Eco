@@ -243,7 +243,7 @@ av.env = {}; //used for functions to process information beteen the environment 
 //Commments in the environment.cfg file?
 //
 //#comment option
-//#!xor not34 region=all:side=none:supply=finite:gradient=false
+//#!xor not34 region=all:side=none:supply=limited:gradient=false
 //region options are in av.sgr.region below   There are several name formats and one dictionary below 
 //supply optoins are in av.sgr.supply 
 //side options are in av.sgr.side3
@@ -273,9 +273,9 @@ av.env = {}; //used for functions to process information beteen the environment 
 //                  | 7 8 9 |
 
 av.sgr = {};   //specific to resource/reactions (sugars); mostly constants. Not all iddeas written here will be used. 
-av.sgr.typeDefault = 'infinite';
+av.sgr.typeDefault = 'unlimited';
 av.sgr.oseNames = ['Notose', 'Nanose', 'Andose', 'Ornose', 'Orose', 'Antose', 'Norose', 'Xorose', 'Equose'];
-av.sgr.resrcTyp = ['infinite', 'infinite', 'infinite', 'infinite', 'infinite', 'infinite', 'infinite', 'infinite', 'infinite'];
+av.sgr.resrcTyp = ['unlimited', 'unlimited', 'unlimited', 'unlimited', 'unlimited', 'unlimited', 'unlimited', 'unlimited', 'unlimited'];
 av.sgr.logEdNames = ['0not', '1nan', '2and', '3orn', '4oro', '5ant', '6nor', '7xor', '8equ'];
 av.sgr.logicNames = ['not', 'nan', 'and', 'orn', 'oro', 'ant', 'nor', 'xor', 'equ'];
 av.sgr.logicTitleNames = ['Not', 'Nan', 'And', 'Orn', 'Oro', 'Ant', 'Nor', 'Xor', 'Equ'];
@@ -431,7 +431,7 @@ av.sgr.regionLayoutValues = ['1Global', '1All', '2LftRit', '2UppLow', '3TopLftRi
 av.sgr.regionQuarterSubBeg =[        0,      1,         1,         1,            1,          1 ];  // start of sub regions useed 
 av.sgr.regionQuarterSubEnd =[        0,      1,         2,         2,            3,          4 ];  //End sub region used
 
-//entry zero isf for global so index matches subregion number, when dish is finite. 
+//entry zero isf for global so index matches subregion number, when dish is limited. 
 av.sgr.name = {};
 av.sgr.code = {};
 av.sgr.name['1Global'] = ['Global Dish'];
@@ -497,10 +497,10 @@ av.sgr.regionNine.Codes = ['000n', '001', '002', '003'   //top row: ninth of dis
                                  , '147', '258', '369'];  //columns 
  
 // need to figure out how to assign when reading environment.cfg
-av.sgr.supply3 =      ['non', 'inf',  'fin',  'chm',  'poi', 'flo' ];  //none, infinite, finite, chemostat, poison
+av.sgr.supply3 =      ['non', 'inf',  'fin',  'chm',  'poi', 'flo' ];  //none, unlimited, limited, chemostat, poison
 av.sgr.supply4 =      ['none', 'infn', 'fint', 'chst', 'pois', 'flow'];
-av.sgr.supplyProper = ['None', 'Infinite', 'Finite', 'Chemostat', 'Flow'];    //only using the first 3 for now; 
-av.sgr.supplylower  = ['none', 'infinite', 'finite', 'chemostat', 'flow'];    //only using the first 3 for now; 
+av.sgr.supplyProper = ['None', 'unlimited', 'Limited', 'Chemostat', 'Flow'];    //only using the first 3 for now; 
+av.sgr.supplylower  = ['none', 'unlimited', 'limited', 'chemostat', 'flow'];    //only using the first 3 for now; 
 //Flow would be from the source in a diffrent place fromt he sink: that is input x,y coordinaes are different from those of output. 
 av.sgr.supplyLetter = ['N'  , 'I'  , 'F'  , 'E', 'P', 'S'];   
 av.sgr.side1 = ['L', 'R', 'T', 'B', 'C', 'E', 'U'];
@@ -517,7 +517,7 @@ av.sgr.nutdft = {};
 // global characteristic in the "summary" and the rest in the "details" section of the summary/details format. 
 
 av.sgr.showGeoSelect = false;   // This will allow the use of both global and grid; but with no selection element
-                                // if "Whole Dish" then infinite and none are global. All else is grid. 
+                                // if "Whole Dish" then unlimited and none are global. All else is grid. 
 av.sgr.gridOnly = false;        // gridOnly true  ++> dftGeometry = grid
 av.sgr.dftGeometry = 'global';  // gridOnly false ++> dftGeometry = global
 if (av.sgr.gridOnly) av.sgr.dftGeometry = 'grid';
@@ -571,14 +571,14 @@ av.sgr.makeNutDefault = function () {
   av.sgr.nutdft.react.max_count = 1;
   av.sgr.nutdft.react.type = 'pow';
   av.sgr.nutdft.uiAll.geometry = av.sgr.dftGeometry;  ////Needs be the default incase there is no resource, but only a reaction ro a task; in that case the resource is global
-  av.sgr.nutdft.uiAll.supplyTypeSlct = 'infinite';    //this is only for whem ui.geometry = global
+  av.sgr.nutdft.uiAll.supplyTypeSlct = 'unlimited';    //this is only for whem ui.geometry = global
   av.sgr.nutdft.uiAll.regionLayout = '1Global';  //only Whole Dish for now; '1All' is the code for 'Whole Dish';
   av.sgr.nutdft.uiAll.regionsNumOf = 1;   // whole dish = there is only one dish 
-  av.sgr.nutdft.uiAll.initialHiNp = 100;      //only used when whem ui.geometry = global and  supplyTypeSlct = 'finite' set per cell ; need to multiply by wrldSize
+  av.sgr.nutdft.uiAll.initialHiNp = 100;      //only used when whem ui.geometry = global and  supplyTypeSlct = 'limited' set per cell ; need to multiply by wrldSize
 
   //defaults for subtasks which must be Grid or Local
-  av.sgr.nutdft.uiSub.supplyTypeSlct = 'infinite';  // Infinite default from Avida-ED 3: I think Should change to Finite
-  av.sgr.nutdft.uiSub.initialHiNp = 100;  //sugar units/cell guess at an initial value when supplyTypeSlct='finite'; need to multiply by wrldSize
+  av.sgr.nutdft.uiSub.supplyTypeSlct = 'unlimited';  // unlimited default from Avida-ED 3: I think Should change to Limited
+  av.sgr.nutdft.uiSub.initialHiNp = 100;  //sugar units/cell guess at an initial value when supplyTypeSlct='limited'; need to multiply by wrldSize
   av.sgr.nutdft.uiSub.inflowHi  = 0.1;   //sugar units/cell guess at an initial value when supplyTypeSlct='chemostat'; need to multiply by wrldSize
   av.sgr.nutdft.uiSub.outflowHi = 0.1;   //sugar units (fraction) guess at an initial value when supplyTypeSlct='chemostat';
   av.sgr.nutdft.uiSub.area = -1;   //based on a standard 30 x 30 world
@@ -682,7 +682,7 @@ av.fzr.clearEnvironment = function(from) {
     av.nut[tsk].uiAll.supplyTypeSlct = av.sgr.nutdft.uiAll.supplyTypeSlct;    //this is only for whem ui.geometry = global
     av.nut[tsk].uiAll.regionLayout = av.sgr.nutdft.uiAll.regionLayout;  //only whole dish for now; default is global;
     av.nut[tsk].uiAll.regionsNumOf = av.sgr.nutdft.uiAll.regionsNumOf;   // whole dish
-    av.nut[tsk].uiAll.initialHiNp = av.sgr.nutdft.uiAll.initialHiNp;      //only used whem ui.geometry = global and  supplyTypeSlct = 'finite' 
+    av.nut[tsk].uiAll.initialHiNp = av.sgr.nutdft.uiAll.initialHiNp;      //only used whem ui.geometry = global and  supplyTypeSlct = 'limited' 
 
     for (jj=0; jj < uiSubDishLen; jj++) {
       av.nut[tsk]['uiSub'][av.sgr.ui_subDish_argu[jj] ] = [];
@@ -883,9 +883,10 @@ av.grd.clearGrd = function () {
   av.grd.logicOutline = [];   // deals with the color of the grid outline
   av.grd.fillmax = 0;    // max value for grid scale for the gradient color
   av.grd.msg = {};
+  av.grd.mxFitHist = 0; 
   av.grd.mxFit = 1.0;   //store initial maximum fitness during an experiment
-  av.grd.mxCost = 380;  //store initial maximum Offspring Cost during an experiment
-  av.grd.mxRate = 80;   //store initial maximum Energy Acq. Rate during an experiment
+  av.grd.mxCost = 200;  //store initial maximum Offspring Cost during an experiment
+  av.grd.mxRate = 50;   //store initial maximum Energy Acq. Rate during an experiment
   av.grd.mxRnot = 1.0;  //store initial maximum not Resource in any cell during an experiment.
   av.grd.mxRnan = 1.0;  //store initial maximum nan Resource in any cell during an experiment.
   av.grd.mxRand = 1.0;  //store initial maximum and Resource in any cell during an experiment.
@@ -896,7 +897,7 @@ av.grd.clearGrd = function () {
   av.grd.mxRxor = 1.0;  //store initial maximum xor Resource in any cell during an experiment.
   av.grd.mxRequ = 1.0;  //store initial maximum equ Resource in any cell during an experiment.
 
-  av.grd.rescaleTolerance = 0.1;
+  av.grd.rescaleTolerance = 0.02;
   av.grd.rescaleTimeConstant = 1;
   av.grd.SelectedColor = '#ffffff';
   av.grd.LogicColor = '#00ff00';   //color used to outline cells with avidians that can do the selected logic functions
