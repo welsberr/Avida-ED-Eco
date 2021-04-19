@@ -48,18 +48,18 @@
 //   Basic Mode only has global resources. 
 //    - infinite, none, finte and chemostat. 
 //    
-// Avida-ED 4.0.1
+// Avida-ED 4.0.01
 //  - fixed ability to change the color of a trace on the Analysis page
 //  - fixed legend for ancestor organism 
 // 
-// Avida-ED 4.0.2
+// Avida-ED 4.0.02
 //  - The focus was staying on the grid cell if one was selected, which prevented typing in text
 //    Changed this so that when the cusor is in a input area then then that gets the keyboard input
 //  - added Avida-ED version number remind folks this is a beta version 
 // 
-// Avida-ED 4.0.3
+// Avida-ED 4.0.03
 //  - Changed resource type from Infinite/Finite to Unlimited/Limited
-//  - Changed it so that the heat map scale for Fitness does not changed until after 10,000 updated for Cory. 
+//  - Changed it so that the heat map scale for Fitness does not changed until after 10,000 updated for Cory. tiba
 //  - updated the following libraries to the versions listed
 //  - - dojo-release-1.16.4
 //  - - jquery-v3.4.1.min
@@ -3383,10 +3383,10 @@ av.ui.closeSendModalFn = () => {
    
   av.doj.mnDebug.style.visibility = 'visible';   // set visiable so that av.ui.toggleDevelopentDisplays will hide devo stuff
 
-  // Avida-ED 4.0.02 Beta Testing fix this too. 
+  // Avida-ED 4.0.03 Beta Testing fix this too. 
   //true when diane is working; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; set to false before public release for Avida-ED 4.0.02 Beta Testing. ');
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.03 Beta Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x
