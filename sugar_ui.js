@@ -646,6 +646,8 @@
     document.getElementById('patternSgr').style.display = displaySetting;
     document.getElementById('allSugarDetailsDiv').style.display = displaySetting;
     document.getElementById('showHideSgr').style.display = displaySetting;
+    document.getElementById('allsgrChemostat').style.display = displaySetting;
+    
     for (ii = 0; ii < len; ii++) {
       tsk = av.sgr.logicNames[ii];
       document.getElementById(tsk+'_regionLayout').value = '1Global';      
