@@ -400,63 +400,68 @@
     av.ptd.allOff = true;
     //console.log('not',av.grd.msg.not.data);
     //Should there be error checking here. It indicates a problem with the envioronment.cfg file. 
-    lngth = av.grd.msg.not.data.length;
-    for (ii = 0; ii < lngth; ii++) {
-      av.grd.logicOutline[ii] = 1;
-    }
-    if ('on' == document.getElementById('notButton').value) {
+    if (null == av.grd.msg.not) {
+      console.log('av.grd.msg.not = null: ERROR: Check Environment File; ================================');
+      console.log('av.grd.msg=', av.grd.msg);
+    } else {
       lngth = av.grd.msg.not.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.not.data[ii];}
-      av.ptd.allOff = false;
-    }
-    if ('on' == document.getElementById('nanButton').value) {
-      lngth = av.grd.msg.nand.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.nand.data[ii];}
-      av.ptd.allOff = false;
-    }
-    if ('on' == document.getElementById('andButton').value) {
-      lngth = av.grd.msg.and.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.and.data[ii];}
-      av.ptd.allOff = false;
-    }
-    if ('on' == document.getElementById('ornButton').value) {
-      lngth = av.grd.msg.orn.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.orn.data[ii];}
-      av.ptd.allOff = false;
-      if (av.debug.bool) console.log('orn', av.grd.msg.orn.data);
-    }
-    if ('on' == document.getElementById('oroButton').value) {
-      lngth = av.grd.msg.or.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.or.data[ii];}
-      av.ptd.allOff = false;
-      if (av.debug.bool) console.log('or', av.grd.msg.or.data);
-    }
-    if ('on' == document.getElementById('antButton').value) {
-      lngth = av.grd.msg.andn.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.andn.data[ii];}
-      av.ptd.allOff = false;
-    }
-    if ('on' == document.getElementById('norButton').value) {
-      lngth = av.grd.msg.nor.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.nor.data[ii];}
-      av.ptd.allOff = false;
-    }
-    if ('on' == document.getElementById('xorButton').value) {
-      lngth = av.grd.msg.xor.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.xor.data[ii];}
-      av.ptd.allOff = false;
-    }
-    if ('on' == document.getElementById('equButton').value) {
-      lngth = av.grd.msg.equ.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.equ.data[ii];}
-      av.ptd.allOff = false;
-    }
-    if (av.ptd.allOff) {for (ii = 0; ii < av.grd.msg.not.data.length; ii++) { av.grd.logicOutline[ii] = 0; } }
+      for (ii = 0; ii < lngth; ii++) {
+        av.grd.logicOutline[ii] = 1;
+      }
+      if ('on' == document.getElementById('notButton').value) {
+        lngth = av.grd.msg.not.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.not.data[ii];}
+        av.ptd.allOff = false;
+      }
+      if ('on' == document.getElementById('nanButton').value) {
+        lngth = av.grd.msg.nand.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.nand.data[ii];}
+        av.ptd.allOff = false;
+      }
+      if ('on' == document.getElementById('andButton').value) {
+        lngth = av.grd.msg.and.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.and.data[ii];}
+        av.ptd.allOff = false;
+      }
+      if ('on' == document.getElementById('ornButton').value) {
+        lngth = av.grd.msg.orn.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.orn.data[ii];}
+        av.ptd.allOff = false;
+        if (av.debug.bool) console.log('orn', av.grd.msg.orn.data);
+      }
+      if ('on' == document.getElementById('oroButton').value) {
+        lngth = av.grd.msg.or.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.or.data[ii];}
+        av.ptd.allOff = false;
+        if (av.debug.bool) console.log('or', av.grd.msg.or.data);
+      }
+      if ('on' == document.getElementById('antButton').value) {
+        lngth = av.grd.msg.andn.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.andn.data[ii];}
+        av.ptd.allOff = false;
+      }
+      if ('on' == document.getElementById('norButton').value) {
+        lngth = av.grd.msg.nor.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.nor.data[ii];}
+        av.ptd.allOff = false;
+      }
+      if ('on' == document.getElementById('xorButton').value) {
+        lngth = av.grd.msg.xor.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.xor.data[ii];}
+        av.ptd.allOff = false;
+      }
+      if ('on' == document.getElementById('equButton').value) {
+        lngth = av.grd.msg.equ.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.equ.data[ii];}
+        av.ptd.allOff = false;
+      }
+      if (av.ptd.allOff) {for (ii = 0; ii < av.grd.msg.not.data.length; ii++) { av.grd.logicOutline[ii] = 0; } }
 
-    //console.log('LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL');
-    if (av.debug.bool) console.log('setLogic', av.grd.logicOutline);
-    //console.log('update',av.grd.updateNum, '; setLogic', av.grd.logicOutline);
-    //if (0 <= av.grd.msg.update) av.ptd.updateLogicFn();  //this is done in update population stats right now
+      //console.log('LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL');
+      if (av.debug.bool) console.log('setLogic', av.grd.logicOutline);
+      //console.log('update',av.grd.updateNum, '; setLogic', av.grd.logicOutline);
+      //if (0 <= av.grd.msg.update) av.ptd.updateLogicFn();  //this is done in update population stats right now
+    }
   };
 
   av.grd.cellConflict = function (NewCols, NewRows) {

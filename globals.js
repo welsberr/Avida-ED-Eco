@@ -5,7 +5,7 @@
 var av = av || {};  //incase av already exists
 
 //console.log('start of globals on 2021_310_04:22 Thurs');
-console.log('start of globals on 2021_325_ Thr');
+console.log('start of globals on 2021_419_Mon');
 
 Number.prototype.pad = function(size) {
   var ss = String(this);
@@ -897,7 +897,7 @@ av.grd.clearGrd = function () {
   av.grd.mxRxor = 1.0;  //store initial maximum xor Resource in any cell during an experiment.
   av.grd.mxRequ = 1.0;  //store initial maximum equ Resource in any cell during an experiment.
 
-  av.grd.rescaleTolerance = 0.02;
+  av.grd.rescaleTolerance = 0.1;
   av.grd.rescaleTimeConstant = 1;
   av.grd.SelectedColor = '#ffffff';
   av.grd.LogicColor = '#00ff00';   //color used to outline cells with avidians that can do the selected logic functions

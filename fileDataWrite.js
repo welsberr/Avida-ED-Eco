@@ -46,7 +46,7 @@
     av.fzr.actConfig.file[fileId] = text;
   };
 
-  // copy instruction set from default config.
+  // copy instruction set from default config
   av.fwt.makeFzrInstsetCfg = function (idStr) {
     'use strict';
     av.fzr.file[idStr + '/instset.cfg'] = av.fzr.file['c0/instset.cfg'];
@@ -98,7 +98,7 @@
     //txt += 'ALLOW_PARENT = 0 \n';    //1 allows parent to be over written and is also the default. 
     txt += 'PRECALC_PHENOTYPE 1\n';    //7 everything supported
     txt += 'VERSION_ID 2.14.0 \n';
-    txt += 'APPLY_ENERGY_METHOD 1 \n';
+    //txt += 'APPLY_ENERGY_METHOD 1 \n';
     txt += 'MERIT_INC_APPLY_IMMEDIATE 1';
         
     //lines below this are just for commments

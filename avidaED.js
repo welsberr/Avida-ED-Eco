@@ -42,6 +42,29 @@
 // The main function change from Avida-ED 3 to four is the addition of limited and gird (local) resources
 // Layout was changed on Population Page 
 // all files in tthe workspace now have a three letter sufix; *.txt was added to those missing a suffix
+// 
+// Avida-ED 4.0.0
+// - a basic verison works there will be an advanced mode as well, but it is not ready yet
+//   Basic Mode only has global resources. 
+//    - infinite, none, finte and chemostat. 
+//    
+// Avida-ED 4.0.1
+//  - fixed ability to change the color of a trace on the Analysis page
+//  - fixed legend for ancestor organism 
+// 
+// Avida-ED 4.0.2
+//  - The focus was staying on the grid cell if one was selected, which prevented typing in text
+//    Changed this so that when the cusor is in a input area then then that gets the keyboard input
+//  - added Avida-ED version number remind folks this is a beta version 
+// 
+// Avida-ED 4.0.3
+//  - Changed resource type from Infinite/Finite to Unlimited/Limited
+//  - Changed it so that the heat map scale for Fitness does not changed until after 10,000 updated for Cory. 
+//  - updated the following libraries to the versions listed
+//  - - dojo-release-1.16.4
+//  - - jquery-v3.4.1.min
+//  - - FileSaver.min.2.0.4
+//    
 //
 // Generic Notes -------------------------------------------------------------------------------------------------------
 //
@@ -145,11 +168,13 @@ require([
   'lib/plotly-v1.53.js',      //2020_0409 development
 
   //'lib/jszip.min.js',        //older version. Not sure what version
-  'lib/jszip-v2.6.1.js',        //need to update, but need to figure out update methods. 
-  //'jszip-v3.3.0.js',         //current version on 2020_0404, but code changes needed that have not been done. development
-  //'jszip-v3.3.0.min.js',     //current version on 2020_0404, but code changes needed that have not been done. production
-  'lib/FileSaver_v1.1_date-2016_0328.js',
+  'lib/jszip-v2.6.1.js',        //need to update, but need to figure out update methods. tiba
+  //'lib/jszip-v3.3.0.js',         //current version on 2020_0404, but code changes needed that have not been done. development
+  //'lib/jszip-v3.3.0.min.js',     //current version on 2020_0404, but code changes needed that have not been done. production
+  //'lib/jszip-v3.2.0.min.js',     //newest version but I have not figure out how to get it to work. 
+  //'lib/FileSaver_v1.1_date-2016_0328.js',
   //'lib/FileSaver-2.0.3/FileSaver.min.js',
+  'lib/FileSaver.min.2.0.4.js',
   //'lib/FileSaver.js',
   //'avida-messages.js',
   'messaging.js',
