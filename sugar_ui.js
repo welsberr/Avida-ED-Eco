@@ -689,11 +689,16 @@
     var numTsk = av.sgr.logEdNames[ndx];
     var regionName;
     var numRegions = 'multi';   //this flag was put in when Rob wanted the 'supplyTypeSlct' to be in the summary anytime the layout = whole dish
-    //var regionLayoutDiv = document.getElementById(tsk+'_regionLayHolder').value;
+    var regionLayout = document.getElementById(tsk+'_regionLayout').value;
     var regionNameList;
     var showGeo = "geoBoth";
+    //console.log('layout=', document.getElementById(tsk+'_regionLayout').value);
+    if ( null != document.getElementById(tsk+'_regionLayout').value) {
+      if ('1Global' == document.getElementById(tsk+'_regionLayout').value) {av.nut[numTsk].uiAll.geometry = 'global';}
+      else { av.nut[numTsk].uiAll.geometry = 'grid';}
+    };
+    
     // update nut.txt.uiAll. uiAll.regionLayout is used to find name list. 
-    av.nut[numTsk].uiAll.geometry = document.getElementById(tsk+'_geometry').value;
     av.nut[numTsk].uiAll.regionLayout = document.getElementById(tsk+'_regionLayout').value;    
     //console.log('av.nut['+numTsk+'].uiAll.regionLayout=', av.nut[numTsk].uiAll.regionLayout);
     av.nut[numTsk].uiAll.regionsNumOf =  Number(av.nut[numTsk].uiAll.regionLayout.substr(0,1) );
@@ -718,6 +723,7 @@
     document.getElementById(tsk+'_inflowHiDiv').style.display = 'none';
     document.getElementById(tsk+'_outflowHiDiv').style.display = 'none';
     document.getElementById(tsk+'_combo').style.display = 'none';    
+    document.getElementById(tsk+'_chemo').style.display = 'none';    
     document.getElementById(tsk+'_chmstatHiTxt').style.display = 'none';
     document.getElementById(tsk+'0inflowHiNp').style.display = 'inline-block';   //yes block as global chemo turns the inputs 2 none
     document.getElementById(tsk+'0outflowHiNp').style.display = 'inline-block';   //yes block as global chemo turns the inputs 2 none
@@ -758,11 +764,12 @@
     // end hiding resource (sugar) interface elements, will show accorting to current state
 
     //console.log('av.nut.'+numTsk+'.uiAll.geometry.tolower()=',av.nut[numTsk].uiAll.geometry.toLowerCase());
-    console.log('av.sgr.complexityLevel=', av.sgr.complexityLevel);
+    console.log('av.sgr.complexityLevel=', av.sgr.complexityLevel, '; geometry=',av.nut[numTsk].uiAll.geometry);
     if ('sgrAdvanced' == av.sgr.complexityLevel) {
       av.nut[numTsk].uiAll.supplyTypeSlct = document.getElementById(tsk + '_supplyTypeSlct').value;
-      console.log('av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
+      //console.log('av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
 
+      document.getElementById(tsk+'_chemo').style.display = 'inline-block';
       document.getElementById(tsk+'_combo').style.display = 'inline-block';
 
       if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
@@ -872,7 +879,7 @@
         }    
       }        // end global 
       else {
-        // geometry = grid  grd-sgr-sum-adv-space
+        // geometry = grid
         document.getElementById(tsk+'_summary').className = 'grd-sgr-sum-adv-space';
         document.getElementById(tsk+'_regionLayHolder').style.display = 'inline-block';
         document.getElementById(tsk+'_section').open = true;
