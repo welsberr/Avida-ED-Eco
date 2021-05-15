@@ -120,16 +120,6 @@
     document.getElementById('allSugarGeometry').value = 'neutral';
   };
   
-  // does not work
-  av.sgr.detailsToggle = function(domobj) {
-    var taskID = domobj.id;
-    var openStatus = !domobj.open;
-    var task = taskID.substring(0, 3);
-    console.log('Details object,', task, 'has an open status of', openStatus);
-    //console.log('domobj=',domobj);
-    av.sgr.OpenClsSugarDetails(task, openStatus);
-  };
-
   //This looks like it needs work
 //--------------------------------------------------------------------------------- av.sgr.allSugarRegionLayoutChange --
   av.sgr.allSugarModifierChange = function(domObj) {
@@ -509,7 +499,7 @@
     var chemoSummary = '';
     var tmpnum = '';
     var notestr = '';
-    //console.log('type=', document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase(), '; !optioin=', !openFlag);
+    console.log('type=', document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase(), '; !optioin=', !openFlag);
     if ('chemostat'  == document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase() && !openFlag) {
       chemoSummary = av.sgr.describe.short[tsk] + ' ' + document.getElementById(tsk+'0inflowHiNp').value + ' / '
                    + document.getElementById(tsk+'0outflowHiNp').value + ' = '
@@ -609,9 +599,29 @@
   //--------------------------------------------------------------------- end av.sgr.setColorFlagBasedonSugarPresence --
 
   //-------------------------------------------------------------------------------------- av.sgr.changeDetailsLayout --
+  // https://stackoverflow.com/questions/7363117/detecting-the-opening-or-closing-of-a-details-element
+  av.sgr.detailsToggle = function(domObj) {
+    var taskID = domObj.id;     //orn_regionLayHolder
+    var task = taskID.substring(0, 3);
+    var isOpen = !domObj.open;
+    console.log('Details object,', task, 'has an open status of', isOpen, '; complexity level=', av.sgr.complexityLevel, 'Time=',
+//                  new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: false }));
+                  new Date().getTime() );
+    if ('sgrGlobal' == av.sgr.complexityLevel) {
+      console.log('av.sgr.complexityLevel=', av.sgr.complexityLevel);
+      if (isOpen) {
+        setTimeout(function() {     //https://stackoverflow.com/questions/17883692/how-to-set-time-delay-in-javascript
+          document.getElementById(taskID).open = false;
+          console.log('details=', taskID, 'should close. Time=', new Date().getTime() );
+        }, 10);   //delayInMilliseconds
+      };
+    };
+  };
+
+  //---------------------------------------------------------------------------------- av.sgr.complexityChangeProcess --
   av.sgr.complexityChangeProcess = function (from) {
     var ii, tsk;
-    var displaySetting = 'inline-bloack';
+    var basicDisplayNone = 'inline-bloack';
     var optionDisabled = false;
     var subnum = 1;
     var len = av.sgr.logicNames.length;
@@ -619,46 +629,47 @@
     av.sgr.complexSumGridPrefix = 'grd-sgr-sum-adv-';
     
     if ('sgrBasic' == av.sgr.complexityLevel) {
-      displaySetting = 'none';
+      basicDisplayNone = 'none';
       clssnam = 'changeAllSugarsBasic';
       optionDisabled = true;
       av.sgr.complexSumGridPrefix = 'grid-sugar-summary-geo-basic-';
     } else if ('sgrGlobal' == av.sgr.complexityLevel) {
-      displaySetting = 'none';
+      basicDisplayNone = 'none';
       clssnam = 'changeAllSugarsGlobal';
       optionDisabled = true;
       av.sgr.complexSumGridPrefix = 'grd-sgr-sum-global-';
     } else {
-      displaySetting = 'inline-block';
+      basicDisplayNone = 'inline-block';
       clssnam = 'changeAllSugarsAdvanced';
+      av.sgr.complexSumGridPrefix = 'grd-sgr-sum-adv-';
       optionDisabled = false;
     };
     console.log(from, 'called av.sgr.complexityChangeProcess: av.sgr.complexityLevel=', av.sgr.complexityLevel);
-    console.log('------------------------------------------------------------------------------geoDispay=', displaySetting);
+    console.log('------------------------------------------------------------------------------geoDispay=', basicDisplayNone);
     document.getElementById('sugarFooter').className = clssnam;
-    document.getElementById('allSugarModifierDiv').style.display = displaySetting;
-    document.getElementById('allSugarRegionLayoutDiv').style.display = displaySetting;
+    document.getElementById('allSugarModifierDiv').style.display = basicDisplayNone;
+    document.getElementById('allSugarRegionLayoutDiv').style.display = basicDisplayNone;
     //document.getElementById('allsgrLimited').disabled = optionDisabled;
     //document.getElementById('allsgrChemostat').disabled = optionDisabled;
-    document.getElementById('allTopLftRit').style.display = displaySetting;
-    document.getElementById('allQuarters').style.display = displaySetting;
-    document.getElementById('regionLayoutSgr').style.display = displaySetting;
-    document.getElementById('patternSgr').style.display = displaySetting;
-    document.getElementById('allSugarDetailsDiv').style.display = displaySetting;
-    document.getElementById('showHideSgr').style.display = displaySetting;
-    document.getElementById('allsgrChemostat').style.display = displaySetting;
+    document.getElementById('allTopLftRit').style.display = basicDisplayNone;
+    document.getElementById('allQuarters').style.display = basicDisplayNone;
+    document.getElementById('regionLayoutSgr').style.display = basicDisplayNone;
+    document.getElementById('patternSgr').style.display = basicDisplayNone;
+    document.getElementById('allSugarDetailsDiv').style.display = basicDisplayNone;
+    document.getElementById('showHideSgr').style.display = basicDisplayNone;
+    document.getElementById('allsgrChemostat').style.display = basicDisplayNone;
     
     for (ii = 0; ii < len; ii++) {
       tsk = av.sgr.logicNames[ii];
       document.getElementById(tsk+'_regionLayout').value = '1Global';      
-      document.getElementById(tsk+'_regionLayHolder').style.display = displaySetting;
-      document.getElementById(tsk+'_debugTyp').style.display = displaySetting;
+      document.getElementById(tsk+'_regionLayHolder').style.display = basicDisplayNone;
+      document.getElementById(tsk+'_debugTyp').style.display = basicDisplayNone;
       //document.getElementById(tsk+'_limited').disabled = optionDisabled;
       //document.getElementById(tsk+'_chemostat').disabled = optionDisabled;
-      document.getElementById(tsk+'_topLftRit').style.display = displaySetting;
-      document.getElementById(tsk+'_quarters').style.display = displaySetting;
+      document.getElementById(tsk+'_topLftRit').style.display = basicDisplayNone;
+      document.getElementById(tsk+'_quarters').style.display = basicDisplayNone;
       document.getElementById(tsk+'_section').open = false;
-      document.getElementById('rs'+tsk).style.display = displaySetting;       //dropDown Display
+      document.getElementById('rs'+tsk).style.display = basicDisplayNone;       //dropDown Display
       av.sgr.changeDetailsLayout(tsk, subnum, 'av.sgr.complexityChangeProcess');
     };    
   };
@@ -686,45 +697,7 @@
     av.nut[numTsk].uiAll.regionLayout = document.getElementById(tsk+'_regionLayout').value;    
     //console.log('av.nut['+numTsk+'].uiAll.regionLayout=', av.nut[numTsk].uiAll.regionLayout);
     av.nut[numTsk].uiAll.regionsNumOf =  Number(av.nut[numTsk].uiAll.regionLayout.substr(0,1) );
-    
-    // one line method to get value of select/option struture.
-    //console.log('onlygrid=', av.sgr.gridOnly, '; mnDebug=', av.doj.mnDebug.style.visibility, '; regionLayoutDiv=', regionLayoutDiv);
-    //av.sgr.gridOnly = true;
-    //
-/*  Not sure this does anything right now Jan 25
-//  if (av.sgr.gridOnly && 'visible' != av.doj.mnDebug.style.visibility) {  
-    if (av.sgr.gridOnly && 'visible' !=  av.doj.mnDebug.style.visibility) {
-      showGeo = 'gridOnly';
-      document.getElementById(tsk+'_regionLayHolder').style.display = 'inline-block';
-      show1supplyTypeSlct = false;
-      if ('1All' == regionLayoutDiv) {
-        document.getElementById(tsk+'WsupplyTypeHolder').style.display = 'inline-block';
-        document.getElementById(tsk+'1supplyTypeSlct').style.display = 'none';
-        //console.log(tsk+'1supplyTypeSlct.class, style=', document.getElementById(tsk+'1supplyTypeSlct').class, document.getElementById(tsk+'1supplyTypeSlct').style.display);
-      }
-      else {
-        showGeo = 'geoBoth';
-        show1supplyTypeSlct = true;
-        document.getElementById(tsk+'WsupplyTypeHolder').style.display = 'none';
-        document.getElementById(tsk+'1supplyTypeSlct').style.display = 'inline-block';
-      }
-    }
-    else if (av.sgr.gridOnly && 'visible' == av.doj.mnDebug.style.visibility) {
-        showGeo = 'gridOnly';
-        show1supplyTypeSlct = true;    
-        document.getElementById(tsk+'_regionLayHolder').style.display = 'none';
-        document.getElementById(tsk+'WsupplyTypeHolder').style.display = 'inline-block';
-        document.getElementById(tsk+'1supplyTypeSlct').style.display = 'inline-block';
-    }
-    else {
-        showGeo = 'geoBoth';
-        document.getElementById(tsk+'_regionLayHolder').style.display = 'inline-block';
-        document.getElementById(tsk+'WsupplyTypeHolder').style.display = 'none';
-        document.getElementById(tsk+'1supplyTypeSlct').style.display = 'inline-block';
-    };
-    //end of gridOnly logic
-*/    
-    
+        
     //console.log('layout =', av.nut[tsk].uiAll.regionLayout, '; tsk=', tsk, ' subChanged=', subChanged, '; from=', from);
     //console.log('num sub Regions=', av.nut[numTsk].uiAll.regionsNumOf, 'layoutName=', '|'+av.nut[numTsk].uiAll.regionLayout+'|');
     numRegions = 'multi';
@@ -744,6 +717,7 @@
     document.getElementById(tsk+'_taskAboutText').style.display = 'none';
     document.getElementById(tsk+'_inflowHiDiv').style.display = 'none';
     document.getElementById(tsk+'_outflowHiDiv').style.display = 'none';
+    document.getElementById(tsk+'_combo').style.display = 'none';    
     document.getElementById(tsk+'_chmstatHiTxt').style.display = 'none';
     document.getElementById(tsk+'0inflowHiNp').style.display = 'inline-block';   //yes block as global chemo turns the inputs 2 none
     document.getElementById(tsk+'0outflowHiNp').style.display = 'inline-block';   //yes block as global chemo turns the inputs 2 none
@@ -756,9 +730,6 @@
     //document.getElementById('sgrEngergyReportLabel').style.display = 'none';
     document.getElementById(tsk+'_section').open = false;
     
-//      tmpTxt = ';
-  //    console.log('dom is', tmpTxt);
-
     // hide for all subsections possible not just the number based on the regon layout type
     for (var sub=0; sub <= av.nut.numRegionsinHTML; sub++) {
       document.getElementById(tsk+sub+'supplyTypeHolder').style.display = 'none';
@@ -787,61 +758,12 @@
     // end hiding resource (sugar) interface elements, will show accorting to current state
 
     //console.log('av.nut.'+numTsk+'.uiAll.geometry.tolower()=',av.nut[numTsk].uiAll.geometry.toLowerCase());
-    //console.log('av.sgr.complexityLevel=', av.sgr.complexityLevel);
-    if ('sgrBasic' == av.sgr.complexityLevel) {
-      av.nut[numTsk].uiAll.supplyTypeSlct = document.getElementById(tsk + 'WsupplyTypeSlct').value;
-      //console.log('av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
-  
-      document.getElementById(tsk+'_summary').className = 'grid-sugar-summary-geo-basic-container';
-      document.getElementById(tsk+'WsupplyTypeHolder').style.display = 'inline-block';
-      document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.long[tsk];
-      document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.long.width;
-      document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
-      document.getElementById(tsk+'_regionLayHolder').style.display = 'none';
-      document.getElementById('sgrEngergyReportLabel').style.display = 'inline';
-
-      switch (av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase()) {
-        case 'none': 
-        case 'unlimited':
-          document.getElementById(tsk+'_section').open = false;
-          break;
-        case 'limited': 
-          document.getElementById(tsk+'_initialDiv').style.display = 'inline-block';
-          document.getElementById(tsk+'_section').open = false;
-          break;
-        case 'chemostat': 
-          document.getElementById(tsk+'_summary').className = 'grid-sugar-summary-geo-basic-chemostat-container';
-          //document.getElementById(tsk+'_periodcheckboxHolder').style.display = 'inline-block';
-          document.getElementById(tsk+'1inflowHiDiv').style.display = 'block';
-          document.getElementById(tsk+'1outflowHiDiv').style.display = 'block';
-          document.getElementById(tsk+'1inflowHiText').innerHTML = 'Inflow';
-          document.getElementById(tsk+'1outflowHiText').innerHTML = 'Outflow fract';
-          document.getElementById(tsk+'1chmstatHiDiv').style.display = 'block';
-          inflow = document.getElementById(tsk+'1inflowHiNp').value;
-          outflow = document.getElementById(tsk+'1outflowHiNp').value;
-          //console.log('tsk=', tsk, '; inflow=', inflow, '; outflow=', outflow );
-          inflow = Number(inflow);
-          outflow = Number(outflow);
-          //console.log('tsk=', tsk, '; inflow=', inflow, '; outflow=', outflow );
-          if ( av.utl.isNumber(inflow)  && av.utl.isNumber(outflow) ) {
-            if ( 0 < outflow  && outflow <=1 && 0 <= inflow ) {
-              av.nut[numTsk].uiAll.equil = inflow / outflow;
-              document.getElementById(tsk+'1chmstatHiText').innerHTML = 'equilibrium = ' + av.utl.toMetric(av.nut[numTsk].uiAll.equil, 0);
-            }
-            else {
-              document.getElementById(tsk+'1chmstatHiText').innerHTML = 'outflow or inflow not valid';
-            }
-          }
-          //document.getElementById(tsk+'_periodTimeHolder').style.display = 'inline-block';
-          document.getElementById(tsk+'1subSection').className = 'grid-sugarDetail-globalsugarDetail-chemostat';
-          document.getElementById(tsk+'_section').open = true;
-          break;
-      }
-    }   //end basic resource mode
-    else { 
-      // av.sgr.complexityLevel = 'sgrAdvanced';
+    console.log('av.sgr.complexityLevel=', av.sgr.complexityLevel);
+    if ('sgrAdvanced' == av.sgr.complexityLevel) {
       av.nut[numTsk].uiAll.supplyTypeSlct = document.getElementById(tsk + '_supplyTypeSlct').value;
-      //console.log('av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
+      console.log('av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
+
+      document.getElementById(tsk+'_combo').style.display = 'inline-block';
 
       if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         // I was not able to get a grid container to start in the top row of the summary secion. 
@@ -950,9 +872,8 @@
         }    
       }        // end global 
       else {
-        // geometry = grid 
-        document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
-        //document.getElementById(tsk+'_summary').className = 'grid-sugar-summary-geo-local-container';
+        // geometry = grid  grd-sgr-sum-adv-space
+        document.getElementById(tsk+'_summary').className = 'grd-sgr-sum-adv-space';
         document.getElementById(tsk+'_regionLayHolder').style.display = 'inline-block';
         document.getElementById(tsk+'_section').open = true;
   //      console.log('av.nut['+numTsk+'].uiAll.regionsNumOf=', av.nut[numTsk].uiAll.regionsNumOf);
@@ -1110,6 +1031,118 @@
             //console.log('document.getElementById('+tsk+sub+'gradientCheck).style.display=', document.getElementById(tsk+sub+'gradientcheckboxHolder').style.display);
         };  //end of subregion for loop
       }    //end of global/local if statement
+    }   //end sgrAdvanced
+    else {
+      // av.sgr.complexityLevel = 'sgrGlobal';   (begingger level)      
+      av.nut[numTsk].uiAll.supplyTypeSlct = document.getElementById(tsk + '_supplyTypeSlct').value;
+      console.log('av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
+
+      if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+        // I was not able to get a grid container to start in the top row of the summary secion. 
+        // I tried absolute postion, but then the grid contain did not change the sise of the summary section. 
+        // never got tried with one surrounding div an then two. finally Applied display: grid to the summary element
+        // changing the summary element to display: grid causes the arrow to disapper, but the detials will still open
+        // document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
+        document.getElementById('allSugarDetailsDiv').style.display = 'none';
+        document.getElementById('showHideSgr').style.display = 'none';
+        document.getElementById(tsk+'_section').open = false;
+        document.getElementById(tsk+'_supplyTypeHolder').style.display = 'inline-block';
+        document.getElementById('sgrEngergyReportLabel').style.display = 'inline';
+        switch (av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase()) {
+          case 'none': 
+          case 'unlimited':
+            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
+            document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.long[tsk];
+            document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.long.width;
+            document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
+            document.getElementById(tsk+'_section').open = false;
+            break;
+          case 'limited': 
+            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'limited-container';
+            document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.short[tsk];
+            document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.short.width;
+            document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
+            document.getElementById(tsk+'_initialHiHolder').style.display = 'inline-block';
+            document.getElementById(tsk+'_section').open = false;
+            break;
+          case 'chemostat':
+            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'chemo-container';
+            //tmpTxt = av.sgr.describe.long[tsk] + ': . . . .  When 0 < period, chemostat becomes periodic';
+            //tmpTxt = 'When 0 < period, chemostat becomes periodic';
+            document.getElementById(tsk+'_section').open = true;
+            if ( av.utl.isNumber(Number(document.getElementById(tsk+'0inflowHiNp').value))  && 
+                 av.utl.isNumber(Number(document.getElementById(tsk+'0outflowHiNp').value)) ) {
+              if ( 0 < Number(document.getElementById(tsk+'0outflowHiNp').value)  && 
+                       Number(document.getElementById(tsk+'0outflowHiNp').value) <=1 ) {
+                av.nut[numTsk].uiAll.equil = ( Number(document.getElementById(tsk+'0inflowHiNp').value) / 
+                         Number(document.getElementById(tsk+'0outflowHiNp').value) );
+                tmpTxt = '';
+              }
+              else {
+                tmpTxt = 'outflow or inflow value is not valid';
+              };
+            };
+            document.getElementById('allSugarDetailsDiv').style.display = 'inline-block';
+            document.getElementById('showHideSgr').style.display = 'inline-block';
+
+            document.getElementById(tsk+'0inflowHiDiv').style.display = 'inline-block';;
+            document.getElementById(tsk+'0outflowHiDiv').style.display = 'inline-block';;
+            document.getElementById(tsk+'0chmstatHiDiv').style.display = 'inline-block';;
+            document.getElementById(tsk+'0inflowHiText').innerHTML = 'inflow / cell';
+            document.getElementById(tsk+'0outflowHiText').innerHTML = 'outflow fract';
+            if (true) {
+              // horizontal
+              if (3 > tmpTxt.length) { tmpTxt = av.utl.toMetric(av.nut[numTsk].uiAll.equil, 0) + ' = equilibrium'; }
+              document.getElementById(tsk+'0chmstatHiText').innerHTML = tmpTxt;
+              document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.long[tsk];
+              document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.long.width;
+              document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
+            } else {
+              // vertical with only numbers in summary
+              document.getElementById(tsk+'_inflowHiDiv').style.display = 'inline-block';
+              document.getElementById(tsk+'_outflowHiDiv').style.display = 'inline-block';
+              document.getElementById(tsk+'_chmstatHiTxt').style.display = 'inline-block';
+              document.getElementById(tsk+'0detailText').style.display = 'inline-block';
+              document.getElementById(tsk+'0detailText').style.width = '100px';
+              document.getElementById(tsk+'0detailText').innerHTML = av.sgr.describe.long[tsk];   // + '&nbsp;&nbsp;&nbsp;&nbsp;';
+              document.getElementById(tsk+'0inflowHiNp').style.display = 'none';    //hide actual input block
+              document.getElementById(tsk+'0outflowHiNp').style.display = 'none';  //hide actual input block
+              document.getElementById(tsk+'_chmstatHiTxt').innerHTML = av.utl.toMetric(av.nut[numTsk].uiAll.equil, 0) + ' = ';
+              document.getElementById(tsk+'0chmstatHiText').innerHTML = 'equilibrium &nbsp;&nbsp;';
+            };
+            document.getElementById(tsk+'0subSection').className = 'sgr-detail-global-chemo-grid-container';
+            if (!av.ui.hideDevelopment) {
+              document.getElementById(tsk+'_periodTimeHolder').style.display = 'inline-block';
+              document.getElementById(tsk+'0detailText').innerHTML = tmpTxt;
+              document.getElementById(tsk+'0detailText').style.display = 'inline-block';
+              document.getElementById(tsk+'0periodcheckboxHolder').style.display = 'inline-block';
+            }
+            // if (av.dbg.flg.nut) { console.log('task='+tsk, '; sub='+sub, '; get className from dom of ', tsk+'0Details'); }
+            // if (av.dbg.flg.nut) { console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'0Details').className); }
+            // if (av.dbg.flg.nut) { console.log(tsk+'0periodcheckboxHolder.checked value =', document.getElementById(tsk+'0periodCheck').checked, document.getElementById(tsk+'0periodCheck').value); }
+            break;
+          case 'debug':
+            document.getElementById(tsk+'_section').open = true;
+  //          document.getElementById(tsk+'_periodcheckboxHolder').style.display = 'inline-block';
+  //          document.getElementById(tsk+'_gradientcheckboxHolder').style.display = 'inline-block';
+  //          document.getElementById(tsk+'_diffusecheckboxHolder').style.display = 'inline-block';
+            document.getElementById(tsk+'_initialDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_periodTimeHolder').style.display = 'inline-block';
+            document.getElementById(tsk+'_initialHiHolder').style.display = 'inline-block';
+            document.getElementById(tsk+'_initialLoDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_inflowHiDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_inflowLoDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_outflowHiDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_outflowLoDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_chmstatHiTxt').style.display = 'inline-block';
+            document.getElementById(tsk+'_chmstatLoDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_hiSideSelectHolder').style.display = 'inline-block';
+            document.getElementById(tsk+'_sideText').innerHTML = 'Side text describing what side means';
+            document.getElementById(tsk+'_subSection').className = 'grid-sugarDetailAll-container';
+         // if (av.dbg.flg.nut) { console.log(tsk+'Details.class=', document.getElementById(tsk+'Details').className); }
+            break;
+        }    
+      };        // end global 
     };    //end of sgrBasic vs sgrAdvanced
     // if (av.dbg.flg.nut) { console.log('tsk=', tsk, 'sub=', sub, '; geometry=', geometry, '; supplyTypeSlct =', supplyTypeSlct, ' ' ,tsk+'_regionLayHolder=', document.getElementById(tsk+'_regionLayHolder').value ); }
     av.sgr.setColorFlagBasedonSugarPresence(av.nut[numTsk].uiAll.geometry.toLowerCase(), tsk, 'av.sgr.changeDetailsLayout');
@@ -1120,6 +1153,8 @@
   //---------------------------------------------------------------------------------------------- end sugars for Eco --
   if (av.dbg.flg.root) { console.log('Root: end sugars for Eco'); }
 
+
+/* no longer in use
   if (av.dbg.flg.root) { console.log('Root: before av.ptd.allSugarcheckboxHolder'); }
   av.ptd.allSugarcheckboxHolder = function (allmode) {
     var onflag = true;
@@ -1152,7 +1187,7 @@
       document.getElementById('equose').checked = onflag;
     };
   };
-
+*/
   //for structure on tst2 tab; not currently called as of 2019 Aug 4
   /*
   av.ptd.envobj2form = function(from) {

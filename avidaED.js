@@ -934,7 +934,7 @@ require([
     if ('visible' === av.doj.mnDebug.style.visibility) {
       av.doj.mnDebug.style.visibility = 'hidden';
       dijit.byId('mnHpDebug').set('label', 'Show debug menu');
-      av.post.addUser('Button: mnHpDebug: now hidden');
+      av.post.addUser('Button: mnHpDebug: now hidden; avidaED.js');
     } else {
       av.doj.mnDebug.style.visibility = 'visible';
       dijit.byId('mnHpDebug').set('label', 'Hide debug menu');
@@ -3170,8 +3170,9 @@ av.ui.closeSendModalFn = () => {
     //Comment out the next three lines later
     var anaData = av.anl.data;
     if (av.dbg.flg.divsize) { console.log('AnaPlot: anlChrtPlotly in av.anl.anaChartInit'); }
+    console.log('AnaPlot: anlChrtPlotly in av.anl.anaChartInit before first Plotly call');
     //Plotly.plot('anlChrtSpace', anaData, av.anl.layout, av.anl.widg);
-    av.debug.log += '\n     --uiD: Plotly: Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg) in AvidaED.js at 2157';
+    av.debug.log += '\n     --uiD: Plotly: Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg) in AvidaED.js at 3174 (was 2157)';
     av.utl.dTailWrite('avidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg', [av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg]);
     Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg);
     if (av.dbg.flg.divsize) { console.log('AnaPlot: after plot in av.anl.anaChartInit'); }
@@ -3254,7 +3255,7 @@ av.ui.closeSendModalFn = () => {
         Plotly.purge(av.dom.anlChrtSpace);
         if (av.dbg.flg.plt) { console.log('AnaPlot: after plot anlChrtSpace'); }
         //Plotly.plot('anlChrtSpace', anaData, av.anl.layout, av.anl.widg);
-        av.debug.log += '\n     --uiD: Plotly: Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg) in AvidaED.js at 2254';
+        av.debug.log += '\n     --uiD: Plotly: Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg) in AvidaED.js at 3258';
         av.utl.dTailWrite('avidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg', [av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg]);
         Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg);
         if (av.dbg.flg.plt) { console.log('AnaPlot: after plot anlChrtSpace'); }

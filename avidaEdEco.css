@@ -910,11 +910,14 @@ summary > div {
   display: inline-block;
   vertical-align: middle;
 }
+details summary > * {
+  display: inline;
+}
 
+/* This was to try to get the inline behavoir above I think. 
 summary {
   display: block
 }
-
 summary:before {
   grid-area: detailArrow;
   content: "►";
@@ -924,6 +927,13 @@ summary:before {
 details[open] summary:before {
   content: "▼";
 }
+*/
+
+/*
+details summary { 
+  cursor: pointer;
+}
+*/
 
 /*************************************************************************** Sugar Accordion using details and select */
 /* Accodion using details/summary and hidden sections also defined here; one detail/summary for each logic task = surgar type */
@@ -1018,27 +1028,34 @@ details[open] summary:before {
 .taskAboutCls { grid-area: tskAboutCls; display: inline-block; border: 0px none red; }
 .sumFtTxtCls { grid-area: sumFtTxtCls; display: inline-block; border: 0px none blue; justify-stretch: end; min-width: 95px; }
 
-.grd-sgr-sum-adv-container_ {
+.grd-sgr-sum-adv-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls geometryCls supplyWdCls supply_HoldCls sumFtTxtCls ';
+  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls tskAboutCls periodTimGlobCls';
   justify-content: start; 
-  min-height: 23px;  width: 100%;
+  height: 23px;  width: 100%;
 }
-
-.grd-sgr-sum-adv-limited-container_ {
+.grd-sgr-sum-adv-limited-container {
   display: grid;
-grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdCls supply_HoldCls initialGlobCls"
-                     "detailArrow sgrTitleCls tskAboutCls  tskAboutCls tskAboutCls tskAboutCls   initialGlobCls";
+  grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls  supply_HoldCls initialGlobCls"
+                       "detailArrow sgrTitleCls tskAboutCls  tskAboutCls tskAboutCls tskAboutCls   initialGlobCls";
+  //grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdCls supply_HoldCls initialGlobCls"
+  //                     "detailArrow sgrTitleCls tskAboutCls  tskAboutCls tskAboutCls tskAboutCls   initialGlobCls";
   justify-content: start; 
   min-height: 23px;  width: 100%;
 }
-
-.grd-sgr-sum-adv-chemo-container_ {
+.grd-sgr-sum-adv-chemo-container {
   display: grid;
   grid-template-areas: "detailArrow sgrTitleCls  regionLayCls geometryCls supplyWdCls supply_HoldCls periodTimGlobCls"
                        "detailArrow sumFtTxtCls sumFtTxtCls  sumFtTxtCls sumFtTxtCls sumFtTxtCls   sumFtTxtCls";
   justify-content: start; 
   min-height: 23px;  width: 100%;
+}
+
+.grd-sgr-sum-adv-space {
+  display: grid;
+  grid-template-areas: "detailArrow sgrTitleCls  regionLayCls geometryCls supply_HoldCls sumFtTxtCls";
+  justify-content: start; 
+  min-height: 23px;  width: 100%;  
 }
 
 .grd-sgr-sum-global-container {
@@ -1276,6 +1293,15 @@ grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdC
   display: grid;
   grid-template-areas: 'setTitle supplyTypeSlctSgr supplyTypeHolder showHideSgr detailDiv'
                        'setTitle regionLayoutSgr   regionLayoutDiv  patternSgr  patternDiv';
+  justify-items: start;  justify-content: start; width: 100%;
+  background: #DDD;   /* #AAA; is too dark now */    
+}
+
+.changeAllSugarsAdvanced {
+  display: grid;
+  grid-template-areas: 'setTitle    setTitle        showHideSgr   detailDiv'
+                       'geometrySgr regionLayoutSgr supplyTypeSlctSgr patternSgr'
+                       'geometryDiv regionLayoutDiv supplyTypeHolder patternDiv';
   justify-items: start;  justify-content: start; width: 100%;
   background: #DDD;   /* #AAA; is too dark now */    
 }

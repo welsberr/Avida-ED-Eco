@@ -788,7 +788,7 @@
                 <div class='odd'><div class='enviroSubHeading'>Ancestral Organism(s):</div>
                   <div id='ancestorRow'>
                     <div id='ancestorBox' class='ancestorContainer'></div>
-                    <div id='geometyHideButton' onclick='av.ui.toggleRegionLayoutControls(this)'>
+                    <div id='geometyHideButton' onclick='av.ui.toggleComplexityLevel(this)'>
                       &nbsp;&nbsp; Show / Hide Geometry menus
                     </div>
                   </div>
@@ -1582,7 +1582,7 @@
                               <option value="grid">Local</option>
                             </select>
                           </div>
-                          <div id="orn_regionLayHolder" class='regionLaySumCls'>
+                          <div id="orn_regionLayHolder" class='regionLaySumCls' onclick='av.sgr.detailToggle'>
                             <select id="orn_regionLayout" onchange="av.sgr.regionLayoutChange(this)">
                               <option id="orn_globalDish" value="1Global" selected=''>Global Dish</option>
                               <option id="orn_wholeDish" value="1All">Whole Dish</option>
@@ -1596,6 +1596,8 @@
                               <option id="orn_none" value='none'>None</option>
                               <option id="orn_unlimited" value='unlimited' selected=''>Unlimited</option>
                               <option id="orn_limited" value="limited">Limited</option>
+                              <option id="orn_chemo" value="combo">Chemo</option>
+                              <option id="orn_combo" value="combo">Combo</option>
                             </select>
                           </div>
                           <div id="ornWsupplyTypeHolder" class='supplyWHoldCls'>
@@ -3580,16 +3582,16 @@
           <p>Please select Ecology (resource) complexity level</p>
           <select id='resrcComplexity' onchange='av.sgr.complexityChange(this)'>
             <option id='sgrBasic' value='sgrBasic' selected >Basic</option>
-            <option id='sgrAdvanced' value='sgrAdvance'>Advanced</option>
+            <option id='sgrAdvanced' value='sgrAdvanced'>Advanced</option>
           </select>&nbsp;&nbsp;&nbsp;
           <br><br>
           <p>Please select your language preference</p>
           <select id='language' onchange='av.ui.language(this)'>
-            <option id='sgrBasic' value='english' selected >English</option>
-            <option id='sgrAdvanced' value='spanish'>Español</option>
-            <option id='sgrAdvanced' value='German' disabled>Deutsch</option>
-            <option id='sgrAdvanced' value='French' disabled>Français</option>
-            <option id='sgrAdvanced' value='Portuguese' disabled>Português</option>
+            <option id='lngEnglish' value='English' selected >English</option>
+            <option id='lngSpanish' value='Spanish'>Español</option>
+            <option id='lngGerman' value='German' disabled>Deutsch</option>
+            <option id='lngFrench' value='French' disabled>Français</option>
+            <option id='lngPortuguese' value='Portuguese' disabled>Português</option>
           </select>&nbsp;&nbsp;&nbsp;
           <br><br>
         </div>
