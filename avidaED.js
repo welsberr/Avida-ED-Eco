@@ -3385,7 +3385,7 @@ av.ui.closeSendModalFn = () => {
   av.doj.mnDebug.style.visibility = 'visible';   // set visiable so that av.ui.toggleDevelopentDisplays will hide devo stuff
 
   // Avida-ED 4.0.03 Beta Testing fix this too. 
-  //true when diane is working; false for all production releases even in alpha testsing.  
+  //true for development; false for all production releases even in alpha testsing.  
   if (false) {
     console.log('testing mode; set to false before public release for Avida-ED 4.0.03 Beta Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
@@ -3393,7 +3393,7 @@ av.ui.closeSendModalFn = () => {
     //set mmDebug to hidden so that when toggle called it will show the development sections x
     av.doj.mnDebug.style.visibility = 'hidden';   //visible
   };
-  av.ui.toggleDevelopentDisplays('Last_things_done');  // this needs to b called in production version
+  av.ui.toggleDevelopmentDisplays('Last_things_done');  // this needs to b called in production version
   
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
   //av.sgr.ChangeAllGeo(av.sgr.dftGeometry);   //tiba delete in 2021

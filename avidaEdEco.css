@@ -1010,10 +1010,12 @@ details summary {
 /************************* Sugar controls layout in 'summary' of detail/summary for each task-sugar in sugar according */
 /* I could not get a div with a dispay of inline-gid start on the top line of the summary. 
 .sumHolderDiv { display: inline-block; position: absolute; }
-.sgrSumCls { display: grid; }
-                       'sumFtTxtCls sumFtTxtCls sumFtTxtCls     sumFtTxtCls';
 */
-
+.sgrLftSumCls { grid-area: sgrLftSumCls; display: inline-block;}
+.sgrRitSumCls { grid-area: sgrRitSumCls; 
+  grid-template-areas: 'tskAboutCls';
+  display: grid;
+}
 .sgrTitleCls { grid-area: sgrTitleCls; display: inline-block; border: 0px none red; width: 54px; }
 .geometryCls { grid-area: geometryCls; display: none; border: 0px none red; }
 .regionLaySumCls { grid-area: regionLayCls; display: inline-block; border: 0px none magenta; }
@@ -1028,6 +1030,12 @@ details summary {
 .taskAboutCls { grid-area: tskAboutCls; display: inline-block; border: 0px none red; }
 .sumFtTxtCls { grid-area: sumFtTxtCls; display: inline-block; border: 0px none blue; justify-stretch: end; min-width: 95px; }
 
+.sgrSumCls { 
+  display: grid; 
+  grid-template-areas: 'detailArrow sgrLftSumCls sgrLftSumCls';
+  height: 23px;  width: 100%;
+}
+
 .grd-sgr-sum-adv-container {
   display: inline-grid;
   grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls tskAboutCls periodTimGlobCls';
@@ -1037,7 +1045,7 @@ details summary {
 .grd-sgr-sum-adv-limited-container {
   display: grid;
   grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls  supply_HoldCls initialGlobCls"
-                       "detailArrow sgrTitleCls tskAboutCls  tskAboutCls tskAboutCls tskAboutCls   initialGlobCls";
+                       "sgrTitleCls tskAboutCls  tskAboutCls tskAboutCls tskAboutCls   initialGlobCls";
   //grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdCls supply_HoldCls initialGlobCls"
   //                     "detailArrow sgrTitleCls tskAboutCls  tskAboutCls tskAboutCls tskAboutCls   initialGlobCls";
   justify-content: start; 
@@ -1066,7 +1074,7 @@ details summary {
 }
 .grd-sgr-sum-global-limited-container {
   display: grid;
-  grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls tskAboutCls initialGlobCls";
+  grid-template-areas: "sgrTitleCls regionLayCls supply_HoldCls initialGlobCls";
   justify-content: start; 
   height: 23px;  width: 100%;
 }

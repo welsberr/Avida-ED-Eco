@@ -299,16 +299,8 @@
       willbe = 'none';
       av.sgr.complexityLevel = 'sgrGlobal';
     };
-    console.log('willbe=', willbe);  
+    //console.log('willbe=', willbe);  
     av.sgr.complexityChangeProcess('av.ui.toggleComplexityLevel');
-/*
-    for (ii = 0; ii < len; ii++) {
-      tsk = av.sgr.logicNames[ii];
-      document.getElementById(tsk+'_regionLayHolder').style.display = willbe;
-    };
-    document.getElementById('regionLayoutSgr').style.display = willbe;
-    document.getElementById('allSugarRegionLayoutDiv').style.display = willbe;
-*/
   };
   
 
@@ -331,7 +323,7 @@
     document.getElementById('allSugarGeometryDiv').style.display = willbe;
   };
 
-  av.ui.toggleDevelopentDisplays = function () {
+  av.ui.toggleDevelopmentDisplays = function () {
     var len, tsk, sub;
     var visibleTxt = 'visible';
     if ('visible' === av.doj.mnDebug.style.visibility) {
@@ -352,7 +344,7 @@
       document.getElementById('popInfoTabHolder').className = 'tabHolderHide';
       //document.getElementById('resrceDataHolder').style.display = 'none';
 
-      av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopentDisplays');
+      av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopmentDisplays');
       len = av.sgr.logicNames.length;
       sub = 1;   //this may change later;
       for (ii = 0; ii < len; ii++) {
@@ -422,7 +414,7 @@
       document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
       document.getElementById('resrceDataHolder').style.display = 'block';
 
-      av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopentDisplays.onclick_show');
+      av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopmentDisplays.onclick_show');
 
       if (av.sgr.gridOnly) {    //In devvelopment
         document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherContainer';

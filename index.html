@@ -251,7 +251,7 @@
               <button id='showTextDebugButton' type='button' value='Big Text'>Big Text</button>
             </div>
             <div id='developmentToggleDiv'>
-              <input id='developmentToggle' class='devoShow' type='button' value=' in Development View ' onclick='av.ui.toggleDevelopentDisplays()' />
+              <input id='developmentToggle' class='devoShow' type='button' value=' in Development View ' onclick='av.ui.toggleDevelopmentDisplays()' />
             </div>
           </div>
         </div><span id='navColId_end' class='display_none'></span>
@@ -1575,6 +1575,10 @@
 
                     <details id='orn_section' class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
                       <summary id='orn_summary' class='sgrSumCls'> 
+                        <div id='orn_sumLftGrid' class='sgrLftSumCls'>
+                          <div id='orn_openClose'>
+                            <span id='orn_sgrDetailClosed'>►</span>
+                            <span id='orn_sgrDetailOpened'>▼</span>
                           <div id='orn_title' class='sgrTitleCls'>Ornose</div>
                           <div id='orn_geometryDiv' class='geometryCls'>
                             <select id="orn_geometry" onchange="av.sgr.geometryChange(this);">
@@ -1609,7 +1613,6 @@
                               <option id="orn_debugTyp" value="debug" disabled>debug</option>
                              </select>
                           </div>
-                          <div id="orn_taskAboutText" class='taskAboutCls'>( x8)</div>
                           <div id='orn_inflowHiDiv' class='sgrDetail_grid-item inflwSumCls'>
                                 <label><input id='orn_inflowHiNp' class='sugInflwHiNcls' type='text' onchange="av.sgr.inflowChange(this);">&nbsp;
                               <span id='orn_inflowHiText' class='sugInflowLCls'> / </span></label>
@@ -1631,6 +1634,10 @@
                             <input id="orn_initialHiNp" class="sugInitialNclass" type='text' value='100' onchange="av.sgr.initialChange(this);">&nbsp;initial / cell
                           </div>
                           <div id="orn_summaryFooterText" class='sumFootTxtClass'> period &lt; 1 ==&gt; non-periodic</div>
+                        </div>
+                        <div id='orn_sumRitBox' class='sgrRitSumCls'>
+                          <div id="orn_taskAboutText" class='taskAboutCls'>( x8)</div> text
+                        </div>
                       </summary>
 
                       <div id="orn_detailsHolder" class='sgrDetailHoldCls'>

@@ -213,6 +213,7 @@
         //if (0 < sub) av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarsupplyTypeSlct');   //only need to do once per task/subsection combo even if it does change both global and subtasks
         av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarsupplyTypeSlct');   //only need to do once per task/subsection combo even if it does change both global and subtasks
       };  // end subsection for loop
+      av.sgr.toggleOpenCloseSymbol(tsk);
     };    // end task for loop
     //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
   };
@@ -613,8 +614,22 @@
         setTimeout(function() {     //https://stackoverflow.com/questions/17883692/how-to-set-time-delay-in-javascript
           document.getElementById(taskID).open = false;
           console.log('details=', taskID, 'should close. Time=', new Date().getTime() );
-        }, 10);   //delayInMilliseconds
+        }, 5);   //delayInMilliseconds
       };
+    };
+    setTimeout(function() {     //https://stackoverflow.com/questions/17883692/how-to-set-time-delay-in-javascript
+      console.log('after close global if needed; ', taskID, 'open=', domObj.open);
+      av.sgr.toggleOpenCloseSymbol(task);
+    }, 7);   //delayInMilliseconds
+  };
+  
+  av.sgr.toggleOpenCloseSymbol = function(task) {
+    if (document.getElementById(task+'_section').open) {
+      document.getElementById(task+'_sgrDetailClosed').style.display = 'none';
+      document.getElementById(task+'_sgrDetailOpened').style.display = 'inline-block';
+    } else {
+      document.getElementById(task+'_sgrDetailClosed').style.display = 'inline-block';
+      document.getElementById(task+'_sgrDetailOpened').style.display = 'none';
     };
   };
 
@@ -787,13 +802,14 @@
           case 'none': 
           case 'unlimited':
             document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
+            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'container';
             document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.long[tsk];
             document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.long.width;
             document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
             document.getElementById(tsk+'_section').open = false;
             break;
           case 'limited': 
-            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'limited-container';
+            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'limited-container';
             document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.short[tsk];
             document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.short.width;
             document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
@@ -1057,15 +1073,16 @@
         document.getElementById('sgrEngergyReportLabel').style.display = 'inline';
         switch (av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase()) {
           case 'none': 
-          case 'unlimited':
-            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
+          case 'unlimited':  
+            //document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
+            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'container';
             document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.long[tsk];
             document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.long.width;
             document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
             document.getElementById(tsk+'_section').open = false;
             break;
           case 'limited': 
-            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'limited-container';
+            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'limited-container';
             document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.short[tsk];
             document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.short.width;
             document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
@@ -1073,7 +1090,7 @@
             document.getElementById(tsk+'_section').open = false;
             break;
           case 'chemostat':
-            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'chemo-container';
+            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'chemo-container';
             //tmpTxt = av.sgr.describe.long[tsk] + ': . . . .  When 0 < period, chemostat becomes periodic';
             //tmpTxt = 'When 0 < period, chemostat becomes periodic';
             document.getElementById(tsk+'_section').open = true;
