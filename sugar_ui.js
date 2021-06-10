@@ -146,127 +146,138 @@
 
 //--------------------------------------------------------------------------------- av.sgr.allSugarRegionLayoutChange --
 
-  av.sgr.allSugarRegionLayoutChange = function(domObj) {
-    //console.log('in av.sgr.allSugarRegionLayoutChange: value=', domObj.value);
-    var selectedOption = domObj.value;
-    av.changeAllSgrRegionLayout(selectedOption, 'av.sgr.allSugarRegionLayoutChange');
-  };
-  
-  av.changeAllSgrRegionLayout = function(selectedOption, from) {
-    var endName = 'regionLayout';   //nan_supplyTypeHolder  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
-    //console.log(from, ' called av.sgr.allSugarRegionLayoutChange: selectedOption=',selectedOption);
-    var domName = '';  
-    var sub=0;   //most will start with 0 for global and also do local section 1
-    // all tasks
-    for (var ii=0; ii< av.sgr.numTasks; ii++) {  
-      //change global
-      domName = av.sgr.logicNames[ii] + '_' + endName;
-      //console.log('domName='+domName, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub, '; value=', domObj.value);
-      //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
-      document.getElementById(domName).value = selectedOption;
-      av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.allSugarRegionLayoutChange');   //only need to do once per task/subsection combo even if it does change both global and subtasks
-      //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value);
-    }   
-    //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
-    document.getElementById('allSugarRegionLayout').value = 'neutral';
-  };
+av.sgr.allSugarRegionLayoutChange = function(domObj) {
+  //console.log('in av.sgr.allSugarRegionLayoutChange: value=', domObj.value);
+  var selectedOption = domObj.value;
+  av.changeAllSgrRegionLayout(selectedOption, 'av.sgr.allSugarRegionLayoutChange');
+};
+
+av.changeAllSgrRegionLayout = function(selectedOption, from) {
+  var endName = 'regionLayout';   //nan_supplyTypeHolder  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
+  //console.log(from, ' called av.sgr.allSugarRegionLayoutChange: selectedOption=',selectedOption);
+  var domName = '';  
+  var sub=0;   //most will start with 0 for global and also do local section 1
+  // all tasks
+  for (var ii=0; ii< av.sgr.numTasks; ii++) {  
+    //change global
+    domName = av.sgr.logicNames[ii] + '_' + endName;
+    //console.log('domName='+domName, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub, '; value=', domObj.value);
+    //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
+    document.getElementById(domName).value = selectedOption;
+    av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.allSugarRegionLayoutChange');   //only need to do once per task/subsection combo even if it does change both global and subtasks
+    //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value);
+  }   
+  //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
+  document.getElementById('allSugarRegionLayout').value = 'neutral';
+};
 
 //------------------------------------------------------------------------------- av.sgr.allsugarsupplyTypeSlctChange --
-  av.sgr.allsugarsupplyTypeSlctChange = function (domObj) {
-    var tsk = 'not';
-    //two line method
-    var idx = domObj.selectedIndex;        // get the index of the selected option 
-    var selectedValue = domObj.options[idx].value;   // get the value of the selected option 
-    // one line method
-    selectedValue = domObj.value;
-    
-    //console.log('allsugarsupplyTypeSlctChange: idx=', idx, '; value=', selectedValue, '=', domObj.value);
-    av.sgr.ChangeAllsugarsupplyTypeSlct(selectedValue, 'av.sgr.allsugarsupplyTypeSlctChange');
-    document.getElementById('allsugarsupplyTypeSlct').value = 'neutral';
-  };
+av.sgr.allsugarsupplyTypeSlctChange = function (domObj) {
+  var tsk = 'not';
+  //two line method
+  var idx = domObj.selectedIndex;        // get the index of the selected option 
+  var selectedValue = domObj.options[idx].value;   // get the value of the selected option 
+  // one line method
+  selectedValue = domObj.value;
 
-  //--------------------------------------------------------------------------------- av.sgr.ChangeAllsugarsupplyTypeSlct --
-  av.sgr.ChangeAllsugarsupplyTypeSlct = function(selectedOption, from) {
-    var endName = 'supplyTypeSlct';   //nan_supplyTypeHolder  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
-    //console.log(from, ' called av.sgr.ChangeAllsugarsupplyTypeSlct: selectedOption=',selectedOption);
-    var domName = '';
-    var start = 1;   //sub sections start with 0, because global limited is in the summary (_)
-    
-    //console.log('start='+start, '; numTasks='+av.sgr.numTasks, '; endName='+endName, '; value=', selectedOption);
-    for (var ii=0; ii< av.sgr.numTasks; ii++) {
-      //change glabal and all subsections  
-      tsk = av.sgr.logicNames[ii];
-      //console.log('av.dom.'+tsk + '_regionLayHolder.value =', document.getElementById(tsk + '_regionLayHolder').value);
-      domName = tsk + 'W' + endName;
-      //console.log('domname=', domName);
-      document.getElementById(domName).value = selectedOption;
-      domName = tsk + '_' + endName;
-      //console.log('domname=', domName);
-      document.getElementById(domName).value = selectedOption;
-      //console.log('document.getElementById('+domName+').value=', document.getElementById(domName).value);
-      av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], 0, 'av.sgr.ChangeAllsugarsupplyTypeSlct');
-      for (var sub=start; sub<= 2; sub++) {
-        domName = av.sgr.logicNames[ii] + sub + endName;
-        //console.log('domName='+domName, '; selectedOption='+selectedOption+'|');
-        document.getElementById(domName).value = selectedOption;
-        //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
-        //if (0 < sub) av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarsupplyTypeSlct');   //only need to do once per task/subsection combo even if it does change both global and subtasks
-        av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarsupplyTypeSlct');   //only need to do once per task/subsection combo even if it does change both global and subtasks
-      };  // end subsection for loop
-      av.sgr.toggleOpenCloseSymbol(tsk);
-    };    // end task for loop
-    //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
+  //console.log('allsugarsupplyTypeSlctChange: idx=', idx, '; value=', selectedValue, '=', domObj.value);
+  av.sgr.ChangeAllsugarsupplyTypeSlct(selectedValue, 'av.sgr.allsugarsupplyTypeSlctChange');
+  document.getElementById('allsugarsupplyTypeSlct').value = 'neutral';
+};
+
+//-------------------------------------------------------------------------------------- av.sgr.toggleOpenCloseSymbol --
+av.sgr.toggleOpenCloseSymbol = function(task) {
+  if (document.getElementById(task+'_section').open) {
+    document.getElementById(task+'_sgrDetailClosed').style.display = 'none';
+    document.getElementById(task+'_sgrDetailOpened').style.display = 'inline-block';
+  } else {
+    document.getElementById(task+'_sgrDetailClosed').style.display = 'inline-block';
+    document.getElementById(task+'_sgrDetailOpened').style.display = 'none';
   };
+};
+
+//--------------------------------------------------------------------------------- av.sgr.ChangeAllsugarsupplyTypeSlct --
+av.sgr.ChangeAllsugarsupplyTypeSlct = function(selectedOption, from) {
+  var endName = 'supplyTypeSlct';   //nan_supplyTypeHolder  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
+  //console.log(from, ' called av.sgr.ChangeAllsugarsupplyTypeSlct: selectedOption=',selectedOption);
+  var domName = '';
+  var start = 1;   //sub sections start with 0, because global limited is in the summary (_)
+
+  //console.log('start='+start, '; numTasks='+av.sgr.numTasks, '; endName='+endName, '; value=', selectedOption);
+  for (var ii=0; ii< av.sgr.numTasks; ii++) {
+    //change glabal and all subsections  
+    tsk = av.sgr.logicNames[ii];
+    //console.log('av.dom.'+tsk + '_regionLayHolder.value =', document.getElementById(tsk + '_regionLayHolder').value);
+    domName = tsk + 'W' + endName;
+    //console.log('domname=', domName);
+    document.getElementById(domName).value = selectedOption;
+    domName = tsk + '_' + endName;
+    //console.log('domname=', domName);
+    document.getElementById(domName).value = selectedOption;
+    //console.log('document.getElementById('+domName+').value=', document.getElementById(domName).value);
+    av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], 0, 'av.sgr.ChangeAllsugarsupplyTypeSlct');
+    for (var sub=start; sub<= 2; sub++) {
+      domName = av.sgr.logicNames[ii] + sub + endName;
+      //console.log('domName='+domName, '; selectedOption='+selectedOption+'|');
+      document.getElementById(domName).value = selectedOption;
+      //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
+      //if (0 < sub) av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarsupplyTypeSlct');   //only need to do once per task/subsection combo even if it does change both global and subtasks
+      av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarsupplyTypeSlct');   //only need to do once per task/subsection combo even if it does change both global and subtasks
+    };  // end subsection for loop
+    av.sgr.toggleOpenCloseSymbol(tsk);
+  };    // end task for loop
+  //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
+};
 
 //----------------------------------------------------------------------------------- av.sgr.allSugarDetailsOpenClose --
-  av.sgr.allSugarDetailsOpenClose = function (domObj) {
-    var idx = domObj.selectedIndex;        // get the index of the selected option 
-    var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
-    av.sgr.OpenCloseAllSugarDetails(selectedOption, 'av.sgr.allSugarDetailsOpenClose');
-    document.getElementById('allSugarDetails').value = 'neutral';
-  };
+av.sgr.allSugarDetailsOpenClose = function (domObj) {
+  var idx = domObj.selectedIndex;        // get the index of the selected option 
+  var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
+  av.sgr.OpenCloseAllSugarDetails(selectedOption, 'av.sgr.allSugarDetailsOpenClose');
+  document.getElementById('allSugarDetails').value = 'neutral';
+};
 
 //--------------------------------------------------------------------------------------------- av.sgr.geometryChange --
-  av.sgr.geometryChange = function (selectObj) {
-    //need to find subregion Number in the future - set to 1 for now.;
-    var taskID = selectObj.id;
-    var task = taskID.substring(0, 3);
-    var sub = taskID.substr(3, 1);
- // if (av.dbg.flg.nut) { console.log('av.sgr.geometryChange: taskID=', taskID, '; task =', task, '; subsection=', sub); }
-    sub = 1;       //or should this be 0 since it is in the 'summary' section?
-    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.geometryChange');
-    //does av.sgr.changeDetailsLayout need a 'sub' value? 
-  };
+av.sgr.geometryChange = function (selectObj) {
+  //need to find subregion Number in the future - set to 1 for now.;
+  var taskID = selectObj.id;
+  var task = taskID.substring(0, 3);
+  var sub = taskID.substr(3, 1);
+  // if (av.dbg.flg.nut) { console.log('av.sgr.geometryChange: taskID=', taskID, '; task =', task, '; subsection=', sub); }
+  sub = 1;       //or should this be 0 since it is in the 'summary' section?
+  av.sgr.changeDetailsLayout(task, sub, 'av.sgr.geometryChange');
+  //does av.sgr.changeDetailsLayout need a 'sub' value? 
+};
 
 //----------------------------------------------------------------------------------------- av.sgr.regionLayoutChange --
-  av.sgr.regionLayoutChange = function (domObj) {
-  //if (av.dbg.flg.nut) { console.log('Nut: av.sgr.regionLayoutChange was called by', domObj); }
-    var taskID = domObj.id;
-    var task = taskID.substring(0, 3);
-    var sub = taskID.substr(3, 1);
-    //console.log('taskID=', taskID, 'task=', task, '; subsection=', sub);
-    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.regionLayoutChange');
-  };
+av.sgr.regionLayoutChange = function (domObj) {
+//if (av.dbg.flg.nut) { console.log('Nut: av.sgr.regionLayoutChange was called by', domObj); }
+  var taskID = domObj.id;
+  var task = taskID.substring(0, 3);
+  var sub = taskID.substr(3, 1);
+  //console.log('taskID=', taskID, 'task=', task, '; subsection=', sub);
+  av.sgr.changeDetailsLayout(task, sub, 'av.sgr.regionLayoutChange');
+};
 
 //----------------------------------------------------------------------------------------------- av.sgr.supplyChange --
-  av.sgr.supplyChange = function (domObj) {
-    var taskID = domObj.id;
-    var value = domObj.value;
-    var task = taskID.substring(0, 3);
-    var sub = taskID.substr(3, 1);
-    if ('_' == sub) {
-      var tmpstr = task + 'W' + taskID.substr(4);
-      //console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub, '; suffix=', taskID.substr(4), '; value=', value, '; tmpstr = '+tmpstr);
-      document.getElementById(tmpstr).value = domObj.value;
-    }
-    else if ('W' == sub) {
-      var tmpstr = task + '1' + taskID.substr(4);
-      //console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub, '; suffix=', taskID.substr(4), '; value=', value, '; tmpstr = '+tmpstr);
-      document.getElementById(tmpstr).value = domObj.value;      
-    }
-    //console.log('taskID=', taskID, '; value=', value, '; task=', task, '; sub=', sub);
-    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
-  };
+av.sgr.supplyChange = function (domObj) {
+  var taskID = domObj.id;
+  var value = domObj.value;
+  var task = taskID.substring(0, 3);
+  var sub = taskID.substr(3, 1);
+  if ('_' == sub) {
+    var tmpstr = task + 'W' + taskID.substr(4);
+    //console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub, '; suffix=', taskID.substr(4), '; value=', value, '; tmpstr = '+tmpstr);
+    document.getElementById(tmpstr).value = domObj.value;
+  }
+  else if ('W' == sub) {
+    var tmpstr = task + '1' + taskID.substr(4);
+    //console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub, '; suffix=', taskID.substr(4), '; value=', value, '; tmpstr = '+tmpstr);
+    document.getElementById(tmpstr).value = domObj.value;      
+  }
+  //console.log('taskID=', taskID, '; value=', value, '; task=', task, '; sub=', sub);
+  av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
+};
 
 //--------------------------------------------------------------------------------------- av.sgr.supplyModifierChange --
   av.sgr.supplyModifierChange = function (domObj) {
@@ -602,34 +613,27 @@
   //-------------------------------------------------------------------------------------- av.sgr.changeDetailsLayout --
   // https://stackoverflow.com/questions/7363117/detecting-the-opening-or-closing-of-a-details-element
   av.sgr.detailsToggle = function(domObj) {
-    var taskID = domObj.id;     //orn_regionLayHolder
-    var task = taskID.substring(0, 3);
-    var isOpen = !domObj.open;
-    console.log('Details object,', task, 'has an open status of', isOpen, '; complexity level=', av.sgr.complexityLevel, 'Time=',
-//                  new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: false }));
-                  new Date().getTime() );
-    if ('sgrGlobal' == av.sgr.complexityLevel) {
-      console.log('av.sgr.complexityLevel=', av.sgr.complexityLevel);
-      if (isOpen) {
-        setTimeout(function() {     //https://stackoverflow.com/questions/17883692/how-to-set-time-delay-in-javascript
-          document.getElementById(taskID).open = false;
-          console.log('details=', taskID, 'should close. Time=', new Date().getTime() );
-        }, 5);   //delayInMilliseconds
+    // may put back in. not now. 
+    if (false) {
+      var taskID = domObj.id;     //orn_regionLayHolder
+      var task = taskID.substring(0, 3);
+      var isOpen = !domObj.open;
+      console.log('Details object,', task, 'has an open status of', isOpen, '; complexity level=', av.sgr.complexityLevel, 'Time=',
+  //                  new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: false }));
+                    new Date().getTime() );
+      if ('sgrGlobal' == av.sgr.complexityLevel) {
+        console.log('av.sgr.complexityLevel=', av.sgr.complexityLevel);
+        if (isOpen) {
+          setTimeout(function() {     //https://stackoverflow.com/questions/17883692/how-to-set-time-delay-in-javascript
+            document.getElementById(taskID).open = false;
+            console.log('details=', taskID, 'should close. Time=', new Date().getTime() );
+          }, 5);   //delayInMilliseconds
+        };
       };
-    };
-    setTimeout(function() {     //https://stackoverflow.com/questions/17883692/how-to-set-time-delay-in-javascript
-      console.log('after close global if needed; ', taskID, 'open=', domObj.open);
-      av.sgr.toggleOpenCloseSymbol(task);
-    }, 7);   //delayInMilliseconds
-  };
-  
-  av.sgr.toggleOpenCloseSymbol = function(task) {
-    if (document.getElementById(task+'_section').open) {
-      document.getElementById(task+'_sgrDetailClosed').style.display = 'none';
-      document.getElementById(task+'_sgrDetailOpened').style.display = 'inline-block';
-    } else {
-      document.getElementById(task+'_sgrDetailClosed').style.display = 'inline-block';
-      document.getElementById(task+'_sgrDetailOpened').style.display = 'none';
+      setTimeout(function() {     //https://stackoverflow.com/questions/17883692/how-to-set-time-delay-in-javascript
+        console.log('after close global if needed; ', taskID, 'open=', domObj.open);
+        av.sgr.toggleOpenCloseSymbol(task);
+      }, 7);   //delayInMilliseconds
     };
   };
 
@@ -643,6 +647,7 @@
     var clssnam = 'changeAllSugarsTogetherContainer';
     av.sgr.complexSumGridPrefix = 'grd-sgr-sum-adv-';
     
+    console.log('av.sgr.complexityLevel =', av.sgr.complexityLevel);
     if ('sgrBasic' == av.sgr.complexityLevel) {
       basicDisplayNone = 'none';
       clssnam = 'changeAllSugarsBasic';

@@ -273,6 +273,9 @@ av.env = {}; //used for functions to process information beteen the environment 
 //                  | 7 8 9 |
 
 av.sgr = {};   //specific to resource/reactions (sugars); mostly constants. Not all iddeas written here will be used. 
+av.sgr.symbolIsClosed = '▼';
+av.sgr.symbolIsOpen = '►';
+
 av.sgr.typeDefault = 'unlimited';
 av.sgr.oseNames = ['Notose', 'Nanose', 'Andose', 'Ornose', 'Orose', 'Antose', 'Norose', 'Xorose', 'Equose'];
 av.sgr.resrcTyp = ['unlimited', 'unlimited', 'unlimited', 'unlimited', 'unlimited', 'unlimited', 'unlimited', 'unlimited', 'unlimited'];
