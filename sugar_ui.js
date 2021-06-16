@@ -188,11 +188,9 @@ av.sgr.allsugarsupplyTypeSlctChange = function (domObj) {
 //-------------------------------------------------------------------------------------- av.sgr.toggleOpenCloseSymbol --
 av.sgr.toggleOpenCloseSymbol = function(task) {
   if (document.getElementById(task+'_section').open) {
-    document.getElementById(task+'_sgrDetailClosed').style.display = 'none';
-    document.getElementById(task+'_sgrDetailOpened').style.display = 'inline-block';
+    document.getElementById(task+'_openClose').innerHTML = av.sgr.symbolIsClosed;
   } else {
-    document.getElementById(task+'_sgrDetailClosed').style.display = 'inline-block';
-    document.getElementById(task+'_sgrDetailOpened').style.display = 'none';
+    document.getElementById(task+'_openClose').innerHTML = av.sgr.symbolIsOpen;
   };
 };
 
@@ -613,15 +611,15 @@ av.sgr.supplyChange = function (domObj) {
   //-------------------------------------------------------------------------------------- av.sgr.changeDetailsLayout --
   // https://stackoverflow.com/questions/7363117/detecting-the-opening-or-closing-of-a-details-element
   av.sgr.detailsToggle = function(domObj) {
-    // may put back in. not now. 
-    if (false) {
       var taskID = domObj.id;     //orn_regionLayHolder
       var task = taskID.substring(0, 3);
       var isOpen = !domObj.open;
       console.log('Details object,', task, 'has an open status of', isOpen, '; complexity level=', av.sgr.complexityLevel, 'Time=',
-  //                  new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: false }));
+      //           new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: false }));
                     new Date().getTime() );
-      if ('sgrGlobal' == av.sgr.complexityLevel) {
+      // may put back later. 
+      //if ('sgrGlobal' == av.sgr.complexityLevel) {
+      if (false) {
         console.log('av.sgr.complexityLevel=', av.sgr.complexityLevel);
         if (isOpen) {
           setTimeout(function() {     //https://stackoverflow.com/questions/17883692/how-to-set-time-delay-in-javascript
@@ -635,7 +633,6 @@ av.sgr.supplyChange = function (domObj) {
         av.sgr.toggleOpenCloseSymbol(task);
       }, 7);   //delayInMilliseconds
     };
-  };
 
   //---------------------------------------------------------------------------------- av.sgr.complexityChangeProcess --
   av.sgr.complexityChangeProcess = function (from) {
