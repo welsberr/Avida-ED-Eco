@@ -1,7 +1,7 @@
 
  // this version uses grid box layout for major sections (toop, left side, main, right side)  
  // if (av.dbg.flg.root) { console.log('Root: avidaED.js at beginning of file on 2020_0111 @ 20:21'); };
- console.log('Root: avidaED.js at beginning of file on 2020_0518 @ 17:44'); 
+ console.log('Root: avidaED.js at beginning of file on 2021_301'); 
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
@@ -42,6 +42,29 @@
 // The main function change from Avida-ED 3 to four is the addition of limited and gird (local) resources
 // Layout was changed on Population Page 
 // all files in tthe workspace now have a three letter sufix; *.txt was added to those missing a suffix
+// 
+// Avida-ED 4.0.0
+// - a basic verison works there will be an advanced mode as well, but it is not ready yet
+//   Basic Mode only has global resources. 
+//    - infinite, none, finte and chemostat. 
+//    
+// Avida-ED 4.0.01
+//  - fixed ability to change the color of a trace on the Analysis page
+//  - fixed legend for ancestor organism 
+// 
+// Avida-ED 4.0.02
+//  - The focus was staying on the grid cell if one was selected, which prevented typing in text
+//    Changed this so that when the cusor is in a input area then then that gets the keyboard input
+//  - added Avida-ED version number remind folks this is a beta version 
+// 
+// Avida-ED 4.0.03
+//  - Changed resource type from Infinite/Finite to Unlimited/Limited
+//  - Changed it so that the heat map scale for Fitness does not changed until after 10,000 updated for Cory. tiba
+//  - updated the following libraries to the versions listed
+//  - - dojo-release-1.16.4
+//  - - jquery-v3.4.1.min
+//  - - FileSaver.min.2.0.4
+//    
 //
 // Generic Notes -------------------------------------------------------------------------------------------------------
 //
@@ -70,14 +93,14 @@
 //  
 //  the avidaDataRecorder.csv does not export correctly, but is created correctly when the population is frozen
 //  
-//  In the environment.cfg file I wrote, I put one unit or resouce in each cell for grid; infinite. I need to have 
+//  In the environment.cfg file I wrote, I put one unit or resouce in each cell for grid; unlimited. I need to have 
 //  the same amount of resouce as in the default so it will default to the corret courrect amount if the user changes from 
-//  infimite to finite in the UI. 
+//  infimite to limited in the UI. 
 //  
 //  I think it will write to have the default amount of resource for that region. 
 //  
-//  Looking at loading default files and perhaps we need to add default values for finite when finite is selected even 
-//  there is no finite in the config file. 
+//  Looking at loading default files and perhaps we need to add default values for limited when limited is selected even 
+//  there is no limited in the config file. 
 //  
 //  Oraganism Page -------
 //  
@@ -145,11 +168,13 @@ require([
   'lib/plotly-v1.53.js',      //2020_0409 development
 
   //'lib/jszip.min.js',        //older version. Not sure what version
-  'lib/jszip-v2.6.1.js',        //need to update, but need to figure out update methods. 
-  //'jszip-v3.3.0.js',         //current version on 2020_0404, but code changes needed that have not been done. development
-  //'jszip-v3.3.0.min.js',     //current version on 2020_0404, but code changes needed that have not been done. production
-  'lib/FileSaver_v1.1_date-2016_0328.js',
+  'lib/jszip-v2.6.1.js',        //need to update, but need to figure out update methods. tiba
+  //'lib/jszip-v3.3.0.js',         //current version on 2020_0404, but code changes needed that have not been done. development
+  //'lib/jszip-v3.3.0.min.js',     //current version on 2020_0404, but code changes needed that have not been done. production
+  //'lib/jszip-v3.2.0.min.js',     //newest version but I have not figure out how to get it to work. 
+  //'lib/FileSaver_v1.1_date-2016_0328.js',
   //'lib/FileSaver-2.0.3/FileSaver.min.js',
+  'lib/FileSaver.min.2.0.4.js',
   //'lib/FileSaver.js',
   //'avida-messages.js',
   'messaging.js',
@@ -163,6 +188,7 @@ require([
   'popControls.js',
   'mouse.js',
   'mouseDown.js',
+  'environment2UI.js',
   'sugar_ui.js',
   'reSizePageParts.js',
   //'restartAvida.js',
@@ -211,7 +237,7 @@ require([
       document.getElementById('appReloadDialog').style.display = 'show';
     }
   }, 121000);
-
+ 
   //initiallize default mouse shapes
   //av.mouse.getOriginalShapes(); only gets empty strings
 
@@ -252,7 +278,7 @@ require([
   
   // if (av.dbg.flg.root) { console.log('Root: before fzWorld'); };
   av.dnd.fzWorld = new dndSource('fzWorld', {
-    //accept: ['b', 'w'],   //b=both; w=world  //only after the population started running
+    accept: ['b', 'w'],   //b=both; w=world  //only after the population started running
     singular: true,
     copyOnly: true,
     selfAccept: false
@@ -577,20 +603,20 @@ require([
     switch (source.node.id) {
       case 'popDish0':
         av.post.addUser('DnD: delete_from: popDish0?');
-        av.anl.pop[0].left = [];       //remove lines from population 1
-        av.anl.pop[0].right = [];
+        av.anl.wrld[0].left = [];       //remove lines from population 1
+        av.anl.wrld[0].right = [];
         av.anl.AnaChartFn();
         break;
       case 'popDish1':
         av.post.addUser('DnD: delete_from: popDish1?');
-        av.anl.pop[1].left = [];       //remove lines from population 2
-        av.anl.pop[1].right = [];
+        av.anl.wrld[1].left = [];       //remove lines from population 2
+        av.anl.wrld[1].right = [];
         av.anl.AnaChartFn();
         break;
       case 'popDish2':
         av.post.addUser('DnD: delete_from: popDish2?');
-        av.anl.pop[2].left = [];       //remove lines from population 3
-        av.anl.pop[2].right = [];
+        av.anl.wrld[2].left = [];       //remove lines from population 3
+        av.anl.wrld[2].right = [];
         av.anl.AnaChartFn();
         break;
     }
@@ -607,16 +633,16 @@ require([
   //                                    End of dojo based DND triggered functions
   //----------------------------------------------------------------------------------------------------------------------
   window.onbeforeunload = function (event) {
-  console.log('window.onbeforeunload');
+  console.log('window.onbeforeunload: av.ui.sendEmailFlag =', av.ui.sendEmailFlag, '; av.fzr.saveState = ', av.fzr.saveState);
     if (!av.ui.sendEmailFlag) {
       if ('no' === av.fzr.saveState || 'maybe' === av.fzr.saveState) {
         return 'Your workspace may have changed sine you last saved. Do you want to save first?';
+      };
 
-        //e.stopPropagation works in Firefox.
-        if (event.stopPropagation) {
-          event.stopPropagation();
-          event.preventDefault();
-        };
+      //e.stopPropagation works in Firefox.
+      if (event.stopPropagation) {
+        event.stopPropagation();
+        event.preventDefault();
       };
     };
   };
@@ -625,27 +651,121 @@ require([
   //********************************************************************************************************************
   // Error logging
   //********************************************************************************************************************
-
-  //--------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------
   //https://bugsnag.com/blog/js-stacktracess
   //http://blog.bugsnag.com/js-stacktraces
   window.onerror = function (message, file, line, col, error) {
-    console.log('in window.onerror');
+    //console.log('in window.onerror 633');
     av.dom.runStopButton.innerHTML = 'Run';  //av.msg.pause('now');
     av.debug.finalizeDtail();
     av.debug.triggered = 'errorTriggered';
     av.post.postLogPara = 'Please send the info below to help us make Avida-ED better by clicking on the [Send] button';
-    av.debug.sendLogPara = 'The error is the last line in the session log in the text below.';
+    av.debug.sendLogPara = 'The error is at the beginning and end of the session log in the text below.';
     av.debug.postEmailLabel = 'Please include your e-mail if you would like feed back or are willing to further assist in debug';
     av.debug.postNoteLabel = 'Please include any additional comments in the field below.';
     av.debug.postEmailLabel = 'Please include your e-mail for feedback or so we can discuss the problem further';
     av.debug.error = 'Error: ' + message + ' from ' + file + ':' + line + ':' + col;
-    av.debug.sendLogTextarea = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail + '\n\n' + av.debug.error;
+    av.debug.sendLogScrollBox = av.debug.error + '\n\n' + av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail + '\n\n' + av.debug.error;
 
     //console.log('inside Window.on_Error: before call problemWindow');
     av.ui.problemWindow('window.onerror');
   };
 
+  //--------------------------------------------------------------------------------------------------------------------
+  //More usefull websites to catch errors
+  // https://davidwalsh.name/javascript-stack-trace
+  // https://danlimerick.wordpress.com/2014/01/18/how-to-catch-javascript-errors-with-window-onerror-even-on-chrome-and-firefox/
+  //to send e-mail  http://stackoverflow.com/questions/7381150/how-to-send-an-email-from-javascript
+
+  // how to send e-mail
+  // http://www.codeproject.com/Questions/303284/How-to-send-email-in-HTML-or-Javascript
+
+  // selected text
+  // http://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
+  // http://www.javascriptkit.com/javatutors/copytoclipboard.shtml
+  
+  // if (av.dbg.flg.root) { console.log('Root: defore av.ui.problemWindow'); }
+  //process problme pop-up window
+  av.ui.problemWindow = function (from) {
+    console.log(from, 'called av.ui.problemWindow 665');
+    av.debug.vars = {
+      isBlink: av.brs.isBlink,
+      isChrome: av.brs.isChrome,
+      isEdge: av.brs.isEdge,
+      isFirefox: av.brs.isFirefox,
+      isIE: av.brs.isIE,
+      isOpera: av.brs.isOpera,
+      isSafari: av.brs.isSafari
+    };
+
+    av.debug.postData = {
+      version: av.ui.version,
+      userInfo: window.navigator.userAgent,
+      screenSize: av.brs.userData.screen,
+      comment: 'userComment',
+      error: av.debug.error,
+      email: 'user email if provided',
+      triggered: av.debug.triggered,
+      logs: {
+        details: av.debug.dTail,
+        session: av.debug.log
+      },
+      freezer: JSON.stringify(av.fzr),
+      vars: av.debug.vars
+    };
+    //console.log('postData=', av.debug.postData); 
+
+    //Until we get sending data to database figure out. Switch between post and e-mail session log
+    if (false) {
+      console.log('sendLogModalID=', document.getElementById('sendLogModalID') );
+      //Need to be able to get rid of these three lines for postPost. will crash without them now.
+      document.getElementById('sendLogModalID').style.display = "block";  //textarea must be visable first
+      av.dom.sendLogScrollBox.focus();   //must not be commented out or extra error
+      document.getElementById('sendLogModalID').style.display = "none";   //sendLogDialog.hide();  
+      av.post.sendWindow();
+    }
+    //e-mail in production version until database worked out.
+    else {
+      av.post.emailWindow();
+    }
+  };
+
+  av.post.emailWindow = function () {
+    //console.log('in av.post.emailWindow 708');
+    av.dom.sendLogScrollBox.textContent = av.debug.sendLogScrollBox;
+    av.dom.sendLogPara.textContent = av.debug.sendLogPara;
+
+    //document.getElementById('postLogTextarea').textContent = av.debug.sendLogScrollBox;
+    //document.getElementById('postLogPara').textContent = av.debug.sendLogPara;
+
+    document.getElementById('sendLogModalID').style.display = 'block';  //sendLogDialog.show();  //textarea must be visable first
+    av.dom.sendLogScrollBox.focus();
+    //av.dom.sendLogScrollBox.select();  //https://css-tricks.com/snippets/javascript/auto-select-textarea-text/
+  };
+  
+  av.ui.closeSendModalFn = function(){
+    document.getElementById('sendLogmodalID').style.display = 'none';
+  };
+  
+  //--------------------------------------------------------------------------------------------------------------------
+    
+  av.post.sendWindow = function () {
+    console.log('in av.post.sendWindow; used for database; not email');
+    av.dom.postLogPara.textContent = av.post.postLogPara;  //textarea must be visable first
+    document.getElementById('postLogModalID').style.display = 'block';
+    av.dom.postVersionLabel.textContent = av.ui.version;
+    av.dom.postScreenSize.textContent = av.brs.userData.screen;
+    av.dom.postUserInfoLabel.textContent = window.navigator.userAgent.toString();
+    av.dom.postError.textContent = av.debug.error;
+    av.dom.postError.style.color = 'red';
+    av.dom.postEmailLabel.textContent = av.debug.postEmailLabel;
+    av.dom.postNoteLabel.textContent = av.debug.postNoteLabel;
+    av.dom.postStatus.textContent = av.debug.postStatus;
+    av.dom.postLogTextarea.textContent = av.debug.log;
+    av.dom.postdTailTextarea.textContent = av.debug.dTail;
+    av.dom.postProblemError.textContent = '';
+  };
+  
   window.addEventListener('error', function (evt) {
     console.log('In window.addEventListener: event listener', evt);
   });
@@ -688,93 +808,6 @@ require([
   }); // End on's function and on statement
 
   //--------------------------------------------------------------------------------------------------------------------
-  //--------------------------------------------------------------------------------------------------------------------
-  //More usefull websites to catch errors
-  // https://davidwalsh.name/javascript-stack-trace
-  // https://danlimerick.wordpress.com/2014/01/18/how-to-catch-javascript-errors-with-window-onerror-even-on-chrome-and-firefox/
-  //to send e-mail  http://stackoverflow.com/questions/7381150/how-to-send-an-email-from-javascript
-
-  // how to send e-mail
-  // http://www.codeproject.com/Questions/303284/How-to-send-email-in-HTML-or-Javascript
-
-  // selected text
-  // http://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
-  // http://www.javascriptkit.com/javatutors/copytoclipboard.shtml
-  
-  // if (av.dbg.flg.root) { console.log('Root: defore av.ui.problemWindow'); }
-  //process problme pop-up window
-  av.ui.problemWindow = function (from) {
-    console.log(from, 'called av.ui.problemWindow');
-    av.debug.vars = {
-      isBlink: av.brs.isBlink,
-      isChrome: av.brs.isChrome,
-      isEdge: av.brs.isEdge,
-      isFirefox: av.brs.isFirefox,
-      isIE: av.brs.isIE,
-      isOpera: av.brs.isOpera,
-      isSafari: av.brs.isSafari
-    };
-
-    av.debug.postData = {
-      version: av.ui.version,
-      userInfo: window.navigator.userAgent,
-      screenSize: av.brs.userData.screen,
-      comment: 'userComment',
-      error: av.debug.error,
-      email: 'user email if provided',
-      triggered: av.debug.triggered,
-      logs: {
-        details: av.debug.dTail,
-        session: av.debug.log
-      },
-      freezer: JSON.stringify(av.fzr),
-      vars: av.debug.vars
-    };
-    //console.log('postData=', av.debug.postData); 
-
-    //Until we get sending data to database figure out. Switch between post and e-mail session log
-    if (true) {
-      //Need to be able to get rid of these three lines for postPost. will crash without them now.
-      sendLogDialog.show();  //textarea must be visable first
-      av.dom.sendLogTextarea.focus();   //must not be commented out or extra error
-      sendLogDialog.hide();  //
-      av.post.sendWindow();
-    }
-    //e-mail in production version until database worked out.
-    else {
-      av.post.emailWindow();
-    }
-  };
-
-  av.post.sendWindow = function () {
-    console.log('in av.post.sendWindow');
-    postLogDialog.show();  //textarea must be visable first
-    av.dom.postLogPara.textContent = av.post.postLogPara;
-    av.dom.postVersionLabel.textContent = av.ui.version;
-    av.dom.postScreenSize.textContent = av.brs.userData.screen;
-    av.dom.postUserInfoLabel.textContent = window.navigator.userAgent.toString();
-    av.dom.postError.textContent = av.debug.error;
-    av.dom.postError.style.color = 'red';
-    av.dom.postEmailLabel.textContent = av.debug.postEmailLabel;
-    av.dom.postNoteLabel.textContent = av.debug.postNoteLabel;
-    av.dom.postStatus.textContent = av.debug.postStatus;
-    av.dom.postLogTextarea.textContent = av.debug.log;
-    av.dom.postdTailTextarea.textContent = av.debug.dTail;
-    av.dom.postProblemError.textContent = '';
-  };
-
-  av.post.emailWindow = function () {
-    console.log('in av.post.emailWindow');
-    av.dom.sendLogTextarea.textContent = av.debug.sendLogTextarea;
-    av.dom.sendLogPara.textContent = av.debug.sendLogPara;
-
-    //document.getElementById('postLogTextarea').textContent = av.debug.sendLogTextarea;
-    //document.getElementById('postLogPara').textContent = av.debug.sendLogPara;
-
-    sendLogDialog.show();  //textarea must be visable first
-    av.dom.sendLogTextarea.focus();
-    av.dom.sendLogTextarea.select();  //https://css-tricks.com/snippets/javascript/auto-select-textarea-text/
-  };
     
   //********************************************************************************************************************
   // Menu Buttons handling
@@ -901,7 +934,7 @@ require([
     if ('visible' === av.doj.mnDebug.style.visibility) {
       av.doj.mnDebug.style.visibility = 'hidden';
       dijit.byId('mnHpDebug').set('label', 'Show debug menu');
-      av.post.addUser('Button: mnHpDebug: now hidden');
+      av.post.addUser('Button: mnHpDebug: now hidden; avidaED.js');
     } else {
       av.doj.mnDebug.style.visibility = 'visible';
       dijit.byId('mnHpDebug').set('label', 'Hide debug menu');
@@ -910,7 +943,7 @@ require([
   };
 
   av.ui.where = function (domobj) {
-    // placeholder that was to return the cell ID in the grid perhaps never done. 
+    // placeholder that was to return the cell ID in the grid; this was never done. 
     console.log('domobj=', domobj);
   };
 
@@ -918,15 +951,53 @@ require([
   //--------------------------------------------------------------------------------------------------------------------
   // Help Drop down menu buttons
   //--------------------------------------------------------------------------------------------------------------------
-  dijit.byId('mnHpAbout').on('Click', function () {
-    av.post.addUser('Button: mnHpAbout');
-    mnHpAboutDialog.show();
+  
+  // onclick='av.ui.aboutAvidaED'
+  av.ui.aboutAvidaED = function(from) {
+    av.post.addUser('Button: display About Avida-ED from:', from);
+    document.getElementById('aboutAvidaED_ModalID').style.display = 'block';
+    var num = $('#aboutAvidaED_content').height() - ($('#aboutAvidaED_grid_container').height() + 80);
+    console.log('ht = ', num);
+    document.getElementById('avidaEDaboutScrollBox').style.height = num + 'px';
+    console.log('in av.ui.aboutAvidaED: from=', from);    
+  };
+
+  //document.getElementById('aboutAvidaED_Cancel').onclick = function () {
+  av.ui.aboutAvidaED_Close = function() {
+    document.getElementById('aboutAvidaED_ModalID').style.display = 'none';
+  };
+
+  dijit.byId('mnAePreferences').on('Click', function () {
+    av.post.addUser('Button: mnAePreferences');
+    //console.log('in mnAePreferences.click');
+    document.getElementById('preferences_ModalID').style.display = 'block';
   });
 
-  dijit.byId('mnAeAbout').on('Click', function () {
-    av.post.addUser('Button: mnAeAbout');
-    mnHpAboutDialog.show();
-  });
+av.ui.email = function() {
+    av.post.addUser('Button: mnHpAbout');
+    av.ui.emailAvidaED();
+    document.getElementById('email_ModalID').style.display = 'block';
+    console.log('in av.ui.email');    
+  };
+  
+av.ui.closeSendModalFn = () => {
+  document.getElementById('sendLogModalID').style.display = 'none';
+};
+  
+  av.sgr.complexityChange = function (domObj) {
+    console.log('the complexity requested is:', domObj.value);
+    av.sgr.complexityLevel = domObj.value;
+    av.sgr.complexityChangeProcess('av.sgr.complexityChange');
+  };
+   
+  av.ui.language = function (domObj) {
+    av.ui.language = domObj.value;
+    console.log('not yet implemented: the language requested is:', domObj.value);
+  };
+ 
+  av.ui.closePreferences = function () {
+    document.getElementById('preferences_ModalID').style.display = 'none';
+  };
 
   dijit.byId('mnHpProblem').on('Click', function () {
     av.post.addUser('Button: mnHpProblem');
@@ -937,7 +1008,7 @@ require([
     av.debug.sendLogPara = 'Please describe the problem and put that at the beginning of the e-mail along with the session log from the text area seeen below.';
     av.debug.postNoteLabel = 'Please describe the problem or suggestion in the comment field below.';
     av.debug.postEmailLabel = 'Please include your e-mail so we can discuss your problem or suggeston further.';
-    av.debug.sendLogTextarea = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail;
+    av.debug.sendLogScrollBox = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail;
     av.debug.error = '';
     av.dom.postError.style.color = 'grey';
     av.ui.problemWindow("dijit.byId('mnHpProblem').on('Click', function ()");
@@ -945,18 +1016,20 @@ require([
   });
 
   //http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
-  dijit.byId('sendEmail').on('Click', function () {
+  av.ui.sendLogEmailFn = function () {
+    console.log('in sendLogEmailFn');
     av.ui.sendEmailFlag = true;
     av.post.addUser('Button: sendEmail');
     var link = 'mailto:' + av.fio.mailAddress +
       //'?cc=CCaddress@example.com' +
       '?subject=' + escape('Avida-ED session log') +
-      '&body=' + escape(av.debug.log);
+      '&body=' + escape(av.debug.sendLogScrollBox);
     window.location.href = link;
     av.ui.sendEmailFlag = false;
-  });
+  };
 
-  //http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
+/* 
+//http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
   dijit.byId('sendEmail').on('Click', function () {
     av.ui.sendEmailFlag = true;
     av.post.addUser('Button: sendEmail');
@@ -967,6 +1040,7 @@ require([
     window.location.href = link;
     av.ui.sendEmailFlag = false;
   });
+*/
 
   av.debug.finalizeDtail = function () {
     //finalize dTail
@@ -1058,7 +1132,7 @@ require([
       document.getElementById('ritePnlBtnHolder').style.display = 'none';
       document.getElementById('rightInfoHolder').style.display = 'none';
     };
-    console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
+    //console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
   };
 
   // Buttons that call MainBoxSwap
@@ -1095,6 +1169,7 @@ require([
     av.ui.mainBoxSwap('analysisBlock');
     //console.log('after mainBoxSwap to analysisBlock');
     av.anl.AnaChartFn();
+    //console.log('fzWorld wd =', document.getElementById('fzWld').style.width );
   };
 
   // if (av.dbg.flg.root) { console.log('Root: before showTextDebugButton.onclick'); }
@@ -1145,7 +1220,7 @@ require([
         // if the miniplot on the populaton page needs to be updated.
         if ( $(av.dom.popStatsBlock).is(":visible")) {
           if (av.dbg.flg.plt) { console.log('need to call av.grd.popChartInit'); }
-        av.grd.popChartFn('av.ptd.rightInfoPanelToggleButton');
+          av.grd.popChartFn('av.ptd.rightInfoPanelToggleButton');
         }
       };
       //console.log('Stats.class=', document.getElementById('StatsButton').className, '; Setup.class=', document.getElementById('SetupButton').className);
@@ -1190,7 +1265,10 @@ require([
       tablinks[ii].className = tablinks[ii].className = 'tablinks';
       //console.log('tablinks[ii].className =', tablinks[ii].className);
     };
-    //console.log('contentType=',contentType,'; evt=', evt);  //keep because evt info looks useful for improving mouse code.
+    // keep console example because evt info looks useful for improving mouse code.
+    // console.log('contentType=',contentType,'; evt=', evt);
+    // console.log('contentType=', contentType);
+    
     document.getElementById(contentType).className = 'labInfoClass labInfoFlex';;
     evt.currentTarget.className = "tablinks active";
     //console.log('id=', evt.currentTarget.id);
@@ -1209,73 +1287,46 @@ require([
   };
   // ------- end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
 
-  //----------------------------------------------------------------------------------------show/hide left side panel --
-  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.lftPnlButtonImg'); }
-  av.ptd.lftPnlButtonImg = function () {
-    if (av.ui.lftSidePnlShowing) {
-      av.post.addUser('Button: lftPnlButtonImg: start hidding left side panel');
-      av.ui.lftSidePnlShowing = false;
-      //av.ui.navColId = av.dom.navColId.offsetWidth;
-      //av.dom.navColId.style.display = 'none';
-      if ('all3pop' == document.getElementById('allAvidaContainer').className) {
-        document.getElementById('allAvidaContainer').className = 'all2rit';
-      }
-    } else {
-      av.post.addUser('Button: lftPnlButtonImg: start showing left side panel');
-      av.ui.lftSidePnlShowing = true;
-      //av.dom.navColId.style.display = 'flex';
-      //av.dom.rightInfoHolder.style.width = av.ui.navColId + 'px';
-      if ('all2rit' == document.getElementById('allAvidaContainer').className) {
-        document.getElementById('allAvidaContainer').className = 'all3pop';
-      }
-    }
-  };
-  
-  av.dom.lftPnlButtonImg.onclick = function () {
-    ///av.post.addUser('Button: lftPnlButtonImg');   //done in popStatView
-    av.ptd.lftPnlButtonImg();
-  };
-
 //----------------------------------------------------------------------------------------------------------------------
 //                                             Population page Buttons
 //----------------------------------------------------------------------------------------------------------------------
 
 // hides and shows the population and selected organsim data on right of population page with 'Stats/mpa' button
-  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.rtPnlButtonImg'); }
-  av.ptd.rtPnlButtonImg = function () {
-    //console.log('rtPnlButtonImg: av.ui.page=', av.ui.page);
+  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.ritePanelButton'); }
+  av.ptd.ritePanelButton = function () {
+    //console.log('ritePanelButton: av.ui.page=', av.ui.page);
     if ('populationBlock' == av.ui.page) {
       if (av.ui.popStatFlag) {
-        av.post.addUser('Button: rtPnlButtonImg: start hidding population stats');
+        av.post.addUser('Button: ritePanelButton: start hidding population stats');
         av.ui.popStatFlag = false;
         av.ptd.rightInfoHolderWd = av.dom.rightInfoHolder.offsetWidth;
         av.dom.rightInfoHolder.style.display = 'none';
       } else {
-        av.post.addUser('Button: rtPnlButtonImg: start showing population stats');
+        av.post.addUser('Button: ritePanelButton: start showing population stats');
         av.ui.popStatFlag = true;
         av.dom.rightInfoHolder.style.display = 'flex';
         //reset info pane dimensions. Try rightInfoHolderWd = 395px; selOrgTypeWd = 150px
         av.dom.rightInfoHolder.style.width = av.ptd.rightInfoHolderWd + 'px';
-        av.ui.adjustpopInfoSize('av.ptd.rtPnlButtonImg');
+        av.ui.adjustpopInfoSize('av.ptd.ritePanelButton');
       };
     }
     else if ('organismBlock' == av.ui.page) {
       //console.log('av.ui.orgStatFlag=', av.ui.orgStatFlag);
       if (av.ui.orgStatFlag) {
-        av.post.addUser('Button: rtPnlButtonImg: start hidding oranism stats');
+        av.post.addUser('Button: ritePanelButton: start hidding oranism stats');
         av.ui.orgStatFlag = false;
         //console.log('av.dom.orgInfoHolder.offsetWidth=', av.dom.orgInfoHolder.offsetWidth);
         av.ui.orgInfoHolderWd = (av.ui.orgInfoHolderMinWidth > av.dom.orgInfoHolder.offsetWidth) ? 
                                                          av.ui.orgInfoHolderMinWidth : av.dom.orgInfoHolder.offsetWidth;
         av.dom.orgInfoHolder.style.display = 'none';
       } else {
-        av.post.addUser('Button: rtPnlButtonImg: start showing oranism stats');
+        av.post.addUser('Button: ritePanelButton: start showing oranism stats');
         av.ui.orgStatFlag = true;
         av.dom.orgInfoHolder.style.display = 'flex';
         //reset info pane dimensions. 
         //console.log('av.ui.orgInfoHolderWd=', av.ui.orgInfoHolderWd);
         av.dom.orgInfoHolder.style.width = av.ui.orgInfoHolderWd + 'px';
-        //av.ui.adjustOrgInfoSize('av.ptd.rtPnlButtonImg');
+        //av.ui.adjustOrgInfoSize('av.ptd.ritePanelButton');
       };
     }
     else {
@@ -1284,7 +1335,7 @@ require([
     };
   };
 
-  av.dom.rtPnlButtonImg.onclick = function () { av.ptd.rtPnlButtonImg(); };
+  av.dom.ritePanelButton.onclick = function () { av.ptd.ritePanelButton(); };
 
   //--------------------------------------------------------------------------------------------------------------------
   ///   Map Grid buttons - New  Run/Pause Freeze
@@ -1351,6 +1402,7 @@ require([
 
   /******************************************* New Button and new Dialog **********************************************/
 
+  //av.dom.newDishDiscard not in avidaEdEco.html
   av.dom.newDishDiscard.onclick = function () {
     av.post.addUser('Button: newDishDiscard');
     av.dom.newDishModalID.style.display = 'none';
@@ -1358,6 +1410,7 @@ require([
     //console.log('newDishDiscard click');
   };
 
+  // av.dom.newDishSaveConfig not in avidaEdEco.html
   av.dom.newDishSaveWorld.onclick = function () {
     av.post.addUser('Button: newDishSaveWorld');
     av.ptd.FrPopulationFn();
@@ -1366,7 +1419,8 @@ require([
     //console.log('newDishSaveWorld click');
   };
 
-  av.dom.newDishSaveConfig.onclick = function () {
+  av.dom.newDishSaveConfig.onclick = function (domObj) {
+    console.log('in av.dom.newDishSaveConfig, domObj = ', domObj);
     av.post.addUser('Button: newDishSaveConfig');
     av.ptd.FrConfigFn('av.dom.newDishSaveConfig.onclick');
     av.dom.newDishModalID.style.display = 'none';
@@ -1402,24 +1456,29 @@ require([
   //Saves either configuration or populated dish
   //Also creates context menu for all new freezer items.*/
   av.dom.freezeButton.onclick = function () {
+    console.log('in av.dom.freezeButton.onclick: av.grd.runState=', av.grd.runState, '; av.msg.ByCellIDgenome=', av.msg.ByCellIDgenome, '; length=', av.msg.ByCellIDgenome.length);
     av.post.addUser('Button: freezeButton');
     if ('prepping' == av.grd.runState)
       av.ptd.FrConfigFn('av.dom.freezeButton.onclick');
     else {
       if (5 > av.msg.ByCellIDgenome.length) {
-        document.getElementById('FzOrganismSpan').style.display = 'none';
-      }  //block
+        document.getElementById('fzDialogModFzOrganismSpan').style.display = 'none';
+      } 
       else
-        document.getElementById('FzOrganismSpan').style.display = 'inline';
-      fzDialog.show();
+        document.getElementById('fzDialogModFzOrganismSpan').style.display = 'inline';
+      console.log('before fzDialog.show()');
+      document.getElementById('fzDialogModalID').style.display = "block";    //fzDialog.show();
     }
   };
 
-  dijit.byId('FzConfigurationButton').on('Click', function () {
-    av.post.addUser('Button: FzConfigurationButton');
-    fzDialog.hide();
-    av.ptd.FrConfigFn('FzConfigurationButton');
-  });
+
+
+  document.getElementById('fzDialogModSaveConfig').onclick = function () {
+//  dijit.byId('FzConfigurationButton').on('Click', function () {
+    av.post.addUser('Button: fzDialogModSaveConfig');
+    document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide();
+    av.ptd.FrConfigFn('fzDialogModSaveConfig.onClick');
+  };
 
   //Drop down menu to save a configuration item
   dijit.byId('mnFzConfig').on('Click', function () {
@@ -1427,19 +1486,24 @@ require([
     av.ptd.FrConfigFn('mnFzConfig');
   });
 
-  //
-  dijit.byId('FzOrganismButton').on('Click', function () {
-    av.post.addUser('Button: FzOrganismButton');
-    fzDialog.hide();
+    document.getElementById('fzDialogModSaveOrganism').onclick = function () {
+//  dijit.byId('FzOrganismButton').on('Click', function () {
+    av.post.addUser('Button: fzDialogModSaveOrganism');
+    document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide
     av.ptd.FrOrganismFn('selected');
-  });
+  };
 
   //button to freeze a population
-  dijit.byId('FzPopulationButton').on('Click', function () {
-    av.post.addUser('Button: FzPopulationButton');
-    fzDialog.hide();
+  document.getElementById('fzDialogModSaveWorld').onclick = function () {  
+  //dijit.byId('FzPopulationButton').on('Click', function () {
+    av.post.addUser('Button: fzDialogModSaveWorld');
+    document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide
     av.ptd.FrPopulationFn();
-  });
+  };
+  
+  document.getElementById('fzDialogModCancel').onclick = function () {
+    document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide
+  };
 
   dijit.byId('mnFzPopulation').on('Click', function () {
     av.post.addUser('Button: mnFzPopulation');
@@ -1550,13 +1614,10 @@ require([
     console.log('parents', av.parents);
     console.log('av.grd.msg', av.grd.msg);
     console.log('av.grd.popStatsMsg', av.grd.popStatsMsg);
-    console.log('av.dnd.fzConfig', av.dnd.fzConfig);
-    console.log('av.dnd.fzOrgan', av.dnd.fzOrgan);
-    console.log('av.dnd.fzWorld', av.dnd.fzWorld);
-    console.log('av.dnd.fzTdish', av.dnd.fzTdish);
-    console.log('av.dnd.activeConfig', av.dnd.activeConfig);
-    console.log('av.dnd.activeOrgan', av.dnd.activeOrgan);
-    console.log('av.dnd.ancestorBox', av.dnd.ancestorBox);
+    console.log('av.grd.DataByCellID =', av.grd.DataByCellID);
+    console.log('av.pch =', av.pch);
+    console.log('av.dom.popChart.data=', av.dom.popChart.data);
+    console.log('av.anl =', av.anl);
   };
 
   document.getElementById('mnDbThrowError').onclick = function () {
@@ -1590,12 +1651,14 @@ require([
   //if a cell is selected, arrow keys can move the selection
   $(document).keydown(function (event) {
     //av.post.addUser(' ');   //in av.mouse.arrowKeyOnGrid
+    //console.log('keydown.event=', event);
     av.mouse.arrowKeysOnGrid(event);
   });
 
   //av.mouse down on the grid
   $(av.dom.gridCanvas).on('mousedown', function (evt) {
     av.post.addUser('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
+    console.log('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
     av.mouse.downGridCanvasFn(evt);
   });
 
@@ -1694,31 +1757,29 @@ require([
 
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
-    //if (true) {console.log(from, 'called av.grd.drawGridSetupFn'); }
-    av.dom.popBot.style.height = '5px';
+    if (av.dbg.flg.dsz) { console.log(from, 'called av.grd.drawGridSetupFn__________________________________________________'); }
+    av.dom.benchPopBot.style.height = '60px';
 
     //size testing box = mainButtons
-    av.dsz.mainButtonsWd = parseInt($("#mainButtons").css("width"));
-    av.dsz.mainButtonsHt = parseInt($("#mainButtons").css("height"));
-    if (av.debug.uil) { console.log('ui: w:', av.dsz.mainButtonsWd, av.dsz.mainButtonsHt, '= mainButtons'); }
+    av.dsz.mainButtonsWd = parseInt($("#mainButtons").outerWidth());
+    av.dsz.mainButtonsHt = parseInt($("#mainButtons").outerHeight());
+    if (av.dbg.flg.dsz) { console.log('dsz: w:', av.dsz.mainButtonsWd, av.dsz.mainButtonsHt, '= mainButtons'); }
 
     //about total window size
-    av.dsz.windowWd = window.innerWidth || document.documentElement.clientWidth
-      || document.body.clientWidth;
-    av.dsz.windowHd = window.innerHeight || document.documentElement.clientHeight
-      || document.body.clientHeight;
-    if (av.debug.uil)
-      console.log('w:', av.dsz.windowWd, av.dsz.windowHd, '= window');
+    av.dsz.windowWd = window.innerWidth || document.documentElement.clientWidth  || document.body.clientWidth;
+    av.dsz.windowHd = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+    if (av.dbg.flg.dsz) { console.log('dsz: w:', av.dsz.windowWd, av.dsz.windowHd, '= window'); }
 
     if (undefined != av.grd.msg) {
       if ('prepping' != av.grd.runState && undefined != av.grd.msg.fitness) {
         //av.grd.setMapData('av.grd.drawGridSetupFn');  //update color information for offpsring once run has started only if screen visable.
         av.grd.findLogicOutline();
-      }
-    }
+      };
+    };
     if ('populationBlock' === av.ui.page) {
       // Does not seem to change wd/ht of gridHolder
-      if ('None' == document.getElementById('colorMode').value) {
+      if ('none' == document.getElementById('colorMode').value.toLowerCase()) {
         if (av.grd.newlyNone) {
           av.grd.newlyNone = false;
           av.grd.cntx.fillStyle = av.color.names['Black'];
@@ -1731,8 +1792,8 @@ require([
           if ('prepping' != av.grd.runState && undefined != av.grd.msg.fitness) {
             av.grd.setMapData('colorMode != none in av.grd.drawGridSetupFn');  //update color information for offpsring once run has started
             //av.grd.findLogicOutline(); //needs to be done for all updates
-          }
-        }
+          };
+        };
 
         //check if gridHolder is taller or wider
         if (av.dom.gridControlContainer.clientWidth < $("#gridHolder").height()) {
@@ -1740,11 +1801,6 @@ require([
         } else
           av.dom.scaleCanvas.width = $("#gridHolder").height() - 22;  //the 22 was determined by trial and error and works on a mac
 
-        if (av.debug.uil) {
-          console.log('plain, client, offset, scroll, style, jq_innner, jq_reg, jq_outter ______________ after assigning scaleCanvasWidth');
-          console.log('scaleCanvas w:', av.dom.scaleCanvas.width, av.dom.scaleCanvas.clientWidth, av.dom.scaleCanvas.offsetWidth, av.dom.scaleCanvas.scrollWidth, av.dom.scaleCanvas.style.width,
-                        ';  h:', av.dom.scaleCanvas.height, av.dom.scaleCanvas.clientHeight, av.dom.scaleCanvas.offsetHeight, av.dom.scaleCanvas.scrollHeight, av.dom.scaleCanvas.style.height);
-        }
         //figure out scale or legend
         if ('Ancestor Organism' == document.getElementById('colorMode').value) {
           av.grd.drawLegend();
@@ -1752,62 +1808,47 @@ require([
           av.grd.setColorMapOnly('draw gradient scale in av.grd.drawGridSetupFn');  //to set color scales for resources
           av.grd.gradientScale('av.grd.drawGridSetupFn');
         }
-        //console.log('after drawing scale or legend. update=',av.grd.oldUpdate);
-
-        av.dom.popBot.style.height = av.dom.popBot.scrollHeight + 'px';
-        if (av.debug.uil) { console.log('ui: change ht of popBot'); }
-
-        //if (av.debug.uil) { console.log('ui: w:', parseInt($("#gridHolder").css('width')), parseInt($("#gridHolder").css('height')),'= av.dom.gridHolder jQuery.cssWd ht ~ outer ~ offset'); }
-
-        //av.dsz.gridHolderWd = parseInt($("#gridHolder").css("width"));   //this seems to match offsetht
-        //av.dsz.gridHolderHt = parseInt($("#gridHolder").css("height"));
-        //if (av.debug.uil) { console.log('ui: w:',av.dsz.gridHolderWd,av.dsz.gridHolderHt, '= gridHolder jQuery.width ht ~ outer ~ css ~ offset'); }
         
-        if (av.debug.uil) {
-          console.log('plain, client, offset, scroll, style, jq_innner, jq_reg, jq_outter ______________ Before testing to see if gridHolder ht/width is larger');
-          console.log('gridHolder: w: _,',  av.dom.gridHolder.clientWidth, av.dom.gridHolder.offsetWidth, av.dom.gridHolder.scrollWidth, 
-                   av.dom.gridHolder.style.width, $("#gridHolder").innerWidth(), $("#gridHolder").width(), $("#gridHolder").outerWidth(),
-                  '  h: ___, ',  av.dom.gridHolder.clientHeight, av.dom.gridHolder.offsetHeight, av.dom.gridHolder.scrollHeight, 
-                  av.dom.gridHolder.style.height, $("#gridHolder").innerHeight(), $("#gridHolder").height(), $("#gridHolder").outerHeight());
-          console.log('gridCanvas w:', av.dom.gridCanvas.width, av.dom.gridCanvas.clientWidth, av.dom.gridCanvas.offsetWidth, av.dom.gridCanvas.scrollWidth, av.dom.gridCanvas.style.width,
-                        ';  h:', av.dom.gridCanvas.height, av.dom.gridCanvas.clientHeight, av.dom.gridCanvas.offsetHeight, av.dom.gridCanvas.scrollHeight, av.dom.gridCanvas.style.height);
-        }
-        //if (av.dom.gridHolder.style.height < av.dom.gridHolder.clientWidth){
-        //if (av.dom.gridHolder.style.height < av.dom.gridHolder.style.width){
+        if (av.dbg.flg.dsz) { console.log('dsz: scaleCanvas ht =', av.dom.scaleCanvas.height); }
+        //av.dom.gridCanvas.width = 10;
+        av.dom.gridCanvas.height = 10;
+        //av.dom.gridHolder.style.width = '10px';
+        av.dom.gridHolder.style.height = '10px';
+        
+        $('#sclCnvsHldr').height(av.dom.scaleCanvas.height);
+        
+        if (av.dbg.flg.dsz) { console.log('dsz: ', $('#sclCnvsHldr').height(), '= sclCnvsHldr ht'); }
+        
+        if (av.dbg.flg.dsz) { console.log('--------------- gridHolder ht =',$('#gridHolder').height().toFixed(1)); }
+
+        av.dom.benchPopBot.style.height = av.dom.benchPopBot.scrollHeight + 'px';
+
         if ($("#gridHolder").height() < $("#gridHolder").width()) {
           av.grd.canvasSize = Math.floor( $("#gridHolder").height() ) - 4;
           //console.log('smaller height: canvasSize = ', av.grd.canvasSize);
         } else {
           av.grd.canvasSize = Math.floor( $("#gridHolder").width() ) - 2;
           //console.log('smaller width: canvasSize = ', av.grd.canvasSize);
-        }
+        };
+        
+        var sum_ht_in = $('#popTopRw').height() + $('#gridHolder').height() + $('#sclCnvsHldr').height() + $('#benchPopBot').height();
+        var sum_ht_ot = $('#popTopRw').outerHeight(true) + $('#gridHolder').outerHeight(true) + $('#sclCnvsHldr').outerHeight(true) + $('#benchPopBot').outerHeight(true);
+        sum_ht_in = parseFloat(sum_ht_in).toFixed(1);
+        sum_ht_ot = parseFloat(sum_ht_ot).toFixed(1);
+
+        if (av.dbg.flg.dsz) { console.log('dsz: wd ht:   mapHolder: ', $('#mapHolder').width().toFixed(1), $('#mapHolder').height().toFixed(1), $('#mapHolder').outerHeight(true).toFixed(1) ); }
+        if (av.dbg.flg.dsz) { console.log('dsz: wd ht:    popTopRw: ', $('#popTopRw').width().toFixed(1), $('#popTopRw').height().toFixed(1), $('#popTopRw').outerHeight(true).toFixed(1) ); }
+        if (av.dbg.flg.dsz) { console.log('dsz: wd ht:  gridHolder: ', $('#gridHolder').width().toFixed(1), $('#gridHolder').height().toFixed(1), $('#gridHolder').outerHeight(true).toFixed(1) ); }
+        if (av.dbg.flg.dsz) { console.log('dsz: wd ht: sclCnvsHldr:', $('#sclCnvsHldr').width().toFixed(1), $('#sclCnvsHldr').height().toFixed(1), $('#sclCnvsHldr').outerHeight(true).toFixed(1) ); }
+        if (av.dbg.flg.dsz) { console.log('dsz: wd ht: benchPopBot:', $('#benchPopBot').width().toFixed(1), $('#benchPopBot').height().toFixed(1), $('#benchPopBot').outerHeight(true).toFixed(1) ); }
+        if (av.dbg.flg.dsz) {  console.log('dsz: wd ht:         sum: width', sum_ht_in, sum_ht_ot ); }
 
         av.dom.gridCanvas.width = av.grd.canvasSize;
         av.dom.gridCanvas.height = av.grd.canvasSize;
         av.grd.spaceX = av.grd.canvasSize;
         av.grd.spaceY = av.grd.canvasSize;
-        
-        if (av.debug.uil) {
-          console.log('plain, client, offset, scroll, style, jq_innner, jq_reg, jq_outter ______________  Before findGridSize');
-          console.log('gridHolder: w: _,',  av.dom.gridHolder.clientWidth, av.dom.gridHolder.offsetWidth, av.dom.gridHolder.scrollWidth, 
-                   av.dom.gridHolder.style.width, $("#gridHolder").innerWidth(), $("#gridHolder").width(), $("#gridHolder").outerWidth(),
-                  '  h: ___, ',  av.dom.gridHolder.clientHeight, av.dom.gridHolder.offsetHeight, av.dom.gridHolder.scrollHeight, 
-                  av.dom.gridHolder.style.height, $("#gridHolder").innerHeight(), $("#gridHolder").height(), $("#gridHolder").outerHeight());
-          console.log('gridCanvas w:', av.dom.gridCanvas.width, av.dom.gridCanvas.clientWidth, av.dom.gridCanvas.offsetWidth, av.dom.gridCanvas.scrollWidth, av.dom.gridCanvas.style.width,
-                        ';  h:', av.dom.gridCanvas.height, av.dom.gridCanvas.clientHeight, av.dom.gridCanvas.offsetHeight, av.dom.gridCanvas.scrollHeight, av.dom.gridCanvas.style.height);
-        }
-        
+
         av.grd.findGridSize(av.grd, av.parents);
-        
-        if (av.debug.uil) {
-          console.log('plain, client, offset, scroll, style, jq_innner, jq_reg, jq_outter ______________  After findGridSize');
-          console.log('gridHolder: w: _,',  av.dom.gridHolder.clientWidth, av.dom.gridHolder.offsetWidth, av.dom.gridHolder.scrollWidth, 
-                   av.dom.gridHolder.style.width, $("#gridHolder").innerWidth(), $("#gridHolder").width(), $("#gridHolder").outerWidth(),
-                  '  h: ___, ',  av.dom.gridHolder.clientHeight, av.dom.gridHolder.offsetHeight, av.dom.gridHolder.scrollHeight, 
-                  av.dom.gridHolder.style.height, $("#gridHolder").innerHeight(), $("#gridHolder").height(), $("#gridHolder").outerHeight());
-          console.log('gridCanvas w:', av.dom.gridCanvas.width, av.dom.gridCanvas.clientWidth, av.dom.gridCanvas.offsetWidth, av.dom.gridCanvas.scrollWidth, av.dom.gridCanvas.style.width,
-                        ';  h:', av.dom.gridCanvas.height, av.dom.gridCanvas.clientHeight, av.dom.gridCanvas.offsetHeight, av.dom.gridCanvas.scrollHeight, av.dom.gridCanvas.style.height);
-        }
 
         //Need to fix for scrolling   // This was commented out in Avida-ED 3.1
         //if (av.dom.gridHolder.scrollHeight == av.dom.gridHolder.clientHeight + 17) {
@@ -1817,20 +1858,10 @@ require([
         //  consold.log('inside DrawGridSetupFn in odd if statement ----------------------------------');
         //}
 
-        //if (true) { console.log('before av.grd.drawGridUpdate'); }
         av.grd.drawGridUpdate();   //in populationGrid.js
 
-        rescaleLabel.textContent = av.grd.fillRescale;       //Tiba look at later
+        rescaleLabel.textContent = av.grd.fillRescale;
         av.grd.need2DrawGrid = true;
-        if (av.debug.uil) {
-          console.log('plain, client, offset, scroll, style, jq_innner, jq_reg, jq_outter ______________  After av.grd.drawGridUpdate');
-          console.log('gridHolder: w: _,',  av.dom.gridHolder.clientWidth, av.dom.gridHolder.offsetWidth, av.dom.gridHolder.scrollWidth, 
-                   av.dom.gridHolder.style.width, $("#gridHolder").innerWidth(), $("#gridHolder").width(), $("#gridHolder").outerWidth(),
-                  '  h: ___, ',  av.dom.gridHolder.clientHeight, av.dom.gridHolder.offsetHeight, av.dom.gridHolder.scrollHeight, 
-                  av.dom.gridHolder.style.height, $("#gridHolder").innerHeight(), $("#gridHolder").height(), $("#gridHolder").outerHeight());
-          console.log('gridCanvas w:', av.dom.gridCanvas.width, av.dom.gridCanvas.clientWidth, av.dom.gridCanvas.offsetWidth, av.dom.gridCanvas.scrollWidth, av.dom.gridCanvas.style.width,
-                        ';  h:', av.dom.gridCanvas.height, av.dom.gridCanvas.clientHeight, av.dom.gridCanvas.offsetHeight, av.dom.gridCanvas.scrollHeight, av.dom.gridCanvas.style.height);
-        }
       }
     }
   };
@@ -1942,117 +1973,92 @@ require([
     av.grd.popChartFn('av.dom.yaxis. onchange');
   };
 
-  // initialize needs to be in AvidaED.js; cannot be run when mini-graph is not visible. 
-  // Should be done before av.grd.popChartFn is run.
-  
+  //---------------------------------------------------------------------------------------- av.ui.miniChartOptionsFn --
+  av.ui.miniChartOptionsFn = function (domobj) {
+    av.pch.option = domobj.value;
+    av.grd.popChartFn('av.ui.miniChartOptionsFn');    
+  };
+
   // if (av.dbg.flg.root) { console.log('Root: before av.grd.popChartInit defined'); }
+  // initialize needs to be in AvidaED.js; cannot be run when mini-graph is not visible. 
+  //--------------------------------------------------------------------------------------------- av.grd.popChartInit --
+  // Should be done before av.grd.popChartFn is run.  
   av.grd.popChartInit = function (from) {
-    //console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
-    //                '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display, '; av.ui.page=', av.ui.page, 
-    //                '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
+    var data;
+    console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
+                   '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display, '; av.ui.page=', av.ui.page, 
+                    '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
     
     if (av.dbg.flg.plt) { 
       console.log(from , 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
                     '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
     }
+    //
     //look to see if poplulation page mini-chart is showing
     //if ('flex' != av.dom.popStatsBlock.style.display || ('populationBlock' !== av.ui.page)) {
     if ( !$(av.dom.popStatsBlock).is(":visible") ) {
       av.pch.needInit = true;
-      if (av.dbg.flg.plt) { console.log('PopPlot:',from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit); }
       return;
+      // chart is not visible don't try to write chart
     };
     
+    //minichart is visible on population page
     av.pch.clearPopChrt();
     av.pch.divSize('av.grd.popChartInit');
-    var popData = av.pch.data;
+    av.pch.popData = av.pch.data;
 
     //if (av.dbg.flg.plt) { console.log('PopPlot: dom of popChart=', document.getElementById('popChart') ); }
     if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart=', av.dom.popChart); }
     if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
     
-    if (undefined == av.dom.popChart.data) {
-      if (av.dbg.flg.plt) { console.log('PopPlot: before plotly.plot in popChartInit'); }
-      av.debug.log += '\n     --uiD: Plotly.plot("popChart", popData, av.pch.layout, av.pch.widg) in AvidaED.js at 1949';
-      av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'popData, av.pch.layout, av.pch.widg', [popData, av.pch.layout, av.pch.widg]);
-      if (av.dbg.flg.plt) { console.log('PopPlot: popData=', popData); }
-      if (av.dbg.flg.plt) { console.log('PopPlot: av.pch.layout=', av.pch.layout); }
-      if (av.dbg.flg.plt) { console.log('PopPlot: av.pch.widg=', av.pch.widg); }
-      if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
-      
-      Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
-      
-      if (av.debug.uil) { console.log('ui: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
-      if (av.dbg.flg.plt) console.log('after plotly.plot in poChartInit');
-    } else {
-      //av.pch.update = {
-      //  xaxis: {range: [0, 10]}, yaxis: {range: [0, 1]},
-      //  width: av.pch.layout.width,
-      //  height: av.pch.layout.height
-      //};
-      if (av.dbg.flg.plt) { console.log('PopPlot: av.pch.layout.width ht=', av.pch.layout.width, av.pch.layout.height); }
+//    if (null == av.dom.popChart.data) {
+    if (true) {
       av.pch.update = {
         autorange: true,
         width: av.pch.layout.width,
         height: av.pch.layout.height
       };
-
-      if (av.dbg.flg.plt) { console.log('PopPlot: popData', popData); }
-      //Plotly.purge(av.dom.popChart);      //does not seem to work once plotly.animate has been used
-      if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=', av.dom.popChart.data); }
-      
+      data = [];
+      Plotly.newPlot(av.dom.popChart, data, av.pch.update);
+    } 
+    else {
       if (undefined != av.dom.popChart.data[0]) {
-        av.debug.log += '\n     --uiD: Plotly: Plotly.deleteTraces(av.dom.popChart, [0, 1]) in AvidaED.js at 2133';
-        av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart', [av.dom.popChart]);
         Plotly.deleteTraces(av.dom.popChart, [0, 1]);
-        av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in av.grd.popChartInit in AvidaED.js at 2182';
-        av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
         Plotly.relayout(av.dom.popChart, av.pch.update);
         if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
-      }
-    }
+      };
+    };
+
     av.dom.popChart.style.visibility = 'hidden';
-    if (av.dbg.flg.plt) { console.log('PopPlot: layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width); }
+    //if (av.dbg.flg.plt) { console.log('PopPlot: layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width); }
     av.pch.needInit = false;
   };
   // if (av.dbg.flg.root) { console.log('Root: after av.grd.popChartInit defined'); }
 
    //Draw popChartFn
+  //----------------------------------------------------------------------------------------------- av.grd.popChartFn --
   av.grd.popChartFn = function (from) {
     'use strict';
+    var popData;
+    var numof;
+    var jj = 0; //count y data arrays
+    
     //console.log(from, 'called popChartFn: av.pch.needInit= ', av.pch.needInit, 
     //                  '; $(statsBlock.display = ', $(av.dom.popStatsBlock).css('display'),
     //                  '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display,
     //                  '; av.ui.page=', av.ui.page,
-    //                  '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));      
+    //                  '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));     
     //console.log('PopPlot:',from, 'called popChartFn: av.pch.needInit= ', av.pch.needInit, 
-    //                  '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));      
+    //                  '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible")); 
     if (av.pch.needInit) {
       //console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, '; av.ui.page=', av.ui.page);
-      // if the miniplot on the populaton page needs to be initiated call that funciton.
-      // In this situation, av.dom.popStatsBlock.style.display does not give the correct answer; 
-      // my guess is because display is changed by changing the class rather than by changing the element directly
-      //if ('flex' == $(av.dom.popStatsBlock).css('display') && ('populationBlock' == av.ui.page) && av.pch.needInit) {
-      //
-      // a shorter version see if the mini-graph is om the page. 
-      //if ( $(av.dom.popStatsBlock).is(":visible") && av.pch.needInit ) {
-      
-      //Older if statement that works better, but not the data for popStatsBlock.sytle.display are wrong 
-      // if the miniplot on the populaton page needs to be initiated call that:
-      //    av.dom.popStatsBlock.style.display never is 'flex' so 
-      //           av.grd.popChartInit('av.grd.popChartFn'); never called
-      // 
-      // console.log('popStatsBlock = ', $(av.dom.popStatsBlock).css('display'), '; av.pch.needInit=', av.pch.needInit);
-      //if ('flex' == av.dom.popStatsBlock.style.display && ('populationBlock' == av.ui.page) && av.pch.needInit) {
 
-      
+      //initialize if needed; but condistion seems wrong.
       if ( !$(av.dom.popStatsBlock).is(":visible") ) {
         if (av.dbg.flg.plt) { console.log('PopPlot: if $popStatsBlock is visible & needInit - then call popChartInit'); }
         av.grd.popChartInit('av.grd.popChartFn');
         if (av.dbg.flg.plt) { console.log('PopPlot: av.grd.runState = ', av.grd.runState); }
       };
-    } else { 
-      if (av.dbg.flg.plt) { console.log('PopPlot: av.grd.runState = ', av.grd.runState); }
     };
 
     // Do not display chart if the chart is not on the screen. Data seems to be getting updated. need to verify this.
@@ -2062,182 +2068,199 @@ require([
     };
     
     if (av.dbg.flg.plt) { console.log('PopPlot: av.grd.runState = ', av.grd.runState); }
-    if ('prepping' === av.grd.runState) {   //values can be prepping, started, or world
-      av.dom.popChart.style.visibility = 'hidden';  //hide mini-chart when a dish is not running
-    } else {
-      av.dom.popChart.style.visibility = 'visible';
-      if ('none' === document.getElementById('yaxis').value) {
-        //the data arrays still need to be updated - hope that happens someplace else. 
-        
-        if (undefined !== av.dom.popChart.data) {
-          // Took the next 3 lines out on 2019_1217 because it did not make sense to me to delete Traces. This could be the wrong thing
-          //av.debug.log += '\n     --uiD: Plotly: Plotly.deleteTraces(av.dom.popChart, [0, 1]) in AvidaED.js at 1621';
-          //av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart', [av.dom.popChart]);
-          //Plotly.deleteTraces(av.dom.popChart, [0, 1]);
+    //values can be prepping, started, or world
+    if ('prepping' === av.grd.runState) {
+      av.dom.popChart.style.visibility = 'hidden';  //hide mini-chart when an experiment is not running. 
+      av.pch.noneWas = av.pch.noneNow;
+      av.pch.noneNow = true;
+      return;
+    };
+    av.pch.chartContained = av.pch.chartContains;
+    av.pch.organismWasTrait = av.pch.organismTrait;
+    av.pch.chartContains = document.getElementById('miniCharts').value;
+    av.pch.organismTrait = document.getElementById('yaxis').value;
+    if (av.dbg.flg.plt) { console.log('av.pch.chartContains=', av.pch.chartContains, '; av.pch.organismTrait=', av.pch.organismTrait); }
 
-          // Not purging Plotly. so took the followling out.
-          //if (av.dbg.flg.plt) { console.log('PopPlot: before purge in popChartFn'); }
-          //Plotly.purge(av.dom.popChart);      //does not seem to work once plotly.animate has been used
-          //if (av.dbg.flg.plt) { console.log('PopPlot: after purge in popChartFn'); }
-        }
+    if ('none' === av.pch.chartContains) {
+      av.pch.noneWas = av.pch.noneNow;
+      av.pch.noneNow = true;
+      av.dom.popChart.style.visibility = 'hidden';
+      if (undefined !== av.dom.popChart.data) {
+        console.log('av.dom.popChart.data is', av.dom.popChart.data);
+      };
+      console.log('chart containts none');
+      return;
+    };
+    
+    // process chart options and y-axis for organisms. 
+    av.dom.popChart.style.visibility = 'visible';  
+    // this adusts the size. Seems like the size should only change when window/div changes size rather than checking very time. 
+    av.pch.divSize('av.grd.popChartFn');
+    //console.log('after av.pch.divSize');
+    
+    if ('organism' == av.pch.chartContains || 'combined' == av.pch.chartContains
+      || 'offspring' == av.pch.chartContains ) {
+      
+      //not in current use. Seems if the y-axis had not changed we might not need to redo case statement
+      if (document.getElementById('yaxis').value === av.pch.yValue) {
+        av.pch.yChange = false;
       } else {
-        // this is the adust the size. Seems like the size should only change when window/div changes size rather than checking very time. 
-        av.pch.divSize('av.grd.popChartFn');
-
-        if (document.getElementById('yaxis').value === av.pch.yValue)
-          av.pch.yChange = false;
-        else {
-          av.pch.yChange = true;
-          av.pch.yValue = document.getElementById('yaxis').value;
-        };
-        //console.log('av.pch.maxFit=',av.pch.aveMaxFit, '; av.pch.logMaxFit=',av.pch.logMaxFit, '; av.pch.aveFit = ', av.pch.aveFit);
-        //console.log('av.pch.logFit = ', av.pch.logFit);
-        if ('Average Fitness' === document.getElementById('yaxis').value) {
+        av.pch.yChange = true;
+        av.pch.yValue = document.getElementById('yaxis').value;
+      };
+      if (av.dbg.flg.plt) { console.log('av.pch.yChange=', av.pch.yChange, '; av.pch.chartContains=', av.pch.chartContains, '; jj=', jj); }
+      //console.log('av.pch.maxFit=',av.pch.aveMaxFit, '; av.pch.logMaxFit=',av.pch.logMaxFit, '; av.pch.aveFit = ', av.pch.aveFit);
+      //console.log('av.pch.logFit = ', av.pch.logFit);
+      switch (av.pch.organismTrait) {
+        case 'Average Fitness':
           av.pch.popY = av.pch.aveFit;
+          av.pch.dadY = av.pch.aveDadFit;
           av.pch.logY = av.pch.logFit;
-          //console.log('av.pch.maxFit=',av.pch.aveMaxFit, '; av.pch.logMaxFit=',av.pch.logMaxFit);
           av.pch.maxY = (av.pch.aveMaxFit > av.pch.logMaxFit) ? av.pch.aveMaxFit : av.pch.logMaxFit;
+          //console.log('av.pch.maxFit=',av.pch.aveMaxFit, '; av.pch.logMaxFit=',av.pch.logMaxFit);
           //console.log('aveMaxFit=', av.pch.aveMaxFit, '; logMaxFit=', av.pch.logMaxFit, '; maxY=', av.pch.maxY);
           //console.log('aveFit', av.pch.aveFit);
           //console.log('logFit', av.pch.logFit);
-        } else if ('Average Offspring Cost' == document.getElementById('yaxis').value) {
+          break;
+        case 'Average Offspring Cost':
           av.pch.popY = av.pch.aveCst;
+          av.pch.dadY = av.pch.aveDadCst;
           av.pch.logY = av.pch.logCst;
           av.pch.maxY = (av.pch.aveMaxCst > av.pch.logMaxCst) ? av.pch.aveMaxCst : av.pch.logMaxCst;
-        } else if ('Average Energy Acq. Rate' == document.getElementById('yaxis').value) {
-          av.pch.popY = av.pch.aveEar;
-          av.pch.logY = av.pch.logEar;
-          av.pch.maxY = (av.pch.aveMaxEar > av.pch.logMaxEar) ? av.pch.aveMaxEar : av.pch.logMaxEar;
-        } else if ('Number of Organisms' == document.getElementById('yaxis').value) {
-          av.pch.popY = av.pch.aveNum;
-          av.pch.logY = av.pch.logNum;
-          av.pch.maxY = (av.pch.aveMaxNum > av.pch.logMaxNum) ? av.pch.aveMaxNum : av.pch.logMaxNum;
-        } else if ('Number Viable' == document.getElementById('yaxis').value) {
-          av.pch.popY = av.pch.aveVia;
-          av.pch.logY = av.pch.logNum;
-          av.pch.maxY = (av.pch.aveMaxVia > av.pch.logMaxNum) ? av.pch.aveMaxVia : av.pch.logMaxNum;
-        } else {
-          av.pch.yValue = 'none';
-          av.pch.popY = [];
-          av.pch.logY = [];
-          av.pch.maxY = 0.1;
-        }
-        //console.log('xx   after', av.pch.xx);
-        //console.log('popY after', av.pch.logY);
-        //console.log('maxY', av.pch.maxY);
-        //console.log('logY after', av.pch.logY);
+          break;
+        case 'Average Energy Acq. Rate':
+        av.pch.popY = av.pch.aveEar;
+        av.pch.dadY = av.pch.aveDadEar;
+        av.pch.logY = av.pch.logEar;
+        av.pch.maxY = (av.pch.aveMaxEar > av.pch.logMaxEar) ? av.pch.aveMaxEar : av.pch.logMaxEar;
+          break;
+        case 'Number of Organisms':
+        av.pch.popY = av.pch.aveNum;
+        av.pch.dadY = av.pch.aveDadVia;
+        av.pch.logY = av.pch.logNum;
+        av.pch.maxY = (av.pch.aveMaxNum > av.pch.logMaxNum) ? av.pch.aveMaxNum : av.pch.logMaxNum;
+          break;
+        case 'Number Viable':
+        av.pch.popY = av.pch.aveVia;
+        av.pch.dadY = av.pch.aveDadVia;
+        av.pch.logY = av.pch.logNum;
+        av.pch.maxY = (av.pch.aveMaxVia > av.pch.logMaxNum) ? av.pch.aveMaxVia : av.pch.logMaxNum;
+        default:
+        av.pch.yValue = 'none';
+        av.pch.popY = [];
+        av.pch.logY = [];
+        av.pch.maxY = 0.1;
+          break;
+      }; //end switch
+      
+      //console.log('xx   after', av.pch.xx);
+      //console.log('popY after', av.pch.logY);
+      //console.log('maxY', av.pch.maxY);
+      //console.log('logY after', av.pch.logY);
 
-        //av.pch.trace0 = {x:av.pch.xx, y:av.pch.popY, type:'scatter', mode: 'lines'};
-        //av.pch.trace1 = {x:av.pch.xx, y:av.pch.logY, type:'scatter', mode: 'lines'};
-        av.pch.trace0.x = av.pch.xx;
-        av.pch.trace0.y = av.pch.popY;
-        av.pch.trace1.x = av.pch.xx;
-        av.pch.trace1.y = av.pch.logY;
-        //console.log('trace0',av.pch.trace0);
-        //console.log('trace1',av.pch.trace1);
-
-        //var popData = [av.pch.trace0];
-        var popData = [av.pch.trace0, av.pch.trace1];
-        var rstl0 = {x: [av.pch.xx], y: [av.pch.popY]};
-        var rstl1 = {x: [av.pch.xx], y: [av.pch.logY]};
-
-        //if (av.pch.yChange) {
-        if (false) {
-          av.pch.yChange = false;
-          av.pch.layout.width = av.pch.pixel.wd - av.pch.pixel.wdif;
-          av.pch.layout.height = av.pch.pixel.ht - av.pch.pixel.hdif;
-          if (av.dbg.flg.plt) { console.log('PopPlot: before purge in update grid chart'); }
-          av.debug.log += '\n     --uiD: Plotly: Plotly.purge(av.dom.popChart)  in AvidaED.js at 1690';
-          av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart', [av.dom.popChart]);
-          Plotly.purge(av.dom.popChart);
-          if (av.dbg.flg.plt) { console.log('PopPlot: after purge in update grid chart'); }
-          av.debug.log += '\n     --uiD: Plotly: Plotly.plot("popChart", popData, av.pch.layout, av.pch.widg)  in AvidaED.js at 1694';
-          av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'popData, av.pch.layout, av.pch.widg', [popData, av.pch.layout, av.pch.widg]);
-          Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
-          //Plotly.plot('popChart', popData, av.pch.layout);
-          if (av.dbg.flg.plt) { console.log('PopPlot: purge chart.popData=', av.dom.popChart.data); }
-          //console.log('purge chart.layout=', av.dom.popChart.layout);
-        } else {
-          //av.pch.update = {
-          //  xaxis: {range: [0, av.pch.popY.length + 1]}, yaxis: {range: [0, 1.1 * av.pch.maxY]},
-          //  width: av.pch.layout.width,
-          //  height: av.pch.layout.height
-          //};
-          if (av.debug.uil) { console.log('ui: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
-          if (av.debug.uil) { console.log('ui: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
-
-          av.pch.update = {
-            autorange: true,
-            width: av.pch.layout.width,
-            height: av.pch.layout.height
-          };
-          //av.pch.update = {xaxis: {range: [0, av.pch.popY.length+1]}, yaxis: {range: [0, av.pch.maxY]}};
-
-          //console.log('before relayout in update grid chart');
-          if (av.dbg.flg.plt) { console.log('PopPlot: av.pch.update', av.pch.update); }
-
-          if (undefined == av.dom.popChart.data) {
-            if (av.dbg.flg.plt) { console.log('PopPlot: before plot'); }
-            av.debug.log += '\n     --uiD: Plotly: Plotly.plot("popChart", popData, av.pch.layout, av.pch.widg)  in AvidaED.js at 1714';
-            av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'popData, av.pch.layout, av.pch.widg', [popData, av.pch.layout, av.pch.widg]);
-            Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
-            if (av.dbg.flg.plt) { console.log('PopPlot: after plot'); }
-          } else if (0 == av.dom.popChart.data.length) {
-            if (av.dbg.flg.plt) { console.log('PopPlot: before plot'); }
-            av.debug.log += '\n     --uiD: Plotly: Plotly.plot("popChart", popData, av.pch.layout, av.pch.widg) in AvidaED.js at 1724';
-            av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'popData, av.pch.layout, av.pch.widg', [popData, av.pch.layout, av.pch.widg]);
-            Plotly.plot('popChart', popData, av.pch.layout, av.pch.widg);
-          } else {
-            if (av.brs.isChrome) {
-              av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", rstl0, [0]) at 1734';
-              av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'rstl0', [rstl0]);
-              Plotly.restyle('popChart', rstl0, [0]);
-              av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", rstl1, [1])  in AvidaED.js at 1738';
-              av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'rstl1', [rstl1]);
-              Plotly.restyle('popChart', rstl1, [1]);
-              av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in AvidaED.js at 1741';
-              av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
-              Plotly.relayout(av.dom.popChart, av.pch.update);
-            } else {
-              //console.log('trace0', av.pch.trace0);
-              //Plotly.restyle(graphDiv, update, [1, 2]);
-              //Plotly.restyle(av.dom.popChart, av.pch.trace0, [0]);
-              //Plotly.restyle(av.dom.popChart, av.pch.trace1, [1]);
-              av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in AvidaED.js at 2304';
-              av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
-              if (undefined == av.pch.update) {
-                av.pch.update = {
-                  autorange: true,
-                  width: av.pch.layout.width,
-                  height: av.pch.layout.height
-                };
-              }
-              ;
-              //trying to figure out why plotly crashed. 
-              //When these were added 2019_08, plotly crased because div holding plotly was not being displayed
-              //console.log('av.debug.log = ', av.debug);
-              //console.log('av.dom.popChart=',av.dom.popChart);
-              //console.log('av.pch.update=', av.pch.update);   // should look like av.pch.update= {autorange: true, width: 544, height: 236}
-              //console.log('av=', av);
-              //next line crashes ------------------
-              Plotly.relayout(av.dom.popChart, av.pch.update);
-              //console.log('after relayout in update grid chart');
-              //Error: Uncaught TypeError: Cannot read property 'width' of undefined from 
-              //http://localhost:8003/lib/plotly.js:114473:53
-
-              if (av.dbg.flg.plt) { console.log('PopPlot: popData', popData); }
-              //Plotly.animate('popChart', {popData});
-              av.debug.log += '\n     --uiD: Plotly.animate("popChart", {popData}) in AvidaED.js at 1757';
-              av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'popData', [popData]);
-              Plotly.animate('popChart', {popData});
-              if (av.dbg.flg.plt) { console.log('PopPlot: after animate in update grid chart'); }
-            }
-          }
-          if (av.dbg.flg.plt) { console.log('PopPlot: chart.popData=', av.dom.popChart.data); }
-          if (av.dbg.flg.plt) { console.log('PopPlot: chart.layout=', av.dom.popChart.layout); }
-        }
+      // tiba delete in 2021
+      // I don' think these are used
+      //av.pch.tracePop.x = av.pch.xx;
+      //av.pch.tracePop.y = av.pch.popY;
+      //av.pch.traceLog.x = av.pch.xx;
+      //av.pch.traceLog.y = av.pch.logY;
+      //console.log('trace0',av.pch.tracePop);
+      //console.log('trace1',av.pch.traceLog);
+    
+      //av.pch.tracePop = {x:av.pch.xx, y:av.pch.popY, type:'scatter', mode: 'lines', name: 'Population'};
+      //av.pch.traceLog = {x:av.pch.xx, y:av.pch.logY, type:'scatter', mode: 'lines', name: 'Function Subset'};
+      //av.pch.popData = [av.pch.tracePop];
+    
+      av.pch.tracePop.y = av.pch.popY;
+      av.pch.traceLog.y = av.pch.logY;
+      av.pch.popData = [av.pch.tracePop, av.pch.traceLog]; //popData
+      av.pch.traceList = [];
+      
+      av.pch.traceList[jj] = {x: [av.pch.xx], y: [av.pch.popY]};
+      av.pch.traceList[jj+1] = {x: [av.pch.xx], y: [av.pch.logY]};
+      jj = jj+2;
+      if ('offspring' == av.pch.chartContains) {
+        av.pch.traceDad.y = av.pch.dadY;
+        av.pch.popData = [av.pch.tracePop, av.pch.traceLog, av.pch.traceDad]; //popData
+        jj++;
       }
-    }
+    }; // chart contains trait determined by yaxis select dom-object
+    if (av.dbg.flg.plt) { console.log('jj=', jj, '; av.pch.popData=', av.pch.popData, '; av.pch.chartContains=', av.pch.chartContains ); }
+
+    if ('resource' == av.pch.chartContains || 'combined' == av.pch.chartContains) {
+
+      // need to check to see if there are any valid global resources before adding them to the structure
+      //console.log('cntGlobalDataTask=', av.nut.cntGlobalDataTasks, '; av.pch.resrcGlobal=', av.pch.resrcGlobal);
+      if (0 < av.nut.cntGlobalDataTasks) {
+        for (var ii=0; ii < av.sgr.numTasks; ii++) {
+          numTsk = av.sgr.logEdNames[ii];
+          tsk = av.sgr.logicNames[ii];
+           av.pch.sgr[numTsk] = av.pch.resrcGlobal[tsk];
+           av.pch.trc[numTsk].x = av.pch.xx;
+           av.pch.trc[numTsk].y = av.pch.sgr[numTsk];
+           av.pch.popData[ii+jj] = av.pch.trc[numTsk];
+           av.pch.traceList[ii+jj] = {x: [av.pch.xx], y: [ av.pch.sgr[numTsk] ]};
+        };
+      };
+    };  // end of chart contains amount of resource
+ 
+    if (true) {
+      numof = av.pch.traceList.length;
+      if (av.debug.uil) { console.log('ui: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
+      if (av.debug.uil) { console.log('ui: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
+
+      av.pch.update = {
+        autorange: true,
+        width: av.pch.layout.width,
+        height: av.pch.layout.height
+      };
+
+      if (av.pch.chartContained != av.pch.chartContains) { av.dom.popChart.data = null; }
+
+      //if (av.dom.popChart.data) console.log('av.dom.popChart.data.length=', av.dom.popChart.data.length);
+      if (null == av.dom.popChart.data || 0 == av.dom.popChart.data.length) {
+        Plotly.plot('popChart', av.pch.popData, av.pch.layout, av.pch.widg);
+        console.log('av.dom.popChart.data is', av.dom.popChart.data);
+      } else {
+        if (av.brs.isChrome) {
+          console.log('av.brs.isChrome=', av.brs.isChrome);
+          for (var ii=0; ii< numof; ii++) {
+            av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", av.pch.traceList['+ii+'], ['+ii+'])';
+            av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.pch.traceList[]', [av.pch.traceList[ii]]);
+            Plotly.restyle('popChart', av.pch.traceList[ii], [ii]);
+          };
+          av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
+          Plotly.relayout(av.dom.popChart, av.pch.update);
+        } else {
+          if (av.dbg.flg.plt) { console.log('av.brs.isChrome=', av.brs.isChrome, ); }
+          //Plotly.restyle(graphDiv, update, [1, 2]);
+          //Plotly.restyle(av.dom.popChart, av.pch.tracePop, [0]);
+          //Plotly.restyle(av.dom.popChart, av.pch.traceLog, [1]);
+          av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in AvidaED.js at 2304';
+          av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
+          if (undefined == av.pch.update) {
+            av.pch.update = {
+              autorange: true,
+              width: av.pch.layout.width,
+              height: av.pch.layout.height
+            };
+          };
+          // the div holding the chart  must be 'visible' for plotly actions to work. 
+          Plotly.relayout(av.dom.popChart, av.pch.update);
+          //console.log('after relayout in update grid chart');
+
+          if (av.dbg.flg.plt) { console.log('PopPlot: av.pch.popData', av.pch.popData); }
+          av.debug.log += '\n     --uiD: Plotly.animate("popChart", {av.pch.popData}) in AvidaED.js at 1757';
+          av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.pch.popData', [av.pch.popData]);
+          //plotly.animate will not accept a . in the variable name so the 
+          popData = av.pch.popData;
+          Plotly.animate('popChart', {popData});
+          if (av.dbg.flg.plt) { console.log('PopPlot: after animate in update grid chart'); }
+        }
+      };
+      if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=', av.dom.popChart.data); }
+      if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.layout=', av.dom.popChart.layout); }
+    };  //end of true
   };
 
 //--------------------------------------------------------------- ************** Tiba whhy does is this functions empty?
@@ -2322,98 +2345,85 @@ require([
     av.grd.drawGridSetupFn('av.ptd.popSizeFn');
   };
 
-/*------------------------------------------------------------------------------------------ av.ptd.muteInputChange --*/
-  av.ptd.muteInputChange = function (value, muteErroTest) {
-    var muteNum = Number(value);
-    if (av.debug.uil) { console.log('ui: muteNum=', muteNum); }
-    if (muteNum >= 0 && muteNum <= 100) {
-      av.ptd.validMuteInuput = true;
-      document.getElementById(muteErroTest).style.color = 'black';
-      document.getElementById(muteErroTest).innerHTML = '';
-      document.getElementById(muteErroTest).innerHTML = '';
-    } else {
-      av.ptd.validMuteInuput = false;
-      document.getElementById(muteErroTest).style.color = 'red';
-      document.getElementById(muteErroTest).innerHTML = '';
-      av.dom.userMsgLabel.innerHTML = '';
-      if (muteNum <= 0) {
-        document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be >= than zero percent. ';
-        if (av.debug.popCon) { console.log('<0'); }
-      }
-      if (muteNum >= 100) {
-        document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be 100% or less. ';
-        if (av.debug.popCon) { console.log('>0'); }
-      }
-      if (isNaN(muteNum)) {
-        document.getElementById(muteErroTest).innerHTML += 'Mutation rate must be a valid number. ';
-        if (av.debug.popCon) { console.log('==NaN'); }
-      }
-    };
-  };
 
-/*------------------------------------------------------------------------------------------ av.ptd.randInputChange --*/
-  av.ptd.randInputChange = function (value, randErroTest) {
-    var randNum = Number(value);
-    if (av.debug.uil) { console.log('ui: randNum=', randNum); }
-    if (randNum >= -1 && randNum <= 1000000) {
-      av.ptd.validMuteInuput = true;
-      document.getElementById(randErroTest).style.color = 'black';
-      document.getElementById(randErroTest).innerHTML = '';
-      document.getElementById(randErroTest).innerHTML = '';
-    } else {
-      av.ptd.validMuteInuput = false;
-      document.getElementById(randErroTest).style.color = 'red';
-      document.getElementById(randErroTest).innerHTML = '';
-      av.dom.userMsgLabel.innerHTML = '';
-      if (randNum <= -1) {
-        document.getElementById(randErroTest).innerHTML += 'Random Seed must be > -1. ';
-        if (av.debug.popCon) { console.log('<0'); }
+// changing the base does not seem change position on the slider
+
+//-------------------------------------------------------------------------------------------- $(function slidePopmute() --
+   $(function slidePopMute() {
+    // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 
+    // the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, 
+    // so I multiplied by 200 to get 100.000% to get a reasonable number of values for the pixils in the slide
+    //console.log('before defaultslide value');
+    var muteSlideDefault = 95.4242509439325;
+    // results in 2% as a default 
+    var muteDefault = (Math.pow(10, (muteSlideDefault / 200)) - 1).toFixed(1);
+    var slides = $('#mutePopSlide').slider({
+      range: 'min',   /*causes the left side of the scroll bar to be grey */
+      value: muteSlideDefault,
+      min: 0.0,
+      max: 401,
+      theme: 'summer',
+      slide: function (event, ui) {
+        var tmpVal = (Math.pow(10, (ui.value / 200)) - 1);
+        if (10 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }     //had been 12, but 10 is more consistent with 2 sig figs
+        else if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
+        else if (0.3 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
+        else {tmpVal = tmpVal.toFixed(2); }
+        //put the value in the text box 
+        // console.log('input', tmpVal, '; slide=', ui.value);
+        $('#mutePopInput').val(tmpVal); //put slider value in the text near slider 
       }
-      if (randNum >= 1000000) {
-        document.getElementById(randErroTest).innerHTML += 'Random Seed must be 1,000,000 or less. ';
-        if (av.debug.popCon) { console.log('>0'); }
-      }
-      if (isNaN(randNum)) {
-        document.getElementById(randErroTest).innerHTML += 'Random Seed must be a valid number. ';
-        if (av.debug.popCon) { console.log('==NaN'); }
-      }
-    };
-  };
+    });
+    // initialize
+     $('#mutePopInput').val(muteDefault);
+    
+    /*update slide based on textbox */
+    $('#mutePopInput').change(function () {
+      var value = this.value;
+      var muteNum = parseFloat(value);
+      //if (av.debug.uil) { console.log('ui: muteNum=', muteNum); }
+      if (muteNum >= 0 && muteNum <= 100) {
+        av.ptd.validMuteInuput = true;
+        av.dom.mutePopError.style.color = 'black';
+        av.dom.mutePopError.innerHTML = '';
+        //update slide value
+        slides.slider('value', 200 * av.utl.log(10,1 + (muteNum)));
+        //console.log('value=', muteNum, '; slide=', 200 * av.utl.log(10,1 + (muteNum) ) );
+        
+        //av.ind.settingsChanged = true;
+        if (av.debug.trace) { console.log('Mute changed', av.ind.settingsChanged); };
+        av.post.addUser('mutePopInput =' + av.dom.mutePopInput.value,  '1add ? 949');
+      } 
+      else {
+        av.ptd.validMuteInuput = false;
+        av.dom.mutePopError.style.color = 'red';
+        av.dom.mutePopError.innerHTML = '';
+        av.dom.userMsgLabel.innerHTML = '';
+        if (muteNum <= 0) {
+          av.dom.mutePopError.innerHTML += 'Mutation rate must be >= than zero percent. ';
+          if (av.debug.popCon) { console.log('<0'); }
+        }
+        if (muteNum >= 100) {
+          av.dom.mutePopError.innerHTML += 'Mutation rate must be 100% or less. ';
+          if (av.debug.popCon) { console.log('>0'); }
+        }
+        if (isNaN(muteNum)) {
+          av.dom.mutePopError.innerHTML += 'Mutation rate must be a valid number. ';
+          if (av.debug.popCon) { console.log('==NaN'); }
+        }
+      };
+    });
+  });
 
   /********************************************************************************** enviornment (sugar) settings ****/
-
-/*----------------------------------------------------------------------------------------- av.ui.ex1setSugarColors --*/
-  av.ui.ex1setSugarColors = function () {
-    var sugarSection = ['ex1notSection', 'ex1nanSection', 'ex1andSection', 'ex1ornSection', 'ex1oroSection', 'ex1antSection', 'ex1norSection', 'ex1xorSection', 'ex1equSection'];
-    var len = av.sgr.sugarColors.length;
-    var ndx = av.sgr.sugarBackgroundShade;
-    for (ii = 0; ii < len; ii++) {
-      //console.log('ii=',ii,'SugarSection=', sugarSection[ii]);
-      if ('allLocal' != document.getElementById('ex1allSugarChange').value) {
-        document.getElementById(sugarSection[ii]).style.backgroundColor = av.color.greyMap[ndx];
-      } else {
-        document.getElementById(sugarSection[ii]).style.backgroundColor = av.color[av.sgr.sugarColors[ii]][ndx];
-      }
-    };
-  };
-
-/*-------------------------------------------------------------------------------------- ex1allSugarChange.onChange --*/
-  document.getElementById('ex1allSugarChange').onchange = function () {
-    var allSugar = document.getElementById('ex1allSugarChange').value;
-    av.ptd.ex1allSugarChange(allSugar);
-    av.ui.ex1setSugarColors();
-    document.getElementById('ex1allSugarChange').value = 'allNeutral';
-  };
-
-// end of ex1 and tst2 page stuff
-
   /**************************************************************************** Tests for Population Setup section ****/
 
 //------------------------------------------------------------------------------------------------- av.ptd.gridChange --
   av.ptd.gridChange = function (domObj) {
-    if (av.dbg.flg.nut) { console.log('in av.ptd.gridChange; domObj.id =', domObj.id); }
+    // if (av.dbg.flg.popSetup ) { console.log('popSetup: in av.ptd.gridChange; domObj.id =', domObj.id); }
     var colNum = Number(av.dom.sizeCols.value);
     var rowNum = Number(av.dom.sizeRows.value);
+    var gridSize = colNum * rowNum;
     //console.log('col, row=', colNum, rowNum);
     if (colNum > 0 && colNum <= 100 && rowNum > 0 && rowNum <= 100) {
       //console.log('valid response');
@@ -2424,8 +2434,10 @@ require([
       av.grd.drawGridSetupFn('av.ptd.gridChange');
     } else {
       av.ptd.validGridSize = false;
-      if (colNum > 0 && colNum <= 100)
+      if (colNum > 0 && colNum <= 100) {
         av.dom.sizeCols.style.color = 'black';
+        av.dom.sizeCells.innerHTML += 'there are '+ gridSize;
+      }
       else
         av.dom.sizeCols.style.color = 'red';
       if (rowNum > 0 && rowNum <= 100)
@@ -2433,32 +2445,32 @@ require([
       else
         av.dom.sizeRows.style.color = 'red';
       av.dom.sizeCells.style.color = 'red';
-      if (av.dbg.flg.nut) { console.log('not valid; col, row=', colNum, rowNum); }
+      // if (av.dbg.flg.popSetup ) { console.log('popSetup: not valid; col, row=', colNum, rowNum); }
       av.dom.sizeCells.innerHTML = '';
       av.dom.userMsgLabel.innerHTML = '';
       if (colNum <= 0) {
         av.dom.sizeCells.innerHTML += 'Number of columns must be greater than zero. ';
-        if (av.dbg.flg.nut) { console.log('<0'); }
+        // if (av.dbg.flg.popSetup ) { console.log('popSetup: <0'); }
       }
       if (colNum >= 100) {
         av.dom.sizeCells.innerHTML += 'Number of columns must be 100 or less. ';
-        if (av.dbg.flg.nut) { console.log('>0'); }
+        // if (av.dbg.flg.popSetup ) { console.log('popSetup: >0'); }
       }
       if (isNaN(colNum)) {
         av.dom.sizeCells.innerHTML += 'Number of columns must be a valid number. ';
-        if (av.dbg.flg.nut) { console.log('==NaN'); }
+        // if (av.dbg.flg.popSetup ) { console.log('popSetup: ==NaN'); }
       }
       if (rowNum <= 0) {
-        av.dom.sizeCells.innerHTML += 'Number of rows must be greater than zero. ';
-        if (av.dbg.flg.nut) { console.log('<0'); }
+        av.dom.sizeCells.innerHTML += 'Number rof rows must be greater than zero. ';
+        // if (av.dbg.flg.popSetup ) { console.log('popSetup: <0'); }
       }
       if (rowNum >= 100) {
         av.dom.sizeCells.innerHTML += 'Number of rows must be 100 or less. ';
-        if (av.dbg.flg.nut) { console.log('>0'); }
+        // if (av.dbg.flg.popSetup ) { console.log('popSetup: >0'); }
       }
       if (isNaN(rowNum)) {
         av.dom.sizeCells.innerHTML += 'Number of rows must be a valid number. ';
-        if (av.dbg.flg.nut) { console.log('==NaN'); }
+        // if (av.dbg.flg.popSetup ) { console.log('popSetup: ==NaN'); }
       }
     }
   };
@@ -2514,78 +2526,6 @@ require([
       }
     }
   };
-
-//-------------------------------------------------------------------------------------------- $(function slidemute() --
-   $(function slidemute() {
-    /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
-    /* the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, */
-    /* so I multiplied by 100,000 to get 100.000% to come out even. */
-    //console.log('before defaultslide value');
-    var muteSlideDefault = 109861.0;
-    var muteVal;
-    /* results in 2% as a default */
-    var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3);
-    var slides = $('#muteSlide').slider({
-      // range: 'min',   /*causes the left side of the scroll bar to be grey */
-      value: muteSlideDefault,
-      min: 0.0,
-      max: 461512,
-      slide: function (event, ui) {
-        var muteVal = (Math.pow(Math.E, (ui.value / 100000)) - 1).toFixed(3);
-        av.post.addUser('muteInput =' + muteVal, ' in AvidaED.js line 1855');
-        //$( '#mRate' ).val( ui.value);  /*put slider value in the text above the slider */
-        $('#muteInput').val(muteVal);
-        /*put the value in the text box */
-      }
-    });
-    /* initialize */
-    //$( '#mRate' ).val( ($( '#muteSlide').slider( 'value' )));  //used in testing nonlinear scale
-    $('#muteInput').val(muteDefault);
-    /*update slide based on textbox */
-    $('#muteInput').change(function () {
-      //muteVal = 100000 * Math.log(1 + (parseFloat(this.value)));
-      muteVal = parseFloat(this.value);
-      slides.slider('value', muteVal);
-      $('#mRate').val(muteVal);
-
-
-      //Not sure the section below does anything expcept example about debug data collection.
-      av.post.data1 = {
-        'changed': 'muteInput',
-        'muteInput': muteVal.formatNum(1)
-      };
-      av.post.data2 = {
-        'operation': 'assign',
-        'object': ['muteInput'],
-        'value': [muteVal.formatNum(1)]
-      };
-      av.post.data = {
-        'operation': 'assign',
-        'name': 'muteInput',
-        'vars': ['muteInput', 'person'],
-        'value': [muteVal.formatNum(1), 'fred']
-      };
-
-      av.post.data = {
-        'operation': 'button',
-        'name': 'runPause',
-        'vars': {'update': 5},
-        'assumptions': {'av.dom.runStopButton.textContent': 'Run'}
-      };
-      av.post.data = {
-        'operation': 'DojoDnd',
-        'name': 'fz2Grid',
-        'vars': {'source': 'av.dnd.fzOrgan', 'nodeDir': 'g0', 'target': 'av.dnd.popGrid', 'xGrid': 4, 'yGrid': 9},
-        //// need dom Id associated with @ancestor.
-        'assumptions': {'nodeName': '@ancestor'}    //condition, constraint
-      };
-      //usr:
-      av.post.addUser('muteInput =' + muteVal.formatNum(1), ' in AvidaED.js line 1865');
-      av.post.usrOneline(av.post.data, 'in AvidaED.js line 1868');
-      //console.log('in mute change');
-
-    });
-  });
 
 //xxs------------------------------------------------------------------------------------ dojo controls that will change --
    dojo.connect(dijit.byId('childParentRadio'), 'onClick', function () {
@@ -2643,20 +2583,35 @@ require([
 
   av.dom.autoPauseNum.onchange = function () {
     av.post.addUser(': autoPauseNum = ' + av.dom.autoPauseNum.value);
-    av.ui.autoStopValue = av.dom.autoPauseNum.value;
+    av.ui.autoStopValue = av.dom.autoPauseNum.value;   //switching to using av.dom.autoPauseNum.value directly
     //console.log('autoPauseNum=', av.dom.autoPauseNum.value);
   };
-
-
-  dojo.connect(dijit.byId('manualUpdateRadiTest'), 'onClick', function () {
-    av.post.addUser('Button: manualUpdateRadiTest');
-    av.ui.autoStopFlag = false;
-  });
 
   dojo.connect(dijit.byId('autoUpdateRadiTest'), 'onClick', function () {
     av.post.addUser('Button: autoUpdateRadiTest');
     av.ui.autoStopFlag = true;
   });
+
+  av.ptd.pauseSlctFn = (domObj) => {
+    var value = document.getElementById('pauseCriteria').value;
+    console.log('puaseCriteria=', value);
+    if ('update' == value ) {
+      av.dom.itemDone1st.style.display = 'none';
+      av.dom.autoPauseNum.style.display = 'inline-block';
+      av.dom.pausePrefix.innerHTML = 'Pause Run at ';
+      av.dom.pauseMidText.innerHTML = '';
+    } else {
+      // stop based on first task criteria
+      av.dom.itemDone1st.style.display = 'inline-block';
+      av.dom.autoPauseNum.style.display = 'none';
+      av.dom.pausePrefix.innerHTML = 'Pause Run when ';
+      av.dom.pauseMidText.innerHTML = ' ';
+    };
+  };
+  
+  av.ptd.sgr1stSlctFn = () => {
+    var value = document.getElementById('itemDone1st').value;
+  };
 
   //********************************************************************************************************************
   //  Read Default Workspace as part of initialization
@@ -2693,43 +2648,78 @@ require([
     av.dom.ExecuteAbout.style.width = '100%';    
   };
   
-//--------------------------------------------------------------------------------------------------- $ slideOrganism --
+  //--------------------------------------------------------------------------------------------------- $ slideOrganism --
   $(function slideOrganism() {
     /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
     /* the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, */
-    /* so I multiplied by 100,000 to get 100.000% to come out even. */
+    /* so I multiplied by 400 to get a range .from 0 to 802 for a slide that uses 800 pixels */
     //console.log('before defaultslide value');
-    var muteSlideDefault = 109861.0;
+    var muteSlideDefault = 190.848501887865;
     /* results in 2% as a default */
-    var muteDefault = (Math.pow(Math.E, (muteSlideDefault / 100000)) - 1).toFixed(3);
-    var slides = $('#orMuteSlide').slider({
-      // range: 'min',   /*causes the left side of the scroll bar to be grey */
+    var muteDefault = (Math.pow(10, (muteSlideDefault / 400)) - 1).toFixed(1);
+    var slides = $('#orgMuteSlide').slider({
+      orientation: "vertical",
+      range: 'min',   /*causes the left side of the scroll bar to be grey */
       value: muteSlideDefault,
       min: 0.0,
-      max: 461512,
+      max: 802,
       slide: function (event, ui) {
-        //$( '#orMRate' ).val( ui.value);  /*put slider value in the text near slider */
-        $('#orMuteInput').val((Math.pow(Math.E, (ui.value / 100000)) - 1).toFixed(3));
-        /*put the value in the text box */
+        var tmpVal = (Math.pow(10, (ui.value / 400)) - 1);
+        if (12 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }
+        else if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
+        else if (0.3 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
+        else {tmpVal = tmpVal.toFixed(2); }
+         //console.log('mutation rate =', tmpVal, 'slider = ', ui.value);
+        $('#orgMuteInput').val(tmpVal); //put slider value in the text near slider 
+        //put the value in the text box 
         av.ind.settingsChanged = true;
         if (av.debug.trace) { console.log('orSlide changed', av.ind.settingsChanged); }
       }
     });
-    /* initialize */
-    //$( '#orMRate' ).val( ($( '#orMuteSlide').slider( 'value' )));
-    //$( '#orMuteInput' ).val(muteDefault+'%');
-    $('#orMuteInput').val(muteDefault);
-    /*update slide based on textbox */
+    // initialize
+    $('#orgMuteInput').val(muteDefault);
     
-    $('#orMuteInput').change(function () {
-      slides.slider('value', 100000.0 * Math.log(1 + (parseFloat(this.value))));
-      av.ind.settingsChanged = true;
-      if (av.debug.trace) { console.log('orMute changed', av.ind.settingsChanged); }
-      //$( '#orMRate' ).val( 100000*Math.log(1+(parseFloat(this.value))) );
-      if (av.debug.trace) console.log('in mute change');
-      av.post.addUser('muteInput =' + dijit.byId('orMuteInput').get('value') + '1949');
+    // update slide based on textbox 
+    $('#orgMuteInput').change(function () {
+      var value = this.value;
+      var muteNum = Number(value);
+      //if (av.debug.uil) { console.log('ui: muteNum=', muteNum); }
+      if (muteNum >= 0 && muteNum <= 100) {
+        av.ptd.validMuteInuput = true;
+        console.log();
+        av.dom.muteOrgError.style.color = 'black';
+        av.dom.muteOrgError.innerHTML = '';
+        //update slide value
+        slides.slider('value', 400 * av.utl.log(10,1 + (muteNum)));
+        av.ind.settingsChanged = true;
+        if (av.debug.trace) { console.log('Mute changed', av.ind.settingsChanged); };
+        //console.log('value=', muteNum, '; slide=', 400 * av.utl.log(10,1 + (muteNum) ) );
+        av.post.addUser('orgMuteInput =' + document.getElementById('orgMuteInput').value,  '1add ? 949');
+      } 
+      else {
+        av.ptd.validMuteInuput = false;
+        av.dom.muteOrgError.style.color = 'red';
+        av.dom.muteOrgError.innerHTML = '';
+        av.dom.userMsgLabel.innerHTML = '';
+        if (muteNum <= 0) {
+          av.dom.muteOrgError.innerHTML += 'Mutation rate must be >= than zero percent. ';
+          if (av.debug.popCon) { console.log('<0'); }
+        }
+        if (muteNum >= 100) {
+          av.dom.muteOrgError.innerHTML += 'Mutation rate must be 100% or less. ';
+          if (av.debug.popCon) { console.log('>0'); }
+        }
+        if (isNaN(muteNum)) {
+          av.dom.muteOrgError.innerHTML += 'Mutation rate must be a valid number. ';
+          if (av.debug.popCon) { console.log('==NaN'); }
+        }
+      }
     });
   });
+
+  //triggers flag that requests more data when the settings dialog is closed.
+  //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
+//----------------------------------------------------------------------------------------------------------------------  
 
   //triggers flag that requests more data when the settings dialog is closed.
   //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
@@ -2738,6 +2728,7 @@ require([
     av.post.addUser('Button: OrganExperimentRadio');
     av.ind.settingsChanged = true;
   });
+  
   dojo.connect(dijit.byId('OrganDemoRadio'), 'onClick', function () {
     av.ind.settingsChanged = true;
     av.post.addUser('Button: OrganDemoRadio');
@@ -2923,12 +2914,243 @@ require([
   //********************************************************************************************************************
   // if (av.dbg.flg.root) { console.log('Root: before Resize helpers'); }
 
- 
+  av.removeVerticalScrollBars = function () {
+    if (av.debug.uil) { console.log('ui: documentElement Ht, scroll client', document.documentElement.scrollHeight, document.documentElement.clientHeight); }
+    if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
+      document.documentElement.style.height = document.documentElement.clientHeight + 'px';
+    };
+
+    //initialize the ht for main buttons and trash can so there is no scroll bar
+    if (av.dom.mainButtons.scrollHeight > av.dom.mainButtons.clientHeight) {
+      av.dom.mainButtons.style.height = av.dom.mainButtons.scrollHeight + 'px';
+    };
+    if (av.debug.uil) { console.log('ui: trashDivHt.client,scroll=', av.dom.trashDiv.clientHeight, av.dom.trashDiv.scrollHeight); }
+    if (av.dom.trashDiv.scrollHeight > av.dom.trashDiv.clientHeight) {
+      av.dom.trashDiv.style.height = av.dom.trashDiv.scrollHeight + 'px';
+    };
+    if (av.dom.orgTopId.scrollHeight > av.dom.orgTopId.clientHeight) {
+      av.dom.orgTopId.style.height = av.dom.orgTopId.scrollHeight + 'px';
+    };
+    if (av.debug.uil) { console.log('ui: orgBot Ht', av.dom.orgBotId.scrollHeight, av.dom.orgBotId.clientHeight); }
+    if (av.dom.orgBotId.scrollHeight > av.dom.orgBotId.clientHeight) {
+      av.ui.orgBotIdNum = av.dom.orgBotId.scrollHeight + 9;
+      av.dom.orgBotId.style.height = av.ui.orgBotIdNum + 'px';
+    };
+  };
+
+  //on 2018_0823 this is where height gets messed up when loading the program. 
+   av.pch.divSize = function (from) {
+    if (av.dbg.flg.divsize) { 
+      console.log('plt: PopPlotSize: ',from, 'called av.pch.divSize +++++++++++++++++++++++++++++++');
+      console.log('plt: popChrtHolder: css.h=', $("#popChrtHolder").css('height'), '; ht=', $('#popChrtHolder').height(), 
+          '; innerHt=', $('#popChrtHolder').innerHeight(), '; outerHt=', $('#popChrtHolder').outerHeight(), 
+          '; outherHt(true)=', $('#popChrtHolder').outerHeight(true), '; offsetHt=', av.dom.popChrtHolder.offsetHeight );
+      console.log('plt: popChrtHolder: css.wd, wd, innerWd, outerWd, outherWd(true)', $("#popChrtHolder").css('width'), 
+            $('#popChrtHolder').innerWidth(), $('#popChrtHolder').outerWidth(), $('#popChrtHolder').outerWidth(true) );
+      console.log('plt: ');
+    };
+    
+    av.pch.pixel.ht = $('#popChrtHolder').height();
+    av.pch.pixel.wd = $('#popChrtHolder').width();
+    //console.log(from, 'called av.pch.divSize: av.pch.pixel.wd=', av.pch.pixel.wd, '; av.pch.pixel.ht=', av.pch.pixel.ht);
+    av.pch.layout.height = av.pch.pixel.ht - av.pch.pixel.hdif;  //leave a bit more vertical space for plot;
+    av.pch.layout.width = av.pch.pixel.wd - av.pch.pixel.wdif;   //leave more horizontal space to right of plot;
+    
+    //av.dom.popChrtHolder.style.width = av.pch.layout.width+'px';
+    //av.dom.popChrtHolder.style.height = av.pch.layout.height+'px';
+    
+    if (av.dbg.flg.divsize) { console.log('plt: PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
+    if (av.dbg.flg.divsize) { console.log('plt: PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
+
+    //console.log('av.pch.layout. wt & ht:', av.pch.layout.width, av.pch.layout.height, '~~~~~~~~~~~~~~~~~~~~~');
+    av.dom.popChart.style.height = av.pch.layout.height + 'px';
+    av.dom.popChart.style.width = av.pch.layout.width + 'px';
+    if (av.debug.uil) {
+      console.log('ui: PopPlotSize: popChart css.wd, border, padding, margin=', $("#popChart").css('width'), $("#popChart").css('height')
+        , $("#popChart").css('border'), $("#popChart").css('padding'), $("#popChart").css('margin'));
+    }
+    if (av.debug.uil) {
+      console.log('ui: PopPlotSize: av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight,
+        av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'), 10));
+    }
+    if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
+    if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
+    //av.debug.uil = false;
+  };
+
+  av.anl.divSize = function (from) {
+    if (av.debug.alo) { console.log('alo: ', from, 'called av.anl.divSize'); }
+    //console.log(from,'anaChrtHolder Ht client scroll ', av.dom.anaChrtHolder.clientHeight, av.dom.anaChrtHolder.scrollHeight);
+    //console.log(from,'anlDndChart Ht client scroll', av.dom.anlDndChart.clientHeight, av.dom.anlDndChart.scrollHeight);
+    //console.log(from,'anlChrtSpace Ht client scroll', av.dom.anlChrtSpace.clientHeight, av.dom.anlChrtSpace.scrollHeight);
+
+    if (av.debug.alol) { console.log('alo: av.dom.anaChrtHolder.clientWd, Ht=', av.dom.anaChrtHolder.clientWidth, av.dom.anaChrtHolder.clientHeight); }
+    av.anl.ht = av.dom.anaChrtHolder.clientHeight - 1;
+    av.anl.wd = av.dom.anaChrtHolder.clientWidth - 1;
+    av.dom.anaChrtHolder.style.height = av.anl.ht + 'px';
+    av.anl.ht = av.dom.anaChrtHolder.clientHeight - 6;
+    av.dom.anlChrtSpace.style.height = av.anl.ht + 'px';
+    av.dom.anlChrtSpace.style.width = av.anl.wd + 'px';
+    av.anl.layout.height = av.anl.ht;
+    av.anl.layout.width = av.anl.wd;
+  };
+
+  // called from script in html file as well as below
+  av.ui.browserResizeEventHandler = function (from) {
+    if (true) { console.log(from, 'called av.ui.browserResizeEventHandler'); }
+    if ('none' !== domStyle.get('analysisBlock', 'display')) {
+      av.anl.AnaChartFn();
+    }
+    if ('none' !== domStyle.get('populationBlock', 'display')) {
+      //av.ui.resizePopLayout('av.ui.browserResizeEventHandler popBlock');  //does not work
+      if (av.debug.uil) {
+        console.log('ui: av.grd.canvasSize =', av.grd.canvasSize, '; av.dom.gridCanvas.width = ', av.dom.gridCanvas.width,
+          '; av.dom.gridHolder.clientHeight=', av.dom.gridHolder.clientHeight);
+      }
+      if (av.grd.need2DrawGrid) {
+        av.grd.popChartFn('av.ui.browserResizeEventHandler');
+        if (av.debug.uil) { console.log('ui: av.grd.need2DrawGrid=', av.grd.need2DrawGrid); }
+        //av.grd.drawGridSetupFn('av.ui.browserResizeEventHandler when pop=flex');
+      }
+    }
+    if ('none' !== domStyle.get('organismBlock', 'display')) {
+      var rd = $('#orgDetailID').innerHeight();
+      av.ui.adjustOrgInstructionTextAreaSize();
+      av.ind.updateOrgTrace('av.ui.browserResizeEventHandler');
+    }
+  };
+
   //console.log('before resize function');
   $(window).resize(function () {
     // av.ui.resizePopLayout('window.resize');    //does not work.
   });
-  
+
+
+  //This function does not work. make grid get larger and larger
+  av.ui.resizePopLayout = function (from) {
+    //console.log(from, 'called av.ui.resizePopLayout');
+    var extraGridWd = 0;  //positive there is extra to distribute; negative need more space.
+    var popSideWdSum = av.dom.navColId.offsetWidth + av.dom.rightInfoHolder.offsetWidth;
+    av.ui.allAvidaWd = av.dom.allAvida.offsetWidth;
+    av.ui.navColIdWd = av.dom.navColId.offsetWidth;
+    av.ui.mapHolderWd = av.dom.mapHolder.offsetWidth;
+    av.ui.gridHolderWd = av.dom.gridHolder.offsetWidth;
+    av.ui.rightInfoHolderWd = av.dom.rightInfoHolder.offsetWidth;
+
+    av.ui.allAvidaHt = av.dom.allAvida.offsetHeight;
+    av.ui.mapHolderHd = av.dom.mapHolder.offsetHeight;
+    av.ui.popTopHd = av.dom.popTopRw.offsetHeight;
+    av.ui.gridHolderHd = av.dom.gridHolder.offsetHeight;
+    av.ui.benchPopBotHd = av.dom.benchPopBot.offsetHeight;
+
+    //https://stackoverflow.com/questions/590602/padding-or-margin-value-in-pixels-as-integer-using-jquery
+    //console.log('gridHolder_margin' ,$("#gridHolder").css("margin"), '; popChart=', $("#popChart").css('margin'));
+
+    if (av.debug.uil) { 
+      console.log('ui: Wd: allAvida navColId mapHolder gridHolder rightInfoHolder, sum', av.dom.allAvida.offsetWidth,
+        av.dom.navColId.offsetWidth, av.dom.mapHolder.offsetWidth, av.dom.rightInfoHolder.offsetWidth,
+        av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.rightInfoHolder.offsetWidth);
+      console.log('ui: Wd: popStatsBlock selOrgType sum', av.dom.popStatsBlock.offsetWidth, av.dom.selOrgType.clientWidth,
+        av.dom.popStatsBlock.offsetWidth + av.dom.selOrgType.clientWidth);
+
+      console.log('ui: Ht; allAvida, mapHolder, popTopRw, gridHolder, benchPopBot sum', av.dom.allAvida.offsetHeight,
+        av.dom.mapHolder.offsetHeight, av.dom.popTopRw.offsetHeight, av.dom.gridHolder.offsetHeight,
+        av.dom.benchPopBot.offsetHeight, av.dom.popTopRw.offsetHeight + av.dom.gridHolder.offsetHeight + av.dom.benchPopBot.offsetHeight);
+      }
+    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight && av.dom.gridHolder.offsetWidth > av.ui.popGridCtlWdMin) {
+      //set grid size based on height and distribute extra width.
+      extraGridWd = av.dom.gridHolder.offsetWidth - av.dom.gridHolder.offsetHeight;
+      popSideWdSum = popSideWdSum + extraGridWd;
+      if (av.debug.uil) { console.log('ui: av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight); }
+      //av.dom.gridCanvas.width = av.dom.gridHolder.clientHeight;     //no style for canvas; style needed for div
+      //av.dom.gridCanvas.height = av.dom.gridHolder.clientHeight;
+      av.dom.gridCanvas.width = $("#gridHolder").height();     //no style for canvas; style needed for div
+      av.dom.gridCanvas.height = $("#gridHolder").height();
+
+      if (av.debug.uil) { console.log('ui: av.dom.gridCanvas.wd ht', av.dom.gridCanvas.width, av.dom.gridCanvas.height); }
+      if (av.debug.uil) { console.log('ui: av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight); }
+      av.dom.navColId.style.width = (0.3 * popSideWdSum) + 'px';
+      av.dom.popStatsBlock.style.width = (0.7 * popSideWdSum) + 'px';
+      av.dom.setupBlock.style.width = (0.7 * popSideWdSum) + 'px';
+      av.dom.selOrgType.style.width = (0.33 * popSideWdSum) + 'px';
+    } else {
+      // set grid size based on width   
+      av.dom.gridCanvas.width = $("#gridHolder").width();     //no style for canvas; style needed for div
+      av.dom.gridCanvas.height = $("#gridHolder").width();
+    }
+  };
+
+  av.ui.chngPopWidth = function (from) {
+    if (av.debug.uil) { console.log('ui: ', from, 'called av.ui.chngPopWidth'); }
+    av.dom.rightInfoHolder.style.width = rightInfoHolderWd + 'px';
+    av.dom.setupBlock.style.width = rightInfoHolderWd + 'px';
+    av.dom.popStatsBlock.style.width = rightInfoHolderWd + 'px';
+    av.dom.selOrgType.style.width = ((rightInfoHolderWd / 2).toFixed(0)) + 'px';
+  };
+
+  av.ui.adjustpopInfoWd = function (adjustGridWd) {
+    var rightInfoHolderWd = av.dom.rightInfoHolder.offsetWidth - adjustGridWd;  //adjustGridWd postive means Grid needs width
+    if (av.debug.uil) { console.log('ui: rightInfoHolderWd=', rightInfoHolderWd, '; av.ui.rightInfoHolderMinWd', av.ui.rightInfoHolderMinWd); }
+    if (rightInfoHolderWd < av.ui.rightInfoHolderMinWd) {
+      var navColWd = av.dom.navColId.offsetWidth;
+      if (av.debug.uil) { console.log('ui: navColWd=', navColWd, '; rightInfoHolderWd=', rightInfoHolderWd, ''); }
+      navColWd = (.33 * (navColWd + rightInfoHolderWd)).toFixed(0);
+      rightInfoHolderWd = navColWd * 2;
+      av.dom.navColId.style.width = navColWd + 'px';
+      if (av.debug.uil) { console.log('ui: navColWd=', navColWd, '; rightInfoHolderWd=', rightInfoHolderWd, '; mapHolder=', av.dom.mapHolder.offsetWidth); }
+    }
+    av.dom.rightInfoHolder.style.width = rightInfoHolderWd + 'px';
+    av.dom.setupBlock.style.width = rightInfoHolderWd + 'px';
+    av.dom.popStatsBlock.style.width = rightInfoHolderWd + 'px';
+    rightInfoHolderWd = (rightInfoHolderWd / 2).toFixed(0); //Math.round(rightInfoHolder/2);
+    av.dom.selOrgType.style.width = rightInfoHolderWd + 'px';
+    if (av.debug.uil) { console.log('ui: set selOrgType to ', rightInfoHolderWd + 'px'); }
+    if (av.debug.uil) { console.log('ui: gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth); }
+  };
+
+  //Adjust Statistics area width based on gridholder size and shape. gridholder should be roughly square
+  av.ui.adjustpopInfoSize = function (from) {
+    var adjustGridWd = 0;
+    if (av.debug.uil) { 
+      console.log('ui: av.ui.adjustpopInfoSize was called from: ', from);
+      console.log('ui: gridHolder.wd=', av.dom.gridHolder.offsetWidth);
+      console.log('ui: navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, '; rightInfoHolder.wd=', av.dom.rightInfoHolder.offsetWidth);
+      console.log('ui: allAvida=', av.dom.allAvida.offsetWidth, '; sum= ',
+        av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.rightInfoHolder.offsetWidth);
+      console.log('ui: rightInfoHolder.offsetWidth, clientwidth =', av.dom.rightInfoHolder.offsetWidth, av.dom.rightInfoHolder.clientWidth);
+      console.log('ui: popStatsBlock.offsetWidth, clientwidth =', av.dom.popStatsBlock.offsetWidth, av.dom.popStatsBlock.clientWidth);
+      console.log('ui: selOrgType.offsetWidth, clientwidth =', av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
+      console.log('ui: av.ui.popGridCtlWdMin=', av.ui.popGridCtlWdMin, '; gridHolder.offsetWidt=', av.dom.gridHolder.offsetWidth);
+    }
+    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight) {
+      adjustGridWd = av.dom.gridHolder.offsetHeight - av.dom.gridHolder.offsetWidth; //adjustGridWd negative means grid holder is too wide.
+      av.ui.adjustpopInfoWd(adjustGridWd);
+    }
+    if (av.ui.popGridCtlWdMin > av.dom.gridHolder.offsetWidth) {
+      adjustGridWd = av.ui.popGridCtlWdMin - av.dom.gridHolder.offsetWidth;
+      av.ui.adjustpopInfoWd(adjustGridWd);
+    };
+    if (av.debug.uil) {
+      console.log('ui: gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
+      console.log('ui: navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth,
+        '; rightInfoHolder.wd=', av.dom.rightInfoHolder.offsetWidth);
+      console.log('ui: allAvida=', av.dom.allAvida.offsetWidth, '; sum= ',
+        av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.rightInfoHolder.offsetWidth);
+
+      console.log('ui: popInfo.offsetWidth, clientwidth =', av.dom.rightInfoHolder.offsetWidth, av.dom.rightInfoHolder.clientWidth);
+      console.log('ui: popStatsBlock.offsetWidth, clientwidth =', av.dom.popStatsBlock.offsetWidth, av.dom.popStatsBlock.clientWidth);
+      console.log('ui: selOrgType.offsetWidth, clientwidth =', av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
+    }
+    av.dom.gridCanvas.style.width = (av.dom.gridHolder.clientHeight - 2) + 'px';
+    av.dom.gridCanvas.style.height = av.dom.gridCanvas.offsetWidth + 'px';
+    av.dom.scaleCanvas.style.width = (av.dom.gridControlContainer.clientWidth - 1) + 'px';
+
+    if (av.debug.uil) {
+      console.log('ui: av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
+      console.log('ui: ==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
+    }
+  };
+
   // **************************************************************************************************************** */
   //                                                Analysis Page
   // **************************************************************************************************************** */
@@ -2939,20 +3161,21 @@ require([
     av.anl.divSize('anaChartInit');
 
     if (undefined !== av.dom.anlChrtSpace.data) {
-      if (av.dbg.flg.plt) { console.log('AnaPlot: before purge in init'); } 
+      if (av.dbg.flg.divsize) { console.log('AnaPlot: before purge in init'); } 
       av.debug.log += '\n     --uiD: Plotly: Plotly.purge(av.dom.anlChrtSpace) in AvidaED.js at 2168';
       av.utl.dTailWrite('avidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace', [av.dom.anlChrtSpace]);
       Plotly.purge(av.dom.anlChrtSpace);
-      if (av.dbg.flg.plt) { console.log('AnaPlot: after purge in init'); }
+      if (av.dbg.flg.divsize) { console.log('AnaPlot: after purge in init'); }
     }
     //Comment out the next three lines later
     var anaData = av.anl.data;
-    if (av.dbg.flg.plt) { console.log('AnaPlot: anlChrtPlotly in av.anl.anaChartInit'); }
+    if (av.dbg.flg.divsize) { console.log('AnaPlot: anlChrtPlotly in av.anl.anaChartInit'); }
+    console.log('AnaPlot: anlChrtPlotly in av.anl.anaChartInit before first Plotly call');
     //Plotly.plot('anlChrtSpace', anaData, av.anl.layout, av.anl.widg);
-    av.debug.log += '\n     --uiD: Plotly: Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg) in AvidaED.js at 2157';
+    av.debug.log += '\n     --uiD: Plotly: Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg) in AvidaED.js at 3174 (was 2157)';
     av.utl.dTailWrite('avidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg', [av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg]);
     Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg);
-    if (av.dbg.flg.plt) { console.log('AnaPlot: after plot in av.anl.anaChartInit'); }
+    if (av.dbg.flg.divsize) { console.log('AnaPlot: after plot in av.anl.anaChartInit'); }
 
     //console.log('layout=', av.dom.anlChrtSpace.layout);
     av.dom.anlChrtSpace.style.visibility = 'hidden';
@@ -2960,6 +3183,7 @@ require([
   // if (av.dbg.flg.root) { console.log('Root: before av.anl.anaChartInit called'); }
   av.anl.anaChartInit();
 
+  //----------------------------------------------------------------------------------------------- av.anl.AnaChartFn --
   av.anl.AnaChartFn = function () {
     'use strict';
     var hasData = false;
@@ -2989,18 +3213,18 @@ require([
         }
       } else {
         if (av.dbg.flg.plt) { console.log('AnaPlot: in AnaChartFn'); }
-        av.anl.trace0.x = av.anl.xx.slice(0, av.anl.pop[0].left.length);
-        av.anl.trace1.x = av.anl.xx.slice(0, av.anl.pop[0].right.length);
-        av.anl.trace2.x = av.anl.xx.slice(0, av.anl.pop[1].left.length);
-        av.anl.trace3.x = av.anl.xx.slice(0, av.anl.pop[1].right.length);
-        av.anl.trace4.x = av.anl.xx.slice(0, av.anl.pop[2].left.length);
-        av.anl.trace5.x = av.anl.xx.slice(0, av.anl.pop[2].right.length);
-        av.anl.trace0.y = av.anl.pop[0].left;
-        av.anl.trace1.y = av.anl.pop[0].right;
-        av.anl.trace2.y = av.anl.pop[1].left;
-        av.anl.trace3.y = av.anl.pop[1].right;
-        av.anl.trace4.y = av.anl.pop[2].left;
-        av.anl.trace5.y = av.anl.pop[2].right;
+        av.anl.trace0.x = av.anl.xx.slice(0, av.anl.wrld[0].left.length);
+        av.anl.trace1.x = av.anl.xx.slice(0, av.anl.wrld[0].right.length);
+        av.anl.trace2.x = av.anl.xx.slice(0, av.anl.wrld[1].left.length);
+        av.anl.trace3.x = av.anl.xx.slice(0, av.anl.wrld[1].right.length);
+        av.anl.trace4.x = av.anl.xx.slice(0, av.anl.wrld[2].left.length);
+        av.anl.trace5.x = av.anl.xx.slice(0, av.anl.wrld[2].right.length);
+        av.anl.trace0.y = av.anl.wrld[0].left;
+        av.anl.trace1.y = av.anl.wrld[0].right;
+        av.anl.trace2.y = av.anl.wrld[1].left;
+        av.anl.trace3.y = av.anl.wrld[1].right;
+        av.anl.trace4.y = av.anl.wrld[2].left;
+        av.anl.trace5.y = av.anl.wrld[2].right;
         av.anl.trace0.line.color = av.anl.color[0];
         av.anl.trace1.line.color = av.anl.color[0];
         av.anl.trace2.line.color = av.anl.color[1];
@@ -3031,7 +3255,7 @@ require([
         Plotly.purge(av.dom.anlChrtSpace);
         if (av.dbg.flg.plt) { console.log('AnaPlot: after plot anlChrtSpace'); }
         //Plotly.plot('anlChrtSpace', anaData, av.anl.layout, av.anl.widg);
-        av.debug.log += '\n     --uiD: Plotly: Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg) in AvidaED.js at 2254';
+        av.debug.log += '\n     --uiD: Plotly: Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg) in AvidaED.js at 3258';
         av.utl.dTailWrite('avidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg', [av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg]);
         Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg);
         if (av.dbg.flg.plt) { console.log('AnaPlot: after plot anlChrtSpace'); }
@@ -3042,27 +3266,27 @@ require([
   /* Chart buttons ****************************************/
   document.getElementById('pop0delete').onclick = function () {
     av.post.addUser('Button: pop0delete');
-    av.anl.hasPopData[0] = false;
-    av.anl.pop[0].left = [];
-    av.anl.pop[0].right = [];
+    av.anl.hasWrldData[0] = false;
+    av.anl.wrld[0].left = [];
+    av.anl.wrld[0].right = [];
     av.anl.clearWorldData(0);
     av.dnd.popDish0.selectAll().deleteSelectedNodes();
     av.anl.AnaChartFn();
   };
   document.getElementById('pop1delete').onclick = function () {
     av.post.addUser('Button: pop1delete');
-    av.anl.hasPopData[1] = false;
-    av.anl.pop[1].left = [];
-    av.anl.pop[1].right = [];
+    av.anl.hasWrldData[1] = false;
+    av.anl.wrld[1].left = [];
+    av.anl.wrld[1].right = [];
     av.anl.clearWorldData(1);
     av.dnd.popDish1.selectAll().deleteSelectedNodes();
     av.anl.AnaChartFn();
   };
   document.getElementById('pop2delete').onclick = function () {
     av.post.addUser('Button: pop2delete');
-    av.anl.hasPopData[2] = false;
-    av.anl.pop[2].left = [];
-    av.anl.pop[2].right = [];
+    av.anl.hasWrldData[2] = false;
+    av.anl.wrld[2].left = [];
+    av.anl.wrld[2].right = [];
     av.anl.clearWorldData(2);
     av.dnd.popDish2.selectAll().deleteSelectedNodes();
     av.anl.AnaChartFn(); 
@@ -3075,7 +3299,7 @@ require([
     var value = domObj.value;
     var side = id.substr(1,4).toLowerCase();
     console.log('id=', id, '; value=', value, '; side=', side);
-    if ('left' !== side) {side = 'right'};
+    if ('left' !== side) {side = 'right';};
     av.post.addUser('Button: ' + id + ' is ' + value);
     av.anl.yLeftTitle = value;
     //need to get correct array to plot from freezer
@@ -3085,16 +3309,27 @@ require([
     av.anl.AnaChartFn('av.anl.yScaleSelect_onChange');
   };
 
-  av.anl.popColorOnChange = function (domObj) {
+  av.anl.wrldColorOnChange = function (domObj) {
     var ndx = Number(domObj.id.substr(3, 1));
+    var popDishName = 'popDish' + ndx;
     console.log('domObj.id=', domObj.id, '; ndx=', ndx, '; domObj.value', domObj.value, '; av.color.names[]=', av.color.names[domObj.value]);
     av.anl.color[ndx] = av.color.names[domObj.value];
     av.post.addUser('Button:' + domObj.id);
-    console.log('av.anl.color[ndx]=', av.anl.color[ndx]);
+    console.log('av.anl.color[ndx]=', av.anl.color[ndx], '; popDishName=', popDishName);
+    console.log('popDish_dom=', document.getElementById(popDishName));
+    console.log('');
+    
+/*  
+  var tstText = 'not0Details';
+    av.dom.test = document.getElementById(tstText);
+    console.log(tstText+'.domObj =', av.dom.test);
+    var sugarlist = av.dom.test.children;
+    console.log('children of '+tstText+' =', sugarlist);
+*/
     av.anl.AnaChartFn();    //redraw chart which will get new color from dom
   };
   
-  /*
+  /* commented out prior to 2021
    av.dom.pop0color.onclick = function () {
    av.anl.color[0] = av.color.names[av.dom.pop0color.value];
    av.post.addUser('Button: pop0color');
@@ -3128,24 +3363,15 @@ require([
   //                                       end of Analysis Page
   // **************************************************************************************************************** */
 
-  //Resize tools might be called here or after "Last_things_done"
   
   // **************************************************************************************************************** */
-  //                                          Last_things_done; Last things done; Last done
+  //                                          Last_things_done; Last things done; Last done last done
   // **************************************************************************************************************** */
   // Do this after all other is done; end of file
   //must create the rest of the resource/reaction user interface before calling av.sgr.ChangeAllGeo('Global');
   av.sgr.buildHtml();
   // av.sgr.defaults;
 
-  av.ui.ex1setSugarColors();   //example 1     //delete later
-
-  //av.ui.removeVerticalScrollbar('popTopRw', 'popTopRw');
-  
-  // * offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
-  // * clientWidth = box + 2*padding - scrollbar_width    
-  // * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
-  // * csssWidth = box only nothing else
   if (av.debug.ind) {
     console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
     av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
@@ -3155,33 +3381,89 @@ require([
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
   av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
   av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
-
+   
   av.doj.mnDebug.style.visibility = 'visible';   // set visiable so that av.ui.toggleDevelopentDisplays will hide devo stuff
 
-  // Avida-ED 4.0.0 Alpha Testing fix this too. 
-  //true when diane is working; false for all production releases even in alpha testsing.  
+  // Avida-ED 4.0.03 Beta Testing fix this too. 
+  //true for development; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; set to true before public release for Avida-ED 4.0.0 Alpha Testing. ');
-    av.dom.xorLabel.onclick();   //now only turns grid resource value table on and off
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.03 Beta Testing. ');
+    av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x
     av.doj.mnDebug.style.visibility = 'hidden';   //visible
   };
-  av.ui.toggleDevelopentDisplays('Last_things_done');  //ned to put this back for production
-  av.dom.xorLabel.onclick();   //now only turns grid resource value table on and off
+  av.ui.toggleDevelopmentDisplays('Last_things_done');  // this needs to b called in production version
   
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
-  av.sgr.ChangeAllGeo('Global');
+  //av.sgr.ChangeAllGeo(av.sgr.dftGeometry);   //tiba delete in 2021
+  av.changeAllSgrRegionLayout(av.sgr.nutdft.uiAll.regionLayout, 'last_things_done');
   //av.sgr.setSugarColors(true);  //true is to turn colors on;    // set color/grey individually so when 0 resources, grey shades rather than colors
-  av.sgr.ChangeAllsugarSupplyType('Last_things_done');
+  av.sgr.ChangeAllsugarsupplyTypeSlct('unlimited','Last_things_done');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');
+  //document.getElementById('resrceDataHolder').style.display = 'block';   //display local resource data
+  av.pch.popChrtHolder_Ht = $('popChrtHolder').innerHeight();
+  av.pch.popStatsBlock_Ht = $('popStatsBlock').innerHeight();
+  av.pch.pop_statsBlock_ChrtHolder_noResrceGrid = av.pch.popStatsBlock_Ht - av.pch.popChrtHolder_Ht;
+
+  //problem as now av.ui.about does not desplay at all
+  //av.ui.aboutAvidaED_Close();    //should not needd this as display = 'none' but it is needed for now.
+
+  av.ui.setResourceComplexity(av.sgr.complexityLevel, 'last-things-done');
+
+  av.fwt.clearResourceConstants();
+
+  //Geometry is no longer a drop down. Now it is an opton in Supply Type
+  document.getElementById('allSugarGeometry').style.display = 'none';
+  document.getElementById('geometrySgr').style.display = 'none';
   
+  // **************************************************************************************************************** */
+  //Resize tools might be called here or after "Last_things_done"
+  // **************************************************************************************************************** */
+
+  var ro = new ResizeObserver(entries => {
+//    console.log('in ResizeObserver');
+    for (let entry of entries) {
+      const cr = entry.contentRect;
+      if (av.dbg.flg.dsz) { console.log(entry.target.id, `size wd, ht: ${cr.width}px  ${cr.height}px`); }
+      if (av.dbg.flg.dsz) { console.log(entry.target.id,'contntRect: ', cr); }
+      if (av.dbg.flg.dsz) { console.log(entry.target.id, 'size wd, ht:', cr.width-cr.left, cr.height-cr.top, 'might need to multiply left and top by two'); }
+    }
+  });
+
+  // Observe one or multiple elements
+  //ro.observe(document.querySelector('div'));
+  ro.observe(document.querySelector('#gridHolder'));
+  
+/*
+ var outputsize =  av.dom.divSizeFn = function() {
+    console.log('in ResizeObserver');
+      var cr = popChrtHolder.contentRect;
+      //console.log('Element:', entry.target);
+      console.log(`Element size: ${cr.width}px ${cr.height}px`);
+      console.log(`Element padding: ${cr.top}px ; ${cr.left}px`);
+    return cr;
+  };
+  new ResizeObserver(outputsize).observe(popChrtHolder);
+*/
+  // **************************************************************************************************************** */
+
+  //---------------------------------------------------------------------------------------------------- size testing --
   // May need to do some things here to get the app to look right on the screen. 
   //av.grd.popChartFn();
   //av.grd.drawGridSetupFn('initial background'); //Draw initial background
 
   // className should be 'labInfoClass labInfoNone'
-  if (av.dbg.flg.nut) { console.log('av.dom.testSetupBlock.className=', av.dom.testSetupBlock.className); }
+  // if (av.dbg.flg.popSetup ) { console.log('popSetup: av.dom.testSetupBlock.className=', av.dom.testSetupBlock.className); }
+
+
+  //---------------------------------------------------------------------------------------------------- size testing --
+  //av.ui.removeVerticalScrollbar('popTopRw', 'popTopRw');
+  
+  // * offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
+  // * clientWidth = box + 2*padding - scrollbar_width    
+  // * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
+  // * csssWidth = box only nothing else
 
   //---------------------------------------------------------------------------------------------------- size testing --
   /*   An attempt to look for which dom objects cause scroll bars
@@ -3213,23 +3495,14 @@ require([
   console.log('num_el=', num_el, '; num_parent = ', num_parent);
   */
   // **************************************************************************************************************** */
+
+  // **************************************************************************************************************** */
   //                                          Useful Generic functions
   // **************************************************************************************************************** */
 
   //Modulo that is more accurate than %; Math.fmod(aa, bb);
   Math.fmod = function (aa, bb) {
     return Number((aa - (Math.floor(aa / bb) * bb)).toPrecision(8));
-  };
-
-  //http://nelsonwells.net/2011/10/swap-object-key-and-values-in-javascript/
-  av.ui.invertHash = function (obj) {
-    var new_obj = {};
-    for (var prop in obj) {
-      if (obj.hasOwnProperty(prop)) {
-        new_obj[obj[prop]] = prop;
-      }
-    }
-    return new_obj;
   };
   
   //console.log('before resize function');
@@ -3244,10 +3517,6 @@ require([
 )
 ;
 
-//------- not in use = example
-//var hexColor = av.ui.invertHash(av.color.names);
-//var theColor = hexColor['#000000'];  //This should get 'Black'
-//console.log('theColor=', theColor);
 
 //--------------------------------------------------------------------------------------------------------------------
 //Notes on things I learned writing this code, that is not directly used in the code
@@ -3468,12 +3737,12 @@ require([
  * 
  https://stackoverflow.com/questions/24977965/collapsible-lists-using-html-and-css
  <details class='debugDetails' id='fzMdishDetails'>
- <summary id='fzMdishSec' class="freezerSummaryClass">Multi-Dishes</summary>
+ <summary id='fzMdishSec' class="freezerSumCls">Multi-Dishes</summary>
  <ul id='fzMdish' class='container'>
  </ul>
  </details>
  <details class='debugDetails' id='fzRdishDetails'>
- <summary id='fzRdishSec' class="freezerSummaryClass">Resource setup</summary>
+ <summary id='fzRdishSec' class="freezerSumCls">Resource setup</summary>
  <ul id='fzRdish' class='container'>
  </ul>
  </details>
@@ -3490,3 +3759,36 @@ require([
  </div>
  
  */
+
+      //Not sure the section below does anything except example about debug data collection.
+/*
+      av.post.data1 = {
+        'changed': 'muteInput',
+        'muteInput': muteVal.formatNum(1)
+      };
+      av.post.data2 = {
+        'operation': 'assign',
+        'object': ['muteInput'],
+        'value': [muteVal.formatNum(1)]
+      };
+      av.post.data = {
+        'operation': 'assign',
+        'name': 'muteInput',
+        'vars': ['muteInput', 'person'],
+        'value': [muteVal.formatNum(1), 'fred']
+      };
+
+      av.post.data = {
+        'operation': 'button',
+        'name': 'runPause',
+        'vars': {'update': 5},
+        'assumptions': {'av.dom.runStopButton.textContent': 'Run'}
+      };
+      av.post.data = {
+        'operation': 'DojoDnd',
+        'name': 'fz2Grid',
+        'vars': {'source': 'av.dnd.fzOrgan', 'nodeDir': 'g0', 'target': 'av.dnd.popGrid', 'xGrid': 4, 'yGrid': 9},
+        //// need dom Id associated with @ancestor.
+        'assumptions': {'nodeName': '@ancestor'}    //condition, constraint
+      };
+*/
