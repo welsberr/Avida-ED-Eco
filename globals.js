@@ -1,13 +1,9 @@
-  //
-  // change color and change data line select/item don't work in Analysis page
-  //
-  //
-  ////***************************************
+  //***************************************
   // Defaults and Constants
   // one global to hold them all.
   var av = av || {};  //incase av already exists
 
-  console.log('start of globals on 2020_0615');
+  console.log('start of globals on 2020_0616');   //useful if somehow get mixed up which folder I'm working in vs which folder is in the python server
 
 
   Number.prototype.pad = function(size) {
@@ -21,7 +17,8 @@
     return target.split(search).join(replacement);
   };
 
-  //av.debug flags
+  // av.debug flags
+  // Used to turn on/off sets of console.log statements that have been used in debugging in the past. 
   av.debug = {};
   av.debug.alo = false; //analysis page layout
   av.debug.anl = false;  //analysis page
@@ -47,6 +44,10 @@
 
   av.debug.usr = ''; //working on log for user actions.
 
+
+  // Collect data that might be useful if an end-user has a problem. 
+  // there is a pop-up window that asks the user to send info to a database
+  
   av.post = {};
   av.post.addUser = function(addStr, comment) {
     "use strict";
@@ -69,8 +70,8 @@
     av.debug.log += '\n--usr: ' + '~|~' + str0.replace(/\\n/g, "\n") + '~.~' + note;
   };
 
+  // Using shape of pointer to indicated a Drag n Drop with in the a canvas or off the canvas. 
   av.mouse = {};
-
   function clearmouse(av) {
     'use strict';
     av.mouse.Dn = false;
@@ -264,6 +265,9 @@
   for (var ii = 0; ii < lngth; ii++) {
     av.mouse.notDndIndShape[ii] = 'default';
   };
+
+  //--------------------------------------------------------------------------------------
+  // Organism View
 
   //initialize globals needed to hold Organism Trace Data
   var traceObj = {}; //global that holds the traceObject that was sent from Avida
