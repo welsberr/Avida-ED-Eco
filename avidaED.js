@@ -1291,51 +1291,6 @@ av.ui.closeSendModalFn = () => {
 //                                             Population page Buttons
 //----------------------------------------------------------------------------------------------------------------------
 
-// hides and shows the population and selected organsim data on right of population page with 'Stats/mpa' button
-  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.ritePanelButton'); }
-  av.ptd.ritePanelButton = function () {
-    //console.log('ritePanelButton: av.ui.page=', av.ui.page);
-    if ('populationBlock' == av.ui.page) {
-      if (av.ui.popStatFlag) {
-        av.post.addUser('Button: ritePanelButton: start hidding population stats');
-        av.ui.popStatFlag = false;
-        av.ptd.rightInfoHolderWd = av.dom.rightInfoHolder.offsetWidth;
-        av.dom.rightInfoHolder.style.display = 'none';
-      } else {
-        av.post.addUser('Button: ritePanelButton: start showing population stats');
-        av.ui.popStatFlag = true;
-        av.dom.rightInfoHolder.style.display = 'flex';
-        //reset info pane dimensions. Try rightInfoHolderWd = 395px; selOrgTypeWd = 150px
-        av.dom.rightInfoHolder.style.width = av.ptd.rightInfoHolderWd + 'px';
-        av.ui.adjustpopInfoSize('av.ptd.ritePanelButton');
-      };
-    }
-    else if ('organismBlock' == av.ui.page) {
-      //console.log('av.ui.orgStatFlag=', av.ui.orgStatFlag);
-      if (av.ui.orgStatFlag) {
-        av.post.addUser('Button: ritePanelButton: start hidding oranism stats');
-        av.ui.orgStatFlag = false;
-        //console.log('av.dom.orgInfoHolder.offsetWidth=', av.dom.orgInfoHolder.offsetWidth);
-        av.ui.orgInfoHolderWd = (av.ui.orgInfoHolderMinWidth > av.dom.orgInfoHolder.offsetWidth) ? 
-                                                         av.ui.orgInfoHolderMinWidth : av.dom.orgInfoHolder.offsetWidth;
-        av.dom.orgInfoHolder.style.display = 'none';
-      } else {
-        av.post.addUser('Button: ritePanelButton: start showing oranism stats');
-        av.ui.orgStatFlag = true;
-        av.dom.orgInfoHolder.style.display = 'flex';
-        //reset info pane dimensions. 
-        //console.log('av.ui.orgInfoHolderWd=', av.ui.orgInfoHolderWd);
-        av.dom.orgInfoHolder.style.width = av.ui.orgInfoHolderWd + 'px';
-        //av.ui.adjustOrgInfoSize('av.ptd.ritePanelButton');
-      };
-    }
-    else {
-      //no right info panel so button goes away
-      console.log('should not be available to be clicked');
-    };
-  };
-
-  av.dom.ritePanelButton.onclick = function () { av.ptd.ritePanelButton(); };
 
   //--------------------------------------------------------------------------------------------------------------------
   ///   Map Grid buttons - New  Run/Pause Freeze
@@ -2908,249 +2863,6 @@ av.ui.closeSendModalFn = () => {
     if (av.debug.ind) { console.log('av.dom.cycleSlider.innerHTML =', av.dom.cycleSlider.innerHTML); }
     if (av.debug.ind) { console.log('av.ind.cycleSlider =', av.ind.cycleSlider); }
 
-
-  //********************************************************************************************************************
-  // Resize window helpers -------------------------------------------
-  //********************************************************************************************************************
-  // if (av.dbg.flg.root) { console.log('Root: before Resize helpers'); }
-
-  av.removeVerticalScrollBars = function () {
-    if (av.debug.uil) { console.log('ui: documentElement Ht, scroll client', document.documentElement.scrollHeight, document.documentElement.clientHeight); }
-    if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
-      document.documentElement.style.height = document.documentElement.clientHeight + 'px';
-    };
-
-    //initialize the ht for main buttons and trash can so there is no scroll bar
-    if (av.dom.mainButtons.scrollHeight > av.dom.mainButtons.clientHeight) {
-      av.dom.mainButtons.style.height = av.dom.mainButtons.scrollHeight + 'px';
-    };
-    if (av.debug.uil) { console.log('ui: trashDivHt.client,scroll=', av.dom.trashDiv.clientHeight, av.dom.trashDiv.scrollHeight); }
-    if (av.dom.trashDiv.scrollHeight > av.dom.trashDiv.clientHeight) {
-      av.dom.trashDiv.style.height = av.dom.trashDiv.scrollHeight + 'px';
-    };
-    if (av.dom.orgTopId.scrollHeight > av.dom.orgTopId.clientHeight) {
-      av.dom.orgTopId.style.height = av.dom.orgTopId.scrollHeight + 'px';
-    };
-    if (av.debug.uil) { console.log('ui: orgBot Ht', av.dom.orgBotId.scrollHeight, av.dom.orgBotId.clientHeight); }
-    if (av.dom.orgBotId.scrollHeight > av.dom.orgBotId.clientHeight) {
-      av.ui.orgBotIdNum = av.dom.orgBotId.scrollHeight + 9;
-      av.dom.orgBotId.style.height = av.ui.orgBotIdNum + 'px';
-    };
-  };
-
-  //on 2018_0823 this is where height gets messed up when loading the program. 
-   av.pch.divSize = function (from) {
-    if (av.dbg.flg.divsize) { 
-      console.log('plt: PopPlotSize: ',from, 'called av.pch.divSize +++++++++++++++++++++++++++++++');
-      console.log('plt: popChrtHolder: css.h=', $("#popChrtHolder").css('height'), '; ht=', $('#popChrtHolder').height(), 
-          '; innerHt=', $('#popChrtHolder').innerHeight(), '; outerHt=', $('#popChrtHolder').outerHeight(), 
-          '; outherHt(true)=', $('#popChrtHolder').outerHeight(true), '; offsetHt=', av.dom.popChrtHolder.offsetHeight );
-      console.log('plt: popChrtHolder: css.wd, wd, innerWd, outerWd, outherWd(true)', $("#popChrtHolder").css('width'), 
-            $('#popChrtHolder').innerWidth(), $('#popChrtHolder').outerWidth(), $('#popChrtHolder').outerWidth(true) );
-      console.log('plt: ');
-    };
-    
-    av.pch.pixel.ht = $('#popChrtHolder').height();
-    av.pch.pixel.wd = $('#popChrtHolder').width();
-    //console.log(from, 'called av.pch.divSize: av.pch.pixel.wd=', av.pch.pixel.wd, '; av.pch.pixel.ht=', av.pch.pixel.ht);
-    av.pch.layout.height = av.pch.pixel.ht - av.pch.pixel.hdif;  //leave a bit more vertical space for plot;
-    av.pch.layout.width = av.pch.pixel.wd - av.pch.pixel.wdif;   //leave more horizontal space to right of plot;
-    
-    //av.dom.popChrtHolder.style.width = av.pch.layout.width+'px';
-    //av.dom.popChrtHolder.style.height = av.pch.layout.height+'px';
-    
-    if (av.dbg.flg.divsize) { console.log('plt: PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
-    if (av.dbg.flg.divsize) { console.log('plt: PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
-
-    //console.log('av.pch.layout. wt & ht:', av.pch.layout.width, av.pch.layout.height, '~~~~~~~~~~~~~~~~~~~~~');
-    av.dom.popChart.style.height = av.pch.layout.height + 'px';
-    av.dom.popChart.style.width = av.pch.layout.width + 'px';
-    if (av.debug.uil) {
-      console.log('ui: PopPlotSize: popChart css.wd, border, padding, margin=', $("#popChart").css('width'), $("#popChart").css('height')
-        , $("#popChart").css('border'), $("#popChart").css('padding'), $("#popChart").css('margin'));
-    }
-    if (av.debug.uil) {
-      console.log('ui: PopPlotSize: av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight,
-        av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'), 10));
-    }
-    if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
-    if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
-    //av.debug.uil = false;
-  };
-
-  av.anl.divSize = function (from) {
-    if (av.debug.alo) { console.log('alo: ', from, 'called av.anl.divSize'); }
-    //console.log(from,'anaChrtHolder Ht client scroll ', av.dom.anaChrtHolder.clientHeight, av.dom.anaChrtHolder.scrollHeight);
-    //console.log(from,'anlDndChart Ht client scroll', av.dom.anlDndChart.clientHeight, av.dom.anlDndChart.scrollHeight);
-    //console.log(from,'anlChrtSpace Ht client scroll', av.dom.anlChrtSpace.clientHeight, av.dom.anlChrtSpace.scrollHeight);
-
-    if (av.debug.alol) { console.log('alo: av.dom.anaChrtHolder.clientWd, Ht=', av.dom.anaChrtHolder.clientWidth, av.dom.anaChrtHolder.clientHeight); }
-    av.anl.ht = av.dom.anaChrtHolder.clientHeight - 1;
-    av.anl.wd = av.dom.anaChrtHolder.clientWidth - 1;
-    av.dom.anaChrtHolder.style.height = av.anl.ht + 'px';
-    av.anl.ht = av.dom.anaChrtHolder.clientHeight - 6;
-    av.dom.anlChrtSpace.style.height = av.anl.ht + 'px';
-    av.dom.anlChrtSpace.style.width = av.anl.wd + 'px';
-    av.anl.layout.height = av.anl.ht;
-    av.anl.layout.width = av.anl.wd;
-  };
-
-  // called from script in html file as well as below
-  av.ui.browserResizeEventHandler = function (from) {
-    if (true) { console.log(from, 'called av.ui.browserResizeEventHandler'); }
-    if ('none' !== domStyle.get('analysisBlock', 'display')) {
-      av.anl.AnaChartFn();
-    }
-    if ('none' !== domStyle.get('populationBlock', 'display')) {
-      //av.ui.resizePopLayout('av.ui.browserResizeEventHandler popBlock');  //does not work
-      if (av.debug.uil) {
-        console.log('ui: av.grd.canvasSize =', av.grd.canvasSize, '; av.dom.gridCanvas.width = ', av.dom.gridCanvas.width,
-          '; av.dom.gridHolder.clientHeight=', av.dom.gridHolder.clientHeight);
-      }
-      if (av.grd.need2DrawGrid) {
-        av.grd.popChartFn('av.ui.browserResizeEventHandler');
-        if (av.debug.uil) { console.log('ui: av.grd.need2DrawGrid=', av.grd.need2DrawGrid); }
-        //av.grd.drawGridSetupFn('av.ui.browserResizeEventHandler when pop=flex');
-      }
-    }
-    if ('none' !== domStyle.get('organismBlock', 'display')) {
-      var rd = $('#orgDetailID').innerHeight();
-      av.ui.adjustOrgInstructionTextAreaSize();
-      av.ind.updateOrgTrace('av.ui.browserResizeEventHandler');
-    }
-  };
-
-  //console.log('before resize function');
-  $(window).resize(function () {
-    // av.ui.resizePopLayout('window.resize');    //does not work.
-  });
-
-
-  //This function does not work. make grid get larger and larger
-  av.ui.resizePopLayout = function (from) {
-    //console.log(from, 'called av.ui.resizePopLayout');
-    var extraGridWd = 0;  //positive there is extra to distribute; negative need more space.
-    var popSideWdSum = av.dom.navColId.offsetWidth + av.dom.rightInfoHolder.offsetWidth;
-    av.ui.allAvidaWd = av.dom.allAvida.offsetWidth;
-    av.ui.navColIdWd = av.dom.navColId.offsetWidth;
-    av.ui.mapHolderWd = av.dom.mapHolder.offsetWidth;
-    av.ui.gridHolderWd = av.dom.gridHolder.offsetWidth;
-    av.ui.rightInfoHolderWd = av.dom.rightInfoHolder.offsetWidth;
-
-    av.ui.allAvidaHt = av.dom.allAvida.offsetHeight;
-    av.ui.mapHolderHd = av.dom.mapHolder.offsetHeight;
-    av.ui.popTopHd = av.dom.popTopRw.offsetHeight;
-    av.ui.gridHolderHd = av.dom.gridHolder.offsetHeight;
-    av.ui.benchPopBotHd = av.dom.benchPopBot.offsetHeight;
-
-    //https://stackoverflow.com/questions/590602/padding-or-margin-value-in-pixels-as-integer-using-jquery
-    //console.log('gridHolder_margin' ,$("#gridHolder").css("margin"), '; popChart=', $("#popChart").css('margin'));
-
-    if (av.debug.uil) { 
-      console.log('ui: Wd: allAvida navColId mapHolder gridHolder rightInfoHolder, sum', av.dom.allAvida.offsetWidth,
-        av.dom.navColId.offsetWidth, av.dom.mapHolder.offsetWidth, av.dom.rightInfoHolder.offsetWidth,
-        av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.rightInfoHolder.offsetWidth);
-      console.log('ui: Wd: popStatsBlock selOrgType sum', av.dom.popStatsBlock.offsetWidth, av.dom.selOrgType.clientWidth,
-        av.dom.popStatsBlock.offsetWidth + av.dom.selOrgType.clientWidth);
-
-      console.log('ui: Ht; allAvida, mapHolder, popTopRw, gridHolder, benchPopBot sum', av.dom.allAvida.offsetHeight,
-        av.dom.mapHolder.offsetHeight, av.dom.popTopRw.offsetHeight, av.dom.gridHolder.offsetHeight,
-        av.dom.benchPopBot.offsetHeight, av.dom.popTopRw.offsetHeight + av.dom.gridHolder.offsetHeight + av.dom.benchPopBot.offsetHeight);
-      }
-    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight && av.dom.gridHolder.offsetWidth > av.ui.popGridCtlWdMin) {
-      //set grid size based on height and distribute extra width.
-      extraGridWd = av.dom.gridHolder.offsetWidth - av.dom.gridHolder.offsetHeight;
-      popSideWdSum = popSideWdSum + extraGridWd;
-      if (av.debug.uil) { console.log('ui: av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight); }
-      //av.dom.gridCanvas.width = av.dom.gridHolder.clientHeight;     //no style for canvas; style needed for div
-      //av.dom.gridCanvas.height = av.dom.gridHolder.clientHeight;
-      av.dom.gridCanvas.width = $("#gridHolder").height();     //no style for canvas; style needed for div
-      av.dom.gridCanvas.height = $("#gridHolder").height();
-
-      if (av.debug.uil) { console.log('ui: av.dom.gridCanvas.wd ht', av.dom.gridCanvas.width, av.dom.gridCanvas.height); }
-      if (av.debug.uil) { console.log('ui: av.dom.gridHolder.client.wd ht', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight); }
-      av.dom.navColId.style.width = (0.3 * popSideWdSum) + 'px';
-      av.dom.popStatsBlock.style.width = (0.7 * popSideWdSum) + 'px';
-      av.dom.setupBlock.style.width = (0.7 * popSideWdSum) + 'px';
-      av.dom.selOrgType.style.width = (0.33 * popSideWdSum) + 'px';
-    } else {
-      // set grid size based on width   
-      av.dom.gridCanvas.width = $("#gridHolder").width();     //no style for canvas; style needed for div
-      av.dom.gridCanvas.height = $("#gridHolder").width();
-    }
-  };
-
-  av.ui.chngPopWidth = function (from) {
-    if (av.debug.uil) { console.log('ui: ', from, 'called av.ui.chngPopWidth'); }
-    av.dom.rightInfoHolder.style.width = rightInfoHolderWd + 'px';
-    av.dom.setupBlock.style.width = rightInfoHolderWd + 'px';
-    av.dom.popStatsBlock.style.width = rightInfoHolderWd + 'px';
-    av.dom.selOrgType.style.width = ((rightInfoHolderWd / 2).toFixed(0)) + 'px';
-  };
-
-  av.ui.adjustpopInfoWd = function (adjustGridWd) {
-    var rightInfoHolderWd = av.dom.rightInfoHolder.offsetWidth - adjustGridWd;  //adjustGridWd postive means Grid needs width
-    if (av.debug.uil) { console.log('ui: rightInfoHolderWd=', rightInfoHolderWd, '; av.ui.rightInfoHolderMinWd', av.ui.rightInfoHolderMinWd); }
-    if (rightInfoHolderWd < av.ui.rightInfoHolderMinWd) {
-      var navColWd = av.dom.navColId.offsetWidth;
-      if (av.debug.uil) { console.log('ui: navColWd=', navColWd, '; rightInfoHolderWd=', rightInfoHolderWd, ''); }
-      navColWd = (.33 * (navColWd + rightInfoHolderWd)).toFixed(0);
-      rightInfoHolderWd = navColWd * 2;
-      av.dom.navColId.style.width = navColWd + 'px';
-      if (av.debug.uil) { console.log('ui: navColWd=', navColWd, '; rightInfoHolderWd=', rightInfoHolderWd, '; mapHolder=', av.dom.mapHolder.offsetWidth); }
-    }
-    av.dom.rightInfoHolder.style.width = rightInfoHolderWd + 'px';
-    av.dom.setupBlock.style.width = rightInfoHolderWd + 'px';
-    av.dom.popStatsBlock.style.width = rightInfoHolderWd + 'px';
-    rightInfoHolderWd = (rightInfoHolderWd / 2).toFixed(0); //Math.round(rightInfoHolder/2);
-    av.dom.selOrgType.style.width = rightInfoHolderWd + 'px';
-    if (av.debug.uil) { console.log('ui: set selOrgType to ', rightInfoHolderWd + 'px'); }
-    if (av.debug.uil) { console.log('ui: gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth); }
-  };
-
-  //Adjust Statistics area width based on gridholder size and shape. gridholder should be roughly square
-  av.ui.adjustpopInfoSize = function (from) {
-    var adjustGridWd = 0;
-    if (av.debug.uil) { 
-      console.log('ui: av.ui.adjustpopInfoSize was called from: ', from);
-      console.log('ui: gridHolder.wd=', av.dom.gridHolder.offsetWidth);
-      console.log('ui: navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth, '; rightInfoHolder.wd=', av.dom.rightInfoHolder.offsetWidth);
-      console.log('ui: allAvida=', av.dom.allAvida.offsetWidth, '; sum= ',
-        av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.rightInfoHolder.offsetWidth);
-      console.log('ui: rightInfoHolder.offsetWidth, clientwidth =', av.dom.rightInfoHolder.offsetWidth, av.dom.rightInfoHolder.clientWidth);
-      console.log('ui: popStatsBlock.offsetWidth, clientwidth =', av.dom.popStatsBlock.offsetWidth, av.dom.popStatsBlock.clientWidth);
-      console.log('ui: selOrgType.offsetWidth, clientwidth =', av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
-      console.log('ui: av.ui.popGridCtlWdMin=', av.ui.popGridCtlWdMin, '; gridHolder.offsetWidt=', av.dom.gridHolder.offsetWidth);
-    }
-    if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight) {
-      adjustGridWd = av.dom.gridHolder.offsetHeight - av.dom.gridHolder.offsetWidth; //adjustGridWd negative means grid holder is too wide.
-      av.ui.adjustpopInfoWd(adjustGridWd);
-    }
-    if (av.ui.popGridCtlWdMin > av.dom.gridHolder.offsetWidth) {
-      adjustGridWd = av.ui.popGridCtlWdMin - av.dom.gridHolder.offsetWidth;
-      av.ui.adjustpopInfoWd(adjustGridWd);
-    };
-    if (av.debug.uil) {
-      console.log('ui: gridHolder.wd=', av.dom.gridHolder.offsetWidth, '; selOrgType.offsetWidth=', av.dom.selOrgType.offsetWidth);
-      console.log('ui: navColId.wd=', av.dom.navColId.offsetWidth, '; mapHolder.wd=', av.dom.mapHolder.offsetWidth,
-        '; rightInfoHolder.wd=', av.dom.rightInfoHolder.offsetWidth);
-      console.log('ui: allAvida=', av.dom.allAvida.offsetWidth, '; sum= ',
-        av.dom.navColId.offsetWidth + av.dom.mapHolder.offsetWidth + av.dom.rightInfoHolder.offsetWidth);
-
-      console.log('ui: popInfo.offsetWidth, clientwidth =', av.dom.rightInfoHolder.offsetWidth, av.dom.rightInfoHolder.clientWidth);
-      console.log('ui: popStatsBlock.offsetWidth, clientwidth =', av.dom.popStatsBlock.offsetWidth, av.dom.popStatsBlock.clientWidth);
-      console.log('ui: selOrgType.offsetWidth, clientwidth =', av.dom.selOrgType.offsetWidth, av.dom.selOrgType.clientWidth);
-    }
-    av.dom.gridCanvas.style.width = (av.dom.gridHolder.clientHeight - 2) + 'px';
-    av.dom.gridCanvas.style.height = av.dom.gridCanvas.offsetWidth + 'px';
-    av.dom.scaleCanvas.style.width = (av.dom.gridControlContainer.clientWidth - 1) + 'px';
-
-    if (av.debug.uil) {
-      console.log('ui: av.dom.gridHolder.clientWidth ht = ', av.dom.gridHolder.clientWidth, av.dom.gridHolder.clientHeight);
-      console.log('ui: ==== av.dom.gridCanvas.width ht =', av.dom.gridCanvas.width, av.dom.gridCanvas.height);
-    }
-  };
-
   // **************************************************************************************************************** */
   //                                                Analysis Page
   // **************************************************************************************************************** */
@@ -3241,8 +2953,7 @@ av.ui.closeSendModalFn = () => {
         var anaData = [av.anl.trace0, av.anl.trace1, av.anl.trace2, av.anl.trace3, av.anl.trace4, av.anl.trace5];
 
         if (av.dbg.flg.plt) { console.log('AnaPlot: av.anl.xx', av.anl.xx); }
-        if (av.dbg.flg.plt)
-          console.log('trace0', av.anl.trace0);
+        if (av.dbg.flg.plt) { console.log('trace0', av.anl.trace0); }
 
         av.anl.divSize('anaChartInit');
         av.anl.layout.height = av.anl.ht;
@@ -3435,66 +3146,6 @@ av.ui.closeSendModalFn = () => {
   //ro.observe(document.querySelector('div'));
   ro.observe(document.querySelector('#gridHolder'));
   
-/*
- var outputsize =  av.dom.divSizeFn = function() {
-    console.log('in ResizeObserver');
-      var cr = popChrtHolder.contentRect;
-      //console.log('Element:', entry.target);
-      console.log(`Element size: ${cr.width}px ${cr.height}px`);
-      console.log(`Element padding: ${cr.top}px ; ${cr.left}px`);
-    return cr;
-  };
-  new ResizeObserver(outputsize).observe(popChrtHolder);
-*/
-  // **************************************************************************************************************** */
-
-  //---------------------------------------------------------------------------------------------------- size testing --
-  // May need to do some things here to get the app to look right on the screen. 
-  //av.grd.popChartFn();
-  //av.grd.drawGridSetupFn('initial background'); //Draw initial background
-
-  // className should be 'labInfoClass labInfoNone'
-  // if (av.dbg.flg.popSetup ) { console.log('popSetup: av.dom.testSetupBlock.className=', av.dom.testSetupBlock.className); }
-
-
-  //---------------------------------------------------------------------------------------------------- size testing --
-  //av.ui.removeVerticalScrollbar('popTopRw', 'popTopRw');
-  
-  // * offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
-  // * clientWidth = box + 2*padding - scrollbar_width    
-  // * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
-  // * csssWidth = box only nothing else
-
-  //---------------------------------------------------------------------------------------------------- size testing --
-  /*   An attempt to look for which dom objects cause scroll bars
-  var docWidth = document.documentElement.offsetWidth;
-  var docHeight = document.documentElement.offsetHeight;
-  var num_el = 0;
-  var num_parent = 0;
-  console.log('docWidth=', docWidth, '; docHeight=', docHeight);
-
-  [].forEach.call(
-    document.querySelectorAll('*'),
-    function(el) {
-      num_el++;
-      if (el.offsetWidth > docWidth) {
-        console.log(el, ': too wide = ', el.offsetWidth);
-      }
-      if (el.offsetHeight > docHeight) {
-        console.log(el, ': too tall = ', el.offsetHeight);
-      }
-      if ((undefined != el.scrollHeight) && (null != el.scrollHeight)) {  
-        //console.log('el.scrollHeight=', el.scrollHeight);
-        if (el.scrollHeight > el.clientHeight+2) {
-          num_parent++;
-          console.log(el, ': too tall = ', el.offsetHeight, '; el.scrollHeight=', el.scrollHeight,'; el.clientHeight=', el.clientHeight);
-        }
-      }
-    }
-  );
-  console.log('num_el=', num_el, '; num_parent = ', num_parent);
-  */
-  // **************************************************************************************************************** */
 
   // **************************************************************************************************************** */
   //                                          Useful Generic functions
@@ -3510,14 +3161,14 @@ av.ui.closeSendModalFn = () => {
   //page is changing sizes  ??
   //----------------------------------------------------------------------------------------------------------------------
   $(window).resize(function () {
+    //console.log('Does trigger on resize');
     // av.ui.resizePopLayout('window.resize');    //does not work.
   });
-  
-}
-)
-;
+});
 
-
+// **************************************************************************************************************** */
+//                                       Notes on things I learned writing this code
+// **************************************************************************************************************** */
 //--------------------------------------------------------------------------------------------------------------------
 //Notes on things I learned writing this code, that is not directly used in the code
 //use FileMerge to compare to versions of the same file on a Mac
@@ -3545,22 +3196,6 @@ av.ui.closeSendModalFn = () => {
  }
  });
  */
-
-/* Not in use */
-  /*
-   av.dnd.fzMdish = new dndSource('fzMdish', {  //multi-dsih
-   accept: ['b', 'm'],  //m=multidish
-   copyOnly: true,
-   singular: true,
-   selfAccept: false
-   });
-   av.dnd.fzRdish = new dndSource('fzRdish', {  //Resources only version
-   accept: ['r'],  //t=resource display
-   copyOnly: true,
-   singular: true,
-   selfAccept: false
-   });
-   */
 
 // Web sites that looked useful for some task
 /* Capture Close event
@@ -3733,62 +3368,13 @@ av.ui.closeSendModalFn = () => {
 //  Git Hub
 // https://github.com/DBlackwood/av_ui/branches
 // 
-/* Bits of html that I might use later. Stored here because comments are not as reliable in html as they are in javacript 
- * 
- https://stackoverflow.com/questions/24977965/collapsible-lists-using-html-and-css
- <details class='debugDetails' id='fzMdishDetails'>
- <summary id='fzMdishSec' class="freezerSumCls">Multi-Dishes</summary>
- <ul id='fzMdish' class='container'>
- </ul>
- </details>
- <details class='debugDetails' id='fzRdishDetails'>
- <summary id='fzRdishSec' class="freezerSumCls">Resource setup</summary>
- <ul id='fzRdish' class='container'>
- </ul>
- </details>
+// https://stackoverflow.com/questions/24977965/collapsible-lists-using-html-and-css
  
- *
- */
-
 //Tabs could be used in the header row for the page buttons. Formated like the tabs on the info pannel for populaton page
 /*
  <div id='headerTabs'>
  <span>Population Tab</span>
  <span>Organism Tab</span>
  <span>Analysis Tab</span>
- </div>
- 
+ </div> 
  */
-
-      //Not sure the section below does anything except example about debug data collection.
-/*
-      av.post.data1 = {
-        'changed': 'muteInput',
-        'muteInput': muteVal.formatNum(1)
-      };
-      av.post.data2 = {
-        'operation': 'assign',
-        'object': ['muteInput'],
-        'value': [muteVal.formatNum(1)]
-      };
-      av.post.data = {
-        'operation': 'assign',
-        'name': 'muteInput',
-        'vars': ['muteInput', 'person'],
-        'value': [muteVal.formatNum(1), 'fred']
-      };
-
-      av.post.data = {
-        'operation': 'button',
-        'name': 'runPause',
-        'vars': {'update': 5},
-        'assumptions': {'av.dom.runStopButton.textContent': 'Run'}
-      };
-      av.post.data = {
-        'operation': 'DojoDnd',
-        'name': 'fz2Grid',
-        'vars': {'source': 'av.dnd.fzOrgan', 'nodeDir': 'g0', 'target': 'av.dnd.popGrid', 'xGrid': 4, 'yGrid': 9},
-        //// need dom Id associated with @ancestor.
-        'assumptions': {'nodeName': '@ancestor'}    //condition, constraint
-      };
-*/
