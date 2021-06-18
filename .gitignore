@@ -3,9 +3,12 @@
 d_*
 d_*/*
 d_*/*/*
-default_*
-_default*
+*.avidaWs/
+*.avidaWs
+default.avidaWs
+default.avidaWs/
 z_not_in_use_*
 avida.js.old
 avida.js.old/*
+
 /HTML5Application/nbproject/private/
