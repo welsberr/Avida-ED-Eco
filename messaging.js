@@ -1,6 +1,7 @@
   // if (av.dbg.flg.root) { console.log('Root: start of messaging'); }  
   var av = av || {};  //incase av already exists
   var dijit = dijit || {};  //to let file know dijit is defined
+  var tmpStr;
 
   // if (av.dbg.flg.root) { console.log('Root: before av.msg.readMsg'); }
   av.msg.readMsg = function (ee) {
@@ -8,10 +9,10 @@
 
     var stub = '';
     var msg = ee.data;  //passed as object rather than string so JSON.parse is not needed.
+    //console.log('msg.type=', msg.type, '; msg.name=', msg.name, '; msg.level=', msg.level);
     //console.log('av.msg.readMsg: msg', msg);
-
     if ('data' == msg.type) {
-      if (av.debug.userMsg) userMsgLabel.textContent = 'Avida type:data; name:' + msg.name;
+      if (av.debug.userMsg) userMsgLabel.textContent = '| Avida type:data; name:' + msg.name;
       switch (msg.name) {
         case 'exportExpr':
           av.debug.log += '\n--Aui: \n' + av.utl.json2stringFn(msg);
@@ -23,7 +24,7 @@
           break;
         case 'reset':
           av.debug.log += '\n--Aui: \n' + av.utl.json2stringFn(msg);
-          if (av.debug.userMsg) userMsgLabel.textContent = 'Avida: ' + msg.name;
+          if (av.debug.userMsg) userMsgLabel.textContent = '| Avida: ' + msg.name;
           if (true === av.msg.uiReqestedReset) {
             av.ptd.resetDishFn();
             av.msg.uiReqestedReset = false;
@@ -78,10 +79,16 @@
           stub = 'name: webGridData; type: ' + msg.type.toString() + '; update:' + msg.update;  //may not display anyway
           av.debug.log += '\n--Aui:  ' + stub;
           //av.msg.sync('webGridData:' + msg.update.toString());
+          
+          //use only one = as one maybe number and the other string
+          if (av.grd.oldUpdate == msg.update && 0 <= msg.update) {  
+            console.log('webGridData repeat update=', av.grd.msg.update);
+          }
           av.grd.drawGridSetupFn('av.msg.readMsg: case=webGridData');  //needs to be called always as some calculations need to happen even if nothing is displayed (for logic data)
           //av.debug.log += '\n - - end webGridData: update:' + av.grd.msg.update;
           break;
         case 'webOrgDataByCellID':
+          av.grd.DataByCellID = msg;        //debug only should be commented out when in user mode
           av.msg.ByCellIDgenome = msg.genome;
           av.grd.updateSelectedOrganismType(msg);  //in messaging
           stub = 'name: webOrgDataByCellID; genotypeName: ' + msg.genotypeName.toString();  //may not display anyway
@@ -92,15 +99,15 @@
           if (av.debug.msg) {console.log('____________UnknownRequest: ', msg);}
           av.debug.log += '\nAui: in default in messaging on line 84 \n' + av.utl.json2stringFn(msg);   //fix format
           break;
-      }
+      };
     }
     else if ('userFeedback' == msg.type) {
       av.debug.log += '\nAui: userFeedback \n' + av.utl.json2stringFn(msg);
-      if (av.debug.userMsg) userMsgLabel.textContent = 'Avida userFeedback: ' + msg.level + ' at ' + av.grd.oldUpdate.toString() + ' is ' + msg.message;
+      if (av.debug.userMsg) userMsgLabel.textContent = '| Avida userFeedback: ' + msg.level + ' at ' + av.grd.oldUpdate.toString() + ' is ' + msg.message;
       //console.log('userFeedback', msg);
       switch (msg.level) {
         case 'error':
-          userMsgLabel.textContent = 'Avida error at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);
+          userMsgLabel.textContent = '| Avida error at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);
           //console.log('type:userFeedback; level:error');
           if (msg.isFatal) {
             //kill and restart avida worker
@@ -112,24 +119,29 @@
           break;
         case 'notification':
           if (av.debug.msg) console.log('avida:notify: ',msg.message);
-          console.log('avida:notify: ',msg.message);
+          console.log('avida:notify:', msg.message, '; inhtml=', document.getElementById('avidaVersion').innerHTML );
+          tmpStr = msg.message;
+          tmpStr = 'avida V:' + tmpStr.substr(tmpStr.length - 13, 13);
           console.log('================================================================================================');
-          if (av.debug.msg) userMsgLabel.textContent = 'Avidia notification: ' + msg.message; //with splash screen no longer need ready message
+          console.log('tmpStr=', tmpStr);
+          //document.getElementById('avidaVersion').innerHTML = tmpStr;
+          if (av.debug.msg) userMsgLabel.textContent = '| Avidia notification: ' + msg.message; //with splash screen no longer need ready message
           // Worked on a better splash screen gif. Used licecap, an application on the Mac to record the gif.
           // Then used http://gifmaker.me/reverser/ to make a gif in reverse time order. Then Wesley used gifsicle
           // to combine the forward and reverse gif.
-          $('#splash').remove(); //hides splace screen.
+          $('#splash').remove(); //hides splash screen.
           document.getElementById("appReloadDialog").style.display="none";
           av.ui.loadOK = true;
           if (av.debug.msg) console.log('before calling av.grd.popChartInit');
-          av.grd.popChartInit('Message: notification');
+          //av.grd.popChartInit('Message: notification');
+          av.dom.storeInitialSize();
           break;
         case 'warning':
-          userMsgLabel.textContent = 'Avida warning at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);
+          userMsgLabel.textContent = '| Avida warning at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);
           if (av.debug.msg) console.log('Avida warn: ',msg);
           break;
         case 'fatal':
-          userMsgLabel.textContent = 'Avida fatal error at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);
+          userMsgLabel.textContent = '| Avida fatal error at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);
           if (av.debug.msg) console.log('Avida fatal: ',msg.message);
           break;
         default:
@@ -152,27 +164,92 @@
 
   av.msg.check4anotherUpdate = function () {
     'use strict';
-    //console.log('newUpdate? stopflag=', av.ui.autoStopFlag, '; bar=', av.ui.autoStopValue, '; update=',av.grd.popStatsMsg.update);
-    if (av.ui.autoStopFlag) {
-      if (av.ui.autoStopValue <= av.grd.popStatsMsg.update) {
-        //make pause state
-        av.ptd.makePauseState();
-        av.ui.autoStopFlag = false;
-        av.dom.autoPauseCheck.checked = false;      
-        //test dishes only
-        dijit.byId('manualUpdateRadiTest').set('checked', true);
-        dijit.byId('autoUpdateRadiTest').set('checked', false);
-        if (av.ui.oneUpdateFlag) av.ui.oneUpdateFlag = false;
-      }
-      else {
-        if (av.ui.oneUpdateFlag) {
-          av.ui.oneUpdateFlag = false;
+    var task = 'not';
+    var sum = 0;
+    var ndx = 0;
+    //console.log('newUpdate? stopflag=', av.ui.autoStopFlag, '; stopLimit=', av.dom.autoPauseNum.value, '; update=',av.grd.popStatsMsg.update);
+    if (av.dom.autoPauseCheck.checked) {
+      if ('update' == av.dom.pauseCriteria.value) {
+        if (av.dom.autoPauseNum.value <= av.grd.popStatsMsg.update) {
+          //make pause state
           av.ptd.makePauseState();
+          av.ui.autoStopFlag = false;
+          av.dom.autoPauseCheck.checked = false;
+          if (av.ui.oneUpdateFlag) av.ui.oneUpdateFlag = false;
         }
-        else {av.msg.stepUpdate();}
-      }
-    }
+        else {
+          // pause run based on up update number not met, check oneupdateflag
+          if (av.ui.oneUpdateFlag) {
+            av.ui.oneUpdateFlag = false;
+            av.ptd.makePauseState();
+          }
+          else { av.msg.stepUpdate();}
+        }
+      } else {
+        // first done 
+        if ('task' == av.dom.itemDone1st.value) {
+          for (var ii=0; ii < av.sgr.numTasks; ii++) {
+            task = av.sgr.logicVnames[ii];
+            sum += av.grd.popStatsMsg[task];
+          };
+          console.log('sum='+sum, '; not='+ av.grd.popStatsMsg.not, '; nan='+ av.grd.popStatsMsg.nand 
+                      ,'; and='+ av.grd.popStatsMsg.and, '; orn='+ av.grd.popStatsMsg.orn
+                      ,'; oro='+ av.grd.popStatsMsg.or, '; ant='+ av.grd.popStatsMsg.andn
+                      ,'; nor='+ av.grd.popStatsMsg.nor, '; xor='+ av.grd.popStatsMsg.xor
+                      ,'; equ='+ av.grd.popStatsMsg.equ);
+          if ( 0 < sum ) {
+            //make pause state
+            av.ptd.makePauseState();
+            av.ui.autoStopFlag = false;
+            av.dom.autoPauseCheck.checked = false;
+            if (av.ui.oneUpdateFlag) av.ui.oneUpdateFlag = false;   
+            console.log('sum=', sum);
+          } else {
+            // pause run based on up any task done not met, check oneupdateflag
+            if (av.ui.oneUpdateFlag) {
+              av.ui.oneUpdateFlag = false;
+              av.ptd.makePauseState();
+            }
+            else { av.msg.stepUpdate();}
+          }
+        } else if ('picked' == av.dom.itemDone1st.value) {
+          // test to see if picked combo done
+          if (0 < av.pch.logNumFnd) {
+            //make pause state
+            av.ptd.makePauseState();
+            av.ui.autoStopFlag = false;
+            av.dom.autoPauseCheck.checked = false;
+            if (av.ui.oneUpdateFlag) av.ui.oneUpdateFlag = false;            
+          } else {
+            // pause run based on up any picked combo done not met, check oneupdateflag
+            if (av.ui.oneUpdateFlag) {
+              av.ui.oneUpdateFlag = false;
+              av.ptd.makePauseState();
+            }
+            else { av.msg.stepUpdate();}
+          }
+        } else {
+          // check for an individual logic task
+          ndx = av.sgr.logicNames.indexOf(av.dom.itemDone1st.value);
+          if (0 < av.grd.popStatsMsg[av.sgr.logicVnames[ndx]]) {
+            //make pause state
+            av.ptd.makePauseState();
+            av.ui.autoStopFlag = false;
+            av.dom.autoPauseCheck.checked = false;
+            if (av.ui.oneUpdateFlag) av.ui.oneUpdateFlag = false;                        
+          } else {
+            // pause run based on up any picked combo done not met, check oneupdateflag
+            if (av.ui.oneUpdateFlag) {
+              av.ui.oneUpdateFlag = false;
+              av.ptd.makePauseState();
+            }
+            else { av.msg.stepUpdate();}
+          };
+        };  //end of indidual logic task
+      };  //end of first done 
+    }  // end of pause flag checked 
     else {
+      // not checked so check for oneUpdateFlag
       if (av.ui.oneUpdateFlag) {
         av.ui.oneUpdateFlag = false;
         av.ptd.makePauseState();
@@ -216,6 +293,7 @@
       var request = {
         'type': 'addEvent',
         'name': 'importExpr',
+        'amend': 'false',
         'triggerType': 'immediate',
         'files': [
   //      { 'name': 'avida.cfg', 'data': av.fzr.actConfig.file['avida.cfg'] },
@@ -230,12 +308,12 @@
         }
       }
       if (av.debug.msg) console.log('importExpr', request);
-      console.log('importExpr', request);
+      //console.log('importExpr', request);
       av.dom.tst2textarea.value = '\n--uiA: importExpr:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importTestDishExpr';
-      //console.log('\n--uiA: importExpr:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importTestDishExpr');
-
+      console.log('\n--uiA: importExpr:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + ' from importConfigExpr');
+      //console.log('Debug: NOT SENT TO AVIDA');
       av.aww.uiWorker.postMessage(request);
-      av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importConfigExpr';
+      av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + ' from importConfigExpr';
     }
   };
 
@@ -269,7 +347,7 @@
         console.log('filename=', dir+'/'+fList[ii]);
       }
     }
-    if (av.debug.msg) console.log('importExpr-testDish', request);
+    if (true) console.log('importExpr-testDish', request); //av.debug.msg
     av.aww.uiWorker.postMessage(request);
     av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from av.msg.makeTestDirMsg';
   };
@@ -305,6 +383,7 @@
       }
     }
     av.aww.uiWorker.postMessage(request);
+    if (true) console.log('makeResReqMsg', request); //av.debug.msg
     if (av.debug.msg) console.log('av.msg.makeResReqMsg', request);
 
     av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importPopExpr';
@@ -399,7 +478,7 @@
       if (av.fzr.file[dir+'/'+fList[ii]]) {request.files.push({ 'name': fList[ii], 'data': av.fzr.file[dir+'/'+fList[ii]] }); }
     }
 
-    if (av.debug.msg) console.log('importTestDishExpr', request);
+    if (true) console.log('importTestDishExpr', request);  //av.debug.msg
     console.log('importTestDishExpr', request);
     console.log('\n--uiA: importExpr:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importTestDishExpr');
     av.aww.uiWorker.postMessage(request);
@@ -456,7 +535,7 @@
     for (var ii = 0; ii < lngth; ii++) {
       if (av.fzr.actConfig.file[fList[ii]]) {request.files.push({ 'name': fList[ii], 'data': av.fzr.actConfig.file[fList[ii]] }); }
     }
-    if (av.debug.msg) console.log('importExpr', request);
+    if (true) console.log('importExpr', request);  //av.debug.msg
     av.aww.uiWorker.postMessage(request);
     av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importWorldExpr';
   };
@@ -506,7 +585,7 @@
           'args': [
             //'0,heads_default,' + av.fzr.actOrgan.genome,                                  //genome string
             av.fzr.actOrgan.genome,                                  //genome string
-            dijit.byId('orMuteInput').get('value') / 100,     // point mutation rate
+            document.getElementById('orgMuteInput').value / 100,     // point mutation rate
             seed                                            //seed where 0 = random; >0 to replay that number
           ]
         };
@@ -612,7 +691,7 @@
       'name': 'reset',
       'triggerType': 'immediate'
     };
-    if (av.debug.userMsg) userMsgLabel.textContent = 'ui-->Avida: reset requested';
+    if (av.debug.userMsg) userMsgLabel.textContent = '| ui-->Avida: reset requested';
     av.aww.uiWorker.postMessage(request);
     av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request);
   };
@@ -656,11 +735,18 @@
     };
   };
 
-  //---------------------------------
+  //------------------------------------------------------------------------------------------- av.msg.updatePopStats --
   av.msg.updatePopStats = function (msg) {
     'use strict';
-    var place = 2;
-    var vari = 2;
+    var tskDom= '';
+    var resrcAmount= 0;
+    var tskName='';
+    var resrcMetric= '';
+    var ndx= 0;
+    var numTsk = 0;
+    
+    if (av.debug.msg) { console.log('Fit=', msg.ave_fitness, '; Cst=', msg.ave_gestation_time, '; Ear=', msg.ave_metabolic_rate, '; via=', msg.viables); }
+    
     //update graph arrays
     if (0 <= msg.update) {  //normal start to loop
       av.pch.aveFit[msg.update] = msg.ave_fitness;
@@ -668,17 +754,23 @@
       av.pch.aveEar[msg.update] = msg.ave_metabolic_rate;
       av.pch.aveNum[msg.update] = msg.organisms;
       av.pch.aveVia[msg.update] = msg.viables;
+      
+      av.pch.aveDadFit[msg.update] = msg.ave_repro_fitness;
+      av.pch.aveDadCst[msg.update] = msg.ave_repro_gestation_time;
+      av.pch.aveDadEar[msg.update] = msg.ave_repro_metabolic_rate;
+      av.pch.aveDadVia[msg.update] = msg.with_offspring;
+
       av.pch.xx[msg.update] = msg.update;
 
       //console.log('av.parents.name.length = ',av.parents.name.length, '; av.pch.numDads=', av.pch.numDads);
       for (var ii = 0; ii<av.pch.numDads; ii++) {
         //console.log('ii='+ii,'; msg.by_clade[av.parents.name[ii]]=',msg.by_clade[av.parents.name[ii]], '; av.parents.name[ii]=', av.parents.name[ii]);
         if (undefined != msg.by_clade[av.parents.name[ii]]) {
-          //console.log('ii='+ii,'; msg.by_clade['+av.parents.name[ii]+'].fitness=', msg.by_clade[av.parents.name[ii]].fitness);
           //console.log('ii=',ii,'; msg.update=', msg.update);
           //console.log('av.pch.dadFit=', av.pch.dadFit);
           //console.log('av.parents.name', av.parents.name);
           //console.log('msg.by_clade=', msg.by_clade);
+          //console.log('ii='+ii ,'; msg.by_clade['+av.parents.name[ii]+'].fitness=', msg.by_clade[av.parents.name[ii]].fitness);
           av.pch.dadFit[av.parents.name[ii]][msg.update] = msg.by_clade[av.parents.name[ii]].fitness;
           av.pch.dadCst[av.parents.name[ii]][msg.update] = msg.by_clade[av.parents.name[ii]].gestation;
           av.pch.dadEar[av.parents.name[ii]][msg.update] = msg.by_clade[av.parents.name[ii]].metabolism;
@@ -700,26 +792,29 @@
       if (av.pch.aveEar[msg.update] > av.pch.aveMaxEar) av.pch.aveMaxEar = av.pch.aveEar[msg.update];
       if (av.pch.aveNum[msg.update] > av.pch.aveMaxNum) av.pch.aveMaxNum = av.pch.aveNum[msg.update];
       if (av.pch.aveVia[msg.update] > av.pch.aveMaxVia) av.pch.aveMaxVia = av.pch.aveVia[msg.update];
-
+      
+      if (av.pch.aveDadFit[msg.update] > av.pch.aveDadMaxFit) av.pch.aveDadMaxFit = av.pch.aveFit[msg.update];
+      if (av.pch.aveDadCst[msg.update] > av.pch.aveDadMaxCst) av.pch.aveDadMaxCst = av.pch.aveCst[msg.update];
+      if (av.pch.aveDadEar[msg.update] > av.pch.aveDadMaxEar) av.pch.aveDadMaxEar = av.pch.aveEar[msg.update];
+      if (av.pch.aveDadVia[msg.update] > av.pch.aveDadMaxVia) av.pch.aveDadMaxVia = av.pch.aveVia[msg.update];
+      
       av.ptd.updateLogicFn(msg.update);  //for graph data  switch to run with grid data since the data is from the grid data
-    }
+    };
+    
     TimeLabel.textContent = msg.update.formatNum(0) + ' updates';
     av.grd.updateNum = msg.update;
+    
     popSizeLabel.textContent = msg.organisms.formatNum(0);
-    aFitLabel.textContent = msg.ave_fitness.formatNum(place);
+    aFitLabel.textContent = av.utl.toMetric(msg.ave_fitness, 0);
 
-      if (987654321 < Number(msg.ave_metabolic_rate)){
-        aEnergyAcqRateLabel.textContent = msg.ave_metabolic_rate.formatNum(0);
-      }
-      else {
-        aEnergyAcqRateLabel.textContent = msg.ave_metabolic_rate.formatNum(place);
-      }
-    if (0 < msg.ave_gestation_time) {aOffspringCostLabel.textContent = msg.ave_gestation_time.formatNum(place);}
+    aEnergyAcqRateLabel.textContent = av.utl.toMetric(msg.ave_metabolic_rate, 0);
+    if (0 < msg.ave_gestation_time) {
+      aOffspringCostLabel.textContent = av.utl.toMetric(msg.ave_gestation_time, 0);
+    }
     else {aOffspringCostLabel.textContent = 'non-viable';}
-      aAgeLabel.textContent = msg.ave_age.formatNum(place);
+      aAgeLabel.textContent = av.utl.toMetric(msg.ave_age, 0);
 
-    parentNumLabel.textContent = av.parents.name.length;
-    //console.log('update', msg.update, '; logNum[update]',av.pch.logNum[Number(msg.update)-1], '; logNum', av.pch.logNum);
+    parentNumLabel.textContent = av.parents.name.length;  //number of original ancesstors
 
     //update viable number on webpage
     viableNumLabel.textContent = msg.viables.formatNum(0);
@@ -733,8 +828,32 @@
     norPop.textContent = msg.nor;
     xorPop.textContent = msg.xor;
     equPop.textContent = msg.equ;
+    
+    //create resource arrays
+    //console.log('msg.globalResourceAmount=', msg.globalResourceAmount);
+    var obj = msg.globalResourceAmount;
+    //console.log(av.pch.resrcCnt, 'obj.length=', obj.length, '; obj=', obj);
+    //console.log('length=', av.pch.resrcGlobal.length, '; av.pch.resrcGlobal=', av.pch.resrcGlobal);
+    
+    for (var tskName in obj) {
+      if ( obj.hasOwnProperty(tskName) ) {
+        ndx = av.sgr.logicNames.indexOf(tskName);
+        numTsk = av.sgr.logEdNames[ndx];
+        resrcAmount = obj[tskName];
+        if ( av.utl.isNumber(parseFloat(resrcAmount)) && 'global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+          tskDom = av.sgr.logicTitleNames[ndx];
+          resrcMetric = av.utl.toMetric(resrcAmount, 0);
+          av.pch.resrcGlobal[tskName][msg.update] = parseFloat(resrcAmount);
+          //console.log('key=', tskName, '; val=', resrcAmount, '; resrcMetric=', resrcMetric, '; dom = '+tskDom);
+          document.getElementById('tot'+tskDom).innerHTML = resrcMetric;
+        };
+      };
+    };  // end of for items in object
+    //console.log('av.pch.resrcGlobal=', av.pch.resrcGlobal);
   };
+  //--------------------------------------------------------------------------------------- end av.msg.updatePopStats --
 
+  //-------------------------------------------------------------------------------------------- av.ptd.updateLogicFn --
   av.ptd.updateLogicFn = function (mUpdate){
     'use strict';
     //console.log('in updateLogicFn: mUpdate = ', mUpdate);
@@ -745,12 +864,14 @@
 
     //console.log('av.ptd.allOff',av.ptd.allOff);
     if (av.ptd.allOff) {    logTit1.textContent = '';
+      logTit0.textContent = '';
       logTit1.textContent = '';
       logTit2.textContent = '';
       logTit3.textContent = '';
       logTit4.textContent = '';
       logTit5.textContent = '';
       logTit6.textContent = '';
+      logTit7.textContent = '';
       numLog.textContent = '';
       av.pch.logMaxFit = 0;
       av.pch.logMaxCst = 0;
@@ -762,12 +883,15 @@
       av.pch.logNum[mUpdate] = null;
     }
     else {
+      logTit0.textContent = '';
       logTit1.textContent = 'Number';
       logTit2.textContent = 'Performing';
       logTit3.textContent = 'All';
       logTit4.textContent = 'Selected';
-      logTit5.textContent = 'Logic';
-      logTit6.textContent = 'Functions';
+      logTit5.textContent = 'Functions';
+    //logTit6.textContent = 'dashed line';
+      logTit6.textContent = '(black dotted line';
+      logTit7.textContent = 'in graph below)';
 
       //console.log('out_', av.grd.logicOutline );
       //console.log('gest', av.grd.msg.gestation.data);
@@ -808,7 +932,8 @@
         '; Gnl', av.pch.logCst[mUpdate].formatNum(0), '; Met', av.pch.logEar[mUpdate].formatNum(0));
     }
     */
-  }
+  };
+  //---------------------------------------------------------------------------------------- end av.ptd.updateLogicFn --
 
   //writes out data for WebOrgDataByCellID
   av.grd.updateSelectedOrganismType = function (msg) {
@@ -819,18 +944,15 @@
     else prefix = '';
     nameLabel.textContent = msg.genotypeName;
     if (null === msg.fitness) fitLabel.textContent = ' ';
-    else fitLabel.textContent = prefix + msg.fitness.formatNum(2);
+    else fitLabel.textContent = prefix + av.utl.toMetric(msg.fitness, 0);
     if (null === msg.metabolism) energyAcqRateLabel.textContent = ' ';
     else {
-      if (987654321 < Number(msg.metabolism)){
-        energyAcqRateLabel.textContent = prefix + msg.metabolism.formatNum(0);
-      }
-      else {
-        energyAcqRateLabel.textContent = prefix + msg.metabolism.formatNum(2);
-      }
+      energyAcqRateLabel.textContent = prefix + av.utl.toMetric(msg.metabolism, 0);
     }
     if (null === msg.gestation) offspringCostLabel.textContent = ' ';
-    else if (0 < msg.gestation) {offspringCostLabel.textContent = prefix + msg.gestation.formatNum(2);}
+    else if (0 < msg.gestation) {
+      offspringCostLabel.textContent = prefix + av.utl.toMetric(msg.gestation, 0);
+    }
     else {offspringCostLabel.textContent = 'non-viable';}
     if (null == msg.age) ageLabel.textContent = ' ';
       else ageLabel.textContent = msg.age;
@@ -846,7 +968,7 @@
     }
     //else ancestorLabel.textContent = av.parents.name[msg.ancestor];
     else ancestorLabel.textContent = msg.ancestor;
-    //add + or - to text of logic function
+
     if (null != msg.tasks) {
       //now put in the actual numbers
       notTime.textContent = msg.tasks.not;
@@ -860,6 +982,7 @@
       equTime.textContent = msg.tasks.equ;
     }
     else {
+/*     delete this section in 2021
       notLabel.textContent = 'NOT';
       nanLabel.textContent = 'NAN';
       andLabel.textContent = 'AND';
@@ -869,7 +992,7 @@
       norLabel.textContent = 'NOR';
       xorLabel.textContent = 'XOR';
       equLabel.textContent = 'EQU';
-
+*/
       notTime.textContent = '-';
       nanTime.textContent = '-';
       andTime.textContent = '-';
@@ -886,8 +1009,10 @@
     else if (0 < msg.isViable) viableLabel.textContent = 'yes';
     else viableLabel.textContent = 'unknown';
 
-    av.msg.fillColorBlock(msg);
+    av.msg.fillColorBlock(msg);   // make the color block next to name contain the color that is on the grid for that cell
     if (av.debug.msg) console.log('Kidstatus', av.grd.kidStatus);
+    
+    //set status of selected grid locaton to know if an organism is present to drag and drop
     if ('getgenome' == av.grd.kidStatus) {
       if (av.debug.msg) console.log('in kidStatus');
       av.grd.kidStatus = 'havegenome';

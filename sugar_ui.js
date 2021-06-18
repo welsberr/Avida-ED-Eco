@@ -7,56 +7,103 @@
 
   /*  Just to state some dom IDs that might be used.
       av.dom.sugarAccordion = document.getElementById('sugarAccordion');
-      av.dom.orn0section = document.getElementById('orn0section');
-      av.dom.orn0title
-      av.dom.orn0summary = document.getElementById('orn0summary'); 
-      av.dom.orn0Details = document.getElementById('orn0Details'); 
+      av.dom.orn_section = document.getElementById('orn_section');
+      av.dom.orn_title
+      av.dom.orn_summary = document.getElementById('orn_summary'); 
+      av.dom.orn_detailsHolder = document.getElementById('orn_detailsHolder'); 
       av.dom.orn1subSection = document.getElementById('orn1subSection'); 
       av.dom.tst2textarea
   */
 
   var av = av || {};  //incase av already exists
 
-
   // This function builds the html for all the other tasks based on the html writen for "orn"
-  // if (av.dbg.flg.root) { console.log('Root: before av.sgr.buildHtml'); }
+  if (av.dbg.flg.root) { console.log('Root: before av.sgr.buildHtml'); }
   av.sgr.buildHtml = function() {
     //console.log('in av.sgr.buildHtml');
+    var ii, jj, tsk;
     var tskSectionStr = '';
     //var subSectionStr = av.dom.orn1subSection.innterHTML;   //later there will be 4 of these for each sugar/task
     var newstr = '';
-    var pattern0 = 'orn0';  
-    var pattern1 = 'orn1';
-    var sgrNum = '';
+    var pattern = 'orn';  
+    var pattern_ = 'orn_';
+    var patternW = 'ornW';  //Rob wanted supply type to be in the "summary" section when the layout = Whole Dish; Later changed his  mine. This structure and all that reference should come out in 2021
+    
+    var patternTsk = 'orn';
+    var tmpstr = '';
+    var tskNum = '';
     var len = av.sgr.logicNames.length;
     for (ii=0; ii<len; ii++) {
-      if ('orn' != av.sgr.logicNames[ii]) {
-        tskSectionStr = av.dom.orn0section.innerHTML;
-        sgrNum = av.sgr.logicNames[ii] + '0';
-        //console.log('ii=', ii, '; sgrNum=',sgrNum);
-        tskSectionStr = tskSectionStr.replaceAll(pattern0, sgrNum);
+      tsk = av.sgr.logicNames[ii];
+      if ('orn' != tsk) {
+        tskSectionStr = av.dom.orn_section.innerHTML;
+        tskNum = tsk + '_';
+        //console.log('tskNum=', tskNum, 'pattern_=',pattern_);
+        tskSectionStr = tskSectionStr.replaceAll(pattern_, tskNum);
+
+        tskNum = tsk + 'W';
+        tskSectionStr = tskSectionStr.replaceAll(patternW, tskNum);
         //console.log('tskSectionStr=', tskSectionStr);
 
-        //av.dom.showTextarea.value = tskSectionStr;
-        document.getElementById(av.sgr.logicNames[ii]+'0section').innerHTML = tskSectionStr;
-        document.getElementById(av.sgr.logicNames[ii]+'0title').innerHTML = av.sgr.oseNames[ii];
+        tmpstr = tsk+'_section';
+        //console.log('id = ', tmpstr);
+        //console.log( 'av.dom.'+tsk+'_detailsHolder =', document.getElementById(tsk+'_detailsHolder').innerHTML );
+        //console.log( 'dom address is ', tmpstr);
+        
+        document.getElementById(tmpstr).innerHTML = tskSectionStr;
+        //av.dom.showBigTextarea.value = tskSectionStr;
 
-        newstr = av.dom.orn0Details.innerHTML;
-        sgrNum = av.sgr.logicNames[ii] + '1';
-        newstr = newstr.replaceAll(pattern1, sgrNum);
-        document.getElementById(av.sgr.logicNames[ii]+'0Details').innerHTML = newstr;
+        tmpstr = tsk+'_title';
+        document.getElementById(tmpstr).innerHTML = av.sgr.oseNames[ii];
+
+        newstr = av.dom.orn_detailsHolder.innerHTML;
+        // av.nut.numRegionsinHTML is defined in globals and is the number of subregions in the html
+        for (jj=0; jj <= av.nut.numRegionsinHTML; jj++) {
+          patternTsk = pattern + jj.toString();
+          tskNum = tsk + jj;
+          //console.log('patternTsk=',patternTsk, '; tskNum=',tskNum);
+          newstr = newstr.replaceAll(patternTsk, tskNum);
+        }
+        //console.log('dom is', tsk+'_detailsHolder');
+        av.dom.showBigTextarea.value = tskSectionStr;
+        document.getElementById(tsk+'_detailsHolder').innerHTML = newstr;
       }
-    };
+    }
       //Was using this to display how I was building sugar according data
-      //console.log('av.dom.orn0section.innerHTML=', av.dom.orn0section.innerHTML);
-      //av.dom.tst2textarea.value = document.getElementById('equ0Details').innerHTML;
+      //console.log('av.dom.orn_section.innerHTML=', av.dom.orn_section.innerHTML);
+      //av.dom.tst2textarea.value = document.getElementById('equorn_detailsHolder').innerHTML;
       //av.dom.tst2textarea.value = tskSectionStr;
 
-      av.dom.showTextarea.value = av.dom.sugarAccordion.innerHTML;  
-      //av.dom.showTextarea.value = document.getElementById('not0Details');  
-      //av.dom.showTextarea.value = newstr;
+      av.dom.showBigTextarea.value = av.dom.sugarAccordion.innerHTML;  
   };
-  
+
+  // html5 that is not in use right now. 
+  /*
+   In use but with fewer options
+                            <div id="orn1hiSideSelectHolder" class="grid-sugarDetail-item sideNclass">
+                            <label><select id="orn1hiSide">
+                              <option value="top">Top</option>
+                              <option value="bottom">Bottom</option>
+                              <option value="left" selected="">Left</option>
+                              <option value="right">Right</option>
+                              <option value="center">Center</option>
+                              <option value="edge">Edge</option>
+                            </select>
+                              <span id="orn1sideText">high side</span></label>
+                          </div>
+
+                            <div id="orn1periodcheckboxHolder" class="grid-sugarDetail-item periodCheckDiv" onchange="av.sgr.eachSugarcheckboxHolderChange(this);">
+                            <label><input id="orn1periodCheck" type="checkboxHolder">Periodic&nbsp;&nbsp;</label>
+                          </div>
+                          <div id="orn1gradientcheckboxHolder" class="grid-sugarDetail-item gradientCheckDiv" onchange="av.sgr.eachSugarcheckboxHolderChange(this);">
+                            <label><input id="orn1gradientCheck" type="checkboxHolder">Gradient&nbsp;&nbsp;</label>
+                          </div>
+                          <div id="orn1diffusecheckboxHolder" class="grid-sugarDetail-item diffuseCheckDiv" onchange="av.sgr.eachSugarcheckboxHolderChange(this);">
+                            <label><input id="orn1diffuseCheck" type="checkboxHolder">Diffusion&nbsp;&nbsp;</label>
+                          </div>
+
+                          <div id="orn_summaryFooterText" class="sumFtTxtCls"> 0 < period then periodic </div>Re  
+  */
   //-------------------------------------------------------------------------------------------------- sugars for Eco --
   //Code for adaptable user interface for environment layout witn upto 9 subsections. 
   //-------------------------------------------------------------------------------------------------- sugars for Eco --
@@ -66,93 +113,212 @@
 //------------------------------------------------------------------------------------------------- Sugar Accordion ----
 //Global or Local in Ed speak = Global or Grid in Avida Environment file.
   av.sgr.allSugarGeometryChange = function (domObj) {
-    var idx = domObj.selectedIndex;        // get the index of the selected option 
+    var idx = domObj.selectedIndex;        // get the index of the selected option
     var which = domObj.options[idx].value;   // get the value of the selected option 
     av.sgr.ChangeAllGeo(which);
     //av.sgr.setSugarColors(true);  //true is to turn colors on;    //color now dependent on presence absence of resources for that task
-    document.getElementById('allSugarGeometry').value = 'Neutral';
+    document.getElementById('allSugarGeometry').value = 'neutral';
+  };
+  
+  //This looks like it needs work
+//--------------------------------------------------------------------------------- av.sgr.allSugarRegionLayoutChange --
+  av.sgr.allSugarModifierChange = function(domObj) {
+    var selectedOption = domObj.value;
+    console.log('av.sgr.allSugarModifierChange: pattern=', selectedOption, '???????????????????????????');
+    if ('diffusion' == domObj.value.toLowerCase()) { diffussionFlag = true; }
+    var endName = 'supplyModifierSelect';   
+    var domName = '';
+    var numtasks = av.sgr.logicNames.length;
+    var start = 1;   //only grid geometry can have diffusion, item 0 is for global
+    // all tasks
+    // console.log('endName=', endName, '; numtasks=', numtasks, '; sub=', sub, ' numRegons=', av.nut.numRegionsinHTML);
+    for (var ii=start; ii< numtasks; ii++) {  
+      for (var sub=start; sub <= av.nut.numRegionsinHTML; sub++) {
+      //change all subsections; Global can have periodic but not gradient or diffusion. 
+        domName = av.sgr.logicNames[ii] + sub + endName;
+        av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.allSugarModifierChange');   //need to do once per task/subsection combo even if it does change both global and subtasks
+        if (10 < sub) break;
+      }
+    }
+    //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
+    document.getElementById('allSugarModifier').value = 'neutral';
   };
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.allsugarSupplyTypeChange = function (domObj) {  
-    var idx = domObj.selectedIndex;        // get the index of the selected option 
-    var selectedValue = domObj.options[idx].value;   // get the value of the selected option 
-    av.sgr.ChangeAllsugarSupplyType(selectedValue, 'av.sgr.allsugarSupplyTypeChange');
-    document.getElementById('allsugarSupplyType').value = 'Neutral';
-  };
+//--------------------------------------------------------------------------------- av.sgr.allSugarRegionLayoutChange --
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.allSugarDetailsOpenClose = function (domObj) {
-    var idx = domObj.selectedIndex;        // get the index of the selected option 
-    var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
-    av.sgr.OpenCloseAllSugarDetails(selectedOption, 'av.sgr.allSugarDetailsOpenClose');
-    document.getElementById('allSugarDetails').value = 'Neutral';
-  };
+av.sgr.allSugarRegionLayoutChange = function(domObj) {
+  //console.log('in av.sgr.allSugarRegionLayoutChange: value=', domObj.value);
+  var selectedOption = domObj.value;
+  av.changeAllSgrRegionLayout(selectedOption, 'av.sgr.allSugarRegionLayoutChange');
+};
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.geometryChange = function (selectObj) {
-    //need to find subregion Number in the future - set to 1 for now. 
-    var taskID = selectObj.id;
-    var task = taskID.substring(0, 3);
-    var sub = taskID.substr(3, 1);
-    if (av.dbg.flg.nut) { console.log('av.sgr.geometryChange: taskID=', taskID, '; task =', task, '; subsection=', sub); }
-    sub = 1;       //or should this be 0 since it is in the 'summary' section?
-    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.geometryChange');
-  };
+av.changeAllSgrRegionLayout = function(selectedOption, from) {
+  var endName = 'regionLayout';   //nan_supplyTypeHolder  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
+  //console.log(from, ' called av.sgr.allSugarRegionLayoutChange: selectedOption=',selectedOption);
+  var domName = '';  
+  var sub=0;   //most will start with 0 for global and also do local section 1
+  // all tasks
+  for (var ii=0; ii< av.sgr.numTasks; ii++) {  
+    //change global
+    domName = av.sgr.logicNames[ii] + '_' + endName;
+    //console.log('domName='+domName, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub, '; value=', domObj.value);
+    //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
+    document.getElementById(domName).value = selectedOption;
+    av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.allSugarRegionLayoutChange');   //only need to do once per task/subsection combo even if it does change both global and subtasks
+    //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value);
+  }   
+  //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
+  document.getElementById('allSugarRegionLayout').value = 'neutral';
+};
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.supplyChange_placeholder = function (domObj) {
+//------------------------------------------------------------------------------- av.sgr.allsugarsupplyTypeSlctChange --
+av.sgr.allsugarsupplyTypeSlctChange = function (domObj) {
+  var tsk = 'not';
+  //two line method
+  var idx = domObj.selectedIndex;        // get the index of the selected option 
+  var selectedValue = domObj.options[idx].value;   // get the value of the selected option 
+  // one line method
+  selectedValue = domObj.value;
+
+  //console.log('allsugarsupplyTypeSlctChange: idx=', idx, '; value=', selectedValue, '=', domObj.value);
+  av.sgr.ChangeAllsugarsupplyTypeSlct(selectedValue, 'av.sgr.allsugarsupplyTypeSlctChange');
+  document.getElementById('allsugarsupplyTypeSlct').value = 'neutral';
+};
+
+//-------------------------------------------------------------------------------------- av.sgr.toggleOpenCloseSymbol --
+av.sgr.toggleOpenCloseSymbol = function(task) {
+  if (document.getElementById(task+'_section').open) {
+    document.getElementById(task+'_openClose').innerHTML = av.sgr.symbolIsClosed;
+  } else {
+    document.getElementById(task+'_openClose').innerHTML = av.sgr.symbolIsOpen;
+  };
+};
+
+//--------------------------------------------------------------------------------- av.sgr.ChangeAllsugarsupplyTypeSlct --
+av.sgr.ChangeAllsugarsupplyTypeSlct = function(selectedOption, from) {
+  var endName = 'supplyTypeSlct';   //nan_supplyTypeHolder  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
+  //console.log(from, ' called av.sgr.ChangeAllsugarsupplyTypeSlct: selectedOption=',selectedOption);
+  var domName = '';
+  var start = 1;   //sub sections start with 0, because global limited is in the summary (_)
+
+  //console.log('start='+start, '; numTasks='+av.sgr.numTasks, '; endName='+endName, '; value=', selectedOption);
+  for (var ii=0; ii< av.sgr.numTasks; ii++) {
+    //change glabal and all subsections  
+    tsk = av.sgr.logicNames[ii];
+    //console.log('av.dom.'+tsk + '_regionLayHolder.value =', document.getElementById(tsk + '_regionLayHolder').value);
+    domName = tsk + 'W' + endName;
+    //console.log('domname=', domName);
+    document.getElementById(domName).value = selectedOption;
+    domName = tsk + '_' + endName;
+    //console.log('domname=', domName);
+    document.getElementById(domName).value = selectedOption;
+    //console.log('document.getElementById('+domName+').value=', document.getElementById(domName).value);
+    av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], 0, 'av.sgr.ChangeAllsugarsupplyTypeSlct');
+    for (var sub=start; sub<= 2; sub++) {
+      domName = av.sgr.logicNames[ii] + sub + endName;
+      //console.log('domName='+domName, '; selectedOption='+selectedOption+'|');
+      document.getElementById(domName).value = selectedOption;
+      //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
+      //if (0 < sub) av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarsupplyTypeSlct');   //only need to do once per task/subsection combo even if it does change both global and subtasks
+      av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarsupplyTypeSlct');   //only need to do once per task/subsection combo even if it does change both global and subtasks
+    };  // end subsection for loop
+    av.sgr.toggleOpenCloseSymbol(tsk);
+  };    // end task for loop
+  //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
+};
+
+//----------------------------------------------------------------------------------- av.sgr.allSugarDetailsOpenClose --
+av.sgr.allSugarDetailsOpenClose = function (domObj) {
+  var idx = domObj.selectedIndex;        // get the index of the selected option 
+  var selectedOption = domObj.options[idx].value;   // get the value of the selected option 
+  av.sgr.OpenCloseAllSugarDetails(selectedOption, 'av.sgr.allSugarDetailsOpenClose');
+  document.getElementById('allSugarDetails').value = 'neutral';
+};
+
+//--------------------------------------------------------------------------------------------- av.sgr.geometryChange --
+av.sgr.geometryChange = function (selectObj) {
+  //need to find subregion Number in the future - set to 1 for now.;
+  var taskID = selectObj.id;
+  var task = taskID.substring(0, 3);
+  var sub = taskID.substr(3, 1);
+  // if (av.dbg.flg.nut) { console.log('av.sgr.geometryChange: taskID=', taskID, '; task =', task, '; subsection=', sub); }
+  sub = 1;       //or should this be 0 since it is in the 'summary' section?
+  av.sgr.changeDetailsLayout(task, sub, 'av.sgr.geometryChange');
+  //does av.sgr.changeDetailsLayout need a 'sub' value? 
+};
+
+//----------------------------------------------------------------------------------------- av.sgr.regionLayoutChange --
+av.sgr.regionLayoutChange = function (domObj) {
+//if (av.dbg.flg.nut) { console.log('Nut: av.sgr.regionLayoutChange was called by', domObj); }
+  var taskID = domObj.id;
+  var task = taskID.substring(0, 3);
+  var sub = taskID.substr(3, 1);
+  //console.log('taskID=', taskID, 'task=', task, '; subsection=', sub);
+  av.sgr.changeDetailsLayout(task, sub, 'av.sgr.regionLayoutChange');
+};
+
+//----------------------------------------------------------------------------------------------- av.sgr.supplyChange --
+av.sgr.supplyChange = function (domObj) {
+  var taskID = domObj.id;
+  var value = domObj.value;
+  var task = taskID.substring(0, 3);
+  var sub = taskID.substr(3, 1);
+  if ('_' == sub) {
+    var tmpstr = task + 'W' + taskID.substr(4);
+    //console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub, '; suffix=', taskID.substr(4), '; value=', value, '; tmpstr = '+tmpstr);
+    document.getElementById(tmpstr).value = domObj.value;
+  }
+  else if ('W' == sub) {
+    var tmpstr = task + '1' + taskID.substr(4);
+    //console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub, '; suffix=', taskID.substr(4), '; value=', value, '; tmpstr = '+tmpstr);
+    document.getElementById(tmpstr).value = domObj.value;      
+  }
+  //console.log('taskID=', taskID, '; value=', value, '; task=', task, '; sub=', sub);
+  av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
+};
+
+//--------------------------------------------------------------------------------------- av.sgr.supplyModifierChange --
+  av.sgr.supplyModifierChange = function (domObj) {
+  if (av.dbg.flg.nut) { console.log('Nut: av.sgr.supplyModifierChange value', domObj.value); }
     var taskID = domObj.id;
     var task = taskID.substring(0, 3);
     var sub = taskID.substr(3, 1);
-    if (av.dbg.flg.nut) { console.log('taskID=', taskID, 'task=', task, '; subsection=', sub); }
-    sub = 1; //only whole dish  for now
-    av.sgr.changeDetailsLayout(task, sub, 'supplyChange_placeholder');
+    console.log('taskID=', taskID, 'task=', task, '; subsection=', sub);
+    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyModifierChange');
   };
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.regionLayoutChange = function (domObj) {
-    if (av.dbg.flg.nut) { console.log('av.sgr.regionLayoutChange was called by', domObj); }
-  };
-
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.supplyChange = function (domObj) {
-    var taskID = domObj.id;
-    var task = taskID.substring(0, 3);
-    var sub = taskID.substr(3, 1);
-    if (av.dbg.flg.nut) { console.log('av.sgr.supplyChange: taskID=', taskID, '; task=', task, '; subsection=', sub); }
-    sub = 1; //only whole dish  for now  or should sub=0 when it it global?
-    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
-  };
-
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
-  av.sgr.eachSugarCheckBoxChange = function (domObj) {
+//------------------------------------------------------------------------------ av.sgr.eachSugarcheckboxHolderChange --
+  av.sgr.eachSugarcheckboxHolderChange = function (domObj) {
   //av.sgr.re_region = /(\D+)(\d+)(.*$)/;
     var taskID = domObj.id;
     var matchTaskRegion = taskID.match(av.sgr.re_region);
     var task = matchTaskRegion[1];      //taskID.substring(0,3);   
     var sub = matchTaskRegion[2];       //taskID.substring(3,1);   did not work; substr seems to work for sub
-    if (av.dbg.flg.nut) { console.log('av.sgr.eachSugarCheckBoxChange: taskID=', taskID, 'tst=', task, '; subsection=', sub); }
+ // if (av.dbg.flg.nut) { console.log('av.sgr.eachSugarcheckboxHolderChange: taskID=', taskID, 'tst=', task, '; subsection=', sub); }
     if (1 < sub)
       sub = 1;
     sub = 1; //only whole dish  for now
-    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.eachSugarCheckBoxChange');
+    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.eachSugarcheckboxHolderChange');
   };
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//----------------------------------------------------------------------------------------------- av.sgr.periodChange --
   av.sgr.periodChange = function (domObj) {
-    //console.log('av.sgr.periodChange domObj=', domObj);
-    if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
+    var txtNum = domObj.value;
+    console.log('av.sgr.periodChange domObj.id=', domObj.id, '; value = ', domObj.value);
+    if ( !av.utl.isNumber(Number(txtNum) ) ) {
+      console.log('NaN: txtNum=', txtNum);
+    }
   };
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//---------------------------------------------------------------------------------------------- av.sgr.initialChange --
   av.sgr.initialChange = function (domObj) {
-    console.log('av.sgr.initialChange domObj=', domObj);
-    if (av.dbg.flg.nut) { console.log('domObj.value=', domObj.value); }
-    var ndx = domObj.id.indexOf('Input');
-    var id = domObj.id.substring(0, ndx) + 'Text';
+    // if (av.dbg.flg.nut) { console.log('domObj.value=', domObj.value, '; id=, domObj.id); }
+    //var ndx = domObj.id.indexOf('Input');
+    //var id = domObj.id.substring(0, ndx) + 'Text';
+    var geometry;
+    var id = domObj.id;
     console.log('text id=', id, '; input id=', domObj.id);
-    //console.log('Number(domObj.value)=',Number(domObj.value));
+    // console.log('Number(domObj.value)=',Number(domObj.value));
     if (isNaN(Number(domObj.value))) {
       document.getElementById(id).innerHTML = 'inital amount must be a number';
       document.getElementById(id).style.color = 'red';
@@ -164,24 +330,66 @@
       document.getElementById(id).style.color = 'black';
       var tsk = domObj.id.substring(0, 3);  //start and end (does not inlcude end)
       var sub = domObj.id.substr(3, 1);     //start and number of characters
-      var geometry = document.getElementById(tsk+'0geometry').value;
-      var supplyType = document.getElementById(tsk+sub+'supplyType').value;
-      console.log('tsk=', tsk, '; geometry=', geometry, '; supplyType=', supplyType);
+      if ('1Global' == document.getElementById(tsk+'_geometry').value) {
+        var geometry = 'global';
+      } else { geometry = 'grid'; }
+      var supplyTypeSlct = document.getElementById(tsk+sub+'supplyTypeSlct').value;
+      console.log('tsk=', tsk, '; geometry=', geometry, '; supplyTypeSlct=', supplyTypeSlct);
       
-     av.sgr.findSugarPresent(supplyType, geometry, tsk, sub, 'av.sgr.initialChange');
+     av.sgr.setColorFlagBasedonSugarPresence(geometry, tsk, 'av.sgr.initialChange');
     }
   };
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//----------------------------------------------------------------------------------------------- av.sgr.inflowChange --
   av.sgr.inflowChange = function (domObj) {
-    if (av.dbg.flg.nut) { console.log('av.sgr.inflowChange domObj=', domObj); }
-    if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
+  // if (av.dbg.flg.nut) { console.log('av.sgr.inflowChange domObj=', domObj); }
+  // if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
+    var id = domObj.id;
+    var equilbrium = 1;
+    var preID = id.substr(0,4);
+    var postID = id.substr(-4,2);
+    var textID = preID + 'inflow' + postID + 'Np';
+    console.log('id=', domObj.id, '; domObj.value=', domObj.value, '; preID=', preID, '; postID=', postID, '; textID=', textID);
+    if (isNaN(Number(domObj.value))) {
+      document.getElementById(textID).innerHTML = 'inflow amount must be a number';
+      document.getElementById(textID).style.color = 'red';
+    } else if (0 >= domObj.value) {
+      document.getElementById(textID).innerHTML = 'inflow amount must be >= 0';
+      document.getElementById(textID).style.color = 'red';
+    } else {
+      document.getElementById(textID).innerHTML = 'inflow / cell';
+      document.getElementById(textID).style.color = 'black';
+      equilbrium = parseFloat(document.getElementById(preID+'inflow'+ postID + 'Np').value)/
+                   parseFloat(document.getElementById(preID+'outflow'+ postID + 'Np').value);
+      console.log('av.dom.'+preID+'chmstat'+postID+'Text = ', av.utl.toMetric(equilbrium,0) + ' = equilibrium');
+      document.getElementById(preID+'chmstat'+postID +'Text').innerHTML = av.utl.toMetric(equilbrium,0) + ' = equilibrium';
   };
+};
 
-//------------------------------------------------------------------------------------- av.sgr.allSugarGeometryChange --
+//---------------------------------------------------------------------------------------------- av.sgr.outflowChange --
   av.sgr.outflowChange = function (domObj) {
-    if (av.dbg.flg.nut) { console.log('av.sgr.outflowChange domObj=', domObj); }
-    if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
+ // if (av.dbg.flg.nut) { console.log('av.sgr.outflowChange domObj=', domObj); }
+ // if (av.dbg.flg.nut) { console.log('id=', domObj.id, '; domObj.value=', domObj.value); }
+    var id = domObj.id;
+    var equilbrium = 1;
+    var preID = id.substr(0,4);
+    var postID = id.substr(-4,2);
+    var textID = preID + 'outflow' + postID + 'Text';
+    //console.log('id=', domObj.id, '; domObj.value=', domObj.value, '; preID=', preID, '; postID=', postID, '; textID=', textID);
+    if (isNaN(Number(domObj.value))) {
+      document.getElementById(textID).innerHTML = 'outflow fraction must be a number';
+      document.getElementById(textID).style.color = 'red';
+    } else if (0 >= domObj.value || domObj.value >  1) {
+      document.getElementById(textID).innerHTML = 'Required: 0 < outflow fraction <= 0';
+      document.getElementById(textID).style.color = 'red';
+    } else {
+      document.getElementById(textID).innerHTML = 'outflow fraction';
+      document.getElementById(textID).style.color = 'black';
+      equilbrium = parseFloat(document.getElementById(preID+'inflow'+ postID + 'Np').value)/
+                   parseFloat(document.getElementById(preID+'outflow'+ postID + 'Np').value);
+      //console.log('av.dom.'+preID+'chmstat'+postID+'Text = ', av.utl.toMetric(equilbrium,0) + ' = equilibrium');
+      document.getElementById(preID+'chmstat'+postID +'Text').innerHTML = av.utl.toMetric(equilbrium,0) + ' = equilibrium';
+    }
   };
 
   /*********************************************************************************** end calls directly from dom ****/
@@ -189,40 +397,19 @@
 
 
   //--------------------------------------------------------------------------------------------- av.sgr.ChangeAllGeo --
-  //This does  not deal with complement, I'll do that later if asked. 
+  // Geometry no longer an opton on the UI
   av.sgr.ChangeAllGeo = function(selectedOption){
     var sub = 1;  //need to figure out subsections later
     var idName = '';
     var numtasks = av.sgr.logicNames.length;
     for (var ii=0; ii< numtasks; ii++) {
     //for (var ii=1; ii< 3; ii++) {
-      idName = av.sgr.logicNames[ii] + '0geometry';   //nan0geometry
+      idName = av.sgr.logicNames[ii] + '_geometry';   //nan_geometry
       document.getElementById(idName).value = selectedOption;
 
       av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllGeo');
     }
     //console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption);
-  };
-
-  //--------------------------------------------------------------------------------- av.sgr.ChangeAllsugarSupplyType --
-  av.sgr.ChangeAllsugarSupplyType = function(selectedOption, from) {
-    var endName = 'supplyType';   //nan0supplyType  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
-    //console.log(from, ' called av.sgr.ChangeAllsugarSupplyType: selectedOption=',selectedOption);
-    var domName = '';  
-    var numtasks = av.sgr.logicNames.length;
-    var start = 0;   //most will start with 0 for global and also do local section 1
-    if ('Finite' == selectedOption) { start=1; }   //only local finte implemented for now; global finite not implemented.
-    // all tasks
-    for (var ii=0; ii< numtasks; ii++) {  
-      //change glabal and all subsections  (only 1 sub secton for now) - this may need to change later; but only allowing None and Infinte for now, so ok.
-      for (var sub=start; sub< 2; sub++) {
-        domName = av.sgr.logicNames[ii] + sub + endName;
-        document.getElementById(domName).value = selectedOption;
-        //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
-        if (0 < sub) av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarSupplyType');   //only need to do once per task/subsection combo even if it does change both global and subtasks
-      }
-    }
-      //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
   };
 
   //------------------------------------------------------------------------------------------- av.sgr.setSugarColors --
@@ -235,54 +422,58 @@
     var len = av.sgr.sugarColors.length;
     for (ii = 0; ii < len; ii++) {
       //need to think this thru as eventually there will be up to 4 subsections. Just one for now.
-      idname = av.sgr.logicNames[ii]+'0section';
-      //if ('Local' == document.getElementById('allSugarGeometry').value) {    //when determined by local vs global 
+      idname = av.sgr.logicNames[ii]+'_section';
       if (colorFlg) {
         backgndColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarBackgroundShade];
         nameColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade]; 
         darkColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade+10]; 
       }
-      idname = av.sgr.logicNames[ii]+'0section';
+      idname = av.sgr.logicNames[ii]+'_section';
       document.getElementById(idname).style.backgroundColor = backgndColor;
-      idname = av.sgr.logicNames[ii]+'0title';
+      idname = av.sgr.logicNames[ii]+'_title';
       //console.log('idname=',idname);
       document.getElementById(idname).style.color = nameColor;  
       // eventually there will be up to 4 subsections. deal with that later.
-      for (var sub=1; sub < 2; sub++) {
+      for (var sub=1; sub < 3; sub++) {
         idname = av.sgr.logicNames[ii]+sub+'regionName';
         document.getElementById(idname).style.color = darkColor;  
+        // console.log('set color for idname=', idname);
       }
     }
   };
   
+  //if (av.dbg.flg.root) { console.log('Root: av.sgr.updateSugarColors'); }
   //---------------------------------------------------------------------------------------- av.sgr.updateSugarColors --
   // not called as of 2020_0124
   av.sgr.updateSugarColors = function() {
     var tsk;
-    var sub = 1;
+    var sub = 0;
     var colorFlg = true;
     var from = 'av.sgr.update.colors';
-    var geometry, supplyType, initial;
+    var supplyTypeSlct, initial;
     var len = av.sgr.logicNames.length;
     for (ii = 0; ii < len; ii++) {
       tsk = av.sgr.logicNames[ii];
-      geometry = document.getElementById(tsk+'0geometry').value;
-      if ('global' == geometry.toLowerCase()) {
-        supplyType = document.getElementById(tsk + '0supplyType').value.toLowerCase();
-        if ('none' == supplyType.toLowerCase() ) {
+      if ('1Global' == document.getElementById(tsk+'_regionLayout').value ) {
+        //global dish
+        supplyTypeSlct = document.getElementById(tsk + '_regionLayout').value.toLowerCase();
+        if ('none' == supplyTypeSlct.toLowerCase() ) {
           colorFlg = false;
         }
       }
       // now look at local resources that might be different in the different subSections in the future. 
       else {
-        supplyType = document.getElementById(tsk + sub + 'supplyType').value.toLowerCase();
-        if ('none' == supplyType.toLowerCase() ) {
-          colorFlg = false;
-        }
-        else if ('finite' == supplyType.toLowerCase() ) {
-          initial = document.getElementById(tsk+sub+'initialHiInput').value;
-          if (0 >= initial) {
+        //local (grid dish)
+        for (sub = 0; sub <= av.nut.numRegionsinHTML; sub++) {
+          supplyTypeSlct = document.getElementById(tsk + sub + 'supplyTypeSlct').value.toLowerCase();
+          if ('none' == supplyTypeSlct.toLowerCase() ) {
             colorFlg = false;
+          }
+          else if ('limited' == supplyTypeSlct.toLowerCase() ) {
+            initial = document.getElementById(tsk+sub+'initialHiNp').value;
+            if (0 >= initial) {
+              colorFlg = false;
+            }
           }
         }
       }
@@ -292,31 +483,61 @@
   };
   //------------------------------------------------------------------------------------ end av.sgr.updateSugarColors --
 
+  //if (av.dbg.flg.root) { console.log('Root: av.sgr.OpenCloseAllSugarDetails'); }
   //--------------------------------------------------------------------------------- av.sgr.OpenCloseAllSugarDetails --
   av.sgr.OpenCloseAllSugarDetails = function(selectedOption, from) {
-    var endName = '0section';   //nanGeometry
-    var idName = '';
+    var tsk = 'sgr';
     var openFlag = false;
     var numtasks = av.sgr.logicNames.length;
-    if ('allOpen' == selectedOption) {openFlag = true;}
-    for (var ii=0; ii< numtasks; ii++) {
-    //for (var ii=1; ii< 3; ii++) {
-      idName = av.sgr.logicNames[ii] + endName;
-      document.getElementById(idName).open = openFlag;
+    if ('allOpen' == selectedOption) {
+      openFlag = true;
     }
-    if (av.dbg.flg.nut) { console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption, '; openFlag=', openFlag, '; from=', from); }
+    for (var ii=0; ii< numtasks; ii++) {
+      tsk = av.sgr.logicNames[ii];
+      numTsk = av.sgr.logEdNames[ii];
+      document.getElementById(tsk+'_section').open = openFlag;
+      av.sgr.OpenClsSugarDetails(tsk, openFlag);    
+    };
+    //if (av.dbg.flg.nut) { console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption, '; openFlag=', openFlag, '; from=', from); }
+  };
+  //----------------------------------------------------------------------------- end av.sgr.OpenCloseAllSugarDetails --
+  
+  //--------------------------------------------------------------------------------------- av.sgr.OpenClsSugarDetail --
+  av.sgr.OpenClsSugarDetails = function(tsk, openFlag) {
+    var ndx = av.sgr.logicNames.indexOf(tsk);
+    var numTsk = av.sgr.logEdNames[ndx];
+    var chemoSummary = '';
+    var tmpnum = '';
+    var notestr = '';
+    console.log('type=', document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase(), '; !optioin=', !openFlag);
+    if ('chemostat'  == document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase() && !openFlag) {
+      chemoSummary = av.sgr.describe.short[tsk] + ' ' + document.getElementById(tsk+'0inflowHiNp').value + ' / '
+                   + document.getElementById(tsk+'0outflowHiNp').value + ' = '
+                   + av.utl.toMetric(av.nut[numTsk].uiAll.equil,0);
+      //console.log('new width is', tmpnum);
+      notestr = 'Inflow / Outflow = Equilibrium';
+    } else if ('chemostat'  == document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase() && openFlag) {
+      chemoSummary = av.sgr.describe.long[tsk];
+    };
+    tmpnum = (chemoSummary.length * 7) + 'px';
+    //console.log('new width is', tmpnum);
+    document.getElementById(tsk+'_taskAboutText').style.width = tmpnum;
+    document.getElementById(tsk+'_taskAboutText').innerHTML = chemoSummary;    
+    document.getElementById('sugarNote').innerHTML = notestr;    
   };
   
+  
+  if (av.dbg.flg.root) { console.log('Root: av.sgr.setSingleSugarColor()'); }
   //-------------------------------------------------------------------------------------- av.sgr.setSingleSugarColor --
   av.sgr.setSingleSugarColor = function(colorFlg, tskNum, from) {
-    if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg); }
+    //if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg); }
+    //console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg);
     var idname;
     var backgndColor = av.color.greyMap[av.sgr.sugarGreyShade];
     var nameColor = 'Black';
     var darkColor = '#eee';
       //need to think this thru as eventually there will be up to 4 subsections. Just one for now.
-      idname = av.sgr.logicNames[tskNum]+'0section';
-      //if ('Local' == document.getElementById('allSugarGeometry').value) {    //when determined by local vs global 
+      idname = av.sgr.logicNames[tskNum]+'_section';
       if (colorFlg) {
         backgndColor = av.color[av.sgr.sugarColors[tskNum]][av.sgr.sugarBackgroundShade];
         nameColor = av.color[av.sgr.sugarColors[tskNum]][av.sgr.sugarNameShade]; 
@@ -328,326 +549,640 @@
         nameColor = av.color.greyMap[av.sgr.sugarNameShade]; 
         darkColor = av.color.greyMap[av.sgr.sugarNameShade+10];         
       }
-      idname = av.sgr.logicNames[tskNum]+'0section';
+      idname = av.sgr.logicNames[tskNum]+'_section';
       document.getElementById(idname).style.backgroundColor = backgndColor;
-      idname = av.sgr.logicNames[tskNum]+'0title';
+      idname = av.sgr.logicNames[tskNum]+'_title';
       // if (av.dbg.flg.nut) { console.log('idname=',idname); }
       document.getElementById(idname).style.color = nameColor;  
       // eventually there will be up to 4 subsections. deal with that later.
-      for (var sub=1; sub < 2; sub++) {
+      for (var sub=1; sub <= av.nut.numRegionsinHTML; sub++) {
         idname = av.sgr.logicNames[tskNum]+sub+'regionName';
+        //console.log('set color for idname=', idname);
         document.getElementById(idname).style.color = darkColor;  
+        idname = av.sgr.logicNames[tskNum]+sub+'subSection';
+        document.getElementById(idname).style['border-top'] = '1px solid '+darkColor;  
       }
   };
   //---------------------------------------------------------------------------------- end av.sgr.setSingleSugarColor --
 
-  av.sgr.findSugarPresent = function(supplyType, geometry, tsk, sub, from) {
-    if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.findSugarPresent: supplyType=', supplyType, '; geometry=', geometry, '; tsk=', tsk, '; sub=', sub); }
-    var colorFlg = true;
+  //if (av.dbg.flg.root) { console.log('Root: before av.sgr.setColorFlagBasedonSugarPresence'); }
+  //------------------------------------------------------------------------- av.sgr.setColorFlagBasedonSugarPresence --
+  av.sgr.setColorFlagBasedonSugarPresence = function(geometry, tsk, from) {
+ // if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.setColorFlagBasedonSugarPresence: supplyTypeSlct=', supplyTypeSlct, '; geometry=', geometry, '; tsk=', tsk, '; sub=', sub); }
+    //console.log(from, 'called av.sgr.setColorFlagBasedonSugarPresence: geometry=', geometry, '; tsk=', tsk);
+    var colorFlg = false;
+    var supplyTypeSlct;
+    var domObjName;
     var indx = av.sgr.logicNames.indexOf(tsk);
+    var numTsk = av.sgr.logEdNames[indx];
+    //console.log('tsk=', tsk, '; indx=', indx, '; numTsk=', numTsk, '; geometry=', geometry);
+    av.nut[numTsk].uiAll.regionsNumOf =  Number(av.nut[numTsk].uiAll.regionLayout.substr(0,1) );
     if ('global' == geometry.toLowerCase()) {
-      supplyType = document.getElementById(tsk + '0supplyType').value.toLowerCase();
-      if ('none' == supplyType.toLowerCase() ) {
-        colorFlg = false;
+      supplyTypeSlct = document.getElementById(tsk + '_supplyTypeSlct').value.toLowerCase();
+      //console.log('supplyTypeSlct=', supplyTypeSlct);
+      if ('none' != supplyTypeSlct.toLowerCase() ) {
+        colorFlg = true;
       }
     }
     // now look at local resources that might be different in the different subSections in the future. 
     else {
-      supplyType = document.getElementById(tsk + sub + 'supplyType').value.toLowerCase();
-      if ('none' == supplyType.toLowerCase() ) {
-        colorFlg = false;
-      }
-      else if ('finite' == supplyType.toLowerCase() ) {
-        initial = document.getElementById(tsk+sub+'initialHiInput').value;
-        if (0 >= initial) {
-          colorFlg = false;
+      for (var ii=1; ii <=av.nut[numTsk].uiAll.regionsNumOf; ii++) {
+        domObjName = tsk + ii + 'supplyTypeSlct';
+        //console.log('tsk=', tsk, '; ii=', ii);
+        //console.log('domElementID=|' + domObjName +'|');
+        //console.log(domObjName+'.value=', document.getElementById(domObjName).value);
+        supplyTypeSlct = document.getElementById(domObjName).value.toLowerCase();
+        if ('none' != supplyTypeSlct.toLowerCase() ) {
+          colorFlg = true;
+        }
+        if ('limited' == supplyTypeSlct.toLowerCase() ) {
+          initial = document.getElementById(tsk+ii+'initialHiNp').value;
+          if (0 < initial) {
+            colorFlg = true;
+          }
         }
       }
-    }
+    } // end else Grid=geometry
     // for all tasks call setSingeleSugarColor
-    av.sgr.setSingleSugarColor(colorFlg, indx, 'av.sgr.findSugarPresent');
+    av.sgr.setSingleSugarColor(colorFlg, indx, 'av.sgr.setColorFlagBasedonSugarPresence');
+  };
+  //--------------------------------------------------------------------- end av.sgr.setColorFlagBasedonSugarPresence --
+
+  //-------------------------------------------------------------------------------------- av.sgr.changeDetailsLayout --
+  // https://stackoverflow.com/questions/7363117/detecting-the-opening-or-closing-of-a-details-element
+  av.sgr.detailsToggle = function(domObj) {
+      var taskID = domObj.id;     //orn_regionLayHolder
+      var task = taskID.substring(0, 3);
+      var isOpen = !domObj.open;
+      console.log('Details object,', task, 'has an open status of', isOpen, '; complexity level=', av.sgr.complexityLevel, 'Time=',
+      //           new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: false }));
+                    new Date().getTime() );
+      // may put back later. 
+      //if ('sgrGlobal' == av.sgr.complexityLevel) {
+      if (false) {
+        console.log('av.sgr.complexityLevel=', av.sgr.complexityLevel);
+        if (isOpen) {
+          setTimeout(function() {     //https://stackoverflow.com/questions/17883692/how-to-set-time-delay-in-javascript
+            document.getElementById(taskID).open = false;
+            console.log('details=', taskID, 'should close. Time=', new Date().getTime() );
+          }, 5);   //delayInMilliseconds
+        };
+      };
+      setTimeout(function() {     //https://stackoverflow.com/questions/17883692/how-to-set-time-delay-in-javascript
+        console.log('after close global if needed; ', taskID, 'open=', domObj.open);
+        av.sgr.toggleOpenCloseSymbol(task);
+      }, 7);   //delayInMilliseconds
+    };
+
+  //---------------------------------------------------------------------------------- av.sgr.complexityChangeProcess --
+  av.sgr.complexityChangeProcess = function (from) {
+    var ii, tsk;
+    var basicDisplayNone = 'inline-bloack';
+    var optionDisabled = false;
+    var subnum = 1;
+    var len = av.sgr.logicNames.length;
+    var clssnam = 'changeAllSugarsTogetherContainer';
+    av.sgr.complexSumGridPrefix = 'grd-sgr-sum-adv-';
+    
+    console.log('av.sgr.complexityLevel =', av.sgr.complexityLevel);
+    if ('sgrBasic' == av.sgr.complexityLevel) {
+      basicDisplayNone = 'none';
+      clssnam = 'changeAllSugarsBasic';
+      optionDisabled = true;
+      av.sgr.complexSumGridPrefix = 'grid-sugar-summary-geo-basic-';
+    } else if ('sgrGlobal' == av.sgr.complexityLevel) {
+      basicDisplayNone = 'none';
+      clssnam = 'changeAllSugarsGlobal';
+      optionDisabled = true;
+      av.sgr.complexSumGridPrefix = 'grd-sgr-sum-global-';
+    } else {
+      basicDisplayNone = 'inline-block';
+      clssnam = 'changeAllSugarsAdvanced';
+      av.sgr.complexSumGridPrefix = 'grd-sgr-sum-adv-';
+      optionDisabled = false;
+    };
+    console.log(from, 'called av.sgr.complexityChangeProcess: av.sgr.complexityLevel=', av.sgr.complexityLevel);
+    console.log('------------------------------------------------------------------------------geoDispay=', basicDisplayNone);
+    document.getElementById('sugarFooter').className = clssnam;
+    document.getElementById('allSugarModifierDiv').style.display = basicDisplayNone;
+    document.getElementById('allSugarRegionLayoutDiv').style.display = basicDisplayNone;
+    //document.getElementById('allsgrLimited').disabled = optionDisabled;
+    //document.getElementById('allsgrChemostat').disabled = optionDisabled;
+    document.getElementById('allTopLftRit').style.display = basicDisplayNone;
+    document.getElementById('allQuarters').style.display = basicDisplayNone;
+    document.getElementById('regionLayoutSgr').style.display = basicDisplayNone;
+    document.getElementById('patternSgr').style.display = basicDisplayNone;
+    document.getElementById('allSugarDetailsDiv').style.display = basicDisplayNone;
+    document.getElementById('showHideSgr').style.display = basicDisplayNone;
+    document.getElementById('allsgrChemostat').style.display = basicDisplayNone;
+    
+    for (ii = 0; ii < len; ii++) {
+      tsk = av.sgr.logicNames[ii];
+      document.getElementById(tsk+'_regionLayout').value = '1Global';      
+      document.getElementById(tsk+'_regionLayHolder').style.display = basicDisplayNone;
+      document.getElementById(tsk+'_debugTyp').style.display = basicDisplayNone;
+      //document.getElementById(tsk+'_limited').disabled = optionDisabled;
+      //document.getElementById(tsk+'_chemostat').disabled = optionDisabled;
+      document.getElementById(tsk+'_topLftRit').style.display = basicDisplayNone;
+      document.getElementById(tsk+'_quarters').style.display = basicDisplayNone;
+      document.getElementById(tsk+'_section').open = false;
+      document.getElementById('rs'+tsk).style.display = basicDisplayNone;       //dropDown Display
+      av.sgr.changeDetailsLayout(tsk, subnum, 'av.sgr.complexityChangeProcess');
+    };    
   };
 
 
+  //if (av.dbg.flg.root) { console.log('Root: before av.sgr.changeDetailsLayout'); }
   //-------------------------------------------------------------------------------------- av.sgr.changeDetailsLayout --
-  av.sgr.changeDetailsLayout = function(tsk, sub, from) {
+  av.sgr.changeDetailsLayout = function(tsk, subChanged, from) {
     //these are not as usefull, turn on the one after the first if ('global' statement if problems
-    // if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; sub=', sub); }
+    //if (true) { console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; subChanged=', subChanged); }
     // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags=', av.nut.hideFlags); }
-
-    var supplyType;
-
-    // one line method to get value of select/option struture. 
-    var geometry = document.getElementById(tsk+'0geometry').value;
-    var geoLo = geometry.toLowerCase();
+    var dom = '';
+    var tmpTxt = '';
+    var inflow = 0.5;
+    var outflow = 0.5;
+    var ndx = av.sgr.logicNames.indexOf(tsk);
+    var numTsk = av.sgr.logEdNames[ndx];
+    var regionName;
+    var numRegions = 'multi';   //this flag was put in when Rob wanted the 'supplyTypeSlct' to be in the summary anytime the layout = whole dish
+    var regionLayout = document.getElementById(tsk+'_regionLayout').value;
+    var regionNameList;
+    var showGeo = "geoBoth";
+    //console.log('layout=', document.getElementById(tsk+'_regionLayout').value);
+    if ( null != document.getElementById(tsk+'_regionLayout').value) {
+      if ('1Global' == document.getElementById(tsk+'_regionLayout').value) {av.nut[numTsk].uiAll.geometry = 'global';}
+      else { av.nut[numTsk].uiAll.geometry = 'grid';}
+    };
     
+    // update nut.txt.uiAll. uiAll.regionLayout is used to find name list. 
+    av.nut[numTsk].uiAll.regionLayout = document.getElementById(tsk+'_regionLayout').value;    
+    //console.log('av.nut['+numTsk+'].uiAll.regionLayout=', av.nut[numTsk].uiAll.regionLayout);
+    av.nut[numTsk].uiAll.regionsNumOf =  Number(av.nut[numTsk].uiAll.regionLayout.substr(0,1) );
+        
+    //console.log('layout =', av.nut[tsk].uiAll.regionLayout, '; tsk=', tsk, ' subChanged=', subChanged, '; from=', from);
+    //console.log('num sub Regions=', av.nut[numTsk].uiAll.regionsNumOf, 'layoutName=', '|'+av.nut[numTsk].uiAll.regionLayout+'|');
+    numRegions = 'multi';
+    
+    if ('1All' == av.sgr[av.nut[numTsk].uiAll.regionLayout]) { numRegions = '1All'; }
+    regionNameList = av.sgr.name[av.nut[numTsk].uiAll.regionLayout];
+    //console.log('av.sgr[av.nut['+numTsk+'].uiAll.regionLayout]=', av.nut[numTsk].uiAll.regionLayout, '; regionNameList',regionNameList);
+
+    //console.log('regionNameList=', regionNameList);
     //this 2 line method woks to get the value of the option in the select structure, but so does the one line method;
-    //var idx = document.getElementById(tsk+'0geometry').selectedIndex;
-    //var geoOption = document.getElementById(tsk+'0geometry').options[idx].value;   // get the value of the selected option   
-    // if (av.dbg.flg.nut) { console.log('geometry=', geometry, '; geoOption=', geoOption); }
+    //var idx = document.getElementById(tsk+'_geometry').selectedIndex;
+    // if (av.dbg.flg.nut) { console.log('geometry=', geometry); }
 
-    if ('global' == geometry.toLowerCase()) {
-      supplyType = document.getElementById(tsk + '0supplyType').value.toLowerCase();
-    }
-    else {
-      supplyType = document.getElementById(tsk + sub + 'supplyType').value.toLowerCase();
-
-    };
-    // if (av.dbg.flg.nut) { console.log('tsk=', tsk, 'sub=', sub, '; geometry=', geometry, '; supplyType =', supplyType, ' ' ,tsk+'0regionLayout=', document.getElementById(tsk+'0regionLayout').value ); }
-    av.sgr.findSugarPresent(supplyType, geoLo, tsk, sub, 'av.sgr.changeDetailsLayout');
-    
     //hide everything. Display parts based on what is selected
-    document.getElementById(tsk+'0supplyType').style.display = 'none';      
-    document.getElementById(tsk+'0regionLayout').style.display = 'none';
-    document.getElementById(tsk+'0initialDiv').style.display = 'none';
-    //if (av.dbg.flg.nut) { console.log('document.getElementById('+tsk+sub+'supplyTypeSelectHolder) =', document.getElementById(tsk+sub+'supplyTypeSelectHolder')); }
-    document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'none';
-    document.getElementById(tsk+sub+'regionName').style.display = 'none';
-    document.getElementById(tsk+sub+'blank').style.display = 'none';      
-    document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
-    document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'none';
-    document.getElementById(tsk+sub+'periodCheckbox').style.display = 'none';
-    document.getElementById(tsk+sub+'periodTime').style.display = 'none';
-    document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'none';
-    document.getElementById(tsk+sub+'sideHiText').style.display = 'none';
-    document.getElementById(tsk+sub+'sideLoText').style.display = 'none';
-    document.getElementById(tsk+sub+'initialHiDiv').style.display = 'none';
-    document.getElementById(tsk+sub+'initialLoDiv').style.display = 'none';
-    document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'none';
-    document.getElementById(tsk+sub+'inflowLoDiv').style.display = 'none';
-    document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'none';
-    document.getElementById(tsk+sub+'outflowLoDiv').style.display = 'none';
-    document.getElementById(tsk+sub+'equalHiDiv').style.display = 'none';
-    document.getElementById(tsk+sub+'equalLoDiv').style.display = 'none';
-    if ('global' == geometry.toLowerCase()) {
-      document.getElementById(tsk+'0supplyType').style.display = 'inline-block';      
-      switch (supplyType) {
-        case 'none': 
-        case 'infinite': 
-          document.getElementById(tsk+'0section').open = false;
-          break;
-        case 'finite': 
-          document.getElementById(tsk+'0initialDiv').style.display = 'inline-block';
-          document.getElementById(tsk+'0section').open = false;
-          break;
-        case 'equilibrium':
-          document.getElementById(tsk+sub+'periodCheckbox').style.display = 'block';
-          document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount / cell';
-          document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction / cell';
-          document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium when resource not consumed';
-          document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-globalEqual-container';
-          if (av.dbg.flg.nut) { console.log('task='+tsk, '; sub='+sub, '; get className from dom of ', tsk+'0Details'); }
-          if (av.dbg.flg.nut) { console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'0Details').className); }
-          if (av.dbg.flg.nut) { console.log(tsk+'1periodCheckbox.checked value =', document.getElementById(tsk+'1periodCheck').checked, document.getElementById(tsk+'1periodCheck').value); }
-          if (true == document.getElementById(tsk+'1periodCheck').checked) {
-            document.getElementById(tsk+sub+'periodTime').style.display = 'block';
-            document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium when resource not consumed';
-            document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-globalEqualPeriod-container';
-          };
-          document.getElementById(tsk+'0section').open = true;
-          break;
-        case 'debug':
-          document.getElementById(tsk+'0section').open = true;
-          document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
-          document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
-          document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'inline-block';
-          document.getElementById(tsk+'0initialDiv').style.display = 'inline-block';
-          document.getElementById(tsk+sub+'periodTime').style.display = 'block';
-          document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'initialLoDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'inflowLoDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'outflowLoDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'equalLoDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'block';
-          document.getElementById(tsk+sub+'sideText').innerHTML = 'Side text describing what side means';
-          document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetailAll-container';
-          if (av.dbg.flg.nut) { console.log(tsk+'Details.class=', document.getElementById(tsk+'Details').className); }
-          break;
-      }    
-    }        // end global 
-    else {
-      //document.getElementById(tsk+'0regionLayout').style.display = 'inline-block';
-      document.getElementById(tsk+sub+'supplyTypeSelectHolder').style.display = 'block';
-      //document.getElementById(tsk+sub+'regionName').style.display = 'block';    
-      document.getElementById(tsk+'0section').open = true;
-
-      switch (supplyType) {    //for when geometery = local
-        case 'none':
-        case 'infinite': 
-            document.getElementById(tsk+sub+'blank').style.display = 'block';      
-            document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-None-container';
-          break;
-        case 'finite':   //Local
-          // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags.gradient=',av.nut.hideFlags.gradient); }
-          document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'block';
-          document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'block';
-          // if (av.dbg.flg.nut) { console.log('task=',tsk, '; sub=', sub, '; gradientCheck.checked=', document.getElementById(tsk+sub+'gradientCheck').checked); }
-          if (true == document.getElementById(tsk+sub+'gradientCheck').checked) {  
-            //gradient
-            document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'block';
-            document.getElementById(tsk+sub+'sideText').innerHTML = 'Choose the side to have the a higher initla amount';
-            document.getElementById(tsk+sub+'initialHiText').innerHTML = 'High side initial amount / cell';
-            document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';
-            document.getElementById(tsk+sub+'initialLoDiv').style.display = 'block';
-            document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-FiniteGradient-container';
-            if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
-          }
-          else {
-            //not-gradient; Local
-            document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';
-            document.getElementById(tsk+sub+'initialHiText').innerHTML = 'Inital amount in each cell';
-            document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-container';
-            if (av.nut.hideFlags.gradient) {
-              document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'none';
-              //document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'none';
-              document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Finite-noGradientCheckbox-container';
-            }
-            if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
-            //if (av.dbg.flg.nut) { console.log('subSection=', document.getElementById(tsk+sub+'subSection')); }
-          }
-          break;
-        case 'equilibrium':
-          if (av.dbg.flg.nut) { console.log(tsk,'0gradientCheckbox.checked=', document.getElementById(tsk+sub+'gradientCheck').checked); }
-          if (!av.nut.hideFlags.gradient) document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
-          if (!av.nut.hideFlags.periodic) document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
-          document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'inline-block';
-          if (av.dbg.flg.nut) { console.log(tsk+sub+'gradientCheck', document.getElementById(tsk+sub+'gradientCheck').checked, '; av.sgr.hideFlgNames.gradient=', av.sgr.hideFlgNames.gradient); }
-          if (true == document.getElementById(tsk+sub+'gradientCheck').checked && !av.sgr.hideFlgNames.gradient) {
-            //gradient
-            document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'block';
-            document.getElementById(tsk+sub+'sideText').innerHTML = 'Side with a higher amount';
-  //          document.getElementById(tsk+sub+'sideHiDiv').style.display = 'block';   //put in to make high and low side more obvious, but I don't think I need it
-  //          document.getElementById(tsk+sub+'sideLoDiv').style.display = 'block';   //put in to make high and low side more obvious, but I don't think I need it
-            document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
-            document.getElementById(tsk+sub+'inflowLoDiv').style.display = 'block';
-            document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
-            document.getElementById(tsk+sub+'outflowLoDiv').style.display = 'block';
-            document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
-            document.getElementById(tsk+sub+'equalLoDiv').style.display = 'block';
-            document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium on high side.';
-            document.getElementById(tsk+sub+'equalLoText').innerHTML = ' = equilibrium on Low side';
-            document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount / cell on high side.';
-            document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction / cell on high side';
-            document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualGradient-container';
-            if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
-            if (true == document.getElementById(tsk+sub+'periodCheck').checked && !av.sgr.hideFlgNames.periodic) {
-              document.getElementById(tsk+sub+'periodTime').style.display = 'block';
-              document.getElementById(tsk+sub+'sideText').innerHTML = 'Side with a higher amount';
-              document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualGradientPeriod-container';            
-              if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
-            }
-          }
-          else {
-            //not-gradient; Local          
-            document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
-            document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
-            document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
-            document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
-            document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow amount / cell';
-            document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow fraction / cell';
-            document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
-            document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium if not consumed.';
-            document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Equal-container';
-            if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
-            if (true == document.getElementById(tsk+sub+'periodCheck').checked  && !av.sgr.hideFlgNames.periodic) {
-              document.getElementById(tsk+sub+'periodTime').style.display = 'block';
-              document.getElementById(tsk+sub+'equalHiText').innerHTML = ' = equilibrium when no resource has been consumed';
-              document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-EqualPeriod-container';            
-              if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
-            }
-          }
-          break;
-          /*
-        case 'SourceSink':        //or should this be 'flow' as it must have diffusion and/or gravity ??
-          document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
-          document.getElementById(tsk+sub+'sideText').innerHTML = 'inflow side; outlow will be everywhere or on the opposite side';
-          document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'block';
-          document.getElementById(tsk+'Details').className = 'grid-sugarDetailSourceSink-container';
-          if (av.dbg.flg.nut) { console.log('nanDetails.class=', document.getElementById(tsk+'Details').className); }
-          break;
-          */
-        case 'Debug':
-          document.getElementById(tsk+'0regionLayout').style.display = 'inline-block';
-          document.getElementById(tsk+sub+'periodCheckbox').style.display = 'inline-block';
-          document.getElementById(tsk+sub+'gradientCheckbox').style.display = 'inline-block';
-          document.getElementById(tsk+sub+'diffuseCheckbox').style.display = 'inline-block';
-          document.getElementById(tsk+'0initialDiv').style.display = 'inline-block';
-          document.getElementById(tsk+sub+'periodTime').style.display = 'block';
-          document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'block';
-          document.getElementById(tsk+sub+'sideText').innerHTML = 'Side text describing what side means';
-          document.getElementById(tsk+sub+'sideHiDiv').style.display = 'block';   //put in to make high and low side more obvious, but I don't think I need it
-          document.getElementById(tsk+sub+'sideLoDiv').style.display = 'block';   //put in to make high and low side more obvious, but I don't think I need it
-          document.getElementById(tsk+sub+'initialHiDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'initialLoDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'inflowLoDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'outflowLoDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'equalHiDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'equalLoDiv').style.display = 'block';
-          document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetailAll-container';
-          if (av.dbg.flg.nut) { console.log(tsk+'Details.class=', document.getElementById(tsk+'Details').className); }
-          break;
-      };
+    document.getElementById(tsk+'_supplyTypeHolder').style.display = 'none';
+    document.getElementById(tsk+'WsupplyTypeHolder').style.display = 'none';
+    document.getElementById(tsk+'_taskAboutText').style.display = 'none';
+    document.getElementById(tsk+'_inflowHiDiv').style.display = 'none';
+    document.getElementById(tsk+'_outflowHiDiv').style.display = 'none';
+    document.getElementById(tsk+'_combo').style.display = 'none';    
+    document.getElementById(tsk+'_chemo').style.display = 'none';    
+    document.getElementById(tsk+'_chmstatHiTxt').style.display = 'none';
+    document.getElementById(tsk+'0inflowHiNp').style.display = 'inline-block';   //yes block as global chemo turns the inputs 2 none
+    document.getElementById(tsk+'0outflowHiNp').style.display = 'inline-block';   //yes block as global chemo turns the inputs 2 none
+     
+    document.getElementById(tsk+'_periodcheckboxHolder').style.display = 'none';
+    document.getElementById(tsk+'_periodTimeHolder').style.display = 'none';
+    document.getElementById(tsk+'_initialHiHolder').style.display = 'none';
+    document.getElementById(tsk+'_summaryFooterText').style.display = 'none';
+    document.getElementById(tsk+'0periodcheckboxHolder').style.display = 'none';
+    //document.getElementById('sgrEngergyReportLabel').style.display = 'none';
+    document.getElementById(tsk+'_section').open = false;
+    
+    // hide for all subsections possible not just the number based on the regon layout type
+    for (var sub=0; sub <= av.nut.numRegionsinHTML; sub++) {
+      document.getElementById(tsk+sub+'supplyTypeHolder').style.display = 'none';
+      document.getElementById(tsk+sub+'detailText').style.display = 'none';
+      document.getElementById(tsk+sub+'regionName').style.display = 'none';
+      document.getElementById(tsk+sub+'blank').style.display = 'none';
+//      document.getElementById(tsk+sub+'gradientcheckboxHolder').style.display = 'none';
+//      document.getElementById(tsk+sub+'diffusecheckboxHosslder').style.display = 'none';
+//      document.getElementById(tsk+sub+'periodcheckboxHolder').style.display = 'none';
+      document.getElementById(tsk+sub+'supplyModifierHolder').style.display = 'none';
+      document.getElementById(tsk+sub+'periodTimeHolder').style.display = 'none';
+      document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'none';
+      document.getElementById(tsk+sub+'sideHiText').style.display = 'none';
+      document.getElementById(tsk+sub+'sideLoText').style.display = 'none';
+      document.getElementById(tsk+sub+'initialHiHolder').style.display = 'none';
+      document.getElementById(tsk+sub+'initialLoDiv').style.display = 'none';
+      document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'none';
+      document.getElementById(tsk+sub+'inflowLoDiv').style.display = 'none';
+      document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'none';
+      document.getElementById(tsk+sub+'outflowLoDiv').style.display = 'none';
+      document.getElementById(tsk+sub+'chmstatHiDiv').style.display = 'none';
+      document.getElementById(tsk+sub+'chmstatLoDiv').style.display = 'none';
+      tmpstr = JSON.stringify(av.nut[numTsk].uiSub.supplyTypeSlct);
+      //console.log('av.nut['+numTsk+'].uiSub.supplyTypeSlct['+sub+'] =',av.nut[numTsk].uiSub.supplyTypeSlct[sub], '; supplyTypeSlct=', tmpstr);
     };
-    // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
+    // end hiding resource (sugar) interface elements, will show accorting to current state
 
+    //console.log('av.nut.'+numTsk+'.uiAll.geometry.tolower()=',av.nut[numTsk].uiAll.geometry.toLowerCase());
+    console.log('av.sgr.complexityLevel=', av.sgr.complexityLevel, '; geometry=',av.nut[numTsk].uiAll.geometry);
+    if ('sgrAdvanced' == av.sgr.complexityLevel) {
+      av.nut[numTsk].uiAll.supplyTypeSlct = document.getElementById(tsk + '_supplyTypeSlct').value;
+      //console.log('av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
+
+      document.getElementById(tsk+'_chemo').style.display = 'inline-block';
+      document.getElementById(tsk+'_combo').style.display = 'inline-block';
+
+      if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+        // I was not able to get a grid container to start in the top row of the summary secion. 
+        // I tried absolute postion, but then the grid contain did not change the sise of the summary section. 
+        // never got tried with one surrounding div an then two. finally Applied display: grid to the summary element
+        // changing the summary element to display: grid causes the arrow to disapper, but the detials will still open
+        // document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
+        document.getElementById('allSugarDetailsDiv').style.display = 'none';
+        document.getElementById('showHideSgr').style.display = 'none';
+        document.getElementById(tsk+'_section').open = false;
+        document.getElementById(tsk+'_supplyTypeHolder').style.display = 'inline-block';
+        document.getElementById('sgrEngergyReportLabel').style.display = 'inline';
+        switch (av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase()) {
+          case 'none': 
+          case 'unlimited':
+            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
+            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'container';
+            document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.long[tsk];
+            document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.long.width;
+            document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
+            document.getElementById(tsk+'_section').open = false;
+            break;
+          case 'limited': 
+            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'limited-container';
+            document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.short[tsk];
+            document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.short.width;
+            document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
+            document.getElementById(tsk+'_initialHiHolder').style.display = 'inline-block';
+            document.getElementById(tsk+'_section').open = false;
+            break;
+          case 'chemostat':
+            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'chemo-container';
+            //tmpTxt = av.sgr.describe.long[tsk] + ': . . . .  When 0 < period, chemostat becomes periodic';
+            //tmpTxt = 'When 0 < period, chemostat becomes periodic';
+            document.getElementById(tsk+'_section').open = true;
+            if ( av.utl.isNumber(Number(document.getElementById(tsk+'0inflowHiNp').value))  && 
+                 av.utl.isNumber(Number(document.getElementById(tsk+'0outflowHiNp').value)) ) {
+              if ( 0 < Number(document.getElementById(tsk+'0outflowHiNp').value)  && 
+                       Number(document.getElementById(tsk+'0outflowHiNp').value) <=1 ) {
+                av.nut[numTsk].uiAll.equil = ( Number(document.getElementById(tsk+'0inflowHiNp').value) / 
+                         Number(document.getElementById(tsk+'0outflowHiNp').value) );
+                tmpTxt = '';
+              }
+              else {
+                tmpTxt = 'outflow or inflow value is not valid';
+              };
+            };
+            document.getElementById('allSugarDetailsDiv').style.display = 'inline-block';
+            document.getElementById('showHideSgr').style.display = 'inline-block';
+
+            document.getElementById(tsk+'0inflowHiDiv').style.display = 'inline-block';;
+            document.getElementById(tsk+'0outflowHiDiv').style.display = 'inline-block';;
+            document.getElementById(tsk+'0chmstatHiDiv').style.display = 'inline-block';;
+            document.getElementById(tsk+'0inflowHiText').innerHTML = 'inflow / cell';
+            document.getElementById(tsk+'0outflowHiText').innerHTML = 'outflow fract';
+            if (true) {
+              // horizontal
+              if (3 > tmpTxt.length) { tmpTxt = av.utl.toMetric(av.nut[numTsk].uiAll.equil, 0) + ' = equilibrium'; }
+              document.getElementById(tsk+'0chmstatHiText').innerHTML = tmpTxt;
+              document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.long[tsk];
+              document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.long.width;
+              document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
+            } else {
+              // vertical with only numbers in summary
+              document.getElementById(tsk+'_inflowHiDiv').style.display = 'inline-block';
+              document.getElementById(tsk+'_outflowHiDiv').style.display = 'inline-block';
+              document.getElementById(tsk+'_chmstatHiTxt').style.display = 'inline-block';
+              document.getElementById(tsk+'0detailText').style.display = 'inline-block';
+              document.getElementById(tsk+'0detailText').style.width = '100px';
+              document.getElementById(tsk+'0detailText').innerHTML = av.sgr.describe.long[tsk];   // + '&nbsp;&nbsp;&nbsp;&nbsp;';
+              document.getElementById(tsk+'0inflowHiNp').style.display = 'none';    //hide actual input block
+              document.getElementById(tsk+'0outflowHiNp').style.display = 'none';  //hide actual input block
+              document.getElementById(tsk+'_chmstatHiTxt').innerHTML = av.utl.toMetric(av.nut[numTsk].uiAll.equil, 0) + ' = ';
+              document.getElementById(tsk+'0chmstatHiText').innerHTML = 'equilibrium &nbsp;&nbsp;';
+            };
+            document.getElementById(tsk+'0subSection').className = 'sgr-detail-global-chemo-grid-container';
+            if (!av.ui.hideDevelopment) {
+              document.getElementById(tsk+'_periodTimeHolder').style.display = 'inline-block';
+              document.getElementById(tsk+'0detailText').innerHTML = tmpTxt;
+              document.getElementById(tsk+'0detailText').style.display = 'inline-block';
+              document.getElementById(tsk+'0periodcheckboxHolder').style.display = 'inline-block';
+            }
+            // if (av.dbg.flg.nut) { console.log('task='+tsk, '; sub='+sub, '; get className from dom of ', tsk+'0Details'); }
+            // if (av.dbg.flg.nut) { console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'0Details').className); }
+            // if (av.dbg.flg.nut) { console.log(tsk+'0periodcheckboxHolder.checked value =', document.getElementById(tsk+'0periodCheck').checked, document.getElementById(tsk+'0periodCheck').value); }
+            break;
+          case 'debug':
+            document.getElementById(tsk+'_section').open = true;
+  //          document.getElementById(tsk+'_periodcheckboxHolder').style.display = 'inline-block';
+  //          document.getElementById(tsk+'_gradientcheckboxHolder').style.display = 'inline-block';
+  //          document.getElementById(tsk+'_diffusecheckboxHolder').style.display = 'inline-block';
+            document.getElementById(tsk+'_initialDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_periodTimeHolder').style.display = 'inline-block';
+            document.getElementById(tsk+'_initialHiHolder').style.display = 'inline-block';
+            document.getElementById(tsk+'_initialLoDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_inflowHiDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_inflowLoDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_outflowHiDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_outflowLoDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_chmstatHiTxt').style.display = 'inline-block';
+            document.getElementById(tsk+'_chmstatLoDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_hiSideSelectHolder').style.display = 'inline-block';
+            document.getElementById(tsk+'_sideText').innerHTML = 'Side text describing what side means';
+            document.getElementById(tsk+'_subSection').className = 'grid-sugarDetailAll-container';
+         // if (av.dbg.flg.nut) { console.log(tsk+'Details.class=', document.getElementById(tsk+'Details').className); }
+            break;
+        }    
+      }        // end global 
+      else {
+        // geometry = grid
+        document.getElementById(tsk+'_summary').className = 'grd-sgr-sum-adv-space';
+        document.getElementById(tsk+'_regionLayHolder').style.display = 'inline-block';
+        document.getElementById(tsk+'_section').open = true;
+  //      console.log('av.nut['+numTsk+'].uiAll.regionsNumOf=', av.nut[numTsk].uiAll.regionsNumOf);
+        for (var sub=1; sub <= av.nut[numTsk].uiAll.regionsNumOf; sub++) {
+          dom = tsk + sub + 'supplyTypeSlct';
+          //console.log('dom is', dom, '=', tsk + sub + 'supplyTypeSlct');
+          av.nut[numTsk].uiSub.supplyTypeSlct[sub] = document.getElementById(tsk + sub + 'supplyTypeSlct').value;
+          //console.log('sub=', sub,'; regionNameList=',  regionNameList);
+          regionName = regionNameList[sub];
+          document.getElementById(tsk+sub+'regionName').innerHTML = regionName;
+          document.getElementById(tsk+sub+'supplyTypeSlct').style.display = 'none';
+          //console.log('supplyTypeSlct ui =', document.getElementById(tsk + sub + 'supplyTypeSlct').value);
+          //console.log('tsk=', tsk, 'numTsk=', numTsk, 'sub=', sub, '; uiSub=', av.nut[numTsk].uiSub) ;
+          //console.log('supplyTypeSlct nut =', av.nut[numTsk].uiSub.supplyTypeSlct[sub]);
+          // if (av.dbg.flg.nut) { console.log('Nut: tsk=', 'sub=', sub, tsk,'supplyTypeSlct=', av.nut[numTsk].uiSub.supplyTypeSlct[sub].toLowerCase(),'regionLayoutDiv=', document.getElementById(tsk+'_regionLayout').value); }
+          switch (av.nut[numTsk].uiSub.supplyTypeSlct[sub].toLowerCase()) {    //for when geometery = local
+            case 'none':
+            case 'unlimited': 
+                //document.getElementById(tsk+sub+'blank').style.display = 'block';      
+                document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-' + numRegions+ '-unlimited-container';
+              break;
+            case 'limited':   //Local
+              // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags.gradient=',av.nut.hideFlags.gradient); }
+              document.getElementById(tsk+sub+'supplyModifierHolder').style.display = 'block';
+              // document.getElementById(tsk+sub+'gradientcheckboxHolder').style.display = 'block';
+              // document.getElementById(tsk+sub+'diffusecheckboxHolder').style.display = 'block';
+              document.getElementById(tsk+sub+'initialHiHolder').style.display = 'block';
+              document.getElementById(tsk+sub+'initialHiText').innerHTML = 'Inital amount';
+              document.getElementById(tsk+sub+'subSection').className = 'sugarColsDetail-limited-container';
+              //document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-Limited-container';
+                //console.log('document.getElementById('+tsk+sub+'supplyModifierSelect).value =');
+                //console.log(document.getElementById(tsk+sub+'supplyModifierSelect').value);
+                console.log(tsk+sub+'supplyModifierSelect.value.toLowerCase()=',
+                             document.getElementById(tsk+sub+'supplyModifierSelect').value.toLowerCase() );
+              if ('gradient' == document.getElementById(tsk+sub+'supplyModifierSelect').value.toLowerCase()) {  
+                //gradient
+                document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'block';
+                document.getElementById(tsk+sub+'sideText').innerHTML = 'High edge';
+                document.getElementById(tsk+sub+'initialHiText').innerHTML = 'High initial';
+                document.getElementById(tsk+sub+'initialHiHolder').style.display = 'block';
+                document.getElementById(tsk+sub+'initialLoDiv').style.display = 'block'; 
+                document.getElementById(tsk+sub+'subSection').className = 'sugarColsDetail-limited-gradient-container';
+                //document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-LimitedGradient-container';
+                // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
+              }
+              break;
+            case 'chemostat':
+              // if (av.dbg.flg.nut) { console.log(tsk,'_gradientcheckboxHolder.checked=', document.getElementById(tsk+sub+'gradientCheck').checked); }
+              // if (!av.nut.hideFlags.gradient) { document.getElementById(tsk+sub+'gradientcheckboxHolder').style.display = 'inline-block';}
+              // if (!av.nut.hideFlags.periodic) { document.getElementById(tsk+sub+'periodcheckboxHolder').style.display = 'inline-block';  }
+              // document.getElementById(tsk+sub+'diffusecheckboxHolder').style.display = 'inline-block';
+              document.getElementById(tsk+sub+'regionName').style.display = 'block';
+              document.getElementById(tsk+sub+'supplyModifierHolder').style.display = 'block';
+              if ('periodic' == document.getElementById(tsk+sub+'supplyModifierSelect').value.toLowerCase() ) {
+                document.getElementById(tsk+sub+'periodTimeHolder').style.display = 'inline-block';
+                console.log('--------------- periodHolder should be');
+              }
+
+              //if (av.dbg.flg.nut) { console.log(tsk+sub+'gradientCheck', document.getElementById(tsk+sub+'gradientCheck').checked, '; av.sgr.hideFlgNames.gradient=', av.sgr.hideFlgNames.gradient); }
+              if ('gradient' == document.getElementById(tsk+sub+'supplyModifierSelect').value.toLowerCase()) {  
+                //gradient
+                document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'block';
+                document.getElementById(tsk+sub+'sideText').innerHTML = 'hi edge';
+      //          document.getElementById(tsk+sub+'sideHiDiv').style.display = 'block';   //put in to make high and low side more obvious, but I don't think I need it; only used when left and right weere side by side
+      //          document.getElementById(tsk+sub+'sideLoDiv').style.display = 'block';   //put in to make high and low side more obvious, but I don't think I need it; only used when left and right weere side by side
+                document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
+                document.getElementById(tsk+sub+'inflowLoDiv').style.display = 'block';
+                document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
+                document.getElementById(tsk+sub+'outflowLoDiv').style.display = 'block';
+                document.getElementById(tsk+sub+'chmstatHiDiv').style.display = 'block';
+                document.getElementById(tsk+sub+'chmstatLoDiv').style.display = 'block';
+                document.getElementById(tsk+sub+'chmstatHiText').innerHTML = ' = equilibrium hi';
+                document.getElementById(tsk+sub+'chmstatLoText').innerHTML = ' = equilibrium low';
+                document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow Hi';
+                document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow frac';
+
+                document.getElementById(tsk+sub+'subSection').className = 'sugarColsDetail-chemostat-gradient-container';
+                //document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-chemostatGradient-container';
+                // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
+                if ('periodic' == document.getElementById(tsk+sub+'supplyModifierSelect').value.toLowerCase() ) {
+                  document.getElementById(tsk+sub+'periodTimeHolder').style.display = 'block';
+                  // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
+                }
+              }
+              else {
+                //not-gradient; Local
+                //document.getElementById(tsk+sub+'periodcheckboxHolder').style.display = 'inline-block';
+                //document.getElementById(tsk+sub+'gradientcheckboxHolder').style.display = 'inline-block';
+                document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
+                document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
+                document.getElementById(tsk+sub+'inflowHiText').innerHTML = 'Inflow';
+                document.getElementById(tsk+sub+'outflowHiText').innerHTML = 'Outflow frac';
+                document.getElementById(tsk+sub+'chmstatHiDiv').style.display = 'block';
+                if ( !isNaN(Number(document.getElementById(tsk+sub+'inflowHiNp').value))  && 
+                     !isNaN(Number(document.getElementById(tsk+sub+'outflowHiNp').value)) ) {
+                  if ( 0 < Number(document.getElementById(tsk+sub+'outflowHiNp').value)  && 
+                           Number(document.getElementById(tsk+sub+'outflowHiNp').value) <=1 ) {
+                    av.nut[numTsk].uiAll.equil = Number(document.getElementById(tsk+sub+'inflowHiNp').value) / 
+                             Number(document.getElementById(tsk+sub+'outflowHiNp').value);
+                    document.getElementById(tsk+sub+'chmstatHiText').innerHTML = av.utl.toMetric(av.nut[numTsk].uiAll.equil),0 + ' = equilibrium';                  
+                  }
+                  else {
+                    document.getElementById(tsk+sub+'chmstatHiText').innerHTML = 'outflow or inflow value is not valid';
+                  }
+                };
+
+                document.getElementById(tsk+sub+'subSection').className = 'sugarColsDetail-chemostat-container';
+                //document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-chemostat-container';
+                //console.log('document.getElementById('+tsk+sub+'gradientCheck).checked=', document.getElementById(tsk+sub+'gradientCheck').checked);
+                //console.log('document.getElementById('+tsk+sub+'gradientcheckboxHolder).style=', document.getElementById(tsk+sub+'gradientcheckboxHolder').style);
+             // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
+                if ('periodic' == document.getElementById(tsk+sub+'supplyModifierSelect').value.toLowerCase() ) {
+                  document.getElementById(tsk+sub+'periodTimeHolder').style.display = 'block';
+                  //document.getElementById(tsk+sub+'subSection').className = showGeo + '-sugarDetail-chemostatPeriod-container';            
+                  // if (av.dbg.flg.nut) { console.log('nut: tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
+                };
+              }
+              break;
+              /*
+            case 'SourceSink':        //or should this be 'flow' as it must have diffusion and/or gravity ??
+              document.getElementById(tsk+sub+'periodcheckboxHolder').style.display = 'inline-block';
+              document.getElementById(tsk+sub+'sideText').innerHTML = 'inflow side; outlow will be everywhere or on the opposite side';
+              document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
+              document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
+              document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'block';
+              document.getElementById(tsk+'Details').className = 'grid-sugarDetailSourceSink-container';
+           // if (av.dbg.flg.nut) { console.log('nanDetails.class=', document.getElementById(tsk+'Details').className); }
+              break;
+              */
+            case 'Debug':
+              document.getElementById(tsk+'_regionLayHolder').style.display = 'inline-block';
+  //            document.getElementById(tsk+sub+'periodcheckboxHolder').style.display = 'inline-block';
+  //            document.getElementById(tsk+sub+'gradientcheckboxHolder').style.display = 'inline-block';
+  //            document.getElementById(tsk+sub+'diffusecheckboxHolder').style.display = 'inline-block';
+              document.getElementById(tsk+'_initialDiv').style.display = 'inline-block';
+              document.getElementById(tsk+sub+'periodTimeHolder').style.display = 'block';
+              document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'block';
+              document.getElementById(tsk+sub+'sideText').innerHTML = 'Side text describing what side means';
+              document.getElementById(tsk+sub+'sideHiDiv').style.display = 'block';   //put in to make high and low side more obvious, but I don't think I need it
+              document.getElementById(tsk+sub+'sideLoDiv').style.display = 'block';   //put in to make high and low side more obvious, but I don't think I need it
+              document.getElementById(tsk+sub+'initialHiHolder').style.display = 'block';
+              document.getElementById(tsk+sub+'initialLoDiv').style.display = 'block';
+              document.getElementById(tsk+sub+'inflowHiDiv').style.display = 'block';
+              document.getElementById(tsk+sub+'inflowLoDiv').style.display = 'block';
+              document.getElementById(tsk+sub+'outflowHiDiv').style.display = 'block';
+              document.getElementById(tsk+sub+'outflowLoDiv').style.display = 'block';
+              document.getElementById(tsk+sub+'chmstatHiDiv').style.display = 'block';
+              document.getElementById(tsk+sub+'chmstatLoDiv').style.display = 'block';
+              document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetailAll-container';
+           // if (av.dbg.flg.nut) { console.log(tsk+'Details.class=', document.getElementById(tsk+'Details').className); }
+              break;
+          }; //end of switch
+          //console.log('document.getElementById('+tsk+sub+'subSection).className=', document.getElementById(tsk+sub+'subSection').className);
+            //console.log('document.getElementById('+tsk+sub+'gradientcheckboxHolder).className=', document.getElementById(tsk+sub+'gradientcheckboxHolder').className);
+            //console.log('document.getElementById('+tsk+sub+'gradientCheck).style.display=', document.getElementById(tsk+sub+'gradientcheckboxHolder').style.display);
+        };  //end of subregion for loop
+      }    //end of global/local if statement
+    }   //end sgrAdvanced
+    else {
+      // av.sgr.complexityLevel = 'sgrGlobal';   (begingger level)      
+      av.nut[numTsk].uiAll.supplyTypeSlct = document.getElementById(tsk + '_supplyTypeSlct').value;
+      console.log('av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
+
+      if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+        // I was not able to get a grid container to start in the top row of the summary secion. 
+        // I tried absolute postion, but then the grid contain did not change the sise of the summary section. 
+        // never got tried with one surrounding div an then two. finally Applied display: grid to the summary element
+        // changing the summary element to display: grid causes the arrow to disapper, but the detials will still open
+        // document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
+        document.getElementById('allSugarDetailsDiv').style.display = 'none';
+        document.getElementById('showHideSgr').style.display = 'none';
+        document.getElementById(tsk+'_section').open = false;
+        document.getElementById(tsk+'_supplyTypeHolder').style.display = 'inline-block';
+        document.getElementById('sgrEngergyReportLabel').style.display = 'inline';
+        switch (av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase()) {
+          case 'none': 
+          case 'unlimited':  
+            //document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
+            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'container';
+            document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.long[tsk];
+            document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.long.width;
+            document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
+            document.getElementById(tsk+'_section').open = false;
+            break;
+          case 'limited': 
+            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'limited-container';
+            document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.short[tsk];
+            document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.short.width;
+            document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
+            document.getElementById(tsk+'_initialHiHolder').style.display = 'inline-block';
+            document.getElementById(tsk+'_section').open = false;
+            break;
+          case 'chemostat':
+            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'chemo-container';
+            //tmpTxt = av.sgr.describe.long[tsk] + ': . . . .  When 0 < period, chemostat becomes periodic';
+            //tmpTxt = 'When 0 < period, chemostat becomes periodic';
+            document.getElementById(tsk+'_section').open = true;
+            if ( av.utl.isNumber(Number(document.getElementById(tsk+'0inflowHiNp').value))  && 
+                 av.utl.isNumber(Number(document.getElementById(tsk+'0outflowHiNp').value)) ) {
+              if ( 0 < Number(document.getElementById(tsk+'0outflowHiNp').value)  && 
+                       Number(document.getElementById(tsk+'0outflowHiNp').value) <=1 ) {
+                av.nut[numTsk].uiAll.equil = ( Number(document.getElementById(tsk+'0inflowHiNp').value) / 
+                         Number(document.getElementById(tsk+'0outflowHiNp').value) );
+                tmpTxt = '';
+              }
+              else {
+                tmpTxt = 'outflow or inflow value is not valid';
+              };
+            };
+            document.getElementById('allSugarDetailsDiv').style.display = 'inline-block';
+            document.getElementById('showHideSgr').style.display = 'inline-block';
+
+            document.getElementById(tsk+'0inflowHiDiv').style.display = 'inline-block';;
+            document.getElementById(tsk+'0outflowHiDiv').style.display = 'inline-block';;
+            document.getElementById(tsk+'0chmstatHiDiv').style.display = 'inline-block';;
+            document.getElementById(tsk+'0inflowHiText').innerHTML = 'inflow / cell';
+            document.getElementById(tsk+'0outflowHiText').innerHTML = 'outflow fract';
+            if (true) {
+              // horizontal
+              if (3 > tmpTxt.length) { tmpTxt = av.utl.toMetric(av.nut[numTsk].uiAll.equil, 0) + ' = equilibrium'; }
+              document.getElementById(tsk+'0chmstatHiText').innerHTML = tmpTxt;
+              document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.long[tsk];
+              document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.long.width;
+              document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
+            } else {
+              // vertical with only numbers in summary
+              document.getElementById(tsk+'_inflowHiDiv').style.display = 'inline-block';
+              document.getElementById(tsk+'_outflowHiDiv').style.display = 'inline-block';
+              document.getElementById(tsk+'_chmstatHiTxt').style.display = 'inline-block';
+              document.getElementById(tsk+'0detailText').style.display = 'inline-block';
+              document.getElementById(tsk+'0detailText').style.width = '100px';
+              document.getElementById(tsk+'0detailText').innerHTML = av.sgr.describe.long[tsk];   // + '&nbsp;&nbsp;&nbsp;&nbsp;';
+              document.getElementById(tsk+'0inflowHiNp').style.display = 'none';    //hide actual input block
+              document.getElementById(tsk+'0outflowHiNp').style.display = 'none';  //hide actual input block
+              document.getElementById(tsk+'_chmstatHiTxt').innerHTML = av.utl.toMetric(av.nut[numTsk].uiAll.equil, 0) + ' = ';
+              document.getElementById(tsk+'0chmstatHiText').innerHTML = 'equilibrium &nbsp;&nbsp;';
+            };
+            document.getElementById(tsk+'0subSection').className = 'sgr-detail-global-chemo-grid-container';
+            if (!av.ui.hideDevelopment) {
+              document.getElementById(tsk+'_periodTimeHolder').style.display = 'inline-block';
+              document.getElementById(tsk+'0detailText').innerHTML = tmpTxt;
+              document.getElementById(tsk+'0detailText').style.display = 'inline-block';
+              document.getElementById(tsk+'0periodcheckboxHolder').style.display = 'inline-block';
+            }
+            // if (av.dbg.flg.nut) { console.log('task='+tsk, '; sub='+sub, '; get className from dom of ', tsk+'0Details'); }
+            // if (av.dbg.flg.nut) { console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'0Details').className); }
+            // if (av.dbg.flg.nut) { console.log(tsk+'0periodcheckboxHolder.checked value =', document.getElementById(tsk+'0periodCheck').checked, document.getElementById(tsk+'0periodCheck').value); }
+            break;
+          case 'debug':
+            document.getElementById(tsk+'_section').open = true;
+  //          document.getElementById(tsk+'_periodcheckboxHolder').style.display = 'inline-block';
+  //          document.getElementById(tsk+'_gradientcheckboxHolder').style.display = 'inline-block';
+  //          document.getElementById(tsk+'_diffusecheckboxHolder').style.display = 'inline-block';
+            document.getElementById(tsk+'_initialDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_periodTimeHolder').style.display = 'inline-block';
+            document.getElementById(tsk+'_initialHiHolder').style.display = 'inline-block';
+            document.getElementById(tsk+'_initialLoDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_inflowHiDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_inflowLoDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_outflowHiDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_outflowLoDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_chmstatHiTxt').style.display = 'inline-block';
+            document.getElementById(tsk+'_chmstatLoDiv').style.display = 'inline-block';
+            document.getElementById(tsk+'_hiSideSelectHolder').style.display = 'inline-block';
+            document.getElementById(tsk+'_sideText').innerHTML = 'Side text describing what side means';
+            document.getElementById(tsk+'_subSection').className = 'grid-sugarDetailAll-container';
+         // if (av.dbg.flg.nut) { console.log(tsk+'Details.class=', document.getElementById(tsk+'Details').className); }
+            break;
+        }    
+      };        // end global 
+    };    //end of sgrBasic vs sgrAdvanced
+    // if (av.dbg.flg.nut) { console.log('tsk=', tsk, 'sub=', sub, '; geometry=', geometry, '; supplyTypeSlct =', supplyTypeSlct, ' ' ,tsk+'_regionLayHolder=', document.getElementById(tsk+'_regionLayHolder').value ); }
+    av.sgr.setColorFlagBasedonSugarPresence(av.nut[numTsk].uiAll.geometry.toLowerCase(), tsk, 'av.sgr.changeDetailsLayout');
+
+    // if (av.dbg.flg.nut) { console.log(tsk+sub+'subSection.class=', document.getElementById(tsk+sub+'subSection').className); }
   };
   //---------------------------------------------------------------------------------- end av.sgr.changeDetailsLayout --
   //---------------------------------------------------------------------------------------------- end sugars for Eco --
+  if (av.dbg.flg.root) { console.log('Root: end sugars for Eco'); }
 
 
-  //------------------------------------------------------------------------------------------ ex1 and tst2 delete later --
-  //in tst2 page now
-  av.ptd.ex1allSugarChange = function (allmode) {
-    var onoff = 'None';
-    var geometry = 'Local';
-    if (av.dbg.flg.nut) { console.log('ex1_allmode=', allmode); }
-    if ( ('allon' == allmode) || ('alloff' == allmode) ) {
-      geometry = 'Global';
-      if ('allon' == allmode) {
-        onoff = 'Infinite';
-      }
-      else if ('alloff' == allmode) {
-        onoff = 'None';
-      };
-      document.getElementById('ex1notGlobRsrcType').value = onoff;
-      //document.getElementById('ex1nanGlobRsrcType').value = onoff;
-      //document.getElementById('ex1andGlobRsrcType').value = onoff;
-      //document.getElementById('ex1ornGlobRsrcType').value = onoff;
-      document.getElementById('ex1oroGlobRsrcType').value = onoff;
-      document.getElementById('ex1antGlobRsrcType').value = onoff;
-      //document.getElementById('ex1norGlobRsrcType').value = onoff;
-      document.getElementById('ex1xorGlobRsrcType').value = onoff;
-      document.getElementById('ex1equGlobRsrcType').value = onoff;
-
-      document.getElementById('ex1notGlobalLocal').value = geometry;
-      document.getElementById('ex1nanGlobalLocal').value = geometry;
-      document.getElementById('ex1andGlobalLocal').value = geometry;
-      document.getElementById('ex1ornGlobalLocal').value = geometry;
-      document.getElementById('ex1oroGlobalLocal').value = geometry;
-      document.getElementById('ex1antGlobalLocal').value = geometry;
-      document.getElementById('ex1norGlobalLocal').value = geometry;
-      document.getElementById('ex1xorGlobalLocal').value = geometry;
-      document.getElementById('ex1equGlobalLocal').value = geometry;
-    }
-    else if ('allLocal' == allmode){
-      //local was picked
-      //would change to grey if this part was implemented 
-    }
-  };
-
-  //in tst2 page now
-  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.allSugarCheckBox'); }
-  av.ptd.allSugarCheckBox = function (allmode) {
+/* no longer in use
+  if (av.dbg.flg.root) { console.log('Root: before av.ptd.allSugarcheckboxHolder'); }
+  av.ptd.allSugarcheckboxHolder = function (allmode) {
     var onflag = true;
     if ('allComp' == allmode) {
       document.getElementById('notose').checked =  !document.getElementById('notose').checked;
@@ -678,12 +1213,12 @@
       document.getElementById('equose').checked = onflag;
     };
   };
-
+*/
   //for structure on tst2 tab; not currently called as of 2019 Aug 4
   /*
   av.ptd.envobj2form = function(from) {
-    if (av.dbg.flg.nut) { console.log(from, 'called av.ptd.envobj2form'); }
-    if (av.dbg.flg.nut) { console.log('av.ui.envRegion=',av.ui.envRegion, '; av.ui.envTask=', av.ui.envTask, '; av.ui.envDistribute=',av.ui.envDistribute); }
+ // if (av.dbg.flg.nut) { console.log(from, 'called av.ptd.envobj2form'); }
+ // if (av.dbg.flg.nut) { console.log('av.ui.envRegion=',av.ui.envRegion, '; av.ui.envTask=', av.ui.envTask, '; av.ui.envDistribute=',av.ui.envDistribute); }
     if (true) return;
     var task;
     var ndx = -1;
@@ -702,7 +1237,7 @@
       //console.log('len='+len, '; envobj.name=',envobj.name);
 
       while(ii < len && !found) {
-        if (av.dbg.flg.nut) { console.log('ii='+ii,'; envobj.name[ii]='+envobj.name[ii],'; envobj.name[ii].substring(3,10)='+envobj.name[ii].substring(3,10)+'|'); }
+     // if (av.dbg.flg.nut) { console.log('ii='+ii,'; envobj.name[ii]='+envobj.name[ii],'; envobj.name[ii].substring(3,10)='+envobj.name[ii].substring(3,10)+'|'); }
         if (regionindex == envobj.name[ii].substring(3,10)) {
           found = true;
           ndx = ii;
@@ -711,10 +1246,10 @@
         ii++;
       };
 
-      if ('Finite' == av.ui.envDistribute) {  
+      if ('Limited' == av.ui.envDistribute) {  
         av.dom.envInitial.value  = envobj.initial[ndx];
       }
-      else if ('Equilibrium' == av.ui.envDistribute) {
+      else if ('Chemostat' == av.ui.envDistribute) {
         var inflow = envobj.inflow[ndx];
         var outflow = envobj.outflow[ndx];
         av.dom.envEqInflow.value = inflow;
@@ -730,3 +1265,187 @@
     else {console.log('Error in an environment indesx: av.ui.envRegion=',av.ui.envRegion, '; av.ui.envTask=', av.ui.envTask, '; av.ui.envDistribute=',av.ui.envDistribute);}
   };
   */
+
+//*---------------------------------------------------------------------------------------------------------------------
+/* not in use */
+/*
+.geoBoth-sugarDetail-chemostat-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyDetailDiv supplyModifierDivClass supplyModifierDivClass periodTime'
+                       'inflowHi        inflowHi        outflowHi       outflowHi             chmstatHi             chmstatHi';
+  justify-items: start;  justify-content: start; width: 100%;
+  align-items: stretch;
+}
+
+.geoBoth-sugarDetail-chemostat-container-0 {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyModifierDivClass periodTime'
+                       'inflowHi        inflowHi        outflowHi       chmstatHi';
+  justify-items: start;  justify-content: start; width: 100%;
+  align-items: stretch;
+}
+
+.geoBoth-sugarDetail-chemostat-container_checkboxHolder {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv '
+                       'inflowHi        inflowHi        chmstatHi'
+                       'outflowHi       outflowHi       chmstatHi';
+  justify-items: start;  justify-content: start; width: 100%;
+  align-items: stretch;
+}
+
+.geoBoth-grid-sugarDetail-Limited-noGradientcheckboxHolder-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
+                       'initialHi initialHi initialHi';
+  /* border: 1px solid rgba(128, 128, 128, 0.5); 
+  border: 1px solid #888;
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.geoBoth-grid-sugarDetail-Limited-noGradientcheckboxHolder-container_checkboxHolder {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
+                       'initialHi initialHi initialHi';
+  /* border: 1px solid rgba(128, 128, 128, 0.5); 
+  border: 1px solid #888;
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-unlimited-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv';
+/*  grid-template-areas: 'subSectionTitle supplyDetailDiv sgrBlank'; 
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-1All-unlimited-container {
+  display: grid;
+  grid-template-areas: 'supplyDetailDiv';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-Limited-noGrradientcheckboxHolder-container {  //not in use
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv initialHi';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-Limited-noGradientcheckboxHolderOneLine-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv initialHi diffuseCheckDiv';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-1All-Limited-noGradientcheckboxHolder-container {
+  display: grid;
+  justify-items: stretch;
+/*  grid-template-areas: 'subSectionTitle initialHi diffuseCheckDiv'; 
+  grid-template-areas: 'supplyDetailDiv diffuseCheckDiv initialHi';
+/*                       'initialHi       initialHi       initialHi';
+  border: 1px solid #888;
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-multi-Limited-noGradientcheckboxHolder-container {  /* not in use on Dec 16 
+  display: grid;
+  justify-items: stretch;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
+                       'initialHi       initialHi       initialHi';
+  /* border: 1px solid rgba(128, 128, 128, 0.5); 
+  border: 1px solid #888;
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-LimitedGradient-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv gradientCheckDiv'
+                       'sideInput sideInput sideInput sideInput'
+                       'initialHi  initialHi initialLo initialLo';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-LimitedGradient-container_md {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
+                       'initialLo initialLo sideInput'
+                       'initialHi  initialHi gradientCheckDiv';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-LimitedGradient-container_old {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv'
+                       'sideInput sideInput sideInput gradientCheckDiv'
+                       'initialHi initialHi initialLo initialLo';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-globalEqualPeriod-container {
+  display: grid;
+  grid-template-areas: 'inflowHi periodCheckDiv periodTime'
+                       'outflowHi chmstatHi chmstatHi';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-None-container {
+  display: grid;
+  grid-template-areas: 'supplyTypeSlct sgrBlank sgrBlank sgrBlank sgrBlank';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-chemostat-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv '
+                       'inflowHi        inflowHi        chmstatHi'
+                       'outflowHi       outflowHi       chmstatHi';
+  justify-items: start;  justify-content: start; width: 100%;
+  align-items: stretch;
+}
+
+.gridOnly-sugarDetail-chemostat-container{
+  display: grid;
+  grid-template-areas: 'inflowHi   diffuseCheckDiv'
+                       'outflowHi  chmstatHi';-
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-chemostatPeriod-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv gradientCheckDiv'
+                       'inflowHi inflowHi periodCheckDiv periodTime'
+                       'outflowHi outflowHi chmstatHi chmstatHi';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-chemostatGradient-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv gradientCheckDiv'
+                       'sideInput sideInput sideInput      periodCheckDiv'
+                       'sideTitleHi sideTitleLo'   
+                       'inflowHi inflowHi    inflowLo inflowLo'
+                       'outflowHi outflowHi  outflowLo outflowLo'
+                       'chmstatHi chmstatHi  chmstatLo chmstatLo';
+  justify-items: start;  justify-content: start; width: 100%;
+  color: black;
+}
+
+.grid-sugarDetail-chemostatGradientPeriod-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv diffuseCheckDiv gradientCheckDiv'
+                       'sideInput sideInput       periodTime periodCheckDiv'
+                       'inflowHi inflowHi    inflowLo inflowLo'
+                       'outflowHi outflowHi  outflowLo outflowLo'
+                       'chmstatHi chmstatHi  chmstatLo chmstatLo';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-Flow-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv'
+                       'sideInput sideInput'
+                       'inflowHi outflowHi';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+*/
+//*---------------------------------------------------------------------------------------------------------------------

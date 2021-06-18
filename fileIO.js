@@ -87,7 +87,7 @@
       av.fzr.gNum++;
       av.fzr.wNum++;
       
-      //console.log('loadConfigFlag=',loadConfigFlag, '; av.fzr=', av.fzr);
+      console.log('loadConfigFlag=',loadConfigFlag, '; av.fzr=', av.fzr);
 
       if (loadConfigFlag) {
         av.dnd.loadDefautlConfigFn('av.fio.readZipWS');
@@ -330,7 +330,8 @@
     }
   };
 
-  //----------------------------------------- Save datarecorder info to a csv file ---------------------------------------
+  // Save datarecorder info to a csv file 
+  //---------------------------------------------------------------------------------------------- av.fio.fzSaveCsvfn --
   av.fio.fzSaveCsvfn = function () {
     if (0 === av.fio.csvFileName.length) av.fio.csvFileName = prompt('Choose a name for your csv file', av.fzr.actConfig.name + '@' + av.grd.popStatsMsg.update);
     if (0 === av.fio.csvFileName.length) av.fio.csvFileName = 'avidaDataRecorder.csv';
@@ -343,6 +344,7 @@
     av.fio.SaveUsingDomElement(av.fwt.csvStrg, av.fio.csvFileName, typeStrng);
   };
 
+  //-------------------------------------------------------------------------------------- av.fio.SaveUsingDomElement --
   av.fio.SaveUsingDomElement = function(aStr, fName, typeStr) {
     "use strict";
     var a = document.createElement('a');
@@ -356,10 +358,13 @@
       window.URL.revokeObjectURL(a.href);
     }, 100);
   };
+  //---------------------------------------------------------------------------------- end av.fio.SaveUsingDomElement --
 
+  //--------------------------------------------------------------------------------- av.fio.fzSaveCurrentWorkspaceFn --
   av.fio.fzSaveCurrentWorkspaceFn = function () {
     'use strict';
-    if (av.debug.fio) console.log('defaultUserFname', av.fio.defaultUserFname);
+    if (av.debug.fio) { console.log('fio: defaultUserFname', av.fio.defaultUserFname); }
+    console.log('defaultUserFname', av.fio.defaultUserFname);
     if (null === av.fio.userFname) {
       av.fio.userFname = av.fio.defaultUserFname;
     }
@@ -374,7 +379,7 @@
 
     //make zipfile as a blob
     var WSzip = new av.fio.JSZip();
-    //console.log('number of files', av.utl.objectLength(av.fzr.file) );
+    console.log('number of files', av.utl.objectLength(av.fzr.file) );
     var numFiles = 0;
     var aFolderName, itemName, itemNameContent;
     var generalContent = 'AvidaED writes this file, but does not read it. \n'
@@ -398,13 +403,15 @@
       }
     }
     var content = WSzip.generate({type:"blob"});
-    //console.log('content', content.size, content);
+    console.log('content', content.size, content);
 
     var fsaver = saveAs(content, av.fio.userFname);
-    //console.log('file saved via saveAs');
+    console.log('file saved via saveAs');
     av.fzr.saveUpdateState('maybe');
   };
+  //----------------------------------------------------------------------------- end av.fio.fzSaveCurrentWorkspaceFn --
 
+  //------------------------------------------------------------------------------------------ av.fzr.saveUpdateState --
   //    wsSavedMsg.textcontent = 'Workspace: default  ';
   av.fzr.saveUpdateState = function (newSaveState) {
     'use strict';
@@ -413,7 +420,7 @@
       //console.log('newSaveState', newSaveState)
       if ('no' === av.fzr.saveState) {
         //console.log('oldSaveState', av.fzr.saveState)
-        av.fzr.saveState = 'maybe';
+        //av.fzr.saveState = 'maybe';
       }
     } 
     else {
@@ -422,29 +429,31 @@
     }
     switch (av.fzr.saveState) {
       case 'yes':
+      case 'default':
         wsSavedMsg.textContent = ' is saved ';
-        wsSavedMsg.style.color = 'green';
+        wsSavedMsg.textContent = ' save status: saved ';
+        wsSavedMsg.style.color = 'rgb(  0,  93,  93)'  //'green';
         break;
       case 'maybe':
         wsSavedMsg.textContent = ' might be saved';
-        wsSavedMsg.style.color = 'orangered';
+        wsSavedMsg.textContent = ' save status: unknown';
+        wsSavedMsg.style.color = 'rgb(  0, 109, 219)';  //'blue';
         break;
       case 'no':
         wsSavedMsg.textContent = ' is not saved';
-        wsSavedMsg.style.color = 'red';
-        break;
-      case 'default':
-        wsSavedMsg.textContent = ' not changed ';
-        wsSavedMsg.style.color = 'blue';
+        wsSavedMsg.textContent = ' save status: NO';
+        wsSavedMsg.style.color = 'rgb(156,  10,  10)';  //red brown      //'red'; 'rgb(255,   0,  10)'
         break;
       default:
         wsSavedMsg.textContent = ' is confused ';
-        wsSavedMsg.style.color = 'deeppink';
+        wsSavedMsg.textContent = ' saved status: confused ';
+        wsSavedMsg.style.color = 'rgb( 93,  20, 166)';  //  6 purple   //'deeppink';
         break;
     }
   };
+  //-------------------------------------------------------------------------------------- end av.fzr.saveUpdateState --
 
-  /*--------------------------------------------------------------------------------------------------------------------*/
+  //--------------------------------------------------------------------------------------------------------------------*/
 
   // if (av.dbg.flg.root) { console.log('Root: before window.downloadFile'); }
   // Source: http://pixelscommander.com/en/javascript/javascript-file-download-ignore-content-type/
@@ -458,7 +467,7 @@
     }
 
     //If in Chrome or Safari - download via virtual link click
-    console.log('downloadFile.isChrome=', window.downloadFile.isChrome, '   isSafari=', window.downloadFile.isSafari)
+    ;console.log('downloadFile.isChrome=', window.downloadFile.isChrome, '   isSafari=', window.downloadFile.isSafari)
     if (window.downloadFile.isChrome || window.downloadFile.isSafari) {
       //Creating new link node.
       var link = document.createElement('a');

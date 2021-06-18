@@ -161,6 +161,8 @@ av.dnd.nameParent = function(name) {
 //---------------------------------------------------------------------------------------------- av.dnd.lndtestConfig --
 av.dnd.lndTestConfig = function (move) {
   'use strict';
+  av.dnd.configFlag = 'test';
+  console.log('In av.dnd.lndTestConfig: move=', move);
   av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
   var ndx = -1;
   var klen = 0;
@@ -194,7 +196,7 @@ av.dnd.lndTestConfig = function (move) {
   //The types are reassigned to indicate that they might be the populated form of the dishes.
   if ('c' == move.target.map[domid].type[0] || 'w' == move.target.map[domid].type[0]) {
     move.target.map[domid].type[0]= 'b';
-    av.frd.updateSetup('av.dnd.lndActiveConfig');                  //call the avida-ED 3.0 style setup page
+    av.frd.updateSetup('av.dnd.lndActiveConfig');                  //call the avida-ED normal style setup page
     av.msg.setupType = 'standard';
   }
   else {
@@ -328,7 +330,8 @@ av.dnd.lndTestConfig = function (move) {
 //-------------------------------------------------------------------------------------- start av.dnd.lndActiveConfig --
 av.dnd.lndActiveConfig = function (move, from) {
   'use strict';
-  console.log(from, 'called av.dnd.lndActiveConfig; move = ', move);
+  av.dnd.configFlag = 'normal';
+  console.log(from, 'called av.dnd.lndActiveConfig; move = ', move, '; configFlag=', av.dnd.configFlag);
   av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
   var ndx = -1;
   var klen = 0;
@@ -633,6 +636,7 @@ av.dnd.landFzOrgan = function (source, nodes, target) {
 av.dnd.makeMove = function (source, nodes, target) {
   'use strict';
   var added = false;
+  var trgt = '';
   av.dnd.move.via = 'user';
   av.dnd.move.source = source;
   av.dnd.move.target = target;
@@ -644,22 +648,27 @@ av.dnd.makeMove = function (source, nodes, target) {
   av.dnd.move.targetDomId = domIDs[domIDs.length-1];
   av.dnd.move.sourceMoveData = av.dnd.move.source.map[av.dnd.move.sourceDomId];
 
-  //console.log('move', av.dnd.move);
+  console.log('move', av.dnd.move);
   switch (target) {
     case av.dnd.ancestorBox:
       added = av.dnd.lndAncestorBox(av.dnd.move);
+      trgt = 'ancestorBox';
       break;
     case av.dnd.activeConfig:
       added = av.dnd.lndActiveConfig(av.dnd.move, 'av.dnd.makeMove');
+      trgt = 'ActiveConfig';
       break;
     case av.dnd.activeOrgan:
       added = av.dnd.lndActiveOrgan(av.dnd.move);
+      trgt = 'ActiveOrgan';
       break;
     case av.dnd.testConfig:      
       added = av.dnd.lndTestConfig(av.dnd.move);
+      trgt = 'TestConfig';
       break;
+    default:
+      console.log('target not found: target=', target);
   }
-  if(!added) { console.log('error moving item');  }
 };
 //----------------------------------------------------------------------------------------------- end av.dnd.makeMove --
 
@@ -1217,22 +1226,22 @@ av.anl.loadSelectedData = function (worldNum, axisSide, side, from) {
   var dataType = document.getElementById(axisSide).value.toLowerCase();
   switch(dataType) {
     case 'none':
-      av.anl.pop[worldNum][side] = [];
+      av.anl.wrld[worldNum][side] = [];
       break;
     case 'average fitness':
-      av.anl.pop[worldNum][side] = av.fzr.pop[worldNum].fit;
+      av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].fit;
       break;
     case 'average offspring cost':
-      av.anl.pop[worldNum][side] = av.fzr.pop[worldNum].ges;
+      av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].ges;
       break;
     case 'average energy acq. rate':
-      av.anl.pop[worldNum][side] = av.fzr.pop[worldNum].met;
+      av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].met;
       break;
     case 'number of organisms':
-      av.anl.pop[worldNum][side] = av.fzr.pop[worldNum].num;
+      av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].num;
       break;
     case 'number viable':
-      av.anl.pop[worldNum][side] = av.fzr.pop[worldNum].via;
+      av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].via;
       break;
   }
   var begin = av.anl.xx.length;

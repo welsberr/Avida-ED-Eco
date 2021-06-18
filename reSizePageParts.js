@@ -1,11 +1,208 @@
-  /* 
-   * To change this license header, choose License Headers in Project Properties.
-   * To change this template file, choose Tools | Templates
-   * and open the template in the editor.
-   */
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-  // if (av.dbg.flg.root) { console.log('Root: start of reSizePageParts'); }
-  var av = av || {};  //because av already exists
+// if (av.dbg.flg.root) { console.log('Root: start of reSizePageParts'); }
+var av = av || {};  //because av already exists
+
+//------------------------------------------------------------------------------------------- av.dom.storeInitialSize --
+av.dom.storeInitialSize = function() {
+  av.dom.window_ht_now = $(window).height();
+  av.dom.window_wd_now = $(window).width();
+  av.dom.document_ht_now = $(document).height();
+  av.dom.document_wd_now = $(document).width();
+  av.dom.freezerSection_wd_now = $("#freezerSection").width();
+  av.dom.freezerSection_ht_now = $("#freezerSection").height();
+  av.dom.navColId_wd_now = $("#navColId").width();
+  av.dom.navColId_ht_now = $("#navColId").height();
+  av.dom.popInfoVert_wd_now = $("#popInfoVert").width();
+  av.dom.popInfoVert_ht_now = $("#popInfoVert").height();
+  av.dom.popChrtHolder_wd_now = $("#popChrtHolder").width();
+  av.dom.popChrtHolder_ht_now = $("#popChrtHolder").height();
+  av.dom.sclCnvsHldr_wd_now = $('#sclCnvsHldr').width();
+  av.dom.sclCnvsHldr_ht_now = $('#sclCnvsHldr').height();
+  
+  if (av.dbg.flg.dsz) { console.log('dsz: now: navColId wd,       ht =', av.dom.navColId_wd_now, ',', av.dom.navColId_ht_now); }
+  if (av.dbg.flg.dsz) { console.log('dsz: now: freezerSection wd, ht =', av.dom.freezerSection_wd_now, ',', av.dom.freezerSection_ht_now); }
+  if (av.dbg.flg.dsz) { console.log('dsz: now: popInfoVert wd,    ht =', av.dom.popInfoVert_wd_now, ',', av.dom.popInfoVert_ht_now); }
+  if (av.dbg.flg.dsz) { console.log('dsz: now: popChrtHolder wd,  ht =', av.dom.popChrtHolder_wd_now, ',', av.dom.popChrtHolder_ht_now); }
+  if (av.dbg.flg.dsz) { console.log('dsz: now: sclCnvsHldr_wd, ht =', av.dom.sclCnvsHldr_wd_now, ',', av.dom.sclCnvsHldr_ht_now); }
+
+  av.dom.headerMain_ht_ot_now = $('#headerMain').outerHeight(true);
+  av.dom.navColId_ht_ot_now = $('#navColId').outerHeight(true);
+  av.dom.navColId_ht_now = $('#navColId').height();
+  av.dom.mainButtons_ht_ot_now = $('#mainButtons').outerHeight(true);
+  av.dom.freezerSection_ht_ot_now = $('#freezerSection').outerHeight(true);
+  av.dom.trashDiv_ht_ot_now = $('#trashDiv').outerHeight(true);
+  av.dom.window_ht_now = $(window).height();
+
+  console.log('Ht: header=', av.dom.headerMain_ht_ot_now, '; navColID=', av.dom.navColId_ht_ot_now
+              , '; sum=', (av.dom.headerMain_ht_ot_now+av.dom.navColId_ht_ot_now) );
+  console.log('mainButtons=', av.dom.mainButtons_ht_ot_now, '; freezer=', av.dom.freezerSection_ht_ot_now
+              , '; trash=', av.dom.trashDiv_ht_ot_now, '; navColID_now=', av.dom.navColId_ht_now
+              , '; sum=',(av.dom.mainButtons_ht_ot_now+av.dom.freezerSection_ht_ot_now+av.dom.trashDiv_ht_ot_now) );
+  
+  //  call other size related function when initializing 
+  av.ui.freezerSizeHtFn(); 
+  console.log('sizes=', av.dom.sizes() );
+};
+
+//----------------------------------------------------------------------------------------show/hide left side panel --
+// fix Freezer div size
+av.ui.freezerSizeHtFn = () => {
+  var dif = 0;
+  console.log('window=', $(window).height(), '; docu=', $(document).height() );
+  if ( $(window).height() < $(document).height() ) {
+    console.log('fix Freezer Size jquery');
+
+    dif = $(document).height - $(window).height();
+    if ( dif < $("#freezerSection").height() ) {
+      av.dom.gridCanvas.height = 10;
+      av.dom.gridHolder.style.height = '10px';
+      
+      av.dom.freezerSection.style.overflow = 'scroll';
+      av.dom.freezerSection.style.height = ($("#freezerSection").height() - dif) +'px';
+      
+      av.grd.drawGridSetupFn('av.ui.freezerSizeHtFn');
+    }
+  };
+    
+};
+
+//------------------------------------------------------------------------------------------------------ av.dom.sizes --
+// https://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
+av.dom.sizes = () => {
+  let contentWidth = [...document.body.children].reduce( 
+    (a, el) => Math.max(a, el.getBoundingClientRect().right), 0) 
+    - document.body.getBoundingClientRect().x;
+
+  return {
+    windowWidth:  document.documentElement.clientWidth,
+    windowHeight: document.documentElement.clientHeight,
+    pageWidth:    Math.min(document.body.scrollWidth, contentWidth),
+    pageHeight:   document.body.scrollHeight,
+    screenWidth:  window.screen.width,
+    screenHeight: window.screen.height,
+    pageX:        document.body.getBoundingClientRect().x,
+    pageY:        document.body.getBoundingClientRect().y,
+    screenX:     -window.screenX,
+    screenY:     -window.screenY - (window.outerHeight-window.innerHeight)
+  };
+};
+
+//----------------------------------------------------------------------------------------show/hide left side panel --
+// if (av.dbg.flg.root) { console.log('Root: before av.ptd.lftPanelBtnFn'); }
+ 
+ av.ptd.lftPanelBtnFn = function () {
+    var sizeStr;
+    
+    av.dom.freezerSection_ht_was = parseFloat(av.dom.freezerSection_ht_now);
+    av.dom.freezerSection_wd_was = parseFloat(av.dom.freezerSection_wd_now);
+    av.dom.navColId_ht_was = parseFloat(av.dom.navColId_ht_now);
+    av.dom.navColId_wd_was = parseFloat(av.dom.navColId_wd_now);
+    av.dom.popInfoVert_ht_was = parseFloat(av.dom.popInfoVert_ht_now);
+    av.dom.popInfoVert_wd_was = parseFloat(av.dom.popInfoVert_wd_now);
+    av.dom.popChrtHolder_ht_was = parseFloat(av.dom.popChrtHolder_ht_now);
+    av.dom.popChrtHolder_wd_was = parseFloat(av.dom.popChrtHolder_wd_now);
+
+      av.dom.navColId_wd_now = ($("#navColId").width()).toString();
+      av.dom.navColId_ht_now = ($("#navColId").height()).toString();
+      av.dom.freezerSection_wd_now = $("#freezerSection").width().toString();
+      av.dom.freezerSection_ht_now = $("#freezerSection").height().toString();
+      av.dom.popInfoVert_wd_now = $("#popInfoVert").width().toString();
+      av.dom.popInfoVert_ht_now = $("#popInfoVert").height().toString();
+      av.dom.popChrtHolder_wd_now = $("#popChrtHolder").width().toString();
+      av.dom.popChrtHolder_ht_now = $("#popChrtHolder").height().toString();
+
+    setTimeout(function() {
+    }, 80);  
+    
+    av.dom.popInfoVert_wd = $('#popInfoVert').width();
+    if (av.dbg.flg.dsz) { console.log('av.dom.lftSidePnlShowing=', av.dom.lftSidePnlShowing, '; av.dom.allAvidaContainer.className=', av.dom.allAvidaContainer.className); }
+    if (av.dom.lftSidePnlShowing) {
+      av.post.addUser('Button: leftPanelButton: start hidding left side panel');
+      av.dom.lftSidePnlShowing = false;
+      av.dom.navColId.style.display = 'none';
+      av.dom.leftPanelButton.value = '>> ';
+      av.dom.leftPanelButton.style.background = '#ccc';
+
+      if ('all3pop' == av.dom.allAvidaContainer.className || 'all3org' == av.dom.allAvidaContainer.className) {
+        av.dom.allAvidaContainer.className = 'all2rit';
+        if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_was,   ht =', av.dom.popChrtHolder_wd_was, ',', av.dom.popChrtHolder_ht_was); }
+        av.dom.popChrtHolder.style.height = av.dom.popChrtHolder_ht_was+'px';
+
+        sizeStr= 670;        
+        av.dom.popInfoVert.style.width = sizeStr+'px';
+        av.dom.labInfoHolder.style.width = sizeStr+'px';
+        av.dom.popStatsBlock.style.width = sizeStr+'px';
+        av.dom.popStatHolder.style.width = sizeStr+'px';
+        av.dom.popStatistics.style.width = (sizeStr-2)+'px';
+        av.dom.resrceDataHolder.style.width = (sizeStr-2)+'px';
+        av.dom.miniChartControls.style.width = (sizeStr-2)+'px';
+        av.dom.pauseOptions.style.width = (sizeStr-2)+'px';
+        av.dom.popStats4grid.style.width = (sizeStr-190)+'px';
+        av.dom.selOrgType.style.wd = (sizeStr-240)+'px';
+
+      }
+    } else {
+      av.post.addUser('Button: leftPanelButton: start showing left side panel');
+      av.dom.lftSidePnlShowing = true;
+      document.getElementById('navColId').style.display = 'block';
+      av.dom.leftPanelButton.value = '<< ';
+      av.dom.leftPanelButton.style.background = 'inherit';
+
+      if ('all2rit' == document.getElementById('allAvidaContainer').className) {
+        av.dom.allAvidaContainer.className = 'all3pop';
+        sizeStr= 442;
+        av.dom.freezerSection.style.height = av.dom.freezerSection_ht+'px';
+        av.dom.popChrtHolder.style.height = av.dom.popChrtHolder_ht_was+'px';
+        av.dom.popInfoVert.style.height = av.dom.popInfoVert_ht_was+'px';
+
+        av.dom.popInfoVert.style.width = sizeStr+'px';
+        av.dom.labInfoHolder.style.width = sizeStr+'px';
+        av.dom.popStatsBlock.style.width = sizeStr+'px';
+        av.dom.popStatHolder.style.width = sizeStr+'px';
+        av.dom.popStatistics.style.width = (sizeStr-2)+'px';
+        av.dom.resrceDataHolder.style.width = (sizeStr-2)+'px';
+        av.dom.miniChartControls.style.width = (sizeStr-2)+'px';
+        av.dom.pauseOptions.style.width = (sizeStr-2)+'px';
+        av.dom.popStats4grid.style.width = (sizeStr-190)+'px';
+        av.dom.selOrgType.style.width = (sizeStr-240)+'px';
+
+        if (av.dbg.flg.dsz) { console.log('dsz: popStatSide_wd=', sizeStr-190, 'selOrgType_wd=', sizeStr-240); }
+        if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert.wd=', $("#popInfoVert").width(), '; popInfoVert_wd=', sizeStr); }
+      };
+    };
+   
+    av.dom.navColId_wd = $("#navColId").width().toString();
+    av.dom.navColId_ht = $("#navColId").height().toString();
+    av.dom.freezerSection_wd = $("#freezerSection").width().toString();
+    av.dom.freezerSection_ht = $("#freezerSection").height().toString();
+    av.dom.popInfoVert_wd = $("#popInfoVert").width().toString();
+    av.dom.popInfoVert_ht = $("#popInfoVert").height().toString();
+    av.dom.popChrtHolder_wd = $("#popChrtHolder").width().toString();
+    av.dom.popChrtHolder_ht = $("#popChrtHolder").height().toString();
+
+    if (av.dbg.flg.dsz) { console.log('dsz: av.dom.navColId_wd_now,   ht =', av.dom.navColId_wd_now, ',', av.dom.navColId_ht_now); }
+    if (av.dbg.flg.dsz) { console.log('dsz: av.dom.navColId_wd_after, ht =', av.dom.navColId_wd, ',', av.dom.navColId_ht); }
+    if (av.dbg.flg.dsz) { console.log('dsz: freezerSection_wd_now,   ht =', av.dom.freezerSection_wd_now, ',', av.dom.freezerSection_ht_now); }
+    if (av.dbg.flg.dsz) { console.log('dsz: freezerSection_wd_after, ht =', av.dom.freezerSection_wd, ',', av.dom.freezerSection_ht); }
+    if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert_wd_now,   ht =', av.dom.popInfoVert_wd_now, ',', av.dom.popInfoVert_ht_now); }
+    if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert_wd_after, ht =', av.dom.popInfoVert_wd, ',', av.dom.popInfoVert_ht); }
+    if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_now,   ht =', av.dom.popChrtHolder_wd_now, ',', av.dom.popChrtHolder_ht_now); }
+    if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_after, ht =', av.dom.popChrtHolder_wd, ',', av.dom.popChrtHolder_ht); }
+  };
+
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------
+//  Code below this is old and might not be in use
+//
 
   //********************************************************************************************************************
   //                                             Resize window helpers 
@@ -41,7 +238,8 @@
   //on 2018_0823 this is where height gets messed up when loading the program. 
   //----------------------------------------------------------------------------------------------------------------------
   //on 2018_0823 this is where height gets messed up when loading the program. 
-   av.pch.divSize = function (from) {
+/*
+   av.pch.divSize_ = function (from) {
     //av.debug.uil = true;
     if (av.debug.uil) { console.log('ui: PopPlotSize: ',from, 'called av.pch.divSize'); }
     if (av.debug.uil) { 
@@ -77,7 +275,7 @@
     if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
     //av.debug.uil = false;
   };
-
+*/
   av.anl.divSize = function (from) {
     if (av.debug.alo) { console.log('alo: ', from, 'called av.anl.divSize'); }
     //console.log(from,'anaChrtHolder Ht client scroll ', av.dom.anaChrtHolder.clientHeight, av.dom.anaChrtHolder.scrollHeight);
@@ -181,7 +379,7 @@ window.addEventListener('resize', function() {
     av.ui.mapHolderHd = av.dom.mapHolder.offsetHeight;
     av.ui.popTopHd = av.dom.popTopRw.offsetHeight;
     av.ui.gridHolderHd = av.dom.gridHolder.offsetHeight;
-    av.ui.popBotHd = av.dom.popBot.offsetHeight;
+    av.ui.benchPopBotHd = av.dom.benchPopBot.offsetHeight;
 
     //https://stackoverflow.com/questions/590602/padding-or-margin-value-in-pixels-as-integer-using-jquery
     //console.log('gridHolder_margin' ,$("#gridHolder").css("margin"), '; popChart=', $("#popChart").css('margin'));
@@ -193,9 +391,9 @@ window.addEventListener('resize', function() {
       console.log('ui: Wd: popStatsBlock selOrgType sum', av.dom.popStatsBlock.offsetWidth, av.dom.selOrgType.clientWidth,
         av.dom.popStatsBlock.offsetWidth + av.dom.selOrgType.clientWidth);
 
-      console.log('ui: Ht; allAvida, mapHolder, popTopRw, gridHolder, popBot sum', av.dom.allAvida.offsetHeight,
+      console.log('ui: Ht; allAvida, mapHolder, popTopRw, gridHolder, benchPopBot sum', av.dom.allAvida.offsetHeight,
         av.dom.mapHolder.offsetHeight, av.dom.popTopRw.offsetHeight, av.dom.gridHolder.offsetHeight,
-        av.dom.popBot.offsetHeight, av.dom.popTopRw.offsetHeight + av.dom.gridHolder.offsetHeight + av.dom.popBot.offsetHeight);
+        av.dom.benchPopBot.offsetHeight, av.dom.popTopRw.offsetHeight + av.dom.gridHolder.offsetHeight + av.dom.benchPopBot.offsetHeight);
       }
     if (av.dom.gridHolder.offsetWidth > av.dom.gridHolder.offsetHeight && av.dom.gridHolder.offsetWidth > av.ui.popGridCtlWdMin) {
       //set grid size based on height and distribute extra width.
@@ -324,7 +522,7 @@ window.addEventListener('resize', function() {
   };
   //Use later ??
   //av.ui.removeVerticalScrollbar('popStats4grid', 'popStatistics');
-  //av.ui.removeVerticalScrollbar('popBot', 'popBot');
+  //av.ui.removeVerticalScrollbar('benchPopBot', 'benchPopBot');
 
 
   //----------------------------------------------------------------------------------------------------------------------

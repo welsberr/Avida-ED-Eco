@@ -1,32 +1,42 @@
-/*one data tap of population page */
+/*on data tab of population page */
 /*
   {
-    box-sizing: border-box;  /* include padding and border in the elements width/size */
+    box-sizing: border-box;  /* include padding and border in the elements width/size 
   }
+
 */
+
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+  }
+
   body {
     margin: 0;
     background: #F5F5F5; /* cyan; */
     padding: 0;
+    
   }
-  .displayNone{
-    display: none;
-  }
+  .display_none { display: none; }
+  .display_inline-block{ display: inline-block }
+  .visibility_hidden {visibility: hidden; }
+  
   .thin{
     margin: 0;
     padding: 0;
   }
   
-  #popInfoTabHolder {
+  .tabHolderShow {
+    display: block;
     width: 100%;
   }
-  .tabHolderShow {
-    flex: 0 0 auto;
-    display: block;
-  }
   .tabHolderHide {
-    background: beige;
-    flex: 0 0 auto;
     display: none;
   }
   
@@ -62,27 +72,17 @@
 .tab button.active {
   background: #ccc;
 }
-  
-  .all2lft{
-    display: grid;
-    grid-template-rows: 2.5em auto;
-    grid-template-columns: 240px auto;
-    grid-template-areas: 'headerRow headerRow'
-                          'navColClass mainBlockHolder';
-    height: 100vh;
-    width: 100vw;
-    max-height: 100vh;
-    max-width: 100vw;
-    min-height: 100vh;
-    min-width: 100vw;
-    margin: 0;
-    background:  #F5F5F5;   /* lightsalmon;  */
-    overflow: hidden;
-  }
+
+.headerRow { grid-area: headerRow; }
+.mainBlockHolder { grid-area: mainBlockHolder; }
+.rightInfoHolder { grid-area: rightInfoHolder; }
+.navColClass {grid-area: navColID; }
+
+
  .all2rit{
     display: grid;
     grid-template-rows: 2.5em auto;
-    grid-template-columns: auto 250px;
+    grid-template-columns: auto 680px;
     grid-template-areas: 'headerRow headerRow'
                          'mainBlockHolder rightInfoHolder';
     height: 100vh;
@@ -93,7 +93,37 @@
     max-width: 100vw;
     margin: 0;
     background:  #F5F5F5;   /* lightsalmon;  */
-    overflow: hidden;
+  }
+  
+  .all2lft{
+    display: grid;
+    grid-template-rows: 2.5em auto;
+    grid-template-columns: 240px auto;
+    grid-template-areas: 'headerRow headerRow'
+                          'navColClass mainBlockHolder';
+    height: 100vh;
+    width: 100vw;
+    min-height: 98vh;
+    min-width: 100vw;
+    max-height: 99vh;
+    max-width: 100vw;
+    margin: 0;
+    background:  #F5F5F5;   /* lightsalmon;  */
+  }
+  .all3pop{
+    display: grid;
+    grid-template-rows: 2.5em 1fr;   /* 2.5em */
+    grid-template-columns: 240px auto 440px;    /* 440px */
+    grid-template-areas: 'headerRow headerRow headerRow'
+                          'navColClass mainBlockHolder rightInfoHolder';
+    height: 100vh;
+    width: 100vw;
+    min-height: 98vh;
+    min-width: 100vw;
+    max-height: 99vh;
+    max-width: 100vw;
+    margin: 0;
+    background:  #F5F5F5;   /* lightsalmon;  */
   }
  .all3org{
     display: grid;
@@ -103,51 +133,32 @@
                           'navColClass mainBlockHolder rightInfoHolder';
     height: 100vh;
     width: 100vw;
-    min-height: 100vh;
+    min-height: 98vh;
     min-width: 100vw;
     max-height: 100vh;
-    max-width: 100vw;
+    max-width: 99vw;
     margin: 0;
     background:  #F5F5F5;   /* lightsalmon;  */
-    overflow: hidden;
   }
 
-  .all3pop{
-    display: grid;
-    grid-template-rows: 2.5em auto;
-    grid-template-columns: 240px auto 440px;    /* 440px */
-    grid-template-areas: 'headerRow headerRow headerRow'
-                          'navColClass mainBlockHolder rightInfoHolder';
-    height: 100vh;
-    width: 100vw;
-    min-height: 100vh;
-    min-width: 100vw;
-    max-height: 100vh;
-    max-width: 100vw;
-    margin: 0;
-    background:  #F5F5F5;   /* lightsalmon;  */
-    overflow: hidden;
-  }
   .headerRow {
     grid-area:headerRow;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     border: 1px solid #AAA;               /* #AAA; */
-    overflow: hidden;
   }
   
   .navColClass {
     grid-area:navColClass;
     place-self: stretch;
-    min-width: 240px;        /*was 152   340px*/
+    width: 238px;        /*was 152   340px*/
     display: flex;
     flex-direction: column;
     background: #F5F5F5; /* lavender; */
     border: 1px solid #AAA;
     hight: 100%;
     resize: horizontal;
-    overflow:scroll;
   }
 
 /*contains pages (population, Organsims, Analysis) */
@@ -168,56 +179,77 @@
     border: 1px solid #AAA;      /*sot stat = 190;  popstat =234  for  424 */
     background: #F5F5F5;
     height: 100%;
-    overflow:scroll;
-  }
-  #popInfoVert {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
+    overflow: hidden;    /* scroll;  */
+  }  /* Contain the blocks popInfoVert and orgInfoHolder  */
+  
   #orgInfoHolder {
     border: 1px solid #AAA;
     background: #F5F5F5;
-    padding: 5px;
     height: 100%;
     width: 100%;
+    min-width: 250px;
+    background-color: inherit; /*mistyrose;*/
   }
   
 
 /* structures in the headerRow */  
+#leftPanelButton{
+    border-radius: 5px 5px 5px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 16px;
+    padding: 0px 4px 0px 2px;  /* top right bottom left */
+    alt: 'button to open/close left panel'; 
+    text-align: center;
+    vertical-align: middle;
+}
+/* not in use - used to get image to fit in a space better
+.scaleImg{
+  height: 80px;
+  object-fit: contain;
+}  
+*/
 .leftPnlBtnHlderShow{
-    background: #eee;     /* #eee; better color ? */
-    flex: 0 1 50px;
-    padding: 2px 4px 2px 6px;    /* top right bottom left */
-    visibility: visible;
-  }
+  height: 18px;
+  padding: 0px 6px 0px 4px;    /* top right bottom left */  
+  margin: auto;
+  background: inherit;     /* #eee; better color ? */
+  flex: 0 1 50px;
+}
 .pnlBtnHldrHide{
-    flex: 0 1 50px;
-    padding: 2px 6px 2px 4px;    /* top right bottom left */  
+  flex: 0 1 50px;
+  padding: 0px 6px 0px 4px;    /* top right bottom left */  
   visibility: hidden;    
 }
-.ritePnlBtnHlderShow{
-    flex: 0 1 50px;
-    padding: 2px 6px 2px 4px;    /* top right bottom left */  
-    visibility: visible;
-}
-  #lftPnlButtonImg{
-    height: 20px;
-    border: 2px solid black;  
-    alt: 'button to open/close left panel'; 
-    float: left;
-  }
-  #rtPnlButtonImg{
-    height: 20px;
-    border: 2px solid black;  
+#ritePanelButton{
+    border-radius: 5px 5px 5px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 16px;
+    padding: 0px 4px 0px 2px;  /* top right bottom left */
     alt: 'button to open/close right panel'; 
-    float: right;
-  }
+    text-align: center;
+    vertical-align: middle;
+}
+
+.ritePnlBtnHlderShow{
+  height: 18px;
+  padding: 0px 6px 0px 4px;    /* top right bottom left */  
+  margin: auto;
+  background: inherit;     /* #eee; better color ? */
+  flex: 0 1 50px;
+}
+
   #mainMenu{
     flex: 0 1 350px;
     height: 2.5em;
+    border: 1px solid #888;
   }
+  /* looks bad
+  #mnAvidaEd {border: 1px solid #999;}
+  #mnFile {border: 1px solid #999;}
+  #mnFreezer {border: 1px solid #999;}
+  #mnControl {border: 1px solid #999;}
+  #mnHelp {border: 1px solid #999;}
+  #mnDebug {border: 1px solid #999;}
+  */
+  
   #headerMsg{
     flex: 1 1 auto;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
   }
@@ -228,13 +260,42 @@
   #wsSavedMsg{
     color: blue;
   }
-  #RtSideSelectHolder{
-    height: 20px;
-    margin: auto;
-  }
   #RtSideToggleButtons{
-    height: 20px;
+    flex: 0 0 82px;
+    background: inherit;     /* #eee; better color ? */
     margin: auto;
+    height: 18px;
+  }
+  .toggleLftButton {
+    border-radius: 5px 0px 0px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 16px;
+    padding: 0px 2px 3px 2px;    /* top right bottom left */  
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .toggleRitButton {
+    border-radius: 0px 5px 5px 0px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 16px;
+    padding: 0px 2px 0px 2px;    /* top right bottom left */  
+    text-align: center;
+    vertical-align: middle;
+    margin-left: -4px;
+  }
+  .activeBtn {
+    background: #ccc;
+  }
+
+  #CanPutButtonHere{
+    flex: 0 0 130px;
+    padding-top: 5px;
+    height: 25px;
+    display: inline-block;
+  }
+  
+  #avidaVersion{
+    text-align: left;
+    vertical-align: middle;
   }
   
 /* structures in the left side panel */
@@ -267,13 +328,12 @@
     border-radius: 5px;
     min-width: 82px;
   }
-.freezerClass{
+#freezerSection{
   border: 1px solid #BABABA;
   flex: 1;                /* fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
-  overflow:scroll;
-  height: 100%;
-  width: 100%;
-  overflow:scroll;
+  height: 99%;
+  width: 99%;
+  overflow:auto;
 }
 #FreezerTitle {
   font-size: 190%;
@@ -283,15 +343,24 @@
 }
 .frzAccordion {
   width: 100%;
+  overflow: auto;
 }
-.freezerSummaryClass{
+.freezerSumCls{
   font-size: 130%;
   background: #EEE;      /* was #EEE; */
   width: 100%;
 }
 .freezerContainer {
   padding-left: 10px;
+  overflow: auto;
 }
+.freezerContainer:hover {
+  overflow-y: auto;
+}
+.freezerContainer>* {
+  max-width: 98%;
+}
+
 /* trash area below freezer */
 #trashCan { 
   grid-area: trashCan;
@@ -344,103 +413,142 @@
   color: rgba(245,245,245,0);               /* 0.0 (fully transparent) to 1.0 (fully opaque); */
   
 }
-
-  .mainBlockClassRow {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    width: 100%;
-    background: #F5F5F5; /* lightblue; */
-  }
-  .popBenchCol{
-    background: #F5F5F5; /* lightgoldenrodyellow; */
-    flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
-    //flex: 0 1 auto;       //should scale with window size, but does not do what I want????
+/* -------------------------------------------------------------------------------- main work bench center section -- */
+.mainBlockClassRow {
+  display: flex;
+  flex-direction: row;
+  height: 99%;
+  width: 100%;
+  background: #F5F5F5; /* #F5F5F5;lightblue; */
+}
+  .orgBenchCol{
+    background: #F5F5F5; /* lightgoldenrodyellow;*/
+    flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
     border: 1px solid #AAA;
     display: flex;
-    overflow:auto;
     flex-direction: column;
     width: 100%;
-    max-height: 100%;
-    overflow:scroll;
-    /*max-width: 430px;   /* tiba; temp fix will need to change this later */
   }
+
+.popBenchCol{
+  background: #F5F5F5; /* lightgoldenrodyellow; */
+  flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
+  //flex: 0 1 auto;       //should scale with window size, but does not do what I want????
+  border: 1px solid #AAA;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 100%;
+  overflow:hidden;
+  /*max-width: 430px;   /* tiba; temp fix will need to change this later */
+}
 
 .benchPopTopRow {
-    flex:0 1 30px;
-    display: flex;
-    flex-direction: row;
-    justify-content:space-between;
-    background: #F5F5F5; /* lightblue;  */
-    border: 1px solid #AAA;
-  }
-  #activeConfigHolder{
-    flex: 0 1 auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-  }
-    #popTopDishIcon{
-      flex: 0 1 58px;
-    }
-    #activeConfig {
-      flex: 0 1 120px;
-      padding-top: 5px;
-    }
-    #testConfigLableHolder {
-      margin: 4px;
-      flex: 0 1 40px;
-    }
-    #testConfig {
-      flex: 0 1 80px;
-    }
-    .activeConfigDojoDNDcontainer {
-      min-height: 30px;
-      min-width: 6em;
-      border: 1px solid #CCCCCC;
-      display: inline-block;
-      overflow: visible;
-    }
-    #popTopMsgSpace {
-      flex: 1 1 auto;          /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-      text-align: left;
-      padding-left: 4px;
-      margin: auto;
-    }
-
-.benchPopMid {
+  flex:0 1 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+  background: #F5F5F5; /* lightblue;  */
   border: 1px solid #AAA;
-  flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+}
+#activeConfigHolder{
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#popTopDishIcon{
+  flex: 0 1 58px;
+}
+#activeConfig {
+  flex: 0 1 120px;
+  padding-top: 5px;
+}
+#testConfigLableHolder {
+  margin: 4px;
+  flex: 0 1 40px;
+}
+#testConfig {
+  flex: 0 1 80px;
+}
+.activeConfigDojoDNDcontainer {
+  min-height: 30px;
+  min-width: 6em;
+  border: 1px solid #CCCCCC;
+  display: inline-block;
+  overflow: visible;
+}
+#popTopMsgSpace {
+  flex: 1 1 auto;          /* fills remaining space; {flex:1 1 auto;} is the same as {flex:1;} both prevent resize */
+  text-align: left;
+  padding-left: 4px;
+  margin: auto;
+}
+
+#gridHolder {
+  border: 1px solid #AAA;
+  flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {flex:1;} both prevent resize */
   background: #F5F5F5; /* blue; */
   overflow:auto;
+  min-width: 20px;
+  margin: 0px;
+  padding: 3px;
+  background: darkgrey;
 }
-  #gridHolder {
-      min-width: 200px;
-      overflow: auto;
-      margin: 0px;
-      padding: 3px;
-      background: darkgrey;
-    }
-.scaleCanvasHolderClass { 
-  flex: 0 1 20px;
+#gridCnvsHldr{
+  margin: auto;
+  padding: auto;
+}
+#ledgendHolder {
+  flex: 0 1 30px;  
+}
+#sclCnvsHldr { 
   min-height: 30px;
   grid-area: scaleCanvas; 
   width: 100%
 }
-
-.scaleCanvasClass {
+#scaleCanvas {
   width: 100%;
   height: 30px;
   border: 1px solid #DDDDDD;
 }
-.benchPopBot{
-  flex: 0 1 40px;
+.dadColorCls{
+  display: inline-block;
+  width: 15px;
+  height: 11px;
+  margin-top: 6px;
+}
+.dadNameCls {
+  display: inline-block;
+  min-width: 15px;
+  height: 15px;
+  padding-bottom: 2px;
+}
+.dadInfoCls {
+  flex: 1;
+  display: inline-block;
+  height: 18px;
+  padding: 0px 4px;
+}
+#dadLegendHldr{
+  display: grid;
+  grid-gap: 4px;
+  min-width: 30px;
+  min-height: 20px;
+  width: 99%;
+  margin-bottom: 5px;
+}
+
+#benchPopBot{
+  flex: 0 1 60px;
   border: 1px solid #AAA;
   min-height: 41px;
   overflow: auto;
   background: #F5F5F5; /* peachpuff;*/
-}
+};
+
   .zoomSlideClass { grid-area: zoomSlide; visibility: hidden; }
   .timeUpdateClass { grid-area: timeUpdate;}
   .freezeButtonDivClass { grid-area: freezeButton;}
@@ -448,6 +556,7 @@
   .gridButtonClass { grid-area: gridButton;}
   .rescalingClass { grid-area: rescaling;}
   .popBotRiteClas { grid-area: popBotRite;}
+
 .gridControlContainerClass{
   display: grid;
   grid-template-areas: 'timeUpdate  modeHolder  rescaling'
@@ -455,13 +564,28 @@
   width: 100%;
 }
 
+/* ---------------------------------------------------------------------------- end main work bench center section -- */
+
 /* right informaton pannel on the populatoin page is all held by popInfoVert which is in #rightInfoHolder */
 
-  .labInfoHolder {
+#popInfoVert {
+    display: flex;
+    flex-direction: column;
+    width: 442px;
+    height: 100%;
+    overflow: auto;
+  } /* contains: popInfoTabHolder & labInfoHolder */
+
+  #popInfoTabHolder {
+      flex: 0 0 24px;
+  }
+  
+  .labInfoHoldCls {
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
     height: 100%;
+    width: 100%;
   }
-    
+  
   #popStatsBlock{
     flex-direction: column;
     height: 100%;
@@ -479,6 +603,7 @@
     display: flex;
     flex-direction: column;
   }
+  /* popStatsBlock (labInfoFlex) contains: */
   
   #environConfigEdit{
     resize: both;
@@ -498,47 +623,178 @@
     resize: vertical;
     overflow: auto;
   }
+  /* contains SelOrgType & PopStats4Grid horizontal */
+  
   #selOrgType{
-    flex: 0 1 190px;        /*was 170 */
+    /* flex: 0 1 190px;        /*was 170 */
+    flex: 1 1 auto;      /* fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
     border: 1px solid #AAA;
-/*    resize: horizontal;  */
     overflow: auto;
-  }
+  }  /*contains sotTopTable and sotBotTable  */
+  #sotTopTable { width: 100%; }
+  #sotBopTable { width: 100%; background: white; }
+  .timePerform { min-width: 120px; background: #fff }
+  
   #popStats4grid{
-    flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+    flex: 1 1 240px;      
     border: 1px solid #AAA;
-  }
+    min-width: 200px;
+  } /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
+div.popsTopTableHold { min-width: 168px;  background: #DDD; }
+  .table.topPopTable {
+/*  margin: auto;  /* centers table in div */
+  border: 0;  padding: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+  min-width: 150px;
+}
+  .popsTopTblcol1 {min-width: 134px; }
+  .popsTopTblcol2 {min-width: 45px; }
+  
+  #popsBotTableHold { width: 100%; background:white; }
+  table.botPopTable {
+  /*  margin: auto;  /* centers table in div */
+    border: 0;   padding: 0;
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: auto;
+}
+  .popsBotTblcol1 {width: 55px; }
+  .popsBotTblcol2 {width: 13px; }
+  .popsBotTblcol3 {width: 110px; }
+  .numAvidains {  background: #fff }   /* min-width: 110px; */
+  
+
+.botPopTable tr:nth-child(even) {background: #FAFAFA}
+.botPopTable th {
+  font-weight: bold;
+}
+.botPopTable td {  line-height: 15px;  }   /* added in javascript */
+
+.botPopTable tr *:nth-child(2) {  text-align: right;  }
+.botPopTable tr *:nth-child(3) {  width: 80%;  }
+
+#logTit6 { font-style: italic; color: dimgray; }
+#logTit7 { font-style: italic; color: dimgray; }
+
+
+
+
   #popChrtHolder{
     flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
     border: 1px solid #AAA;
     height: 100%;
   }
-  #miniChartYaxis{
-    flex: 0 0 30px;
+ 
+  /* ---------------------- Population (right) side of tables */)
+  #popStats4grid{           /* inside horizontal flexbox*/
+    flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
     border: 1px solid #AAA;
   }
-
-  #displayGridResourceData{
+  #resrceDataHolder{
+    display: none;  /* none; */
+    flex: 0 0 53;
+    border: 1px solid #AAA;
+    width: 99%;
+/*    visibility: hidden; */
+  }
+  #popChrtHolder{
+    flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+    height: 100%;
+  } 
+  #miniChartControls{
+    flex: 0 0 20px;
     display: flex;
-    flex: 0 0 auto;
-    border: 1px solid #AAA;
-    width: 100%;
+    border: 1px solid #AAA;    
   }
+  #miniChartYaxis{
+    flex: 0 0 220px;
+  }
+  #miniChartOptHolder{
+    flex: 0 0 auto;
+    padding-left: 15px;
+    align-self: flex-end;
+  }
+  #pauseOptions {
+    flex: 0 0 20px;
+    border: 1px solid #AAA;
+    background: #DDD;
+  }
+  #pausePrefix { display: inline-block; }
+  #pauseMidText { display: inline-block; }
+  #itemDone1st { display: none; }
+  #pauseCriteriaHolder { }  /* tried to use to give a white background to select box rather than a inherit background */
   
-  .grid-currentSugarAmount-container {   /*on stats tab of population page */
-  display: inline-grid;
-  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
-  background: #F5F5F5;     /* #2196F3;  blue */
-/*  justify-content: space-evenly;  */
-  width: 100%;
+input:focus {
+/*  background-color: yellow;  */
 }
 
-.grid-currentSugarAmount-item {          /*on data tab of population page */
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
+/*--------------------------------------------------------------------------------------------- Resource Data Table --*/
+
+.sugarTsk{
+  background: #DDD; /* #DDD; */
+  border: 1px solid #BBB;   /*lower darker*/
   text-align: center;
-  padding: 2px 3px;
 }
+.mxTask{
+  display: none;
+  background: #EEE; /* #EEE; */
+  border: 1px solid #BBB;   /*lower darker*/
+  text-align: center;
+}
+.cellTask{
+  background: #DDD; /*#DDD;*/
+  border: 1px solid #BBB;   /*lower darker*/
+  text-align: center;
+}
+.totTask{
+  background: #EEE; /* #EEE; */
+  border: 1px solid #BBB;   /*lower darker*/
+  text-align: center;
+}
+
+ #sgrTop{grid-area: sgrTop}  #sgrNot{grid-area: sgrNot}  #sgrNan{grid-area: sgrNan}  #sgrAnd{grid-area: sgrAnd}  #sgrOrn{grid-area: sgrOrn}  #sgrOro{grid-area: sgrOro}  #sgrAnt{grid-area: sgrAnt}  #sgrNor{grid-area: sgrNor}  #sgrXor{grid-area: sgrXor}  #sgrEqu{grid-area: sgrEqu}
+  #mxTop{grid-area:  mxTop}   #mxNot{grid-area:  mxNot}   #mxNan{grid-area:  mxNan}   #mxAnd{grid-area:  mxAnd}   #mxOrn{grid-area:  mxOrn}   #mxOro{grid-area:  mxOro}   #mxAnt{grid-area:  mxAnt}   #mxNor{grid-area:  mxNor}   #mxXor{grid-area:  mxXor}   #mxEqu{grid-area:  mxEqu}
+#cellTop{grid-area:cellTop} #cellNot{grid-area:cellNot} #cellNan{grid-area:cellNan} #cellAnd{grid-area:cellAnd} #cellOrn{grid-area:cellOrn} #cellOro{grid-area:cellOro} #cellAnt{grid-area:cellAnt} #cellNor{grid-area:cellNor} #cellXor{grid-area:cellXor} #cellEqu{grid-area:cellEqu}
+ #totTop{grid-area: totTop}  #totNot{grid-area: totNot}  #totNan{grid-area: totNan}  #totAnd{grid-area: totAnd}  #totOrn{grid-area: totOrn}  #totOro{grid-area: totOro}  #totAnt{grid-area: totAnt}  #totNor{grid-area: totNor}  #totXor{grid-area: totXor}  #totEqu{grid-area: totEqu}
+
+.sugarLocal-gridContainer {   /*on stats tab of population page */
+  display: grid;
+  grid-template-areas: ' sgrTop  sgrNot  sgrNan  sgrAnd  sgrOrn  sgrOro  sgrAnt  sgrNor  sgrXor  sgrEqu'
+                       '  mxTop   mxNot   mxNan   mxAnd   mxOrn   mxOro   mxAnt   mxNor   mxXor   mxEqu'
+                       'cellTop cellNot cellNan cellAnd cellOrn cellOro cellAnt cellNor cellXor cellEqu';
+  width: 99%;
+  justify-content: stretch;
+}
+
+.sugarGlobal-gridContainer {   /*on stats tab of population page   resourceDataGrid held by resrceDataHolder */
+  display: grid;
+  grid-template-areas: ' sgrTop  sgrNot  sgrNan  sgrAnd  sgrOrn  sgrOro  sgrAnt  sgrNor  sgrXor  sgrEqu'
+                       ' totTop  totNot  totNan  totAnd  totOrn  totOro  totAnt  totNor  totXor  totEqu'
+                       'cellTop cellNot cellNan cellAnd cellOrn cellOro cellAnt cellNor cellXor cellEqu';
+  grid-template-columns: 3fr,      2fr,    2fr,    2fr,    2fr,    2fr,    2fr,    2fr,    2fr,    2fr; 
+  width: 100%;
+  justify-content: stretch;
+}
+
+.sugarBoth-gridContainer {   /*on stats tab of population page */
+  display: grid;
+  grid-template-areas: ' sgrTop  sgrNot  sgrNan  sgrAnd  sgrOrn  sgrOro  sgrAnt  sgrNor  sgrXor  sgrEqu'
+                       '  mxTop   mxNot   mxNan   mxAnd   mxOrn   mxOro   mxAnt   mxNor   mxXor   mxEqu'
+                       'cellTop cellNot cellNan cellAnd cellOrn cellOro cellAnt cellNor cellXor cellEqu'
+                       ' totTop  totNot  totNan  totAnd  totOrn  totOro  totAnt  totNor  totXor  totEqu';
+  background: mistyrose;
+  width: 100%;
+  justify-content: stretch;
+/*  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+  background: mistyrose;
+  width: 100%;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+/*  background: #FFF;   /* #DDD; */
+}
+/*----------------------------------------------------------------------------------------- end Resource Data Table --*/
+
 
 #environmentSettingTitle{
   font-size: 130%;
@@ -547,80 +803,174 @@
   display: inline;
   font-size: 120%;
 }
-/*************************************************************************** Sugar Accordion using details and select */
 
-/* Header and controls that change all tasks are here.   /*  background: inherit */
-/* inherit */
-/* #sugarHeaderTitle { grid-area: headerTitle; justify: start ; background: #CCC; font-size: 120%;}   /* may not need or want */
-
-#sugarSetTitle { grid-area:setTitle; justify-self: center; background: inherit; font-size: 110%; }
-#allsugarSupplyTypeDiv { grid-area:supplyType ; justify-self: center; background: inherit;}
-#allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: center; background: inherit;}
-#allSugarDetailsDiv { grid-area:detailDiv; justify-self: center; background: inherit;}
-#geometrySgr { grid-area:geometrySgr; justify-self: center; background: inherit;}
-#supplyTypeSgr { grid-area:supplyTypeSgr; justify-self: center; background: inherit;}
-#showHideSgr { grid-area:showHideSgr; justify-self: center; background: inherit;}
-#taskSugar { grid-area:taskSugar; justify-self: center; }
-
-#allSgr4Blnk { grid-area: allSgr4Blnk; background: #CCC; }
-#allSgr5Blnk { grid-area: allSgr5Blnk; background: #CCC; }
-
-
-
-.changeAllSugarsTogetherContainer {
-  display: grid;
-  grid-template-areas: 'headerTitle  headerTitle setTitle    allSgr5Blnk'
-                       'allSgr4Blnk  geometrySgr supplyTypeSgr showHideSgr'
-                       'allSgr4Blnk  geometryDiv supplyType  detailDiv';
-  /*
-  grid-template-areas: 'setTitle  geometrySgr supplyTypeSgr showHideSgr'
-                       'setTitle  geometryDiv supplyType  detailDiv';
-  */
-  width: 100%;
-  grid-template-columns: 25% 25% 25% 25%;
-  /* grid-template-rows: 33fr 33fr 33fr; */
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  background: inherit;   /* #DDD; */
+.colrow {
+  width: 4.5em; height:1.6em;
 }
 
-/*  Not in use
-                          <div id='allSgr4Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                          <div id='allSgr5Blnk' class='rHeadItem'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                          <div id='taskSugar' class='rHeadItem'>Sugar Name</div>
+#mutePopError { text-align: left; width: 90%; height: 15px; }
+
+.mutePopInputClass{
+  width:4em;
+  height:13px;
+  margin: 0px 2px;     /* top right bottom left  */   /*top left/right bottom */ /*top/bottom  left/right */
+  /* padding: 0px 0px;   /* top right bottom left  */  /* box padding border margin outside now */
+  display: inline-block; 
+  /*background: yellow; */
+  float: left;
+}
+.mutePopSlideClass{
+  /* width:360px; */
+  display: block; 
+  vertical-align: center; 
+  background: #666;
+}
+/*
+    -webkit-appearance: none;
+  width: 80%;
+  height: 5px;
+  background: black;
+  outline: black;
+  opacity: 1;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width:  5px;
+  height: 5px;
+  background: black;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width:  5px;
+  height: 5px;
+  background: black;
+  cursor: pointer;
+}
+
+.mutePopSlideClass .ui-slider-range { background: #black; }
+.mutePopSlideClass .ui-slider-handle { border-color: #black; }
 */
 
+.ancestorContainer {
+  grid-area: ancestorContainer;
+  display: block;
+  resize:both;
+  overflow:auto;
+  min-height: 30px;
+  width: 200px;
+  border: 1px solid black;
+  background: white;
+}
 
+.#geometyHideButton {
+  grid-area: geometyHideButton;
+  display: inline-block;
+  min-height: 30px;
+  min-width: 30px;
+  color: #EEEEEE; /*background color of 'odd' rows */
+}
+
+#ancestorRow {
+  display: grid;
+  grid-template-areas: 'ancestorContainer geometyHideButton';
+  grid-template-columns: auto auto;
+  grid-column-gap: 1px;
+  width: 100%;
+  justify-content: start;
+}
+
+/* Evidently cannot click a button with visibility: hidden or display;none */
+.geoButtonShow {
+  background: inherit;
+  color: black;
+}
+.geoButtonCammo {        /* #notation with 4 or 8 chars should have opacity as the last section should work, but NetBeans does not like it*/  
+  border: none;                             /* #F5F5F500 should work, but net beans does not like it so some browsers might not like it */
+  background-color: inherit;    /*  rgba(245,245,245,0)  is #F5F5F5 with opacity set to 0.0;   */  
+  color: #EEEEEE;          /* 0.0 (fully transparent) to 1.0 (fully opaque); background color of odd row is #EEEEEE; */
+  
+}
+
+
+/* from: https://stackoverflow.com/questions/51131818/how-to-vertically-align-detailss-arrow-with-summarys-content */
+/* this section formats the details summary */
+/* I'm not sure it is a good idea */
+/* This works for the Freezer detail-summary, 
+    but the in summary with dispaly: grid the triangle wer on the right. They were Not in the grid-template-areas: */
+
+summary::-webkit-details-marker {
+  display: none
+}
+
+summary > div {
+  display: inline-block;
+  vertical-align: middle;
+}
+details summary > * {
+  display: inline;
+}
+
+/* This was to try to get the inline behavoir above I think. 
+summary {
+  display: block
+}
+summary:before {
+  grid-area: detailArrow;
+  content: "►";
+  margin: 0px;
+}
+
+details[open] summary:before {
+  content: "▼";
+}
+*/
+
+/*
+details summary { 
+  cursor: pointer;
+}
+*/
+
+/*************************************************************************** Sugar Accordion using details and select */
 /* Accodion using details/summary and hidden sections also defined here; one detail/summary for each logic task = surgar type */
 
 #sugarAccordion{
   width: 100%;
 }
-.sugarAccordionSection{
+#sugarNote {
+  text-align: right;
   width: 100%;
-  border-bottom: 1px solid #222;   /* #000 is black  */
+}
+.sgrAccordSectionCls{
+  width: 100%;
+  border-bottom: 1px solid #888;   /* #000 is black  */
   display: inline-block;
 }
-.sugarSummary{
-  background: rgba(128, 128, 128, 0.0); 
-  min-height: 20px;
-  width: 100%;
+
+.geometryCls{
+  display: inline-block
 }
 
 .groupDebug{  display: inline; }
-.grooupFinite { display: inline; }
-.groupEquilibrium { display: inline; }
+.grooupLimited { display: inline; }
+.groupChemostat { display: inline; }
 
-.globalFinite { display: inline; }
-.globalEquilibrium { display: inline; }
+.globalLimited { display: inline; }
+.globalChemostat { display: inline; }
 .globalDebug { display:inline; }
 
-.localEquilibrium { display: inline; }
+.localChemostat { display: inline; }
 .localDebug { display:inline; }
 
-.HalfLftRit{
-  display: inline-block;  
-}
+
+.2HalfLftRit { display:inline; }
+.3TopLftRit { display:inline; }
+.4Quarters { display:inline; }
+
 .TopLftRit{
   display: inline-block;  
 }
@@ -636,158 +986,276 @@
   display: none;
 }
 
-.sugarDetailSection{
-  background: rgba(255, 255, 255, 0.0);   
+.sgrDetailHoldCls {
+  /* background: rgba(255, 255, 255, 0.0); */
+  background: rgba(128, 128, 128, 0.2);      
 }
 .dishPartLabel{
   font-size: 100%;
   font-weight: bold;
   color: #444;
 }
-.sugarSummaryDiv{
-  display: inline-block;
-}
-.sugPeriodInput{
-  width: 3.5em; height:1.5em;
-}
-.sugInitialInput{
-  width: 4em; height:1.5em;
-}
-.sugInitialHiInput{
-  width: 4em; height:1.5em;
-}
-.sugInitialLoInput{
-  width: 4em; height:1.5em;
-}
-.sugInflowHiInput{
-  width: 3.5em; height:1.5em;
-}
-.sugInflowLoInput{
-  width: 3.5em; height:1.5em;
-}
-.sugOutflowHiInput{
-  width: 3.5em; height:1.5em;
-}
-.sugOutflowLoInput{
-  width: 3.5em; height:1.5em;
-}
-#notSection{
-  background: rgba(255,153,178, 1);  /* bigger number is closer to white; 0,0,0 is black*/
-}
-#nanSection{
-  background: rgba(255,204,153, 1);
-}
-#andSection{
-  background: rgba(255,255,153, 1);
-}
-#ornSection{
-  background: rgba(153,255,153, 1);
-}
-#oroSection{
-  background: rgba(153,255,153, 1);
-}
-#antSection{
-  background: rgba(153,255,153, 1);
-}
-#norSection{
-  background: rgba(153,255,153, 1);
-}
-#xorSection{
-  background: rgba(153,255,153, 1);
-}
-#equSection{
-  background: rgba(153,255,153, 1);
-}
-/****************************************** layout for header area for Resource controls in Setup for Population Page */
-/* 
-    Deal with these later: now sure what we want yet.
-#sugarRewardStr { grid-area: rewardstr; }
-#sugarReward02x { grid-area: reward02x; }
-#sugarReward04x { grid-area: reward04x; }
-#sugarReward08x { grid-area: reward08x; }
-#sugarReward16x { grid-area: reward16x; }
-#sugarReward32x { grid-area: reward32x; }
-                          <div id='sugarRewardStr'>(strength of energy reward shown in parentheses)</div>
-                          <div id='sugarReward02x'>Easy (x2) notose/nanose</div>
-                          <div id='sugarReward04x'>Moderate (x4) andose/ornose</div>
-                          <div id='sugarReward08x'>Hard (x8) orose/antose</div>
-                          <div id='sugarReward16x'>Very Hard (x16) norose/xorose</div>
-                          <div id='sugarReward32x'>Brutal (x32) equose</div>
 
 */
+#not_section{ border-bottom: 1px solid #888; }
+#nan_section{ border-bottom: 2px solid #222; }  /* #000 = black */
+#and_section{ border-bottom: 1px solid #888; }
+#orn_section{ border-bottom: 2px solid #222; }  /* #000 = black */
+#oro_section{ border-bottom: 1px solid #888; }
+#ant_section{ border-bottom: 2px solid #222; }  /* #000 = black */
+#nor_section{ border-bottom: 1px solid #888; }
+#xor_section{ border-bottom: 2px solid #222; }  /* #000 = black */
+#equ_section{ border-bottom: 1px solid #888; }
+}
+/************************* Sugar controls layout in 'summary' of detail/summary for each task-sugar in sugar according */
+/* I could not get a div with a dispay of inline-gid start on the top line of the summary. 
+.sumHolderDiv { display: inline-block; position: absolute; }
+*/
+.sumFtTxtCls { 
+  grid-area: sumFtTxtCls; 
+  display: inline-block; border: 1px solid palegreen; 
+}
+.taskAboutCls { 
+  grid-area: tskAboutCls; 
+  display: inline-block;
+  border: 1px solid red;
+  width: 250px;
+}
+.sgrLftSumCls { grid-area: sgrLftSumCls; display: inline-block;}
+.sgrRitSumCls { grid-area: sgrRitSumCls; 
+  grid-template-areas: 'sumFtTxtCls tskAboutCls';
+  grid-template-columns: 1px 96px;
+  display: grid;
+  justify-items: end;
+  border: 1px solid green;
+}
+.sgrTitleCls { grid-area: sgrTitleCls; display: inline-block; border: 1px solid red; width: 54px; }
+.geometryCls { grid-area: geometryCls; display: none; border: 1px solid red; }
+.regionLaySumCls { grid-area: regionLayCls; display: inline-block; border: 0px none magenta; }
+.supply_HoldCls { grid-area: supply_HoldCls; display: inline-block; border: 0px none cyan; }
+.supplyWHoldCls { grid-area: supplyWdCls; display: inline-block; border: 1px solid red; }
+.inflwSumCls { grid-area: inflwSumCls; display: inline-block; border: 0px none magenta; }
+.outflwSumCls { grid-area: outflwSumCls; display: inline-block; border: 0px none cyan; }
+.chmsttSumCls { grid-area: chmsttSumCls; display: inline-block; border: 1px solid red; }
+.periodGlobalCheck { grid-area: periodGlobalCheck; display: inline-block; border: 1px solid red; }
+.periodTimGlobCls { grid-area: periodTimGlobCls; display: inline-block; border: 1px solid red; }
+.initialGlobCls { grid-area: initialGlobCls; display: inline-block; border: 1px solid red; }
 
-/************************* Sugar controls layout in 'deails' of detail/summary for each task-sugar in sugar according */
+.sgrSumCls { 
+  display: grid; 
+  grid-template-areas: 'sgrLftSumCls sgrRitSumCls';
+  grid-template-columns: 1fr 98px;
+  height: 23px;  width: 100%;
+  border: 1px solid blue;  
+}
 
-.initialHi { grid-area: initialHi;}
-.initialLo { grid-area: initialLo;}
+.sgr
 
-.inflowHi { grid-area: inflowHi; }
-.inflowLo { grid-area: inflowLo; }
+.grd-sgr-sum-adv-container {
+  display: inline-grid;
+  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls tskAboutCls periodTimGlobCls';
+  justify-content: start; 
+  height: 23px;  width: 100%;
+  border: 1px solid blue;  
+}
+.grd-sgr-sum-adv-limited-container {
+  display: grid;
+  grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls  supply_HoldCls initialGlobCls"
+                       "sgrTitleCls tskAboutCls  tskAboutCls tskAboutCls tskAboutCls   initialGlobCls";
+  //grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdCls supply_HoldCls initialGlobCls"
+  //                     "detailArrow sgrTitleCls tskAboutCls  tskAboutCls tskAboutCls tskAboutCls   initialGlobCls";
+  justify-content: start; 
+  min-height: 23px;  width: 100%;
+}
+.grd-sgr-sum-adv-chemo-container {
+  display: grid;
+  grid-template-areas: "detailArrow sgrTitleCls  regionLayCls geometryCls supplyWdCls supply_HoldCls periodTimGlobCls"
+                       "detailArrow sumFtTxtCls sumFtTxtCls  sumFtTxtCls sumFtTxtCls sumFtTxtCls   sumFtTxtCls";
+  justify-content: start; 
+  min-height: 23px;  width: 100%;
+}
 
-.outflowHi { grid-area: outflowHi; }
-.outflowLo { grid-area: outflowLo; }
+.grd-sgr-sum-adv-space {
+  display: grid;
+  grid-template-areas: "detailArrow sgrTitleCls  regionLayCls geometryCls supply_HoldCls sumFtTxtCls";
+  justify-content: start; 
+  min-height: 23px;  width: 100%;  
+}
 
-.equalHi { grid-area: equalHi; }
-.equalLo { grid-area: equalLo; }
+.grd-sgr-sum-global-container_ {
+  display: inline-grid;
+  /* grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls'; */
+  grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls initialGlobCls";
+  justify-content: start; 
+  height: 23px;
+  border: 1px solid purple;
+}
+.grd-sgr-sum-global-container {
+  display: grid;
+  grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls initialGlobCls";
+  justify-content: start; 
+  height: 23px;  
+  border: 1px solid purple;
+}
+.grd-sgr-sum-global-limited-container {
+  display: grid;
+  grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls initialGlobCls";
+  justify-content: start; 
+  height: 23px;  
+  border: 1px solid purple;
+}
+.grd-sgr-sum-global-chemo-container {
+  display: grid;
+  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls tskAboutCls';
+  justify-content: start; 
+  height: 23px;  width: 100%;
+}
+.grd-sgr-sum-global-chemo-container_block {
+  display: block;
+}
+.grd-sgr-sum-global-chemo-container_columns {
+  display: grid;
+  grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls  chmsttSumCls inflwSumCls outflwSumCls";
+  justify-content: start; 
+  height: 23px;  width: 100%;
+}
 
-.sideTitleHi { grid-area: sideTitleHi; }
-.sideTitleLo { grid-area: sideTitleLo; }
+.grid-sugar-summary-geo-basic-container_ {
+  display: inline-grid;
+  grid-template-areas: 'detailArrow sgrTitleCls geometryCls supplyWdCls supply_HoldCls sumFtTxtCls initialGlobCls';
+  justify-items: start;  justify-content: start; width: 100%;
+  min-height: 23px;
+}
+/*------------------------------------------------------------------------------------- sugar input class formatting --*/
+.sugPeriodNclass { width: 50px; height:13px; text-align:right; }
+.sugInitialNclass { width: 50px; height:13px; text-align:right; }
+.sugInitialHiNclass { width: 50px; height:13px; text-align:right; }
+.sugInitialLoNclass { width: 50px; height:13px; text-align:right; }
+.sugInflwHiNcls { width: 50px; height:13px; text-align:right; }
+.sugInflwLoNcls { width: 50px; height:13px; text-align:right; }
+.sgrOutflwHiNcls { width: 50px; height:13px; text-align:right; }
+.sgrOutflwLoNcls { width: 50px; height:13px; text-align:right; }
 
-.typeInput { grid-area: typeInput; }
-.sideInput { grid-area: sideInput; }
 
-.subSectionTitle { grid-area: subSectionTitle; }
+/************************* Sugar controls layout in 'details' of detail/summary for each task-sugar in sugar according */
+/* period, gradient and diffuse were check boxes; now they are part of a drop down */
+.periodCheckDiv { grid-area: periodCheckDiv; display: none; }
+.gradientCheckDiv { grid-area: gradientCheckDiv; display: none; }
+.diffuseCheckDiv { grid-area: diffuseCheckDiv; display: none; }
+
+/* used as global resources can be periodic, but not in use now */
+.periodCheckGlobal { grid-area: periodCheckGlobal; display: none; }
+.detailTxtCls { grid-area: detailTxtCls; place-self: center;  border: 0px none green; }
+
+.initialHiDcls { grid-area: initialHi;}
+.initialLoDcls { grid-area: initialLo;}
+
+.inflwHiDcls { grid-area: inflowHi; place-self: center; border: 0px none blue; }
+.inflwLoDcls { grid-area: inflowLo; place-self: center stretch; }
+
+.outflwHiDcls { grid-area: outflowHi; place-self: center; border: 0px none cyan; }
+.outflwLoDcls { grid-area: outflowLo; place-self: center; border: 1px solid red; }
+
+ /* top right bottom left */  
+.chmsttHiDcls { grid-area: chmstatHi; place-self: center; border: 1px solid red; }
+.chmsttLoDcls { grid-area: chmstatLo; place-self: center; border: 1px solid red; }
+
+.sideTitleHiDcls { grid-area: sideTitleHi; place-self: center stretch; }
+.sideTitleLoDcls { grid-area: sideTitleLo; place-self: center stretch; }
+
+.sideNclass { grid-area: sideInput; }
+.supplyTypeHoldcls { grid-area: supplyDetailDiv; }
+
+.subSectionTitle { grid-area: subSectionTitle; width: 70px;}
 .sgrBlank { grid-area: sgrBlank; }
 
-.periodCheckDiv { grid-area: periodCheckDiv; }
-.periodTime { grid-area: periodTime; }
+.supplyModifierDivClass {grid-area: supplyModifierDivClass}
+.periodTimeDivClass { grid-area: periodTime; }
 
-.gradientCheckDiv { grid-area: gradientCheckDiv; }
-.diffuseCheckDiv { grid-area: diffuseCheckDiv; }
-
-.grid-sugarDetail-Finite-noGridCheckbox-container {
+.sgr-detail-adv-grd-container {
   display: grid;
-  grid-template-areas: 'typeInput initialHi';
-  width: 100%;
-}
-.grid-sugarDetail-Finite-noGradientCheckbox-container {
-  display: grid;
-  grid-template-areas: 'typeInput initialHi diffuseCheckDiv';
-  width: 100%;
-}
-.grid-sugarDetail-Finite-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
-                       'initialHi  initialHi initialHi initialHi';
-  width: 100%;
-}
-.grid-sugarDetail-FiniteGradient-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
-                       'sideInput sideInput sideInput sideInput'
-                       'initialHi  initialHi initialLo initialLo';
-  width: 100%;
+  grid-template-areas: 'detailTxtCls detailTxtCls detailTxtCls'
+                       'inflowHi outflowHi chmstatHi';
+  justify-content: start; width: 100%;  
 }
 
-.grid-sugarDetail-FiniteGradient-container_md {
+.sgr-detail-global-chemo-grid-container_block { display: block; height: 20pxs}
+
+.sgr-detail-global-chemo-grid-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv'
-                       'initialLo initialLo sideInput'
-                       'initialHi  initialHi gradientCheckDiv';
-  width: 100%;
+  grid-template-areas: 'inflowHi outflowHi chmstatHi';
+  justify-content: start; width: 100%;  
 }
 
-.grid-sugarDetail-FiniteGradient-container_old {
+.sgr-detail-global-chemo-grid-container_periodic {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv'
-                       'sideInput sideInput sideInput gradientCheckDiv'
-                       'initialHi initialHi initialLo initialLo';
-  width: 100%;
+  grid-template-areas: 'periodGlobalCheck periodTime periodTime'
+                       'inflowHi outflowHi chmstatHi';
+  justify-content: start; width: 100%;  
+}
+
+.sgr-detail-global-chemo-grid-container_control_in_summary {
+  display: grid;
+  grid-template-areas: 'detailTxtCls chmstatHi inflowHi outflowHi';
+  grid-template-columns: 150px 65px 65px 65px;
+  justify-items: start;  justify-content: start; 
+  width: 100%; min-height: 23px;
+}
+
+.grid-sugarDetail-globalsugarDetail-chemostat__ {
+  display: grid;
+  grid-template-areas: 'inflowHi outflowHi chmstatHi';
+  justify-items: start;  justify-content: start; 
+  width: 100%; height: 23px;
+}
+
+.grid-sugarDetail-multi-unlimited-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.grid-sugarDetail-Limited-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyModifierDivClass periodTime'
+                       'initialHi       initialHi       initialHi            initialHi';
+  justify-items: start;  justify-content: start; width: 100%;
+}
+
+.sugarColsDetail-limited-gradient-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyDetailDiv supplyModifierDivClass supplyModifierDivClass periodTime'
+                       'initialHi       initialHi       sideInput       sideInput             initialLo             initialLo';
+  justify-items: start;  justify-content: start; width: 100%;
+  align-items: stretch;
+}
+.sugarColsDetail-limited-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyDetailDiv supplyModifierDivClass supplyModifierDivClass periodTime'
+                       'initialHi       initialHi       initialHi       initialHi             initialHi             initialHi';
+  justify-items: start;  justify-content: start; width: 100%;
+  align-items: stretch;
+}
+
+.sugarColsDetail-chemostat-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyDetailDiv supplyModifierDivClass supplyModifierDivClass periodTime'
+                       'inflowHi        inflowHi        outflowHi       outflowHi             chmstatHi             chmstatHi';
+  justify-items: start;  justify-content: start; width: 100%;
+  align-items: stretch;
+}
+.sugarColsDetail-chemostat-gradient-container {
+  display: grid;
+  grid-template-areas: 'subSectionTitle supplyDetailDiv supplyDetailDiv supplyModifierDivClass supplyModifierDivClass sideInput'
+                       'inflowHi        inflowHi        outflowHi       outflowHi             chmstatHi             chmstatHi';
+                       'inflowLo        inflowLo        outflowLo       outflowLo             chmstatLo             chmstatLo';
+  justify-items: start;  justify-content: start; width: 100%;
+  align-items: stretch;
 }
 
 .grid-sugarDetailAll-container {
   display: grid;
-  grid-template-areas: 'subSectionTitle typeInput'
+  grid-template-areas: 'subSectionTitle supplyDetailDiv'
                        'sideInput sideInput'
                        'periodCheckDiv periodTime'
                        'gradientCheckDiv diffuseCheckDiv'
@@ -795,78 +1263,18 @@
                        'initialHi initialLo'
                        'inflowHi inflowLo'
                        'outflowHi outflowLo'
-                       'equalHi equalLo';
-  width: 100%;
+                       'chmstatHi chmstatLo';
+  justify-items: start;  justify-content: start; width: 100%;
 }
-.grid-sugarDetail-globalEqual-container {
-  display: grid;
-  grid-template-areas: 'inflowHi periodCheckDiv'
-                       'outflowHi equalHi';
-  width: 100%;
-}
-.grid-sugarDetail-globalEqualPeriod-container {
-  display: grid;
-  grid-template-areas: 'inflowHi periodCheckDiv periodTime'
-                       'outflowHi equalHi equalHi';
-  width: 100%;
-}
-.grid-sugarDetail-None-container {
-  display: grid;
-  grid-template-areas: 'typeInput sgrBlank sgrBlank sgrBlank sgrBlank';
-  width: 100%;
-}
-
-.grid-sugarDetail-Equal-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
-                       'inflowHi inflowHi periodCheckDiv periodCheckDiv'
-                       'outflowHi outflowHi equalHi equalHi';
-  width: 100%;
-}
-.grid-sugarDetail-EqualPeriod-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
-                       'inflowHi inflowHi periodCheckDiv periodTime'
-                       'outflowHi outflowHi equalHi equalHi';
-  width: 100%;
-}
-
-.grid-sugarDetail-EqualGradient-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
-                       'sideInput sideInput sideInput      periodCheckDiv'
-/*                     'sideTitleHi sideTitleLo'   */
-                       'inflowHi inflowHi    inflowLo inflowLo'
-                       'outflowHi outflowHi  outflowLo outflowLo'
-                       'equalHi equalHi      equalLo equalLo';
-  width: 100%;
-  color: black;
-}
-.grid-sugarDetail-EqualGradientPeriod-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle typeInput diffuseCheckDiv gradientCheckDiv'
-                       'sideInput sideInput       periodTime periodCheckDiv'
-/*                     'sideTitleHi sideTitleLo'   */
-                       'inflowHi inflowHi    inflowLo inflowLo'
-                       'outflowHi outflowHi  outflowLo outflowLo'
-                       'equalHi equalHi      equalLo equalLo';
-  width: 100%;
-}
-.grid-sugarDetail-Flow-container {
-  display: grid;
-  grid-template-areas: 'subSectionTitle typeInput'
-                       'sideInput sideInput'
-                       'inflowHi outflowHi';
-  width: 100%;
-}
+/*--------------------------------------------------------------------------------------------------------------------*/
 .grid-sugarDetail-item{
-  background: rgba(128, 128, 128, 0.2);    
-  border: 1px solid rgba(128, 128, 128, 0.4);
+/*  background: rgba(128, 128, 128, 0.2);    */
+  border: 1px solid rgba(128, 128, 128, 0.1);
   text-align: left;
   padding: 1px 1px;
   min-height: 22px;
 }
-.sugarTitle{
+.sgrTitleCls{
   width: 57px;
   font-size: 110%;
   font-weight: bold;
@@ -892,6 +1300,102 @@
   font-weight: bold;
   color: #666;   /* a nice dark grey for bold text that should not be as prominiate as black bold text */
 }
+
+/* ----------------------------------------------------------------- Footer controls that change all tasks are here --*/
+/* background: inherit */
+
+#sugarSetTitle { grid-area:setTitle; justify-self: right; background: inherit; font-size: 110%; }
+#allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: center; }
+#allSugarsupplyTypeHolder { grid-area:supplyTypeHolder ; justify-self: center; }
+#allSugarRegionLayoutDiv { grid-area:regionLayoutDiv; justify-self: center; }
+#allSugarDetailsDiv { grid-area:detailDiv; justify-self: lefts; }
+#allSugarModifierDiv { grid-area:patternDiv; justify-self: center; }
+
+/* delete in 2021 #allSugarDiffusionDiv  { grid-area:diffusionDiv; justify-self: center; } */
+
+#geometrySgr { grid-area:geometrySgr; justify-self: center; background: inherit;}
+#supplyTypeSlctSgr { grid-area:supplyTypeSlctSgr; justify-self: center; background: inherit;}
+#regionLayoutSgr { grid-area:regionLayoutSgr; justify-self: center; background: inherit;}
+#patternSgr { grid-area:patternSgr; justify-self: center; background: inherit;}
+#showHideSgr { grid-area:showHideSgr; justify-self: right; background: inherit;}
+
+#allSgr4Blnk { grid-area: allSgr3Blnk; }
+#allSgr4Blnk { grid-area: allSgr4Blnk; }
+#allSgr5Blnk { grid-area: allSgr5Blnk; }
+
+.changeAllSugarsGlobal {
+  display: grid;
+  grid-template-areas: 'setTitle supplyTypeSlctSgr supplyTypeHolder showHideSgr detailDiv'
+                       'setTitle regionLayoutSgr   regionLayoutDiv  patternSgr  patternDiv';
+  justify-items: start;  justify-content: start; width: 100%;
+  background: #DDD;   /* #AAA; is too dark now */    
+}
+
+.changeAllSugarsAdvanced {
+  display: grid;
+  grid-template-areas: 'setTitle    setTitle        showHideSgr   detailDiv'
+                       'geometrySgr regionLayoutSgr supplyTypeSlctSgr patternSgr'
+                       'geometryDiv regionLayoutDiv supplyTypeHolder patternDiv';
+  justify-items: start;  justify-content: start; width: 100%;
+  background: #DDD;   /* #AAA; is too dark now */    
+}
+
+.changeAllSugarsBasic {
+  display: grid;
+  grid-template-areas: 'setTitle    supplyTypeSlctSgr   supplyTypeHolder';
+  width: 100%;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background: #DDD;   /* #AAA; is too dark now */  
+}
+
+.changeAllSugarsTogetherContainer {
+  display: grid;
+  grid-template-areas: 'setTitle    setTitle        showHideSgr   detailDiv'
+                       'geometrySgr regionLayoutSgr supplyTypeSlctSgr patternSgr'
+                       'geometryDiv regionLayoutDiv supplyTypeHolder patternDiv';
+  /*
+  grid-template-areas: 'setTitle     headerTitle headerTitle   allSgr5Blnk'
+                       'allSgr4Blnk  geometrySgr supplyTypeSlctSgr showHideSgr'
+                       'allSgr4Blnk  geometryDiv supplyTypeSlct  detailDiv';
+
+  grid-template-areas: 'setTitle  geometrySgr supplyTypeSlctSgr showHideSgr'
+                       'setTitle  geometryDiv supplyTypeSlct  detailDiv';
+  */
+  width: 100%;
+  /* grid-template-columns: 20% 25% 30% 25%;
+    grid-template-rows: 33fr 33fr 33fr; */
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background: #DDD;   /* #AAA; is too dark now */
+}
+
+.changeAllSugarsTogetherNoGlobalContainer {
+  display: grid;
+  grid-template-areas: ' setTitle        showHideSgr   detailDiv'
+                       ' regionLayoutSgr supplyTypeSlctSgr diffusionSgr'
+                       ' regionLayoutDiv supplyTypeHolder diffusionDiv';
+  /*
+  grid-template-areas: 'setTitle     headerTitle headerTitle   allSgr5Blnk'
+                       'allSgr4Blnk  geometrySgr supplyTypeSlctSgr showHideSgr'
+                       'allSgr4Blnk  geometryDiv supplyTypeSlct  detailDiv';
+
+  grid-template-areas: 'setTitle  geometrySgr supplyTypeSlctSgr showHideSgr'
+                       'setTitle  geometryDiv supplyTypeSlct  detailDiv';
+  */
+  width: 100%;
+  /* grid-template-columns: 20% 25% 30% 25%;
+    grid-template-rows: 33fr 33fr 33fr; */
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background: #DDD;   /* #DDD; */
+}
+
+/* not in current use
+                    <div id='allSgr3Blnk'>&nbsp;&nbsp;&nbsp;</div>
+                    <div id='allSgr4Blnk'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div id='allSgr5Blnk'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+*/
 
 /*********************************************************************** End Sugar Accordion using details and select */
 
@@ -924,7 +1428,8 @@
 select {
 /*  background: url("https://i.ibb.co/b7xjLrB/selectbox-arrow.png") right center no-repeat;  */
   height: 18px;
-  border-bottom: 1px solid #aaa;      
+  border-bottom: 1px solid #aaa;
+  background-color: white;  
   background: url('images/select_white_on_black_V_150x200.png') right center no-repeat;
   background-size:  auto 99%;    /* was 20 x 20 */
   -webkit-appearance: none;
@@ -941,15 +1446,17 @@ select:hover{
   box-shadow:none;
 }
 select:hover::after {
-  background:  #0f0;  /*can't tell that this does anything'*/
+  background:  #F5F5F5;  /*can't tell that this does anything'*/
 }
 
-select:focus{
-  background: white;  /*changes background off all the options not the one highlighted */
+/* select:focus{    /*https://stackoverflow.com/questions/8352867/how-to-disable-chrome-details-label-default-behavior 
+              web site gave me clue to not hide the arrow when selected. Need to not change the background */
+  /* background: white;  /*changes background off all the options not the one highlighted */
+  /* border: solid 1px black;   /*does have effect, but 1px looks the same as withoutsx . */
 }
 
 select:option { 
-    padding: 0px 2px;    /*top/bottom  left/right  */
+    padding: 0px 1px;    /*top/bottom  left/right  */
     background: #eee;
 } 
 /* for IE and Edge */ 
@@ -960,40 +1467,55 @@ select:disabled::-ms-expand {
     background: #fff; 
 }
 
-  .toggleLftButton {
-    border-radius: 5px 0px 0px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 18px;
-    padding: 1px 4px 3px 4px;  /* top right bottom left */
-  }
+/* this creates a grey checkbox */
+.blk_wite_checkbox {
+	-webkit-appearance: none;
+	background-color: #fafafa;
+	border: 1px solid #cacece;
+	/* box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05); */
+	padding: 8px;
+	border-radius: 3px;
+	display: inline-block;
+	position: relative;
+  margin-top: 4px;
+}
+.blk_wite_checkbox:active, .blk_wite_checkbox:checked:active {
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
 
-  .toggleRitButton {
-    border-radius: 0px 5px 5px 0px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 18px;
-    padding: 1px 4px 3px 4px;  /* top right bottom left */
-    background: inherit;
-  }
-  .activeBtn {
-    background: #ccc;
-  }
+.blk_wite_checkbox:checked {
+	background-color: #e9ecee;
+	border: 1px solid #adb8c0;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+	color: #99a1a7;
+}
+.blk_wite_checkbox:checked:after {
+	content: '\2714';
+	font-size: 100%;
+	position: absolute;
+	top: 0px;
+	left: 3px;
+	color: black;    /* #99a1a7;  */
+}
+.big-checkbox {
+	padding: 18px;
+}
 
-/* Checkbox next */
+.big-checkbox:checked:after {
+	font-size: 28px;
+	left: 6px;
+}
+
+/*Checkbox this code creates a black circle version instead of the blue check
 
 input[type="checkbox"] {
   box-shadow:none !important;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  border: 1px solid black;
-  border-radius: 50%;
-  background: white;
-  margin: 0px 2px;
-  width: 1em;
-  height: 1em;
-  box-shadow:none;
-}
+
 input[type="checkbox"]:checked {
-  background: white;
-  border: 4px solid black;
+/*  border: 4px solid black; */
   box-shadow:none;
 }
 checkbox:focus {
@@ -1004,107 +1526,40 @@ checkbox:focus {
 
 /************************************************************************ used in examples will be deleted eventually */
 
-.ex1oddSugarPart{
-  border-top: 1px solid #888;
-  background: rgba(128, 128, 128, 0.2);  /*LtSteelBlue=b0cedE=176, 196, 180 */
-}  /*#89a9d9;*/
-.ex1evenSugar{ 
-  background: rgba(128, 128, 128, 0.4);  /*228, 241, 254, */
-  border-top: 1px solid #888;
+.ex1center {
+  display: inline-block;
+  vertical-align: middle;
+  width: 300px;
+  padding: 10px 15px;
+  border: #a0a0a0 solid 1px;
+  background: #f5f5f5;
 }
+ .ex1holder {
+  white-space: nowrap;  /* May want to do this if there is risk the container may be narrower than the element inside */
+  text-align: center;
+  background: #c0c0c0;
+  border: black solid 1px;
+  margin: 20px;
+ }
+.ex1holder:before {
+ content: '\200B';
+/*   content: '';
+  margin-left: -0.25em; */
+  display: inline-block;
+  height: 100%; 
+  vertical-align: middle;
+}  
 
-.ex1sugarAccordionSection{
-  border-bottom: 1px solid #222;   /* #000 is black  */
-}
-
-.ex1sugarSummary{
-  background: rgba(128, 128, 128, 0.1);  
-  height: 22px;
-}
-
-.ex1sugarTitle{
-  font-size: 110%;
-  font-weight: bolder;
-}
-.ex1dishPartLabel{
-  font-size: 100%;
-  font-weight: bold;
-  color: #444;
-}
-
-#ex1notSection{
-  background: rgba(255,153,178, 1);  /* bigger number is closer to white; 0,0,0 is black*/
-}
-#ex1nanSection{
-  background: rgba(255,204,153, 1);
-}
-#ex1andSection{
-  background: rgba(255,255,153, 1);
-}
-#ex1ornSection{
-  background: rgba(153,255,153, 1);
-}
-#ex1oroSection{
-  background: rgba(153,255,153, 1);
-}
-#ex1antSection{
-  background: rgba(153,255,153, 1);
-}
-#ex1norSection{
-  background: rgba(153,255,153, 1);
-}
-#ex1xorSection{
-  background: rgba(153,255,153, 1);
-}
-#ex1equSection{
-  background: rgba(153,255,153, 1);
-}
-
-/******************************************************************** end used in examples will be deleted eventually */
-  
-.taskSets{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  /* justify-content: space-evenly; */
-}
-.taskLevel{
-  flex:0 1 50em;             /* 0 1 8em; */
-  border: 1px solid #EEE;
-  padding: 3px;
-}
-.foodAmount{
-  flex:0 1 8em;              /*  0 1 8em; */
-  border: 1px solid #EEE;
-  padding: 3px;
-}
-.period{
-  flex:0 1 8em;             /*  0 1 8em; */
-  border: 1px solid #EEE;
-  padding: 3px;
-}
-.flowInput{
-  width: 2em;      /*  4.5em */
-  height:1.6em
-}
-
-  .orgBenchCol{
-    background: #F5F5F5; /* lightgoldenrodyellow;*/
-    flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+/*Organism Block css */
+.orgBenchTopRow{
     border: 1px solid #AAA;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-  .orgBenchTopRow{
-    border: 1px solid #AAA;
-    flex:0 1 30px;    // describes this as element in a bigger flex box
+    flex:0 1 30px;    /* describes this as element in a bigger flex box */
     overflow: auto;
-    display: flex;    // makes this a flexbox to hold smaller elements
+    display: flex;    /* makes this a flexbox to hold smaller elements */
     flex-direction: row;
   }
   .orgTopLt{
-    flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+    flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} fx prevent resize */
     display: flex;
     flex-direction: row;
     background: #F5F5F5; /* linen; */
@@ -1134,14 +1589,18 @@ checkbox:focus {
     height: 1.6em;
   }
   .orgDetailClass{
-    width: 100%;     
+    width: 100%;
   }
-  .orgSettingClass{
-    width: 100%;     
+  #orgTaskDataDiv{
+    padding: 5px;
   }
-  
+  #lowerOrgInfo{
+    width: 100%;
+    padding: 5px;    
+  }
   #orgTaskDataDiv {
     background:#DDD;    
+    padding: 5px;
   }
   #InstructionDetail {
     min-width: 1px;
@@ -1168,6 +1627,49 @@ checkbox:focus {
     width: 100%;
     type: text;
   }
+  .orgSettingClass{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+    background: #CCCCCC;
+  }
+  .repeatMode{
+    flex: 0 1 150px;
+    background: #EEEEEE;
+    padding: 1em 0.5em 1em 0.5em;   
+  }
+  .muteOrgHolder{
+    flex: 1;          /* supposed to expand to fill remainting space, but not working */
+    background: #CCCCCC;
+    padding: 1em 0.5em 2em 0.5em;   
+  }
+  /* top, right, bottom, left;  right and left were 0.3 before*/
+  #muteOrgTextHolder{
+    background: inherit;
+    padding: 10px 0px;
+  }
+  #muteOrgSlideHolder{
+    background-color: inherit;
+    width: 100%;
+    height: 450px;
+  }
+  
+  #orgMuteSlide {
+  /* width:200px; */
+  height: 400px;
+  display: block; 
+  vertical-align: top; 
+  padding: 20px auto;
+  margin:auto; 
+  background: #888;
+}
+  #orgMuteInput{
+    width: 50px; height:13px;
+  }
+  
+  
   .analysisArea{
     display: flex;
     flex-direction: column;
@@ -1242,7 +1744,7 @@ checkbox:focus {
       padding 3px;
       background: #F5F5F5;  /*lemonchiffon; */
     }
-    //insdie popDishHolder
+    /* insdie popDishHolder */
     .popDishClass {
       min-height: 1.6em;
       padding: 5px;
@@ -1259,6 +1761,10 @@ checkbox:focus {
     margin: 10px 2px 5px 10px;    /* top right bottom left */
   }
   
+ .AviaEDaboutP {
+  font-size: 120%;
+}
+
 /**********************************************************************************************************************/
 /* the class model is used to create dialog boxes without dojo                                                        */
 /**********************************************************************************************************************/
@@ -1269,11 +1775,13 @@ checkbox:focus {
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
+    bottom: 0;
+
     z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+    //padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
+    width: 100%;   /*   Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background: rgb(0,0,0); /* Fallback color */
@@ -1284,13 +1792,13 @@ checkbox:focus {
 .modal-content {
     background: #fefefe;
     margin: auto;
-    padding: 0px;
-    border: 1px solid #888;
-    width: 80%;
+    padding: 2px;
+    border: 1px solid black; /* #888; */
+    width: 50%;
 }
 
 .modal-header {
-    padding: 8px 8px;
+    padding: 2px 2px;
     font-size: 130%;
     font-weight: bold;
     background: lightgray;
@@ -1300,15 +1808,203 @@ checkbox:focus {
 .modal-body {padding: 8px 8px;}
 
 .modal-footer {
-    padding: 8px 8px;
+    padding: 4px 4spx;
     background: lightgray;
     color: black;
 }
+
+//----------------------------------------------------------------------------------------------------------------------
 /************************************************************************************************* end of model class */                                                                         */
+
+#saveCSVdataModalID {
+  position: fixed; /* Stay in place */
+  padding-top: 200px;
+}
+
+/**********************************************************************************************************************/
+/* the class modalBig is used to create big dialog boxes without dojo                                                     */
+/**********************************************************************************************************************/
+/* https://www.w3schools.com/howto/howto_css_modals.asp                                                               */
+/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal                                                */
+/* 
+/* The Modal (background) */
+.modalBig {
+    display: none; /* Hidden by default */
+    z-index: 1; /* Sit on top */
+    position: fixed; /* Stay in place */
+    left: 0px;
+    top: 0px;
+    padding-left: 5%; /* Location of the box */
+    padding-top: 5%; /* Location of the box */
+    width: 100%;   /*   Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background: rgb(0,0,0); /* Fallback color */
+    background: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* The Modal (background) */
+.modalBig__ {
+    bottom: 0;
+}
+
+/* Modal Content */
+.modalBig-content {
+  display: flex;
+  flex-direction: column;
+  background: #fefefe;
+  padding: 0px;   //was 2
+  border: 1px solid black; /* #888; */
+  width: 94%;
+  height: 90%;
+  font-size: 120%;
+}
+.modalBig-header {
+  flex: 0 0 40px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 0px;    /* top-bottom; left-right */
+  font-size: 130%;
+  background: lightgray;
+  color: black;
+}
+
+
+.modalBig-body {
+  padding: 8px 8px; 
+  flex: 0 0 fr;
+}
+
+.modalBig-footer {
+  flex: 0 0 40px
+  padding: 8px 0px;    /*top-bottom; left-right */
+  width: 100%;
+  background: lightgray;
+  color: black;
+}
+/* ---------------------------------------------------------------------- markup for Error Form that uses modalBig -- */
+
+#sendLogTitle { 
+  flex: 0 0 100%;  
+  display: inline-block; 
+  align-self: flex-center;
+  text-align: center;
+  padding: 1px auto;      /*top-bottom; left-right */
+  margin: 0px;
+}
+
+#sendLogP { font-size: 120%; }
+#sendLogTxtAreaHldr {
+  padding: 1px auto;
+}
+#sendLogScrollBox {
+  border: 1px solid #aaa;
+  padding: 15px;
+  overflow: auto;
+  resize: both;
+  margin: auto;
+  width: 90%;
+  height: 100px;
+}
+/* ------------------------------------------------------------------ markup for About Avida-ED that uses modalBig -- */
+#AvidaEDaboutModalContainer{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  /*justify-content: center */
+  width: 99%;
+  height: auto;
+}
+#aboutAvidaED_header{
+  flex-direction: row-reverse;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: 40px; 
+  justify-content: space-between;
+}
+#aboutAvidaEDtitle { 
+  flex: 0 0 600px;  
+  display: inline-block; 
+  align-self: flex-center;
+  text-align: center;
+  padding: 1px auto;
+  margin: 0px;
+}
+.aboutAvidaEDcloseHldr { 
+  flex: 0 0 70px; 
+  display: inline-block;
+  height: 30px;
+  width: 50px;
+  padding: 4px 8px;
+  margin: 0px;
+}
+#aboutAvidaEDcloseButton {
+  padding: 1px 2x 1px 2px;
+}
+
+#aboutAvidaEDupperTextHolder { 
+  grid-area: aboutTxtHold; 
+  display: inline-block; 
+  padding: 20px;
+}
+#aboutAvidaEDlogoHolder { 
+  grid-area: aboutLogoHold; 
+  display: inline-block;
+  place-self: center;
+  padding: 10px;
+  margin:auto;
+} 
+#aboutAvidaED_grid_container {
+  display: grid;
+  grid-template-areas: 'aboutLogoHold aboutTxtHold ';
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;}
+
+.AvidaEDaboutP {
+  font-weight: bold;
+}
+#aboutAvidaEDscrllTextHldr {
+  padding: 1px auto;
+}
+#avidaEDaboutScrollBox {
+  border: 1px solid #aaa;
+  padding: 15px;
+  overflow: auto;
+  resize: both;
+  margin: auto;
+  width: 90%;
+  height: 100px;
+ }
+#funding {
+  display: block;
+  padding-left: 70px;
+}
+.aboutCls{
+  text-decoration: underline;
+  text-align: center;
+}
+.negIndent{
+  text-indent: -70px;
+}
+.marginBelow{
+  margin-bottom: 10px;
+}
+.centerP{ text-align: center; justify-self: center; }
+.centerPbig{ text-align: center; justify-self: center; font-size: 140%;}
+.centerImg{ 
+  display: block;
+  text-align: center; 
+  justify-self: center;
+  margin: auto;
+  width: 50%;
+}
+
+/********************************************************************************************** end of modalBig class */                                                                         */
 
 /*************************************************************************************************** no longer in use */
 
-//Not in use, but could be useful
+/// Not in use, but could be useful
   /* from https://www.bestcssbuttongenerator.com/#/17 */
   .fancyButton {
     -moz-box-shadow: 5px 4px 7px 0px #899599;
@@ -1357,7 +2053,5 @@ checkbox:focus {
     width: 100%;
     height: 100%;
     background: #F5F5F5; /* red; */
-    height: 100%;
-    width: 100%;
-    overflow:scroll;
+    overflow:hidden;
   }

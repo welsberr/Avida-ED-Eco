@@ -77,6 +77,7 @@
   };
 
 
+  //---------------------------------------------------------------------------------------- av.ptd.popRunningStateUi --
   av.ptd.popRunningStateUi = function () {
     'use strict';
     av.grd.runState = 'started';  //the run has now started
@@ -92,16 +93,48 @@
     delete av.dnd.activeConfig.accept['w'];
     av.dnd.fzWorld.accept['w'] = 1;
     av.dnd.fzWorld.accept['b'] = 1;
-    $('#muteSlide').slider({disabled: true});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
+    $('#mutePopSlide').slider({disabled: true});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
     av.dom.sizeCols.disabled = true;
     av.dom.sizeRows.disabled = true;
 
-    av.dom.muteInput.disabled= true;
+    av.dom.mutePopInput.disabled= true;
 
-    av.dom.muteInput.disabled = true;
     av.dom.childParentRadio.disabled = true;
     av.dom.childRandomRadio.disabled = true;
+    
+    var tsk='neq';
+    var len = av.sgr.logicNames.length;
+    for (var ndx=0; ndx<len; ndx++) {
+      tsk = av.sgr.logicNames[ndx];
+      document.getElementById(tsk+'_geometry').disabled = true;
+      document.getElementById(tsk+'_regionLayout').disabled = true;
+      document.getElementById(tsk+'_supplyTypeSlct').disabled = true;
+      document.getElementById(tsk+'WsupplyTypeSlct').disabled = true;
+      document.getElementById(tsk+'_periodcheckboxHolder').disabled = true;
+      document.getElementById(tsk+'_periodTimeHolder').disabled = true;
+      document.getElementById(tsk+'_initialHiNp').disabled = true;
+      for (var sub=0; sub<av.nut.numRegionsinHTML; sub++) {
+        document.getElementById(tsk+sub+'supplyTypeSlct').disabled = true;
+        //console.log('html:', tsk+sub+'supplyModifierSelect');
+        document.getElementById(tsk+sub+'supplyModifierSelect').disabled = true;
+        document.getElementById(tsk+sub+'periodNp').disabled = true;
+        document.getElementById(tsk+sub+'hiSide').disabled = true;
+        document.getElementById(tsk+sub+'initialHiNp').disabled = true;
+        document.getElementById(tsk+sub+'initialLoNp').disabled = true;
+        document.getElementById(tsk+sub+'inflowHiNp').disabled = true;
+        document.getElementById(tsk+sub+'inflowLoNp').disabled = true;
+        document.getElementById(tsk+sub+'outflowHiNp').disabled = true;
+        document.getElementById(tsk+sub+'outflowLoNp').disabled = true;
+      };
+    };
+    document.getElementById('allSugarGeometry').disabled = true;
+    document.getElementById('allsugarsupplyTypeSlct').disabled = true;
+    document.getElementById('allSugarRegionLayout').disabled = true;
+    document.getElementById('allSugarModifier').disabled = true;
+    document.getElementById('allSugarDetails').disabled = true;
+
     /*
+     * These checkboxHolderes no longer exist; tiba delete by 2021
     av.dom.notose.disabled = true;
     av.dom.nanose.disabled = true;
     av.dom.andose.disabled = true;
@@ -118,7 +151,9 @@
     //there will be a population so it can now be frozen.
     dijit.byId('mnFzPopulation').attr('disabled', false);
   };
-
+  //------------------------------------------------------------------------------------ end av.ptd.popRunningStateUi --
+  
+  //-------------------------------------------------------------------------------------------- av.ptd.popNewExState --
   av.ptd.popNewExState = function () {
     'use strict';
     //set configuation to default
@@ -146,16 +181,77 @@
     av.dnd.ancestorBoTest.isSource = true;
     av.dnd.ancestorBoTest.copyOnly = true;
     av.dnd.activeConfig.isSource = true;
-    $('#muteSlide').slider({disabled: false});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
     av.dom.sizeCols.disabled = false;
     av.dom.sizeRows.disabled = false;
-    av.dom.muteInput.disabled = false;
+    av.dom.mutePopInput.disabled = false;
+    $('#mutePopSlide').slider({disabled: false});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
     av.dom.childParentRadio.disabled = false;
     av.dom.childRandomRadio.disabled = false;
     console.log('Avida-ED4: need to reset defaults on new Environmental seettings.');
 
     av.dom.experimentRadio.disabled = false;
     av.dom.demoRadio.disabled = false;
+
+    var tsk='neq';
+    var len = av.sgr.logicNames.length;
+    for (var ndx=0; ndx<len; ndx++) {
+      tsk = av.sgr.logicNames[ndx];
+      document.getElementById(tsk+'_geometry').disabled = false;
+      document.getElementById(tsk+'_regionLayout').disabled = false;
+      document.getElementById(tsk+'_supplyTypeSlct').disabled = false;
+      document.getElementById(tsk+'WsupplyTypeSlct').disabled = false;
+      document.getElementById(tsk+'_periodcheckboxHolder').disabled = false;
+      document.getElementById(tsk+'_periodTimeHolder').disabled = false;
+      document.getElementById(tsk+'_initialHiNp').disabled = false;
+      //clear the resource series graphs
+      av.pch.resrcGlobal[tsk] = [];
+      for (var sub=1; sub<av.nut.numRegionsinHTML; sub++) {
+        document.getElementById(tsk+sub+'supplyTypeSlct').disabled = false;
+        document.getElementById(tsk+sub+'supplyModifierSelect').disabled = false;
+        document.getElementById(tsk+sub+'periodNp').disabled = false;
+        document.getElementById(tsk+sub+'hiSide').disabled = false;
+        document.getElementById(tsk+sub+'initialHiNp').disabled = false;
+        document.getElementById(tsk+sub+'initialLoNp').disabled = false;
+        document.getElementById(tsk+sub+'inflowHiNp').disabled = false;
+        document.getElementById(tsk+sub+'inflowLoNp').disabled = false;
+        document.getElementById(tsk+sub+'outflowHiNp').disabled = false;
+        document.getElementById(tsk+sub+'outflowLoNp').disabled = false;
+      };
+    };
+
+    var tsk='neq';
+    var len = av.sgr.logicNames.length;
+    for (var ndx=0; ndx<len; ndx++) {
+      tsk = av.sgr.logicNames[ndx];
+      document.getElementById(tsk+'_geometry').disabled = false;
+      document.getElementById(tsk+'_regionLayout').disabled = false;
+      document.getElementById(tsk+'_supplyTypeSlct').disabled = false;
+      document.getElementById(tsk+'WsupplyTypeSlct').disabled = false;
+      document.getElementById(tsk+'_periodcheckboxHolder').disabled = false;
+      document.getElementById(tsk+'_periodTimeHolder').disabled = false;
+      document.getElementById(tsk+'_initialHiNp').disabled = false;
+      //clear the resource series graphs
+      av.pch.resrcGlobal[tsk] = [];
+      for (var sub=0; sub<av.nut.numRegionsinHTML; sub++) {
+        document.getElementById(tsk+sub+'supplyTypeSlct').disabled = false;
+        document.getElementById(tsk+sub+'supplyModifierSelect').disabled = false;
+        document.getElementById(tsk+sub+'periodNp').disabled = false;
+        document.getElementById(tsk+sub+'hiSide').disabled = false;
+        document.getElementById(tsk+sub+'initialHiNp').disabled = false;
+        document.getElementById(tsk+sub+'initialLoNp').disabled = false;
+        document.getElementById(tsk+sub+'inflowHiNp').disabled = false;
+        document.getElementById(tsk+sub+'inflowLoNp').disabled = false;
+        document.getElementById(tsk+sub+'outflowHiNp').disabled = false;
+        document.getElementById(tsk+sub+'outflowLoNp').disabled = false;
+      };
+    };
+    document.getElementById('allSugarGeometry').disabled = false;
+    document.getElementById('allsugarsupplyTypeSlct').disabled = false;
+    document.getElementById('allSugarRegionLayout').disabled = false;
+    document.getElementById('allSugarModifier').disabled = false;
+    document.getElementById('allSugarDetails').disabled = false;
+    console.log('environment settings should now be enabled ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+
 
     //reset Ancestor Color stack
     //av.parents.Colors = av.color.parentColorList.slice();   //delete this later
@@ -233,12 +329,14 @@
     equPop.textContent = '';
 
     numLog.textContent = '';
+    logTit0.textContent = '';
     logTit1.textContent = '';
     logTit2.textContent = '';
     logTit3.textContent = '';
     logTit4.textContent = '';
     logTit5.textContent = '';
     logTit6.textContent = '';
+    logTit7.textContent = '';
     av.grd.flagSelected = false;
     dijit.byId('mnCnOrganismTrace').attr('disabled', true);
     dijit.byId('mnFzOrganism').attr('disabled', true);
@@ -247,7 +345,8 @@
   //after Run button pushed for population
   av.ptd.runPopFn = function (from) {
     'use strict';
-    if (av.debug.popCon) console.log(from, 'called av.ptd.runPopFn: runPopFn runState =', av.grd.runState);
+    if (av.debug.popCon) { console.log('popCon:', from, 'called av.ptd.runPopFn: runPopFn runState =', av.grd.runState); }
+    console.log(from, 'called av.ptd.runPopFn: runPopFn runState =', av.grd.runState);
     //check for ancestor organism in configuration data
     var namelist;
     // used only for testing new dish configurations don't work in the current computer interface
@@ -295,14 +394,14 @@
         else {
           //collect setup data to send to avida in a normal run.  
           //Order matters. Files must be created first. Then files must be sent before some other stuff.
-          av.fwt.form2cfgFolder();          //creates avida.cfg and environment.cfg and ancestor.txt and ancestors_manual.txt from form
+          av.fwt.form2cfgFolder();  //creates avida.cfg and environment.cfg and ancestor.txt and ancestors_manual.txt from form
         };
         if ('prepping' === av.grd.runState) {
-          av.msg.importConfigExpr('av.ptd.runPopFn ln300');   // send importExpr message to avida
+           av.msg.importConfigExpr('av.ptd.runPopFn ln301');   // send importExpr message to avida
           //console.log('after calling av.msg.importConfigExpr');
+          //used for configured dish
           av.msg.injectAncestors('config');
         }
-        //used for configured dish
         else {
           av.msg.importWorldExpr();
           //console.log('parents.injected = av.parents.injected);
@@ -330,12 +429,12 @@
       }; // end if section to deal with starting a new run
 
       if (av.dom.autoPauseCheck.checked) {
-        av.ui.autoStopFlag = true;
-        av.ui.autoStopValue = av.dom.autoPauseNum.value;
+        av.ui.autoStopFlag = true;                          // switching to using check box directly
+        av.ui.autoStopValue = av.dom.autoPauseNum.value;    // swithcing to using dom value
         //console.log('stop at  = av.dom.autoPauseNum.value;
       };
       //console.log('before call av.ptd.makeRunState');
-      av.ptd.makeRunState('av.ptd.runPopFn 328');
+      av.ptd.makeRunState('av.ptd.runPopFn 338');
       //console.log('after call av.ptd.makeRunState');
       av.msg.stepUpdate();   //av.msg.doRunPause(av.fio);
       //console.log('after av.msg.stepUpdate');
@@ -343,7 +442,9 @@
     if (av.debug.popCon) console.log('end of av.ptd.runPopFn 331');
     //update screen based on data from C++
   };
+  //---------------------------------------------------------------------------------------- end av.ptd.popNewExState --
 
+  //------------------------------------------------------------------------------------------------ av.ptd.runStopFn --
   av.ptd.runStopFn = function () {
     if ('Run' == av.dom.runStopButton.innerHTML) {
       av.ptd.makeRunState('av.ptd.runStopFn');
@@ -356,10 +457,11 @@
       //console.log('pop size  = av.pch.aveNum);
     }
   };
+  //-------------------------------------------------------------------------------------------- end av.ptd.runStopFn --
 
-  //----------------------------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------
   // Freezer Button functions
-  //----------------------------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------
 
   //Freeze the selected organism
   av.ptd.FrOrganismFn = function (trigger) {
@@ -535,6 +637,7 @@
     // send reset to Avida adaptor
     //if (need2sendRest2avida) {av.msg.reset();} //Take this out if we only reset when avida resets After sending a request for reset.
 
+    var Tsk;
     console.log('in resetDishFn');
     av.msg.pause('now');
     av.ptd.makePauseState();
@@ -581,26 +684,13 @@
     av.grd.popChartClear();
     av.grd.drawGridSetupFn('av.ptd.resetDishFn');
 
-    // reset debug values. 
-      mxNot.textContent = "";
-      mxNan.textContent = "";
-      mxAnd.textContent = "";
-      mxOrn.textContent = "";
-      mxOro.textContent = "";
-      mxAnt.textContent = "";
-      mxNor.textContent = "";
-      mxXor.textContent = "";
-      mxEqu.textContent = "";
-
-      cellNot.textContent = "";
-      cellNan.textContent = "";
-      cellAnd.textContent = "";
-      cellOrn.textContent = "";
-      cellOro.textContent = "";
-      cellAnt.textContent = "";
-      cellNor.textContent = "";
-      cellXor.textContent = "";
-      cellEqu.textContent = "";
+    // reset resource values.
+    for (var ii=0; ii < av.sgr.numTasks; ii++) {
+      Tsk = av.sgr.logicTitleNames[ii];
+      document.getElementById('mx'+Tsk).innerHTML = '';
+      document.getElementById('cell'+Tsk).innerHTML = '';
+      document.getElementById('tot'+Tsk).innerHTML = '';
+    };
   };
 
   //clear logic Buttons

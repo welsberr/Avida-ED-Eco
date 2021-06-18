@@ -6,6 +6,22 @@
   var av = av || {};  //incase av already exists
 
   //----------------------------------------------------------------------------------------------------------------------
+    //http://nelsonwells.net/2011/10/swap-object-key-and-values-in-javascript/
+  av.utl.invertHash = function (obj) {
+    var new_obj = {};
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(prop)) {
+        new_obj[obj[prop]] = prop;
+      }
+    }
+    return new_obj;
+  };
+  //------- not in use = example
+  //var hexColor = av.ui.invertHash(av.color.names);
+  //var theColor = hexColor['#000000'];  //This should get 'Black'
+  //console.log('theColor=', theColor);
+
+  //----------------------------------------------------------------------------------------------------------------------
   //http://stackoverflow.com/questions/1295584/most-efficient-way-to-create-a-zero-filled-javascript-array
   av.utl.newFilledArray = function (length, val) {
     var array = [];
@@ -16,6 +32,11 @@
     return array;
   };
 
+  //----------------------------------------------------------------------------------------------------------------------
+  av.utl.isNumberRegExpression = function(n) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); };
+  //from https://stackoverflow.com/questions/1303646/check-whether-variable-is-number-or-string-in-javascript
+  av.utl.isNumber = function(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0); };
+  
   //----------------------------------------------------------------------------------------------------------------------
   (function () {
     'use strict';
@@ -124,7 +145,7 @@
   };
   original */
 
-  //siplified form of toLocalString
+  //simplified form of toLocalString
   Number.prototype.formatNum = function(fracDigits, location){
     'use strict';
     var num = this;
@@ -133,8 +154,103 @@
     return num.toLocaleString(local, {minimumFractionDigits: digits, maximumFractionDigits: digits});
   };
 
+av.utl.log = function (base, num) {  
+  return Math.log(num) / Math.log(base);  
+};
+//--------------------------------------------------------------------------------------------------- av.utl.toMetric --
+// The largest number dispalyed in my test was     512P = 512345678901235000
+// in number in the the environment.cfg CELL statement was 512345678901234567
+  av.utl.toMetric = function (standardNotationNum, fixedBase) {
+    var stdNum = NaN;
+    var fixBase = 0;
+    var numStr = 'NaN';
+    if ( av.utl.isNumber(Number(fixedBase)) ) {
+      var fixBase = parseFloat(fixedBase);
+      //console.log('fixedBase=', fixedBase);
+    };
+    //console.log('10**update = 10**',av.grd.msg.update, '=', 10**av.grd.msg.update);
+    if ( av.utl.isNumber(parseFloat(standardNotationNum)) ) {
+      stdNum = parseFloat(standardNotationNum);
+      if (10**27 <= stdNum ) {numStr = stdNum.toExponential(3); }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
 
+      else if (10**26 <= stdNum ) {numStr = (stdNum/10**24).toFixed(fixBase+0) + "Y"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**25 <= stdNum ) {numStr = (stdNum/10**24).toFixed(fixBase+1) + "Y"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**24 <= stdNum ) {numStr = (stdNum/10**24).toFixed(fixBase+2) + "Y"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
 
+      else if (10**23 <= stdNum ) {numStr = (stdNum/10**21).toFixed(fixBase+0) + "Z"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**22 <= stdNum ) {numStr = (stdNum/10**21).toFixed(fixBase+1) + "Z"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**21 <= stdNum ) {numStr = (stdNum/10**21).toFixed(fixBase+2) + "Z"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (10**20 <= stdNum ) {numStr = (stdNum/10**18).toFixed(fixBase+0) + "E"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**19 <= stdNum ) {numStr = (stdNum/10**18).toFixed(fixBase+1) + "E"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**18 <= stdNum ) {numStr = (stdNum/10**18).toFixed(fixBase+2) + "E"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (10**17 <= stdNum ) {numStr = (stdNum/10**15).toFixed(fixBase+0) + "P"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**16 <= stdNum ) {numStr = (stdNum/10**15).toFixed(fixBase+1) + "P"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**15 <= stdNum ) {numStr = (stdNum/10**15).toFixed(fixBase+2) + "P"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (10**14 <= stdNum ) {numStr = (stdNum/10**12).toFixed(fixBase+0) + "T"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**13 <= stdNum ) {numStr = (stdNum/10**12).toFixed(fixBase+1) + "T"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**12 <= stdNum ) {numStr = (stdNum/10**12).toFixed(fixBase+2) + "T"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (10**11 <= stdNum ) {numStr = (stdNum/10**9).toFixed(fixBase+0) + "G"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**10 <= stdNum ) {numStr = (stdNum/10**9).toFixed(fixBase+1) + "G"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**9 <= stdNum )  {numStr = (stdNum/10**9).toFixed(fixBase+2) + "G"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (10**8 <= stdNum ) {numStr = (stdNum/10**6).toFixed(fixBase+0) + "M"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**7 <= stdNum ) {numStr = (stdNum/10**6).toFixed(fixBase+1) + "M"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**6 <= stdNum ) {numStr = (stdNum/10**6).toFixed(fixBase+2) + "M"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (10**5 <= stdNum ) {numStr = (stdNum/10**3).toFixed(fixBase+0) + "k"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**4 <= stdNum ) {numStr = (stdNum/10**3).toFixed(fixBase+1) + "k"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10**3 <= stdNum ) {numStr = (stdNum/10**3).toFixed(fixBase+2) + "k"; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (100 <= stdNum ) {numStr = stdNum.toFixed(fixBase+1) ; }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (10 <= stdNum ) {numStr = stdNum.toFixed(fixBase+2); }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+      else if (1 <= stdNum ) {numStr = stdNum.toFixed(fixBase+3); }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+      else if (0.1 <= stdNum) {numStr = (stdNum/10**(-3)).toFixed(fixBase+0) + "m"; } 
+      else if (0.01 <= stdNum) {numStr = (stdNum/10**(-3)).toFixed(fixBase+1) + "m"; } 
+      else if (0.001 <= stdNum) {numStr = (stdNum/10**(-3)).toFixed(fixBase+2) + "m"; } 
+
+      else if (10**(-4) <= stdNum) {numStr = (stdNum/10**(-6)).toFixed(fixBase+0) + '&micro;'; }
+      else if (10**(-5) <= stdNum) {numStr = (stdNum/10**(-6)).toFixed(fixBase+1) + '&micro;'; }
+      else if (10**(-6) <= stdNum) {numStr = (stdNum/10**(-6)).toFixed(fixBase+2) + '&micro;'; }
+
+      else if (10**(-7) <= stdNum) {numStr = (stdNum/10**(-9)).toFixed(fixBase+0) + 'n'; }
+      else if (10**(-8) <= stdNum) {numStr = (stdNum/10**(-9)).toFixed(fixBase+1) + 'n'; }
+      else if (10**(-9) <= stdNum) {numStr = (stdNum/10**(-9)).toFixed(fixBase+2) + 'n'; }
+
+      else if (10**(-10) <= stdNum) {numStr = (stdNum/10**(-12)).toFixed(fixBase+0) + 'p'; }
+      else if (10**(-11) <= stdNum) {numStr = (stdNum/10**(-12)).toFixed(fixBase+1) + 'p'; }
+      else if (10**(-12) <= stdNum) {numStr = (stdNum/10**(-12)).toFixed(fixBase+2) + 'p'; }
+
+      else if (10**(-13) <= stdNum) {numStr = (stdNum/10**(-15)).toFixed(fixBase+0) + 'f'; }
+      else if (10**(-14) <= stdNum) {numStr = (stdNum/10**(-15)).toFixed(fixBase+1) + 'f'; }
+      else if (10**(-15) <= stdNum) {numStr = (stdNum/10**(-15)).toFixed(fixBase+2) + 'f'; }
+
+      else if (10**(-16) <= stdNum) {numStr = (stdNum/10**(-18)).toFixed(fixBase+0) + 'a'; }
+      else if (10**(-17) <= stdNum) {numStr = (stdNum/10**(-18)).toFixed(fixBase+1) + 'a'; }
+      else if (10**(-18) <= stdNum) {numStr = (stdNum/10**(-18)).toFixed(fixBase+2) + 'a'; }
+
+      else if (10**(-19) <= stdNum) {numStr = (stdNum/10**(-21)).toFixed(fixBase+0) + 'z'; }
+      else if (10**(-20) <= stdNum) {numStr = (stdNum/10**(-21)).toFixed(fixBase+1) + 'z'; }
+      else if (10**(-21) <= stdNum) {numStr = (stdNum/10**(-21)).toFixed(fixBase+2) + 'z'; }
+
+      else if (10**(-22) <= stdNum) {numStr = (stdNum/10**(-24)).toFixed(fixBase+0) + 'y'; }
+      else if (10**(-23) <= stdNum) {numStr = (stdNum/10**(-24)).toFixed(fixBase+1) + 'y'; }
+      else if (10**(-24) <= stdNum) {numStr = (stdNum/10**(-24)).toFixed(fixBase+2) + 'y'; }
+
+      else if (0 == stdNum) { numStr = stdNum.toFixed(0); }
+      else {numStr = stdNum.toExponential(3); }  //console.log('stdNum =',stdNum,'; numStr=', numStr); }
+
+    };
+    //console.log('stdNum =',stdNum,'; numStr=', numStr);
+    return numStr;
+  };
+//----------------------------------------------------------------------------------------------- end av.utl.toMetric --
+
+//-------------------------------------------------------------------------------------------------- string utilities --
   /*
    av.utl.wsb(target, thestring)
    returns the part of the string that occurs before the target substring
@@ -199,8 +315,9 @@
 
     return str1;
   };
+//---------------------------------------------------------------------------------------------- end string utilities --
 
-  //**********************************************************************************************************************
+//------------------------------------------------------------------------------------------------- av.utl.dTailWrite --
   av.utl.dTailWrite = function (file, lineNum, nameStr, objAry) {
     av.debug.dTail = 'File=' + file + ': ' + lineNum;
     var lngth = objAry.length;
@@ -219,8 +336,9 @@
     }
     //console.log('dTail = ', av.debug.dTail);
   };
+//--------------------------------------------------------------------------------------------- end av.utl.dTailWrite --
 
-  //**********************************************************************************************************************
+//---------------------------------------------------------------------------------------------- av.utl.jsonStringify --
   av.utl.jsonStringify = function(jStr) {
     'use strict';
     var str0 = JSON.stringify(jStr, null, 2);
@@ -262,7 +380,7 @@
     return rstr + '~.~';
   };
 
-  //**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------- av.utl.json2oneLine --
   // JSon to oneLine
   av.utl.json2oneLine = function (jStr) {
     'use strict';
@@ -288,7 +406,10 @@
     }
     return rstr;
   };
+//------------------------------------------------------------------------------------------- end av.utl.json2oneLine --
 
+
+//----------------------------------------------------------------------------------------------- av.utl.objectLength --
   //number of items in an object
   //http://stackoverflow.com/questions/16976904/javascript-counting-number-of-objects-in-object
   av.utl.objectLength = function(object){
@@ -306,9 +427,8 @@
     }
   };
 
-
-  //----------------------------------------------------------------------------------------------------------------------
-  //  Find browser and operating system
+//---------------------------------------------------------------------------------- find browser & operationg system --
+  //  
   // http://stackoverflow.com/questions/9514179/how-to-find-the-operating-system-version-using-javascript
   // http://jsfiddle.net/ChristianL/AVyND/
   /**
@@ -492,6 +612,7 @@
       flashVersion: flashVersion
     };
   }(this));
+//--------------------------------------------------------------------------- end of find browser & operationg system --
 
   av.brs.userData = window.jscd;
   //console.log('user', av.brs.userData);

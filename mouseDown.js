@@ -94,9 +94,9 @@
     av.mouse.DnGridPos = [evt.offsetX, evt.offsetY];
     av.mouse.Dn = true;
     // Select if it is in the grid
-    av.mouse.findSelected(evt, av.grd);
+    av.mouse.findSelected(evt);
     //check to see if in the grid part of the canvas
-    if (av.debug.mouse) console.log('av.mousedown', av.grd.selectedNdx);
+    if (av.debug.mouse) { console.log('av.mousedown', av.grd.selectedNdx); }
     //if (av.debug.mouse) console.log('grid Canvas; selectedNdx', av.grd.selectedNdx,'________________________________');
     //if (av.debug.mouse) console.log('grid Canvas; av.grd.msg.ancestor[av.grd.selectedNdx]', av.grd.msg.ancestor.data[av.grd.selectedNdx]);
     if (av.grd.selectedCol >= 0 && av.grd.selectedCol < av.grd.cols && av.grd.selectedRow >= 0 && av.grd.selectedRow < av.grd.rows) {
@@ -109,7 +109,7 @@
       av.mouse.ParentNdx = -1; //index into parents array if parent selected else -1;
       if ('prepping' == av.grd.runState) {  //run has not started so look to see if cell contains ancestor
         av.mouse.ParentNdx = av.mouse.findParentNdx(av.parents);
-        if (av.debug.mouse) console.log('parent', av.mouse.ParentNdx);
+        if (av.debug.mouse) { console.log('parent', av.mouse.ParentNdx); }
         if (-1 < av.mouse.ParentNdx) { //selected a parent, check for dragging
           av.mouse.selectedDadMouseStyle();
           av.mouse.Picked = 'parent';
@@ -153,5 +153,5 @@
       dijit.byId('mnFzOrganism').attr('disabled', true);
     }
     av.grd.drawGridSetupFn('av.mouse.downGridCanvasFn outside grid?');
-  }
+  };
 

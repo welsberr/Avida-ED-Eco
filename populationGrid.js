@@ -72,26 +72,32 @@
   //Sets scale and puts the user selected data type in the grid array. Rob wants the scale to be different at the beginning of a run 
   av.grd.setMapData = function (from) {
     'use strict';
+    var tskDom='';
+    var taskNum=0;
+    var tskName='';
+    var taskStr='';
     //console.log(from, 'called av.grd.setMapData: av.grd.msg.fitness=',av.grd.msg.fitness);
     if (undefined != av.grd.msg.fitness) {
+      if (av.grd.mxFitHist < av.grd.msg.fitness.maxVal) { av.grd.mxFitHist = av.grd.msg.fitness.maxVal; }
       //console.log('av.grd.msg', av.grd.msg);
       //console.log('av.grd.mxFit=', av.grd.mxFit, '; av.grd.msg.fitness.maxVal=', av.grd.msg.fitness.maxVal, '; low limit=',
       //  (1 - av.grd.rescaleTolerance) * av.grd.mxFit, '; lo2 limit = ', (1 - 2*av.grd.rescaleTolerance) * av.grd.mxFit );
-      if (av.grd.mxFit < av.grd.msg.fitness.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxFit > av.grd.msg.fitness.maxVal) ) {
+      
+      if (av.grd.mxFit < av.grd.msg.fitness.maxVal || ( av.grd.updateNum >10000 && (1 - av.grd.rescaleTolerance) * av.grd.mxFit > av.grd.msg.fitness.maxVal) ) {
         av.grd.mxFit = av.grd.mxFit + ((1 + av.grd.rescaleTolerance) * av.grd.msg.fitness.maxVal - av.grd.mxFit) / av.grd.rescaleTimeConstant;
         av.grd.reScaleFit = 'rescaling';
-        //console.log('rescaling')
+        console.log('rescaling: av.grd.msg.fitness.maxVal=', av.grd.msg.fitness.maxVal);
       }
       else av.grd.reScaleFit = '';
 
       if (av.grd.mxCost < av.grd.msg.gestation.maxVal || (1 - av.grd.rescaleTolerance) * av.grd.mxCost > av.grd.msg.gestation.maxVal) {
         av.grd.mxCost = av.grd.mxCost + ((1 + av.grd.rescaleTolerance) * av.grd.msg.gestation.maxVal - av.grd.mxCost) / av.grd.rescaleTimeConstant;
-        if (1000 < av.grd.mxCost) av.grd.mxCost = 1000;
+        //if (1000 < av.grd.mxCost) av.grd.mxCost = 1000;
         av.grd.reScaleGest = 'rescaling';
       }
       else av.grd.reScaleGest = '';
 
-      if (av.grd.mxRate < av.grd.msg.metabolism.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRate > av.grd.msg.metabolism.maxVal)) {
+      if (av.grd.mxRate < av.grd.msg.metabolism.maxVal || ( av.grd.updateNum >10000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRate > av.grd.msg.metabolism.maxVal)) {
         av.grd.mxRate = av.grd.mxRate + ((1 + av.grd.rescaleTolerance) * av.grd.msg.metabolism.maxVal - av.grd.mxRate) / av.grd.rescaleTimeConstant;
         av.grd.reScaleRate = 'rescaling';
       }
@@ -110,7 +116,7 @@
       else av.grd.reScaleRate = '';
       if (av.grd.mxRand < av.grd.msg.rand.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRand > av.grd.msg.rand.maxVal)) {
         av.grd.mxRand = av.grd.mxRand + ((1 + av.grd.rescaleTolerance) * av.grd.msg.rand.maxVal - av.grd.mxRand) / av.grd.rescaleTimeConstant;
-        av.grd.reScaleRate =    'rescaling';
+        av.grd.reScaleRate = 'rescaling';
       }
       else av.grd.reScaleRate = '';
 
@@ -150,79 +156,27 @@
       }
       else av.grd.reScaleRate = '';  
 
-      if (av.grd.msg.rnot.maxVal) {
-        if (100 < av.grd.msg.rnot.maxVal) mxNot.textContent = av.grd.msg.rnot.maxVal.formatNum(1);
-        else mxNot.textContent = av.grd.msg.rnot.maxVal.formatNum(2);
-      };
-      if (av.grd.msg.rnan.maxVal) {
-        if (100 < av.grd.msg.rnan.maxVal) mxNan.textContent = av.grd.msg.rnan.maxVal.formatNum(1);
-        else mxNan.textContent = av.grd.msg.rnan.maxVal.formatNum(2);
-      };
-      if (av.grd.msg.rand.maxVal) {
-        if (100 < av.grd.msg.rand.maxVal) mxAnd.textContent = av.grd.msg.rand.maxVal.formatNum(1);
-        else mxAnd.textContent = av.grd.msg.rand.maxVal.formatNum(2);
-      };
-      if (av.grd.msg.rorn.maxVal) {
-        if (100 < av.grd.msg.rorn.maxVal) mxOrn.textContent = av.grd.msg.rorn.maxVal.formatNum(1);
-        else mxOrn.textContent = av.grd.msg.rorn.maxVal.formatNum(2);
-      };
-      if (av.grd.msg.roro.maxVal) {
-        if (100 < av.grd.msg.roro.maxVal) mxOro.textContent = av.grd.msg.roro.maxVal.formatNum(1);
-        else mxOro.textContent = av.grd.msg.roro.maxVal.formatNum(2);
-      };
-      if (av.grd.msg.rant.maxVal) {
-        if (100 < av.grd.msg.rant.maxVal) mxAnt.textContent = av.grd.msg.rant.maxVal.formatNum(1);
-        else mxAnt.textContent = av.grd.msg.rant.maxVal.formatNum(2);
-      };
-      if (av.grd.msg.rnor.maxVal) {
-        if (100 < av.grd.msg.rnor.maxVal) mxNor.textContent = av.grd.msg.rnor.maxVal.formatNum(1);
-        else mxNor.textContent = av.grd.msg.rnor.maxVal.formatNum(2);
-      };
-      if (av.grd.msg.rxor.maxVal) {
-        if (100 < av.grd.msg.rxor.maxVal) mxXor.textContent = av.grd.msg.rxor.maxVal.formatNum(1);
-        else mxXor.textContent = av.grd.msg.rxor.maxVal.formatNum(2);
-      };
-      if (av.grd.msg.requ.maxVal) {
-        if (100 < av.grd.msg.requ.maxVal) mxEqu.textContent = av.grd.msg.requ.maxVal.formatNum(1);
-        else mxEqu.textContent = av.grd.msg.requ.maxVal.formatNum(2);
-      };
-
+      //need to make an infinity grid so we know where to put the infinity color and value for the grid
       if (av.grd.selectedNdx) {
-        if (undefined !== av.grd.msg.rnot.data[av.grd.selectedNdx]) {
-          if (100 < av.grd.msg.rnot.data[av.grd.selectedNdx]) cellNot.textContent = av.grd.msg.rnot.data[av.grd.selectedNdx].formatNum(1);
-          else cellNot.textContent = av.grd.msg.rnot.data[av.grd.selectedNdx].formatNum(2);
-        };
-        if (undefined !== av.grd.msg.rnan.data[av.grd.selectedNdx]) {
-          if (100 < av.grd.msg.rnan.data[av.grd.selectedNdx]) cellNan.textContent = av.grd.msg.rnan.data[av.grd.selectedNdx].formatNum(1);
-          else cellNan.textContent = av.grd.msg.rnan.data[av.grd.selectedNdx].formatNum(2);
-        };
-        if (undefined !== av.grd.msg.rand.data[av.grd.selectedNdx]) {
-          if (100 < av.grd.msg.rand.data[av.grd.selectedNdx]) cellAnd.textContent = av.grd.msg.rand.data[av.grd.selectedNdx].formatNum(1);
-          else cellAnd.textContent = av.grd.msg.rand.data[av.grd.selectedNdx].formatNum(2);
-        };
-        if (undefined !== av.grd.msg.rorn.data[av.grd.selectedNdx]) {
-          if (100 < av.grd.msg.rorn.data[av.grd.selectedNdx]) cellOrn.textContent = av.grd.msg.rorn.data[av.grd.selectedNdx].formatNum(1);
-          else cellOrn.textContent = av.grd.msg.rorn.data[av.grd.selectedNdx].formatNum(2);
-        };
-        if (undefined !== av.grd.msg.roro.data[av.grd.selectedNdx]) {
-          if (100 < av.grd.msg.roro.data[av.grd.selectedNdx]) cellOro.textContent = av.grd.msg.roro.data[av.grd.selectedNdx].formatNum(1);
-          else cellOro.textContent = av.grd.msg.roro.data[av.grd.selectedNdx].formatNum(2);
-        };
-        if (undefined !== av.grd.msg.rant.data[av.grd.selectedNdx]) {
-          if (100 < av.grd.msg.rant.data[av.grd.selectedNdx]) cellAnt.textContent = av.grd.msg.rant.data[av.grd.selectedNdx].formatNum(1);
-          else cellAnt.textContent = av.grd.msg.rant.data[av.grd.selectedNdx].formatNum(2);
-        };
-        if (undefined !== av.grd.msg.rnor.data[av.grd.selectedNdx]) {
-          if (100 < av.grd.msg.rnor.data[av.grd.selectedNdx]) cellNor.textContent = av.grd.msg.rnor.data[av.grd.selectedNdx].formatNum(1);
-          else cellNor.textContent = av.grd.msg.rnor.data[av.grd.selectedNdx].formatNum(2);
-        };
-        if (undefined !== av.grd.msg.rxor.data[av.grd.selectedNdx]) {
-          if (100 < av.grd.msg.rxor.data[av.grd.selectedNdx]) cellXor.textContent = av.grd.msg.rxor.data[av.grd.selectedNdx].formatNum(1);
-          else cellXor.textContent = av.grd.msg.rxor.data[av.grd.selectedNdx].formatNum(2);
-        };
-        if (undefined !== av.grd.msg.requ.data[av.grd.selectedNdx]) {
-          if (100 < av.grd.msg.requ.data[av.grd.selectedNdx]) cellEqu.textContent = av.grd.msg.requ.data[av.grd.selectedNdx].formatNum(1);
-          else cellEqu.textContent = av.grd.msg.requ.data[av.grd.selectedNdx].formatNum(2);
+        for (var ii=0; ii < av.sgr.numTasks; ii++) {
+          tskDom = av.sgr.logicTitleNames[ii];
+          tskName = av.sgr.logicNames[ii];
+
+          //taskNum = parseFloat(av.grd.msg['r'+tskName].data[av.grd.selectedNdx]);
+          taskNum = av.grd.msg['r'+tskName].data[av.grd.selectedNdx];
+          if (av.utl.isNumber(parseFloat(taskNum)) ) {
+            //console.log('cell'+tskDom + '=', taskNum);
+            taskStr = av.utl.toMetric(taskNum, 0);
+            document.getElementById('cell'+tskDom).innerHTML = taskStr;
+          };
+          //taskNum = parseFloat(av.grd.msg['r'+tskName].maxVal);
+          taskNum = av.grd.msg['r'+tskName].maxVal;
+          if (av.utl.isNumber(parseFloat(taskNum)) ) {
+            //console.log('max'+tskDom + ' =', taskNum);
+            taskStr = av.utl.toMetric(taskNum, 0);
+            document.getElementById('mx'+tskDom).innerHTML = taskStr;
+            document.getElementById('mx'+tskDom).style.backgroundColor
+          };
         };
       };
 
@@ -367,7 +321,9 @@
     //console.log('mode', document.getElementById("colorMode").value, '; fill', av.grd.fill);
     lngth = av.grd.fill.length;
     //console.log('av.grd.fill.length=',av.grd.fill.length);
-    if (0<av.grd.fill.length){
+    if (0 < av.grd.fill.length){
+      //console.log('in av.grd.drawKids: data type =', document.getElementById("colorMode").value);
+      //console.log('av.grd.fill=',av.grd.fill);
       if ("Ancestor Organism" == document.getElementById("colorMode").value) {
         for (ii = 0; ii < lngth; ii++) {
           cc = ii % av.grd.cols;
@@ -394,30 +350,34 @@
           rr = Math.floor(ii / av.grd.cols);     //was trunc
           xx = av.grd.marginX + av.grd.xOffset + cc * av.grd.cellWd;
           yy = av.grd.marginY + av.grd.yOffset + rr * av.grd.cellHt;
-
           if (null === av.grd.fill[ii]) {
             //console.log('ii', ii, '; msg.ancestor.data[ii]',av.grd.msg.ancestor.data[ii]);
-            if ('-' === av.grd.msg.ancestor.data[ii]) av.grd.cntx.fillStyle = '#000';  //not there
+            if ('-' === av.grd.msg.ancestor.data[ii]) av.grd.cntx.fillStyle = '#000';  //not there = black
             else {
-              av.grd.cntx.fillStyle = '#0B0';
-              console.log('fill[', ii, '] = ', av.grd.fill[ii], 'ancestor != -;   =======================================');
-            } //not viable
+              //data error
+              av.grd.cntx.fillStyle = '#0B0';    //Green
+              console.log('fill[', ii, '] = ', av.grd.fill[ii], 'ancestor != -;   ======================================');
+            } 
           }
-          else if (0 == av.grd.fill[ii] && 'Ancestor Organism' == document.getElementById("colorMode").value) {
-            //console.log('fill[', ii, '] = ', av.grd.fill[ii], 'default kid color');
+          else if (0 >= av.grd.fill[ii] && 'Ancestor Organism' == document.getElementById("colorMode").value) {
+            console.log('fill[', ii, '] = ', av.grd.fill[ii], 'default kid color, this should not happen');
             av.grd.cntx.fillStyle = av.color.defaultKidColor;
           }
           else if (0 > av.grd.fill[ii]) {
             //console.log('fill[', ii, '] = ', av.grd.fill[ii], '; type=',document.getElementById("colorMode").value,'; fill out of bounds');
-            //console.log('fill out of bounds');
+            console.log('Error: fill out of bounds =====================================================================');
             av.grd.fill[ii] = 0;
             av.grd.cntx.fillStyle = av.utl.get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax);
 
           }
           else if ('Offspring Cost' == document.getElementById("colorMode").value && 999 < av.grd.fill[ii]) {
             //console.log('fill[', ii, '] = ', av.grd.fill[ii], 'Offspring Cost out of bounds');
-            console.log('Offspring Cost out of bounds');
-            av.grd.cntx.fillStyle = '#090';
+            console.log('Error: Offspring Cost out of bounds');
+            av.grd.cntx.fillStyle = '#090';   //green
+          }
+          else if (0 >= av.grd.msg.gestation.data[ii]) {
+            av.grd.cntx.fillStyle = '#888';    //non-viable grey. added recently
+            //console.log('non-viable found');
           }
           else {  //av.utl.get_color0 = function(cmap, dx, d1, d2)
             av.grd.cntx.fillStyle = av.utl.get_color0(av.grd.cmap, av.grd.fill[ii], 0, av.grd.fillmax);
@@ -440,63 +400,68 @@
     av.ptd.allOff = true;
     //console.log('not',av.grd.msg.not.data);
     //Should there be error checking here. It indicates a problem with the envioronment.cfg file. 
-    lngth = av.grd.msg.not.data.length;
-    for (ii = 0; ii < lngth; ii++) {
-      av.grd.logicOutline[ii] = 1;
-    }
-    if ('on' == document.getElementById('notButton').value) {
+    if (null == av.grd.msg.not) {
+      console.log('av.grd.msg.not = null: ERROR: Check Environment File; ================================');
+      console.log('av.grd.msg=', av.grd.msg);
+    } else {
       lngth = av.grd.msg.not.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.not.data[ii];}
-      av.ptd.allOff = false;
-    }
-    if ('on' == document.getElementById('nanButton').value) {
-      lngth = av.grd.msg.nand.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.nand.data[ii];}
-      av.ptd.allOff = false;
-    }
-    if ('on' == document.getElementById('andButton').value) {
-      lngth = av.grd.msg.and.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.and.data[ii];}
-      av.ptd.allOff = false;
-    }
-    if ('on' == document.getElementById('ornButton').value) {
-      lngth = av.grd.msg.orn.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.orn.data[ii];}
-      av.ptd.allOff = false;
-      if (av.debug.bool) console.log('orn', av.grd.msg.orn.data);
-    }
-    if ('on' == document.getElementById('oroButton').value) {
-      lngth = av.grd.msg.or.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.or.data[ii];}
-      av.ptd.allOff = false;
-      if (av.debug.bool) console.log('or', av.grd.msg.or.data);
-    }
-    if ('on' == document.getElementById('antButton').value) {
-      lngth = av.grd.msg.andn.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.andn.data[ii];}
-      av.ptd.allOff = false;
-    }
-    if ('on' == document.getElementById('norButton').value) {
-      lngth = av.grd.msg.nor.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.nor.data[ii];}
-      av.ptd.allOff = false;
-    }
-    if ('on' == document.getElementById('xorButton').value) {
-      lngth = av.grd.msg.xor.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.xor.data[ii];}
-      av.ptd.allOff = false;
-    }
-    if ('on' == document.getElementById('equButton').value) {
-      lngth = av.grd.msg.equ.data.length;
-      for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.equ.data[ii];}
-      av.ptd.allOff = false;
-    }
-    if (av.ptd.allOff) {for (ii = 0; ii < av.grd.msg.not.data.length; ii++) { av.grd.logicOutline[ii] = 0; } }
+      for (ii = 0; ii < lngth; ii++) {
+        av.grd.logicOutline[ii] = 1;
+      }
+      if ('on' == document.getElementById('notButton').value) {
+        lngth = av.grd.msg.not.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.not.data[ii];}
+        av.ptd.allOff = false;
+      }
+      if ('on' == document.getElementById('nanButton').value) {
+        lngth = av.grd.msg.nand.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.nand.data[ii];}
+        av.ptd.allOff = false;
+      }
+      if ('on' == document.getElementById('andButton').value) {
+        lngth = av.grd.msg.and.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.and.data[ii];}
+        av.ptd.allOff = false;
+      }
+      if ('on' == document.getElementById('ornButton').value) {
+        lngth = av.grd.msg.orn.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.orn.data[ii];}
+        av.ptd.allOff = false;
+        if (av.debug.bool) console.log('orn', av.grd.msg.orn.data);
+      }
+      if ('on' == document.getElementById('oroButton').value) {
+        lngth = av.grd.msg.or.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.or.data[ii];}
+        av.ptd.allOff = false;
+        if (av.debug.bool) console.log('or', av.grd.msg.or.data);
+      }
+      if ('on' == document.getElementById('antButton').value) {
+        lngth = av.grd.msg.andn.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.andn.data[ii];}
+        av.ptd.allOff = false;
+      }
+      if ('on' == document.getElementById('norButton').value) {
+        lngth = av.grd.msg.nor.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.nor.data[ii];}
+        av.ptd.allOff = false;
+      }
+      if ('on' == document.getElementById('xorButton').value) {
+        lngth = av.grd.msg.xor.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.xor.data[ii];}
+        av.ptd.allOff = false;
+      }
+      if ('on' == document.getElementById('equButton').value) {
+        lngth = av.grd.msg.equ.data.length;
+        for (ii = 0; ii < lngth; ii++) {av.grd.logicOutline[ii] = av.grd.logicOutline[ii] * av.grd.msg.equ.data[ii];}
+        av.ptd.allOff = false;
+      }
+      if (av.ptd.allOff) {for (ii = 0; ii < av.grd.msg.not.data.length; ii++) { av.grd.logicOutline[ii] = 0; } }
 
-    //console.log('LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL');
-    if (av.debug.bool) console.log('setLogic', av.grd.logicOutline);
-    //console.log('update',av.grd.updateNum, '; setLogic', av.grd.logicOutline);
-    //if (0 <= av.grd.msg.update) av.ptd.updateLogicFn();  //this is done in update population stats right now
+      //console.log('LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL');
+      if (av.debug.bool) console.log('setLogic', av.grd.logicOutline);
+      //console.log('update',av.grd.updateNum, '; setLogic', av.grd.logicOutline);
+      //if (0 <= av.grd.msg.update) av.ptd.updateLogicFn();  //this is done in update population stats right now
+    }
   };
 
   av.grd.cellConflict = function (NewCols, NewRows) {
@@ -690,7 +655,7 @@
     av.grd.cntx.fillRect(av.grd.xOffset, av.grd.yOffset, av.grd.sizeX, av.grd.sizeY);
 
     av.grd.backgroundSquares();
-  }
+  };
 
   //--------------- Draw legend --------------------------------------
   //Draws the color and name of each Ancestor (parent) organism
@@ -698,16 +663,64 @@
   //allow for the width of the color box to see how many columns fit across
   //the width of av.dom.scaleCanvas. We will need to increase the size of the
   //legend box by the height of a line for each additional line.
-  av.grd.drawLegend = function () {
+
+  av.grd.drawLegend = function() {
+    av.dom.sclCnvsHldr.style.display = 'none';
+    av.dom.dadLegendHldr.style.display = 'grid';  //'grid';
+    var numtxt = '00';
+    var tmpNum = 0;
+    var dadDivTxt = '';
+    var maxWidth = 0;
+    var leftPad = 10;
+    var row = 0;
+    var col = 0;
+    var numCol = 1;
+    var numRow = 1;
+    var rowHt = 20;
+    
+    var dadListLngth = av.parents.name.length;
+    for (var ii=0; ii < dadListLngth; ii++) {
+      if (10 > ii) numtxt = '0' + ii;
+      else numtxt = ii.toString();
+      dadDivTxt += "<div id='dadInfo"+numtxt+"' class='dadInfoCls'> \n";
+      dadDivTxt += "  <div id='dadColor"+numtxt+"' class='dadColorCls' style='background:"+av.parents.color[ii]+"'></div> \n";
+      dadDivTxt += "  <p id='dadName"+numtxt+"' class='dadNameCls'>"+av.parents.name[ii]+"</p> \n";
+      dadDivTxt += "</div> \n";
+    };
+    av.dom.dadLegendHldr.innerHTML = dadDivTxt;
+//    console.log('dadDivTxt=', dadDivTxt);
+    for (var ii=0; ii < dadListLngth; ii++) {
+      if (10 > ii) numtxt = '0' + ii;
+      else numtxt = ii.toString();
+      tmpNum = $('#dadColor'+numtxt).outerWidth(true) + $('#dadName'+numtxt).outerWidth(true) + 20;
+      document.getElementById('dadInfo'+numtxt).style.width = tmpNum + 'px';
+      if (tmpNum > maxWidth) maxWidth = tmpNum;
+    };
+    console.log('dadInfoCls_wd', maxWidth);
+    $('.dadInfoCls').css('width',maxWidth+'px');
+    av.dom.dadLegendHldr_wd = $('#dadLegendHldr').outerWidth(true);
+    numCol = Math.floor((av.dom.dadLegendHldr_wd-leftPad)/maxWidth);
+    if (Math.floor(dadListLngth/numCol) == dadListLngth/numCol) {
+      numRow = Math.floor(dadListLngth / numCol);
+    } else {
+      numRow = Math.floor(dadListLngth / numCol) + 1;
+    };
+    av.dom.dadLegendHldr.style.gridTemplateColumns = 'repeat('+numCol+', '+maxWidth+'px'+')';
+    av.dom.dadLegendHldr.style.gridTemplateRows = 'repeat('+numRow+', 18px)';
+
+  };
+  
+  av.grd.drawLegend_canvas = function () {
     'use strict';
     var legendPad = 10;   //padding on left so it is not right at edge of canvas
     var colorWide = 13;   //width and heigth of color square
-    var RowHt = 20;       //height of each row of text
+    var RowHt = 10;       //height of each row of text
     var textOffset = 15;  //vertical offset to get to the bottom of the text
     var leftPad = 10;     //padding to allow space between each column of text in the legend
     var legendCols = 1;   //max number of columns based on width of canvas and longest name
     var txtWide = 0;      //width of text for an ancestor (parent) name
     var maxWide = 0;      //maximum width needed for any of the ancestor names in this set
+   
     //console.log('in drawLedgend')
     av.grd.sCtx.font = "14px Arial";
     //find out how much space is needed
@@ -716,8 +729,9 @@
       txtWide = av.grd.sCtx.measureText(av.parents.name[ii]).width;
       if (txtWide > maxWide) {
         maxWide = txtWide;
-      }
-    }
+      };
+    };
+        
     legendCols = Math.floor((av.dom.scaleCanvas.width - leftPad) / (maxWide + colorWide + legendPad));  //was trunc
     if (Math.floor(av.parents.name.length / legendCols) == av.parents.name.length / legendCols) {          //was trunc
       var legendRows = Math.floor(av.parents.name.length / legendCols);
@@ -726,7 +740,8 @@
       legendRows = Math.floor(av.parents.name.length / legendCols) + 1;    //was trunc
     }
     //set canvas height based on space needed
-    av.dom.scaleCanvas.height = RowHt * legendRows;
+    console.log('scale canvas ht:', RowHt * legendRows);
+    //av.dom.scaleCanvas.height = RowHt * legendRows;
     av.grd.sCtx.fillStyle = av.color.names["ltGrey"];
     av.grd.sCtx.fillRect(0, 0, av.dom.scaleCanvas.width, av.dom.scaleCanvas.height);
     var colWide = (av.dom.scaleCanvas.width - leftPad) / legendCols;
@@ -745,13 +760,15 @@
       av.grd.sCtx.font = "14px Arial";
       av.grd.sCtx.fillStyle = 'black';
       av.grd.sCtx.fillText(av.parents.name[ii], xx + colorWide + legendPad / 2, yy);
-    }
+    };
   };
 
   av.grd.gradientScale = function (from) {
     'use strict';
     if (av.debug.uil) { console.log('ui: ', from, 'called av.grd.gradientScale. w:',av.dom.scaleCanvas.width, av.dom.scaleCanvas.height, '= scaleCanvas Wd Ht; start gradientScale '); }
     if (av.debug.uil) { console.log('ui: w:', $("#gridHolder").outerWidth(), $("#gridHolder").outerHeight(), '= av.dom.gridHolder jQuery.outerWd ht ~ ccs ~ offset; start gradientScale'); }
+    av.dom.sclCnvsHldr.style.display = 'block';
+    av.dom.dadLegendHldr.style.display = 'none';
 
     //finding the dimensions needed for the legend. 
     av.dom.scaleCanvas.height = 30;
@@ -792,19 +809,14 @@
       av.grd.sCtx.font = "14px Arial";
       av.grd.sCtx.fillStyle = "#000";
       var maxTxtWd = gradWidth / 5;
-      var place = 2;
       var xx = 0;
       var marks = 4;
       var txt = "";
-      if (av.grd.fillmax > 1000) {
-        place = 0;
-      }
-      else if (av.grd.fillmax > 100) {
-        place = 1;
-      }
+
       for (var ii = 0; ii <= marks; ii++) {
         xx = ii * av.grd.fillmax / marks;
-        txt = xx.formatNum(place);  //2 in this case is number of decimal places
+        txt = av.utl.toMetric( xx, 0);
+        if (0.0004 > xx ) { txt = xx.formatNum(0); } //2 in this case is number of decimal places
         var txtW = av.grd.sCtx.measureText(txt).width;
         xx = xStart + ii * gradWidth / marks - txtW / 2;
         av.grd.sCtx.fillText(txt, xx, legendHt - 2, maxTxtWd);

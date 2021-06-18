@@ -282,7 +282,7 @@ av.color.Gnuplot2cmap = [
 , 'rgb(255, 255, 255)' */
   ];
 
-//does not match color order at this time.
+//Early list; not useing now
 av.color.parentColorNames = [
   'A blue'    //1               website #7
   ,'B yellow'  //2            website #15 modified was 255, 255, 109
@@ -1309,7 +1309,11 @@ av.color.cubehelixCmap = [  //djb version
 
 //----------------------------------------------------------------------------------------------------------------------
 /* web sites about color 
- *  * 
+ *  
+ *  http://www.personal.psu.edu/cab38/ColorBrewer/ColorBrewer_intro.html
+ *  https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3
+ *  
+ *  
  * colors I used for av.color.parentColorList distinct colors
  * http://www.somersault1824.com/tips-for-designing-scientific-figures-for-color-blind-readers/
  * 

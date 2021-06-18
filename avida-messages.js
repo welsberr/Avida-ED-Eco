@@ -97,6 +97,8 @@ function doGetMessage() {
 */
 function doPostMessage(msg_str) {
   if (show_msg) console.log("doPostMessage: msg_str=", msg_str);
+  
+  //console.log('msg_str=', msg_str);
   var json_msg = JSON.parse(msg_str);
   switch(json_msg.type){
     case 'update':

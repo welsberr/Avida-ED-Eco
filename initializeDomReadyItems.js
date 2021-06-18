@@ -5,390 +5,519 @@
   var dijit = dijit || {};
 
   // if (av.dbg.flg.root) { console.log('Root: before av.dom.load'); }
-    av.dom.load = function () {
-      'use strict';
-      //Menu
-      av.doj.mnCnPopRun = document.getElementById('mnCnPopRun');
+  av.dom.load = function () {
+    'use strict';
+    //Menu
+    av.doj.mnCnPopRun = document.getElementById('mnCnPopRun');
 
-      av.doj.mnFlStandAloneApp = document.getElementById('mnFlStandAloneApp');
-      av.doj.mnHpAbout = document.getElementById('mnHpAbout');
-      av.doj.mnHpManual = document.getElementById('mnHpManual');
-      av.doj.mnHpHardware = document.getElementById('mnHpHardware');
-      av.doj.mnHpInfo = document.getElementById('mnHpInfo');
-      av.doj.mnHpProblem = document.getElementById('mnHpProblem');
-      av.doj.mnHpDebug = document.getElementById('mnHpDebug');
-      av.doj.mnDebug = document.getElementById('mnDebug');
+    av.doj.mnFlStandAloneApp = document.getElementById('mnFlStandAloneApp');
+    av.doj.mnHpAbout = document.getElementById('mnHpAbout');
+    av.doj.mnHpManual = document.getElementById('mnHpManual');
+    av.doj.mnHpHardware = document.getElementById('mnHpHardware');
+    av.doj.mnHpInfo = document.getElementById('mnHpInfo');
+    av.doj.mnHpProblem = document.getElementById('mnHpProblem');
+    av.doj.mnHpDebug = document.getElementById('mnHpDebug');
+    av.doj.mnDebug = document.getElementById('mnDebug');
 
-      //main area
-      av.dom.userMsgLabel = document.getElementById('userMsgLabel');
-      av.dom.wsSavedMsg = document.getElementById('wsSavedMsg');
-      av.dom.wsNameMsg = document.getElementById('wsNameMsg');
+    //main area
+    av.dom.userMsgLabel = document.getElementById('userMsgLabel');
+    av.dom.wsSavedMsg = document.getElementById('wsSavedMsg');
+    av.dom.wsNameMsg = document.getElementById('wsNameMsg');
 
 
-      av.dom.allAvida = document.getElementById('allAvida');
-      av.dom.navColId = document.getElementById('navColId');
+    av.dom.navColId = document.getElementById('navColId');
+    av.dom.allAvidaContainer = document.getElementById('allAvidaContainer');
+    av.dom.popInfoVert = document.getElementById('popInfoVert');
+    av.dom.labInfoHolder = document.getElementById('labInfoHolder');
+    av.dom.popStatsBlock = document.getElementById('popStatsBlock');
+    av.dom.popStatHolder = document.getElementById('popStatHolder');
+    av.dom.popStatistics = document.getElementById('popStatistics');
+    av.dom.popStats4grid = document.getElementById('popStats4grid');
+    av.dom.selOrgType = document.getElementById('selOrgType');
+    av.dom.resrceDataHolder = document.getElementById('resrceDataHolder');
+    av.dom.miniChartControls = document.getElementById('miniChartControls');
+    av.dom.popChrtHolder = document.getElementById('popChrtHolder');
+    av.dom.pauseOptions = document.getElementById('pauseOptions');
 
-      av.dom.populationButton = document.getElementById('populationButton');
-      av.dom.freezeButton = document.getElementById('freezeButton');
-      av.dom.populationBlock = document.getElementById('populationBlock');
-      av.dom.organismBlock = document.getElementById('organismBlock');
-      av.dom.analysisBlock = document.getElementById('analysisBlock');
-      av.dom.showTextDebugBlock = document.getElementById('showTextDebugBlock');
-      av.dom.populationButton = document.getElementById('populationButton');
-      av.dom.organismButton = document.getElementById('organismButton');
-      av.dom.analysisButton = document.getElementById('analysisButton');
-      av.dom.showTextDebugButton = document.getElementById('showTextDebugButton');
-      av.dom.allAvida = document.getElementById('allAvida');
+    av.dom.populationButton = document.getElementById('populationButton');
+    av.dom.freezerSection = document.getElementById('freezerSection');
+    av.dom.freezeButton = document.getElementById('freezeButton');
+    av.dom.populationBlock = document.getElementById('populationBlock');
+    av.dom.organismBlock = document.getElementById('organismBlock');
+    av.dom.analysisBlock = document.getElementById('analysisBlock');
+    av.dom.showTextDebugBlock = document.getElementById('showTextDebugBlock');
+    av.dom.populationButton = document.getElementById('populationButton');
+    av.dom.organismButton = document.getElementById('organismButton');
+    av.dom.analysisButton = document.getElementById('analysisButton');
+    av.dom.showTextDebugButton = document.getElementById('showTextDebugButton');
 
-      av.dom.lftPnlButtonImg = document.getElementById('lftPnlButtonImg');
-      av.dom.rtPnlButtonImg = document.getElementById('rtPnlButtonImg');
+    av.dom.leftPanelButton = document.getElementById('leftPanelButton');
+    av.dom.lftSidePnlShowing = true;
+    av.dom.ritePanelButton = document.getElementById('ritePanelButton');
+
+    av.dom.orgInfoHolder = document.getElementById('orgInfoHolder');
+
+
+    //Population Page
+    av.dom.rightInfoHolder = document.getElementById('rightInfoHolder');
+    av.dom.statsTab = document.getElementById('statsTab');
+    av.dom.setupTab = document.getElementById('setupTab');
+    av.dom.testTab = document.getElementById('testTab');
+    av.dom.setupBlock = document.getElementById('setupBlock');
+    av.dom.testSetupBlock = document.getElementById('testSetupBlock');
+    av.dom.mapHolder = document.getElementById('mapHolder');
+    av.dom.popTopRw = document.getElementById('popTopRw');
+    av.dom.gridHolder = document.getElementById('gridHolder');
+    av.dom.gridCanvas = document.getElementById('gridCanvas');
+    av.dom.sclCnvsHldr = document.getElementById('sclCnvsHldr');
+    av.dom.scaleCanvas = document.getElementById('scaleCanvas');
+    av.dom.dadLegendHldr = document.getElementById('dadLegendHldr');
+    av.dom.dadInfo00 = document.getElementById('dadInfo00');
+    av.dom.benchPopBot = document.getElementById('benchPopBot');
+    av.dom.popStatsBlock = document.getElementById('popStatsBlock');
+    av.dom.StatsButton = document.getElementById('StatsButton');
+
+    av.dom.popChrtHolder = document.getElementById('popChrtHolder'); 
+    av.dom.popChart = document.getElementById('popChart');  //easier handle for div with chart
+    av.dom.popChartDiv = document.getElementById('popChartDiv');
+    av.dom.cycleSlider = document.getElementById('cycleSlider');
+    av.dom.runStopButton = document.getElementById('runStopButton');
+    av.dom.oneUpdateButton = document.getElementById('oneUpdateButton');
+    av.dom.newDishButton = document.getElementById('newDishButton');
+    av.dom.avidianOutline = document.getElementById('avidianOutline');
+
+
+    av.dom.gridControlContainer = document.getElementById('gridControlContainer');
+
+    //Test setup page
+    av.dom.sizeCellTest = document.getElementById('sizeCellTest');
+    av.dom.sizeColTest = document.getElementById('sizeColTest');
+    av.dom.sizeRowTest = document.getElementById('sizeRowTest');
+    av.dom.childParentRadiTest = document.getElementById('childParentRadiTest');
+    av.dom.experimentRadiTest = document.getElementById('experimentRadiTest');
+    av.dom.randInpuTest = document.getElementById('randInpuTest');
+    //av.dom.Test = document.getElementById('Test');
+    //av.dom.Test = document.getElementById('Test');
+
+    //Population Map Setup page
+    av.dom.sizeCells = document.getElementById('sizeCells');
+    av.dom.sizeCols = document.getElementById('sizeCols');
+    av.dom.sizeRows = document.getElementById('sizeRows');
+    av.dom.mutePopInput = document.getElementById('mutePopInput');
+    av.dom.mutePopError = document.getElementById('mutePopError');
+    av.dom.childParentRadio = document.getElementById('childParentRadio');
+    av.dom.childRandomRadio = document.getElementById('childRandomRadio');
+    av.dom.envNone = document.getElementById('envNone');
+    av.dom.envLimited = document.getElementById('envLimited');
+    av.dom.envGradient = document.getElementById('envGradient');
+    av.dom.envChemostat = document.getElementById('envChemostat');
+    av.dom.envSourceSink = document.getElementById('envSourceSink');
+    av.dom.envInitial = document.getElementById('envInitial');
+    av.dom.envEqInflow = document.getElementById('envEqInflow');
+    av.dom.envEqOutflow = document.getElementById('envEqOutflow');
+    av.dom.envEqual = document.getElementById('envEqual');
+    av.dom.envGrSide = document.getElementById('envGrSide');
+    av.dom.envGrInflow = document.getElementById('envGrInflow');
+    av.dom.envGrOutflow = document.getElementById('envGrOutflow');
+    //av.dom.env = document.getElementById(''); 
+
+/*
+    av.dom.notose = document.getElementById('notose');
+    av.dom.andose = document.getElementById('andose');
+    av.dom.orose = document.getElementById('orose');
+    av.dom.norose = document.getElementById('norose');
+    av.dom.equose = document.getElementById('equose');  //5
+    av.dom.nanose = document.getElementById('nanose');
+    av.dom.ornose = document.getElementById('ornose');
+    av.dom.andnose = document.getElementById('andnose');
+    av.dom.xorose = document.getElementById('xorose');
+*/
+
+    av.dom.notButton = document.getElementById('notButton');
+    av.dom.andButton = document.getElementById('andButton');
+    av.dom.orButton = document.getElementById('orButton');
+    av.dom.norButton = document.getElementById('norButton');
+    av.dom.equButton = document.getElementById('equButton');  //5
+    av.dom.nanButton = document.getElementById('nanButton');
+    av.dom.ornButton = document.getElementById('ornButton');
+    av.dom.andnButton = document.getElementById('andnButton');
+    av.dom.xorButton = document.getElementById('xorButton');
+
+    av.dom.sugarAccordion = document.getElementById('sugarAccordion');
+    av.dom.orn_section = document.getElementById('orn_section');
+    av.dom.orn_summary = document.getElementById('orn_summary');
+    av.dom.orn_title = document.getElementById('orn_title');
+    av.dom.orn_detailsHolder = document.getElementById('orn_detailsHolder');
+    av.dom.orn1subSection = document.getElementById('orn1subSection');
+    av.dom.showBigTextarea = document.getElementById('showBigTextarea');
+
+    /*
+     * Not in use any longer; might use to create new vars
+     * 
+     av.dom.notType = document.getElementById('notType');
+     av.dom.andType = document.getElementById('andType');
+     av.dom.oroType = document.getElementById('oroType');
+     av.dom.norType = document.getElementById('norType');
+     av.dom.equType = document.getElementById('equType'); 
+     av.dom.nanType = document.getElementById('nanType');
+     av.dom.ornType = document.getElementById('ornType');
+     av.dom.antType = document.getElementById('antType');
+     av.dom.xorType = document.getElementById('xorType');
+
+     av.dom.notIn = document.getElementById('notIn');
+     av.dom.andIn = document.getElementById('andIn');
+     av.dom.oroIn = document.getElementById('oroIn');
+     av.dom.norIn = document.getElementById('norIn');
+     av.dom.equIn = document.getElementById('equIn'); 
+     av.dom.nanIn = document.getElementById('nanIn');
+     av.dom.ornIn = document.getElementById('ornIn');
+     av.dom.antIn = document.getElementById('antIn');
+     av.dom.xorIn = document.getElementById('xorIn');
+
+     av.dom.notOut = document.getElementById('notOut');
+     av.dom.andOut = document.getElementById('andOut');
+     av.dom.oroOut = document.getElementById('oroOut');
+     av.dom.norOut = document.getElementById('norOut');
+     av.dom.equOut = document.getElementById('equOut'); 
+     av.dom.nanOut = document.getElementById('nanOut');
+     av.dom.ornOut = document.getElementById('ornOut');
+     av.dom.antOut = document.getElementById('antOut');
+     av.dom.xorOut = document.getElementById('xorOut');
+     */
+    av.dom.experimentRadio = document.getElementById('experimentRadio');
+    av.dom.demoRadio = document.getElementById('demoRadio');
+    av.dom.autoPauseCheck = document.getElementById('autoPauseCheck');
+    av.dom.autoPauseNum = document.getElementById('autoPauseNum');
+    av.dom.itemDone1st = document.getElementById('itemDone1st');
+    av.dom.pausePrefix = document.getElementById('pausePrefix');
+    av.dom.pauseMidText = document.getElementById('pauseMidText');
+    av.dom.pauseCriteria = document.getElementById('pauseCriteria');
+    
+    //test dishes setup
+    av.dom.environConfigEdit = document.getElementById('environConfigEdit');
+    av.dom.tst2textarea = document.getElementById('tst2textarea');
+
+    av.dom.sendLogPara = document.getElementById('sendLogPara');
+    av.dom.sendLogScrollBox = document.getElementById('sendLogScrollBox');
+
+    //Organism Page
+    av.dom.orgBotId = document.getElementById('orgBotId');
+    av.dom.organCanvas = document.getElementById("organCanvas");
+    av.dom.orgSettings = document.getElementById('orgSettings');
+    av.dom.orgDetailID = document.getElementById('orgDetailID');
+    av.dom.orgCycle = document.getElementById('orgCycle');
+    av.dom.muteOrgError = document.getElementById('muteOrgError');
+
+    //Analysis Page  
+    //av.dom.anlChrtSpace = document.getElementById('anlChrtSpace');  //easier handle for div with chart
+    av.dom.anlChrtSpace = document.getElementById('anlDndChart');  //easier handle for div with chart
+    av.dom.anlDndChart = document.getElementById('anlDndChart');
+    av.dom.anaChrtHolder = document.getElementById('anaChrtHolder');
+    av.dom.popDish0 = document.getElementById('popDish0');
+    av.dom.popDish1 = document.getElementById('popDish1');
+    av.dom.popDish2 = document.getElementById('popDish2');
+    av.dom.pop0color = document.getElementById('pop0color');
+    av.dom.pop1color = document.getElementById('pop1color');
+    av.dom.pop2color = document.getElementById('pop2color');
+
+    //post - send data to database
+    av.dom.postLogTextarea = document.getElementById('postLogTextarea');
+    av.dom.postLogPara = document.getElementById('postLogPara');
+    av.dom.postVersionLabel = document.getElementById('postVersionLabel');
+    av.dom.postScreenSize = document.getElementById('postScreenSize');
+    av.dom.postUserInfoLabel = document.getElementById('postUserInfoLabel');
+    av.dom.postError = document.getElementById('postError');
+    av.dom.postProblemError = document.getElementById('postProblemError');
+    av.dom.postEmailInput = document.getElementById('postEmailInput');
+    av.dom.postEmailLabel = document.getElementById('postEmailLabel');
+    av.dom.postNoteLabel = document.getElementById('postNoteLabel');
+    av.dom.postComment = document.getElementById('postComment');
+    av.dom.postLogTextarea = document.getElementById('postLogTextarea');
+    av.dom.postdTailTextarea = document.getElementById('postdTailTextarea');
+    av.dom.postStatus = document.getElementById('postStatus');
+
+    av.dom.mainButtons = document.getElementById('mainButtons');
+    av.dom.trashDiv = document.getElementById('trashDiv');
+
+    av.dom.orgTopId = document.getElementById('orgTopId');
+
+    av.dom.ExecuteJust = document.getElementById('ExecuteJust');       //check for code repeats might be able to do a function and clean things tiba
+    av.dom.ExecuteAbout = document.getElementById('ExecuteAbout');
+
+    av.dom.xorLabel = document.getElementById('xorLabel');          //no longer in use. 
+
+    //av.dom. = document.getElementById('');
+    // Modal Dialogs 
+    av.dom.newDishModalID = document.getElementById('newDishModalID');
+    av.dom.newDishCancel = document.getElementById('newDishCancel');
+    av.dom.newDishDiscard = document.getElementById('newDishDiscard');
+    av.dom.newDishSaveConfig = document.getElementById('newDishSaveConfig');
+    av.dom.newDishSaveWorld = document.getElementById('newDishSaveWorld');
+    av.dom.needAncestorModalID = document.getElementById('needAncestorModalID');
+    av.dom.needAncestorCancel = document.getElementById('needAncestorCancel');
+
+    //av.dom. = document.getElementById('');
+  };
+  //av.dom.load();
+
+  av.dom.initilizeDigitData = function () {
+    dijit.byId('mnCnPause').attr('disabled', true);
+    dijit.byId('mnCnOrganismTrace').attr('disabled', true);
+    dijit.byId('mnFzOrganism').attr('disabled', true);
+    dijit.byId('mnFzOffspring').attr('disabled', true);
+    dijit.byId('mnFzPopulation').attr('disabled', true);
+    //dijit.byId('mnFzAddConfigEx').attr('disabled', true);
+    //dijit.byId('mnFzAddGenomeEx').attr('disabled', true);
+    //dijit.byId('mnFzAddPopEx').attr('disabled', true);
+    //dijit.byId('mnFzAddGenomeView').attr('disabled', true);
+    //dijit.byId('mnFzAddPopAnalysis').attr('disabled', true);
+  };
+
+  // for analyze page
+  av.dom.initilizeAnalizePage = function() {
+    //console.log('getDomByID of pop0color=', document.getElementById('pop0color') );
+    //console.log('av.dom.pop0color=', av.dom.pop0color);
+    //console.log('av.dom.pop0color.value=', av.dom.pop0color.value);
+    //console.log('av.color.names=', av.color.names);
+    av.anl.color[0] = av.color.names[av.dom.pop0color.value];
+    av.anl.color[1] = av.color.names[av.dom.pop1color.value];
+    av.anl.color[2] = av.color.names[av.dom.pop2color.value];
+    av.anl.yLeftTitle = document.getElementById('yLeftSelect').value;
+    av.anl.yRightTitle = document.getElementById('yRightSelect').value;
+  };
+
+  //------------------------------------------------------------------------------------- av.ui.toggleComplexityLevel --
+  av.ui.toggleComplexityLevel = function(){
+    var len = av.sgr.logicNames.length;
+    var willbe = 'none';
+    
+    if ('sgrGlobal' === av.sgr.complexityLevel) {
+      willbe = 'inline-block';
+      av.sgr.complexityLevel = 'sgrAdvanced';
+      //
+    } else {
+      willbe = 'none';
+      av.sgr.complexityLevel = 'sgrGlobal';
+    };
+    //console.log('willbe=', willbe);  
+    av.sgr.complexityChangeProcess('av.ui.toggleComplexityLevel');
+  };
+  
+
+  //----------------------------------------------------------------------------- av.ui.toggleDisplayGeometryControls --
+  //No longer in uses as Geometry and Region Layout are now combined
+  av.ui.toggleDisplayGeometryControls = function(){ 
+    var len = av.sgr.logicNames.length;
+    var willbe = 'none';
+    if ('none' === document.getElementById('orn_geometryDiv').style.display) {
+      willbe = 'inline-block';
+    } else {
+      willbe = 'none';
+    };
+    //console.log('willbe=', willbe);  
+    for (ii = 0; ii < len; ii++) {
+      tsk = av.sgr.logicNames[ii];
+      document.getElementById(tsk+'_geometryDiv').style.display = willbe;
+    };
+    document.getElementById('geometrySgr').style.display = willbe;
+    document.getElementById('allSugarGeometryDiv').style.display = willbe;
+  };
+
+  av.ui.toggleDevelopmentDisplays = function () {
+    var len, tsk, sub;
+    var visibleTxt = 'visible';
+    if ('visible' === av.doj.mnDebug.style.visibility) {
+      //hide all development elements
+      av.ui.hideDevelopment = true;
+      av.doj.mnDebug.style.visibility = 'hidden';
+      document.getElementById('showTextDebugButtonDiv').style.visibility = 'hidden';
+      document.getElementById('developmentToggle').className = 'devoCammo';  
+      document.getElementById('geometyHideButton').className = 'geoButtonCammo';  
+      document.getElementById('ritePnlBtnHolder').className = 'pnlBtnHldrHide';
+
+      document.getElementById('fzTdishSec').style.visibility = 'hidden';
+      document.getElementById('testDishDetailDiv').style.display = 'none';
+      document.getElementById('testConfigLableHolder').style.display = 'none';
+      document.getElementById('testConfig').style.display = 'none';
+      document.getElementById('avidianOutline').style.display = 'none';
+
+      document.getElementById('popInfoTabHolder').className = 'tabHolderHide';
+      //document.getElementById('resrceDataHolder').style.display = 'none';
+
+      av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopmentDisplays');
+      len = av.sgr.logicNames.length;
+      sub = 1;   //this may change later;
+      for (ii = 0; ii < len; ii++) {
+        tsk = av.sgr.logicNames[ii];
+        av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
+      };
+
+      if (av.sgr.gridOnly) {
+        document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherNoGlobalContainer';
+        document.getElementById('geometrySgr').style.display = 'none';
+        document.getElementById('allSugarGeometryDiv').style.display = 'none'; 
+        document.getElementById('allSugarGeometry').style.display = 'none'; 
+      }
+
+      //console.log("document.getElementsByClassName('globalChemostat').length=", document.getElementsByClassName('globalChemostat').length );
+      //console.log("document.getElementsByClassName('localChemostat')=", document.getElementsByClassName('localChemostat').length );
+      //console.log("document.getElementsByClassName('globalLimited')=", document.getElementsByClassName('globalLimited').length );
+
+      //Hide select options that are not yet implemented
+
+      len = document.getElementsByClassName('localDebug').length;
+      for (ii = 0; ii < len; ii++) {
+        document.getElementsByClassName('localDebug')[ii].style.display = 'none';
+        //document.getElementsByClassName('localChemostat')[ii].style.display = 'none';
+      };
+
+      //Hide select options that are not yet implemented
+      len = document.getElementsByClassName('globalChemostat').length;
+      for (ii = 0; ii < len; ii++) {
+        //console.log('globalLimited=', document.getElementsByClassName('globalLimited')[ii].id);
+        document.getElementsByClassName('globalLimited')[ii].style.display = 'none';
+        document.getElementsByClassName('globalChemostat')[ii].style.display = 'none';
+        //document.getElementsByClassName('globalDebug')[ii].style.display = 'none';
+      };
+
+      len = document.getElementsByClassName('3TopLftRit').length;
+      for (ii = 0; ii < len; ii++) {
+        document.getElementsByClassName('3TopLftRit')[ii].style.display = 'none';
+        document.getElementsByClassName('4Quarters')[ii].style.display = 'none';
+      }
       
-      av.dom.orgInfoHolder = document.getElementById('orgInfoHolder');
-      av.dom.popInfoVert = document.getElementById('popInfoVert');
+      // now clear options for changing all sugars (groups)
+      //document.getElementsByClassName('groupChemostat')[0].style.display = 'none';
+      //document.getElementsByClassName('groupLimited')[0].style.display = 'none';     //limited available for local options
+      //document.getElementsByClassName('groupDebug')[0].style.display = 'none';
+      //console.log('dom.groupDebug=', document.getElementsByClassName('groupDebug'));
 
+      //debug menu??
+      dijit.byId('mnHpDebug').set('label', 'Show debug menu');   //???????
 
-      //Population Page
-      av.dom.rightInfoHolder = document.getElementById('rightInfoHolder');
-      av.dom.statsTab = document.getElementById('statsTab');
-      av.dom.setupTab = document.getElementById('setupTab');
-      av.dom.testTab = document.getElementById('testTab');
-      av.dom.setupBlock = document.getElementById('setupBlock');
-      av.dom.testSetupBlock = document.getElementById('testSetupBlock');
-      av.dom.mapHolder = document.getElementById('mapHolder');
-      av.dom.popTopRw = document.getElementById('popTopRw');
-      av.dom.popBot = document.getElementById('popBot');
-      av.dom.gridHolder = document.getElementById('gridHolder');
-      av.dom.gridCanvas = document.getElementById('gridCanvas');
-      av.dom.scaleCanvas = document.getElementById('scaleCanvas');
-      av.dom.popBot = document.getElementById('popBot');
-      av.dom.popStatsBlock = document.getElementById('popStatsBlock');
-      av.dom.StatsButton = document.getElementById('StatsButton');
+      av.post.addUser('Button: mnHpDebug: now hidden; InitlizeDomReadyItems.js');
+    } else {       
+      // development sectiomn can be seen.
+      av.ui.hideDevelopment = false;
+      av.doj.mnDebug.style.visibility = 'visible';
+      document.getElementById('showTextDebugButtonDiv').style.visibility = 'visible';
+      document.getElementById('developmentToggle').className = 'devoShow';
+      document.getElementById('geometyHideButton').className = 'devoShow';
+      document.getElementById('ritePnlBtnHolder').className = 'ritePnlBtnHlderShow';
 
-      av.dom.popChart = document.getElementById('popChart');  //easier handle for div with chart
-      av.dom.popChrtHolder = document.getElementById('popChrtHolder');
+      document.getElementById('fzTdishSec').style.visibility = 'visible';
+      document.getElementById('testDishDetailDiv').style.display = 'block';
+      document.getElementById('testConfigLableHolder').style.display = 'flex';
+      document.getElementById('testConfig').style.display = 'flex';
+      document.getElementById('avidianOutline').style.display = 'inline-block'; 
 
-      av.dom.cycleSlider = document.getElementById('cycleSlider');
-      av.dom.runStopButton = document.getElementById('runStopButton');
-      av.dom.oneUpdateButton = document.getElementById('oneUpdateButton');
-      av.dom.newDishButton = document.getElementById('newDishButton');
-      av.dom.avidianOutline = document.getElementById('avidianOutline');
+      document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
+      document.getElementById('resrceDataHolder').style.display = 'block';
 
+      av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopmentDisplays.onclick_show');
 
-      av.dom.selOrgType = document.getElementById('selOrgType');
-      av.dom.gridControlContainer = document.getElementById('gridControlContainer');
-
-      //Test setup page
-      av.dom.sizeCellTest = document.getElementById('sizeCellTest');
-      av.dom.sizeColTest = document.getElementById('sizeColTest');
-      av.dom.sizeRowTest = document.getElementById('sizeRowTest');
-      av.dom.childParentRadiTest = document.getElementById('childParentRadiTest');
-      av.dom.experimentRadiTest = document.getElementById('experimentRadiTest');
-      av.dom.randInpuTest = document.getElementById('randInpuTest');
-      av.dom.manualUpdateRadiTest = document.getElementById('manualUpdateRadiTest');
-      //av.dom.Test = document.getElementById('Test');
-      //av.dom.Test = document.getElementById('Test');
-
-      //Population Map Setup page
-      av.dom.sizeCells = document.getElementById('sizeCells');
-      av.dom.sizeCols = document.getElementById('sizeCols');
-      av.dom.sizeRows = document.getElementById('sizeRows');
-      av.dom.muteInput = document.getElementById('muteInput');
-      av.dom.muteError = document.getElementById('muteError');
-      av.dom.childParentRadio = document.getElementById('childParentRadio');
-      av.dom.childRandomRadio = document.getElementById('childRandomRadio');
-      av.dom.envNone = document.getElementById('envNone');
-      av.dom.envFinite = document.getElementById('envFinite');
-      av.dom.envGradient = document.getElementById('envGradient');
-      av.dom.envEquilibrium = document.getElementById('envEquilibrium');
-      av.dom.envSourceSink = document.getElementById('envSourceSink');
-      av.dom.envInitial = document.getElementById('envInitial');
-      av.dom.envEqInflow = document.getElementById('envEqInflow');
-      av.dom.envEqOutflow = document.getElementById('envEqOutflow');
-      av.dom.envEqual = document.getElementById('envEqual');
-      av.dom.envGrSide = document.getElementById('envGrSide');
-      av.dom.envGrInflow = document.getElementById('envGrInflow');
-      av.dom.envGrOutflow = document.getElementById('envGrOutflow');
-      //av.dom.env = document.getElementById(''); 
-
-      av.dom.notose = document.getElementById('notose');
-      av.dom.andose = document.getElementById('andose');
-      av.dom.orose = document.getElementById('orose');
-      av.dom.norose = document.getElementById('norose');
-      av.dom.equose = document.getElementById('equose');  //5
-      av.dom.nanose = document.getElementById('nanose');
-      av.dom.ornose = document.getElementById('ornose');
-      av.dom.andnose = document.getElementById('andnose');
-      av.dom.xorose = document.getElementById('xorose');
-
-
-      av.dom.notButton = document.getElementById('notButton');
-      av.dom.andButton = document.getElementById('andButton');
-      av.dom.orButton = document.getElementById('orButton');
-      av.dom.norButton = document.getElementById('norButton');
-      av.dom.equButton = document.getElementById('equButton');  //5
-      av.dom.nanButton = document.getElementById('nanButton');
-      av.dom.ornButton = document.getElementById('ornButton');
-      av.dom.andnButton = document.getElementById('andnButton');
-      av.dom.xorButton = document.getElementById('xorButton');
-
-      av.dom.sugarAccordion = document.getElementById('sugarAccordion');
-      av.dom.orn0section = document.getElementById('orn0section');
-      av.dom.orn0summary = document.getElementById('orn0summary');
-      av.dom.orn0title = document.getElementById('orn0title');
-      av.dom.orn0Details = document.getElementById('orn0Details');
-      av.dom.orn1subSection = document.getElementById('orn1subSection');
-      av.dom.showTextarea = document.getElementById('showTextarea');
-
-      /*
-       * Not in use any longer; might use to create new vars
-       * 
-       av.dom.notType = document.getElementById('notType');
-       av.dom.andType = document.getElementById('andType');
-       av.dom.oroType = document.getElementById('oroType');
-       av.dom.norType = document.getElementById('norType');
-       av.dom.equType = document.getElementById('equType'); 
-       av.dom.nanType = document.getElementById('nanType');
-       av.dom.ornType = document.getElementById('ornType');
-       av.dom.antType = document.getElementById('antType');
-       av.dom.xorType = document.getElementById('xorType');
-
-       av.dom.notIn = document.getElementById('notIn');
-       av.dom.andIn = document.getElementById('andIn');
-       av.dom.oroIn = document.getElementById('oroIn');
-       av.dom.norIn = document.getElementById('norIn');
-       av.dom.equIn = document.getElementById('equIn'); 
-       av.dom.nanIn = document.getElementById('nanIn');
-       av.dom.ornIn = document.getElementById('ornIn');
-       av.dom.antIn = document.getElementById('antIn');
-       av.dom.xorIn = document.getElementById('xorIn');
-
-       av.dom.notOut = document.getElementById('notOut');
-       av.dom.andOut = document.getElementById('andOut');
-       av.dom.oroOut = document.getElementById('oroOut');
-       av.dom.norOut = document.getElementById('norOut');
-       av.dom.equOut = document.getElementById('equOut'); 
-       av.dom.nanOut = document.getElementById('nanOut');
-       av.dom.ornOut = document.getElementById('ornOut');
-       av.dom.antOut = document.getElementById('antOut');
-       av.dom.xorOut = document.getElementById('xorOut');
-       */
-      av.dom.experimentRadio = document.getElementById('experimentRadio');
-      av.dom.demoRadio = document.getElementById('demoRadio');
-      av.dom.autoPauseCheck = document.getElementById('autoPauseCheck');
-      av.dom.autoPauseNum = document.getElementById('autoPauseNum');
-
-      //test dishes setup
-      av.dom.environConfigEdit = document.getElementById('environConfigEdit');
-      av.dom.tst2textarea = document.getElementById('tst2textarea');
-
-      av.dom.sendLogPara = document.getElementById('sendLogPara');
-      av.dom.sendLogTextarea = document.getElementById('sendLogTextarea');
-
-      //Organism Page
-      av.dom.orgBotId = document.getElementById('orgBotId');
-      av.dom.organCanvas = document.getElementById("organCanvas");
-      av.dom.orgInfoHolder = document.getElementById('orgInfoHolder');
-      av.dom.orgSettings = document.getElementById('orgSettings');
-      av.dom.orgDetailID = document.getElementById('orgDetailID');
-      av.dom.orgCycle = document.getElementById('orgCycle');
-
-      //Analysis Page  
-      //av.dom.anlChrtSpace = document.getElementById('anlChrtSpace');  //easier handle for div with chart
-      av.dom.anlChrtSpace = document.getElementById('anlDndChart');  //easier handle for div with chart
-      av.dom.anlDndChart = document.getElementById('anlDndChart');
-      av.dom.anaChrtHolder = document.getElementById('anaChrtHolder');
-      av.dom.popDish0 = document.getElementById('popDish0');
-      av.dom.popDish1 = document.getElementById('popDish1');
-      av.dom.popDish2 = document.getElementById('popDish2');
-      av.dom.pop0color = document.getElementById('pop0color');
-      av.dom.pop1color = document.getElementById('pop1color');
-      av.dom.pop2color = document.getElementById('pop2color');
-
-      //post - send data to database
-      av.dom.postLogTextarea = document.getElementById('postLogTextarea');
-      av.dom.postLogPara = document.getElementById('postLogPara');
-      av.dom.postVersionLabel = document.getElementById('postVersionLabel');
-      av.dom.postScreenSize = document.getElementById('postScreenSize');
-      av.dom.postUserInfoLabel = document.getElementById('postUserInfoLabel');
-      av.dom.postError = document.getElementById('postError');
-      av.dom.postProblemError = document.getElementById('postProblemError');
-      av.dom.postEmailInput = document.getElementById('postEmailInput');
-      av.dom.postEmailLabel = document.getElementById('postEmailLabel');
-      av.dom.postNoteLabel = document.getElementById('postNoteLabel');
-      av.dom.postComment = document.getElementById('postComment');
-      av.dom.postLogTextarea = document.getElementById('postLogTextarea');
-      av.dom.postdTailTextarea = document.getElementById('postdTailTextarea');
-      av.dom.postStatus = document.getElementById('postStatus');
-
-      av.dom.mainButtons = document.getElementById('mainButtons');
-      av.dom.trashDiv = document.getElementById('trashDiv');
-
-      av.dom.orgTopId = document.getElementById('orgTopId');
-
-      av.dom.ExecuteJust = document.getElementById('ExecuteJust');       //check for code repeats might be able to do a function and clean things tiba
-      av.dom.ExecuteAbout = document.getElementById('ExecuteAbout');
-
-      av.dom.xorLabel = document.getElementById('xorLabel');          //used to toggle debug menu
-
-      //av.dom. = document.getElementById('');
-      // Modal Dialogs 
-      av.dom.newDishModalID = document.getElementById('newDishModalID');
-      av.dom.newDishCancel = document.getElementById('newDishCancel');
-      av.dom.newDishDiscard = document.getElementById('newDishDiscard');
-      av.dom.newDishSaveConfig = document.getElementById('newDishSaveConfig');
-      av.dom.newDishSaveWorld = document.getElementById('newDishSaveWorld');
-      av.dom.needAncestorModalID = document.getElementById('needAncestorModalID');
-      av.dom.needAncestorCancel = document.getElementById('needAncestorCancel');
-
-      //av.dom. = document.getElementById('');
-    };
-    //av.dom.load();
-
-    av.dom.initilizeDigitData = function () {
-      dijit.byId('mnCnPause').attr('disabled', true);
-      dijit.byId('mnCnOrganismTrace').attr('disabled', true);
-      dijit.byId('mnFzOrganism').attr('disabled', true);
-      dijit.byId('mnFzOffspring').attr('disabled', true);
-      dijit.byId('mnFzPopulation').attr('disabled', true);
-      //dijit.byId('mnFzAddConfigEx').attr('disabled', true);
-      //dijit.byId('mnFzAddGenomeEx').attr('disabled', true);
-      //dijit.byId('mnFzAddPopEx').attr('disabled', true);
-      //dijit.byId('mnFzAddGenomeView').attr('disabled', true);
-      //dijit.byId('mnFzAddPopAnalysis').attr('disabled', true);
-    };
-
-    // for analyze page
-    av.dom.initilizeAnalizePage = function() {
-      //console.log('getDomByID of pop0color=', document.getElementById('pop0color') );
-      //console.log('av.dom.pop0color=', av.dom.pop0color);
-      //console.log('av.dom.pop0color.value=', av.dom.pop0color.value);
-      //console.log('av.color.names=', av.color.names);
-      av.anl.color[0] = av.color.names[av.dom.pop0color.value];
-      av.anl.color[1] = av.color.names[av.dom.pop1color.value];
-      av.anl.color[2] = av.color.names[av.dom.pop2color.value];
-      av.anl.yLeftTitle = document.getElementById('yLeftSelect').value;
-      av.anl.yRightTitle = document.getElementById('yRightSelect').value;
-    };
-
-    av.ui.toggleDevelopentDisplays = function () {
-      var len, tsk, sub;
-      if ('visible' === av.doj.mnDebug.style.visibility) {
-        //hide all development elements
-        av.ui.hideDevelopment = true;
-        av.doj.mnDebug.style.visibility = 'hidden';
-        document.getElementById('showTextDebugButtonDiv').style.visibility = 'hidden';
-        document.getElementById('developmentToggle').className = 'devoCammo';  
-        document.getElementById('ritePnlBtnHolder').className = 'pnlBtnHldrHide';
-
-        document.getElementById('fzTdishSec').style.visibility = 'hidden';
-        document.getElementById('testDishDetailDiv').style.display = 'none';
-        document.getElementById('testConfigLableHolder').style.display = 'none';
-        document.getElementById('testConfig').style.display = 'none';
-        document.getElementById('avidianOutline').style.display = 'none';
-
-        document.getElementById('popInfoTabHolder').className = 'tabHolderHide';
-        //document.getElementById('displayGridResourceData').style.display = 'none';
-
-        av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopentDisplays');
-        len = av.sgr.logicNames.length;
-        sub = 1;   //this may change later;
-        for (ii = 0; ii < len; ii++) {
-          tsk = av.sgr.logicNames[ii];
-          av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
-        };
-
-        //console.log("document.getElementsByClassName('globalEquilibrium')=", document.getElementsByClassName('globalEquilibrium').length );
-        //console.log("document.getElementsByClassName('localEquilibrium')=", document.getElementsByClassName('localEquilibrium').length );
-
-        //console.log("document.getElementsByClassName('globalFinite')=", document.getElementsByClassName('globalFinite').length );
-        
-        //Hide select options that are not yet implemented
-        len = document.getElementsByClassName('localEquilibrium').length;
-        for (ii = 0; ii < len; ii++) {
-          document.getElementsByClassName('globalFinite')[ii].style.display = 'none';
-          document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'none';
-          document.getElementsByClassName('globalDebug')[ii].style.display = 'none';
-          
-          document.getElementsByClassName('localDebug')[ii].style.display = 'none';
-          document.getElementsByClassName('localEquilibrium')[ii].style.display = 'none';
-        };
-       
-        // now clear options for changing all sugars (groups)
-        document.getElementsByClassName('groupEquilibrium')[0].style.display = 'none';
-        //document.getElementsByClassName('groupFinite')[0].style.display = 'none';     //finite available for local options
-        document.getElementsByClassName('groupDebug')[0].style.display = 'none';
-
-        //debug menu??
-        dijit.byId('mnHpDebug').set('label', 'Show debug menu');   //???????
-
-        av.post.addUser('Button: mnHpDebug: now hidden');
-      } else {       // development sectiomn can be seen.
-        av.ui.hideDevelopment = false;
-        av.doj.mnDebug.style.visibility = 'visible';
-        document.getElementById('showTextDebugButtonDiv').style.visibility = 'visible';
-        document.getElementById('developmentToggle').className = 'devoShow';
-        document.getElementById('ritePnlBtnHolder').className = 'ritePnlBtnHlderShow';
-
-        document.getElementById('fzTdishSec').style.visibility = 'visible';
-        document.getElementById('testDishDetailDiv').style.display = 'block';
-        document.getElementById('testConfigLableHolder').style.display = 'flex';
-        document.getElementById('testConfig').style.display = 'flex';
-        document.getElementById('avidianOutline').style.display = 'inline-block'; 
-
-        document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
-        //document.getElementById('displayGridResourceData').style.display = 'flex';
-
-        av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopentDisplays.onclick_show');
-
-        len = av.sgr.logicNames.length;
-        sub = 1;   //this may change later;
-        for (ii = 0; ii < len; ii++) {
-          tsk = av.sgr.logicNames[ii];
-          av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
-        };
-
-        //show environment options sill under development.
-        len = document.getElementsByClassName('localEquilibrium').length;
-        for (ii = 0; ii < len; ii++) {
-          document.getElementsByClassName('globalEquilibrium')[ii].style.display = 'inline';
-          document.getElementsByClassName('globalFinite')[ii].style.display = 'inline';
-          document.getElementsByClassName('globalDebug')[ii].style.display = 'inline';
-          document.getElementsByClassName('localEquilibrium')[ii].style.display = 'inline';
-          document.getElementsByClassName('localDebug')[ii].style.display = 'inline';
-        };
-        
-         // now show options for changing all sugars (groups)
-        document.getElementsByClassName('groupEquilibrium')[0].style.display = 'inline';
-        //document.getElementsByClassName('groupFinite')[0].style.display = 'inline';     //finite available for local options
-        document.getElementsByClassName('groupDebug')[0].style.display = 'inline';
-
-        //Show debug on dropdown menu
-        dijit.byId('mnHpDebug').set('label', 'Hide debug menu');   //????????
-        av.post.addUser('Button: mnHpDebug: now visible');
+      if (av.sgr.gridOnly) {    //In devvelopment
+        document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherContainer';
+        document.getElementById('geometrySgr').style.display = 'inline-block';
+        document.getElementById('allSugarGeometryDiv').style.display = 'inline-block';
       }
-      //console.log('in av.ui.hideDevelopment=', av.ui.hideDevelopment, 'at end of function');
-    };
 
-  // if (av.dbg.flg.root) { console.log('Root: before av.ui.xorLabel'); }
+      len = document.getElementsByClassName('3TopLftRit').length;
+      for (ii = 0; ii < len; ii++) {
+        document.getElementsByClassName('3TopLftRit')[ii].style.display = 'inline-block';
+        document.getElementsByClassName('4Quarters')[ii].style.display = 'inline-block';
+      }
+
+
+
+      len = av.sgr.logicNames.length;
+      console.log('logicNames.length=', len);
+      sub = 1;   //this may change later;
+      for (ii = 0; ii < len; ii++) {
+        tsk = av.sgr.logicNames[ii];
+        av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
+        //document.getElementsByClassName('globalChemostat')[ii].style.display = 'inline';
+        //document.getElementsByClassName('globalLimited')[ii].style.display = 'inline';
+        //document.getElementsByClassName('globalDebug')[ii].style.display = 'inline';
+      };
+
+      //show environment options sill under development.
+      document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherContainer';
+
+/*        
+      len = document.getElementsByClassName('localChemostat').length;
+      console.log('localChemostat.len=', len, '; globalChemostat.len=', document.getElementsByClassName('globalChemostat').length);
+      for (ii = 0; ii < len; ii++) {
+        document.getElementsByClassName('localChemostat')[ii].style.display = 'inline';
+        //document.getElementsByClassName('localDebug')[ii].style.display = 'inline';
+      };
+
+       // now show options for changing all sugars (groups)
+      //document.getElementsByClassName('groupChemostat')[0].style.display = 'inline';
+      //document.getElementsByClassName('groupLimited')[0].style.display = 'inline';     //limited available for local options
+      //document.getElementsByClassName('groupDebug')[0].style.display = 'inline';
+*/
+      //Show debug on dropdown menu
+      dijit.byId('mnHpDebug').set('label', 'Hide debug menu');   //????????
+      av.post.addUser('Button: mnHpDebug: now visible');
+    }
+    //console.log('in av.ui.hideDevelopment=', av.ui.hideDevelopment, 'at end of function');
+  };
+
+  // if (av.dbg.flg.root) { console.log('Root: before av.ui.antLabel'); }
   //----------------------------------------------------------------------------------------------------------------------
-    //toggles showing resource data in right info panel (Stats window) in Populaton View
-    av.ui.xorLabel = function () {
-      if ('none' === document.getElementById('displayGridResourceData').style.display) {
-        document.getElementById('displayGridResourceData').style.display = 'flex';
-      } else {
-        document.getElementById('displayGridResourceData').style.display = 'none';
-      }
+  //Forces popChartInit
+  av.ui.antLabel = function (from) {
+    console.log(from, 'called av.ui.antLabel to run av.grd.popChartInit'); 
+    
+    console.log('ht: popChrtHolder, popChart, popChartDiv', $('#popChrtHolder').outerHeight(true), $('#popChartDiv').outerHeight(true), $('#popChart').outerHeight(true) );
+    var htnum = Number($('#popChrtHolder').outerHeight(true))-1;
+    av.dom.popChart.style.maxheight = htnum +'px;';
+    console.log('ht: popChrtHolder, popChart, popChartDiv', $('#popChrtHolder').outerHeight(true), $('#popChartDiv').outerHeight(true), $('#popChart').outerHeight(true) );
+    av.grd.popChartInit('av.ui.antLabel');
+    console.log('ht: popChrtHolder, popChart, popChartDiv', $('#popChrtHolder').outerHeight(true), $('#popChartDiv').outerHeight(true), $('#popChart').outerHeight(true) );
+  };
+  
+  // if (av.dbg.flg.root) { console.log('Root: before av.ui.toggleResourceData'); }
+  //----------------------------------------------------------------------------------------------------------------------
+  //toggles showing resource data in right info panel (Stats window) in Populaton View
+  av.ui.toggleResourceData = function (from) {
+    console.log(from, 'called av.ui.toggleResourceData to to toggle dipslay of resource data');
+    if ('none' === document.getElementById('resrceDataHolder').style.display) {
+      document.getElementById('resrceDataHolder').style.display = 'block';
+    } else {
+      document.getElementById('resrceDataHolder').style.display = 'none';  //flex
     };
+    av.sgr.complexityChangeProcess('last-things-done');
+  };
 
-  //=========================================================================================== simulated dom action ===
-  // https://stackoverflow.com/questions/6157929/how-to-simulate-a-mouse-click-using-javascript?fbclid=IwAR0Ht17-ZP6Rb6paHLZUFoLPf_Hz0-WXRTv-dKS3SsZsymY8TsM7OJYinmQ
-  // 
-  // example call of av.dom.simulate
-  // av.dom.simulate(document.getElementById(defaultConfigDomID), "click");
-  //
-  // Note that as a third parameter you can pass in 'options'. The options you don't specify are taken from the 
-  // defaultOptions (see bottom of the script). So if you for example want to specify mouse coordinates you can do something like:
-  // simulate(document.getElementById("btn"), "click", { pointerX: 123, pointerY: 321 })
+  // if (av.dbg.flg.root) { console.log('Root: before av.ui.toggleResourceComplexity'); }
+  //----------------------------------------------------------------------------------------------------------------------
+  //toggles showing resource data in right info panel (Stats window) in Populaton View
+  av.ui.toggleResourceComplexity = function (from) {
+    console.log(from, 'called av.ui.toggleResourceComplexity to to toggle dipslay of complexityLevel');
+    if ('sgrBasic' === av.sgr.complexityLevel) {
+      av.sgr.complexityLevel = 'sgrAdvanced';
+    } else {
+        av.sgr.complexityLevel = 'sgrBasic';
+    }
+    av.ui.setResourceComplexity(av.sgr.complexityLevel, 'av.ui.toggleResourceComplexity');
+  };
+  
+av.ui.setResourceComplexity = function (level, from) {
+  document.getElementById('resrcComplexity').value = level;
+  av.sgr.complexityChangeProcess('av.ui.setResourceComplexity');
+};
+
+//=========================================================================================== simulated dom action ===
+// https://stackoverflow.com/questions/6157929/how-to-simulate-a-mouse-click-using-javascript?fbclid=IwAR0Ht17-ZP6Rb6paHLZUFoLPf_Hz0-WXRTv-dKS3SsZsymY8TsM7OJYinmQ
+// 
+// example call of av.dom.simulate
+// av.dom.simulate(document.getElementById(defaultConfigDomID), "click");
+//
+// Note that as a third parameter you can pass in 'options'. The options you don't specify are taken from the 
+// defaultOptions (see bottom of the script). So if you for example want to specify mouse coordinates you can do something like:
+// simulate(document.getElementById("btn"), "click", { pointerX: 123, pointerY: 321 })
 
 av.dom.simulate = function (element, eventName) {
     console.log('element', element, '; eventName=', eventName);
@@ -431,27 +560,27 @@ av.dom.simulate = function (element, eventName) {
     return element;
 };
 
-av.dom.simulateExtend = function(destination, source) {
-    for (var property in source)
-      destination[property] = source[property];
-    return destination;
-};
+  av.dom.simulateExtend = function(destination, source) {
+      for (var property in source)
+        destination[property] = source[property];
+      return destination;
+  };
 
-av.dom.simulateEventMatchers = {
-    'HTMLEvents': /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
-    'MouseEvents': /^(?:click|dblclick|mouse(?:down|up|over|move|out))$/
-};
-av.dom.simulateDefaultOptions = {
-    pointerX: 0,
-    pointerY: 0,
-    button: 0,
-    ctrlKey: false,
-    altKey: false,
-    shiftKey: false,
-    metaKey: false,
-    bubbles: true,
-    cancelable: true
-};
+  av.dom.simulateEventMatchers = {
+      'HTMLEvents': /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
+      'MouseEvents': /^(?:click|dblclick|mouse(?:down|up|over|move|out))$/
+  };
+  av.dom.simulateDefaultOptions = {
+      pointerX: 0,
+      pointerY: 0,
+      button: 0,
+      ctrlKey: false,
+      altKey: false,
+      shiftKey: false,
+      metaKey: false,
+      bubbles: true,
+      cancelable: true
+  };
   //======================================================================================= end simulated dom action ===
 
 
@@ -461,35 +590,132 @@ av.dom.simulateDefaultOptions = {
   //----------------------------------------------------------------------------------------------------------------------
 
   /*
-     //http://stackoverflow.com/questions/20773306/mozilla-firefox-not-working-with-window-onbeforeunload
-     var myEvent = window.attachEvent || window.addEventListener;
-     var chkevent = window.attachEvent ? 'onbeforeunload' : 'beforeunload'; /// make IE7, IE8 compitable
+    //http://stackoverflow.com/questions/20773306/mozilla-firefox-not-working-with-window-onbeforeunload
+    var myEvent = window.attachEvent || window.addEventListener;
+    var chkevent = window.attachEvent ? 'onbeforeunload' : 'beforeunload'; /// make IE7, IE8 compitable
 
-     myEvent(chkevent, function(e) { // For >=IE7, Chrome, Firefox
-     var confirmationMessage = 'Remember to save your workSpace before you leave Avida-ED';  // a space
-     (e || window.event).returnValue = confirmationMessage;
-     return confirmationMessage;
-     });
+    myEvent(chkevent, function(e) { // For >=IE7, Chrome, Firefox
+    var confirmationMessage = 'Remember to save your workSpace before you leave Avida-ED';  // a space
+    (e || window.event).returnValue = confirmationMessage;
+    return confirmationMessage;
+    });
 
-     function goodbye(e) {
-     if(!e) e = window.event;
-     //e.cancelBubble is supported by IE - this will kill the bubbling process.
-     e.cancelBubble = true;
-     e.returnValue = 'Have you saved your workspace?'; //This is displayed on the dialog
+    function goodbye(e) {
+    if(!e) e = window.event;
+    //e.cancelBubble is supported by IE - this will kill the bubbling process.
+    e.cancelBubble = true;
+    e.returnValue = 'Have you saved your workspace?'; //This is displayed on the dialog
 
-     //e.stopPropagation works in Firefox.
-     if (e.stopPropagation) {
-     e.stopPropagation();
-     e.preventDefault();
-     }
-     }
-     window.onbeforeunload=goodbye;
-     */
-
-  //----------------------------------------------------------------------------------------------------------------------
-
+    //e.stopPropagation works in Firefox.
+    if (e.stopPropagation) {
+    e.stopPropagation();
+    e.preventDefault();
+    }
+    }
+    window.onbeforeunload=goodbye;
+    */
 
   //----------------------------------------------------------------------------------------------------------------------
-  //   un used snips from file Data Write
-  //----------------------------------------------------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------------------------------------------------
+//   un used snips from file Data Write
+//----------------------------------------------------------------------------------------------------------------------
+// logicaly this should be in reSizePageParts, 
+// but putting the info here makes it easy to reference when writing in reSizePageParts.js
+//---------------------------------------------------------------------------------- notes on different types of size --
+//
+// div objects have size with width (x) and height (y) directions. 
+// there are several size modifies and trying to figure out which is which can be confusing. 
+
+// dom box model and size info   
+// https://stackoverflow.com/questions/21064101/understanding-offsetwidth-clientwidth-scrollwidth-and-height-respectively
+// There is a nested set of boxes with every div
+// margin
+//   border
+//     padding
+//       box (with actual content or guts
+// the size of stuff around the box gets added twice, once for each side
+// 
+// dom.name.offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
+// dom.name.clientWidth = box + 2*padding - scrollbar_width    
+// dom.name.scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
+// cssWidth = box only nothing else
+// dom.name.width
+// 
+// https://www.w3schools.com/jquery/css_width.asp
+// https://www.w3schools.com/jquery/jquery_dimensions.asp
+// 
+// $('#name').innerWidth()
+//    where name is from the id='name'   of the dom objecte in the html
+//  .height() - returns the height of element excludes padding, border and margin.
+//  .innerHeight() - returns the height of element includes padding but excludes border and margin.
+//  .outerHeight() - returns the height of the div including border but excludes margin.
+//  .outerHeight(true) - returns the height of the div including margin.
+// 
+// The difference between .css( "height" ) and .height() is that the former returns a value with units intact (for example, 400px).
+// while the latter returns a unit-less pixel value (for example, 400)
+// https://api.jquery.com/height/
+//   
+// var av.dom.name = $("#name"); // variable is longer than $ version so no real need to use
+//  
+// scrollbarWidth = offsetWidth - clientWidth - getComputedStyle().borderLeftWidth - getComputedStyle().borderRightWidth
+//  
+//
+// get css values
+//     //https://stackoverflow.com/questions/590602/padding-or-margin-value-in-pixels-as-integer-using-jquery
+//     //https://stackoverflow.com/questions/9592575/get-height-of-div-with-no-height-set-in-css
+//     
+// an example: the 10 at the end is to say base 10 rather than octal.
+//     console.log('av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight, 
+//       av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'),10));
+
+// 
+
+
+// should this move to an init page ui function?
+//get size of screen availbe for Avida-ED; used to keep on screen and get rid of scroll bars
+//http://ryanve.com/lab/dimensions/
+//https://andylangton.co.uk/blog/development/get-viewportwindow-size-width-and-height-javascript
+//https://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
+//window.screen.availWidth
+//window.innerWidth    or    window.outerWidth
+//console.log('documentElement Ht, scroll client', document.documentElement.scrollHeight, 
+//  document.documentElement.clientHeight);
+//if (document.documentElement.scrollHeight > document.documentElement.clientHeight) {
+//  document.documentElement.style.height = document.documentElement.clientHeight + 'px';
+//}
+//
+// Targeting common screen sizes   https://www.websitedimensions.com/
+
+// looks like tool-tip
+// https://www.w3schools.com/howto/howto_js_popup.asp
+// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup
+
+//
+// jQurey resize() Method
+// https://www.w3schools.com/jquery/event_resize.asp
+//
+// html reize element: 
+// https://codepen.io/sol0mka/pen/FnizC
+// 
+// Position relative to ancestor:
+// https://www.w3schools.com/cssref/pr_pos_right.asp
+//
+// Document Ready Examples
+// https://www.sitepoint.com/types-document-ready/
+// 
+// Forcing windows resize to fire
+// https://stackoverflow.com/questions/1861109/forcing-windows-resize-to-fire
+// https://stackoverflow.com/questions/23567483/jquery-fake-a-window-resize
+// https://stackoverflow.com/questions/277759/html-onresizeend-event-or-equivalent-way-to-detect-end-of-resize
+// https://stackoverflow.com/questions/2996431/detect-when-a-window-is-resized-using-javascript
+// https://stackoverflow.com/questions/14504079/jquery-trigger-function-above-a-certain-window-width
+
+
+
+//  cursor shapes:
+// use: col-resize   for changing the width between divs
+// use: row-resize   for changing the height between divs
+// https://developer.mozilla.org/en-US/docs/Web/CSS/cursor
+// https://www.w3schools.com/css/tryit.asp?filename=trycss_cursor
