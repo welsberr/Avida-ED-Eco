@@ -374,8 +374,9 @@ av.ui.resizePopLayout = function (from) {
 };
 //--------------------------------------------------------------------------------------------- av.ui.adjustpopInfoWd --
 // only called by av.ui.adjustpopInfoSize (which is below)
-// not in use becaues rite Panel Button is hiddenav.ui.adjustpopInfoWd = function (adjustGridWd) {
-var rightInfoHolderWd = av.dom.rightInfoHolder.offsetWidth - adjustGridWd;  //adjustGridWd postive means Grid needs width
+// not in use becaues rite Panel Button is hidden
+av.ui.adjustpopInfoWd = function (adjustGridWd) {
+  var rightInfoHolderWd = av.dom.rightInfoHolder.offsetWidth - adjustGridWd;  //adjustGridWd postive means Grid needs width
   if (av.debug.uil) { console.log('ui: rightInfoHolderWd=', rightInfoHolderWd, '; av.ui.rightInfoHolderMinWd', av.ui.rightInfoHolderMinWd); }
   if (rightInfoHolderWd < av.ui.rightInfoHolderMinWd) {
     var navColWd = av.dom.navColId.offsetWidth;
@@ -491,7 +492,7 @@ av.ptd.ritePanelButton = function () {
 //---------------------------------------------------------------------------------------- end av.ptd.ritePanelButton --
 
 // supposed to make the center section larger. does not so button hidden
-document.getElementById('ritePanelButton').onclick = function() { av.ptd.ritePanelButton(); };
+// document.getElementById('ritePanelButton').onclick = function() { av.ptd.ritePanelButton(); };
 //--------------------------------------------------------------------------------------- end ritePanelButton.onclick --
 
 

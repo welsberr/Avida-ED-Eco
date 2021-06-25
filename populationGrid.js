@@ -633,7 +633,7 @@
       av.grd.drawKids();
       av.grd.drawParent();
     }
-    //Draw Selected as one of the last items to draw
+    // Draw Selected as one of the last items to draw
     if (av.grd.flagSelected) { av.grd.drawSelected(); };
     if ('prepping' !== av.grd.runState) {
       if ('r' == document.getElementById('colorMode').value.substring(0,1) && av.ui.showOutlineFlag ) av.grd.DrawAvidaOutline();
