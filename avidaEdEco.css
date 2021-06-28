@@ -498,6 +498,8 @@ html {
   background: darkgrey;
 }
 #gridCnvsHldr{
+  width:100%; /* yemi: makes sure the container fills the entire width of the space available */
+  height:100%; /* yemi: makes sure the container fills the entire height of the space available */
   margin: auto;
   padding: auto;
 }
@@ -2000,6 +2002,15 @@ checkbox:focus {
   width: 50%;
 }
 
+/*
+yemi: this is the make sure canvas fills the entire container while also maintaining aspect ratio
+*/
+canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 /********************************************************************************************** end of modalBig class */                                                                         */
 
 /*************************************************************************************************** no longer in use */
@@ -2055,3 +2066,6 @@ checkbox:focus {
     background: #F5F5F5; /* red; */
     overflow:hidden;
   }
+
+
+
