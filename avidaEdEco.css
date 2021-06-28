@@ -489,7 +489,7 @@ html {
 
 #gridHolder {
   border: 1px solid #AAA;
-  flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {flex:1;} both prevent resize */
+  flex: auto;                 /* fills remaining space; {flex:1 1 auto;} is the same as {flex:1;} both prevent resize */
   background: #F5F5F5; /* blue; */
   overflow:auto;
   min-width: 20px;
