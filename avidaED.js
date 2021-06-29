@@ -76,17 +76,8 @@
 // Path in TX for Filezilla /var/www/vhosts/bwng/public_html/projects/Avida-ED
 //                          /var/www/vhosts/bwng/public_html/projects/
 //
-// Dreamweaver no longer in use ----------------------------------------------------------------------------------------
-//
-// for things on Darwin (dream weaver site)
-// ssh -l diane darwin.beacon.msu.edu/html
-// var/sites/Avida-ED.msu.edu
-// emacs home.html
-//
-// to get to mac files on parallels
-// net use z: \\Mac\Home
-//
 //----------------------------------------------------------------------------------------------------------------------
+//  Notes on problems below:
 //---------------------------------------------------------------------------------------------------------- Problems --
 //  
 //  Population Page -------
@@ -110,7 +101,7 @@
 //  Fix av.anl.widg = {   statement on globals in Avida-ED 3.2 to match the one in Avida-ED-4 ecology
 //  
 //----------------------------------------------------------------------------------------------------------------------
-// 
+
 
 // if (av.dbg.flg.root) { console.log('Root: before require statement'); }
 var av = av || {};  //incase av already exists
@@ -249,7 +240,6 @@ require([
 
   // if (av.dbg.flg.root) { console.log('Root: before av.dom.load'); };
   av.dom.load();
-
   av.dom.initilizeDigitData();
   av.dom.initilizeAnalizePage(); 
 
@@ -479,26 +469,6 @@ require([
     }
   });
 
-  // 2019-04-14: Untested.
-  /*
-   dojo.connect( av.dnd.fzMdish, "onDndDrop", function( source, nodes, copy, target ) {
-   if ('fzMdish' === target.node.id) {
-   nodes.forEach(function(node) {
-   av.dnd.sortDnD('fzMdish');
-   });
-   }
-   });
-   
-   // 2019-04-14: Untested.
-   dojo.connect( av.dnd.fzRdish, "onDndDrop", function( source, nodes, copy, target ) {
-   if ('fzRdish' === target.node.id) {
-   nodes.forEach(function(node) {
-   av.dnd.sortDnD('fzRdish');
-   });
-   }
-   });
-   */
-
   // if (av.dbg.flg.root) { console.log('Root: before av.dnd.ancestorBox'); }
   av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
     if ('ancestorBox' === target.node.id) {
@@ -647,386 +617,178 @@ require([
     };
   };
 
-   // if (av.dbg.flg.root) { console.log('Root: before Error Logging'); }
-  //********************************************************************************************************************
-  // Error logging
-  //********************************************************************************************************************
-  //--------------------------------------------------------------------------------------------------------------------
-  //https://bugsnag.com/blog/js-stacktracess
-  //http://blog.bugsnag.com/js-stacktraces
-  window.onerror = function (message, file, line, col, error) {
-    //console.log('in window.onerror 633');
-    av.dom.runStopButton.innerHTML = 'Run';  //av.msg.pause('now');
-    av.debug.finalizeDtail();
-    av.debug.triggered = 'errorTriggered';
-    av.post.postLogPara = 'Please send the info below to help us make Avida-ED better by clicking on the [Send] button';
-    av.debug.sendLogPara = 'The error is at the beginning and end of the session log in the text below.';
-    av.debug.postEmailLabel = 'Please include your e-mail if you would like feed back or are willing to further assist in debug';
-    av.debug.postNoteLabel = 'Please include any additional comments in the field below.';
-    av.debug.postEmailLabel = 'Please include your e-mail for feedback or so we can discuss the problem further';
-    av.debug.error = 'Error: ' + message + ' from ' + file + ':' + line + ':' + col;
-    av.debug.sendLogScrollBox = av.debug.error + '\n\n' + av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail + '\n\n' + av.debug.error;
+// if (av.dbg.flg.root) { console.log('Root: before Error Logging'); }
+//********************************************************************************************************************
+// Error logging
+//********************************************************************************************************************
+//--------------------------------------------------------------------------------------------------------------------
+//https://bugsnag.com/blog/js-stacktracess
+//http://blog.bugsnag.com/js-stacktraces
+window.onerror = function (message, file, line, col, error) {
+  //console.log('in window.onerror 633');
+  av.dom.runStopButton.innerHTML = 'Run';  //av.msg.pause('now');
+  av.debug.finalizeDtail();
+  av.debug.triggered = 'errorTriggered';
+  av.post.postLogPara = 'Please send the info below to help us make Avida-ED better by clicking on the [Send] button';
+  av.debug.sendLogPara = 'The error is at the beginning and end of the session log in the text below.';
+  av.debug.postEmailLabel = 'Please include your e-mail if you would like feed back or are willing to further assist in debug';
+  av.debug.postNoteLabel = 'Please include any additional comments in the field below.';
+  av.debug.postEmailLabel = 'Please include your e-mail for feedback or so we can discuss the problem further';
+  av.debug.error = 'Error: ' + message + ' from ' + file + ':' + line + ':' + col;
+  av.debug.sendLogScrollBox = av.debug.error + '\n\n' + av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail + '\n\n' + av.debug.error;
 
-    //console.log('inside Window.on_Error: before call problemWindow');
-    av.ui.problemWindow('window.onerror');
-  };
-
-  //--------------------------------------------------------------------------------------------------------------------
-  //More usefull websites to catch errors
-  // https://davidwalsh.name/javascript-stack-trace
-  // https://danlimerick.wordpress.com/2014/01/18/how-to-catch-javascript-errors-with-window-onerror-even-on-chrome-and-firefox/
-  //to send e-mail  http://stackoverflow.com/questions/7381150/how-to-send-an-email-from-javascript
-
-  // how to send e-mail
-  // http://www.codeproject.com/Questions/303284/How-to-send-email-in-HTML-or-Javascript
-
-  // selected text
-  // http://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
-  // http://www.javascriptkit.com/javatutors/copytoclipboard.shtml
-  
-  // if (av.dbg.flg.root) { console.log('Root: defore av.ui.problemWindow'); }
-  //process problme pop-up window
-  av.ui.problemWindow = function (from) {
-    console.log(from, 'called av.ui.problemWindow 665');
-    av.debug.vars = {
-      isBlink: av.brs.isBlink,
-      isChrome: av.brs.isChrome,
-      isEdge: av.brs.isEdge,
-      isFirefox: av.brs.isFirefox,
-      isIE: av.brs.isIE,
-      isOpera: av.brs.isOpera,
-      isSafari: av.brs.isSafari
-    };
-
-    av.debug.postData = {
-      version: av.ui.version,
-      userInfo: window.navigator.userAgent,
-      screenSize: av.brs.userData.screen,
-      comment: 'userComment',
-      error: av.debug.error,
-      email: 'user email if provided',
-      triggered: av.debug.triggered,
-      logs: {
-        details: av.debug.dTail,
-        session: av.debug.log
-      },
-      freezer: JSON.stringify(av.fzr),
-      vars: av.debug.vars
-    };
-    //console.log('postData=', av.debug.postData); 
-
-    //Until we get sending data to database figure out. Switch between post and e-mail session log
-    if (false) {
-      console.log('sendLogModalID=', document.getElementById('sendLogModalID') );
-      //Need to be able to get rid of these three lines for postPost. will crash without them now.
-      document.getElementById('sendLogModalID').style.display = "block";  //textarea must be visable first
-      av.dom.sendLogScrollBox.focus();   //must not be commented out or extra error
-      document.getElementById('sendLogModalID').style.display = "none";   //sendLogDialog.hide();  
-      av.post.sendWindow();
-    }
-    //e-mail in production version until database worked out.
-    else {
-      av.post.emailWindow();
-    }
-  };
-
-  av.post.emailWindow = function () {
-    //console.log('in av.post.emailWindow 708');
-    av.dom.sendLogScrollBox.textContent = av.debug.sendLogScrollBox;
-    av.dom.sendLogPara.textContent = av.debug.sendLogPara;
-
-    //document.getElementById('postLogTextarea').textContent = av.debug.sendLogScrollBox;
-    //document.getElementById('postLogPara').textContent = av.debug.sendLogPara;
-
-    document.getElementById('sendLogModalID').style.display = 'block';  //sendLogDialog.show();  //textarea must be visable first
-    av.dom.sendLogScrollBox.focus();
-    //av.dom.sendLogScrollBox.select();  //https://css-tricks.com/snippets/javascript/auto-select-textarea-text/
-  };
-  
-  av.ui.closeSendModalFn = function(){
-    document.getElementById('sendLogmodalID').style.display = 'none';
-  };
-  
-  //--------------------------------------------------------------------------------------------------------------------
-    
-  av.post.sendWindow = function () {
-    console.log('in av.post.sendWindow; used for database; not email');
-    av.dom.postLogPara.textContent = av.post.postLogPara;  //textarea must be visable first
-    document.getElementById('postLogModalID').style.display = 'block';
-    av.dom.postVersionLabel.textContent = av.ui.version;
-    av.dom.postScreenSize.textContent = av.brs.userData.screen;
-    av.dom.postUserInfoLabel.textContent = window.navigator.userAgent.toString();
-    av.dom.postError.textContent = av.debug.error;
-    av.dom.postError.style.color = 'red';
-    av.dom.postEmailLabel.textContent = av.debug.postEmailLabel;
-    av.dom.postNoteLabel.textContent = av.debug.postNoteLabel;
-    av.dom.postStatus.textContent = av.debug.postStatus;
-    av.dom.postLogTextarea.textContent = av.debug.log;
-    av.dom.postdTailTextarea.textContent = av.debug.dTail;
-    av.dom.postProblemError.textContent = '';
-  };
-  
-  window.addEventListener('error', function (evt) {
-    console.log('In window.addEventListener: event listener', evt);
-  });
-  //--------------------------------------------------------------------------------------------
-  //http://www.technicaladvices.com/2012/03/26/detecting-the-page-leave-event-in-javascript/
-  //Cannot get custom message in Firefox (or Safari for now)
-  
-
-  on(document.getElementById('postPost'), 'click', function () {
-    console.log('in on(document.getElementById(postPost)');
-    av.post.addUser('Button: postPost');
-    //Data to send
-    av.debug.postData.email = av.dom.postEmailInput.value;
-    av.debug.postData.comment = av.dom.postComment.value;
-    console.log('postData=', av.debug.postData);
-
-    av.dom.postStatus.textContent = 'Sending';
-    av.dom.postProblemError.textContent = '';
-
-    //domConst.place('<p>sending message</p>', 'postStatus');
-    var hostname = 'https://avida-ed.msu.edu/developer/report/receive';
-
-    xhr.post(//Post is a helper function to xhr, a more generic class
-      hostname, //URL parameter
-      {//Data and halding parameter
-        data: dojo.toJson(av.debug.postData),
-        headers: {'X-Requested-With': null}
-      }
-    ).then(function (received) { //Promise format; received data from request (first param of then)
-      av.dom.postStatus.textContent = 'Received';
-      //domConst.place('<p>Data received: <code>' + JSON.stringify(received) + '</code></p>', 'postStatus');
-    }, function (err) { //Error handling (second param of then)
-      av.dom.postStatus.textContent = 'Error';
-      av.dom.postProblemError.textContent = 'Please send an e-mail to ' + av.fio.mailAddress + ' about the error sending a Problem Report';
-      av.dom.postProblemError.style.color = 'red';
-
-      //domConst.place('<p>Error: <code>' + JSON.stringify(err) + '</code></p>', 'postStatus');
-    }
-    ); // End then
-  }); // End on's function and on statement
-
-  //--------------------------------------------------------------------------------------------------------------------
-    
-  //********************************************************************************************************************
-  // Menu Buttons handling
-  //********************************************************************************************s************************
-
-  // if (av.dbg.flg.root) { console.log('Root: dijit test', dijit.byId('mnFlOpenDefaultWS')); }
-
-  // if (av.dbg.flg.root) { console.log('Root: before mnFlOpenDefaultWS'); }
-  dijit.byId('mnFlOpenDefaultWS').on('Click', function () {
-    'use strict';
-    av.post.addUser('Button: mnFlOpenDefaultWS');
-    av.fio.useDefault = true;
-    if ('no' === av.fzr.saveState) {
-      sWSfDialog.show();  //Save WSfile Dialog box
-    }
-    else {
-      av.fio.readZipWS(av.fio.defaultFname, false);  //loadConfigFlag = false = do not load config file
-    }
-  });
-
-  dijit.byId('sWSfSave').on('Click', function () {
-    av.post.addUser('Button: sWSSave');
-    //console.log('before call save workspace');
-    av.fio.fzSaveCurrentWorkspaceFn();  //fileIO.js
-    //console.log('after call to save workspace');
-  });
-
-  dijit.byId('sWSfOpen').on('Click', function () {
-    av.post.addUser('Button: sWSfOpen');
-    sWSfDialog.hide(sWSfDialog.hide);
-    if (av.fio.useDefault) {
-      av.fio.readZipWS(av.fio.defaultFname, false);  //loadConfigFlag = false = do not load config file
-    }  
-    //false = do not load config file
-    else {
-      //document.getElementById('inputFile').click();  //to get user picked file
-      document.getElementById('putWS').click();  //to get user picked file
-    }
-  });
-
-  // open and read user picked file
-  //--------------------------------------------------------------------------------------------------------------------
-  dijit.byId('mnFlOpenWS').on('Click', function () {
-    'use strict';
-    av.post.addUser('Button: mnFlOpenWS');
-    av.fio.useDefault = false;
-    if ('no' === av.fzr.saveState) {
-      sWSfDialog.show();   //Need to change to include might be saved tiba fix
-    }
-    //else document.getElementById('inputFile').click();
-    else {
-      document.getElementById('putWS').click();  // calls av.fio.userPickZipRead
-    }
-  });
-
-  //--------------------------------------------------------------------------------------------------------------------
-  dijit.byId('mnFlFzItem').on('Click', function () {
-    'use strict';
-    av.post.addUser('Button: mnFlFzItem');
-    av.fio.useDefault = false;
-    //console.log('importFzrItem', importFzrItem);
-    document.getElementById('importFzrItem').click();
-  });
-
-  //--------------------------------------------------------------------------------------------------------------------
-  // Save current workspace (mnFzSaveWorkspace)
-  document.getElementById('mnFlSaveWorkspace').onclick = function () {
-    if (!av.brs.isSafari) {
-      //if (true) {
-      av.post.addUser('Button: mnFlSaveWorkspace');
-      av.fio.fzSaveCurrentWorkspaceFn();  //fileIO.js
-    }
-  };
-
-  try {
-    var isFileSaverSupported = !!new Blob;
-  } catch (e) {
-    console.log('----------------------------------------------------------filesaver supported?', e);
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  // Save current workspace with a new name
-  document.getElementById('mnFlSaveAs').onclick = function () {
-    if (!av.brs.isSafari) {
-      //if (true) {
-      av.post.addUser('Button: mnFlSaveAs');
-      var suggest = 'avidaWS.avidaWs.zip';
-      if (av.fio.userFname) {
-        if (0 < av.fio.userFname.length) { suggest = av.fio.userFname; }
-      }
-      av.fio.userFname = prompt('Choose a new name for your Workspace now', suggest);
-      if (null !== av.fio.userFname) {
-        av.fio.fzSaveCurrentWorkspaceFn();
-      }  //fileIO.js
-    }
-  };
-
-  //--------------------------------------------------------------------------------------------------------------------
-  //Export csv data from current run.
-  dijit.byId('mnFlExportData').on('Click', function () {
-    'use strict';
-    av.post.addUser('Button: mnFlExportData');
-    av.fwt.writeCurrentCSV(av.fzr.actConfig.name + '@' + av.grd.popStatsMsg.update + '\n');
-  });
-
-  //--------------------------------------------------------------------------------------------------------------------
-  //Export chart data from current run.
-  dijit.byId('mnFlExportGraph').on('Click', function () {
-    'use strict';
-    av.post.addUser('Button: mnFlExportGraph');
-    mnFlExportGraphDialog.show();
-  });
-
-  //--------------------------------------------------------------------------------------------------------------------
-  //Save Stand alone applicaton.
-  dijit.byId('mnFlStandAloneApp').on('Click', function () {
-    'use strict';
-    av.post.addUser('Button: mnFlExportGraph');
-    mnFlStandAloneAppDialog.show();
-  });
-
- //----------------------------------------- Testing & Development Tools that are hidden from from User .---------------
-  av.doj.mnHpDebug.onclick = function () {
-    if ('visible' === av.doj.mnDebug.style.visibility) {
-      av.doj.mnDebug.style.visibility = 'hidden';
-      dijit.byId('mnHpDebug').set('label', 'Show debug menu');
-      av.post.addUser('Button: mnHpDebug: now hidden; avidaED.js');
-    } else {
-      av.doj.mnDebug.style.visibility = 'visible';
-      dijit.byId('mnHpDebug').set('label', 'Hide debug menu');
-      av.post.addUser('Button: mnHpDebug: now visible');
-    }
-  };
-
-  av.ui.where = function (domobj) {
-    // placeholder that was to return the cell ID in the grid; this was never done. 
-    console.log('domobj=', domobj);
-  };
-
-  // if (av.dbg.flg.root) { console.log('Root: before Help drop down menu'); }
-  //--------------------------------------------------------------------------------------------------------------------
-  // Help Drop down menu buttons
-  //--------------------------------------------------------------------------------------------------------------------
-  
-  // onclick='av.ui.aboutAvidaED'
-  av.ui.aboutAvidaED = function(from) {
-    av.post.addUser('Button: display About Avida-ED from:', from);
-    document.getElementById('aboutAvidaED_ModalID').style.display = 'block';
-    var num = $('#aboutAvidaED_content').height() - ($('#aboutAvidaED_grid_container').height() + 80);
-    console.log('ht = ', num);
-    document.getElementById('avidaEDaboutScrollBox').style.height = num + 'px';
-    console.log('in av.ui.aboutAvidaED: from=', from);    
-  };
-
-  //document.getElementById('aboutAvidaED_Cancel').onclick = function () {
-  av.ui.aboutAvidaED_Close = function() {
-    document.getElementById('aboutAvidaED_ModalID').style.display = 'none';
-  };
-
-  dijit.byId('mnAePreferences').on('Click', function () {
-    av.post.addUser('Button: mnAePreferences');
-    //console.log('in mnAePreferences.click');
-    document.getElementById('preferences_ModalID').style.display = 'block';
-  });
-
-av.ui.email = function() {
-    av.post.addUser('Button: mnHpAbout');
-    av.ui.emailAvidaED();
-    document.getElementById('email_ModalID').style.display = 'block';
-    console.log('in av.ui.email');    
-  };
-  
-av.ui.closeSendModalFn = () => {
-  document.getElementById('sendLogModalID').style.display = 'none';
+  //console.log('inside Window.on_Error: before call problemWindow');
+  av.ui.problemWindow('window.onerror');
 };
-  
-  av.sgr.complexityChange = function (domObj) {
-    console.log('the complexity requested is:', domObj.value);
-    av.sgr.complexityLevel = domObj.value;
-    av.sgr.complexityChangeProcess('av.sgr.complexityChange');
-  };
-   
-  av.ui.language = function (domObj) {
-    av.ui.language = domObj.value;
-    console.log('not yet implemented: the language requested is:', domObj.value);
-  };
- 
-  av.ui.closePreferences = function () {
-    document.getElementById('preferences_ModalID').style.display = 'none';
+
+//--------------------------------------------------------------------------------------------------------------------
+//More usefull websites to catch errors
+// https://davidwalsh.name/javascript-stack-trace
+// https://danlimerick.wordpress.com/2014/01/18/how-to-catch-javascript-errors-with-window-onerror-even-on-chrome-and-firefox/
+//to send e-mail  http://stackoverflow.com/questions/7381150/how-to-send-an-email-from-javascript
+
+// how to send e-mail
+// http://www.codeproject.com/Questions/303284/How-to-send-email-in-HTML-or-Javascript
+
+// selected text
+// http://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
+// http://www.javascriptkit.com/javatutors/copytoclipboard.shtml
+
+// if (av.dbg.flg.root) { console.log('Root: defore av.ui.problemWindow'); }
+//process problme pop-up window
+av.ui.problemWindow = function (from) {
+  console.log(from, 'called av.ui.problemWindow 665');
+  av.debug.vars = {
+    isBlink: av.brs.isBlink,
+    isChrome: av.brs.isChrome,
+    isEdge: av.brs.isEdge,
+    isFirefox: av.brs.isFirefox,
+    isIE: av.brs.isIE,
+    isOpera: av.brs.isOpera,
+    isSafari: av.brs.isSafari
   };
 
-  dijit.byId('mnHpProblem').on('Click', function () {
-    av.post.addUser('Button: mnHpProblem');
-    av.debug.finalizeDtail();
-    av.debug.triggered = 'userTriggered';
-    av.debug.postStatus = '';
-    av.post.postLogPara = 'Please send the data below to help us make Avida-ED better by clicking on the [Send] button';
-    av.debug.sendLogPara = 'Please describe the problem and put that at the beginning of the e-mail along with the session log from the text area seeen below.';
-    av.debug.postNoteLabel = 'Please describe the problem or suggestion in the comment field below.';
-    av.debug.postEmailLabel = 'Please include your e-mail so we can discuss your problem or suggeston further.';
-    av.debug.sendLogScrollBox = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail;
-    av.debug.error = '';
-    av.dom.postError.style.color = 'grey';
-    av.ui.problemWindow("dijit.byId('mnHpProblem').on('Click', function ()");
-    // only shows one line = prompt('Please put this in an e-mail to help us improve Avida-ED: Copy to clipboard: Ctrl+C, Enter', '\nto: ' + av.fio.mailAddress + '\n' + av.debug.log);
-  });
-
-  //http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
-  av.ui.sendLogEmailFn = function () {
-    console.log('in sendLogEmailFn');
-    av.ui.sendEmailFlag = true;
-    av.post.addUser('Button: sendEmail');
-    var link = 'mailto:' + av.fio.mailAddress +
-      //'?cc=CCaddress@example.com' +
-      '?subject=' + escape('Avida-ED session log') +
-      '&body=' + escape(av.debug.sendLogScrollBox);
-    window.location.href = link;
-    av.ui.sendEmailFlag = false;
+  av.debug.postData = {
+    version: av.ui.version,
+    userInfo: window.navigator.userAgent,
+    screenSize: av.brs.userData.screen,
+    comment: 'userComment',
+    error: av.debug.error,
+    email: 'user email if provided',
+    triggered: av.debug.triggered,
+    logs: {
+      details: av.debug.dTail,
+      session: av.debug.log
+    },
+    freezer: JSON.stringify(av.fzr),
+    vars: av.debug.vars
   };
+  //console.log('postData=', av.debug.postData); 
+
+  //Until we get sending data to database figure out. Switch between post and e-mail session log
+  if (false) {
+    console.log('sendLogModalID=', document.getElementById('sendLogModalID') );
+    //Need to be able to get rid of these three lines for postPost. will crash without them now.
+    document.getElementById('sendLogModalID').style.display = "block";  //textarea must be visable first
+    av.dom.sendLogScrollBox.focus();   //must not be commented out or extra error
+    document.getElementById('sendLogModalID').style.display = "none";   //sendLogDialog.hide();  
+    av.post.sendWindow();
+  }
+  //e-mail in production version until database worked out.
+  else {
+    av.post.emailWindow();
+  }
+};
+
+av.post.emailWindow = function () {
+  //console.log('in av.post.emailWindow 708');
+  av.dom.sendLogScrollBox.textContent = av.debug.sendLogScrollBox;
+  av.dom.sendLogPara.textContent = av.debug.sendLogPara;
+
+  //document.getElementById('postLogTextarea').textContent = av.debug.sendLogScrollBox;
+  //document.getElementById('postLogPara').textContent = av.debug.sendLogPara;
+
+  document.getElementById('sendLogModalID').style.display = 'block';  //sendLogDialog.show();  //textarea must be visable first
+  av.dom.sendLogScrollBox.focus();
+  //av.dom.sendLogScrollBox.select();  //https://css-tricks.com/snippets/javascript/auto-select-textarea-text/
+};
+
+av.ui.closeSendModalFn = function(){
+  document.getElementById('sendLogmodalID').style.display = 'none';
+};
+
+//--------------------------------------------------------------------------------------------------------------------
+
+av.post.sendWindow = function () {
+  console.log('in av.post.sendWindow; used for database; not email');
+  av.dom.postLogPara.textContent = av.post.postLogPara;  //textarea must be visable first
+  document.getElementById('postLogModalID').style.display = 'block';
+  av.dom.postVersionLabel.textContent = av.ui.version;
+  av.dom.postScreenSize.textContent = av.brs.userData.screen;
+  av.dom.postUserInfoLabel.textContent = window.navigator.userAgent.toString();
+  av.dom.postError.textContent = av.debug.error;
+  av.dom.postError.style.color = 'red';
+  av.dom.postEmailLabel.textContent = av.debug.postEmailLabel;
+  av.dom.postNoteLabel.textContent = av.debug.postNoteLabel;
+  av.dom.postStatus.textContent = av.debug.postStatus;
+  av.dom.postLogTextarea.textContent = av.debug.log;
+  av.dom.postdTailTextarea.textContent = av.debug.dTail;
+  av.dom.postProblemError.textContent = '';
+};
+
+window.addEventListener('error', function (evt) {
+  console.log('In window.addEventListener: event listener', evt);
+});
+//--------------------------------------------------------------------------------------------
+//http://www.technicaladvices.com/2012/03/26/detecting-the-page-leave-event-in-javascript/
+//Cannot get custom message in Firefox (or Safari for now)
+
+
+on(document.getElementById('postPost'), 'click', function () {
+  console.log('in on(document.getElementById(postPost)');
+  av.post.addUser('Button: postPost');
+  //Data to send
+  av.debug.postData.email = av.dom.postEmailInput.value;
+  av.debug.postData.comment = av.dom.postComment.value;
+  console.log('postData=', av.debug.postData);
+
+  av.dom.postStatus.textContent = 'Sending';
+  av.dom.postProblemError.textContent = '';
+
+  //domConst.place('<p>sending message</p>', 'postStatus');
+  var hostname = 'https://avida-ed.msu.edu/developer/report/receive';
+
+  xhr.post(//Post is a helper function to xhr, a more generic class
+    hostname, //URL parameter
+    {//Data and halding parameter
+      data: dojo.toJson(av.debug.postData),
+      headers: {'X-Requested-With': null}
+    }
+  ).then(function (received) { //Promise format; received data from request (first param of then)
+    av.dom.postStatus.textContent = 'Received';
+    //domConst.place('<p>Data received: <code>' + JSON.stringify(received) + '</code></p>', 'postStatus');
+  }, function (err) { //Error handling (second param of then)
+    av.dom.postStatus.textContent = 'Error';
+    av.dom.postProblemError.textContent = 'Please send an e-mail to ' + av.fio.mailAddress + ' about the error sending a Problem Report';
+    av.dom.postProblemError.style.color = 'red';
+
+    //domConst.place('<p>Error: <code>' + JSON.stringify(err) + '</code></p>', 'postStatus');
+  }
+  ); // End then
+}); // End on's function and on statement
+
+//http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
+av.ui.sendLogEmailFn = function () {
+  console.log('in sendLogEmailFn');
+  av.ui.sendEmailFlag = true;
+  av.post.addUser('Button: sendEmail');
+  var link = 'mailto:' + av.fio.mailAddress +
+    //'?cc=CCaddress@example.com' +
+    '?subject=' + escape('Avida-ED session log') +
+    '&body=' + escape(av.debug.sendLogScrollBox);
+  window.location.href = link;
+  av.ui.sendEmailFlag = false;
+};
 
 /* 
 //http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
@@ -1042,488 +804,724 @@ av.ui.closeSendModalFn = () => {
   });
 */
 
-  av.debug.finalizeDtail = function () {
-    //finalize dTail
-    //dom dimensions clientWidth clientHeight scrollWidth scrollHeight innerWidth innerHeight outerWidth outerHeight
-    //assignment must have units and is a string style.width style.height
-    av.debug.dTail = ''
-      + '\nmapHolder.client wd Ht = ' + av.dom.mapHolder.clientWidth + '  ' + av.dom.mapHolder.clientHeight
-      + '\nmapHolder.scroll wd Ht = ' + av.dom.mapHolder.scrollWidth + '  ' + av.dom.mapHolder.scrollHeight
-      + '\n  gridHolder.client wd Ht = ' + av.dom.gridHolder.clientWidth + '  ' + av.dom.gridHolder.clientHeight
-      + '\n  gridHolder.scroll wd Ht = ' + av.dom.gridHolder.scrollWidth + '  ' + av.dom.gridHolder.scrollHeight
-      + '\n  gridCanvas.client wd Ht = ' + av.dom.gridCanvas.clientWidth + '  ' + av.dom.gridCanvas.clientHeight
-      + '\n  gridCanvas.scroll wd Ht = ' + av.dom.gridCanvas.scrollWidth + '  ' + av.dom.gridCanvas.scrollHeight
-      + '\n' + av.debug.dTail;
+av.debug.finalizeDtail = function () {
+  //finalize dTail
+  //dom dimensions clientWidth clientHeight scrollWidth scrollHeight innerWidth innerHeight outerWidth outerHeight
+  //assignment must have units and is a string style.width style.height
+  av.debug.dTail = ''
+    + '\nmapHolder.client wd Ht = ' + av.dom.mapHolder.clientWidth + '  ' + av.dom.mapHolder.clientHeight
+    + '\nmapHolder.scroll wd Ht = ' + av.dom.mapHolder.scrollWidth + '  ' + av.dom.mapHolder.scrollHeight
+    + '\n  gridHolder.client wd Ht = ' + av.dom.gridHolder.clientWidth + '  ' + av.dom.gridHolder.clientHeight
+    + '\n  gridHolder.scroll wd Ht = ' + av.dom.gridHolder.scrollWidth + '  ' + av.dom.gridHolder.scrollHeight
+    + '\n  gridCanvas.client wd Ht = ' + av.dom.gridCanvas.clientWidth + '  ' + av.dom.gridCanvas.clientHeight
+    + '\n  gridCanvas.scroll wd Ht = ' + av.dom.gridCanvas.scrollWidth + '  ' + av.dom.gridCanvas.scrollHeight
+    + '\n' + av.debug.dTail;
+};
+
+//********************************************************************************************************************
+// End of Error logging
+//********************************************************************************************************************
+
+//********************************************************************************************************************
+// buttons in the Header Row
+//********************************************************************************************s************************
+
+// supposed to make the center section larger. does not work so button hidden
+  document.getElementById('ritePanelButton').onclick = function () {
+    av.ptd.ritePanelButton();
+    console.log('in ritePanelButton.onclick');
   };
+//--------------------------------------------------------------------------------------- end ritePanelButton.onclick --
 
-  //********************************************************************************************************************
-  // main button scripts
-  //********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
+// Menu Buttons handling
+//----------------------------------------------------------------------------------------------------------------------
 
-  //The style display: 'none' cannnot be used in the html during the initial load as the dijits won't work right
-  //visibility:hidden can be used, but it leaves the white space and just does not display dijits.
-  //So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
-  //the default option.
-  // if (av.dbg.flg.root) { console.log('Root: before av.ui.mainBoxSwap defined'); }
-  av.ui.mainBoxSwap = function (showBlock) {
-    //console.log('showBlock=', showBlock);
-    av.ui.page = showBlock;
-    av.dom.populationBlock.style.display = "none";
-    av.dom.organismBlock.style.display = "none";
-    av.dom.analysisBlock.style.display = "none";
-    av.dom.showTextDebugBlock.style.display = "none";
-    av.dom.orgInfoHolder.style.display = 'none';
-    av.dom.popInfoVert.style.display = 'none';
-    av.dom.populationButton.style.background = 'white';
-    av.dom.organismButton.style.background = 'white';
-    av.dom.analysisButton.style.background = 'white';
-    av.dom.showTextDebugButton.style.background = 'white';
-    document.getElementById(showBlock).style.display = "flex";   //orgPageButtonHolder
-    var showButton = showBlock.substring(0,showBlock.length-5)+'Button';
-    console.log('showButton=',showButton);
-    document.getElementById(showButton).style.background = '#DBDBDB'; 
-    //dijit.byId(showBlock).resize();
-    //document.getElementById(showBlock).resize();
 
-    //disable menu options. they will be enabled when relevant canvas is drawn
-    dijit.byId('mnFzOffspring').attr('disabled', true);
-    dijit.byId('mnCnOffspringTrace').attr('disabled', true);
+// if (av.dbg.flg.root) { console.log('Root: dijit test', dijit.byId('mnFlOpenDefaultWS')); }
 
-    // if the miniplot on the populaton page needs to be initiated call that funciton.
-    console.log('In: av.ui.mainBoxSwap; av.pch.needInit=', av.pch.needInit, '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));
-    if ($(av.dom.popStatsBlock).is(":visible") && (av.pch.needInit) ) {
-      av.grd.popChartInit('av.ui.mainBoxSwap');
-    };
-    if ('populationBlock' == av.ui.page) {
-      av.dom.popInfoVert.style.display = 'block';
-      document.getElementById('allAvidaContainer').className = 'all3pop';
+// if (av.dbg.flg.root) { console.log('Root: before mnFlOpenDefaultWS'); }
+dijit.byId('mnFlOpenDefaultWS').on('Click', function () {
+  'use strict';
+  av.post.addUser('Button: mnFlOpenDefaultWS');
+  av.fio.useDefault = true;
+  if ('no' === av.fzr.saveState) {
+    sWSfDialog.show();  //Save WSfile Dialog box
+  }
+  else {
+    av.fio.readZipWS(av.fio.defaultFname, false);  //loadConfigFlag = false = do not load config file
+  }
+});
+
+dijit.byId('sWSfSave').on('Click', function () {
+  av.post.addUser('Button: sWSSave');
+  //console.log('before call save workspace');
+  av.fio.fzSaveCurrentWorkspaceFn();  //fileIO.js
+  //console.log('after call to save workspace');
+});
+
+dijit.byId('sWSfOpen').on('Click', function () {
+  av.post.addUser('Button: sWSfOpen');
+  sWSfDialog.hide(sWSfDialog.hide);
+  if (av.fio.useDefault) {
+    av.fio.readZipWS(av.fio.defaultFname, false);  //loadConfigFlag = false = do not load config file
+  }  
+  //false = do not load config file
+  else {
+    //document.getElementById('inputFile').click();  //to get user picked file
+    document.getElementById('putWS').click();  //to get user picked file
+  }
+});
+
+// open and read user picked file
+//--------------------------------------------------------------------------------------------------------------------
+dijit.byId('mnFlOpenWS').on('Click', function () {
+  'use strict';
+  av.post.addUser('Button: mnFlOpenWS');
+  av.fio.useDefault = false;
+  if ('no' === av.fzr.saveState) {
+    sWSfDialog.show();   //Need to change to include might be saved tiba fix
+  }
+  //else document.getElementById('inputFile').click();
+  else {
+    document.getElementById('putWS').click();  // calls av.fio.userPickZipRead
+  }
+});
+
+//--------------------------------------------------------------------------------------------------------------------
+dijit.byId('mnFlFzItem').on('Click', function () {
+  'use strict';
+  av.post.addUser('Button: mnFlFzItem');
+  av.fio.useDefault = false;
+  //console.log('importFzrItem', importFzrItem);
+  document.getElementById('importFzrItem').click();
+});
+
+//--------------------------------------------------------------------------------------------------------------------
+// Save current workspace (mnFzSaveWorkspace)
+document.getElementById('mnFlSaveWorkspace').onclick = function () {
+  if (!av.brs.isSafari) {
+    //if (true) {
+    av.post.addUser('Button: mnFlSaveWorkspace');
+    av.fio.fzSaveCurrentWorkspaceFn();  //fileIO.js
+  }
+};
+
+try {
+  var isFileSaverSupported = !!new Blob;
+} catch (e) {
+  console.log('----------------------------------------------------------filesaver supported?', e);
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+// Save current workspace with a new name
+document.getElementById('mnFlSaveAs').onclick = function () {
+  if (!av.brs.isSafari) {
+    //if (true) {
+    av.post.addUser('Button: mnFlSaveAs');
+    var suggest = 'avidaWS.avidaWs.zip';
+    if (av.fio.userFname) {
+      if (0 < av.fio.userFname.length) { suggest = av.fio.userFname; }
     }
-    if ('analysisBlock' == av.ui.page) {
-      document.getElementById('allAvidaContainer').className = 'all2lft';
-    }
-    if ('organismBlock' == av.ui.page) {
-      document.getElementById('allAvidaContainer').className = 'all3org';
-      console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
-      av.dom.orgInfoHolder.style.display = 'block';
-      if ('settings' == av.ui.orgInfo) {
-        av.dom.orgSettings.style.display = 'block';
-        av.dom.orgDetailID.style.display = 'none';
-      }
-      else {
-        av.dom.orgSettings.style.display = 'none';
-        av.dom.orgDetailID.style.display = 'block';
-        av.ui.adjustOrgInstructionTextAreaSize();
-      };
-      
-      if (undefined !== av.traceObj) {
-        av.ind.updateOrgTrace('mainBoxSwap_organismBlock');
-      };
-      av.ind.organismCanvasHolderSize('mainBoxSwap_organismBlock');   ///??????
-      av.ind.clearGen('mainBoxSwap_organismBlock');
-      av.ind.cpuOutputCnvsSize();
-    }
-     if (('populationBlock' == av.ui.page) || ('organismBlock' == av.ui.page)) {
-      document.getElementById('RtSideToggleButtons').style.display = 'block';
-      document.getElementById('ritePnlBtnHolder').style.display = 'block';
-      document.getElementById('rightInfoHolder').style.display = 'block';
-    }
-    else {
-      document.getElementById('RtSideToggleButtons').style.display = 'none';
-      document.getElementById('ritePnlBtnHolder').style.display = 'none';
-      document.getElementById('rightInfoHolder').style.display = 'none';
-    };
-    //console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
-  };
+    av.fio.userFname = prompt('Choose a new name for your Workspace now', suggest);
+    if (null !== av.fio.userFname) {
+      av.fio.fzSaveCurrentWorkspaceFn();
+    }  //fileIO.js
+  }
+};
 
-  // Buttons that call MainBoxSwap
-  // if (av.dbg.flg.root) { console.log('Root: before av.dom.populationButton.onclick'); }
-  av.dom.populationButton.onclick = function () {
-    av.post.addUser('Button: populationButton');
-    if (av.debug.dnd || av.debug.mouse)
-      console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
-    av.ui.mainBoxSwap('populationBlock');
-  };
+//--------------------------------------------------------------------------------------------------------------------
+//Export csv data from current run.
+dijit.byId('mnFlExportData').on('Click', function () {
+  'use strict';
+  av.post.addUser('Button: mnFlExportData');
+  av.fwt.writeCurrentCSV(av.fzr.actConfig.name + '@' + av.grd.popStatsMsg.update + '\n');
+});
 
-  av.dom.organismButton.onclick = function () {
-    av.post.addUser('Button: organismButton');
-    // * offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
-    // * clientWidth = box + 2*padding - scrollbar_width    
-    // * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
-    // * csssWidth = box only nothing else
-    console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
-      av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
-      $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
-    if (av.dom.orgInfoHolder.clientWidth < av.ui.orgInfoHolderMinWidth) av.ui.orgInfoHolderWidth = av.ui.orgInfoHolderMinWidth;
-    av.ui.mainBoxSwap('organismBlock');
+//--------------------------------------------------------------------------------------------------------------------
+//Export chart data from current run.
+dijit.byId('mnFlExportGraph').on('Click', function () {
+  'use strict';
+  av.post.addUser('Button: mnFlExportGraph');
+  mnFlExportGraphDialog.show();
+});
 
-    av.dom.orgInfoHolder.style.width = av.ui.orgInfoHolderWidth + 'px';
-    
-    console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
-      av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
-      $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
-    console.log('orgInfoHolder.paddding=', $("#orgInfoHolder").css('padding'));
-  };
+//--------------------------------------------------------------------------------------------------------------------
+//Save Stand alone applicaton.
+dijit.byId('mnFlStandAloneApp').on('Click', function () {
+  'use strict';
+  av.post.addUser('Button: mnFlExportGraph');
+  mnFlStandAloneAppDialog.show();
+});
 
-  document.getElementById('analysisButton').onclick = function () {
-    av.post.addUser('Button: analysisButton');
-    av.ui.mainBoxSwap('analysisBlock');
-    //console.log('after mainBoxSwap to analysisBlock');
-    av.anl.AnaChartFn();
-    //console.log('fzWorld wd =', document.getElementById('fzWld').style.width );
-  };
+//----------------------------------------- Testing & Development Tools that are hidden from from User .---------------
+av.doj.mnHpDebug.onclick = function () {
+  if ('visible' === av.doj.mnDebug.style.visibility) {
+    av.doj.mnDebug.style.visibility = 'hidden';
+    dijit.byId('mnHpDebug').set('label', 'Show debug menu');
+    av.post.addUser('Button: mnHpDebug: now hidden; avidaED.js');
+  } else {
+    av.doj.mnDebug.style.visibility = 'visible';
+    dijit.byId('mnHpDebug').set('label', 'Hide debug menu');
+    av.post.addUser('Button: mnHpDebug: now visible');
+  }
+};
 
-  // if (av.dbg.flg.root) { console.log('Root: before showTextDebugButton.onclick'); }
-  document.getElementById('showTextDebugButton').onclick = function () {
-    av.post.addUser('Button: showTextDebugButton');
-    av.ui.mainBoxSwap('showTextDebugBlock');
-  };
-  // ------------------ two controls for the same purpose; tabs used in develoopment mode --
+av.ui.where = function (domobj) {
+  // placeholder that was to return the cell ID in the grid; this was never done. 
+  console.log('domobj=', domobj);
+};
+
+// if (av.dbg.flg.root) { console.log('Root: before Help drop down menu'); }
+//--------------------------------------------------------------------------------------------------------------------
+// Help Drop down menu buttons
+//--------------------------------------------------------------------------------------------------------------------
+
+// onclick='av.ui.aboutAvidaED'
+av.ui.aboutAvidaED = function(from) {
+  av.post.addUser('Button: display About Avida-ED from:', from);
+  document.getElementById('aboutAvidaED_ModalID').style.display = 'block';
+  var num = $('#aboutAvidaED_content').height() - ($('#aboutAvidaED_grid_container').height() + 80);
+  console.log('ht = ', num);
+  document.getElementById('avidaEDaboutScrollBox').style.height = num + 'px';
+  console.log('in av.ui.aboutAvidaED: from=', from);    
+};
+
+//document.getElementById('aboutAvidaED_Cancel').onclick = function () {
+av.ui.aboutAvidaED_Close = function() {
+  document.getElementById('aboutAvidaED_ModalID').style.display = 'none';
+};
+
+dijit.byId('mnAePreferences').on('Click', function () {
+  av.post.addUser('Button: mnAePreferences');
+  //console.log('in mnAePreferences.click');
+  document.getElementById('preferences_ModalID').style.display = 'block';
+});
+
+av.ui.email = function() {
+  av.post.addUser('Button: mnHpAbout');
+  av.ui.emailAvidaED();
+  document.getElementById('email_ModalID').style.display = 'block';
+  console.log('in av.ui.email');    
+};
+
+av.ui.closeSendModalFn = () => {
+  document.getElementById('sendLogModalID').style.display = 'none';
+};
   
-  //Toggle switch for Population/Organism pages
-  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.rightInfoPanelToggleButton'); }
-  //Population page
-  av.ptd.rightInfoPanelToggleButton = function(domObj) {
-    if ('populationBlock' == av.ui.page) {
-      var tabcontent = document.getElementsByClassName("labInfoClass");
-      //console.log('tabcontent=', tabcontent);
-      for (ii = 0; ii < tabcontent.length; ii++) {
-        //console.log('ii=', ii, '; tabcontent[ii]=', tabcontent[ii]);
-        tabcontent[ii].className = 'labInfoClass labInfoNone';
-        //console.log('ii=', ii, '; tabcontent[ii].className =', tabcontent[ii].className);
-      };
-      var tablinks = document.getElementsByClassName("tablinks");
-      for (var ii = 0; ii < tablinks.length; ii++) {
-        //console.log('ii=', ii, '; tablinks[ii]=', tablinks[ii], '; tablinks[ii].className =', tablinks[ii].className);
-        tablinks[ii].className = tablinks[ii].className.replace(" active", "");
-        //console.log('tablinks[ii].className =', tablinks[ii].className);
-      };
-        
-      // show set up panel
-      if ('SetupButton' == domObj.id) {
-        document.getElementById('SetupButton').className = 'toggleRitButton activeBtn';
-        document.getElementById('StatsButton').className = 'toggleLftButton';
-        av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
-        av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
-        av.dom.setupTab.className = 'tablinks active';
-      } else {
-        // show Statisitcal data about grid
-        document.getElementById('StatsButton').className = 'toggleLftButton activeBtn';
-        document.getElementById('SetupButton').className = 'toggleRitButton';
-        av.dom.popStatsBlock.className = 'labInfoClass labInfoFlex';
-        av.dom.setupBlock.className = 'labInfoClass labInfoNone';
-        av.dom.statsTab.className = 'tablinks active'; 
+av.sgr.complexityChange = function (domObj) {
+  console.log('the complexity requested is:', domObj.value);
+  av.sgr.complexityLevel = domObj.value;
+  av.sgr.complexityChangeProcess('av.sgr.complexityChange');
+};
+   
+av.ui.language = function (domObj) {
+  av.ui.language = domObj.value;
+  console.log('not yet implemented: the language requested is:', domObj.value);
+};
 
-        if (av.dbg.flg.plt) {      //
-          console.log('In: av.ptd.rightInfoPanelToggleButton; av.pch.needInit=', av.pch.needInit
-              , '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") ); 
-        }
-        // if the miniplot on the populaton page needs to be updated.
-        if ( $(av.dom.popStatsBlock).is(":visible")) {
-          if (av.dbg.flg.plt) { console.log('need to call av.grd.popChartInit'); }
-          av.grd.popChartFn('av.ptd.rightInfoPanelToggleButton');
-        }
-      };
-      //console.log('Stats.class=', document.getElementById('StatsButton').className, '; Setup.class=', document.getElementById('SetupButton').className);
-    }
-    //Organism Page
-    else if ('organismBlock' == av.ui.page) {
-      if ('SetupButton' == domObj.id) {
-        av.post.addUser('Button: OrgSetting');
-        av.ind.settingsChanged = false;
-        av.ui.orgInfo = 'settings';
-        av.dom.orgSettings.style.display = 'block';
-        av.dom.orgDetailID.style.display = 'none';
-      }
-      else {
-        av.ui.orgInfo = 'details';
-        av.dom.orgSettings.style.display = 'none';
-        av.dom.orgDetailID.style.display = 'block';
-        console.log('av.ind.settingsChanged=', av.ind.settingsChanged);
-        if (av.ind.settingsChanged) av.msg.doOrgTrace();
-      }  
+av.ui.closePreferences = function () {
+  document.getElementById('preferences_ModalID').style.display = 'none';
+};
+
+dijit.byId('mnHpProblem').on('Click', function () {
+  av.post.addUser('Button: mnHpProblem');
+  av.debug.finalizeDtail();
+  av.debug.triggered = 'userTriggered';
+  av.debug.postStatus = '';
+  av.post.postLogPara = 'Please send the data below to help us make Avida-ED better by clicking on the [Send] button';
+  av.debug.sendLogPara = 'Please describe the problem and put that at the beginning of the e-mail along with the session log from the text area seeen below.';
+  av.debug.postNoteLabel = 'Please describe the problem or suggestion in the comment field below.';
+  av.debug.postEmailLabel = 'Please include your e-mail so we can discuss your problem or suggeston further.';
+  av.debug.sendLogScrollBox = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail;
+  av.debug.error = '';
+  av.dom.postError.style.color = 'grey';
+  av.ui.problemWindow("dijit.byId('mnHpProblem').on('Click', function ()");
+  // only shows one line = prompt('Please put this in an e-mail to help us improve Avida-ED: Copy to clipboard: Ctrl+C, Enter', '\nto: ' + av.fio.mailAddress + '\n' + av.debug.log);
+});
+
+//********************************************************************************************************************
+// end of menu buttons
+//********************************************************************************************************************
+
+//********************************************************************************************************************
+// Pop up Buttons    Modals 
+//********************************************************************************************************************
+// some drop down menu  buttons are in here as they open pop ups. 
+
+//------------------------------------------------------------------------------------- modal dialog cancel buttons --
+
+av.dom.needAncestorCancel.onclick = function () {
+  av.dom.needAncestorModalID.style.display = 'none';
+};
+
+av.dom.newDishCancel.onclick = function () {
+  av.dom.newDishModalID.style.display = 'none';
+};
+
+/******************************************* New Button and new Dialog **********************************************/
+
+//av.dom.newDishDiscard not in avidaEdEco.html
+av.dom.newDishDiscard.onclick = function () {
+  av.post.addUser('Button: newDishDiscard');
+  av.dom.newDishModalID.style.display = 'none';
+  av.msg.reset();
+  //console.log('newDishDiscard click');
+};
+
+// av.dom.newDishSaveConfig not in avidaEdEco.html
+av.dom.newDishSaveWorld.onclick = function () {
+  av.post.addUser('Button: newDishSaveWorld');
+  av.ptd.FrPopulationFn();
+  av.dom.newDishModalID.style.display = 'none';
+  av.msg.reset();
+  //console.log('newDishSaveWorld click');
+};
+
+av.dom.newDishSaveConfig.onclick = function (domObj) {
+  console.log('in av.dom.newDishSaveConfig, domObj = ', domObj);
+  av.post.addUser('Button: newDishSaveConfig');
+  av.ptd.FrConfigFn('av.dom.newDishSaveConfig.onclick');
+  av.dom.newDishModalID.style.display = 'none';
+  av.msg.reset();
+  //console.log('newDishSaveConfig click');
+};
+
+av.ui.newButtonBoth = function() {
+  'use strict';
+  if ('prepping' == av.grd.runState) {// reset petri dish
+    av.msg.reset();
+    console.log('in prepping');
+    //av.ptd.resetDishFn(true); //Only do when get reset back from avida after sending reset, commented out in v3.0
+  } else {// check to see about saving current population
+    av.msg.pause('now');
+    av.ptd.makePauseState();
+    console.log('av.dom.newDishModalID=', av.dom.newDishModalID);
+    av.dom.newDishModalID.style.display = "block";
+  }
+};
+
+av.dom.newDishButton.onclick = function () {
+  av.post.addUser('Button: newDishButton');
+  av.ui.newButtonBoth();
+};
+
+dijit.byId('mnCnNewpop').on('Click', function () {
+  av.post.addUser('Button: mnCnNewpop');
+  av.ui.newButtonBoth();
+});
+
+//**************************************      Freeze Button      *****************************************************
+//Saves either configuration or populated dish
+//Also creates context menu for all new freezer items.*/
+av.dom.freezeButton.onclick = function () {
+  console.log('in av.dom.freezeButton.onclick: av.grd.runState=', av.grd.runState, '; av.msg.ByCellIDgenome=', av.msg.ByCellIDgenome, '; length=', av.msg.ByCellIDgenome.length);
+  av.post.addUser('Button: freezeButton');
+  if ('prepping' == av.grd.runState)
+    av.ptd.FrConfigFn('av.dom.freezeButton.onclick');
+  else {
+    if (5 > av.msg.ByCellIDgenome.length) {
+      document.getElementById('fzDialogModFzOrganismSpan').style.display = 'none';
+    } 
+    else
+      document.getElementById('fzDialogModFzOrganismSpan').style.display = 'inline';
+    console.log('before fzDialog.show()');
+    document.getElementById('fzDialogModalID').style.display = "block";    //fzDialog.show();
+  }
+};
+
+document.getElementById('fzDialogModSaveConfig').onclick = function () {
+  av.post.addUser('Button: fzDialogModSaveConfig');
+  document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide();
+  av.ptd.FrConfigFn('fzDialogModSaveConfig.onClick');
+};
+
+//Drop down menu to save a configuration item
+dijit.byId('mnFzConfig').on('Click', function () {
+  av.post.addUser('Button: mnFzConfig');
+  av.ptd.FrConfigFn('mnFzConfig');
+});
+
+document.getElementById('fzDialogModSaveOrganism').onclick = function () {
+  av.post.addUser('Button: fzDialogModSaveOrganism');
+  document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide
+  av.ptd.FrOrganismFn('selected');
+};
+
+//button to freeze a population
+document.getElementById('fzDialogModSaveWorld').onclick = function () {  
+//dijit.byId('FzPopulationButton').on('Click', function () {
+  av.post.addUser('Button: fzDialogModSaveWorld');
+  document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide
+  av.ptd.FrPopulationFn();
+};
+
+document.getElementById('fzDialogModCancel').onclick = function () {
+  document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide
+};
+
+dijit.byId('mnFzPopulation').on('Click', function () {
+  av.post.addUser('Button: mnFzPopulation');
+  av.ptd.FrPopulationFn();
+});
+
+//Buttons on drop down menu to save an organism
+dijit.byId('mnFzOrganism').on('Click', function () {
+  av.post.addUser('Button: mnFzOrganism');
+  av.ptd.FrOrganismFn('selected');
+});
+
+//Buttons on drop down menu to save an offspring
+dijit.byId('mnFzOffspring').on('Click', function () {
+  av.post.addUser('Button: mnFzOffspring');
+  av.ptd.FrOrganismFn('offspring');
+});
+
+//Buttons on drop down menu to add Configured Dish to an Experiment
+dijit.byId('mnFzAddConfigEx').on('Click', function () {
+  av.post.addUser('Button: mnFzAddConfigEx');
+  av.dnd.FzAddExperimentFn('fzConfig', 'activeConfig', 'c');
+});
+
+//Buttons on drop down menu to add Organism to an Experiment - does not work on Test
+dijit.byId('mnFzAddGenomeEx').on('Click', function () {
+  av.post.addUser('Button: mnFzAddGenomeEx');
+  av.dnd.FzAddExperimentFn('fzOrgan', 'ancestorBox', 'g');
+});
+
+//Buttons on drop down menu to add Populated Dish to an Experiment
+dijit.byId('mnFzAddPopEx').on('Click', function () {
+  av.post.addUser('Button: mnFzAddPopEx');
+  av.dnd.FzAddExperimentFn('fzWorld', 'activeConfig', 'w');
+});
+
+/*
+ //Buttons on drop down menu to add Multi-Dish to an Experiment
+ dijit.byId('mnFzAddMdishEx').on('Click', function () {
+  av.post.addUser('Button: mnFzAddMdishEx');
+  //av.dnd.FzAddExperimentFn('fzMdish', 'activeConfig', 'm');
+  av.msg.runMultiDish('fzMdish', 'activeConfig', 'm');
+ });
+ */
+
+
+//Buttons on drop down menu to put an organism in Organism Viewer
+dijit.byId('mnFzAddGenomeView').on('Click', function () {
+  av.post.addUser('Button: mnFzAddGenomeEx');
+  av.dnd.FzAddExperimentFn('fzOrgan', 'activeOrgan', 'g');
+  av.ui.mainBoxSwap('organismBlock');
+  av.ind.organismCanvasHolderSize('mnFzAddGenomeView');
+  av.ui.adjustOrgInstructionTextAreaSize();
+  av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+});
+
+//Buttons on drop down menu to add Populated Dish to Analysis
+dijit.byId('mnFzAddPopAnalysis').on('Click', function () {
+  av.post.addUser('Button: mnFzAddPopEx');
+  av.dnd.FzAddExperimentFn('fzWorld', 'anlDndChart', 'w');
+});
+
+//********************************************************************************************************************
+// End of Pop up boxes
+//********************************************************************************************************************
+
+//********************************************************************************************************************
+// main Page button scripts
+//********************************************************************************************************************
+
+//The style display: 'none' cannnot be used in the html during the initial load as the dijits won't work right
+//visibility:hidden can be used, but it leaves the white space and just does not display dijits.
+//So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
+//the default option.
+// if (av.dbg.flg.root) { console.log('Root: before av.ui.mainBoxSwap defined'); }
+av.ui.mainBoxSwap = function (showBlock) {
+  //console.log('showBlock=', showBlock);
+  av.ui.page = showBlock;
+  av.dom.populationBlock.style.display = "none";
+  av.dom.organismBlock.style.display = "none";
+  av.dom.analysisBlock.style.display = "none";
+  av.dom.showTextDebugBlock.style.display = "none";
+  av.dom.orgInfoHolder.style.display = 'none';
+  av.dom.popInfoVert.style.display = 'none';
+  av.dom.populationButton.style.background = 'white';
+  av.dom.organismButton.style.background = 'white';
+  av.dom.analysisButton.style.background = 'white';
+  av.dom.showTextDebugButton.style.background = 'white';
+  document.getElementById(showBlock).style.display = "flex";   //orgPageButtonHolder
+  var showButton = showBlock.substring(0,showBlock.length-5)+'Button';
+  console.log('showButton=',showButton);
+  document.getElementById(showButton).style.background = '#DBDBDB'; 
+  //dijit.byId(showBlock).resize();
+  //document.getElementById(showBlock).resize();
+
+  //disable menu options. they will be enabled when relevant canvas is drawn
+  dijit.byId('mnFzOffspring').attr('disabled', true);
+  dijit.byId('mnCnOffspringTrace').attr('disabled', true);
+
+  // if the miniplot on the populaton page needs to be initiated call that funciton.
+  console.log('In: av.ui.mainBoxSwap; av.pch.needInit=', av.pch.needInit, '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));
+  if ($(av.dom.popStatsBlock).is(":visible") && (av.pch.needInit) ) {
+    av.grd.popChartInit('av.ui.mainBoxSwap');
+  };
+  if ('populationBlock' == av.ui.page) {
+    av.dom.popInfoVert.style.display = 'block';
+    document.getElementById('allAvidaContainer').className = 'all3pop';
+  }
+  if ('analysisBlock' == av.ui.page) {
+    document.getElementById('allAvidaContainer').className = 'all2lft';
+  }
+  if ('organismBlock' == av.ui.page) {
+    document.getElementById('allAvidaContainer').className = 'all3org';
+    console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
+    av.dom.orgInfoHolder.style.display = 'block';
+    if ('settings' == av.ui.orgInfo) {
+      av.dom.orgSettings.style.display = 'block';
+      av.dom.orgDetailID.style.display = 'none';
     }
     else {
-      // Analysis Page or Big text display for debug
-      console.log('should not be avaiable on analysis or showText page');
-    }
-  };
+      av.dom.orgSettings.style.display = 'none';
+      av.dom.orgDetailID.style.display = 'block';
+      av.ui.adjustOrgInstructionTextAreaSize();
+    };
 
-  //Development section with tabs
-  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.processTab'); }
-  av.ptd.processTab = function (evt, contentType) {
-    var ii, tablinks;
+    if (undefined !== av.traceObj) {
+      av.ind.updateOrgTrace('mainBoxSwap_organismBlock');
+    };
+    av.ind.organismCanvasHolderSize('mainBoxSwap_organismBlock');   ///??????
+    av.ind.clearGen('mainBoxSwap_organismBlock');
+    av.ind.cpuOutputCnvsSize();
+  }
+   if (('populationBlock' == av.ui.page) || ('organismBlock' == av.ui.page)) {
+    document.getElementById('RtSideToggleButtons').style.display = 'block';
+    document.getElementById('ritePnlBtnHolder').style.display = 'block';
+    document.getElementById('rightInfoHolder').style.display = 'block';
+  }
+  else {
+    document.getElementById('RtSideToggleButtons').style.display = 'none';
+    document.getElementById('ritePnlBtnHolder').style.display = 'none';
+    document.getElementById('rightInfoHolder').style.display = 'none';
+  };
+  //console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
+};
+
+// Buttons that call MainBoxSwap
+// if (av.dbg.flg.root) { console.log('Root: before av.dom.populationButton.onclick'); }
+av.dom.populationButton.onclick = function () {
+  av.post.addUser('Button: populationButton');
+  if (av.debug.dnd || av.debug.mouse)
+    console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
+  av.ui.mainBoxSwap('populationBlock');
+};
+
+av.dom.organismButton.onclick = function () {
+  av.post.addUser('Button: organismButton');
+  // * offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
+  // * clientWidth = box + 2*padding - scrollbar_width    
+  // * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
+  // * csssWidth = box only nothing else
+  console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
+    av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
+    $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
+  if (av.dom.orgInfoHolder.clientWidth < av.ui.orgInfoHolderMinWidth) av.ui.orgInfoHolderWidth = av.ui.orgInfoHolderMinWidth;
+  av.ui.mainBoxSwap('organismBlock');
+
+  av.dom.orgInfoHolder.style.width = av.ui.orgInfoHolderWidth + 'px';
+
+  console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
+    av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
+    $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
+  console.log('orgInfoHolder.paddding=', $("#orgInfoHolder").css('padding'));
+};
+
+document.getElementById('analysisButton').onclick = function () {
+  av.post.addUser('Button: analysisButton');
+  av.ui.mainBoxSwap('analysisBlock');
+  //console.log('after mainBoxSwap to analysisBlock');
+  av.anl.AnaChartFn();
+  //console.log('fzWorld wd =', document.getElementById('fzWld').style.width );
+};
+
+// if (av.dbg.flg.root) { console.log('Root: before showTextDebugButton.onclick'); }
+document.getElementById('showTextDebugButton').onclick = function () {
+  av.post.addUser('Button: showTextDebugButton');
+  av.ui.mainBoxSwap('showTextDebugBlock');
+};
+// ------------------ two controls for the same purpose; tabs used in develoopment mode --
+
+//Toggle switch for Population/Organism pages
+// if (av.dbg.flg.root) { console.log('Root: before av.ptd.rightInfoPanelToggleButton'); }
+//Population page
+av.ptd.rightInfoPanelToggleButton = function(domObj) {
+  if ('populationBlock' == av.ui.page) {
     var tabcontent = document.getElementsByClassName("labInfoClass");
     //console.log('tabcontent=', tabcontent);
     for (ii = 0; ii < tabcontent.length; ii++) {
       //console.log('ii=', ii, '; tabcontent[ii]=', tabcontent[ii]);
       tabcontent[ii].className = 'labInfoClass labInfoNone';
-      //console.log('ii=', ii, '; tabcontent[ii].display =', tabcontent[ii].style.display);
+      //console.log('ii=', ii, '; tabcontent[ii].className =', tabcontent[ii].className);
     };
-    tablinks = document.getElementsByClassName("tablinks");
-    for (ii = 0; ii < tablinks.length; ii++) {
+    var tablinks = document.getElementsByClassName("tablinks");
+    for (var ii = 0; ii < tablinks.length; ii++) {
       //console.log('ii=', ii, '; tablinks[ii]=', tablinks[ii], '; tablinks[ii].className =', tablinks[ii].className);
-      tablinks[ii].className = tablinks[ii].className = 'tablinks';
+      tablinks[ii].className = tablinks[ii].className.replace(" active", "");
       //console.log('tablinks[ii].className =', tablinks[ii].className);
     };
-    // keep console example because evt info looks useful for improving mouse code.
-    // console.log('contentType=',contentType,'; evt=', evt);
-    // console.log('contentType=', contentType);
-    
-    document.getElementById(contentType).className = 'labInfoClass labInfoFlex';;
-    evt.currentTarget.className = "tablinks active";
-    //console.log('id=', evt.currentTarget.id);
-    if ('setupTab' == evt.currentTarget.id) {
+
+    // show set up panel
+    if ('SetupButton' == domObj.id) {
       document.getElementById('SetupButton').className = 'toggleRitButton activeBtn';
       document.getElementById('StatsButton').className = 'toggleLftButton';
-    }
-    else if ('statsTab' == evt.currentTarget.id) {
+      av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
+      av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
+      av.dom.setupTab.className = 'tablinks active';
+    } else {
+      // show Statisitcal data about grid
+      document.getElementById('StatsButton').className = 'toggleLftButton activeBtn';
       document.getElementById('SetupButton').className = 'toggleRitButton';
-      document.getElementById('StatsButton').className = 'toggleLftButton activeBtn';      
+      av.dom.popStatsBlock.className = 'labInfoClass labInfoFlex';
+      av.dom.setupBlock.className = 'labInfoClass labInfoNone';
+      av.dom.statsTab.className = 'tablinks active'; 
+
+      if (av.dbg.flg.plt) {      //
+        console.log('In: av.ptd.rightInfoPanelToggleButton; av.pch.needInit=', av.pch.needInit
+            , '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") ); 
+      }
+      // if the miniplot on the populaton page needs to be updated.
+      if ( $(av.dom.popStatsBlock).is(":visible")) {
+        if (av.dbg.flg.plt) { console.log('need to call av.grd.popChartInit'); }
+        av.grd.popChartFn('av.ptd.rightInfoPanelToggleButton');
+      }
+    };
+    //console.log('Stats.class=', document.getElementById('StatsButton').className, '; Setup.class=', document.getElementById('SetupButton').className);
+  }
+  //Organism Page
+  else if ('organismBlock' == av.ui.page) {
+    if ('SetupButton' == domObj.id) {
+      av.post.addUser('Button: OrgSetting');
+      av.ind.settingsChanged = false;
+      av.ui.orgInfo = 'settings';
+      av.dom.orgSettings.style.display = 'block';
+      av.dom.orgDetailID.style.display = 'none';
     }
     else {
-      document.getElementById('SetupButton').className = 'toggleRitButton';
-      document.getElementById('StatsButton').className = 'toggleLftButton';            
-    }
+      av.ui.orgInfo = 'details';
+      av.dom.orgSettings.style.display = 'none';
+      av.dom.orgDetailID.style.display = 'block';
+      console.log('av.ind.settingsChanged=', av.ind.settingsChanged);
+      if (av.ind.settingsChanged) av.msg.doOrgTrace();
+    }  
+  }
+  else {
+    // Analysis Page or Big text display for debug
+    console.log('should not be avaiable on analysis or showText page');
+  }
+};
+
+//Development section with tabs
+// if (av.dbg.flg.root) { console.log('Root: before av.ptd.processTab'); }
+av.ptd.processTab = function (evt, contentType) {
+  var ii, tablinks;
+  var tabcontent = document.getElementsByClassName("labInfoClass");
+  //console.log('tabcontent=', tabcontent);
+  for (ii = 0; ii < tabcontent.length; ii++) {
+    //console.log('ii=', ii, '; tabcontent[ii]=', tabcontent[ii]);
+    tabcontent[ii].className = 'labInfoClass labInfoNone';
+    //console.log('ii=', ii, '; tabcontent[ii].display =', tabcontent[ii].style.display);
   };
-  // ------- end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
+  tablinks = document.getElementsByClassName("tablinks");
+  for (ii = 0; ii < tablinks.length; ii++) {
+    //console.log('ii=', ii, '; tablinks[ii]=', tablinks[ii], '; tablinks[ii].className =', tablinks[ii].className);
+    tablinks[ii].className = tablinks[ii].className = 'tablinks';
+    //console.log('tablinks[ii].className =', tablinks[ii].className);
+  };
+  // keep console example because evt info looks useful for improving mouse code.
+  // console.log('contentType=',contentType,'; evt=', evt);
+  // console.log('contentType=', contentType);
+
+  document.getElementById(contentType).className = 'labInfoClass labInfoFlex';;
+  evt.currentTarget.className = "tablinks active";
+  //console.log('id=', evt.currentTarget.id);
+  if ('setupTab' == evt.currentTarget.id) {
+    document.getElementById('SetupButton').className = 'toggleRitButton activeBtn';
+    document.getElementById('StatsButton').className = 'toggleLftButton';
+  }
+  else if ('statsTab' == evt.currentTarget.id) {
+    document.getElementById('SetupButton').className = 'toggleRitButton';
+    document.getElementById('StatsButton').className = 'toggleLftButton activeBtn';      
+  }
+  else {
+    document.getElementById('SetupButton').className = 'toggleRitButton';
+    document.getElementById('StatsButton').className = 'toggleLftButton';            
+  }
+};
+// ------- end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
+//********************************************************************************************************************
+// End main button scripts
+//********************************************************************************************************************
 
 //----------------------------------------------------------------------------------------------------------------------
 //                                             Population page Buttons
 //----------------------------------------------------------------------------------------------------------------------
 
+//--------------------------------------------------------------------------------------------------------------------
+///   Map Grid buttons - New  Run/Pause Freeze
+//--------------------------------------------------------------------------------------------------------------------
 
-  //--------------------------------------------------------------------------------------------------------------------
-  ///   Map Grid buttons - New  Run/Pause Freeze
-  //--------------------------------------------------------------------------------------------------------------------
+//process the run/Stop Button - a separate function is used so it can be flipped if the message to avida is not successful.
+av.dom.runStopButton.onclick = function () {
+  av.post.addUser('Button: runStopButton = ' + av.grd.updateNum, '=updateNum;  ' + av.grd.msg.update + '=msg.update;  ' + av.grd.popStatsMsg.update + '=popStatsMsg.update');
+  av.ptd.runStopFn();
+};
 
-  //process the run/Stop Button - a separate function is used so it can be flipped if the message to avida is not successful.
-  av.dom.runStopButton.onclick = function () {
-    av.post.addUser('Button: runStopButton = ' + av.grd.updateNum, '=updateNum;  ' + av.grd.msg.update + '=msg.update;  ' + av.grd.popStatsMsg.update + '=popStatsMsg.update');
-    av.ptd.runStopFn();
-  };
+dijit.byId('mnCnPause').on('Click', function () {
+  av.post.addUser('Button: mnCnPause');
+  //console.log('about to call av.ptd.makePauseState()');
+  av.msg.pause('now');
+  //av.debug.log += '______Debug Note: about to call av.ptd.makePauseState() in AvidaEd.js line 986 \n';
+  av.ptd.makePauseState();
+});
 
-  dijit.byId('mnCnPause').on('Click', function () {
-    av.post.addUser('Button: mnCnPause');
-    //console.log('about to call av.ptd.makePauseState()');
-    av.msg.pause('now');
-    //av.debug.log += '______Debug Note: about to call av.ptd.makePauseState() in AvidaEd.js line 986 \n';
-    av.ptd.makePauseState();
-  });
+//process run/Stop buttons as above but for drop down menu
+dijit.byId('mnCnRun').on('Click', function () {
+  av.post.addUser('Button: mnCnRun');
+  av.ptd.makeRunState('mnCnRun.Click');
+  av.ptd.runPopFn('mnCnRun.Click');
+});
 
-  //process run/Stop buttons as above but for drop down menu
-  dijit.byId('mnCnRun').on('Click', function () {
-    av.post.addUser('Button: mnCnRun');
-    av.ptd.makeRunState('mnCnRun.Click');
-    av.ptd.runPopFn('mnCnRun.Click');
-  });
+//process run/Stop buttons as above but for drop down menu
+dijit.byId('mnCnOne').on('Click', function () {
+  av.post.addUser('Button: mnCnOne');
+  av.ui.oneUpdateFlag = true;
+  av.ptd.makeRunState('mnCnOne.Click');
+  av.ptd.runPopFn('mnCnOne.Click');
+});
 
-  //process run/Stop buttons as above but for drop down menu
-  dijit.byId('mnCnOne').on('Click', function () {
-    av.post.addUser('Button: mnCnOne');
-    av.ui.oneUpdateFlag = true;
-    av.ptd.makeRunState('mnCnOne.Click');
-    av.ptd.runPopFn('mnCnOne.Click');
-  });
+av.dom.oneUpdateButton.onclick = function () {
+  av.post.addUser('Button: oneUpdateButton', '=updateNum; ' + av.grd.msg.update + '=msg.update;  ' + av.grd.popStatsMsg.update + '=popStatsMsg.update');
+  av.ui.oneUpdateFlag = true;
+  av.ptd.makeRunState('av.dom.oneUpdateButton.onclick');
+  av.ptd.runPopFn('av.dom.oneUpdateButton.onclick');
+};
 
-  av.dom.oneUpdateButton.onclick = function () {
-    av.post.addUser('Button: oneUpdateButton', '=updateNum; ' + av.grd.msg.update + '=msg.update;  ' + av.grd.popStatsMsg.update + '=popStatsMsg.update');
-    av.ui.oneUpdateFlag = true;
-    av.ptd.makeRunState('av.dom.oneUpdateButton.onclick');
-    av.ptd.runPopFn('av.dom.oneUpdateButton.onclick');
-  };
+av.ui.avidianOutlineOnclick = function (domObj) {
+  av.post.addUser('Button: avidianOutline; av.ui.showOutlineFlag=' + av.ui.showOutlineFlag);
+  if ('Resource Mode: hide Avidian Outlines' == av.dom.avidianOutline.innerHTML) {
+    av.dom.avidianOutline.innerHTML = 'Resource Mode: show Avidian Outlines';
+    av.ui.showOutlineFlag = false;
+    console.log('av.ui.showOutlineFlag=' + av.ui.showOutlineFlag);
+  } else {
+    av.dom.avidianOutline.innerHTML = 'Resource Mode: hide Avidian Outlines';
+    console.log('av.ui.showOutlineFlag=' + av.ui.showOutlineFlag);
+    av.ui.showOutlineFlag = true;
+  }
+};
 
-  av.ui.avidianOutlineOnclick = function (domObj) {
-    av.post.addUser('Button: avidianOutline; av.ui.showOutlineFlag=' + av.ui.showOutlineFlag);
-    if ('Resource Mode: hide Avidian Outlines' == av.dom.avidianOutline.innerHTML) {
-      av.dom.avidianOutline.innerHTML = 'Resource Mode: show Avidian Outlines';
-      av.ui.showOutlineFlag = false;
-      console.log('av.ui.showOutlineFlag=' + av.ui.showOutlineFlag);
-    } else {
-      av.dom.avidianOutline.innerHTML = 'Resource Mode: hide Avidian Outlines';
-      console.log('av.ui.showOutlineFlag=' + av.ui.showOutlineFlag);
-      av.ui.showOutlineFlag = true;
-    }
-  };
+//----------------------------------------------------------------------------------------------------------------------
+//                                          End Population page Buttons
+//----------------------------------------------------------------------------------------------------------------------
+//********************************************************************************************************************
 
-//------------------------------------------------------------------------------------- modal dialog cancel buttons --
-
-  av.dom.needAncestorCancel.onclick = function () {
-    av.dom.needAncestorModalID.style.display = 'none';
-  };
-
-  av.dom.newDishCancel.onclick = function () {
-    av.dom.newDishModalID.style.display = 'none';
-  };
-
-  /******************************************* New Button and new Dialog **********************************************/
-
-  //av.dom.newDishDiscard not in avidaEdEco.html
-  av.dom.newDishDiscard.onclick = function () {
-    av.post.addUser('Button: newDishDiscard');
-    av.dom.newDishModalID.style.display = 'none';
-    av.msg.reset();
-    //console.log('newDishDiscard click');
-  };
-
-  // av.dom.newDishSaveConfig not in avidaEdEco.html
-  av.dom.newDishSaveWorld.onclick = function () {
-    av.post.addUser('Button: newDishSaveWorld');
-    av.ptd.FrPopulationFn();
-    av.dom.newDishModalID.style.display = 'none';
-    av.msg.reset();
-    //console.log('newDishSaveWorld click');
-  };
-
-  av.dom.newDishSaveConfig.onclick = function (domObj) {
-    console.log('in av.dom.newDishSaveConfig, domObj = ', domObj);
-    av.post.addUser('Button: newDishSaveConfig');
-    av.ptd.FrConfigFn('av.dom.newDishSaveConfig.onclick');
-    av.dom.newDishModalID.style.display = 'none';
-    av.msg.reset();
-    //console.log('newDishSaveConfig click');
-  };
-
-  av.ui.newButtonBoth = function() {
-    'use strict';
-    if ('prepping' == av.grd.runState) {// reset petri dish
-      av.msg.reset();
-      console.log('in prepping');
-      //av.ptd.resetDishFn(true); //Only do when get reset back from avida after sending reset, commented out in v3.0
-    } else {// check to see about saving current population
-      av.msg.pause('now');
-      av.ptd.makePauseState();
-      console.log('av.dom.newDishModalID=', av.dom.newDishModalID);
-      av.dom.newDishModalID.style.display = "block";
-    }
-  };
-
-  av.dom.newDishButton.onclick = function () {
-    av.post.addUser('Button: newDishButton');
-    av.ui.newButtonBoth();
-  };
-
-  dijit.byId('mnCnNewpop').on('Click', function () {
-    av.post.addUser('Button: mnCnNewpop');
-    av.ui.newButtonBoth();
-  });
-
-  //**************************************      Freeze Button      *****************************************************
-  //Saves either configuration or populated dish
-  //Also creates context menu for all new freezer items.*/
-  av.dom.freezeButton.onclick = function () {
-    console.log('in av.dom.freezeButton.onclick: av.grd.runState=', av.grd.runState, '; av.msg.ByCellIDgenome=', av.msg.ByCellIDgenome, '; length=', av.msg.ByCellIDgenome.length);
-    av.post.addUser('Button: freezeButton');
-    if ('prepping' == av.grd.runState)
-      av.ptd.FrConfigFn('av.dom.freezeButton.onclick');
-    else {
-      if (5 > av.msg.ByCellIDgenome.length) {
-        document.getElementById('fzDialogModFzOrganismSpan').style.display = 'none';
-      } 
-      else
-        document.getElementById('fzDialogModFzOrganismSpan').style.display = 'inline';
-      console.log('before fzDialog.show()');
-      document.getElementById('fzDialogModalID').style.display = "block";    //fzDialog.show();
-    }
-  };
-
-
-
-  document.getElementById('fzDialogModSaveConfig').onclick = function () {
-//  dijit.byId('FzConfigurationButton').on('Click', function () {
-    av.post.addUser('Button: fzDialogModSaveConfig');
-    document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide();
-    av.ptd.FrConfigFn('fzDialogModSaveConfig.onClick');
-  };
-
-  //Drop down menu to save a configuration item
-  dijit.byId('mnFzConfig').on('Click', function () {
-    av.post.addUser('Button: mnFzConfig');
-    av.ptd.FrConfigFn('mnFzConfig');
-  });
-
-    document.getElementById('fzDialogModSaveOrganism').onclick = function () {
-//  dijit.byId('FzOrganismButton').on('Click', function () {
-    av.post.addUser('Button: fzDialogModSaveOrganism');
-    document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide
-    av.ptd.FrOrganismFn('selected');
-  };
-
-  //button to freeze a population
-  document.getElementById('fzDialogModSaveWorld').onclick = function () {  
-  //dijit.byId('FzPopulationButton').on('Click', function () {
-    av.post.addUser('Button: fzDialogModSaveWorld');
-    document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide
-    av.ptd.FrPopulationFn();
-  };
-  
-  document.getElementById('fzDialogModCancel').onclick = function () {
-    document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide
-  };
-
-  dijit.byId('mnFzPopulation').on('Click', function () {
-    av.post.addUser('Button: mnFzPopulation');
-    av.ptd.FrPopulationFn();
-  });
-
-  //Buttons on drop down menu to save an organism
-  dijit.byId('mnFzOrganism').on('Click', function () {
-    av.post.addUser('Button: mnFzOrganism');
-    av.ptd.FrOrganismFn('selected');
-  });
-
-  //Buttons on drop down menu to save an offspring
-  dijit.byId('mnFzOffspring').on('Click', function () {
-    av.post.addUser('Button: mnFzOffspring');
-    av.ptd.FrOrganismFn('offspring');
-  });
-
-  //Buttons on drop down menu to add Configured Dish to an Experiment
-  dijit.byId('mnFzAddConfigEx').on('Click', function () {
-    av.post.addUser('Button: mnFzAddConfigEx');
-    av.dnd.FzAddExperimentFn('fzConfig', 'activeConfig', 'c');
-  });
-
-  //Buttons on drop down menu to add Organism to an Experiment - does not work on Test
-  dijit.byId('mnFzAddGenomeEx').on('Click', function () {
-    av.post.addUser('Button: mnFzAddGenomeEx');
-    av.dnd.FzAddExperimentFn('fzOrgan', 'ancestorBox', 'g');
-  });
-
-  //Buttons on drop down menu to add Populated Dish to an Experiment
-  dijit.byId('mnFzAddPopEx').on('Click', function () {
-    av.post.addUser('Button: mnFzAddPopEx');
-    av.dnd.FzAddExperimentFn('fzWorld', 'activeConfig', 'w');
-  });
-
-  /*
-   //Buttons on drop down menu to add Multi-Dish to an Experiment
-   dijit.byId('mnFzAddMdishEx').on('Click', function () {
-   av.post.addUser('Button: mnFzAddMdishEx');
-   //av.dnd.FzAddExperimentFn('fzMdish', 'activeConfig', 'm');
-   av.msg.runMultiDish('fzMdish', 'activeConfig', 'm');
-   });
-   */
-
-
-//Buttons on drop down menu to put an organism in Organism Viewer
-  dijit.byId('mnFzAddGenomeView').on('Click', function () {
-    av.post.addUser('Button: mnFzAddGenomeEx');
-    av.dnd.FzAddExperimentFn('fzOrgan', 'activeOrgan', 'g');
-    av.ui.mainBoxSwap('organismBlock');
-    av.ind.organismCanvasHolderSize('mnFzAddGenomeView');
-    av.ui.adjustOrgInstructionTextAreaSize();
-    av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-  });
-
-  //Buttons on drop down menu to add Populated Dish to Analysis
-  dijit.byId('mnFzAddPopAnalysis').on('Click', function () {
-    av.post.addUser('Button: mnFzAddPopEx');
-    av.dnd.FzAddExperimentFn('fzWorld', 'anlDndChart', 'w');
-  });
-
-
-  // End of Freezer functions
-  //---------------------------------------------- Restart Avida web worker --------------------------------------------
+//---------------------------------------------- Restart Avida web worker --------------------------------------------
 
   //http://www.w3schools.com/html/tryit.asp?filename=tryhtml5_webworker
   av.ui.restartAvida = function () {
