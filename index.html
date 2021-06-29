@@ -5,6 +5,8 @@
     <title>Avida-ED 4</title>
     <meta charset='utf-8' />
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <!--yemi: import jQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
     <script type='text/javascript' src='lib/dojo-release-1.16.4/dojo/dojo.js'
           data-dojo-config="'parseOnLoad':false,'async':true,
           'packages':[
@@ -25,7 +27,7 @@
           'mblThemeFiles':[],
           'mblLoadCompatModifier':''">
     </script>
-    
+
     <!--yemi: removed the console.logs because they were not doing anything-->
     <script type='text/javascript' src='colormap.js'></script>
     <script type='text/javascript' src='monoColor.js'></script>
@@ -36,6 +38,7 @@
     <script type="text/javascript" src="reSizePageParts.js"></script>
     <link href='images/favicon.ico' rel='icon' type='image/x-icon' />
     <link rel='stylesheet' href='lib/jquery-ui-1.12.1.custom/jquery-ui.css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css">
     <style>
       @import 'themes/claro/document.css';
       @import 'themes/claro/claro.css';	
@@ -61,7 +64,7 @@
     </script>
   </head>
 
-  <body id='myapp' data-maq-flow-layout='true' data-maq-comptype='desktop' class='claro' data-maq-ws='collapse'
+  <body id='myapp' data-maq-flow-layout='false' data-maq-comptype='desktop' class='claro' data-maq-ws='collapse'
         data-maq-appstates='{}' onresize='avResize()'>
     <span id="http://stackoverflow.com/questions/20828799/creating-a-splash-page-in-html5"></span>
     <div id='splash'>
@@ -195,7 +198,7 @@
           <input id='ritePanelButton' type='button' value='&nbsp;>>' onclick='av.ptd.lftPanelBtnFn();'/>
         </div>
       </div><span id='headerMain_end' class='display_none'></span>
-
+      
         <div id="navColId" class="navColClass">
           <div id='mainButtons' class="mainPageButtons">
             <div id='popPageButtonHolder' class='PageButtonHolder'>
@@ -251,8 +254,9 @@
           </div>
         </div><span id='navColId_end' class='display_none'></span>
 
-        <div class="mainBlockHolder">
+        <div class='dragbar' id="dragbarLeft"></div> <!--yemi: dragbar on the left-->
 
+        <div class="mainBlockHolder">
           <div id="populationBlock" class="mainBlockClassRow">
             <div id='mapHolder' class="popBenchCol">
               

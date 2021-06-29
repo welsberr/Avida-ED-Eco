@@ -1,3 +1,31 @@
+/* yemi: functions for left dragbar */
+
+function dragbarLeftResize() {
+  var dragging = false;
+  $('#dragbarLeft').bind('mousedown', function(e) {
+    e.preventDefault();
+    dragging = true;
+    console.log(dragging);
+  });
+
+  $(document).bind('mouseup', function(e) {
+    if (dragging) {
+      var percentage = (e.pageX / window.innerWidth);
+      var mainPercentage = 1 - percentage;
+      widthAvailable = window.innerWidth - 440 - 3; /* yemi: hard-coded 440px (right panel) 3px (left dragbar), need to fix */
+      colInfo = (widthAvailable * percentage) + "px 3px " + (widthAvailable * mainPercentage) + "px 440px";
+      console.log(colInfo);
+      $('.all3pop').css("grid-template-columns", colInfo);
+      $('#navColId').css("width", (widthAvailable * percentage) + "px");
+      $('#populationBlock').css("width", (widthAvailable * mainPercentage) + "px");
+      $(document).unbind('mousemove');
+      dragging = false;
+      console.log(dragging);
+    }
+  });
+};
+
+
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -52,6 +80,9 @@ av.dom.storeInitialSize = function() {
   //  call other size related function when initializing 
   av.ui.freezerSizeHtFn(); 
   console.log('sizes=', av.dom.sizes() );
+  
+  // yemi: call the drag bar left function
+  dragbarLeftResize();
 };
 
 //----------------------------------------------------------------------------------------show/hide left side panel --
@@ -76,7 +107,7 @@ av.ui.freezerSizeHtFn = () => {
       //av.grd.drawGridSetupFn is in avidaED.js
       av.grd.drawGridSetupFn('av.ui.freezerSizeHtFn');
     }
-  };    
+  };  
 };
 
 //********************************************************************************************************************
@@ -539,3 +570,7 @@ av.ui.removeVerticalScrollbar = function (scrollDiv, htChangeDiv) {
 //av.ui.removeVerticalScrollbar('popStats4grid', 'popStatistics');
 //av.ui.removeVerticalScrollbar('benchPopBot', 'benchPopBot');
 //------------------------------------------------------------------------ end calls to av.ui.removeVerticalScrollbar --
+
+
+
+

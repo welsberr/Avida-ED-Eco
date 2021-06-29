@@ -77,14 +77,15 @@ html {
 .mainBlockHolder { grid-area: mainBlockHolder; }
 .rightInfoHolder { grid-area: rightInfoHolder; }
 .navColClass {grid-area: navColID; }
+#dragbarLeft {grid-area: dragbarLeft; } /* yemi: */
 
 
  .all2rit{
     display: grid;
     grid-template-rows: 2.5em auto;
-    grid-template-columns: auto 680px;
-    grid-template-areas: 'headerRow headerRow'
-                         'mainBlockHolder rightInfoHolder';
+    grid-template-columns: 3px auto 680px;
+    grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
+                         'dragbarLeft mainBlockHolder rightInfoHolder';
     height: 100vh;
     width: 100vw;
     min-height: 100vh;
@@ -98,9 +99,9 @@ html {
   .all2lft{
     display: grid;
     grid-template-rows: 2.5em auto;
-    grid-template-columns: 240px auto;
-    grid-template-areas: 'headerRow headerRow'
-                          'navColClass mainBlockHolder';
+    grid-template-columns: 240px 3px auto;
+    grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
+                          'navColClass dragbarLeft mainBlockHolder';
     height: 100vh;
     width: 100vw;
     min-height: 98vh;
@@ -110,12 +111,12 @@ html {
     margin: 0;
     background:  #F5F5F5;   /* lightsalmon;  */
   }
-  .all3pop{
+  .all3pop{ 
     display: grid;
     grid-template-rows: 2.5em 1fr;   /* 2.5em */
-    grid-template-columns: 240px auto 440px;    /* 440px */
-    grid-template-areas: 'headerRow headerRow headerRow'
-                          'navColClass mainBlockHolder rightInfoHolder';
+    grid-template-columns: 240px 3px auto 440px;    /* 440px */
+    grid-template-areas: 'headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
+                          'navColClass dragbarLeft mainBlockHolder rightInfoHolder';
     height: 100vh;
     width: 100vw;
     min-height: 98vh;
@@ -128,9 +129,9 @@ html {
  .all3org{
     display: grid;
     grid-template-rows: 2.5em auto;
-    grid-template-columns: 240px auto 250px;    /* 250px */
-    grid-template-areas: 'headerRow headerRow headerRow'
-                          'navColClass mainBlockHolder rightInfoHolder';
+    grid-template-columns: 240px 3px auto 250px;    /* 250px */
+    grid-template-areas: 'headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
+                          'navColClass dragbarLeft mainBlockHolder rightInfoHolder';
     height: 100vh;
     width: 100vw;
     min-height: 98vh;
@@ -157,8 +158,9 @@ html {
     flex-direction: column;
     background: #F5F5F5; /* lavender; */
     border: 1px solid #AAA;
-    hight: 100%;
+    height: 100%;
     resize: horizontal;
+    min-width: 194px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
   }
 
 /*contains pages (population, Organsims, Analysis) */
@@ -489,7 +491,7 @@ html {
 
 #gridHolder {
   border: 1px solid #AAA;
-  flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {flex:1;} both prevent resize */
+  flex: auto;  /* yemi: changed from 1 to flex */   /* fills remaining space; {flex:1 1 auto;} is the same as {flex:1;} both prevent resize */
   background: #F5F5F5; /* blue; */
   overflow:auto;
   min-width: 20px;
@@ -2009,6 +2011,16 @@ canvas {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+/*
+yemi: dragbar
+*/
+.dragbar {
+  background-color:gray;
+  width :3px;
+  height : 95vh;
+  cursor: col-resize;
 }
 
 /********************************************************************************************** end of modalBig class */                                                                         */
