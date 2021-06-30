@@ -1,30 +1,81 @@
-/* yemi: functions for left dragbar */
+/* yemi: function to automatically resize the Analysis page when button clicked; called in avidaED.js */
+function resizeAnalysisPage() {
+  var leftNavBarWidth = $('.navColClass').css("width");
+  var dragbarWidth = $('#dragbarLeft').css("width");
+  var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto";
+  $('.all2lft').css("grid-template-columns", newColumns);
+}
 
+/* yemi: functions for left dragbar */
 function dragbarLeftResize() {
   var dragging = false;
   $('#dragbarLeft').bind('mousedown', function(e) {
     e.preventDefault();
     dragging = true;
-    console.log(dragging);
+    
+    $(document).mousemove(function(e){
+      var widthAvailable = window.innerWidth - 440 - 3; /* yemi: hard-coded 440px (right panel) 3px (left dragbar), need to fix */
+      var percentage = (e.pageX / widthAvailable);
+      var widthOfNav = widthAvailable * percentage;
+
+      /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
+      if (widthOfNav < parseInt($('#navColId').css("min-width"))) {
+        widthOfNav = parseInt($('#navColId').css("min-width"))
+      }
+
+      /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
+      else if (widthOfNav > parseInt($('#navColId').css("max-width"))) {
+        widthOfNav = parseInt($('#navColId').css("max-width"));
+      }
+      
+      /* yemi: when modifying the column sizes, need to modify all three layouts */
+      var population_colInfo = widthOfNav + "px 3px " + "auto 440px";
+      var organism_colInfo = widthOfNav + "px 3px " + "auto 250px";
+      var analysis_colInfo = widthOfNav + "px 3px auto";
+      $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
+      $('.all3pop').css("grid-template-columns", population_colInfo);
+      $('.all3org').css("grid-template-columns", organism_colInfo);
+      $('#navColId').css("width", widthOfNav + "px");
+
+      /* yemi: make the following divs take up the entire width of their containers */
+      $('orgInfoHolder').css("width", "100%");
+    });
   });
 
   $(document).bind('mouseup', function(e) {
     if (dragging) {
-      var percentage = (e.pageX / window.innerWidth);
-      var mainPercentage = 1 - percentage;
-      widthAvailable = window.innerWidth - 440 - 3; /* yemi: hard-coded 440px (right panel) 3px (left dragbar), need to fix */
-      colInfo = (widthAvailable * percentage) + "px 3px " + (widthAvailable * mainPercentage) + "px 440px";
-      console.log(colInfo);
-      $('.all3pop').css("grid-template-columns", colInfo);
-      $('#navColId').css("width", (widthAvailable * percentage) + "px");
-      $('#populationBlock').css("width", (widthAvailable * mainPercentage) + "px");
+      var widthAvailable = window.innerWidth - 440 - 3; /* yemi: hard-coded 440px (right panel) 3px (left dragbar), need to fix */
+      var percentage = (e.pageX / widthAvailable);
+      var widthOfNav = widthAvailable * percentage;
+
+      /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
+      if (widthOfNav < parseInt($('#navColId').css("min-width"))) {
+        widthOfNav = parseInt($('#navColId').css("min-width"))
+      }
+
+      /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
+      else if (widthOfNav > parseInt($('#navColId').css("max-width"))) {
+        widthOfNav = parseInt($('#navColId').css("max-width"));
+      }
+      
+      /* yemi: when modifying the column sizes, need to modify all three layouts */
+      var population_colInfo = widthOfNav + "px 3px " + "auto 440px";
+      var organism_colInfo = widthOfNav + "px 3px " + "auto 250px";
+      var analysis_colInfo = widthOfNav + "px 3px auto";
+      $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
+      $('.all3pop').css("grid-template-columns", population_colInfo);
+      $('.all3org').css("grid-template-columns", organism_colInfo);
+      $('#navColId').css("width", widthOfNav + "px");
+
+      /* yemi: make the following divs take up the entire width of their containers */
+      $('orgInfoHolder').css("width", "100%");
       $(document).unbind('mousemove');
       dragging = false;
-      console.log(dragging);
+
+      console.log(window.outerHeight);
     }
   });
 };
-
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -77,11 +128,11 @@ av.dom.storeInitialSize = function() {
               , '; trash=', av.dom.trashDiv_ht_ot_now, '; navColID_now=', av.dom.navColId_ht_now
               , '; sum=',(av.dom.mainButtons_ht_ot_now+av.dom.freezerSection_ht_ot_now+av.dom.trashDiv_ht_ot_now) );
   
-  //  call other size related function when initializing 
+  // call other size related function when initializing 
   av.ui.freezerSizeHtFn(); 
   console.log('sizes=', av.dom.sizes() );
   
-  // yemi: call the drag bar left function
+  /* yemi: call the drag bar left function */
   dragbarLeftResize();
 };
 
@@ -202,7 +253,7 @@ av.dom.sizes = () => {
       av.dom.leftPanelButton.style.background = '#ccc';
 
       if ('all3pop' == av.dom.allAvidaContainer.className || 'all3org' == av.dom.allAvidaContainer.className) {
-        av.dom.allAvidaContainer.className = 'all2rit';
+        av.dom.allAvidaContainer.className = 'all2rit'; /* yemi: isn't the last class name supposed to be 'all2lft'? */
         if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_was,   ht =', av.dom.popChrtHolder_wd_was, ',', av.dom.popChrtHolder_ht_was); }
         av.dom.popChrtHolder.style.height = av.dom.popChrtHolder_ht_was+'px';
 

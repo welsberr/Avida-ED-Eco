@@ -1156,7 +1156,7 @@ av.ui.closeSendModalFn = () => {
     if (av.dom.orgInfoHolder.clientWidth < av.ui.orgInfoHolderMinWidth) av.ui.orgInfoHolderWidth = av.ui.orgInfoHolderMinWidth;
     av.ui.mainBoxSwap('organismBlock');
 
-    av.dom.orgInfoHolder.style.width = av.ui.orgInfoHolderWidth + 'px';
+    // av.dom.orgInfoHolder.style.width = av.ui.orgInfoHolderWidth + 'px'; /* yemi: commented this out because it was messing with my resize code. let me know if this is causing problems */
     
     console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
       av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
@@ -1170,6 +1170,9 @@ av.ui.closeSendModalFn = () => {
     //console.log('after mainBoxSwap to analysisBlock');
     av.anl.AnaChartFn();
     //console.log('fzWorld wd =', document.getElementById('fzWld').style.width );
+    
+    /* yemi: just so that if screen resized in the other layout, you still update the analysis page correctly */
+    resizeAnalysisPage();
   };
 
   // if (av.dbg.flg.root) { console.log('Root: before showTextDebugButton.onclick'); }

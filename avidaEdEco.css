@@ -98,7 +98,7 @@ html {
   
   .all2lft{
     display: grid;
-    grid-template-rows: 2.5em auto;
+    grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
     grid-template-columns: 240px 3px auto;
     grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                           'navColClass dragbarLeft mainBlockHolder';
@@ -111,6 +111,7 @@ html {
     margin: 0;
     background:  #F5F5F5;   /* lightsalmon;  */
   }
+
   .all3pop{ 
     display: grid;
     grid-template-rows: 2.5em 1fr;   /* 2.5em */
@@ -128,7 +129,7 @@ html {
   }
  .all3org{
     display: grid;
-    grid-template-rows: 2.5em auto;
+    grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
     grid-template-columns: 240px 3px auto 250px;    /* 250px */
     grid-template-areas: 'headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                           'navColClass dragbarLeft mainBlockHolder rightInfoHolder';
@@ -158,9 +159,10 @@ html {
     flex-direction: column;
     background: #F5F5F5; /* lavender; */
     border: 1px solid #AAA;
-    height: 100%;
+    height: 99%;
     resize: horizontal;
-    min-width: 194px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
+    min-width: 185px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
+    max-width: 620px;
   }
 
 /*contains pages (population, Organsims, Analysis) */
@@ -178,6 +180,7 @@ html {
 
   #rightInfoHolder {
     grid-area: rightInfoHolder;
+    width: 100%;
     border: 1px solid #AAA;      /*sot stat = 190;  popstat =234  for  424 */
     background: #F5F5F5;
     height: 100%;
@@ -189,7 +192,7 @@ html {
     background: #F5F5F5;
     height: 100%;
     width: 100%;
-    min-width: 250px;
+    /* min-width: 250px; */
     background-color: inherit; /*mistyrose;*/
   }
   
@@ -423,19 +426,23 @@ html {
   width: 100%;
   background: #F5F5F5; /* #F5F5F5;lightblue; */
 }
-  .orgBenchCol{
-    background: #F5F5F5; /* lightgoldenrodyellow;*/
-    flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-    border: 1px solid #AAA;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
+
+.orgBenchCol{
+  background: #F5F5F5; /* lightgoldenrodyellow;*/
+  flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+  border: 1px solid #AAA;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 99%;
+  max-height: 100%;
+  overflow:hidden;
+}
 
 .popBenchCol{
   background: #F5F5F5; /* lightgoldenrodyellow; */
   flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
-  //flex: 0 1 auto;       //should scale with window size, but does not do what I want????
+  /* flex: 0 1 auto;       should scale with window size, but does not do what I want???? */
   border: 1px solid #AAA;
   display: flex;
   flex-direction: column;
@@ -453,6 +460,7 @@ html {
   background: #F5F5F5; /* lightblue;  */
   border: 1px solid #AAA;
 }
+
 #activeConfigHolder{
   flex: 0 1 auto;
   display: flex;
