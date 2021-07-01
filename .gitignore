@@ -8,7 +8,9 @@ d_*/*/*
 default.avidaWs
 default.avidaWs/
 z_not_in_use_*
+z_*
 avida.js.old
 avida.js.old/*
 
+nbproject/
 /HTML5Application/nbproject/private/

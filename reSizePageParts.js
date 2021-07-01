@@ -573,11 +573,6 @@ av.ptd.ritePanelButton = function () {
 };
 //---------------------------------------------------------------------------------------- end av.ptd.ritePanelButton --
 
-// supposed to make the center section larger. does not so button hidden
-// document.getElementById('ritePanelButton').onclick = function() { av.ptd.ritePanelButton(); };
-//--------------------------------------------------------------------------------------- end ritePanelButton.onclick --
-
-
 //------------------------------------------------------------------------------------- av.ui.removeVerticalScrollbar --
 // if (av.dbg.flg.root) { console.log('Root: before av.ui.removeVerticalScrollbar'); }
 //https://tylercipriani.com/2014/07/12/crossbrowser-javascript-scrollbar-detection.html

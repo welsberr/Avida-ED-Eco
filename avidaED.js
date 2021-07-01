@@ -76,17 +76,8 @@
 // Path in TX for Filezilla /var/www/vhosts/bwng/public_html/projects/Avida-ED
 //                          /var/www/vhosts/bwng/public_html/projects/
 //
-// Dreamweaver no longer in use ----------------------------------------------------------------------------------------
-//
-// for things on Darwin (dream weaver site)
-// ssh -l diane darwin.beacon.msu.edu/html
-// var/sites/Avida-ED.msu.edu
-// emacs home.html
-//
-// to get to mac files on parallels
-// net use z: \\Mac\Home
-//
 //----------------------------------------------------------------------------------------------------------------------
+//  Notes on problems below:
 //---------------------------------------------------------------------------------------------------------- Problems --
 //  
 //  Population Page -------
@@ -110,7 +101,7 @@
 //  Fix av.anl.widg = {   statement on globals in Avida-ED 3.2 to match the one in Avida-ED-4 ecology
 //  
 //----------------------------------------------------------------------------------------------------------------------
-// 
+
 
 // if (av.dbg.flg.root) { console.log('Root: before require statement'); }
 var av = av || {};  //incase av already exists
@@ -249,7 +240,6 @@ require([
 
   // if (av.dbg.flg.root) { console.log('Root: before av.dom.load'); };
   av.dom.load();
-
   av.dom.initilizeDigitData();
   av.dom.initilizeAnalizePage(); 
 
@@ -384,7 +374,7 @@ require([
     }
   });
 
-// based on https://stackoverflow.com/questions/27529727/sorta-b-does-not-work-in-dojo-dnd-source
+  // based on https://stackoverflow.com/questions/27529727/sorta-b-does-not-work-in-dojo-dnd-source
   av.dnd.sortDnD = function (dndSection) {
     // Input: dndSection = the text of the class os the Dojo DnD section with elements to be sorted
     // e.g., var dndSection = 'fzOrgan'; sortDnD(dndSection);
@@ -478,26 +468,6 @@ require([
       });
     }
   });
-
-  // 2019-04-14: Untested.
-  /*
-   dojo.connect( av.dnd.fzMdish, "onDndDrop", function( source, nodes, copy, target ) {
-   if ('fzMdish' === target.node.id) {
-   nodes.forEach(function(node) {
-   av.dnd.sortDnD('fzMdish');
-   });
-   }
-   });
-   
-   // 2019-04-14: Untested.
-   dojo.connect( av.dnd.fzRdish, "onDndDrop", function( source, nodes, copy, target ) {
-   if ('fzRdish' === target.node.id) {
-   nodes.forEach(function(node) {
-   av.dnd.sortDnD('fzRdish');
-   });
-   }
-   });
-   */
 
   // if (av.dbg.flg.root) { console.log('Root: before av.dnd.ancestorBox'); }
   av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
@@ -632,6 +602,111 @@ require([
   //----------------------------------------------------------------------------------------------------------------------
   //                                    End of dojo based DND triggered functions
   //----------------------------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------
+  //    mouse DND functions
+  //--------------------------------------------------------------------------------------------------------------------
+
+  //mouse click started on Organism Canvas - only offspring can be selected if present
+  $(document.getElementById('organCanvas')).on('mousedown', function (evt) {
+    av.post.addUser('mousedown: organCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
+    av.mouse.downOrganCanvasFn(evt);
+  });
+
+  //if a cell is selected, arrow keys can move the selection
+  $(document).keydown(function (event) {
+    //av.post.addUser(' ');   //in av.mouse.arrowKeyOnGrid
+    //console.log('keydown.event=', event);
+    av.mouse.arrowKeysOnGrid(event);
+  });
+
+  //av.mouse down on the grid
+  $(av.dom.gridCanvas).on('mousedown', function (evt) {
+    av.post.addUser('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
+    console.log('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
+    av.mouse.downGridCanvasFn(evt);
+  });
+
+  //mouse move anywhere on screen - not currently in use.
+  /*  $(document.getElementById('gridCanvas')).on('mousemove', function handler (evt) {
+   //$(document).on('mousemove', function handler(evt) { //needed so cursor changes shape
+   //console.log('gd move');
+   //document.getElementById('gridCanvas').style.cursor = 'copy';
+   //document.getElementById('trashCan').style.cursor = 'copy';
+   //console.log('av.mouseMove cursor GT', document.getElementById('gridCanvas').style.cursor, dom.byId('trashCan').style.cursor);
+   //if (av.debug.mouse) console.log('________________________________av.mousemove');
+   if (!av.mouse.nearly([evt.offsetX, evt.offsetY], av.mouse.DnGridPos)) {
+   //if (av.debug.mouse) console.log('________________________________');
+   //if (av.debug.mouse) console.log('gd draging');
+   if (av.mouse.Dn) av.mouse.Drag = true;
+   }
+   $(document).off('av.mousemove', handler);
+   });
+   */
+
+  $(document).on('pointerup', function (evt) {
+    av.mouse.UpGridPos = [evt.originalEvent.offsetX, evt.originalEvent.offsetY];
+  });
+
+  //When mouse button is released, return cursor to default values
+  $(document).on('mouseup', function (evt) {
+    'use strict';
+    var target = '';
+    if (av.debug.mouse)
+      console.log('in mouseup target:', evt.target.id, '; event:', evt);
+    if (av.debug.mouse)
+      console.log('in mouseup target:', evt.target.id);
+    av.mouse.makeCursorDefault();
+    av.mouse.UpGridPos = [evt.offsetX, evt.offsetY];
+    if (av.debug.mouse)
+      console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
+    av.mouse.Dn = false;
+
+    // --------- process if something picked to dnd ------------------
+    if ('parent' == av.mouse.Picked) {
+      av.mouse.Picked = '';
+      av.mouse.ParentMouse(evt, av);
+      if ('gridCanvas' == evt.target.id || 'trashCanImage' == evt.target.id) {
+        av.grd.drawGridSetupFn('on mouseup where evt.target.id=gridCanvas or trashCanImage');
+      } else if ('organIcon' == evt.target.id) {
+        //Change to Organism Page
+        av.ui.mainBoxSwap('organismBlock');
+        av.ind.organismCanvasHolderSize('mouseup_organIcon_parent');
+        av.ui.adjustOrgInstructionTextAreaSize();
+        if (av.debug.mouse)
+          console.log('from parent', av.parent, '; fzr', av.fzr);
+        av.post.addUser('Dragged item to Organism Icon');
+        av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+      }
+    } else if ('offspring' == av.mouse.Picked) {
+      target = av.mouse.offspringMouse(evt, av.dnd, av.fio, av.fzr, av.gen);
+      av.mouse.Picked = '';
+    } else if ('kid' == av.mouse.Picked) {
+      av.mouse.Picked = '';
+      target = av.mouse.kidMouse(evt, av.dnd, av.fzr, av.grd);
+      if (av.debug.mouse)
+        console.log('kidMouse: target', target, '===============', evt.target.id);
+      if ('organIcon' == evt.target.id) {
+        //Change to Organism Page
+        av.ui.mainBoxSwap('organismBlock');
+        av.ind.organismCanvasHolderSize('mouseup_organIcon_Kid');
+        av.ui.adjustOrgInstructionTextAreaSize();
+        av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+      }
+      /*      else if ('fzOrgan' == target) {
+       //make_database_entry if using a database (av.fio, av.fzr);
+       }
+       */
+    }
+    av.mouse.Picked = '';
+  });
+  //********************************************************************************************************************
+  // End of Mouse functions
+  //********************************************************************************************************************
+
+  //--------------------------------------------------------------------------------------------------------------------
+  // Remind user if they might need to save their workspace
+  //--------------------------------------------------------------------------------------------------------------------
+
   window.onbeforeunload = function (event) {
   console.log('window.onbeforeunload: av.ui.sendEmailFlag =', av.ui.sendEmailFlag, '; av.fzr.saveState = ', av.fzr.saveState);
     if (!av.ui.sendEmailFlag) {
@@ -647,11 +722,10 @@ require([
     };
   };
 
-   // if (av.dbg.flg.root) { console.log('Root: before Error Logging'); }
+  // if (av.dbg.flg.root) { console.log('Root: before Error Logging'); }
   //********************************************************************************************************************
   // Error logging
   //********************************************************************************************************************
-  //--------------------------------------------------------------------------------------------------------------------
   //https://bugsnag.com/blog/js-stacktracess
   //http://blog.bugsnag.com/js-stacktraces
   window.onerror = function (message, file, line, col, error) {
@@ -683,7 +757,7 @@ require([
   // selected text
   // http://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
   // http://www.javascriptkit.com/javatutors/copytoclipboard.shtml
-  
+
   // if (av.dbg.flg.root) { console.log('Root: defore av.ui.problemWindow'); }
   //process problme pop-up window
   av.ui.problemWindow = function (from) {
@@ -742,13 +816,13 @@ require([
     av.dom.sendLogScrollBox.focus();
     //av.dom.sendLogScrollBox.select();  //https://css-tricks.com/snippets/javascript/auto-select-textarea-text/
   };
-  
+
   av.ui.closeSendModalFn = function(){
     document.getElementById('sendLogmodalID').style.display = 'none';
   };
-  
+
   //--------------------------------------------------------------------------------------------------------------------
-    
+
   av.post.sendWindow = function () {
     console.log('in av.post.sendWindow; used for database; not email');
     av.dom.postLogPara.textContent = av.post.postLogPara;  //textarea must be visable first
@@ -765,14 +839,14 @@ require([
     av.dom.postdTailTextarea.textContent = av.debug.dTail;
     av.dom.postProblemError.textContent = '';
   };
-  
+
   window.addEventListener('error', function (evt) {
     console.log('In window.addEventListener: event listener', evt);
   });
   //--------------------------------------------------------------------------------------------
   //http://www.technicaladvices.com/2012/03/26/detecting-the-page-leave-event-in-javascript/
   //Cannot get custom message in Firefox (or Safari for now)
-  
+
 
   on(document.getElementById('postPost'), 'click', function () {
     console.log('in on(document.getElementById(postPost)');
@@ -807,11 +881,66 @@ require([
     ); // End then
   }); // End on's function and on statement
 
-  //--------------------------------------------------------------------------------------------------------------------
-    
+  //http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
+  av.ui.sendLogEmailFn = function () {
+    console.log('in sendLogEmailFn');
+    av.ui.sendEmailFlag = true;
+    av.post.addUser('Button: sendEmail');
+    var link = 'mailto:' + av.fio.mailAddress +
+      //'?cc=CCaddress@example.com' +
+      '?subject=' + escape('Avida-ED session log') +
+      '&body=' + escape(av.debug.sendLogScrollBox);
+    window.location.href = link;
+    av.ui.sendEmailFlag = false;
+  };
+
+  /* 
+  //http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
+    dijit.byId('sendEmail').on('Click', function () {
+      av.ui.sendEmailFlag = true;
+      av.post.addUser('Button: sendEmail');
+      var link = 'mailto:' + av.fio.mailAddress +
+        //'?cc=CCaddress@example.com' +
+        '?subject=' + escape('Avida-ED session log') +
+        '&body=' + escape(av.debug.log);
+      window.location.href = link;
+      av.ui.sendEmailFlag = false;
+    });
+  */
+
+  av.debug.finalizeDtail = function () {
+    //finalize dTail
+    //dom dimensions clientWidth clientHeight scrollWidth scrollHeight innerWidth innerHeight outerWidth outerHeight
+    //assignment must have units and is a string style.width style.height
+    av.debug.dTail = ''
+      + '\nmapHolder.client wd Ht = ' + av.dom.mapHolder.clientWidth + '  ' + av.dom.mapHolder.clientHeight
+      + '\nmapHolder.scroll wd Ht = ' + av.dom.mapHolder.scrollWidth + '  ' + av.dom.mapHolder.scrollHeight
+      + '\n  gridHolder.client wd Ht = ' + av.dom.gridHolder.clientWidth + '  ' + av.dom.gridHolder.clientHeight
+      + '\n  gridHolder.scroll wd Ht = ' + av.dom.gridHolder.scrollWidth + '  ' + av.dom.gridHolder.scrollHeight
+      + '\n  gridCanvas.client wd Ht = ' + av.dom.gridCanvas.clientWidth + '  ' + av.dom.gridCanvas.clientHeight
+      + '\n  gridCanvas.scroll wd Ht = ' + av.dom.gridCanvas.scrollWidth + '  ' + av.dom.gridCanvas.scrollHeight
+      + '\n' + av.debug.dTail;
+  };
+
   //********************************************************************************************************************
-  // Menu Buttons handling
+  // End of Error logging
+  //********************************************************************************************************************
+
+  //********************************************************************************************************************
+  // buttons in the Header Row
   //********************************************************************************************s************************
+
+  // supposed to make the center section larger. does not work so button hidden
+    document.getElementById('ritePanelButton').onclick = function () {
+      av.ptd.ritePanelButton();
+      console.log('in ritePanelButton.onclick');
+    };
+  //--------------------------------------------------------------------------------------- end ritePanelButton.onclick --
+
+  //----------------------------------------------------------------------------------------------------------------------
+  // Menu Buttons handling
+  //----------------------------------------------------------------------------------------------------------------------
+
 
   // if (av.dbg.flg.root) { console.log('Root: dijit test', dijit.byId('mnFlOpenDefaultWS')); }
 
@@ -929,7 +1058,7 @@ require([
     mnFlStandAloneAppDialog.show();
   });
 
- //----------------------------------------- Testing & Development Tools that are hidden from from User .---------------
+  //----------------------------------------- Testing & Development Tools that are hidden from from User .---------------
   av.doj.mnHpDebug.onclick = function () {
     if ('visible' === av.doj.mnDebug.style.visibility) {
       av.doj.mnDebug.style.visibility = 'hidden';
@@ -951,7 +1080,7 @@ require([
   //--------------------------------------------------------------------------------------------------------------------
   // Help Drop down menu buttons
   //--------------------------------------------------------------------------------------------------------------------
-  
+
   // onclick='av.ui.aboutAvidaED'
   av.ui.aboutAvidaED = function(from) {
     av.post.addUser('Button: display About Avida-ED from:', from);
@@ -973,28 +1102,28 @@ require([
     document.getElementById('preferences_ModalID').style.display = 'block';
   });
 
-av.ui.email = function() {
+  av.ui.email = function() {
     av.post.addUser('Button: mnHpAbout');
     av.ui.emailAvidaED();
     document.getElementById('email_ModalID').style.display = 'block';
     console.log('in av.ui.email');    
   };
-  
-av.ui.closeSendModalFn = () => {
-  document.getElementById('sendLogModalID').style.display = 'none';
-};
-  
+
+  av.ui.closeSendModalFn = () => {
+    document.getElementById('sendLogModalID').style.display = 'none';
+  };
+
   av.sgr.complexityChange = function (domObj) {
     console.log('the complexity requested is:', domObj.value);
     av.sgr.complexityLevel = domObj.value;
     av.sgr.complexityChangeProcess('av.sgr.complexityChange');
   };
-   
+
   av.ui.language = function (domObj) {
     av.ui.language = domObj.value;
     console.log('not yet implemented: the language requested is:', domObj.value);
   };
- 
+
   av.ui.closePreferences = function () {
     document.getElementById('preferences_ModalID').style.display = 'none';
   };
@@ -1015,340 +1144,50 @@ av.ui.closeSendModalFn = () => {
     // only shows one line = prompt('Please put this in an e-mail to help us improve Avida-ED: Copy to clipboard: Ctrl+C, Enter', '\nto: ' + av.fio.mailAddress + '\n' + av.debug.log);
   });
 
-  //http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
-  av.ui.sendLogEmailFn = function () {
-    console.log('in sendLogEmailFn');
-    av.ui.sendEmailFlag = true;
-    av.post.addUser('Button: sendEmail');
-    var link = 'mailto:' + av.fio.mailAddress +
-      //'?cc=CCaddress@example.com' +
-      '?subject=' + escape('Avida-ED session log') +
-      '&body=' + escape(av.debug.sendLogScrollBox);
-    window.location.href = link;
-    av.ui.sendEmailFlag = false;
+  //------------------------------------------------------------------------------------------------------ debug menu --
+
+  document.getElementById('mnDbThrowData').onclick = function () {
+    'use strict';
+    av.post.addUser('Button: mnDbThrowData');
+    console.log('av', av);
+    console.log('fzr', av.fzr);
+    console.log('parents', av.parents);
+    console.log('av.grd.msg', av.grd.msg);
+    console.log('av.grd.popStatsMsg', av.grd.popStatsMsg);
+    console.log('av.grd.DataByCellID =', av.grd.DataByCellID);
+    console.log('av.pch =', av.pch);
+    console.log('av.dom.popChart.data=', av.dom.popChart.data);
+    console.log('av.anl =', av.anl);
   };
 
-/* 
-//http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
-  dijit.byId('sendEmail').on('Click', function () {
-    av.ui.sendEmailFlag = true;
-    av.post.addUser('Button: sendEmail');
-    var link = 'mailto:' + av.fio.mailAddress +
-      //'?cc=CCaddress@example.com' +
-      '?subject=' + escape('Avida-ED session log') +
-      '&body=' + escape(av.debug.log);
-    window.location.href = link;
-    av.ui.sendEmailFlag = false;
-  });
-*/
-
-  av.debug.finalizeDtail = function () {
-    //finalize dTail
-    //dom dimensions clientWidth clientHeight scrollWidth scrollHeight innerWidth innerHeight outerWidth outerHeight
-    //assignment must have units and is a string style.width style.height
-    av.debug.dTail = ''
-      + '\nmapHolder.client wd Ht = ' + av.dom.mapHolder.clientWidth + '  ' + av.dom.mapHolder.clientHeight
-      + '\nmapHolder.scroll wd Ht = ' + av.dom.mapHolder.scrollWidth + '  ' + av.dom.mapHolder.scrollHeight
-      + '\n  gridHolder.client wd Ht = ' + av.dom.gridHolder.clientWidth + '  ' + av.dom.gridHolder.clientHeight
-      + '\n  gridHolder.scroll wd Ht = ' + av.dom.gridHolder.scrollWidth + '  ' + av.dom.gridHolder.scrollHeight
-      + '\n  gridCanvas.client wd Ht = ' + av.dom.gridCanvas.clientWidth + '  ' + av.dom.gridCanvas.clientHeight
-      + '\n  gridCanvas.scroll wd Ht = ' + av.dom.gridCanvas.scrollWidth + '  ' + av.dom.gridCanvas.scrollHeight
-      + '\n' + av.debug.dTail;
+  document.getElementById('mnDbThrowError').onclick = function () {
+    'use strict';
+    av.post.addUser('Button: mnDbThrowError');
+    var george = fred;
   };
+
+  document.getElementById('mnDbLineLog').onclick = function () {
+    'use strict';
+    av.debug.log += '\n -----------------------------------------------------------------------------------------------\n';
+  };
+
+  /*
+   document.getElementById('mnDbLoadProtoType').onclick = function () {
+   'use strict';
+   //code to load the files from the freezer into the space
+   };
+   */
 
   //********************************************************************************************************************
-  // main button scripts
+  // end of menu buttons
   //********************************************************************************************************************
 
-  //The style display: 'none' cannnot be used in the html during the initial load as the dijits won't work right
-  //visibility:hidden can be used, but it leaves the white space and just does not display dijits.
-  //So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
-  //the default option.
-  // if (av.dbg.flg.root) { console.log('Root: before av.ui.mainBoxSwap defined'); }
-  av.ui.mainBoxSwap = function (showBlock) {
-    //console.log('showBlock=', showBlock);
-    av.ui.page = showBlock;
-    av.dom.populationBlock.style.display = "none";
-    av.dom.organismBlock.style.display = "none";
-    av.dom.analysisBlock.style.display = "none";
-    av.dom.showTextDebugBlock.style.display = "none";
-    av.dom.orgInfoHolder.style.display = 'none';
-    av.dom.popInfoVert.style.display = 'none';
-    av.dom.populationButton.style.background = 'white';
-    av.dom.organismButton.style.background = 'white';
-    av.dom.analysisButton.style.background = 'white';
-    av.dom.showTextDebugButton.style.background = 'white';
-    document.getElementById(showBlock).style.display = "flex";   //orgPageButtonHolder
-    var showButton = showBlock.substring(0,showBlock.length-5)+'Button';
-    console.log('showButton=',showButton);
-    document.getElementById(showButton).style.background = '#DBDBDB'; 
-    //dijit.byId(showBlock).resize();
-    //document.getElementById(showBlock).resize();
+  //********************************************************************************************************************
+  // Pop up Buttons    Modals 
+  //********************************************************************************************************************
+  // some drop down menu  buttons are in here as they open pop ups. 
 
-    //disable menu options. they will be enabled when relevant canvas is drawn
-    dijit.byId('mnFzOffspring').attr('disabled', true);
-    dijit.byId('mnCnOffspringTrace').attr('disabled', true);
-
-    // if the miniplot on the populaton page needs to be initiated call that funciton.
-    console.log('In: av.ui.mainBoxSwap; av.pch.needInit=', av.pch.needInit, '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));
-    if ($(av.dom.popStatsBlock).is(":visible") && (av.pch.needInit) ) {
-      av.grd.popChartInit('av.ui.mainBoxSwap');
-    };
-    if ('populationBlock' == av.ui.page) {
-      av.dom.popInfoVert.style.display = 'block';
-      document.getElementById('allAvidaContainer').className = 'all3pop';
-    }
-    if ('analysisBlock' == av.ui.page) {
-      document.getElementById('allAvidaContainer').className = 'all2lft';
-    }
-    if ('organismBlock' == av.ui.page) {
-      document.getElementById('allAvidaContainer').className = 'all3org';
-      console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
-      av.dom.orgInfoHolder.style.display = 'block';
-      if ('settings' == av.ui.orgInfo) {
-        av.dom.orgSettings.style.display = 'block';
-        av.dom.orgDetailID.style.display = 'none';
-      }
-      else {
-        av.dom.orgSettings.style.display = 'none';
-        av.dom.orgDetailID.style.display = 'block';
-        av.ui.adjustOrgInstructionTextAreaSize();
-      };
-      
-      if (undefined !== av.traceObj) {
-        av.ind.updateOrgTrace('mainBoxSwap_organismBlock');
-      };
-      av.ind.organismCanvasHolderSize('mainBoxSwap_organismBlock');   ///??????
-      av.ind.clearGen('mainBoxSwap_organismBlock');
-      av.ind.cpuOutputCnvsSize();
-    }
-     if (('populationBlock' == av.ui.page) || ('organismBlock' == av.ui.page)) {
-      document.getElementById('RtSideToggleButtons').style.display = 'block';
-      document.getElementById('ritePnlBtnHolder').style.display = 'block';
-      document.getElementById('rightInfoHolder').style.display = 'block';
-    }
-    else {
-      document.getElementById('RtSideToggleButtons').style.display = 'none';
-      document.getElementById('ritePnlBtnHolder').style.display = 'none';
-      document.getElementById('rightInfoHolder').style.display = 'none';
-    };
-    //console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
-  };
-
-  // Buttons that call MainBoxSwap
-  // if (av.dbg.flg.root) { console.log('Root: before av.dom.populationButton.onclick'); }
-  av.dom.populationButton.onclick = function () {
-    av.post.addUser('Button: populationButton');
-    if (av.debug.dnd || av.debug.mouse)
-      console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
-    av.ui.mainBoxSwap('populationBlock');
-  };
-
-  av.dom.organismButton.onclick = function () {
-    av.post.addUser('Button: organismButton');
-    // * offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
-    // * clientWidth = box + 2*padding - scrollbar_width    
-    // * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
-    // * csssWidth = box only nothing else
-    console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
-      av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
-      $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
-    if (av.dom.orgInfoHolder.clientWidth < av.ui.orgInfoHolderMinWidth) av.ui.orgInfoHolderWidth = av.ui.orgInfoHolderMinWidth;
-    av.ui.mainBoxSwap('organismBlock');
-
-    // av.dom.orgInfoHolder.style.width = av.ui.orgInfoHolderWidth + 'px'; /* yemi: commented this out because it was messing with my resize code. let me know if this is causing problems */
-    
-    console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
-      av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
-      $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
-    console.log('orgInfoHolder.paddding=', $("#orgInfoHolder").css('padding'));
-  };
-
-  document.getElementById('analysisButton').onclick = function () {
-    av.post.addUser('Button: analysisButton');
-    av.ui.mainBoxSwap('analysisBlock');
-    //console.log('after mainBoxSwap to analysisBlock');
-    av.anl.AnaChartFn();
-    //console.log('fzWorld wd =', document.getElementById('fzWld').style.width );
-    
-    /* yemi: just so that if screen resized in the other layout, you still update the analysis page correctly */
-    resizeAnalysisPage();
-  };
-
-  // if (av.dbg.flg.root) { console.log('Root: before showTextDebugButton.onclick'); }
-  document.getElementById('showTextDebugButton').onclick = function () {
-    av.post.addUser('Button: showTextDebugButton');
-    av.ui.mainBoxSwap('showTextDebugBlock');
-  };
-  // ------------------ two controls for the same purpose; tabs used in develoopment mode --
-  
-  //Toggle switch for Population/Organism pages
-  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.rightInfoPanelToggleButton'); }
-  //Population page
-  av.ptd.rightInfoPanelToggleButton = function(domObj) {
-    if ('populationBlock' == av.ui.page) {
-      var tabcontent = document.getElementsByClassName("labInfoClass");
-      //console.log('tabcontent=', tabcontent);
-      for (ii = 0; ii < tabcontent.length; ii++) {
-        //console.log('ii=', ii, '; tabcontent[ii]=', tabcontent[ii]);
-        tabcontent[ii].className = 'labInfoClass labInfoNone';
-        //console.log('ii=', ii, '; tabcontent[ii].className =', tabcontent[ii].className);
-      };
-      var tablinks = document.getElementsByClassName("tablinks");
-      for (var ii = 0; ii < tablinks.length; ii++) {
-        //console.log('ii=', ii, '; tablinks[ii]=', tablinks[ii], '; tablinks[ii].className =', tablinks[ii].className);
-        tablinks[ii].className = tablinks[ii].className.replace(" active", "");
-        //console.log('tablinks[ii].className =', tablinks[ii].className);
-      };
-        
-      // show set up panel
-      if ('SetupButton' == domObj.id) {
-        document.getElementById('SetupButton').className = 'toggleRitButton activeBtn';
-        document.getElementById('StatsButton').className = 'toggleLftButton';
-        av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
-        av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
-        av.dom.setupTab.className = 'tablinks active';
-      } else {
-        // show Statisitcal data about grid
-        document.getElementById('StatsButton').className = 'toggleLftButton activeBtn';
-        document.getElementById('SetupButton').className = 'toggleRitButton';
-        av.dom.popStatsBlock.className = 'labInfoClass labInfoFlex';
-        av.dom.setupBlock.className = 'labInfoClass labInfoNone';
-        av.dom.statsTab.className = 'tablinks active'; 
-
-        if (av.dbg.flg.plt) {      //
-          console.log('In: av.ptd.rightInfoPanelToggleButton; av.pch.needInit=', av.pch.needInit
-              , '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") ); 
-        }
-        // if the miniplot on the populaton page needs to be updated.
-        if ( $(av.dom.popStatsBlock).is(":visible")) {
-          if (av.dbg.flg.plt) { console.log('need to call av.grd.popChartInit'); }
-          av.grd.popChartFn('av.ptd.rightInfoPanelToggleButton');
-        }
-      };
-      //console.log('Stats.class=', document.getElementById('StatsButton').className, '; Setup.class=', document.getElementById('SetupButton').className);
-    }
-    //Organism Page
-    else if ('organismBlock' == av.ui.page) {
-      if ('SetupButton' == domObj.id) {
-        av.post.addUser('Button: OrgSetting');
-        av.ind.settingsChanged = false;
-        av.ui.orgInfo = 'settings';
-        av.dom.orgSettings.style.display = 'block';
-        av.dom.orgDetailID.style.display = 'none';
-      }
-      else {
-        av.ui.orgInfo = 'details';
-        av.dom.orgSettings.style.display = 'none';
-        av.dom.orgDetailID.style.display = 'block';
-        console.log('av.ind.settingsChanged=', av.ind.settingsChanged);
-        if (av.ind.settingsChanged) av.msg.doOrgTrace();
-      }  
-    }
-    else {
-      // Analysis Page or Big text display for debug
-      console.log('should not be avaiable on analysis or showText page');
-    }
-  };
-
-  //Development section with tabs
-  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.processTab'); }
-  av.ptd.processTab = function (evt, contentType) {
-    var ii, tablinks;
-    var tabcontent = document.getElementsByClassName("labInfoClass");
-    //console.log('tabcontent=', tabcontent);
-    for (ii = 0; ii < tabcontent.length; ii++) {
-      //console.log('ii=', ii, '; tabcontent[ii]=', tabcontent[ii]);
-      tabcontent[ii].className = 'labInfoClass labInfoNone';
-      //console.log('ii=', ii, '; tabcontent[ii].display =', tabcontent[ii].style.display);
-    };
-    tablinks = document.getElementsByClassName("tablinks");
-    for (ii = 0; ii < tablinks.length; ii++) {
-      //console.log('ii=', ii, '; tablinks[ii]=', tablinks[ii], '; tablinks[ii].className =', tablinks[ii].className);
-      tablinks[ii].className = tablinks[ii].className = 'tablinks';
-      //console.log('tablinks[ii].className =', tablinks[ii].className);
-    };
-    // keep console example because evt info looks useful for improving mouse code.
-    // console.log('contentType=',contentType,'; evt=', evt);
-    // console.log('contentType=', contentType);
-    
-    document.getElementById(contentType).className = 'labInfoClass labInfoFlex';;
-    evt.currentTarget.className = "tablinks active";
-    //console.log('id=', evt.currentTarget.id);
-    if ('setupTab' == evt.currentTarget.id) {
-      document.getElementById('SetupButton').className = 'toggleRitButton activeBtn';
-      document.getElementById('StatsButton').className = 'toggleLftButton';
-    }
-    else if ('statsTab' == evt.currentTarget.id) {
-      document.getElementById('SetupButton').className = 'toggleRitButton';
-      document.getElementById('StatsButton').className = 'toggleLftButton activeBtn';      
-    }
-    else {
-      document.getElementById('SetupButton').className = 'toggleRitButton';
-      document.getElementById('StatsButton').className = 'toggleLftButton';            
-    }
-  };
-  // ------- end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
-
-//----------------------------------------------------------------------------------------------------------------------
-//                                             Population page Buttons
-//----------------------------------------------------------------------------------------------------------------------
-
-
-  //--------------------------------------------------------------------------------------------------------------------
-  ///   Map Grid buttons - New  Run/Pause Freeze
-  //--------------------------------------------------------------------------------------------------------------------
-
-  //process the run/Stop Button - a separate function is used so it can be flipped if the message to avida is not successful.
-  av.dom.runStopButton.onclick = function () {
-    av.post.addUser('Button: runStopButton = ' + av.grd.updateNum, '=updateNum;  ' + av.grd.msg.update + '=msg.update;  ' + av.grd.popStatsMsg.update + '=popStatsMsg.update');
-    av.ptd.runStopFn();
-  };
-
-  dijit.byId('mnCnPause').on('Click', function () {
-    av.post.addUser('Button: mnCnPause');
-    //console.log('about to call av.ptd.makePauseState()');
-    av.msg.pause('now');
-    //av.debug.log += '______Debug Note: about to call av.ptd.makePauseState() in AvidaEd.js line 986 \n';
-    av.ptd.makePauseState();
-  });
-
-  //process run/Stop buttons as above but for drop down menu
-  dijit.byId('mnCnRun').on('Click', function () {
-    av.post.addUser('Button: mnCnRun');
-    av.ptd.makeRunState('mnCnRun.Click');
-    av.ptd.runPopFn('mnCnRun.Click');
-  });
-
-  //process run/Stop buttons as above but for drop down menu
-  dijit.byId('mnCnOne').on('Click', function () {
-    av.post.addUser('Button: mnCnOne');
-    av.ui.oneUpdateFlag = true;
-    av.ptd.makeRunState('mnCnOne.Click');
-    av.ptd.runPopFn('mnCnOne.Click');
-  });
-
-  av.dom.oneUpdateButton.onclick = function () {
-    av.post.addUser('Button: oneUpdateButton', '=updateNum; ' + av.grd.msg.update + '=msg.update;  ' + av.grd.popStatsMsg.update + '=popStatsMsg.update');
-    av.ui.oneUpdateFlag = true;
-    av.ptd.makeRunState('av.dom.oneUpdateButton.onclick');
-    av.ptd.runPopFn('av.dom.oneUpdateButton.onclick');
-  };
-
-  av.ui.avidianOutlineOnclick = function (domObj) {
-    av.post.addUser('Button: avidianOutline; av.ui.showOutlineFlag=' + av.ui.showOutlineFlag);
-    if ('Resource Mode: hide Avidian Outlines' == av.dom.avidianOutline.innerHTML) {
-      av.dom.avidianOutline.innerHTML = 'Resource Mode: show Avidian Outlines';
-      av.ui.showOutlineFlag = false;
-      console.log('av.ui.showOutlineFlag=' + av.ui.showOutlineFlag);
-    } else {
-      av.dom.avidianOutline.innerHTML = 'Resource Mode: hide Avidian Outlines';
-      console.log('av.ui.showOutlineFlag=' + av.ui.showOutlineFlag);
-      av.ui.showOutlineFlag = true;
-    }
-  };
-
-//------------------------------------------------------------------------------------- modal dialog cancel buttons --
+  //------------------------------------------------------------------------------------- modal dialog cancel buttons --
 
   av.dom.needAncestorCancel.onclick = function () {
     av.dom.needAncestorModalID.style.display = 'none';
@@ -1429,10 +1268,7 @@ av.ui.closeSendModalFn = () => {
     }
   };
 
-
-
   document.getElementById('fzDialogModSaveConfig').onclick = function () {
-//  dijit.byId('FzConfigurationButton').on('Click', function () {
     av.post.addUser('Button: fzDialogModSaveConfig');
     document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide();
     av.ptd.FrConfigFn('fzDialogModSaveConfig.onClick');
@@ -1444,8 +1280,7 @@ av.ui.closeSendModalFn = () => {
     av.ptd.FrConfigFn('mnFzConfig');
   });
 
-    document.getElementById('fzDialogModSaveOrganism').onclick = function () {
-//  dijit.byId('FzOrganismButton').on('Click', function () {
+  document.getElementById('fzDialogModSaveOrganism').onclick = function () {
     av.post.addUser('Button: fzDialogModSaveOrganism');
     document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide
     av.ptd.FrOrganismFn('selected');
@@ -1458,7 +1293,7 @@ av.ui.closeSendModalFn = () => {
     document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide
     av.ptd.FrPopulationFn();
   };
-  
+
   document.getElementById('fzDialogModCancel').onclick = function () {
     document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide
   };
@@ -1501,14 +1336,14 @@ av.ui.closeSendModalFn = () => {
   /*
    //Buttons on drop down menu to add Multi-Dish to an Experiment
    dijit.byId('mnFzAddMdishEx').on('Click', function () {
-   av.post.addUser('Button: mnFzAddMdishEx');
-   //av.dnd.FzAddExperimentFn('fzMdish', 'activeConfig', 'm');
-   av.msg.runMultiDish('fzMdish', 'activeConfig', 'm');
+    av.post.addUser('Button: mnFzAddMdishEx');
+    //av.dnd.FzAddExperimentFn('fzMdish', 'activeConfig', 'm');
+    av.msg.runMultiDish('fzMdish', 'activeConfig', 'm');
    });
    */
 
 
-//Buttons on drop down menu to put an organism in Organism Viewer
+  //Buttons on drop down menu to put an organism in Organism Viewer
   dijit.byId('mnFzAddGenomeView').on('Click', function () {
     av.post.addUser('Button: mnFzAddGenomeEx');
     av.dnd.FzAddExperimentFn('fzOrgan', 'activeOrgan', 'g');
@@ -1524,175 +1359,345 @@ av.ui.closeSendModalFn = () => {
     av.dnd.FzAddExperimentFn('fzWorld', 'anlDndChart', 'w');
   });
 
-
-  // End of Freezer functions
   //---------------------------------------------- Restart Avida web worker --------------------------------------------
 
-  //http://www.w3schools.com/html/tryit.asp?filename=tryhtml5_webworker
-  av.ui.restartAvida = function () {
-    userMsgLabel.textContent = 'reloading Avida . . .';
+    //http://www.w3schools.com/html/tryit.asp?filename=tryhtml5_webworker
+    av.ui.restartAvida = function () {
+      userMsgLabel.textContent = 'reloading Avida . . .';
 
-    av.aww.uiWorker.terminate();
-    av.aww.uiWorker = null;
+      av.aww.uiWorker.terminate();
+      av.aww.uiWorker = null;
 
-    //console.log('just killed webWorker');
+      //console.log('just killed webWorker');
 
-    if (typeof (Worker) !== 'undefined') {
-      if (null == av.aww.uiWorker) {
-        av.aww.uiWorker = new Worker('avida.js');
-        console.log('webworker recreated');
-        av.debug.log += '\nuiA: ui killed avida webworker and started a new webworker';
+      if (typeof (Worker) !== 'undefined') {
+        if (null == av.aww.uiWorker) {
+          av.aww.uiWorker = new Worker('avida.js');
+          console.log('webworker recreated');
+          av.debug.log += '\nuiA: ui killed avida webworker and started a new webworker';
+        }
+      } else {
+        userMsgLabel.textContent = "Sorry, your browser does not support Web workers and Avida won't run";
       }
+
+      //need to 'start new experiment'
+      av.ptd.resetDishFn(false);  //do not send reset to avida; avida restarted
+      restartAvidaDialog.hide();
+    };
+
+    document.getElementById('restartAvidaNow').onclick = function () {
+      av.post.addUser('Button: restartAvidaNow');
+      av.ui.restartAvida();
+    };
+
+    document.getElementById('restartAvidaFrzConfig').onclick = function () {
+      av.post.addUser('Button: restartAvidaFzrConfig');
+      av.ptd.FrConfigFn('restartAvidaFrzConfig');
+    };
+
+
+  //********************************************************************************************************************
+  // End of Pop up boxes
+  //********************************************************************************************************************
+
+  //********************************************************************************************************************
+  // main Page button scripts
+  //********************************************************************************************************************
+
+  //The style display: 'none' cannnot be used in the html during the initial load as the dijits won't work right
+  //visibility:hidden can be used, but it leaves the white space and just does not display dijits.
+  //So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
+  //the default option.
+  // if (av.dbg.flg.root) { console.log('Root: before av.ui.mainBoxSwap defined'); }
+  av.ui.mainBoxSwap = function (showBlock) {
+    //console.log('showBlock=', showBlock);
+    av.ui.page = showBlock;
+    av.dom.populationBlock.style.display = "none";
+    av.dom.organismBlock.style.display = "none";
+    av.dom.analysisBlock.style.display = "none";
+    av.dom.showTextDebugBlock.style.display = "none";
+    av.dom.orgInfoHolder.style.display = 'none';
+    av.dom.popInfoVert.style.display = 'none';
+    av.dom.populationButton.style.background = 'white';
+    av.dom.organismButton.style.background = 'white';
+    av.dom.analysisButton.style.background = 'white';
+    av.dom.showTextDebugButton.style.background = 'white';
+    document.getElementById(showBlock).style.display = "flex";   //orgPageButtonHolder
+    var showButton = showBlock.substring(0,showBlock.length-5)+'Button';
+    console.log('showButton=',showButton);
+    document.getElementById(showButton).style.background = '#DBDBDB'; 
+    //dijit.byId(showBlock).resize();
+    //document.getElementById(showBlock).resize();
+
+    //disable menu options. they will be enabled when relevant canvas is drawn
+    dijit.byId('mnFzOffspring').attr('disabled', true);
+    dijit.byId('mnCnOffspringTrace').attr('disabled', true);
+
+    // if the miniplot on the populaton page needs to be initiated call that funciton.
+    console.log('In: av.ui.mainBoxSwap; av.pch.needInit=', av.pch.needInit, '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));
+    if ($(av.dom.popStatsBlock).is(":visible") && (av.pch.needInit) ) {
+      av.grd.popChartInit('av.ui.mainBoxSwap');
+    };
+    if ('populationBlock' == av.ui.page) {
+      av.dom.popInfoVert.style.display = 'block';
+      document.getElementById('allAvidaContainer').className = 'all3pop';
+    }
+    if ('analysisBlock' == av.ui.page) {
+      document.getElementById('allAvidaContainer').className = 'all2lft';
+    }
+    if ('organismBlock' == av.ui.page) {
+      document.getElementById('allAvidaContainer').className = 'all3org';
+      console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
+      av.dom.orgInfoHolder.style.display = 'block';
+      if ('settings' == av.ui.orgInfo) {
+        av.dom.orgSettings.style.display = 'block';
+        av.dom.orgDetailID.style.display = 'none';
+      }
+      else {
+        av.dom.orgSettings.style.display = 'none';
+        av.dom.orgDetailID.style.display = 'block';
+        av.ui.adjustOrgInstructionTextAreaSize();
+      };
+
+      if (undefined !== av.traceObj) {
+        av.ind.updateOrgTrace('mainBoxSwap_organismBlock');
+      };
+      av.ind.organismCanvasHolderSize('mainBoxSwap_organismBlock');   ///??????
+      av.ind.clearGen('mainBoxSwap_organismBlock');
+      av.ind.cpuOutputCnvsSize();
+    }
+     if (('populationBlock' == av.ui.page) || ('organismBlock' == av.ui.page)) {
+      document.getElementById('RtSideToggleButtons').style.display = 'block';
+      document.getElementById('ritePnlBtnHolder').style.display = 'block';
+      document.getElementById('rightInfoHolder').style.display = 'block';
+    }
+    else {
+      document.getElementById('RtSideToggleButtons').style.display = 'none';
+      document.getElementById('ritePnlBtnHolder').style.display = 'none';
+      document.getElementById('rightInfoHolder').style.display = 'none';
+    };
+    //console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
+  };
+
+  // Buttons that call MainBoxSwap
+  // if (av.dbg.flg.root) { console.log('Root: before av.dom.populationButton.onclick'); }
+  av.dom.populationButton.onclick = function () {
+    av.post.addUser('Button: populationButton');
+    if (av.debug.dnd || av.debug.mouse)
+      console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
+    av.ui.mainBoxSwap('populationBlock');
+  };
+
+  av.dom.organismButton.onclick = function () {
+    av.post.addUser('Button: organismButton');
+    // * offsetWidth = box + 2*padding + 2*borders (seems to include scroll bars plus some)
+    // * clientWidth = box + 2*padding - scrollbar_width    
+    // * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
+    // * csssWidth = box only nothing else
+    console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
+      av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
+      $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
+    if (av.dom.orgInfoHolder.clientWidth < av.ui.orgInfoHolderMinWidth) av.ui.orgInfoHolderWidth = av.ui.orgInfoHolderMinWidth;
+    av.ui.mainBoxSwap('organismBlock');
+    
+    // av.dom.orgInfoHolder.style.width = av.ui.orgInfoHolderWidth + 'px'; /* yemi: commented this out because it was messing with my resize code. let me know if this is causing problems */
+
+    console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
+      av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
+      $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
+    console.log('orgInfoHolder.paddding=', $("#orgInfoHolder").css('padding'));
+  };
+
+  document.getElementById('analysisButton').onclick = function () {
+    av.post.addUser('Button: analysisButton');
+    av.ui.mainBoxSwap('analysisBlock');
+    //console.log('after mainBoxSwap to analysisBlock');
+    av.anl.AnaChartFn();
+    //console.log('fzWorld wd =', document.getElementById('fzWld').style.width );
+    
+    /* yemi: just so that if screen resized in the other layout, you still update the analysis page correctly */
+    resizeAnalysisPage();
+  };
+
+  // if (av.dbg.flg.root) { console.log('Root: before showTextDebugButton.onclick'); }
+  document.getElementById('showTextDebugButton').onclick = function () {
+    av.post.addUser('Button: showTextDebugButton');
+    av.ui.mainBoxSwap('showTextDebugBlock');
+  };
+  // ------------------ two controls for the same purpose; tabs used in develoopment mode --
+
+  //Toggle switch for Population/Organism pages
+  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.rightInfoPanelToggleButton'); }
+  //Population page
+  av.ptd.rightInfoPanelToggleButton = function(domObj) {
+    if ('populationBlock' == av.ui.page) {
+      var tabcontent = document.getElementsByClassName("labInfoClass");
+      //console.log('tabcontent=', tabcontent);
+      for (ii = 0; ii < tabcontent.length; ii++) {
+        //console.log('ii=', ii, '; tabcontent[ii]=', tabcontent[ii]);
+        tabcontent[ii].className = 'labInfoClass labInfoNone';
+        //console.log('ii=', ii, '; tabcontent[ii].className =', tabcontent[ii].className);
+      };
+      var tablinks = document.getElementsByClassName("tablinks");
+      for (var ii = 0; ii < tablinks.length; ii++) {
+        //console.log('ii=', ii, '; tablinks[ii]=', tablinks[ii], '; tablinks[ii].className =', tablinks[ii].className);
+        tablinks[ii].className = tablinks[ii].className.replace(" active", "");
+        //console.log('tablinks[ii].className =', tablinks[ii].className);
+      };
+
+      // show set up panel
+      if ('SetupButton' == domObj.id) {
+        document.getElementById('SetupButton').className = 'toggleRitButton activeBtn';
+        document.getElementById('StatsButton').className = 'toggleLftButton';
+        av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
+        av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
+        av.dom.setupTab.className = 'tablinks active';
+      } else {
+        // show Statisitcal data about grid
+        document.getElementById('StatsButton').className = 'toggleLftButton activeBtn';
+        document.getElementById('SetupButton').className = 'toggleRitButton';
+        av.dom.popStatsBlock.className = 'labInfoClass labInfoFlex';
+        av.dom.setupBlock.className = 'labInfoClass labInfoNone';
+        av.dom.statsTab.className = 'tablinks active'; 
+
+        if (av.dbg.flg.plt) {      //
+          console.log('In: av.ptd.rightInfoPanelToggleButton; av.pch.needInit=', av.pch.needInit
+              , '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") ); 
+        }
+        // if the miniplot on the populaton page needs to be updated.
+        if ( $(av.dom.popStatsBlock).is(":visible")) {
+          if (av.dbg.flg.plt) { console.log('need to call av.grd.popChartInit'); }
+          av.grd.popChartFn('av.ptd.rightInfoPanelToggleButton');
+        }
+      };
+      //console.log('Stats.class=', document.getElementById('StatsButton').className, '; Setup.class=', document.getElementById('SetupButton').className);
+    }
+    //Organism Page
+    else if ('organismBlock' == av.ui.page) {
+      if ('SetupButton' == domObj.id) {
+        av.post.addUser('Button: OrgSetting');
+        av.ind.settingsChanged = false;
+        av.ui.orgInfo = 'settings';
+        av.dom.orgSettings.style.display = 'block';
+        av.dom.orgDetailID.style.display = 'none';
+      }
+      else {
+        av.ui.orgInfo = 'details';
+        av.dom.orgSettings.style.display = 'none';
+        av.dom.orgDetailID.style.display = 'block';
+        console.log('av.ind.settingsChanged=', av.ind.settingsChanged);
+        if (av.ind.settingsChanged) av.msg.doOrgTrace();
+      }  
+    }
+    else {
+      // Analysis Page or Big text display for debug
+      console.log('should not be avaiable on analysis or showText page');
+    }
+  };
+
+  //Development section with tabs
+  // if (av.dbg.flg.root) { console.log('Root: before av.ptd.processTab'); }
+  av.ptd.processTab = function (evt, contentType) {
+    var ii, tablinks;
+    var tabcontent = document.getElementsByClassName("labInfoClass");
+    //console.log('tabcontent=', tabcontent);
+    for (ii = 0; ii < tabcontent.length; ii++) {
+      //console.log('ii=', ii, '; tabcontent[ii]=', tabcontent[ii]);
+      tabcontent[ii].className = 'labInfoClass labInfoNone';
+      //console.log('ii=', ii, '; tabcontent[ii].display =', tabcontent[ii].style.display);
+    };
+    tablinks = document.getElementsByClassName("tablinks");
+    for (ii = 0; ii < tablinks.length; ii++) {
+      //console.log('ii=', ii, '; tablinks[ii]=', tablinks[ii], '; tablinks[ii].className =', tablinks[ii].className);
+      tablinks[ii].className = tablinks[ii].className = 'tablinks';
+      //console.log('tablinks[ii].className =', tablinks[ii].className);
+    };
+    // keep console example because evt info looks useful for improving mouse code.
+    // console.log('contentType=',contentType,'; evt=', evt);
+    // console.log('contentType=', contentType);
+
+    document.getElementById(contentType).className = 'labInfoClass labInfoFlex';;
+    evt.currentTarget.className = "tablinks active";
+    //console.log('id=', evt.currentTarget.id);
+    if ('setupTab' == evt.currentTarget.id) {
+      document.getElementById('SetupButton').className = 'toggleRitButton activeBtn';
+      document.getElementById('StatsButton').className = 'toggleLftButton';
+    }
+    else if ('statsTab' == evt.currentTarget.id) {
+      document.getElementById('SetupButton').className = 'toggleRitButton';
+      document.getElementById('StatsButton').className = 'toggleLftButton activeBtn';      
+    }
+    else {
+      document.getElementById('SetupButton').className = 'toggleRitButton';
+      document.getElementById('StatsButton').className = 'toggleLftButton';            
+    }
+  };
+  // ------- end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
+  //********************************************************************************************************************
+  // End main button scripts
+  //********************************************************************************************************************
+
+  //----------------------------------------------------------------------------------------------------------------------
+  //                                             Population page Buttons
+  //----------------------------------------------------------------------------------------------------------------------
+
+  //--------------------------------------------------------------------------------------------------------------------
+  ///   Map Grid buttons - New  Run/Pause Freeze
+  //--------------------------------------------------------------------------------------------------------------------
+
+  //process the run/Stop Button - a separate function is used so it can be flipped if the message to avida is not successful.
+  av.dom.runStopButton.onclick = function () {
+    av.post.addUser('Button: runStopButton = ' + av.grd.updateNum, '=updateNum;  ' + av.grd.msg.update + '=msg.update;  ' + av.grd.popStatsMsg.update + '=popStatsMsg.update');
+    av.ptd.runStopFn();
+  };
+
+  dijit.byId('mnCnPause').on('Click', function () {
+    av.post.addUser('Button: mnCnPause');
+    //console.log('about to call av.ptd.makePauseState()');
+    av.msg.pause('now');
+    //av.debug.log += '______Debug Note: about to call av.ptd.makePauseState() in AvidaEd.js line 986 \n';
+    av.ptd.makePauseState();
+  });
+
+  //process run/Stop buttons as above but for drop down menu
+  dijit.byId('mnCnRun').on('Click', function () {
+    av.post.addUser('Button: mnCnRun');
+    av.ptd.makeRunState('mnCnRun.Click');
+    av.ptd.runPopFn('mnCnRun.Click');
+  });
+
+  //process run/Stop buttons as above but for drop down menu
+  dijit.byId('mnCnOne').on('Click', function () {
+    av.post.addUser('Button: mnCnOne');
+    av.ui.oneUpdateFlag = true;
+    av.ptd.makeRunState('mnCnOne.Click');
+    av.ptd.runPopFn('mnCnOne.Click');
+  });
+
+  av.dom.oneUpdateButton.onclick = function () {
+    av.post.addUser('Button: oneUpdateButton', '=updateNum; ' + av.grd.msg.update + '=msg.update;  ' + av.grd.popStatsMsg.update + '=popStatsMsg.update');
+    av.ui.oneUpdateFlag = true;
+    av.ptd.makeRunState('av.dom.oneUpdateButton.onclick');
+    av.ptd.runPopFn('av.dom.oneUpdateButton.onclick');
+  };
+
+  av.ui.avidianOutlineOnclick = function (domObj) {
+    av.post.addUser('Button: avidianOutline; av.ui.showOutlineFlag=' + av.ui.showOutlineFlag);
+    if ('Resource Mode: hide Avidian Outlines' == av.dom.avidianOutline.innerHTML) {
+      av.dom.avidianOutline.innerHTML = 'Resource Mode: show Avidian Outlines';
+      av.ui.showOutlineFlag = false;
+      console.log('av.ui.showOutlineFlag=' + av.ui.showOutlineFlag);
     } else {
-      userMsgLabel.textContent = "Sorry, your browser does not support Web workers and Avida won't run";
+      av.dom.avidianOutline.innerHTML = 'Resource Mode: hide Avidian Outlines';
+      console.log('av.ui.showOutlineFlag=' + av.ui.showOutlineFlag);
+      av.ui.showOutlineFlag = true;
     }
-
-    //need to 'start new experiment'
-    av.ptd.resetDishFn(false);  //do not send reset to avida; avida restarted
-    restartAvidaDialog.hide();
   };
 
-  document.getElementById('restartAvidaNow').onclick = function () {
-    av.post.addUser('Button: restartAvidaNow');
-    av.ui.restartAvida();
-  };
-
-  document.getElementById('restartAvidaFrzConfig').onclick = function () {
-    av.post.addUser('Button: restartAvidaFzrConfig');
-    av.ptd.FrConfigFn('restartAvidaFrzConfig');
-  };
-
-  //test - delete later ------------------------------------------------------------------------------------------------
-
-  document.getElementById('mnDbThrowData').onclick = function () {
-    'use strict';
-    av.post.addUser('Button: mnDbThrowData');
-    console.log('av', av);
-    console.log('fzr', av.fzr);
-    console.log('parents', av.parents);
-    console.log('av.grd.msg', av.grd.msg);
-    console.log('av.grd.popStatsMsg', av.grd.popStatsMsg);
-    console.log('av.grd.DataByCellID =', av.grd.DataByCellID);
-    console.log('av.pch =', av.pch);
-    console.log('av.dom.popChart.data=', av.dom.popChart.data);
-    console.log('av.anl =', av.anl);
-  };
-
-  document.getElementById('mnDbThrowError').onclick = function () {
-    'use strict';
-    av.post.addUser('Button: mnDbThrowError');
-    var george = fred;
-  };
-
-  document.getElementById('mnDbLineLog').onclick = function () {
-    'use strict';
-    av.debug.log += '\n -----------------------------------------------------------------------------------------------\n';
-  };
-
-  /*
-   document.getElementById('mnDbLoadProtoType').onclick = function () {
-   'use strict';
-   //code to load the files from the freezer into the space
-   };
-   */
-
-  //--------------------------------------------------------------------------------------------------------------------
-  //    mouse DND functions
-  //--------------------------------------------------------------------------------------------------------------------
-
-  //mouse click started on Organism Canvas - only offspring can be selected if present
-  $(document.getElementById('organCanvas')).on('mousedown', function (evt) {
-    av.post.addUser('mousedown: organCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
-    av.mouse.downOrganCanvasFn(evt);
-  });
-
-  //if a cell is selected, arrow keys can move the selection
-  $(document).keydown(function (event) {
-    //av.post.addUser(' ');   //in av.mouse.arrowKeyOnGrid
-    //console.log('keydown.event=', event);
-    av.mouse.arrowKeysOnGrid(event);
-  });
-
-  //av.mouse down on the grid
-  $(av.dom.gridCanvas).on('mousedown', function (evt) {
-    av.post.addUser('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
-    console.log('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
-    av.mouse.downGridCanvasFn(evt);
-  });
-
-  //mouse move anywhere on screen - not currently in use.
-  /*  $(document.getElementById('gridCanvas')).on('mousemove', function handler (evt) {
-   //$(document).on('mousemove', function handler(evt) { //needed so cursor changes shape
-   //console.log('gd move');
-   //document.getElementById('gridCanvas').style.cursor = 'copy';
-   //document.getElementById('trashCan').style.cursor = 'copy';
-   //console.log('av.mouseMove cursor GT', document.getElementById('gridCanvas').style.cursor, dom.byId('trashCan').style.cursor);
-   //if (av.debug.mouse) console.log('________________________________av.mousemove');
-   if (!av.mouse.nearly([evt.offsetX, evt.offsetY], av.mouse.DnGridPos)) {
-   //if (av.debug.mouse) console.log('________________________________');
-   //if (av.debug.mouse) console.log('gd draging');
-   if (av.mouse.Dn) av.mouse.Drag = true;
-   }
-   $(document).off('av.mousemove', handler);
-   });
-   */
-
-  $(document).on('pointerup', function (evt) {
-    av.mouse.UpGridPos = [evt.originalEvent.offsetX, evt.originalEvent.offsetY];
-  });
-
-  //When mouse button is released, return cursor to default values
-  $(document).on('mouseup', function (evt) {
-    'use strict';
-    var target = '';
-    if (av.debug.mouse)
-      console.log('in mouseup target:', evt.target.id, '; event:', evt);
-    if (av.debug.mouse)
-      console.log('in mouseup target:', evt.target.id);
-    av.mouse.makeCursorDefault();
-    av.mouse.UpGridPos = [evt.offsetX, evt.offsetY];
-    if (av.debug.mouse)
-      console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
-    av.mouse.Dn = false;
-
-    // --------- process if something picked to dnd ------------------
-    if ('parent' == av.mouse.Picked) {
-      av.mouse.Picked = '';
-      av.mouse.ParentMouse(evt, av);
-      if ('gridCanvas' == evt.target.id || 'trashCanImage' == evt.target.id) {
-        av.grd.drawGridSetupFn('on mouseup where evt.target.id=gridCanvas or trashCanImage');
-      } else if ('organIcon' == evt.target.id) {
-        //Change to Organism Page
-        av.ui.mainBoxSwap('organismBlock');
-        av.ind.organismCanvasHolderSize('mouseup_organIcon_parent');
-        av.ui.adjustOrgInstructionTextAreaSize();
-        if (av.debug.mouse)
-          console.log('from parent', av.parent, '; fzr', av.fzr);
-        av.post.addUser('Dragged item to Organism Icon');
-        av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-      }
-    } else if ('offspring' == av.mouse.Picked) {
-      target = av.mouse.offspringMouse(evt, av.dnd, av.fio, av.fzr, av.gen);
-      av.mouse.Picked = '';
-    } else if ('kid' == av.mouse.Picked) {
-      av.mouse.Picked = '';
-      target = av.mouse.kidMouse(evt, av.dnd, av.fzr, av.grd);
-      if (av.debug.mouse)
-        console.log('kidMouse: target', target, '===============', evt.target.id);
-      if ('organIcon' == evt.target.id) {
-        //Change to Organism Page
-        av.ui.mainBoxSwap('organismBlock');
-        av.ind.organismCanvasHolderSize('mouseup_organIcon_Kid');
-        av.ui.adjustOrgInstructionTextAreaSize();
-        av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-      }
-      /*      else if ('fzOrgan' == target) {
-       //make_database_entry if using a database (av.fio, av.fzr);
-       }
-       */
-    }
-    av.mouse.Picked = '';
-  });
+  //----------------------------------------------------------------------------------------------------------------------
+  //                                          End Population page Buttons
+  //----------------------------------------------------------------------------------------------------------------------
+  //********************************************************************************************************************
 
   // *******************************************************************************************************************
   //                                      Pouplation Page
@@ -1766,17 +1771,17 @@ av.ui.closeSendModalFn = () => {
           av.grd.setColorMapOnly('draw gradient scale in av.grd.drawGridSetupFn');  //to set color scales for resources
           av.grd.gradientScale('av.grd.drawGridSetupFn');
         }
-        
+
         if (av.dbg.flg.dsz) { console.log('dsz: scaleCanvas ht =', av.dom.scaleCanvas.height); }
         //av.dom.gridCanvas.width = 10;
         av.dom.gridCanvas.height = 10;
         //av.dom.gridHolder.style.width = '10px';
         av.dom.gridHolder.style.height = '10px';
-        
+
         $('#sclCnvsHldr').height(av.dom.scaleCanvas.height);
-        
+
         if (av.dbg.flg.dsz) { console.log('dsz: ', $('#sclCnvsHldr').height(), '= sclCnvsHldr ht'); }
-        
+
         if (av.dbg.flg.dsz) { console.log('--------------- gridHolder ht =',$('#gridHolder').height().toFixed(1)); }
 
         av.dom.benchPopBot.style.height = av.dom.benchPopBot.scrollHeight + 'px';
@@ -1788,7 +1793,7 @@ av.ui.closeSendModalFn = () => {
           av.grd.canvasSize = Math.floor( $("#gridHolder").width() ) - 2;
           //console.log('smaller width: canvasSize = ', av.grd.canvasSize);
         };
-        
+
         var sum_ht_in = $('#popTopRw').height() + $('#gridHolder').height() + $('#sclCnvsHldr').height() + $('#benchPopBot').height();
         var sum_ht_ot = $('#popTopRw').outerHeight(true) + $('#gridHolder').outerHeight(true) + $('#sclCnvsHldr').outerHeight(true) + $('#benchPopBot').outerHeight(true);
         sum_ht_in = parseFloat(sum_ht_in).toFixed(1);
@@ -1854,7 +1859,7 @@ av.ui.closeSendModalFn = () => {
   av.grd.colorMap = 'Gnuplot2';
   /*
    dijit.byId('mnGnuplot2').attr('disabled', true);
-   
+
    dijit.byId('mnViridis').on('Click', function () {
    av.post.addUser('Button: mnViridis');
    dijit.byId('mnCubehelix').attr('disabled', false);
@@ -1863,7 +1868,7 @@ av.ui.closeSendModalFn = () => {
    av.grd.colorMap = 'Viridis';
    av.grd.drawGridSetupFn('digjit.byID(mnViridis');
    });
-   
+
    dijit.byId('mnGnuplot2').on('Click', function () {
    av.post.addUser('Button: mnGnuplot2');
    dijit.byId('mnCubehelix').attr('disabled', false);
@@ -1872,7 +1877,7 @@ av.ui.closeSendModalFn = () => {
    av.grd.colorMap = 'Gnuplot2';
    av.grd.drawGridSetupFn('digit.byID(mnGnuplot2)');
    });
-   
+
    dijit.byId('mnCubehelix').on('Click', function () {
    av.post.addUser('Button: mnCubehelix');
    dijit.byId('mnCubehelix').attr('disabled', true);
@@ -1883,7 +1888,7 @@ av.ui.closeSendModalFn = () => {
    av.post.addUser('Button: mnCubehelix pressed');
    });
    */
-  
+
   // *******************************************************************************************************************
   //    Buttons that select organisms that perform a logic function
   // *******************************************************************************************************************
@@ -1946,7 +1951,7 @@ av.ui.closeSendModalFn = () => {
     console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
                    '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display, '; av.ui.page=', av.ui.page, 
                     '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
-    
+
     if (av.dbg.flg.plt) { 
       console.log(from , 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
                     '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
@@ -1959,7 +1964,7 @@ av.ui.closeSendModalFn = () => {
       return;
       // chart is not visible don't try to write chart
     };
-    
+
     //minichart is visible on population page
     av.pch.clearPopChrt();
     av.pch.divSize('av.grd.popChartInit');
@@ -1968,8 +1973,8 @@ av.ui.closeSendModalFn = () => {
     //if (av.dbg.flg.plt) { console.log('PopPlot: dom of popChart=', document.getElementById('popChart') ); }
     if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart=', av.dom.popChart); }
     if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
-    
-//    if (null == av.dom.popChart.data) {
+
+  //    if (null == av.dom.popChart.data) {
     if (true) {
       av.pch.update = {
         autorange: true,
@@ -2000,7 +2005,7 @@ av.ui.closeSendModalFn = () => {
     var popData;
     var numof;
     var jj = 0; //count y data arrays
-    
+
     //console.log(from, 'called popChartFn: av.pch.needInit= ', av.pch.needInit, 
     //                  '; $(statsBlock.display = ', $(av.dom.popStatsBlock).css('display'),
     //                  '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display,
@@ -2024,7 +2029,7 @@ av.ui.closeSendModalFn = () => {
       if (av.dbg.flg.plt) { console.log('PopPlot: Not visible: so skip rest of function'); }
       return;
     };
-    
+
     if (av.dbg.flg.plt) { console.log('PopPlot: av.grd.runState = ', av.grd.runState); }
     //values can be prepping, started, or world
     if ('prepping' === av.grd.runState) {
@@ -2049,16 +2054,16 @@ av.ui.closeSendModalFn = () => {
       console.log('chart containts none');
       return;
     };
-    
+
     // process chart options and y-axis for organisms. 
     av.dom.popChart.style.visibility = 'visible';  
     // this adusts the size. Seems like the size should only change when window/div changes size rather than checking very time. 
     av.pch.divSize('av.grd.popChartFn');
     //console.log('after av.pch.divSize');
-    
+
     if ('organism' == av.pch.chartContains || 'combined' == av.pch.chartContains
       || 'offspring' == av.pch.chartContains ) {
-      
+
       //not in current use. Seems if the y-axis had not changed we might not need to redo case statement
       if (document.getElementById('yaxis').value === av.pch.yValue) {
         av.pch.yChange = false;
@@ -2110,7 +2115,7 @@ av.ui.closeSendModalFn = () => {
         av.pch.maxY = 0.1;
           break;
       }; //end switch
-      
+
       //console.log('xx   after', av.pch.xx);
       //console.log('popY after', av.pch.logY);
       //console.log('maxY', av.pch.maxY);
@@ -2124,16 +2129,16 @@ av.ui.closeSendModalFn = () => {
       //av.pch.traceLog.y = av.pch.logY;
       //console.log('trace0',av.pch.tracePop);
       //console.log('trace1',av.pch.traceLog);
-    
+
       //av.pch.tracePop = {x:av.pch.xx, y:av.pch.popY, type:'scatter', mode: 'lines', name: 'Population'};
       //av.pch.traceLog = {x:av.pch.xx, y:av.pch.logY, type:'scatter', mode: 'lines', name: 'Function Subset'};
       //av.pch.popData = [av.pch.tracePop];
-    
+
       av.pch.tracePop.y = av.pch.popY;
       av.pch.traceLog.y = av.pch.logY;
       av.pch.popData = [av.pch.tracePop, av.pch.traceLog]; //popData
       av.pch.traceList = [];
-      
+
       av.pch.traceList[jj] = {x: [av.pch.xx], y: [av.pch.popY]};
       av.pch.traceList[jj+1] = {x: [av.pch.xx], y: [av.pch.logY]};
       jj = jj+2;
@@ -2161,7 +2166,7 @@ av.ui.closeSendModalFn = () => {
         };
       };
     };  // end of chart contains amount of resource
- 
+
     if (true) {
       numof = av.pch.traceList.length;
       if (av.debug.uil) { console.log('ui: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
@@ -2221,12 +2226,6 @@ av.ui.closeSendModalFn = () => {
     };  //end of true
   };
 
-//--------------------------------------------------------------- ************** Tiba whhy does is this functions empty?
-  av.grd.popChartClear = function () {
-    'use strict';
-    //console.log('in popChartClear');
-  };
-  //av.grd.popChartClear();
 
   // **************************************************************************************************************** */
   // ******* Population Setup Buttons from 'Setup' subpage ********* */
@@ -2271,7 +2270,7 @@ av.ui.closeSendModalFn = () => {
     av.grd.drawGridSetupFn('av.ptd.popSizeFn');
   };
 
-/*-------------------------------------------------------------------------------------------- av.ptd.popSizeFnTest --*/
+  /*-------------------------------------------------------------------------------------------- av.ptd.popSizeFnTest --*/
   av.ptd.popSizeFnTest = function (from) {
     av.grd.setupCols = Number(av.dom.sizeColTest.value);
     av.grd.setupRows = Number(av.dom.sizeRowTest.value);
@@ -2304,79 +2303,78 @@ av.ui.closeSendModalFn = () => {
   };
 
 
-// changing the base does not seem change position on the slider
+  // changing the base does not seem change position on the slider:  because it a ratio
+  //----------------------------------------------------------------------------------------- $(function slidePopmute() --
+  $(function slidePopMute() {
+   // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 
+   // the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, 
+   // so I multiplied by 200 to get 100.000% to get a reasonable number of values for the pixils in the slide
+   //console.log('before defaultslide value');
+   var muteSlideDefault = 95.4242509439325;
+   // results in 2% as a default 
+   var muteDefault = (Math.pow(10, (muteSlideDefault / 200)) - 1).toFixed(1);
+   var slides = $('#mutePopSlide').slider({
+     range: 'min',   /*causes the left side of the scroll bar to be grey */
+     value: muteSlideDefault,
+     min: 0.0,
+     max: 401,
+     theme: 'summer',
+     slide: function (event, ui) {
+       var tmpVal = (Math.pow(10, (ui.value / 200)) - 1);
+       if (10 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }     //had been 12, but 10 is more consistent with 2 sig figs
+       else if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
+       else if (0.3 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
+       else {tmpVal = tmpVal.toFixed(2); }
+       //put the value in the text box 
+       // console.log('input', tmpVal, '; slide=', ui.value);
+       $('#mutePopInput').val(tmpVal); //put slider value in the text near slider 
+     }
+   });
+   // initialize
+    $('#mutePopInput').val(muteDefault);
 
-//-------------------------------------------------------------------------------------------- $(function slidePopmute() --
-   $(function slidePopMute() {
-    // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 
-    // the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, 
-    // so I multiplied by 200 to get 100.000% to get a reasonable number of values for the pixils in the slide
-    //console.log('before defaultslide value');
-    var muteSlideDefault = 95.4242509439325;
-    // results in 2% as a default 
-    var muteDefault = (Math.pow(10, (muteSlideDefault / 200)) - 1).toFixed(1);
-    var slides = $('#mutePopSlide').slider({
-      range: 'min',   /*causes the left side of the scroll bar to be grey */
-      value: muteSlideDefault,
-      min: 0.0,
-      max: 401,
-      theme: 'summer',
-      slide: function (event, ui) {
-        var tmpVal = (Math.pow(10, (ui.value / 200)) - 1);
-        if (10 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }     //had been 12, but 10 is more consistent with 2 sig figs
-        else if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
-        else if (0.3 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
-        else {tmpVal = tmpVal.toFixed(2); }
-        //put the value in the text box 
-        // console.log('input', tmpVal, '; slide=', ui.value);
-        $('#mutePopInput').val(tmpVal); //put slider value in the text near slider 
-      }
-    });
-    // initialize
-     $('#mutePopInput').val(muteDefault);
-    
-    /*update slide based on textbox */
-    $('#mutePopInput').change(function () {
-      var value = this.value;
-      var muteNum = parseFloat(value);
-      //if (av.debug.uil) { console.log('ui: muteNum=', muteNum); }
-      if (muteNum >= 0 && muteNum <= 100) {
-        av.ptd.validMuteInuput = true;
-        av.dom.mutePopError.style.color = 'black';
-        av.dom.mutePopError.innerHTML = '';
-        //update slide value
-        slides.slider('value', 200 * av.utl.log(10,1 + (muteNum)));
-        //console.log('value=', muteNum, '; slide=', 200 * av.utl.log(10,1 + (muteNum) ) );
-        
-        //av.ind.settingsChanged = true;
-        if (av.debug.trace) { console.log('Mute changed', av.ind.settingsChanged); };
-        av.post.addUser('mutePopInput =' + av.dom.mutePopInput.value,  '1add ? 949');
-      } 
-      else {
-        av.ptd.validMuteInuput = false;
-        av.dom.mutePopError.style.color = 'red';
-        av.dom.mutePopError.innerHTML = '';
-        av.dom.userMsgLabel.innerHTML = '';
-        if (muteNum <= 0) {
-          av.dom.mutePopError.innerHTML += 'Mutation rate must be >= than zero percent. ';
-          if (av.debug.popCon) { console.log('<0'); }
-        }
-        if (muteNum >= 100) {
-          av.dom.mutePopError.innerHTML += 'Mutation rate must be 100% or less. ';
-          if (av.debug.popCon) { console.log('>0'); }
-        }
-        if (isNaN(muteNum)) {
-          av.dom.mutePopError.innerHTML += 'Mutation rate must be a valid number. ';
-          if (av.debug.popCon) { console.log('==NaN'); }
-        }
-      };
-    });
+   /*update slide based on textbox */
+   $('#mutePopInput').change(function () {
+     var value = this.value;
+     var muteNum = parseFloat(value);
+     //if (av.debug.uil) { console.log('ui: muteNum=', muteNum); }
+     if (muteNum >= 0 && muteNum <= 100) {
+       av.ptd.validMuteInuput = true;
+       av.dom.mutePopError.style.color = 'black';
+       av.dom.mutePopError.innerHTML = '';
+       //update slide value
+       slides.slider('value', 200 * av.utl.log(10,1 + (muteNum)));
+       //console.log('value=', muteNum, '; slide=', 200 * av.utl.log(10,1 + (muteNum) ) );
+
+       //av.ind.settingsChanged = true;
+       if (av.debug.trace) { console.log('Mute changed', av.ind.settingsChanged); };
+       av.post.addUser('mutePopInput =' + av.dom.mutePopInput.value,  '1add ? 949');
+     } 
+     else {
+       av.ptd.validMuteInuput = false;
+       av.dom.mutePopError.style.color = 'red';
+       av.dom.mutePopError.innerHTML = '';
+       av.dom.userMsgLabel.innerHTML = '';
+       if (muteNum <= 0) {
+         av.dom.mutePopError.innerHTML += 'Mutation rate must be >= than zero percent. ';
+         if (av.debug.popCon) { console.log('<0'); }
+       }
+       if (muteNum >= 100) {
+         av.dom.mutePopError.innerHTML += 'Mutation rate must be 100% or less. ';
+         if (av.debug.popCon) { console.log('>0'); }
+       }
+       if (isNaN(muteNum)) {
+         av.dom.mutePopError.innerHTML += 'Mutation rate must be a valid number. ';
+         if (av.debug.popCon) { console.log('==NaN'); }
+       }
+     };
+   });
   });
 
-  /********************************************************************************** enviornment (sugar) settings ****/
-  /**************************************************************************** Tests for Population Setup section ****/
+  //*********************************************************************************** enviornment (sugar) settings ****/
+  //***************************************************************************** Tests for Population Setup section ****/
 
-//------------------------------------------------------------------------------------------------- av.ptd.gridChange --
+  //------------------------------------------------------------------------------------------------- av.ptd.gridChange --
   av.ptd.gridChange = function (domObj) {
     // if (av.dbg.flg.popSetup ) { console.log('popSetup: in av.ptd.gridChange; domObj.id =', domObj.id); }
     var colNum = Number(av.dom.sizeCols.value);
@@ -2432,7 +2430,7 @@ av.ui.closeSendModalFn = () => {
       }
     }
   };
-//---------------------------------------------------------------------------------------------- av.ptd.gridChangTest --
+  //---------------------------------------------------------------------------------------------- av.ptd.gridChangTest --
   av.ptd.gridChangTest = function (from) {
     //console.log(from, 'called av.ptd.gridChangTest; ');
     var colNum = Number(av.dom.sizeColTest.value);
@@ -2485,118 +2483,118 @@ av.ui.closeSendModalFn = () => {
     }
   };
 
-//xxs------------------------------------------------------------------------------------ dojo controls that will change --
-   dojo.connect(dijit.byId('childParentRadio'), 'onClick', function () {
-    av.post.addUser('Button: childParentRadio');
-  });
+  //------------------------------------------------------------------------------------ dojo controls that will change --
+    dojo.connect(dijit.byId('childParentRadio'), 'onClick', function () {
+     av.post.addUser('Button: childParentRadio');
+   });
 
-  dojo.connect(dijit.byId('childRandomRadio'), 'onClick', function () {
-    av.post.addUser('Button: childRandomRadio');
-  });
+   dojo.connect(dijit.byId('childRandomRadio'), 'onClick', function () {
+     av.post.addUser('Button: childRandomRadio');
+   });
 
-  dojo.connect(dijit.byId('notose'), 'onClick', function () {
-    av.post.addUser('Button: notose = ' + dijit.byId('notose').get('checked').toString());
-  });
+   dojo.connect(dijit.byId('notose'), 'onClick', function () {
+     av.post.addUser('Button: notose = ' + dijit.byId('notose').get('checked').toString());
+   });
 
 
-  dojo.connect(dijit.byId('andose'), 'onClick', function () {
-    av.post.addUser('Button: andose = ' + dijit.byId('andose').get('checked').toString());
-  });
+   dojo.connect(dijit.byId('andose'), 'onClick', function () {
+     av.post.addUser('Button: andose = ' + dijit.byId('andose').get('checked').toString());
+   });
 
-  dojo.connect(dijit.byId('orose'), 'onClick', function () {
-    av.post.addUser('Button: orose = ' + dijit.byId('orose').get('checked').toString());
-  });
+   dojo.connect(dijit.byId('orose'), 'onClick', function () {
+     av.post.addUser('Button: orose = ' + dijit.byId('orose').get('checked').toString());
+   });
 
-  dojo.connect(dijit.byId('norose'), 'onClick', function () {
-    av.post.addUser('Button: norose = ' + dijit.byId('norose').get('checked').toString());
-  });
+   dojo.connect(dijit.byId('norose'), 'onClick', function () {
+     av.post.addUser('Button: norose = ' + dijit.byId('norose').get('checked').toString());
+   });
 
-  dojo.connect(dijit.byId('equose'), 'onClick', function () {
-    av.post.addUser('Button: equose = ' + dijit.byId('equose').get('checked').toString());
-  });
+   dojo.connect(dijit.byId('equose'), 'onClick', function () {
+     av.post.addUser('Button: equose = ' + dijit.byId('equose').get('checked').toString());
+   });
 
-  dojo.connect(dijit.byId('nanose'), 'onClick', function () {
-    av.post.addUser('Button: nanose = ' + dijit.byId('nanose').get('checked').toString());
-  });
+   dojo.connect(dijit.byId('nanose'), 'onClick', function () {
+     av.post.addUser('Button: nanose = ' + dijit.byId('nanose').get('checked').toString());
+   });
 
-  dojo.connect(dijit.byId('ornose'), 'onClick', function () {
-    av.post.addUser('Button: ornose = ' + dijit.byId('ornose').get('checked').toString());
-  });
+   dojo.connect(dijit.byId('ornose'), 'onClick', function () {
+     av.post.addUser('Button: ornose = ' + dijit.byId('ornose').get('checked').toString());
+   });
 
-  dojo.connect(dijit.byId('andnose'), 'onClick', function () {
-    av.post.addUser('Button: andnose = ' + dijit.byId('andnose').get('checked').toString());
-  });
+   dojo.connect(dijit.byId('andnose'), 'onClick', function () {
+     av.post.addUser('Button: andnose = ' + dijit.byId('andnose').get('checked').toString());
+   });
 
-  dojo.connect(dijit.byId('xorose'), 'onClick', function () {
-    av.post.addUser('Button: xorose = ' + dijit.byId('xorose').get('checked').toString());
-  });
+   dojo.connect(dijit.byId('xorose'), 'onClick', function () {
+     av.post.addUser('Button: xorose = ' + dijit.byId('xorose').get('checked').toString());
+   });
 
-  dojo.connect(dijit.byId('experimentRadio'), 'onClick', function () {
-    av.post.addUser('Button: experimentRadio');
-  });
+   dojo.connect(dijit.byId('experimentRadio'), 'onClick', function () {
+     av.post.addUser('Button: experimentRadio');
+   });
 
-  dojo.connect(dijit.byId('demoRadio'), 'onClick', function () {
-    av.post.addUser('Button: demoRadio');
-  });
+   dojo.connect(dijit.byId('demoRadio'), 'onClick', function () {
+     av.post.addUser('Button: demoRadio');
+   });
 
-  av.dom.autoPauseNum.onchange = function () {
-    av.post.addUser(': autoPauseNum = ' + av.dom.autoPauseNum.value);
-    av.ui.autoStopValue = av.dom.autoPauseNum.value;   //switching to using av.dom.autoPauseNum.value directly
-    //console.log('autoPauseNum=', av.dom.autoPauseNum.value);
-  };
+   av.dom.autoPauseNum.onchange = function () {
+     av.post.addUser(': autoPauseNum = ' + av.dom.autoPauseNum.value);
+     av.ui.autoStopValue = av.dom.autoPauseNum.value;   //switching to using av.dom.autoPauseNum.value directly
+     //console.log('autoPauseNum=', av.dom.autoPauseNum.value);
+   };
 
-  dojo.connect(dijit.byId('autoUpdateRadiTest'), 'onClick', function () {
-    av.post.addUser('Button: autoUpdateRadiTest');
-    av.ui.autoStopFlag = true;
-  });
+   dojo.connect(dijit.byId('autoUpdateRadiTest'), 'onClick', function () {
+     av.post.addUser('Button: autoUpdateRadiTest');
+     av.ui.autoStopFlag = true;
+   });
 
-  av.ptd.pauseSlctFn = (domObj) => {
-    var value = document.getElementById('pauseCriteria').value;
-    console.log('puaseCriteria=', value);
-    if ('update' == value ) {
-      av.dom.itemDone1st.style.display = 'none';
-      av.dom.autoPauseNum.style.display = 'inline-block';
-      av.dom.pausePrefix.innerHTML = 'Pause Run at ';
-      av.dom.pauseMidText.innerHTML = '';
-    } else {
-      // stop based on first task criteria
-      av.dom.itemDone1st.style.display = 'inline-block';
-      av.dom.autoPauseNum.style.display = 'none';
-      av.dom.pausePrefix.innerHTML = 'Pause Run when ';
-      av.dom.pauseMidText.innerHTML = ' ';
-    };
-  };
-  
-  av.ptd.sgr1stSlctFn = () => {
-    var value = document.getElementById('itemDone1st').value;
-  };
+   av.ptd.pauseSlctFn = (domObj) => {
+     var value = document.getElementById('pauseCriteria').value;
+     console.log('puaseCriteria=', value);
+     if ('update' == value ) {
+       av.dom.itemDone1st.style.display = 'none';
+       av.dom.autoPauseNum.style.display = 'inline-block';
+       av.dom.pausePrefix.innerHTML = 'Pause Run at ';
+       av.dom.pauseMidText.innerHTML = '';
+     } else {
+       // stop based on first task criteria
+       av.dom.itemDone1st.style.display = 'inline-block';
+       av.dom.autoPauseNum.style.display = 'none';
+       av.dom.pausePrefix.innerHTML = 'Pause Run when ';
+       av.dom.pauseMidText.innerHTML = ' ';
+     };
+   };
 
-  //********************************************************************************************************************
+   av.ptd.sgr1stSlctFn = () => {
+     var value = document.getElementById('itemDone1st').value;
+   };
+
+  //----------------------------------------------------------------------------------------------------------------------
   //  Read Default Workspace as part of initialization
-  // ********************************************************************************************************************
+  //----------------------------------------------------------------------------------------------------------------------
   av.fio.JSZip = JSZip;  //to allow other required files to be able to use JSZip
   av.fio.FileSaver = FileSaver;
   av.pch.Plotly = Plotly;
 
   //Read the default work space and then loadConfigFlag = true; //the @default should be placed at the current configuration
   // need to change how loadConfig worrks
-  
+
   // if (av.dbg.flg.root) { console.log('Root: before calling av.fio.readZipWS ---------------'); }
   av.fio.readZipWS(av.fio.defaultFname, true);  
-  
+
   //Need to get @default (the condents of folder c0) into the active config field. 
 
   //------------------------------------------------------- call StatsButton.click to get the display in default mode --
   // if (av.dbg.flg.root) { console.log('Root: before call StatsButton.click'); }
   document.getElementById('StatsButton').click();
 
-//----------------------------------------------------------------------------------------------------------------------
-//                                                     Oranism Page methods
-//----------------------------------------------------------------------------------------------------------------------
- 
-//adjust instruction text size
-  // if (av.dbg.flg.root) { console.log('Root: before av.ui.adjustOrgInstructionTextAreaSize'); }
-//---------------------------------------------------------------------------- av.ui.adjustOrgInstructionTextAreaSize --
+  //********************************************************************************************************************
+  //                                                     Oranism Page methods
+  //********************************************************************************************************************
+
+  //adjust instruction text size
+    // if (av.dbg.flg.root) { console.log('Root: before av.ui.adjustOrgInstructionTextAreaSize'); }
+  //---------------------------------------------------------------------------- av.ui.adjustOrgInstructionTextAreaSize --
   av.ui.adjustOrgInstructionTextAreaSize = function() {
     var height = ( $('#orgInfoHolder').innerHeight() - $('#orgDetailID').innerHeight() - 10 ) / 2;
     //console.log('orgInfoHolder.ht=', $('#orgInfoHolder').innerHeight(), '; orgDetailID=',$('#orgDetailID').innerHeight(), '; height=', height);
@@ -2605,7 +2603,7 @@ av.ui.closeSendModalFn = () => {
     av.dom.ExecuteJust.style.width = '100%';
     av.dom.ExecuteAbout.style.width = '100%';    
   };
-  
+
   //--------------------------------------------------------------------------------------------------- $ slideOrganism --
   $(function slideOrganism() {
     /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
@@ -2636,7 +2634,7 @@ av.ui.closeSendModalFn = () => {
     });
     // initialize
     $('#orgMuteInput').val(muteDefault);
-    
+
     // update slide based on textbox 
     $('#orgMuteInput').change(function () {
       var value = this.value;
@@ -2677,26 +2675,23 @@ av.ui.closeSendModalFn = () => {
 
   //triggers flag that requests more data when the settings dialog is closed.
   //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
-//----------------------------------------------------------------------------------------------------------------------  
+  //----------------------------------------------------------------------------------------------------------------------  
 
-  //triggers flag that requests more data when the settings dialog is closed.
-  //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
-//----------------------------------------------------------------------------------------------------------------------
   dojo.connect(dijit.byId('OrganExperimentRadio'), 'onClick', function () {
     av.post.addUser('Button: OrganExperimentRadio');
     av.ind.settingsChanged = true;
   });
-  
+
   dojo.connect(dijit.byId('OrganDemoRadio'), 'onClick', function () {
     av.ind.settingsChanged = true;
     av.post.addUser('Button: OrganDemoRadio');
   });
 
-//----------------------------------------------------------------------------------------------------------------------
-//                                        Menu buttons that call for genome/Organism trace
-//----------------------------------------------------------------------------------------------------------------------
-//
-//------------------------------------------------------------------------------------------------- mnCnOrganismTrace --
+  //----------------------------------------------------------------------------------------------------------------------
+  //                                        Menu buttons that call for genome/Organism trace
+  //----------------------------------------------------------------------------------------------------------------------
+  //
+  //------------------------------------------------------------------------------------------------- mnCnOrganismTrace --
   dijit.byId('mnCnOrganismTrace').on('Click', function () {
     av.post.addUser('Button: mnCnOrganismTrace');
     av.mouse.traceSelected(av.dnd, av.fzr, av.grd);
@@ -2716,9 +2711,9 @@ av.ui.closeSendModalFn = () => {
     offspringTrace(av.dnd, av.fio, av.fzr, av.gen);
   });
 
-//----------------------------------------------------------------------------------------------------------------------
-//                                             Canvas for Organsim View (genome)
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
+  //                                             Canvas for Organsim View (genome)
+  //----------------------------------------------------------------------------------------------------------------------
 
   //set canvas size; called from many places
   av.ind.organismCanvasHolderSize = function() {
@@ -2744,24 +2739,21 @@ av.ui.closeSendModalFn = () => {
     } else
       av.ind.didDivide = false;
   };
-  
-//----------------------------------------------------------------------------------------------------------------------
-//                                 End of Canvas to draw genome and update details
-//----------------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------------------------
-//                    Methods for Buttons examine run of one Avidian on Organaism Page (below drawing of genome
-//----------------------------------------------------------------------------------------------------------------------
 
-  //wonder if this does anything.
-  function outputUpdate(vol) {
-    if (av.debug.ind) { console.log('outputUpdate: vol= ', vol); }
-    document.querySelector('#orgCycle').value = vol;
-  };
-  
-  //Need to fix lenth of cycleSlider so it lines up with slider on canvas. 
-  //bit strings sill not updated correctly   2019 Dec 03
-  
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
+  //                                 End of Canvas to draw genome and update details
+  //----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
+  //                    Methods for Buttons examine run of one Avidian on Organaism Page (below drawing of genome
+  //----------------------------------------------------------------------------------------------------------------------
+
+  //wonder if this does anything. comment out on 29 June 2021; delete later if no problems
+  //function outputUpdate(vol) {
+  //  if (av.debug.ind) { console.log('outputUpdate: vol= ', vol); }
+  //  document.querySelector('#orgCycle').value = vol;
+  //};
+
+  //----------------------------------------------------------------------------------------------------------------------
   document.getElementById('orgBack').onclick = function () {
     var ii = Number(document.getElementById('orgCycle').value);
     //console.log('; av.ind.cycleSlider.get(minimum") =', av.ind.cycleSlider.get('minimum'), '; orgBack: ii = ', ii );
@@ -2776,7 +2768,7 @@ av.ui.closeSendModalFn = () => {
     av.post.addUser('Button: orgBack; cycle = ' + ii);
   };
 
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
   document.getElementById('orgForward').onclick = function () {
     var ii = Number(document.getElementById('orgCycle').value);
     //console.log('orgForward: ii = ', ii);
@@ -2791,14 +2783,14 @@ av.ui.closeSendModalFn = () => {
     av.post.addUser('Button: orgForward; cycle = ' + ii);
   };
 
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
   document.getElementById('orgReset').onclick = function () {
     //console.log('orgReset');
     av.post.addUser('Button: orgReset');
     av.msg.doOrgTrace();
   };
 
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
   av.ind.orgRunFn = function () {
     if (av.ind.cycleSlider.get('maximum') > av.ind.cycle) {
       av.ind.cycle++;
@@ -2810,7 +2802,7 @@ av.ui.closeSendModalFn = () => {
     }
   };
 
-//----------------------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------------------
   document.getElementById('orgRun').onclick = function () {
     //console.log('orgRun: av.ind.cycleSlider.get("value")=', av.ind.cycleSlider.get('value'));
     if ('Run' == document.getElementById('orgRun').textContent) {
@@ -2833,20 +2825,19 @@ av.ui.closeSendModalFn = () => {
     av.ind.orgStopFn();
   };
 
-//----------------------------------------------------------------------------------------------------------------------
-  av.ind.orgCycleInputChange = function (domObj) {
-    if (av.debug.ind) { console.log('orgCycle.onChange:  value = ',  domObj.value); }
-    av.ind.cycleSlider.set('value', domObj.value);  //seemed to work;
-    av.ind.cycle = domObj.value;
-    if (av.debug.ind) { console.log('orgCycle: value = ', domObj.value, '; av.ind.cycleSlider.get("value") =', av.ind.cycleSlider.get('value')); }
-    av.ind.updateOrgTrace('av.ind.orgCycleInputChange');
-    if (av.debug.ind) { console.log('orgCycle: value = ', domObj.value, '; av.ind.cycleSlider=', av.ind.cycleSlider); }
-  };
+  //----------------------------------------------------------------------------------------------------------------------
+    av.ind.orgCycleInputChange = function (domObj) {
+      if (av.debug.ind) { console.log('orgCycle.onChange:  value = ',  domObj.value); }
+      av.ind.cycleSlider.set('value', domObj.value);  //seemed to work;
+      av.ind.cycle = domObj.value;
+      if (av.debug.ind) { console.log('orgCycle: value = ', domObj.value, '; av.ind.cycleSlider.get("value") =', av.ind.cycleSlider.get('value')); }
+      av.ind.updateOrgTrace('av.ind.orgCycleInputChange');
+      if (av.debug.ind) { console.log('orgCycle: value = ', domObj.value, '; av.ind.cycleSlider=', av.ind.cycleSlider); }
+    };
 
-//       Organism Offspring Cycle Slider      running all the cycles completes the reproduuction
-//       I think this is another loading action rather than a function that gets called. 
-//----------------------------------------------------------------------------------------------------------------------
-  if (av.debug.ind) { console.log('av.dom.cycleSlider =', av.dom.cycleSlider); }
+  //       Organism Offspring Cycle Slider      running all the cycles completes the reproduuction
+  if (av.debug.ind) { console.log('bevore av.ind.cycleslider av.dom.cycleSlider =', av.dom.cycleSlider); }
+  //----------------------------------------------------------------------------------------------------------------------
   av.ind.cycleSlider = new HorizontalSlider({
     name: 'cycleSlider',
     value: 0,
@@ -2870,7 +2861,7 @@ av.ui.closeSendModalFn = () => {
   //                                                Analysis Page
   // **************************************************************************************************************** */
   // if (av.dbg.flg.root) { console.log('Root: start of Analysis Page'); }
-  
+
   // initialize needs to be in AvidaED.js   Does not work in included files
   av.anl.anaChartInit = function () {
     av.anl.divSize('anaChartInit');
@@ -3032,52 +3023,22 @@ av.ui.closeSendModalFn = () => {
     console.log('av.anl.color[ndx]=', av.anl.color[ndx], '; popDishName=', popDishName);
     console.log('popDish_dom=', document.getElementById(popDishName));
     console.log('');
-    
-/*  
+
+  /*  
   var tstText = 'not0Details';
     av.dom.test = document.getElementById(tstText);
     console.log(tstText+'.domObj =', av.dom.test);
     var sugarlist = av.dom.test.children;
     console.log('children of '+tstText+' =', sugarlist);
-*/
+  */
     av.anl.AnaChartFn();    //redraw chart which will get new color from dom
   };
-  
-  /* commented out prior to 2021
-   av.dom.pop0color.onclick = function () {
-   av.anl.color[0] = av.color.names[av.dom.pop0color.value];
-   av.post.addUser('Button: pop0color');
-   av.anl.AnaChartFn();
-   };
-   av.dom.pop1color.onclick = function () {
-   av.post.addUser('Button: pop1color');
-   av.anl.color[1] = av.color.names[av.dom.pop1color.value];
-   av.anl.AnaChartFn();
-   };
-   av.dom.pop2color.onclick = function () {
-   av.post.addUser('Button: pop2color');
-   av.anl.color[2] = av.color.names[av.dom.pop2color.value];
-   av.anl.AnaChartFn();
-   };
-  
-  //dijit.byId('yRightSelect').on('Change', function () {
-  document.getElementById('yRightSelect').onclick = function () {
-    av.anl.yRightTitle = document.getElementById('yRightSelect').value;
-    //need to get correct array to plot from freezer
-    av.anl.loadSelectedData(0, 'yRightSelect', 'right');
-    av.anl.loadSelectedData(1, 'yRightSelect', 'right');
-    av.anl.loadSelectedData(2, 'yRightSelect', 'right');
-    av.anl.AnaChartFn();
-    av.post.addUser('Button: yRightSelect = ' + document.getElementById('yRightSelect').value);
-  };
-   */
-  
+
   // if (av.dbg.flg.root) { console.log('Root: after chart defined for analysis page'); }
   // **************************************************************************************************************** */
   //                                       end of Analysis Page
   // **************************************************************************************************************** */
 
-  
   // **************************************************************************************************************** */
   //                                          Last_things_done; Last things done; Last done last done
   // **************************************************************************************************************** */
@@ -3095,7 +3056,7 @@ av.ui.closeSendModalFn = () => {
   av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
   av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
   av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
-   
+
   av.doj.mnDebug.style.visibility = 'visible';   // set visiable so that av.ui.toggleDevelopentDisplays will hide devo stuff
 
   // Avida-ED 4.0.03 Beta Testing fix this too. 
@@ -3108,7 +3069,7 @@ av.ui.closeSendModalFn = () => {
     av.doj.mnDebug.style.visibility = 'hidden';   //visible
   };
   av.ui.toggleDevelopmentDisplays('Last_things_done');  // this needs to b called in production version
-  
+
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
   //av.sgr.ChangeAllGeo(av.sgr.dftGeometry);   //tiba delete in 2021
   av.changeAllSgrRegionLayout(av.sgr.nutdft.uiAll.regionLayout, 'last_things_done');
@@ -3130,13 +3091,13 @@ av.ui.closeSendModalFn = () => {
   //Geometry is no longer a drop down. Now it is an opton in Supply Type
   document.getElementById('allSugarGeometry').style.display = 'none';
   document.getElementById('geometrySgr').style.display = 'none';
-  
+
   // **************************************************************************************************************** */
   //Resize tools might be called here or after "Last_things_done"
   // **************************************************************************************************************** */
 
   var ro = new ResizeObserver(entries => {
-//    console.log('in ResizeObserver');
+    //console.log('in ResizeObserver');
     for (let entry of entries) {
       const cr = entry.contentRect;
       if (av.dbg.flg.dsz) { console.log(entry.target.id, `size wd, ht: ${cr.width}px  ${cr.height}px`); }
@@ -3148,7 +3109,6 @@ av.ui.closeSendModalFn = () => {
   // Observe one or multiple elements
   //ro.observe(document.querySelector('div'));
   ro.observe(document.querySelector('#gridHolder'));
-  
 
   // **************************************************************************************************************** */
   //                                          Useful Generic functions
