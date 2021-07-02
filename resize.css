@@ -7,7 +7,7 @@
   display: flex;
 }
 #organismBlock{
-  display: none;
+  display: flex;
 }
 #analysisBlock{
   display: none;

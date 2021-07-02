@@ -2722,9 +2722,12 @@ av.ui.closeSendModalFn = () => {
 
   //set canvas size; called from many places
   av.ind.organismCanvasHolderSize = function() {
-    av.dom.organCanvas.width = $('#organismCanvasHolder').innerWidth() - 6;
-    av.dom.organCanvas.height = $('#organismCanvasHolder').innerHeight() - 12;
+    // av.dom.organCanvas.width = $('#organismCanvasHolder').innerWidth() - 6;
+    // av.dom.organCanvas.height = $('#organismCanvasHolder').innerHeight() - 12;
+    av.dom.organCanvas.width = $('organismCanvasHolder').innerWidth; // yemi: hopefully $('organismCanvasHolder').innerWidth is equivalent to 100%
+    av.dom.organCanvas.height = $('organismCanvasHolder').innerHeight; // yemi: basically, 100% means fill whatever container it is contained in.
   };
+
   //set output Canvas Size
   av.ind.cpuOutputCnvsSize = function() {
     console.log('output Wd Ht: $inner =', $('#cpuOutputCnvs').innerWidth(), $('#cpuOutputCnvs').innerHeight());

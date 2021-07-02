@@ -130,14 +130,14 @@ html {
  .all3org{
     display: grid;
     grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
-    grid-template-columns: 240px 3px auto 250px;    /* 250px */
+    grid-template-columns: 240px 3px auto 300px;    /* 250px */
     grid-template-areas: 'headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                           'navColClass dragbarLeft mainBlockHolder rightInfoHolder';
     height: 100vh;
     width: 100vw;
     min-height: 98vh;
     min-width: 100vw;
-    max-height: 100vh;
+    max-height: 99vh;
     max-width: 99vw;
     margin: 0;
     background:  #F5F5F5;   /* lightsalmon;  */
@@ -159,7 +159,7 @@ html {
     flex-direction: column;
     background: #F5F5F5; /* lavender; */
     border: 1px solid #AAA;
-    height: 99%;
+    height: 100%;
     resize: horizontal;
     min-width: 185px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
     max-width: 620px;
@@ -173,7 +173,9 @@ html {
     height: 100%;
     width: 100%;
     border: 1px solid #AAA;
+    overflow: auto;
   }
+
   .footerRow {
     border: 1px solid #AAA;
   }
@@ -336,9 +338,9 @@ html {
 #freezerSection{
   border: 1px solid #BABABA;
   flex: 1;                /* fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
-  height: 99%;
-  width: 99%;
-  overflow:auto;
+  /* height: 99%; */
+  /* width: 99%; */
+  overflow:hidden;
 }
 #FreezerTitle {
   font-size: 190%;
@@ -425,18 +427,20 @@ html {
   height: 99%;
   width: 100%;
   background: #F5F5F5; /* #F5F5F5;lightblue; */
+  max-height: 1060px;
 }
 
 .orgBenchCol{
   background: #F5F5F5; /* lightgoldenrodyellow;*/
   flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-  border: 1px solid #AAA;
+  /* border: 1px solid #AAA; */ /* yemi: removed borders because I thought it was distracting */ 
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 99%;
-  max-height: 100%;
-  overflow:hidden;
+  height: 100%; /* yemi */
+  /* max-height: 100%; */ /* yemi */
+  overflow:auto;
+  grid-template-rows: 2.5em auto ;
 }
 
 .popBenchCol{
@@ -1569,7 +1573,9 @@ checkbox:focus {
     overflow: auto;
     display: flex;    /* makes this a flexbox to hold smaller elements */
     flex-direction: row;
+    min-height: 30px;
   }
+
   .orgTopLt{
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} fx prevent resize */
     display: flex;
