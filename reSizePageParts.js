@@ -43,7 +43,7 @@ function dragbarLeftResize() {
 
       /* yemi: make the following divs take up the entire width of their containers */
       $('orgInfoHolder').css("width", "100%");
-      
+
     });
 
   });
@@ -79,6 +79,7 @@ function dragbarLeftResize() {
       
       $(document).unbind('mousemove');
       dragging = false;
+
     }
 
   });
