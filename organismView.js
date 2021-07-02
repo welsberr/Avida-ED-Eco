@@ -90,8 +90,6 @@
     var radius = 5;
 
     lineY = av.dom.organCanvas.height - av.ind.TimeLineHeight / 2;
-    console.log(av.dom.organCanvas.height);
-    console.log(av.dom.organCanvas.width);
     upTickY = lineY - tickLength;
     dnTickY = lineY + tickLength;
     upLabelY = lineY - upLabelYoffset;

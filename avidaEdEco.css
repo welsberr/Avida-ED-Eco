@@ -172,6 +172,7 @@ html {
     background: #F5F5F5;     /* lightskyblue; */
     height: 100%;
     width: 100%;
+    max-height: 100vh;
     border: 1px solid #AAA;
     overflow: auto;
   }
@@ -1596,6 +1597,8 @@ checkbox:focus {
   }
   .orgMid {
     border: 1px solid #AAA;
+    height: 100%;
+    width: 100%;
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
   }
   .orgBot {
