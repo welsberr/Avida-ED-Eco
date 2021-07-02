@@ -2719,8 +2719,10 @@ require([
   av.ind.organismCanvasHolderSize = function() {
     // av.dom.organCanvas.width = $('#organismCanvasHolder').innerWidth() - 6;
     // av.dom.organCanvas.height = $('#organismCanvasHolder').innerHeight() - 12;
-    av.dom.organCanvas.width = $('organismCanvasHolder').innerWidth; // yemi: hopefully $('organismCanvasHolder').innerWidth is equivalent to 100%
-    av.dom.organCanvas.height = $('organismCanvasHolder').innerHeight; // yemi: basically, 100% means fill whatever container it is contained in.
+    av.dom.organCanvas.width = $('#organismCanvasHolder').innerWidth(); // yemi: hopefully $('organismCanvasHolder').innerWidth is equivalent to 100%
+    av.dom.organCanvas.height = $('#organismCanvasHolder').innerHeight(); // yemi: basically, 100% means fill whatever container it is contained in.
+    /* yemi: IMPORTANT THING TO NOTE: innerHeight() returns just the number, .css("width") returns a string with 'px' suffix
+             Canvas widths CANNOT have 'px' suffix, it just needs to be a number. So in conclusion, do NOT use .css("width") to set the width of a canvas. I learned it the hard way. */
   };
 
   //set output Canvas Size
