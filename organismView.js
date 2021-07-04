@@ -393,7 +393,7 @@
       av.ind.bigR[av.ind.mom] = Math.round(0.43 * (av.dom.organCanvas.height - av.ind.TimeLineHeight));  //set size based on height
     }
     else {
-      av.ind.bigR[av.ind.mom] = Math.round(0.2 * av.dom.organCanvas.width) //set size based on width
+      av.ind.bigR[av.ind.mom] = Math.round(0.2 * av.dom.organCanvas.width); //set size based on width
     }
     av.ind.cx[av.ind.mom] = av.dom.organCanvas.width / 2 - 1.2 * av.ind.bigR[av.ind.mom];        //center of 1st (parent) circle x
     av.ind.cy[av.ind.mom] = 0.53 * (av.dom.organCanvas.height - av.ind.TimeLineHeight);  //center of 1st (parent) circle y

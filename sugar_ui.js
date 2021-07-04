@@ -66,6 +66,7 @@
         }
         //console.log('dom is', tsk+'_detailsHolder');
         av.dom.showBigTextarea.value = tskSectionStr;
+        console.log('tsk_detailsHolder=', tsk+'_detailsHolder');
         document.getElementById(tsk+'_detailsHolder').innerHTML = newstr;
       }
     }
@@ -420,6 +421,7 @@ av.sgr.supplyChange = function (domObj) {
     var nameColor = 'Black';
     var darkColor = '#eee';
     var len = av.sgr.sugarColors.length;
+    len = 2; // turned colors off to test new UI for sugar. Tiba delete this in to get colors. 
     for (ii = 0; ii < len; ii++) {
       //need to think this thru as eventually there will be up to 4 subsections. Just one for now.
       idname = av.sgr.logicNames[ii]+'_section';
@@ -532,12 +534,15 @@ av.sgr.supplyChange = function (domObj) {
   av.sgr.setSingleSugarColor = function(colorFlg, tskNum, from) {
     //if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg); }
     //console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg);
+
+    /* no colors while debugging. tiba delete later
     var idname;
     var backgndColor = av.color.greyMap[av.sgr.sugarGreyShade];
     var nameColor = 'Black';
     var darkColor = '#eee';
       //need to think this thru as eventually there will be up to 4 subsections. Just one for now.
       idname = av.sgr.logicNames[tskNum]+'_section';
+      
       if (colorFlg) {
         backgndColor = av.color[av.sgr.sugarColors[tskNum]][av.sgr.sugarBackgroundShade];
         nameColor = av.color[av.sgr.sugarColors[tskNum]][av.sgr.sugarNameShade]; 
@@ -562,6 +567,7 @@ av.sgr.supplyChange = function (domObj) {
         idname = av.sgr.logicNames[tskNum]+sub+'subSection';
         document.getElementById(idname).style['border-top'] = '1px solid '+darkColor;  
       }
+    */
   };
   //---------------------------------------------------------------------------------- end av.sgr.setSingleSugarColor --
 
@@ -782,6 +788,7 @@ av.sgr.supplyChange = function (domObj) {
 
     //console.log('av.nut.'+numTsk+'.uiAll.geometry.tolower()=',av.nut[numTsk].uiAll.geometry.toLowerCase());
     console.log('av.sgr.complexityLevel=', av.sgr.complexityLevel, '; geometry=',av.nut[numTsk].uiAll.geometry);
+    
     if ('sgrAdvanced' == av.sgr.complexityLevel) {
       av.nut[numTsk].uiAll.supplyTypeSlct = document.getElementById(tsk + '_supplyTypeSlct').value;
       //console.log('av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
@@ -794,7 +801,7 @@ av.sgr.supplyChange = function (domObj) {
         // I tried absolute postion, but then the grid contain did not change the sise of the summary section. 
         // never got tried with one surrounding div an then two. finally Applied display: grid to the summary element
         // changing the summary element to display: grid causes the arrow to disapper, but the detials will still open
-        // document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
+        // document.getElementById(tsk+'_summary').className = 'grd-sgr-sum-adv-' + 'container';
         document.getElementById('allSugarDetailsDiv').style.display = 'none';
         document.getElementById('showHideSgr').style.display = 'none';
         document.getElementById(tsk+'_section').open = false;
@@ -803,15 +810,15 @@ av.sgr.supplyChange = function (domObj) {
         switch (av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase()) {
           case 'none': 
           case 'unlimited':
-            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
-            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'container';
+            //document.getElementById(tsk+'_summary').className = 'grd-sgr-sum-adv-' + 'container';
+            document.getElementById(tsk+'_sumLftGrid').className = 'grd-sgr-sum-adv-' + 'container sgrLftSumCls';
             document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.long[tsk];
             document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.long.width;
             document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
             document.getElementById(tsk+'_section').open = false;
             break;
           case 'limited': 
-            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'limited-container';
+            document.getElementById(tsk+'_sumLftGrid').className = 'grd-sgr-sum-adv-' + 'limited-container sgrLftSumCls';
             document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.short[tsk];
             document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.short.width;
             document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
@@ -819,7 +826,7 @@ av.sgr.supplyChange = function (domObj) {
             document.getElementById(tsk+'_section').open = false;
             break;
           case 'chemostat':
-            document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'chemo-container';
+            document.getElementById(tsk+'_summary').className = 'grd-sgr-sum-adv-' + 'chemo-container sgrLftSumCls';
             //tmpTxt = av.sgr.describe.long[tsk] + ': . . . .  When 0 < period, chemostat becomes periodic';
             //tmpTxt = 'When 0 < period, chemostat becomes periodic';
             document.getElementById(tsk+'_section').open = true;
@@ -1077,22 +1084,24 @@ av.sgr.supplyChange = function (domObj) {
           case 'none': 
           case 'unlimited':  
             //document.getElementById(tsk+'_summary').className = av.sgr.complexSumGridPrefix + 'container';
-            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'container';
+            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'container sgrLftSumCls';
             document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.long[tsk];
             document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.long.width;
             document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
             document.getElementById(tsk+'_section').open = false;
             break;
           case 'limited': 
-            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'limited-container';
-            document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.short[tsk];
-            document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.short.width;
+            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'limited-container sgrLftSumCls';
+            document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.long[tsk];
+            document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.long.width;
+            //document.getElementById(tsk+'_taskAboutText').innerHTML = av.sgr.describe.short[tsk];
+            //document.getElementById(tsk+'_taskAboutText').style.width = av.sgr.describe.short.width;
             document.getElementById(tsk+'_taskAboutText').style.display = 'inline-block';
             document.getElementById(tsk+'_initialHiHolder').style.display = 'inline-block';
             document.getElementById(tsk+'_section').open = false;
             break;
           case 'chemostat':
-            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'chemo-container';
+            document.getElementById(tsk+'_sumLftGrid').className = av.sgr.complexSumGridPrefix + 'chemo-container sgrLftSumCls';
             //tmpTxt = av.sgr.describe.long[tsk] + ': . . . .  When 0 < period, chemostat becomes periodic';
             //tmpTxt = 'When 0 < period, chemostat becomes periodic';
             document.getElementById(tsk+'_section').open = true;

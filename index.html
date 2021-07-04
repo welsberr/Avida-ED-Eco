@@ -45,26 +45,9 @@
       @import 'avidaEdEco.css';
       @import 'resize.css';
     </style>
-    <script>
-      //console.log('before avResize');
-      function avResize() {
-        console.log('initial handler in html. Triggers when viewport (browser) is resized');
-        //av.ui.browserResizeEventHandler();  //gets an error on a fresh load
-      }
-
-      //never triggered not sure why. trying to get mouse coordinates for IE
-      //console.log('before getCoords');
-      function getCoords(event) {
-        av.mouse.grdX = event.clientX;
-        av.mouse.grdY = event.clientY;
-        console.log(' on grid in html xy', event.clientX, event.clientY);
-      }
-      //console.log('last line in script before close head')
-    </script>
   </head>
 
-  <body id='myapp' data-maq-flow-layout='false' data-maq-comptype='desktop' class='claro' data-maq-ws='collapse'
-        data-maq-appstates='{}' onresize='avResize()'>
+  <body id='Avida-ED main display'>
     <span id="http://stackoverflow.com/questions/20828799/creating-a-splash-page-in-html5"></span>
     <div id='splash'>
       <div align='center'>
@@ -346,8 +329,8 @@
                 <div id='a_control_or_info_can_go_here' class="orgTopRt"></div>
               </div>
               <div class="orgMid" id='organismCanvasHolder'>
-                <canvas data-dojo-type='dojo.dnd.Target' id='organCanvas' 
-                        style='border:1px solid #000000;'></canvas> <!-- yemi -->
+                <!-- yemi canvas comment; diane move style info to #organCanvas in avidaedEco.css -->
+                <canvas data-dojo-type='dojo.dnd.Target' id='organCanvas'></canvas> 
               </div>
               <div class="orgBotClass" id='orgBotId'>
                 <div id='cycleSlider'></div><br />
@@ -808,6 +791,7 @@
                   <span id='sgrEngergyReportLabel'> (strength of energy reward shown in parentheses)</span>
                   <div id='sugarAccordion'>
                     <div id='sugarNote'></div>
+                    
                    <div id="sugarInsideWrapper">   
                     <details id="not_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
                       <summary id="not_summary" class='sgrSumCls'> 
@@ -1629,9 +1613,9 @@
                           <div id="orn_initialHiHolder" class='initialGlobCls'>
                             <input id="orn_initialHiNp" class="sugInitialNclass" type='text' value='100' onchange="av.sgr.initialChange(this);">&nbsp;initial / cell
                           </div>
-                        </div>
-                        <div id='orn_sumRitBox' class='sgrRitSumCls'>
                           <div id="orn_summaryFooterText" class='sumFtTxtCls'> period &lt; 1 ==&gt; non-periodic</div>
+                        </div><span id="orn_sumLftGrid_end" class="display_none"></span>
+                        <div id='orn_sumRitBox' class='sgrRitSumCls'>
                           <div id="orn_taskAboutText" class='taskAboutCls'>( x8)</div>
                         </div>
                       </summary>

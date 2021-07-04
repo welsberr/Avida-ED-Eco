@@ -20,7 +20,7 @@ function dragbarLeftResize() {
 
       /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
       if (widthOfNav < parseInt($('#navColId').css("min-width"))) {
-        widthOfNav = parseInt($('#navColId').css("min-width"))
+        widthOfNav = parseInt($('#navColId').css("min-width"));
       }
 
       /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
@@ -50,7 +50,7 @@ function dragbarLeftResize() {
 
       /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
       if (widthOfNav < parseInt($('#navColId').css("min-width"))) {
-        widthOfNav = parseInt($('#navColId').css("min-width"))
+        widthOfNav = parseInt($('#navColId').css("min-width"));
       }
 
       /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
