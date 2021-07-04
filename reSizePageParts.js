@@ -1,19 +1,23 @@
 /* yemi: function to automatically resize the Analysis page when button clicked; called in avidaED.js */
 function resizeAnalysisPage() {
+
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('#dragbarLeft').css("width");
   var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto";
   $('.all2lft').css("grid-template-columns", newColumns);
+
 }
 
 /* yemi: functions for left dragbar */
 function dragbarLeftResize() {
+
   var dragging = false;
   $('#dragbarLeft').bind('mousedown', function(e) {
     e.preventDefault();
     dragging = true;
     
     $(document).mousemove(function(e){
+
       var widthAvailable = window.innerWidth - 440 - 3; /* yemi: hard-coded 440px (right panel) 3px (left dragbar), need to fix */
       var percentage = (e.pageX / widthAvailable);
       var widthOfNav = widthAvailable * percentage;
@@ -30,7 +34,7 @@ function dragbarLeftResize() {
       
       /* yemi: when modifying the column sizes, need to modify all three layouts */
       var population_colInfo = widthOfNav + "px 3px " + "auto 440px";
-      var organism_colInfo = widthOfNav + "px 3px " + "auto 250px";
+      var organism_colInfo = widthOfNav + "px 3px " + "auto 300px";
       var analysis_colInfo = widthOfNav + "px 3px auto";
       $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
       $('.all3pop').css("grid-template-columns", population_colInfo);
@@ -39,10 +43,13 @@ function dragbarLeftResize() {
 
       /* yemi: make the following divs take up the entire width of their containers */
       $('orgInfoHolder').css("width", "100%");
+
     });
+
   });
 
   $(document).bind('mouseup', function(e) {
+
     if (dragging) {
       var widthAvailable = window.innerWidth - 440 - 3; /* yemi: hard-coded 440px (right panel) 3px (left dragbar), need to fix */
       var percentage = (e.pageX / widthAvailable);
@@ -60,7 +67,7 @@ function dragbarLeftResize() {
       
       /* yemi: when modifying the column sizes, need to modify all three layouts */
       var population_colInfo = widthOfNav + "px 3px " + "auto 440px";
-      var organism_colInfo = widthOfNav + "px 3px " + "auto 250px";
+      var organism_colInfo = widthOfNav + "px 3px " + "auto 300px";
       var analysis_colInfo = widthOfNav + "px 3px auto";
       $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
       $('.all3pop').css("grid-template-columns", population_colInfo);
@@ -69,12 +76,14 @@ function dragbarLeftResize() {
 
       /* yemi: make the following divs take up the entire width of their containers */
       $('orgInfoHolder').css("width", "100%");
+      
       $(document).unbind('mousemove');
       dragging = false;
 
-      console.log(window.outerHeight);
     }
+
   });
+
 };
 
 /* 

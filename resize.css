@@ -7,7 +7,7 @@
   display: flex;
 }
 #organismBlock{
-  display: none;
+  display: flex;
 }
 #analysisBlock{
   display: none;
@@ -20,6 +20,7 @@
   margin: 0;
   display: none;
 }
+
 #splash{
   display: none;
   position: absolute; 
