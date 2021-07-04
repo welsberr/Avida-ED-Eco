@@ -1436,7 +1436,7 @@ require([
     // if the miniplot on the populaton page needs to be initiated call that funciton.
     console.log('In: av.ui.mainBoxSwap; av.pch.needInit=', av.pch.needInit, '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));
     if ($(av.dom.popStatsBlock).is(":visible") && (av.pch.needInit) ) {
-      av.grd.popChartInit('av.ui.mainBoxSwap');
+      av.grd.popChartInit('av.ui.mainBoxSwap');x
     };
     if ('populationBlock' == av.ui.page) {
       av.dom.popInfoVert.style.display = 'block';
@@ -1723,16 +1723,10 @@ require([
     if (av.dbg.flg.dsz) { console.log(from, 'called av.grd.drawGridSetupFn__________________________________________________'); }
     av.dom.benchPopBot.style.height = '60px';
 
-    //size testing box = mainButtons
-    av.dsz.mainButtonsWd = parseInt($("#mainButtons").outerWidth());
-    av.dsz.mainButtonsHt = parseInt($("#mainButtons").outerHeight());
-    if (av.dbg.flg.dsz) { console.log('dsz: w:', av.dsz.mainButtonsWd, av.dsz.mainButtonsHt, '= mainButtons'); }
-
-    //about total window size
-    av.dsz.windowWd = window.innerWidth || document.documentElement.clientWidth  || document.body.clientWidth;
-    av.dsz.windowHd = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-
-    if (av.dbg.flg.dsz) { console.log('dsz: w:', av.dsz.windowWd, av.dsz.windowHd, '= window'); }
+    // about total window size
+    // av.dsz.windowWd = window.innerWidth || document.documentElement.clientWidth  || document.body.clientWidth;
+    // av.dsz.windowHd = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    // if (av.dbg.flg.dsz) { console.log('dsz: w:', av.dsz.windowWd, av.dsz.windowHd, '= window'); }
 
     if (undefined != av.grd.msg) {
       if ('prepping' != av.grd.runState && undefined != av.grd.msg.fitness) {
@@ -1794,32 +1788,12 @@ require([
           //console.log('smaller width: canvasSize = ', av.grd.canvasSize);
         };
 
-        var sum_ht_in = $('#popTopRw').height() + $('#gridHolder').height() + $('#sclCnvsHldr').height() + $('#benchPopBot').height();
-        var sum_ht_ot = $('#popTopRw').outerHeight(true) + $('#gridHolder').outerHeight(true) + $('#sclCnvsHldr').outerHeight(true) + $('#benchPopBot').outerHeight(true);
-        sum_ht_in = parseFloat(sum_ht_in).toFixed(1);
-        sum_ht_ot = parseFloat(sum_ht_ot).toFixed(1);
-
-        if (av.dbg.flg.dsz) { console.log('dsz: wd ht:   mapHolder: ', $('#mapHolder').width().toFixed(1), $('#mapHolder').height().toFixed(1), $('#mapHolder').outerHeight(true).toFixed(1) ); }
-        if (av.dbg.flg.dsz) { console.log('dsz: wd ht:    popTopRw: ', $('#popTopRw').width().toFixed(1), $('#popTopRw').height().toFixed(1), $('#popTopRw').outerHeight(true).toFixed(1) ); }
-        if (av.dbg.flg.dsz) { console.log('dsz: wd ht:  gridHolder: ', $('#gridHolder').width().toFixed(1), $('#gridHolder').height().toFixed(1), $('#gridHolder').outerHeight(true).toFixed(1) ); }
-        if (av.dbg.flg.dsz) { console.log('dsz: wd ht: sclCnvsHldr:', $('#sclCnvsHldr').width().toFixed(1), $('#sclCnvsHldr').height().toFixed(1), $('#sclCnvsHldr').outerHeight(true).toFixed(1) ); }
-        if (av.dbg.flg.dsz) { console.log('dsz: wd ht: benchPopBot:', $('#benchPopBot').width().toFixed(1), $('#benchPopBot').height().toFixed(1), $('#benchPopBot').outerHeight(true).toFixed(1) ); }
-        if (av.dbg.flg.dsz) {  console.log('dsz: wd ht:         sum: width', sum_ht_in, sum_ht_ot ); }
-
         av.dom.gridCanvas.width = av.grd.canvasSize;
         av.dom.gridCanvas.height = av.grd.canvasSize;
         av.grd.spaceX = av.grd.canvasSize;
         av.grd.spaceY = av.grd.canvasSize;
 
         av.grd.findGridSize(av.grd, av.parents);
-
-        //Need to fix for scrolling   // This was commented out in Avida-ED 3.1
-        //if (av.dom.gridHolder.scrollHeight == av.dom.gridHolder.clientHeight + 17) {
-        //  var numGH = av.dom.gridHolder.clientHeight;
-        //  av.dom.gridCanvas.height = numGH - 6 - 17;
-        //  av.grd.findGridSize(av.grd, av.parents);     //in populationGrid.js
-        //  consold.log('inside DrawGridSetupFn in odd if statement ----------------------------------');
-        //}
 
         av.grd.drawGridUpdate();   //in populationGrid.js
 
@@ -1858,6 +1832,8 @@ require([
 
   av.grd.colorMap = 'Gnuplot2';
   /*
+   *  This secton allowed one to change the color map of the scale, but Rob did not like it.
+   * 
    dijit.byId('mnGnuplot2').attr('disabled', true);
 
    dijit.byId('mnViridis').on('Click', function () {
