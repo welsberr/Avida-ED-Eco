@@ -1,3 +1,12 @@
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+// if (av.dbg.flg.root) { console.log('Root: start of reSizePageParts'); }
+var av = av || {};  //because av already exists
+
 /* yemi: function to automatically resize the Analysis page when button clicked; called in avidaED.js */
 function resizeAnalysisPage() {
 
@@ -5,7 +14,24 @@ function resizeAnalysisPage() {
   var dragbarWidth = $('#dragbarLeft').css("width");
   var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto";
   $('.all2lft').css("grid-template-columns", newColumns);
+}
 
+/* yemi: function to automatically resize the Populations page when button clicked; called in avidaED.js */
+function resizePopulationPage() {
+
+  var leftNavBarWidth = $('.navColClass').css("width");
+  var dragbarWidth = $('#dragbarLeft').css("width");
+  var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto 440px";
+  $('.all3pop').css("grid-template-columns", newColumns);
+}
+
+/* yemi: function to automatically resize the Organisms page when button clicked; called in avidaED.js */
+function resizeOrganismPage() {
+
+  var leftNavBarWidth = $('.navColClass').css("width");
+  var dragbarWidth = $('#dragbarLeft').css("width");
+  var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto 250px";
+  $('.all3org').css("grid-template-columns", newColumns);
 }
 
 /* yemi: functions for left dragbar */
@@ -34,7 +60,7 @@ function dragbarLeftResize() {
       
       /* yemi: when modifying the column sizes, need to modify all three layouts */
       var population_colInfo = widthOfNav + "px 3px " + "auto 440px";
-      var organism_colInfo = widthOfNav + "px 3px " + "auto 300px";
+      var organism_colInfo = widthOfNav + "px 3px " + "auto 250px";
       var analysis_colInfo = widthOfNav + "px 3px auto";
       $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
       $('.all3pop').css("grid-template-columns", population_colInfo);
@@ -44,8 +70,9 @@ function dragbarLeftResize() {
       /* yemi: make the following divs take up the entire width of their containers */
       $('orgInfoHolder').css("width", "100%");
 
+      /* yemi: update organism canvas */
+      av.ind.updateOrgTrace()
     });
-
   });
 
   $(document).bind('mouseup', function(e) {
@@ -67,7 +94,7 @@ function dragbarLeftResize() {
       
       /* yemi: when modifying the column sizes, need to modify all three layouts */
       var population_colInfo = widthOfNav + "px 3px " + "auto 440px";
-      var organism_colInfo = widthOfNav + "px 3px " + "auto 300px";
+      var organism_colInfo = widthOfNav + "px 3px " + "auto 250px";
       var analysis_colInfo = widthOfNav + "px 3px auto";
       $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
       $('.all3pop').css("grid-template-columns", population_colInfo);
@@ -81,19 +108,9 @@ function dragbarLeftResize() {
       dragging = false;
 
     }
-
   });
-
 };
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-// if (av.dbg.flg.root) { console.log('Root: start of reSizePageParts'); }
-var av = av || {};  //because av already exists
 
 //------------------------------------------------------------------------------------------- av.dom.storeInitialSize --
 // Called in messaging.js in av.msg.readMsg()

@@ -130,7 +130,7 @@ html {
  .all3org{
     display: grid;
     grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
-    grid-template-columns: 240px 3px auto 300px;    /* 250px */
+    grid-template-columns: 240px 3px auto 250px;    /* 250px */
     grid-template-areas: 'headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                           'navColClass dragbarLeft mainBlockHolder rightInfoHolder';
     height: 99vh;
@@ -639,7 +639,7 @@ html {
     flex-direction: row;
     border: 1px solid #AAA;
     background: #F5F5F5;
-    height: 280px;
+    height: auto;
     resize: vertical;
     overflow: auto;
   }
@@ -1599,7 +1599,7 @@ checkbox:focus {
     overflow: auto;
     display: flex;    /* makes this a flexbox to hold smaller elements */
     flex-direction: row;
-    min-height: 30px;
+    min-height: 40px;
   }
 
   .orgTopLt{
@@ -1619,12 +1619,15 @@ checkbox:focus {
   }
   .orgMid {
     border: 1px solid #AAA;
-    height: 100%;
+    height: 85%; /* yemi: determined by trial and error; might need to fix eventually, but for now, fixed the overflow problem*/
     width: 100%;
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
   }
   #organCanvas{
-    border:1px solid #000000;     /*black*/    
+    /* border:1px solid #000000; */     /*black*/    
+    top: 50%;
+    left: 50%;
+    max-height: 100%; /* yemi: added max-height attribute to fill the entire orgMid, for now, fixed the overflow problem*/
   }
   .orgBot {
     flex: 0 1 40px;
@@ -2067,6 +2070,10 @@ canvas {
 }
 
 .organismControls {
+  padding: 5px;
+}
+
+.popButCls {
   padding: 5px;
 }
 
