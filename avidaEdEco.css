@@ -127,11 +127,12 @@ html {
   margin: 0;
   background:  #F5F5F5;   /* lightsalmon;  */
 }
+
 .all3org{
   display: grid;
   grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
   grid-template-columns: 240px 3px auto 3px 250px;    /* 250px */
-  grid-template-areas: 'headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
+  grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
   height: 99vh;
   width: 100vw;
@@ -175,6 +176,7 @@ html {
     max-height: 100vh;
     border: 1px solid #AAA;
     overflow: auto;
+    min-width: 200px;
   }
 
   .footerRow {
@@ -189,7 +191,7 @@ html {
     height: 100%;
     overflow: hidden;    /* scroll;  */
   }  /* Contain the blocks popInfoVert and orgInfoHolder  */
-  
+
   #orgInfoHolder {
     border: 1px solid #AAA;
     background: #F5F5F5;
@@ -591,7 +593,6 @@ html {
 #popInfoVert {
     display: flex;
     flex-direction: column;
-    width: 442px;
     height: 100%;
     overflow: auto;
   } /* contains: popInfoTabHolder & labInfoHolder */
@@ -609,6 +610,7 @@ html {
   #popStatsBlock{
     flex-direction: column;
     height: 100%;
+    width: 100%;
   }
   .labInfoClass{
     background: #F5F5F5; /* lightsteelblue; */
@@ -697,13 +699,11 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
 #logTit6 { font-style: italic; color: dimgray; }
 #logTit7 { font-style: italic; color: dimgray; }
 
-
-
-
   #popChrtHolder{
     flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
     border: 1px solid #AAA;
     height: 100%;
+    width: 100%;
   }
  
   /* ---------------------- Population (right) side of tables */)
