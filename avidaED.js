@@ -1486,6 +1486,9 @@ require([
     if (av.debug.dnd || av.debug.mouse)
       console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
     av.ui.mainBoxSwap('populationBlock');
+
+    /* yemi: just so that if screen resized in the other layout, you still update the population page correctly */
+    resizePopulationPage();
   };
 
   av.dom.organismButton.onclick = function () {
@@ -1506,6 +1509,12 @@ require([
       av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
       $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
     console.log('orgInfoHolder.paddding=', $("#orgInfoHolder").css('padding'));
+
+    /* yemi: just so that if screen resized in the other layout, you still update the organism page correctly */
+    resizeOrganismPage();
+
+    /* yemi: organism trace persists; can be removed if undesired */
+    av.ind.updateOrgTrace()
   };
 
   document.getElementById('analysisButton').onclick = function () {
@@ -2693,10 +2702,8 @@ require([
 
   //set canvas size; called from many places
   av.ind.organismCanvasHolderSize = function() {
-    // av.dom.organCanvas.width = $('#organismCanvasHolder').innerWidth() - 6;
-    // av.dom.organCanvas.height = $('#organismCanvasHolder').innerHeight() - 12;
-    av.dom.organCanvas.width = $('#organismCanvasHolder').innerWidth(); // yemi: hopefully $('organismCanvasHolder').innerWidth is equivalent to 100%
-    av.dom.organCanvas.height = $('#organismCanvasHolder').innerHeight(); // yemi: basically, 100% means fill whatever container it is contained in.
+    av.dom.organCanvas.width = $('#organismCanvasHolder').innerWidth() - 6; // yemi: hopefully $('organismCanvasHolder').innerWidth is equivalent to 100%
+    av.dom.organCanvas.height = $('#organismCanvasHolder').innerHeight() - 15; // yemi: changed it from -12 to -15 (works better I guess? when I tried using percentages, did not work as well)
     /* yemi: IMPORTANT THING TO NOTE: innerHeight() returns just the number, .css("width") returns a string with 'px' suffix
              Canvas widths CANNOT have 'px' suffix, it just needs to be a number. So in conclusion, do NOT use .css("width") to set the width of a canvas. I learned it the hard way. */
   };

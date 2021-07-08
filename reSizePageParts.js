@@ -1,11 +1,39 @@
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+// if (av.dbg.flg.root) { console.log('Root: start of reSizePageParts'); }
+var av = av || {};  //because av already exists
+
 /* yemi: function to automatically resize the Analysis page when button clicked; called in avidaED.js */
 function resizeAnalysisPage() {
 
   var leftNavBarWidth = $('.navColClass').css("width");
-  var dragbarWidth = $('#dragbarLeft').css("width");
-  var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto";
+  var dragbarLeftWidth = $('#dragbarLeft').css("width");
+  var newColumns = leftNavBarWidth + " " + dragbarLeftWidth + " auto";
   $('.all2lft').css("grid-template-columns", newColumns);
+}
 
+/* yemi: function to automatically resize the Populations page when button clicked; called in avidaED.js */
+function resizePopulationPage() {
+
+  var leftNavBarWidth = $('.navColClass').css("width");
+  var dragbarWidth = $('.dragbar').css("width");
+  var rightSideWidth = $('#rightInfoHolder').css("width");
+  var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
+  $('.all3pop').css("grid-template-columns", newColumns);
+}
+
+/* yemi: function to automatically resize the Organisms page when button clicked; called in avidaED.js */
+function resizeOrganismPage() {
+
+  var leftNavBarWidth = $('.navColClass').css("width");
+  var dragbarWidth = $('.dragbar').css("width");
+  var rightSideWidth = $('#rightInfoHolder').css("width");
+  var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
+  $('.all3org').css("grid-template-columns", newColumns);
 }
 
 /* yemi: functions for left dragbar */
@@ -18,7 +46,10 @@ function dragbarLeftResize() {
     
     $(document).mousemove(function(e){
 
-      var widthAvailable = window.innerWidth - 440 - 3; /* yemi: hard-coded 440px (right panel) 3px (left dragbar), need to fix */
+      var rightSideWidth = $('#rightInfoHolder').css("width");
+      console.log(rightSideWidth);
+      var rightSideWidthNum = $('#rightInfoHolder').css("width").substring(0,$('#rightInfoHolder').css("width").length - 2); /* yemi: extract only the number */
+      var widthAvailable = window.innerWidth - rightSideWidthNum - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
       var percentage = (e.pageX / widthAvailable);
       var widthOfNav = widthAvailable * percentage;
 
@@ -33,8 +64,8 @@ function dragbarLeftResize() {
       }
       
       /* yemi: when modifying the column sizes, need to modify all three layouts */
-      var population_colInfo = widthOfNav + "px 3px " + "auto 440px";
-      var organism_colInfo = widthOfNav + "px 3px " + "auto 300px";
+      var population_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
+      var organism_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
       var analysis_colInfo = widthOfNav + "px 3px auto";
       $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
       $('.all3pop').css("grid-template-columns", population_colInfo);
@@ -44,14 +75,17 @@ function dragbarLeftResize() {
       /* yemi: make the following divs take up the entire width of their containers */
       $('orgInfoHolder').css("width", "100%");
 
+      /* yemi: update organism canvas */
+      av.ind.updateOrgTrace()
     });
-
   });
 
   $(document).bind('mouseup', function(e) {
 
     if (dragging) {
-      var widthAvailable = window.innerWidth - 440 - 3; /* yemi: hard-coded 440px (right panel) 3px (left dragbar), need to fix */
+      var rightSideWidth = $('#rightInfoHolder').css("width");
+      var rightSideWidthNum = $('#rightInfoHolder').css("width").substring(0,$('#rightInfoHolder').css("width").length - 2); /* yemi: extract only the number */
+      var widthAvailable = window.innerWidth - rightSideWidthNum - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
       var percentage = (e.pageX / widthAvailable);
       var widthOfNav = widthAvailable * percentage;
 
@@ -66,8 +100,8 @@ function dragbarLeftResize() {
       }
       
       /* yemi: when modifying the column sizes, need to modify all three layouts */
-      var population_colInfo = widthOfNav + "px 3px " + "auto 440px";
-      var organism_colInfo = widthOfNav + "px 3px " + "auto 300px";
+      var population_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
+      var organism_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
       var analysis_colInfo = widthOfNav + "px 3px auto";
       $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
       $('.all3pop').css("grid-template-columns", population_colInfo);
@@ -81,19 +115,98 @@ function dragbarLeftResize() {
       dragging = false;
 
     }
-
   });
-
 };
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/* yemi: functions for right dragbar */
+function dragbarRightResize() {
 
-// if (av.dbg.flg.root) { console.log('Root: start of reSizePageParts'); }
-var av = av || {};  //because av already exists
+  var dragging = false;
+  $('#dragbarRight').bind('mousedown', function(e) {
+    e.preventDefault();
+    dragging = true;
+    
+    $(document).mousemove(function(e){
+
+      var leftSideWidth = $('#navColId').css("width");
+      var leftSideWidthNum = $('#navColId').css("width").substring(0, $('#navColId').css("width").length - 2); /* yemi: extract only the number */
+      console.log(leftSideWidthNum);
+      var widthAvailable = window.innerWidth - leftSideWidthNum - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
+      console.log(widthAvailable);
+      var percentage = ((e.pageX - leftSideWidthNum) / widthAvailable); /* yemi: prolly needs fixing */
+      console.log("hello" + percentage);
+      var widthOfCenter = widthAvailable * percentage;
+      console.log(widthOfCenter);
+
+      /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
+      if (widthOfCenter < parseInt($('.mainBlockHolder').css("min-width"))) {
+        widthOfCenter = parseInt($('.mainBlockHolder').css("min-width"));
+      }
+
+      /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
+      else if (widthOfCenter > parseInt($('.mainBlockHolder').css("max-width"))) {
+        widthOfCenter = parseInt($('.mainBlockHolder').css("max-width"));
+      }
+      
+      /* yemi: when modifying the column sizes, need to modify all two layouts */
+      var population_colInfo = leftSideWidth + " 3px " + widthOfCenter + "px" + " 3px auto";
+      var organism_colInfo = leftSideWidth + " 3px " + widthOfCenter + "px" + " 3px auto";
+      
+      console.log(population_colInfo);
+
+      $('.all3pop').css("grid-template-columns", population_colInfo);
+      $('.all3org').css("grid-template-columns", organism_colInfo);
+      // $('.mainBlockHolder').css("width", widthOfCenter + "px");
+
+      /* yemi: make the following divs take up the entire width of their containers */
+      $('orgInfoHolder').css("width", "100%");
+
+      /* yemi: update organism canvas */
+      av.ind.updateOrgTrace()
+    });
+  });
+
+  $(document).bind('mouseup', function(e) {
+
+    if (dragging) {
+
+      var leftSideWidth = $('#navColId').css("width");
+      var leftSideWidthNum = $('#navColId').css("width").substring(0, $('#navColId').css("width").length - 2); /* yemi: extract only the number */
+      console.log(leftSideWidthNum);
+      var widthAvailable = window.innerWidth - leftSideWidthNum - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
+      console.log(widthAvailable);
+      var percentage = ((e.pageX - leftSideWidthNum) / widthAvailable); /* yemi: prolly needs fixing */
+      console.log("hello" + percentage);
+      var widthOfCenter = widthAvailable * percentage;
+      console.log(widthOfCenter);
+
+      /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
+      if (widthOfCenter < parseInt($('.mainBlockHolder').css("min-width"))) {
+        widthOfCenter = parseInt($('.mainBlockHolder').css("min-width"));
+      }
+
+      /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
+      else if (widthOfCenter > parseInt($('.mainBlockHolder').css("max-width"))) {
+        widthOfCenter = parseInt($('.mainBlockHolder').css("max-width"));
+      }
+      
+      /* yemi: when modifying the column sizes, need to modify all two layouts */
+      var population_colInfo = leftSideWidth + " 3px " + widthOfCenter + "px" + " 3px auto";
+      var organism_colInfo = leftSideWidth + " 3px " + widthOfCenter + "px" + " 3px auto";
+
+      $('.all3pop').css("grid-template-columns", population_colInfo);
+      $('.all3org').css("grid-template-columns", organism_colInfo);
+      // $('.mainBlockHolder').css("width", widthOfCenter + "px");
+
+      /* yemi: make the following divs take up the entire width of their containers */
+      $('orgInfoHolder').css("width", "100%");
+      
+      $(document).unbind('mousemove');
+      dragging = false;
+    }
+  });
+};
+
 
 //------------------------------------------------------------------------------------------- av.dom.storeInitialSize --
 // Called in messaging.js in av.msg.readMsg()
@@ -143,6 +256,9 @@ av.dom.storeInitialSize = function() {
   
   /* yemi: call the drag bar left function */
   dragbarLeftResize();
+
+  /* yemi: call the drag bar right function */
+  dragbarRightResize()
 };
 
 //----------------------------------------------------------------------------------------show/hide left side panel --

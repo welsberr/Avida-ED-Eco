@@ -80,90 +80,91 @@ html {
 #dragbarLeft {grid-area: dragbarLeft; } /* yemi: */
 
 
- .all2rit{
-    display: grid;
-    grid-template-rows: 2.5em auto;
-    grid-template-columns: 3px auto 680px;
-    grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
-                         'dragbarLeft mainBlockHolder rightInfoHolder';
-    height: 100vh;
-    width: 100vw;
-    min-height: 100vh;
-    min-width: 100vw;
-    max-height: 100vh;
-    max-width: 100vw;
-    margin: 0;
-    background:  #F5F5F5;   /* lightsalmon;  */
-  }
-  
-  .all2lft{
-    display: grid;
-    grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
-    grid-template-columns: 240px 3px auto;
-    grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
-                          'navColClass dragbarLeft mainBlockHolder';
-    height: 99vh;
-    width: 100vw;
-    min-height: 98vh;
-    min-width: 100vw;
-    max-height: 99vh;
-    max-width: 100vw;
-    margin: 0;
-    background:  #F5F5F5;   /* lightsalmon;  */
-  }
+.all2rit{
+  display: grid;
+  grid-template-rows: 2.5em auto;
+  grid-template-columns: 3px auto 680px;
+  grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
+                        'dragbarLeft mainBlockHolder rightInfoHolder';
+  height: 100vh;
+  width: 100vw;
+  min-height: 100vh;
+  min-width: 100vw;
+  max-height: 100vh;
+  max-width: 100vw;
+  margin: 0;
+  background:  #F5F5F5;   /* lightsalmon;  */
+}
 
-  .all3pop{ 
-    display: grid;
-    grid-template-rows: 2.5em 1fr;   /* 2.5em */
-    grid-template-columns: 240px 3px auto 440px;    /* 440px */
-    grid-template-areas: 'headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
-                          'navColClass dragbarLeft mainBlockHolder rightInfoHolder';
-    height: 99vh;
-    width: 100vw;
-    min-height: 98vh;
-    min-width: 100vw;
-    max-height: 99vh;
-    max-width: 100vw;
-    margin: 0;
-    background:  #F5F5F5;   /* lightsalmon;  */
-  }
- .all3org{
-    display: grid;
-    grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
-    grid-template-columns: 240px 3px auto 300px;    /* 250px */
-    grid-template-areas: 'headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
-                          'navColClass dragbarLeft mainBlockHolder rightInfoHolder';
-    height: 99vh;
-    width: 100vw;
-    min-height: 98vh;
-    min-width: 100vw;
-    max-height: 99vh;
-    max-width: 99vw;
-    margin: 0;
-    background:  #F5F5F5;   /* lightsalmon;  */
-  }
+.all2lft{
+  display: grid;
+  grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
+  grid-template-columns: 240px 3px auto;
+  grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
+                        'navColClass dragbarLeft mainBlockHolder';
+  height: 99vh;
+  width: 100vw;
+  min-height: 98vh;
+  min-width: 100vw;
+  max-height: 99vh;
+  max-width: 100vw;
+  margin: 0;
+  background:  #F5F5F5;   /* lightsalmon;  */
+}
 
-  .headerRow {
-    grid-area:headerRow;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    border: 1px solid #AAA;               /* #AAA; */
-  }
-  
-  .navColClass {
-    grid-area:navColClass;
-    place-self: stretch;
-    width: 238px;        /*was 152   340px*/
-    display: flex;
-    flex-direction: column;
-    background: #F5F5F5; /* lavender; */
-    border: 1px solid #AAA;
-    height: 100%;
-    resize: horizontal;
-    min-width: 185px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
-    max-width: 620px;
-  }
+.all3pop{ 
+  display: grid;
+  grid-template-rows: 2.5em 1fr;   /* 2.5em */
+  grid-template-columns: 240px 3px auto 3px 440px;    /* 440px */
+  grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
+                        'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
+  height: 99vh;
+  width: 100vw;
+  min-height: 98vh;
+  min-width: 100vw;
+  max-height: 99vh;
+  max-width: 100vw;
+  margin: 0;
+  background:  #F5F5F5;   /* lightsalmon;  */
+}
+
+.all3org{
+  display: grid;
+  grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
+  grid-template-columns: 240px 3px auto 3px 250px;    /* 250px */
+  grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
+                        'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
+  height: 99vh;
+  width: 100vw;
+  min-height: 98vh;
+  min-width: 100vw;
+  max-height: 99vh;
+  max-width: 99vw;
+  margin: 0;
+  background:  #F5F5F5;   /* lightsalmon;  */
+}
+
+.headerRow {
+  grid-area:headerRow;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 1px solid #AAA;               /* #AAA; */
+}
+
+.navColClass {
+  grid-area:navColClass;
+  place-self: stretch;
+  width: 238px;        /*was 152   340px*/
+  display: flex;
+  flex-direction: column;
+  background: #F5F5F5; /* lavender; */
+  border: 1px solid #AAA;
+  height: 100%;
+  resize: horizontal;
+  min-width: 185px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
+  max-width: 620px;
+}
 
 /*contains pages (population, Organsims, Analysis) */
 .mainBlockHolder{
@@ -175,6 +176,7 @@ html {
     max-height: 100vh;
     border: 1px solid #AAA;
     overflow: auto;
+    min-width: 200px;
   }
 
   .footerRow {
@@ -189,7 +191,7 @@ html {
     height: 100%;
     overflow: hidden;    /* scroll;  */
   }  /* Contain the blocks popInfoVert and orgInfoHolder  */
-  
+
   #orgInfoHolder {
     border: 1px solid #AAA;
     background: #F5F5F5;
@@ -591,7 +593,6 @@ html {
 #popInfoVert {
     display: flex;
     flex-direction: column;
-    width: 442px;
     height: 100%;
     overflow: auto;
   } /* contains: popInfoTabHolder & labInfoHolder */
@@ -609,6 +610,7 @@ html {
   #popStatsBlock{
     flex-direction: column;
     height: 100%;
+    width: 100%;
   }
   .labInfoClass{
     background: #F5F5F5; /* lightsteelblue; */
@@ -639,7 +641,7 @@ html {
     flex-direction: row;
     border: 1px solid #AAA;
     background: #F5F5F5;
-    height: 280px;
+    height: auto;
     resize: vertical;
     overflow: auto;
   }
@@ -697,13 +699,11 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
 #logTit6 { font-style: italic; color: dimgray; }
 #logTit7 { font-style: italic; color: dimgray; }
 
-
-
-
   #popChrtHolder{
     flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
     border: 1px solid #AAA;
     height: 100%;
+    width: 100%;
   }
  
   /* ---------------------- Population (right) side of tables */)
@@ -1599,7 +1599,7 @@ checkbox:focus {
     overflow: auto;
     display: flex;    /* makes this a flexbox to hold smaller elements */
     flex-direction: row;
-    min-height: 30px;
+    min-height: 40px;
   }
 
   .orgTopLt{
@@ -1619,12 +1619,15 @@ checkbox:focus {
   }
   .orgMid {
     border: 1px solid #AAA;
-    height: 100%;
+    height: 85%; /* yemi: determined by trial and error; might need to fix eventually, but for now, fixed the overflow problem*/
     width: 100%;
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
   }
   #organCanvas{
-    border:1px solid #000000;     /*black*/    
+    /* border:1px solid #000000; */     /*black*/    
+    top: 50%;
+    left: 50%;
+    max-height: 100%; /* yemi: added max-height attribute to fill the entire orgMid, for now, fixed the overflow problem*/
   }
   .orgBot {
     flex: 0 1 40px;
@@ -2067,6 +2070,10 @@ canvas {
 }
 
 .organismControls {
+  padding: 5px;
+}
+
+.popButCls {
   padding: 5px;
 }
 
