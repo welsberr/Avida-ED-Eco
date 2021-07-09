@@ -162,7 +162,7 @@ html {
   border: 1px solid #AAA;
   height: 100%;
   resize: horizontal;
-  min-width: 185px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
+  min-width: 160px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
   max-width: 620px;
 }
 
@@ -605,6 +605,8 @@ html {
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
     height: 100%;
     width: 100%;
+    min-width: 190px; /* yemi: */
+    max-width: 450px; /* yemi: */
   }
   
   #popStatsBlock{
@@ -725,7 +727,9 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
   #miniChartControls{
     flex: 0 0 20px;
     display: flex;
-    border: 1px solid #AAA;    
+    border: 1px solid #AAA;   
+    overflow: auto;
+    height: 25px; 
   }
   #miniChartYaxis{
     flex: 0 0 220px;
@@ -2060,7 +2064,6 @@ canvas {
   object-fit: contain;
 }
 
-
 /* yemi: dragbar */
 .dragbar {
   background-color:gray;
@@ -2075,6 +2078,10 @@ canvas {
 
 .popButCls {
   padding: 5px;
+}
+
+#miniChartOptionsLabel {
+  margin: 0;
 }
 
 /********************************************************************************************** end of modalBig class */                                                                         */
