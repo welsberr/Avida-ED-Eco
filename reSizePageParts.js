@@ -36,15 +36,33 @@ function resizeOrganismPage() {
   $('.all3org').css("grid-template-columns", newColumns);
 }
 
+IS_LEFT_CLOSED = false
+
 /* yemi: functions for left dragbar */
 function dragbarLeftResize() {
 
   var dragging = false;
+
+  /* yemi: when there's a mousehover over dragbar, dragbar changes color */
+  $('#dragbarLeft').bind('mouseover', function(e) {
+    $('#dragbarLeft').css('background-color', 'blue');
+    $('#dragbarLeft').css('width', '4px');
+  })
+
+  $('#dragbarLeft').bind('mouseout', function(e) {
+    $('#dragbarLeft').css('background-color', 'gray');
+    $('#dragbarLeft').css('width', '3px');
+  })
+
   $('#dragbarLeft').bind('mousedown', function(e) {
     e.preventDefault();
     dragging = true;
     
     $(document).mousemove(function(e){
+
+      /* yemi: on mouse move, dragbar changes color */
+      $('#dragbarLeft').css('background-color', 'blue');
+      $('#dragbarLeft').css('width', '4px');
 
       var rightSideWidth = $('#rightInfoHolder').css("width");
       console.log(rightSideWidth);
@@ -53,9 +71,13 @@ function dragbarLeftResize() {
       var percentage = (e.pageX / widthAvailable);
       var widthOfNav = widthAvailable * percentage;
 
+      /* yemi: if below is not the case, set IS_LEFT_CLOSED to false */ 
+      IS_LEFT_CLOSED = false
+
       /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
       if (widthOfNav < parseInt($('#navColId').css("min-width"))) {
-        widthOfNav = parseInt($('#navColId').css("min-width"));
+        widthOfNav = 0; /* yemi: if width too small, collapse it*/
+        IS_LEFT_CLOSED = true
       }
 
       /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
@@ -83,22 +105,31 @@ function dragbarLeftResize() {
   $(document).bind('mouseup', function(e) {
 
     if (dragging) {
+
+      /* yemi: dragbar changes color back to original */
+      $('#dragbarLeft').css('background-color', 'gray');
+      $('#dragbarLeft').css('width', '3px');
+
       var rightSideWidth = $('#rightInfoHolder').css("width");
       var rightSideWidthNum = $('#rightInfoHolder').css("width").substring(0,$('#rightInfoHolder').css("width").length - 2); /* yemi: extract only the number */
       var widthAvailable = window.innerWidth - rightSideWidthNum - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
       var percentage = (e.pageX / widthAvailable);
       var widthOfNav = widthAvailable * percentage;
 
+      /* yemi: if below is not the case, set IS_LEFT_CLOSED to false */ 
+      IS_LEFT_CLOSED = false
+
       /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
       if (widthOfNav < parseInt($('#navColId').css("min-width"))) {
-        widthOfNav = parseInt($('#navColId').css("min-width"));
+        widthOfNav = 0; /* yemi: if width too small, collapse it */
+        IS_LEFT_CLOSED = true
       }
 
       /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
       else if (widthOfNav > parseInt($('#navColId').css("max-width"))) {
         widthOfNav = parseInt($('#navColId').css("max-width"));
       }
-      
+
       /* yemi: when modifying the column sizes, need to modify all three layouts */
       var population_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
       var organism_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
@@ -122,35 +153,55 @@ function dragbarLeftResize() {
 function dragbarRightResize() {
 
   var dragging = false;
+
+  /* yemi: when there's a mousehover over dragbar, dragbar changes color */
+  $('#dragbarRight').bind('mouseover', function(e) {
+    $('#dragbarRight').css('background-color', 'blue');
+    $('#dragbarRight').css('width', '4px');
+  })
+
+  $('#dragbarRight').bind('mouseout', function(e) {
+    $('#dragbarRight').css('background-color', 'gray');
+    $('#dragbarRight').css('width', '3px');
+  })
+
   $('#dragbarRight').bind('mousedown', function(e) {
     e.preventDefault();
     dragging = true;
     
     $(document).mousemove(function(e){
 
-      var leftSideWidth = $('#navColId').css("width");
-      var leftSideWidthNum = $('#navColId').css("width").substring(0, $('#navColId').css("width").length - 2); /* yemi: extract only the number */
-      console.log(leftSideWidthNum);
-      var widthAvailable = window.innerWidth - leftSideWidthNum - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
-      console.log(widthAvailable);
-      var percentage = ((e.pageX - leftSideWidthNum) / widthAvailable); /* yemi: prolly needs fixing */
-      console.log("hello" + percentage);
+      /* yemi: on mouse move, dragbar changes color */
+      $('#dragbarRight').css('background-color', 'blue');
+      $('#dragbarRight').css('width', '4px');
+
+      var leftSideWidth;
+      if (IS_LEFT_CLOSED) {
+        leftSideWidth = "0px"
+      } else {
+        leftSideWidth = $('#navColId').css("width");
+      }
+
+      var widthAvailable = window.innerWidth - parseInt(leftSideWidth) - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
+      var percentage = ((e.pageX - parseInt(leftSideWidth)) / widthAvailable); /* yemi: prolly needs fixing */
       var widthOfCenter = widthAvailable * percentage;
-      console.log(widthOfCenter);
+      var widthOfRight = widthAvailable - widthOfCenter;
 
       /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
-      if (widthOfCenter < parseInt($('.mainBlockHolder').css("min-width"))) {
-        widthOfCenter = parseInt($('.mainBlockHolder').css("min-width"));
+      if (widthOfRight < parseInt($('.labInfoHoldCls').css("min-width"))) {
+        widthOfRight = 0; /* yemi: if width too small, collapse it */
+        widthOfCenter = widthAvailable;
       }
 
       /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
-      else if (widthOfCenter > parseInt($('.mainBlockHolder').css("max-width"))) {
-        widthOfCenter = parseInt($('.mainBlockHolder').css("max-width"));
+      else if (widthOfRight > parseInt($('.labInfoHoldCls').css("max-width"))) {
+        widthOfRight = parseInt($('.labInfoHoldCls').css("max-width"));
+        widthOfCenter = widthAvailable - widthOfRight;
       }
       
       /* yemi: when modifying the column sizes, need to modify all two layouts */
-      var population_colInfo = leftSideWidth + " 3px " + widthOfCenter + "px" + " 3px auto";
-      var organism_colInfo = leftSideWidth + " 3px " + widthOfCenter + "px" + " 3px auto";
+      var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
+      var organism_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
       
       console.log(population_colInfo);
 
@@ -170,29 +221,37 @@ function dragbarRightResize() {
 
     if (dragging) {
 
-      var leftSideWidth = $('#navColId').css("width");
-      var leftSideWidthNum = $('#navColId').css("width").substring(0, $('#navColId').css("width").length - 2); /* yemi: extract only the number */
-      console.log(leftSideWidthNum);
-      var widthAvailable = window.innerWidth - leftSideWidthNum - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
-      console.log(widthAvailable);
-      var percentage = ((e.pageX - leftSideWidthNum) / widthAvailable); /* yemi: prolly needs fixing */
-      console.log("hello" + percentage);
+      /* yemi: dragbar changes color back to original */
+      $('#dragbarRight').css('background-color', 'gray');
+      $('#dragbarRight').css('width', '3px');
+
+      var leftSideWidth;
+      if (IS_LEFT_CLOSED) {
+        leftSideWidth = "0px"
+      } else {
+        leftSideWidth = $('#navColId').css("width");
+      }
+
+      var widthAvailable = window.innerWidth - parseInt(leftSideWidth) - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
+      var percentage = ((e.pageX - parseInt(leftSideWidth)) / widthAvailable); /* yemi: prolly needs fixing */
       var widthOfCenter = widthAvailable * percentage;
-      console.log(widthOfCenter);
+      var widthOfRight = widthAvailable - widthOfCenter;
 
       /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
-      if (widthOfCenter < parseInt($('.mainBlockHolder').css("min-width"))) {
-        widthOfCenter = parseInt($('.mainBlockHolder').css("min-width"));
+      if (widthOfRight < parseInt($('.labInfoHoldCls').css("min-width"))) {
+        widthOfRight = 0; /* yemi: if width too small, collapse it */
+        widthOfCenter = widthAvailable;
       }
 
       /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
-      else if (widthOfCenter > parseInt($('.mainBlockHolder').css("max-width"))) {
-        widthOfCenter = parseInt($('.mainBlockHolder').css("max-width"));
+      else if (widthOfRight > parseInt($('.labInfoHoldCls').css("max-width"))) {
+        widthOfRight = $('.labInfoHolder').css("max-width");
+        widthOfCenter = widthAvailable - widthOfRight;
       }
       
       /* yemi: when modifying the column sizes, need to modify all two layouts */
-      var population_colInfo = leftSideWidth + " 3px " + widthOfCenter + "px" + " 3px auto";
-      var organism_colInfo = leftSideWidth + " 3px " + widthOfCenter + "px" + " 3px auto";
+      var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
+      var organism_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
 
       $('.all3pop').css("grid-template-columns", population_colInfo);
       $('.all3org').css("grid-template-columns", organism_colInfo);
