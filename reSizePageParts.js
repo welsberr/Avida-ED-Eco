@@ -7,6 +7,9 @@
 // if (av.dbg.flg.root) { console.log('Root: start of reSizePageParts'); }
 var av = av || {};  //because av already exists
 
+/* yemi: checks if the left side panel is closed or not; is used by both the dragbar and the left panel button. */
+var IS_LEFT_CLOSED = false;
+
 /* yemi: function to automatically resize the Analysis page when button clicked; called in avidaED.js */
 function resizeAnalysisPage() {
 
@@ -36,8 +39,6 @@ function resizeOrganismPage() {
   $('.all3org').css("grid-template-columns", newColumns);
 }
 
-IS_LEFT_CLOSED = false
-
 /* yemi: functions for left dragbar */
 function dragbarLeftResize() {
 
@@ -58,47 +59,54 @@ function dragbarLeftResize() {
     e.preventDefault();
     dragging = true;
     
-    $(document).mousemove(function(e){
+  $(document).mousemove(function(e){
 
-      /* yemi: on mouse move, dragbar changes color */
-      $('#dragbarLeft').css('background-color', 'blue');
-      $('#dragbarLeft').css('width', '4px');
+    /* yemi: on mouse move, dragbar changes color */
+    $('#dragbarLeft').css('background-color', 'blue');
+    $('#dragbarLeft').css('width', '4px');
 
-      var rightSideWidth = $('#rightInfoHolder').css("width");
-      console.log(rightSideWidth);
-      var rightSideWidthNum = $('#rightInfoHolder').css("width").substring(0,$('#rightInfoHolder').css("width").length - 2); /* yemi: extract only the number */
-      var widthAvailable = window.innerWidth - rightSideWidthNum - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
-      var percentage = (e.pageX / widthAvailable);
-      var widthOfNav = widthAvailable * percentage;
+    var rightSideWidth = $('#rightInfoHolder').css("width");
+    console.log(rightSideWidth);
+    var rightSideWidthNum = $('#rightInfoHolder').css("width").substring(0,$('#rightInfoHolder').css("width").length - 2); /* yemi: extract only the number */
+    var widthAvailable = window.innerWidth - rightSideWidthNum - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
+    var percentage = (e.pageX / widthAvailable);
+    var widthOfNav = widthAvailable * percentage;
 
-      /* yemi: if below is not the case, set IS_LEFT_CLOSED to false */ 
-      IS_LEFT_CLOSED = false
+    /* yemi: 20 is a constant buffer to prevent the sidebar from closing too quickly; when in this buffer region, don't do anything, just maintain state */
+    if (widthOfNav > parseInt($('#navColId').css("min-width")) - 20 && widthOfNav < parseInt($('#navColId').css("min-width"))) {
+      return;
+    }
 
-      /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
-      if (widthOfNav < parseInt($('#navColId').css("min-width"))) {
-        widthOfNav = 0; /* yemi: if width too small, collapse it*/
-        IS_LEFT_CLOSED = true
-      }
+    /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
+    else if (widthOfNav < parseInt($('#navColId').css("min-width")) - 20) {
+      widthOfNav = 0; /* yemi: if width too small, collapse it*/
+      IS_LEFT_CLOSED = true;
+    } 
 
-      /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
-      else if (widthOfNav > parseInt($('#navColId').css("max-width"))) {
-        widthOfNav = parseInt($('#navColId').css("max-width"));
-      }
-      
-      /* yemi: when modifying the column sizes, need to modify all three layouts */
-      var population_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
-      var organism_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
-      var analysis_colInfo = widthOfNav + "px 3px auto";
-      $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
-      $('.all3pop').css("grid-template-columns", population_colInfo);
-      $('.all3org').css("grid-template-columns", organism_colInfo);
-      $('#navColId').css("width", widthOfNav + "px");
+    /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
+    else if (widthOfNav > parseInt($('#navColId').css("max-width"))) {
+      widthOfNav = parseInt($('#navColId').css("max-width"));
+      IS_LEFT_CLOSED = false;
+    }
 
-      /* yemi: make the following divs take up the entire width of their containers */
-      $('orgInfoHolder').css("width", "100%");
+    else {
+      IS_LEFT_CLOSED = false;
+    }
 
-      /* yemi: update organism canvas */
-      av.ind.updateOrgTrace()
+    /* yemi: when modifying the column sizes, need to modify all three layouts */
+    var population_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
+    var organism_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
+    var analysis_colInfo = widthOfNav + "px 3px auto";
+    $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
+    $('.all3pop').css("grid-template-columns", population_colInfo);
+    $('.all3org').css("grid-template-columns", organism_colInfo);
+    $('#navColId').css("width", widthOfNav + "px");
+
+    /* yemi: make the following divs take up the entire width of their containers */
+    $('orgInfoHolder').css("width", "100%");
+
+    /* yemi: update organism canvas */
+    av.ind.updateOrgTrace()
     });
   });
 
@@ -116,18 +124,29 @@ function dragbarLeftResize() {
       var percentage = (e.pageX / widthAvailable);
       var widthOfNav = widthAvailable * percentage;
 
-      /* yemi: if below is not the case, set IS_LEFT_CLOSED to false */ 
-      IS_LEFT_CLOSED = false
-
       /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
-      if (widthOfNav < parseInt($('#navColId').css("min-width"))) {
+      if (widthOfNav < parseInt($('#navColId').css("min-width")) - 20) {
         widthOfNav = 0; /* yemi: if width too small, collapse it */
-        IS_LEFT_CLOSED = true
-      }
+        IS_LEFT_CLOSED = true;
+        /* yemi: change the button's contents and look */
+        $('#leftPanelButton').val('>> ');
+        $('#leftPanelBUtton').css('background', '#ccc');
+      } 
 
       /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
       else if (widthOfNav > parseInt($('#navColId').css("max-width"))) {
         widthOfNav = parseInt($('#navColId').css("max-width"));
+        IS_LEFT_CLOSED = false;
+        /* yemi: change the button's contents and look */
+        $('#leftPanelButton').val('<< ');
+        $('#leftPanelBUtton').css('background', 'inherit');
+      }
+
+      else {
+        IS_LEFT_CLOSED = false;
+        /* yemi: change the button's contents and look */
+        $('#leftPanelButton').val('<< ');
+        $('#leftPanelBUtton').css('background', 'inherit');
       }
 
       /* yemi: when modifying the column sizes, need to modify all three layouts */
@@ -144,7 +163,6 @@ function dragbarLeftResize() {
       
       $(document).unbind('mousemove');
       dragging = false;
-
     }
   });
 };
@@ -193,7 +211,7 @@ function dragbarRightResize() {
         widthOfCenter = widthAvailable;
       }
 
-      /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
+      /* yemi: if the width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
       else if (widthOfRight > parseInt($('.labInfoHoldCls').css("max-width"))) {
         widthOfRight = parseInt($('.labInfoHoldCls').css("max-width"));
         widthOfCenter = widthAvailable - widthOfRight;
@@ -403,105 +421,146 @@ av.dom.sizes = () => {
 // Rob wants a button like this that hides the left panel and makes the center panel bigger. 
 // not in current use; I hope this can be done with fewer individual size adjustments
 
- av.ptd.lftPanelBtnFn = function () {
-    var sizeStr;
-    
-    av.dom.freezerSection_ht_was = parseFloat(av.dom.freezerSection_ht_now);
-    av.dom.freezerSection_wd_was = parseFloat(av.dom.freezerSection_wd_now);
-    av.dom.navColId_ht_was = parseFloat(av.dom.navColId_ht_now);
-    av.dom.navColId_wd_was = parseFloat(av.dom.navColId_wd_now);
-    av.dom.popInfoVert_ht_was = parseFloat(av.dom.popInfoVert_ht_now);
-    av.dom.popInfoVert_wd_was = parseFloat(av.dom.popInfoVert_wd_now);
-    av.dom.popChrtHolder_ht_was = parseFloat(av.dom.popChrtHolder_ht_now);
-    av.dom.popChrtHolder_wd_was = parseFloat(av.dom.popChrtHolder_wd_now);
+av.ptd.lftPanelBtnFn = function () {
 
-      av.dom.navColId_wd_now = ($("#navColId").width()).toString();
-      av.dom.navColId_ht_now = ($("#navColId").height()).toString();
-      av.dom.freezerSection_wd_now = $("#freezerSection").width().toString();
-      av.dom.freezerSection_ht_now = $("#freezerSection").height().toString();
-      av.dom.popInfoVert_wd_now = $("#popInfoVert").width().toString();
-      av.dom.popInfoVert_ht_now = $("#popInfoVert").height().toString();
-      av.dom.popChrtHolder_wd_now = $("#popChrtHolder").width().toString();
-      av.dom.popChrtHolder_ht_now = $("#popChrtHolder").height().toString();
+  setTimeout(function() {}, 80);  
 
-    setTimeout(function() {
-    }, 80);  
-    
-    av.dom.popInfoVert_wd = $('#popInfoVert').width();
-    if (av.dbg.flg.dsz) { console.log('av.dom.lftSidePnlShowing=', av.dom.lftSidePnlShowing, '; av.dom.allAvidaContainer.className=', av.dom.allAvidaContainer.className); }
-    if (av.dom.lftSidePnlShowing) {
-      av.post.addUser('Button: leftPanelButton: start hidding left side panel');
-      av.dom.lftSidePnlShowing = false;
-      av.dom.navColId.style.display = 'none';
-      av.dom.leftPanelButton.value = '>> ';
-      av.dom.leftPanelButton.style.background = '#ccc';
+  const rightSideWidth = $('#rightInfoHolder').css("width");
 
-      if ('all3pop' == av.dom.allAvidaContainer.className || 'all3org' == av.dom.allAvidaContainer.className) {
-        av.dom.allAvidaContainer.className = 'all2rit'; /* yemi: isn't the last class name supposed to be 'all2lft'? */
-        if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_was,   ht =', av.dom.popChrtHolder_wd_was, ',', av.dom.popChrtHolder_ht_was); }
-        av.dom.popChrtHolder.style.height = av.dom.popChrtHolder_ht_was+'px';
+  /* yemi: new code to implement the left side panel button */
+  if (!IS_LEFT_CLOSED) {
 
-        sizeStr= 670;        
-        av.dom.popInfoVert.style.width = sizeStr+'px';
-        av.dom.labInfoHolder.style.width = sizeStr+'px';
-        av.dom.popStatsBlock.style.width = sizeStr+'px';
-        av.dom.popStatHolder.style.width = sizeStr+'px';
-        av.dom.popStatistics.style.width = (sizeStr-2)+'px';
-        av.dom.resrceDataHolder.style.width = (sizeStr-2)+'px';
-        av.dom.miniChartControls.style.width = (sizeStr-2)+'px';
-        av.dom.pauseOptions.style.width = (sizeStr-2)+'px';
-        av.dom.popStats4grid.style.width = (sizeStr-190)+'px';
-        av.dom.selOrgType.style.wd = (sizeStr-240)+'px';
+    IS_LEFT_CLOSED = true;
 
-      }
-    } else {
-      av.post.addUser('Button: leftPanelButton: start showing left side panel');
-      av.dom.lftSidePnlShowing = true;
-      document.getElementById('navColId').style.display = 'block';
-      av.dom.leftPanelButton.value = '<< ';
-      av.dom.leftPanelButton.style.background = 'inherit';
+    /* yemi: change the button's contents and look */
+    $('#leftPanelButton').val('>> ');
+    $('#leftPanelBUtton').css('background', '#ccc');
 
-      if ('all2rit' == document.getElementById('allAvidaContainer').className) {
-        av.dom.allAvidaContainer.className = 'all3pop';
-        sizeStr= 442;
-        av.dom.freezerSection.style.height = av.dom.freezerSection_ht+'px';
-        av.dom.popChrtHolder.style.height = av.dom.popChrtHolder_ht_was+'px';
-        av.dom.popInfoVert.style.height = av.dom.popInfoVert_ht_was+'px';
+    var widthOfNav = 0
+    /* yemi: when modifying the column sizes, need to modify all three layouts */
+    var population_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
+    var organism_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
+    var analysis_colInfo = widthOfNav + "px 3px auto";
+    $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
+    $('.all3pop').css("grid-template-columns", population_colInfo);
+    $('.all3org').css("grid-template-columns", organism_colInfo);
+    $('.navColClass').css("width", widthOfNav + "px");
+  }
 
-        av.dom.popInfoVert.style.width = sizeStr+'px';
-        av.dom.labInfoHolder.style.width = sizeStr+'px';
-        av.dom.popStatsBlock.style.width = sizeStr+'px';
-        av.dom.popStatHolder.style.width = sizeStr+'px';
-        av.dom.popStatistics.style.width = (sizeStr-2)+'px';
-        av.dom.resrceDataHolder.style.width = (sizeStr-2)+'px';
-        av.dom.miniChartControls.style.width = (sizeStr-2)+'px';
-        av.dom.pauseOptions.style.width = (sizeStr-2)+'px';
-        av.dom.popStats4grid.style.width = (sizeStr-190)+'px';
-        av.dom.selOrgType.style.width = (sizeStr-240)+'px';
+  else if (IS_LEFT_CLOSED) {
 
-        if (av.dbg.flg.dsz) { console.log('dsz: popStatSide_wd=', sizeStr-190, 'selOrgType_wd=', sizeStr-240); }
-        if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert.wd=', $("#popInfoVert").width(), '; popInfoVert_wd=', sizeStr); }
-      };
-    };
-   
-    av.dom.navColId_wd = $("#navColId").width().toString();
-    av.dom.navColId_ht = $("#navColId").height().toString();
-    av.dom.freezerSection_wd = $("#freezerSection").width().toString();
-    av.dom.freezerSection_ht = $("#freezerSection").height().toString();
-    av.dom.popInfoVert_wd = $("#popInfoVert").width().toString();
-    av.dom.popInfoVert_ht = $("#popInfoVert").height().toString();
-    av.dom.popChrtHolder_wd = $("#popChrtHolder").width().toString();
-    av.dom.popChrtHolder_ht = $("#popChrtHolder").height().toString();
+    IS_LEFT_CLOSED = false;
 
-    if (av.dbg.flg.dsz) { console.log('dsz: av.dom.navColId_wd_now,   ht =', av.dom.navColId_wd_now, ',', av.dom.navColId_ht_now); }
-    if (av.dbg.flg.dsz) { console.log('dsz: av.dom.navColId_wd_after, ht =', av.dom.navColId_wd, ',', av.dom.navColId_ht); }
-    if (av.dbg.flg.dsz) { console.log('dsz: freezerSection_wd_now,   ht =', av.dom.freezerSection_wd_now, ',', av.dom.freezerSection_ht_now); }
-    if (av.dbg.flg.dsz) { console.log('dsz: freezerSection_wd_after, ht =', av.dom.freezerSection_wd, ',', av.dom.freezerSection_ht); }
-    if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert_wd_now,   ht =', av.dom.popInfoVert_wd_now, ',', av.dom.popInfoVert_ht_now); }
-    if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert_wd_after, ht =', av.dom.popInfoVert_wd, ',', av.dom.popInfoVert_ht); }
-    if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_now,   ht =', av.dom.popChrtHolder_wd_now, ',', av.dom.popChrtHolder_ht_now); }
-    if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_after, ht =', av.dom.popChrtHolder_wd, ',', av.dom.popChrtHolder_ht); }
-  };
+    /* yemi: change the button's contents and look */
+    $('#leftPanelButton').val('<< ');
+    $('#leftPanelBUtton').css('background', 'inherit');
+
+    var widthOfNav = parseInt($(".navColClass").css("width"));
+    /* yemi: when modifying the column sizes, need to modify all three layouts */
+    var population_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
+    var organism_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
+    var analysis_colInfo = widthOfNav + "px 3px auto";
+    $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
+    $('.all3pop').css("grid-template-columns", population_colInfo);
+    $('.all3org').css("grid-template-columns", organism_colInfo);
+  }
+
+  // var sizeStr;
+  
+  // av.dom.freezerSection_ht_was = parseFloat(av.dom.freezerSection_ht_now);
+  // av.dom.freezerSection_wd_was = parseFloat(av.dom.freezerSection_wd_now);
+  // av.dom.navColId_ht_was = parseFloat(av.dom.navColId_ht_now);
+  // av.dom.navColId_wd_was = parseFloat(av.dom.navColId_wd_now);
+  // av.dom.popInfoVert_ht_was = parseFloat(av.dom.popInfoVert_ht_now);
+  // av.dom.popInfoVert_wd_was = parseFloat(av.dom.popInfoVert_wd_now);
+  // av.dom.popChrtHolder_ht_was = parseFloat(av.dom.popChrtHolder_ht_now);
+  // av.dom.popChrtHolder_wd_was = parseFloat(av.dom.popChrtHolder_wd_now);
+
+  // av.dom.navColId_wd_now = ($("#navColId").width()).toString();
+  // av.dom.navColId_ht_now = ($("#navColId").height()).toString();
+  // av.dom.freezerSection_wd_now = $("#freezerSection").width().toString();
+  // av.dom.freezerSection_ht_now = $("#freezerSection").height().toString();
+  // av.dom.popInfoVert_wd_now = $("#popInfoVert").width().toString();
+  // av.dom.popInfoVert_ht_now = $("#popInfoVert").height().toString();
+  // av.dom.popChrtHolder_wd_now = $("#popChrtHolder").width().toString();
+  // av.dom.popChrtHolder_ht_now = $("#popChrtHolder").height().toString();
+
+  // setTimeout(function() {}, 80);  
+//   av.dom.popInfoVert_wd = $('#popInfoVert').width();
+//   if (av.dbg.flg.dsz) { console.log('av.dom.lftSidePnlShowing=', av.dom.lftSidePnlShowing, '; av.dom.allAvidaContainer.className=', av.dom.allAvidaContainer.className); }
+//   if (av.dom.lftSidePnlShowing) {
+//     av.post.addUser('Button: leftPanelButton: start hidding left side panel');
+//     av.dom.lftSidePnlShowing = false;
+//     av.dom.navColId.style.display = 'none';
+//     av.dom.leftPanelButton.value = '>> ';
+//     av.dom.leftPanelButton.style.background = '#ccc';
+
+//     if ('all3pop' == av.dom.allAvidaContainer.className || 'all3org' == av.dom.allAvidaContainer.className) {
+//       av.dom.allAvidaContainer.className = 'all2rit'; /* yemi: isn't the last class name supposed to be 'all2lft'? */
+//       if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_was,   ht =', av.dom.popChrtHolder_wd_was, ',', av.dom.popChrtHolder_ht_was); }
+//       av.dom.popChrtHolder.style.height = av.dom.popChrtHolder_ht_was+'px';
+
+//       sizeStr= 670;        
+//       av.dom.popInfoVert.style.width = sizeStr+'px';
+//       av.dom.labInfoHolder.style.width = sizeStr+'px';
+//       av.dom.popStatsBlock.style.width = sizeStr+'px';
+//       av.dom.popStatHolder.style.width = sizeStr+'px';
+//       av.dom.popStatistics.style.width = (sizeStr-2)+'px';
+//       av.dom.resrceDataHolder.style.width = (sizeStr-2)+'px';
+//       av.dom.miniChartControls.style.width = (sizeStr-2)+'px';
+//       av.dom.pauseOptions.style.width = (sizeStr-2)+'px';
+//       av.dom.popStats4grid.style.width = (sizeStr-190)+'px';
+//       av.dom.selOrgType.style.wd = (sizeStr-240)+'px';
+
+//     }
+//   } else {
+//     av.post.addUser('Button: leftPanelButton: start showing left side panel');
+//     av.dom.lftSidePnlShowing = true;
+//     document.getElementById('navColId').style.display = 'block';
+//     av.dom.leftPanelButton.value = '<< ';
+//     av.dom.leftPanelButton.style.background = 'inherit';
+
+//     if ('all2rit' == document.getElementById('allAvidaContainer').className) {
+//       av.dom.allAvidaContainer.className = 'all3pop';
+//       sizeStr= 442;
+//       av.dom.freezerSection.style.height = av.dom.freezerSection_ht+'px';
+//       av.dom.popChrtHolder.style.height = av.dom.popChrtHolder_ht_was+'px';
+//       av.dom.popInfoVert.style.height = av.dom.popInfoVert_ht_was+'px';
+
+//       av.dom.popInfoVert.style.width = sizeStr+'px';
+//       av.dom.labInfoHolder.style.width = sizeStr+'px';
+//       av.dom.popStatsBlock.style.width = sizeStr+'px';
+//       av.dom.popStatHolder.style.width = sizeStr+'px';
+//       av.dom.popStatistics.style.width = (sizeStr-2)+'px';
+//       av.dom.resrceDataHolder.style.width = (sizeStr-2)+'px';
+//       av.dom.miniChartControls.style.width = (sizeStr-2)+'px';
+//       av.dom.pauseOptions.style.width = (sizeStr-2)+'px';
+//       av.dom.popStats4grid.style.width = (sizeStr-190)+'px';
+//       av.dom.selOrgType.style.width = (sizeStr-240)+'px';
+
+//       if (av.dbg.flg.dsz) { console.log('dsz: popStatSide_wd=', sizeStr-190, 'selOrgType_wd=', sizeStr-240); }
+//       if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert.wd=', $("#popInfoVert").width(), '; popInfoVert_wd=', sizeStr); }
+//     };
+//   };
+  
+//   av.dom.navColId_wd = $("#navColId").width().toString();
+//   av.dom.navColId_ht = $("#navColId").height().toString();
+//   av.dom.freezerSection_wd = $("#freezerSection").width().toString();
+//   av.dom.freezerSection_ht = $("#freezerSection").height().toString();
+//   av.dom.popInfoVert_wd = $("#popInfoVert").width().toString();
+//   av.dom.popInfoVert_ht = $("#popInfoVert").height().toString();
+//   av.dom.popChrtHolder_wd = $("#popChrtHolder").width().toString();
+//   av.dom.popChrtHolder_ht = $("#popChrtHolder").height().toString();
+
+//   if (av.dbg.flg.dsz) { console.log('dsz: av.dom.navColId_wd_now,   ht =', av.dom.navColId_wd_now, ',', av.dom.navColId_ht_now); }
+//   if (av.dbg.flg.dsz) { console.log('dsz: av.dom.navColId_wd_after, ht =', av.dom.navColId_wd, ',', av.dom.navColId_ht); }
+//   if (av.dbg.flg.dsz) { console.log('dsz: freezerSection_wd_now,   ht =', av.dom.freezerSection_wd_now, ',', av.dom.freezerSection_ht_now); }
+//   if (av.dbg.flg.dsz) { console.log('dsz: freezerSection_wd_after, ht =', av.dom.freezerSection_wd, ',', av.dom.freezerSection_ht); }
+//   if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert_wd_now,   ht =', av.dom.popInfoVert_wd_now, ',', av.dom.popInfoVert_ht_now); }
+//   if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert_wd_after, ht =', av.dom.popInfoVert_wd, ',', av.dom.popInfoVert_ht); }
+//   if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_now,   ht =', av.dom.popChrtHolder_wd_now, ',', av.dom.popChrtHolder_ht_now); }
+//   if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_after, ht =', av.dom.popChrtHolder_wd, ',', av.dom.popChrtHolder_ht); }
+};
 
 // if (av.dbg.flg.root) { console.log('Root: before Resize helpers'); }
 //--------------------------------------------------------------------------------------- av.removeVerticalScrollBars --
