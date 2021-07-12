@@ -333,6 +333,7 @@
       document.getElementById('showTextDebugButtonDiv').style.visibility = 'hidden';
       document.getElementById('developmentToggle').className = 'devoCammo';  
       document.getElementById('geometyHideButton').className = 'geoButtonCammo';  
+      
       // document.getElementById('ritePnlBtnHolder').className = 'pnlBtnHldrHide'; /* yemi: show the ritePnlBtn */
 
       document.getElementById('fzTdishSec').style.visibility = 'hidden';
