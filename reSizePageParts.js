@@ -10,6 +10,9 @@ var av = av || {};  //because av already exists
 /* yemi: checks if the left side panel is closed or not; is used by both the dragbar and the left panel button. */
 var IS_LEFT_CLOSED = false;
 
+/* yemi: checks if the right side panel is closed or not; is used by both the dragbar and the right panel button. */
+var IS_RIGHT_CLOSED = false;
+
 /* yemi: function to automatically resize the Analysis page when button clicked; called in avidaED.js */
 function resizeAnalysisPage() {
 
@@ -67,7 +70,7 @@ function dragbarLeftResize() {
 
     var rightSideWidth = $('#rightInfoHolder').css("width");
     console.log(rightSideWidth);
-    var rightSideWidthNum = $('#rightInfoHolder').css("width").substring(0,$('#rightInfoHolder').css("width").length - 2); /* yemi: extract only the number */
+    var rightSideWidthNum = parseInt($('#rightInfoHolder').css("width")); /* yemi: extract only the number */
     var widthAvailable = window.innerWidth - rightSideWidthNum - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
     var percentage = (e.pageX / widthAvailable);
     var widthOfNav = widthAvailable * percentage;
@@ -119,7 +122,7 @@ function dragbarLeftResize() {
       $('#dragbarLeft').css('width', '3px');
 
       var rightSideWidth = $('#rightInfoHolder').css("width");
-      var rightSideWidthNum = $('#rightInfoHolder').css("width").substring(0,$('#rightInfoHolder').css("width").length - 2); /* yemi: extract only the number */
+      var rightSideWidthNum = parseInt($('#rightInfoHolder').css("width")); /* yemi: extract only the number */
       var widthAvailable = window.innerWidth - rightSideWidthNum - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
       var percentage = (e.pageX / widthAvailable);
       var widthOfNav = widthAvailable * percentage;
@@ -201,12 +204,12 @@ function dragbarRightResize() {
       }
 
       var widthAvailable = window.innerWidth - parseInt(leftSideWidth) - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
-      var percentage = ((e.pageX - parseInt(leftSideWidth)) / widthAvailable); /* yemi: prolly needs fixing */
+      var percentage = ((e.pageX - parseInt(leftSideWidth) - 6) / widthAvailable); /* yemi: prolly needs fixing */
       var widthOfCenter = widthAvailable * percentage;
       var widthOfRight = widthAvailable - widthOfCenter;
 
       /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
-      if (widthOfRight < parseInt($('.labInfoHoldCls').css("min-width"))) {
+      if (widthOfRight < parseInt($('.labInfoHoldCls').css("min-width")) - 10) {
         widthOfRight = 0; /* yemi: if width too small, collapse it */
         widthOfCenter = widthAvailable;
       }
@@ -220,18 +223,16 @@ function dragbarRightResize() {
       /* yemi: when modifying the column sizes, need to modify all two layouts */
       var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
       var organism_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
-      
       console.log(population_colInfo);
-
+      
       $('.all3pop').css("grid-template-columns", population_colInfo);
       $('.all3org').css("grid-template-columns", organism_colInfo);
-      // $('.mainBlockHolder').css("width", widthOfCenter + "px");
 
       /* yemi: make the following divs take up the entire width of their containers */
       $('orgInfoHolder').css("width", "100%");
 
       /* yemi: update organism canvas */
-      av.ind.updateOrgTrace()
+      av.ind.updateOrgTrace();
     });
   });
 
@@ -245,13 +246,13 @@ function dragbarRightResize() {
 
       var leftSideWidth;
       if (IS_LEFT_CLOSED) {
-        leftSideWidth = "0px"
+        leftSideWidth = "0px";
       } else {
         leftSideWidth = $('#navColId').css("width");
       }
 
       var widthAvailable = window.innerWidth - parseInt(leftSideWidth) - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
-      var percentage = ((e.pageX - parseInt(leftSideWidth)) / widthAvailable); /* yemi: prolly needs fixing */
+      var percentage = ((e.pageX - parseInt(leftSideWidth) - 6) / widthAvailable); /* yemi: prolly needs fixing */
       var widthOfCenter = widthAvailable * percentage;
       var widthOfRight = widthAvailable - widthOfCenter;
 
@@ -259,12 +260,27 @@ function dragbarRightResize() {
       if (widthOfRight < parseInt($('.labInfoHoldCls').css("min-width"))) {
         widthOfRight = 0; /* yemi: if width too small, collapse it */
         widthOfCenter = widthAvailable;
+        IS_RIGHT_CLOSED = true;
+        /* yemi: change the button's contents and look */
+        $('#ritePanelButton').val('<< ');
+        $('#ritePanelBUtton').css('background', '#ccc');
       }
 
       /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
       else if (widthOfRight > parseInt($('.labInfoHoldCls').css("max-width"))) {
         widthOfRight = $('.labInfoHolder').css("max-width");
         widthOfCenter = widthAvailable - widthOfRight;
+        IS_RIGHT_CLOSED = false;
+        /* yemi: change the button's contents and look */
+        $('#ritePanelButton').val('>> ');
+        $('#ritePanelBUtton').css('background', 'inherit');
+      }
+
+      else {
+        IS_RIGHT_CLOSED = false;
+        /* yemi: change the button's contents and look */
+        $('#ritePanelButton').val('>> ');
+        $('#ritePanelBUtton').css('background', 'inherit');
       }
       
       /* yemi: when modifying the column sizes, need to modify all two layouts */
@@ -273,7 +289,6 @@ function dragbarRightResize() {
 
       $('.all3pop').css("grid-template-columns", population_colInfo);
       $('.all3org').css("grid-template-columns", organism_colInfo);
-      // $('.mainBlockHolder').css("width", widthOfCenter + "px");
 
       /* yemi: make the following divs take up the entire width of their containers */
       $('orgInfoHolder').css("width", "100%");
@@ -420,6 +435,60 @@ av.dom.sizes = () => {
 // Used for a presentation to hide the left panel and make the right panel bigger.
 // Rob wants a button like this that hides the left panel and makes the center panel bigger. 
 // not in current use; I hope this can be done with fewer individual size adjustments
+
+av.ptd.ritePanelBtnFn = function () {
+
+  setTimeout(function() {}, 80);
+
+  var leftSideWidth;
+  if (IS_LEFT_CLOSED) {
+    leftSideWidth = "0px";
+  } else {
+    leftSideWidth = $('#navColId').css("width");
+  }
+
+  if (!IS_RIGHT_CLOSED) {
+    IS_RIGHT_CLOSED = true;
+
+    var widthOfRight = 0;
+
+    /* yemi: change the button's contents and look */
+    $('#ritePanelButton').val('<< ');
+    $('#ritePanelBUtton').css('background', '#ccc');
+
+    /* yemi: when modifying the column sizes, need to modify all two layouts */
+    var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
+    var organism_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
+
+    $('.all3pop').css("grid-template-columns", population_colInfo);
+    $('.all3org').css("grid-template-columns", organism_colInfo);
+
+    /* yemi: make the following divs take up the entire width of their containers */
+    $('orgInfoHolder').css("width", "100%");
+  }
+
+  else if (IS_RIGHT_CLOSED) {
+    console.log("right bar was closed.");
+    IS_RIGHT_CLOSED = false;
+
+    /* yemi: change the button's contents and look */
+    $('#ritePanelButton').val('>> ');
+    $('#ritePanelBUtton').css('background', 'inherit');
+
+    // var widthOfRight = parseInt($('.labInfoHoldCls').css("min-width"));
+    var widthOfRight = 440;
+
+    /* yemi: when modifying the column sizes, need to modify all two layouts */
+    var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
+    var organism_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
+
+    $('.all3pop').css("grid-template-columns", population_colInfo);
+    $('.all3org').css("grid-template-columns", organism_colInfo);
+    
+    /* yemi: make the following divs take up the entire width of their containers */
+    $('orgInfoHolder').css("width", "100%");
+  }
+};
 
 av.ptd.lftPanelBtnFn = function () {
 

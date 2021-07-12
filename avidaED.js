@@ -931,10 +931,11 @@ require([
   //********************************************************************************************s************************
 
   // supposed to make the center section larger. does not work so button hidden
-    document.getElementById('ritePanelButton').onclick = function () {
-      av.ptd.ritePanelButton();
-      console.log('in ritePanelButton.onclick');
-    };
+    // document.getElementById('ritePanelButton').onclick = function () {
+    //   av.ptd.ritePanelButton();
+    //   console.log('in ritePanelButton.onclick');
+    // };
+    /* yemi: erased because it was interfering with my code */
   //--------------------------------------------------------------------------------------- end ritePanelButton.onclick --
 
   //----------------------------------------------------------------------------------------------------------------------

@@ -333,7 +333,7 @@
       document.getElementById('showTextDebugButtonDiv').style.visibility = 'hidden';
       document.getElementById('developmentToggle').className = 'devoCammo';  
       document.getElementById('geometyHideButton').className = 'geoButtonCammo';  
-      document.getElementById('ritePnlBtnHolder').className = 'pnlBtnHldrHide';
+      // document.getElementById('ritePnlBtnHolder').className = 'pnlBtnHldrHide'; /* yemi: show the ritePnlBtn */
 
       document.getElementById('fzTdishSec').style.visibility = 'hidden';
       document.getElementById('testDishDetailDiv').style.display = 'none';
@@ -427,7 +427,6 @@
         document.getElementsByClassName('3TopLftRit')[ii].style.display = 'inline-block';
         document.getElementsByClassName('4Quarters')[ii].style.display = 'inline-block';
       }
-
 
 
       len = av.sgr.logicNames.length;

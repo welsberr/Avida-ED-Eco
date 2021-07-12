@@ -605,7 +605,7 @@ html {
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
     height: 100%;
     width: 100%;
-    min-width: 190px; /* yemi: */
+    min-width: 200px; /* yemi: */
     max-width: 450px; /* yemi: */
   }
   
