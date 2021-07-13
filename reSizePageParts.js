@@ -223,7 +223,6 @@ function dragbarRightResize() {
       /* yemi: when modifying the column sizes, need to modify all two layouts */
       var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
       var organism_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
-      console.log(population_colInfo);
       
       $('.all3pop').css("grid-template-columns", population_colInfo);
       $('.all3org').css("grid-template-columns", organism_colInfo);
@@ -513,7 +512,6 @@ av.ptd.lftPanelBtnFn = function () {
     $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
     $('.all3pop').css("grid-template-columns", population_colInfo);
     $('.all3org').css("grid-template-columns", organism_colInfo);
-    $('.navColClass').css("width", widthOfNav + "px");
   }
 
   else if (IS_LEFT_CLOSED) {
