@@ -1039,8 +1039,8 @@ details summary {
   grid-area: sumFtTxtCls; 
   display: inline-block; border: 1px solid palegreen; 
 }
-.taskAboutCls { 
-  grid-area: tskAboutCls; 
+.taskRewardCls { 
+  grid-area: tskRewardCls; 
   display: inline-block;
   border: 1px solid red;
   width: 250px;
@@ -1049,7 +1049,7 @@ details summary {
 /* Sgr summary as a grid container. Something wrong. Try a Flex box
 .sgrLftSumCls { grid-area: sgrLftSumCls; display: inline-block;}
 .sgrRitSumCls { grid-area: sgrRitSumCls; 
-  grid-template-areas: 'sumFtTxtCls tskAboutCls';
+  grid-template-areas: 'sumFtTxtCls tskRewardCls';
   grid-template-columns: 1px 96px;
   display: grid;
   justify-items: end;
@@ -1074,15 +1074,12 @@ details summary {
 .sgrRitSumCls { 
   flex: 0 1 auto;
   grid-area: sgrRitSumCls; 
-  grid-template-areas: 'sumFtTxtCls tskAboutCls';
+  grid-template-areas: 'sumFtTxtCls tskRewardCls';
   grid-template-columns: 1px 96px;
   display: grid;
   justify-items: end;
   background: yellow;
 }
-
-
-
 
 .sgrTitleCls { grid-area: sgrTitleCls; display: inline-block; border: 1px solid red; width: 54px; }
 .geometryCls { grid-area: geometryCls; display: none; border: 1px solid red; }
@@ -1099,17 +1096,17 @@ details summary {
 
 .grd-sgr-sum-adv-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls tskAboutCls periodTimGlobCls';
+  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls sumFtTxtCls';
   justify-content: start; 
-  height: 23px;  width: 100%;
+  width: 100%;
   border: 1px solid blue;  
 }
 .grd-sgr-sum-adv-limited-container {
   display: grid;
   grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls  supply_HoldCls initialGlobCls"
-                       "sgrTitleCls tskAboutCls  tskAboutCls tskAboutCls tskAboutCls   initialGlobCls";
+                       "sgrTitleCls tskRewardCls  tskRewardCls tskRewardCls tskRewardCls   initialGlobCls";
   //grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdCls supply_HoldCls initialGlobCls"
-  //                     "detailArrow sgrTitleCls tskAboutCls  tskAboutCls tskAboutCls tskAboutCls   initialGlobCls";
+  //                     "detailArrow sgrTitleCls tskRewardCls  tskRewardCls tskRewardCls tskRewardCls   initialGlobCls";
   justify-content: start; 
   min-height: 23px;  width: 100%;
 }
@@ -1128,14 +1125,6 @@ details summary {
   min-height: 23px;  width: 100%;  
 }
 
-.grd-sgr-sum-global-container_ {
-  display: inline-grid;
-  /* grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls'; */
-  grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls initialGlobCls";
-  justify-content: start; 
-  height: 23px;
-  border: 1px solid purple;
-}
 .grd-sgr-sum-global-container {
   display: grid;
   grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls initialGlobCls";
@@ -1152,7 +1141,7 @@ details summary {
 }
 .grd-sgr-sum-global-chemo-container {
   display: grid;
-  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls tskAboutCls';
+  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls tskRewardCls';
   justify-content: start; 
   height: 23px;  width: 100%;
 }
