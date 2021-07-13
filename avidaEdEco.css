@@ -636,7 +636,7 @@ html {
 
   #popStatHolder{
     flex: 1 1 280px;
-    min-height: 280px;
+    /* min-height: 280px; */
   }
   #popStatistics{
     display: flex;

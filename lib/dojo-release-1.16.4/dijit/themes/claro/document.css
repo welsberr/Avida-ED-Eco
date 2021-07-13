@@ -21,7 +21,7 @@ abbr, acronym {
 }
 body { 
 	font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif; 
-	*font-size: 75%;
+	font-size: 75%;
 }
 h1 {
 	font-size: 1.5em; 
