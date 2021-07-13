@@ -602,7 +602,6 @@
     av.grd.sizeY = av.dom.gridCanvas.height;
     av.grd.xOffset = 0;
     av.grd.yOffset = 0;
-    console.log("bruh", av.grd.sizeX, av.grd.sizeY);
   };
 
   av.grd.drawGridUpdate = function () {

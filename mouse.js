@@ -124,10 +124,8 @@
     var mouseX = evt.offsetX - av.grd.marginX;
     var mouseY = evt.offsetY - av.grd.marginY - offsetYLocal;
     av.grd.selectedCol = Math.floor(mouseX / av.grd.cellWd);
-    console.log("inside findSelected", av.grd.xOffset, av.grd.yOffset);
     av.grd.selectedRow = Math.floor(mouseY / av.grd.cellHt);
     av.grd.selectedNdx = av.grd.selectedRow * av.grd.cols + av.grd.selectedCol;
-    console.log(mouseX, mouseY, av.grd.selectedCol, av.grd.selectedRow);
     if (av.debug.mouse) console.log('mx,y', mouseX, mouseY, '; selected Col, Row', av.grd.selectedCol, av.grd.selectedRow);
   };
 
