@@ -108,11 +108,24 @@
 
   av.mouse.findSelected = function (evt) {
     'use strict';
-    var mouseX = evt.offsetX - av.grd.marginX - av.grd.xOffset;
-    var mouseY = evt.offsetY - av.grd.marginY - av.grd.yOffset;
+    /* yemi: The actual height of the grid is $("#gridHolder").height(). 
+             The height of the displayed population grid canvas, is determined in populationGrid.js.
+             Basically, the scheme is, if the height is longer than the width, av.dom.gridCanvas.height gets set equal to the width.
+             This is probably to keep the canvas a square.
+             Anyhow, offsetYLocal basically resolves the offset between the actual grid height ($("#gridHolder").height()) and the newly determined av.dom.gridCanvas.height.
+             This is done by doing $("#gridHolder").height() - av.dom.gridCanvas.height and then dividing the result by 2. 
+             The dividng by 2 is because there's "empty" gray space both above and below the displayed population grid. 
+             We just want to offset by the "above" empty space, so we divide by 2.
+             I named offsetYLocal "Local" because this is a variable local to this function. 
+             I was mindful not to confuse this with the global variable, av.grd.yOffset, which I believe is not really in use right now.
+             I know this because in av.grd.findGridSize function of populationGrid.js, it is set to 0.
+    */
+    var offsetYLocal = ($("#gridHolder").height() - av.dom.gridCanvas.height) / 2;
+    var mouseX = evt.offsetX - av.grd.marginX;
+    var mouseY = evt.offsetY - av.grd.marginY - offsetYLocal;
     av.grd.selectedCol = Math.floor(mouseX / av.grd.cellWd);
     av.grd.selectedRow = Math.floor(mouseY / av.grd.cellHt);
-    av.grd.selectedNdx = av.grd.selectedRow*av.grd.cols + av.grd.selectedCol;
+    av.grd.selectedNdx = av.grd.selectedRow * av.grd.cols + av.grd.selectedCol;
     if (av.debug.mouse) console.log('mx,y', mouseX, mouseY, '; selected Col, Row', av.grd.selectedCol, av.grd.selectedRow);
   };
 

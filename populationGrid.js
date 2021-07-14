@@ -594,12 +594,14 @@
     }
 
     //Determine new size of grid
-      if (av.debug.uil) { console.log('ui: w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= In: av.dom.gridCanvas.width ht--'); }
+    if (av.debug.uil) { console.log('ui: w:', av.dom.gridCanvas.width, av.dom.gridCanvas.height, '= In: av.dom.gridCanvas.width ht--'); }
 
-      av.dom.gridCanvas.width = av.grd.sizeX;
-      av.dom.gridCanvas.height = av.grd.sizeY;
-      av.grd.xOffset = 0;
-      av.grd.yOffset = 0;
+    // av.dom.gridCanvas.width = av.grd.sizeX;
+    // av.dom.gridCanvas.height = av.grd.sizeY;
+    av.grd.sizeX = av.dom.gridCanvas.width; /* yemi: changed the order, did not break anything */
+    av.grd.sizeY = av.dom.gridCanvas.height;
+    av.grd.xOffset = 0;
+    av.grd.yOffset = 0;
   };
 
   av.grd.drawGridUpdate = function () {

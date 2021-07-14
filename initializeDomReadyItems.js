@@ -336,6 +336,9 @@
       visibleBecomes = 'hidden';
       blockBecomes = 'none';
       document.getElementById('developmentToggle').className = 'devoCammo';  
+      
+      // document.getElementById('ritePnlBtnHolder').className = 'pnlBtnHldrHide'; /* yemi: show the ritePnlBtn */
+
       document.getElementById('geometyHideButton').className = 'geoButtonCammo';
       document.getElementById('popInfoTabHolder').className = 'tabHolderHide';
 
@@ -418,7 +421,6 @@
         document.getElementsByClassName('3TopLftRit')[ii].style.display = 'inline-block';
         document.getElementsByClassName('4Quarters')[ii].style.display = 'inline-block';
       }
-
 
 
       len = av.sgr.logicNames.length;
