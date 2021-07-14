@@ -1026,34 +1026,33 @@
   // if (av.dbg.flg.root) { console.log('Root: before av.msg.fillColorBlock'); }
   av.msg.fillColorBlock = function (msg) {  //Draw the color block
       'use strict';
+      var bkcolor = '#000';
       if (av.debug.msg) console.log('in fillColorBlock');
       //if (av.debug.msg) console.log('ndx', av.grd.selectedNdx, '; msg.ancestor.data[ndx]',av.grd.msg.ancestor.data[av.grd.selectedNdx]);
       if (av.debug.msg) console.log('av.grd.fill[av.grd.selectedNdx]',av.grd.fill[av.grd.selectedNdx]);
       if ('Ancestor Organism' == document.getElementById('colorMode').value) {
-        if (null === av.grd.fill[av.grd.selectedNdx]) {
-          av.grd.selCtx.fillStyle = '#000';
-        }
-        else {
-          av.grd.selCtx.fillStyle = av.parents.color[av.parents.name.indexOf(msg.ancestor)];
+        if (null != av.grd.fill[av.grd.selectedNdx]) {
+          //av.grd.selCtx.fillStyle = av.parents.color[av.parents.name.indexOf(msg.ancestor)];
+          bkcolor = av.parents.color[av.parents.name.indexOf(msg.ancestor)];
         }
       }
       else {
         if (null === av.grd.fill[av.grd.selectedNdx]) {
-          if (null === av.grd.msg.ancestor.data[av.grd.selectedNdx]) av.grd.selCtx.fillStyle = '#000';
-          else av.grd.selCtx.fillStyle = '#888';
+          if (null === av.grd.msg.ancestor.data[av.grd.selectedNdx]) bkcolor = '#000';
+          else bkcolor = '#888';
         }
-        else if (0 == av.grd.fill[av.grd.selectedNdx]) av.grd.selCtx.fillStyle = av.color.defaultKidColor;
+        else if (0 == av.grd.fill[av.grd.selectedNdx]) bkcolor = av.color.defaultKidColor;
         else {  //av.utl.get_color0 = function(cmap, dx, d1, d2)
-          av.grd.selCtx.fillStyle = av.utl.get_color0(av.grd.cmap, av.grd.fill[av.grd.selectedNdx], 0, av.grd.fillmax);
+          bkcolor = av.utl.get_color0(av.grd.cmap, av.grd.fill[av.grd.selectedNdx], 0, av.grd.fillmax);
           //console.log('av.grd.cmap=', av.grd.cmap);
           //console.log('av.grd.fill=', av.grd.fill);
           //console.log('av.grd.selectedNdx=',av.grd.selectedNdx,'; av.grd.fillmax',av.grd.fillmax,'; fillStyle', av.utl.get_color0(av.grd.cmap, av.grd.fill[av.grd.selectedNdx], 0, av.grd.fillmax));
         }
       }
-      if (av.debug.msg) console.log('color', av.grd.selCtx.fillStyle);
-      //console.log('color', av.grd.selCtx.fillStyle);
-      av.grd.selCtx.fillRect(0, 0, av.grd.SelectedWd, av.grd.SelectedHt);
-
+      if (av.debug.msg) console.log('sot bkcolor', bkcolor);
+      //av.grd.selCtx.fillRect(0, 0, av.grd.SelectedWd, av.grd.SelectedHt);
+      av.dom.sotColorBox.style.backgroundColor = bkcolor;
+      av.dom.sotColorBox.style.border = '2px solid ' + bkcolor;
     };
     // if (av.dbg.flg.root) { console.log('Root: end of messaging'); }  
   // ------------------------------------------------ not in use ---------------------------------------------------------
