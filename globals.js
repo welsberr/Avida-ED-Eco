@@ -1403,7 +1403,7 @@ av.mouse.notDndPopList = ['colorMode'
   //statistics section
   , 'sotLabel'
   , 'nameLabel'
-  , 'sotColorCanvas'
+  , 'sotColorBox'
   , 'fitLabel'
   , 'energyAcqRateLabel'
   , 'offspringCostLabel'

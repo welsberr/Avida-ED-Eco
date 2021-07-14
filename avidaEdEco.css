@@ -257,8 +257,8 @@ html {
   #mnFreezer {border: 1px solid #999;}
   #mnControl {border: 1px solid #999;}
   #mnHelp {border: 1px solid #999;}
-  #mnDebug {border: 1px solid #999;}
   */
+  mnDebug {visibility: hidden;}
   
   #headerMsg{
     flex: 1 1 auto;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
@@ -419,7 +419,8 @@ html {
 }
 .devoCammo {        /* #notation with 4 or 8 chars should have opacity as the last section should work, but NetBeans does not like it*/  
   border: none;                             /* #F5F5F500 should work, but net beans does not like it so some browsers might not like it */
-  background-color: rgba(245,245,245,0);    /*  rgba(245,245,245,0)  is #F5F5F5 with opacity set to 0.0;   */  
+  background: inherit
+  //background-color: rgba(245,245,245,0);    /*  rgba(245,245,245,0)  is #F5F5F5 with opacity set to 0.0;   */  
   color: rgba(245,245,245,0);               /* 0.0 (fully transparent) to 1.0 (fully opaque); */
   
 }
@@ -484,6 +485,7 @@ html {
   padding-top: 5px;
 }
 #testConfigLableHolder {
+  dislplay: none;
   margin: 4px;
   flex: 0 1 40px;
 }
@@ -657,6 +659,8 @@ html {
   }  /*contains sotTopTable and sotBotTable  */
   #sotTopTable { width: 100%; }
   #sotBopTable { width: 100%; background: white; }
+  #sotColorBox { display: inline-block; width: 10px; height: 10px;}
+  
   .timePerform { min-width: 120px; background: #fff }
   
   #popStats4grid{
@@ -2046,7 +2050,6 @@ checkbox:focus {
 }
 
 /* yemi: this is the make sure canvas fills the entire container while also maintaining aspect ratio */
- 
 canvas {
   width: 100%;
   height: 100%;

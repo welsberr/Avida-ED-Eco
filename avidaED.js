@@ -1717,10 +1717,9 @@ require([
   //Set up canvas objects
   av.grd.sCtx = av.dom.scaleCanvas.getContext('2d');
   av.grd.cntx = av.dom.gridCanvas.getContext('2d');
-  av.dom.sotColorCanvas = document.getElementById('sotColorCanvas');
-  av.grd.selCtx = av.dom.sotColorCanvas.getContext('2d');
-  av.grd.SelectedWd = $('#sotColorCanvas').innerWidth();
-  av.grd.SelectedHt = $('#sotColorCanvas').innerHeight();
+  //av.grd.selCtx = av.dom.sotColorCanvas.getContext('2d');
+  //av.grd.SelectedWd = $('#sotColorCanvas').innerWidth();
+  //av.grd.SelectedHt = $('#sotColorCanvas').innerHeight();
 
   //av.dom.gridCanvas.height = $('#gridHolder').innerHeight() - 16 - av.dom.scaleCanvas.height;
 
@@ -3056,15 +3055,12 @@ require([
     //set mmDebug to hidden so that when toggle called it will show the development sections x
     av.doj.mnDebug.style.visibility = 'hidden';   //visible
   };
-  av.ui.toggleDevelopmentDisplays('Last_things_done');  // this needs to b called in production version
+  //av.ui.toggleDevelopmentDisplays('Last_things_done');  // this needs to be called in production version
 
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
-  //av.sgr.ChangeAllGeo(av.sgr.dftGeometry);   //tiba delete in 2021
   av.changeAllSgrRegionLayout(av.sgr.nutdft.uiAll.regionLayout, 'last_things_done');
-  //av.sgr.setSugarColors(true);  //true is to turn colors on;    // set color/grey individually so when 0 resources, grey shades rather than colors
   av.sgr.ChangeAllsugarsupplyTypeSlct('unlimited','Last_things_done');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');
-  //document.getElementById('resrceDataHolder').style.display = 'block';   //display local resource data
   av.pch.popChrtHolder_Ht = $('popChrtHolder').innerHeight();
   av.pch.popStatsBlock_Ht = $('popStatsBlock').innerHeight();
   av.pch.pop_statsBlock_ChrtHolder_noResrceGrid = av.pch.popStatsBlock_Ht - av.pch.popChrtHolder_Ht;

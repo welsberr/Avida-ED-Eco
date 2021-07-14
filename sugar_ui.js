@@ -66,7 +66,7 @@
         }
         //console.log('dom is', tsk+'_detailsHolder');
         av.dom.showBigTextarea.value = tskSectionStr;
-        console.log('tsk_detailsHolder=', tsk+'_detailsHolder');
+        //console.log('tsk_detailsHolder=', tsk+'_detailsHolder');
         document.getElementById(tsk+'_detailsHolder').innerHTML = newstr;
       }
     }
@@ -505,7 +505,7 @@ av.sgr.supplyChange = function (domObj) {
   //----------------------------------------------------------------------------- end av.sgr.OpenCloseAllSugarDetails --
   
   //--------------------------------------------------------------------------------------- av.sgr.OpenClsSugarDetail --
-  av.sgr.OpenClsSugarDetails = function(tsk, openFlag) {
+  av.sgr.OpenClsSugarDetails = function(tsk, openFlag, from) {
     var ndx = av.sgr.logicNames.indexOf(tsk);
     var numTsk = av.sgr.logEdNames[ndx];
     var chemoSummary = '';
@@ -650,7 +650,7 @@ av.sgr.supplyChange = function (domObj) {
     var clssnam = 'changeAllSugarsTogetherContainer';
     av.sgr.complexSumGridPrefix = 'grd-sgr-sum-adv-';
     
-    console.log('av.sgr.complexityLevel =', av.sgr.complexityLevel);
+    console.log(from, 'called av.sgr.complexityChangeProcess: av.sgr.complexityLevel =', av.sgr.complexityLevel);
     if ('sgrBasic' == av.sgr.complexityLevel) {
       basicDisplayNone = 'none';
       clssnam = 'changeAllSugarsBasic';
@@ -765,9 +765,9 @@ av.sgr.supplyChange = function (domObj) {
       document.getElementById(tsk+sub+'detailText').style.display = 'none';
       document.getElementById(tsk+sub+'regionName').style.display = 'none';
       document.getElementById(tsk+sub+'blank').style.display = 'none';
-//      document.getElementById(tsk+sub+'gradientcheckboxHolder').style.display = 'none';
-//      document.getElementById(tsk+sub+'diffusecheckboxHosslder').style.display = 'none';
-//      document.getElementById(tsk+sub+'periodcheckboxHolder').style.display = 'none';
+      //document.getElementById(tsk+sub+'gradientcheckboxHolder').style.display = 'none';
+      //document.getElementById(tsk+sub+'diffusecheckboxHosslder').style.display = 'none';
+      //document.getElementById(tsk+sub+'periodcheckboxHolder').style.display = 'none';
       document.getElementById(tsk+sub+'supplyModifierHolder').style.display = 'none';
       document.getElementById(tsk+sub+'periodTimeHolder').style.display = 'none';
       document.getElementById(tsk+sub+'hiSideSelectHolder').style.display = 'none';
@@ -787,7 +787,7 @@ av.sgr.supplyChange = function (domObj) {
     // end hiding resource (sugar) interface elements, will show accorting to current state
 
     //console.log('av.nut.'+numTsk+'.uiAll.geometry.tolower()=',av.nut[numTsk].uiAll.geometry.toLowerCase());
-    console.log('av.sgr.complexityLevel=', av.sgr.complexityLevel, '; geometry=',av.nut[numTsk].uiAll.geometry, 'av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
+    console.log(from, 'called av.sgr.changeDetailsLayout: av.sgr.complexityLevel=', av.sgr.complexityLevel, '; geometry=',av.nut[numTsk].uiAll.geometry, 'av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
     
     if ('sgrAdvanced' == av.sgr.complexityLevel) {
       av.sgr.processAdvancedFn();

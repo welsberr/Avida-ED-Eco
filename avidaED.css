@@ -361,7 +361,7 @@ http://www.shawnolson.net/a/503/altering_css_class_attributes_with_javascript.ht
 /*
                     <div id='sotLabel' class='popStatsTitle'>Selected Organism Type</div>
                       <div id='sotTopTable' class='topSotTable'>
-                        <div class='sotL sotodd'>Name:&nbsp;<canvas id='sotColorCanvas' width='10' height='10'></canvas></div>
+                        <div class='sotL sotodd'>Name:&nbsp;<canvas id='sotColorBox' width='10' height='10'></canvas></div>
                         <div class='sotR sotodd'><label id='nameLabel'></label>.</div>
 
                         <div class='sotL sotEven'>Fitness:&nbsp;</div>
