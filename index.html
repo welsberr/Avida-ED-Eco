@@ -149,7 +149,7 @@
 
               </span>
             </span>
-            <span data-dojo-type='dijit/PopupMenuBarItem' label='Debug' id='mnDebug' style = 'visibility: hidden'> <!--visible/hidden-->
+            <span data-dojo-type='dijit/PopupMenuBarItem' label='Debug' id='mnDebug'> <!--visible/hidden-->
               <span data-dojo-type='dijit/Menu'>
                 <span data-dojo-type='dijit/MenuItem' id='mnDbThrowError' label='Throw Error'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnDbThrowData' label='Send Data to console'></span>
@@ -231,7 +231,7 @@
               <button id='showTextDebugButton' type='button' value='Big Text'>Big Text</button>
             </div>
             <div id='developmentToggleDiv'>
-              <input id='developmentToggle' class='devoShow' type='button' value=' in Development View ' onclick='av.ui.toggleDevelopmentDisplays()' />
+              <input id='developmentToggle' class='devoCammo' type='button' value=' in Development View ' onclick='av.ui.toggleDevelopmentDisplays()' />
             </div>
           </div>
         </div><span id='navColId_end' class='display_none'></span>
@@ -457,7 +457,7 @@
 
       <div id='rightInfoHolder'> 
         <div id='popInfoVert'>
-          <div id='popInfoTabHolder' class='tabHolderShow'>
+          <div id='popInfoTabHolder' class='tabHolderHide'>
             <div class="tab">
               <button class="tablinks active" id="statsTab" onclick="av.ptd.processTab(event, 'popStatsBlock')">Stats</button>
               <button class="tablinks" id="setupTab" onclick="av.ptd.processTab(event, 'setupBlock')">Setup</button>
@@ -579,9 +579,8 @@
                         <colgroup><col class='popsTopTblcol1'><col class='popsTopTblcol2'></colgroup>
                           <tr>
                             <td><div class='noWrapL'>Size (# of organisms):&nbsp;</div></td>
-                            <!-- <td><div class='noWrapW'><label id='popSizeLabel'>&nbsp;&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;</div></td> -->
-                            <!-- yemi: extra &nbsp; were making this label particularly large-->
-                            <td><div class='noWrapW'><label id='popSizeLabel'></label>&nbsp;</div></td>
+
+                            <td><div class='noWrapW'><label id='popSizeLabel'>&nbsp;&nbsp;&nbsp;</label></div></td>
                           </tr>
                           <tr>
                             <td><div class='noWrapL'>Avg. Fitness:&nbsp;</div></td>
@@ -777,7 +776,7 @@
                 <div class='odd'><div class='enviroSubHeading'>Ancestral Organism(s):</div>
                   <div id='ancestorRow'>
                     <div id='ancestorBox' class='ancestorContainer'></div>
-                    <div id='geometyHideButton' onclick='av.ui.toggleComplexityLevel(this)'>
+                    <div id='geometyHideButton' class='geoButtonCammo'; onclick='av.ui.toggleComplexityLevel(this)'>
                       &nbsp;&nbsp; Show / Hide Geometry menus
                     </div>
                   </div>
@@ -3109,7 +3108,7 @@
 
                   </div><span id='sugarAccordion_end' class='display_none'></span>
 
-                  <div id='sugarFooter' class='changeAllSugarsTogetherContainer'>
+                  <div id='sugarFooter' class='changeAllSugarsTogetherNoGlobalContainer'>
                     <div id='sugarSetTitle' class='rHeadItem'>Set all Resources:&nbsp;</div>
 
                     <div id='allSugarGeometryDiv' class='rHeadItem'>

@@ -282,8 +282,8 @@
     av.dnd.gridCanvas.sync();
 
     //Update data for Selected Organism Type
-    av.grd.selCtx.fillStyle = '#D7D7D7';
-    av.grd.selCtx.fillRect(0, 0, av.grd.SelectedWd, av.grd.SelectedHt);
+    av.dom.sotColorBox.style.backgroundColor = '#D7D7D7';
+    av.dom.sotColorBox.style.border = '2px solid ' + '#D7D7D7';
     nameLabel.textContent = '';
     fitLabel.innerHTML = '';
     energyAcqRateLabel.textContent = '';
@@ -681,7 +681,6 @@
     //console.log('fzr.activeCon', av.fzr.actConfig);
 
     // re-write grid if that page is visible
-    av.grd.popChartClear();
     av.grd.drawGridSetupFn('av.ptd.resetDishFn');
 
     // reset resource values.

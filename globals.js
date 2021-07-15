@@ -731,6 +731,7 @@ av.fzr.clearEnvironment = function(from) {
 
 //------------------------------------------------------------------------------------------- av.sgr.processHideFlags --
 //Flags for fields not yet implemented. 
+av.ui.hideDevelopment = false;
 av.sgr.processHideFlags = function(boolArry, from) {
   //console.log(from+' called av.sgr.processHideFlags: hideDevelopment=', av.ui.hideDevelopment, '; boolArry=', boolArry);
   //showDevelopment is a flag, when true show parts still under development or debug

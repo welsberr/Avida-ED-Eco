@@ -122,7 +122,7 @@
   };
   
   //This looks like it needs work
-//--------------------------------------------------------------------------------- av.sgr.allSugarRegionLayoutChange --
+//------------------------------------------------------------------------------------- av.sgr.allSugarModifierChange --
   av.sgr.allSugarModifierChange = function(domObj) {
     var selectedOption = domObj.value;
     console.log('av.sgr.allSugarModifierChange: pattern=', selectedOption, '???????????????????????????');
@@ -137,7 +137,7 @@
       for (var sub=start; sub <= av.nut.numRegionsinHTML; sub++) {
       //change all subsections; Global can have periodic but not gradient or diffusion. 
         domName = av.sgr.logicNames[ii] + sub + endName;
-        av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.allSugarModifierChange');   //need to do once per task/subsection combo even if it does change both global and subtasks
+        av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], 'av.sgr.allSugarModifierChange');   //need to do once per task/subsection combo even if it does change both global and subtasks
         if (10 < sub) break;
       }
     }
@@ -155,7 +155,7 @@ av.sgr.allSugarRegionLayoutChange = function(domObj) {
 
 av.changeAllSgrRegionLayout = function(selectedOption, from) {
   var endName = 'regionLayout';   //nan_supplyTypeHolder  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
-  //console.log(from, ' called av.sgr.allSugarRegionLayoutChange: selectedOption=',selectedOption);
+  console.log(from, ' called av.changeAllSgrRegionLayout: selectedOption=',selectedOption);
   var domName = '';  
   var sub=0;   //most will start with 0 for global and also do local section 1
   // all tasks
@@ -165,7 +165,7 @@ av.changeAllSgrRegionLayout = function(selectedOption, from) {
     //console.log('domName='+domName, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub, '; value=', domObj.value);
     //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
     document.getElementById(domName).value = selectedOption;
-    av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.allSugarRegionLayoutChange');   //only need to do once per task/subsection combo even if it does change both global and subtasks
+    av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], 'av.changeAllSgrRegionLayout');   //only need to do once per task/subsection combo even if it does change both global and subtasks
     //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value);
   }   
   //console.log('ii=',ii,'; domName=', domName, '; selectedOption=', selectedOption);
@@ -198,7 +198,7 @@ av.sgr.toggleOpenCloseSymbol = function(task) {
 //--------------------------------------------------------------------------------- av.sgr.ChangeAllsugarsupplyTypeSlct --
 av.sgr.ChangeAllsugarsupplyTypeSlct = function(selectedOption, from) {
   var endName = 'supplyTypeSlct';   //nan_supplyTypeHolder  the 0 is present because we were considering doing upto 4 local areas and easier to take the 0 out later, than to put it in. 
-  //console.log(from, ' called av.sgr.ChangeAllsugarsupplyTypeSlct: selectedOption=',selectedOption);
+  console.log(from, ' called ChangeAllsugarsupplyTypeSlct: selectedOption=', selectedOption);
   var domName = '';
   var start = 1;   //sub sections start with 0, because global limited is in the summary (_)
 
@@ -214,14 +214,11 @@ av.sgr.ChangeAllsugarsupplyTypeSlct = function(selectedOption, from) {
     //console.log('domname=', domName);
     document.getElementById(domName).value = selectedOption;
     //console.log('document.getElementById('+domName+').value=', document.getElementById(domName).value);
-    av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], 0, 'av.sgr.ChangeAllsugarsupplyTypeSlct');
+    av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], 'av.sgr.ChangeAllsugarsupplyTypeSlct');
     for (var sub=start; sub<= 2; sub++) {
       domName = av.sgr.logicNames[ii] + sub + endName;
       //console.log('domName='+domName, '; selectedOption='+selectedOption+'|');
       document.getElementById(domName).value = selectedOption;
-      //console.log('dom.'+domName+'.value =',  document.getElementById(domName).value, '; tsk =', av.sgr.logicNames[ii], '; sub=', sub);
-      //if (0 < sub) av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarsupplyTypeSlct');   //only need to do once per task/subsection combo even if it does change both global and subtasks
-      av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllsugarsupplyTypeSlct');   //only need to do once per task/subsection combo even if it does change both global and subtasks
     };  // end subsection for loop
     av.sgr.toggleOpenCloseSymbol(tsk);
   };    // end task for loop
@@ -244,8 +241,7 @@ av.sgr.geometryChange = function (selectObj) {
   var sub = taskID.substr(3, 1);
   // if (av.dbg.flg.nut) { console.log('av.sgr.geometryChange: taskID=', taskID, '; task =', task, '; subsection=', sub); }
   sub = 1;       //or should this be 0 since it is in the 'summary' section?
-  av.sgr.changeDetailsLayout(task, sub, 'av.sgr.geometryChange');
-  //does av.sgr.changeDetailsLayout need a 'sub' value? 
+  av.sgr.changeDetailsLayout(task, 'av.sgr.geometryChange');
 };
 
 //----------------------------------------------------------------------------------------- av.sgr.regionLayoutChange --
@@ -255,7 +251,7 @@ av.sgr.regionLayoutChange = function (domObj) {
   var task = taskID.substring(0, 3);
   var sub = taskID.substr(3, 1);
   //console.log('taskID=', taskID, 'task=', task, '; subsection=', sub);
-  av.sgr.changeDetailsLayout(task, sub, 'av.sgr.regionLayoutChange');
+  av.sgr.changeDetailsLayout(task, 'av.sgr.regionLayoutChange');
 };
 
 //----------------------------------------------------------------------------------------------- av.sgr.supplyChange --
@@ -275,7 +271,7 @@ av.sgr.supplyChange = function (domObj) {
     document.getElementById(tmpstr).value = domObj.value;      
   }
   //console.log('taskID=', taskID, '; value=', value, '; task=', task, '; sub=', sub);
-  av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyChange');
+  av.sgr.changeDetailsLayout(task, 'av.sgr.supplyChange');
 };
 
 //--------------------------------------------------------------------------------------- av.sgr.supplyModifierChange --
@@ -285,7 +281,7 @@ av.sgr.supplyChange = function (domObj) {
     var task = taskID.substring(0, 3);
     var sub = taskID.substr(3, 1);
     console.log('taskID=', taskID, 'task=', task, '; subsection=', sub);
-    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.supplyModifierChange');
+    av.sgr.changeDetailsLayout(task, 'av.sgr.supplyModifierChange');
   };
 
 //------------------------------------------------------------------------------ av.sgr.eachSugarcheckboxHolderChange --
@@ -299,7 +295,7 @@ av.sgr.supplyChange = function (domObj) {
     if (1 < sub)
       sub = 1;
     sub = 1; //only whole dish  for now
-    av.sgr.changeDetailsLayout(task, sub, 'av.sgr.eachSugarcheckboxHolderChange');
+    av.sgr.changeDetailsLayout(task, 'av.sgr.eachSugarcheckboxHolderChange');
   };
 
 //----------------------------------------------------------------------------------------------- av.sgr.periodChange --
@@ -408,7 +404,7 @@ av.sgr.supplyChange = function (domObj) {
       idName = av.sgr.logicNames[ii] + '_geometry';   //nan_geometry
       document.getElementById(idName).value = selectedOption;
 
-      av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], sub, 'av.sgr.ChangeAllGeo');
+      av.sgr.changeDetailsLayout(av.sgr.logicNames[ii], 'av.sgr.ChangeAllGeo');
     }
     //console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption);
   };
@@ -498,7 +494,7 @@ av.sgr.supplyChange = function (domObj) {
       tsk = av.sgr.logicNames[ii];
       numTsk = av.sgr.logEdNames[ii];
       document.getElementById(tsk+'_section').open = openFlag;
-      av.sgr.OpenClsSugarDetails(tsk, openFlag);    
+      av.sgr.OpenClsSugarDetails(tsk, openFlag, av.sgr.OpenCloseAllSugarDetails);    
     };
     //if (av.dbg.flg.nut) { console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption, '; openFlag=', openFlag, '; from=', from); }
   };
@@ -511,7 +507,7 @@ av.sgr.supplyChange = function (domObj) {
     var chemoSummary = '';
     var tmpnum = '';
     var notestr = '';
-    console.log('type=', document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase(), '; !optioin=', !openFlag);
+    console.log(from, 'called OpenClsSugarDetails: type=', document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase(), '; !optioin=', !openFlag);
     if ('chemostat'  == document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase() && !openFlag) {
       chemoSummary = av.sgr.describe.short[tsk] + ' ' + document.getElementById(tsk+'0inflowHiNp').value + ' / '
                    + document.getElementById(tsk+'0outflowHiNp').value + ' = '
@@ -525,7 +521,7 @@ av.sgr.supplyChange = function (domObj) {
     //console.log('new width is', tmpnum);
     document.getElementById(tsk+'_taskRewardText').style.width = tmpnum;
     document.getElementById(tsk+'_taskRewardText').innerHTML = chemoSummary;    
-    document.getElementById('sugarNote').innerHTML = notestr;    
+    document.getElementById('sugarNote').innerHTML = notestr;
   };
   
   
@@ -667,7 +663,6 @@ av.sgr.supplyChange = function (domObj) {
       av.sgr.complexSumGridPrefix = 'grd-sgr-sum-adv-';
       optionDisabled = false;
     };
-    console.log(from, 'called av.sgr.complexityChangeProcess: av.sgr.complexityLevel=', av.sgr.complexityLevel);
     console.log('------------------------------------------------------------------------------geoDispay=', basicDisplayNone);
     document.getElementById('sugarFooter').className = clssnam;
     document.getElementById('allSugarModifierDiv').style.display = basicDisplayNone;
@@ -693,28 +688,28 @@ av.sgr.supplyChange = function (domObj) {
       document.getElementById(tsk+'_quarters').style.display = basicDisplayNone;
       document.getElementById(tsk+'_section').open = false;
       document.getElementById('rs'+tsk).style.display = basicDisplayNone;       //dropDown Display
-      av.sgr.changeDetailsLayout(tsk, subnum, 'av.sgr.complexityChangeProcess');
+      av.sgr.changeDetailsLayout(tsk, 'av.sgr.complexityChangeProcess');
     };    
   };
 
 
   //if (av.dbg.flg.root) { console.log('Root: before av.sgr.changeDetailsLayout'); }
   //-------------------------------------------------------------------------------------- av.sgr.changeDetailsLayout --
-  av.sgr.changeDetailsLayout = function(tsk, subChanged, from) {
+  av.sgr.changeDetailsLayout = function(tsk, from) {
     //these are not as usefull, turn on the one after the first if ('global' statement if problems
     //if (true) { console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; subChanged=', subChanged); }
     // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags=', av.nut.hideFlags); }
     var dom = '';
-    var tmpTxt = '';
-    var inflow = 0.5;
-    var outflow = 0.5;
+    //var tmpTxt = '';
+    //var inflow = 0.5;
+    //var outflow = 0.5;
     var ndx = av.sgr.logicNames.indexOf(tsk);
     var numTsk = av.sgr.logEdNames[ndx];
-    var regionName;
-    var numRegions = 'multi';   //this flag was put in when Rob wanted the 'supplyTypeSlct' to be in the summary anytime the layout = whole dish
-    var regionLayout = document.getElementById(tsk+'_regionLayout').value;
+    //var regionName;
+    //var numRegions = 'multi';   //this flag was put in when Rob wanted the 'supplyTypeSlct' to be in the summary anytime the layout = whole dish
+    //var regionLayout = document.getElementById(tsk+'_regionLayout').value;
     var regionNameList;
-    var showGeo = "geoBoth";
+    //var showGeo = "geoBoth";
     //console.log('layout=', document.getElementById(tsk+'_regionLayout').value);
     if ( null != document.getElementById(tsk+'_regionLayout').value) {
       if ('1Global' == document.getElementById(tsk+'_regionLayout').value) {av.nut[numTsk].uiAll.geometry = 'global';}
@@ -787,7 +782,7 @@ av.sgr.supplyChange = function (domObj) {
     // end hiding resource (sugar) interface elements, will show accorting to current state
 
     //console.log('av.nut.'+numTsk+'.uiAll.geometry.tolower()=',av.nut[numTsk].uiAll.geometry.toLowerCase());
-    console.log(from, 'called av.sgr.changeDetailsLayout: av.sgr.complexityLevel=', av.sgr.complexityLevel, '; geometry=',av.nut[numTsk].uiAll.geometry, 'av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
+    console.log(from, '==> changeDetailsLayout: complex=', av.sgr.complexityLevel, '; geo=',av.nut[numTsk].uiAll.geometry, 'av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
     
     if ('sgrAdvanced' == av.sgr.complexityLevel) {
       av.sgr.processAdvancedFn();
