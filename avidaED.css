@@ -136,7 +136,7 @@ div.popStatsTableSot {
 .noWrapN {
   text-align:left;
   font-weight: bold;
-  max-height: 12px;
+  /* max-height: 12px; */ /* yemi: fixes inconsistent spacing of rows in Population Statistics */
   overflow: hidden;
 }
 

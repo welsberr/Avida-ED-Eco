@@ -161,6 +161,7 @@ html {
   background: #F5F5F5; /* lavender; */
   border: 1px solid #AAA;
   height: 100%;
+  width: 100%;
   resize: horizontal;
   min-width: 160px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
   max-width: 620px;
@@ -419,10 +420,9 @@ html {
 }
 .devoCammo {        /* #notation with 4 or 8 chars should have opacity as the last section should work, but NetBeans does not like it*/  
   border: none;                             /* #F5F5F500 should work, but net beans does not like it so some browsers might not like it */
-  background: inherit
-  //background-color: rgba(245,245,245,0);    /*  rgba(245,245,245,0)  is #F5F5F5 with opacity set to 0.0;   */  
+  background: inherit;
+  /* background-color: rgba(245,245,245,0); */   /*  rgba(245,245,245,0)  is #F5F5F5 with opacity set to 0.0;   */  
   color: rgba(245,245,245,0);               /* 0.0 (fully transparent) to 1.0 (fully opaque); */
-  
 }
 /* -------------------------------------------------------------------------------- main work bench center section -- */
 .mainBlockClassRow {
@@ -485,7 +485,7 @@ html {
   padding-top: 5px;
 }
 #testConfigLableHolder {
-  dislplay: none;
+  display: none;
   margin: 4px;
   flex: 0 1 40px;
 }
@@ -712,7 +712,7 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
     width: 100%;
   }
  
-  /* ---------------------- Population (right) side of tables */)
+  /* ---------------------- Population (right) side of tables( */
   #popStats4grid{           /* inside horizontal flexbox*/
     flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
     border: 1px solid #AAA;
@@ -721,8 +721,8 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
     display: none;  /* none; */
     flex: 0 0 53;
     border: 1px solid #AAA;
-    width: 99%;
-/*    visibility: hidden; */
+    width: 100%; /* yemi: changed from 99% to 100% to remove awkward space at the end */
+  /* visibility: hidden; */
   }
   #popChrtHolder{
     flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
@@ -894,7 +894,7 @@ input:focus {
   background: white;
 }
 
-.#geometyHideButton {
+#geometyHideButton {
   grid-area: geometyHideButton;
   display: inline-block;
   min-height: 30px;
@@ -980,7 +980,7 @@ details summary {
 }
 
 .geometryCls{
-  display: inline-block
+  display: inline-block;
 }
 
 .groupDebug{  display: inline; }
@@ -995,9 +995,9 @@ details summary {
 .localDebug { display:inline; }
 
 
-.2HalfLftRit { display:inline; }
-.3TopLftRit { display:inline; }
-.4Quarters { display:inline; }
+.2HalfLftRit{ display:inline; }
+.3TopLftRit{ display:inline; }
+.4Quarters{ display:inline; }
 
 .TopLftRit{
   display: inline-block;  
@@ -1024,7 +1024,6 @@ details summary {
   color: #444;
 }
 
-*/
 #not_section{ border-bottom: 1px solid #888; }
 #nan_section{ border-bottom: 2px solid #222; }  /* #000 = black */
 #and_section{ border-bottom: 1px solid #888; }
@@ -1034,7 +1033,7 @@ details summary {
 #nor_section{ border-bottom: 1px solid #888; }
 #xor_section{ border-bottom: 2px solid #222; }  /* #000 = black */
 #equ_section{ border-bottom: 1px solid #888; }
-}
+
 /************************* Sugar controls layout in 'summary' of detail/summary for each task-sugar in sugar according */
 /* I could not get a div with a dispay of inline-gid start on the top line of the summary. 
 .sumHolderDiv { display: inline-block; position: absolute; }
@@ -1109,8 +1108,8 @@ details summary {
   display: grid;
   grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls  supply_HoldCls initialGlobCls"
                        "sgrTitleCls tskRewardCls  tskRewardCls tskRewardCls tskRewardCls   initialGlobCls";
-  //grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdCls supply_HoldCls initialGlobCls"
-  //                     "detailArrow sgrTitleCls tskRewardCls  tskRewardCls tskRewardCls tskRewardCls   initialGlobCls";
+  /* grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdCls supply_HoldCls initialGlobCls" */
+  /*                     "detailArrow sgrTitleCls tskRewardCls  tskRewardCls tskRewardCls tskRewardCls   initialGlobCls"; */
   justify-content: start; 
   min-height: 23px;  width: 100%;
 }
@@ -2049,11 +2048,14 @@ checkbox:focus {
   width: 50%;
 }
 
-/* yemi: this is the make sure canvas fills the entire container while also maintaining aspect ratio */
+/*
+ * Yemi's Changes
+ */
+
 canvas {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: contain; /* yemi: this is the make sure canvas fills the entire container while also maintaining aspect ratio */
 }
 
 /* yemi: dragbar */
@@ -2068,12 +2070,12 @@ canvas {
   padding: 5px;
 }
 
-.popButCls {
-  padding: 5px;
-}
-
 #miniChartOptionsLabel {
   margin: 0;
+}
+
+label {
+  margin-bottom: 0em; /* yemi: overwrites margin on the bottom set by Bootstrap */
 }
 
 /********************************************************************************************** end of modalBig class */                                                                         */

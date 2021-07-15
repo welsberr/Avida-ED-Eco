@@ -194,11 +194,11 @@ function dragbarRightResize() {
 
       /* yemi: on mouse move, dragbar changes color */
       $('#dragbarRight').css('background-color', 'blue');
-      $('#dragbarRight').css('width', '4px');
+      $('#dragbarRight').css('width', '3px');
 
       var leftSideWidth;
       if (IS_LEFT_CLOSED) {
-        leftSideWidth = "0px"
+        leftSideWidth = "0px";
       } else {
         leftSideWidth = $('#navColId').css("width");
       }
@@ -209,7 +209,7 @@ function dragbarRightResize() {
       var widthOfRight = widthAvailable - widthOfCenter;
 
       /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
-      if (widthOfRight < parseInt($('.labInfoHoldCls').css("min-width")) - 10) {
+      if (widthOfRight < parseInt($('.labInfoHoldCls').css("min-width"))) {
         widthOfRight = 0; /* yemi: if width too small, collapse it */
         widthOfCenter = widthAvailable;
       }
@@ -349,7 +349,7 @@ av.dom.storeInitialSize = function() {
   dragbarLeftResize();
 
   /* yemi: call the drag bar right function */
-  dragbarRightResize()
+  dragbarRightResize();
 };
 
 //----------------------------------------------------------------------------------------show/hide left side panel --
@@ -532,6 +532,8 @@ av.ptd.lftPanelBtnFn = function () {
     $('.all3org').css("grid-template-columns", organism_colInfo);
   }
 
+  /* yemi: below code pretty much replaced by the code above */
+
   // var sizeStr;
   
   // av.dom.freezerSection_ht_was = parseFloat(av.dom.freezerSection_ht_now);
@@ -627,6 +629,7 @@ av.ptd.lftPanelBtnFn = function () {
 //   if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert_wd_after, ht =', av.dom.popInfoVert_wd, ',', av.dom.popInfoVert_ht); }
 //   if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_now,   ht =', av.dom.popChrtHolder_wd_now, ',', av.dom.popChrtHolder_ht_now); }
 //   if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_after, ht =', av.dom.popChrtHolder_wd, ',', av.dom.popChrtHolder_ht); }
+
 };
 
 // if (av.dbg.flg.root) { console.log('Root: before Resize helpers'); }

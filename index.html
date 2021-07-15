@@ -220,7 +220,7 @@
                 <div id='fzTdish' class='freezerContainer'>
                 </div>
               </div>
-            </details >
+            </details>
           </div><span id='freezerSection_end' class='display_none'></span>
 
           <div id="trashDiv" class='trash-grid-container'>
@@ -579,7 +579,9 @@
                         <colgroup><col class='popsTopTblcol1'><col class='popsTopTblcol2'></colgroup>
                           <tr>
                             <td><div class='noWrapL'>Size (# of organisms):&nbsp;</div></td>
-                            <td><div class='noWrapW'><label id='popSizeLabel'>&nbsp;&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;</div></td>
+                            <!-- <td><div class='noWrapW'><label id='popSizeLabel'>&nbsp;&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;</div></td> -->
+                            <!-- yemi: extra &nbsp; were making this label particularly large-->
+                            <td><div class='noWrapW'><label id='popSizeLabel'></label>&nbsp;</div></td>
                           </tr>
                           <tr>
                             <td><div class='noWrapL'>Avg. Fitness:&nbsp;</div></td>
@@ -600,11 +602,13 @@
                           <tr>
                             <td><div class='noWrap'># Ancestor(s) at start:&nbsp;</div></td>
                             <!-- <td><div class='noWrap'># w/ picked functions:&nbsp;</div></td>   -->
-                            <td><div class='noWrap'><label id='parentNumLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>
+                            <!--<td><div class='noWrap'><label id='parentNumLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>-->
+                            <td><div class='noWrap'><label id='parentNumLabel'></label>&nbsp;</div></td>
                           </tr>
                           <tr>
                             <td><div class='noWrap'># of viable organisms:&nbsp;</div></td>
-                            <td><div class='noWrap'><label id='viableNumLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>
+                            <!--<td><div class='noWrap'><label id='viableNumLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>-->
+                            <td><div class='noWrap'><label id='viableNumLabel'></label>&nbsp;</div></td>
                           </tr>
                         </tbody>
                       </table>
