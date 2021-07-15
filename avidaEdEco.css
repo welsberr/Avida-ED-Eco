@@ -115,7 +115,7 @@ html {
 .all3pop{ 
   display: grid;
   grid-template-rows: 2.5em 1fr;   /* 2.5em */
-  grid-template-columns: 240px 3px auto 3px 440px;    /* 440px */
+  grid-template-columns: 240px 3px auto 3px 400px;    /* 440px */
   grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
   height: 99vh;
@@ -155,13 +155,12 @@ html {
 .navColClass {
   grid-area:navColClass;
   place-self: stretch;
-  width: 238px;        /*was 152   340px*/
+  /* width: 238px; */       /*was 152   340px*/
   display: flex;
   flex-direction: column;
   background: #F5F5F5; /* lavender; */
   border: 1px solid #AAA;
   height: 100%;
-  width: 100%;
   resize: horizontal;
   min-width: 160px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
   max-width: 620px;
@@ -653,10 +652,11 @@ html {
   
   #selOrgType{
     /* flex: 0 1 190px;        /*was 170 */
-    flex: 1 1 auto;      /* fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
+    flex: 1 1 auto;    /* yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
     border: 1px solid #AAA;
-    overflow: auto;
+    /* overflow: auto; */
   }  /*contains sotTopTable and sotBotTable  */
+
   #sotTopTable { width: 100%; }
   #sotBopTable { width: 100%; background: white; }
   #sotColorBox { display: inline-block; width: 10px; height: 10px;}
@@ -664,34 +664,41 @@ html {
   .timePerform { min-width: 120px; background: #fff }
   
   #popStats4grid{
-    flex: 1 1 240px;      
+    flex: 1 1 240px; /* yemi: fixed the weird width problem */     
     border: 1px solid #AAA;
-    min-width: 200px;
+    /* min-width: 200px; */ /* yemi */
+    /* width: 100%; */
   } /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
-div.popsTopTableHold { min-width: 168px;  background: #DDD; }
-  .table.topPopTable {
+
+div.popsTopTableHold { 
+  min-width: 168px;
+  background: #DDD; 
+}
+
+.table.topPopTable {
 /*  margin: auto;  /* centers table in div */
-  border: 0;  padding: 0;
+  border: 0;  
+  padding: 0;
   border-collapse: collapse;
   table-layout: fixed;
   min-width: 150px;
 }
-  .popsTopTblcol1 {min-width: 134px; }
-  .popsTopTblcol2 {min-width: 45px; }
-  
-  #popsBotTableHold { width: 100%; background:white; }
-  table.botPopTable {
-  /*  margin: auto;  /* centers table in div */
-    border: 0;   padding: 0;
-    border-collapse: collapse;
-    width: 100%;
-    table-layout: auto;
+
+.popsTopTblcol1 {min-width: 134px; }
+.popsTopTblcol2 {min-width: 60px; } /* yemi: changed from 45px to 60px */
+
+#popsBotTableHold { width: 100%; background:white; }
+table.botPopTable {
+/*  margin: auto;  /* centers table in div */
+  border: 0;   padding: 0;
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: auto;
 }
-  .popsBotTblcol1 {width: 55px; }
-  .popsBotTblcol2 {width: 13px; }
-  .popsBotTblcol3 {width: 110px; }
-  .numAvidains {  background: #fff }   /* min-width: 110px; */
-  
+.popsBotTblcol1 {width: 55px; }
+.popsBotTblcol2 {width: 13px; }
+.popsBotTblcol3 {width: 110px; }
+.numAvidains {  background: #fff }   /* min-width: 110px; */
 
 .botPopTable tr:nth-child(even) {background: #FAFAFA}
 .botPopTable th {
@@ -705,53 +712,53 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
 #logTit6 { font-style: italic; color: dimgray; }
 #logTit7 { font-style: italic; color: dimgray; }
 
-  #popChrtHolder{
-    flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-    border: 1px solid #AAA;
-    height: 100%;
-    width: 100%;
-  }
- 
-  /* ---------------------- Population (right) side of tables( */
-  #popStats4grid{           /* inside horizontal flexbox*/
-    flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-    border: 1px solid #AAA;
-  }
-  #resrceDataHolder{
-    display: none;  /* none; */
-    flex: 0 0 53;
-    border: 1px solid #AAA;
-    width: 100%; /* yemi: changed from 99% to 100% to remove awkward space at the end */
-  /* visibility: hidden; */
-  }
-  #popChrtHolder{
-    flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-    height: 100%;
-  } 
-  #miniChartControls{
-    flex: 0 0 20px;
-    display: flex;
-    border: 1px solid #AAA;   
-    overflow: auto;
-    height: 25px; 
-  }
-  #miniChartYaxis{
-    flex: 0 0 220px;
-  }
-  #miniChartOptHolder{
-    flex: 0 0 auto;
-    padding-left: 15px;
-    align-self: flex-end;
-  }
-  #pauseOptions {
-    flex: 0 0 20px;
-    border: 1px solid #AAA;
-    background: #DDD;
-  }
-  #pausePrefix { display: inline-block; }
-  #pauseMidText { display: inline-block; }
-  #itemDone1st { display: none; }
-  #pauseCriteriaHolder { }  /* tried to use to give a white background to select box rather than a inherit background */
+#popChrtHolder{
+  flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+  border: 1px solid #AAA;
+  height: 100%;
+  width: 100%;
+}
+
+/* ---------------------- Population (right) side of tables( */
+#popStats4grid{           /* inside horizontal flexbox*/
+  flex: 1 1 auto;       /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+  border: 1px solid #AAA;
+}
+#resrceDataHolder{
+  display: none;  /* none; */
+  /* flex: 0 0 53; */
+  border: 1px solid #AAA;
+  width: 100%; /* yemi: changed from 99% to 100% to remove awkward space at the end */
+/* visibility: hidden; */
+}
+#popChrtHolder{
+  flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+  height: 100%;
+} 
+#miniChartControls{
+  flex: 0 0 20px;
+  display: flex;
+  border: 1px solid #AAA;   
+  overflow: auto;
+  height: 25px; 
+}
+#miniChartYaxis{
+  flex: 0 0 220px;
+}
+#miniChartOptHolder{
+  flex: 0 0 auto;
+  padding-left: 15px;
+  align-self: flex-end;
+}
+#pauseOptions {
+  flex: 0 0 20px;
+  border: 1px solid #AAA;
+  background: #DDD;
+}
+#pausePrefix { display: inline-block; }
+#pauseMidText { display: inline-block; }
+#itemDone1st { display: none; }
+#pauseCriteriaHolder { }  /* tried to use to give a white background to select box rather than a inherit background */
   
 input:focus {
 /*  background-color: yellow;  */
@@ -800,8 +807,9 @@ input:focus {
   grid-template-areas: ' sgrTop  sgrNot  sgrNan  sgrAnd  sgrOrn  sgrOro  sgrAnt  sgrNor  sgrXor  sgrEqu'
                        ' totTop  totNot  totNan  totAnd  totOrn  totOro  totAnt  totNor  totXor  totEqu'
                        'cellTop cellNot cellNan cellAnd cellOrn cellOro cellAnt cellNor cellXor cellEqu';
-  grid-template-columns: 3fr,      2fr,    2fr,    2fr,    2fr,    2fr,    2fr,    2fr,    2fr,    2fr; 
+  grid-template-columns: 3fr      2fr    2fr    2fr    2fr    2fr    2fr    2fr    2fr    2fr; 
   width: 100%;
+  overflow: auto;
   justify-content: stretch;
 }
 
@@ -1554,8 +1562,8 @@ input[type="checkbox"] {
 
 input[type="checkbox"]:checked {
 /*  border: 4px solid black; */
-  box-shadow:none;
-}
+  /* box-shadow:none;
+} */
 checkbox:focus {
   box-shadow:none;
 }
@@ -2064,6 +2072,10 @@ canvas {
   width :3px;
   height : 100%;
   cursor: col-resize;
+}
+
+#dragbarLeft {
+  float: right;
 }
 
 .organismControls {
