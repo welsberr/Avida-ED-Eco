@@ -622,7 +622,7 @@ require([
   //av.mouse down on the grid
   $(av.dom.gridCanvas).on('mousedown', function (evt) {
     av.post.addUser('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
-    console.log('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
+    //console.log('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
     av.mouse.downGridCanvasFn(evt);
   });
 
@@ -1061,6 +1061,7 @@ require([
 
   //----------------------------------------- Testing & Development Tools that are hidden from from User .---------------
   av.doj.mnHpDebug.onclick = function () {
+    console.log('in av.doj.mnHpDebug.onclick');
     if ('visible' === av.doj.mnDebug.style.visibility) {
       av.doj.mnDebug.style.visibility = 'hidden';
       dijit.byId('mnHpDebug').set('label', 'Show debug menu');
@@ -1718,11 +1719,6 @@ require([
   //Set up canvas objects
   av.grd.sCtx = av.dom.scaleCanvas.getContext('2d');
   av.grd.cntx = av.dom.gridCanvas.getContext('2d');
-  //av.grd.selCtx = av.dom.sotColorCanvas.getContext('2d');
-  //av.grd.SelectedWd = $('#sotColorCanvas').innerWidth();
-  //av.grd.SelectedHt = $('#sotColorCanvas').innerHeight();
-
-  //av.dom.gridCanvas.height = $('#gridHolder').innerHeight() - 16 - av.dom.scaleCanvas.height;
 
   //--------------------------------------------------------------------------------------------------------------------
   // if (av.dbg.flg.root) { console.log('Root: before av.grd.drawGridSetupFn'); }
@@ -3059,8 +3055,8 @@ require([
   //av.ui.toggleDevelopmentDisplays('Last_things_done');  // this needs to be called in production version
 
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
-  av.changeAllSgrRegionLayout(av.sgr.nutdft.uiAll.regionLayout, 'last_things_done');
-  av.sgr.ChangeAllsugarsupplyTypeSlct('unlimited','Last_things_done');
+  //av.changeAllSgrRegionLayout(av.sgr.nutdft.uiAll.regionLayout, 'last_things_done');   //does not seem to be needed. 2021_714
+  //av.sgr.ChangeAllsugarsupplyTypeSlct('unlimited','Last_things_done');    //does not seem to be needed. 2021_714
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');
   av.pch.popChrtHolder_Ht = $('popChrtHolder').innerHeight();
   av.pch.popStatsBlock_Ht = $('popStatsBlock').innerHeight();

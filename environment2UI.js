@@ -1340,7 +1340,7 @@
       };   // end of grid section
       sub = 0;
       // update layout for the "sugar" area of UI, based on nutrient structure (nut) from envrironment.cfg
-      av.sgr.changeDetailsLayout(tsk, sub, 'av.env.ui2dom');  // sub is not used in this function; need to update. 
+      av.sgr.changeDetailsLayout(tsk, 'av.env.ui2dom');  
     };    // end of task loop
     if (av.dbg.flg.nut) { console.log('Nut in dom: ================================================================== end of av.env.environment2UI =='); }
     if (av.dbg.flg.nut) { 

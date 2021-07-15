@@ -1032,7 +1032,6 @@
       if (av.debug.msg) console.log('av.grd.fill[av.grd.selectedNdx]',av.grd.fill[av.grd.selectedNdx]);
       if ('Ancestor Organism' == document.getElementById('colorMode').value) {
         if (null != av.grd.fill[av.grd.selectedNdx]) {
-          //av.grd.selCtx.fillStyle = av.parents.color[av.parents.name.indexOf(msg.ancestor)];
           bkcolor = av.parents.color[av.parents.name.indexOf(msg.ancestor)];
         }
       }
@@ -1050,7 +1049,6 @@
         }
       }
       if (av.debug.msg) console.log('sot bkcolor', bkcolor);
-      //av.grd.selCtx.fillRect(0, 0, av.grd.SelectedWd, av.grd.SelectedHt);
       av.dom.sotColorBox.style.backgroundColor = bkcolor;
       av.dom.sotColorBox.style.border = '2px solid ' + bkcolor;
     };

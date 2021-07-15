@@ -371,6 +371,9 @@ html {
   max-width: 98%;
 }
 
+#fzTdishSec { visibility: hidden; }
+#testDishDetailDiv {display: none; }
+
 /* trash area below freezer */
 #trashCan { 
   grid-area: trashCan;
@@ -382,6 +385,7 @@ html {
   align-self: stretch;
   justify-self: stretch;
   display: flex;
+  visibility: hidden;
   align-items: center;
   justify-content: flex-end;
 }
@@ -485,12 +489,13 @@ html {
   padding-top: 5px;
 }
 #testConfigLableHolder {
-  dislplay: none;
+  display: none;
   margin: 4px;
   flex: 0 1 40px;
 }
 #testConfig {
   flex: 0 1 80px;
+  display: none;
 }
 .activeConfigDojoDNDcontainer {
   min-height: 30px;
@@ -573,13 +578,15 @@ html {
   height: 100%;
 };
 
-  .zoomSlideClass { grid-area: zoomSlide; visibility: hidden; }
-  .timeUpdateClass { grid-area: timeUpdate;}
-  .freezeButtonDivClass { grid-area: freezeButton;}
-  .modeHolderClass { grid-area: modeHolder;}
-  .gridButtonClass { grid-area: gridButton;}
-  .rescalingClass { grid-area: rescaling;}
-  .popBotRiteClas { grid-area: popBotRite;}
+#avidanOutline {display: none};
+
+.zoomSlideClass { grid-area: zoomSlide; visibility: hidden; }
+.timeUpdateClass { grid-area: timeUpdate;}
+.freezeButtonDivClass { grid-area: freezeButton;}
+.modeHolderClass { grid-area: modeHolder;}
+.gridButtonClass { grid-area: gridButton;}
+.rescalingClass { grid-area: rescaling;}
+.popBotRiteClas { grid-area: popBotRite;}
 
 .gridControlContainerClass{
   display: grid;
@@ -718,7 +725,7 @@ div.popsTopTableHold { min-width: 168px;  background: #DDD; }
     border: 1px solid #AAA;
   }
   #resrceDataHolder{
-    display: none;  /* none; */
+    display: none;  
     flex: 0 0 53;
     border: 1px solid #AAA;
     width: 99%;
@@ -987,17 +994,12 @@ details summary {
 .grooupLimited { display: inline; }
 .groupChemostat { display: inline; }
 
-.globalLimited { display: inline; }
-.globalChemostat { display: inline; }
-.globalDebug { display:inline; }
-
 .localChemostat { display: inline; }
-.localDebug { display:inline; }
 
 
-.2HalfLftRit { display:inline; }
-.3TopLftRit { display:inline; }
-.4Quarters { display:inline; }
+.2HalfLftRit { display: inline-block; }  //inline
+.3TopLftRit { display: none; }  //inline
+.4Quarters { display: none; }  //inline
 
 .TopLftRit{
   display: inline-block;  
@@ -1342,9 +1344,11 @@ details summary {
 
 /* ----------------------------------------------------------------- Footer controls that change all tasks are here --*/
 /* background: inherit */
+#allSugarGeometry {display: none;}    /* probably need to delete this option
+
 
 #sugarSetTitle { grid-area:setTitle; justify-self: right; background: inherit; font-size: 110%; }
-#allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: center; }
+#allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: center; display: none; }
 #allSugarsupplyTypeHolder { grid-area:supplyTypeHolder ; justify-self: center; }
 #allSugarRegionLayoutDiv { grid-area:regionLayoutDiv; justify-self: center; }
 #allSugarDetailsDiv { grid-area:detailDiv; justify-self: lefts; }
@@ -1352,7 +1356,7 @@ details summary {
 
 /* delete in 2021 #allSugarDiffusionDiv  { grid-area:diffusionDiv; justify-self: center; } */
 
-#geometrySgr { grid-area:geometrySgr; justify-self: center; background: inherit;}
+#geometrySgr { grid-area:geometrySgr; justify-self: center; background: inherit; display: none; }
 #supplyTypeSlctSgr { grid-area:supplyTypeSlctSgr; justify-self: center; background: inherit;}
 #regionLayoutSgr { grid-area:regionLayoutSgr; justify-self: center; background: inherit;}
 #patternSgr { grid-area:patternSgr; justify-self: center; background: inherit;}
