@@ -121,8 +121,9 @@
              I know this because in av.grd.findGridSize function of populationGrid.js, it is set to 0.
     */
     var offsetYLocal = ($("#gridHolder").height() - av.dom.gridCanvas.height) / 2;
-    var mouseX = evt.offsetX - av.grd.marginX;
-    var mouseY = evt.offsetY - av.grd.marginY - offsetYLocal;
+    var offsetXLocal = ($("#gridHolder").width() - av.dom.gridCanvas.width) / 2;
+    var mouseX = evt.offsetX - av.grd.marginX - av.grd.xOffset - offsetXLocal;
+    var mouseY = evt.offsetY - av.grd.marginY - av.grd.yOffset - offsetYLocal;
     av.grd.selectedCol = Math.floor(mouseX / av.grd.cellWd);
     av.grd.selectedRow = Math.floor(mouseY / av.grd.cellHt);
     av.grd.selectedNdx = av.grd.selectedRow * av.grd.cols + av.grd.selectedCol;

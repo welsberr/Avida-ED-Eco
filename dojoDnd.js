@@ -770,8 +770,10 @@ av.dnd.landGridCanvas = function (source, nodes, target) {
   //add to log
   av.post.addUser('DnD: ' + source.node.id + '--> GridCanvas: by: ' + nodes[0].textContent + ' on (' +  av.mouse.UpGridPos[0] + ', ' + av.mouse.UpGridPos[1] + ')' );
 
-  var mouseX = av.mouse.UpGridPos[0] - av.grd.marginX - av.grd.xOffset;
-  var mouseY = av.mouse.UpGridPos[1] - av.grd.marginY - av.grd.yOffset;
+  var offsetXLocal = ($("#gridHolder").width() - av.dom.gridCanvas.width) / 2;
+  var offsetYLocal = ($("#gridHolder").height() - av.dom.gridCanvas.height) / 2;
+  var mouseX = av.mouse.UpGridPos[0] - av.grd.marginX - av.grd.xOffset - offsetXLocal;
+  var mouseY = av.mouse.UpGridPos[1] - av.grd.marginY - av.grd.yOffset - offsetYLocal;
   if (av.debug.dnd) console.log('mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
   if (av.debug.dnd) console.log('mouseX, y', mouseX, mouseY);
   av.parents.col[nn] = Math.floor(mouseX / av.grd.cellWd);

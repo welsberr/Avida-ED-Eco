@@ -50,66 +50,56 @@ function dragbarLeftResize() {
   /* yemi: when there's a mousehover over dragbar, dragbar changes color */
   $('#dragbarLeft').bind('mouseover', function(e) {
     $('#dragbarLeft').css('background-color', 'blue');
-    $('#dragbarLeft').css('width', '4px');
   })
 
   $('#dragbarLeft').bind('mouseout', function(e) {
     $('#dragbarLeft').css('background-color', 'gray');
-    $('#dragbarLeft').css('width', '3px');
   })
 
   $('#dragbarLeft').bind('mousedown', function(e) {
     e.preventDefault();
     dragging = true;
     
-  $(document).mousemove(function(e){
+    $(document).mousemove(function(e){
 
-    /* yemi: on mouse move, dragbar changes color */
-    $('#dragbarLeft').css('background-color', 'blue');
-    $('#dragbarLeft').css('width', '4px');
+      /* yemi: on mouse move, dragbar changes color */
+      $('#dragbarLeft').css('background-color', 'blue');
 
-    var rightSideWidth = $('#rightInfoHolder').css("width");
-    console.log(rightSideWidth);
-    var rightSideWidthNum = parseInt($('#rightInfoHolder').css("width")); /* yemi: extract only the number */
-    var widthAvailable = window.innerWidth - rightSideWidthNum - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
-    var percentage = (e.pageX / widthAvailable);
-    var widthOfNav = widthAvailable * percentage;
+      var rightSideWidth = $('#rightInfoHolder').css("width");
+      var rightSideWidthNum = parseInt($('#rightInfoHolder').css("width")); /* yemi: extract only the number */
+      var widthAvailable = window.innerWidth - rightSideWidthNum - 6; /* yemi: hard-coded 400px (right panel) 6px (left dragbar + right dragbar), need to fix */
+      var percentage = (e.pageX / widthAvailable);
+      var widthOfNav = widthAvailable * percentage;
 
-    /* yemi: 20 is a constant buffer to prevent the sidebar from closing too quickly; when in this buffer region, don't do anything, just maintain state */
-    if (widthOfNav > parseInt($('#navColId').css("min-width")) - 20 && widthOfNav < parseInt($('#navColId').css("min-width"))) {
-      return;
-    }
+      /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
+      if (widthOfNav < parseInt($('#navColId').css("min-width"))) {
+        widthOfNav = 0; /* yemi: if width too small, collapse it*/
+        IS_LEFT_CLOSED = true;
+      } 
 
-    /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
-    else if (widthOfNav < parseInt($('#navColId').css("min-width")) - 20) {
-      widthOfNav = 0; /* yemi: if width too small, collapse it*/
-      IS_LEFT_CLOSED = true;
-    } 
+      /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
+      else if (widthOfNav > parseInt($('#navColId').css("max-width"))) {
+        widthOfNav = parseInt($('#navColId').css("max-width"));
+        IS_LEFT_CLOSED = false;
+      }
 
-    /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
-    else if (widthOfNav > parseInt($('#navColId').css("max-width"))) {
-      widthOfNav = parseInt($('#navColId').css("max-width"));
-      IS_LEFT_CLOSED = false;
-    }
+      else {
+        IS_LEFT_CLOSED = false;
+      }
 
-    else {
-      IS_LEFT_CLOSED = false;
-    }
+      /* yemi: when modifying the column sizes, need to modify all three layouts */
+      var population_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
+      var organism_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
+      var analysis_colInfo = widthOfNav + "px 3px auto";
+      $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
+      $('.all3pop').css("grid-template-columns", population_colInfo);
+      $('.all3org').css("grid-template-columns", organism_colInfo);
 
-    /* yemi: when modifying the column sizes, need to modify all three layouts */
-    var population_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
-    var organism_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
-    var analysis_colInfo = widthOfNav + "px 3px auto";
-    $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
-    $('.all3pop').css("grid-template-columns", population_colInfo);
-    $('.all3org').css("grid-template-columns", organism_colInfo);
-    $('#navColId').css("width", widthOfNav + "px");
+      /* yemi: make the following divs take up the entire width of their containers */
+      $('orgInfoHolder').css("width", "100%");
 
-    /* yemi: make the following divs take up the entire width of their containers */
-    $('orgInfoHolder').css("width", "100%");
-
-    /* yemi: update organism canvas */
-    av.ind.updateOrgTrace()
+      /* yemi: update organism canvas */
+      av.ind.updateOrgTrace()
     });
   });
 
@@ -119,16 +109,15 @@ function dragbarLeftResize() {
 
       /* yemi: dragbar changes color back to original */
       $('#dragbarLeft').css('background-color', 'gray');
-      $('#dragbarLeft').css('width', '3px');
 
       var rightSideWidth = $('#rightInfoHolder').css("width");
       var rightSideWidthNum = parseInt($('#rightInfoHolder').css("width")); /* yemi: extract only the number */
-      var widthAvailable = window.innerWidth - rightSideWidthNum - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
+      var widthAvailable = window.innerWidth - rightSideWidthNum - 6; /* yemi: hard-coded 400px (right panel) 6px (left dragbar + right dragbar), need to fix */
       var percentage = (e.pageX / widthAvailable);
       var widthOfNav = widthAvailable * percentage;
 
       /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
-      if (widthOfNav < parseInt($('#navColId').css("min-width")) - 20) {
+      if (widthOfNav < parseInt($('.navColClass').css("min-width"))) {
         widthOfNav = 0; /* yemi: if width too small, collapse it */
         IS_LEFT_CLOSED = true;
         /* yemi: change the button's contents and look */
@@ -137,7 +126,7 @@ function dragbarLeftResize() {
       } 
 
       /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
-      else if (widthOfNav > parseInt($('#navColId').css("max-width"))) {
+      else if (widthOfNav > parseInt($('.navColClass').css("max-width"))) {
         widthOfNav = parseInt($('#navColId').css("max-width"));
         IS_LEFT_CLOSED = false;
         /* yemi: change the button's contents and look */
@@ -159,7 +148,6 @@ function dragbarLeftResize() {
       $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
       $('.all3pop').css("grid-template-columns", population_colInfo);
       $('.all3org').css("grid-template-columns", organism_colInfo);
-      $('#navColId').css("width", widthOfNav + "px");
 
       /* yemi: make the following divs take up the entire width of their containers */
       $('orgInfoHolder').css("width", "100%");
@@ -179,12 +167,12 @@ function dragbarRightResize() {
   $('#dragbarRight').bind('mouseover', function(e) {
     $('#dragbarRight').css('background-color', 'blue');
     $('#dragbarRight').css('width', '4px');
-  })
+  });
 
   $('#dragbarRight').bind('mouseout', function(e) {
     $('#dragbarRight').css('background-color', 'gray');
     $('#dragbarRight').css('width', '3px');
-  })
+  });
 
   $('#dragbarRight').bind('mousedown', function(e) {
     e.preventDefault();
@@ -194,22 +182,22 @@ function dragbarRightResize() {
 
       /* yemi: on mouse move, dragbar changes color */
       $('#dragbarRight').css('background-color', 'blue');
-      $('#dragbarRight').css('width', '4px');
+      $('#dragbarRight').css('width', '3px');
 
       var leftSideWidth;
       if (IS_LEFT_CLOSED) {
-        leftSideWidth = "0px"
+        leftSideWidth = "0px";
       } else {
         leftSideWidth = $('#navColId').css("width");
       }
 
-      var widthAvailable = window.innerWidth - parseInt(leftSideWidth) - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
+      var widthAvailable = window.innerWidth - parseInt(leftSideWidth) - 6; /* yemi: hard-coded 400px (right panel) 6px (left dragbar + right dragbar), need to fix */
       var percentage = ((e.pageX - parseInt(leftSideWidth) - 6) / widthAvailable); /* yemi: prolly needs fixing */
       var widthOfCenter = widthAvailable * percentage;
       var widthOfRight = widthAvailable - widthOfCenter;
 
       /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
-      if (widthOfRight < parseInt($('.labInfoHoldCls').css("min-width")) - 10) {
+      if (widthOfRight < parseInt($('.labInfoHoldCls').css("min-width"))) {
         widthOfRight = 0; /* yemi: if width too small, collapse it */
         widthOfCenter = widthAvailable;
       }
@@ -223,6 +211,7 @@ function dragbarRightResize() {
       /* yemi: when modifying the column sizes, need to modify all two layouts */
       var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
       var organism_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
+      console.log(population_colInfo);
       
       $('.all3pop').css("grid-template-columns", population_colInfo);
       $('.all3org').css("grid-template-columns", organism_colInfo);
@@ -250,7 +239,7 @@ function dragbarRightResize() {
         leftSideWidth = $('#navColId').css("width");
       }
 
-      var widthAvailable = window.innerWidth - parseInt(leftSideWidth) - 6; /* yemi: hard-coded 440px (right panel) 6px (left dragbar + right dragbar), need to fix */
+      var widthAvailable = window.innerWidth - parseInt(leftSideWidth) - 6; /* yemi: hard-coded 400px (right panel) 6px (left dragbar + right dragbar), need to fix */
       var percentage = ((e.pageX - parseInt(leftSideWidth) - 6) / widthAvailable); /* yemi: prolly needs fixing */
       var widthOfCenter = widthAvailable * percentage;
       var widthOfRight = widthAvailable - widthOfCenter;
@@ -349,7 +338,7 @@ av.dom.storeInitialSize = function() {
   dragbarLeftResize();
 
   /* yemi: call the drag bar right function */
-  dragbarRightResize()
+  dragbarRightResize();
 };
 
 //----------------------------------------------------------------------------------------show/hide left side panel --
@@ -467,7 +456,6 @@ av.ptd.ritePanelBtnFn = function () {
   }
 
   else if (IS_RIGHT_CLOSED) {
-    console.log("right bar was closed.");
     IS_RIGHT_CLOSED = false;
 
     /* yemi: change the button's contents and look */
@@ -475,7 +463,7 @@ av.ptd.ritePanelBtnFn = function () {
     $('#ritePanelBUtton').css('background', 'inherit');
 
     // var widthOfRight = parseInt($('.labInfoHoldCls').css("min-width"));
-    var widthOfRight = 440;
+    var widthOfRight = 400;
 
     /* yemi: when modifying the column sizes, need to modify all two layouts */
     var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
@@ -522,7 +510,8 @@ av.ptd.lftPanelBtnFn = function () {
     $('#leftPanelButton').val('<< ');
     $('#leftPanelBUtton').css('background', 'inherit');
 
-    var widthOfNav = parseInt($(".navColClass").css("width"));
+    var widthOfNav = 240; // yemi: default width
+
     /* yemi: when modifying the column sizes, need to modify all three layouts */
     var population_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
     var organism_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
@@ -531,6 +520,8 @@ av.ptd.lftPanelBtnFn = function () {
     $('.all3pop').css("grid-template-columns", population_colInfo);
     $('.all3org').css("grid-template-columns", organism_colInfo);
   }
+
+  /* yemi: below code pretty much replaced by the code above */
 
   // var sizeStr;
   
@@ -627,6 +618,7 @@ av.ptd.lftPanelBtnFn = function () {
 //   if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert_wd_after, ht =', av.dom.popInfoVert_wd, ',', av.dom.popInfoVert_ht); }
 //   if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_now,   ht =', av.dom.popChrtHolder_wd_now, ',', av.dom.popChrtHolder_ht_now); }
 //   if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_after, ht =', av.dom.popChrtHolder_wd, ',', av.dom.popChrtHolder_ht); }
+
 };
 
 // if (av.dbg.flg.root) { console.log('Root: before Resize helpers'); }
