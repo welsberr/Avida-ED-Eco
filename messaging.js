@@ -935,8 +935,9 @@ av.ptd.updateLogicFn = function (mUpdate){
   }
   */
 };
-//---------------------------------------------------------------------------------------- end av.ptd.updateLogicFn --
+//------------------------------------------------------------------------------------------ end av.ptd.updateLogicFn --
 
+//--------------------------------------------------------------------------------- av.grd.updateSelectedOrganismType --
 //writes out data for WebOrgDataByCellID
 av.grd.updateSelectedOrganismType = function (msg) {
   'use strict';
@@ -1024,38 +1025,44 @@ av.grd.updateSelectedOrganismType = function (msg) {
     dijit.byId('mnCnOrganismTrace').attr('disabled', false);
   }
 };
+//----------------------------------------------------------------------------- end av.grd.updateSelectedOrganismType --
 
-  // if (av.dbg.flg.root) { console.log('Root: before av.msg.fillColorBlock'); }
-  av.msg.fillColorBlock = function (msg) {  //Draw the color block
-      'use strict';
-      var bkcolor = '#000';
-      if (av.debug.msg) console.log('in fillColorBlock');
-      //if (av.debug.msg) console.log('ndx', av.grd.selectedNdx, '; msg.ancestor.data[ndx]',av.grd.msg.ancestor.data[av.grd.selectedNdx]);
-      if (av.debug.msg) console.log('av.grd.fill[av.grd.selectedNdx]',av.grd.fill[av.grd.selectedNdx]);
-      if ('Ancestor Organism' == document.getElementById('colorMode').value) {
-        if (null != av.grd.fill[av.grd.selectedNdx]) {
-          bkcolor = av.parents.color[av.parents.name.indexOf(msg.ancestor)];
-        }
-      }
-    }
-    else {
-      if (null === av.grd.fill[av.grd.selectedNdx]) {
-        if (null === av.grd.msg.ancestor.data[av.grd.selectedNdx]) bkcolor = '#000';
-        else bkcolor = '#888';
-      }
-      if (av.debug.msg) console.log('sot bkcolor', bkcolor);
-      av.dom.sotColorBox.style.backgroundColor = bkcolor;
-      av.dom.sotColorBox.style.border = '2px solid ' + bkcolor;
+//--------------------------------------------------------------------------------------------- av.msg.fillColorBlock --
+// Draw a box with the color of the selected organism in the Selected Organsim Type (SOT) table next to name.
+// if (av.dbg.flg.root) { console.log('Root: before av.msg.fillColorBlock'); }
+av.msg.fillColorBlock = function (msg) {  
+  'use strict';
+  var bkcolor = '#000';
+  if (av.debug.msg) {console.log('in fillColorBlock'); }
+  //if (av.debug.msg) { console.log('ndx', av.grd.selectedNdx, '; msg.ancestor.data[ndx]',av.grd.msg.ancestor.data[av.grd.selectedNdx]); }
+  if (av.debug.msg) { console.log('av.grd.fill[av.grd.selectedNdx]',av.grd.fill[av.grd.selectedNdx]); }
+
+  if ('Ancestor Organism' == document.getElementById('colorMode').value) {
+    // the display mode is Ancestor so used the color for the ancstor, if none exits. 
+    if (null != av.grd.fill[av.grd.selectedNdx]) {
+      bkcolor = av.parents.color[av.parents.name.indexOf(msg.ancestor)];
     };
-    // if (av.dbg.flg.root) { console.log('Root: end of messaging'); }  
-  // ------------------------------------------------ not in use ---------------------------------------------------------
-  /*
-  function doDbReady(fio) {
-    'use strict';
-    var request = {
-      'type': 'dbReady'
-    };
-    av.aww.uiWorker.postMessage(request);
   }
-  */
+  else {
+    // color mode is not ancestor so use the color in that cell if one is prescent. 
+    if (null != av.grd.fill[av.grd.selectedNdx]) { bkcolor = '#888'; }
+  };
+  if (av.debug.msg) console.log('sot bkcolor', bkcolor);
+  av.dom.sotColorBox.style.backgroundColor = bkcolor;
+  av.dom.sotColorBox.style.border = '2px solid ' + bkcolor;
+};
+//----------------------------------------------------------------------------------------- end av.msg.fillColorBlock --
+// if (av.dbg.flg.root) { console.log('Root: end of messaging'); }
+
+
+// ------------------------------------------------ not in use ---------------------------------------------------------
+/*
+function doDbReady(fio) {
+  'use strict';
+  var request = {
+    'type': 'dbReady'
+  };
+  av.aww.uiWorker.postMessage(request);
+}
+*/
 
