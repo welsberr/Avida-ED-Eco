@@ -622,7 +622,7 @@ require([
   //av.mouse down on the grid
   $(av.dom.gridCanvas).on('mousedown', function (evt) {
     av.post.addUser('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
-    //console.log('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
+    console.log('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
     av.mouse.downGridCanvasFn(evt);
   });
 
@@ -931,11 +931,10 @@ require([
   //********************************************************************************************s************************
 
   // supposed to make the center section larger. does not work so button hidden
-    // document.getElementById('ritePanelButton').onclick = function () {
-    //   av.ptd.ritePanelButton();
-    //   console.log('in ritePanelButton.onclick');
-    // };
-    /* yemi: erased because it was interfering with my code */
+    document.getElementById('ritePanelButton').onclick = function () {
+      av.ptd.ritePanelButton();
+      console.log('in ritePanelButton.onclick');
+    };
   //--------------------------------------------------------------------------------------- end ritePanelButton.onclick --
 
   //----------------------------------------------------------------------------------------------------------------------
@@ -1061,7 +1060,6 @@ require([
 
   //----------------------------------------- Testing & Development Tools that are hidden from from User .---------------
   av.doj.mnHpDebug.onclick = function () {
-    console.log('in av.doj.mnHpDebug.onclick');
     if ('visible' === av.doj.mnDebug.style.visibility) {
       av.doj.mnDebug.style.visibility = 'hidden';
       dijit.byId('mnHpDebug').set('label', 'Show debug menu');
@@ -1488,9 +1486,6 @@ require([
     if (av.debug.dnd || av.debug.mouse)
       console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
     av.ui.mainBoxSwap('populationBlock');
-
-    /* yemi: just so that if screen resized in the other layout, you still update the population page correctly */
-    resizePopulationPage();
   };
 
   av.dom.organismButton.onclick = function () {
@@ -1511,12 +1506,6 @@ require([
       av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
       $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
     console.log('orgInfoHolder.paddding=', $("#orgInfoHolder").css('padding'));
-
-    /* yemi: just so that if screen resized in the other layout, you still update the organism page correctly */
-    resizeOrganismPage();
-
-    /* yemi: organism trace persists; can be removed if undesired */
-    av.ind.updateOrgTrace()
   };
 
   document.getElementById('analysisButton').onclick = function () {
@@ -1719,6 +1708,12 @@ require([
   //Set up canvas objects
   av.grd.sCtx = av.dom.scaleCanvas.getContext('2d');
   av.grd.cntx = av.dom.gridCanvas.getContext('2d');
+  av.dom.sotColorCanvas = document.getElementById('sotColorCanvas');
+  av.grd.selCtx = av.dom.sotColorCanvas.getContext('2d');
+  av.grd.SelectedWd = $('#sotColorCanvas').innerWidth();
+  av.grd.SelectedHt = $('#sotColorCanvas').innerHeight();
+
+  //av.dom.gridCanvas.height = $('#gridHolder').innerHeight() - 16 - av.dom.scaleCanvas.height;
 
   //--------------------------------------------------------------------------------------------------------------------
   // if (av.dbg.flg.root) { console.log('Root: before av.grd.drawGridSetupFn'); }
@@ -2698,12 +2693,9 @@ require([
 
   //set canvas size; called from many places
   av.ind.organismCanvasHolderSize = function() {
-    av.dom.organCanvas.width = $('#organismCanvasHolder').innerWidth() - 6; // yemi: hopefully $('organismCanvasHolder').innerWidth is equivalent to 100%
-    av.dom.organCanvas.height = $('#organismCanvasHolder').innerHeight() - 15; // yemi: changed it from -12 to -15 (works better I guess? when I tried using percentages, did not work as well)
-    /* yemi: IMPORTANT THING TO NOTE: innerHeight() returns just the number, .css("width") returns a string with 'px' suffix
-             Canvas widths CANNOT have 'px' suffix, it just needs to be a number. So in conclusion, do NOT use .css("width") to set the width of a canvas. I learned it the hard way. */
+    av.dom.organCanvas.width = $('#organismCanvasHolder').innerWidth() - 6;
+    av.dom.organCanvas.height = $('#organismCanvasHolder').innerHeight() - 12;
   };
-
   //set output Canvas Size
   av.ind.cpuOutputCnvsSize = function() {
     console.log('output Wd Ht: $inner =', $('#cpuOutputCnvs').innerWidth(), $('#cpuOutputCnvs').innerHeight());
@@ -3052,12 +3044,15 @@ require([
     //set mmDebug to hidden so that when toggle called it will show the development sections x
     av.doj.mnDebug.style.visibility = 'hidden';   //visible
   };
-  //av.ui.toggleDevelopmentDisplays('Last_things_done');  // this needs to be called in production version
+  av.ui.toggleDevelopmentDisplays('Last_things_done');  // this needs to b called in production version
 
   av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
-  //av.changeAllSgrRegionLayout(av.sgr.nutdft.uiAll.regionLayout, 'last_things_done');   //does not seem to be needed. 2021_714
-  //av.sgr.ChangeAllsugarsupplyTypeSlct('unlimited','Last_things_done');    //does not seem to be needed. 2021_714
+  //av.sgr.ChangeAllGeo(av.sgr.dftGeometry);   //tiba delete in 2021
+  av.changeAllSgrRegionLayout(av.sgr.nutdft.uiAll.regionLayout, 'last_things_done');
+  //av.sgr.setSugarColors(true);  //true is to turn colors on;    // set color/grey individually so when 0 resources, grey shades rather than colors
+  av.sgr.ChangeAllsugarsupplyTypeSlct('unlimited','Last_things_done');
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');
+  //document.getElementById('resrceDataHolder').style.display = 'block';   //display local resource data
   av.pch.popChrtHolder_Ht = $('popChrtHolder').innerHeight();
   av.pch.popStatsBlock_Ht = $('popStatsBlock').innerHeight();
   av.pch.pop_statsBlock_ChrtHolder_noResrceGrid = av.pch.popStatsBlock_Ht - av.pch.popChrtHolder_Ht;
@@ -3109,43 +3104,6 @@ require([
     // av.ui.resizePopLayout('window.resize');    //does not work.
   });
 });
-
-//----------------------------------------------------------------------------------------------------------------------
-  //on 2018_0823 this is where height gets messed up when loading the program.
-  av.pch.divSize = function (from) {
-    //av.debug.uil = true;
-    if (av.debug.uil) { console.log('ui: PopPlotSize: ',from, 'called av.pch.divSize'); }
-    if (av.debug.uil) {
-      console.log('ui: popChrtHolder css.wd ht border padding margin=', $("#popChrtHolder").css('width'), $("#popChrtHolder").css('height')
-        , $("#popChrtHolder").css('border'), $("#popChrtHolder").css('padding'), $("#popChrtHolder").css('margin'));
-    }
-    if (av.debug.uil) {
-      console.log('ui: PopPlotSize: av.dom.popChrtHolder.ht offset, client ht=', av.dom.popChrtHolder.offsetHeight,
-        av.dom.popChrtHolder.clientHeight, '; parseInt(padding)=', parseInt($("#popChrtHolder").css('padding'), 10));
-    }
-    av.pch.pixel.ht = av.dom.popChrtHolder.clientHeight - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
-    av.pch.pixel.wd = av.dom.popChrtHolder.clientWidth - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
-    //console.log(from, 'called av.pch.divSize: av.pch.pixel.wd=', av.pch.pixel.wd, '; av.pch.pixel.ht=', av.pch.pixel.ht);
-    av.pch.layout.height = av.pch.pixel.ht - av.pch.pixel.hdif;  //leave a bit more vertical space for plot;
-    av.pch.layout.width = av.pch.pixel.wd - av.pch.pixel.wdif;   //leave more horizontal space to right of plot;
-    if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
-    if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
-    //av.dom.popChrtHolder.style.width = av.dom.popChrtHolder.clientWidth + 'px';  //seems redundent  djb said to delete as of 2018_0827
-    //av.dom.popChrtHolder.style.height = av.dom.popChrtHolder.clientHeight + 'px';  //seems redundent djb said to delete as of 2018_0827
-    av.dom.popChart.style.height = av.pch.layout.height + 'px';
-    av.dom.popChart.style.width = av.pch.layout.width + 'px';
-    if (av.debug.uil) {
-      console.log('ui: PopPlotSize: popChart css.wd, border, padding, margin=', $("#popChart").css('width'), $("#popChart").css('height')
-        , $("#popChart").css('border'), $("#popChart").css('padding'), $("#popChart").css('margin'));
-    }
-    if (av.debug.uil) {
-      console.log('ui: PopPlotSize: av.dom.popChart.ht offset, client ht=', av.dom.popChart.offsetHeight,
-        av.dom.popChart.clientHeight, '; parseInt(padding)=', parseInt($("#popChart").css('padding'), 10));
-    }
-    if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.pixel.wd ht=', av.pch.pixel.wd, av.pch.pixel.ht); }
-    if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
-    //av.debug.uil = false;
-  };
 
 // **************************************************************************************************************** */
 //                                       Notes on things I learned writing this code

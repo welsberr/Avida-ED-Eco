@@ -136,7 +136,7 @@ div.popStatsTableSot {
 .noWrapN {
   text-align:left;
   font-weight: bold;
-  /* max-height: 12px; */ /* yemi: fixes inconsistent spacing of rows in Population Statistics */
+  max-height: 12px;
   overflow: hidden;
 }
 
@@ -275,7 +275,7 @@ table.topSotTable {
   text-align: right;
 }
 .topSotTable tr *:nth-child(2) {
-  width: 50%;
+  width: 40px;
 }
 
 .topSotTable tr:nth-child(odd) {background: #D7D7D7}
@@ -286,7 +286,6 @@ table.topPopTable {
   border: 0;
   padding: 0;
   white-space: nowrap;
-  width: 100%;
 }
 .topPopTable tr *:nth-child(1) {
   text-align: right;
@@ -304,7 +303,6 @@ table.botSotTable {
   border: 0;
   padding: 0;
   border-collapse: collapse;
-  width: 100%; /* yemi */
 }
 
 .botSotTable tr:nth-child(even) {background: #FAFAFA}
@@ -320,36 +318,37 @@ table.botSotTable {
   text-align:left;
   padding-left: 1px;
   /* max-height: 125px;  */
-  /* width: 70px; */ /* yemi */
+  width: 70px; 
   overflow: hidden;
 }
-
-.sotL {
+  .sotL {
   text-align:right;
   max-height: 15px;
-  /* width: 110px; */ /* yemi */
+  /* width: 110px;  */
   overflow: hidden;
 }
-.sotodd {
-  background: #BBB;   /* #D7D7D7;    */
-  align-self: center;
-}
-.sotEven {
-  background: #DDD;
-  align-self: center;
-}
+  .sotodd {
+    background: #BBB;   /* #D7D7D7;    */
+    align-self: center;
+  }
+  .sotEven {
+    background: #DDD;
+    align-self: center;
+  }
 .noWrapR {
   text-align:left;
   max-height: 15px;
   overflow: hidden;
 }
 .popButCls{
-  padding: 0px 2px 0px 2px;  
+  padding: 0px; 2px; 0px; 2px;  
   max-height: 15px;
 }
 .noWrap1 {
   text-align:center;
 }
+
+
 
 /*
 web pages about style sheets that are changed with javascript
@@ -362,7 +361,7 @@ http://www.shawnolson.net/a/503/altering_css_class_attributes_with_javascript.ht
 /*
                     <div id='sotLabel' class='popStatsTitle'>Selected Organism Type</div>
                       <div id='sotTopTable' class='topSotTable'>
-                        <div class='sotL sotodd'>Name:&nbsp;<canvas id='sotColorBox' width='10' height='10'></canvas></div>
+                        <div class='sotL sotodd'>Name:&nbsp;<canvas id='sotColorCanvas' width='10' height='10'></canvas></div>
                         <div class='sotR sotodd'><label id='nameLabel'></label>.</div>
 
                         <div class='sotL sotEven'>Fitness:&nbsp;</div>

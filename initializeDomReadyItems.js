@@ -75,7 +75,6 @@
     av.dom.dadInfo00 = document.getElementById('dadInfo00');
     av.dom.benchPopBot = document.getElementById('benchPopBot');
     av.dom.popStatsBlock = document.getElementById('popStatsBlock');
-    av.dom.sotColorBox = document.getElementById('sotColorBox');
     av.dom.StatsButton = document.getElementById('StatsButton');
 
     av.dom.popChrtHolder = document.getElementById('popChrtHolder'); 
@@ -326,75 +325,142 @@
 
   av.ui.toggleDevelopmentDisplays = function () {
     var len, tsk, sub;
-    var ndx2b = 0;
-    var visible2b = ['visible', 'hidden'];
-    var block2b = ['inline-block', 'none'];
-    var flex2b = ['flex', 'none'];
-    var devoTog2b = ['devoShow', 'devoCammo'];
-    var geoHideBut2b =['devoShow', 'geoButtonCammo'];
-    var popInfoTab2b = ['tabHolderShow', 'tabHolderHide'];
-    var sgrfooter2b = ['changeAllSugarsTogetherContainer', 'changeAllSugarsTogetherNoGlobalContainer'];
-    
-    console.log('av.doj.mnDebug.style.visibility=', av.doj.mnDebug.style.visibility);
+    var visibleTxt = 'visible';
     if ('visible' === av.doj.mnDebug.style.visibility) {
-      ndx2b = 1;
       //hide all development elements
       av.ui.hideDevelopment = true;
+      av.doj.mnDebug.style.visibility = 'hidden';
+      document.getElementById('showTextDebugButtonDiv').style.visibility = 'hidden';
+      document.getElementById('developmentToggle').className = 'devoCammo';  
+      document.getElementById('geometyHideButton').className = 'geoButtonCammo';  
+      document.getElementById('ritePnlBtnHolder').className = 'pnlBtnHldrHide';
+
+      document.getElementById('fzTdishSec').style.visibility = 'hidden';
+      document.getElementById('testDishDetailDiv').style.display = 'none';
+      document.getElementById('testConfigLableHolder').style.display = 'none';
+      document.getElementById('testConfig').style.display = 'none';
+      document.getElementById('avidianOutline').style.display = 'none';
+
+      document.getElementById('popInfoTabHolder').className = 'tabHolderHide';
+      //document.getElementById('resrceDataHolder').style.display = 'none';
+
       av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopmentDisplays');
+      len = av.sgr.logicNames.length;
+      sub = 1;   //this may change later;
+      for (ii = 0; ii < len; ii++) {
+        tsk = av.sgr.logicNames[ii];
+        av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
+      };
+
+      if (av.sgr.gridOnly) {
+        document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherNoGlobalContainer';
+        document.getElementById('geometrySgr').style.display = 'none';
+        document.getElementById('allSugarGeometryDiv').style.display = 'none'; 
+        document.getElementById('allSugarGeometry').style.display = 'none'; 
+      }
+
+      //console.log("document.getElementsByClassName('globalChemostat').length=", document.getElementsByClassName('globalChemostat').length );
+      //console.log("document.getElementsByClassName('localChemostat')=", document.getElementsByClassName('localChemostat').length );
+      //console.log("document.getElementsByClassName('globalLimited')=", document.getElementsByClassName('globalLimited').length );
+
+      //Hide select options that are not yet implemented
+
+      len = document.getElementsByClassName('localDebug').length;
+      for (ii = 0; ii < len; ii++) {
+        document.getElementsByClassName('localDebug')[ii].style.display = 'none';
+        //document.getElementsByClassName('localChemostat')[ii].style.display = 'none';
+      };
+
+      //Hide select options that are not yet implemented
+      len = document.getElementsByClassName('globalChemostat').length;
+      for (ii = 0; ii < len; ii++) {
+        //console.log('globalLimited=', document.getElementsByClassName('globalLimited')[ii].id);
+        document.getElementsByClassName('globalLimited')[ii].style.display = 'none';
+        document.getElementsByClassName('globalChemostat')[ii].style.display = 'none';
+        //document.getElementsByClassName('globalDebug')[ii].style.display = 'none';
+      };
+
+      len = document.getElementsByClassName('3TopLftRit').length;
+      for (ii = 0; ii < len; ii++) {
+        document.getElementsByClassName('3TopLftRit')[ii].style.display = 'none';
+        document.getElementsByClassName('4Quarters')[ii].style.display = 'none';
+      }
       
-      //debug menu??Î
+      // now clear options for changing all sugars (groups)
+      //document.getElementsByClassName('groupChemostat')[0].style.display = 'none';
+      //document.getElementsByClassName('groupLimited')[0].style.display = 'none';     //limited available for local options
+      //document.getElementsByClassName('groupDebug')[0].style.display = 'none';
+      //console.log('dom.groupDebug=', document.getElementsByClassName('groupDebug'));
+
+      //debug menu??
       dijit.byId('mnHpDebug').set('label', 'Show debug menu');   //???????
 
       av.post.addUser('Button: mnHpDebug: now hidden; InitlizeDomReadyItems.js');
-      //-------------------------------------------------------------------------------- hide stuff --
-    } else {
+    } else {       
       // development sectiomn can be seen.
       av.ui.hideDevelopment = false;
+      av.doj.mnDebug.style.visibility = 'visible';
+      document.getElementById('showTextDebugButtonDiv').style.visibility = 'visible';
+      document.getElementById('developmentToggle').className = 'devoShow';
+      document.getElementById('geometyHideButton').className = 'devoShow';
+      document.getElementById('ritePnlBtnHolder').className = 'ritePnlBtnHlderShow';
+
+      document.getElementById('fzTdishSec').style.visibility = 'visible';
+      document.getElementById('testDishDetailDiv').style.display = 'block';
+      document.getElementById('testConfigLableHolder').style.display = 'flex';
+      document.getElementById('testConfig').style.display = 'flex';
+      document.getElementById('avidianOutline').style.display = 'inline-block'; 
+
+      document.getElementById('popInfoTabHolder').className = 'tabHolderShow';
+      document.getElementById('resrceDataHolder').style.display = 'block';
+
       av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopmentDisplays.onclick_show');
 
+      if (av.sgr.gridOnly) {    //In devvelopment
+        document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherContainer';
+        document.getElementById('geometrySgr').style.display = 'inline-block';
+        document.getElementById('allSugarGeometryDiv').style.display = 'inline-block';
+      }
+
+      len = document.getElementsByClassName('3TopLftRit').length;
+      for (ii = 0; ii < len; ii++) {
+        document.getElementsByClassName('3TopLftRit')[ii].style.display = 'inline-block';
+        document.getElementsByClassName('4Quarters')[ii].style.display = 'inline-block';
+      }
+
+
+
+      len = av.sgr.logicNames.length;
+      console.log('logicNames.length=', len);
+      sub = 1;   //this may change later;
+      for (ii = 0; ii < len; ii++) {
+        tsk = av.sgr.logicNames[ii];
+        av.sgr.changeDetailsLayout(tsk, sub, 'toggle development show');
+        //document.getElementsByClassName('globalChemostat')[ii].style.display = 'inline';
+        //document.getElementsByClassName('globalLimited')[ii].style.display = 'inline';
+        //document.getElementsByClassName('globalDebug')[ii].style.display = 'inline';
+      };
+
+      //show environment options sill under development.
+      document.getElementById('sugarFooter').className = 'changeAllSugarsTogetherContainer';
+
+/*        
+      len = document.getElementsByClassName('localChemostat').length;
+      console.log('localChemostat.len=', len, '; globalChemostat.len=', document.getElementsByClassName('globalChemostat').length);
+      for (ii = 0; ii < len; ii++) {
+        document.getElementsByClassName('localChemostat')[ii].style.display = 'inline';
+        //document.getElementsByClassName('localDebug')[ii].style.display = 'inline';
+      };
+
+       // now show options for changing all sugars (groups)
+      //document.getElementsByClassName('groupChemostat')[0].style.display = 'inline';
+      //document.getElementsByClassName('groupLimited')[0].style.display = 'inline';     //limited available for local options
+      //document.getElementsByClassName('groupDebug')[0].style.display = 'inline';
+*/
       //Show debug on dropdown menu
       dijit.byId('mnHpDebug').set('label', 'Hide debug menu');   //????????
       av.post.addUser('Button: mnHpDebug: now visible');
-    }  // end of development section can be seen 
-    //------------------------------------------------------------------------------------ process changes using ndx2b--
-    
-  len = document.getElementsByClassName('3TopLftRit').length;
-  for (ii = 0; ii < len; ii++) {
-    document.getElementsByClassName('3TopLftRit')[ii].style.display = block2b[ndx2b];
-    document.getElementsByClassName('4Quarters')[ii].style.display = block2b[ndx2b];
-  }
-
-  if (av.sgr.gridOnly) {
-    document.getElementById('sugarFooter').className = sgrfooter2b[ndx2b];
-    document.getElementById('geometrySgr').style.display = block2b[ndx2b];
-    document.getElementById('allSugarGeometryDiv').style.display = block2b[ndx2b];
-    document.getElementById('allSugarGeometry').style.display = block2b[ndx2b]; 
-  }
-
-    document.getElementById('testConfig').style.display = block2b[ndx2b];
-    document.getElementById('avidianOutline').style.display = block2b[ndx2b];
-    document.getElementById('resrceDataHolder').style.display = block2b[ndx2b];
-
-    document.getElementById('developmentToggle').className = devoTog2b[ndx2b];
-    document.getElementById('geometyHideButton').className = geoHideBut2b[ndx2b];
-    document.getElementById('popInfoTabHolder').className = popInfoTab2b[ndx2b];
-
-    av.doj.mnDebug.style.visibility = visible2b[ndx2b];
-    document.getElementById('testConfigLableHolder').style.display = flex2b[ndx2b];   //none
-    
-    document.getElementById('showTextDebugButtonDiv').style.visibility = visible2b[ndx2b];   //hidden
-    document.getElementById('fzTdishSec').style.visibility = visible2b[ndx2b];       // hidden
-    document.getElementById('testDishDetailDiv').style.display = block2b[ndx2b];   //none
-    document.getElementById('testConfig').style.display = block2b[ndx2b];    //none
-    document.getElementById('avidianOutline').style.display = block2b[ndx2b];   //none
-
-    len = av.sgr.logicNames.length;
-    sub = 1;   //this may change later;
-    for (ii = 0; ii < len; ii++) {
-      tsk = av.sgr.logicNames[ii];
-      av.sgr.changeDetailsLayout(tsk, 'av.ui.toggleDevelopmentDisplays');
-    };
-
+    }
     //console.log('in av.ui.hideDevelopment=', av.ui.hideDevelopment, 'at end of function');
   };
 

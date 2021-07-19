@@ -80,91 +80,90 @@ html {
 #dragbarLeft {grid-area: dragbarLeft; } /* yemi: */
 
 
-.all2rit{
-  display: grid;
-  grid-template-rows: 2.5em auto;
-  grid-template-columns: 3px auto 680px;
-  grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
-                        'dragbarLeft mainBlockHolder rightInfoHolder';
-  height: 100vh;
-  width: 100vw;
-  min-height: 100vh;
-  min-width: 100vw;
-  max-height: 100vh;
-  max-width: 100vw;
-  margin: 0;
-  background:  #F5F5F5;   /* lightsalmon;  */
-}
+ .all2rit{
+    display: grid;
+    grid-template-rows: 2.5em auto;
+    grid-template-columns: 3px auto 680px;
+    grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
+                         'dragbarLeft mainBlockHolder rightInfoHolder';
+    height: 100vh;
+    width: 100vw;
+    min-height: 100vh;
+    min-width: 100vw;
+    max-height: 100vh;
+    max-width: 100vw;
+    margin: 0;
+    background:  #F5F5F5;   /* lightsalmon;  */
+  }
+  
+  .all2lft{
+    display: grid;
+    grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
+    grid-template-columns: 240px 3px auto;
+    grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
+                          'navColClass dragbarLeft mainBlockHolder';
+    height: 100vh;
+    width: 100vw;
+    min-height: 98vh;
+    min-width: 100vw;
+    max-height: 99vh;
+    max-width: 100vw;
+    margin: 0;
+    background:  #F5F5F5;   /* lightsalmon;  */
+  }
 
-.all2lft{
-  display: grid;
-  grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
-  grid-template-columns: 240px 3px auto;
-  grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
-                        'navColClass dragbarLeft mainBlockHolder';
-  height: 99vh;
-  width: 100vw;
-  min-height: 98vh;
-  min-width: 100vw;
-  max-height: 99vh;
-  max-width: 100vw;
-  margin: 0;
-  background:  #F5F5F5;   /* lightsalmon;  */
-}
+  .all3pop{ 
+    display: grid;
+    grid-template-rows: 2.5em 1fr;   /* 2.5em */
+    grid-template-columns: 240px 3px auto 440px;    /* 440px */
+    grid-template-areas: 'headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
+                          'navColClass dragbarLeft mainBlockHolder rightInfoHolder';
+    height: 100vh;
+    width: 100vw;
+    min-height: 98vh;
+    min-width: 100vw;
+    max-height: 99vh;
+    max-width: 100vw;
+    margin: 0;
+    background:  #F5F5F5;   /* lightsalmon;  */
+  }
+ .all3org{
+    display: grid;
+    grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
+    grid-template-columns: 240px 3px auto 250px;    /* 250px */
+    grid-template-areas: 'headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
+                          'navColClass dragbarLeft mainBlockHolder rightInfoHolder';
+    height: 100vh;
+    width: 100vw;
+    min-height: 98vh;
+    min-width: 100vw;
+    max-height: 100vh;
+    max-width: 99vw;
+    margin: 0;
+    background:  #F5F5F5;   /* lightsalmon;  */
+  }
 
-.all3pop{ 
-  display: grid;
-  grid-template-rows: 2.5em 1fr;   /* 2.5em */
-  grid-template-columns: 240px 3px auto 3px 400px;    /* 440px */
-  grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
-                        'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
-  height: 99vh;
-  width: 100vw;
-  min-height: 98vh;
-  min-width: 100vw;
-  max-height: 99vh;
-  max-width: 100vw;
-  margin: 0;
-  background:  #F5F5F5;   /* lightsalmon;  */
-}
-
-.all3org{
-  display: grid;
-  grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
-  grid-template-columns: 240px 3px auto 3px 250px;    /* 250px */
-  grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
-                        'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
-  height: 99vh;
-  width: 100vw;
-  min-height: 98vh;
-  min-width: 100vw;
-  max-height: 99vh;
-  max-width: 99vw;
-  margin: 0;
-  background:  #F5F5F5;   /* lightsalmon;  */
-}
-
-.headerRow {
-  grid-area:headerRow;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border: 1px solid #AAA;               /* #AAA; */
-}
-
-.navColClass {
-  grid-area:navColClass;
-  place-self: stretch;
-  /* width: 238px; */       /*was 152   340px*/
-  display: flex;
-  flex-direction: column;
-  background: #F5F5F5; /* lavender; */
-  border: 1px solid #AAA;
-  height: 100%;
-  resize: horizontal;
-  min-width: 160px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
-  max-width: 620px;
-}
+  .headerRow {
+    grid-area:headerRow;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid #AAA;               /* #AAA; */
+  }
+  
+  .navColClass {
+    grid-area:navColClass;
+    place-self: stretch;
+    width: 238px;        /*was 152   340px*/
+    display: flex;
+    flex-direction: column;
+    background: #F5F5F5; /* lavender; */
+    border: 1px solid #AAA;
+    height: 99%;
+    resize: horizontal;
+    min-width: 185px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
+    max-width: 620px;
+  }
 
 /*contains pages (population, Organsims, Analysis) */
 .mainBlockHolder{
@@ -173,12 +172,8 @@ html {
     background: #F5F5F5;     /* lightskyblue; */
     height: 100%;
     width: 100%;
-    max-height: 100vh;
     border: 1px solid #AAA;
-    overflow: auto;
-    min-width: 200px;
   }
-
   .footerRow {
     border: 1px solid #AAA;
   }
@@ -191,7 +186,7 @@ html {
     height: 100%;
     overflow: hidden;    /* scroll;  */
   }  /* Contain the blocks popInfoVert and orgInfoHolder  */
-
+  
   #orgInfoHolder {
     border: 1px solid #AAA;
     background: #F5F5F5;
@@ -257,8 +252,8 @@ html {
   #mnFreezer {border: 1px solid #999;}
   #mnControl {border: 1px solid #999;}
   #mnHelp {border: 1px solid #999;}
+  #mnDebug {border: 1px solid #999;}
   */
-  mnDebug {visibility: hidden;}
   
   #headerMsg{
     flex: 1 1 auto;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
@@ -341,9 +336,9 @@ html {
 #freezerSection{
   border: 1px solid #BABABA;
   flex: 1;                /* fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
-  /* height: 99%; */
-  /* width: 99%; */
-  overflow:hidden;
+  height: 99%;
+  width: 99%;
+  overflow:visible;
 }
 #FreezerTitle {
   font-size: 190%;
@@ -371,9 +366,6 @@ html {
   max-width: 98%;
 }
 
-#fzTdishSec { visibility: hidden; }
-#testDishDetailDiv {display: none; }
-
 /* trash area below freezer */
 #trashCan { 
   grid-area: trashCan;
@@ -385,7 +377,6 @@ html {
   align-self: stretch;
   justify-self: stretch;
   display: flex;
-  visibility: hidden;
   align-items: center;
   justify-content: flex-end;
 }
@@ -423,38 +414,36 @@ html {
 }
 .devoCammo {        /* #notation with 4 or 8 chars should have opacity as the last section should work, but NetBeans does not like it*/  
   border: none;                             /* #F5F5F500 should work, but net beans does not like it so some browsers might not like it */
-  background: inherit;
-  /* background-color: rgba(245,245,245,0); */   /*  rgba(245,245,245,0)  is #F5F5F5 with opacity set to 0.0;   */  
+  background-color: rgba(245,245,245,0);    /*  rgba(245,245,245,0)  is #F5F5F5 with opacity set to 0.0;   */  
   color: rgba(245,245,245,0);               /* 0.0 (fully transparent) to 1.0 (fully opaque); */
+  
 }
 /* -------------------------------------------------------------------------------- main work bench center section -- */
 .mainBlockClassRow {
   display: flex;
   flex-direction: row;
-  height: 100%;
+  height: 99%;
   width: 100%;
   background: #F5F5F5; /* #F5F5F5;lightblue; */
-  /* max-height: 1060px; */
 }
 
 .orgBenchCol{
   background: #F5F5F5; /* lightgoldenrodyellow;*/
   flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-  /* border: 1px solid #AAA; */ /* yemi: removed borders because I thought it was distracting */ 
+  border: 1px solid #AAA;
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%; /* yemi */
-  /* max-height: 100%; */ /* yemi */
-  overflow:auto;
-  grid-template-rows: 2.5em auto ;
+  height: 99%;
+  max-height: 100%;
+  overflow:hidden;
 }
 
 .popBenchCol{
   background: #F5F5F5; /* lightgoldenrodyellow; */
   flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
   /* flex: 0 1 auto;       should scale with window size, but does not do what I want???? */
-  /* border: 1px solid #AAA; */ /* yemi: removed border */
+  border: 1px solid #AAA;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -488,13 +477,11 @@ html {
   padding-top: 5px;
 }
 #testConfigLableHolder {
-  display: none;
   margin: 4px;
   flex: 0 1 40px;
 }
 #testConfig {
   flex: 0 1 80px;
-  display: none;
 }
 .activeConfigDojoDNDcontainer {
   min-height: 30px;
@@ -512,7 +499,7 @@ html {
 
 #gridHolder {
   border: 1px solid #AAA;
-  flex: auto;  /* yemi: changed from 1 to auto */   
+  flex: auto;  /* yemi: changed from 1 to flex */   /* fills remaining space; {flex:1 1 auto;} is the same as {flex:1;} both prevent resize */
   background: #F5F5F5; /* blue; */
   overflow:auto;
   min-width: 20px;
@@ -568,24 +555,19 @@ html {
 
 #benchPopBot{
   flex: 0 1 60px;
-  /* border: 1px solid #AAA; */ /* yemi: removed border */
+  border: 1px solid #AAA;
   min-height: 41px;
   overflow: auto;
   background: #F5F5F5; /* peachpuff;*/
-  padding: 10px; /* yemi: added padding */
-  width: 100%; /* yemi: added width and height */
-  height: 100%;
 };
 
-#avidanOutline {display: none};
-
-.zoomSlideClass { grid-area: zoomSlide; visibility: hidden; }
-.timeUpdateClass { grid-area: timeUpdate;}
-.freezeButtonDivClass { grid-area: freezeButton;}
-.modeHolderClass { grid-area: modeHolder;}
-.gridButtonClass { grid-area: gridButton;}
-.rescalingClass { grid-area: rescaling;}
-.popBotRiteClas { grid-area: popBotRite;}
+  .zoomSlideClass { grid-area: zoomSlide; visibility: hidden; }
+  .timeUpdateClass { grid-area: timeUpdate;}
+  .freezeButtonDivClass { grid-area: freezeButton;}
+  .modeHolderClass { grid-area: modeHolder;}
+  .gridButtonClass { grid-area: gridButton;}
+  .rescalingClass { grid-area: rescaling;}
+  .popBotRiteClas { grid-area: popBotRite;}
 
 .gridControlContainerClass{
   display: grid;
@@ -601,6 +583,7 @@ html {
 #popInfoVert {
     display: flex;
     flex-direction: column;
+    width: 442px;
     height: 100%;
     overflow: auto;
   } /* contains: popInfoTabHolder & labInfoHolder */
@@ -613,14 +596,11 @@ html {
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
     height: 100%;
     width: 100%;
-    min-width: 200px; /* yemi: */
-    max-width: 450px; /* yemi: */
   }
   
   #popStatsBlock{
     flex-direction: column;
     height: 100%;
-    width: 100%;
   }
   .labInfoClass{
     background: #F5F5F5; /* lightsteelblue; */
@@ -644,14 +624,14 @@ html {
 
   #popStatHolder{
     flex: 1 1 280px;
-    /* min-height: 280px; */
+    min-height: 280px;
   }
   #popStatistics{
     display: flex;
     flex-direction: row;
     border: 1px solid #AAA;
     background: #F5F5F5;
-    height: auto;
+    height: 280px;
     resize: vertical;
     overflow: auto;
   }
@@ -659,53 +639,43 @@ html {
   
   #selOrgType{
     /* flex: 0 1 190px;        /*was 170 */
-    flex: 1 1 auto;    /* yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
+    flex: 1 1 auto;      /* fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
     border: 1px solid #AAA;
-    /* overflow: auto; */
+    overflow: auto;
   }  /*contains sotTopTable and sotBotTable  */
-
   #sotTopTable { width: 100%; }
   #sotBopTable { width: 100%; background: white; }
-  #sotColorBox { display: inline-block; width: 10px; height: 10px;}
-  
   .timePerform { min-width: 120px; background: #fff }
   
   #popStats4grid{
-    flex: 1 1 240px; /* yemi: fixed the weird width problem */     
+    flex: 1 1 240px;      
     border: 1px solid #AAA;
-    /* min-width: 200px; */ /* yemi */
-    /* width: 100%; */
+    min-width: 200px;
   } /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
-
-div.popsTopTableHold { 
-  min-width: 168px;
-  background: #DDD; 
-}
-
-.table.topPopTable {
+div.popsTopTableHold { min-width: 168px;  background: #DDD; }
+  .table.topPopTable {
 /*  margin: auto;  /* centers table in div */
-  border: 0;  
-  padding: 0;
+  border: 0;  padding: 0;
   border-collapse: collapse;
   table-layout: fixed;
   min-width: 150px;
 }
-
-.popsTopTblcol1 {min-width: 134px; }
-.popsTopTblcol2 {min-width: 60px; } /* yemi: changed from 45px to 60px */
-
-#popsBotTableHold { width: 100%; background:white; }
-table.botPopTable {
-/*  margin: auto;  /* centers table in div */
-  border: 0;   padding: 0;
-  border-collapse: collapse;
-  width: 100%;
-  table-layout: auto;
+  .popsTopTblcol1 {min-width: 134px; }
+  .popsTopTblcol2 {min-width: 45px; }
+  
+  #popsBotTableHold { width: 100%; background:white; }
+  table.botPopTable {
+  /*  margin: auto;  /* centers table in div */
+    border: 0;   padding: 0;
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: auto;
 }
-.popsBotTblcol1 {width: 55px; }
-.popsBotTblcol2 {width: 13px; }
-.popsBotTblcol3 {width: 110px; }
-.numAvidains {  background: #fff }   /* min-width: 110px; */
+  .popsBotTblcol1 {width: 55px; }
+  .popsBotTblcol2 {width: 13px; }
+  .popsBotTblcol3 {width: 110px; }
+  .numAvidains {  background: #fff }   /* min-width: 110px; */
+  
 
 .botPopTable tr:nth-child(even) {background: #FAFAFA}
 .botPopTable th {
@@ -719,53 +689,53 @@ table.botPopTable {
 #logTit6 { font-style: italic; color: dimgray; }
 #logTit7 { font-style: italic; color: dimgray; }
 
-#popChrtHolder{
-  flex: auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-  border: 1px solid #AAA;
-  height: 100%;
-  width: 100%;
-}
 
-/* ---------------------- Population (right) side of tables( */
-#popStats4grid{           /* inside horizontal flexbox*/
-  flex: 1 1 auto;       /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-  border: 1px solid #AAA;
-}
-#resrceDataHolder{
-  display: none;  /* none; */
-  /* flex: 0 0 53; */
-  border: 1px solid #AAA;
-  width: 100%; /* yemi: changed from 99% to 100% to remove awkward space at the end */
-/* visibility: hidden; */
-}
-#popChrtHolder{
-  flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-  height: 100%;
-} 
-#miniChartControls{
-  flex: 0 0 20px;
-  display: flex;
-  border: 1px solid #AAA;   
-  overflow: auto;
-  height: 25px; 
-}
-#miniChartYaxis{
-  flex: 0 0 220px;
-}
-#miniChartOptHolder{
-  flex: 0 0 auto;
-  padding-left: 15px;
-  align-self: flex-end;
-}
-#pauseOptions {
-  flex: 0 0 20px;
-  border: 1px solid #AAA;
-  background: #DDD;
-}
-#pausePrefix { display: inline-block; }
-#pauseMidText { display: inline-block; }
-#itemDone1st { display: none; }
-#pauseCriteriaHolder { }  /* tried to use to give a white background to select box rather than a inherit background */
+
+
+  #popChrtHolder{
+    flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+    border: 1px solid #AAA;
+    height: 100%;
+  }
+ 
+  /* ---------------------- Population (right) side of tables */)
+  #popStats4grid{           /* inside horizontal flexbox*/
+    flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+    border: 1px solid #AAA;
+  }
+  #resrceDataHolder{
+    display: none;  /* none; */
+    flex: 0 0 53;
+    border: 1px solid #AAA;
+    width: 99%;
+/*    visibility: hidden; */
+  }
+  #popChrtHolder{
+    flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+    height: 100%;
+  } 
+  #miniChartControls{
+    flex: 0 0 20px;
+    display: flex;
+    border: 1px solid #AAA;    
+  }
+  #miniChartYaxis{
+    flex: 0 0 220px;
+  }
+  #miniChartOptHolder{
+    flex: 0 0 auto;
+    padding-left: 15px;
+    align-self: flex-end;
+  }
+  #pauseOptions {
+    flex: 0 0 20px;
+    border: 1px solid #AAA;
+    background: #DDD;
+  }
+  #pausePrefix { display: inline-block; }
+  #pauseMidText { display: inline-block; }
+  #itemDone1st { display: none; }
+  #pauseCriteriaHolder { }  /* tried to use to give a white background to select box rather than a inherit background */
   
 input:focus {
 /*  background-color: yellow;  */
@@ -805,7 +775,6 @@ input:focus {
   grid-template-areas: ' sgrTop  sgrNot  sgrNan  sgrAnd  sgrOrn  sgrOro  sgrAnt  sgrNor  sgrXor  sgrEqu'
                        '  mxTop   mxNot   mxNan   mxAnd   mxOrn   mxOro   mxAnt   mxNor   mxXor   mxEqu'
                        'cellTop cellNot cellNan cellAnd cellOrn cellOro cellAnt cellNor cellXor cellEqu';
-  grid-template-columns: 3fr      2fr    2fr    2fr    2fr    2fr    2fr    2fr    2fr    2fr; 
   width: 99%;
   justify-content: stretch;
 }
@@ -815,9 +784,8 @@ input:focus {
   grid-template-areas: ' sgrTop  sgrNot  sgrNan  sgrAnd  sgrOrn  sgrOro  sgrAnt  sgrNor  sgrXor  sgrEqu'
                        ' totTop  totNot  totNan  totAnd  totOrn  totOro  totAnt  totNor  totXor  totEqu'
                        'cellTop cellNot cellNan cellAnd cellOrn cellOro cellAnt cellNor cellXor cellEqu';
-  grid-template-columns: 3fr      2fr    2fr    2fr    2fr    2fr    2fr    2fr    2fr    2fr; 
+  grid-template-columns: 3fr,      2fr,    2fr,    2fr,    2fr,    2fr,    2fr,    2fr,    2fr,    2fr; 
   width: 100%;
-  overflow: auto;
   justify-content: stretch;
 }
 
@@ -910,7 +878,7 @@ input:focus {
   background: white;
 }
 
-#geometyHideButton {
+.#geometyHideButton {
   grid-area: geometyHideButton;
   display: inline-block;
   min-height: 30px;
@@ -996,19 +964,24 @@ details summary {
 }
 
 .geometryCls{
-  display: inline-block;
+  display: inline-block
 }
 
 .groupDebug{  display: inline; }
 .grooupLimited { display: inline; }
 .groupChemostat { display: inline; }
 
+.globalLimited { display: inline; }
+.globalChemostat { display: inline; }
+.globalDebug { display:inline; }
+
 .localChemostat { display: inline; }
+.localDebug { display:inline; }
 
 
-.2HalfLftRit { display: inline-block; }  //inline
-.3TopLftRit { display: none; }  //inline
-.4Quarters { display: none; }  //inline
+.2HalfLftRit { display:inline; }
+.3TopLftRit { display:inline; }
+.4Quarters { display:inline; }
 
 .TopLftRit{
   display: inline-block;  
@@ -1035,6 +1008,7 @@ details summary {
   color: #444;
 }
 
+*/
 #not_section{ border-bottom: 1px solid #888; }
 #nan_section{ border-bottom: 2px solid #222; }  /* #000 = black */
 #and_section{ border-bottom: 1px solid #888; }
@@ -1044,7 +1018,7 @@ details summary {
 #nor_section{ border-bottom: 1px solid #888; }
 #xor_section{ border-bottom: 2px solid #222; }  /* #000 = black */
 #equ_section{ border-bottom: 1px solid #888; }
-
+}
 /************************* Sugar controls layout in 'summary' of detail/summary for each task-sugar in sugar according */
 /* I could not get a div with a dispay of inline-gid start on the top line of the summary. 
 .sumHolderDiv { display: inline-block; position: absolute; }
@@ -1053,8 +1027,8 @@ details summary {
   grid-area: sumFtTxtCls; 
   display: inline-block; border: 1px solid palegreen; 
 }
-.taskRewardCls { 
-  grid-area: tskRewardCls; 
+.taskAboutCls { 
+  grid-area: tskAboutCls; 
   display: inline-block;
   border: 1px solid red;
   width: 250px;
@@ -1063,7 +1037,7 @@ details summary {
 /* Sgr summary as a grid container. Something wrong. Try a Flex box
 .sgrLftSumCls { grid-area: sgrLftSumCls; display: inline-block;}
 .sgrRitSumCls { grid-area: sgrRitSumCls; 
-  grid-template-areas: 'sumFtTxtCls tskRewardCls';
+  grid-template-areas: 'sumFtTxtCls tskAboutCls';
   grid-template-columns: 1px 96px;
   display: grid;
   justify-items: end;
@@ -1088,12 +1062,15 @@ details summary {
 .sgrRitSumCls { 
   flex: 0 1 auto;
   grid-area: sgrRitSumCls; 
-  grid-template-areas: 'sumFtTxtCls tskRewardCls';
+  grid-template-areas: 'sumFtTxtCls tskAboutCls';
   grid-template-columns: 1px 96px;
   display: grid;
   justify-items: end;
   background: yellow;
 }
+
+
+
 
 .sgrTitleCls { grid-area: sgrTitleCls; display: inline-block; border: 1px solid red; width: 54px; }
 .geometryCls { grid-area: geometryCls; display: none; border: 1px solid red; }
@@ -1110,17 +1087,17 @@ details summary {
 
 .grd-sgr-sum-adv-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls sumFtTxtCls';
+  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls tskAboutCls periodTimGlobCls';
   justify-content: start; 
-  width: 100%;
+  height: 23px;  width: 100%;
   border: 1px solid blue;  
 }
 .grd-sgr-sum-adv-limited-container {
   display: grid;
   grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls  supply_HoldCls initialGlobCls"
-                       "sgrTitleCls tskRewardCls  tskRewardCls tskRewardCls tskRewardCls   initialGlobCls";
-  /* grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdCls supply_HoldCls initialGlobCls" */
-  /*                     "detailArrow sgrTitleCls tskRewardCls  tskRewardCls tskRewardCls tskRewardCls   initialGlobCls"; */
+                       "sgrTitleCls tskAboutCls  tskAboutCls tskAboutCls tskAboutCls   initialGlobCls";
+  //grid-template-areas: "detailArrow sgrTitleCls regionLayCls geometryCls supplyWdCls supply_HoldCls initialGlobCls"
+  //                     "detailArrow sgrTitleCls tskAboutCls  tskAboutCls tskAboutCls tskAboutCls   initialGlobCls";
   justify-content: start; 
   min-height: 23px;  width: 100%;
 }
@@ -1139,6 +1116,14 @@ details summary {
   min-height: 23px;  width: 100%;  
 }
 
+.grd-sgr-sum-global-container_ {
+  display: inline-grid;
+  /* grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls'; */
+  grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls initialGlobCls";
+  justify-content: start; 
+  height: 23px;
+  border: 1px solid purple;
+}
 .grd-sgr-sum-global-container {
   display: grid;
   grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls initialGlobCls";
@@ -1155,7 +1140,7 @@ details summary {
 }
 .grd-sgr-sum-global-chemo-container {
   display: grid;
-  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls tskRewardCls';
+  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls tskAboutCls';
   justify-content: start; 
   height: 23px;  width: 100%;
 }
@@ -1352,11 +1337,9 @@ details summary {
 
 /* ----------------------------------------------------------------- Footer controls that change all tasks are here --*/
 /* background: inherit */
-#allSugarGeometry {display: none;}    /* probably need to delete this option
-
 
 #sugarSetTitle { grid-area:setTitle; justify-self: right; background: inherit; font-size: 110%; }
-#allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: center; display: none; }
+#allSugarGeometryDiv { grid-area:geometryDiv ; justify-self: center; }
 #allSugarsupplyTypeHolder { grid-area:supplyTypeHolder ; justify-self: center; }
 #allSugarRegionLayoutDiv { grid-area:regionLayoutDiv; justify-self: center; }
 #allSugarDetailsDiv { grid-area:detailDiv; justify-self: lefts; }
@@ -1364,7 +1347,7 @@ details summary {
 
 /* delete in 2021 #allSugarDiffusionDiv  { grid-area:diffusionDiv; justify-self: center; } */
 
-#geometrySgr { grid-area:geometrySgr; justify-self: center; background: inherit; display: none; }
+#geometrySgr { grid-area:geometrySgr; justify-self: center; background: inherit;}
 #supplyTypeSlctSgr { grid-area:supplyTypeSlctSgr; justify-self: center; background: inherit;}
 #regionLayoutSgr { grid-area:regionLayoutSgr; justify-self: center; background: inherit;}
 #patternSgr { grid-area:patternSgr; justify-self: center; background: inherit;}
@@ -1567,8 +1550,8 @@ input[type="checkbox"] {
 
 input[type="checkbox"]:checked {
 /*  border: 4px solid black; */
-  /* box-shadow:none;
-} */
+  box-shadow:none;
+}
 checkbox:focus {
   box-shadow:none;
 }
@@ -1608,9 +1591,7 @@ checkbox:focus {
     overflow: auto;
     display: flex;    /* makes this a flexbox to hold smaller elements */
     flex-direction: row;
-    min-height: 40px;
   }
-
   .orgTopLt{
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} fx prevent resize */
     display: flex;
@@ -1628,15 +1609,10 @@ checkbox:focus {
   }
   .orgMid {
     border: 1px solid #AAA;
-    height: 85%; /* yemi: determined by trial and error; might need to fix eventually, but for now, fixed the overflow problem*/
-    width: 100%;
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
   }
   #organCanvas{
-    /* border:1px solid #000000; */     /*black*/    
-    top: 50%;
-    left: 50%;
-    max-height: 100%; /* yemi: added max-height attribute to fill the entire orgMid, for now, fixed the overflow problem*/
+    border:1px solid #000000;     /*black*/    
   }
   .orgBot {
     flex: 0 1 40px;
@@ -2061,38 +2037,21 @@ checkbox:focus {
   width: 50%;
 }
 
-/*
- * Yemi's Changes
- */
-
+/* yemi: this is the make sure canvas fills the entire container while also maintaining aspect ratio */
+ 
 canvas {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* yemi: this is the make sure canvas fills the entire container while also maintaining aspect ratio */
+  object-fit: contain;
 }
+
 
 /* yemi: dragbar */
 .dragbar {
   background-color:gray;
   width :3px;
-  height : 100%;
+  height : 95vh;
   cursor: col-resize;
-}
-
-#dragbarLeft {
-  float: right;
-}
-
-.organismControls {
-  padding: 5px;
-}
-
-#miniChartOptionsLabel {
-  margin: 0;
-}
-
-label {
-  margin-bottom: 0em; /* yemi: overwrites margin on the bottom set by Bootstrap */
 }
 
 /********************************************************************************************** end of modalBig class */                                                                         */

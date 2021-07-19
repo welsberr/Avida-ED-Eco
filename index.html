@@ -47,7 +47,7 @@
     </style>
   </head>
 
-  <body id='Avida-ED main display' class='claro'>
+  <body id='Avida-ED main display'>
     <span id="http://stackoverflow.com/questions/20828799/creating-a-splash-page-in-html5"></span>
     <div id='splash'>
       <div align='center'>
@@ -149,7 +149,7 @@
 
               </span>
             </span>
-            <span data-dojo-type='dijit/PopupMenuBarItem' label='Debug' id='mnDebug'> <!--visible/hidden-->
+            <span data-dojo-type='dijit/PopupMenuBarItem' label='Debug' id='mnDebug' style = 'visibility: hidden'> <!--visible/hidden-->
               <span data-dojo-type='dijit/Menu'>
                 <span data-dojo-type='dijit/MenuItem' id='mnDbThrowError' label='Throw Error'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnDbThrowData' label='Send Data to console'></span>
@@ -177,7 +177,7 @@
         </div>
 
         <div id='ritePnlBtnHolder' class='ritePnlBtnHlderShow'>
-          <input id='ritePanelButton' type='button' value='&nbsp;>>' onclick='av.ptd.ritePanelBtnFn();'/>
+          <input id='ritePanelButton' type='button' value='&nbsp;>>' onclick='av.ptd.lftPanelBtnFn();'/>
         </div>
       </div><span id='headerMain_end' class='display_none'></span>
       
@@ -220,7 +220,7 @@
                 <div id='fzTdish' class='freezerContainer'>
                 </div>
               </div>
-            </details>
+            </details >
           </div><span id='freezerSection_end' class='display_none'></span>
 
           <div id="trashDiv" class='trash-grid-container'>
@@ -231,7 +231,7 @@
               <button id='showTextDebugButton' type='button' value='Big Text'>Big Text</button>
             </div>
             <div id='developmentToggleDiv'>
-              <input id='developmentToggle' class='devoCammo' type='button' value=' in Development View ' onclick='av.ui.toggleDevelopmentDisplays()' />
+              <input id='developmentToggle' class='devoShow' type='button' value=' in Development View ' onclick='av.ui.toggleDevelopmentDisplays()' />
             </div>
           </div>
         </div><span id='navColId_end' class='display_none'></span>
@@ -334,17 +334,15 @@
               </div>
               <div class="orgBotClass" id='orgBotId'>
                 <div id='cycleSlider'></div><br />
-                <div class='organismControls'>
-                  <div class='lftmargin'>Cycle:
-                    <input id='orgCycle' type='text' value='0' class='orgCycleClass' onchange='av.ind.orgCycleInputChange(this)'/>
-                  </div>
-                  <div style='text-align:center'>
-                    <button id='orgReset' disabled>Reset</button>
-                    <button id='orgBack' disabled>Back</button>
-                    <button id='orgRun' disabled>Run</button>
-                    <button id='orgForward' disabled>Forward</button>
-                    <button id='orgEnd' disabled>End</button>
-                  </div>
+                <div class='lftmargin'>Cycle:
+                  <input id='orgCycle' type='text' value='0' class='orgCycleClass' onchange='av.ind.orgCycleInputChange(this)'/>
+                </div>
+                <div style='text-align:center'>
+                  <button id='orgReset' disabled>Reset</button>
+                  <button id='orgBack' disabled>Back</button>
+                  <button id='orgRun' disabled>Run</button>
+                  <button id='orgForward' disabled>Forward</button>
+                  <button id='orgEnd' disabled>End</button>
                 </div>
               </div>
             </div><span id='oranismRunCol_end'></span>
@@ -452,12 +450,10 @@
             </form>
           </div> <span id='showTextDebugBlock_end' class='display_none'></span>  
         </div> <span id='mainBlockHolder_end' class='display_none'></span>
-      
-      <div class='dragbar' id="dragbarRight"></div> <!--yemi: dragbar on the right-->
 
       <div id='rightInfoHolder'> 
         <div id='popInfoVert'>
-          <div id='popInfoTabHolder' class='tabHolderHide'>
+          <div id='popInfoTabHolder' class='tabHolderShow'>
             <div class="tab">
               <button class="tablinks active" id="statsTab" onclick="av.ptd.processTab(event, 'popStatsBlock')">Stats</button>
               <button class="tablinks" id="setupTab" onclick="av.ptd.processTab(event, 'setupBlock')">Setup</button>
@@ -478,8 +474,8 @@
                       <tbody>
                         
                         <tr>
-                          <td><div class='sotL'>Name:&nbsp;<div id='sotColorBox'></div></div></td>
-                          <td colspan='2'><div class='noWrapR'>&nbsp;&nbsp;<label id='nameLabel'></label></div></td>
+                          <td><div class='sotL'>Name:&nbsp;<canvas id='sotColorCanvas' width='10' height='10'></canvas></div></td>
+                          <td colspan='2'><div class='noWrapR'><label id='nameLabel'></label></div></td>
                         </tr>
                         <tr>
                           <td><div class='sotL'>Fitness:&nbsp;</div></td>
@@ -522,47 +518,47 @@
                         <tr>
                           <td><div class='noWrap1'><label id='notLabel'>NOT</label></div></td>
                           <td><div class='noWrap2'><label id='notTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>--> <!-- yemi -->
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='nanLabel'>NAN</label></div></td>
                           <td><div class='noWrap2'><label id='nanTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='andLabel'>AND</label></div></td>
                           <td><div class='noWrap2'><label id='andTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='ornLabel'>ORN</label></div></td>
                           <td><div class='noWrap2'><label id='ornTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='oroLabel'>ORO</label></div></td>
                           <td><div class='noWrap2'><label id='oroTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='antLabel' onclick="av.ui.toggleResourceComplexity('antLable')">ANT</label></div></td>
                           <td><div class='noWrap2'><label id='antTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='norLabel'>NOR</label></div></td>
                           <td><div class='noWrap2'><label id='norTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='xorLabel' onclick="av.ui.toggleResourceData('xorLabel')">XOR</label></div></td>
                           <td><div class='noWrap2'><label id='xorTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='equLabel'>EQU</label></div></td>
                           <td><div class='noWrap2'><label id='equTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
+                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         </tr>
                       </tbody>
                     </table>
@@ -579,8 +575,7 @@
                         <colgroup><col class='popsTopTblcol1'><col class='popsTopTblcol2'></colgroup>
                           <tr>
                             <td><div class='noWrapL'>Size (# of organisms):&nbsp;</div></td>
-
-                            <td><div class='noWrapW'><label id='popSizeLabel'>&nbsp;&nbsp;&nbsp;</label></div></td>
+                            <td><div class='noWrapW'><label id='popSizeLabel'>&nbsp;&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;</div></td>
                           </tr>
                           <tr>
                             <td><div class='noWrapL'>Avg. Fitness:&nbsp;</div></td>
@@ -601,13 +596,11 @@
                           <tr>
                             <td><div class='noWrap'># Ancestor(s) at start:&nbsp;</div></td>
                             <!-- <td><div class='noWrap'># w/ picked functions:&nbsp;</div></td>   -->
-                            <!--<td><div class='noWrap'><label id='parentNumLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>-->
-                            <td><div class='noWrap'><label id='parentNumLabel'></label>&nbsp;</div></td>
+                            <td><div class='noWrap'><label id='parentNumLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>
                           </tr>
                           <tr>
                             <td><div class='noWrap'># of viable organisms:&nbsp;</div></td>
-                            <!--<td><div class='noWrap'><label id='viableNumLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>-->
-                            <td><div class='noWrap'><label id='viableNumLabel'></label>&nbsp;</div></td>
+                            <td><div class='noWrap'><label id='viableNumLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>
                           </tr>
                         </tbody>
                       </table>
@@ -620,7 +613,7 @@
                             <th><div class='noWrapF'><label id='psFn'>Function&nbsp;&nbsp;</label></div></th>
                             <th colspan='2' class='numAvidains'>
                               <div class='noWrapN'><label id='psNumOrg'># of Organisms</label></div></th>
-                            <!--<td></td>-->
+                            <td></td>
                           </tr>
                           <tr>
                             <td><div class='popButCls'><button id='notButton' class='bitButtonOff'>NOT</button></div></td>
@@ -776,7 +769,7 @@
                 <div class='odd'><div class='enviroSubHeading'>Ancestral Organism(s):</div>
                   <div id='ancestorRow'>
                     <div id='ancestorBox' class='ancestorContainer'></div>
-                    <div id='geometyHideButton' class='geoButtonCammo'; onclick='av.ui.toggleComplexityLevel(this)'>
+                    <div id='geometyHideButton' onclick='av.ui.toggleComplexityLevel(this)'>
                       &nbsp;&nbsp; Show / Hide Geometry menus
                     </div>
                   </div>
@@ -1623,7 +1616,7 @@
                           <div id="orn_summaryFooterText" class='sumFtTxtCls'> period &lt; 1 ==&gt; non-periodic</div>
                         </div><span id="orn_sumLftGrid_end" class="display_none"></span>
                         <div id='orn_sumRitBox' class='sgrRitSumCls'>
-                          <div id="orn_taskRewardText" class='taskRewardCls'>( x8)</div>
+                          <div id="orn_taskAboutText" class='taskAboutCls'>( x8)</div>
                         </div>
                       </summary>
 
@@ -3108,7 +3101,7 @@
 
                   </div><span id='sugarAccordion_end' class='display_none'></span>
 
-                  <div id='sugarFooter' class='changeAllSugarsTogetherNoGlobalContainer'>
+                  <div id='sugarFooter' class='changeAllSugarsTogetherContainer'>
                     <div id='sugarSetTitle' class='rHeadItem'>Set all Resources:&nbsp;</div>
 
                     <div id='allSugarGeometryDiv' class='rHeadItem'>

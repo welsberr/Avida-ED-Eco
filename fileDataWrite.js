@@ -232,13 +232,9 @@
     console.log('resource type =', av.nut.resrcTyp);
     for (var ii=0; ii < av.sgr.numTasks; ii++) {
       tskTitle = av.sgr.logicTitleNames[ii];
-      //document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;';
-      //document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;';
-      //document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;';
-     
-      document.getElementById('cell'+tskTitle).innerHTML = '';
-      document.getElementById('mx'+tskTitle).innerHTML = '';
-      document.getElementById('tot'+tskTitle).innerHTML = '';
+      document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;';
+      document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;';
+      document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;';
     }
   };
   
@@ -313,17 +309,16 @@
       //console.log('hideFlag['+ii+'] =', hideFlag[ii]);
       hideResourceGrid = hideResourceGrid && hideFlag[ii];
     }  // end of for loop. 
-    console.log(from, 'called av.fwt.setResourceGridDisplay: hideResourceGrid is', hideResourceGrid);
+    console.log('hideResourceGrid is', hideResourceGrid);
     
     if (hideResourceGrid) {
-      //document.getElementById('resrceDataHolder').style.display = 'none';
-      //document.getElementById('resrceDataHolder').style.visibility = 'hidden';
+      document.getElementById('resrceDataHolder').style.display = 'none';
+      document.getElementById('resrceDataHolder').style.visibility = 'hidden';
       document.getElementById('resourceDataGrid').class = 'visibility_hidden';
     } else {
-      //there is some spatial data so show that. 
-      document.getElementById('resrceDataHolder').style.display = 'inline-block';
-      //document.getElementById('resrceDataHolder').style.visibility = 'hidden';
-      document.getElementById('resourceDataGrid').class = 'sugarGlobal-gridContainer';
+      document.getElementById('resrceDataHolder').style.display = 'none';
+      document.getElementById('resrceDataHolder').style.visibility = 'hidden';
+      document.getElementById('resourceDataGrid').class = 'visibility_hidden';
 //      document.getElementById('resrceDataHolder').style.display = 'block';
 //      document.getElementById('resrceDataHolder').style.visibility = 'visible';
 //      document.getElementById('resourceDataGrid').class = 'sugarGlobal-gridContainer';
