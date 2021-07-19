@@ -1025,37 +1025,37 @@ av.grd.updateSelectedOrganismType = function (msg) {
   }
 };
 
-  // if (av.dbg.flg.root) { console.log('Root: before av.msg.fillColorBlock'); }
-  av.msg.fillColorBlock = function (msg) {  //Draw the color block
-      'use strict';
-      var bkcolor = '#000';
-      if (av.debug.msg) console.log('in fillColorBlock');
-      //if (av.debug.msg) console.log('ndx', av.grd.selectedNdx, '; msg.ancestor.data[ndx]',av.grd.msg.ancestor.data[av.grd.selectedNdx]);
-      if (av.debug.msg) console.log('av.grd.fill[av.grd.selectedNdx]',av.grd.fill[av.grd.selectedNdx]);
-      if ('Ancestor Organism' == document.getElementById('colorMode').value) {
-        if (null != av.grd.fill[av.grd.selectedNdx]) {
-          bkcolor = av.parents.color[av.parents.name.indexOf(msg.ancestor)];
-        }
+// if (av.dbg.flg.root) { console.log('Root: before av.msg.fillColorBlock'); }
+av.msg.fillColorBlock = function (msg) {  //Draw the color block
+    'use strict';
+    var bkcolor = '#000';
+    if (av.debug.msg) console.log('in fillColorBlock');
+    //if (av.debug.msg) console.log('ndx', av.grd.selectedNdx, '; msg.ancestor.data[ndx]',av.grd.msg.ancestor.data[av.grd.selectedNdx]);
+    if (av.debug.msg) console.log('av.grd.fill[av.grd.selectedNdx]',av.grd.fill[av.grd.selectedNdx]);
+    if ('Ancestor Organism' == document.getElementById('colorMode').value) {
+      if (null != av.grd.fill[av.grd.selectedNdx]) {
+        bkcolor = av.parents.color[av.parents.name.indexOf(msg.ancestor)];
       }
     }
-    else {
-      if (null === av.grd.fill[av.grd.selectedNdx]) {
-        if (null === av.grd.msg.ancestor.data[av.grd.selectedNdx]) bkcolor = '#000';
-        else bkcolor = '#888';
-      }
-      if (av.debug.msg) console.log('sot bkcolor', bkcolor);
-      av.dom.sotColorBox.style.backgroundColor = bkcolor;
-      av.dom.sotColorBox.style.border = '2px solid ' + bkcolor;
-    };
-    // if (av.dbg.flg.root) { console.log('Root: end of messaging'); }  
-  // ------------------------------------------------ not in use ---------------------------------------------------------
-  /*
-  function doDbReady(fio) {
-    'use strict';
-    var request = {
-      'type': 'dbReady'
-    };
-    av.aww.uiWorker.postMessage(request);
   }
-  */
+  else {
+    if (null === av.grd.fill[av.grd.selectedNdx]) {
+      if (null === av.grd.msg.ancestor.data[av.grd.selectedNdx]) bkcolor = '#000';
+      else bkcolor = '#888';
+    }
+    if (av.debug.msg) console.log('sot bkcolor', bkcolor);
+    av.dom.sotColorBox.style.backgroundColor = bkcolor;
+    av.dom.sotColorBox.style.border = '2px solid ' + bkcolor;
+  };
+  // if (av.dbg.flg.root) { console.log('Root: end of messaging'); }  
+// ------------------------------------------------ not in use ---------------------------------------------------------
+/*
+function doDbReady(fio) {
+  'use strict';
+  var request = {
+    'type': 'dbReady'
+  };
+  av.aww.uiWorker.postMessage(request);
+}
+*/
 
