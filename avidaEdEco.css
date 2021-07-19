@@ -512,7 +512,7 @@ html {
 
 #gridHolder {
   border: 1px solid #AAA;
-  flex: auto;  /* yemi: changed from 1 to flex */   /* fills remaining space; {flex:1 1 auto;} is the same as {flex:1;} both prevent resize */
+  flex: auto;  /* yemi: changed from 1 to auto */   
   background: #F5F5F5; /* blue; */
   overflow:auto;
   min-width: 20px;
@@ -720,7 +720,7 @@ table.botPopTable {
 #logTit7 { font-style: italic; color: dimgray; }
 
 #popChrtHolder{
-  flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+  flex: auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
   border: 1px solid #AAA;
   height: 100%;
   width: 100%;
@@ -805,6 +805,7 @@ input:focus {
   grid-template-areas: ' sgrTop  sgrNot  sgrNan  sgrAnd  sgrOrn  sgrOro  sgrAnt  sgrNor  sgrXor  sgrEqu'
                        '  mxTop   mxNot   mxNan   mxAnd   mxOrn   mxOro   mxAnt   mxNor   mxXor   mxEqu'
                        'cellTop cellNot cellNan cellAnd cellOrn cellOro cellAnt cellNor cellXor cellEqu';
+  grid-template-columns: 3fr      2fr    2fr    2fr    2fr    2fr    2fr    2fr    2fr    2fr; 
   width: 99%;
   justify-content: stretch;
 }
