@@ -182,6 +182,7 @@ require([
   'environment2UI.js',
   'sugar_ui.js',
   'reSizePageParts.js',
+  'dragulaDnd.js',
   //'restartAvida.js',
   //'diagnosticconsole.js',
   'dojo/domReady!'
