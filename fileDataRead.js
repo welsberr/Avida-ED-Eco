@@ -8,6 +8,10 @@
   /* yemi's implementation of av.fio.addFzItem to be used on Test Dish Section of Freezer */
   var testItemId = 0;
 
+  // replacement for dndSection.map -> need to made to be like it eventually
+  // right now this dictionary only works for test dishes
+  var testNodeDictionary = {};
+
   av.fio.addFzItem2 = function(container, name, type, fileNum) {
     // example 'container': '.className' or '#id'
     'use strict';
@@ -18,8 +22,10 @@
     // 'insertNodes' implementation
     var domId = `test${testItemId}`
     $(container).append(`<div class="item ${type}" id="${domId}"> ${name} </div>`);
-    testItemId++;
+    testNodeDictionary[domId] = {"name": name, "type": type};
 
+    testItemId++;
+    // console.log(testNodeDictionary);
     return domId;
   }
 
@@ -137,6 +143,7 @@
         // if (av.fzr.tNum < Number(num)) {av.fzr.tNum = Number(num); }
         // break;
         domid = av.fio.addFzItem2("#fzTdish", name, type, num);
+        break;
       case 'w':
         domid = av.fio.addFzItem(av.dnd.fzWorld, name, type, num);
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzWorld is undefined');

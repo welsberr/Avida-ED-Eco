@@ -70,16 +70,91 @@ jQuery(document).ready(function($) {
 
     if (source === fzTdish && target === testConfig) {
       console.log("here");
-      lndTestConfig(el, target);
+      av.dnd.lndTestConfig(el, target, source);
     }
 
   });
 
   // yemi's implementation of av.dnd.lndTestConfig but locally
-  lndTestConfig = (el, target) => {
-    //$("#testConfig").empty();
+  av.dnd.lndTestConfig = (el, target, source) => {
+    $("#testConfig").empty();
+    $("#testConfig").append(el);
+
     var domid = el.id;
-  }
+    av.fzr.actConfig.actDomid = domid;
+    av.fzr.actConfig.name = document.getElementById(domid).textContent;
+    av.fzr.actConfig.fzDomid = domid;
+    av.fzr.actConfig.dir = av.fzr.dir[av.fzr.actConfig.fzDomid];
+    delete av.fzr.actConfig.file['instset.cfg'];
+    if (av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg']) {
+      av.fzr.actConfig.file['instset.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg'];
+    }
+    console.log(av.fzr.dir);
+    console.log(av.fzr.actConfig.actDomid, av.fzr.actConfig.name, av.fzr.actConfig.fzDomid, av.fzr.actConfig.dir);
+    console.log(av.fzr.file);
+
+    if (testNodeDictionary[domid].type[0] == 'c'|| testNodeDictionary[domid].type[0] == 'w') {
+      testNodeDictionary[domid].type[0] = 'b';
+      av.frd.updateSetup('av.dnd.lndActiveConfig');
+      av.msg.setupType = 'standard';
+    } else {
+      testNodeDictionary[domid].type[0] = 'v';
+      av.frd.updateTestSetup('av.dnd.lndActiveConfig');
+      av.msg.setupType = 'test';
+    }
+
+    $("#ancestorBox").empty();
+    // av.dnd.ancestorBoTest.empty();
+
+    av.parents.clearParentsFn();
+
+    if (source.id === 'fzConfig' || source.id === 'fzTdish') {
+      av.fzr.actConfig.type = testNodeDictionary[domid].type;
+      av.fzr.actConfig.file['events.cfg'] = ' ';
+
+      //delete anyfiles in activeConfig part of freezer
+      if (av.fzr.actConfig.file['clade.ssg']) {delete av.fzr.actConfig.file['clade.ssg'];}
+      if (av.fzr.actConfig.file['detail.spop']) {delete av.fzr.actConfig.file['detail.spop'];}
+      if (av.fzr.actConfig.file['update']) {delete av.fzr.actConfig.file['update'];}
+
+      //load ancestors if present.
+      if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt']) {
+        str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt'];
+        av.fio.autoAncestorLoad(str);
+      };
+      if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt']) {
+        str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt'];
+        av.fio.handAncestorLoad(str);
+      };
+
+      //load files from freezer
+      av.fzr.actConfig.file['avida.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/avida.cfg'];
+      av.fzr.actConfig.file['environment.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/environment.cfg'];
+      av.fzr.actConfig.file['events.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/events.cfg'];
+      av.fzr.actConfig.file['update'] = av.fzr.file[av.fzr.actConfig.dir + '/update'];
+
+      av.grd.drawGridSetupFn('Yemi\'s Implementation of lndTestConfig'); //draw grid
+
+      av.parents.placeAncestors();
+    }
+
+    if (source.id == 'fzWorld') {
+      av.fzr.actConfig.type = 'w';
+      av.ptd.popWorldStateUi('av.dnd.lndActiveConfig');
+    } else {
+      av.fzr.actConfig.type = 't';
+      av.ptd.popTdishStateUi('av.dnd.lndActiveConfig');
+    }
+
+    //Load Time Recorder Data
+    av.frd.loadTimeRecorderData(av.fzr.actConfig.dir);
+    av.pch.processLogic();
+    //send message to Avida
+    av.msg.importPopExpr();
+    av.msg.requestGridData();
+    av.msg.sendData();
+    av.grd.popChartFn('av.dnd.lndTestConfig');
+  };
 
   /*
   Helpers For Touch Screens
