@@ -8,13 +8,17 @@
   /* yemi's implementation of av.fio.addFzItem to be used on Test Dish Section of Freezer */
   var testItemId = 0;
 
-  // replacement for dndSection.map -> need to made to be like it eventually
-  // right now this dictionary only works for test dishes
-  var testNodeDictionary = {};
+  // replacement for dndSection.map
+  var containerMap = {};
 
   av.fio.addFzItem2 = function(container, name, type, fileNum) {
-    // example 'container': '.className' or '#id'
+    // example 'container' input format: '.className' or '#id'
     'use strict';
+
+    if (Object.keys(containerMap).indexOf(container) === -1) {
+      containerMap[container] = {};
+    }
+
     var names = [];
     var domItems = $.map($(container), (value, key) => { return value })[0].children
     var lngth = domItems.length;
@@ -22,10 +26,9 @@
     // 'insertNodes' implementation
     var domId = `test${testItemId}`
     $(container).append(`<div class="item ${type}" id="${domId}"> ${name} </div>`);
-    testNodeDictionary[domId] = {"name": name, "type": type};
+    containerMap[container][domId] = {"name": name, "type": type};
 
     testItemId++;
-    // console.log(testNodeDictionary);
     return domId;
   }
 

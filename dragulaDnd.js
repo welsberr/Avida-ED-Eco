@@ -81,6 +81,7 @@ jQuery(document).ready(function($) {
     $("#testConfig").append(el);
 
     var domid = el.id;
+    var container = source.id !== undefined ? "#" + source.id : "." + source.className;
     av.fzr.actConfig.actDomid = domid;
     av.fzr.actConfig.name = document.getElementById(domid).textContent;
     av.fzr.actConfig.fzDomid = domid;
@@ -89,16 +90,18 @@ jQuery(document).ready(function($) {
     if (av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg']) {
       av.fzr.actConfig.file['instset.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg'];
     }
-    console.log(av.fzr.dir);
-    console.log(av.fzr.actConfig.actDomid, av.fzr.actConfig.name, av.fzr.actConfig.fzDomid, av.fzr.actConfig.dir);
-    console.log(av.fzr.file);
+    // console.log(av.fzr.dir);
+    // console.log(av.fzr.actConfig.actDomid, av.fzr.actConfig.name, av.fzr.actConfig.fzDomid, av.fzr.actConfig.dir);
+    // console.log(av.fzr.file);
 
-    if (testNodeDictionary[domid].type[0] == 'c'|| testNodeDictionary[domid].type[0] == 'w') {
-      testNodeDictionary[domid].type[0] = 'b';
+    // console.log(containerMap);
+    // console.log(container);
+    if (containerMap[container][domid].type[0] == 'c'|| containerMap[container][domid].type[0] == 'w') {
+      containerMap[container][domid].type[0] = 'b';
       av.frd.updateSetup('av.dnd.lndActiveConfig');
       av.msg.setupType = 'standard';
     } else {
-      testNodeDictionary[domid].type[0] = 'v';
+      containerMap[container][domid].type[0] = 'v';
       av.frd.updateTestSetup('av.dnd.lndActiveConfig');
       av.msg.setupType = 'test';
     }
@@ -109,7 +112,7 @@ jQuery(document).ready(function($) {
     av.parents.clearParentsFn();
 
     if (source.id === 'fzConfig' || source.id === 'fzTdish') {
-      av.fzr.actConfig.type = testNodeDictionary[domid].type;
+      av.fzr.actConfig.type = containerMap[container][domid].type;
       av.fzr.actConfig.file['events.cfg'] = ' ';
 
       //delete anyfiles in activeConfig part of freezer
