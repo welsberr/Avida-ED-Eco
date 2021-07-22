@@ -274,12 +274,14 @@ require([
     copyOnly: true,
     selfAccept: false
   });
-  av.dnd.fzTdish = new dndSource('fzTdish', {
-    accept: ['b', 't'], //b=both; w=world  //test dishes
-    singular: true,
-    copyOnly: true,
-    selfAccept: false
-  });
+  
+  // yemd
+  // av.dnd.fzTdish = new dndSource('fzTdish', {
+  //   accept: ['b', 't'], //b=both; w=world  //test dishes
+  //   singular: true,
+  //   copyOnly: true,
+  //   selfAccept: false
+  // });
 
   av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
 
@@ -297,12 +299,13 @@ require([
     selfAccept: false
   });
 
-  av.dnd.testConfig = new dndSource('testConfig', {
-    accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
-    singular: true,
-    copyOnly: true,
-    selfAccept: false
-  });
+  // yemd
+  // av.dnd.testConfig = new dndSource('testConfig', {
+  //   accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
+  //   singular: true,
+  //   copyOnly: true,
+  //   selfAccept: false
+  // });
 
   // if (av.dbg.flg.root) { console.log('Root: before activeOrgan'); }
   //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
@@ -367,13 +370,14 @@ require([
     }
   });
 
-  av.dnd.testConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
-    'use strict';
-    //console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id);
-    if ('testConfig' === target.node.id) {
-      av.dnd.makeMove(source, nodes, target);
-    }
-  });
+  // yemd
+  // av.dnd.testConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
+  //   'use strict';
+  //   //console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id);
+  //   if ('testConfig' === target.node.id) {
+  //     av.dnd.makeMove(source, nodes, target);
+  //   }
+  // });
 
   // based on https://stackoverflow.com/questions/27529727/sorta-b-does-not-work-in-dojo-dnd-source
   av.dnd.sortDnD = function (dndSection) {
@@ -446,20 +450,21 @@ require([
     }
   });
 
-  av.dnd.fzTdish.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
-    if ('fzTdish' === target.node.id) {
-      var pkg = {};
-      av.ui.num = av.fzr.wNum;
-      pkg.source = source;
-      pkg.nodes = nodes;
-      pkg.copy = copy;
-      pkg.target = target;
-      av.dnd.landfzTdishFn(pkg);
-      if (av.ui.num !== av.fzr.wNum) {
-        av.fwt.makeFzrWorld(av.ui.num, 'av.dnd.fzTdish.on');
-      } //tiba need to check this
-    }
-  });
+  // yemd
+  // av.dnd.fzTdish.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
+  //   if ('fzTdish' === target.node.id) {
+  //     var pkg = {};
+  //     av.ui.num = av.fzr.wNum;
+  //     pkg.source = source;
+  //     pkg.nodes = nodes;
+  //     pkg.copy = copy;
+  //     pkg.target = target;
+  //     av.dnd.landfzTdishFn(pkg);
+  //     if (av.ui.num !== av.fzr.wNum) {
+  //       av.fwt.makeFzrWorld(av.ui.num, 'av.dnd.fzTdish.on');
+  //     } //tiba need to check this
+  //   }
+  // });
 
   // 2019-04-14: Untested.
   dojo.connect(av.dnd.fzTdish, "onDndDrop", function (source, nodes, copy, target) {

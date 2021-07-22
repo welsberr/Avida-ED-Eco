@@ -1617,34 +1617,37 @@ av.dnd.contextMenu = function(target, fzItemID, from) {
 };
 
   //---------------------------------------------------------------------------------------- av.dnd.clearFrzDogjoFn --*/
-  av.dnd.clearFrzDojoFn = function() {
-    //Clear each section of the freezer
-    //if (av.debug.fio) { console.log('FIO: before  av.dnd.fzConfig.selectAll'); }
-    av.dnd.fzConfig.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
-    //if (av.debug.fio) { console.log('FIO: before av.dnd.fzConfig.sync'); }
-    av.dnd.fzConfig.sync('');   //should be done after insertion or deletion
-    //if (av.debug.fio) { console.log('FIO: before av.dnd.fzOrgan.selectAll', av.dnd.fzOrgan); }
-    av.dnd.fzOrgan.selectAll().deleteSelectedNodes();
-    //if (av.debug.fio) { console.log('FIO: before av.dnd.fzOrgan.sync'); }
-    av.dnd.fzOrgan.sync();
-    /*
-    if (av.debug.fio) { console.log('before av.dnd.fzMdish.selectAll', av.dnd.fzMdish); }
-    av.dnd.fzMdish.selectAll().deleteSelectedNodes();
-    av.dnd.fzMdish.sync();
+  
+  // yemd
+  // av.dnd.clearFrzDojoFn = function() {
+  //   //Clear each section of the freezer
+  //   //if (av.debug.fio) { console.log('FIO: before  av.dnd.fzConfig.selectAll'); }
+  //   av.dnd.fzConfig.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
+  //   //if (av.debug.fio) { console.log('FIO: before av.dnd.fzConfig.sync'); }
+  //   av.dnd.fzConfig.sync('');   //should be done after insertion or deletion
+  //   //if (av.debug.fio) { console.log('FIO: before av.dnd.fzOrgan.selectAll', av.dnd.fzOrgan); }
+  //   av.dnd.fzOrgan.selectAll().deleteSelectedNodes();
+  //   //if (av.debug.fio) { console.log('FIO: before av.dnd.fzOrgan.sync'); }
+  //   av.dnd.fzOrgan.sync();
+  //   /*
+  //   if (av.debug.fio) { console.log('before av.dnd.fzMdish.selectAll', av.dnd.fzMdish); }
+  //   av.dnd.fzMdish.selectAll().deleteSelectedNodes();
+  //   av.dnd.fzMdish.sync();
 
-    if (av.debug.fio) { console.log('before av.dnd.fzRdish.selectAll', av.dnd.fzMdish); }
-    av.dnd.fzRdish.selectAll().deleteSelectedNodes();
-    av.dnd.fzRdish.sync();
-    */
-    //if (av.debug.fio) { console.log('FIO: before av.dnd.fzTdish.selectAll', av.dnd.fzMdish); }
-    av.dnd.fzTdish.selectAll().deleteSelectedNodes();
-    av.dnd.fzTdish.sync();
+  //   if (av.debug.fio) { console.log('before av.dnd.fzRdish.selectAll', av.dnd.fzMdish); }
+  //   av.dnd.fzRdish.selectAll().deleteSelectedNodes();
+  //   av.dnd.fzRdish.sync();
+  //   */
+  //   //if (av.debug.fio) { console.log('FIO: before av.dnd.fzTdish.selectAll', av.dnd.fzMdish); }
+  //   av.dnd.fzTdish.selectAll().deleteSelectedNodes();
+  //   av.dnd.fzTdish.sync();
 
-    //if (av.debug.fio) { console.log('FIO: before av.dnd.fzWorld.selectAll', av.dnd.fzWorld); }
-    av.dnd.fzWorld.selectAll().deleteSelectedNodes();
-    av.dnd.fzWorld.sync();
-    //if (av.debug.fio) { console.log('FIO: after av.dnd.fzWorld.selectAll'); }
-  };
+  //   //if (av.debug.fio) { console.log('FIO: before av.dnd.fzWorld.selectAll', av.dnd.fzWorld); }
+  //   av.dnd.fzWorld.selectAll().deleteSelectedNodes();
+  //   av.dnd.fzWorld.sync();
+  //   //if (av.debug.fio) { console.log('FIO: after av.dnd.fzWorld.selectAll'); }
+  // };
+  
   //------------------------------------------------------------------------------------ end av.dnd.clearFrzDogjoFn --*/
 
 /* ****************************************************************************************************************** */

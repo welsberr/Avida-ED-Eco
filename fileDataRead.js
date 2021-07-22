@@ -4,6 +4,25 @@
 
   // if (av.dbg.flg.root) { console.log('Root: before av.fio.addFzItem'); }
   /*------------------------------------------------------------------------------------------------ av.fio.addFzItem --*/
+  
+  /* yemi's implementation of av.fio.addFzItem to be used on Test Dish Section of Freezer */
+  var testItemId = 0;
+
+  av.fio.addFzItem2 = function(container, name, type, fileNum) {
+    // example 'container': '.className' or '#id'
+    'use strict';
+    var names = [];
+    var domItems = $.map($(container), (value, key) => { return value })[0].children
+    var lngth = domItems.length;
+
+    // 'insertNodes' implementation
+    var domId = `test${testItemId}`
+    $(container).append(`<div class="item ${type}" id="${domId}"> ${name} </div>`);
+    testItemId++;
+
+    return domId;
+  }
+
   av.fio.addFzItem = function(dndSection, name, type, fileNum) {
     'use strict';
     var domid;
@@ -31,7 +50,6 @@
       };
 
       //var domID = av.dnd.getDomId(configName, target);
-
 
       if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', dndSection.node.id);
       //console.log('fileNum', fileNum, '; name', name, '; Section', dndSection.node.id, '; type', type);
@@ -113,10 +131,12 @@
         break;
   */
       case 't':
-        domid = av.fio.addFzItem(av.dnd.fzTdish, name, type, num);
-        if ('dndSection is undefined' === domid) console.log('av.dnd.fzTdish is undefined');
-        if (av.fzr.tNum < Number(num)) {av.fzr.tNum = Number(num); }
-        break;
+        // yemd
+        // domid = av.fio.addFzItem(av.dnd.fzTdish, name, type, num);
+        // if ('dndSection is undefined' === domid) console.log('av.dnd.fzTdish is undefined');
+        // if (av.fzr.tNum < Number(num)) {av.fzr.tNum = Number(num); }
+        // break;
+        domid = av.fio.addFzItem2("#fzTdish", name, type, num);
       case 'w':
         domid = av.fio.addFzItem(av.dnd.fzWorld, name, type, num);
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzWorld is undefined');
@@ -680,7 +700,7 @@
             av.dom.autoPauseNum.value = '1000';
           }
         }
-      } // for
+      } 
     }
   };
   //----------------------------------------------------------------------------------- end av.frd.pauseRunAtTXT2form --
