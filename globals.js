@@ -542,7 +542,19 @@ av.sgr.describe.long.ant = '&nbsp;(x8) Hard';
 av.sgr.describe.long.nor = '(x16) Very Hard';
 av.sgr.describe.long.xor = '(x16) Very Hard';
 av.sgr.describe.long.equ = '(x32) Brutal';
-av.sgr.describe.long.width = '96px';
+
+av.sgr.describe.lng2 = {};
+av.sgr.describe.lng2.not = 'Easy &nbsp;(x2)';
+av.sgr.describe.lng2.nan = 'Easy &nbsp;(x2)';
+av.sgr.describe.lng2.and = 'Moderate &nbsp;(x4)';
+av.sgr.describe.lng2.orn = 'Moderate &nbsp;(x4)';
+av.sgr.describe.lng2.oro = 'Hard &nbsp;(x8)';
+av.sgr.describe.lng2.ant = 'Hard &nbsp;(x8)';
+av.sgr.describe.lng2.nor = 'Very Hard (x16)';
+av.sgr.describe.lng2.xor = 'Very Hard (x16)';
+av.sgr.describe.lng2.equ = 'Brutal (x32)';
+
+av.sgr.describe.lng2.width = '96px';
 
 av.sgr.describe.short = {};
 av.sgr.describe.short.not = '&nbsp;(x2)';

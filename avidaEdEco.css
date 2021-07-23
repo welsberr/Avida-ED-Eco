@@ -1056,6 +1056,7 @@ details summary {
 .taskRewardCls { 
   grid-area: tskRewardCls; 
   display: inline-block;
+  text-align: right;
   border: 1px solid red;
   width: 250px;
 }
@@ -1068,13 +1069,6 @@ details summary {
   display: grid;
   justify-items: end;
   border: 1px solid green;
-}
-.sgrSumCls { 
-  display: grid; 
-  grid-template-areas: 'sgrLftSumCls sgrRitSumCls';
-  grid-template-columns: 1fr 98px;
-  height: 23px;  width: 100%;
-  border: 1px solid blue;  
 }
 */
 

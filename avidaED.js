@@ -282,7 +282,7 @@ require([
   //   copyOnly: true,
   //   selfAccept: false
   // });
-
+  
   av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
 
   // if (av.dbg.flg.root) { console.log('Root: before organIcon'); }

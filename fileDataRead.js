@@ -32,6 +32,7 @@
     return domId;
   }
 
+  // makes a freezer item int the correct freezer sectionl 
   av.fio.addFzItem = function(dndSection, name, type, fileNum) {
     'use strict';
     var domid;
@@ -44,19 +45,11 @@
       var domItems = Object.keys(dndSection.map);
       var lngth = domItems.length;
 
-      if (false) {
-      //if (0 < lngth) {
-        //trying to figure out sorting 
-        for (var ii = 0; ii < lngth; ii++) {
-          names[ii] = dndSection.map[domItems[ii]].data;
-        };
-      }
-      else {
-        dndSection.insertNodes(false, [{data: name, type: [type]}]);
-        dndSection.sync();
-        var mapItems = Object.keys(dndSection.map);
-        domid = mapItems[mapItems.length - 1];
-      };
+      // creates a dojo dom element that represents the freezer item. 
+      dndSection.insertNodes(false, [{data: name, type: [type]}]);
+      dndSection.sync();
+      var mapItems = Object.keys(dndSection.map);
+      domid = mapItems[mapItems.length - 1];
 
       //var domID = av.dnd.getDomId(configName, target);
 
@@ -194,18 +187,19 @@
     //console.log('SubDish:', av.fzr.folderType, ';  ID=', av.fio.anID);
   };
 
-  /*--------------------------------------------------------------------------------------------- av.fio.processFiles --*/
+  //--------------------------------------------------------------------------------------------- av.fio.processFiles --
+  // 
   av.fio.processFiles = function (loadConfigFlag, from) {
     'use strict';
     if (av.dbg.flg.frd) { console.log('FIO: ',from, ' called av.fio.processFiles: loadConfigFlag = ', loadConfigFlag); }
     //console.log('FIO: ',from, ' called av.fio.processFiles: loadConfigFlag = ', loadConfigFlag);
     var fileType = av.fio.anID;
     
-    //Multi-dish not being implented at this time so subDish should never be a av.fzr.folderType
-    if ('subDish' === av.fzr.folderType){
-      fileType = av.utl.wsa('/', fileType);
-      //av.frd.processSubDish();
-    };
+    //Multi-dish not being implented at this time so subDish should never be a av.fzr.folderType    //delete in 2021
+    //if ('subDish' === av.fzr.folderType){
+    //  fileType = av.utl.wsa('/', fileType); 
+    //  //av.frd.processSubDish();
+    //};
     
     fileType = av.utl.wsa('/', fileType);
     //if (av.debug.fio) console.log('anID=', av.fio.anID, '; fileType=', fileType, '; fziType=', av.fzr.folderType);
