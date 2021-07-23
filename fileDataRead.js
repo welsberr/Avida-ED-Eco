@@ -3,7 +3,35 @@
   var dijit = dijit || {};  //incase av already exists
 
   // if (av.dbg.flg.root) { console.log('Root: before av.fio.addFzItem'); }
-  //------------------------------------------------------------------------------------------------ av.fio.addFzItem --
+  /*------------------------------------------------------------------------------------------------ av.fio.addFzItem --*/
+  
+  /* yemi's implementation of av.fio.addFzItem to be used on Test Dish Section of Freezer */
+  var testItemId = 0;
+
+  // replacement for dndSection.map
+  var containerMap = {};
+
+  av.fio.addFzItem2 = function(container, name, type, fileNum) {
+    // example 'container' input format: '.className' or '#id'
+    'use strict';
+
+    if (Object.keys(containerMap).indexOf(container) === -1) {
+      containerMap[container] = {};
+    }
+
+    var names = [];
+    var domItems = $.map($(container), (value, key) => { return value })[0].children
+    var lngth = domItems.length;
+
+    // 'insertNodes' implementation
+    var domId = `test${testItemId}`
+    $(container).append(`<div class="item ${type}" id="${domId}"> ${name} </div>`);
+    containerMap[container][domId] = {"name": name, "type": type};
+
+    testItemId++;
+    return domId;
+  }
+
   // makes a freezer item int the correct freezer sectionl 
   av.fio.addFzItem = function(dndSection, name, type, fileNum) {
     'use strict';
@@ -24,7 +52,6 @@
       domid = mapItems[mapItems.length - 1];
 
       //var domID = av.dnd.getDomId(configName, target);
-
 
       if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', dndSection.node.id);
       //console.log('fileNum', fileNum, '; name', name, '; Section', dndSection.node.id, '; type', type);
@@ -106,9 +133,12 @@
         break;
   */
       case 't':
-        domid = av.fio.addFzItem(av.dnd.fzTdish, name, type, num);
-        if ('dndSection is undefined' === domid) console.log('av.dnd.fzTdish is undefined');
-        if (av.fzr.tNum < Number(num)) {av.fzr.tNum = Number(num); }
+        // yemd
+        // domid = av.fio.addFzItem(av.dnd.fzTdish, name, type, num);
+        // if ('dndSection is undefined' === domid) console.log('av.dnd.fzTdish is undefined');
+        // if (av.fzr.tNum < Number(num)) {av.fzr.tNum = Number(num); }
+        // break;
+        domid = av.fio.addFzItem2("#fzTdish", name, type, num);
         break;
       case 'w':
         domid = av.fio.addFzItem(av.dnd.fzWorld, name, type, num);
@@ -674,7 +704,7 @@
             av.dom.autoPauseNum.value = '1000';
           }
         }
-      } // for
+      } 
     }
   };
   //----------------------------------------------------------------------------------- end av.frd.pauseRunAtTXT2form --

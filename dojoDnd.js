@@ -159,172 +159,176 @@ av.dnd.nameParent = function(name) {
 //and reinserting the most resent one after a drop event.
 //
 //---------------------------------------------------------------------------------------------- av.dnd.lndtestConfig --
-av.dnd.lndTestConfig = function (move) {
-  'use strict';
-  av.dnd.configFlag = 'test';
-  console.log('In av.dnd.lndTestConfig: move=', move);
-  av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
-  var ndx = -1;
-  var klen = 0;
-  var kk = 0;
-  var str = '';
-  //there is always a node here, so it must always be cleared when adding a new one.
-  av.dnd.testConfig.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
-  av.dnd.testConfig.sync();   //should be done after insertion or deletion
 
-  //get the data for the new configuration
-  move.source.forInSelectedItems(function (item, id) { //assign the node that is selected from the source.
-    av.dnd.testConfig.insertNodes(false, [item]);
-  });
-  var domid = Object.keys(av.dnd.testConfig.map)[0];
-  //console.log('ldn.testConfig: type=', move.target.map[domid].type[0] );
-  // The type assignment and .sync were done here in the past. I'm going to try moving this to just before clearing the ancestor box. 
-    //move.target.map[domid].type[0] = 'b';
-  av.dnd.testConfig.sync();
-  //console.log('data', move.target.map[domid].data, move.target.map[domid]);
+// yemd
 
-  av.fzr.actConfig.actDomid = domid;
-  av.fzr.actConfig.name = document.getElementById(domid).textContent;
-  //console.log('New Config:', av.fzr.actConfig.name);
-  av.fzr.actConfig.fzDomid = Object.keys(move.source.selection)[0];
-  av.fzr.actConfig.dir = av.fzr.dir[av.fzr.actConfig.fzDomid];
-  delete av.fzr.actConfig.file['instset.cfg'];
-  if (av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg']) {
-    av.fzr.actConfig.file['instset.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg'];
-  }
+// av.dnd.lndTestConfig = function (move) {
+//   'use strict';
+//   av.dnd.configFlag = 'test';
+//   console.log('In av.dnd.lndTestConfig: move=', move);
+//   av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
+//   var ndx = -1;
+//   var klen = 0;
+//   var kk = 0;
+//   var str = '';
+//   //there is always a node here, so it must always be cleared when adding a new one.
+//   av.dnd.testConfig.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
+//   av.dnd.testConfig.sync();   //should be done after insertion or deletion
+
+//   //get the data for the new configuration
+//   move.source.forInSelectedItems(function (item, id) { //assign the node that is selected from the source.
+//     av.dnd.testConfig.insertNodes(false, [item]);
+//   });
+//   var domid = Object.keys(av.dnd.testConfig.map)[0];
+//   //console.log('ldn.testConfig: type=', move.target.map[domid].type[0] );
+//   // The type assignment and .sync were done here in the past. I'm going to try moving this to just before clearing the ancestor box. 
+//     //move.target.map[domid].type[0] = 'b';
+//   av.dnd.testConfig.sync();
+//   //console.log('data', move.target.map[domid].data, move.target.map[domid]);
+
+//   av.fzr.actConfig.actDomid = domid;
+//   av.fzr.actConfig.name = document.getElementById(domid).textContent;
+//   //console.log('New Config:', av.fzr.actConfig.name);
+//   av.fzr.actConfig.fzDomid = Object.keys(move.source.selection)[0];
+//   av.fzr.actConfig.dir = av.fzr.dir[av.fzr.actConfig.fzDomid];
+//   delete av.fzr.actConfig.file['instset.cfg'];
+//   if (av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg']) {
+//     av.fzr.actConfig.file['instset.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg'];
+//   }
   
-  //The types are reassigned to indicate that they might be the populated form of the dishes.
-  if ('c' == move.target.map[domid].type[0] || 'w' == move.target.map[domid].type[0]) {
-    move.target.map[domid].type[0]= 'b';
-    av.frd.updateSetup('av.dnd.lndActiveConfig');                  //call the avida-ED normal style setup page
-    av.msg.setupType = 'standard';
-  }
-  else {
-    move.target.map[domid].type[0] = 'v';   //type is test or populated test
-    av.frd.updateTestSetup('av.dnd.lndActiveConfig');               //call the test version of Setup
-    av.msg.setupType = 'test';
-  };
+//   //The types are reassigned to indicate that they might be the populated form of the dishes.
+//   if ('c' == move.target.map[domid].type[0] || 'w' == move.target.map[domid].type[0]) {
+//     move.target.map[domid].type[0]= 'b';
+//     av.frd.updateSetup('av.dnd.lndActiveConfig');                  //call the avida-ED normal style setup page
+//     av.msg.setupType = 'standard';
+//   }
+//   else {
+//     move.target.map[domid].type[0] = 'v';   //type is test or populated test
+//     av.frd.updateTestSetup('av.dnd.lndActiveConfig');               //call the test version of Setup
+//     av.msg.setupType = 'test';
+//   };
 
-  //Clear ancestorBox
-  av.dnd.ancestorBox.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
-  av.dnd.ancestorBox.sync();   //should be done after insertion or deletion
-  av.dnd.ancestorBoTest.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
-  av.dnd.ancestorBoTest.sync();   //should be done after insertion or deletion
+//   //Clear ancestorBox
+//   av.dnd.ancestorBox.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
+//   av.dnd.ancestorBox.sync();   //should be done after insertion or deletion
+//   av.dnd.ancestorBoTest.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
+//   av.dnd.ancestorBoTest.sync();   //should be done after insertion or deletion
 
-  av.parents.clearParentsFn();
+//   av.parents.clearParentsFn();
 
-  console.log('move.source.node.id=',move.source.node.id);
-  if ('fzConfig' === move.source.node.id || ('fzTdish' === move.source.node.id)) {
-    av.fzr.actConfig.type = move.type;
-    //av.fzr.actConfig.type = 'c';
+//   console.log('move.source.node.id=',move.source.node.id);
+//   if ('fzConfig' === move.source.node.id || ('fzTdish' === move.source.node.id)) {
+//     av.fzr.actConfig.type = move.type;
+//     //av.fzr.actConfig.type = 'c';
     
-    //clear any old data files;
-    av.fzr.actConfig.file['events.cfg'] = ' ';
+//     //clear any old data files;
+//     av.fzr.actConfig.file['events.cfg'] = ' ';
     
-    //delete anyfiles in activeConfig part of freezer
-    if (av.fzr.actConfig.file['clade.ssg']) {delete av.fzr.actConfig.file['clade.ssg'];}
-    if (av.fzr.actConfig.file['detail.spop']) {delete av.fzr.actConfig.file['detail.spop'];}
-    if (av.fzr.actConfig.file['update']) {delete av.fzr.actConfig.file['update'];}
+//     //delete anyfiles in activeConfig part of freezer
+//     if (av.fzr.actConfig.file['clade.ssg']) {delete av.fzr.actConfig.file['clade.ssg'];}
+//     if (av.fzr.actConfig.file['detail.spop']) {delete av.fzr.actConfig.file['detail.spop'];}
+//     if (av.fzr.actConfig.file['update']) {delete av.fzr.actConfig.file['update'];}
     
-    //load ancestors if present.
-    if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt']) {
-      str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt'];
-      av.fio.autoAncestorLoad(str);
-    };
-    if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt']) {
-      str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt'];
-      av.fio.handAncestorLoad(str);
-    };
+//     //load ancestors if present.
+//     if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt']) {
+//       str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt'];
+//       av.fio.autoAncestorLoad(str);
+//     };
+//     if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt']) {
+//       str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt'];
+//       av.fio.handAncestorLoad(str);
+//     };
     
-    //load files from freezer
-    av.fzr.actConfig.file['avida.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/avida.cfg'];
-    av.fzr.actConfig.file['environment.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/environment.cfg'];
-    av.fzr.actConfig.file['events.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/events.cfg'];
-    av.fzr.actConfig.file['update'] = av.fzr.file[av.fzr.actConfig.dir + '/update'];
+//     //load files from freezer
+//     av.fzr.actConfig.file['avida.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/avida.cfg'];
+//     av.fzr.actConfig.file['environment.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/environment.cfg'];
+//     av.fzr.actConfig.file['events.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/events.cfg'];
+//     av.fzr.actConfig.file['update'] = av.fzr.file[av.fzr.actConfig.dir + '/update'];
 
     
-    av.grd.drawGridSetupFn('av.dnd.lndActiveConfig'); //draw grid
-  }
-  else if (('fzWorld' === move.source.node.id) ) {
-    if ('fzWorld' === move.source.node.id) {
-      av.fzr.actConfig.type = 'w';
-    }
-    else {
-      av.fzr.actConfig.type = 'm';
-      console.log('multi- Dish in LandActive Config===================================================================');
-    }
-    av.fzr.actConfig.file['avida.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/avida.cfg'];
-    av.fzr.actConfig.file['clade.ssg'] = av.fzr.file[av.fzr.actConfig.dir + '/clade.ssg'];
-    av.fzr.actConfig.file['detail.spop'] = av.fzr.file[av.fzr.actConfig.dir + '/detail.spop'];
-    av.fzr.actConfig.file['environment.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/environment.cfg'];
-    av.fzr.actConfig.file['events.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/events.cfg'];
-    av.fzr.actConfig.file['update'] = av.fzr.file[av.fzr.actConfig.dir + '/update'];
-    av.grd.oldUpdate = av.fzr.actConfig.file['update'];
-    TimeLabel.textContent = av.grd.oldUpdate;
-    console.log('in dojo');
+//     av.grd.drawGridSetupFn('av.dnd.lndActiveConfig'); //draw grid
+//   }
+//   else if (('fzWorld' === move.source.node.id) ) {
+//     if ('fzWorld' === move.source.node.id) {
+//       av.fzr.actConfig.type = 'w';
+//     }
+//     else {
+//       av.fzr.actConfig.type = 'm';
+//       console.log('multi- Dish in LandActive Config===================================================================');
+//     }
+//     av.fzr.actConfig.file['avida.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/avida.cfg'];
+//     av.fzr.actConfig.file['clade.ssg'] = av.fzr.file[av.fzr.actConfig.dir + '/clade.ssg'];
+//     av.fzr.actConfig.file['detail.spop'] = av.fzr.file[av.fzr.actConfig.dir + '/detail.spop'];
+//     av.fzr.actConfig.file['environment.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/environment.cfg'];
+//     av.fzr.actConfig.file['events.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/events.cfg'];
+//     av.fzr.actConfig.file['update'] = av.fzr.file[av.fzr.actConfig.dir + '/update'];
+//     av.grd.oldUpdate = av.fzr.actConfig.file['update'];
+//     TimeLabel.textContent = av.grd.oldUpdate;
+//     console.log('in dojo');
 
-    //load parents from clade.ssg and ancestors.
-    av.fio.cladeSSG2parents(av.fzr.file[av.fzr.actConfig.dir + '/clade.ssg']);
-    var handList = av.fio.handAncestorParse(av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt']);
-    var autoList = av.fio.autoAncestorParse(av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt']);
-    console.log('handList=', handList);
-    console.log('autoList=', autoList);
-    var ndx = 0;
-    klen = av.parents.name.length;
-    for (kk = 0; kk < klen; kk++) {
-      ndx = autoList.nam.indexOf(av.parents.name[kk]);
-      if (-1 < ndx) {
-        av.parents.genome[kk] = autoList.gen[ndx];
-        av.parents.howPlaced[kk] = 'auto';
-        av.parents.injected[kk] = true;
-        av.parents.autoNdx.push(kk);
-        autoList.nam.splice(ndx, 1);
-        autoList.gen.splice(ndx, 1);
-      }
-      else {
-        ndx = handList.nam.indexOf(av.parents.name[kk]);
-        if (-1 < ndx) {
-          av.parents.genome[kk] = handList.gen[ndx];
-          av.parents.col[kk] = handList.col[ndx];
-          av.parents.row[kk] = handList.row[ndx];
-          av.parents.howPlaced[kk] = 'hand';
-          av.parents.injected[kk] = true;
-          av.parents.handNdx.push(kk);
-          handList.nam.splice(ndx, 1);
-          handList.gen.splice(ndx, 1);
-          handList.col.splice(ndx, 1);
-          handList.row.splice(ndx, 1);
-        }
-        else {
-          console.log('Name, ', av.parents.name[kk], ', not found');
-        }
-      }
-    }
-    av.parents.placeAncestors();
-    //run status is no longer 'new' it is 'world'
-    
-    if ('fzWorld' === move.source.node.id) {
-      av.fzr.actConfig.type = 'w';
-      av.ptd.popWorldStateUi('av.dnd.lndActiveConfig');
-    }
-    else {
-      av.fzr.actConfig.type = 't';
-      av.ptd.popTdishStateUi('av.dnd.lndActiveConfig');
-    }
+//     //load parents from clade.ssg and ancestors.
+//     av.fio.cladeSSG2parents(av.fzr.file[av.fzr.actConfig.dir + '/clade.ssg']);
+//     var handList = av.fio.handAncestorParse(av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt']);
+//     var autoList = av.fio.autoAncestorParse(av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt']);
+//     console.log('handList=', handList);
+//     console.log('autoList=', autoList);
+//     var ndx = 0;
+//     klen = av.parents.name.length;
+//     for (kk = 0; kk < klen; kk++) {
+//       ndx = autoList.nam.indexOf(av.parents.name[kk]);
+//       if (-1 < ndx) {
+//         av.parents.genome[kk] = autoList.gen[ndx];
+//         av.parents.howPlaced[kk] = 'auto';
+//         av.parents.injected[kk] = true;
+//         av.parents.autoNdx.push(kk);
+//         autoList.nam.splice(ndx, 1);
+//         autoList.gen.splice(ndx, 1);
+//       }
+//       else {
+//         ndx = handList.nam.indexOf(av.parents.name[kk]);
+//         if (-1 < ndx) {
+//           av.parents.genome[kk] = handList.gen[ndx];
+//           av.parents.col[kk] = handList.col[ndx];
+//           av.parents.row[kk] = handList.row[ndx];
+//           av.parents.howPlaced[kk] = 'hand';
+//           av.parents.injected[kk] = true;
+//           av.parents.handNdx.push(kk);
+//           handList.nam.splice(ndx, 1);
+//           handList.gen.splice(ndx, 1);
+//           handList.col.splice(ndx, 1);
+//           handList.row.splice(ndx, 1);
+//         }
+//         else {
+//           console.log('Name, ', av.parents.name[kk], ', not found');
+//         }
+//       }
+//     }
+//   } else {
+//     console.log('fzr.activeCon - something strange happened', av.fzr.actConfig);
+//   }
 
-    //Load Time Recorder Data
-    av.frd.loadTimeRecorderData(av.fzr.actConfig.dir);
-    av.pch.processLogic();
-    //send message to Avida
-    av.msg.importPopExpr();
-    av.msg.requestGridData();
-    av.msg.sendData();
-    av.grd.popChartFn('av.dnd.lndTestConfig');
-    //av.msg.requestPopStats();  //tiba last time this was on; data was all = 0, so confusing;
-  }
-  
-  else console.log('fzr.activeCon - something strange happened', av.fzr.actConfig);
-};
+//   av.parents.placeAncestors();
+//   //run status is no longer 'new' it is 'world'
+
+//   if ('fzWorld' === move.source.node.id) {
+//     av.fzr.actConfig.type = 'w';
+//     av.ptd.popWorldStateUi('av.dnd.lndActiveConfig');
+//   }
+//   else {
+//     av.fzr.actConfig.type = 't';
+//     av.ptd.popTdishStateUi('av.dnd.lndActiveConfig');
+//   }
+
+//   //Load Time Recorder Data
+//   av.frd.loadTimeRecorderData(av.fzr.actConfig.dir);
+//   av.pch.processLogic();
+//   //send message to Avida
+//   av.msg.importPopExpr();
+//   av.msg.requestGridData();
+//   av.msg.sendData();
+//   av.grd.popChartFn('av.dnd.lndTestConfig');
+// };
+
 //------------------------------------------------------------------------------------------ end av.dnd.lndtestConfig --
 
 //-------------------------------------------------------------------------------------- start av.dnd.lndActiveConfig --
@@ -1617,34 +1621,37 @@ av.dnd.contextMenu = function(target, fzItemID, from) {
 };
 
   //---------------------------------------------------------------------------------------- av.dnd.clearFrzDogjoFn --*/
-  av.dnd.clearFrzDojoFn = function() {
-    //Clear each section of the freezer
-    //if (av.debug.fio) { console.log('FIO: before  av.dnd.fzConfig.selectAll'); }
-    av.dnd.fzConfig.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
-    //if (av.debug.fio) { console.log('FIO: before av.dnd.fzConfig.sync'); }
-    av.dnd.fzConfig.sync('');   //should be done after insertion or deletion
-    //if (av.debug.fio) { console.log('FIO: before av.dnd.fzOrgan.selectAll', av.dnd.fzOrgan); }
-    av.dnd.fzOrgan.selectAll().deleteSelectedNodes();
-    //if (av.debug.fio) { console.log('FIO: before av.dnd.fzOrgan.sync'); }
-    av.dnd.fzOrgan.sync();
-    /*
-    if (av.debug.fio) { console.log('before av.dnd.fzMdish.selectAll', av.dnd.fzMdish); }
-    av.dnd.fzMdish.selectAll().deleteSelectedNodes();
-    av.dnd.fzMdish.sync();
+  
+  // yemd
+  // av.dnd.clearFrzDojoFn = function() {
+  //   //Clear each section of the freezer
+  //   //if (av.debug.fio) { console.log('FIO: before  av.dnd.fzConfig.selectAll'); }
+  //   av.dnd.fzConfig.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
+  //   //if (av.debug.fio) { console.log('FIO: before av.dnd.fzConfig.sync'); }
+  //   av.dnd.fzConfig.sync('');   //should be done after insertion or deletion
+  //   //if (av.debug.fio) { console.log('FIO: before av.dnd.fzOrgan.selectAll', av.dnd.fzOrgan); }
+  //   av.dnd.fzOrgan.selectAll().deleteSelectedNodes();
+  //   //if (av.debug.fio) { console.log('FIO: before av.dnd.fzOrgan.sync'); }
+  //   av.dnd.fzOrgan.sync();
+  //   /*
+  //   if (av.debug.fio) { console.log('before av.dnd.fzMdish.selectAll', av.dnd.fzMdish); }
+  //   av.dnd.fzMdish.selectAll().deleteSelectedNodes();
+  //   av.dnd.fzMdish.sync();
 
-    if (av.debug.fio) { console.log('before av.dnd.fzRdish.selectAll', av.dnd.fzMdish); }
-    av.dnd.fzRdish.selectAll().deleteSelectedNodes();
-    av.dnd.fzRdish.sync();
-    */
-    //if (av.debug.fio) { console.log('FIO: before av.dnd.fzTdish.selectAll', av.dnd.fzMdish); }
-    av.dnd.fzTdish.selectAll().deleteSelectedNodes();
-    av.dnd.fzTdish.sync();
+  //   if (av.debug.fio) { console.log('before av.dnd.fzRdish.selectAll', av.dnd.fzMdish); }
+  //   av.dnd.fzRdish.selectAll().deleteSelectedNodes();
+  //   av.dnd.fzRdish.sync();
+  //   */
+  //   //if (av.debug.fio) { console.log('FIO: before av.dnd.fzTdish.selectAll', av.dnd.fzMdish); }
+  //   av.dnd.fzTdish.selectAll().deleteSelectedNodes();
+  //   av.dnd.fzTdish.sync();
 
-    //if (av.debug.fio) { console.log('FIO: before av.dnd.fzWorld.selectAll', av.dnd.fzWorld); }
-    av.dnd.fzWorld.selectAll().deleteSelectedNodes();
-    av.dnd.fzWorld.sync();
-    //if (av.debug.fio) { console.log('FIO: after av.dnd.fzWorld.selectAll'); }
-  };
+  //   //if (av.debug.fio) { console.log('FIO: before av.dnd.fzWorld.selectAll', av.dnd.fzWorld); }
+  //   av.dnd.fzWorld.selectAll().deleteSelectedNodes();
+  //   av.dnd.fzWorld.sync();
+  //   //if (av.debug.fio) { console.log('FIO: after av.dnd.fzWorld.selectAll'); }
+  // };
+  
   //------------------------------------------------------------------------------------ end av.dnd.clearFrzDogjoFn --*/
 
 /* ****************************************************************************************************************** */
