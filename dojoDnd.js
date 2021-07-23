@@ -328,6 +328,7 @@ av.dnd.lndTestConfig = function (move) {
 //------------------------------------------------------------------------------------------ end av.dnd.lndtestConfig --
 
 //-------------------------------------------------------------------------------------- start av.dnd.lndActiveConfig --
+
 av.dnd.lndActiveConfig = function (move, from) {
   'use strict';
   av.dnd.configFlag = 'normal';
@@ -510,6 +511,7 @@ av.dnd.lndActiveConfig = function (move, from) {
   
   else console.log('fzr.activeCon - something strange happened', av.fzr.actConfig);
 };
+
 //---------------------------------------------------------------------------------------- end av.dnd.lndActiveConfig --
 
 //----------------------------------------------------------------------------------------- start av.dnd.landFzConfig --
@@ -1259,6 +1261,7 @@ av.anl.loadSelectedData = function (worldNum, axisSide, side, from) {
 
 // get rid of if don't use
 //-------------------------------------------------------------------------------------- av.dnd.loadDefautlConfigFn --*/
+
 av.dnd.loadDefautlConfigFn = function (from) {
   //console.log(from, 'called av.dnd.loadDefautlConfigFn: av.fzr.file.c0/entryname.txt=', av.fzr.file['c0/entryname.txt']);
   //console.log('av.fzr.domid.c0=', av.fzr.domid.c0);
@@ -1334,6 +1337,7 @@ av.dnd.loadDefautlConfigFn = function (from) {
     console.log('Error: index of default configuration file not found; there must be a c0 folder');
   }
 };
+
 //---------------------------------------------------------------------------------- end av.dnd.loadDefautlConfigFn --*/
 
 
