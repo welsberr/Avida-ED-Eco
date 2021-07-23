@@ -14,6 +14,9 @@
   var av = av || {};  //incase av already exists
 
   // if (av.dbg.flg.root) { console.log('Root: before av.fio.readZipWS'); }
+  // reads the defaut workspace when the program is initialized and when the user re-loads the default workspace. 
+  // the default configuration file is loaded as the active configuration when the program is first run. 
+  // The active configuration is not changed if the user relods the default freezer. 
   /*------------------------------------------------------------------------------------------------ av.fio.readZipWS --*/
   av.fio.readZipWS = function(zipFileName, loadConfigFlag) {
     if (av.debug.fio) console.log('zipFileName=', zipFileName, '; loadConfigFlag=', loadConfigFlag);
@@ -47,11 +50,6 @@
       //if (av.debug.fio) console.log('before call procesfiles');
       av.fio.zipPathRoot = null;
       for (var nameOfFileContainedInZipFile in av.fio.zipfile.files) {
-        /*Mac generated workspaces have the string '.avidaedworkspace/'  or '.avidaWs/' before the folders for each freezerItem.
-         This prefix needs to be removed if present. av.fio.zipPathRoot will be assigned the beginning of the path name within the zip file.
-         */
-        //if (av.debug.fio) console.log('nameOfFileContainedInZipFile=', nameOfFileContainedInZipFile, '; fileContainedInZipFile.asText()=', fileContainedInZipFile.asText());
-        //if (av.debug.fio) console.log('nameOfFileContainedInZipFile=', nameOfFileContainedInZipFile);
         if (null === av.fio.zipPathRoot) {
           if (0 < nameOfFileContainedInZipFile.indexOf('avidaWs') && 0 > nameOfFileContainedInZipFile.indexOf('MACOSX')) {
             av.fio.zipPathRoot = av.utl.wsb('/', nameOfFileContainedInZipFile);
@@ -75,7 +73,7 @@
       };  //end of process files loops
       
       
-      //want to sort TestDishes here
+      //sort TestDishes here
       av.dnd.sortDnD('fzTdish');
 
       //note setup form is updated when the files are read.

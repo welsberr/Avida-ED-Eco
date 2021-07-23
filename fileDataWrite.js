@@ -213,7 +213,7 @@
       text = dfltTxt;
     }
     else { 
-      return ''; 
+      return '';  
     }
     if (null != str) {
       text = str + text;

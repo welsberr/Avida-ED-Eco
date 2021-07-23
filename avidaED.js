@@ -279,7 +279,9 @@ require([
     copyOnly: true,
     selfAccept: false
   });
-
+  console.log('av.dnd.fzTdish =', av.dnd.fzConfig);
+  console.log('av.dom.fzTdish = ', document.getElementById('fzTdish'));
+  
   av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
 
   // if (av.dbg.flg.root) { console.log('Root: before organIcon'); }

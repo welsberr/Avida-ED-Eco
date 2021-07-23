@@ -785,10 +785,10 @@ av.sgr.supplyChange = function (domObj) {
     console.log(from, '==> changeDetailsLayout: complex=', av.sgr.complexityLevel, '; geo=',av.nut[numTsk].uiAll.geometry, 'av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
     
     if ('sgrAdvanced' == av.sgr.complexityLevel) {
-      av.sgr.processAdvancedFn();
+      av.sgr.processAdvancedFn(numTsk, tsk);
     }
     else {
-      av.sgr.processBasicFn();
+      av.sgr.processBasicFn(numTsk, tsk);
     };    //end of sgrBasic vs sgrAdvanced
     //----------------------------------------------------------------------------- basic (global) resource interface --
     // if (av.dbg.flg.nut) { console.log('tsk=', tsk, 'sub=', sub, '; geometry=', geometry, '; supplyTypeSlct =', supplyTypeSlct, ' ' ,tsk+'_regionLayHolder=', document.getElementById(tsk+'_regionLayHolder').value ); }
@@ -799,11 +799,11 @@ av.sgr.supplyChange = function (domObj) {
 //------------------------------------------------------------------------------------ end av.sgr.changeDetailsLayout --
 
 //--------------------------------------------------------------------------------------------- av.sgr.processBasicFn --
-av.sgr.processBasicFn = function() {
+av.sgr.processBasicFn = function(numTsk, tsk) {
   // av.sgr.complexityLevel = 'sgrGlobal';   (begingger level)      
   av.nut[numTsk].uiAll.supplyTypeSlct = document.getElementById(tsk + '_supplyTypeSlct').value;
   //console.log('av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
-
+  console
   if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
     // I was not able to get a grid container to start in the top row of the summary secion. 
     // I tried absolute postion, but then the grid contain did not change the sise of the summary section. 
