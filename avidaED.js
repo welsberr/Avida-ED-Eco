@@ -157,6 +157,7 @@ require([
   //'lib/plotly.js',               //version  plotly_v1.44.3   as of 2018
   //'lib/plotly-v1.53.min.js',      //2020_0409 production
   'lib/plotly-v1.53.js',      //2020_0409 development
+  //'lib/dragula/dragula-v3.7.2.min.js',
 
   //'lib/jszip.min.js',        //older version. Not sure what version
   'lib/jszip-v2.6.1.js',        //need to update, but need to figure out update methods. tiba
@@ -182,7 +183,7 @@ require([
   'environment2UI.js',
   'sugar_ui.js',
   'reSizePageParts.js',
-  'dragulaDnd.js',
+  //'dragulaDnd.js',
   //'restartAvida.js',
   //'diagnosticconsole.js',
   'dojo/domReady!'
