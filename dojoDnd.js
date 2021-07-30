@@ -61,100 +61,117 @@ av.dnd.getDomId = function (name, target){
 // };
 
 //--------------------------------------------------------------------------------------------- av.dnd.makeNameList ----
-av.dnd.makeNameList = function (target) {
-  'use strict';
-  var namelist = dojo.query('> .dojoDndItem', target.node.id);
-  var lngth = namelist.length;
-  var listNames = [];
-  for (var ii = 0; ii < lngth; ii++) {
-    listNames[ii] = namelist[ii].textContent;
-  }
-  return listNames;
-};
+
+// yemd
+// av.dnd.makeNameList = function (target) {
+//   'use strict';
+//   var namelist = dojo.query('> .dojoDndItem', target.node.id);
+//   var lngth = namelist.length;
+//   var listNames = [];
+//   for (var ii = 0; ii < lngth; ii++) {
+//     listNames[ii] = namelist[ii].textContent;
+//   }
+//   return listNames;
+// };
 
 //-------------------------------------------------------------------------------------- av.dnd.preTransferNameList ----
-av.dnd.preTransferNameList = function(target, name) {
-  'use strict';
-  var listFull = av.dnd.makeNameList(target);
-  var ndx = listFull.indexOf(name);
-  //console.log('name', name, '; index', ndx, '; listFull',listFull);
-  if (-1 < ndx) listFull.splice(ndx,1);
-  //console.log('listFull', listFull);
-  return listFull;
-};
+
+// yemd
+// av.dnd.preTransferNameList = function(target, name) {
+//   'use strict';
+//   var listFull = av.dnd.makeNameList(target);
+//   var ndx = listFull.indexOf(name);
+//   //console.log('name', name, '; index', ndx, '; listFull',listFull);
+//   if (-1 < ndx) listFull.splice(ndx,1);
+//   //console.log('listFull', listFull);
+//   return listFull;
+// };
 
 //--------------------------------------------------------------------------------------------- av.dnd.nameNfrzItem ----
-av.dnd.nameNfrzItem = function (namelist, name, number) {
-  var num = number + 1;
-  var aName = name + '_' + num.formatNum(0);
-  var newName;
-  if (0 <= namelist.indexOf(aName)) {
-    newName = av.dnd.nameNfrzItem(namelist, name, num);
-    //console.log('aName', aName, '; num', num, 'newName', newName);
-  }
-  else { newName = aName; }
-  return newName;
-};
+
+// yemd
+// av.dnd.nameNfrzItem = function (namelist, name, number) {
+//   var num = number + 1;
+//   var aName = name + '_' + num.formatNum(0);
+//   var newName;
+//   if (0 <= namelist.indexOf(aName)) {
+//     newName = av.dnd.nameNfrzItem(namelist, name, num);
+//     //console.log('aName', aName, '; num', num, 'newName', newName);
+//   }
+//   else { newName = aName; }
+//   return newName;
+// };
 
 //---------------------------------------------------------------------------------------------- av.dnd.namefzrItem ----
-av.dnd.namefzrItem = function(name, namelist) {
-  'use strict';
-  var theName;
-  //look for name in freezer section
-  //console.log('name', name, '; index', namelist.indexOf(name), '; nameList',namelist);
-  if (0 <= namelist.indexOf(name)) {
-    theName = av.dnd.nameNfrzItem(namelist, name, 1);
-  }
-  else { theName = name; }
-  //console.log('name', theName);
-  return theName;
-};
+
+// yemd
+// av.dnd.namefzrItem = function(name, namelist) {
+//   'use strict';
+//   var theName;
+//   //look for name in freezer section
+//   //console.log('name', name, '; index', namelist.indexOf(name), '; nameList',namelist);
+//   if (0 <= namelist.indexOf(name)) {
+//     theName = av.dnd.nameNfrzItem(namelist, name, 1);
+//   }
+//   else { theName = name; }
+//   //console.log('name', theName);
+//   return theName;
+// };
 
 //----------------------------------------------------------------------------------------- av.dnd.getUniqueFzrName ----
-av.dnd.getUniqueFzrName = function(name, namelist) {
-  'use strict';
-  var unique = true;
-  var suggestName;
-  var lngth = namelist.length;
-  //console.log('namelist', namelist);
-  while (unique) {
-    unique = false;
-    if (0 <= namelist.indexOf(name)) {
-      suggestName = av.dnd.namefzrItem(name, namelist);
-      name = prompt('Please give your item a unique name ', suggestName);
-      unique = true;
-    }
-  }
-  return name;
-};
+
+// yemd
+// av.dnd.getUniqueFzrName = function(name, namelist) {
+//   'use strict';
+//   var unique = true;
+//   var suggestName;
+//   var lngth = namelist.length;
+//   //console.log('namelist', namelist);
+//   while (unique) {
+//     unique = false;
+//     if (0 <= namelist.indexOf(name)) {
+//       suggestName = av.dnd.namefzrItem(name, namelist);
+//       name = prompt('Please give your item a unique name ', suggestName);
+//       unique = true;
+//     }
+//   }
+//   return name;
+// };
 
 
 //---------------------------------------------------------------------------------------------- av.dnd.nameNparent ----
-av.dnd.nameNparent = function (name, number) {
-  var num = number + 1;
-  var aName = name + '-' + num.formatNum(0);
-  var newName;
-  if (0 <= av.parents.name.indexOf(aName)) {
-    newName = av.dnd.nameNparent(name, num);
-    //console.log('aName', aName, '; num', num, 'newName', newName);
-  }
-  else { newName = aName; }
-  return newName;
-};
+
+// yemd 
+// moved to dragulaDnd.js
+// av.dnd.nameNparent = function (name, number) {
+//   var num = number + 1;
+//   var aName = name + '-' + num.formatNum(0);
+//   var newName;
+//   if (0 <= av.parents.name.indexOf(aName)) {
+//     newName = av.dnd.nameNparent(name, num);
+//     //console.log('aName', aName, '; num', num, 'newName', newName);
+//   }
+//   else { newName = aName; }
+//   return newName;
+// };
 
 //----------------------------------------------------------------------------------------------- av.dnd.nameParent ----
-av.dnd.nameParent = function(name) {
-  'use strict';
-  var theName;
-  //look for name in parent
-  if (0 <= av.parents.name.indexOf(name)) {
-    theName = av.dnd.nameNparent(name, 1);
-  }
-  else { theName = name; }
-  //console.log('name', theName);
-  av.parents.name.push(theName);
-  return theName;
-};
+
+// yemd
+// moved to dragulaDnd.js
+// av.dnd.nameParent = function(name) {
+//   'use strict';
+//   var theName;
+//   //look for name in parent
+//   if (0 <= av.parents.name.indexOf(name)) {
+//     theName = av.dnd.nameNparent(name, 1);
+//   }
+//   else { theName = name; }
+//   //console.log('name', theName);
+//   av.parents.name.push(theName);
+//   return theName;
+// };
+
 //======================================================================================== End Drag n Drog Unilities ===
 
 //======================================================================================== Drag n Drop Configuration ===
@@ -525,51 +542,53 @@ av.dnd.nameParent = function(name) {
 
 //----------------------------------------------------------------------------------------- start av.dnd.landFzConfig --
 
+// yemd
+
 //Process when an Configuration is added to the Freezer
-av.dnd.landFzConfig = function (source, nodes, target) {
-  'use strict';
-  if (av.debug.dnd) console.log('av.dnd.landFzConfig: fzr', av.fzr);
-  var domid = Object.keys(target.selection)[0];
-  //console.log('domID', domid, target);
-  //console.log('fzConfig', av.dnd.fzConfig);
-  var oldName = nodes[0].textContent;
-  var nameArray = av.dnd.preTransferNameList(target, oldName);
-  var sName = av.dnd.namefzrItem(oldName, nameArray);
-  var configurationName = prompt('Please name your dish configuration', sName);
-  if (configurationName) {
-    var configName = av.dnd.getUniqueFzrName(configurationName, nameArray);
-    if (null != configName) {
-      av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent + '; --> ' + configName);
-      document.getElementById(domid).textContent = configName;
-      target.map[domid].data = configName;
-      target.map[domid].type[0] = 'c';
-      //console.log('data', target.map[domid].data, target.map[domid]);
-      //console.log('type', target.map[domid].type[0]);
+// av.dnd.landFzConfig = function (source, nodes, target) {
+//   'use strict';
+//   if (av.debug.dnd) console.log('av.dnd.landFzConfig: fzr', av.fzr);
+//   var domid = Object.keys(target.selection)[0];
+//   //console.log('domID', domid, target);
+//   //console.log('fzConfig', av.dnd.fzConfig);
+//   var oldName = nodes[0].textContent;
+//   var nameArray = av.dnd.preTransferNameList(target, oldName);
+//   var sName = av.dnd.namefzrItem(oldName, nameArray);
+//   var configurationName = prompt('Please name your dish configuration', sName);
+//   if (configurationName) {
+//     var configName = av.dnd.getUniqueFzrName(configurationName, nameArray);
+//     if (null != configName) {
+//       av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent + '; --> ' + configName);
+//       document.getElementById(domid).textContent = configName;
+//       target.map[domid].data = configName;
+//       target.map[domid].type[0] = 'c';
+//       //console.log('data', target.map[domid].data, target.map[domid]);
+//       //console.log('type', target.map[domid].type[0]);
 
-      //Now find which node has the new content so it can get a context menu.
-      var domID = av.dnd.getDomId(configName, target);
-      target.map[domid].type[0] = 'c';
-      av.fzr.dir[domID] = 'c'+ av.fzr.cNum;
-      av.fzr.domid['c'+ av.fzr.cNum] = domID;
-      av.fzr.file[av.fzr.dir[domID]+'/entryname.txt'] = configName;
-      av.fwt.makeFzrConfig(av.fzr.cNum,'av.dnd.landFzConfig');
-      av.fzr.cNum++;
+//       //Now find which node has the new content so it can get a context menu.
+//       var domID = av.dnd.getDomId(configName, target);
+//       target.map[domid].type[0] = 'c';
+//       av.fzr.dir[domID] = 'c'+ av.fzr.cNum;
+//       av.fzr.domid['c'+ av.fzr.cNum] = domID;
+//       av.fzr.file[av.fzr.dir[domID]+'/entryname.txt'] = configName;
+//       av.fwt.makeFzrConfig(av.fzr.cNum,'av.dnd.landFzConfig');
+//       av.fzr.cNum++;
 
-      //create a right av.mouse-click context menu for the item just created.
-      av.dnd.contextMenu(target, domID, 'av.dnd.landFzConfig');
-      av.fzr.saveUpdateState('no');
-      if (av.debug.dnd) console.log('dir', av.fzr.dir[domID], '; configName', configName );
-    }
-    else {  //user cancelled so the item should NOT be added to the freezer.
-      av.dnd.fzConfig.deleteSelectedNodes();  //clear items
-      av.dnd.fzConfig.sync();   //should be done after insertion or deletion
-    }
-  }
-  else {  //user cancelled so the item should NOT be added to the freezer.
-    av.dnd.fzConfig.deleteSelectedNodes();  //clear items
-    av.dnd.fzConfig.sync();   //should be done after insertion or deletion
-  }
-};
+//       //create a right av.mouse-click context menu for the item just created.
+//       av.dnd.contextMenu(target, domID, 'av.dnd.landFzConfig');
+//       av.fzr.saveUpdateState('no');
+//       if (av.debug.dnd) console.log('dir', av.fzr.dir[domID], '; configName', configName );
+//     }
+//     else {  //user cancelled so the item should NOT be added to the freezer.
+//       av.dnd.fzConfig.deleteSelectedNodes();  //clear items
+//       av.dnd.fzConfig.sync();   //should be done after insertion or deletion
+//     }
+//   }
+//   else {  //user cancelled so the item should NOT be added to the freezer.
+//     av.dnd.fzConfig.deleteSelectedNodes();  //clear items
+//     av.dnd.fzConfig.sync();   //should be done after insertion or deletion
+//   }
+// };
 
 //=============================================================================================== av.dnd.landFzOrgan ===
 
@@ -644,126 +663,135 @@ av.dnd.landFzOrgan = function (source, nodes, target) {
 
 //here the parameters are Dojo DND objects
 //------------------------------------------------------------------------------------------------- av.dnd.makeMove --*/
-av.dnd.makeMove = function (source, nodes, target) {
-  'use strict';
-  var added = false;
-  var trgt = '';
-  av.dnd.move.via = 'user';
-  av.dnd.move.source = source;
-  av.dnd.move.target = target;
-  av.dnd.move.nodeName = nodes[0].textContent;
-  av.dnd.move.sourceDomId = Object.keys(source.selection)[0];
-  av.dnd.move.dir = av.fzr.dir[av.dnd.move.sourceDomId];
-  av.dnd.move.nodeName = av.fzr.domid[av.dnd.move.dir];
-  var domIDs = Object.keys(target.map);
-  av.dnd.move.targetDomId = domIDs[domIDs.length-1];
-  av.dnd.move.sourceMoveData = av.dnd.move.source.map[av.dnd.move.sourceDomId];
 
-  console.log('move', av.dnd.move);
-  switch (target) {
-    case av.dnd.ancestorBox:
-      added = av.dnd.lndAncestorBox(av.dnd.move);
-      trgt = 'ancestorBox';
-      break;
-    case av.dnd.activeConfig:
-      added = av.dnd.lndActiveConfig(av.dnd.move, 'av.dnd.makeMove');
-      trgt = 'ActiveConfig';
-      break;
-    case av.dnd.activeOrgan:
-      added = av.dnd.lndActiveOrgan(av.dnd.move);
-      trgt = 'ActiveOrgan';
-      break;
-    case av.dnd.testConfig:      
-      added = av.dnd.lndTestConfig(av.dnd.move);
-      trgt = 'TestConfig';
-      break;
-    default:
-      console.log('target not found: target=', target);
-  }
-};
+// yemd
+// av.dnd.makeMove = function (source, nodes, target) {
+//   'use strict';
+//   var added = false;
+//   var trgt = '';
+//   av.dnd.move.via = 'user';
+//   av.dnd.move.source = source;
+//   av.dnd.move.target = target;
+//   av.dnd.move.nodeName = nodes[0].textContent;
+//   av.dnd.move.sourceDomId = Object.keys(source.selection)[0];
+//   av.dnd.move.dir = av.fzr.dir[av.dnd.move.sourceDomId];
+//   av.dnd.move.nodeName = av.fzr.domid[av.dnd.move.dir];
+//   var domIDs = Object.keys(target.map);
+//   av.dnd.move.targetDomId = domIDs[domIDs.length-1];
+//   av.dnd.move.sourceMoveData = av.dnd.move.source.map[av.dnd.move.sourceDomId];
+
+//   console.log('move', av.dnd.move);
+//   switch (target) {
+//     case av.dnd.ancestorBox:
+//       added = av.dnd.lndAncestorBox(av.dnd.move);
+//       trgt = 'ancestorBox';
+//       break;
+//     case av.dnd.activeConfig:
+//       added = av.dnd.lndActiveConfig(av.dnd.move, 'av.dnd.makeMove');
+//       trgt = 'ActiveConfig';
+//       break;
+//     case av.dnd.activeOrgan:
+//       added = av.dnd.lndActiveOrgan(av.dnd.move);
+//       trgt = 'ActiveOrgan';
+//       break;
+//     case av.dnd.testConfig:      
+//       added = av.dnd.lndTestConfig(av.dnd.move);
+//       trgt = 'TestConfig';
+//       break;
+//     default:
+//       console.log('target not found: target=', target);
+//   }
+// };
 //----------------------------------------------------------------------------------------------- end av.dnd.makeMove --
 
 
 //--------------------------------------------------------------------------------------------- av.dnd.lndAncestorBox --
-av.dnd.lndAncestorBox = function (move) {
-  'use strict';
-  var added;
-  //Do not copy parents if one is moved within Ancestor Box
-  if ('ancestorBox' != move.source.node.id) {
-    //av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
-    /*
-    av.post.data = {
-      'operation' : 'DojoDnd',
-      'name' : 'av.dnd.lndAncestorBox',
-      //'vars' : {'source' : 'av.dnd.fzOrgan', 'nodeDir': move.dir, 'target': 'av.dnd.ancestorBox'},
-      'vars' : {'source' : move.source.node.id, 'nodeDir': move.dir, 'target': move.target.node.id, 'call': 'dnd.lndAncestorBox'},
-      'assumptions' : {'nodeName': move.nodeName, 'via': move.via}
-    };
-    av.post.usrOut(av.post.data, 'in dojoDND.js line 467');
-     */
-    console.log('move=', move);
-    
-    //The rest of this is about updating data for parents and the automatic placement of that parent.
-    //find genome by finding source
-    //console.log('seq=', av.fzr.file[move.dir+'/genome.seq']);
-    av.parents.genome.push(av.fzr.file[move.dir+'/genome.seq']);
-    var nn = av.parents.name.length;
-    av.parents.autoNdx.push(nn);
-    av.parents.injected.push(false);
-    
-    var newName = av.dnd.nameParent(move.sourceMoveData.data);
-    document.getElementById(move.targetDomId).textContent = newName;
-    
-    av.parents.howPlaced.push('auto');
-    av.parents.domid.push(move.targetDomId); //domid in ancestorBox used to remove if square in grid moved to trashcan
-    //Find color of ancestor
-    if (0 < av.parents.Colors.length) { av.parents.color.push(av.parents.Colors.pop());}
-    else { av.parents.color.push(av.color.defaultParentColor); }
-    av.parents.placeAncestors();
-    if (av.debug.dnd) console.log('parents', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]);
-    av.grd.drawGridSetupFn('av.dnd.lndAncestorBox');
 
-    return (true);
-  }
-  else return (false);
-};
+// yemd
+// replaced by av.dnd.lndAncestorBox in dragula.js
+
+// av.dnd.lndAncestorBox = function (move) {
+//   'use strict';
+//   var added;
+//   //Do not copy parents if one is moved within Ancestor Box
+//   if ('ancestorBox' != move.source.node.id) {
+//     //av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
+//     /*
+//     av.post.data = {
+//       'operation' : 'DojoDnd',
+//       'name' : 'av.dnd.lndAncestorBox',
+//       //'vars' : {'source' : 'av.dnd.fzOrgan', 'nodeDir': move.dir, 'target': 'av.dnd.ancestorBox'},
+//       'vars' : {'source' : move.source.node.id, 'nodeDir': move.dir, 'target': move.target.node.id, 'call': 'dnd.lndAncestorBox'},
+//       'assumptions' : {'nodeName': move.nodeName, 'via': move.via}
+//     };
+//     av.post.usrOut(av.post.data, 'in dojoDND.js line 467');
+//      */
+//     console.log('move=', move);
+    
+//     //The rest of this is about updating data for parents and the automatic placement of that parent.
+//     //find genome by finding source
+//     //console.log('seq=', av.fzr.file[move.dir+'/genome.seq']);
+//     av.parents.genome.push(av.fzr.file[move.dir+'/genome.seq']);
+//     var nn = av.parents.name.length;
+//     av.parents.autoNdx.push(nn);
+//     av.parents.injected.push(false);
+    
+//     var newName = av.dnd.nameParent(move.sourceMoveData.data);
+//     document.getElementById(move.targetDomId).textContent = newName;
+    
+//     av.parents.howPlaced.push('auto');
+//     av.parents.domid.push(move.targetDomId); //domid in ancestorBox used to remove if square in grid moved to trashcan
+//     //Find color of ancestor
+//     if (0 < av.parents.Colors.length) { av.parents.color.push(av.parents.Colors.pop());}
+//     else { av.parents.color.push(av.color.defaultParentColor); }
+//     av.parents.placeAncestors();
+//     if (av.debug.dnd) console.log('parents', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]);
+//     av.grd.drawGridSetupFn('av.dnd.lndAncestorBox');
+
+//     return (true);
+//   }
+//   else return (false);
+// };
+
 //----------------------------------------------------------------------------------------- end av.dnd.lndAncestorBox --
 
 //------------------------------------------------------------------------------------------ av.dnd.lndAncestorBoTest --
-av.dnd.lndAncestorBoTest = function (move) {
-  'use strict';
-  var added;
-  //Do not copy parents if one is moved within Ancestor Box
-  if ('ancestorBoTest' != move.source.node.id) {
-    //av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
-    av.post.data = {
-      'operation' : 'DojoDnd',
-      'name' : 'av.dnd.lndAncestorBoTest',
-      //'vars' : {'source' : 'av.dnd.fzOrgan', 'nodeDir': move.dir, 'target': 'av.dnd.ancestorBoTest'},
-      'vars' : {'source' : move.source.node.id, 'nodeDir': move.dir, 'target': move.target.node.id, 'call': 'dnd.lndAncestorBoTest'},
-      'assumptions' : {'nodeName': move.nodeName, 'via': move.via}
-    };
-    av.post.usrOut(av.post.data, 'in dojoDND.js line 467');
 
-    //find genome by finding source
-    //console.log('seq=', av.fzr.file[move.dir+'/genome.seq']);
-    av.parents.genome.push(av.fzr.file[move.dir+'/genome.seq']);
-    var nn = av.parents.name.length;
-    av.parents.autoNdx.push(nn);
-    av.parents.injected.push(false);
-    var newName = av.dnd.nameParent(move.nodeName);
-    document.getElementById(move.targetDomId).textContent = newName;
-    av.parents.howPlaced.push('auto');
-    av.parents.domid.push(move.targetDomId); //domid in ancestorBoTest used to remove if square in grid moved to trashcan
-    //Find color of ancestor
-    if (0 < av.parents.Colors.length) { av.parents.color.push(av.parents.Colors.pop());}
-    else { av.parents.color.push(av.color.defaultParentColor); }
-    av.parents.placeAncestors();
-    if (av.debug.dnd) console.log('parents', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]);
-    return (true);
-  }
-  else return (false);
-};
+// yemd
+// av.dnd.lndAncestorBoTest = function (move) {
+//   'use strict';
+//   var added;
+//   //Do not copy parents if one is moved within Ancestor Box
+//   if ('ancestorBoTest' != move.source.node.id) {
+//     //av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
+//     av.post.data = {
+//       'operation' : 'DojoDnd',
+//       'name' : 'av.dnd.lndAncestorBoTest',
+//       //'vars' : {'source' : 'av.dnd.fzOrgan', 'nodeDir': move.dir, 'target': 'av.dnd.ancestorBoTest'},
+//       'vars' : {'source' : move.source.node.id, 'nodeDir': move.dir, 'target': move.target.node.id, 'call': 'dnd.lndAncestorBoTest'},
+//       'assumptions' : {'nodeName': move.nodeName, 'via': move.via}
+//     };
+//     av.post.usrOut(av.post.data, 'in dojoDND.js line 467');
+
+//     //find genome by finding source
+//     //console.log('seq=', av.fzr.file[move.dir+'/genome.seq']);
+//     av.parents.genome.push(av.fzr.file[move.dir+'/genome.seq']);
+//     var nn = av.parents.name.length;
+//     av.parents.autoNdx.push(nn);
+//     av.parents.injected.push(false);
+//     var newName = av.dnd.nameParent(move.nodeName);
+//     document.getElementById(move.targetDomId).textContent = newName;
+//     av.parents.howPlaced.push('auto');
+//     av.parents.domid.push(move.targetDomId); //domid in ancestorBoTest used to remove if square in grid moved to trashcan
+//     //Find color of ancestor
+//     if (0 < av.parents.Colors.length) { av.parents.color.push(av.parents.Colors.pop());}
+//     else { av.parents.color.push(av.color.defaultParentColor); }
+//     av.parents.placeAncestors();
+//     if (av.debug.dnd) console.log('parents', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]);
+//     return (true);
+//   }
+//   else return (false);
+// };
 //-------------------------------------------------------------------------------------- end av.dnd.lndAncestorBoTest --
 
 // Process Drop on gridCanvas

@@ -253,14 +253,17 @@ require([
   /* Yes they are globals, but they are defined based on the dom and
    when I've tried putting them in another file it does not work */
 
-  av.dnd.fzConfig = new dndSource('fzConfig', {
-    accept: ['b', 'c'], //b=both; c=config
-    copyOnly: true,
-    singular: true,
-    selfAccept: false
-  });
+  // yemd
+  // av.dnd.fzConfig = new dndSource('fzConfig', {
+  //   accept: ['b', 'c'], //b=both; c=config
+  //   copyOnly: true,
+  //   singular: true,
+  //   selfAccept: false
+  // });
   
   // if (av.dbg.flg.root) { console.log('Root: before fzOrgan'); }
+  
+  // yemd
   av.dnd.fzOrgan = new dndSource('fzOrgan', {
     accept: ['g'], //g=genome
     copyOnly: true,
@@ -269,20 +272,22 @@ require([
   });
   
   // if (av.dbg.flg.root) { console.log('Root: before fzWorld'); };
-  av.dnd.fzWorld = new dndSource('fzWorld', {
-    accept: ['b', 'w'],   //b=both; w=world  //only after the population started running
-    singular: true,
-    copyOnly: true,
-    selfAccept: false
-  });
   
   // yemd
-  // av.dnd.fzTdish = new dndSource('fzTdish', {
-  //   accept: ['b', 't'], //b=both; w=world  //test dishes
+  // av.dnd.fzWorld = new dndSource('fzWorld', {
+  //   accept: ['b', 'w'],   //b=both; w=world  //only after the population started running
   //   singular: true,
   //   copyOnly: true,
   //   selfAccept: false
   // });
+  
+  // yemd
+  av.dnd.fzTdish = new dndSource('fzTdish', {
+    accept: ['b', 't'], //b=both; w=world  //test dishes
+    singular: true,
+    copyOnly: true,
+    selfAccept: false
+  });
   
   av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
 
@@ -290,15 +295,18 @@ require([
   av.dnd.organIcon = new dndTarget('organIcon', {accept: ['g'], selfAccept: false});
   av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
   av.dnd.gridCanvas = new dndTarget('gridCanvas', {accept: ['g']});
-  av.dnd.trashCan = new dndSource('trashCan', {accept: ['c', 'g', 't', 'w'], singular: true});
+  
+  // yemd
+  // av.dnd.trashCan = new dndSource('trashCan', {accept: ['c', 'g', 't', 'w'], singular: true});
   // if (av.dbg.flg.root) { console.log('Root: after trashCan'); }
 
-  av.dnd.activeConfig = new dndSource('activeConfig', {
-    accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
-    singular: true,
-    copyOnly: true,
-    selfAccept: false
-  });
+  // yemd
+  // av.dnd.activeConfig = new dndSource('activeConfig', {
+  //   accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
+  //   singular: true,
+  //   copyOnly: true,
+  //   selfAccept: false
+  // });
 
   // yemd
   // av.dnd.testConfig = new dndSource('testConfig', {
@@ -363,13 +371,14 @@ require([
   // I don't think I would have written it this way had I known the single event handler would not work, but I had
   // created the dojodnd.js file before I realized that I needed separate event handelers with the conditional.
 
-  av.dnd.activeConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
-    'use strict';
-    //console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id);
-    if ('activeConfig' === target.node.id) {
-      av.dnd.makeMove(source, nodes, target);
-    }
-  });
+  // yemd
+  // av.dnd.activeConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
+  //   'use strict';
+  //   //console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id);
+  //   if ('activeConfig' === target.node.id) {
+  //     av.dnd.makeMove(source, nodes, target);
+  //   }
+  // });
 
   // yemd
   // av.dnd.testConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
@@ -402,21 +411,22 @@ require([
   // Connect sections to sortDnD function
   // Section names: fcConfig, fzOrgan, fzWorld, fzTdish, fzMdish, fzRdish
 
+  // yemd
   // 2019-04-14: test dragging @default in, then back to freeezer with name change; sort appears to work.
-  dojo.connect(av.dnd.fzConfig, "onDndDrop", function (source, nodes, copy, target) {
-    //This triggers for every dnd drop, not just those of fzConfig  
-    if ('fzConfig' === target.node.id) {
-      //console.log('fzConfig=', av.dnd.fzConfig);
-      //console.log('.childNodes=', av.dnd.fzConfig.childNodes);
-      //console.log('nodes=', nodes);
-      //console.log('; copy=', copy, '; target=', target);
-      //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
-      av.dnd.landFzConfig(source, nodes, target);  //needed as part of call to contextMenu
-      nodes.forEach(function (node) {
-        av.dnd.sortDnD('fzConfig');
-      });
-    }
-  });
+  // dojo.connect(av.dnd.fzConfig, "onDndDrop", function (source, nodes, copy, target) {
+  //   //This triggers for every dnd drop, not just those of fzConfig  
+  //   if ('fzConfig' === target.node.id) {
+  //     //console.log('fzConfig=', av.dnd.fzConfig);
+  //     //console.log('.childNodes=', av.dnd.fzConfig.childNodes);
+  //     //console.log('nodes=', nodes);
+  //     //console.log('; copy=', copy, '; target=', target);
+  //     //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
+  //     av.dnd.landFzConfig(source, nodes, target);  //needed as part of call to contextMenu
+  //     nodes.forEach(function (node) {
+  //       av.dnd.sortDnD('fzConfig');
+  //     });
+  //   }
+  // });
 
   // 2019-04-14: test grabbing organisms, dropping in grid, then from setup textbox to freezer, appears to work
   dojo.connect(av.dnd.fzOrgan, "onDndDrop", function (source, nodes, copy, target) {
@@ -477,27 +487,31 @@ require([
   });
 
   // if (av.dbg.flg.root) { console.log('Root: before av.dnd.ancestorBox'); }
-  av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
-    if ('ancestorBox' === target.node.id) {
-      //console.log('ancestorBox=', target, av.dnd.ancestorBox);  //yes they are the same. could use in the above if statement.
-      av.dnd.makeMove(source, nodes, target);
-    }
-  });
+  
+  // yemd
+  // av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
+  //   if ('ancestorBox' === target.node.id) {
+  //     //console.log('ancestorBox=', target, av.dnd.ancestorBox);  //yes they are the same. could use in the above if statement.
+  //     av.dnd.makeMove(source, nodes, target);
+  //   }
+  // });
 
-  av.dnd.ancestorBoTest.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
-    if ('ancestorBoTest' === target.node.id) {
-      av.dnd.makeMove(source, nodes, target);
-    }
-  });
+  // yemd
+  // av.dnd.ancestorBoTest.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
+  //   if ('ancestorBoTest' === target.node.id) {
+  //     av.dnd.makeMove(source, nodes, target);
+  //   }
+  // });
 
-  av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of gridCanvas
-    if ('gridCanvas' === target.node.id) {
-      av.dnd.landGridCanvas(source, nodes, target);
-      //console.log('before call av.grd.drawGridSetupFn');
-      av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
-      //console.log('in gridCanvas.on');
-    }
-  });
+  // yemd
+  // av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of gridCanvas
+  //   if ('gridCanvas' === target.node.id) {
+  //     av.dnd.landGridCanvas(source, nodes, target);
+  //     //console.log('before call av.grd.drawGridSetupFn');
+  //     av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
+  //     //console.log('in gridCanvas.on');
+  //   }
+  // });
 
   av.dnd.organIcon.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of organIcon
     //setTimeout(null,1000);
@@ -527,20 +541,21 @@ require([
     }
   });
 
-  av.dnd.trashCan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of trashCan
-    if ('trashCan' === target.node.id) {
-      var remove = {};
-      remove.type = '';
-      remove.dir = '';
-      if (av.debug.dnd) { console.log('trashCan: s, t', source, target); }
-      remove = av.dnd.landTrashCan(source, nodes, target);
-      if ('' !== remove.type) {
-        //removeFzrItem(av.fzr, remove.dir, remove.type);
-        remove.dir = av.fzr.dir[remove.domid];
-        av.fwt.removeFzrItem(remove.dir, remove.type);
-      }
-    }
-  });
+  // yemd
+  // av.dnd.trashCan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of trashCan
+  //   if ('trashCan' === target.node.id) {
+  //     var remove = {};
+  //     remove.type = '';
+  //     remove.dir = '';
+  //     if (av.debug.dnd) { console.log('trashCan: s, t', source, target); }
+  //     remove = av.dnd.landTrashCan(source, nodes, target);
+  //     if ('' !== remove.type) {
+  //       //removeFzrItem(av.fzr, remove.dir, remove.type);
+  //       remove.dir = av.fzr.dir[remove.domid];
+  //       av.fwt.removeFzrItem(remove.dir, remove.type);
+  //     }
+  //   }
+  // });
 
   av.dnd.anlDndChart.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of anlDndChart
     if ('anlDndChart' === target.node.id) {
@@ -650,62 +665,63 @@ require([
    });
    */
 
-  $(document).on('pointerup', function (evt) {
-    av.mouse.UpGridPos = [evt.originalEvent.offsetX, evt.originalEvent.offsetY];
-  });
+  // yemd
+  // $(document).on('pointerup', function (evt) {
+  //   av.mouse.UpGridPos = [evt.originalEvent.offsetX, evt.originalEvent.offsetY];
+  // });
 
-  //When mouse button is released, return cursor to default values
-  $(document).on('mouseup', function (evt) {
-    'use strict';
-    var target = '';
-    if (av.debug.mouse)
-      console.log('in mouseup target:', evt.target.id, '; event:', evt);
-    if (av.debug.mouse)
-      console.log('in mouseup target:', evt.target.id);
-    av.mouse.makeCursorDefault();
-    av.mouse.UpGridPos = [evt.offsetX, evt.offsetY];
-    if (av.debug.mouse)
-      console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
-    av.mouse.Dn = false;
+  // //When mouse button is released, return cursor to default values
+  // $(document).on('mouseup', function (evt) {
+  //   'use strict';
+  //   var target = '';
+  //   if (av.debug.mouse)
+  //     console.log('in mouseup target:', evt.target.id, '; event:', evt);
+  //   if (av.debug.mouse)
+  //     console.log('in mouseup target:', evt.target.id);
+  //   av.mouse.makeCursorDefault();
+  //   av.mouse.UpGridPos = [evt.offsetX, evt.offsetY];
+  //   if (av.debug.mouse)
+  //     console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
+  //   av.mouse.Dn = false;
 
-    // --------- process if something picked to dnd ------------------
-    if ('parent' == av.mouse.Picked) {
-      av.mouse.Picked = '';
-      av.mouse.ParentMouse(evt, av);
-      if ('gridCanvas' == evt.target.id || 'trashCanImage' == evt.target.id) {
-        av.grd.drawGridSetupFn('on mouseup where evt.target.id=gridCanvas or trashCanImage');
-      } else if ('organIcon' == evt.target.id) {
-        //Change to Organism Page
-        av.ui.mainBoxSwap('organismBlock');
-        av.ind.organismCanvasHolderSize('mouseup_organIcon_parent');
-        av.ui.adjustOrgInstructionTextAreaSize();
-        if (av.debug.mouse)
-          console.log('from parent', av.parent, '; fzr', av.fzr);
-        av.post.addUser('Dragged item to Organism Icon');
-        av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-      }
-    } else if ('offspring' == av.mouse.Picked) {
-      target = av.mouse.offspringMouse(evt, av.dnd, av.fio, av.fzr, av.gen);
-      av.mouse.Picked = '';
-    } else if ('kid' == av.mouse.Picked) {
-      av.mouse.Picked = '';
-      target = av.mouse.kidMouse(evt, av.dnd, av.fzr, av.grd);
-      if (av.debug.mouse)
-        console.log('kidMouse: target', target, '===============', evt.target.id);
-      if ('organIcon' == evt.target.id) {
-        //Change to Organism Page
-        av.ui.mainBoxSwap('organismBlock');
-        av.ind.organismCanvasHolderSize('mouseup_organIcon_Kid');
-        av.ui.adjustOrgInstructionTextAreaSize();
-        av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-      }
-      /*      else if ('fzOrgan' == target) {
-       //make_database_entry if using a database (av.fio, av.fzr);
-       }
-       */
-    }
-    av.mouse.Picked = '';
-  });
+  //   // --------- process if something picked to dnd ------------------
+  //   if ('parent' == av.mouse.Picked) {
+  //     av.mouse.Picked = '';
+  //     av.mouse.ParentMouse(evt, av);
+  //     if ('gridCanvas' == evt.target.id || 'trashCanImage' == evt.target.id) {
+  //       av.grd.drawGridSetupFn('on mouseup where evt.target.id=gridCanvas or trashCanImage');
+  //     } else if ('organIcon' == evt.target.id) {
+  //       //Change to Organism Page
+  //       av.ui.mainBoxSwap('organismBlock');
+  //       av.ind.organismCanvasHolderSize('mouseup_organIcon_parent');
+  //       av.ui.adjustOrgInstructionTextAreaSize();
+  //       if (av.debug.mouse)
+  //         console.log('from parent', av.parent, '; fzr', av.fzr);
+  //       av.post.addUser('Dragged item to Organism Icon');
+  //       av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+  //     }
+  //   } else if ('offspring' == av.mouse.Picked) {
+  //     target = av.mouse.offspringMouse(evt, av.dnd, av.fio, av.fzr, av.gen);
+  //     av.mouse.Picked = '';
+  //   } else if ('kid' == av.mouse.Picked) {
+  //     av.mouse.Picked = '';
+  //     target = av.mouse.kidMouse(evt, av.dnd, av.fzr, av.grd);
+  //     if (av.debug.mouse)
+  //       console.log('kidMouse: target', target, '===============', evt.target.id);
+  //     if ('organIcon' == evt.target.id) {
+  //       //Change to Organism Page
+  //       av.ui.mainBoxSwap('organismBlock');
+  //       av.ind.organismCanvasHolderSize('mouseup_organIcon_Kid');
+  //       av.ui.adjustOrgInstructionTextAreaSize();
+  //       av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+  //     }
+  //     /*      else if ('fzOrgan' == target) {
+  //      //make_database_entry if using a database (av.fio, av.fzr);
+  //      }
+  //      */
+  //   }
+  //   av.mouse.Picked = '';
+  // });
   //********************************************************************************************************************
   // End of Mouse functions
   //********************************************************************************************************************
