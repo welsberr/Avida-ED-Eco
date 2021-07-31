@@ -1,8 +1,9 @@
 .DS_Store
 *.*~
+_d_*
+_d_*/*
+_d_*/*/*
 d_*
-d_*/*
-d_*/*/*
 *.avidaWs/
 *.avidaWs
 default.avidaWs
