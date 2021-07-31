@@ -1002,49 +1002,53 @@ av.dnd.landorganCanvas = function (source, nodes, target) {
 //Process when an World is added to the Freezer
 //pkg contains = pkg.source, pkg.nodes, pkg.target
 //--------------------------------------------------------------------------------------------- av.dnd.landFzWorldFn ---
-av.dnd.landFzWorldFn = function (pkg) {  
-  'use strict';
-  if (av.debug.dnd) console.log('landFzPopDish: fzr', av.fzr);
-  var domid = Object.keys(pkg.target.selection)[0];
 
-  var oldName = pkg.nodes[0].textContent + '@' + av.grd.popStatsMsg.update.formatNum(0);
-  var nameArray = av.dnd.preTransferNameList(pkg.target, oldName);
-  var sName = av.dnd.namefzrItem(oldName, nameArray);
-  var worldName = prompt('Please name your populated dish', sName);
-  if (worldName) {
-    var nameWorld = av.dnd.getUniqueFzrName(worldName, nameArray);
-    if (null != nameWorld) {
-      av.post.addUser('DnD: ' + pkg.source.node.id + '--> ' + pkg.target.node.id + ': by: ' + pkg.nodes[0].textContent + ' --> ' + nameWorld);
-      document.getElementById(domid).textContent = nameWorld;
-      pkg.target.map[domid].data = nameWorld;
-      pkg.target.map[domid].type[0] = 'w';
-      //console.log('data', pkg.target.map[domid].data, pkg.target.map[domid]);
-      //console.log('type', pkg.target.map[domid].type[0]);
+// yemd
+// replaced by av.dnd.landFzWorld in dragulaDnd.js
 
-      //Now find which node has the new content so it can get a context menu.
-      var domID = av.dnd.getDomId(nameWorld, pkg.target);
-      av.fzr.dir[domID] = 'w'+ av.fzr.wNum;
-      av.fzr.domid['w'+ av.fzr.wNum] = domID;
+// av.dnd.landFzWorldFn = function (pkg) {  
+//   'use strict';
+//   if (av.debug.dnd) console.log('landFzPopDish: fzr', av.fzr);
+//   var domid = Object.keys(pkg.target.selection)[0];
 
-      //create a right av.mouse-click context menu for the item just created.
-      av.dnd.contextMenu(pkg.target, domID, 'av.dnd.landFzWorldFn');
-      av.fwt.makeFzrWorld(av.fzr.wNum, 'av.dnd.landFzWorldFn');
-      av.msg.exportExpr('w' + av.fzr.wNum);
-      av.msg.sendData();
+//   var oldName = pkg.nodes[0].textContent + '@' + av.grd.popStatsMsg.update.formatNum(0);
+//   var nameArray = av.dnd.preTransferNameList(pkg.target, oldName);
+//   var sName = av.dnd.namefzrItem(oldName, nameArray);
+//   var worldName = prompt('Please name your populated dish', sName);
+//   if (worldName) {
+//     var nameWorld = av.dnd.getUniqueFzrName(worldName, nameArray);
+//     if (null != nameWorld) {
+//       av.post.addUser('DnD: ' + pkg.source.node.id + '--> ' + pkg.target.node.id + ': by: ' + pkg.nodes[0].textContent + ' --> ' + nameWorld);
+//       document.getElementById(domid).textContent = nameWorld;
+//       pkg.target.map[domid].data = nameWorld;
+//       pkg.target.map[domid].type[0] = 'w';
+//       //console.log('data', pkg.target.map[domid].data, pkg.target.map[domid]);
+//       //console.log('type', pkg.target.map[domid].type[0]);
 
-      av.fzr.saveUpdateState('no');
-      av.fzr.wNum++;
-    }
-    else {  //user cancelled so the item should NOT be added to the freezer.
-      av.dnd.fzWorld.deleteSelectedpkg.nodes();  //clear items
-      av.dnd.fzWorld.sync();   //should be done after insertion or deletion
-    }
-  }
-  else {  //user cancelled so the item should NOT be added to the freezer.
-    av.dnd.fzWorld.deleteSelectedpkg.nodes();  //clear items
-    av.dnd.fzWorld.sync();   //should be done after insertion or deletion
-  }
-};
+//       //Now find which node has the new content so it can get a context menu.
+//       var domID = av.dnd.getDomId(nameWorld, pkg.target);
+//       av.fzr.dir[domID] = 'w'+ av.fzr.wNum;
+//       av.fzr.domid['w'+ av.fzr.wNum] = domID;
+
+//       //create a right av.mouse-click context menu for the item just created.
+//       av.dnd.contextMenu(pkg.target, domID, 'av.dnd.landFzWorldFn');
+//       av.fwt.makeFzrWorld(av.fzr.wNum, 'av.dnd.landFzWorldFn');
+//       av.msg.exportExpr('w' + av.fzr.wNum);
+//       av.msg.sendData();
+
+//       av.fzr.saveUpdateState('no');
+//       av.fzr.wNum++;
+//     }
+//     else {  //user cancelled so the item should NOT be added to the freezer.
+//       av.dnd.fzWorld.deleteSelectedpkg.nodes();  //clear items
+//       av.dnd.fzWorld.sync();   //should be done after insertion or deletion
+//     }
+//   }
+//   else {  //user cancelled so the item should NOT be added to the freezer.
+//     av.dnd.fzWorld.deleteSelectedpkg.nodes();  //clear items
+//     av.dnd.fzWorld.sync();   //should be done after insertion or deletion
+//   }
+// };
 //----------------------------------------------------------------------------------------- end av.dnd.landFzWorldFn ---
 
     //ways to get information about the Dnd containers

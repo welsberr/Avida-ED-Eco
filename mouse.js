@@ -73,8 +73,12 @@
   av.mouse.makeCursorDefault = function () {
     'use strict';
     av.mouse.frzCurserSet('default');  //pointer
-    if (1 < av.fzr.actConfig.actDomid.length) {document.getElementById(av.fzr.actConfig.actDomid).style.cursor = 'pointer';}
-    if (1 < av.fzr.actOrgan.actDomid.length) {document.getElementById(av.fzr.actOrgan.actDomid).style.cursor = 'pointer';}
+
+    console.log(av.fzr.actConfig.actDomid);
+    console.log(av.fzr);
+    // yemd
+    // if (1 < av.fzr.actConfig.actDomid.length) {document.getElementById(av.fzr.actConfig.actDomid).style.cursor = 'pointer';}
+    // if (1 < av.fzr.actOrgan.actDomid.length) {document.getElementById(av.fzr.actOrgan.actDomid).style.cursor = 'pointer';}
     av.mouse.setCursorStyle('default', av.mouse.dndTarget);
     av.mouse.setCursorStyle('default', av.mouse.notDndPopList);
     av.mouse.setCursorStyle('default', av.mouse.notDndIndList);
@@ -122,6 +126,7 @@
     */
     var offsetYLocal = ($("#gridHolder").height() - av.dom.gridCanvas.height) / 2;
     var offsetXLocal = ($("#gridHolder").width() - av.dom.gridCanvas.width) / 2;
+    console.log("findSelected", evt.offsetX, evt.offsetY);
     var mouseX = evt.offsetX - av.grd.marginX - av.grd.xOffset - offsetXLocal;
     var mouseY = evt.offsetY - av.grd.marginY - av.grd.yOffset - offsetYLocal;
     av.grd.selectedCol = Math.floor(mouseX / av.grd.cellWd);
@@ -296,7 +301,7 @@
     'use strict';
     if (av.debug.mouse) console.log('ParentMouse', evt.target.id, evt);
     if ('gridCanvas' == evt.target.id) { // parent moved to another location on grid canvas
-      av.mouse.UpGridPos = [evt.offsetX, evt.offsetY]; //not used for now
+      // av.mouse.UpGridPos = [evt.offsetX, evt.offsetY]; //not used for now
       //Move the ancestor on the canvas
       av.mouse.findSelected(evt);
       // look to see if this is a valid grid cell

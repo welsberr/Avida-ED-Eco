@@ -90,7 +90,7 @@
     //av.dnd.activeConfig.isSource = false;
     // delete av.dnd.ancestorBox.accept['g'];
     // delete av.dnd.ancestorBoTest.accept['g'];
-    delete av.dnd.gridCanvas.accept['g'];
+    // delete av.dnd.gridCanvas.accept['g'];
     // delete av.dnd.activeConfig.accept['c'];
     // delete av.dnd.activeConfig.accept['w'];
     // av.dnd.fzWorld.accept['w'] = 1;
@@ -294,8 +294,9 @@
     $("#ancestorBox").empty();
     $("#ancestorBoTest").empty();
 
-    av.dnd.gridCanvas.selectAll().deleteSelectedNodes();
-    av.dnd.gridCanvas.sync();
+    // yemd
+    // av.dnd.gridCanvas.selectAll().deleteSelectedNodes();
+    // av.dnd.gridCanvas.sync();
 
     //Update data for Selected Organism Type
     av.dom.sotColorBox.style.backgroundColor = '#D7D7D7';
@@ -495,7 +496,7 @@
     }
     else if ('offspring' == trigger) {
       //get name from parent
-      parentName = av.dnd.activeOrgan.textContent; // yemd
+      parentName = av.dnd.activeOrgan.textContent; 
       fzName = prompt('Please name the offspring', parentName + '_Offspring');
       gene = '0,heads_default,' + av.ind.dna[1];
     }

@@ -264,12 +264,12 @@ require([
   // if (av.dbg.flg.root) { console.log('Root: before fzOrgan'); }
   
   // yemd
-  av.dnd.fzOrgan = new dndSource('fzOrgan', {
-    accept: ['g'], //g=genome
-    copyOnly: true,
-    singular: true,
-    selfAccept: false
-  });
+  // av.dnd.fzOrgan = new dndSource('fzOrgan', {
+  //   accept: ['g'], //g=genome
+  //   copyOnly: true,
+  //   singular: true,
+  //   selfAccept: false
+  // });
   
   // if (av.dbg.flg.root) { console.log('Root: before fzWorld'); };
   
@@ -282,19 +282,24 @@ require([
   // });
   
   // yemd
-  av.dnd.fzTdish = new dndSource('fzTdish', {
-    accept: ['b', 't'], //b=both; w=world  //test dishes
-    singular: true,
-    copyOnly: true,
-    selfAccept: false
-  });
+  // av.dnd.fzTdish = new dndSource('fzTdish', {
+  //   accept: ['b', 't'], //b=both; w=world  //test dishes
+  //   singular: true,
+  //   copyOnly: true,
+  //   selfAccept: false
+  // });
   
-  av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
+  // yemd
+  // av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
 
   // if (av.dbg.flg.root) { console.log('Root: before organIcon'); }
   av.dnd.organIcon = new dndTarget('organIcon', {accept: ['g'], selfAccept: false});
-  av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
-  av.dnd.gridCanvas = new dndTarget('gridCanvas', {accept: ['g']});
+  
+  // yemd
+  // av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
+  
+  // yemd
+  // av.dnd.gridCanvas = new dndTarget('gridCanvas', {accept: ['g']});
   
   // yemd
   // av.dnd.trashCan = new dndSource('trashCan', {accept: ['c', 'g', 't', 'w'], singular: true});
@@ -442,24 +447,25 @@ require([
     }
   });
 
-  dojo.connect(av.dnd.fzWorld, "onDndDrop", function (source, nodes, copy, target) {
-    //This triggers for every dnd drop, not just those of fzWorld
-    if ('fzWorld' === target.node.id) {
-      var pkg = {};
-      av.ui.num = av.fzr.wNum;
-      pkg.source = source;
-      pkg.nodes = nodes;
-      pkg.copy = copy;
-      pkg.target = target;
-      av.dnd.landFzWorldFn(pkg);
-      nodes.forEach(function (node) {
-        av.dnd.sortDnD('fzWorld');
-      });
-      if (av.ui.num !== av.fzr.wNum) {
-        av.fwt.makeFzrWorld(av.ui.num, 'dojo.connect');
-      } //tiba need to check this
-    }
-  });
+  // yemd
+  // dojo.connect(av.dnd.fzWorld, "onDndDrop", function (source, nodes, copy, target) {
+  //   //This triggers for every dnd drop, not just those of fzWorld
+  //   if ('fzWorld' === target.node.id) {
+  //     var pkg = {};
+  //     av.ui.num = av.fzr.wNum;
+  //     pkg.source = source;
+  //     pkg.nodes = nodes;
+  //     pkg.copy = copy;
+  //     pkg.target = target;
+  //     av.dnd.landFzWorldFn(pkg);
+  //     nodes.forEach(function (node) {
+  //       av.dnd.sortDnD('fzWorld');
+  //     });
+  //     if (av.ui.num !== av.fzr.wNum) {
+  //       av.fwt.makeFzrWorld(av.ui.num, 'dojo.connect');
+  //     } //tiba need to check this
+  //   }
+  // });
 
   // yemd
   // av.dnd.fzTdish.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
@@ -665,63 +671,64 @@ require([
    });
    */
 
-  // yemd
   // $(document).on('pointerup', function (evt) {
   //   av.mouse.UpGridPos = [evt.originalEvent.offsetX, evt.originalEvent.offsetY];
   // });
 
-  // //When mouse button is released, return cursor to default values
-  // $(document).on('mouseup', function (evt) {
-  //   'use strict';
-  //   var target = '';
-  //   if (av.debug.mouse)
-  //     console.log('in mouseup target:', evt.target.id, '; event:', evt);
-  //   if (av.debug.mouse)
-  //     console.log('in mouseup target:', evt.target.id);
-  //   av.mouse.makeCursorDefault();
-  //   av.mouse.UpGridPos = [evt.offsetX, evt.offsetY];
-  //   if (av.debug.mouse)
-  //     console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
-  //   av.mouse.Dn = false;
+  //When mouse button is released, return cursor to default values
+  $(document).on('mouseup', function (evt) {
+    'use strict';
+    var target = '';
+    if (av.debug.mouse)
+      console.log('in mouseup target:', evt.target.id, '; event:', evt);
+    if (av.debug.mouse)
+      console.log('in mouseup target:', evt.target.id);
+    av.mouse.makeCursorDefault();
+    // av.mouse.UpGridPos = [evt.offsetX, evt.offsetY];
+    console.log('in avidaEd.js mouseup:', av.mouse.UpGridPos);
+    if (av.debug.mouse)
+      console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
+    av.mouse.Dn = false;
 
-  //   // --------- process if something picked to dnd ------------------
-  //   if ('parent' == av.mouse.Picked) {
-  //     av.mouse.Picked = '';
-  //     av.mouse.ParentMouse(evt, av);
-  //     if ('gridCanvas' == evt.target.id || 'trashCanImage' == evt.target.id) {
-  //       av.grd.drawGridSetupFn('on mouseup where evt.target.id=gridCanvas or trashCanImage');
-  //     } else if ('organIcon' == evt.target.id) {
-  //       //Change to Organism Page
-  //       av.ui.mainBoxSwap('organismBlock');
-  //       av.ind.organismCanvasHolderSize('mouseup_organIcon_parent');
-  //       av.ui.adjustOrgInstructionTextAreaSize();
-  //       if (av.debug.mouse)
-  //         console.log('from parent', av.parent, '; fzr', av.fzr);
-  //       av.post.addUser('Dragged item to Organism Icon');
-  //       av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-  //     }
-  //   } else if ('offspring' == av.mouse.Picked) {
-  //     target = av.mouse.offspringMouse(evt, av.dnd, av.fio, av.fzr, av.gen);
-  //     av.mouse.Picked = '';
-  //   } else if ('kid' == av.mouse.Picked) {
-  //     av.mouse.Picked = '';
-  //     target = av.mouse.kidMouse(evt, av.dnd, av.fzr, av.grd);
-  //     if (av.debug.mouse)
-  //       console.log('kidMouse: target', target, '===============', evt.target.id);
-  //     if ('organIcon' == evt.target.id) {
-  //       //Change to Organism Page
-  //       av.ui.mainBoxSwap('organismBlock');
-  //       av.ind.organismCanvasHolderSize('mouseup_organIcon_Kid');
-  //       av.ui.adjustOrgInstructionTextAreaSize();
-  //       av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-  //     }
-  //     /*      else if ('fzOrgan' == target) {
-  //      //make_database_entry if using a database (av.fio, av.fzr);
-  //      }
-  //      */
-  //   }
-  //   av.mouse.Picked = '';
-  // });
+    // --------- process if something picked to dnd ------------------
+    if ('parent' == av.mouse.Picked) {
+      av.mouse.Picked = '';
+      av.mouse.ParentMouse(evt, av);
+      if ('gridCanvas' == evt.target.id || 'trashCanImage' == evt.target.id) {
+        av.grd.drawGridSetupFn('on mouseup where evt.target.id=gridCanvas or trashCanImage');
+      } else if ('organIcon' == evt.target.id) {
+        //Change to Organism Page
+        av.ui.mainBoxSwap('organismBlock');
+        av.ind.organismCanvasHolderSize('mouseup_organIcon_parent');
+        av.ui.adjustOrgInstructionTextAreaSize();
+        if (av.debug.mouse)
+          console.log('from parent', av.parent, '; fzr', av.fzr);
+        av.post.addUser('Dragged item to Organism Icon');
+        av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+      }
+    } else if ('offspring' == av.mouse.Picked) {
+      target = av.mouse.offspringMouse(evt, av.dnd, av.fio, av.fzr, av.gen);
+      av.mouse.Picked = '';
+    } else if ('kid' == av.mouse.Picked) {
+      av.mouse.Picked = '';
+      target = av.mouse.kidMouse(evt, av.dnd, av.fzr, av.grd);
+      if (av.debug.mouse)
+        console.log('kidMouse: target', target, '===============', evt.target.id);
+      if ('organIcon' == evt.target.id) {
+        //Change to Organism Page
+        av.ui.mainBoxSwap('organismBlock');
+        av.ind.organismCanvasHolderSize('mouseup_organIcon_Kid');
+        av.ui.adjustOrgInstructionTextAreaSize();
+        av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+      }
+      /*      else if ('fzOrgan' == target) {
+      //make_database_entry if using a database (av.fio, av.fzr);
+      }
+      */
+    }
+    av.mouse.Picked = '';
+  });
+
   //********************************************************************************************************************
   // End of Mouse functions
   //********************************************************************************************************************
