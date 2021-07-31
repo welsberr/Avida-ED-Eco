@@ -1554,7 +1554,7 @@ av.dnd.contextMenu = function(target, fzItemID, from) {
         if (null != fzName) {
           //document.getElementById(fzItemID).innerHTML = fzName;  //either works
           document.getElementById(fzItemID).textContent = fzName;
-          document.getElementById(fzItemID).data = fzName;
+          document.getElementById(fzItemID).data = fzName;av.fzr.saveUpdateState
           target.map[fzItemID].data = fzName;
           //console.log('.data=', target.map[fzItemID].data);
           //update freezer structure

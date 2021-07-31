@@ -29,6 +29,9 @@
 // Get hashtag of avida side to state which version of avida works with this version of av_ui
 // git rev-parse HEAD
 //
+// To get a local copy of a pull request:
+// git pull origin pull/18/head    //where '18' is the number of the pull request
+//
 // Avida -------------------
 //
 // to thet the parse value go to the current version of avida folder and
@@ -182,6 +185,7 @@ require([
   'environment2UI.js',
   'sugar_ui.js',
   'reSizePageParts.js',
+  //    <script type="text/javascript" src="reSizePageParts.js"></script>
   'dragulaDnd.js',
   //'restartAvida.js',
   //'diagnosticconsole.js',

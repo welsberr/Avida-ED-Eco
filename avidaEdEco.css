@@ -1081,10 +1081,10 @@ details summary {
 .sgrLftSumCls { flex: 0 1 auto; background: lightpink;}
 .sgrRitSumCls { 
   flex: 0 1 auto;
+  display: grid;
   grid-area: sgrRitSumCls; 
   grid-template-areas: 'sumFtTxtCls tskRewardCls';
   grid-template-columns: 1px 96px;
-  display: grid;
   justify-items: end;
   background: yellow;
 }
