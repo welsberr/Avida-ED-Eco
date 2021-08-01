@@ -336,7 +336,7 @@ av.dnd.nameParent = function(name) {
 av.dnd.lndActiveConfig = function (move, from) {
   'use strict';
   av.dnd.configFlag = 'normal';
-  console.log(from, 'called av.dnd.lndActiveConfig; move = ', move, '; configFlag=', av.dnd.configFlag);
+  // console.log(from, 'called av.dnd.lndActiveConfig; move = ', move, '; configFlag=', av.dnd.configFlag);
   av.post.addUser('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
   var ndx = -1;
   var klen = 0;
@@ -1322,13 +1322,13 @@ av.dnd.loadDefautlConfigFn = function (from) {
     av.dnd.move.dir = av.fzr.dir[av.dnd.move.sourceDomId];
     av.dnd.move.nodeName = av.fzr.file[av.dnd.move.dir + '/entryname.txt'];
     
-    //put node to move into the target
+    // put node to move into the target
     av.dnd[target].insertNodes(false, [{data: av.dnd.move.nodeName, type: [type]}]);
     av.dnd[target].sync();
     var domIDs = Object.keys(av.dnd[target].map);
     av.dnd.move.targetDomId = domIDs[domIDs.length - 1];
     av.dnd.move.sourceMoveData = av.dnd.move.source.map[av.dnd.move.sourceDomId];
-    console.log('move', av.dnd.move);
+    // console.log('move', av.dnd.move);
     
     if (('fzConfig' == fzSection || 'fzWorld' == fzSection) && 'activeConfig' == target) { 
       addedPopPage = av.dnd.lndActiveConfig(av.dnd.move, 'av.dnd.loadDefautlConfigFn');
@@ -1371,7 +1371,7 @@ av.dnd.FzAddExperimentFn = function (fzSection, target, type) {
     var domIDs = Object.keys(av.dnd[target].map);
     av.dnd.move.targetDomId = domIDs[domIDs.length - 1];
     av.dnd.move.sourceMoveData = av.dnd.move.source.map[av.dnd.move.sourceDomId];
-    console.log('move', av.dnd.move);
+    // console.log('move', av.dnd.move);
     
     if ('fzOrgan' == fzSection && 'ancestorBox' == target) { addedPopPage = av.dnd.lndAncestorBox(av.dnd.move); }
     else if ('fzOrgan' == fzSection && 'activeOrgan' == target) { addedPopPage = av.dnd.lndActiveOrgan(av.dnd.move); }

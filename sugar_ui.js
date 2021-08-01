@@ -494,7 +494,7 @@ av.sgr.supplyChange = function (domObj) {
       tsk = av.sgr.logicNames[ii];
       numTsk = av.sgr.logEdNames[ii];
       document.getElementById(tsk+'_section').open = openFlag;
-      av.sgr.OpenClsSugarDetails(tsk, openFlag, av.sgr.OpenCloseAllSugarDetails);    
+      av.sgr.OpenClsSugarDetails(tsk, openFlag, 'av.sgr.OpenCloseAllSugarDetails');    
     };
     //if (av.dbg.flg.nut) { console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption, '; openFlag=', openFlag, '; from=', from); }
   };
@@ -696,21 +696,10 @@ av.sgr.supplyChange = function (domObj) {
   //if (av.dbg.flg.root) { console.log('Root: before av.sgr.changeDetailsLayout'); }
   //-------------------------------------------------------------------------------------- av.sgr.changeDetailsLayout --
   av.sgr.changeDetailsLayout = function(tsk, from) {
-    //these are not as usefull, turn on the one after the first if ('global' statement if problems
-    //if (true) { console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; subChanged=', subChanged); }
-    // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags=', av.nut.hideFlags); }
     var dom = '';
-    //var tmpTxt = '';
-    //var inflow = 0.5;
-    //var outflow = 0.5;
     var ndx = av.sgr.logicNames.indexOf(tsk);
     var numTsk = av.sgr.logEdNames[ndx];
-    //var regionName;
-    //var numRegions = 'multi';   //this flag was put in when Rob wanted the 'supplyTypeSlct' to be in the summary anytime the layout = whole dish
-    //var regionLayout = document.getElementById(tsk+'_regionLayout').value;
     var regionNameList;
-    //var showGeo = "geoBoth";
-    //console.log('layout=', document.getElementById(tsk+'_regionLayout').value);
     if ( null != document.getElementById(tsk+'_regionLayout').value) {
       if ('1Global' == document.getElementById(tsk+'_regionLayout').value) {av.nut[numTsk].uiAll.geometry = 'global';}
       else { av.nut[numTsk].uiAll.geometry = 'grid';}

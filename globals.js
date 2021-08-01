@@ -5,7 +5,7 @@
 var av = av || {};  //incase av already exists
 
 //console.log('start of globals on 2021_310_04:22 Thurs');
-console.log('start of globals on 2021_419_Mon');
+console.log('start of globals on 2021_801_Sat');
 
 Number.prototype.pad = function(size) {
   var ss = String(this);
@@ -542,6 +542,7 @@ av.sgr.describe.long.ant = '&nbsp;(x8) Hard';
 av.sgr.describe.long.nor = '(x16) Very Hard';
 av.sgr.describe.long.xor = '(x16) Very Hard';
 av.sgr.describe.long.equ = '(x32) Brutal';
+av.sgr.describe.long.width = '96px';
 
 av.sgr.describe.lng2 = {};
 av.sgr.describe.lng2.not = 'Easy &nbsp;(x2)';
@@ -1534,7 +1535,7 @@ for (var ii = 0; ii < lngth; ii++) {
   av.mouse.notDndIndShape[ii] = 'default';
 };
 
-console.log('end of globals');
+//console.log('end of globals');
 
 //----------------------------------------------------------------------------------------------------------------------
 // Notes on page layout

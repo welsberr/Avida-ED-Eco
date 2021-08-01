@@ -11,12 +11,14 @@ html {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
+/*  I don't remmeber why this is here. Taking it out might be a problem DJB 2021_731'  
 *, *:before, *:after {
   -webkit-box-sizing: inherit;
   -moz-box-sizing: inherit;
   box-sizing: inherit;
   }
-
+*/
   body {
     margin: 0;
     background: #F5F5F5; /* cyan; */
@@ -852,7 +854,16 @@ input:focus {
   width: 4.5em; height:1.6em;
 }
 
-#mutePopError { text-align: left; width: 90%; height: 15px; }
+#popSetupMutationRate {
+  /* background: lightpink; */
+}
+
+#mutePopError { 
+ 
+  width: 100%; height: 15px;
+  /* background-color: lightyellow;  */
+  /* text-align: left; */
+}
 
 .mutePopInputClass{
   width:4em;
@@ -860,14 +871,13 @@ input:focus {
   margin: 0px 2px;     /* top right bottom left  */   /*top left/right bottom */ /*top/bottom  left/right */
   /* padding: 0px 0px;   /* top right bottom left  */  /* box padding border margin outside now */
   display: inline-block; 
-  /*background: yellow; */
   float: left;
 }
 .mutePopSlideClass{
   /* width:360px; */
   display: block; 
-  vertical-align: center; 
-  background: #666;
+  vertical-align: middle; 
+  background: #666;    /* #666 */
 }
 /*
     -webkit-appearance: none;
@@ -1049,18 +1059,6 @@ details summary {
 /* I could not get a div with a dispay of inline-gid start on the top line of the summary. 
 .sumHolderDiv { display: inline-block; position: absolute; }
 */
-.sumFtTxtCls { 
-  grid-area: sumFtTxtCls; 
-  display: inline-block; border: 1px solid palegreen; 
-}
-.taskRewardCls { 
-  grid-area: tskRewardCls; 
-  display: inline-block;
-  text-align: right;
-  border: 1px solid red;
-  width: 250px;
-}
-
 /* Sgr summary as a grid container. Something wrong. Try a Flex box
 .sgrLftSumCls { grid-area: sgrLftSumCls; display: inline-block;}
 .sgrRitSumCls { grid-area: sgrRitSumCls; 
@@ -1072,34 +1070,50 @@ details summary {
 }
 */
 
+
+.sumFtTxtCls { 
+  grid-area: sumFtTxtCls; 
+  display: inline-block; 
+}
+.taskRewardCls { 
+  grid-area: tskRewardCls;
+  text-align: right;
+  height: 100%;
+  width: 96px;
+  /* background: yellow; */
+}
+
+
 .sgrSumCls { 
   display: flex;
   justify-content: space-between;
   height: 23px;  width: 100%;
-  background: lightblue;  
+  /* background: LightCyan;  */
 }
-.sgrLftSumCls { flex: 0 1 auto; background: lightpink;}
+.sgrLftSumCls { flex: 0 1 auto; }
+.sgrRitSumCls { flex: 0 1 auto; width: 96px; }
+
+/*  This works fine, but his not needed. 
 .sgrRitSumCls { 
   flex: 0 1 auto;
   display: grid;
-  grid-area: sgrRitSumCls; 
-  grid-template-areas: 'sumFtTxtCls tskRewardCls';
-  grid-template-columns: 1px 96px;
+  grid-template-areas: 'tskRewardCls';
+  grid-template-columns: 96px;
   justify-items: end;
-  background: yellow;
+  background: lightyellow;
+  /* grid-area: sgrRitSumCls;    /* use if sgrSumCls has display: grid; 
 }
-
-.sgrTitleCls { grid-area: sgrTitleCls; display: inline-block; border: 1px solid red; width: 54px; }
-.geometryCls { grid-area: geometryCls; display: none; border: 1px solid red; }
-.regionLaySumCls { grid-area: regionLayCls; display: inline-block; border: 0px none magenta; }
-.supply_HoldCls { grid-area: supply_HoldCls; display: inline-block; border: 0px none cyan; }
-.supplyWHoldCls { grid-area: supplyWdCls; display: inline-block; border: 1px solid red; }
-.inflwSumCls { grid-area: inflwSumCls; display: inline-block; border: 0px none magenta; }
-.outflwSumCls { grid-area: outflwSumCls; display: inline-block; border: 0px none cyan; }
-.chmsttSumCls { grid-area: chmsttSumCls; display: inline-block; border: 1px solid red; }
-.periodGlobalCheck { grid-area: periodGlobalCheck; display: inline-block; border: 1px solid red; }
-.periodTimGlobCls { grid-area: periodTimGlobCls; display: inline-block; border: 1px solid red; }
-.initialGlobCls { grid-area: initialGlobCls; display: inline-block; border: 1px solid red; }
+*/
+.sgrTitleCls { grid-area: sgrTitleCls; display: inline-block; width: 54px; }
+.regionLaySumCls { grid-area: regionLayCls; display: inline-block; }
+.supply_HoldCls { grid-area: supply_HoldCls; display: inline-block; }
+.supplyWHoldCls { grid-area: supplyWdCls; display: inline-block; border: }
+.inflwSumCls { grid-area: inflwSumCls; display: inline-block; }
+.outflwSumCls { grid-area: outflwSumCls; display: inline-block; }
+.chmsttSumCls { grid-area: chmsttSumCls; display: inline-block; }
+.periodGlobalCheck { grid-area: periodGlobalCheck; display: inline-block; }
+.periodTimGlobCls { grid-area: periodTimGlobCls; display: inline-block; }
+.initialGlobCls { grid-area: initialGlobCls; display: inline-block; }
 
 
 .grd-sgr-sum-adv-container {
@@ -1107,7 +1121,7 @@ details summary {
   grid-template-areas: 'detailArrow sgrTitleCls regionLayCls sumFtTxtCls';
   justify-content: start; 
   width: 100%;
-  border: 1px solid blue;  
+  /* border: 1px solid blue;  */
 }
 .grd-sgr-sum-adv-limited-container {
   display: grid;
@@ -1137,15 +1151,13 @@ details summary {
   display: grid;
   grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls initialGlobCls";
   justify-content: start; 
-  height: 23px;  
-  border: 1px solid purple;
+  height: 23px;
 }
 .grd-sgr-sum-global-limited-container {
   display: grid;
   grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls initialGlobCls";
   justify-content: start; 
   height: 23px;  
-  border: 1px solid purple;
 }
 .grd-sgr-sum-global-chemo-container {
   display: grid;
@@ -1188,20 +1200,20 @@ details summary {
 
 /* used as global resources can be periodic, but not in use now */
 .periodCheckGlobal { grid-area: periodCheckGlobal; display: none; }
-.detailTxtCls { grid-area: detailTxtCls; place-self: center;  border: 0px none green; }
+.detailTxtCls { grid-area: detailTxtCls; place-self: center;  }
 
 .initialHiDcls { grid-area: initialHi;}
 .initialLoDcls { grid-area: initialLo;}
 
-.inflwHiDcls { grid-area: inflowHi; place-self: center; border: 0px none blue; }
+.inflwHiDcls { grid-area: inflowHi; place-self: center; }
 .inflwLoDcls { grid-area: inflowLo; place-self: center stretch; }
 
-.outflwHiDcls { grid-area: outflowHi; place-self: center; border: 0px none cyan; }
-.outflwLoDcls { grid-area: outflowLo; place-self: center; border: 1px solid red; }
+.outflwHiDcls { grid-area: outflowHi; place-self: center; }
+.outflwLoDcls { grid-area: outflowLo; place-self: center; }
 
  /* top right bottom left */  
-.chmsttHiDcls { grid-area: chmstatHi; place-self: center; border: 1px solid red; }
-.chmsttLoDcls { grid-area: chmstatLo; place-self: center; border: 1px solid red; }
+.chmsttHiDcls { grid-area: chmstatHi; place-self: center; }
+.chmsttLoDcls { grid-area: chmstatLo; place-self: center; }
 
 .sideTitleHiDcls { grid-area: sideTitleHi; place-self: center stretch; }
 .sideTitleLoDcls { grid-area: sideTitleLo; place-self: center stretch; }

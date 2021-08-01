@@ -550,7 +550,7 @@
                           <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
                         </tr>
                         <tr>
-                          <td><div class='noWrap1'><label id='antLabel' onclick="av.ui.toggleResourceComplexity('antLable')">ANT</label></div></td>
+                          <td><div class='noWrap1'><label id='antLabel'>ANT</label></div></td>
                           <td><div class='noWrap2'><label id='antTime'></label></div></td>
                           <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
                         </tr>
@@ -769,11 +769,11 @@
                     <label id='sizeCells'>There are 900 cells by default</label>
                 </div>
                 <div class='even'>
-                  <div>
+                  <div id='popSetupMutationRate'>
                     <span class='enviroSubHeading lftmargin' >Per Site Mutation Rate:</span>
                     <input id='mutePopInput' type='text' class='mutePopInputClass'>&nbsp;%                    
                   </div>
-                  <div id='mutePopError'>&nbsp;&nbsp;&nbsp;</div>
+                  <div id='mutePopError' onclick="av.ui.toggleResourceComplexity('muteErrorNotice')"></div>
                   <div id='mutePopSlideHolder'>
                     <span id='mutePopSlide' class='mutePopSlideClass'></span>&nbsp;
                   </div>

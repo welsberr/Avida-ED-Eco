@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
                     $.map($("#trashCan"), (value, key) => { return value }), 
                     $.map($("#gridCanvas"), (value, key) => { return value }), 
                     $.map($("#ancestorBox"), (value, key) => { return value })].flat();
-  console.log(containers);
+  //console.log(containers);
 
   var hi = containers[0]
   var fzConfig = containers[1]
@@ -55,21 +55,21 @@ jQuery(document).ready(function($) {
   });
 
   dra.on('drag', (el, source) => { 
-    console.log("dragging");
+    //console.log("dragging");
   });
 
   // main function that determines the logic for drag and drop
   dra.on('drop', (el, target, source) => {
 
     if (el.parentElement !== null && (el.parentElement === trashCan || el.parentElement.id === "trashDiv")) {
-      console.log("in trashcan");
+      //console.log("in trashcan");
       // console.log(target.id);
       // console.log(source.className);
       el.remove();
     }
 
     if (source === fzTdish && target === testConfig) {
-      console.log("here");
+      //console.log("here");
       av.dnd.lndTestConfig(el, target, source);
     }
 
