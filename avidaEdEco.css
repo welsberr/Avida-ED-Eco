@@ -637,7 +637,7 @@ html {
       flex: 0 0 24px;
   }
   
-  . {          /* right side panel with info about the lab benche */
+  .labInfoHoldCls {          /* right side panel with info about the lab benche */
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
     height: 100%;
     width: 100%;
@@ -699,12 +699,12 @@ html {
 .timePerform { min-width: 120px; background: #fff }
   
 #popStats4grid{
-  flex: 1 1 240px /* yemi: fixed the weird width problem by useing 240px as the width; auto adjusts */     
+  flex: 1 1 240px; /* yemi: fixed the weird width problem by useing 240px as the width; auto adjusts */     
   border: 1px solid #AAA;
   min-width: 200px;  /* yemi commented out; diane put back in */
   /* width: 100%; */
 } /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
-}
+
 div.popsTopTableHold { 
   min-width: 168px;
   background: #DDD; 
