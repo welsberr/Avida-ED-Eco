@@ -79,8 +79,8 @@ html {
 .mainBlockHolder { grid-area: mainBlockHolder; }
 .rightInfoHolder { grid-area: rightInfoHolder; }
 .navColClass {grid-area: navColID; }
-#dragbarLeft {grid-area: dragbarLeft; } /* yemi: */
-
+#dragbarLeft {grid-area: dragbarLeft; } /* yemi:    float: right;*/
+#dragbarRight {grid-area: float: right; }
 
 .all2rit{
   display: grid;
@@ -154,7 +154,7 @@ html {
   border: 1px solid #AAA;               /* #AAA; */
 }
 
-.navColClass {
+.navColClass {                  /* left side bar with freezer */
   grid-area:navColClass;
   place-self: stretch;
   /* width: 238px; */       /*was 152   340px*/
@@ -163,7 +163,7 @@ html {
   background: #F5F5F5; /* lavender; */
   border: 1px solid #AAA;
   height: 100%;
-  resize: horizontal;
+  /* resize: horizontal;      /* diane removed */
   min-width: 160px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
   max-width: 620px;
 }
@@ -415,6 +415,7 @@ html {
 }
 #showTextDebugButton{
   min-width: 60px;
+  visibility: hidden;
 }
 #developmentToggle{
   min-width: 60px;
@@ -422,6 +423,7 @@ html {
 .devoShow {
   background: inherit;
   color: black;
+  max-width:95%;
 }
 .devoCammo {        /* #notation with 4 or 8 chars should have opacity as the last section should work, but NetBeans does not like it*/  
   border: none;                             /* #F5F5F500 should work, but net beans does not like it so some browsers might not like it */
@@ -429,6 +431,30 @@ html {
   /* background-color: rgba(245,245,245,0); */   /*  rgba(245,245,245,0)  is #F5F5F5 with opacity set to 0.0;   */  
   color: rgba(245,245,245,0);               /* 0.0 (fully transparent) to 1.0 (fully opaque); */
 }
+
+#showTextDebugBlock {
+  width: 100%;
+  height: 100%;
+  background: #F5F5F5;  /*lightgray;  */  
+}
+
+#showBigTextHolder {
+  background: #CCCCCC;
+  width: 100%;
+  height:95%;
+}
+
+#showBigTextarea{
+  resize: both;
+   -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    ;
+    /* cols:'150' rows:'50' */
+}
+
 /* -------------------------------------------------------------------------------- main work bench center section -- */
 .mainBlockClassRow {
   display: flex;
@@ -611,12 +637,12 @@ html {
       flex: 0 0 24px;
   }
   
-  .labInfoHoldCls {
+  . {          /* right side panel with info about the lab benche */
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
     height: 100%;
     width: 100%;
     min-width: 200px; /* yemi: */
-    max-width: 450px; /* yemi: */
+    max-width: 2200px; /* yemi: diane does not see why a max is needed: sometimes want popChart big */
   }
   
   #popStatsBlock{
@@ -654,31 +680,31 @@ html {
     border: 1px solid #AAA;
     background: #F5F5F5;
     height: auto;
-    resize: vertical;
+    resize: vertical;     /*should get yemi to replaces with a popChartDragbar */
     overflow: auto;
   }
   /* contains SelOrgType & PopStats4Grid horizontal */
   
-  #selOrgType{
-    /* flex: 0 1 190px;        /*was 170 */
-    flex: 1 1 auto;    /* yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
-    border: 1px solid #AAA;
-    /* overflow: auto; */
-  }  /*contains sotTopTable and sotBotTable  */
+#selOrgType{
+  /* flex: 0 1 190px;        /*was 170 */
+  flex: 1 1 auto;    /* yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
+  border: 1px solid #AAA;
+  /* overflow: auto; */
+}  /*contains sotTopTable and sotBotTable  */
 
-  #sotTopTable { width: 100%; }
-  #sotBopTable { width: 100%; background: white; }
-  #sotColorBox { display: inline-block; width: 10px; height: 10px;}
-  
-  .timePerform { min-width: 120px; background: #fff }
-  
-  #popStats4grid{
-    flex: 1 1 240px; /* yemi: fixed the weird width problem */     
-    border: 1px solid #AAA;
-    /* min-width: 200px; */ /* yemi */
-    /* width: 100%; */
-  } /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
+#sotTopTable { width: 100%; }
+#sotBopTable { width: 100%; background: white; }
+#sotColorBox { display: inline-block; width: 10px; height: 10px;}
 
+.timePerform { min-width: 120px; background: #fff }
+  
+#popStats4grid{
+  flex: 1 1 240px /* yemi: fixed the weird width problem by useing 240px as the width; auto adjusts */     
+  border: 1px solid #AAA;
+  min-width: 200px;  /* yemi commented out; diane put back in */
+  /* width: 100%; */
+} /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
+}
 div.popsTopTableHold { 
   min-width: 168px;
   background: #DDD; 
@@ -728,11 +754,8 @@ table.botPopTable {
   width: 100%;
 }
 
-/* ---------------------- Population (right) side of tables( */
-#popStats4grid{           /* inside horizontal flexbox*/
-  flex: 1 1 auto;       /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-  border: 1px solid #AAA;
-}
+/* ---------------------- Population (right) side of tables */
+
 #resrceDataHolder{
   display: none;  /* none; */
   /* flex: 0 0 53; */
@@ -1005,10 +1028,6 @@ details summary {
   display: inline-block;
 }
 
-.geometryCls{
-  display: inline-block;
-}
-
 .groupDebug{  display: inline; }
 .grooupLimited { display: inline; }
 .groupChemostat { display: inline; }
@@ -1104,6 +1123,9 @@ details summary {
   /* grid-area: sgrRitSumCls;    /* use if sgrSumCls has display: grid; 
 }
 */
+/* no longer in use, but need to keep until removed from javascript */
+.geometryCls{ grid-area:geometryCls; display: none; }
+
 .sgrTitleCls { grid-area: sgrTitleCls; display: inline-block; width: 54px; }
 .regionLaySumCls { grid-area: regionLayCls; display: inline-block; }
 .supply_HoldCls { grid-area: supply_HoldCls; display: inline-block; }
@@ -1452,6 +1474,14 @@ details summary {
                     <div id='allSgr3Blnk'>&nbsp;&nbsp;&nbsp;</div>
                     <div id='allSgr4Blnk'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
                     <div id='allSgr5Blnk'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+                    <div id='allSugarGeometryDiv' class='rHeadItem'>
+                      <select id="allSugarGeometry" class='geometryClsAll' onchange='av.sgr.allSugarGeometryChange(this);'>
+                        <option value='global'>Global</option>
+                        <option value='grid'>Local</option>
+                        <option value='neutral' selected>----</option>                            
+                      </select>
+                    </div>
 */
 
 /*********************************************************************** End Sugar Accordion using details and select */
@@ -1554,6 +1584,8 @@ select:disabled::-ms-expand {
 	left: 3px;
 	color: black;    /* #99a1a7;  */
 }
+
+/* not in use
 .big-checkbox {
 	padding: 18px;
 }
@@ -1562,7 +1594,7 @@ select:disabled::-ms-expand {
 	font-size: 28px;
 	left: 6px;
 }
-
+*/
 /*Checkbox this code creates a black circle version instead of the blue check
 
 input[type="checkbox"] {
@@ -2083,10 +2115,6 @@ canvas {
   width :3px;
   height : 100%;
   cursor: col-resize;
-}
-
-#dragbarLeft {
-  float: right;
 }
 
 .organismControls {

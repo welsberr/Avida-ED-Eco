@@ -127,7 +127,6 @@
         document.getElementById(tsk+sub+'outflowLoNp').disabled = true;
       };
     };
-    document.getElementById('allSugarGeometry').disabled = true;
     document.getElementById('allsugarsupplyTypeSlct').disabled = true;
     document.getElementById('allSugarRegionLayout').disabled = true;
     document.getElementById('allSugarModifier').disabled = true;

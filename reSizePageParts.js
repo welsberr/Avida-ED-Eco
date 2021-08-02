@@ -15,16 +15,23 @@ var IS_RIGHT_CLOSED = false;
 
 /* yemi: function to automatically resize the Analysis page when button clicked; called in avidaED.js */
 function resizeAnalysisPage() {
-
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarLeftWidth = $('#dragbarLeft').css("width");
   var newColumns = leftNavBarWidth + " " + dragbarLeftWidth + " auto";
   $('.all2lft').css("grid-template-columns", newColumns);
 }
 
+/* diane modieved yemi's work: function to automatically resize the Analysis page when button clicked; called in avidaED.js */
+av.ui.resizeShowTextDebugPage =function() {
+  console.log('in av.ui.resizeShowTextDebugPage');
+  var leftNavBarWidth = $('.navColClass').css("width");
+  var dragbarLeftWidth = $('#dragbarLeft').css("width");
+  var newColumns = leftNavBarWidth + " " + dragbarLeftWidth + " auto";
+  $('.all2lft').css("grid-template-columns", newColumns);
+};
+
 /* yemi: function to automatically resize the Populations page when button clicked; called in avidaED.js */
 function resizePopulationPage() {
-
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('.dragbar').css("width");
   var rightSideWidth = $('#rightInfoHolder').css("width");
@@ -34,27 +41,28 @@ function resizePopulationPage() {
 
 /* yemi: function to automatically resize the Organisms page when button clicked; called in avidaED.js */
 function resizeOrganismPage() {
-
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('.dragbar').css("width");
-  var rightSideWidth = $('#rightInfoHolder').css("width");
+  console.log('$("#rightInfoHolder").css("width"); = ', $('#rightInfoHolder').css("width"));
+  //var rightSideWidth = $('#rightInfoHolder').css("width");
+  var rightSideWidth = 0;
   var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
   $('.all3org').css("grid-template-columns", newColumns);
 }
 
 /* yemi: functions for left dragbar */
 function dragbarLeftResize() {
-
+  console.log('navColID=', parseInt($('#navColId').css("min-width")));
   var dragging = false;
 
   /* yemi: when there's a mousehover over dragbar, dragbar changes color */
   $('#dragbarLeft').bind('mouseover', function(e) {
     $('#dragbarLeft').css('background-color', 'blue');
-  })
+  });
 
   $('#dragbarLeft').bind('mouseout', function(e) {
     $('#dragbarLeft').css('background-color', 'gray');
-  })
+  });
 
   $('#dragbarLeft').bind('mousedown', function(e) {
     e.preventDefault();
@@ -70,6 +78,7 @@ function dragbarLeftResize() {
       var widthAvailable = window.innerWidth - rightSideWidthNum - 6; /* yemi: hard-coded 400px (right panel) 6px (left dragbar + right dragbar), need to fix */
       var percentage = (e.pageX / widthAvailable);
       var widthOfNav = widthAvailable * percentage;
+
 
       /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
       if (widthOfNav < parseInt($('#navColId').css("min-width"))) {
@@ -99,7 +108,7 @@ function dragbarLeftResize() {
       $('orgInfoHolder').css("width", "100%");
 
       /* yemi: update organism canvas */
-      av.ind.updateOrgTrace()
+      av.ind.updateOrgTrace();
     });
   });
 
@@ -211,7 +220,7 @@ function dragbarRightResize() {
       /* yemi: when modifying the column sizes, need to modify all two layouts */
       var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
       var organism_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
-      console.log(population_colInfo);
+      //console.log(population_colInfo);
       
       $('.all3pop').css("grid-template-columns", population_colInfo);
       $('.all3org').css("grid-template-columns", organism_colInfo);

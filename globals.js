@@ -5,7 +5,7 @@
 var av = av || {};  //incase av already exists
 
 //console.log('start of globals on 2021_310_04:22 Thurs');
-console.log('start of globals on 2021_801_Sat');
+console.log('start of globals on 2021_801_Sun');
 
 Number.prototype.pad = function(size) {
   var ss = String(this);
@@ -1542,7 +1542,8 @@ for (var ii = 0; ii < lngth; ii++) {
 //----------------------------------------------------------------------------------------------------------------------
 // AllAvida: 937
 // Population page: Initial assume a square grid and both sidebars open. 
-// navColID or navColClass: wd = 152 includling 2px for a 1 px border. (minimum nice wd) about 84 too narrow, but works. 
+// navColID or navColClass: wd = 152 includling 2px for a 1 px border. 
+//     (minimum nice wd) about 84 too narrow, but works. 
 // mainBlockHolder: wd = 
 // rightInfoHolder: mn wd = 500 inlcuding border
 // popStatsBlock: min wd = 364 no border. 

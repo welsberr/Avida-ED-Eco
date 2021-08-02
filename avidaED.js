@@ -1453,8 +1453,11 @@ require([
     if ('populationBlock' == av.ui.page) {
       av.dom.popInfoVert.style.display = 'block';
       document.getElementById('allAvidaContainer').className = 'all3pop';
-    }
+    };    
     if ('analysisBlock' == av.ui.page) {
+      document.getElementById('allAvidaContainer').className = 'all2lft';
+    };
+    if ('showTextDebugBlock' == av.ui.page) {
       document.getElementById('allAvidaContainer').className = 'all2lft';
     }
     if ('organismBlock' == av.ui.page) {
@@ -1544,6 +1547,7 @@ require([
   document.getElementById('showTextDebugButton').onclick = function () {
     av.post.addUser('Button: showTextDebugButton');
     av.ui.mainBoxSwap('showTextDebugBlock');
+    av.ui.resizeShowTextDebugPage('showTextDebug');
   };
   // ------------------ two controls for the same purpose; tabs used in develoopment mode --
 
@@ -3079,9 +3083,9 @@ require([
 
   av.fwt.clearResourceConstants();
 
-  //Geometry is no longer a drop down. Now it is an opton in Supply Type
-  document.getElementById('allSugarGeometry').style.display = 'none';
-  document.getElementById('geometrySgr').style.display = 'none';
+  // Geometry is no longer a drop down. Now it is an opton in Supply Type; tiba delte before 2022
+  // document.getElementById('allSugarGeometry').style.display = 'none';
+  // document.getElementById('geometrySgr').style.display = 'none';
 
   // **************************************************************************************************************** */
   //Resize tools might be called here or after "Last_things_done"
