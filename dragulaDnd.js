@@ -55,6 +55,9 @@ jQuery(document).ready(function($) {
       if (source === av.dnd.fzOrgan && (target === av.dnd.gridCanvas || target === av.dnd.ancestorBox || target === av.dnd.ancestorBoTest)) {
         return true;
       }
+      if (source === av.dnd.fzTdish && target === av.dnd.testConfig) {
+        return true;
+      }
     },
     invalid: function (el, handle) {
       return false; // don't prevent any drags from initiating by default
@@ -114,16 +117,12 @@ jQuery(document).ready(function($) {
       'use strict';
       if (dragging) {
         av.mouse.UpGridPos = [evt.pageX, evt.pageY];
-        console.log(containerMap);
-        console.log(target);
-        console.log(av.dnd.gridCanvas);
         if (target === av.dnd.gridCanvas) {
-          console.log('here');
           av.dnd.landGridCanvas2(el, target, source);
           av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
         }
         dragging = false;
-        // $(document).unbind('mousemove');
+        $(document).unbind('mousemove');
       }
     });
 
@@ -240,9 +239,8 @@ jQuery(document).ready(function($) {
     var heightOfTop = parseInt($('#popTopRw').css('height')) + parseInt($('#headerMain').css('height'));
     var mouseX = av.mouse.UpGridPos[0] - av.grd.marginX - av.grd.xOffset - offsetXLocal - widthOfNav - 5; // yemi: hardcoded 5; works for now
     var mouseY = av.mouse.UpGridPos[1] - av.grd.marginY - av.grd.yOffset - offsetYLocal - heightOfTop - 5;
-    
     if (av.debug.dnd) console.log('mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
-
+    if (av.debug.dnd) console.log('mouseX, y', mouseX, mouseY);
     av.parents.col[nn] = Math.floor(mouseX / av.grd.cellWd);
     av.parents.row[nn] = Math.floor(mouseY / av.grd.cellHt);
     //check to see if in the grid part of the canvas
@@ -254,26 +252,12 @@ jQuery(document).ready(function($) {
       var newName = av.dnd.nameParent(el.textContent.trim());
 
       //Add organism to av.dnd.ancestorBox in settings.
-      el.id = 'g' + av.fzr.gNum;
-      var domid = el.id;
       var type = 'g';
       var dir = domid;
       var container = '#' + av.dnd.ancestorBox.id;
       
-      // Add a DOM object
-      $(container).append(`<div class="item ${type}" id="${domid}"> ${newName} </div>`);
-
-      // Add an entry to containerMap
-      if (Object.keys(containerMap).indexOf(container) === -1) {
-        containerMap[container] = {};
-      }
-
-      if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
-        containerMap[container][domid] = {'name': newName , 'type': 'g'};
-      } else {
-        containerMap[container][domid].name = newName;
-        containerMap[container][domid].type = 'g';
-      }
+      var domid = av.dnd.insertNode(container, newName, type);
+      if (av.debug.dnd) console.log('containerMap[#ancestorBox]', containerMap[container]);
 
       // Push the item to av.parents
       av.parents.domid.push(domid);
@@ -285,7 +269,6 @@ jQuery(document).ready(function($) {
       if (av.debug.dnd) console.log('av.dnd.landGridCanvas; domId', domid, '; av.fzr.genome', av.fzr.genome);
       var dir = av.fzr.dir[domid];
       av.parents.genome.push(av.fzr.file[dir+'/genome.seq']);
-
       //Find color of ancestor
       if (0 < av.parents.Colors.length) {av.parents.color.push(av.parents.Colors.pop());}
       else {av.parents.color.push(av.color.defaultParentColor);}
@@ -296,7 +279,7 @@ jQuery(document).ready(function($) {
       av.post.addUser('DnD: ' + source.id + '--> GridCanvas: by: ' + el.textContent.trim());
     }
     //In all cases remove the ancestor from the gridCanvas so we only keep them in the av.dnd.ancestorBox.
-    // $('#' + av.dnd.gridCanvas.id).empty();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
+    $('#' + av.dnd.gridCanvas.id).empty();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
     if (av.debug.dnd) console.log('parents', av.parents);
   };
 
@@ -305,8 +288,7 @@ jQuery(document).ready(function($) {
     if (av.debug.dnd) console.log('landFzPopDish: fzr', av.fzr);
 
     // create a new dom id for the new object
-    el.id = 'w' + av.fzr.wNum;
-    var domid = el.id;
+    var domid;
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     var oldName = el.textContent.trim() + '@' + av.grd.popStatsMsg.update.formatNum(0);
     var sName = av.dnd.namefzrItem(container, oldName);
@@ -315,27 +297,22 @@ jQuery(document).ready(function($) {
       var nameWorld = av.dnd.getUniqueFzrName(container, worldName);
       if (nameWorld !== null) {
         av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent.trim() + ' --> ' + nameWorld);
-        document.getElementById(domid).textContent = nameWorld;
 
         // Add an entry to containerMap
-        if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
-          containerMap[container][domid] = {'name': nameWorld , 'type': 'w'};
-        } else {
-          containerMap[container][domid].name = nameWorld;
-          containerMap[container][domid].type = 'w';
-        }
+        domid = av.dnd.insertNode(container, nameWorld, 'w', el);
+        document.getElementById(domid).textContent = nameWorld;
+        console.log(containerMap);
 
-        av.fzr.dir[domid] = 'w'+ av.fzr.wNum;
-        av.fzr.domid['w'+ av.fzr.wNum] = domid;
+        av.fzr.dir[domid] = 'w' + (av.fzr.wNum - 1);
+        av.fzr.domid['w' + (av.fzr.wNum - 1)] = domid;
 
         //create a right av.mouse-click context menu for the item just created.
         av.dnd.contextMenu(container, domid, 'av.dnd.landFzWorldFn');
-        av.fwt.makeFzrWorld(av.fzr.wNum, 'av.dnd.landFzWorldFn');
-        av.msg.exportExpr('w' + av.fzr.wNum);
+        av.fwt.makeFzrWorld((av.fzr.wNum - 1), 'av.dnd.landFzWorldFn');
+        av.msg.exportExpr('w' + (av.fzr.wNum - 1));
         av.msg.sendData();
 
         av.fzr.saveUpdateState('no');
-        av.fzr.wNum++;
       } else { //user cancelled so the item should NOT be added to the freezer.
         // do nothing
       }
@@ -346,9 +323,10 @@ jQuery(document).ready(function($) {
 
   av.dnd.landAncestorBox = function(el, target, source) {
     'use strict';
-    el.id = 'g' + av.fzr.gNum;
-    var domid = el.id;
+
+    var domid;
     var dir = domid;
+    var type = 'g';
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
 
     if (source !== av.dnd.ancestorBox) {
@@ -361,26 +339,7 @@ jQuery(document).ready(function($) {
       
       var newName = av.dnd.nameParent(el.textContent.trim());
       //Add organism to av.dnd.ancestorBox in settings.
-      var type = 'g';
-      var dir = domid;
-      var container = '#' + av.dnd.ancestorBox.id;
-      
-      // Add a DOM object
-      //$(container).append(`<div class="item ${type}" id="${domid}"> ${newName} </div>`);
-
-      // Add an entry to containerMap
-      if (Object.keys(containerMap).indexOf(container) === -1) {
-        containerMap[container] = {};
-      }
-
-      if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
-        containerMap[container][domid] = {'name': newName , 'type': 'g'};
-      } else {
-        containerMap[container][domid].name = newName;
-        containerMap[container][domid].type = 'g';
-      }
-
-      console.log(containerMap);
+      domid = av.dnd.insertNode(container, newName, type, el);
 
       av.parents.howPlaced.push('auto');
       av.parents.domid.push(domid); //domid in ancestorBox used to remove if square in grid moved to trashcan
@@ -388,8 +347,6 @@ jQuery(document).ready(function($) {
       if (0 < av.parents.Colors.length) { av.parents.color.push(av.parents.Colors.pop());}
       else { av.parents.color.push(av.color.defaultParentColor); }
       av.parents.placeAncestors();
-
-      console.log(av.fzr.file);
 
       // unsure if this is supposed to happen; in the original, it doesn't
       // //load ancestors if present.
@@ -402,8 +359,6 @@ jQuery(document).ready(function($) {
       //   str = av.fzr.file[dir + '/ancestors_manual.txt'];
       //   av.fio.handAncestorLoad(str);
       // };
-
-      av.fzr.gNum++;
 
       if (av.debug.dnd) console.log('parents', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]);
       av.grd.drawGridSetupFn('av.dnd.landAncestorBox');
@@ -418,6 +373,7 @@ jQuery(document).ready(function($) {
     var added;
     var domid = el.id;
     var dir = domid;
+    var type = 'g';
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     
     //Do not copy parents if one is moved within Ancestor Box
@@ -438,7 +394,8 @@ jQuery(document).ready(function($) {
       av.parents.injected.push(false);
       
       var newName = av.dnd.nameParent(el.textContent.trim());
-      document.getElementById(target.id).textContent = newName;
+      //Add organism to av.dnd.ancestorBox in settings.
+      domid = av.dnd.insertNode(container, newName, type, el);
 
       av.parents.howPlaced.push('auto');
       av.parents.domid.push(move.targetDomId); //domid in ancestorBox used to remove if square in grid moved to trashcan
@@ -473,8 +430,8 @@ jQuery(document).ready(function($) {
     if (av.debug.dnd) console.log('av.dnd.landFzConfig: fzr', av.fzr);
 
     // create a new dom id for the new object
-    el.id = 'c' + av.fzr.cNum;
-    var domid = el.id;
+    var domid;
+    var type = 'c';
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     var oldName = el.textContent.trim();
     var sName = av.dnd.namefzrItem(container, oldName);
@@ -482,21 +439,12 @@ jQuery(document).ready(function($) {
     if (configurationName) {
       var configName = av.dnd.getUniqueFzrName(container, configurationName);
       if (configName !== null) {
-        document.getElementById(domid).textContent = configName;
+        domid = av.dnd.insertNode(container, configName, type, el);
 
-        // Add an entry to containerMap
-        if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
-          containerMap[container][domid] = {'name': configName , 'type': 'c'};
-        } else {
-          containerMap[container][domid].name = configName;
-          containerMap[container][domid].type = 'c';
-        }
-
-        av.fzr.dir[domid] = 'c'+ av.fzr.cNum;
-        av.fzr.domid['c'+ av.fzr.cNum] = domid;
+        av.fzr.dir[domid] = 'c'+ (av.fzr.cNum - 1);
+        av.fzr.domid['c'+ (av.fzr.cNum - 1)] = domid;
         av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = configName;
-        av.fwt.makeFzrConfig(av.fzr.cNum,'av.dnd.landFzConfig');
-        av.fzr.cNum++;
+        av.fwt.makeFzrConfig((av.fzr.cNum - 1),'av.dnd.landFzConfig');
 
         //create a right av.mouse-click context menu for the item just created.
         av.dnd.contextMenu(container, domid, 'av.dnd.landFzConfig');
@@ -526,15 +474,9 @@ jQuery(document).ready(function($) {
 
     // remove the existing configuration
     $("#activeConfig").empty();
-    if (Object.keys(containerMap).indexOf(target_container) !== -1) {
-      delete containerMap[target_container];
-    }
-
+    // empty the container map
+    containerMap[target_container] = {};
     $("#activeConfig").append(el);
-    // Add an entry to containerMap
-    if (Object.keys(containerMap).indexOf(target_container) === -1) {
-      containerMap[target_container] = {};
-    }
 
     av.fzr.actConfig.actDomid = domid;
     av.fzr.actConfig.name = document.getElementById(av.fzr.actConfig.actDomid).textContent;
@@ -586,7 +528,6 @@ jQuery(document).ready(function($) {
 
     else if (source === av.dnd.fzWorld) {
       containerMap[target_container][domid] = {"name": el.innerHTML.trim(), "type": "w"};
-      console.log(av.fzr.actConfig);
       av.fzr.actConfig.type = 'w';
       av.ptd.popWorldStateUi('av.dnd.landActiveConfig');
 
@@ -651,7 +592,6 @@ jQuery(document).ready(function($) {
     av.msg.requestGridData();
     av.msg.sendData();
     av.grd.popChartFn('av.dnd.landActiveConfig');
-
   };
 
 
@@ -665,16 +605,11 @@ jQuery(document).ready(function($) {
     var target_container = target.id !== undefined ? "#" + target.id : "." + target.className;
 
     // remove the existing configuration
-    $("#testConfig").empty();
+    $("#activeConfig").empty();
     if (Object.keys(containerMap).indexOf(target_container) !== -1) {
-      delete containerMap[target_container];
-    }
-
-    $("#testConfig").append(el);
-    // Add an entry to containerMap
-    if (Object.keys(containerMap).indexOf(target_container) === -1) {
       containerMap[target_container] = {};
     }
+    $("#activeConfig").append(el);
     containerMap[target_container][domid] = {"name": el.innerHTML, "type": "c"};
 
     av.fzr.actConfig.actDomid = domid;
@@ -702,11 +637,11 @@ jQuery(document).ready(function($) {
 
       //load ancestors if present.
       if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt']) {
-        str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt'];
+        var str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt'];
         av.fio.autoAncestorLoad(str);
       };
       if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt']) {
-        str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt'];
+        var str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt'];
         av.fio.handAncestorLoad(str);
       };
 
@@ -795,6 +730,7 @@ jQuery(document).ready(function($) {
 
   av.dnd.loadDefaultConfigFn = function (from) {
     el = $.map($("#c0"), (value, key) => { return value })[0];
+    console.log(el);
     av.dnd.landActiveConfig(el, activeConfig, fzConfig);
   };
 
@@ -802,13 +738,15 @@ jQuery(document).ready(function($) {
   av.dnd.contextMenu = function(container, fzItemID, from) {
     // example 'target' input format: '.className' or '#id'
     'use strict';
-    console.log(from, 'called av.dnd.contextMenu; fzItemID=', fzItemID, '; container=', container);
+    // console.log(from, 'called av.dnd.contextMenu; fzItemID=', fzItemID, '; container=', container);
     var dir = '';
     if (av.debug.dnd) console.log('contextMenu; target.id =',container);
     if (av.debug.dnd) console.log('contextMenu; fzItemID=',fzItemID, ' container=', container);
     if (av.debug.dnd) console.log('contextMenu: fzr', av.fzr);
 
     // should I not use digit here?
+    console.log(containerMap);
+    console.log(fzItemID);
     var aMenu = new dijit.Menu({targetNodeIds: [fzItemID]});
     aMenu.addChild(new dijit.MenuItem({
       label: 'Rename',
@@ -881,6 +819,54 @@ jQuery(document).ready(function($) {
         }
       }
     }));
+  };
+
+  /*
+  av.dnd.inserNode
+  */
+  
+  av.dnd.insertNode = function(container, name, type, el = '', fileNum = -1) {
+    var domid = '';
+    switch (type) {
+      case 'g':
+        domid = 'g' + av.fzr.gNum++;
+        break;
+
+      case 'w':
+        domid = 'w' + av.fzr.wNum++;
+        break;
+      
+      case 't':
+        domid = 't' + av.fzr.tNum++;
+        break;
+      
+      case 'c':
+        domid = 'c' + av.fzr.cNum++;
+        break;
+    }
+
+    // if the element was dragged into the container, creating a dom object already
+    if (el !== '') {
+      el.id = domid;
+      el.innerHTML = name;
+      el.class = `item ${type}`;
+      console.log(el);
+    }
+    // if the element is being added during the fileDataRead stage,
+    else {
+      if (fileNum >= 0) {
+        domid = `${type}${fileNum}`;
+      }
+      $(container).append(`<div class="item ${type}" id="${domid}"> ${name} </div>`);
+    }
+
+    // Add an entry to containerMap
+    if (Object.keys(containerMap).indexOf(container) === -1) {
+      containerMap[container] = {};
+    }
+    containerMap[container][domid] = {'name': name , 'type': type};
+
+    return domid;
   };
 
   /* 

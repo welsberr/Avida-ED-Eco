@@ -301,7 +301,7 @@
     'use strict';
     if (av.debug.mouse) console.log('ParentMouse', evt.target.id, evt);
     if ('gridCanvas' == evt.target.id) { // parent moved to another location on grid canvas
-      // av.mouse.UpGridPos = [evt.offsetX, evt.offsetY]; //not used for now
+      av.mouse.UpGridPos = [evt.offsetX, evt.offsetY]; //not used for now
       //Move the ancestor on the canvas
       av.mouse.findSelected(evt);
       // look to see if this is a valid grid cell

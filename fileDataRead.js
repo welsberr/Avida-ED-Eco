@@ -6,7 +6,6 @@
   /*------------------------------------------------------------------------------------------------ av.fio.addFzItem --*/
   
   /* yemi's implementation of av.fio.addFzItem to be used on Test Dish Section of Freezer */
-  var testItemId = 0;
 
   // replacement for dndSection.map
   var containerMap = {};
@@ -18,27 +17,16 @@
     'use strict';
     if (container !== undefined) {
       // if the container is not yet in the containerMap, add an entry
-      if (Object.keys(containerMap).indexOf(container) === -1) {
-        containerMap[container] = {};
-      }
-
-      var domItems = $.map($(container), (value, key) => { return value })[0].children
-
-      // 'insertNodes' implementation
-      var domId = `${type}${fileNum}`
-      $(container).append(`<div class="item ${type}" id="${domId}"> ${name} </div>`);
-      containerMap[container][domId] = {"name": name, "type": type};
-
-      if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', dndSection.node.id);
+      
+      var domid = av.dnd.insertNode(container,name,type,'', fileNum);
+      if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', containerMap[container][domid]);
 
       // create a right av.mouse-click context menu for the item just created.
       if (0 < fileNum) {
-        av.dnd.contextMenu(container, domId, 'av.fio.addFzItem');
+        av.dnd.contextMenu(container, domid, 'av.fio.addFzItem');
       }
-
-      testItemId++;
-      return domId;
-
+      console.log(type, fileNum);
+      return domid;
     } else {
       return 'dndSection is undefined';
     }
@@ -770,38 +758,24 @@
       av.parents.name.push(rslt.nam[ii]);
       av.parents.howPlaced.push('auto');
 
+      var domid;
       if ('test' == av.msg.setupType) {
         // yemd
         // av.dnd.ancestorBoTest.insertNodes(false, [{data: rslt.nam[ii], type: ['g']}]);
         // av.dnd.ancestorBoTest.sync();
 
-        var domid = 'g' + av.fzr.gNum;
         var type = 'g';
         var container = '#' + av.dnd.ancestorBoTest.id;
+        domid = av.dnd.insertNode(container, rslt.nam[ii], type);
       }
       else {
         // yemd
         // av.dnd.ancestorBox.insertNodes(false, [{data: rslt.nam[ii], type: ['g']}]);
         // av.dnd.ancestorBox.sync();
 
-        var domid = 'g' + av.fzr.gNum;
         var type = 'g';
         var container = '#' + av.dnd.ancestorBox.id;
-      }
-
-      // Add a DOM object
-      // $(container).append(`<div class="item ${type}" id="${domid}"> ${rslt.nam[ii]} </div>`);
-
-      // Add an entry to containerMap
-      if (Object.keys(containerMap).indexOf(container) === -1) {
-        containerMap[container] = {};
-      }
-
-      if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
-        containerMap[container][domid] = {'name': rslt.nam[ii] , 'type': 'g'};
-      } else {
-        containerMap[container][domid].name = rslt.nam[ii];
-        containerMap[container][domid].type = 'g';
+        domid = av.dnd.insertNode(container, rslt.nam[ii], type);
       }
 
       // if (av.dbg.flg.frd) console.log('autoPlaceParent: domIds', domid, '; length', domIds.length);
@@ -881,32 +855,16 @@
       // if (av.dbg.flg.frd) console.log('handAncestorLoad: domIds', domIds, '; length', domIds.length);
       // av.parents.domid.push(domIds[domIds.length-1]); //domid in ancestorBox used to remove if square in grid moved to trashcan
       
+      var domid;
       if ('test' == av.msg.setupType) {
-
-        var domid = 'g' + av.fzr.gNum;
         var type = 'g';
         var container = '#' + av.dnd.ancestorBoTest.id;
+        domid = av.dnd.insertNode(container, stuff.nam[kk], type);
       }
       else {
-
-        var domid = 'g' + av.fzr.gNum;
         var type = 'g';
         var container = '#' + av.dnd.ancestorBox.id;
-      }
-
-      // Add a DOM object
-      // $(container).append(`<div class="item ${type}" id="${domid}"> ${stuff.nam[kk]} </div>`);
-
-      // Add an entry to containerMap
-      if (Object.keys(containerMap).indexOf(container) === -1) {
-        containerMap[container] = {};
-      }
-
-      if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
-        containerMap[container][domid] = {'name': stuff.nam[kk] , 'type': 'g'};
-      } else {
-        containerMap[container][domid].name = stuff.nam[kk];
-        containerMap[container][domid].type = 'g';
+        domid = av.dnd.insertNode(container, stuff.nam[kk], type);
       }
 
       av.parents.domid.push(domid); //domid in ancestorBox used to remove if square in grid moved to trashcan
@@ -963,31 +921,15 @@
       // av.dnd.ancestorBox.insertNodes(false, [{data: av.parents.name[ii], type: ['g']}]);
 
       //Add organism to av.dnd.ancestorBox in settings.
-      var domid = 'g' + av.fzr.gNum;
       var type = 'g';
       var container = '#' + av.dnd.ancestorBox.id;
-      
-      // Add a DOM object
-      $(container).append(`<div class="item ${type}" id="${domid}"> ${av.parents.name[ii]} </div>`);
-
-      // Add an entry to containerMap
-      if (Object.keys(containerMap).indexOf(container) === -1) {
-        containerMap[container] = {};
-      }
-
-      if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
-        containerMap[container][domid] = {'name': av.parents.name[ii] , 'type': 'g'};
-      } else {
-        containerMap[container][domid].name = av.parents.name[ii];
-        containerMap[container][domid].type = 'g';
-      }
+      var domid = av.dnd.insertNode(container, stuff.nam[kk], type);
 
       // yemd
       // need to find the domid of the ancestor in ancestorBox. The line below is not correct. ???? !!!!! tiba
       // var domIDs = Object.keys(av.dnd.ancestorBox.map);
       // av.parents.domid.push(domIDs[domIDs.length-1]);
       av.parents.domid.push(domid);
-      av.fzr.gNum++;
 
       //Find color of ancestor
       if (0 < av.parents.Colors.length) {av.parents.color.push(av.parents.Colors.pop());}
