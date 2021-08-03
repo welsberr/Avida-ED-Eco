@@ -972,19 +972,39 @@
       // av.dnd.ancestorBox.insertNodes(false, [{data: av.parents.name[ii], type: ['g']}]);
 
       //Add organism to av.dnd.ancestorBox in settings.
+      var domid = 'g' + av.fzr.gNum;
       var type = 'g';
       var container = '#' + av.dnd.ancestorBox.id;
-      var domid = av.dnd.insertNode(container, stuff.nam[kk], type);
+      // var domid = av.dnd.insertNode(container, stuff.nam[kk], type);
+
+      // Add a DOM object
+      $(container).append(`<div class="item ${type}" id="${domid}"> ${av.parents.name[ii]} </div>`);
+
+      // Add an entry to containerMap
+      if (Object.keys(containerMap).indexOf(container) === -1) {
+        containerMap[container] = {};
+      }
+
+      if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
+        containerMap[container][domid] = {'name': av.parents.name[ii] , 'type': 'g'};
+      } else {
+        containerMap[container][domid].name = av.parents.name[ii];
+        containerMap[container][domid].type = 'g';
+      }
 
       // yemd
       // need to find the domid of the ancestor in ancestorBox. The line below is not correct. ???? !!!!! tiba
       // var domIDs = Object.keys(av.dnd.ancestorBox.map);
       // av.parents.domid.push(domIDs[domIDs.length-1]);
       av.parents.domid.push(domid);
+      av.fzr.gNum++;
+      console.log(containerMap);
+      console.log(av.fzr);
 
       //Find color of ancestor
       if (0 < av.parents.Colors.length) {av.parents.color.push(av.parents.Colors.pop());}
       else {av.parents.color.push(av.color.defaultParentColor);}
+
     }
     // av.dnd.ancestorBox.sync();
     //console.log('parents', av.parents);

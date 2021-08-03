@@ -46,10 +46,6 @@ jQuery(document).ready(function($) {
       if (target === source) {
         return true;
       }
-      if (target === av.dnd.activeConfig && av.grd.runState === 'started') {
-        console.log('please save before continuing -- replace this msg with modal');
-        return false;
-      }
       if (source === av.dnd.activeConfig && (target === av.dnd.fzConfig || target === av.dnd.fzWorld)) {
         return true;
       }
@@ -64,8 +60,7 @@ jQuery(document).ready(function($) {
       }
     },
     invalid: function (el, handle) {
-      // return av.grd.runState === 'started';
-      return false; // don't prevent any drags from initiating by default
+      // return false; // don't prevent any drags from initiating by default
     },
     copy: function (el, source) {
       //Makes sure the only item that will be copied instead of moved is in the FreezerMove div
@@ -89,31 +84,39 @@ jQuery(document).ready(function($) {
 
     // el, target, source are dom objects aka stuff you could 'target.id' to
 
-    if (target !== null && target === trashCan) {
-      av.dnd.landTrashCan(el, source);
-    }
-
-    if (target === testConfig) {
-      av.dnd.landTestConfig(el, target, source);
-    }
-
-    if (target === activeConfig) {
+    if ((target === av.dnd.activeConfig || target === av.dnd.ancesterBox) && av.grd.runState === 'started') {
+      av.dom.newDishModalID.style.display = 'block';
+      dra.cancel();
+      $('#activeConfig').empty();
+    } else if (target === activeConfig) {
       av.dnd.landActiveConfig(el, target, source);
     }
 
-    if (target === fzConfig) {
+    if (target === av.dnd.testConfig || target === av.dnd.ancestorBoTest && av.grd.runState === 'started') {
+      av.dom.newDishModalID.style.display = 'block';
+      dra.cancel();
+      $('#testConfig').empty();
+    } else if (target === av.dnd.testConfig) {
+      av.dnd.landTestConfig(el, target, source);
+    }
+
+    if (target !== null && target === av.dnd.trashCan) {
+      av.dnd.landTrashCan(el, source);
+    }
+    
+    if (target === av.dnd.fzConfig) {
       av.dnd.landFzConfig(el, target, source);
     }
 
-    if (target === ancestorBox) {
+    if (target === av.dnd.ancestorBox) {
       av.dnd.landAncestorBox(el, target, source);
     }
 
-    if (target === ancestorBoTest) {
+    if (target === av.dnd.ancestorBoTest) {
       av.dnd.landAncestorBoTest(el, target, source);
     }
 
-    if (target === fzWorld) {
+    if (target === av.dnd.fzWorld) {
       av.dnd.landFzWorld(el, target, source);
     }
 
@@ -132,7 +135,7 @@ jQuery(document).ready(function($) {
     });
 
     /* to be implemented */
-    if (target === fzOrgan) {
+    if (target === av.dnd.fzOrgan) {
       av.dnd.landFzOrgan2(el, target, source);
     }
 
