@@ -252,7 +252,6 @@ jQuery(document).ready(function($) {
       var newName = av.dnd.nameParent(el.textContent.trim());
 
       //Add organism to av.dnd.ancestorBox in settings.
-      el.id = 'g' + av.fzr.gNum;
       var domid = el.id;
       var type = 'g';
       var dir = domid;
