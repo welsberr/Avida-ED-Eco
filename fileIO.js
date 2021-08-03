@@ -82,10 +82,9 @@
       av.fio.fileReadingDone = true;
       //if (av.debug.fio) console.log('before DrawGridSetup')
       av.grd.drawGridSetupFn('av.fio.readZipWS');
-      // yemd
-      // av.fzr.cNum++;  //now the Num value refer to the next (new) item to be put in the freezer.
-      // av.fzr.gNum++;
-      // av.fzr.wNum++;
+      av.fzr.cNum++;  //now the Num value refer to the next (new) item to be put in the freezer.
+      av.fzr.gNum++;
+      av.fzr.wNum++;
       
       console.log('loadConfigFlag=',loadConfigFlag, '; av.fzr=', av.fzr);
 
@@ -186,13 +185,12 @@
           };
           if (av.debug.fio) console.log('cNum=',av.fzr.cNum, '; gNum=', av.fzr.gNum, '; mNum', av.fzr.mNum, '; wNum', av.fzr.wNum);
           if ('populationBlock' === av.ui.page) av.grd.drawGridSetupFn('av.fio.userPickZipRead');
-          // yemd
-          // av.fzr.cNum++;  //now the Num value refer to the next (new) item to be put in the freezer.
-          // av.fzr.gNum++;
-          // av.fzr.mNum++;
-          // av.fzr.rNum++;
-          // av.fzr.tNum++;
-          // av.fzr.wNum++;
+          av.fzr.cNum++;  //now the Num value refer to the next (new) item to be put in the freezer.
+          av.fzr.gNum++;
+          av.fzr.mNum++;
+          av.fzr.rNum++;
+          av.fzr.tNum++;
+          av.fzr.wNum++;
           //tiba; will need to increment cNum and wNum for each superdish when userInterface is built.
           for (var key in av.fzr.mDish) {
             if (av.debug.fio) console.log('key=', key, '; object=', av.fzr.mDish[key]);
@@ -301,20 +299,20 @@
           domid = av.fio.addFzItem(av.dnd.fzConfig, name, type, av.fzr.cNum);
           if ('dndSection is undefined' == domid) console.log('av.dnd.fzConfig is undefined');
           dir = 'c' + av.fzr.cNum;
-          // av.fzr.cNum++;
+          av.fzr.cNum++;
           if (av.debug.fio) console.log('c: num', num, '; name', name);
           break;
         case 'g':
           domid = av.fio.addFzItem(av.dnd.fzOrgan, name, type, av.fzr.gNum);
           if ('dndSection is undefined' == domid) console.log('av.dnd.fzOrgan is undefined');
           dir = 'g' + av.fzr.gNum;
-          // av.fzr.gNum++;
+          av.fzr.gNum++;
           break;
         case 'w':
           domid = av.fio.addFzItem(av.dnd.fzWorld, name, type, av.fzr.wNum);
           if ('dndSection is undefined' == domid) console.log('av.dnd.fzWorld is undefined');
           dir = 'w' + av.fzr.wNum;
-          // av.fzr.wNum++;
+          av.fzr.wNum++;
           break;
       }
       for (var fname in av.fzr.item) {
