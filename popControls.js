@@ -466,6 +466,7 @@
 
   //------------------------------------------------------------------------------------------------ av.ptd.runStopFn --
   av.ptd.runStopFn = function () {
+    console.log('inside runStopFn', av.grd.runState);
     if ('Run' == av.dom.runStopButton.innerHTML) {
       av.ptd.makeRunState('av.ptd.runStopFn');
       av.ptd.runPopFn('av.ptd.runStopFn');

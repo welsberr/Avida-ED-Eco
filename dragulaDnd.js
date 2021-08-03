@@ -46,6 +46,10 @@ jQuery(document).ready(function($) {
       if (target === source) {
         return true;
       }
+      if (target === av.dnd.activeConfig && av.grd.runState === 'started') {
+        console.log('please save before continuing -- replace this msg with modal');
+        return false;
+      }
       if (source === av.dnd.activeConfig && (target === av.dnd.fzConfig || target === av.dnd.fzWorld)) {
         return true;
       }
@@ -60,6 +64,7 @@ jQuery(document).ready(function($) {
       }
     },
     invalid: function (el, handle) {
+      // return av.grd.runState === 'started';
       return false; // don't prevent any drags from initiating by default
     },
     copy: function (el, source) {
@@ -530,6 +535,7 @@ jQuery(document).ready(function($) {
   av.dnd.landActiveConfig = function (el, target, source) {
     'use strict';
     av.dnd.configFlag = 'normal';
+    console.log(av.grd.runState);
 
     var ndx = -1;
     var klen = 0;
