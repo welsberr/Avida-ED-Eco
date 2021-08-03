@@ -584,11 +584,13 @@ jQuery(document).ready(function($) {
 
       //load ancestors if present.
       if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt']) {
+        console.log('ancester auto');
         str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt'];
         av.fio.autoAncestorLoad(str);
       };
       if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt']) {
         str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt'];
+        console.log('ancestor hand');
         av.fio.handAncestorLoad(str);
       };
 
@@ -653,7 +655,7 @@ jQuery(document).ready(function($) {
         }
       }
     } else {
-      containerMap[target_container][domid] = {"name": el.innerHTML.trim(), "type": "w"};
+      containerMap[target_container][domid] = {"name": el.innerHTML.trim(), "type": "t"};
       av.fzr.actConfig.type = 't';
       av.ptd.popTdishStateUi('av.dnd.landActiveConfig');
     }

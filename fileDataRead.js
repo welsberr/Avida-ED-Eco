@@ -793,7 +793,7 @@
       }
 
       // Add a DOM object
-      // $(container).append(`<div class="item ${type}" id="${domid}"> ${rslt.nam[ii]} </div>`);
+      $(container).append(`<div class="item ${type}" id="${domid}"> ${rslt.nam[ii]} </div>`);
 
       // Add an entry to containerMap
       if (Object.keys(containerMap).indexOf(container) === -1) {
@@ -806,6 +806,10 @@
         containerMap[container][domid].name = rslt.nam[ii];
         containerMap[container][domid].type = 'g';
       }
+
+      console.log(domid);
+      console.log(containerMap);
+      console.log(av.fzr);
 
       // if (av.dbg.flg.frd) console.log('autoPlaceParent: domIds', domid, '; length', domIds.length);
       av.parents.domid.push(domid); //domid in ancestorBox used to remove if square in grid moved to trashcan
@@ -886,7 +890,7 @@
       
       // var domid;
       if ('test' == av.msg.setupType) {
-        var domid = 'g' + av.fzr.gNum;
+        var domid = 'g' + av.fzr.gNum; // yemd might need to come back to it
         var type = 'g';
         var container = '#' + av.dnd.ancestorBoTest.id;
         // domid = av.dnd.insertNode(container, stuff.nam[kk], type);
@@ -899,7 +903,7 @@
       }
 
       // Add a DOM object
-      // $(container).append(`<div class="item ${type}" id="${domid}"> ${stuff.nam[kk]} </div>`);
+      $(container).append(`<div class="item ${type}" id="${domid}"> ${stuff.nam[kk]} </div>`);
 
       // Add an entry to containerMap
       if (Object.keys(containerMap).indexOf(container) === -1) {
