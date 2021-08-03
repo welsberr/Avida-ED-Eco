@@ -74,8 +74,6 @@
     'use strict';
     av.mouse.frzCurserSet('default');  //pointer
 
-    console.log(av.fzr.actConfig.actDomid);
-    console.log(av.fzr);
     // yemd
     // if (1 < av.fzr.actConfig.actDomid.length) {document.getElementById(av.fzr.actConfig.actDomid).style.cursor = 'pointer';}
     // if (1 < av.fzr.actOrgan.actDomid.length) {document.getElementById(av.fzr.actOrgan.actDomid).style.cursor = 'pointer';}

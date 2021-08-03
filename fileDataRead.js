@@ -27,7 +27,7 @@
       // 'insertNodes' implementation
       var domid = `${type}${fileNum}`
       $(container).append(`<div class="item ${type}" id="${domid}"> ${name} </div>`);
-      containerMap[container][domId] = {"name": name, "type": type};
+      containerMap[container][domid] = {"name": name, "type": type};
       
       // var domid = av.dnd.insertNode(container,name,type,'', fileNum);
       if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', containerMap[container][domid]);
@@ -915,7 +915,7 @@
 
       av.parents.domid.push(domid); //domid in ancestorBox used to remove if square in grid moved to trashcan
       av.fzr.gNum++;
-      
+
       //Find color of ancestor
       if (0 < av.parents.Colors.length) { av.parents.color.push(av.parents.Colors.pop());}
       else { av.parents.color.push(av.color.defaultParentColor); }
