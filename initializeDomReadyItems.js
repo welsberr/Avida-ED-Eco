@@ -374,7 +374,8 @@ if (av.sgr.gridOnly) {
 }
 
   document.getElementById('testConfig').style.display = block2b[ndx2b];
-  document.getElementById('avidianOutline').style.display = block2b[ndx2b];
+  console.log('block2b[ndx2b]', block2b[ndx2b]);
+  document.getElementById('avidianOutline').style.display = block2b[ndx2b];   //none
   document.getElementById('resrceDataHolder').style.display = block2b[ndx2b];
 
   document.getElementById('developmentToggle').className = devoTog2b[ndx2b];
@@ -389,7 +390,6 @@ if (av.sgr.gridOnly) {
   document.getElementById('fzTdishSec').style.visibility = visible2b[ndx2b];       // hidden
   document.getElementById('testDishDetailDiv').style.display = block2b[ndx2b];   //none
   document.getElementById('testConfig').style.display = block2b[ndx2b];    //none
-  document.getElementById('avidianOutline').style.display = block2b[ndx2b];   //none
 
   len = av.sgr.logicNames.length;
   sub = 1;   //this may change later;

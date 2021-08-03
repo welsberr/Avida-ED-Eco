@@ -244,7 +244,7 @@
         document.getElementById(tsk+sub+'outflowLoNp').disabled = false;
       };
     };
-    document.getElementById('allSugarGeometry').disabled = false;
+    //document.getElementById('allSugarGeometry').disabled = false;
     document.getElementById('allsugarsupplyTypeSlct').disabled = false;
     document.getElementById('allSugarRegionLayout').disabled = false;
     document.getElementById('allSugarModifier').disabled = false;

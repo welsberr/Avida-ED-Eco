@@ -158,7 +158,7 @@ av.utl.log = function (base, num) {
   return Math.log(num) / Math.log(base);  
 };
 //--------------------------------------------------------------------------------------------------- av.utl.toMetric --
-// The largest number dispalyed in my test was     512P = 512345678901235000
+// The largest number displayed in my test was     512P = 512345678901235000
 // in number in the the environment.cfg CELL statement was 512345678901234567
   av.utl.toMetric = function (standardNotationNum, fixedBase) {
     var stdNum = NaN;

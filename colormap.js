@@ -1310,37 +1310,68 @@ av.color.cubehelixCmap = [  //djb version
 //----------------------------------------------------------------------------------------------------------------------
 /* web sites about color 
  *  
- *  http://www.personal.psu.edu/cab38/ColorBrewer/ColorBrewer_intro.html
- *  https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3
- *  
- *  
- * colors I used for av.color.parentColorList distinct colors
- * http://www.somersault1824.com/tips-for-designing-scientific-figures-for-color-blind-readers/
- * 
- * https://personal.sron.nl/~pault/   has set of 9 color blind freindly distinct colors
- * http://jfly.iam.u-tokyo.ac.jp/color/#pallet   set of 8 colors for colorbind folks
- * 
- * http://colorbrewer2.org  color selection tool 
- * http://www.iscc.org/pdf/PC54_1724_001.pdf older article about distinct colors
- * 
- * http://graphicdesign.stackexchange.com/questions/3682/where-can-i-find-a-large-palette-set-of-contrasting-colors-for-coloring-many-d
- * http://tools.medialab.sciences-po.fr/iwanthue/  creates distinct colors
- * 
- * Color gradients with increasing lightness
- * http://www.mrao.cam.ac.uk/~dag/CUBEHELIX/cubetry.html
- * https://bids.github.io/colormap/  has viridis in it
- * http://matplotlib.org/users/colormaps.html    source of gnuplot2
- * 
- * https://mycarta.wordpress.com/2012/05/29/the-rainbow-is-dead-long-live-the-rainbow-series-outline/
- * http://stackoverflow.com/questions/7251872/is-there-a-better-color-scale-than-the-rainbow-colormap
- * 
- * color tools
- * http://www.456bereastreet.com/archive/200709/10_colour_contrast_checking_tools_to_improve_the_accessibility_of_your_design/
- * http://phrogz.net/css/distinct-colors.html
- * 
- * http://stackoverflow.com/questions/3620663/color-theory-how-to-convert-munsell-hvc-to-rgb-hsb-hsl
- *
- * Color tools to see what image looks like to av.color.parentColorList from Mike
- *  http://www.color-blindness.com/coblis-color-blindness-simulator/
- *  http://www.vischeck.com/vischeck/vischeckImage.php
+ 
+ Instructions for color brewer
+http://www.personal.psu.edu/cab38/ColorBrewer/ColorBrewer_intro.html   old requires flash 
+http://colorbrewer2.org  color selection tool      use this one
+    creates a set of colors, does not look at colors from your site. 
+
+Paul Tol has information on color
+   set of 9 color blind friendly distinct colors 
+https://personal.sron.nl/~pault/   
+
+Color Universal Design (CUD)
+- set of 8 colors for colorbind folks
+http://jfly.iam.u-tokyo.ac.jp/color/#pallet   
+
+The Inter-Society Color Council has some resources
+https://iscc.org/page-18123
+  http://www.iscc.org/pdf/PC54_1724_001.pdf good article, but not there in 2021
+
+creates a set of colors to use as a pallet base on several optional criteria. Colorblind friendly option is slow. 
+same tool both sites
+http://graphicdesign.stackexchange.com/questions/3682/where-can-i-find-a-large-palette-set-of-contrasting-colors-for-coloring-many-d
+http://tools.medialab.sciences-po.fr/iwanthue/  creates distinct color palets, an option for colorblind 
+
+Color gradients with increasing lightness
+http://www.mrao.cam.ac.uk/~dag/CUBEHELIX/cubetry.html
+
+Several color gradients including viridis
+https://bids.github.io/colormap/  
+
+source of gnuplot2 used in Avida-ED 3 & 4
+http://matplotlib.org/users/colormaps.html    not there
+https://matplotlib.org/2.0.2/users/colormaps.html   next version 
+https://matplotlib.org/stable/                       3.4.2 in 2021
+
+Series of articles about why rainbow is NOT a good color palette for data 
+https://mycarta.wordpress.com/2012/05/29/the-rainbow-is-dead-long-live-the-rainbow-series-outline/
+More info on the evils of the rainbow color map
+http://stackoverflow.com/questions/7251872/is-there-a-better-color-scale-than-the-rainbow-colormap
+
+color tools
+list of tools for testing color in a design
+http://www.456bereastreet.com/archive/200709/10_colour_contrast_checking_tools_to_improve_the_accessibility_of_your_design/
+
+creates a set of visually distinct colors.
+http://phrogz.net/css/distinct-colors.html
+
+http://stackoverflow.com/questions/3620663/color-theory-how-to-convert-munsell-hvc-to-rgb-hsb-hsl
+
+Color tools to see what image looks like, Mike Wiser provided these two. 
+  lets one upload an image to see a simulation of how that image appears to people with different types of color blindness
+http://www.color-blindness.com/coblis-color-blindness-simulator/
+http://www.vischeck.com/vischeck/vischeckImage.php
+
+Has many tools 
+Used to create linear color maps when I needed 9 different colors gradients for the set of logic 9
+https://www.rapidtables.com/web/color/Web_Color.html
+
+
+---------- 
+Commercial page that makes images for science. I cannot seem to get to the link below in 2021
+    list of colors to use for both color normal and color blind people. 
+http://www.somersault1824.com/
+  av.color.parentColorList came from file below, but that file was not there in 2021
+    http://www.somersault1824.com/tips-for-designing-scientific-figures-for-color-blind-readers/
 */

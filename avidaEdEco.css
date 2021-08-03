@@ -605,7 +605,7 @@ html {
   height: 100%;
 };
 
-#avidanOutline {display: none};
+#avidianOutline { display: none; }
 
 .zoomSlideClass { grid-area: zoomSlide; visibility: hidden; }
 .timeUpdateClass { grid-area: timeUpdate;}
@@ -733,7 +733,7 @@ table.botPopTable {
 .popsBotTblcol1 {width: 55px; }
 .popsBotTblcol2 {width: 13px; }
 .popsBotTblcol3 {width: 110px; }
-.numAvidains {  background: #fff }   /* min-width: 110px; */
+.numAvidians {  background: #fff }   /* min-width: 110px; */
 
 .botPopTable tr:nth-child(even) {background: #FAFAFA}
 .botPopTable th {
@@ -977,7 +977,7 @@ input:focus {
 /* this section formats the details summary */
 /* I'm not sure it is a good idea */
 /* This works for the Freezer detail-summary, 
-    but the in summary with dispaly: grid the triangle wer on the right. They were Not in the grid-template-areas: */
+    but the in summary with display: grid the triangle wer on the right. They were Not in the grid-template-areas: */
 
 summary::-webkit-details-marker {
   display: none
