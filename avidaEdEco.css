@@ -80,7 +80,7 @@ html {
 .rightInfoHolder { grid-area: rightInfoHolder; }
 .navColClass {grid-area: navColID; }
 #dragbarLeft {grid-area: dragbarLeft; } /* yemi:    float: right;*/
-#dragbarRight {grid-area: float: right; }
+#dragbarRight {float: right; }
 
 .all2rit{
   display: grid;
@@ -1034,10 +1034,9 @@ details summary {
 
 .localChemostat { display: inline; }
 
-
-.2HalfLftRit { display: inline-block; }  //inline
-.3TopLftRit { display: none; }  //inline
-.4Quarters { display: none; }  //inline
+.2HalfLftRit { display: inline-block; }  /* inline */
+.3TopLftRit { display: none; }  /* inline */
+.4Quarters { display: none; }  /* inline */
 
 .TopLftRit{
   display: inline-block;  
@@ -1129,7 +1128,7 @@ details summary {
 .sgrTitleCls { grid-area: sgrTitleCls; display: inline-block; width: 54px; }
 .regionLaySumCls { grid-area: regionLayCls; display: inline-block; }
 .supply_HoldCls { grid-area: supply_HoldCls; display: inline-block; }
-.supplyWHoldCls { grid-area: supplyWdCls; display: inline-block; border: }
+.supplyWHoldCls { grid-area: supplyWdCls; display: inline-block;}
 .inflwSumCls { grid-area: inflwSumCls; display: inline-block; }
 .outflwSumCls { grid-area: outflwSumCls; display: inline-block; }
 .chmsttSumCls { grid-area: chmsttSumCls; display: inline-block; }
@@ -1842,7 +1841,7 @@ checkbox:focus {
       margin: auto;
     }
     .popDishHolder{  
-      padding 3px;
+      padding: 3px;
       background: #F5F5F5;  /*lemonchiffon; */
     }
     /* insdie popDishHolder */
@@ -2144,7 +2143,7 @@ label {
 
 /*************************************************************************************************** no longer in use */
 
-/// Not in use, but could be useful
+/* Not in use, but could be useful */
   /* from https://www.bestcssbuttongenerator.com/#/17 */
   .fancyButton {
     -moz-box-shadow: 5px 4px 7px 0px #899599;

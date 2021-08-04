@@ -37,6 +37,7 @@ function resizePopulationPage() {
   var rightSideWidth = $('#rightInfoHolder').css("width");
   var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
   $('.all3pop').css("grid-template-columns", newColumns);
+  av.grd.drawGridSetupFn(); // yemi: redraw the grid
 }
 
 /* yemi: function to automatically resize the Organisms page when button clicked; called in avidaED.js */
@@ -69,6 +70,7 @@ function dragbarLeftResize() {
     dragging = true;
     
     $(document).mousemove(function(e){
+      av.grd.drawGridSetupFn(); // yemi: redraw the grid
 
       /* yemi: on mouse move, dragbar changes color */
       $('#dragbarLeft').css('background-color', 'blue');
@@ -115,6 +117,7 @@ function dragbarLeftResize() {
   $(document).bind('mouseup', function(e) {
 
     if (dragging) {
+      av.grd.drawGridSetupFn(); // yemi: redraw the grid
 
       /* yemi: dragbar changes color back to original */
       $('#dragbarLeft').css('background-color', 'gray');
@@ -188,6 +191,7 @@ function dragbarRightResize() {
     dragging = true;
     
     $(document).mousemove(function(e){
+      av.grd.drawGridSetupFn(); // yemi: redraw the grid
 
       /* yemi: on mouse move, dragbar changes color */
       $('#dragbarRight').css('background-color', 'blue');
@@ -236,6 +240,7 @@ function dragbarRightResize() {
   $(document).bind('mouseup', function(e) {
 
     if (dragging) {
+      av.grd.drawGridSetupFn(); // yemi: redraw the grid
 
       /* yemi: dragbar changes color back to original */
       $('#dragbarRight').css('background-color', 'gray');
@@ -348,6 +353,8 @@ av.dom.storeInitialSize = function() {
 
   /* yemi: call the drag bar right function */
   dragbarRightResize();
+
+  av.grd.drawGridSetupFn(); // yemi: redraw the grid
 };
 
 //----------------------------------------------------------------------------------------show/hide left side panel --
@@ -484,6 +491,8 @@ av.ptd.ritePanelBtnFn = function () {
     /* yemi: make the following divs take up the entire width of their containers */
     $('orgInfoHolder').css("width", "100%");
   }
+
+  av.grd.drawGridSetupFn(); // yemi: redraw the grid
 };
 
 av.ptd.lftPanelBtnFn = function () {
@@ -530,103 +539,7 @@ av.ptd.lftPanelBtnFn = function () {
     $('.all3org').css("grid-template-columns", organism_colInfo);
   }
 
-  /* yemi: below code pretty much replaced by the code above */
-
-  // var sizeStr;
-  
-  // av.dom.freezerSection_ht_was = parseFloat(av.dom.freezerSection_ht_now);
-  // av.dom.freezerSection_wd_was = parseFloat(av.dom.freezerSection_wd_now);
-  // av.dom.navColId_ht_was = parseFloat(av.dom.navColId_ht_now);
-  // av.dom.navColId_wd_was = parseFloat(av.dom.navColId_wd_now);
-  // av.dom.popInfoVert_ht_was = parseFloat(av.dom.popInfoVert_ht_now);
-  // av.dom.popInfoVert_wd_was = parseFloat(av.dom.popInfoVert_wd_now);
-  // av.dom.popChrtHolder_ht_was = parseFloat(av.dom.popChrtHolder_ht_now);
-  // av.dom.popChrtHolder_wd_was = parseFloat(av.dom.popChrtHolder_wd_now);
-
-  // av.dom.navColId_wd_now = ($("#navColId").width()).toString();
-  // av.dom.navColId_ht_now = ($("#navColId").height()).toString();
-  // av.dom.freezerSection_wd_now = $("#freezerSection").width().toString();
-  // av.dom.freezerSection_ht_now = $("#freezerSection").height().toString();
-  // av.dom.popInfoVert_wd_now = $("#popInfoVert").width().toString();
-  // av.dom.popInfoVert_ht_now = $("#popInfoVert").height().toString();
-  // av.dom.popChrtHolder_wd_now = $("#popChrtHolder").width().toString();
-  // av.dom.popChrtHolder_ht_now = $("#popChrtHolder").height().toString();
-
-  // setTimeout(function() {}, 80);  
-//   av.dom.popInfoVert_wd = $('#popInfoVert').width();
-//   if (av.dbg.flg.dsz) { console.log('av.dom.lftSidePnlShowing=', av.dom.lftSidePnlShowing, '; av.dom.allAvidaContainer.className=', av.dom.allAvidaContainer.className); }
-//   if (av.dom.lftSidePnlShowing) {
-//     av.post.addUser('Button: leftPanelButton: start hidding left side panel');
-//     av.dom.lftSidePnlShowing = false;
-//     av.dom.navColId.style.display = 'none';
-//     av.dom.leftPanelButton.value = '>> ';
-//     av.dom.leftPanelButton.style.background = '#ccc';
-
-//     if ('all3pop' == av.dom.allAvidaContainer.className || 'all3org' == av.dom.allAvidaContainer.className) {
-//       av.dom.allAvidaContainer.className = 'all2rit'; /* yemi: isn't the last class name supposed to be 'all2lft'? */
-//       if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_was,   ht =', av.dom.popChrtHolder_wd_was, ',', av.dom.popChrtHolder_ht_was); }
-//       av.dom.popChrtHolder.style.height = av.dom.popChrtHolder_ht_was+'px';
-
-//       sizeStr= 670;        
-//       av.dom.popInfoVert.style.width = sizeStr+'px';
-//       av.dom.labInfoHolder.style.width = sizeStr+'px';
-//       av.dom.popStatsBlock.style.width = sizeStr+'px';
-//       av.dom.popStatHolder.style.width = sizeStr+'px';
-//       av.dom.popStatistics.style.width = (sizeStr-2)+'px';
-//       av.dom.resrceDataHolder.style.width = (sizeStr-2)+'px';
-//       av.dom.miniChartControls.style.width = (sizeStr-2)+'px';
-//       av.dom.pauseOptions.style.width = (sizeStr-2)+'px';
-//       av.dom.popStats4grid.style.width = (sizeStr-190)+'px';
-//       av.dom.selOrgType.style.wd = (sizeStr-240)+'px';
-
-//     }
-//   } else {
-//     av.post.addUser('Button: leftPanelButton: start showing left side panel');
-//     av.dom.lftSidePnlShowing = true;
-//     document.getElementById('navColId').style.display = 'block';
-//     av.dom.leftPanelButton.value = '<< ';
-//     av.dom.leftPanelButton.style.background = 'inherit';
-
-//     if ('all2rit' == document.getElementById('allAvidaContainer').className) {
-//       av.dom.allAvidaContainer.className = 'all3pop';
-//       sizeStr= 442;
-//       av.dom.freezerSection.style.height = av.dom.freezerSection_ht+'px';
-//       av.dom.popChrtHolder.style.height = av.dom.popChrtHolder_ht_was+'px';
-//       av.dom.popInfoVert.style.height = av.dom.popInfoVert_ht_was+'px';
-
-//       av.dom.popInfoVert.style.width = sizeStr+'px';
-//       av.dom.labInfoHolder.style.width = sizeStr+'px';
-//       av.dom.popStatsBlock.style.width = sizeStr+'px';
-//       av.dom.popStatHolder.style.width = sizeStr+'px';
-//       av.dom.popStatistics.style.width = (sizeStr-2)+'px';
-//       av.dom.resrceDataHolder.style.width = (sizeStr-2)+'px';
-//       av.dom.miniChartControls.style.width = (sizeStr-2)+'px';
-//       av.dom.pauseOptions.style.width = (sizeStr-2)+'px';
-//       av.dom.popStats4grid.style.width = (sizeStr-190)+'px';
-//       av.dom.selOrgType.style.width = (sizeStr-240)+'px';
-
-//       if (av.dbg.flg.dsz) { console.log('dsz: popStatSide_wd=', sizeStr-190, 'selOrgType_wd=', sizeStr-240); }
-//       if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert.wd=', $("#popInfoVert").width(), '; popInfoVert_wd=', sizeStr); }
-//     };
-//   };
-  
-//   av.dom.navColId_wd = $("#navColId").width().toString();
-//   av.dom.navColId_ht = $("#navColId").height().toString();
-//   av.dom.freezerSection_wd = $("#freezerSection").width().toString();
-//   av.dom.freezerSection_ht = $("#freezerSection").height().toString();
-//   av.dom.popInfoVert_wd = $("#popInfoVert").width().toString();
-//   av.dom.popInfoVert_ht = $("#popInfoVert").height().toString();
-//   av.dom.popChrtHolder_wd = $("#popChrtHolder").width().toString();
-//   av.dom.popChrtHolder_ht = $("#popChrtHolder").height().toString();
-
-//   if (av.dbg.flg.dsz) { console.log('dsz: av.dom.navColId_wd_now,   ht =', av.dom.navColId_wd_now, ',', av.dom.navColId_ht_now); }
-//   if (av.dbg.flg.dsz) { console.log('dsz: av.dom.navColId_wd_after, ht =', av.dom.navColId_wd, ',', av.dom.navColId_ht); }
-//   if (av.dbg.flg.dsz) { console.log('dsz: freezerSection_wd_now,   ht =', av.dom.freezerSection_wd_now, ',', av.dom.freezerSection_ht_now); }
-//   if (av.dbg.flg.dsz) { console.log('dsz: freezerSection_wd_after, ht =', av.dom.freezerSection_wd, ',', av.dom.freezerSection_ht); }
-//   if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert_wd_now,   ht =', av.dom.popInfoVert_wd_now, ',', av.dom.popInfoVert_ht_now); }
-//   if (av.dbg.flg.dsz) { console.log('dsz: popInfoVert_wd_after, ht =', av.dom.popInfoVert_wd, ',', av.dom.popInfoVert_ht); }
-//   if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_now,   ht =', av.dom.popChrtHolder_wd_now, ',', av.dom.popChrtHolder_ht_now); }
-//   if (av.dbg.flg.dsz) { console.log('dsz: popChrtHolder_wd_after, ht =', av.dom.popChrtHolder_wd, ',', av.dom.popChrtHolder_ht); }
+  av.grd.drawGridSetupFn(); // yemi: redraw the grid
 
 };
 
@@ -706,6 +619,7 @@ window.addEventListener('resize', function() {
 	av.viewPortInnerHeight = window.innerHeight;
 	av.viewPortClientWidth = document.documentElement.clientWidth;
 	av.viewPortClientHeight = document.documentElement.clientHeight;
+  av.grd.drawGridSetupFn(); // yemi: redraw the grid
 });
 //--------------------------------------------------------------------------------------- end window.addEventListener --
 

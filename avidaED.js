@@ -1796,11 +1796,15 @@ require([
           };
         };
 
-        //check if gridHolder is taller or wider
-        if (av.dom.gridControlContainer.clientWidth < $("#gridHolder").height()) {
-          av.dom.scaleCanvas.width = (av.dom.gridControlContainer.clientWidth - 22);  //works for canvas; need to use .style for divs
-        } else
-          av.dom.scaleCanvas.width = $("#gridHolder").height() - 22;  //the 22 was determined by trial and error and works on a mac
+        // check if gridHolder is taller or wider
+        // if (av.dom.gridControlContainer.clientWidth < $("#gridHolder").height()) {
+        //   av.dom.scaleCanvas.width = av.dom.gridControlContainer.clientWidth - 22;  //works for canvas; need to use .style for divs
+        // } else {
+        //   av.dom.scaleCanvas.width = $("#gridHolder").height() - 22;  //the 22 was determined by trial and error and works on a mac
+        // }
+
+        av.dom.scaleCanvas.width = $("#sclCnvsHldr").width() + 0.5 * $("#sclCnvsHldr").width();
+
 
         //figure out scale or legend
         if ('Ancestor Organism' == document.getElementById('colorMode').value) {
