@@ -434,18 +434,20 @@ require([
   // });
 
   // 2019-04-14: test grabbing organisms, dropping in grid, then from setup textbox to freezer, appears to work
-  dojo.connect(av.dnd.fzOrgan, "onDndDrop", function (source, nodes, copy, target) {
-    //This triggers for every dnd drop, not just those of fzOrgan
-    if ('fzOrgan' === target.node.id) {
-      //console.log('fzOrgan=', av.dnd.fzOrgan);
-      //console.log('.childNodes=', av.dnd.fzOrgan.childNodes);
-      console.log('nodes=', nodes);
-      av.dnd.landFzOrgan(source, nodes, target);
-      nodes.forEach(function (node) {
-        av.dnd.sortDnD('fzOrgan');
-      });
-    }
-  });
+  
+  // yemd
+  // dojo.connect(av.dnd.fzOrgan, "onDndDrop", function (source, nodes, copy, target) {
+  //   //This triggers for every dnd drop, not just those of fzOrgan
+  //   if ('fzOrgan' === target.node.id) {
+  //     //console.log('fzOrgan=', av.dnd.fzOrgan);
+  //     //console.log('.childNodes=', av.dnd.fzOrgan.childNodes);
+  //     console.log('nodes=', nodes);
+  //     av.dnd.landFzOrgan(source, nodes, target);
+  //     nodes.forEach(function (node) {
+  //       av.dnd.sortDnD('fzOrgan');
+  //     });
+  //   }
+  // });
 
   // yemd
   // dojo.connect(av.dnd.fzWorld, "onDndDrop", function (source, nodes, copy, target) {

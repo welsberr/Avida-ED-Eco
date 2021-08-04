@@ -796,78 +796,82 @@ av.dnd.landFzOrgan = function (source, nodes, target) {
 
 // Process Drop on gridCanvas
 //--------------------------------------------------------------------------------------------- av.dnd.landGridCanvas --
-av.dnd.landGridCanvas = function (source, nodes, target) {
-  'use strict';
-  if (av.debug.dnd) console.log('inside gridCanvas dnd');
-  if (av.debug.dnd) console.log('parents', av.parents);
 
-  //was it dropped on the grid of cells?
-  //if (av.debug.dnd) console.log('xOff, yOff, xUP, y', av.grd.xOffset, av.grd.yOffset, av.mouse.UpGridPos[0];, av.mouse.UpGridPos[1];);
-  //calculated grid cell to see if it was a valid grid position.
-  var nn = av.parents.name.length;
-  //console.log('nn', nn);
-  //add to log
-  av.post.addUser('DnD: ' + source.node.id + '--> GridCanvas: by: ' + nodes[0].textContent + ' on (' +  av.mouse.UpGridPos[0] + ', ' + av.mouse.UpGridPos[1] + ')' );
+// yemd
+// replaced by av.dnd.landGridCanvas in dragulaDnd.js
 
-  var offsetXLocal = ($("#gridHolder").width() - av.dom.gridCanvas.width) / 2;
-  var offsetYLocal = ($("#gridHolder").height() - av.dom.gridCanvas.height) / 2;
-  var mouseX = av.mouse.UpGridPos[0] - av.grd.marginX - av.grd.xOffset - offsetXLocal;
-  var mouseY = av.mouse.UpGridPos[1] - av.grd.marginY - av.grd.yOffset - offsetYLocal;
-  if (av.debug.dnd) console.log('mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
-  if (av.debug.dnd) console.log('mouseX, y', mouseX, mouseY);
-  av.parents.col[nn] = Math.floor(mouseX / av.grd.cellWd);
-  av.parents.row[nn] = Math.floor(mouseY / av.grd.cellHt);
-  //check to see if in the grid part of the canvas
-  if (av.parents.col[nn] >= 0 && av.parents.col[nn] < av.grd.cols && av.parents.row[nn] >= 0 && av.parents.row[nn] < av.grd.rows) {
-    av.parents.AvidaNdx[nn] = av.parents.row[nn] * av.grd.cols + av.parents.col[nn];
+// av.dnd.landGridCanvas = function (source, nodes, target) {
+//   'use strict';
+//   if (av.debug.dnd) console.log('inside gridCanvas dnd');
+//   if (av.debug.dnd) console.log('parents', av.parents);
 
-    //Start setting up for getting data for parents structure
-    nn = av.parents.name.length;  // get index into parents
-    var newName = av.dnd.nameParent(nodes[0].textContent);
-    //av.parents.name[nn] = nodes[0].textContent;
+//   //was it dropped on the grid of cells?
+//   //if (av.debug.dnd) console.log('xOff, yOff, xUP, y', av.grd.xOffset, av.grd.yOffset, av.mouse.UpGridPos[0];, av.mouse.UpGridPos[1];);
+//   //calculated grid cell to see if it was a valid grid position.
+//   var nn = av.parents.name.length;
+//   //console.log('nn', nn);
+//   //add to log
+//   av.post.addUser('DnD: ' + source.node.id + '--> GridCanvas: by: ' + nodes[0].textContent + ' on (' +  av.mouse.UpGridPos[0] + ', ' + av.mouse.UpGridPos[1] + ')' );
 
-    //Add organism to av.dnd.ancestorBox in settings.
-    av.dnd.fzOrgan.forInSelectedItems(function (item, id) {
-      item.data = newName;
-      if (av.debug.dnd) console.log('selected: item', item, '; id', id);
-      av.dnd.ancestorBox.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
-      if (av.debug.dnd) console.log('av.dnd.gridCanvas.map', av.dnd.gridCanvas.map);
-      if (av.debug.dnd) console.log('av.dnd.ancestorBox.map', av.dnd.ancestorBox.map);
-    });
-    // need to find the domid of the ancestor in ancestorBox. The line below is not correct. ???? !!!!! tiba
-    var domIDs = Object.keys(av.dnd.ancestorBox.map);
-    av.parents.domid.push(domIDs[domIDs.length-1]);
+//   var offsetXLocal = ($("#gridHolder").width() - av.dom.gridCanvas.width) / 2;
+//   var offsetYLocal = ($("#gridHolder").height() - av.dom.gridCanvas.height) / 2;
+//   var mouseX = av.mouse.UpGridPos[0] - av.grd.marginX - av.grd.xOffset - offsetXLocal;
+//   var mouseY = av.mouse.UpGridPos[1] - av.grd.marginY - av.grd.yOffset - offsetYLocal;
+//   if (av.debug.dnd) console.log('mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
+//   if (av.debug.dnd) console.log('mouseX, y', mouseX, mouseY);
+//   av.parents.col[nn] = Math.floor(mouseX / av.grd.cellWd);
+//   av.parents.row[nn] = Math.floor(mouseY / av.grd.cellHt);
+//   //check to see if in the grid part of the canvas
+//   if (av.parents.col[nn] >= 0 && av.parents.col[nn] < av.grd.cols && av.parents.row[nn] >= 0 && av.parents.row[nn] < av.grd.rows) {
+//     av.parents.AvidaNdx[nn] = av.parents.row[nn] * av.grd.cols + av.parents.col[nn];
 
-    //update parents structure
-    av.parents.handNdx.push(nn);
-    av.parents.howPlaced[nn] = 'hand';
-    av.parents.injected[nn] = false;
-    var domId = Object.keys(source.selection)[0];
-    if (av.debug.dnd) console.log('av.dnd.landGridCanvas; domId', domId, '; av.fzr.genome', av.fzr.genome);
-    var dir = av.fzr.dir[domId];
-    av.parents.genome.push(av.fzr.file[dir+'/genome.seq']);
-    //find domId of parent as listed in av.dnd.ancestorBox
+//     //Start setting up for getting data for parents structure
+//     nn = av.parents.name.length;  // get index into parents
+//     var newName = av.dnd.nameParent(nodes[0].textContent);
+//     //av.parents.name[nn] = nodes[0].textContent;
 
-    //Don't think I need domID within ancestorBox
-    //var mapItems = Object.keys(av.dnd.ancestorBox.map);
-    //av.parents.domid.push(mapItems[mapItems.length - 1]);
+//     //Add organism to av.dnd.ancestorBox in settings.
+//     av.dnd.fzOrgan.forInSelectedItems(function (item, id) {
+//       item.data = newName;
+//       if (av.debug.dnd) console.log('selected: item', item, '; id', id);
+//       av.dnd.ancestorBox.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
+//       if (av.debug.dnd) console.log('av.dnd.gridCanvas.map', av.dnd.gridCanvas.map);
+//       if (av.debug.dnd) console.log('av.dnd.ancestorBox.map', av.dnd.ancestorBox.map);
+//     });
+//     // need to find the domid of the ancestor in ancestorBox. The line below is not correct. ???? !!!!! tiba
+//     var domIDs = Object.keys(av.dnd.ancestorBox.map);
+//     av.parents.domid.push(domIDs[domIDs.length-1]);
 
-    //Find color of ancestor
-    if (0 < av.parents.Colors.length) {av.parents.color.push(av.parents.Colors.pop());}
-    else {av.parents.color.push(av.color.defaultParentColor);}
-    //if (av.debug.dnd) console.log('after', av.parents)
-    //Re-Draw Grid - done in routine that calls this one.
-  }
-  else {
-    //not on grid
-    av.post.addUser('DnD: ' + source.node.id + '--> GridCanvas: by: ' + nodes[0].textContent);
-  }
-  //In all cases remove the ancestor from the gridCanvas so we only keep them in the av.dnd.ancestorBox.
-  av.dnd.gridCanvas.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
-  av.dnd.gridCanvas.sync();
+//     //update parents structure
+//     av.parents.handNdx.push(nn);
+//     av.parents.howPlaced[nn] = 'hand';
+//     av.parents.injected[nn] = false;
+//     var domId = Object.keys(source.selection)[0];
+//     if (av.debug.dnd) console.log('av.dnd.landGridCanvas; domId', domId, '; av.fzr.genome', av.fzr.genome);
+//     var dir = av.fzr.dir[domId];
+//     av.parents.genome.push(av.fzr.file[dir+'/genome.seq']);
+//     //find domId of parent as listed in av.dnd.ancestorBox
+
+//     //Don't think I need domID within ancestorBox
+//     //var mapItems = Object.keys(av.dnd.ancestorBox.map);
+//     //av.parents.domid.push(mapItems[mapItems.length - 1]);
+
+//     //Find color of ancestor
+//     if (0 < av.parents.Colors.length) {av.parents.color.push(av.parents.Colors.pop());}
+//     else {av.parents.color.push(av.color.defaultParentColor);}
+//     //if (av.debug.dnd) console.log('after', av.parents)
+//     //Re-Draw Grid - done in routine that calls this one.
+//   }
+//   else {
+//     //not on grid
+//     av.post.addUser('DnD: ' + source.node.id + '--> GridCanvas: by: ' + nodes[0].textContent);
+//   }
+//   //In all cases remove the ancestor from the gridCanvas so we only keep them in the av.dnd.ancestorBox.
+//   av.dnd.gridCanvas.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
+//   av.dnd.gridCanvas.sync();
   
-  if (av.debug.dnd) console.log('parents', av.parents);
-};
+//   if (av.debug.dnd) console.log('parents', av.parents);
+// };
 //--------------------------------------------------------------------------------------- end av.dnd.landGridCanvas --*/
 
 //------------------------------------------------------------------------------------ av.dnd.updateFromFzrOrganism --*/

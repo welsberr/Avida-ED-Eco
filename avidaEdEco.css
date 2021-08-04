@@ -1292,7 +1292,9 @@ details summary {
   grid-template-areas: 'subSectionTitle supplyDetailDiv supplyDetailDiv supplyModifierDivClass supplyModifierDivClass sideInput'
                        'inflowHi        inflowHi        outflowHi       outflowHi             chmstatHi             chmstatHi';
                        'inflowLo        inflowLo        outflowLo       outflowLo             chmstatLo             chmstatLo';
-  justify-items: start;  justify-content: start; width: 100%;
+  justify-items: start;  
+  justify-content: start; 
+  width: 100%;
   align-items: stretch;
 }
 
@@ -1833,7 +1835,7 @@ checkbox:focus {
     bottom: 0;
 
     z-index: 1; /* Sit on top */
-    //padding-top: 100px; /* Location of the box */
+    /* padding-top: 100px;*/ /* Location of the box */
     left: 0;
     top: 0;
     width: 100%;   /*   Full width */
@@ -1868,8 +1870,8 @@ checkbox:focus {
     color: black;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-/************************************************************************************************* end of model class */                                                                         */
+/*----------------------------------------------------------------------------------------------------------------------
+/************************************************************************************************* end of model class */                                                                        
 
 #saveCSVdataModalID {
   position: fixed; /* Stay in place */
@@ -1907,7 +1909,7 @@ checkbox:focus {
   display: flex;
   flex-direction: column;
   background: #fefefe;
-  padding: 0px;   //was 2
+  padding: 0px;   /* was 2 */
   border: 1px solid black; /* #888; */
   width: 94%;
   height: 90%;
@@ -1931,7 +1933,7 @@ checkbox:focus {
 }
 
 .modalBig-footer {
-  flex: 0 0 40px
+  flex: 0 0 40px;
   padding: 8px 0px;    /*top-bottom; left-right */
   width: 100%;
   background: lightgray;
@@ -2087,6 +2089,15 @@ canvas {
 
 label {
   margin-bottom: 0em; /* yemi: overwrites margin on the bottom set by Bootstrap */
+}
+
+/* yemi: draggable item styling */
+.item {
+  cursor: grab;
+}
+.item:hover {
+  background-color: rgb(189, 229, 245);
+  opacity: 50%;
 }
 
 /********************************************************************************************** end of modalBig class */                                                                         */

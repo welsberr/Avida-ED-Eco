@@ -260,25 +260,47 @@
     return target;
   };
 
+  // yemd
+  // possibly move to dragulaDnd just to keep all the dnd functions together?
   av.mouse.freezeTheKid = function () {
     "use strict";
     av.post.addUser('Moved avidian from grid to freezer');
     if (av.debug.mouse) console.log('freezerDiv');
     //make sure there is a name.
 
-    var nameArray = av.dnd.makeNameList(av.dnd.fzOrgan);
+    // var nameArray = av.dnd.makeNameList(av.dnd.fzOrgan);
     //console.log('name', av.grd.kidName, '; array',  nameArray);
-    var sName = av.dnd.namefzrItem(av.grd.kidName, nameArray);
+    container = $.map($('#ancestorBox')[0], (key, value) => {return value});
+    var sName = av.dnd.namefzrItem(container, av.grd.kidName);
     console.log('sName', sName);
     var avidian = prompt('Please name your avidian', sName);
     if (avidian) {
-      var avName = av.dnd.getUniqueFzrName(avidian, nameArray);
+      var avName = av.dnd.getUniqueFzrName(container, avidian);
       if (null != avName) {  //give dom item new avName name
         av.post.addUser('Froze kid = ' + avName);
-        av.dnd.fzOrgan.insertNodes(false, [{data: avName, type: ['g']}]);
-        av.dnd.fzOrgan.sync();
-        var mapItems = Object.keys(av.dnd.fzOrgan.map);
+        
+        // av.dnd.fzOrgan.insertNodes(false, [{data: avName, type: ['g']}]);
+        // av.dnd.fzOrgan.sync();
         var gdir =  'g' + av.fzr.gNum;
+        var type = 'g';
+        var domid = gdir;
+        var container = '#' + av.dnd.fzOrgan.id;
+        var mapItems = Object.keys(containerMap[container]);
+
+        $(container).append(`<div class="item ${type}" id="${domid}"> ${avName} </div>`);
+
+        // Add an entry to containerMap
+        if (Object.keys(containerMap).indexOf(container) === -1) {
+          containerMap[container] = {};
+        }
+
+        if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
+          containerMap[container][domid] = {'name': avName , 'type': 'g'};
+        } else {
+          containerMap[container][domid].name = avName;
+          containerMap[container][domid].type = 'g';
+        }
+
         av.fzr.file[gdir + '/entryname.txt'] = avName;
         av.fzr.dir[mapItems[mapItems.length - 1]] = gdir;
         av.fzr.domid[gdir] = mapItems[mapItems.length - 1];
@@ -293,7 +315,7 @@
         av.fzr.saveUpdateState('no');
       }
     }
-  }
+  };
 
   av.mouse.ParentMouse = function (evt, av) {
     'use strict';
