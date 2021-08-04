@@ -48,7 +48,7 @@ jQuery(document).ready(function($) {
         return true;
       }
       if ((source === av.dnd.ancestorBox || source === av.dnd.ancestorBoTest) && (target === av.dnd.gridCanvas)) {
-        $('#' + el.id).css('cursor','not-allowed');
+        // el.style.background = 'red';
         return false;
       }
       if (source === av.dnd.activeConfig && (target === av.dnd.fzConfig || target === av.dnd.fzWorld)) {
@@ -65,7 +65,7 @@ jQuery(document).ready(function($) {
       } 
       else {
         console.log('not allowed');
-        document.getElementById(el.id).style.cursor = 'not-allowed';
+        el.style.cursor = 'not-allowed'; // not working yet 
         console.log(el.id);
         console.log(document.getElementById(el.id).style.cursor);
         return false;
@@ -87,10 +87,14 @@ jQuery(document).ready(function($) {
   });
 
   dra.on('drag', (el, source) => { 
-    $('#' + el.id).css('cursor', 'default');
+    // el.style.background = 'rgb(189, 229, 245)';
+    el.style.cursor =  'default';
     console.log("dragging");
     dragging = true;
     global_source = source;
+  });
+
+  dra.on('cancel', (el, container, source) => {
   });
 
   // main function that determines the logic for drag and drop
@@ -101,7 +105,7 @@ jQuery(document).ready(function($) {
     if ((target === av.dnd.activeConfig || target === av.dnd.ancesterBox) && av.grd.runState === 'started') {
       av.dom.newDishModalID.style.display = 'block'; // show the 'please save' modal
       dra.cancel(); // cancel the drag event
-      $('#activeConfig').empty(); // empty the activeConfig box
+      // $('#activeConfig').empty(); // empty the activeConfig box
     } else if (target === activeConfig) {
       av.dnd.landActiveConfig(el, target, source);
     }
@@ -109,7 +113,7 @@ jQuery(document).ready(function($) {
     if (target === av.dnd.testConfig || target === av.dnd.ancestorBoTest && av.grd.runState === 'started') {
       av.dom.newDishModalID.style.display = 'block';
       dra.cancel();
-      $('#testConfig').empty();
+      // $('#testConfig').empty();
     } else if (target === av.dnd.testConfig) {
       av.dnd.landTestConfig(el, target, source);
     }
@@ -430,7 +434,7 @@ jQuery(document).ready(function($) {
 
   av.dnd.landAncestorBox = function(el, target, source) {
     'use strict';
-    el.id = 'g' + av.fzr.gNum;
+    // el.id = 'g' + av.fzr.gNum;
     var domid = el.id;
     // var domid;
     var dir = domid;
@@ -445,14 +449,14 @@ jQuery(document).ready(function($) {
       av.parents.autoNdx.push(nn);
       av.parents.injected.push(false);
       
+      //rename the item with a new name
       var newName = av.dnd.nameParent(el.textContent.trim());
+      el.textContent = newName;
+
       //Add organism to av.dnd.ancestorBox in settings.
       var type = 'g';
       var dir = domid;
       var container = '#' + av.dnd.ancestorBox.id;
-
-      // Add a DOM object
-      //$(container).append(`<div class="item ${type}" id="${domid}"> ${newName} </div>`);
 
       // Add an entry to containerMap
       if (Object.keys(containerMap).indexOf(container) === -1) {
@@ -488,7 +492,7 @@ jQuery(document).ready(function($) {
       //   av.fio.handAncestorLoad(str);
       // };
 
-      av.fzr.gNum++;
+      // av.fzr.gNum++;
       if (av.debug.dnd) console.log('parents', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]);
       av.grd.drawGridSetupFn('av.dnd.landAncestorBox');
 
@@ -1101,9 +1105,10 @@ jQuery(document).ready(function($) {
     var theName;
     //look for name in parent
     if (0 <= av.parents.name.indexOf(name)) {
-      theName = av.dnd.nameNparent(name, 1);
+      theName = av.dnd.nameNparent(name, 0);
+      console.log('duplicate parent name exists');
     }
-    else { theName = name; }
+    else { theName = name; console.log('this is a original name');}
     av.parents.name.push(theName);
     return theName;
   };
