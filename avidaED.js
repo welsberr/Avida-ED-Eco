@@ -1796,6 +1796,7 @@ require([
           };
         };
 
+        // yemi
         // check if gridHolder is taller or wider
         // if (av.dom.gridControlContainer.clientWidth < $("#gridHolder").height()) {
         //   av.dom.scaleCanvas.width = av.dom.gridControlContainer.clientWidth - 22;  //works for canvas; need to use .style for divs
@@ -1804,7 +1805,6 @@ require([
         // }
 
         av.dom.scaleCanvas.width = $("#sclCnvsHldr").width() + 0.5 * $("#sclCnvsHldr").width();
-
 
         //figure out scale or legend
         if ('Ancestor Organism' == document.getElementById('colorMode').value) {

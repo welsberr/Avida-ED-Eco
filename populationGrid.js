@@ -773,7 +773,7 @@
     av.dom.dadLegendHldr.style.display = 'none';
 
     //finding the dimensions needed for the legend. 
-    av.dom.scaleCanvas.height = 40;
+    av.dom.scaleCanvas.height = 30;
     av.grd.sCtx.fillStyle = av.color.names["ltGrey"];
     av.grd.sCtx.fillRect(0, 0, av.dom.scaleCanvas.width, av.dom.scaleCanvas.height);
     var xStart = 15;

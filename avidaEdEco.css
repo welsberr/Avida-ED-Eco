@@ -178,7 +178,7 @@ html {
     max-height: 100vh;
     border: 1px solid #AAA;
     overflow: auto;
-    min-width: 200px;
+    min-width: 100px;
   }
 
   .footerRow {
@@ -642,7 +642,7 @@ html {
     height: 100%;
     width: 100%;
     min-width: 200px; /* yemi: */
-    max-width: 2200px; /* yemi: diane does not see why a max is needed: sometimes want popChart big */
+    max-width: 590px; /* yemi: diane does not see why a max is needed: sometimes want popChart big */
   }
   
   #popStatsBlock{

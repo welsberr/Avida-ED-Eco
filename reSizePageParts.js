@@ -230,7 +230,7 @@ function dragbarRightResize() {
       $('.all3org').css("grid-template-columns", organism_colInfo);
 
       /* yemi: make the following divs take up the entire width of their containers */
-      $('orgInfoHolder').css("width", "100%");
+      $('#orgInfoHolder').css("width", "100%");
 
       /* yemi: update organism canvas */
       av.ind.updateOrgTrace();
