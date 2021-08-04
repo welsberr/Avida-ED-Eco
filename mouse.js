@@ -352,8 +352,8 @@
       if (av.debug.mouse) console.log('av.parents.domid', av.parents.domid);
       var node = dojo.byId(av.parents.domid[av.mouse.ParentNdx]);
       console.log('node', node);
-      av.dnd.ancestorBox.parent.removeChild(node);
-      av.dnd.ancestorBox.sync();
+      // av.dnd.ancestorBox.parent.removeChild(node);
+      // av.dnd.ancestorBox.sync();
       av.post.addUser('Moved ancestor to trash');
 
       //remove from main list.

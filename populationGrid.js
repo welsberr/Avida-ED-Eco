@@ -331,7 +331,7 @@
           xx = av.grd.marginX + av.grd.xOffset + cc * av.grd.cellWd;
           yy = av.grd.marginY + av.grd.yOffset + rr * av.grd.cellHt;
           if (null === av.grd.fill[ii]) {
-            av.grd.cntx.fillStyle = '#000';  //no avidain is in this cell
+            av.grd.cntx.fillStyle = '#000';  //no avidian is in this cell
           }
           else {
             ndx = av.parents.name.indexOf(av.grd.fill[ii]);

@@ -129,7 +129,6 @@
         document.getElementById(tsk+sub+'outflowLoNp').disabled = true;
       };
     };
-    document.getElementById('allSugarGeometry').disabled = true;
     document.getElementById('allsugarsupplyTypeSlct').disabled = true;
     document.getElementById('allSugarRegionLayout').disabled = true;
     document.getElementById('allSugarModifier').disabled = true;
@@ -257,7 +256,7 @@
         document.getElementById(tsk+sub+'outflowLoNp').disabled = false;
       };
     };
-    document.getElementById('allSugarGeometry').disabled = false;
+    //document.getElementById('allSugarGeometry').disabled = false;
     document.getElementById('allsugarsupplyTypeSlct').disabled = false;
     document.getElementById('allSugarRegionLayout').disabled = false;
     document.getElementById('allSugarModifier').disabled = false;

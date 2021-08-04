@@ -1,7 +1,7 @@
 
  // this version uses grid box layout for major sections (toop, left side, main, right side)  
  // if (av.dbg.flg.root) { console.log('Root: avidaED.js at beginning of file on 2020_0111 @ 20:21'); };
- console.log('Root: avidaED.js at beginning of file on 2021_301'); 
+ console.log('Root: avidaED.js at beginning of file on 2021_801_ Sat'); 
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
@@ -28,6 +28,9 @@
 //
 // Get hashtag of avida side to state which version of avida works with this version of av_ui
 // git rev-parse HEAD
+//
+// To get a local copy of a pull request:
+// git pull origin pull/18/head    //where '18' is the number of the pull request
 //
 // Avida -------------------
 //
@@ -1475,8 +1478,11 @@ require([
     if ('populationBlock' == av.ui.page) {
       av.dom.popInfoVert.style.display = 'block';
       document.getElementById('allAvidaContainer').className = 'all3pop';
-    }
+    };    
     if ('analysisBlock' == av.ui.page) {
+      document.getElementById('allAvidaContainer').className = 'all2lft';
+    };
+    if ('showTextDebugBlock' == av.ui.page) {
       document.getElementById('allAvidaContainer').className = 'all2lft';
     }
     if ('organismBlock' == av.ui.page) {
@@ -1566,6 +1572,7 @@ require([
   document.getElementById('showTextDebugButton').onclick = function () {
     av.post.addUser('Button: showTextDebugButton');
     av.ui.mainBoxSwap('showTextDebugBlock');
+    av.ui.resizeShowTextDebugPage('showTextDebug');
   };
   // ------------------ two controls for the same purpose; tabs used in develoopment mode --
 
@@ -3101,9 +3108,9 @@ require([
 
   av.fwt.clearResourceConstants();
 
-  //Geometry is no longer a drop down. Now it is an opton in Supply Type
-  document.getElementById('allSugarGeometry').style.display = 'none';
-  document.getElementById('geometrySgr').style.display = 'none';
+  // Geometry is no longer a drop down. Now it is an opton in Supply Type; tiba delte before 2022
+  // document.getElementById('allSugarGeometry').style.display = 'none';
+  // document.getElementById('geometrySgr').style.display = 'none';
 
   // **************************************************************************************************************** */
   //Resize tools might be called here or after "Last_things_done"
@@ -3121,7 +3128,9 @@ require([
 
   // Observe one or multiple elements
   //ro.observe(document.querySelector('div'));
-  ro.observe(document.querySelector('#gridHolder'));
+  
+    
+  //ro.observe(document.querySelector('#gridHolder'));  // commented out on 2021_731 Sat
 
   // **************************************************************************************************************** */
   //                                          Useful Generic functions

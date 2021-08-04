@@ -5,7 +5,7 @@
 var av = av || {};  //incase av already exists
 
 //console.log('start of globals on 2021_310_04:22 Thurs');
-console.log('start of globals on 2021_419_Mon');
+console.log('start of globals on 2021_801_Sun');
 
 Number.prototype.pad = function(size) {
   var ss = String(this);
@@ -542,6 +542,7 @@ av.sgr.describe.long.ant = '&nbsp;(x8) Hard';
 av.sgr.describe.long.nor = '(x16) Very Hard';
 av.sgr.describe.long.xor = '(x16) Very Hard';
 av.sgr.describe.long.equ = '(x32) Brutal';
+av.sgr.describe.long.width = '96px';
 
 av.sgr.describe.lng2 = {};
 av.sgr.describe.lng2.not = 'Easy &nbsp;(x2)';
@@ -1534,14 +1535,15 @@ for (var ii = 0; ii < lngth; ii++) {
   av.mouse.notDndIndShape[ii] = 'default';
 };
 
-console.log('end of globals');
+//console.log('end of globals');
 
 //----------------------------------------------------------------------------------------------------------------------
 // Notes on page layout
 //----------------------------------------------------------------------------------------------------------------------
 // AllAvida: 937
 // Population page: Initial assume a square grid and both sidebars open. 
-// navColID or navColClass: wd = 152 includling 2px for a 1 px border. (minimum nice wd) about 84 too narrow, but works. 
+// navColID or navColClass: wd = 152 includling 2px for a 1 px border. 
+//     (minimum nice wd) about 84 too narrow, but works. 
 // mainBlockHolder: wd = 
 // rightInfoHolder: mn wd = 500 inlcuding border
 // popStatsBlock: min wd = 364 no border. 

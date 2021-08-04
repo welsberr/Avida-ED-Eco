@@ -224,23 +224,19 @@
     return text;
   };
 
-  //------------------------------------------------------------------------------------- av.fwt.setResourceConstants --
-
-  av.fwt.clearResourceConstants = function() {
-    var tskTitle;
-    av.nut.resrcTyp = av.sgr.resrcTyp;
-    console.log('resource type =', av.nut.resrcTyp);
-    for (var ii=0; ii < av.sgr.numTasks; ii++) {
-      tskTitle = av.sgr.logicTitleNames[ii];
-      //document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;&nbsp;';
-      //document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;&nbsp;';
-      //document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;&nbsp;';
-     
-      document.getElementById('cell'+tskTitle).innerHTML = '';
-      document.getElementById('mx'+tskTitle).innerHTML = '';
-      document.getElementById('tot'+tskTitle).innerHTML = '';
-    }
-  };
+//--------------------------------------------------------------------------------------- av.fwt.setResourceConstants --
+// clears data for three row data table for resources in the stats panel on the population page. 
+av.fwt.clearResourceConstants = function(from) {
+  var tskTitle;
+  av.nut.resrcTyp = av.sgr.resrcTyp;
+  console.log(from,'called av.fwt.clearResourceConstants: resource type =', av.nut.resrcTyp);
+  for (var ii=0; ii < av.sgr.numTasks; ii++) {
+    tskTitle = av.sgr.logicTitleNames[ii];
+    document.getElementById('cell'+tskTitle).innerHTML = '';
+    document.getElementById('mx'+tskTitle).innerHTML = '';
+    document.getElementById('tot'+tskTitle).innerHTML = '';
+  }
+};
   
   av.fwt.setResourceConstants = function() {
     var logLen = av.sgr.logicNames.length;

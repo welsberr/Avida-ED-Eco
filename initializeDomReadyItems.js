@@ -324,92 +324,92 @@
     document.getElementById('allSugarGeometryDiv').style.display = willbe;
   };
 
-  av.ui.toggleDevelopmentDisplays = function () {
-    var len, tsk, sub;
-    var ndx2b = 0;
-    var visible2b = ['visible', 'hidden'];
-    var block2b = ['inline-block', 'none'];
-    var flex2b = ['flex', 'none'];
-    var devoTog2b = ['devoShow', 'devoCammo'];
-    var geoHideBut2b =['devoShow', 'geoButtonCammo'];
-    var popInfoTab2b = ['tabHolderShow', 'tabHolderHide'];
-    var sgrfooter2b = ['changeAllSugarsTogetherContainer', 'changeAllSugarsTogetherNoGlobalContainer'];
-    
-    console.log('av.doj.mnDebug.style.visibility=', av.doj.mnDebug.style.visibility);
-    if ('visible' === av.doj.mnDebug.style.visibility) {
-      ndx2b = 1;
-      //hide all development elements
-      av.ui.hideDevelopment = true;
-      av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopmentDisplays');
-      
-      //debug menu??Î
-      dijit.byId('mnHpDebug').set('label', 'Show debug menu');   //???????
+//----------------------------------------------------------------------------------- av.ui.toggleDevelopmentDisplays --
+// opens items used in development that are not for the user to see. 
+av.ui.toggleDevelopmentDisplays = function () {
+  var len, tsk, sub;
+  var ndx2b = 0;
+  var visible2b = ['visible', 'hidden'];
+  var block2b = ['inline-block', 'none'];
+  var flex2b = ['flex', 'none'];
+  var devoTog2b = ['devoShow', 'devoCammo'];
+  var geoHideBut2b =['devoShow', 'geoButtonCammo'];
+  var popInfoTab2b = ['tabHolderShow', 'tabHolderHide'];
+  var sgrfooter2b = ['changeAllSugarsTogetherContainer', 'changeAllSugarsTogetherNoGlobalContainer'];
 
-      av.post.addUser('Button: mnHpDebug: now hidden; InitlizeDomReadyItems.js');
-      //-------------------------------------------------------------------------------- hide stuff --
-    } else {
-      // development sectiomn can be seen.
-      av.ui.hideDevelopment = false;
-      av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopmentDisplays.onclick_show');
+  console.log('av.doj.mnDebug.style.visibility=', av.doj.mnDebug.style.visibility);
+  if ('devoShow' === document.getElementById('developmentToggle').className) {
+    ndx2b = 1;
+    //hide all development elements
+    av.ui.hideDevelopment = true;
+    av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopmentDisplays');
 
-      //Show debug on dropdown menu
-      dijit.byId('mnHpDebug').set('label', 'Hide debug menu');   //????????
-      av.post.addUser('Button: mnHpDebug: now visible');
-    }  // end of development section can be seen 
-    //------------------------------------------------------------------------------------ process changes using ndx2b--
-    
-  len = document.getElementsByClassName('3TopLftRit').length;
+    //debug menu??Î
+    dijit.byId('mnHpDebug').set('label', 'Show debug menu');   //???????
+
+    av.post.addUser('Button: mnHpDebug: now hidden; InitlizeDomReadyItems.js');
+    //-------------------------------------------------------------------------------- hide stuff --
+  } else {
+    // development sectiomn can be seen.
+    av.ui.hideDevelopment = false;
+    av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopmentDisplays.onclick_show');
+
+    //Show debug on dropdown menu
+    dijit.byId('mnHpDebug').set('label', 'Hide debug menu');   //????????
+    av.post.addUser('Button: mnHpDebug: now visible');
+  }  // end of development section can be seen 
+  //------------------------------------------------------------------------------------ process changes using ndx2b--
+
+len = document.getElementsByClassName('3TopLftRit').length;
+for (ii = 0; ii < len; ii++) {
+  document.getElementsByClassName('3TopLftRit')[ii].style.display = block2b[ndx2b];
+  document.getElementsByClassName('4Quarters')[ii].style.display = block2b[ndx2b];
+}
+
+if (av.sgr.gridOnly) {
+  document.getElementById('sugarFooter').className = sgrfooter2b[ndx2b];
+  document.getElementById('geometrySgr').style.display = block2b[ndx2b];
+  document.getElementById('allSugarGeometryDiv').style.display = block2b[ndx2b];
+  document.getElementById('allSugarGeometry').style.display = block2b[ndx2b]; 
+}
+
+  document.getElementById('testConfig').style.display = block2b[ndx2b];
+  console.log('block2b[ndx2b]', block2b[ndx2b]);
+  document.getElementById('avidianOutline').style.display = block2b[ndx2b];   //none
+  document.getElementById('resrceDataHolder').style.display = block2b[ndx2b];
+
+  document.getElementById('developmentToggle').className = devoTog2b[ndx2b];
+  document.getElementById('geometyHideButton').className = geoHideBut2b[ndx2b];
+  document.getElementById('popInfoTabHolder').className = popInfoTab2b[ndx2b];
+
+  av.doj.mnDebug.style.visibility = visible2b[ndx2b];
+  document.getElementById('testConfigLableHolder').style.display = flex2b[ndx2b];   //none
+
+  document.getElementById('showTextDebugButtonDiv').style.visibility = visible2b[ndx2b];   //hidden
+  av.dom.showTextDebugButton.style.visibility = visible2b[ndx2b]
+  document.getElementById('fzTdishSec').style.visibility = visible2b[ndx2b];       // hidden
+  document.getElementById('testDishDetailDiv').style.display = block2b[ndx2b];   //none
+  document.getElementById('testConfig').style.display = block2b[ndx2b];    //none
+
+  len = av.sgr.logicNames.length;
+  sub = 1;   //this may change later;
   for (ii = 0; ii < len; ii++) {
-    document.getElementsByClassName('3TopLftRit')[ii].style.display = block2b[ndx2b];
-    document.getElementsByClassName('4Quarters')[ii].style.display = block2b[ndx2b];
-  }
-
-  if (av.sgr.gridOnly) {
-    document.getElementById('sugarFooter').className = sgrfooter2b[ndx2b];
-    document.getElementById('geometrySgr').style.display = block2b[ndx2b];
-    document.getElementById('allSugarGeometryDiv').style.display = block2b[ndx2b];
-    document.getElementById('allSugarGeometry').style.display = block2b[ndx2b]; 
-  }
-
-    document.getElementById('testConfig').style.display = block2b[ndx2b];
-    document.getElementById('avidianOutline').style.display = block2b[ndx2b];
-    document.getElementById('resrceDataHolder').style.display = block2b[ndx2b];
-
-    document.getElementById('developmentToggle').className = devoTog2b[ndx2b];
-    document.getElementById('geometyHideButton').className = geoHideBut2b[ndx2b];
-    document.getElementById('popInfoTabHolder').className = popInfoTab2b[ndx2b];
-
-    av.doj.mnDebug.style.visibility = visible2b[ndx2b];
-    document.getElementById('testConfigLableHolder').style.display = flex2b[ndx2b];   //none
-    
-    document.getElementById('showTextDebugButtonDiv').style.visibility = visible2b[ndx2b];   //hidden
-    document.getElementById('fzTdishSec').style.visibility = visible2b[ndx2b];       // hidden
-    document.getElementById('testDishDetailDiv').style.display = block2b[ndx2b];   //none
-    document.getElementById('testConfig').style.display = block2b[ndx2b];    //none
-    document.getElementById('avidianOutline').style.display = block2b[ndx2b];   //none
-
-    len = av.sgr.logicNames.length;
-    sub = 1;   //this may change later;
-    for (ii = 0; ii < len; ii++) {
-      tsk = av.sgr.logicNames[ii];
-      av.sgr.changeDetailsLayout(tsk, 'av.ui.toggleDevelopmentDisplays');
-    };
-
-    //console.log('in av.ui.hideDevelopment=', av.ui.hideDevelopment, 'at end of function');
+    tsk = av.sgr.logicNames[ii];
+    av.sgr.changeDetailsLayout(tsk, 'av.ui.toggleDevelopmentDisplays');
   };
 
-  // if (av.dbg.flg.root) { console.log('Root: before av.ui.antLabel'); }
-  //----------------------------------------------------------------------------------------------------------------------
-  //Forces popChartInit
-  av.ui.antLabel = function (from) {
-    console.log(from, 'called av.ui.antLabel to run av.grd.popChartInit'); 
-    
-    console.log('ht: popChrtHolder, popChart, popChartDiv', $('#popChrtHolder').outerHeight(true), $('#popChartDiv').outerHeight(true), $('#popChart').outerHeight(true) );
-    var htnum = Number($('#popChrtHolder').outerHeight(true))-1;
-    av.dom.popChart.style.maxheight = htnum +'px;';
-    console.log('ht: popChrtHolder, popChart, popChartDiv', $('#popChrtHolder').outerHeight(true), $('#popChartDiv').outerHeight(true), $('#popChart').outerHeight(true) );
-    av.grd.popChartInit('av.ui.antLabel');
-    console.log('ht: popChrtHolder, popChart, popChartDiv', $('#popChrtHolder').outerHeight(true), $('#popChartDiv').outerHeight(true), $('#popChart').outerHeight(true) );
+  //console.log('in av.ui.hideDevelopment=', av.ui.hideDevelopment, 'at end of function');
+  };
+//----------------------------------------------------------------------------------- av.ui.toggleDevelopmentDisplays --
+
+  
+  av.ui.toggleDebugMenu =function () {
+    //console.log('in av.ui.toggleDebugMenu: av.doj.mnDebug.style.visibility=', av.doj.mnDebug.style.visibility);
+    if ('visible' === av.doj.mnDebug.style.visibility) {
+      av.doj.mnDebug.style.visibility = 'hidden';
+    }
+    else 
+      av.doj.mnDebug.style.visibility = 'visible';
   };
   
   // if (av.dbg.flg.root) { console.log('Root: before av.ui.toggleResourceData'); }
@@ -517,43 +517,27 @@ av.dom.simulate = function (element, eventName) {
   };
   //======================================================================================= end simulated dom action ===
 
+// Code below is not in use
 
-
+  // if (av.dbg.flg.root) { console.log('Root: before av.ui.antLabel'); }
   //----------------------------------------------------------------------------------------------------------------------
-  //     Un used code snipits from AvidaED.js
-  //----------------------------------------------------------------------------------------------------------------------
+  //Forces popChartInit  not in use 2021_801
+/*  av.ui.antLabel = function (from) {
+    console.log(from, 'called av.ui.antLabel to run av.grd.popChartInit'); 
+    
+    console.log('ht: popChrtHolder, popChart, popChartDiv', $('#popChrtHolder').outerHeight(true), $('#popChartDiv').outerHeight(true), $('#popChart').outerHeight(true) );
+    var htnum = Number($('#popChrtHolder').outerHeight(true))-1;
+    av.dom.popChart.style.maxheight = htnum +'px;';
+    console.log('ht: popChrtHolder, popChart, popChartDiv', $('#popChrtHolder').outerHeight(true), $('#popChartDiv').outerHeight(true), $('#popChart').outerHeight(true) );
+    av.grd.popChartInit('av.ui.antLabel');
+    console.log('ht: popChrtHolder, popChart, popChartDiv', $('#popChrtHolder').outerHeight(true), $('#popChartDiv').outerHeight(true), $('#popChart').outerHeight(true) );
+  };
+*/  
 
-  /*
-    //http://stackoverflow.com/questions/20773306/mozilla-firefox-not-working-with-window-onbeforeunload
-    var myEvent = window.attachEvent || window.addEventListener;
-    var chkevent = window.attachEvent ? 'onbeforeunload' : 'beforeunload'; /// make IE7, IE8 compitable
-
-    myEvent(chkevent, function(e) { // For >=IE7, Chrome, Firefox
-    var confirmationMessage = 'Remember to save your workSpace before you leave Avida-ED';  // a space
-    (e || window.event).returnValue = confirmationMessage;
-    return confirmationMessage;
-    });
-
-    function goodbye(e) {
-    if(!e) e = window.event;
-    //e.cancelBubble is supported by IE - this will kill the bubbling process.
-    e.cancelBubble = true;
-    e.returnValue = 'Have you saved your workspace?'; //This is displayed on the dialog
-
-    //e.stopPropagation works in Firefox.
-    if (e.stopPropagation) {
-    e.stopPropagation();
-    e.preventDefault();
-    }
-    }
-    window.onbeforeunload=goodbye;
-    */
-
-  //----------------------------------------------------------------------------------------------------------------------
 
 
 //----------------------------------------------------------------------------------------------------------------------
-//   un used snips from file Data Write
+// Notes
 //----------------------------------------------------------------------------------------------------------------------
 // logicaly this should be in reSizePageParts, 
 // but putting the info here makes it easy to reference when writing in reSizePageParts.js

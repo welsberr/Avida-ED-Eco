@@ -51,7 +51,6 @@
         //console.log( 'dom address is ', tmpstr);
         
         document.getElementById(tmpstr).innerHTML = tskSectionStr;
-        //av.dom.showBigTextarea.value = tskSectionStr;
 
         tmpstr = tsk+'_title';
         document.getElementById(tmpstr).innerHTML = av.sgr.oseNames[ii];
@@ -65,7 +64,7 @@
           newstr = newstr.replaceAll(patternTsk, tskNum);
         }
         //console.log('dom is', tsk+'_detailsHolder');
-        av.dom.showBigTextarea.value = tskSectionStr;
+        av.dom.showBigTextarea.value =+ tskSectionStr;
         //console.log('tsk_detailsHolder=', tsk+'_detailsHolder');
         document.getElementById(tsk+'_detailsHolder').innerHTML = newstr;
       }
@@ -117,7 +116,6 @@
     var idx = domObj.selectedIndex;        // get the index of the selected option
     var which = domObj.options[idx].value;   // get the value of the selected option 
     av.sgr.ChangeAllGeo(which);
-    //av.sgr.setSugarColors(true);  //true is to turn colors on;    //color now dependent on presence absence of resources for that task
     document.getElementById('allSugarGeometry').value = 'neutral';
   };
   
@@ -409,36 +407,6 @@ av.sgr.supplyChange = function (domObj) {
     //console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption);
   };
 
-  //------------------------------------------------------------------------------------------- av.sgr.setSugarColors --
-    // not called as of 2020_0124
-  av.sgr.setSugarColors = function(colorFlg) {
-    var idname;
-    var backgndColor = av.color.greyMap[av.sgr.sugarGreyShade];
-    var nameColor = 'Black';
-    var darkColor = '#eee';
-    var len = av.sgr.sugarColors.length;
-    len = 2; // turned colors off to test new UI for sugar. Tiba delete this in to get colors. 
-    for (ii = 0; ii < len; ii++) {
-      //need to think this thru as eventually there will be up to 4 subsections. Just one for now.
-      idname = av.sgr.logicNames[ii]+'_section';
-      if (colorFlg) {
-        backgndColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarBackgroundShade];
-        nameColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade]; 
-        darkColor = av.color[av.sgr.sugarColors[ii]][av.sgr.sugarNameShade+10]; 
-      }
-      idname = av.sgr.logicNames[ii]+'_section';
-      document.getElementById(idname).style.backgroundColor = backgndColor;
-      idname = av.sgr.logicNames[ii]+'_title';
-      //console.log('idname=',idname);
-      document.getElementById(idname).style.color = nameColor;  
-      // eventually there will be up to 4 subsections. deal with that later.
-      for (var sub=1; sub < 3; sub++) {
-        idname = av.sgr.logicNames[ii]+sub+'regionName';
-        document.getElementById(idname).style.color = darkColor;  
-        // console.log('set color for idname=', idname);
-      }
-    }
-  };
   
   //if (av.dbg.flg.root) { console.log('Root: av.sgr.updateSugarColors'); }
   //---------------------------------------------------------------------------------------- av.sgr.updateSugarColors --
@@ -494,7 +462,7 @@ av.sgr.supplyChange = function (domObj) {
       tsk = av.sgr.logicNames[ii];
       numTsk = av.sgr.logEdNames[ii];
       document.getElementById(tsk+'_section').open = openFlag;
-      av.sgr.OpenClsSugarDetails(tsk, openFlag, av.sgr.OpenCloseAllSugarDetails);    
+      av.sgr.OpenClsSugarDetails(tsk, openFlag, 'av.sgr.OpenCloseAllSugarDetails');    
     };
     //if (av.dbg.flg.nut) { console.log('ii=',ii,'; idName=', idName, '; selectedOption=', selectedOption, '; openFlag=', openFlag, '; from=', from); }
   };
@@ -531,7 +499,6 @@ av.sgr.supplyChange = function (domObj) {
     //if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg); }
     //console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg);
 
-    /* no colors while debugging. tiba delete later
     var idname;
     var backgndColor = av.color.greyMap[av.sgr.sugarGreyShade];
     var nameColor = 'Black';
@@ -563,7 +530,6 @@ av.sgr.supplyChange = function (domObj) {
         idname = av.sgr.logicNames[tskNum]+sub+'subSection';
         document.getElementById(idname).style['border-top'] = '1px solid '+darkColor;  
       }
-    */
   };
   //---------------------------------------------------------------------------------- end av.sgr.setSingleSugarColor --
 
@@ -696,21 +662,10 @@ av.sgr.supplyChange = function (domObj) {
   //if (av.dbg.flg.root) { console.log('Root: before av.sgr.changeDetailsLayout'); }
   //-------------------------------------------------------------------------------------- av.sgr.changeDetailsLayout --
   av.sgr.changeDetailsLayout = function(tsk, from) {
-    //these are not as usefull, turn on the one after the first if ('global' statement if problems
-    //if (true) { console.log(from, 'called av.sgr.changeDetailsLayout: task=', tsk, '; subChanged=', subChanged); }
-    // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags=', av.nut.hideFlags); }
     var dom = '';
-    //var tmpTxt = '';
-    //var inflow = 0.5;
-    //var outflow = 0.5;
     var ndx = av.sgr.logicNames.indexOf(tsk);
     var numTsk = av.sgr.logEdNames[ndx];
-    //var regionName;
-    //var numRegions = 'multi';   //this flag was put in when Rob wanted the 'supplyTypeSlct' to be in the summary anytime the layout = whole dish
-    //var regionLayout = document.getElementById(tsk+'_regionLayout').value;
     var regionNameList;
-    //var showGeo = "geoBoth";
-    //console.log('layout=', document.getElementById(tsk+'_regionLayout').value);
     if ( null != document.getElementById(tsk+'_regionLayout').value) {
       if ('1Global' == document.getElementById(tsk+'_regionLayout').value) {av.nut[numTsk].uiAll.geometry = 'global';}
       else { av.nut[numTsk].uiAll.geometry = 'grid';}
@@ -803,8 +758,12 @@ av.sgr.processBasicFn = function(numTsk, tsk) {
   // av.sgr.complexityLevel = 'sgrGlobal';   (begingger level)      
   av.nut[numTsk].uiAll.supplyTypeSlct = document.getElementById(tsk + '_supplyTypeSlct').value;
   //console.log('av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
-  console
-  if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+  
+  if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
+    // modify to treat as if it is global
+    console.log('In av.sgr.processBasicFn: geometry=grid; tsk=', tsk, '; numTsk=', numTsk);
+  };
+  if (true) {
     // I was not able to get a grid container to start in the top row of the summary secion. 
     // I tried absolute postion, but then the grid contain did not change the sise of the summary section. 
     // never got tried with one surrounding div an then two. finally Applied display: grid to the summary element
@@ -890,27 +849,7 @@ av.sgr.processBasicFn = function(numTsk, tsk) {
         // if (av.dbg.flg.nut) { console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'0Details').className); }
         // if (av.dbg.flg.nut) { console.log(tsk+'0periodcheckboxHolder.checked value =', document.getElementById(tsk+'0periodCheck').checked, document.getElementById(tsk+'0periodCheck').value); }
         break;
-      case 'debug':
-        document.getElementById(tsk+'_section').open = true;
-        //document.getElementById(tsk+'_periodcheckboxHolder').style.display = 'inline-block';
-        //document.getElementById(tsk+'_gradientcheckboxHolder').style.display = 'inline-block';
-        //document.getElementById(tsk+'_diffusecheckboxHolder').style.display = 'inline-block';
-        document.getElementById(tsk+'_initialDiv').style.display = 'inline-block';
-        document.getElementById(tsk+'_periodTimeHolder').style.display = 'inline-block';
-        document.getElementById(tsk+'_initialHiHolder').style.display = 'inline-block';
-        document.getElementById(tsk+'_initialLoDiv').style.display = 'inline-block';
-        document.getElementById(tsk+'_inflowHiDiv').style.display = 'inline-block';
-        document.getElementById(tsk+'_inflowLoDiv').style.display = 'inline-block';
-        document.getElementById(tsk+'_outflowHiDiv').style.display = 'inline-block';
-        document.getElementById(tsk+'_outflowLoDiv').style.display = 'inline-block';
-        document.getElementById(tsk+'_chmstatHiTxt').style.display = 'inline-block';
-        document.getElementById(tsk+'_chmstatLoDiv').style.display = 'inline-block';
-        document.getElementById(tsk+'_hiSideSelectHolder').style.display = 'inline-block';
-        document.getElementById(tsk+'_sideText').innerHTML = 'Side text describing what side means';
-        document.getElementById(tsk+'_subSection').className = 'grid-sugarDetailAll-container';
-     // if (av.dbg.flg.nut) { console.log(tsk+'Details.class=', document.getElementById(tsk+'Details').className); }
-        break;
-    }    
+    }  // end of switch 
   };
 };
 //----------------------------------------------------------------------------------------- end av.sgr.processBasicFn --

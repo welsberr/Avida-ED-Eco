@@ -1419,7 +1419,7 @@ av.dnd.FzAddExperimentFn = function (fzSection, target, type) {
     var domIDs = Object.keys(av.dnd[target].map);
     av.dnd.move.targetDomId = domIDs[domIDs.length - 1];
     av.dnd.move.sourceMoveData = av.dnd.move.source.map[av.dnd.move.sourceDomId];
-    console.log('move', av.dnd.move);
+    // console.log('move', av.dnd.move);
     
     if ('fzOrgan' == fzSection && 'ancestorBox' == target) { addedPopPage = av.dnd.lndAncestorBox(av.dnd.move); }
     else if ('fzOrgan' == fzSection && 'activeOrgan' == target) { addedPopPage = av.dnd.lndActiveOrgan(av.dnd.move); }

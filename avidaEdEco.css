@@ -11,12 +11,14 @@ html {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
+/*  I don't remmeber why this is here. Taking it out might be a problem DJB 2021_731'  
 *, *:before, *:after {
   -webkit-box-sizing: inherit;
   -moz-box-sizing: inherit;
   box-sizing: inherit;
   }
-
+*/
   body {
     margin: 0;
     background: #F5F5F5; /* cyan; */
@@ -77,8 +79,8 @@ html {
 .mainBlockHolder { grid-area: mainBlockHolder; }
 .rightInfoHolder { grid-area: rightInfoHolder; }
 .navColClass {grid-area: navColID; }
-#dragbarLeft {grid-area: dragbarLeft; } /* yemi: */
-
+#dragbarLeft {grid-area: dragbarLeft; } /* yemi:    float: right;*/
+#dragbarRight {grid-area: float: right; }
 
 .all2rit{
   display: grid;
@@ -152,7 +154,7 @@ html {
   border: 1px solid #AAA;               /* #AAA; */
 }
 
-.navColClass {
+.navColClass {                  /* left side bar with freezer */
   grid-area:navColClass;
   place-self: stretch;
   /* width: 238px; */       /*was 152   340px*/
@@ -161,7 +163,7 @@ html {
   background: #F5F5F5; /* lavender; */
   border: 1px solid #AAA;
   height: 100%;
-  resize: horizontal;
+  /* resize: horizontal;      /* diane removed */
   min-width: 160px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
   max-width: 620px;
 }
@@ -413,6 +415,7 @@ html {
 }
 #showTextDebugButton{
   min-width: 60px;
+  visibility: hidden;
 }
 #developmentToggle{
   min-width: 60px;
@@ -420,6 +423,7 @@ html {
 .devoShow {
   background: inherit;
   color: black;
+  max-width:95%;
 }
 .devoCammo {        /* #notation with 4 or 8 chars should have opacity as the last section should work, but NetBeans does not like it*/  
   border: none;                             /* #F5F5F500 should work, but net beans does not like it so some browsers might not like it */
@@ -427,6 +431,30 @@ html {
   /* background-color: rgba(245,245,245,0); */   /*  rgba(245,245,245,0)  is #F5F5F5 with opacity set to 0.0;   */  
   color: rgba(245,245,245,0);               /* 0.0 (fully transparent) to 1.0 (fully opaque); */
 }
+
+#showTextDebugBlock {
+  width: 100%;
+  height: 100%;
+  background: #F5F5F5;  /*lightgray;  */  
+}
+
+#showBigTextHolder {
+  background: #CCCCCC;
+  width: 100%;
+  height:95%;
+}
+
+#showBigTextarea{
+  resize: both;
+   -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    ;
+    /* cols:'150' rows:'50' */
+}
+
 /* -------------------------------------------------------------------------------- main work bench center section -- */
 .mainBlockClassRow {
   display: flex;
@@ -577,7 +605,7 @@ html {
   height: 100%;
 };
 
-#avidanOutline {display: none};
+#avidianOutline { display: none; }
 
 .zoomSlideClass { grid-area: zoomSlide; visibility: hidden; }
 .timeUpdateClass { grid-area: timeUpdate;}
@@ -609,12 +637,12 @@ html {
       flex: 0 0 24px;
   }
   
-  .labInfoHoldCls {
+  .labInfoHoldCls {          /* right side panel with info about the lab benche */
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
     height: 100%;
     width: 100%;
     min-width: 200px; /* yemi: */
-    max-width: 450px; /* yemi: */
+    max-width: 2200px; /* yemi: diane does not see why a max is needed: sometimes want popChart big */
   }
   
   #popStatsBlock{
@@ -652,30 +680,30 @@ html {
     border: 1px solid #AAA;
     background: #F5F5F5;
     height: auto;
-    resize: vertical;
+    resize: vertical;     /*should get yemi to replaces with a popChartDragbar */
     overflow: auto;
   }
   /* contains SelOrgType & PopStats4Grid horizontal */
   
-  #selOrgType{
-    /* flex: 0 1 190px;        /*was 170 */
-    flex: 1 1 auto;    /* yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
-    border: 1px solid #AAA;
-    /* overflow: auto; */
-  }  /*contains sotTopTable and sotBotTable  */
+#selOrgType{
+  /* flex: 0 1 190px;        /*was 170 */
+  flex: 1 1 auto;    /* yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
+  border: 1px solid #AAA;
+  /* overflow: auto; */
+}  /*contains sotTopTable and sotBotTable  */
 
-  #sotTopTable { width: 100%; }
-  #sotBopTable { width: 100%; background: white; }
-  #sotColorBox { display: inline-block; width: 10px; height: 10px;}
+#sotTopTable { width: 100%; }
+#sotBopTable { width: 100%; background: white; }
+#sotColorBox { display: inline-block; width: 10px; height: 10px;}
+
+.timePerform { min-width: 120px; background: #fff }
   
-  .timePerform { min-width: 120px; background: #fff }
-  
-  #popStats4grid{
-    flex: 1 1 240px; /* yemi: fixed the weird width problem */     
-    border: 1px solid #AAA;
-    /* min-width: 200px; */ /* yemi */
-    /* width: 100%; */
-  } /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
+#popStats4grid{
+  flex: 1 1 240px; /* yemi: fixed the weird width problem by useing 240px as the width; auto adjusts */     
+  border: 1px solid #AAA;
+  min-width: 200px;  /* yemi commented out; diane put back in */
+  /* width: 100%; */
+} /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
 
 div.popsTopTableHold { 
   min-width: 168px;
@@ -705,7 +733,7 @@ table.botPopTable {
 .popsBotTblcol1 {width: 55px; }
 .popsBotTblcol2 {width: 13px; }
 .popsBotTblcol3 {width: 110px; }
-.numAvidains {  background: #fff }   /* min-width: 110px; */
+.numAvidians {  background: #fff }   /* min-width: 110px; */
 
 .botPopTable tr:nth-child(even) {background: #FAFAFA}
 .botPopTable th {
@@ -726,11 +754,8 @@ table.botPopTable {
   width: 100%;
 }
 
-/* ---------------------- Population (right) side of tables( */
-#popStats4grid{           /* inside horizontal flexbox*/
-  flex: 1 1 auto;       /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-  border: 1px solid #AAA;
-}
+/* ---------------------- Population (right) side of tables */
+
 #resrceDataHolder{
   display: none;  /* none; */
   /* flex: 0 0 53; */
@@ -852,7 +877,16 @@ input:focus {
   width: 4.5em; height:1.6em;
 }
 
-#mutePopError { text-align: left; width: 90%; height: 15px; }
+#popSetupMutationRate {
+  /* background: lightpink; */
+}
+
+#mutePopError { 
+ 
+  width: 100%; height: 15px;
+  /* background-color: lightyellow;  */
+  /* text-align: left; */
+}
 
 .mutePopInputClass{
   width:4em;
@@ -860,14 +894,13 @@ input:focus {
   margin: 0px 2px;     /* top right bottom left  */   /*top left/right bottom */ /*top/bottom  left/right */
   /* padding: 0px 0px;   /* top right bottom left  */  /* box padding border margin outside now */
   display: inline-block; 
-  /*background: yellow; */
   float: left;
 }
 .mutePopSlideClass{
   /* width:360px; */
   display: block; 
-  vertical-align: center; 
-  background: #666;
+  vertical-align: middle; 
+  background: #666;    /* #666 */
 }
 /*
     -webkit-appearance: none;
@@ -944,7 +977,7 @@ input:focus {
 /* this section formats the details summary */
 /* I'm not sure it is a good idea */
 /* This works for the Freezer detail-summary, 
-    but the in summary with dispaly: grid the triangle wer on the right. They were Not in the grid-template-areas: */
+    but the in summary with display: grid the triangle wer on the right. They were Not in the grid-template-areas: */
 
 summary::-webkit-details-marker {
   display: none
@@ -992,10 +1025,6 @@ details summary {
 .sgrAccordSectionCls{
   width: 100%;
   border-bottom: 1px solid #888;   /* #000 is black  */
-  display: inline-block;
-}
-
-.geometryCls{
   display: inline-block;
 }
 
@@ -1049,18 +1078,6 @@ details summary {
 /* I could not get a div with a dispay of inline-gid start on the top line of the summary. 
 .sumHolderDiv { display: inline-block; position: absolute; }
 */
-.sumFtTxtCls { 
-  grid-area: sumFtTxtCls; 
-  display: inline-block; border: 1px solid palegreen; 
-}
-.taskRewardCls { 
-  grid-area: tskRewardCls; 
-  display: inline-block;
-  text-align: right;
-  border: 1px solid red;
-  width: 250px;
-}
-
 /* Sgr summary as a grid container. Something wrong. Try a Flex box
 .sgrLftSumCls { grid-area: sgrLftSumCls; display: inline-block;}
 .sgrRitSumCls { grid-area: sgrRitSumCls; 
@@ -1072,34 +1089,53 @@ details summary {
 }
 */
 
+
+.sumFtTxtCls { 
+  grid-area: sumFtTxtCls; 
+  display: inline-block; 
+}
+.taskRewardCls { 
+  grid-area: tskRewardCls;
+  text-align: right;
+  height: 100%;
+  width: 96px;
+  /* background: yellow; */
+}
+
+
 .sgrSumCls { 
   display: flex;
   justify-content: space-between;
   height: 23px;  width: 100%;
-  background: lightblue;  
+  /* background: LightCyan;  */
 }
-.sgrLftSumCls { flex: 0 1 auto; background: lightpink;}
+.sgrLftSumCls { flex: 0 1 auto; }
+.sgrRitSumCls { flex: 0 1 auto; width: 96px; }
+
+/*  This works fine, but his not needed. 
 .sgrRitSumCls { 
   flex: 0 1 auto;
-  grid-area: sgrRitSumCls; 
-  grid-template-areas: 'sumFtTxtCls tskRewardCls';
-  grid-template-columns: 1px 96px;
   display: grid;
+  grid-template-areas: 'tskRewardCls';
+  grid-template-columns: 96px;
   justify-items: end;
-  background: yellow;
+  background: lightyellow;
+  /* grid-area: sgrRitSumCls;    /* use if sgrSumCls has display: grid; 
 }
+*/
+/* no longer in use, but need to keep until removed from javascript */
+.geometryCls{ grid-area:geometryCls; display: none; }
 
-.sgrTitleCls { grid-area: sgrTitleCls; display: inline-block; border: 1px solid red; width: 54px; }
-.geometryCls { grid-area: geometryCls; display: none; border: 1px solid red; }
-.regionLaySumCls { grid-area: regionLayCls; display: inline-block; border: 0px none magenta; }
-.supply_HoldCls { grid-area: supply_HoldCls; display: inline-block; border: 0px none cyan; }
-.supplyWHoldCls { grid-area: supplyWdCls; display: inline-block; border: 1px solid red; }
-.inflwSumCls { grid-area: inflwSumCls; display: inline-block; border: 0px none magenta; }
-.outflwSumCls { grid-area: outflwSumCls; display: inline-block; border: 0px none cyan; }
-.chmsttSumCls { grid-area: chmsttSumCls; display: inline-block; border: 1px solid red; }
-.periodGlobalCheck { grid-area: periodGlobalCheck; display: inline-block; border: 1px solid red; }
-.periodTimGlobCls { grid-area: periodTimGlobCls; display: inline-block; border: 1px solid red; }
-.initialGlobCls { grid-area: initialGlobCls; display: inline-block; border: 1px solid red; }
+.sgrTitleCls { grid-area: sgrTitleCls; display: inline-block; width: 54px; }
+.regionLaySumCls { grid-area: regionLayCls; display: inline-block; }
+.supply_HoldCls { grid-area: supply_HoldCls; display: inline-block; }
+.supplyWHoldCls { grid-area: supplyWdCls; display: inline-block; border: }
+.inflwSumCls { grid-area: inflwSumCls; display: inline-block; }
+.outflwSumCls { grid-area: outflwSumCls; display: inline-block; }
+.chmsttSumCls { grid-area: chmsttSumCls; display: inline-block; }
+.periodGlobalCheck { grid-area: periodGlobalCheck; display: inline-block; }
+.periodTimGlobCls { grid-area: periodTimGlobCls; display: inline-block; }
+.initialGlobCls { grid-area: initialGlobCls; display: inline-block; }
 
 
 .grd-sgr-sum-adv-container {
@@ -1107,7 +1143,7 @@ details summary {
   grid-template-areas: 'detailArrow sgrTitleCls regionLayCls sumFtTxtCls';
   justify-content: start; 
   width: 100%;
-  border: 1px solid blue;  
+  /* border: 1px solid blue;  */
 }
 .grd-sgr-sum-adv-limited-container {
   display: grid;
@@ -1137,15 +1173,13 @@ details summary {
   display: grid;
   grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls initialGlobCls";
   justify-content: start; 
-  height: 23px;  
-  border: 1px solid purple;
+  height: 23px;
 }
 .grd-sgr-sum-global-limited-container {
   display: grid;
   grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls initialGlobCls";
   justify-content: start; 
   height: 23px;  
-  border: 1px solid purple;
 }
 .grd-sgr-sum-global-chemo-container {
   display: grid;
@@ -1188,20 +1222,20 @@ details summary {
 
 /* used as global resources can be periodic, but not in use now */
 .periodCheckGlobal { grid-area: periodCheckGlobal; display: none; }
-.detailTxtCls { grid-area: detailTxtCls; place-self: center;  border: 0px none green; }
+.detailTxtCls { grid-area: detailTxtCls; place-self: center;  }
 
 .initialHiDcls { grid-area: initialHi;}
 .initialLoDcls { grid-area: initialLo;}
 
-.inflwHiDcls { grid-area: inflowHi; place-self: center; border: 0px none blue; }
+.inflwHiDcls { grid-area: inflowHi; place-self: center; }
 .inflwLoDcls { grid-area: inflowLo; place-self: center stretch; }
 
-.outflwHiDcls { grid-area: outflowHi; place-self: center; border: 0px none cyan; }
-.outflwLoDcls { grid-area: outflowLo; place-self: center; border: 1px solid red; }
+.outflwHiDcls { grid-area: outflowHi; place-self: center; }
+.outflwLoDcls { grid-area: outflowLo; place-self: center; }
 
  /* top right bottom left */  
-.chmsttHiDcls { grid-area: chmstatHi; place-self: center; border: 1px solid red; }
-.chmsttLoDcls { grid-area: chmstatLo; place-self: center; border: 1px solid red; }
+.chmsttHiDcls { grid-area: chmstatHi; place-self: center; }
+.chmsttLoDcls { grid-area: chmstatLo; place-self: center; }
 
 .sideTitleHiDcls { grid-area: sideTitleHi; place-self: center stretch; }
 .sideTitleLoDcls { grid-area: sideTitleLo; place-self: center stretch; }
@@ -1442,6 +1476,14 @@ details summary {
                     <div id='allSgr3Blnk'>&nbsp;&nbsp;&nbsp;</div>
                     <div id='allSgr4Blnk'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
                     <div id='allSgr5Blnk'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+                    <div id='allSugarGeometryDiv' class='rHeadItem'>
+                      <select id="allSugarGeometry" class='geometryClsAll' onchange='av.sgr.allSugarGeometryChange(this);'>
+                        <option value='global'>Global</option>
+                        <option value='grid'>Local</option>
+                        <option value='neutral' selected>----</option>                            
+                      </select>
+                    </div>
 */
 
 /*********************************************************************** End Sugar Accordion using details and select */
@@ -1544,6 +1586,8 @@ select:disabled::-ms-expand {
 	left: 3px;
 	color: black;    /* #99a1a7;  */
 }
+
+/* not in use
 .big-checkbox {
 	padding: 18px;
 }
@@ -1552,7 +1596,7 @@ select:disabled::-ms-expand {
 	font-size: 28px;
 	left: 6px;
 }
-
+*/
 /*Checkbox this code creates a black circle version instead of the blue check
 
 input[type="checkbox"] {
@@ -2073,10 +2117,6 @@ canvas {
   width :3px;
   height : 100%;
   cursor: col-resize;
-}
-
-#dragbarLeft {
-  float: right;
 }
 
 .organismControls {
