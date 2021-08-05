@@ -57,19 +57,28 @@ function dragbarLeftResize() {
   var dragging = false;
 
   /* yemi: when there's a mousehover over dragbar, dragbar changes color */
-  $('#dragbarLeft').bind('mouseover', function(e) {
+  $('#dragbarLeft').on('mouseover touchstart', function(e) {
     $('#dragbarLeft').css('background-color', 'blue');
   });
 
-  $('#dragbarLeft').bind('mouseout', function(e) {
+  $('#dragbarLeft').on('mouseout touchend', function(e) {
     $('#dragbarLeft').css('background-color', 'gray');
   });
 
-  $('#dragbarLeft').bind('mousedown', function(e) {
-    // e.preventDefault();
+  $('#dragbarLeft').on('mousedown touchmove', function(e) {
     dragging = true;
+
+    // yemi: need to account for both touch and mouse event
+    var x;
+    if(e.type == 'touchmove'){
+      console.log('here', e);
+      var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+      x = touch.pageX;
+    } else if (e.type == 'mouseup') {
+      x = e.clientX;
+    }
     
-    $(document).mousemove(function(e){
+    $(document).on('mousemove touchmove', function(e){
       av.grd.drawGridSetupFn(); // yemi: redraw the grid
 
       /* yemi: on mouse move, dragbar changes color */
@@ -78,7 +87,7 @@ function dragbarLeftResize() {
       var rightSideWidth = $('#rightInfoHolder').css("width");
       var rightSideWidthNum = parseInt($('#rightInfoHolder').css("width")); /* yemi: extract only the number */
       var widthAvailable = window.innerWidth - rightSideWidthNum - 6; /* yemi: hard-coded 400px (right panel) 6px (left dragbar + right dragbar), need to fix */
-      var percentage = (e.pageX / widthAvailable);
+      var percentage = (x / widthAvailable);
       var widthOfNav = widthAvailable * percentage;
 
 
@@ -114,10 +123,19 @@ function dragbarLeftResize() {
     });
   });
 
-  $(document).bind('mouseup', function(e) {
+  $(document).on('mouseup touchend', function(e) {
 
     if (dragging) {
       av.grd.drawGridSetupFn(); // yemi: redraw the grid
+
+      // yemi: need to account for both touch and mouse event
+      var x;
+      if(e.type == 'touchmove'){
+        var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+        x = touch.pageX;
+      } else if (e.type == 'mouseup') {
+        x = e.clientX;
+      }
 
       /* yemi: dragbar changes color back to original */
       $('#dragbarLeft').css('background-color', 'gray');
@@ -125,7 +143,7 @@ function dragbarLeftResize() {
       var rightSideWidth = $('#rightInfoHolder').css("width");
       var rightSideWidthNum = parseInt($('#rightInfoHolder').css("width")); /* yemi: extract only the number */
       var widthAvailable = window.innerWidth - rightSideWidthNum - 6; /* yemi: hard-coded 400px (right panel) 6px (left dragbar + right dragbar), need to fix */
-      var percentage = (e.pageX / widthAvailable);
+      var percentage = (x / widthAvailable);
       var widthOfNav = widthAvailable * percentage;
 
       /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
@@ -164,7 +182,6 @@ function dragbarLeftResize() {
       /* yemi: make the following divs take up the entire width of their containers */
       $('orgInfoHolder').css("width", "100%");
       
-      $(document).unbind('mousemove');
       dragging = false;
     }
   });
@@ -176,27 +193,33 @@ function dragbarRightResize() {
   var dragging = false;
 
   /* yemi: when there's a mousehover over dragbar, dragbar changes color */
-  $('#dragbarRight').bind('mouseover', function(e) {
+  $('#dragbarRight').on('mouseover touchstart', function(e) {
     $('#dragbarRight').css('background-color', 'blue');
-    $('#dragbarRight').css('width', '4px');
   });
 
-  $('#dragbarRight').bind('mouseout', function(e) {
+  $('#dragbarRight').on('mouseout touchend', function(e) {
     $('#dragbarRight').css('background-color', 'gray');
-    $('#dragbarRight').css('width', '3px');
   });
 
-  $('#dragbarRight').bind('mousedown', function(e) {
+  $('#dragbarRight').on('mousedown touchmove', function(e) {
     // e.preventDefault();
     dragging = true;
     
-    $(document).mousemove(function(e){
+    $(document).on('mousemove touchmove', function(e){
       av.grd.drawGridSetupFn(); // yemi: redraw the grid
       av.grd.popChartFn(); // yemi: redraw plotly graph
 
+      // yemi: need to account for both touch and mouse event
+      var x;
+      if(e.type == 'touchmove'){
+        var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+        x = touch.pageX;
+      } else if (e.type == 'mouseup') {
+        x = e.clientX;
+      }
+
       /* yemi: on mouse move, dragbar changes color */
       $('#dragbarRight').css('background-color', 'blue');
-      $('#dragbarRight').css('width', '3px');
 
       var leftSideWidth;
       if (IS_LEFT_CLOSED) {
@@ -206,7 +229,7 @@ function dragbarRightResize() {
       }
 
       var widthAvailable = window.innerWidth - parseInt(leftSideWidth) - 6; /* yemi: hard-coded 400px (right panel) 6px (left dragbar + right dragbar), need to fix */
-      var percentage = ((e.pageX - parseInt(leftSideWidth) - 6) / widthAvailable); /* yemi: prolly needs fixing */
+      var percentage = ((x - parseInt(leftSideWidth) - 6) / widthAvailable); /* yemi: prolly needs fixing */
       var widthOfCenter = widthAvailable * percentage;
       var widthOfRight = widthAvailable - widthOfCenter;
 
@@ -238,15 +261,20 @@ function dragbarRightResize() {
     });
   });
 
-  $(document).bind('mouseup', function(e) {
+  $(document).on('mouseup touchend', function(e) {
 
     if (dragging) {
       av.grd.drawGridSetupFn(); // yemi: redraw the grid
       av.grd.popChartFn(); // yemi: redraw plotly graph
 
-      /* yemi: dragbar changes color back to original */
-      $('#dragbarRight').css('background-color', 'gray');
-      $('#dragbarRight').css('width', '3px');
+      // yemi: need to account for both touch and mouse event
+      var x;
+      if(e.type == 'touchmove'){
+        var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+        x = touch.pageX;
+      } else if (e.type == 'mouseup') {
+        x = e.clientX;
+      }
 
       var leftSideWidth;
       if (IS_LEFT_CLOSED) {
@@ -256,7 +284,7 @@ function dragbarRightResize() {
       }
 
       var widthAvailable = window.innerWidth - parseInt(leftSideWidth) - 6; /* yemi: hard-coded 400px (right panel) 6px (left dragbar + right dragbar), need to fix */
-      var percentage = ((e.pageX - parseInt(leftSideWidth) - 6) / widthAvailable); /* yemi: prolly needs fixing */
+      var percentage = ((x - parseInt(leftSideWidth) - 6) / widthAvailable); /* yemi: prolly needs fixing */
       var widthOfCenter = widthAvailable * percentage;
       var widthOfRight = widthAvailable - widthOfCenter;
 
@@ -297,7 +325,6 @@ function dragbarRightResize() {
       /* yemi: make the following divs take up the entire width of their containers */
       $('orgInfoHolder').css("width", "100%");
       
-      $(document).unbind('mousemove');
       dragging = false;
     }
   });
