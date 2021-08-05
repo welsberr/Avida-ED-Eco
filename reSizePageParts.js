@@ -66,7 +66,7 @@ function dragbarLeftResize() {
   });
 
   $('#dragbarLeft').bind('mousedown', function(e) {
-    e.preventDefault();
+    // e.preventDefault();
     dragging = true;
     
     $(document).mousemove(function(e){
@@ -187,7 +187,7 @@ function dragbarRightResize() {
   });
 
   $('#dragbarRight').bind('mousedown', function(e) {
-    e.preventDefault();
+    // e.preventDefault();
     dragging = true;
     
     $(document).mousemove(function(e){
