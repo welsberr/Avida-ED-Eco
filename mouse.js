@@ -156,6 +156,7 @@
     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
   };
 
+  // yemi: 'offspring' is for organism page, 'kid' for population page
   av.mouse.offspringMouse = function(evt, dnd, fio, fzr, gen) {
     'use strict';
     var target = '';
@@ -173,29 +174,45 @@
         //create a new freezer item
         if (av.debug.mouse) console.log('offSpring->freezerDiv');
         var parent;
-        var parentID = Object.keys(dnd.activeOrgan.map)[0];
+        // var parentID = Object.keys(dnd.activeOrgan.map)[0];
+        var container = dnd.activeOrgan.id !== undefined ? "#" + dnd.activeOrgan.id : "." + dnd.activeOrgan.className;
+        var parentID = $(container).children()[0].id; // yemi: not sure it will work
         if (av.debug.mouse) console.log('parentID', parentID);
         if (undefined == parentID) parent = 'noParentName';
         else parent = document.getElementById(parentID).textContent;
         //make sure there is a name.
         var oldname = parent + '_offspring';
-
-        var nameArray = av.dnd.makeNameList(av.dnd.fzOrgan);
-        //console.log('name', oldname, '; array',  nameArray);
-        var sName = av.dnd.namefzrItem(oldname, nameArray);
+        var sName = av.dnd.namefzrItem(container, oldName);
+        // var nameArray = av.dnd.makeNameList(av.dnd.fzOrgan);
+        // //console.log('name', oldname, '; array',  nameArray);
+        // var sName = av.dnd.namefzrItem(oldname, nameArray);
         console.log('sName', sName);
         var avidian = prompt('Please name your avidian', sName);
         if (avidian) {
-          avidian = av.dnd.getUniqueFzrName(avidian, nameArray);
+          avidian = av.dnd.getUniqueFzrName(container, avidian);
           if (null != avidian) {  //add to Freezer
             av.post.addUser('Moved offspring, ' + avidian + ', to organism freezer');
-            dnd.fzOrgan.insertNodes(false, [{data: avidian, type: ['g']}]);
-            dnd.fzOrgan.sync();
+            // dnd.fzOrgan.insertNodes(false, [{data: avidian, type: ['g']}]);
+            // dnd.fzOrgan.sync();
+
+            var domid = 'g' + av.fzr.gNum;
+            var type = 'g';
+            $(container).append(`<div class="item ${type}" id="${domid}"> ${avidian} </div>`);
+            // Add an entry to containerMap
+            if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
+              containerMap[container][domid] = {'name': avidian , 'type': 'g'};
+            } else {
+              containerMap[container][domid].name = avidian;
+              containerMap[container][domid].type = 'g';
+            }
             //find domId of offspring as listed in dnd.fzOrgan
-            var mapItems = Object.keys(dnd.fzOrgan.map);
+            // var mapItems = Object.keys(dnd.fzOrgan.map);
+            // var gdir =  'g' + av.fzr.gNum;
+            // av.fzr.dir[mapItems[mapItems.length - 1]] = gdir;
+            // av.fzr.domid[gdir] = mapItems[mapItems.length - 1];
             var gdir =  'g' + av.fzr.gNum;
-            av.fzr.dir[mapItems[mapItems.length - 1]] = gdir;
-            av.fzr.domid[gdir] = mapItems[mapItems.length - 1];
+            av.fzr.dir[domid] = gdir;
+            av.fzr.domid[gdir] = domid;
             av.fzr.file[gdir + '/entryname.txt'] = avidian;
             av.fzr.file[gdir + '/genome.seq'] = '0,heads_default,' + av.ind.dna[av.ind.son];
             av.fzr.gNum++;
@@ -203,7 +220,8 @@
             if (av.debug.mouse) console.log('Offspring-->freezer, dir', gdir, 'fzr', fzr);
             //create a right mouse-click context menu for the item just created.
             if (av.debug.mouse) console.log('Offspring-->freezer; fzf', fzr);
-            av.dnd.contextMenu(dnd.fzOrgan, av.fzr.domid[gdir], 'av.mouse.offspringMouse');
+            // av.dnd.contextMenu(dnd.fzOrgan, av.fzr.domid[gdir], 'av.mouse.offspringMouse');
+            av.dnd.contextMenu(container, domid, 'av.mouse.offspringMouse');
           }
         }
       }
@@ -226,6 +244,7 @@
     av.fzr.actOrgan.actDomid = Object.keys(av.dnd.activeOrgan.map)[0];
   }
 
+  // yemi: 'offspring' is for organism page, 'kid' for population page
   av.mouse.kidMouse = function (evt, dnd, fzr, grd){
     'use strict';
     var target = '';

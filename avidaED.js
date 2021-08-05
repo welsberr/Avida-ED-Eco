@@ -688,11 +688,12 @@ require([
       console.log('in mouseup target:', evt.target.id, '; event:', evt);
     if (av.debug.mouse)
       console.log('in mouseup target:', evt.target.id);
-    av.mouse.makeCursorDefault();
-    // av.mouse.UpGridPos = [evt.offsetX, evt.offsetY];
-    console.log('in avidaEd.js mouseup:', av.mouse.UpGridPos);
+    
+      av.mouse.makeCursorDefault();
+
     if (av.debug.mouse)
       console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
+    
     av.mouse.Dn = false;
 
     // --------- process if something picked to dnd ------------------
@@ -711,10 +712,14 @@ require([
         av.post.addUser('Dragged item to Organism Icon');
         av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
       }
-    } else if ('offspring' == av.mouse.Picked) {
+    } 
+    else if ('offspring' == av.mouse.Picked) {
+      console.log('offspring');
       target = av.mouse.offspringMouse(evt, av.dnd, av.fio, av.fzr, av.gen);
       av.mouse.Picked = '';
-    } else if ('kid' == av.mouse.Picked) {
+    } 
+    else if ('kid' == av.mouse.Picked) {
+      console.log(evt.target);
       av.mouse.Picked = '';
       target = av.mouse.kidMouse(evt, av.dnd, av.fzr, av.grd);
       if (av.debug.mouse)

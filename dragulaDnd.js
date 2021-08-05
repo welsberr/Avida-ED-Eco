@@ -135,7 +135,9 @@ jQuery(document).ready(function($) {
     }
 
     if (target === av.dnd.fzWorld) {
-      av.dnd.landFzWorld(el, target, source);
+      // yemi: does not trigger because techinically there are no 'items' on the grid right now.
+      // on the grid, mouse movements overtake. Code for that is in mouse.js (av.mouse.kidMouse)
+      // av.dnd.landFzWorld();
     }
 
     //When mouse button is released, return cursor to default values
@@ -405,21 +407,14 @@ jQuery(document).ready(function($) {
           containerMap[container][domid].name = nameWorld;
           containerMap[container][domid].type = 'w';
         }
-        // domid = av.dnd.insertNode(container, nameWorld, 'w', el);
-        // document.getElementById(domid).textContent = nameWorld;
-        // console.log(containerMap);
 
         av.fzr.dir[domid] = 'w'+ av.fzr.wNum;
         av.fzr.domid['w'+ av.fzr.wNum] = domid;
-        // av.fzr.dir[domid] = 'w' + (av.fzr.wNum - 1);
-        // av.fzr.domid['w' + (av.fzr.wNum - 1)] = domid;
 
         //create a right av.mouse-click context menu for the item just created.
         av.dnd.contextMenu(container, domid, 'av.dnd.landFzWorldFn');
         av.fwt.makeFzrWorld(av.fzr.wNum, 'av.dnd.landFzWorldFn');
         av.msg.exportExpr('w' + av.fzr.wNum);
-        // av.fwt.makeFzrWorld((av.fzr.wNum - 1), 'av.dnd.landFzWorldFn');
-        // av.msg.exportExpr('w' + (av.fzr.wNum - 1));
         av.msg.sendData();
 
         av.fzr.saveUpdateState('no');
@@ -1017,7 +1012,6 @@ jQuery(document).ready(function($) {
       el.id = domid;
       el.innerHTML = name;
       el.class = `item ${type}`;
-      console.log(el);
     }
     // if the element is being added during the fileDataRead stage,
     else {
@@ -1046,9 +1040,6 @@ jQuery(document).ready(function($) {
     var unique = true;
     var suggestName;
     var namelist = $.map(document.querySelector(container).children, (x) => {return x.textContent.trim()});
-    console.log(namelist);
-    console.log(name);
-    console.log(namelist.indexOf(name));
     while (unique) {
       unique = false;
       if (0 <= namelist.indexOf(name)) {
@@ -1064,13 +1055,9 @@ jQuery(document).ready(function($) {
   av.dnd.namefzrItem = function(container, name) {
     'use strict';
     var namelist = $.map(document.querySelector(container).children, (x) => {return x.textContent.trim()});
-    console.log(namelist);
-    console.log(name);
-    console.log(namelist.indexOf(name));
     var theName;
     //look for name in freezer section
     if (0 <= namelist.indexOf(name)) {
-      console.log("there's a dupe");
       theName = av.dnd.nameNfrzItem(namelist, name, 0);
     } else { theName = name; }
 
@@ -1106,9 +1093,8 @@ jQuery(document).ready(function($) {
     //look for name in parent
     if (0 <= av.parents.name.indexOf(name)) {
       theName = av.dnd.nameNparent(name, 0);
-      console.log('duplicate parent name exists');
     }
-    else { theName = name; console.log('this is a original name');}
+    else { theName = name;}
     av.parents.name.push(theName);
     return theName;
   };
