@@ -165,7 +165,7 @@ html {
   height: 100%;
   /* resize: horizontal;      /* diane removed */
   min-width: 160px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
-  max-width: 620px;
+  max-width: 1620px;   /* yemi  had at 620px. Diane changed */
 }
 
 /*contains pages (population, Organsims, Analysis) */
@@ -642,7 +642,7 @@ html {
     height: 100%;
     width: 100%;
     min-width: 200px; /* yemi: */
-    max-width: 590px; /* yemi: diane does not see why a max is needed: sometimes want popChart big */
+    max-width: 1590px; /* yemi: 590px.  diane does not see why a max is needed: sometimes want popChart big */
   }
   
   #popStatsBlock{
