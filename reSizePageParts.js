@@ -65,21 +65,20 @@ function dragbarLeftResize() {
     $('#dragbarLeft').css('background-color', 'gray');
   });
 
-  $('#dragbarLeft').on('mousedown touchmove', function(e) {
+  $('#dragbarLeft').on('mousedown touchstart', function(e) {
     dragging = true;
-
-    // yemi: need to account for both touch and mouse event
-    var x;
-    if(e.type == 'touchmove'){
-      console.log('here', e);
-      var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-      x = touch.pageX;
-    } else if (e.type == 'mouseup') {
-      x = e.clientX;
-    }
     
     $(document).on('mousemove touchmove', function(e){
       av.grd.drawGridSetupFn(); // yemi: redraw the grid
+      
+      // yemi: need to account for both touch and mouse event
+      var x;
+      if(e.type == 'touchmove'){
+        var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+        x = touch.pageX;
+      } else if (e.type == 'mousemove') {
+        x = e.pageX;
+      }
 
       /* yemi: on mouse move, dragbar changes color */
       $('#dragbarLeft').css('background-color', 'blue');
@@ -96,13 +95,11 @@ function dragbarLeftResize() {
         widthOfNav = 0; /* yemi: if width too small, collapse it*/
         IS_LEFT_CLOSED = true;
       } 
-
       /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
       else if (widthOfNav > parseInt($('#navColId').css("max-width"))) {
         widthOfNav = parseInt($('#navColId').css("max-width"));
         IS_LEFT_CLOSED = false;
       }
-
       else {
         IS_LEFT_CLOSED = false;
       }
@@ -154,7 +151,6 @@ function dragbarLeftResize() {
         $('#leftPanelButton').val('>> ');
         $('#leftPanelBUtton').css('background', '#ccc');
       } 
-
       /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
       else if (widthOfNav > parseInt($('.navColClass').css("max-width"))) {
         widthOfNav = parseInt($('#navColId').css("max-width"));
@@ -163,7 +159,6 @@ function dragbarLeftResize() {
         $('#leftPanelButton').val('<< ');
         $('#leftPanelBUtton').css('background', 'inherit');
       }
-
       else {
         IS_LEFT_CLOSED = false;
         /* yemi: change the button's contents and look */
@@ -181,6 +176,8 @@ function dragbarLeftResize() {
 
       /* yemi: make the following divs take up the entire width of their containers */
       $('orgInfoHolder').css("width", "100%");
+      
+      $(document).unbind('mousemove touchmove'); // yemi: need it
       
       dragging = false;
     }
@@ -201,8 +198,7 @@ function dragbarRightResize() {
     $('#dragbarRight').css('background-color', 'gray');
   });
 
-  $('#dragbarRight').on('mousedown touchmove', function(e) {
-    // e.preventDefault();
+  $('#dragbarRight').on('mousedown touchstart', function(e) {
     dragging = true;
     
     $(document).on('mousemove touchmove', function(e){
@@ -214,8 +210,8 @@ function dragbarRightResize() {
       if(e.type == 'touchmove'){
         var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
         x = touch.pageX;
-      } else if (e.type == 'mouseup') {
-        x = e.clientX;
+      } else if (e.type == 'mousemove') {
+        x = e.pageX;
       }
 
       /* yemi: on mouse move, dragbar changes color */
@@ -238,7 +234,6 @@ function dragbarRightResize() {
         widthOfRight = 0; /* yemi: if width too small, collapse it */
         widthOfCenter = widthAvailable;
       }
-
       /* yemi: if the width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
       else if (widthOfRight > parseInt($('.labInfoHoldCls').css("max-width"))) {
         widthOfRight = parseInt($('.labInfoHoldCls').css("max-width"));
@@ -297,7 +292,6 @@ function dragbarRightResize() {
         $('#ritePanelButton').val('<< ');
         $('#ritePanelBUtton').css('background', '#ccc');
       }
-
       /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
       else if (widthOfRight > parseInt($('.labInfoHoldCls').css("max-width"))) {
         widthOfRight = $('.labInfoHolder').css("max-width");
@@ -307,7 +301,6 @@ function dragbarRightResize() {
         $('#ritePanelButton').val('>> ');
         $('#ritePanelBUtton').css('background', 'inherit');
       }
-
       else {
         IS_RIGHT_CLOSED = false;
         /* yemi: change the button's contents and look */
@@ -324,6 +317,8 @@ function dragbarRightResize() {
 
       /* yemi: make the following divs take up the entire width of their containers */
       $('orgInfoHolder').css("width", "100%");
+
+      $(document).unbind('mousemove touchmove');
       
       dragging = false;
     }
