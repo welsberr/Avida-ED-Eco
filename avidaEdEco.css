@@ -642,7 +642,7 @@ html {
     height: 100%;
     width: 100%;
     min-width: 200px; /* yemi: */
-    max-width: 590px; /* yemi: diane does not see why a max is needed: sometimes want popChart big */
+    max-width: 650px; /* yemi: diane does not see why a max is needed: sometimes want popChart big */
   }
   
   #popStatsBlock{
