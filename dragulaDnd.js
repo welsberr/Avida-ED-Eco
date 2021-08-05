@@ -141,19 +141,27 @@ jQuery(document).ready(function($) {
     }
 
     //When mouse button is released, return cursor to default values
-    $(document).bind('mouseup touchend', function (evt) {
+    $(document).on('mouseup touchend', function (evt) {
       'use strict';
       if (dragging && global_source !== av.dnd.ancestorBox) {
-        console.log('here');
-        av.mouse.UpGridPos = [evt.pageX, evt.pageY];
-        console.log(global_source);
+        var x;
+        var y;
+        if(evt.type == 'touchend'){
+          var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
+          x = touch.pageX;
+          y = touch.pageY;
+        } else if (evt.type == 'mouseup') {
+          x = evt.clientX;
+          y = evt.clientY;
+        }
+        av.mouse.UpGridPos = [x, y];
         if (target === av.dnd.gridCanvas) {
           av.dnd.landGridCanvas(el, target, source);
           av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
         }
         dragging = false;
         global_source = '';
-        $(document).unbind('mousemove');
+        $(document).unbind('mousemove touchmove');
       }
     });
 
