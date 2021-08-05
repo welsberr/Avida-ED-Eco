@@ -80,7 +80,7 @@ html {
 .rightInfoHolder { grid-area: rightInfoHolder; }
 .navColClass {grid-area: navColID; }
 #dragbarLeft {grid-area: dragbarLeft; } /* yemi:    float: right;*/
-#dragbarRight {grid-area: float: right; }
+#dragbarRight {float: right; }
 
 .all2rit{
   display: grid;
@@ -178,7 +178,7 @@ html {
     max-height: 100vh;
     border: 1px solid #AAA;
     overflow: auto;
-    min-width: 200px;
+    min-width: 100px;
   }
 
   .footerRow {
@@ -642,7 +642,7 @@ html {
     height: 100%;
     width: 100%;
     min-width: 200px; /* yemi: */
-    max-width: 2200px; /* yemi: diane does not see why a max is needed: sometimes want popChart big */
+    max-width: 590px; /* yemi: diane does not see why a max is needed: sometimes want popChart big */
   }
   
   #popStatsBlock{
@@ -1034,10 +1034,9 @@ details summary {
 
 .localChemostat { display: inline; }
 
-
-.2HalfLftRit { display: inline-block; }  //inline
-.3TopLftRit { display: none; }  //inline
-.4Quarters { display: none; }  //inline
+.2HalfLftRit { display: inline-block; }  /* inline */
+.3TopLftRit { display: none; }  /* inline */
+.4Quarters { display: none; }  /* inline */
 
 .TopLftRit{
   display: inline-block;  
@@ -1129,7 +1128,7 @@ details summary {
 .sgrTitleCls { grid-area: sgrTitleCls; display: inline-block; width: 54px; }
 .regionLaySumCls { grid-area: regionLayCls; display: inline-block; }
 .supply_HoldCls { grid-area: supply_HoldCls; display: inline-block; }
-.supplyWHoldCls { grid-area: supplyWdCls; display: inline-block; border: }
+.supplyWHoldCls { grid-area: supplyWdCls; display: inline-block;}
 .inflwSumCls { grid-area: inflwSumCls; display: inline-block; }
 .outflwSumCls { grid-area: outflwSumCls; display: inline-block; }
 .chmsttSumCls { grid-area: chmsttSumCls; display: inline-block; }
@@ -1326,7 +1325,9 @@ details summary {
   grid-template-areas: 'subSectionTitle supplyDetailDiv supplyDetailDiv supplyModifierDivClass supplyModifierDivClass sideInput'
                        'inflowHi        inflowHi        outflowHi       outflowHi             chmstatHi             chmstatHi';
                        'inflowLo        inflowLo        outflowLo       outflowLo             chmstatLo             chmstatLo';
-  justify-items: start;  justify-content: start; width: 100%;
+  justify-items: start;  
+  justify-content: start; 
+  width: 100%;
   align-items: stretch;
 }
 
@@ -1842,7 +1843,7 @@ checkbox:focus {
       margin: auto;
     }
     .popDishHolder{  
-      padding 3px;
+      padding: 3px;
       background: #F5F5F5;  /*lemonchiffon; */
     }
     /* insdie popDishHolder */
@@ -1879,7 +1880,7 @@ checkbox:focus {
     bottom: 0;
 
     z-index: 1; /* Sit on top */
-    //padding-top: 100px; /* Location of the box */
+    /* padding-top: 100px;*/ /* Location of the box */
     left: 0;
     top: 0;
     width: 100%;   /*   Full width */
@@ -1914,8 +1915,8 @@ checkbox:focus {
     color: black;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-/************************************************************************************************* end of model class */                                                                         */
+/*----------------------------------------------------------------------------------------------------------------------
+/************************************************************************************************* end of model class */                                                                        
 
 #saveCSVdataModalID {
   position: fixed; /* Stay in place */
@@ -1953,7 +1954,7 @@ checkbox:focus {
   display: flex;
   flex-direction: column;
   background: #fefefe;
-  padding: 0px;   //was 2
+  padding: 0px;   /* was 2 */
   border: 1px solid black; /* #888; */
   width: 94%;
   height: 90%;
@@ -1977,7 +1978,7 @@ checkbox:focus {
 }
 
 .modalBig-footer {
-  flex: 0 0 40px
+  flex: 0 0 40px;
   padding: 8px 0px;    /*top-bottom; left-right */
   width: 100%;
   background: lightgray;
@@ -2131,11 +2132,20 @@ label {
   margin-bottom: 0em; /* yemi: overwrites margin on the bottom set by Bootstrap */
 }
 
+/* yemi: draggable item styling */
+.item {
+  cursor: grab;
+}
+.item:hover {
+  background-color: rgb(189, 229, 245);
+  opacity: 50%;
+}
+
 /********************************************************************************************** end of modalBig class */                                                                         */
 
 /*************************************************************************************************** no longer in use */
 
-/// Not in use, but could be useful
+/* Not in use, but could be useful */
   /* from https://www.bestcssbuttongenerator.com/#/17 */
   .fancyButton {
     -moz-box-shadow: 5px 4px 7px 0px #899599;
@@ -2186,6 +2196,30 @@ label {
     background: #F5F5F5; /* red; */
     overflow:hidden;
   }
+
+  /* --------Dragula--------
+  .gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    opacity: 0.8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=80);
+  }
+  .gu-hide {
+    display: none !important;
+  }
+  .gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+  }
+  .gu-transit {
+    opacity: 0.2;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20);
+  } */
 
 
 
