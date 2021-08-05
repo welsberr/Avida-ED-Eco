@@ -141,7 +141,7 @@ jQuery(document).ready(function($) {
     }
 
     //When mouse button is released, return cursor to default values
-    $(document).bind('mouseup', function (evt) {
+    $(document).bind('mouseup touchend', function (evt) {
       'use strict';
       if (dragging && global_source !== av.dnd.ancestorBox) {
         console.log('here');

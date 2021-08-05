@@ -713,13 +713,14 @@ require([
         av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
       }
     } 
+    // yemi: this is for organism page
     else if ('offspring' == av.mouse.Picked) {
       console.log('offspring');
       target = av.mouse.offspringMouse(evt, av.dnd, av.fio, av.fzr, av.gen);
       av.mouse.Picked = '';
     } 
+    // yemi: this is for population page
     else if ('kid' == av.mouse.Picked) {
-      console.log(evt.target);
       av.mouse.Picked = '';
       target = av.mouse.kidMouse(evt, av.dnd, av.fzr, av.grd);
       if (av.debug.mouse)
@@ -729,12 +730,9 @@ require([
         av.ui.mainBoxSwap('organismBlock');
         av.ind.organismCanvasHolderSize('mouseup_organIcon_Kid');
         av.ui.adjustOrgInstructionTextAreaSize();
+        console.log("hi I'm here");
         av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
       }
-      /*      else if ('fzOrgan' == target) {
-      //make_database_entry if using a database (av.fio, av.fzr);
-      }
-      */
     }
     av.mouse.Picked = '';
   });
