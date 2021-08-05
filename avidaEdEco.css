@@ -165,7 +165,7 @@ html {
   height: 100%;
   /* resize: horizontal;      /* diane removed */
   min-width: 160px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
-  max-width: 620px;
+  max-width: 1620px;   /* yemi  had at 620px. Diane changed */
 }
 
 /*contains pages (population, Organsims, Analysis) */
@@ -1558,14 +1558,16 @@ select:disabled::-ms-expand {
 /* this creates a grey checkbox */
 .blk_wite_checkbox {
 	-webkit-appearance: none;
-	background-color: #fafafa;
-	border: 1px solid #cacece;
+	background-color: #fafafa;      /* #fafafa */
+	border: 1px solid #707070;    /* #cacece */
 	/* box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05); */
 	padding: 8px;
 	border-radius: 3px;
 	display: inline-block;
 	position: relative;
   margin-top: 4px;
+  min-width: 15px;
+  min-height: 15px;
 }
 .blk_wite_checkbox:active, .blk_wite_checkbox:checked:active {
 	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
