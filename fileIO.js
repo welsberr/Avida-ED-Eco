@@ -89,7 +89,7 @@
       console.log('loadConfigFlag=',loadConfigFlag, '; av.fzr=', av.fzr);
 
       if (loadConfigFlag) {
-        av.dnd.loadDefaultConfigFn('av.fio.readZipWS');
+        av.dnd.loadDefautlConfigFn('av.fio.readZipWS');
 
         if (false) {
           if ('c0/avida.cfg' == av.fio.anID) {

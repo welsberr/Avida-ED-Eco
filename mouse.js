@@ -73,10 +73,8 @@
   av.mouse.makeCursorDefault = function () {
     'use strict';
     av.mouse.frzCurserSet('default');  //pointer
-
-    // yemd
-    // if (1 < av.fzr.actConfig.actDomid.length) {document.getElementById(av.fzr.actConfig.actDomid).style.cursor = 'pointer';}
-    // if (1 < av.fzr.actOrgan.actDomid.length) {document.getElementById(av.fzr.actOrgan.actDomid).style.cursor = 'pointer';}
+    if (1 < av.fzr.actConfig.actDomid.length) {document.getElementById(av.fzr.actConfig.actDomid).style.cursor = 'pointer';}
+    if (1 < av.fzr.actOrgan.actDomid.length) {document.getElementById(av.fzr.actOrgan.actDomid).style.cursor = 'pointer';}
     av.mouse.setCursorStyle('default', av.mouse.dndTarget);
     av.mouse.setCursorStyle('default', av.mouse.notDndPopList);
     av.mouse.setCursorStyle('default', av.mouse.notDndIndList);
@@ -124,7 +122,6 @@
     */
     var offsetYLocal = ($("#gridHolder").height() - av.dom.gridCanvas.height) / 2;
     var offsetXLocal = ($("#gridHolder").width() - av.dom.gridCanvas.width) / 2;
-    console.log("findSelected", evt.offsetX, evt.offsetY);
     var mouseX = evt.offsetX - av.grd.marginX - av.grd.xOffset - offsetXLocal;
     var mouseY = evt.offsetY - av.grd.marginY - av.grd.yOffset - offsetYLocal;
     av.grd.selectedCol = Math.floor(mouseX / av.grd.cellWd);
@@ -260,47 +257,25 @@
     return target;
   };
 
-  // yemd
-  // possibly move to dragulaDnd just to keep all the dnd functions together?
   av.mouse.freezeTheKid = function () {
     "use strict";
     av.post.addUser('Moved avidian from grid to freezer');
     if (av.debug.mouse) console.log('freezerDiv');
     //make sure there is a name.
 
-    // var nameArray = av.dnd.makeNameList(av.dnd.fzOrgan);
+    var nameArray = av.dnd.makeNameList(av.dnd.fzOrgan);
     //console.log('name', av.grd.kidName, '; array',  nameArray);
-    container = $.map($('#ancestorBox')[0], (key, value) => {return value});
-    var sName = av.dnd.namefzrItem(container, av.grd.kidName);
+    var sName = av.dnd.namefzrItem(av.grd.kidName, nameArray);
     console.log('sName', sName);
     var avidian = prompt('Please name your avidian', sName);
     if (avidian) {
-      var avName = av.dnd.getUniqueFzrName(container, avidian);
+      var avName = av.dnd.getUniqueFzrName(avidian, nameArray);
       if (null != avName) {  //give dom item new avName name
         av.post.addUser('Froze kid = ' + avName);
-        
-        // av.dnd.fzOrgan.insertNodes(false, [{data: avName, type: ['g']}]);
-        // av.dnd.fzOrgan.sync();
+        av.dnd.fzOrgan.insertNodes(false, [{data: avName, type: ['g']}]);
+        av.dnd.fzOrgan.sync();
+        var mapItems = Object.keys(av.dnd.fzOrgan.map);
         var gdir =  'g' + av.fzr.gNum;
-        var type = 'g';
-        var domid = gdir;
-        var container = '#' + av.dnd.fzOrgan.id;
-        var mapItems = Object.keys(containerMap[container]);
-
-        $(container).append(`<div class="item ${type}" id="${domid}"> ${avName} </div>`);
-
-        // Add an entry to containerMap
-        if (Object.keys(containerMap).indexOf(container) === -1) {
-          containerMap[container] = {};
-        }
-
-        if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
-          containerMap[container][domid] = {'name': avName , 'type': 'g'};
-        } else {
-          containerMap[container][domid].name = avName;
-          containerMap[container][domid].type = 'g';
-        }
-
         av.fzr.file[gdir + '/entryname.txt'] = avName;
         av.fzr.dir[mapItems[mapItems.length - 1]] = gdir;
         av.fzr.domid[gdir] = mapItems[mapItems.length - 1];
@@ -315,7 +290,7 @@
         av.fzr.saveUpdateState('no');
       }
     }
-  };
+  }
 
   av.mouse.ParentMouse = function (evt, av) {
     'use strict';
@@ -352,8 +327,8 @@
       if (av.debug.mouse) console.log('av.parents.domid', av.parents.domid);
       var node = dojo.byId(av.parents.domid[av.mouse.ParentNdx]);
       console.log('node', node);
-      // av.dnd.ancestorBox.parent.removeChild(node);
-      // av.dnd.ancestorBox.sync();
+      av.dnd.ancestorBox.parent.removeChild(node);
+      av.dnd.ancestorBox.sync();
       av.post.addUser('Moved ancestor to trash');
 
       //remove from main list.
