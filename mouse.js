@@ -367,6 +367,7 @@
       if (av.debug.mouse) console.log('av.mouse.ParentNdx', av.mouse.ParentNdx, '; domid', av.parents.domid[av.mouse.ParentNdx]);
       if (av.debug.mouse) console.log('ancestorBox', av.dnd.ancestorBox);
       if (av.debug.mouse) console.log('av.parents.domid', av.parents.domid);
+      // yemi: delete from containerMap as well as erase dom object
       var domid = av.parents.domid[av.mouse.ParentNdx];
       var container = '#' + av.dnd.ancestorBox.id;
       $(container).children('#' + domid).remove();
