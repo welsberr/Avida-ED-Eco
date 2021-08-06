@@ -684,16 +684,11 @@ require([
   $(document).on('mouseup', function (evt) {
     'use strict';
     var target = '';
-    if (av.debug.mouse)
-      console.log('in mouseup target:', evt.target.id, '; event:', evt);
-    if (av.debug.mouse)
-      console.log('in mouseup target:', evt.target.id);
+    if (av.debug.mouse) console.log('in mouseup target:', evt.target.id, '; event:', evt);
+    if (av.debug.mouse) console.log('in mouseup target:', evt.target.id);
+    if (av.debug.mouse) console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
     
-      av.mouse.makeCursorDefault();
-
-    if (av.debug.mouse)
-      console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
-    
+    av.mouse.makeCursorDefault();
     av.mouse.Dn = false;
 
     // --------- process if something picked to dnd ------------------
@@ -1806,7 +1801,6 @@ require([
         // } else {
         //   av.dom.scaleCanvas.width = $("#gridHolder").height() - 22;  //the 22 was determined by trial and error and works on a mac
         // }
-
         av.dom.scaleCanvas.width = $("#sclCnvsHldr").width() + 0.5 * $("#sclCnvsHldr").width();
 
         //figure out scale or legend

@@ -119,6 +119,8 @@ jQuery(document).ready(function($) {
     }
 
     if (target !== null && target === av.dnd.trashCan) {
+      // yemi: however, if the drag is being initiated from the gridCanvas aka, then the event handler is in mouse.js
+      // refer to av.mouse.ParentMouse or av.mouse.KidMouse
       av.dnd.landTrashCan(el, source);
     }
     
@@ -861,6 +863,7 @@ jQuery(document).ready(function($) {
       remove.type = 'g';
       el.remove();       //http://stackoverflow.com/questions/1812148/dojo-dnd-move-node-programmatically
       document.querySelector(container).removeChild(document.getElementById(el.id));
+      delete containerMap[container][domid];
       // maybe have a pop up saying 'it was successfully deleted?
       av.fzr.saveUpdateState('no');
     }
@@ -869,6 +872,7 @@ jQuery(document).ready(function($) {
       remove.type = 'g';
       el.remove();       //http://stackoverflow.com/questions/1812148/dojo-dnd-move-node-programmatically
       document.querySelector(container).removeChild(document.getElementById(el.id));
+      delete containerMap[container][domid];
       av.fzr.saveUpdateState('no');
     }
     else if (fzWorld === source && '@example' !== el.textContent) {
@@ -876,6 +880,7 @@ jQuery(document).ready(function($) {
       remove.type = 'w';
       el.remove();       //http://stackoverflow.com/questions/1812148/dojo-dnd-move-node-programmatically
       document.querySelector(container).removeChild(document.getElementById(el.id));
+      delete containerMap[container][domid];
       av.fzr.saveUpdateState('no');
     } 
     else {

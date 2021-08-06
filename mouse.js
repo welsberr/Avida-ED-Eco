@@ -124,7 +124,6 @@
     */
     var offsetYLocal = ($("#gridHolder").height() - av.dom.gridCanvas.height) / 2;
     var offsetXLocal = ($("#gridHolder").width() - av.dom.gridCanvas.width) / 2;
-    console.log("findSelected", evt.offsetX, evt.offsetY);
     var mouseX = evt.offsetX - av.grd.marginX - av.grd.xOffset - offsetXLocal;
     var mouseY = evt.offsetY - av.grd.marginY - av.grd.yOffset - offsetYLocal;
     av.grd.selectedCol = Math.floor(mouseX / av.grd.cellWd);
@@ -368,10 +367,10 @@
       if (av.debug.mouse) console.log('av.mouse.ParentNdx', av.mouse.ParentNdx, '; domid', av.parents.domid[av.mouse.ParentNdx]);
       if (av.debug.mouse) console.log('ancestorBox', av.dnd.ancestorBox);
       if (av.debug.mouse) console.log('av.parents.domid', av.parents.domid);
-      var node = dojo.byId(av.parents.domid[av.mouse.ParentNdx]);
-      console.log('node', node);
-      // av.dnd.ancestorBox.parent.removeChild(node);
-      // av.dnd.ancestorBox.sync();
+      var domid = av.parents.domid[av.mouse.ParentNdx];
+      var container = '#' + av.dnd.ancestorBox.id;
+      $(container).children('#' + domid).remove();
+      delete containerMap[container][domid];
       av.post.addUser('Moved ancestor to trash');
 
       //remove from main list.
