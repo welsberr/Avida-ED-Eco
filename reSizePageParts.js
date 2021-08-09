@@ -46,7 +46,7 @@ function resizeOrganismPage() {
   var dragbarWidth = $('.dragbar').css("width");
   console.log('$("#rightInfoHolder").css("width"); = ', $('#rightInfoHolder').css("width"));
   //var rightSideWidth = $('#rightInfoHolder').css("width");
-  var rightSideWidth = 0;
+  var rightSideWidth = '240px';
   var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
   $('.all3org').css("grid-template-columns", newColumns);
 }
