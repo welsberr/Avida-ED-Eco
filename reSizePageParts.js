@@ -104,8 +104,8 @@ function dragbarLeftResize() {
       $('.all3pop').css("grid-template-columns", population_colInfo);
       $('.all3org').css("grid-template-columns", organism_colInfo);
 
-      /* yemi: make the following divs take up the entire width of their containers */
-      $('orgInfoHolder').css("width", "100%");
+      // yemi: make the following divs take up the entire width of their containers 
+      //$('orgInfoHolder').css("width", "100%");   // put in right side function only already in css
 
       /* yemi: update organism canvas */
       av.ind.updateOrgTrace();
@@ -134,7 +134,7 @@ function dragbarLeftResize() {
         $('#leftPanelBUtton').css('background', '#ccc');
       } 
 
-      /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
+      /* yemi: if thhe position of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
       else if (widthOfNav > parseInt($('.navColClass').css("max-width"))) {
         widthOfNav = parseInt($('#navColId').css("max-width"));
         IS_LEFT_CLOSED = false;
@@ -158,8 +158,8 @@ function dragbarLeftResize() {
       $('.all3pop').css("grid-template-columns", population_colInfo);
       $('.all3org').css("grid-template-columns", organism_colInfo);
 
-      /* yemi: make the following divs take up the entire width of their containers */
-      $('orgInfoHolder').css("width", "100%");
+      // yemi: make the following divs take up the entire width of their containers 
+      //$('orgInfoHolder').css("width", "100%");   // put in right side function only already in css
       
       $(document).unbind('mousemove');
       dragging = false;
@@ -226,7 +226,7 @@ function dragbarRightResize() {
       $('.all3org').css("grid-template-columns", organism_colInfo);
 
       /* yemi: make the following divs take up the entire width of their containers */
-      $('orgInfoHolder').css("width", "100%");
+      $('orgInfoHolder').css("width", "100%");   //why is this needed twice when already in css?
 
       /* yemi: update organism canvas */
       av.ind.updateOrgTrace();
@@ -253,7 +253,7 @@ function dragbarRightResize() {
       var widthOfCenter = widthAvailable * percentage;
       var widthOfRight = widthAvailable - widthOfCenter;
 
-      /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
+      /* yemi: if the position of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
       if (widthOfRight < parseInt($('.labInfoHoldCls').css("min-width"))) {
         widthOfRight = 0; /* yemi: if width too small, collapse it */
         widthOfCenter = widthAvailable;

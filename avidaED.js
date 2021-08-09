@@ -1452,6 +1452,7 @@ require([
     };
     if ('populationBlock' == av.ui.page) {
       av.dom.popInfoVert.style.display = 'block';
+      $('#labInfoHoldCls').css('min-width', '200px');
       document.getElementById('allAvidaContainer').className = 'all3pop';
     };    
     if ('analysisBlock' == av.ui.page) {
@@ -1464,6 +1465,7 @@ require([
       document.getElementById('allAvidaContainer').className = 'all3org';
       console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
       av.dom.orgInfoHolder.style.display = 'block';
+      $('#labInfoHoldCls').css('min-width', '190px');
       if ('settings' == av.ui.orgInfo) {
         av.dom.orgSettings.style.display = 'block';
         av.dom.orgDetailID.style.display = 'none';
