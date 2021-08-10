@@ -66,7 +66,7 @@
     av.mouse.frzCurserSet('no-drop');
     av.mouse.setCursorStyle('copy', av.mouse.sonTarget);
     av.mouse.frzOrgCurserSet('copy');
-    console.log('av.fzr.actOrgan.actDomid', av.fzr.actOrgan.actDomid, '; Object.keys(av.dnd.activeOrgan.map)[0]', Object.keys(av.dnd.activeOrgan.map)[0]);
+    console.log('av.fzr.actOrgan.actDomid', av.fzr.actOrgan.actDomid, '; containerMap["#activeOrgan"]', containerMap["#activeOrgan"]);
     if (1 < av.fzr.actOrgan.actDomid.length) {document.getElementById(av.fzr.actOrgan.actDomid).style.cursor = 'copy';}
   };
 
@@ -136,20 +136,21 @@
     'use strict';
     //Get name of Mom that is in OrganCurrentNode
     var parent;
-    var parentID = Object.keys(av.dnd.activeOrgan.map)[0];
+    var parentID = Object.keys(containerMap['#activeOrgan'])[0];
     if (av.debug.mouse) console.log('parentID', parentID);
     if (undefined == parentID) parent = '';
-    else parent = document.getElementById(parentID).textContent;
-    av.dnd.activeOrgan.selectAll().deleteSelectedNodes();  //clear items
-    av.dnd.activeOrgan.sync();   //should be done after insertion or deletion
+    else parent = document.getElementById(parentID).textContent.trim();
+    $('#activeOrgan').empty();
+    delete containerMap['#activeOrgan'][parentID];
     //Put name of offspring in OrganCurrentNode
-    av.dnd.activeOrgan.insertNodes(false, [{data: parent + "_offspring", type: ["g"]}]);
-    av.dnd.activeOrgan.sync();
-    av.fzr.actOrgan.actDomid = Object.keys(av.dnd.activeOrgan.map)[0];
-
+    var domid = 'g' + av.fzr.gNum;
+    console.log(domid);
+    var type = 'g';
+    $('#activeOrgan').append(`<div class="item ${type}" id="${domid}"> ${parent + "_offspring"} </div>`);
+    containerMap['#activeOrgan'][domid] = {name: parent + "_offspring", type: type};
+    av.fzr.actOrgan.actDomid = domid;
     av.fzr.actOrgan.name = parent + "_offspring";
     av.fzr.actOrgan.genome = '0,heads_default,' + av.ind.dna[av.ind.son];  //this should be the full genome when the offspring is complete.
-    av.fzr.actOrgan.actDomid = Object.keys(av.dnd.activeOrgan.map)[0];
     if (av.debug.mouse) console.log('av.fzr.actOrgan', av.fzr.actOrgan);
     //get genome from offspring data //needs work!!
     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
@@ -160,15 +161,16 @@
     'use strict';
     var target = '';
     //console.log('av.fzr.actOrgan.actDomid', av.fzr.actOrgan.actDomid);
-    if ('organIcon' == evt.target.id || 'actOrgImg' == evt.target.id || av.fzr.actOrgan.actDomid == evt.target.id ) {
+    if ('organIcon' == evt.target.id || 'actOrgImg' == evt.target.id) {
       offspringTrace(dnd, fio, fzr, gen);
       av.post.addUser('Moved something to organsim Icon');
       target = 'organIcon';
     }
     else { // look for target in the freezer
       var found = false;
-      for (var dir in av.fzr.domid) {if (av.fzr.domid[dir] == evt.target.id) {found=true; break;}}
+      for (var dir in av.fzr.domid) {if (av.fzr.domid[dir] == evt.target.id) {found=true; console.log('nay'); break;}}
       if (found) {
+        console.log('hi')
         target  = 'fzOrgan';
         //create a new freezer item
         if (av.debug.mouse) console.log('offSpring->freezerDiv');
@@ -178,9 +180,9 @@
         var parentID = $(container).children()[0].id; // yemi: not sure it will work
         if (av.debug.mouse) console.log('parentID', parentID);
         if (undefined == parentID) parent = 'noParentName';
-        else parent = document.getElementById(parentID).textContent;
+        else parent = document.getElementById(parentID).textContent.trim();
         //make sure there is a name.
-        var oldname = parent + '_offspring';
+        var oldName = parent + '_offspring';
         var sName = av.dnd.namefzrItem(container, oldName);
         // var nameArray = av.dnd.makeNameList(av.dnd.fzOrgan);
         // //console.log('name', oldname, '; array',  nameArray);
@@ -196,7 +198,10 @@
 
             var domid = 'g' + av.fzr.gNum;
             var type = 'g';
-            $(container).append(`<div class="item ${type}" id="${domid}"> ${avidian} </div>`);
+            console.log(domid);
+            // $(container).empty();
+            // $(container).append(`<div class="item ${type}" id="${domid}"> ${avidian} </div>`);
+            $('#fzOrgan').append(`<div class="item ${type}" id="${domid}"> ${avidian} </div>`);
             // Add an entry to containerMap
             if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
               containerMap[container][domid] = {'name': avidian , 'type': 'g'};

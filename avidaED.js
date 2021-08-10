@@ -295,8 +295,9 @@ require([
   // yemd
   // av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
 
+  // yemd
   // if (av.dbg.flg.root) { console.log('Root: before organIcon'); }
-  av.dnd.organIcon = new dndTarget('organIcon', {accept: ['g'], selfAccept: false});
+  // av.dnd.organIcon = new dndTarget('organIcon', {accept: ['g'], selfAccept: false});
   
   // yemd
   // av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
@@ -326,13 +327,15 @@ require([
 
   // if (av.dbg.flg.root) { console.log('Root: before activeOrgan'); }
   //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
-  av.dnd.activeOrgan = new dndSource('activeOrgan', {
-    accept: ['g'],
-    singular: true,
-    copyOnly: true,
-    selfAccept: false
-  });
-  av.dnd.organCanvas = new dndSource('organCanvas', {accept: ['g'], singular: true, selfAccept: false});
+  
+  // yemd
+  // av.dnd.activeOrgan = new dndSource('activeOrgan', {
+  //   accept: ['g'],
+  //   singular: true,
+  //   copyOnly: true,
+  //   selfAccept: false
+  // });
+  // av.dnd.organCanvas = new dndSource('organCanvas', {accept: ['g'], singular: true, selfAccept: false});
   //Targets only accept object, source can do both
   av.dnd.anlDndChart = new dndTarget('anlDndChart', {accept: ['w'], singular: true});
   av.dnd.popDish0 = new dndTarget('popDish0', {accept: ['w'], singular: true});
@@ -524,33 +527,37 @@ require([
   //   }
   // });
 
-  av.dnd.organIcon.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of organIcon
-    //setTimeout(null,1000);
-    if ('organIcon' === target.node.id) {
-      if (av.debug.dnd) { console.log('landOrganIcon: s, t', source, target); }
-      av.dnd.landOrganIcon(source, nodes, target);
-      //Change to Organism Page
-      av.ui.mainBoxSwap('organismBlock');
-      av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-    }
-  });
+  // yemd
+  // av.dnd.organIcon.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of organIcon
+  //   //setTimeout(null,1000);
+  //   console.log('organIcon');
+  //   if ('organIcon' === target.node.id) {
+  //     if (av.debug.dnd) { console.log('landOrganIcon: s, t', source, target); }
+  //     av.dnd.landOrganIcon(source, nodes, target);
+  //     //Change to Organism Page
+  //     av.ui.mainBoxSwap('organismBlock');
+  //     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+  //   }
+  // });
 
-  av.dnd.activeOrgan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeOrgan
-    if ('activeOrgan' === target.node.id) {
-      if (av.debug.dnd) { console.log('activeOrgan: s, t', source, target); }
-      av.dnd.makeMove(source, nodes, target);
-      //av.dnd.landActiveOrgan(source, nodes, target);
-      av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-    }
-  });
+  // yemd
+  // av.dnd.activeOrgan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeOrgan
+  //   if ('activeOrgan' === target.node.id) {
+  //     if (av.debug.dnd) { console.log('activeOrgan: s, t', source, target); }
+  //     av.dnd.makeMove(source, nodes, target);
+  //     //av.dnd.landActiveOrgan(source, nodes, target);
+  //     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+  //   }
+  // });
 
-  av.dnd.organCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of organCanvas
-    if ('organCanvas' === target.node.id) {
-      if (av.debug.dnd) { console.log('landorganCanvas: s, t', source, target); }
-      av.dnd.landorganCanvas(source, nodes, target);
-      av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-    }
-  });
+  // yemd
+  // av.dnd.organCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of organCanvas
+  //   if ('organCanvas' === target.node.id) {
+  //     if (av.debug.dnd) { console.log('landorganCanvas: s, t', source, target); }
+  //     av.dnd.landorganCanvas(source, nodes, target);
+  //     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+  //   }
+  // });
 
   // yemd
   // av.dnd.trashCan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of trashCan
@@ -630,7 +637,7 @@ require([
    {data: 'm2w30u1000nand', type: ['w']},
    {data: 'm2w30u1000not', type: ['w']}
    ]);
-   */
+  */
 
   //----------------------------------------------------------------------------------------------------------------------
   //                                    End of dojo based DND triggered functions
@@ -710,7 +717,6 @@ require([
     } 
     // yemi: this is for organism page
     else if ('offspring' == av.mouse.Picked) {
-      console.log('offspring');
       target = av.mouse.offspringMouse(evt, av.dnd, av.fio, av.fzr, av.gen);
       av.mouse.Picked = '';
     } 

@@ -594,71 +594,71 @@ av.dnd.getDomId = function (name, target){
 
 //When something is added to the Organism Freezer
 //---------------------------------------------------------------------------------------------- av.dnd.landFzOrgan --*/
-av.dnd.landFzOrgan = function (source, nodes, target) {
-  'use strict';
-  var gen;
-  var domid = Object.keys(target.selection)[0];
-  if (av.debug.dnd) console.log('domid', domid);
-  //console.log('target', target, '; fzrOrgan', av.dnd.fzOrgan);
-  var oldName = nodes[0].textContent;
-  var nameArray = av.dnd.preTransferNameList(target, oldName);
-  //console.log('name', oldName, '; array',  nameArray);
-  var sName = av.dnd.namefzrItem(oldName, nameArray);
-  var avidian = prompt('Please name your avidian', sName);
-  if (avidian) {
-    var avName = av.dnd.getUniqueFzrName(avidian, nameArray);
-    if (null != avName) {  //give dom item new avName name
-      av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent + '; --> ' + avName);
-      document.getElementById(domid).textContent = avName;
-      target.map[domid].data = avName;
+// av.dnd.landFzOrgan = function (source, nodes, target) {
+//   'use strict';
+//   var gen;
+//   var domid = Object.keys(target.selection)[0];
+//   if (av.debug.dnd) console.log('domid', domid);
+//   //console.log('target', target, '; fzrOrgan', av.dnd.fzOrgan);
+//   var oldName = nodes[0].textContent;
+//   var nameArray = av.dnd.preTransferNameList(target, oldName);
+//   //console.log('name', oldName, '; array',  nameArray);
+//   var sName = av.dnd.namefzrItem(oldName, nameArray);
+//   var avidian = prompt('Please name your avidian', sName);
+//   if (avidian) {
+//     var avName = av.dnd.getUniqueFzrName(avidian, nameArray);
+//     if (null != avName) {  //give dom item new avName name
+//       av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent + '; --> ' + avName);
+//       document.getElementById(domid).textContent = avName;
+//       target.map[domid].data = avName;
 
-      if ('ancestorBox' == source.node.id) {  //do not remove if population has started running
-        //update structure to hold freezer data for Organisms.
-        var Ndx = av.parents.domid.indexOf(nodes[0].id);  //Find index into parent structure
-        gen = av.parents.genome[Ndx];
+//       if ('ancestorBox' == source.node.id) {  //do not remove if population has started running
+//         //update structure to hold freezer data for Organisms.
+//         var Ndx = av.parents.domid.indexOf(nodes[0].id);  //Find index into parent structure
+//         gen = av.parents.genome[Ndx];
 
-        if (false === av.dnd.ancestorBox.copyOnly) {
+//         if (false === av.dnd.ancestorBox.copyOnly) {
 
-          // need to remove organism from parents list.
-          av.parents.removeParent(Ndx);
-          av.parents.placeAncestors();
+//           // need to remove organism from parents list.
+//           av.parents.removeParent(Ndx);
+//           av.parents.placeAncestors();
 
-          // need to remove organism from the Ancestor Box.
-          // av.dnd.ancestorBox is dojo dnd copyonly to prevent loss of that organsim when the user clicks cancel. The user will
-          // see the cancel as cancelling the dnd rather than canceling the rename.
-          av.dnd.ancestorBox.deleteSelectedNodes();  //clear items
-          av.dnd.ancestorBox.sync();   //should be done after insertion or deletion
-        }
-      }
-      else if ('activeOrgan' === source.node.id) { gen = av.fzr.actOrgan.genome; }
-      av.fzr.dir[domid] = 'g' + av.fzr.gNum;
-      av.fzr.domid['g' + av.fzr.gNum] = domid;
-      av.fzr.file['g' + av.fzr.gNum + '/genome.seq'] = gen;
-      av.fzr.file['g' + av.fzr.gNum + '/entryname.txt'] = av.dnd.fzOrgan.map[domid].data;
-      av.fzr.gNum++;
-      if (av.debug.dnd) console.log('fzr', av.fzr);
+//           // need to remove organism from the Ancestor Box.
+//           // av.dnd.ancestorBox is dojo dnd copyonly to prevent loss of that organsim when the user clicks cancel. The user will
+//           // see the cancel as cancelling the dnd rather than canceling the rename.
+//           av.dnd.ancestorBox.deleteSelectedNodes();  //clear items
+//           av.dnd.ancestorBox.sync();   //should be done after insertion or deletion
+//         }
+//       }
+//       else if ('activeOrgan' === source.node.id) { gen = av.fzr.actOrgan.genome; }
+//       av.fzr.dir[domid] = 'g' + av.fzr.gNum;
+//       av.fzr.domid['g' + av.fzr.gNum] = domid;
+//       av.fzr.file['g' + av.fzr.gNum + '/genome.seq'] = gen;
+//       av.fzr.file['g' + av.fzr.gNum + '/entryname.txt'] = av.dnd.fzOrgan.map[domid].data;
+//       av.fzr.gNum++;
+//       if (av.debug.dnd) console.log('fzr', av.fzr);
 
-      if (av.debug.dnd) console.log('fzOrgan', av.dnd.fzOrgan);
-      //create a right av.mouse-click context menu for the item just created.
-      if (av.debug.dnd) console.log('before context menu: target',target, '; domId', domid );
-      av.dnd.contextMenu(target, domid, 'av.dnd.landFzOrgan');
-      av.fzr.saveUpdateState('no');
-    }
-    else { //Not given a name, so it should NOT be added to the freezer.
-      av.dnd.fzOrgan.deleteSelectedNodes();  //clear items
-      av.dnd.fzOrgan.sync();   //should be done after insertion or deletion
-    }
-  }
-  else {  //cancelled so the item should NOT be added to the freezer.
-    av.dnd.fzOrgan.deleteSelectedNodes();  //clear items
-    av.dnd.fzOrgan.sync();   //should be done after insertion or deletion
-  }
-  if (av.debug.dnd) console.log('near end of av.dnd.landFzOrgan');
-  if ('ancestorBox' != source.node.id) {
-    if (av.debug.dnd) console.log('dojo dnd to Organ Freezer, not from Ancestor Box');
-  }
-  if (av.debug.dnd) console.log('End of av.dnd.landFzOrgan');
-};
+//       if (av.debug.dnd) console.log('fzOrgan', av.dnd.fzOrgan);
+//       //create a right av.mouse-click context menu for the item just created.
+//       if (av.debug.dnd) console.log('before context menu: target',target, '; domId', domid );
+//       av.dnd.contextMenu(target, domid, 'av.dnd.landFzOrgan');
+//       av.fzr.saveUpdateState('no');
+//     }
+//     else { //Not given a name, so it should NOT be added to the freezer.
+//       av.dnd.fzOrgan.deleteSelectedNodes();  //clear items
+//       av.dnd.fzOrgan.sync();   //should be done after insertion or deletion
+//     }
+//   }
+//   else {  //cancelled so the item should NOT be added to the freezer.
+//     av.dnd.fzOrgan.deleteSelectedNodes();  //clear items
+//     av.dnd.fzOrgan.sync();   //should be done after insertion or deletion
+//   }
+//   if (av.debug.dnd) console.log('near end of av.dnd.landFzOrgan');
+//   if ('ancestorBox' != source.node.id) {
+//     if (av.debug.dnd) console.log('dojo dnd to Organ Freezer, not from Ancestor Box');
+//   }
+//   if (av.debug.dnd) console.log('End of av.dnd.landFzOrgan');
+// };
 //------------------------------------------------------------------------------------------ end av.dnd.landFzOrgan --*/
 
 //here the parameters are Dojo DND objects
@@ -875,130 +875,113 @@ av.dnd.landFzOrgan = function (source, nodes, target) {
 //--------------------------------------------------------------------------------------- end av.dnd.landGridCanvas --*/
 
 //------------------------------------------------------------------------------------ av.dnd.updateFromFzrOrganism --*/
-av.dnd.updateFromFzrOrganism = function () {
-  'use strict';
-  var domId = Object.keys(av.dnd.fzOrgan.selection)[0];
-  var dir = av.fzr.dir[domId];
-  if (av.debug.dnd) console.log('domId', domId, '; dir', dir);
-  av.fzr.actOrgan.name = av.fzr.file[dir+'/entryname.txt'];
-  av.fzr.actOrgan.genome = av.fzr.file[dir+'/genome.seq'];
-  if (av.debug.dnd) console.log('domId', domId);
-  if (av.debug.dnd) console.log('domId', domId, '; dir', dir, '; name', av.fzr.actOrgan.name, '; genome', av.fzr.actOrgan.genome);
-  if (av.debug.dnd) console.log('fzr', av.fzr);
 
-  if (av.debug.dnd) console.log('av.fzr.actOrgan', av.fzr.actOrgan);
-};
+// yemd
+// av.dnd.updateFromFzrOrganism = function () {
+//   'use strict';
+//   var domId = Object.keys(av.dnd.fzOrgan.selection)[0];
+//   var dir = av.fzr.dir[domId];
+//   if (av.debug.dnd) console.log('domId', domId, '; dir', dir);
+//   av.fzr.actOrgan.name = av.fzr.file[dir+'/entryname.txt'];
+//   av.fzr.actOrgan.genome = av.fzr.file[dir+'/genome.seq'];
+//   if (av.debug.dnd) console.log('domId', domId);
+//   if (av.debug.dnd) console.log('domId', domId, '; dir', dir, '; name', av.fzr.actOrgan.name, '; genome', av.fzr.actOrgan.genome);
+//   if (av.debug.dnd) console.log('fzr', av.fzr);
+
+//   if (av.debug.dnd) console.log('av.fzr.actOrgan', av.fzr.actOrgan);
+// };
 
 //-------------------------------------------------------------------------------------------- av.dnd.landOrganIcon --*/
-av.dnd.landOrganIcon = function (source, nodes, target) {
-  //clear out the old data if an organism is already there
-  'use strict';
-  av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
-  if (av.debug.dnd) console.log('source', source.node.id);
-  if ('activeOrgan' != source.node.id) {
-    var items = av.dnd.getAllItems(av.dnd.activeOrgan);    //gets some data about the items in the container
-    if (0 < items.length) {
-      av.dnd.activeOrgan.selectAll().deleteSelectedNodes();  //clear items
-      av.dnd.activeOrgan.sync();   //should be done after insertion or deletion
-    }
-    //get the data for the new organism
-    source.forInSelectedItems(function (item, id) {
-      av.dnd.activeOrgan.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
-      av.dnd.activeOrgan.sync();
-    });
-    av.fzr.actOrgan.actDomid = Object.keys(av.dnd.activeOrgan.map)[0];
-  }
-  if ('fzOrgan' === source.node.id) { av.dnd.updateFromFzrOrganism(); }
-  else if ('ancestorBox' === source.node.id) {
-    var domid = Object.keys(av.dnd.ancestorBox.selection)[0];
-    var Ndx = av.parents.domid.indexOf(domid);  //Find index into parent structure
-    av.fzr.actOrgan.name = av.parents.name[Ndx];
-    av.fzr.actOrgan.genome = av.parents.genome[Ndx];
-    if (av.debug.dnd) console.log('fzr', av.fzr, '; parents', av.parents, '; ndx', Ndx);
-  }
 
-  //clear out av.dnd.organIcon as nothing is stored there - just moved on to OrganismCurrent
-  av.dnd.organIcon.selectAll().deleteSelectedNodes();  //clear items
-  av.dnd.organIcon.sync();   //should be done after insertion or deletion
-};
+// yemd
+// replaced by av.dnd.landOrganIcon2 in dragulaDnd.js
+// av.dnd.landOrganIcon = function (source, nodes, target) {
+//   //clear out the old data if an organism is already there
+//   'use strict'
+//   av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
+//   if (av.debug.dnd) console.log('source', source.node.id);
+//   if ('activeOrgan' != source.node.id) {
+//     var items = av.dnd.getAllItems(av.dnd.activeOrgan);    //gets some data about the items in the container
+//     if (0 < items.length) {
+//       av.dnd.activeOrgan.selectAll().deleteSelectedNodes();  //clear items
+//       av.dnd.activeOrgan.sync();   //should be done after insertion or deletion
+//     }
+//     //get the data for the new organism
+//     source.forInSelectedItems(function (item, id) {
+//       av.dnd.activeOrgan.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
+//       av.dnd.activeOrgan.sync();
+//     });
+//     av.fzr.actOrgan.actDomid = Object.keys(av.dnd.activeOrgan.map)[0];
+//   }
+//   if ('fzOrgan' === source.node.id) { av.dnd.updateFromFzrOrganism(); }
+//   else if ('ancestorBox' === source.node.id) {
+//     var domid = Object.keys(av.dnd.ancestorBox.selection)[0];
+//     var Ndx = av.parents.domid.indexOf(domid);  //Find index into parent structure
+//     av.fzr.actOrgan.name = av.parents.name[Ndx];
+//     av.fzr.actOrgan.genome = av.parents.genome[Ndx];
+//     if (av.debug.dnd) console.log('fzr', av.fzr, '; parents', av.parents, '; ndx', Ndx);
+//   }
+
+//   //clear out av.dnd.organIcon as nothing is stored there - just moved on to OrganismCurrent
+//   av.dnd.organIcon.selectAll().deleteSelectedNodes();  //clear items
+//   av.dnd.organIcon.sync();   //should be done after insertion or deletion
+// };
 //---------------------------------------------------------------------------------------- end av.dnd.landOrganIcon --*/
 
 //Need to have only the most recent dropped organism in av.dnd.activeOrgan. Do this by deleting everything in activeOrgan
 //and reinserting the most resent one after a drop event.
-//------------------------------------------------------------------------------------------- av.dnd.lndActiveOrgan --*/
-av.dnd.lndActiveOrgan = function (move) {
-  'use strict';
-  //av.post.addUser('DnD: ' + move.fzSection.node.id + '--> ' + move.target.node.id + ': by: ' + move.sourceDomId.textContent);
-  console.log('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + av.dnd.move.nodeName);
-  //clear out the old data if an organism is already there
-  var items = av.dnd.getAllItems(av.dnd.activeOrgan);    //used to see if there is more than one item in Organ Current
-  //if (av.debug.dnd) console.log('items', items, items.length);
-  if (0 < items.length) {
-    av.dnd.activeOrgan.selectAll().deleteSelectedNodes();  //clear items
-    av.dnd.activeOrgan.sync();   //should be done after insertion or deletion
 
-    //get the data for the new organism
-    av.dnd.fzOrgan.forInSelectedItems(function (item, id) {
-      av.dnd.activeOrgan.insertNodes(false, [item]);          //assign the node that is selected from the only valid pkg.source.
-    });
-    av.dnd.activeOrgan.sync();
-    av.fzr.actOrgan.actDomid = Object.keys(av.dnd.activeOrgan.map)[0];
-    //if (av.debug.dnd) console.log('av.dnd.activeOrgan.map=', av.dnd.activeOrgan.map);
-  }
-  av.dnd.updateFromFzrOrganism();
-};
-//---------------------------------------------------------------------------------------- end av.dnd.lndActiveOrgan --*/
+// yemd
+// replaced by av.dnd.landActiveOrgan2 in dragulaDnd.js
+//------------------------------------------------------------------------------------------- av.dnd.landActiveOrgan --*/
+// av.dnd.landActiveOrgan = function (move) {
+//   'use strict';
+//   //av.post.addUser('DnD: ' + move.fzSection.node.id + '--> ' + move.target.node.id + ': by: ' + move.sourceDomId.textContent);
+//   console.log('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + av.dnd.move.nodeName);
+//   //clear out the old data if an organism is already there
+//   var items = av.dnd.getAllItems(av.dnd.activeOrgan);    //used to see if there is more than one item in Organ Current
+//   //if (av.debug.dnd) console.log('items', items, items.length);
+//   if (0 < items.length) {
+//     av.dnd.activeOrgan.selectAll().deleteSelectedNodes();  //clear items
+//     av.dnd.activeOrgan.sync();   //should be done after insertion or deletion
 
-//Need to have only the most recent dropped organism in av.dnd.activeOrgan. Do this by deleting everything in activeOrgan
-//and reinserting the most resent one after a drop event.
-//------------------------------------------------------------------------------------------ av.dnd.landActiveOrgan --*/
-av.dnd.landActiveOrgan = function (source, nodes, target) {
-  'use strict';
-  av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
-  //clear out the old data if an organism is already there
-  var items = av.dnd.getAllItems(av.dnd.activeOrgan);    //used to see if there is more than one item in Organ Current
-  //if (av.debug.dnd) console.log('items', items, items.length);
-  if (0 < items.length) {
-    av.dnd.activeOrgan.selectAll().deleteSelectedNodes();  //clear items
-    av.dnd.activeOrgan.sync();   //should be done after insertion or deletion
-
-    //get the data for the new organism
-    av.dnd.fzOrgan.forInSelectedItems(function (item, id) {
-      av.dnd.activeOrgan.insertNodes(false, [item]);          //assign the node that is selected from the only valid pkg.source.
-    });
-    av.dnd.activeOrgan.sync();
-    av.fzr.actOrgan.actDomid = Object.keys(av.dnd.activeOrgan.map)[0];
-    //if (av.debug.dnd) console.log('av.dnd.activeOrgan.map=', av.dnd.activeOrgan.map);
-  }
-  av.dnd.updateFromFzrOrganism();
-};
+//     //get the data for the new organism
+//     av.dnd.fzOrgan.forInSelectedItems(function (item, id) {
+//       av.dnd.activeOrgan.insertNodes(false, [item]);          //assign the node that is selected from the only valid pkg.source.
+//     });
+//     av.dnd.activeOrgan.sync();
+//     av.fzr.actOrgan.actDomid = Object.keys(av.dnd.activeOrgan.map)[0];
+//     //if (av.debug.dnd) console.log('av.dnd.activeOrgan.map=', av.dnd.activeOrgan.map);
+//   }
+//   av.dnd.updateFromFzrOrganism();
+// };
 //-------------------------------------------------------------------------------------- end av.dnd.landActiveOrgan --*/
 
 //The variable organCanvas with the html tag organismCanvas will Not hold the organism. Anything dropped on the OrganismCanvas
 //will be put in av.dnd.activeOrgan.
 //------------------------------------------------------------------------------------------ av.dnd.landorganCanvas --*/
-av.dnd.landorganCanvas = function (source, nodes, target) {
-  'use strict';
-  av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
-  //Clear current to put the new organism in there.
-  av.dnd.activeOrgan.selectAll().deleteSelectedNodes();  //clear items
-  av.dnd.activeOrgan.sync();   //should be done after insertion or deletion
+// av.dnd.landorganCanvas = function (source, nodes, target) {
+//   'use strict';
+//   av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
+//   //Clear current to put the new organism in there.
+//   av.dnd.activeOrgan.selectAll().deleteSelectedNodes();  //clear items
+//   av.dnd.activeOrgan.sync();   //should be done after insertion or deletion
 
-  //Clear canvas because we only store the 'Mom' in the OrganCurrentNode
-  var ItemID = Object.keys(av.dnd.activeOrgan.map)[0];
-  av.dnd.organCanvas.selectAll().deleteSelectedNodes();  //clear items
-  av.dnd.organCanvas.sync();   //should be done after insertion or deletion
-  dojo.destroy(ItemID);
+//   //Clear canvas because we only store the 'Mom' in the OrganCurrentNode
+//   var ItemID = Object.keys(av.dnd.activeOrgan.map)[0];
+//   av.dnd.organCanvas.selectAll().deleteSelectedNodes();  //clear items
+//   av.dnd.organCanvas.sync();   //should be done after insertion or deletion
+//   dojo.destroy(ItemID);
 
-  //get the data for the new organism
-  av.dnd.fzOrgan.forInSelectedItems(function (item, id) {
-    av.dnd.activeOrgan.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
-  });
-  av.dnd.activeOrgan.sync();
-  av.fzr.actOrgan.actDomid = Object.keys(av.dnd.activeOrgan.map)[0];
+//   //get the data for the new organism
+//   av.dnd.fzOrgan.forInSelectedItems(function (item, id) {
+//     av.dnd.activeOrgan.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
+//   });
+//   av.dnd.activeOrgan.sync();
+//   av.fzr.actOrgan.actDomid = Object.keys(av.dnd.activeOrgan.map)[0];
 
-  if ('fzOrgan' == source.node.id) av.dnd.updateFromFzrOrganism();
-};
+//   if ('fzOrgan' == source.node.id) av.dnd.updateFromFzrOrganism();
+// };
 //-------------------------------------------------------------------------------------- end av.dnd.landorganCanvas --*/
 
 //============================================================================================= Populated Dishes DND ===
