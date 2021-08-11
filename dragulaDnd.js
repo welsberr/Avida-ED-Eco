@@ -20,6 +20,10 @@ jQuery(document).ready(function($) {
                     $.map($("#activeOrgan"), (value, key) => { return value }),
                     $.map($("#organCanvas"), (value, key) => { return value }),
                     $.map($("#organIcon"), (value, key) => { return value }),
+                    $.map($("#anlDndChart"), (value, key) => { return value }),
+                    $.map($("#popDish0"), (value, key) => { return value }),
+                    $.map($("#popDish1"), (value, key) => { return value }),
+                    $.map($("#popDish2"), (value, key) => { return value }),
                    ].flat();
   console.log('dragula containters: ', containers);
 
@@ -38,6 +42,10 @@ jQuery(document).ready(function($) {
   av.dnd.activeOrgan = containers[10]
   av.dnd.organCanvas = containers[11]
   av.dnd.organIcon = containers[12]
+  av.dnd.anlDndChart = containers[13]
+  av.dnd.popDish0 = containers[14]
+  av.dnd.popDish1 = containers[15]
+  av.dnd.popDish2 = containers[16]
 
   var dragging = false;
 
@@ -63,6 +71,9 @@ jQuery(document).ready(function($) {
         return true;
       }
       if ((source === av.dnd.fzConfig || source === av.dnd.fzWorld) && target === av.dnd.activeConfig) {
+        return true;
+      }
+      if (source === av.dnd.fzWorld && (target === av.dnd.anlDndChart || target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2)) {
         return true;
       }
       if (source === av.dnd.fzOrgan && (target === av.dnd.activeOrgan || target === av.dnd.organCanvas || target === av.dnd.organIcon || target === av.dnd.gridCanvas || target === av.dnd.ancestorBox || target === av.dnd.ancestorBoTest)) {
@@ -169,6 +180,7 @@ jQuery(document).ready(function($) {
           y = evt.clientY;
         }
         av.mouse.UpGridPos = [x, y];
+        console.log(av.mouse.UpGridPos);
         if (target === av.dnd.gridCanvas) {
           av.dnd.landGridCanvas(el, target, source);
           av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
@@ -183,77 +195,82 @@ jQuery(document).ready(function($) {
     }
 
     if (target === av.dnd.organCanvas) {
-      console.log('helo');
-      av.dnd.landOrganCanvas2(el, target, source);
+      av.dnd.landOrganCanvas(el, target, source);
     }
 
-    // if (target === organCanvas) {
-    //   av.dnd.landOrganCanvas(el, target, source);
-    //   av.msg.doOrgTrace();
-    // }
+    if (target === av.dnd.anlDndChart) {
+      av.dnd.landAnlDndChart(el, target, source);
+      av.anl.AnaChartFn();
+    }
 
-    // if (target === anlDndChart) {
-    //   av.dnd.landAnlDndChart(el, target, source);
-    //   av.anl.AnaChartFn();
-    // }
-
-    // if (target === popDish0) {
-    //   av.dnd.landpopDish0(el, target, source);
-    //   av.anl.AnaChartFn();
-    // } 
-
-    // if (target === popDish1) {
-    //   av.dnd.landpopDish1(el, target, source);
-    //   av.anl.AnaChartFn();
-    // }
-
-    // if (target === popDish2) {
-    //   av.dnd.landpopDish2(el, target, source);
-    //   av.anl.AnaChartFn();
-    // }
-
-    // if (target === popDish0) {
-    //   switch (source.id) {
-    //     case 'popDish0':
-    //       av.post.addUser('DnD: delete_from: popDish0?');
-    //       av.anl.wrld[0].left = [];       //remove lines from population 1
-    //       av.anl.wrld[0].right = [];
-    //       av.anl.AnaChartFn();
-    //       break;
-    //     case 'popDish1':
-    //       av.post.addUser('DnD: delete_from: popDish1?');
-    //       av.anl.wrld[1].left = [];       //remove lines from population 2
-    //       av.anl.wrld[1].right = [];
-    //       av.anl.AnaChartFn();
-    //       break;
-    //     case 'popDish2':
-    //       av.post.addUser('DnD: delete_from: popDish2?');
-    //       av.anl.wrld[2].left = [];       //remove lines from population 3
-    //       av.anl.wrld[2].right = [];
-    //       av.anl.AnaChartFn();
-    //       break;
-    //   }
-    // }
-
+    if (target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2) {
+      if (target === av.dnd.popDish0) {
+        av.dnd.landpopDish(el, target, source, 0);
+      }
+      else if (target === av.dnd.popDish1) {
+        av.dnd.landpopDish(el, target, source, 1);
+      }
+      else if (target === av.dnd.popDish2) {
+        av.dnd.landpopDish(el, target, source, 2);
+      }
+      av.anl.AnaChartFn();
+    } 
   });
 
-  av.dnd.landpopDish2 = function(el, target, source) {
+  av.dnd.landpopDish = function(el, target, source, num) {
+    'use strict';
+    av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent.trim());
+    var items = av.dnd.getAllItems(target);
 
-  };
+    //if there is an existing item, need to clear all nodes and assign most recent to item 0
+    //clear out the old data
+    var container = target.id !== undefined ? "#" + target.id : "." + target.className;
+    av.dnd.empty(container);
+    //get the data for the new organism
+    av.dnd.insert(container, el, 'w');
+    av.dnd.insertToDOM(container, el);
+  
+    var fzdomid = el.id;
+    var dir = av.fzr.dir[fzdomid];
+    av.anl.loadWorldData(num, dir);
+    av.anl.loadSelectedData(num, 'yLeftSelect', 'left', 'av.dnd.landpopDish');
+    av.anl.loadSelectedData(num, 'yRightSelect', 'right', 'av.dnd.landpopDish');
+  }
 
-  av.dnd.landpopDish1 = function(el, target, source) {
+  av.dnd.putNslot = function (el, num, source) {
+    'use strict';
+    //the console.log get the data one way, the codes gets the same data another way. 
+    // console.log('sourceContainer=', source.parent.id, '; world domID=', source.anchor.id, '; world Name=', source.anchor.textContent.trim());
+    var domid = el.id;
+    var dir = av.fzr.dir[domid];
+    
+    av.dnd.insert('#popDish' + num, el, 'w');
 
-  };
-
-  av.dnd.landpopDish0 = function(el, target, source) {
-
+    av.anl.loadWorldData(num, dir);
+    av.anl.loadSelectedData(num, 'yLeftSelect', 'left', 'av.dnd.putNslot');
+    av.anl.loadSelectedData(num, 'yRightSelect', 'right', 'av.dnd.putNslot');
   };
 
   av.dnd.landAnlDndChart = function(el, target, source) {
-
+    'use strict';
+    av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent);
+    var items = av.dnd.getAllItems(av.dnd.popDish0);
+    if (0 === items.length) { av.dnd.putNslot(el, 0, source); }
+    else {
+      items = av.dnd.getAllItems(av.dnd.popDish1);
+      if (0 === items.length) { av.dnd.putNslot(el, 1, source); }
+      else {
+        items = av.dnd.getAllItems(av.dnd.popDish2);
+        if (0 === items.length) { av.dnd.putNslot(el, 2, source);}
+      }
+    }
+    //in all cases no population name is stored in the graph div
+    var container = target.id !== undefined ? "#" + target.id : "." + target.className;
+    av.dnd.empty(container);
+    av.dnd.insertToDOM('#popDish0', el, 'w');
   };
 
-  av.dnd.landOrganCanvas2 = function(el, target, source) {
+  av.dnd.landOrganCanvas = function(el, target, source) {
     'use strict';
     av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent);
     av.dnd.landActiveOrgan(el, target, source);
@@ -444,9 +461,7 @@ jQuery(document).ready(function($) {
       if (Object.keys(containerMap).indexOf(container) === -1) {
         containerMap[container] = {};
       }
-
-      containerMap[container][domid].name = newName;
-      containerMap[container][domid].type = 'g';
+      containerMap[container][domid] = {'name': newName, 'type': 'g'};
   
       // var domid = av.dnd.insertNode(container, newName, type);
       if (av.debug.dnd) console.log('containerMap[#ancestorBox]', containerMap[container]);
@@ -1125,6 +1140,39 @@ jQuery(document).ready(function($) {
     containerMap[container][domid] = {'name': name , 'type': type};
 
     return domid;
+  };
+
+  /*
+  Helpers for Manipulating ContainerMap
+  */
+
+  av.dnd.empty = function(container) {
+    $(container).empty();
+    containerMap[container] = {}
+  }
+
+  av.dnd.insert = function(container, el, type) {
+    var domid = el.id;
+    if (Object.keys(containerMap).indexOf(container) === -1) {
+      containerMap[container] = {}
+    }
+    containerMap[container][domid] = {'name': el.textContent.trim() , 'type': type};
+    console.log(containerMap);
+  }
+
+  av.dnd.insertToDOM = function(container, el) {
+    $(container).append(el);
+  }
+
+  av.dnd.getAllItems = function (source) {
+    'use strict';
+    var container = source.id !== undefined ? "#" + source.id : "." + source.className;
+    try {
+      var items = Object.keys(containerMap[container]);
+    } catch (error) {
+      var items = [];
+    }
+    return items;
   };
 
   /* 

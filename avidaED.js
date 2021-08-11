@@ -337,10 +337,12 @@ require([
   // });
   // av.dnd.organCanvas = new dndSource('organCanvas', {accept: ['g'], singular: true, selfAccept: false});
   //Targets only accept object, source can do both
-  av.dnd.anlDndChart = new dndTarget('anlDndChart', {accept: ['w'], singular: true});
-  av.dnd.popDish0 = new dndTarget('popDish0', {accept: ['w'], singular: true});
-  av.dnd.popDish1 = new dndTarget('popDish1', {accept: ['w'], singular: true});
-  av.dnd.popDish2 = new dndTarget('popDish2', {accept: ['w'], singular: true});
+  
+  // yemd
+  // av.dnd.anlDndChart = new dndTarget('anlDndChart', {accept: ['w'], singular: true});
+  // av.dnd.popDish0 = new dndTarget('popDish0', {accept: ['w'], singular: true});
+  // av.dnd.popDish1 = new dndTarget('popDish1', {accept: ['w'], singular: true});
+  // av.dnd.popDish2 = new dndTarget('popDish2', {accept: ['w'], singular: true});
 
   av.parents.clearParentsFn();
 
@@ -575,62 +577,63 @@ require([
   //   }
   // });
 
-  av.dnd.anlDndChart.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of anlDndChart
-    if ('anlDndChart' === target.node.id) {
-      if (av.debug.dnd) { console.log('anlDndChart: s, t', source, target); }
-      av.dnd.landAnlDndChart(av.dnd, source, nodes, target);
-      av.anl.AnaChartFn();
-    }
-  });
+  // yemd
+  // av.dnd.anlDndChart.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of anlDndChart
+  //   if ('anlDndChart' === target.node.id) {
+  //     if (av.debug.dnd) { console.log('anlDndChart: s, t', source, target); }
+  //     av.dnd.landAnlDndChart(av.dnd, source, nodes, target);
+  //     av.anl.AnaChartFn();
+  //   }
+  // });
 
-  av.dnd.popDish0.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of popDish0
-    if ('popDish0' === target.node.id) {
-      if (av.debug.dnd) { console.log('popDish0: s, t', source, target); }
-      av.dnd.landpopDish0(av.dnd, source, nodes, target);
-      av.anl.AnaChartFn();
-    }
-  });
+  // av.dnd.popDish0.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of popDish0
+  //   if ('popDish0' === target.node.id) {
+  //     if (av.debug.dnd) { console.log('popDish0: s, t', source, target); }
+  //     av.dnd.landpopDish0(av.dnd, source, nodes, target);
+  //     av.anl.AnaChartFn();
+  //   }
+  // });
 
-  av.dnd.popDish1.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of popDish1
-    if ('popDish1' === target.node.id) {
-      if (av.debug.dnd) { console.log('popDish1: s, t', source, target); }
-      av.dnd.landpopDish1(av.dnd, source, nodes, target);
-      av.anl.AnaChartFn();
-    }
-  });
+  // av.dnd.popDish1.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of popDish1
+  //   if ('popDish1' === target.node.id) {
+  //     if (av.debug.dnd) { console.log('popDish1: s, t', source, target); }
+  //     av.dnd.landpopDish1(av.dnd, source, nodes, target);
+  //     av.anl.AnaChartFn();
+  //   }
+  // });
 
-  av.dnd.popDish2.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of popDish2
-    if ('popDish2' === target.node.id) {
-      if (av.debug.dnd) { console.log('popDish2: s, t', source, target); }
-      av.dnd.landpopDish2(av.dnd, source, nodes, target);
-      av.anl.AnaChartFn();
-    }
-  });
+  // av.dnd.popDish2.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of popDish2
+  //   if ('popDish2' === target.node.id) {
+  //     if (av.debug.dnd) { console.log('popDish2: s, t', source, target); }
+  //     av.dnd.landpopDish2(av.dnd, source, nodes, target);
+  //     av.anl.AnaChartFn();
+  //   }
+  // });
 
-  av.dnd.popDish0.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
-    //The following cases should never happen as they are defined as 'target' not as 'source' dnd types.
-    // The code is here in case the dnd type is changed to 'source'
-    switch (source.node.id) {
-      case 'popDish0':
-        av.post.addUser('DnD: delete_from: popDish0?');
-        av.anl.wrld[0].left = [];       //remove lines from population 1
-        av.anl.wrld[0].right = [];
-        av.anl.AnaChartFn();
-        break;
-      case 'popDish1':
-        av.post.addUser('DnD: delete_from: popDish1?');
-        av.anl.wrld[1].left = [];       //remove lines from population 2
-        av.anl.wrld[1].right = [];
-        av.anl.AnaChartFn();
-        break;
-      case 'popDish2':
-        av.post.addUser('DnD: delete_from: popDish2?');
-        av.anl.wrld[2].left = [];       //remove lines from population 3
-        av.anl.wrld[2].right = [];
-        av.anl.AnaChartFn();
-        break;
-    }
-  });
+  // av.dnd.popDish0.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
+  //   //The following cases should never happen as they are defined as 'target' not as 'source' dnd types.
+  //   // The code is here in case the dnd type is changed to 'source'
+  //   switch (source.node.id) {
+  //     case 'popDish0':
+  //       av.post.addUser('DnD: delete_from: popDish0?');
+  //       av.anl.wrld[0].left = [];       //remove lines from population 1
+  //       av.anl.wrld[0].right = [];
+  //       av.anl.AnaChartFn();
+  //       break;
+  //     case 'popDish1':
+  //       av.post.addUser('DnD: delete_from: popDish1?');
+  //       av.anl.wrld[1].left = [];       //remove lines from population 2
+  //       av.anl.wrld[1].right = [];
+  //       av.anl.AnaChartFn();
+  //       break;
+  //     case 'popDish2':
+  //       av.post.addUser('DnD: delete_from: popDish2?');
+  //       av.anl.wrld[2].left = [];       //remove lines from population 3
+  //       av.anl.wrld[2].right = [];
+  //       av.anl.AnaChartFn();
+  //       break;
+  //   }
+  // });
 
   /*  //kept only as an example of how to programatically add data to a dnd container
    av.dnd.fzWorld.insertNodes(false, [
@@ -3005,7 +3008,7 @@ require([
     av.anl.wrld[0].left = [];
     av.anl.wrld[0].right = [];
     av.anl.clearWorldData(0);
-    av.dnd.popDish0.selectAll().deleteSelectedNodes();
+    av.dnd.empty('#popDish0');
     av.anl.AnaChartFn();
   };
   document.getElementById('pop1delete').onclick = function () {
@@ -3014,7 +3017,7 @@ require([
     av.anl.wrld[1].left = [];
     av.anl.wrld[1].right = [];
     av.anl.clearWorldData(1);
-    av.dnd.popDish1.selectAll().deleteSelectedNodes();
+    av.dnd.empty('#popDish1');
     av.anl.AnaChartFn();
   };
   document.getElementById('pop2delete').onclick = function () {
@@ -3023,7 +3026,7 @@ require([
     av.anl.wrld[2].left = [];
     av.anl.wrld[2].right = [];
     av.anl.clearWorldData(2);
-    av.dnd.popDish2.selectAll().deleteSelectedNodes();
+    av.dnd.empty('#popDish2');
     av.anl.AnaChartFn(); 
   };
 

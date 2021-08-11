@@ -13,13 +13,15 @@ var dojo = dojo || {};
 //============================================================================================ Drag n Drog Unilities ===
 
 //---------------------------------------------------------------------------------------------- av.dnd.getAllItems --*/
-av.dnd.getAllItems = function (source) {
-  'use strict';
-  var items = source.getAllNodes().map(function (node) {
-    return source.getItem(node.id);
-  });
-  return items;
-};
+
+// yemd
+// av.dnd.getAllItems = function (source) {
+//   'use strict';
+//   var items = source.getAllNodes().map(function (node) {
+//     return source.getItem(node.id);
+//   });
+//   return items;
+// };
 
 //------------------------------------------------------------------------------------------------- av.dnd.getDomId ----
 av.dnd.getDomId = function (name, target){
@@ -1430,134 +1432,139 @@ av.dnd.FzAddExperimentFn = function (fzSection, target, type) {
 };
 //------------------------------------------------------------------------------------ end av.dnd.FzAddExperimentFn --*/
 
+// yemd: replaced by av.dnd.landAnlDndChart in dragulaDnd.js
 
-av.dnd.lndAnlDndChart = function (move) {
-  'use strict';
-  console.log('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
-  var items = av.dnd.getAllItems(av.dnd.popDish0);
-  if (0 === items.length) { av.dnd.putNslot(0, move.source); }
-  else {
-    items = av.dnd.getAllItems(av.dnd.popDish1);
-    if (0 === items.length) { av.dnd.putNslot(1, move.source); }
-    else {
-      items = av.dnd.getAllItems(av.dnd.popDish2);
-      if (0 === items.length) { av.dnd.putNslot(2, move.source);}
-    }
-  }
-  //in all cases no population name is stored in the graph div
-  av.dnd.anlDndChart.selectAll().deleteSelectedNodes();  //clear items
-  av.dnd.anlDndChart.sync();   //should be done after insertion or deletion
-};
+// av.dnd.lndAnlDndChart = function (move) {
+//   'use strict';
+//   console.log('DnD: ' + move.source.node.id + '--> ' + move.target.node.id + ': by: ' + move.nodeName);
+//   var items = av.dnd.getAllItems(av.dnd.popDish0);
+//   if (0 === items.length) { av.dnd.putNslot(0, move.source); }
+//   else {
+//     items = av.dnd.getAllItems(av.dnd.popDish1);
+//     if (0 === items.length) { av.dnd.putNslot(1, move.source); }
+//     else {
+//       items = av.dnd.getAllItems(av.dnd.popDish2);
+//       if (0 === items.length) { av.dnd.putNslot(2, move.source);}
+//     }
+//   }
+//   //in all cases no population name is stored in the graph div
+//   av.dnd.anlDndChart.selectAll().deleteSelectedNodes();  //clear items
+//   av.dnd.anlDndChart.sync();   //should be done after insertion or deletion
+// };
 
-av.dnd.landAnlDndChart = function (dnd, source, nodes, target) {
-  'use strict';
-  av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
-  var items = av.dnd.getAllItems(av.dnd.popDish0);
-  if (0 === items.length) { av.dnd.putNslot(0, source); }
-  else {
-    items = av.dnd.getAllItems(av.dnd.popDish1);
-    if (0 === items.length) { av.dnd.putNslot(1, source); }
-    else {
-      items = av.dnd.getAllItems(av.dnd.popDish2);
-      if (0 === items.length) { av.dnd.putNslot(2, source);}
-    }
-  }
-  //in all cases no population name is stored in the graph div
-  av.dnd.anlDndChart.selectAll().deleteSelectedNodes();  //clear items
-  av.dnd.anlDndChart.sync();   //should be done after insertion or deletion
-};
+// av.dnd.landAnlDndChart = function (dnd, source, nodes, target) {
+//   'use strict';
+//   av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
+//   var items = av.dnd.getAllItems(av.dnd.popDish0);
+//   if (0 === items.length) { av.dnd.putNslot(0, source); }
+//   else {
+//     items = av.dnd.getAllItems(av.dnd.popDish1);
+//     if (0 === items.length) { av.dnd.putNslot(1, source); }
+//     else {
+//       items = av.dnd.getAllItems(av.dnd.popDish2);
+//       if (0 === items.length) { av.dnd.putNslot(2, source);}
+//     }
+//   }
+//   //in all cases no population name is stored in the graph div
+//   av.dnd.anlDndChart.selectAll().deleteSelectedNodes();  //clear items
+//   av.dnd.anlDndChart.sync();   //should be done after insertion or deletion
+// };
 
 //------------------------------------------------------------------------------------------------- av.dnd.putNslot --*/
-av.dnd.putNslot = function (Num, source) {
-  'use strict';
-  //the console.log get the data one way, the codes gets the same data another way. 
-  console.log('sourceContainer=', source.parent.id, '; world domID=', source.anchor.id, '; world Name=', source.anchor.textContent);
-  var domid = Object.keys(source.selection)[0];
-  var name = document.getElementById(domid).textContent;
-  var dir = av.fzr.dir[domid];
+// av.dnd.putNslot = function (Num, source) {
+//   'use strict';
+//   //the console.log get the data one way, the codes gets the same data another way. 
+//   console.log('sourceContainer=', source.parent.id, '; world domID=', source.anchor.id, '; world Name=', source.anchor.textContent);
+//   var domid = Object.keys(source.selection)[0];
+//   var name = document.getElementById(domid).textContent;
+//   var dir = av.fzr.dir[domid];
 
-  //I tried putting av.dnd.popDish+Num as a parameter to be passed, but that did not work.
-  av.dnd['popDish'+Num].insertNodes(false, [{data: name, type: ['w']}]);
-  av.dnd['popDish'+Num].sync();
-  av.anl.loadWorldData(Num, dir);
-  av.anl.loadSelectedData(Num, 'yLeftSelect', 'left', 'av.dnd.putNslot');
-  av.anl.loadSelectedData(Num, 'yRightSelect', 'right', 'av.dnd.putNslot');
-};
+//   //I tried putting av.dnd.popDish+Num as a parameter to be passed, but that did not work.
+//   av.dnd['popDish'+Num].insertNodes(false, [{data: name, type: ['w']}]);
+//   av.dnd['popDish'+Num].sync();
+//   av.anl.loadWorldData(Num, dir);
+//   av.anl.loadSelectedData(Num, 'yLeftSelect', 'left', 'av.dnd.putNslot');
+//   av.anl.loadSelectedData(Num, 'yRightSelect', 'right', 'av.dnd.putNslot');
+// };
 //--------------------------------------------------------------------------------------------- end av.dnd.putNslot --*/
 
 // should be able to combine the following three functions, but hope to get rid of dojo dnd someday. 
 // only called from  av.dnd.popDish0.on('DndDrop', function (source, nodes, copy, target)
 // tried to put in a separate file at one time and at that time it did not work. 
 //--------------------------------------------------------------------------------------------- av.dnd.landpopDish# --*/
-av.dnd.landpopDish0 = function (dnd, source, nodes, target) {
-  'use strict';
-  av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
-  var items = av.dnd.getAllItems(av.dnd.popDish0);
-  //if there is an existing item, need to clear all nodes and assign most recent to item 0
-  if (0 < items.length) {
-    //clear out the old data
-    av.dnd.popDish0.selectAll().deleteSelectedNodes();  //clear items
-    av.dnd.popDish0.sync();   //should be done after insertion or deletion
 
-    //get the data for the new organism
-    av.dnd.fzWorld.forInSelectedItems(function (item, id) {
-      av.dnd.popDish0.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
-    });
-    av.dnd.popDish0.sync();
-  }
-  var fzdomid = Object.keys(source.selection)[0];
-  var dir = av.fzr.dir[fzdomid];
-  av.anl.loadWorldData(0, dir);
-  av.anl.loadSelectedData(0, 'yLeftSelect', 'left', 'av.dnd.landpopDish0');
-  av.anl.loadSelectedData(0, 'yRightSelect', 'right', 'av.dnd.landpopDish0');
-};
+// yemd: replaced by av.dnd.landpopDish in dragulaDnd.js 
+// consolidated the three functions because they were basically the same
 
-av.dnd.landpopDish1 = function (dnd, source, nodes, target) {
-  'use strict';
-  av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
-  var items = av.dnd.getAllItems(av.dnd.popDish1);
-  //if there is an existing item, need to clear all nodes and assign most recent to item 0
-  if (0 < items.length) {
-    //clear out the old data
-    av.dnd.popDish1.selectAll().deleteSelectedNodes();  //clear items
-    av.dnd.popDish1.sync();   //should be done after insertion or deletion
+// av.dnd.landpopDish0 = function (dnd, source, nodes, target) {
+//   'use strict';
+//   av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
+//   var items = av.dnd.getAllItems(av.dnd.popDish0);
+//   //if there is an existing item, need to clear all nodes and assign most recent to item 0
+//   if (0 < items.length) {
+//     //clear out the old data
+//     av.dnd.popDish0.selectAll().deleteSelectedNodes();  //clear items
+//     av.dnd.popDish0.sync();   //should be done after insertion or deletion
 
-    //get the data for the new organism
-    av.dnd.fzWorld.forInSelectedItems(function (item, id) {
-      av.dnd.popDish1.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
-    });
-    av.dnd.popDish1.sync();
-  }
-  var fzdomid = Object.keys(source.selection)[0];
-  var dir = av.fzr.dir[fzdomid];
-  av.anl.loadWorldData(1, dir);
-  av.anl.loadSelectedData(1, 'yLeftSelect', 'left', 'av.dnd.landpopDish1');
-  av.anl.loadSelectedData(1, 'yRightSelect', 'right', 'av.dnd.landpopDish1');
-};
+//     //get the data for the new organism
+//     av.dnd.fzWorld.forInSelectedItems(function (item, id) {
+//       av.dnd.popDish0.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
+//     });
+//     av.dnd.popDish0.sync();
+//   }
+//   var fzdomid = Object.keys(source.selection)[0];
+//   var dir = av.fzr.dir[fzdomid];
+//   av.anl.loadWorldData(0, dir);
+//   av.anl.loadSelectedData(0, 'yLeftSelect', 'left', 'av.dnd.landpopDish0');
+//   av.anl.loadSelectedData(0, 'yRightSelect', 'right', 'av.dnd.landpopDish0');
+// };
 
-av.dnd.landpopDish2 = function (dnd, source, nodes, target) {
-  'use strict';
-  av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
-  var items = av.dnd.getAllItems(av.dnd.popDish2);
-  //if there is an existing item, need to clear all nodes and assign most recent to item 0
-  if (0 < items.length) {
-    //clear out the old data
-    av.dnd.popDish2.selectAll().deleteSelectedNodes();  //clear items
-    av.dnd.popDish2.sync();   //should be done after insertion or deletion
+// av.dnd.landpopDish1 = function (dnd, source, nodes, target) {
+//   'use strict';
+//   av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
+//   var items = av.dnd.getAllItems(av.dnd.popDish1);
+//   //if there is an existing item, need to clear all nodes and assign most recent to item 0
+//   if (0 < items.length) {
+//     //clear out the old data
+//     av.dnd.popDish1.selectAll().deleteSelectedNodes();  //clear items
+//     av.dnd.popDish1.sync();   //should be done after insertion or deletion
 
-    //get the data for the new organism
-    av.dnd.fzWorld.forInSelectedItems(function (item, id) {
-      av.dnd.popDish2.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
-    });
-    av.dnd.popDish2.sync();
-    //if (av.debug.dnd) console.log('popDish2.map=', popDish2.map);
-  }
-  var fzdomid = Object.keys(source.selection)[0];
-  var dir = av.fzr.dir[fzdomid];
-  av.anl.loadWorldData(2, dir);
-  av.anl.loadSelectedData(2, 'yLeftSelect', 'left', 'av.dnd.landpopDish2');
-  av.anl.loadSelectedData(2, 'yRightSelect', 'right', 'av.dnd.landpopDish2');
-};
+//     //get the data for the new organism
+//     av.dnd.fzWorld.forInSelectedItems(function (item, id) {
+//       av.dnd.popDish1.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
+//     });
+//     av.dnd.popDish1.sync();
+//   }
+//   var fzdomid = Object.keys(source.selection)[0];
+//   var dir = av.fzr.dir[fzdomid];
+//   av.anl.loadWorldData(1, dir);
+//   av.anl.loadSelectedData(1, 'yLeftSelect', 'left', 'av.dnd.landpopDish1');
+//   av.anl.loadSelectedData(1, 'yRightSelect', 'right', 'av.dnd.landpopDish1');
+// };
+
+// av.dnd.landpopDish2 = function (dnd, source, nodes, target) {
+//   'use strict';
+//   av.post.addUser('DnD: ' + source.node.id + '--> ' + target.node.id + ': by: ' + nodes[0].textContent);
+//   var items = av.dnd.getAllItems(av.dnd.popDish2);
+//   //if there is an existing item, need to clear all nodes and assign most recent to item 0
+//   if (0 < items.length) {
+//     //clear out the old data
+//     av.dnd.popDish2.selectAll().deleteSelectedNodes();  //clear items
+//     av.dnd.popDish2.sync();   //should be done after insertion or deletion
+
+//     //get the data for the new organism
+//     av.dnd.fzWorld.forInSelectedItems(function (item, id) {
+//       av.dnd.popDish2.insertNodes(false, [item]);          //assign the node that is selected from the only valid source.
+//     });
+//     av.dnd.popDish2.sync();
+//     //if (av.debug.dnd) console.log('popDish2.map=', popDish2.map);
+//   }
+//   var fzdomid = Object.keys(source.selection)[0];
+//   var dir = av.fzr.dir[fzdomid];
+//   av.anl.loadWorldData(2, dir);
+//   av.anl.loadSelectedData(2, 'yLeftSelect', 'left', 'av.dnd.landpopDish2');
+//   av.anl.loadSelectedData(2, 'yRightSelect', 'right', 'av.dnd.landpopDish2');
+// };
 //----------------------------------------------------------------------------------------- end av.dnd.landpopDish# --*/
 
 // ****************************************************************************************************************** */
