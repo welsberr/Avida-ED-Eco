@@ -82,6 +82,9 @@ jQuery(document).ready(function($) {
       if (source === av.dnd.fzTdish && target === av.dnd.testConfig) {
         return true;
       } 
+      if (target === av.dnd.trashCan) {
+        return true;
+      }
       else {
         // el.style.cursor = 'not-allowed'; // not working yet 
         return false;
@@ -107,6 +110,7 @@ jQuery(document).ready(function($) {
     el.style.cursor =  'default';
     console.log("dragging");
     dragging = true;
+    //When mouse button is released, return cursor to default values
   });
 
   $('#item').on('click', (e) => {
@@ -118,7 +122,6 @@ jQuery(document).ready(function($) {
   dra.on('drop', (el, target, source) => {
 
     // el, target, source are dom objects aka stuff you could 'target.id' to
-
     if ((target === av.dnd.activeConfig || target === av.dnd.ancestorBox) && av.grd.runState === 'started') {
       av.dom.newDishModalID.style.display = 'block'; // show the 'please save' modal
       dra.cancel(); // cancel the drag event
@@ -133,7 +136,7 @@ jQuery(document).ready(function($) {
       av.dnd.landTestConfig(el, target, source);
     }
 
-    if (target !== null && target === av.dnd.trashCan) {
+    if (target === av.dnd.trashCan) {
       // yemi: however, if the drag is being initiated from the gridCanvas aka, then the event handler is in mouse.js
       // refer to av.mouse.ParentMouse or av.mouse.KidMouse
       av.dnd.landTrashCan(el, source);
@@ -154,7 +157,7 @@ jQuery(document).ready(function($) {
     if (target === av.dnd.fzWorld) {
       // yemi: does not trigger because techinically there are no 'items' on the grid right now.
       // on the grid, mouse movements overtake. Code for that is in mouse.js (av.mouse.kidMouse)
-      // av.dnd.landFzWorld();
+      av.dnd.landFzWorld(el, target, source);
     }
 
     if (target === av.dnd.fzOrgan) {
@@ -165,7 +168,6 @@ jQuery(document).ready(function($) {
       av.dnd.landOrganIcon(el, target, source);
     }
 
-    //When mouse button is released, return cursor to default values
     $(document).on('mouseup touchend', function (evt) {
       'use strict';
       if (dragging) {
@@ -180,13 +182,14 @@ jQuery(document).ready(function($) {
           y = evt.clientY;
         }
         av.mouse.UpGridPos = [x, y];
-        if (target === av.dnd.gridCanvas) {
+        var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
+        if (elements.indexOf("gridCanvas") != -1) { // if gridCanvas is behind this mouse point
           av.dnd.landGridCanvas(el, target, source);
           av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
         }
-        dragging = false;
-        $(document).unbind('mousemove touchmove');
       }
+      dragging = false;
+      $(document).unbind('mousemove touchmove');
     });
 
     if (target === av.dnd.activeOrgan) {
@@ -224,8 +227,7 @@ jQuery(document).ready(function($) {
       var domIDs = Object.keys(av.dnd[target].map);
       av.dnd.move.targetDomId = domIDs[domIDs.length - 1];
       av.dnd.move.sourceMoveData = av.dnd.move.source.map[av.dnd.move.sourceDomId];
-      // console.log('move', av.dnd.move);
-      
+
       if ('fzOrgan' == fzSection && 'ancestorBox' == target) { addedPopPage = av.dnd.landAncestorBox(av.dnd.move); }
       else if ('fzOrgan' == fzSection && 'activeOrgan' == target) { addedPopPage = av.dnd.lndActiveOrgan(av.dnd.move); }
       else if (('fzConfig' == fzSection || 'fzWorld' == fzSection) && 'activeConfig' == target) { 
@@ -409,7 +411,7 @@ jQuery(document).ready(function($) {
         av.fzr.dir[domid] = 'g' + av.fzr.gNum;
         av.fzr.domid['g' + av.fzr.gNum] = domid;
         av.fzr.file['g' + av.fzr.gNum + '/genome.seq'] = gen;
-        av.fzr.file['g' + av.fzr.gNum + '/entryname.txt'] = containerMap[container][domid].data;
+        av.fzr.file['g' + av.fzr.gNum + '/entryname.txt'] = avName;
         av.fzr.gNum++;
         if (av.debug.dnd) console.log('fzr', av.fzr);
 
@@ -441,6 +443,7 @@ jQuery(document).ready(function($) {
     var nn = av.parents.name.length;
     av.post.addUser('DnD: ' + source.id + '--> GridCanvas: by: ' + el.textContent.trim() + ' on (' +  av.mouse.UpGridPos[0] + ', ' + av.mouse.UpGridPos[1] + ')' );
 
+    console.log(el);
     // to correctly place the organism, need to calculate offsets
     var offsetXLocal = ($("#gridHolder").width() - av.dom.gridCanvas.width) / 2;
     var offsetYLocal = ($("#gridHolder").height() - av.dom.gridCanvas.height) / 2;
@@ -789,9 +792,8 @@ jQuery(document).ready(function($) {
     remove.domid = '';
     if (av.debug.dnd) console.log('in av.dnd.landTrashCan');
     
-    var container = source.id !== undefined ? "#" + source.id : "." + source.className;
     //if the item is from the freezer, delete from freezer unless it is original stock (@)
-    if (fzOrgan === source && '@ancestor' !== el.textContent) {
+    if (av.dnd.fzOrgan === source && '@ancestor' !== el.textContent.trim()) {
       if (av.debug.dnd) {console.log('fzOrgan->trash', av.fzr.genome);}
       remove.domid = el.id;
       remove.type = 'g';
@@ -800,24 +802,20 @@ jQuery(document).ready(function($) {
       // maybe have a pop up saying 'it was successfully deleted?
       av.fzr.saveUpdateState('no');
     }
-    else if (fzConfig === source && '@default' !== el.textContent) {
+    else if (av.dnd.fzConfig === source && '@default' !== el.textContent.trim()) {
       remove.domid = el.id;
       remove.type = 'g';
       el.remove();       //http://stackoverflow.com/questions/1812148/dojo-dnd-move-node-programmatically
       av.dnd.remove(source, el);
       av.fzr.saveUpdateState('no');
     }
-    else if (fzWorld === source && '@example' !== el.textContent) {
+    else if (av.dnd.fzWorld === source && '@example' !== el.textContent.trim()) {
       remove.domid = el.id;
       remove.type = 'w';
       el.remove();       //http://stackoverflow.com/questions/1812148/dojo-dnd-move-node-programmatically
       av.dnd.remove(source, el);
       av.fzr.saveUpdateState('no');
     } 
-    else {
-      // if it's none of the above, undo the delete by appending the element back to the source
-      av.dnd.insertToDOM(source, el);
-    }
 
     // empty the trashCan of all children elements except for the trashCan image
     for (var i = 0; i < $('#trashCan')[0].children.length; i++) {
@@ -829,7 +827,6 @@ jQuery(document).ready(function($) {
       remove.dir = av.fzr.dir[remove.domid];
       av.fwt.removeFzrItem(remove.dir, remove.type);
     }
-
     return remove;
   };
 
@@ -847,9 +844,6 @@ jQuery(document).ready(function($) {
     if (av.debug.dnd) console.log('contextMenu; fzItemID=',fzItemID, ' container=', container);
     if (av.debug.dnd) console.log('contextMenu: fzr', av.fzr);
 
-    // should I not use digit here?
-    console.log(containerMap);
-    console.log(fzItemID);
     var aMenu = new dijit.Menu({targetNodeIds: [fzItemID]});
     aMenu.addChild(new dijit.MenuItem({
       label: 'Rename',
@@ -857,7 +851,7 @@ jQuery(document).ready(function($) {
         av.post.addUser('Button: Rename:' + document.getElementById(fzItemID).textContent);
         var fzName = prompt('Please rename freezer item', document.getElementById(fzItemID).textContent);
         if (fzName) {
-          fzName = av.dnd.getUniqueFzrName(container, fzName);
+          fzName = av.dnd.getUniqueFzrName(target, fzName);
           if (null != fzName) {
             document.getElementById(fzItemID).innerHTML = fzName;
             document.getElementById(fzItemID).data = fzName;
@@ -925,8 +919,9 @@ jQuery(document).ready(function($) {
     }));
   };
 
+
   /*
-  Helpers for Inserting and Removing Nodes
+  Helpers for Inserting and Removing Items from Dragula Containers
   */
 
   av.dnd.empty = function(target) {
@@ -940,11 +935,8 @@ jQuery(document).ready(function($) {
   av.dnd.remove = function(target, el) {
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     $(container).remove(el);
-    try {
-      delete containerMap[container][domid] || document.querySelector(container).removeChild(document.getElementById(el.id));
-    } catch {
-      console.log('entry in containerMap to be deleted');
-    }
+    document.querySelector(container).removeChild(document.getElementById(el.id));
+    delete containerMap[container][el.id];
   }
 
   av.dnd.insert = function(target, el, type) {
@@ -999,6 +991,7 @@ jQuery(document).ready(function($) {
   av.dnd.namefzrItem = function(target, name) {
     'use strict';
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
+    console.log(container);
     var namelist = $.map(document.querySelector(container).children, (x) => { if (!x.classList.contains('gu-transit')) return x.textContent.trim()});
     var theName;
     //look for name in freezer section

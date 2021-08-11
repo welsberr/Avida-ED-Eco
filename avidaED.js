@@ -720,6 +720,7 @@ require([
     } 
     // yemi: this is for organism page
     else if ('offspring' == av.mouse.Picked) {
+      console.log('offspring picked');
       target = av.mouse.offspringMouse(evt, av.dnd, av.fio, av.fzr, av.gen);
       av.mouse.Picked = '';
     } 

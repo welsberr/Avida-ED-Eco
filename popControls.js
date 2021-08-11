@@ -437,13 +437,13 @@
     else if ('offspring' == trigger) {
       //get name from parent
       parentName = av.dnd.activeOrgan.textContent; 
-      fzName = prompt('Please name the offspring', parentName + '_Offspring');
+      fzName = prompt('Please name the offspring', parentName + '_offspring');
       gene = '0,heads_default,' + av.ind.dna[1];
     }
     else {
       fzName = prompt('Please name the organism', 'newOrganism');
     }
-    fzName = av.dnd.getUniqueFzrName(container, fzName);
+    fzName = av.dnd.getUniqueFzrName(av.dnd.fzWorld, fzName);
     if (null != fzName) {
       //insert new item into the freezer.
       var type = 'g'
@@ -465,11 +465,10 @@
   av.ptd.FrConfigFn = function (from) {
     'use strict';
     console.log(from, ' called av.ptd.FrConfigFn');
-    var container = av.dnd.fzConfig.id !== undefined ? "#" + av.dnd.fzConfig.id : "." + av.dnd.fzConfig.className;
-    var sName = av.dnd.namefzrItem(container, 'newConfig');
+    var sName = av.dnd.namefzrItem(av.dnd.fzConfig, 'newConfig');
     var fzName = prompt('Please name the new configuration', sName);
     if (fzName) {
-      fzName = av.dnd.getUniqueFzrName(container, fzName);
+      fzName = av.dnd.getUniqueFzrName(av.dnd.fzConfig, fzName);
       if (null != fzName) {
         var type = 'c'
         var domid = `${type}${av.fzr.cNum}`
@@ -497,7 +496,7 @@
     var popName = av.fzr.actConfig.name + '@' + av.grd.popStatsMsg.update.formatNum(0);  // need update here star
     var fzName = prompt('Please name the new population', popName);
     if (fzName) {
-      fzName = av.dnd.getUniqueFzrName(container, fzName);
+      fzName = av.dnd.getUniqueFzrName(av.dnd.fzWorld, fzName);
       if (null != fzName) {
         var type = 'w'
         var domid = `${type}${av.fzr.wNum}`
