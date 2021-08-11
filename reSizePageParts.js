@@ -32,25 +32,44 @@ av.ui.resizeShowTextDebugPage =function() {
 
 /* yemi: function to automatically resize the Populations page when button clicked; called in avidaED.js */
 function resizePopulationPage() {
+  $('#labInfoHoldCls').css('min-width', '200px');  // set here as it is different in Organism Page
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('.dragbar').css("width");
-  var rightSideWidth = $('#rightInfoHolder').css("width");
+  //var rightSideWidth = $('#rightInfoHolder').css("width");
+  var rightSideWidth = '400px';
   var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
   $('.all3pop').css("grid-template-columns", newColumns);
+  console.log('all3pop.grid-template-columns=',$('.all3pop').css("grid-template-columns") );
 }
 
 /* yemi: function to automatically resize the Organisms page when button clicked; called in avidaED.js */
 function resizeOrganismPage() {
+  $('#labInfoHoldCls').css('min-width', '50px');  // set here as it is different in Population Page
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('.dragbar').css("width");
-  console.log('$("#rightInfoHolder").css("width"); = ', $('#rightInfoHolder').css("width"));
-  //var rightSideWidth = $('#rightInfoHolder').css("width");
-  var rightSideWidth = 0;
+  var rightSideWidth = '180px';   //not sure why this was ever set to 0. The organsim page has a right side panel
   var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
   $('.all3org').css("grid-template-columns", newColumns);
-}
+  console.log('leftNavBarWidth=', leftNavBarWidth, '; dragbarWidth=', dragbarWidth, '; rightSideWidth=', rightSideWidth);
+  console.log('all3org.grid-template-columns=',$('.all3org').css("grid-template-columns") );
+  av.ui.adjustOrgInstructionTextAreaSize();
+};
+
+//---------------------------------------------------------------------------- av.ui.adjustOrgInstructionTextAreaSize --
+// resizes ust the Instruction textAreas to split evenly between the two in the space available. 
+// probably called more than it needs to be called. 
+av.ui.adjustOrgInstructionTextAreaSize = function() {
+  var height = ( $('#orgInfoHolder').innerHeight() - $('#orgDetailID').innerHeight() - 10 ) / 2;
+  //console.log('orgInfoHolder.ht=', $('#orgInfoHolder').innerHeight(), '; orgDetailID=',$('#orgDetailID').innerHeight(), '; height=', height);
+  av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
+  av.dom.ExecuteAbout.style.height = height + 'px';
+  av.dom.ExecuteJust.style.width = '100%';
+  av.dom.ExecuteAbout.style.width = '100%';    
+};
+
 
 /* yemi: functions for left dragbar */
+//------------------------------------------------------------------------------------------------- dragbarLeftResize --
 function dragbarLeftResize() {
   console.log('navColID=', parseInt($('#navColId').css("min-width")));
   var dragging = false;
@@ -151,6 +170,7 @@ function dragbarLeftResize() {
       }
 
       /* yemi: when modifying the column sizes, need to modify all three layouts */
+      console.log('rightSideWidth=', rightSideWidth);
       var population_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
       var organism_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
       var analysis_colInfo = widthOfNav + "px 3px auto";
@@ -166,12 +186,12 @@ function dragbarLeftResize() {
     }
   });
 };
+//--------------------------------------------------------------------------------------------- end dragbarLeftResize --
 
-/* yemi: functions for right dragbar */
+
+// yemi: functions for right dragbar 
 function dragbarRightResize() {
-
   var dragging = false;
-
   /* yemi: when there's a mousehover over dragbar, dragbar changes color */
   $('#dragbarRight').bind('mouseover', function(e) {
     $('#dragbarRight').css('background-color', 'blue');

@@ -1436,23 +1436,20 @@ require([
     av.dom.showTextDebugButton.style.background = 'white';
     document.getElementById(showBlock).style.display = "flex";   //orgPageButtonHolder
     var showButton = showBlock.substring(0,showBlock.length-5)+'Button';
-    console.log('showButton=',showButton);
+    // console.log('showButton=',showButton);
     document.getElementById(showButton).style.background = '#DBDBDB'; 
-    //dijit.byId(showBlock).resize();
-    //document.getElementById(showBlock).resize();
 
     //disable menu options. they will be enabled when relevant canvas is drawn
     dijit.byId('mnFzOffspring').attr('disabled', true);
     dijit.byId('mnCnOffspringTrace').attr('disabled', true);
 
     // if the miniplot on the populaton page needs to be initiated call that funciton.
-    console.log('In: av.ui.mainBoxSwap; av.pch.needInit=', av.pch.needInit, '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));
+    // console.log('In: av.ui.mainBoxSwap; av.pch.needInit=', av.pch.needInit, '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));
     if ($(av.dom.popStatsBlock).is(":visible") && (av.pch.needInit) ) {
       av.grd.popChartInit('av.ui.mainBoxSwap');x
     };
     if ('populationBlock' == av.ui.page) {
       av.dom.popInfoVert.style.display = 'block';
-      $('#labInfoHoldCls').css('min-width', '200px');
       document.getElementById('allAvidaContainer').className = 'all3pop';
     };    
     if ('analysisBlock' == av.ui.page) {
@@ -1463,9 +1460,8 @@ require([
     }
     if ('organismBlock' == av.ui.page) {
       document.getElementById('allAvidaContainer').className = 'all3org';
-      console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
+      // console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
       av.dom.orgInfoHolder.style.display = 'block';
-      $('#labInfoHoldCls').css('min-width', '190px');
       if ('settings' == av.ui.orgInfo) {
         av.dom.orgSettings.style.display = 'block';
         av.dom.orgDetailID.style.display = 'none';
@@ -1473,7 +1469,6 @@ require([
       else {
         av.dom.orgSettings.style.display = 'none';
         av.dom.orgDetailID.style.display = 'block';
-        av.ui.adjustOrgInstructionTextAreaSize();
       };
 
       if (undefined !== av.traceObj) {
@@ -1514,24 +1509,13 @@ require([
     // * clientWidth = box + 2*padding - scrollbar_width    
     // * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
     // * csssWidth = box only nothing else
-    console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
-      av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
-      $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
-    if (av.dom.orgInfoHolder.clientWidth < av.ui.orgInfoHolderMinWidth) av.ui.orgInfoHolderWidth = av.ui.orgInfoHolderMinWidth;
+    // console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
+    //  av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
+    //   $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
+    // if (av.dom.orgInfoHolder.clientWidth < av.ui.orgInfoHolderMinWidth) av.ui.orgInfoHolderWidth = av.ui.orgInfoHolderMinWidth;
     av.ui.mainBoxSwap('organismBlock');
-    
-    // av.dom.orgInfoHolder.style.width = av.ui.orgInfoHolderWidth + 'px'; /* yemi: commented this out because it was messing with my resize code. let me know if this is causing problems */
-
-    console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
-      av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
-      $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
-    console.log('orgInfoHolder.paddding=', $("#orgInfoHolder").css('padding'));
-
-    /* yemi: just so that if screen resized in the other layout, you still update the organism page correctly */
     resizeOrganismPage();
-
-    /* yemi: organism trace persists; can be removed if undesired */
-    av.ind.updateOrgTrace()
+    av.ind.updateOrgTrace();       // yemi: organism trace persists; can be removed if undesired 
   };
 
   document.getElementById('analysisButton').onclick = function () {
@@ -2590,17 +2574,7 @@ require([
   //********************************************************************************************************************
 
   //adjust instruction text size
-    // if (av.dbg.flg.root) { console.log('Root: before av.ui.adjustOrgInstructionTextAreaSize'); }
-  //---------------------------------------------------------------------------- av.ui.adjustOrgInstructionTextAreaSize --
-  av.ui.adjustOrgInstructionTextAreaSize = function() {
-    var height = ( $('#orgInfoHolder').innerHeight() - $('#orgDetailID').innerHeight() - 10 ) / 2;
-    //console.log('orgInfoHolder.ht=', $('#orgInfoHolder').innerHeight(), '; orgDetailID=',$('#orgDetailID').innerHeight(), '; height=', height);
-    av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
-    av.dom.ExecuteAbout.style.height = height + 'px';
-    av.dom.ExecuteJust.style.width = '100%';
-    av.dom.ExecuteAbout.style.width = '100%';    
-  };
-
+    // if (av.dbg.flg.root) { console.log('Root: before $(function slideOrganism()'); }
   //--------------------------------------------------------------------------------------------------- $ slideOrganism --
   $(function slideOrganism() {
     /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
@@ -2722,10 +2696,10 @@ require([
 
   //set output Canvas Size
   av.ind.cpuOutputCnvsSize = function() {
-    console.log('output Wd Ht: $inner =', $('#cpuOutputCnvs').innerWidth(), $('#cpuOutputCnvs').innerHeight());
+    //console.log('output Wd Ht: $inner =', $('#cpuOutputCnvs').innerWidth(), $('#cpuOutputCnvs').innerHeight());
     av.ind.outputCanvasWd = $('#cpuOutputCnvs').innerWidth();
     av.ind.outputCanvasHt = $('#cpuOutputCnvs').innerHeight();
-    console.log('av.ind.outputCanvas=', av.ind.outputCanvasWd, av.ind.outputCanvasHt);
+    //console.log('av.ind.outputCanvas=', av.ind.outputCanvasWd, av.ind.outputCanvasHt);
   };
 
   av.ind.updateOrgTrace = function (from) {

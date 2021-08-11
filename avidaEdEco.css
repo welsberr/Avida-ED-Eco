@@ -85,7 +85,7 @@ html {
 .all2rit{
   display: grid;
   grid-template-rows: 2.5em auto;
-  grid-template-columns: 3px auto 680px;
+  grid-template-columns: 3px auto 400px;
   grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'dragbarLeft mainBlockHolder rightInfoHolder';
   height: 100vh;
@@ -133,7 +133,7 @@ html {
 .all3org{
   display: grid;
   grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
-  grid-template-columns: 240px 3px auto 3px 250px;    /* 250px */
+  grid-template-columns: 240px 3px auto 3px 200px;    /* 250px */
   grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
   height: 99vh;
