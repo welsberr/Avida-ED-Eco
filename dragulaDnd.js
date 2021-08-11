@@ -109,9 +109,6 @@ jQuery(document).ready(function($) {
     dragging = true;
   });
 
-  dra.on('cancel', (el, container, source) => {
-  });
-
   $('#item').on('click', (e) => {
     e.target.css('background', 'rgb(189, 229, 245)');
     selected = e.target;
@@ -956,6 +953,7 @@ jQuery(document).ready(function($) {
     if (Object.keys(containerMap).indexOf(container) === -1) {
       containerMap[container] = {}
     }
+    console.log(el.id, el);
     containerMap[container][domid] = {'name': el.textContent.trim() , 'type': type};
   }
 

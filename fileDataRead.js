@@ -4,9 +4,6 @@
 
   // if (av.dbg.flg.root) { console.log('Root: before av.fio.addFzItem'); }
   /*------------------------------------------------------------------------------------------------ av.fio.addFzItem --*/
-  
-  /* yemi's implementation of av.fio.addFzItem to be used on Test Dish Section of Freezer */
-  var testItemId = 0;
 
   // replacement for dndSection.map
   var containerMap = {};
@@ -22,8 +19,6 @@
         containerMap[container] = {};
       }
 
-      var domItems = $.map($(container), (value, key) => { return value })[0].children
-
       // 'insertNodes' implementation
       var domid = `${type}${fileNum}`
       $(container).append(`<div class="item ${type}" id="${domid}"> ${name} </div>`);
@@ -36,8 +31,6 @@
       if (0 < fileNum) {
         av.dnd.contextMenu(container, domid, 'av.fio.addFzItem');
       }
-      console.log(type, fileNum);
-      testItemId++;
       return domid;
     } else {
       return 'dndSection is undefined';
@@ -118,18 +111,15 @@
     switch (type) {
       case 'c':
         // yemd
-        // domid = av.fio.addFzItem(av.dnd.fzConfig, name, type, num);
-        domid = av.fio.addFzItem("#fzConfig", name, type, num);
+        domid = av.fio.addFzItem('#fzConfig', name, type, num);
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzConfig is undefined');
         if (av.fzr.cNum < Number(num)) {av.fzr.cNum = Number(num); }
-         
         //The default config file is loaded as the activeConfig after all the files are loaded. 
         //if (0 == num && loadConfigFlag) {var ConfigActiveDomID = av.fio.setActiveConfig(av.dnd.activeConfig, name, 'b');}
         break;
       case 'g':
         // yemd
-        // domid = av.fio.addFzItem(av.dnd.fzOrgan, name, type, num);
-        domid = av.fio.addFzItem("#fzOrgan", name, type, num);
+        domid = av.fio.addFzItem('#fzOrgan', name, type, num);
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzOrgan is undefined');
         if (av.fzr.gNum < Number(num)) {av.fzr.gNum = Number(num); }
         break;
@@ -152,15 +142,13 @@
   */
       case 't':
         // yemd
-        // domid = av.fio.addFzItem(av.dnd.fzTdish, name, type, num);
-        domid = av.fio.addFzItem("#fzTdish", name, type, num);
+        domid = av.fio.addFzItem('#fzTdish', name, type, num);
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzTdish is undefined');
         if (av.fzr.tNum < Number(num)) {av.fzr.tNum = Number(num); } 
         break;
       case 'w':
         // yemd
-        // domid = av.fio.addFzItem(av.dnd.fzWorld, name, type, num);
-        domid = av.fio.addFzItem("#fzWorld", name, type, num);
+        domid = av.fio.addFzItem('#fzWorld', name, type, num);
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzWorld is undefined');
         if (av.fzr.wNum < Number(num)) {av.fzr.wNum = Number(num); }
         break;
