@@ -161,16 +161,15 @@
     'use strict';
     var target = '';
     //console.log('av.fzr.actOrgan.actDomid', av.fzr.actOrgan.actDomid);
-    if ('organIcon' == evt.target.id || 'actOrgImg' == evt.target.id) {
+    if ('organIcon' == evt.target.id || 'actOrgImg' == evt.target.id || 'activeOrgan' == evt.target.id) {
       offspringTrace(dnd, fio, fzr, gen);
       av.post.addUser('Moved something to organsim Icon');
       target = 'organIcon';
     }
     else { // look for target in the freezer
       var found = false;
-      for (var dir in av.fzr.domid) {if (av.fzr.domid[dir] == evt.target.id) {found=true; console.log('nay'); break;}}
+      for (var dir in av.fzr.domid) {if (av.fzr.domid[dir] == evt.target.id) {found=true; break;}}
       if (found) {
-        console.log('hi')
         target  = 'fzOrgan';
         //create a new freezer item
         if (av.debug.mouse) console.log('offSpring->freezerDiv');
@@ -198,7 +197,6 @@
 
             var domid = 'g' + av.fzr.gNum;
             var type = 'g';
-            console.log(domid);
             // $(container).empty();
             // $(container).append(`<div class="item ${type}" id="${domid}"> ${avidian} </div>`);
             $('#fzOrgan').append(`<div class="item ${type}" id="${domid}"> ${avidian} </div>`);
