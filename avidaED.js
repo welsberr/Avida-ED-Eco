@@ -3008,7 +3008,7 @@ require([
     av.anl.wrld[0].left = [];
     av.anl.wrld[0].right = [];
     av.anl.clearWorldData(0);
-    av.dnd.empty('#popDish0');
+    av.dnd.empty(av.dnd.popDish0);
     av.anl.AnaChartFn();
   };
   document.getElementById('pop1delete').onclick = function () {
@@ -3017,7 +3017,7 @@ require([
     av.anl.wrld[1].left = [];
     av.anl.wrld[1].right = [];
     av.anl.clearWorldData(1);
-    av.dnd.empty('#popDish1');
+    av.dnd.empty(av.dnd.popDish1);
     av.anl.AnaChartFn();
   };
   document.getElementById('pop2delete').onclick = function () {
@@ -3026,7 +3026,7 @@ require([
     av.anl.wrld[2].left = [];
     av.anl.wrld[2].right = [];
     av.anl.clearWorldData(2);
-    av.dnd.empty('#popDish2');
+    av.dnd.empty(av.dnd.popDish2);
     av.anl.AnaChartFn(); 
   };
 
