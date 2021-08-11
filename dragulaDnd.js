@@ -81,7 +81,7 @@ jQuery(document).ready(function($) {
     },
     copy: function (el, source) {
       //Makes sure the only item that will be copied instead of moved is in the FreezerMove div
-      return source === av.dnd.activeConfig || source === av.dnd.fzConfig || source === av.dnd.fzOrgan || source === av.dnd.fzWorld || source === av.dnd.fzTdish;
+      return source === av.dnd.activeOrgan || source === av.dnd.activeConfig || source === av.dnd.fzConfig || source === av.dnd.fzOrgan || source === av.dnd.fzWorld || source === av.dnd.fzTdish;
     },
     direction: 'vertical',             // Y axis is considered when determining where an element would be dropped                       
     copySortSource: false,             // elements in copy-source containers can be reordered
@@ -304,7 +304,6 @@ jQuery(document).ready(function($) {
     containerMap['#activeOrgan'][domid] = {'name': el.textContent , 'type': 'g'};
     av.fzr.actOrgan.actDomid = domid;
 
-    console.log('hello');
     if ('fzOrgan' === source.id) { 
       av.dnd.updateFromFzrOrganism(el); 
     }
@@ -349,6 +348,7 @@ jQuery(document).ready(function($) {
     var domid = el.id;
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     var oldName = el.textContent.trim();
+    console.log(document.querySelector(container).children);
     var sName = av.dnd.namefzrItem(container, oldName);
     var avidian = prompt('Please name your avidian', sName);
     var type = 'g';
@@ -1136,7 +1136,7 @@ jQuery(document).ready(function($) {
     'use strict';
     var unique = true;
     var suggestName;
-    var namelist = $.map(document.querySelector(container).children, (x) => {return x.textContent.trim()});
+    var namelist = $.map(document.querySelector(container).children, (x) => { if (!x.classList.contains('gu-transit')) return x.textContent.trim()});
     while (unique) {
       unique = false;
       if (0 <= namelist.indexOf(name)) {
@@ -1151,10 +1151,11 @@ jQuery(document).ready(function($) {
   // used to name an item that's being introduced to the freezer
   av.dnd.namefzrItem = function(container, name) {
     'use strict';
-    var namelist = $.map(document.querySelector(container).children, (x) => {return x.textContent.trim()});
+    var namelist = $.map(document.querySelector(container).children, (x) => { if (!x.classList.contains('gu-transit')) return x.textContent.trim()});
     var theName;
     //look for name in freezer section
     if (0 <= namelist.indexOf(name)) {
+      console.log(namelist, name);
       theName = av.dnd.nameNfrzItem(namelist, name, 0);
     } else { theName = name; }
 

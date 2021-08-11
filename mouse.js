@@ -144,7 +144,6 @@
     delete containerMap['#activeOrgan'][parentID];
     //Put name of offspring in OrganCurrentNode
     var domid = 'g' + av.fzr.gNum;
-    console.log(domid);
     var type = 'g';
     $('#activeOrgan').append(`<div class="item ${type}" id="${domid}"> ${parent + "_offspring"} </div>`);
     containerMap['#activeOrgan'][domid] = {name: parent + "_offspring", type: type};
@@ -166,7 +165,7 @@
       av.post.addUser('Moved something to organsim Icon');
       target = 'organIcon';
     }
-    else { // look for target in the freezer
+    else if ('fzOrgan' == evt.target.id) { // look for target in the freezer
       var found = false;
       for (var dir in av.fzr.domid) {if (av.fzr.domid[dir] == evt.target.id) {found=true; break;}}
       if (found) {
