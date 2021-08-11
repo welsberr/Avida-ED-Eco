@@ -11,7 +11,6 @@
     dijit.byId('mnCnPause').attr('disabled', true);
     dijit.byId('mnCnRun').attr('disabled', false);
     dijit.byId('mnCnOne').attr('disabled', false);
-    //console.log('pauseState; button=run');
     av.dom.runStopButton.textContent = 'Run';
     av.dom.oneUpdateButton.disabled = false;
   };
@@ -20,7 +19,6 @@
   //probably should not be called until after program is sure that it is valid to start running, but it works this way
   //might change someday.
   av.ptd.makeRunState = function (from) {
-    //console.log(from, ' called av.ptd.makeRunState');
     av.dom.runStopButton.textContent = 'Pause';
     dijit.byId('mnCnPause').attr('disabled', false);
     dijit.byId('mnCnRun').attr('disabled', true);
@@ -33,21 +31,10 @@
     console.log(from, 'called av.ptd.popWorldStateUi');
     av.grd.runState = 'world';
     //Disable some of the options on the Setup page
-    //av.dnd.ancestorBox.isSource = false;
-    av.dnd.ancestorBox.copyOnly = true;
-    av.dnd.ancestorBoTest.copyOnly = true;
-    // av.dnd.activeConfig.isSource = true;
-    //delete av.dnd.ancestorBox.accept['g'];
-    //delete av.dnd.gridCanvas.accept['g'];
-    // delete av.dnd.activeConfig.accept['c'];
-    // delete av.dnd.activeConfig.accept['w'];
-    // av.dnd.fzWorld.accept['w'] = 1;
-    // av.dnd.fzWorld.accept['b'] = 1;
     av.dom.sizeCols.disabled = true;
     av.dom.sizeRows.disabled = true;
     //av.dom.experimentRadio.disabled = true;
     //av.dom.demoRadio.disabled = true;
-
     //there will be a population so it can now be frozen.
     dijit.byId('mnFzPopulation').attr('disabled', false);
   };
@@ -57,21 +44,10 @@
     console.log(from, 'called av.ptd.popTdishStateUi');
     av.grd.runState = 'tDish';
     //Disable normal Setup page and setup testDish setup Page   
-    //av.dnd.ancestorBox.isSource = false;
-    // av.dnd.ancestorBox.copyOnly = true;
-    // av.dnd.ancestorBoTest.copyOnly = true;
-    // av.dnd.activeConfig.isSource = true;
-    //delete av.dnd.ancestorBox.accept['g'];
-    //delete av.dnd.gridCanvas.accept['g'];
-    // delete av.dnd.activeConfig.accept['c'];
-    // delete av.dnd.activeConfig.accept['w'];
-    // av.dnd.fzWorld.accept['t'] = 1;
-    // av.dnd.fzWorld.accept['b'] = 1;
     av.dom.sizeCols.disabled = true;
     av.dom.sizeRows.disabled = true;
     //av.dom.experimentRadio.disabled = true;
     //av.dom.demoRadio.disabled = true;
-
     //there will be a population so it can now be frozen.
     dijit.byId('mnFzPopulation').attr('disabled', false);
   };
@@ -84,17 +60,6 @@
     //Disable some of the options on the Setup page
     
     // yemd
-    // av.dnd.ancestorBox.copyOnly = true;
-    // av.dnd.ancestorBoTest.copyOnly = true;
-    //av.dnd.ancestorBox.isSource = false;
-    //av.dnd.activeConfig.isSource = false;
-    // delete av.dnd.ancestorBox.accept['g'];
-    // delete av.dnd.ancestorBoTest.accept['g'];
-    // delete av.dnd.gridCanvas.accept['g'];
-    // delete av.dnd.activeConfig.accept['c'];
-    // delete av.dnd.activeConfig.accept['w'];
-    // av.dnd.fzWorld.accept['w'] = 1;
-    // av.dnd.fzWorld.accept['b'] = 1;
     $('#mutePopSlide').slider({disabled: true});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
     av.dom.sizeCols.disabled = true;
     av.dom.sizeRows.disabled = true;
@@ -163,11 +128,6 @@
     var fname = '@default';
 
     // yemd
-    // av.dnd.activeConfig.selectAll().deleteSelectedNodes();
-    // av.dnd.activeConfig.insertNodes(false, [{data: fname, type: ['c']}]);
-    // av.dnd.activeConfig.sync();
-    
-    // yemd
     var domId = Object.keys(containerMap['#activeConfig'])[0];
     av.fzr.actConfig.actDomid = domId;
     av.fzr.actConfig.name = fname;
@@ -178,20 +138,6 @@
     // clear parents
 
     // yemd
-    // av.dnd.ancestorBox.accept['g'] = 1;
-    // av.dnd.ancestorBoTest.accept['g'] = 1;
-    // av.dnd.gridCanvas.accept['g'] = 1;
-    // av.dnd.activeConfig.accept['c'] = 1;
-    // av.dnd.activeConfig.accept['b'] = 1;
-    // av.dnd.activeConfig.accept['t'] = 1;
-    // av.dnd.activeConfig.accept['w'] = 1;
-    // av.dnd.fzWorld.accept['w'] = 0;
-    // av.dnd.fzWorld.accept['b'] = 0;
-    // av.dnd.ancestorBox.isSource = true;
-    // av.dnd.ancestorBox.copyOnly = true;
-    // av.dnd.ancestorBoTest.isSource = true;
-    // av.dnd.ancestorBoTest.copyOnly = true;
-    // av.dnd.activeConfig.isSource = true;
     av.dom.sizeCols.disabled = false;
     av.dom.sizeRows.disabled = false;
     av.dom.mutePopInput.disabled = false;
@@ -290,12 +236,8 @@
     av.frd.avidaCFG2form(fileStr, 'av.ptd.popNewExState'); // yemd fileStr is not defined
     
     // yemd
-    $("#ancestorBox").empty();
-    $("#ancestorBoTest").empty();
-
-    // yemd
-    // av.dnd.gridCanvas.selectAll().deleteSelectedNodes();
-    // av.dnd.gridCanvas.sync();
+    av.dnd.empty(av.dnd.ancestorBox);
+    av.dnd.empty(av.dnd.ancestorBoTest);
 
     //Update data for Selected Organism Type
     av.dom.sotColorBox.style.backgroundColor = '#D7D7D7';
@@ -368,13 +310,11 @@
     // used only for testing new dish configurations don't work in the current computer interface
     if ('test' == av.msg.setupType)
       namelist = $.map(document.querySelector('#ancestorBoTest').children, (x) => {return x.innerHTML.trim()});
-      // namelist = dojo.query('> .dojoDndItem', 'ancestorBoTest'); 
     // normal end user version
     else
       //get a list of names of organisms that are in the starting population. 
       //works for both configured dishes and populated dishes
       namelist = $.map(document.querySelector('#ancestorBox').children, (x) => {return x.innerHTML.trim()});
-      // namelist = dojo.query('> .dojoDndItem', 'ancestorBox');
   
     if (namelist.length < 1) {
       //console.log('about to call av.ptd.makePauseState()');
@@ -515,12 +455,7 @@
       av.fzr.file['g' + av.fzr.gNum + '/genome.seq'] = gene;
       av.fzr.file['g' + av.fzr.gNum + '/entryname.txt'] = fzName;
       av.fzr.gNum++;
-      // var domid = av.dnd.insertNode(container, fzName, type);
-      // av.fzr.dir[domid] = 'g' + (av.fzr.gNum - 1); // incrementing happend inside insertNode
-      // av.fzr.domid['g' + (av.fzr.gNum - 1)] = domid;
-      // av.fzr.file['g' + (av.fzr.gNum - 1) + '/genome.seq'] = gene;
-      // av.fzr.file['g' + (av.fzr.gNum - 1) + '/entryname.txt'] = fzName;
-      av.dnd.contextMenu(container, domid, 'av.ptd.FrOrganismFn');
+      av.dnd.contextMenu(av.dnd.fzWorld, domid, 'av.ptd.FrOrganismFn');
       av.fzr.saveUpdateState('no');
     }
   };
@@ -542,15 +477,11 @@
         containerMap[container][domid] = {"name": fzName, "type": type};
         av.fzr.dir[domid] = 'c'+ av.fzr.cNum;
         av.fzr.domid['c'+ av.fzr.cNum] = domid;
-        // var domid = av.dnd.insertNode(container, fzName, type);
-        // av.fzr.dir[domid] = 'c'+ (av.fzr.cNum - 1);
-        // av.fzr.domid['c'+ (av.fzr.cNum - 1)] = domid;
         av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = fzName;
         av.fwt.makeFzrConfig(av.fzr.cNum, 'av.ptd.FrConfigFn');
         av.fzr.cNum++;
-        // av.fwt.makeFzrConfig((av.fzr.cNum - 1), 'av.ptd.FrConfigFn');
         //Create context menu for right-click on this item
-        av.dnd.contextMenu(container, domid, 'av.ptd.FrConfigFn');
+        av.dnd.contextMenu(av.dnd.fzConfig, domid, 'av.ptd.FrConfigFn');
         av.fzr.saveUpdateState('no');
       }
     }
@@ -574,19 +505,14 @@
         containerMap[container][domid] = {"name": fzName, "type": type};
         av.fzr.dir[domid] = 'w'+ av.fzr.wNum;
         av.fzr.domid['w'+ av.fzr.wNum] = domid;
-        // var domid = av.dnd.insertNode(container, fzName, type);
-        // av.fzr.dir[domid] = 'w'+ (av.fzr.wNum - 1);
-        // av.fzr.domid['w'+ (av.fzr.wNum - 1)] = domid;
         av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = fzName;
         av.fwt.makeFzrWorld(av.fzr.wNum, 'av.ptd.FrPopulationFn');
         av.fzr.wNum++;
-        // av.fwt.makeFzrWorld((av.fzr.wNum - 1), 'av.ptd.FrPopulationFn');
         //Create context menu for right-click on this item
-        av.dnd.contextMenu(container, domid, 'av.ptd.FrPopulationFn');
+        av.dnd.contextMenu(av.dnd.fzWorld, domid, 'av.ptd.FrPopulationFn');
         av.fzr.saveUpdateState('no');
       }
     }
-    console.log(av.fzr);
   };
 
   av.pch.processLogic = function() {

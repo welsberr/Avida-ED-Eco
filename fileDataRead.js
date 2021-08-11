@@ -10,26 +10,24 @@
   // example containerMap access: containerMap['#fzConfig']['test 0']
   // The first key contains '#' or '.'. Second key doesn't.
 
-  av.fio.addFzItem = function(container, name, type, fileNum) {
+  av.fio.addFzItem = function(target, name, type, fileNum) {
     // example 'container' input format: '.className' or '#id'
     'use strict';
+    var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     if (container !== undefined) {
       // if the container is not yet in the containerMap, add an entry
       if (Object.keys(containerMap).indexOf(container) === -1) {
         containerMap[container] = {};
       }
-
       // 'insertNodes' implementation
       var domid = `${type}${fileNum}`
       $(container).append(`<div class="item ${type}" id="${domid}"> ${name} </div>`);
       containerMap[container][domid] = {"name": name, "type": type};
-      
-      // var domid = av.dnd.insertNode(container,name,type,'', fileNum);
       if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', containerMap[container][domid]);
 
       // create a right av.mouse-click context menu for the item just created.
       if (0 < fileNum) {
-        av.dnd.contextMenu(container, domid, 'av.fio.addFzItem');
+        av.dnd.contextMenu(target, domid, 'av.fio.addFzItem');
       }
       return domid;
     } else {
@@ -111,7 +109,7 @@
     switch (type) {
       case 'c':
         // yemd
-        domid = av.fio.addFzItem('#fzConfig', name, type, num);
+        domid = av.fio.addFzItem(av.dnd.fzConfig, name, type, num);
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzConfig is undefined');
         if (av.fzr.cNum < Number(num)) {av.fzr.cNum = Number(num); }
         //The default config file is loaded as the activeConfig after all the files are loaded. 
@@ -119,7 +117,7 @@
         break;
       case 'g':
         // yemd
-        domid = av.fio.addFzItem('#fzOrgan', name, type, num);
+        domid = av.fio.addFzItem(av.dnd.fzOrgan, name, type, num);
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzOrgan is undefined');
         if (av.fzr.gNum < Number(num)) {av.fzr.gNum = Number(num); }
         break;
@@ -142,13 +140,13 @@
   */
       case 't':
         // yemd
-        domid = av.fio.addFzItem('#fzTdish', name, type, num);
+        domid = av.fio.addFzItem(av.dnd.fzTdish, name, type, num);
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzTdish is undefined');
         if (av.fzr.tNum < Number(num)) {av.fzr.tNum = Number(num); } 
         break;
       case 'w':
         // yemd
-        domid = av.fio.addFzItem('#fzWorld', name, type, num);
+        domid = av.fio.addFzItem(av.dnd.fzWorld, name, type, num);
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzWorld is undefined');
         if (av.fzr.wNum < Number(num)) {av.fzr.wNum = Number(num); }
         break;
@@ -760,24 +758,14 @@
 
       // var domid;
       if ('test' == av.msg.setupType) {
-        // yemd
-        // av.dnd.ancestorBoTest.insertNodes(false, [{data: rslt.nam[ii], type: ['g']}]);
-        // av.dnd.ancestorBoTest.sync();
-
         var domid = 'g' + av.fzr.gNum;
         var type = 'g';
         var container = '#' + av.dnd.ancestorBoTest.id;
-        // domid = av.dnd.insertNode(container, rslt.nam[ii], type);
       }
       else {
-        // yemd
-        // av.dnd.ancestorBox.insertNodes(false, [{data: rslt.nam[ii], type: ['g']}]);
-        // av.dnd.ancestorBox.sync();
-
         var domid = 'g' + av.fzr.gNum;
         var type = 'g';
         var container = '#' + av.dnd.ancestorBox.id;
-        // domid = av.dnd.insertNode(container, rslt.nam[ii], type);
       }
 
       // Add a DOM object
@@ -787,18 +775,8 @@
       if (Object.keys(containerMap).indexOf(container) === -1) {
         containerMap[container] = {};
       }
-
-      if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
-        containerMap[container][domid] = {'name': rslt.nam[ii] , 'type': 'g'};
-      } else {
-        containerMap[container][domid].name = rslt.nam[ii];
-        containerMap[container][domid].type = 'g';
-      }
-
-      console.log(domid);
-      console.log(containerMap);
-      console.log(av.fzr);
-
+      containerMap[container][domid] = {'name': rslt.nam[ii] , 'type': 'g'};
+    
       // if (av.dbg.flg.frd) console.log('autoPlaceParent: domIds', domid, '; length', domIds.length);
       av.parents.domid.push(domid); //domid in ancestorBox used to remove if square in grid moved to trashcan
       //Find color of ancestor
@@ -861,33 +839,15 @@
       var nn = av.parents.name.length;
       av.parents.name.push(stuff.nam[kk]);
 
-      // yemd
-      // var domIds;
-      // if ('test' == av.msg.setupType) {
-      //   av.dnd.ancestorBoTest.insertNodes(false, [{data: stuff.nam[kk], type: ['g']}]);
-      //   av.dnd.ancestorBoTest.sync();
-      //   domIds = Object.keys(av.dnd.ancestorBoTest.map);
-      // }
-      // else {
-      //   av.dnd.ancestorBox.insertNodes(false, [{data: stuff.nam[kk], type: ['g']}]);
-      //   av.dnd.ancestorBox.sync();
-      //   domIds = Object.keys(av.dnd.ancestorBox.map);
-      // }
-      // if (av.dbg.flg.frd) console.log('handAncestorLoad: domIds', domIds, '; length', domIds.length);
-      // av.parents.domid.push(domIds[domIds.length-1]); //domid in ancestorBox used to remove if square in grid moved to trashcan
-      
-      // var domid;
       if ('test' == av.msg.setupType) {
         var domid = 'g' + av.fzr.gNum; // yemd might need to come back to it
         var type = 'g';
         var container = '#' + av.dnd.ancestorBoTest.id;
-        // domid = av.dnd.insertNode(container, stuff.nam[kk], type);
       }
       else {
         var domid = 'g' + av.fzr.gNum;
         var type = 'g';
         var container = '#' + av.dnd.ancestorBox.id;
-        // domid = av.dnd.insertNode(container, stuff.nam[kk], type);
       }
 
       // Add a DOM object
@@ -897,14 +857,7 @@
       if (Object.keys(containerMap).indexOf(container) === -1) {
         containerMap[container] = {};
       }
-
-      if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
-        containerMap[container][domid] = {'name': stuff.nam[kk] , 'type': 'g'};
-      } else {
-        containerMap[container][domid].name = stuff.nam[kk];
-        containerMap[container][domid].type = 'g';
-      }
-
+      containerMap[container][domid] = {'name': stuff.nam[kk] , 'type': 'g'};
       av.parents.domid.push(domid); //domid in ancestorBox used to remove if square in grid moved to trashcan
       av.fzr.gNum++;
 
@@ -981,9 +934,6 @@
       }
 
       // yemd
-      // need to find the domid of the ancestor in ancestorBox. The line below is not correct. ???? !!!!! tiba
-      // var domIDs = Object.keys(av.dnd.ancestorBox.map);
-      // av.parents.domid.push(domIDs[domIDs.length-1]);
       av.parents.domid.push(domid);
       av.fzr.gNum++;
       console.log(containerMap);
@@ -994,7 +944,6 @@
       else {av.parents.color.push(av.color.defaultParentColor);}
 
     }
-    // av.dnd.ancestorBox.sync();
     //console.log('parents', av.parents);
   };
   //------------------------------------------------ end two function section to put data from clade.ssg into parents --

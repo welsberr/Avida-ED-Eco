@@ -25,9 +25,6 @@
     if (loadConfigFlag) { av.fzr.clearFzr_activeConfig_nutData_Fn(); }
     else { av.fzr.clearMainFzrFn(); }  // clear freezer (globals.js)
     
-    // yemd
-    // av.dnd.clearFrzDojoFn(); 
-    
     //Change loading a workspace will change the freezer, but not parents or configuration
   /*  av.parents.clearParentsFn();  //globals.js
     av.dnd.ancestorBox.selectAll().deleteSelectedNodes();

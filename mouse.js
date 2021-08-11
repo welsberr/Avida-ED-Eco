@@ -140,12 +140,11 @@
     if (av.debug.mouse) console.log('parentID', parentID);
     if (undefined == parentID) parent = '';
     else parent = document.getElementById(parentID).textContent.trim();
-    $('#activeOrgan').empty();
-    delete containerMap['#activeOrgan'][parentID];
+    av.dnd.empty(av.dnd.activeOrgan);
+    $('#activeOrgan').append(`<div class="item ${type}" id="${domid}"> ${parent + "_offspring"} </div>`);
     //Put name of offspring in OrganCurrentNode
     var domid = 'g' + av.fzr.gNum;
     var type = 'g';
-    $('#activeOrgan').append(`<div class="item ${type}" id="${domid}"> ${parent + "_offspring"} </div>`);
     containerMap['#activeOrgan'][domid] = {name: parent + "_offspring", type: type};
     av.fzr.actOrgan.actDomid = domid;
     av.fzr.actOrgan.name = parent + "_offspring";
@@ -182,35 +181,17 @@
         //make sure there is a name.
         var oldName = parent + '_offspring';
         var sName = av.dnd.namefzrItem(container, oldName);
-        // var nameArray = av.dnd.makeNameList(av.dnd.fzOrgan);
-        // //console.log('name', oldname, '; array',  nameArray);
-        // var sName = av.dnd.namefzrItem(oldname, nameArray);
-        console.log('sName', sName);
         var avidian = prompt('Please name your avidian', sName);
         if (avidian) {
           avidian = av.dnd.getUniqueFzrName(container, avidian);
           if (null != avidian) {  //add to Freezer
             av.post.addUser('Moved offspring, ' + avidian + ', to organism freezer');
-            // dnd.fzOrgan.insertNodes(false, [{data: avidian, type: ['g']}]);
-            // dnd.fzOrgan.sync();
-
             var domid = 'g' + av.fzr.gNum;
             var type = 'g';
-            // $(container).empty();
-            // $(container).append(`<div class="item ${type}" id="${domid}"> ${avidian} </div>`);
             $('#fzOrgan').append(`<div class="item ${type}" id="${domid}"> ${avidian} </div>`);
             // Add an entry to containerMap
-            if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
-              containerMap[container][domid] = {'name': avidian , 'type': 'g'};
-            } else {
-              containerMap[container][domid].name = avidian;
-              containerMap[container][domid].type = 'g';
-            }
+            containerMap[container][domid] = {'name': avidian , 'type': 'g'};
             //find domId of offspring as listed in dnd.fzOrgan
-            // var mapItems = Object.keys(dnd.fzOrgan.map);
-            // var gdir =  'g' + av.fzr.gNum;
-            // av.fzr.dir[mapItems[mapItems.length - 1]] = gdir;
-            // av.fzr.domid[gdir] = mapItems[mapItems.length - 1];
             var gdir =  'g' + av.fzr.gNum;
             av.fzr.dir[domid] = gdir;
             av.fzr.domid[gdir] = domid;
@@ -221,8 +202,7 @@
             if (av.debug.mouse) console.log('Offspring-->freezer, dir', gdir, 'fzr', fzr);
             //create a right mouse-click context menu for the item just created.
             if (av.debug.mouse) console.log('Offspring-->freezer; fzf', fzr);
-            // av.dnd.contextMenu(dnd.fzOrgan, av.fzr.domid[gdir], 'av.mouse.offspringMouse');
-            av.dnd.contextMenu(container, domid, 'av.mouse.offspringMouse');
+            av.dnd.contextMenu(av.dnd.fzOrgan, domid, 'av.mouse.offspringMouse');
           }
         }
       }
@@ -286,20 +266,14 @@
     "use strict";
     av.post.addUser('Moved avidian from grid to freezer');
     if (av.debug.mouse) console.log('freezerDiv');
-    //make sure there is a name.
-
-    // var nameArray = av.dnd.makeNameList(av.dnd.fzOrgan);
-    //console.log('name', av.grd.kidName, '; array',  nameArray);
-    container = $.map($('#ancestorBox')[0], (key, value) => {return value});
-    var sName = av.dnd.namefzrItem(container, av.grd.kidName);
+    //make sure there is a name
+    var sName = av.dnd.namefzrItem(av.dnd.fzOrgan, av.grd.kidName);
     var avidian = prompt('Please name your avidian', sName);
+    var container = '#' + av.dnd.fzOrgan.id;
     if (avidian) {
-      var avName = av.dnd.getUniqueFzrName(container, avidian);
+      var avName = av.dnd.getUniqueFzrName(av.dnd.fzOrgan, avidian);
       if (null != avName) {  //give dom item new avName name
         av.post.addUser('Froze kid = ' + avName);
-        
-        // av.dnd.fzOrgan.insertNodes(false, [{data: avName, type: ['g']}]);
-        // av.dnd.fzOrgan.sync();
         var gdir =  'g' + av.fzr.gNum;
         var type = 'g';
         var domid = gdir;
@@ -307,18 +281,11 @@
         var mapItems = Object.keys(containerMap[container]);
 
         $(container).append(`<div class="item ${type}" id="${domid}"> ${avName} </div>`);
-
         // Add an entry to containerMap
         if (Object.keys(containerMap).indexOf(container) === -1) {
           containerMap[container] = {};
         }
-
-        if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
-          containerMap[container][domid] = {'name': avName , 'type': 'g'};
-        } else {
-          containerMap[container][domid].name = avName;
-          containerMap[container][domid].type = 'g';
-        }
+        containerMap[container][domid] = {'name': avName , 'type': 'g'};
 
         av.fzr.file[gdir + '/entryname.txt'] = avName;
         av.fzr.dir[mapItems[mapItems.length - 1]] = gdir;
@@ -375,20 +342,20 @@
       $(container).children('#' + domid).remove();
       delete containerMap[container][domid];
       av.post.addUser('Moved ancestor to trash');
-
       //remove from main list.
       av.parents.removeParent(av.mouse.ParentNdx);
     }
     //-------------------------------------------- organism view
     else if ('organIcon' == evt.target.id) {
       av.post.addUser('Moved ancestor to Organsim View');
-      av.dnd.activeOrgan.selectAll().deleteSelectedNodes();  //clear items
-      av.dnd.activeOrgan.sync();   //should be done after insertion or deletion
+      av.dnd.empty(av.dnd.activeOrgan);
+      var container = '#' + av.dnd.activeOrgan.id;
       //Put name of offspring in av.dnd.activeOrganism
-      av.dnd.activeOrgan.insertNodes(false, [{data: av.parents.name[av.mouse.ParentNdx], type: ['g']}]);
-      av.dnd.activeOrgan.sync();
+      if (Object.keys(containerMap).indexOf(container) === -1) {
+        containerMap[container] = {};
+      }
+      containerMap[container][domid] = {'name': av.parents.name[av.mouse.ParentNdx] , 'type': 'g'};
       av.fzr.actOrgan.actDomid = Object.keys(av.dnd.activeOrgan.map)[0];
-
       //genome data should be in av.parents.genome[av.mouse.ParentNdx];
       av.fzr.actOrgan.genome = av.parents.genome[av.mouse.ParentNdx];
       av.fzr.actOrgan.name = av.parents.name[av.mouse.ParentNdx];
@@ -396,22 +363,23 @@
     }
   }
 
-  av.mouse.fromAncestorBoxRemove = function (removeName) {
-    'use strict';
-    var domItems = Object.keys(dnd.ancestorBox.map);
-    //console.log("domItems=", domItems);
-    var nodeIndex = -1;
-    var lngth = domItems.length;
-    for (var ii = 0; ii < lngth; ii++) { //http://stackoverflow.com/questions/5837558/dojo-drag-and-drop-how-to-retrieve-order-of-items
-      if (dnd.ancestorBox.map[domItems[ii]].data == removeName) {
-        nodeIndex = ii;
-      }
-    }
-    var node = dojo.byId(domItems[nodeIndex]);
-    if (av.debug.mouse) console.log('nodeIndex', nodeIndex, domItems[nodeIndex]);
-    dnd.ancestorBox.parent.removeChild(node);
-    dnd.ancestorBox.sync();
-  }
+  // yemd
+  // av.mouse.fromAncestorBoxRemove = function (removeName) {
+  //   'use strict';
+  //   var domItems = Object.keys(dnd.ancestorBox.map);
+  //   //console.log("domItems=", domItems);
+  //   var nodeIndex = -1;
+  //   var lngth = domItems.length;
+  //   for (var ii = 0; ii < lngth; ii++) { //http://stackoverflow.com/questions/5837558/dojo-drag-and-drop-how-to-retrieve-order-of-items
+  //     if (dnd.ancestorBox.map[domItems[ii]].data == removeName) {
+  //       nodeIndex = ii;
+  //     }
+  //   }
+  //   var node = dojo.byId(domItems[nodeIndex]);
+  //   if (av.debug.mouse) console.log('nodeIndex', nodeIndex, domItems[nodeIndex]);
+  //   dnd.ancestorBox.parent.removeChild(node);
+  //   dnd.ancestorBox.sync();
+  // }
 
   //Key movement on grid
   // if (av.dbg.flg.root) { console.log('Root: before av.mouse.arrowKeysOnGrid'); }
