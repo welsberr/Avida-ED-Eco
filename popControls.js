@@ -467,11 +467,13 @@
     console.log(from, ' called av.ptd.FrConfigFn');
     var sName = av.dnd.namefzrItem(av.dnd.fzConfig, 'newConfig');
     var fzName = prompt('Please name the new configuration', sName);
+    var container = av.dnd.fzConfig.id !== undefined ? "#" + av.dnd.fzConfig.id : "." + av.dnd.fzConfig.className;
     if (fzName) {
       fzName = av.dnd.getUniqueFzrName(av.dnd.fzConfig, fzName);
       if (null != fzName) {
         var type = 'c'
         var domid = `${type}${av.fzr.cNum}`
+        
         $(container).append(`<div class="item ${type}" id="${domid}"> ${fzName} </div>`)
         containerMap[container][domid] = {"name": fzName, "type": type};
         av.fzr.dir[domid] = 'c'+ av.fzr.cNum;

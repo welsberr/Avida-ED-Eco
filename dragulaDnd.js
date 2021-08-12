@@ -49,6 +49,13 @@ jQuery(document).ready(function($) {
 
   var dragging = false;
   var selected = '';
+  var sourceIsFzOrgan = false;
+
+  $('.item').click((e) => {
+    console.log(e.target);
+    e.target.css('background', 'rgb(189, 229, 245)');
+    selected = e.target;
+  }); 
 
   var dra = dragula(containers, {
     isContainer: function (el) {
@@ -111,12 +118,10 @@ jQuery(document).ready(function($) {
     console.log("dragging");
     dragging = true;
     //When mouse button is released, return cursor to default values
+    if (source === av.dnd.fzOrgan) { // necessary because for some reason inside mouse events, dra 'source' and 'target' are messed up
+      sourceIsFzOrgan = true;
+    } else sourceIsFzOrgan = false;
   });
-
-  $('#item').on('click', (e) => {
-    e.target.css('background', 'rgb(189, 229, 245)');
-    selected = e.target;
-  }); 
 
   // main function that determines the logic for drag and drop
   dra.on('drop', (el, target, source) => {
@@ -183,7 +188,9 @@ jQuery(document).ready(function($) {
         }
         av.mouse.UpGridPos = [x, y];
         var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
-        if (elements.indexOf("gridCanvas") != -1) { // if gridCanvas is behind this mouse point
+        console.log(evt);
+        console.log(source);
+        if (elements.indexOf("gridCanvas") != -1 && sourceIsFzOrgan) { // if gridCanvas is behind this mouse point
           av.dnd.landGridCanvas(el, target, source);
           av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
         }
@@ -945,7 +952,6 @@ jQuery(document).ready(function($) {
     if (Object.keys(containerMap).indexOf(container) === -1) {
       containerMap[container] = {}
     }
-    console.log(el.id, el);
     containerMap[container][domid] = {'name': el.textContent.trim() , 'type': type};
   }
 
