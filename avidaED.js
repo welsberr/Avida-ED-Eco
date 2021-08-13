@@ -1402,6 +1402,8 @@ require([
   dijit.byId('mnFzAddPopAnalysis').on('Click', function () {
     av.post.addUser('Button: mnFzAddPopEx');
     av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.anlDndChart, 'w');
+    av.ui.mainBoxSwap('analysisBlock');
+    av.anl.AnaChartFn();
   });
 
   //---------------------------------------------- Restart Avida web worker --------------------------------------------
