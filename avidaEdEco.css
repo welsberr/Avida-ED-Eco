@@ -2133,9 +2133,9 @@ label {
 /* yemi: draggable item styling */
 .item {
   cursor: grab;
+  background-color: inherit;
 }
 .item:hover {
-  background-color: rgb(189, 229, 245);
   opacity: 50%;
 }
 

@@ -47,8 +47,10 @@ jQuery(document).ready(function($) {
   av.dnd.popDish1 = containers[15]
   av.dnd.popDish2 = containers[16]
 
+  // yemd: variables necessary to make landGridCanvas work (because dragula and regular JavaScript mouseevents are not compatible)
   var dragging = false;
   var sourceIsFzOrgan = false;
+  var elForGrid = '';
 
   var dra = dragula(containers, {
     isContainer: function (el) {
@@ -114,6 +116,8 @@ jQuery(document).ready(function($) {
     if (source === av.dnd.fzOrgan) { // necessary because for some reason inside mouse events, dra 'source' and 'target' are messed up
       sourceIsFzOrgan = true;
     } else sourceIsFzOrgan = false;
+
+    elForGrid = el;
   });
 
   // main function that determines the logic for drag and drop
@@ -182,7 +186,7 @@ jQuery(document).ready(function($) {
         av.mouse.UpGridPos = [x, y];
         var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
         if (elements.indexOf("gridCanvas") != -1 && sourceIsFzOrgan) { // if gridCanvas is behind this mouse point
-          av.dnd.landGridCanvas(el, target, source);
+          av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, source);
           av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
         }
       }
@@ -217,15 +221,14 @@ jQuery(document).ready(function($) {
 
   var selectedId = '';
     $(document).on('click', function(e) {
-      var classList = e.target.className.split(" "); //yemd: e.target.className is a string
-      if (selectedId !== '') {
+      var classList = e.target.className.split(" "); // yemd: e.target.className is a string
+      if (selectedId !== '' && e.target.id === selectedId) {
         $('#' + e.target.id).css('background', 'inherit');
         selectedId = '';
       } 
-      else if (classList.indexOf('item') != -1) {
+      else if (selectedId === '' && classList.indexOf('item') != -1) { // yemd: if the target is of class 'item' (aka draggable item)
         $('#' + e.target.id).css('background', 'rgb(189, 229, 245)');
         selectedId = e.target.id;
-        console.log(selectedId);
       }
     });
 
@@ -303,6 +306,7 @@ jQuery(document).ready(function($) {
     'use strict';
     av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent);
     var items = av.dnd.getAllItems(av.dnd.popDish0);
+    el = el.cloneNode(true);
     if (0 === items.length) { av.dnd.putNslot(el, 0, av.dnd.popDish0); }
     else {
       items = av.dnd.getAllItems(av.dnd.popDish1);
@@ -314,13 +318,15 @@ jQuery(document).ready(function($) {
     }
     //in all cases no population name is stored in the graph div
     av.dnd.empty(target);
-    av.dnd.insertToDOM(av.dnd.popDish0, el, 'w');
+    av.dnd.insert(av.dnd.popDish0, el, 'w')
+    av.dnd.insertToDOM(av.dnd.popDish0, el);
     av.anl.AnaChartFn();
   };
 
   av.dnd.landOrganCanvas = function(el, target, source) {
     'use strict';
     av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent);
+    el = el.cloneNode(true);
     av.dnd.landActiveOrgan(el, target, source);
   };
 
@@ -470,13 +476,14 @@ jQuery(document).ready(function($) {
     //check to see if in the grid part of the canvas
     if (av.parents.col[nn] >= 0 && av.parents.col[nn] < av.grd.cols && av.parents.row[nn] >= 0 && av.parents.row[nn] < av.grd.rows) {
       av.parents.AvidaNdx[nn] = av.parents.row[nn] * av.grd.cols + av.parents.col[nn];
-
+      el = el.cloneNode(true);
       //Start setting up for getting data for parents structure
       nn = av.parents.name.length;  // get index into parents
       el.textContent = av.dnd.nameParent(el.textContent.trim());
       //Add organism to av.dnd.ancestorBox in settings.
       var domid = el.id;
       var dir = domid;
+      console.log(el);
       av.dnd.insert(av.dnd.ancestorBox, el, 'g');
       av.dnd.insertToDOM(av.dnd.ancestorBox, el);
 
@@ -970,7 +977,8 @@ jQuery(document).ready(function($) {
 
   av.dnd.insertToDOM = function(target, el) {
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
-    $(container).append(el);
+    console.log($(container));
+    $(container).append(el.cloneNode(true));
   }
 
   av.dnd.getAllItems = function (source) {
