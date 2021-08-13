@@ -70,6 +70,7 @@ function dragbarLeftResize() {
     
     $(document).on('mousemove touchmove', function(e){
       av.grd.drawGridSetupFn(); // yemi: redraw the grid
+      av.anl.AnaChartFn(); // yemi: redraw analysis grid
       
       // yemi: need to account for both touch and mouse event
       var x;
@@ -124,6 +125,7 @@ function dragbarLeftResize() {
 
     if (dragging) {
       av.grd.drawGridSetupFn(); // yemi: redraw the grid
+      av.anl.AnaChartFn(); // yemi: redraw analysis grid
 
       // yemi: need to account for both touch and mouse event
       var x;
@@ -645,6 +647,7 @@ window.addEventListener('resize', function() {
 	av.viewPortClientWidth = document.documentElement.clientWidth;
 	av.viewPortClientHeight = document.documentElement.clientHeight;
   av.grd.drawGridSetupFn(); // yemi: redraw the grid
+  av.anl.AnaChartFn(); // yemi: redraw analysis grid
 });
 //--------------------------------------------------------------------------------------- end window.addEventListener --
 
