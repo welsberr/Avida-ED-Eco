@@ -429,9 +429,9 @@
     var fzName = 'new';
     var parentName = '';
     var gene;
-    var container = av.dnd.fzWorld.id !== undefined ? "#" + av.dnd.fzWorld.id : "." + av.dnd.fzWorld.className;
+    var container = av.dnd.fzOrgan.id !== undefined ? "#" + av.dnd.fzOrgan.id : "." + av.dnd.fzOrgan.className;
     if ('selected' == trigger) {
-      fzName = prompt('Please name the selected organism', 'av.grd.kidName');
+      fzName = prompt('Please name the selected organism', av.grd.kidName);
       gene = av.grd.kidGenome;
     }
     else if ('offspring' == trigger) {
