@@ -230,6 +230,11 @@ jQuery(document).ready(function($) {
         $('#' + e.target.id).css('background', 'rgb(189, 229, 245)');
         selectedId = e.target.id;
       }
+      else if (selectedId != '' && classList.indexOf('item') != -1) { // if something is selected already and user selects another one
+        $('#' + selectedId).css('background', 'inherit');
+        $('#' + e.target.id).css('background', 'rgb(189, 229, 245)');
+        selectedId = e.target.id;
+      }
     });
 
   av.dnd.FzAddExperimentFn = function (source, target, type) {
