@@ -998,7 +998,7 @@ jQuery(document).ready(function($) {
     while (unique) {
       unique = false;
       if (0 <= namelist.indexOf(name)) {
-        suggestName = av.dnd.namefzrItem(container, name);
+        suggestName = av.dnd.namefzrItem(target, name);
         name = prompt('Please give your item a unique name ', suggestName);
         unique = true;
       }
@@ -1010,7 +1010,6 @@ jQuery(document).ready(function($) {
   av.dnd.namefzrItem = function(target, name) {
     'use strict';
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
-    console.log(container);
     var namelist = $.map(document.querySelector(container).children, (x) => { if (!x.classList.contains('gu-transit')) return x.textContent.trim()});
     var theName;
     //look for name in freezer section

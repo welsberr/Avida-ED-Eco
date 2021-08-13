@@ -443,7 +443,7 @@
     else {
       fzName = prompt('Please name the organism', 'newOrganism');
     }
-    fzName = av.dnd.getUniqueFzrName(av.dnd.fzWorld, fzName);
+    fzName = av.dnd.getUniqueFzrName(av.dnd.fzOrgan, fzName);
     if (null != fzName) {
       //insert new item into the freezer.
       var type = 'g'
@@ -455,6 +455,7 @@
       av.fzr.file['g' + av.fzr.gNum + '/genome.seq'] = gene;
       av.fzr.file['g' + av.fzr.gNum + '/entryname.txt'] = fzName;
       av.fzr.gNum++;
+      console.log(av.fzr);
       av.dnd.contextMenu(av.dnd.fzWorld, domid, 'av.ptd.FrOrganismFn');
       av.fzr.saveUpdateState('no');
     }

@@ -296,12 +296,13 @@
         containerMap[container][domid] = {'name': avName , 'type': 'g'};
 
         av.fzr.file[gdir + '/entryname.txt'] = avName;
-        av.fzr.dir[mapItems[mapItems.length - 1]] = gdir;
-        av.fzr.domid[gdir] = mapItems[mapItems.length - 1];
+        av.fzr.dir[domid] = gdir;
+        av.fzr.domid[gdir] = domid;
         //av.fzr.file[gdir + '/genome.seq'] = '0,heads_default,' + av.grd.kidGenome;
         av.fzr.file[gdir + '/genome.seq'] = av.grd.kidGenome;
         av.fzr.gNum++;
         av.fzr.saveUpdateState('no');
+        console.log(av.fzr);
         if (av.debug.mouse) console.log('fzOrgan', av.dnd.fzOrgan);
         if (av.debug.mouse) console.log('Kid-->Snow: dir',gdir, '; fzr', fzr);
         //create a right mouse-click context menu for the item just created.
