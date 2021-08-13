@@ -48,14 +48,7 @@ jQuery(document).ready(function($) {
   av.dnd.popDish2 = containers[16]
 
   var dragging = false;
-  var selected = '';
   var sourceIsFzOrgan = false;
-
-  $('.item').click((e) => {
-    console.log(e.target);
-    e.target.css('background', 'rgb(189, 229, 245)');
-    selected = e.target;
-  }); 
 
   var dra = dragula(containers, {
     isContainer: function (el) {
@@ -188,8 +181,6 @@ jQuery(document).ready(function($) {
         }
         av.mouse.UpGridPos = [x, y];
         var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
-        console.log(evt);
-        console.log(source);
         if (elements.indexOf("gridCanvas") != -1 && sourceIsFzOrgan) { // if gridCanvas is behind this mouse point
           av.dnd.landGridCanvas(el, target, source);
           av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
@@ -224,26 +215,37 @@ jQuery(document).ready(function($) {
     } 
   });
 
-  av.dnd.FzAddExperimentFn = function (fzSection, target, type) {
-    if (undefined != selected) {
-      var nodeMvDomid = selected.id;
-      console.log('fzSection=', fzSection, '; target=', target, '; nodeMvDomid=', nodeMvDomid, '; type=', type);
+  var selectedId = '';
+    $(document).on('click', function(e) {
+      var classList = e.target.className.split(" "); //yemd: e.target.className is a string
+      if (selectedId !== '') {
+        $('#' + e.target.id).css('background', 'inherit');
+        selectedId = '';
+      } 
+      else if (classList.indexOf('item') != -1) {
+        $('#' + e.target.id).css('background', 'rgb(189, 229, 245)');
+        selectedId = e.target.id;
+        console.log(selectedId);
+      }
+    });
+
+  av.dnd.FzAddExperimentFn = function (source, target, type) {
+    if (undefined != selectedId) {
+      var el = $.map($('#' + selectedId), (value, key) => { return value })[0].cloneNode(true);
+      var fzSection = source.id;
+      var targetId = target.id;
+      console.log('fzSection=', fzSection, '; target=', target, '; selectedId=', selectedId, '; type=', type);
       var addedPopPage = false;
       var addedAnaPage = false;
-      av.dnd.insert(av.dnd[target], selected, type);
-      var domIDs = Object.keys(av.dnd[target].map);
-      av.dnd.move.targetDomId = domIDs[domIDs.length - 1];
-      av.dnd.move.sourceMoveData = av.dnd.move.source.map[av.dnd.move.sourceDomId];
-
-      if ('fzOrgan' == fzSection && 'ancestorBox' == target) { addedPopPage = av.dnd.landAncestorBox(av.dnd.move); }
-      else if ('fzOrgan' == fzSection && 'activeOrgan' == target) { addedPopPage = av.dnd.lndActiveOrgan(av.dnd.move); }
-      else if (('fzConfig' == fzSection || 'fzWorld' == fzSection) && 'activeConfig' == target) { 
-        addedPopPage = av.dnd.lndActiveConfig(av.dnd.move, 'av.dnd.FzAddExperimentFn');
+      // av.dnd.insert(target, el, type);
+      if ('fzOrgan' == fzSection && 'ancestorBox' == targetId) { addedPopPage = av.dnd.landAncestorBox(el, target, source); }
+      else if ('fzOrgan' == fzSection && 'activeOrgan' == targetId) { addedPopPage = av.dnd.landActiveOrgan(el, target, source); }
+      else if (('fzConfig' == fzSection || 'fzWorld' == fzSection) && 'activeConfig' == targetId) { 
+        addedPopPage = av.dnd.landActiveConfig(el, target, source);
       }
-      else if ('anlDndChart' == target && 'fzWorld' == fzSection) addedAnaPage = av.dnd.lndAnlDndChart(av.dnd.move);
+      else if ('anlDndChart' == targetId && 'fzWorld' == fzSection) addedAnaPage = av.dnd.landAnlDndChart(el, target, source);
   
       if (addedPopPage) av.grd.drawGridSetupFn('av.dnd.FzAddExperimentFn');
-      
     }
     else {
       switch(fzSection) {
@@ -258,6 +260,10 @@ jQuery(document).ready(function($) {
           break;
       }
     }
+
+    // yemd: reset the selectedId
+    $('#' + selectedId).css('background', 'inherit');
+    selectedId = '';
   };
 
   av.dnd.landpopDish = function(el, target, source, num) {
@@ -450,7 +456,6 @@ jQuery(document).ready(function($) {
     var nn = av.parents.name.length;
     av.post.addUser('DnD: ' + source.id + '--> GridCanvas: by: ' + el.textContent.trim() + ' on (' +  av.mouse.UpGridPos[0] + ', ' + av.mouse.UpGridPos[1] + ')' );
 
-    console.log(el);
     // to correctly place the organism, need to calculate offsets
     var offsetXLocal = ($("#gridHolder").width() - av.dom.gridCanvas.width) / 2;
     var offsetYLocal = ($("#gridHolder").height() - av.dom.gridCanvas.height) / 2;
@@ -566,6 +571,12 @@ jQuery(document).ready(function($) {
 
       if (av.debug.dnd) console.log('parents', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]);
       av.grd.drawGridSetupFn('av.dnd.landAncestorBox');
+
+      // if the element has not been added yet to target because it has been moved from outside the dragula framework, manually add them
+      var childDomIds = $.map(document.querySelector('#' + target.id).children, (x) => { if (!x.classList.contains('gu-transit')) return x.id});
+      if (childDomIds.indexOf(el.id) === -1) {
+        target.append(el);
+      }
 
       return (true);
     }
@@ -952,6 +963,8 @@ jQuery(document).ready(function($) {
     if (Object.keys(containerMap).indexOf(container) === -1) {
       containerMap[container] = {}
     }
+    console.log(el);
+    console.log($(el));
     containerMap[container][domid] = {'name': el.textContent.trim() , 'type': type};
   }
 

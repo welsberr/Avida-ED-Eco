@@ -1363,19 +1363,19 @@ require([
   //Buttons on drop down menu to add Configured Dish to an Experiment
   dijit.byId('mnFzAddConfigEx').on('Click', function () {
     av.post.addUser('Button: mnFzAddConfigEx');
-    av.dnd.FzAddExperimentFn('fzConfig', 'activeConfig', 'c');
+    av.dnd.FzAddExperimentFn(av.dnd.fzConfig, av.dnd.activeConfig, 'c');
   });
 
   //Buttons on drop down menu to add Organism to an Experiment - does not work on Test
   dijit.byId('mnFzAddGenomeEx').on('Click', function () {
     av.post.addUser('Button: mnFzAddGenomeEx');
-    av.dnd.FzAddExperimentFn('fzOrgan', 'ancestorBox', 'g');
+    av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.ancestorBox, 'g');
   });
 
   //Buttons on drop down menu to add Populated Dish to an Experiment
   dijit.byId('mnFzAddPopEx').on('Click', function () {
     av.post.addUser('Button: mnFzAddPopEx');
-    av.dnd.FzAddExperimentFn('fzWorld', 'activeConfig', 'w');
+    av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.activeConfig, 'w');
   });
 
   /*
@@ -1391,7 +1391,7 @@ require([
   //Buttons on drop down menu to put an organism in Organism Viewer
   dijit.byId('mnFzAddGenomeView').on('Click', function () {
     av.post.addUser('Button: mnFzAddGenomeEx');
-    av.dnd.FzAddExperimentFn('fzOrgan', 'activeOrgan', 'g');
+    av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.activeOrgan, 'g');
     av.ui.mainBoxSwap('organismBlock');
     av.ind.organismCanvasHolderSize('mnFzAddGenomeView');
     av.ui.adjustOrgInstructionTextAreaSize();
@@ -1401,7 +1401,7 @@ require([
   //Buttons on drop down menu to add Populated Dish to Analysis
   dijit.byId('mnFzAddPopAnalysis').on('Click', function () {
     av.post.addUser('Button: mnFzAddPopEx');
-    av.dnd.FzAddExperimentFn('fzWorld', 'anlDndChart', 'w');
+    av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.anlDndChart, 'w');
   });
 
   //---------------------------------------------- Restart Avida web worker --------------------------------------------
