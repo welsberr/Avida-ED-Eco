@@ -220,7 +220,8 @@ jQuery(document).ready(function($) {
   });
 
   var selectedId = '';
-    $(document).on('click', function(e) {
+  $('.navColClass').on('click', function(e) { // allow click selection only if it's within the freezer
+    if (e.target) {
       var classList = e.target.className.split(" "); // yemd: e.target.className is a string
       if (selectedId !== '' && e.target.id === selectedId) {
         $('#' + e.target.id).css('background', 'inherit');
@@ -235,7 +236,8 @@ jQuery(document).ready(function($) {
         $('#' + e.target.id).css('background', 'rgb(189, 229, 245)');
         selectedId = e.target.id;
       }
-    });
+    }
+  });
 
   av.dnd.FzAddExperimentFn = function (source, target, type) {
     if (undefined != selectedId) {
