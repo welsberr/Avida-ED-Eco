@@ -242,7 +242,7 @@ jQuery(document).ready(function($) {
   av.dnd.FzAddExperimentFn = function (source, target, type) {
     var fzSection = source.id;
     var targetId = target.id;
-    
+
     if (undefined !== selectedId && '' !== selectedId) {
       var el = $.map($('#' + selectedId), (value, key) => { return value })[0].cloneNode(true);
       console.log('fzSection=', fzSection, '; target=', target, '; selectedId=', selectedId, '; type=', type);
@@ -979,8 +979,6 @@ jQuery(document).ready(function($) {
     if (Object.keys(containerMap).indexOf(container) === -1) {
       containerMap[container] = {}
     }
-    console.log(el);
-    console.log($(el));
     containerMap[container][domid] = {'name': el.textContent.trim() , 'type': type};
   }
 
@@ -1032,7 +1030,7 @@ jQuery(document).ready(function($) {
     //look for name in freezer section
     if (0 <= namelist.indexOf(name)) {
       console.log(namelist, name);
-      theName = av.dnd.nameNfrzItem(namelist, name, 0);
+      theName = av.dnd.nameNfrzItem(namelist, name, 1);
     } else { theName = name; }
 
     return theName;
@@ -1066,7 +1064,7 @@ jQuery(document).ready(function($) {
     var theName;
     //look for name in parent
     if (0 <= av.parents.name.indexOf(name)) {
-      theName = av.dnd.nameNparent(name, 0);
+      theName = av.dnd.nameNparent(name, 1);
     }
     else { theName = name;}
     av.parents.name.push(theName);
