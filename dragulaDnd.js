@@ -240,10 +240,11 @@ jQuery(document).ready(function($) {
   });
 
   av.dnd.FzAddExperimentFn = function (source, target, type) {
-    if (undefined != selectedId) {
+    var fzSection = source.id;
+    var targetId = target.id;
+    
+    if (undefined !== selectedId && '' !== selectedId) {
       var el = $.map($('#' + selectedId), (value, key) => { return value })[0].cloneNode(true);
-      var fzSection = source.id;
-      var targetId = target.id;
       console.log('fzSection=', fzSection, '; target=', target, '; selectedId=', selectedId, '; type=', type);
       var addedPopPage = false;
       var addedAnaPage = false;
@@ -256,10 +257,15 @@ jQuery(document).ready(function($) {
       else if ('anlDndChart' == targetId && 'fzWorld' == fzSection) addedAnaPage = av.dnd.landAnlDndChart(el, target, source);
   
       if (addedPopPage) av.grd.drawGridSetupFn('av.dnd.FzAddExperimentFn');
+       // yemd: reset the selectedId
+      $('#' + selectedId).css('background', 'inherit');
+      selectedId = '';
     }
     else {
+      console.log('here');
       switch(fzSection) {
         case 'fzConfig':
+          console.log('hi');
           alert('You must select a configurated dish first');
           break;
         case 'fzOrgan':
@@ -270,10 +276,6 @@ jQuery(document).ready(function($) {
           break;
       }
     }
-
-    // yemd: reset the selectedId
-    $('#' + selectedId).css('background', 'inherit');
-    selectedId = '';
   };
 
   av.dnd.landpopDish = function(el, target, source, num) {
