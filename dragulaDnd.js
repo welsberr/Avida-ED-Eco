@@ -52,6 +52,9 @@ jQuery(document).ready(function($) {
   var sourceIsFzOrgan = false;
   var elForGrid = '';
 
+  /*
+  Dragula Initialization
+  */
   var dra = dragula(containers, {
     isContainer: function (el) {
       return false; // only elements in drake.containers will be taken into account
@@ -107,6 +110,9 @@ jQuery(document).ready(function($) {
     ignoreInputTextSelection: true     // allows users to select input text, see details below
   });
 
+  /*
+  Handle drag
+  */
   dra.on('drag', (el, source) => { 
     // el.style.background = 'rgb(189, 229, 245)';
     el.style.cursor =  'default';
@@ -120,11 +126,12 @@ jQuery(document).ready(function($) {
     elForGrid = el;
   });
 
-  // main function that determines the logic for drag and drop
+  /*
+  Handle drop
+  */
   dra.on('drop', (el, target, source) => {
-
     // el, target, source are dom objects aka stuff you could 'target.id' to
-    if ((target === av.dnd.activeConfig || target === av.dnd.ancestorBox) && av.grd.runState === 'started') {
+    if ((target === av.dnd.activeConfig || target === av.dnd.ancestorBox || target === av.dnd.trashCan) && av.grd.runState === 'started') {
       av.dom.newDishModalID.style.display = 'block'; // show the 'please save' modal
       dra.cancel(); // cancel the drag event
     } else if (target === av.dnd.activeConfig) {
@@ -170,30 +177,6 @@ jQuery(document).ready(function($) {
       av.dnd.landOrganIcon(el, target, source);
     }
 
-    $(document).on('mouseup touchend', function (evt) {
-      'use strict';
-      if (dragging) {
-        var x;
-        var y;
-        if(evt.type == 'touchend'){
-          var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
-          x = touch.pageX;
-          y = touch.pageY;
-        } else if (evt.type == 'mouseup') {
-          x = evt.clientX;
-          y = evt.clientY;
-        }
-        av.mouse.UpGridPos = [x, y];
-        var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
-        if (elements.indexOf("gridCanvas") != -1 && sourceIsFzOrgan) { // if gridCanvas is behind this mouse point
-          av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, source);
-          av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
-        }
-      }
-      dragging = false;
-      $(document).unbind('mousemove touchmove');
-    });
-
     if (target === av.dnd.activeOrgan) {
       av.dnd.landActiveOrgan(el, target, source);
     }
@@ -217,8 +200,36 @@ jQuery(document).ready(function($) {
         av.dnd.landpopDish(el, target, source, 2);
       }
     } 
+
+    // Special case for gridCanvas
+    $(document).on('mouseup touchend', function (evt) {
+      'use strict';
+      if (dragging) {
+        var x;
+        var y;
+        if(evt.type == 'touchend'){
+          var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
+          x = touch.pageX;
+          y = touch.pageY;
+        } else if (evt.type == 'mouseup') {
+          x = evt.clientX;
+          y = evt.clientY;
+        }
+        av.mouse.UpGridPos = [x, y];
+        var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
+        if (elements.indexOf("gridCanvas") != -1 && sourceIsFzOrgan) { // if gridCanvas is behind this mouse point
+          av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, source);
+          av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
+        }
+      }
+      dragging = false;
+      $(document).unbind('mousemove touchmove');
+    });
   });
 
+  /*
+  Select an item from the freezer using click
+  */
   var selectedId = '';
   $('.navColClass').on('click', function(e) { // allow click selection only if it's within the freezer
     if (e.target) {
@@ -239,6 +250,146 @@ jQuery(document).ready(function($) {
     }
   });
 
+  /*
+  When something is added to the Freezer
+  */
+  //when a configuration is added to the freezer
+  av.dnd.landFzConfig = function(el, target, source) {
+    'use strict';
+    if (av.debug.dnd) console.log('av.dnd.landFzConfig: fzr', av.fzr);
+
+    // create a new dom id for the new object
+    el.id = 'c' + av.fzr.cNum;
+    var domid = el.id;
+    var oldName = el.textContent.trim();
+    var sName = av.dnd.namefzrItem(target, oldName);
+    var configurationName = prompt('Please name your dish configuration', sName);
+    if (configurationName) {
+      var configName = av.dnd.getUniqueFzrName(target, configurationName);
+      if (configName !== null) {
+        el.textContent = configName;
+        // Add an entry to containerMap
+        av.dnd.insert(target, el, 'c');
+        console.log(containerMap);
+
+        av.fzr.dir[domid] = 'c'+ av.fzr.cNum;
+        av.fzr.domid['c'+ av.fzr.cNum] = domid;
+        av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = configName;
+        av.fwt.makeFzrConfig(av.fzr.cNum,'av.dnd.landFzConfig');
+        av.fzr.cNum++;
+
+        //create a right av.mouse-click context menu for the item just created.
+        av.dnd.contextMenu(target, domid, 'av.dnd.landFzConfig');
+        av.fzr.saveUpdateState('no');
+        if (av.debug.dnd) console.log('dir', av.fzr.dir[domid], '; configName', configName );
+      } else { //user cancelled so the item should NOT be added to the freezer.
+        // do nothing
+      }
+    } else { //user cancelled so the item should NOT be added to the freezer.
+      // do nothing
+    }
+  };
+
+  //when an organism is added to the freezer
+  av.dnd.landFzOrgan = function(el, target, source) {
+    // 
+    el.id = 'g' + av.fzr.gNum;
+    var gen;
+    var oldName = el.textContent.trim();
+    var sName = av.dnd.namefzrItem(target, oldName);
+    var avidian = prompt('Please name your avidian', sName);
+    var type = 'g';
+    if (avidian) {
+      var avName = av.dnd.getUniqueFzrName(target, avidian);
+      if (null != avName) { //give dom item new avName name
+        av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent + '; --> ' + avName);
+         // Add an entry to containerMap
+        av.dnd.insert(target, el, type);
+        var domid = el.id;
+        document.getElementById(domid).textContent = avName;
+        console.log(containerMap);
+        if (source === av.dnd.ancestorBox) { //do not remove if population has started running
+          //update structure to hold freezer data for Organisms.
+          var Ndx = av.parents.domid.indexOf(domid); //Find index into parent structure
+          gen = av.parents.genome[Ndx];
+          av.parents.removeParent(Ndx);
+          av.parents.placeAncestors();
+          // need to remove organism from the Ancestor Box.
+          // av.dnd.ancestorBox is dojo dnd copyonly to prevent loss of that organsim when the user clicks cancel. The user will
+          // see the cancel as cancelling the dnd rather than canceling the rename.
+          // av.dnd.remove(av.dnd.ancestorBox, el);
+        }
+        else if (source === av.dnd.activeOrgan) { console.log('bells'); gen = av.fzr.actOrgan.genome; }
+        av.fzr.dir[domid] = 'g' + av.fzr.gNum;
+        av.fzr.domid['g' + av.fzr.gNum] = domid;
+        av.fzr.file['g' + av.fzr.gNum + '/genome.seq'] = gen;
+        av.fzr.file['g' + av.fzr.gNum + '/entryname.txt'] = avName;
+        av.fzr.gNum++;
+        if (av.debug.dnd) console.log('fzr', av.fzr);
+
+        if (av.debug.dnd) console.log('fzOrgan', av.dnd.fzOrgan);
+        //create a right av.mouse-click context menu for the item just created.
+        if (av.debug.dnd) console.log('before context menu: target',target, '; domId', domid );
+        av.dnd.contextMenu(target, domid, 'av.dnd.landFzOrgan');
+        av.fzr.saveUpdateState('no');
+      }
+      else { //Not given a name, so it should NOT be added to the freezer.
+        // do not do anything
+      }
+    }
+    else { //cancelled so the item should NOT be added to the freezer.
+      // do not do anything
+    }
+    if (av.debug.dnd) console.log('near end of av.dnd.landFzOrgan');
+    if (source != av.dnd.ancestorBox) {
+      if (av.debug.dnd) console.log('dojo dnd to Organ Freezer, not from Ancestor Box');
+    }
+    if (av.debug.dnd) console.log('End of av.dnd.landFzOrgan');
+  };
+
+  //when a populated dish is added to the freezer
+  av.dnd.landFzWorld = function(el, target, source) {
+    'use strict';
+    if (av.debug.dnd) console.log('landFzPopDish: fzr', av.fzr);
+
+    // create a new dom id for the new object
+    el.id = 'w' + av.fzr.wNum;
+    var domid = el.id;
+    var oldName = el.textContent.trim() + '@' + av.grd.popStatsMsg.update.formatNum(0);
+    var sName = av.dnd.namefzrItem(target, oldName);
+    var worldName = prompt('Please name your populated dish', sName);
+    if (worldName) {
+      var nameWorld = av.dnd.getUniqueFzrName(target, worldName);
+      if (nameWorld !== null) {
+        av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent.trim() + ' --> ' + nameWorld);
+        el.textContent = nameWorld;
+        
+        // Add an entry to containerMap
+        av.dnd.insert(target, el, 'w');
+        console.log(containerMap);
+
+        av.fzr.dir[domid] = 'w'+ av.fzr.wNum;
+        av.fzr.domid['w'+ av.fzr.wNum] = domid;
+        //create a right av.mouse-click context menu for the item just created.
+        av.dnd.contextMenu(target, domid, 'av.dnd.landFzWorldFn');
+        av.fwt.makeFzrWorld(av.fzr.wNum, 'av.dnd.landFzWorldFn');
+        av.msg.exportExpr('w' + av.fzr.wNum);
+        av.msg.sendData();
+
+        av.fzr.saveUpdateState('no');
+        av.fzr.wNum++;
+      } else { //user cancelled so the item should NOT be added to the freezer.
+        // do nothing
+      }
+    } else { //user cancelled so the item should NOT be added to the freezer.
+      // do nothing
+    }
+  };
+
+  /*
+  Running actions from drop down menu
+  */
+
   av.dnd.FzAddExperimentFn = function (source, target, type) {
     var fzSection = source.id;
     var targetId = target.id;
@@ -248,7 +399,6 @@ jQuery(document).ready(function($) {
       console.log('fzSection=', fzSection, '; target=', target, '; selectedId=', selectedId, '; type=', type);
       var addedPopPage = false;
       var addedAnaPage = false;
-      // av.dnd.insert(target, el, type);
       if ('fzOrgan' == fzSection && 'ancestorBox' == targetId) { addedPopPage = av.dnd.landAncestorBox(el, target, source); }
       else if ('fzOrgan' == fzSection && 'activeOrgan' == targetId) { addedPopPage = av.dnd.landActiveOrgan(el, target, source); }
       else if (('fzConfig' == fzSection || 'fzWorld' == fzSection) && 'activeConfig' == targetId) { 
@@ -257,15 +407,13 @@ jQuery(document).ready(function($) {
       else if ('anlDndChart' == targetId && 'fzWorld' == fzSection) addedAnaPage = av.dnd.landAnlDndChart(el, target, source);
   
       if (addedPopPage) av.grd.drawGridSetupFn('av.dnd.FzAddExperimentFn');
-       // yemd: reset the selectedId
+      // yemd: reset the selectedId
       $('#' + selectedId).css('background', 'inherit');
       selectedId = '';
     }
     else {
-      console.log('here');
       switch(fzSection) {
         case 'fzConfig':
-          console.log('hi');
           alert('You must select a configurated dish first');
           break;
         case 'fzOrgan':
@@ -278,20 +426,24 @@ jQuery(document).ready(function($) {
     }
   };
 
+  /*
+  Analysis Page
+  */
+
   av.dnd.landpopDish = function(el, target, source, num) {
     'use strict';
     av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent.trim());
-    var items = av.dnd.getAllItems(target);
 
     //if there is an existing item, need to clear all nodes and assign most recent to item 0
     //clear out the old data
     av.dnd.empty(target);
     //get the data for the new organism
+    var dir = av.fzr.dir[el.id];
+    el.id = 'w' + av.fzr.wNum++; 
     av.dnd.insert(target, el, 'w');
     av.dnd.insertToDOM(target, el);
+    console.log(containerMap);
   
-    var fzdomid = el.id;
-    var dir = av.fzr.dir[fzdomid];
     av.anl.loadWorldData(num, dir);
     av.anl.loadSelectedData(num, 'yLeftSelect', 'left', 'av.dnd.landpopDish');
     av.anl.loadSelectedData(num, 'yRightSelect', 'right', 'av.dnd.landpopDish');
@@ -302,10 +454,10 @@ jQuery(document).ready(function($) {
     'use strict';
     //the console.log get the data one way, the codes gets the same data another way. 
     // console.log('sourceContainer=', source.parent.id, '; world domID=', source.anchor.id, '; world Name=', source.anchor.textContent.trim());
-    var domid = el.id;
-    var dir = av.fzr.dir[domid];
+    var dir = av.fzr.dir[el.id];
+    el.id = 'w' + av.fzr.wNum++;
     av.dnd.insert(source, el, 'w');
-
+    console.log(containerMap);
     av.anl.loadWorldData(num, dir);
     av.anl.loadSelectedData(num, 'yLeftSelect', 'left', 'av.dnd.putNslot');
     av.anl.loadSelectedData(num, 'yRightSelect', 'right', 'av.dnd.putNslot');
@@ -315,7 +467,6 @@ jQuery(document).ready(function($) {
     'use strict';
     av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent);
     var items = av.dnd.getAllItems(av.dnd.popDish0);
-    el = el.cloneNode(true);
     if (0 === items.length) { av.dnd.putNslot(el, 0, av.dnd.popDish0); }
     else {
       items = av.dnd.getAllItems(av.dnd.popDish1);
@@ -329,13 +480,17 @@ jQuery(document).ready(function($) {
     av.dnd.empty(target);
     av.dnd.insert(av.dnd.popDish0, el, 'w')
     av.dnd.insertToDOM(av.dnd.popDish0, el);
+    console.log(containerMap);
     av.anl.AnaChartFn();
   };
+
+  /*
+  Organism Page
+  */
 
   av.dnd.landOrganCanvas = function(el, target, source) {
     'use strict';
     av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent);
-    el = el.cloneNode(true);
     av.dnd.landActiveOrgan(el, target, source);
   };
 
@@ -346,10 +501,16 @@ jQuery(document).ready(function($) {
     console.log('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent);
     //clear out the old data if an organism is already there
     av.dnd.empty(av.dnd.activeOrgan);
+    // Add an entry to containerMap
+    var domid = el.id;
+    var dir = av.fzr.dir[domid];
+    el.id = 'g' + av.fzr.gNum++;
+    av.fzr.dir[el.id] = dir;
+    av.fzr.domid[dir] = el.id;
+    av.dnd.insert(av.dnd.activeOrgan, el, 'g');
     // append the new organism
     av.dnd.insertToDOM(av.dnd.activeOrgan, el);
-    // Add an entry to containerMap
-    av.dnd.insert(av.dnd.activeOrgan, el, 'g');
+    console.log(containerMap);
     av.fzr.actOrgan.actDomid = el.id;
     av.dnd.updateFromFzrOrganism(el);
     av.msg.doOrgTrace();
@@ -363,16 +524,20 @@ jQuery(document).ready(function($) {
 
     // remove the existing configuration
     av.dnd.empty(av.dnd.activeOrgan);
-    // append the new organism
-    av.dnd.insertToDOM(av.dnd.activeOrgan, el);
+    var dir = av.fzr.dir[el.id];
+    el = el.cloneNode(true);
+    el.id = av.fzr.gNum++;
+    av.fzr.dir[el.id] = dir;
     // Add an entry to containerMap
     av.dnd.insert(av.dnd.activeOrgan, el, 'g');
+    // append the new organism
+    av.dnd.insertToDOM(av.dnd.activeOrgan, el);
+    console.log(containerMap);
     av.fzr.actOrgan.actDomid = el.id;
 
-    if ('fzOrgan' === source.id) { 
+    if (source === av.dnd.fzOrgan) { 
       av.dnd.updateFromFzrOrganism(el); 
     }
-    
     if (source === av.dnd.ancestorBox) {
       var Ndx = av.parents.domid.indexOf(el.id);
       av.fzr.actOrgan.name = av.parents.name[Ndx];
@@ -403,65 +568,12 @@ jQuery(document).ready(function($) {
     if (av.debug.dnd) console.log('domId', domId);
     if (av.debug.dnd) console.log('domId', domId, '; dir', dir, '; name', av.fzr.actOrgan.name, '; genome', av.fzr.actOrgan.genome);
     if (av.debug.dnd) console.log('fzr', av.fzr);
-  
     if (av.debug.dnd) console.log('av.fzr.actOrgan', av.fzr.actOrgan);
   };
 
-  av.dnd.landFzOrgan = function(el, target, source) {
-    var gen;
-    var domid = el.id;
-    var oldName = el.textContent.trim();
-    var sName = av.dnd.namefzrItem(target, oldName);
-    var avidian = prompt('Please name your avidian', sName);
-    var type = 'g';
-    if (avidian) {
-      var avName = av.dnd.getUniqueFzrName(target, avidian);
-      if (null != avName) { //give dom item new avName name
-        av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent + '; --> ' + avName);
-        document.getElementById(domid).textContent = avName;
-         // Add an entry to containerMap
-        av.dnd.insert(target, el, type);
-        if (source === av.dnd.ancestorBox) { //do not remove if population has started running
-          //update structure to hold freezer data for Organisms.
-          var Ndx = av.parents.domid.indexOf(domid); //Find index into parent structure
-          gen = av.parents.genome[Ndx];
-
-          if (true) { // because av.dnd.ancestorBox is always not copyOnly in the new framework
-            av.parents.removeParent(Ndx);
-            av.parents.placeAncestors();
-            // need to remove organism from the Ancestor Box.
-            // av.dnd.ancestorBox is dojo dnd copyonly to prevent loss of that organsim when the user clicks cancel. The user will
-            // see the cancel as cancelling the dnd rather than canceling the rename.
-            av.dnd.remove(av.dnd.ancestorBox, el);
-          }
-        }
-        else if (source === av.dnd.activeOrgan) { console.log('bells'); gen = av.fzr.actOrgan.genome; }
-        av.fzr.dir[domid] = 'g' + av.fzr.gNum;
-        av.fzr.domid['g' + av.fzr.gNum] = domid;
-        av.fzr.file['g' + av.fzr.gNum + '/genome.seq'] = gen;
-        av.fzr.file['g' + av.fzr.gNum + '/entryname.txt'] = avName;
-        av.fzr.gNum++;
-        if (av.debug.dnd) console.log('fzr', av.fzr);
-
-        if (av.debug.dnd) console.log('fzOrgan', av.dnd.fzOrgan);
-        //create a right av.mouse-click context menu for the item just created.
-        if (av.debug.dnd) console.log('before context menu: target',target, '; domId', domid );
-        av.dnd.contextMenu(target, domid, 'av.dnd.landFzOrgan');
-        av.fzr.saveUpdateState('no');
-      }
-      else { //Not given a name, so it should NOT be added to the freezer.
-        // do not do anything
-      }
-    }
-    else { //cancelled so the item should NOT be added to the freezer.
-      // do not do anything
-    }
-    if (av.debug.dnd) console.log('near end of av.dnd.landFzOrgan');
-    if (source != av.dnd.ancestorBox) {
-      if (av.debug.dnd) console.log('dojo dnd to Organ Freezer, not from Ancestor Box');
-    }
-    if (av.debug.dnd) console.log('End of av.dnd.landFzOrgan');
-  };
+  /*
+  Population Page
+  */
 
   av.dnd.landGridCanvas = function(el, target, source) {
     'use strict';
@@ -485,16 +597,18 @@ jQuery(document).ready(function($) {
     //check to see if in the grid part of the canvas
     if (av.parents.col[nn] >= 0 && av.parents.col[nn] < av.grd.cols && av.parents.row[nn] >= 0 && av.parents.row[nn] < av.grd.rows) {
       av.parents.AvidaNdx[nn] = av.parents.row[nn] * av.grd.cols + av.parents.col[nn];
-      el = el.cloneNode(true);
       //Start setting up for getting data for parents structure
       nn = av.parents.name.length;  // get index into parents
-      el.textContent = av.dnd.nameParent(el.textContent.trim());
       //Add organism to av.dnd.ancestorBox in settings.
-      var domid = el.id;
-      var dir = domid;
-      console.log(el);
+      el = el.cloneNode(true);
+      var dir = av.fzr.dir[el.id];
+      el.id = 'g' + av.fzr.gNum;
+      av.fzr.dir[el.id] = dir;
+      el.textContent = av.dnd.nameParent(el.textContent.trim());
       av.dnd.insert(av.dnd.ancestorBox, el, 'g');
       av.dnd.insertToDOM(av.dnd.ancestorBox, el);
+      var domid = el.id;
+      console.log(containerMap);
 
       if (av.debug.dnd) console.log('containerMap[#ancestorBox]', containerMap[container]);
 
@@ -505,8 +619,8 @@ jQuery(document).ready(function($) {
       av.parents.howPlaced[nn] = 'hand';
       av.parents.injected[nn] = false;
       if (av.debug.dnd) console.log('av.dnd.landGridCanvas; domId', domid, '; av.fzr.genome', av.fzr.genome);
-      var dir = av.fzr.dir[domid];
       av.parents.genome.push(av.fzr.file[dir+'/genome.seq']);
+      av.fzr.gNum++;
       //Find color of ancestor
       if (0 < av.parents.Colors.length) {av.parents.color.push(av.parents.Colors.pop());}
       else {av.parents.color.push(av.color.defaultParentColor);}
@@ -521,47 +635,10 @@ jQuery(document).ready(function($) {
     if (av.debug.dnd) console.log('parents', av.parents);
   };
 
-  av.dnd.landFzWorld = function(el, target, source) {
-    'use strict';
-    if (av.debug.dnd) console.log('landFzPopDish: fzr', av.fzr);
-
-    // create a new dom id for the new object
-    el.id = 'w' + av.fzr.wNum;
-    var domid = el.id;
-    var oldName = el.textContent.trim() + '@' + av.grd.popStatsMsg.update.formatNum(0);
-    var sName = av.dnd.namefzrItem(target, oldName);
-    var worldName = prompt('Please name your populated dish', sName);
-    if (worldName) {
-      var nameWorld = av.dnd.getUniqueFzrName(target, worldName);
-      if (nameWorld !== null) {
-        av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent.trim() + ' --> ' + nameWorld);
-        el.textContent = nameWorld;
-
-        // Add an entry to containerMap
-        av.dnd.insert(target, el, 'w');
-
-        av.fzr.dir[domid] = 'w'+ av.fzr.wNum;
-        av.fzr.domid['w'+ av.fzr.wNum] = domid;
-        //create a right av.mouse-click context menu for the item just created.
-        av.dnd.contextMenu(target, domid, 'av.dnd.landFzWorldFn');
-        av.fwt.makeFzrWorld(av.fzr.wNum, 'av.dnd.landFzWorldFn');
-        av.msg.exportExpr('w' + av.fzr.wNum);
-        av.msg.sendData();
-
-        av.fzr.saveUpdateState('no');
-        av.fzr.wNum++;
-      } else { //user cancelled so the item should NOT be added to the freezer.
-        // do nothing
-      }
-    } else { //user cancelled so the item should NOT be added to the freezer.
-      // do nothing
-    }
-  };
-
   av.dnd.landAncestorBox = function(el, target, source) {
     'use strict';
     var domid = el.id;
-    var dir = domid;
+    var dir = av.fzr.dir[domid];
 
     if (source !== av.dnd.ancestorBox) {
       //find genome by finding source
@@ -569,17 +646,19 @@ jQuery(document).ready(function($) {
       var nn = av.parents.name.length;
       av.parents.autoNdx.push(nn);
       av.parents.injected.push(false);
-      
+
+      el.id = 'g' + av.fzr.gNum;
+      av.fzr.dir[el.id] = dir;
       //rename the item with a new name
       var newName = av.dnd.nameParent(el.textContent.trim());
       el.textContent = newName;
       //Add organism to av.dnd.ancestorBox in settings.
-      var dir = domid;
       // Add an entry to containerMap
       av.dnd.insert(target, el, 'g');
+      console.log(containerMap);
 
       av.parents.howPlaced.push('auto');
-      av.parents.domid.push(domid); //domid in ancestorBox used to remove if square in grid moved to trashcan
+      av.parents.domid.push(el.id); //domid in ancestorBox used to remove if square in grid moved to trashcan
       //Find color of ancestor
       if (0 < av.parents.Colors.length) { av.parents.color.push(av.parents.Colors.pop());}
       else { av.parents.color.push(av.color.defaultParentColor); }
@@ -593,6 +672,7 @@ jQuery(document).ready(function($) {
       if (childDomIds.indexOf(el.id) === -1) {
         target.append(el);
       }
+      av.fzr.gNum++;
 
       return (true);
     }
@@ -615,69 +695,46 @@ jQuery(document).ready(function($) {
       };
       av.post.usrOut(av.post.data, 'in dragulaDnd.js line 233');
 
-      //find genome by finding source
-      av.parents.genome.push(av.fzr.file[dir + '/genome.seq']);
-      var nn = av.parents.name.length;
-      av.parents.autoNdx.push(nn);
-      av.parents.injected.push(false);
-      
-      //rename the item with a new name
-      var newName = av.dnd.nameParent(el.textContent.trim());
-      el.textContent = newName;
-      //Add organism to av.dnd.ancestorBox in settings.
-      var dir = domid;
-      // Add an entry to containerMap
-      av.dnd.insert(target, el, 'g');
+      var domid = el.id;
+      var dir = av.fzr.dir[domid];
 
-      av.parents.howPlaced.push('auto');
-      av.parents.domid.push(domid); //domid in ancestorBox used to remove if square in grid moved to trashcan
-      //Find color of ancestor
-      if (0 < av.parents.Colors.length) { av.parents.color.push(av.parents.Colors.pop());}
-      else { av.parents.color.push(av.color.defaultParentColor); }
-      av.parents.placeAncestors();
+      if (source !== av.dnd.ancestorBox) {
+        //find genome by finding source
+        av.parents.genome.push(av.fzr.file[dir + '/genome.seq']);
+        var nn = av.parents.name.length;
+        av.parents.autoNdx.push(nn);
+        av.parents.injected.push(false);
 
-      if (av.debug.dnd) console.log('parents', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]);
-      av.grd.drawGridSetupFn('av.dnd.landAncestorBox');
-
-      return (true);
-    }
-    else { return (false); }
-  }
-
-  //when a configuration is added to the freezer
-  av.dnd.landFzConfig = function(el, target, source) {
-    'use strict';
-    if (av.debug.dnd) console.log('av.dnd.landFzConfig: fzr', av.fzr);
-
-    // create a new dom id for the new object
-    el.id = 'c' + av.fzr.cNum;
-    var domid = el.id;
-    var oldName = el.textContent.trim();
-    var sName = av.dnd.namefzrItem(target, oldName);
-    var configurationName = prompt('Please name your dish configuration', sName);
-    if (configurationName) {
-      var configName = av.dnd.getUniqueFzrName(target, configurationName);
-      if (configName !== null) {
-        el.textContent = configName;
-
+        el.id = 'g' + av.fzr.gNum;
+        av.fzr.dir[el.id] = dir;
+        //rename the item with a new name
+        var newName = av.dnd.nameParent(el.textContent.trim());
+        el.textContent = newName;
+        //Add organism to av.dnd.ancestorBox in settings.
         // Add an entry to containerMap
-        av.dnd.insert(target, el, 'c');
+        av.dnd.insert(target, el, 'g');
+        console.log(containerMap);
 
-        av.fzr.dir[domid] = 'c'+ av.fzr.cNum;
-        av.fzr.domid['c'+ av.fzr.cNum] = domid;
-        av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = configName;
-        av.fwt.makeFzrConfig(av.fzr.cNum,'av.dnd.landFzConfig');
-        av.fzr.cNum++;
+        av.parents.howPlaced.push('auto');
+        av.parents.domid.push(el.id); //domid in ancestorBox used to remove if square in grid moved to trashcan
+        //Find color of ancestor
+        if (0 < av.parents.Colors.length) { av.parents.color.push(av.parents.Colors.pop());}
+        else { av.parents.color.push(av.color.defaultParentColor); }
+        av.parents.placeAncestors();
 
-        //create a right av.mouse-click context menu for the item just created.
-        av.dnd.contextMenu(target, domid, 'av.dnd.landFzConfig');
-        av.fzr.saveUpdateState('no');
-        if (av.debug.dnd) console.log('dir', av.fzr.dir[domid], '; configName', configName );
-      } else { //user cancelled so the item should NOT be added to the freezer.
-        // do nothing
+        if (av.debug.dnd) console.log('parents', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]);
+        av.grd.drawGridSetupFn('av.dnd.landAncestorBox');
+
+        // if the element has not been added yet to target because it has been moved from outside the dragula framework, manually add them
+        var childDomIds = $.map(document.querySelector('#' + target.id).children, (x) => { if (!x.classList.contains('gu-transit')) return x.id});
+        if (childDomIds.indexOf(el.id) === -1) {
+          target.append(el);
+        }
+
+        av.fzr.gNum++;
+        return (true);
       }
-    } else { //user cancelled so the item should NOT be added to the freezer.
-      // do nothing
+      else { return (false); }
     }
   };
 
@@ -691,16 +748,23 @@ jQuery(document).ready(function($) {
     var kk = 0;
     var str = '';
 
-    var domid = el.id;
+    var dir = av.fzr.dir[el.id];
+    if (el.id[0] === 'c') {
+      el.id = 'c' + av.fzr.cNum;
+    }
+    else if (el.id[0] === 'w') {
+      el.id = 'w' + av.fzr.wNum;
+    }
+    av.fzr.dir[el.id] = dir;
 
     // remove the existing configuration
     av.dnd.empty(target);
     av.dnd.insertToDOM(target, el);
 
-    av.fzr.actConfig.actDomid = domid;
+    av.fzr.actConfig.actDomid = el.id;
     av.fzr.actConfig.name = el.textContent;
     av.fzr.actConfig.fzDomid = source.id;
-    av.fzr.actConfig.dir = av.fzr.dir[av.fzr.actConfig.actDomid];
+    av.fzr.actConfig.dir = av.fzr.dir[el.id];
     delete av.fzr.actConfig.file['instset.cfg'];
     if (av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg']) {
       av.fzr.actConfig.file['instset.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg'];
@@ -741,6 +805,7 @@ jQuery(document).ready(function($) {
       av.fzr.actConfig.file['update'] = av.fzr.file[av.fzr.actConfig.dir + '/update'];
 
       av.grd.drawGridSetupFn('Yemi\'s Implementation of landTestConfig'); //draw grid
+      av.fzr.cNum++;
     }
 
     else if (source === av.dnd.fzWorld) {
@@ -794,12 +859,15 @@ jQuery(document).ready(function($) {
           }
         }
       }
+      av.fzr.wNum++;
     } else {
       av.dnd.insert(target, el, 't');
       av.fzr.actConfig.type = 't';
       av.ptd.popTdishStateUi('av.dnd.landActiveConfig');
+      av.fzr.tNum++;
     }
 
+    console.log(containerMap);
     av.parents.placeAncestors();
     //Load Time Recorder Data
     av.frd.loadTimeRecorderData(av.fzr.actConfig.dir);
@@ -850,6 +918,17 @@ jQuery(document).ready(function($) {
       av.dnd.remove(source, el);
       av.fzr.saveUpdateState('no');
     } 
+    else if (av.dnd.ancestorBox === source) {
+      remove.domid = el.id;
+      remove.type = 'g';
+      el.remove();       //http://stackoverflow.com/questions/1812148/dojo-dnd-move-node-programmatically
+      av.dnd.remove(source, el);
+      av.fzr.saveUpdateState('no');
+      var index = av.parents.domid.indexOf(el.id);
+      av.parents.removeParent(index);
+      console.log(av.parents);
+      av.grd.drawGridUpdate();
+    }
 
     // empty the trashCan of all children elements except for the trashCan image
     for (var i = 0; i < $('#trashCan')[0].children.length; i++) {
@@ -861,6 +940,7 @@ jQuery(document).ready(function($) {
       remove.dir = av.fzr.dir[remove.domid];
       av.fwt.removeFzrItem(remove.dir, remove.type);
     }
+    console.log(containerMap);
     return remove;
   };
 
@@ -969,7 +1049,12 @@ jQuery(document).ready(function($) {
   av.dnd.remove = function(target, el) {
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     $(container).remove(el);
-    document.querySelector(container).removeChild(document.getElementById(el.id));
+    try{
+      document.querySelector(container).removeChild(document.getElementById(el.id));
+    } catch {
+      console.log('oops');
+    }
+
     delete containerMap[container][el.id];
   }
 
@@ -984,8 +1069,7 @@ jQuery(document).ready(function($) {
 
   av.dnd.insertToDOM = function(target, el) {
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
-    console.log($(container));
-    $(container).append(el.cloneNode(true));
+    $(container).append(el);
   }
 
   av.dnd.getAllItems = function (source) {
@@ -1094,4 +1178,5 @@ jQuery(document).ready(function($) {
       }, false);
     }
   };
+
 });

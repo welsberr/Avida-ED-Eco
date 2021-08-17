@@ -1387,7 +1387,6 @@ require([
    });
    */
 
-
   //Buttons on drop down menu to put an organism in Organism Viewer
   dijit.byId('mnFzAddGenomeView').on('Click', function () {
     av.post.addUser('Button: mnFzAddGenomeEx');
