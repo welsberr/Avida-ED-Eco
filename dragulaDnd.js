@@ -91,7 +91,6 @@ jQuery(document).ready(function($) {
         return true;
       }
       else {
-        // el.style.cursor = 'not-allowed'; // not working yet 
         return false;
       }
     },
@@ -115,14 +114,13 @@ jQuery(document).ready(function($) {
   */
   dra.on('drag', (el, source) => { 
     // el.style.background = 'rgb(189, 229, 245)';
-    el.style.cursor =  'default';
     console.log("dragging");
     dragging = true;
     //When mouse button is released, return cursor to default values
     if (source === av.dnd.fzOrgan) { // necessary because for some reason inside mouse events, dra 'source' and 'target' are messed up
       sourceIsFzOrgan = true;
     } else sourceIsFzOrgan = false;
-
+    document.body.style.cursor = "copy";
     elForGrid = el;
   });
 
@@ -225,6 +223,7 @@ jQuery(document).ready(function($) {
       dragging = false;
       $(document).unbind('mousemove touchmove');
     });
+    document.body.style.cursor = 'default';
   });
 
   /*

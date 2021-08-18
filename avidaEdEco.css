@@ -2132,7 +2132,7 @@ label {
 
 /* yemi: draggable item styling */
 .item {
-  cursor: grab;
+  /* cursor: grab; */
   background-color: inherit;
 }
 .item:hover {

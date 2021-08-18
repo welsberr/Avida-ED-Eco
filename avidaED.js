@@ -698,7 +698,7 @@ require([
     if (av.debug.mouse) console.log('in mouseup target:', evt.target.id);
     if (av.debug.mouse) console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
     
-    av.mouse.makeCursorDefault();
+    // av.mouse.makeCursorDefault();
     av.mouse.Dn = false;
 
     // --------- process if something picked to dnd ------------------
@@ -735,7 +735,6 @@ require([
         av.ui.mainBoxSwap('organismBlock');
         av.ind.organismCanvasHolderSize('mouseup_organIcon_Kid');
         av.ui.adjustOrgInstructionTextAreaSize();
-        console.log("hi I'm here");
         av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
       }
     }

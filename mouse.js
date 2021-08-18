@@ -167,7 +167,6 @@
       target = 'organIcon';
     }
     else if (elements.indexOf('fzOrgan') != -1) { // look for target in the freezer
-      console.log('hi');
       var found = false;
       for (var dir in av.fzr.domid) {if (av.fzr.domid[dir] == evt.target.id) {found=true; break;}}
       if (found) {
