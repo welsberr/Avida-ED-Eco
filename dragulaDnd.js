@@ -50,6 +50,7 @@ jQuery(document).ready(function($) {
   // yemd: variables necessary to make landGridCanvas work (because dragula and regular JavaScript mouseevents are not compatible)
   var dragging = false;
   var sourceIsFzOrgan = false;
+  var sourceIsFzWorld = false;
   var elForGrid = '';
 
   /*
@@ -63,36 +64,7 @@ jQuery(document).ready(function($) {
       return true; // elements are always draggable by default
     },
     accepts: function (el, target, source, sibling) {
-      if (target === source) {
-        return true;
-      }
-      if ((source === av.dnd.ancestorBox) && (target === av.dnd.organIcon || target === av.dnd.gridCanvas)) {
-        return true;
-      }
-      if (source === av.dnd.activeConfig && (target === av.dnd.fzConfig || target === av.dnd.fzWorld)) {
-        return true;
-      }
-      if (source === av.dnd.activeOrgan && (target === av.dnd.fzOrgan)) {
-        return true;
-      }
-      if ((source === av.dnd.fzConfig || source === av.dnd.fzWorld) && target === av.dnd.activeConfig) {
-        return true;
-      }
-      if (source === av.dnd.fzWorld && (target === av.dnd.anlDndChart || target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2)) {
-        return true;
-      }
-      if (source === av.dnd.fzOrgan && (target === av.dnd.activeOrgan || target === av.dnd.organCanvas || target === av.dnd.organIcon || target === av.dnd.gridCanvas || target === av.dnd.ancestorBox || target === av.dnd.ancestorBoTest)) {
-        return true;
-      }
-      if (source === av.dnd.fzTdish && target === av.dnd.testConfig) {
-        return true;
-      } 
-      if (target === av.dnd.trashCan) {
-        return true;
-      }
-      else {
-        return false;
-      }
+      return true;
     },
     invalid: function (el, handle) {
       return false; // don't prevent any drags from initiating by default
@@ -110,26 +82,90 @@ jQuery(document).ready(function($) {
   });
 
   /*
+  This is defining which containers can accept what
+  */
+  av.dnd.accepts = function(el, target, source) {
+    if (target === source) {
+      return true;
+    }
+    if ((source === av.dnd.ancestorBox) && (target === av.dnd.organIcon || target === av.dnd.gridCanvas)) {
+      return true;
+    }
+    if (source === av.dnd.activeConfig && (target === av.dnd.fzConfig || target === av.dnd.fzWorld)) {
+      return true;
+    }
+    if (source === av.dnd.activeOrgan && (target === av.dnd.fzOrgan)) {
+      return true;
+    }
+    if ((source === av.dnd.fzConfig || source === av.dnd.fzWorld) && target === av.dnd.activeConfig) {
+      return true;
+    }
+    if (source === av.dnd.fzWorld && (target === av.dnd.gridCanvas || target === av.dnd.anlDndChart || target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2)) {
+      return true;
+    }
+    if (source === av.dnd.fzOrgan && (target === av.dnd.activeOrgan || target === av.dnd.organCanvas || target === av.dnd.organIcon || target === av.dnd.gridCanvas || target === av.dnd.ancestorBox || target === av.dnd.ancestorBoTest)) {
+      return true;
+    }
+    if (source === av.dnd.fzTdish && target === av.dnd.testConfig) {
+      return true;
+    } 
+    if (target === av.dnd.trashCan) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  /*
   Handle drag
   */
   dra.on('drag', (el, source) => { 
     // el.style.background = 'rgb(189, 229, 245)';
     console.log("dragging");
+    document.body.style.cursor = "default";
     dragging = true;
     //When mouse button is released, return cursor to default values
     if (source === av.dnd.fzOrgan) { // necessary because for some reason inside mouse events, dra 'source' and 'target' are messed up
       sourceIsFzOrgan = true;
     } else sourceIsFzOrgan = false;
-    document.body.style.cursor = "copy";
+
+    if (source === av.dnd.fzWorld) {
+      sourceIsFzWorld = true;
+    } else sourceIsFzWorld = false;
+
     elForGrid = el;
+  });
+
+  dra.on('over', (el, container, source) => {
+    if (av.dnd.accepts(el, container, source)) {
+      document.body.style.cursor = "copy";
+    } else {
+      document.body.style.cursor = "no-drop";
+    }
+  });
+
+  dra.on('out', (el, container, source) => {
+    console.log(container);
+    document.body.style.cursor = "default";
+  });
+
+  dra.on('cancel', (el, container, source) => {
+    console.log(container);
+    document.body.style.cursor = "default";
   });
 
   /*
   Handle drop
   */
   dra.on('drop', (el, target, source) => {
+    // if the drop is not acceptable, cancel and return
+    if (!av.dnd.accepts(el, target, source)) {
+      dra.cancel();
+      return;
+    }
     // el, target, source are dom objects aka stuff you could 'target.id' to
-    if ((target === av.dnd.activeConfig || target === av.dnd.ancestorBox || target === av.dnd.trashCan) && av.grd.runState === 'started') {
+    if ((target === av.dnd.gridCanvas || target === av.dnd.activeConfig || target === av.dnd.ancestorBox || target === av.dnd.trashCan) && av.grd.runState === 'started') {
       av.dom.newDishModalID.style.display = 'block'; // show the 'please save' modal
       dra.cancel(); // cancel the drag event
     } else if (target === av.dnd.activeConfig) {
@@ -218,12 +254,18 @@ jQuery(document).ready(function($) {
         if (elements.indexOf("gridCanvas") != -1 && sourceIsFzOrgan) { // if gridCanvas is behind this mouse point
           av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, source);
           av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
+        } 
+
+        if (elements.indexOf("gridCanvas") != -1 && sourceIsFzWorld) { 
+          var elm = elForGrid.cloneNode(true)
+          elm.id = 'w' + av.fzr.wNum++;
+          av.dnd.activeConfig.append(elm);
+          av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, source);
         }
       }
       dragging = false;
       $(document).unbind('mousemove touchmove');
     });
-    document.body.style.cursor = 'default';
   });
 
   /*
@@ -1089,6 +1131,7 @@ jQuery(document).ready(function($) {
 
   av.dnd.insertToDOM = function(target, el) {
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
+    el = el.cloneNode(true);
     $(container).append(el);
   }
 
