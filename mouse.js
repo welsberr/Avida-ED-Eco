@@ -375,24 +375,6 @@
     }
   }
 
-  // yemd
-  // av.mouse.fromAncestorBoxRemove = function (removeName) {
-  //   'use strict';
-  //   var domItems = Object.keys(dnd.ancestorBox.map);
-  //   //console.log("domItems=", domItems);
-  //   var nodeIndex = -1;
-  //   var lngth = domItems.length;
-  //   for (var ii = 0; ii < lngth; ii++) { //http://stackoverflow.com/questions/5837558/dojo-drag-and-drop-how-to-retrieve-order-of-items
-  //     if (dnd.ancestorBox.map[domItems[ii]].data == removeName) {
-  //       nodeIndex = ii;
-  //     }
-  //   }
-  //   var node = dojo.byId(domItems[nodeIndex]);
-  //   if (av.debug.mouse) console.log('nodeIndex', nodeIndex, domItems[nodeIndex]);
-  //   dnd.ancestorBox.parent.removeChild(node);
-  //   dnd.ancestorBox.sync();
-  // }
-
   //Key movement on grid
   // if (av.dbg.flg.root) { console.log('Root: before av.mouse.arrowKeysOnGrid'); }
   av.mouse.arrowKeysOnGrid = function (event) {
