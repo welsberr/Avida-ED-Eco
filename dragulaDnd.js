@@ -226,9 +226,8 @@ jQuery(document).ready(function($) {
     // Special case for gridCanvas
     $(document).on('mouseup touchend', function (evt) {
       'use strict';
-      console.log('Im here');
       av.mouse.makeCursorDefault(); // want the mouse to be default after mouseup
-      if (dragging) {
+      if (dragging) { 
         var x;
         var y;
         if(evt.type == 'touchend'){

@@ -498,6 +498,7 @@ html {
   justify-content:space-between;
   background: #F5F5F5; /* lightblue;  */
   border: 1px solid #AAA;
+  padding: 0.2em;
 }
 
 #activeConfigHolder{
@@ -512,8 +513,9 @@ html {
   flex: 0 1 58px;
 }
 #activeConfig {
-  flex: 0 1 120px;
+  /* flex: 0 1 120px; */ /* yemi: this is not allowing for flexible resizing of the box, ironically */
   padding-top: 5px;
+  width: fit-content; /* yemi: */
 }
 #testConfigLableHolder {
   display: none;
@@ -595,7 +597,7 @@ html {
 }
 
 #benchPopBot{
-  flex: 0 1 60px;
+  /* flex: 0 1 60px; */ /* yemi: this is formatting the bottom weirdly so commenting out for now */
   /* border: 1px solid #AAA; */ /* yemi: removed border */
   min-height: 41px;
   overflow: auto;
@@ -608,10 +610,10 @@ html {
 #avidianOutline { display: none; }
 
 .zoomSlideClass { grid-area: zoomSlide; visibility: hidden; }
-.timeUpdateClass { grid-area: timeUpdate;}
+.timeUpdateClass { grid-area: timeUpdate; padding-bottom: 5px;}
 .freezeButtonDivClass { grid-area: freezeButton;}
-.modeHolderClass { grid-area: modeHolder;}
-.gridButtonClass { grid-area: gridButton;}
+.modeHolderClass { grid-area: modeHolder; padding-bottom: 5px; justify-self: end;}
+.gridButtonClass { grid-area: gridButton; justify-self: end;} 
 .rescalingClass { grid-area: rescaling;}
 .popBotRiteClas { grid-area: popBotRite;}
 
@@ -619,6 +621,7 @@ html {
   display: grid;
   grid-template-areas: 'timeUpdate  modeHolder  rescaling'
                        'freezeButton gridButton popBotRite';
+  grid-template-columns: 50% 50% 0px; /* yemi: since rescaling button is not implemented yet, we don't save a column for it now */
   width: 100%;
 }
 
@@ -1822,13 +1825,25 @@ checkbox:focus {
     #popDish2Div { grid-area: popDish2;}
     
     .anaDeleteButtonDiv{
-      padding: 1px 4px;  /*top/bottom  left/right  */
+      /* padding: 1px 4px; */  /*top/bottom  left/right  */
+      padding-left: 5px;
+      padding-right: 4px;
+      padding-top: 1px;
+      padding-right: 1px;
     }
     .anaDeleteButton{
       margin: auto;
-      height: 18px;
-      position: absolute;
-    };
+      height: fit-content;
+      /* position: absolute; */
+      background-color: rgb(238, 176, 176);
+      text-align: center;
+      font-size: smaller;
+    }
+
+    .anaDeleteButton:hover {
+      background-color: rgb(247, 151, 151)
+    }
+
     .anaColorLineDiv{
       padding: 2px 4px;  /*top/bottom  left/right  */
       width: 99%; 
@@ -1856,9 +1871,10 @@ checkbox:focus {
 
   .anaYaxis{
     flex: 0 1 50%;       /* need a way to put drop down description on another line if screen is narrow */
-    min-width: 350px;
+    /* min-width: 350px; */ /* yemd: messes with layout when screen resized */
     background: #F5F5F5;/* #F5F5F5; /* pink ;  */
     margin: 10px 2px 5px 10px;    /* top right bottom left */
+    overflow: auto; /* yemi */
   }
   
  .AviaEDaboutP {
@@ -2141,6 +2157,18 @@ label {
 }
 
 input[type=button]:hover {
+  opacity: 50%;
+}
+
+button {
+  border: none;
+  background-color: #d1d9df;
+  padding: 0.5em;
+  color: #000000;
+}
+
+button:hover {
+  background-color: #c3e0f7;
   opacity: 50%;
 }
 

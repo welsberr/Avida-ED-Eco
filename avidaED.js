@@ -699,7 +699,6 @@ require([
     if (av.debug.mouse) console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
     // after everything, reset cursor
     document.body.style.cursor = "default";
-    av.mouse.makeCursorDefault();
     av.mouse.Dn = false;
 
     // --------- process if something picked to dnd ------------------
@@ -2922,7 +2921,6 @@ require([
     av.dom.anlChrtSpace.style.visibility = 'hidden';
   };
   // if (av.dbg.flg.root) { console.log('Root: before av.anl.anaChartInit called'); }
-  av.anl.anaChartInit();
 
   //----------------------------------------------------------------------------------------------- av.anl.AnaChartFn --
   av.anl.AnaChartFn = function () {
