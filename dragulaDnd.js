@@ -52,6 +52,9 @@ jQuery(document).ready(function($) {
   var sourceIsFzOrgan = false;
   var sourceIsFzWorld = false;
   var elForGrid = '';
+  // yemd: variable to keep the most recently added domid
+  // domids are unique for each new item that is drag and dropped
+  var mostRecentlyAddedDomid = '';
 
   /*
   Dragula Initialization
@@ -64,6 +67,7 @@ jQuery(document).ready(function($) {
       return true; // elements are always draggable by default
     },
     accepts: function (el, target, source, sibling) {
+      // actual accepts function is taken out into its own function to be usable outside the dragula constructor
       return true;
     },
     invalid: function (el, handle) {
@@ -94,7 +98,7 @@ jQuery(document).ready(function($) {
     if (source === av.dnd.activeConfig && (target === av.dnd.fzConfig || target === av.dnd.fzWorld)) {
       return true;
     }
-    if (source === av.dnd.activeOrgan && (target === av.dnd.fzOrgan)) {
+    if (source === av.dnd.activeOrgan && (target === av.dnd.fzOrgan || target === av.dnd.organIcon || target === av.dnd.organCanvas)) {
       return true;
     }
     if ((source === av.dnd.fzConfig || source === av.dnd.fzWorld) && target === av.dnd.activeConfig) {
@@ -121,8 +125,6 @@ jQuery(document).ready(function($) {
   Handle drag
   */
   dra.on('drag', (el, source) => { 
-    // el.style.background = 'rgb(189, 229, 245)';
-    console.log("dragging");
     document.body.style.cursor = "default";
     dragging = true;
     //When mouse button is released, return cursor to default values
@@ -138,6 +140,7 @@ jQuery(document).ready(function($) {
   });
 
   dra.on('over', (el, container, source) => {
+    console.log('hi');
     if (av.dnd.accepts(el, container, source)) {
       document.body.style.cursor = "copy";
     } else {
@@ -146,12 +149,10 @@ jQuery(document).ready(function($) {
   });
 
   dra.on('out', (el, container, source) => {
-    console.log(container);
     document.body.style.cursor = "default";
   });
 
   dra.on('cancel', (el, container, source) => {
-    console.log(container);
     document.body.style.cursor = "default";
   });
 
@@ -171,58 +172,46 @@ jQuery(document).ready(function($) {
     } else if (target === av.dnd.activeConfig) {
       av.dnd.landActiveConfig(el, target, source);
     }
-
     if (target === av.dnd.testConfig || target === av.dnd.ancestorBoTest && av.grd.runState === 'started') {
       av.dom.newDishModalID.style.display = 'block';
       dra.cancel();
     } else if (target === av.dnd.testConfig) {
       av.dnd.landTestConfig(el, target, source);
     }
-
     if (target === av.dnd.trashCan) {
       // yemi: however, if the drag is being initiated from the gridCanvas aka, then the event handler is in mouse.js
       // refer to av.mouse.ParentMouse or av.mouse.KidMouse
       av.dnd.landTrashCan(el, source);
     }
-    
     if (target === av.dnd.fzConfig) {
       av.dnd.landFzConfig(el, target, source);
     }
-
     if (target === av.dnd.ancestorBox) {
       av.dnd.landAncestorBox(el, target, source);
     }
-
     if (target === av.dnd.ancestorBoTest) {
       av.dnd.landAncestorBoTest(el, target, source);
     }
-
     if (target === av.dnd.fzWorld) {
       // yemi: does not trigger because techinically there are no 'items' on the grid right now.
       // on the grid, mouse movements overtake. Code for that is in mouse.js (av.mouse.kidMouse)
       av.dnd.landFzWorld(el, target, source);
     }
-
     if (target === av.dnd.fzOrgan) {
       av.dnd.landFzOrgan(el, target, source); // I don't think it's getting called
     }
-
     if (target === av.dnd.organIcon) {
       av.dnd.landOrganIcon(el, target, source);
     }
-
     if (target === av.dnd.activeOrgan) {
       av.dnd.landActiveOrgan(el, target, source);
     }
-
     if (target === av.dnd.organCanvas) {
       av.dnd.landOrganCanvas(el, target, source);
     }
-
     if (target === av.dnd.anlDndChart) {
       av.dnd.landAnlDndChart(el, target, source);
     }
-
     if (target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2) {
       if (target === av.dnd.popDish0) {
         av.dnd.landpopDish(el, target, source, 0);
@@ -234,10 +223,11 @@ jQuery(document).ready(function($) {
         av.dnd.landpopDish(el, target, source, 2);
       }
     } 
-
     // Special case for gridCanvas
     $(document).on('mouseup touchend', function (evt) {
       'use strict';
+      console.log('Im here');
+      av.mouse.makeCursorDefault(); // want the mouse to be default after mouseup
       if (dragging) {
         var x;
         var y;
@@ -266,6 +256,9 @@ jQuery(document).ready(function($) {
       dragging = false;
       $(document).unbind('mousemove touchmove');
     });
+
+    // change the color back (whatever it was before) of the most recently added dom object
+    $('#' + mostRecentlyAddedDomid).css('background', 'inherit');
   });
 
   /*
@@ -273,6 +266,7 @@ jQuery(document).ready(function($) {
   */
   var selectedId = '';
   $('.navColClass').on('click', function(e) { // allow click selection only if it's within the freezer
+    document.body.style.cursor = "default"; // want the mouse to be default for click
     if (e.target) {
       var classList = e.target.className.split(" "); // yemd: e.target.className is a string
       if (selectedId !== '' && e.target.id === selectedId) {
@@ -300,6 +294,7 @@ jQuery(document).ready(function($) {
     if (av.debug.dnd) console.log('av.dnd.landFzConfig: fzr', av.fzr);
     // create a new dom id for the new object
     el.id = 'c' + av.fzr.cNum;
+    mostRecentlyAddedDomid = el.id; // register this as the most recently added dom object
     // give a new name to the object
     var oldName = el.textContent.trim();
     var sName = av.dnd.namefzrItem(target, oldName);
@@ -338,6 +333,7 @@ jQuery(document).ready(function($) {
   //when an organism is added to the freezer
   av.dnd.landFzOrgan = function(el, target, source) {
     el.id = 'g' + av.fzr.gNum;
+    mostRecentlyAddedDomid = el.id;
     var gen;
     var oldName = el.textContent.trim();
     var sName = av.dnd.namefzrItem(target, oldName);
@@ -392,6 +388,7 @@ jQuery(document).ready(function($) {
     'use strict';
     if (av.debug.dnd) console.log('landFzPopDish: fzr', av.fzr);
     el.id = 'w' + av.fzr.wNum;
+    mostRecentlyAddedDomid = el.id;
     var oldName = el.textContent.trim() + '@' + av.grd.popStatsMsg.update.formatNum(0);
     var sName = av.dnd.namefzrItem(target, oldName);
     var worldName = prompt('Please name your populated dish', sName);
@@ -448,7 +445,8 @@ jQuery(document).ready(function($) {
   
       if (addedPopPage) av.grd.drawGridSetupFn('av.dnd.FzAddExperimentFn');
       // yemd: reset the selectedId
-      $('#' + selectedId).css('background', 'inherit');
+      $('#' + mostRecentlyAddedDomid).css('background', 'inherit'); // revert the background color of the most recently added dom object
+      $('#' + selectedId).css('background', 'inherit'); // selectedId is the id of the dom object from which the new object was copied from 
       selectedId = '';
     }
     // if nothing is selected
@@ -478,8 +476,15 @@ jQuery(document).ready(function($) {
     av.dnd.empty(target);
     // get the data for the dragged dish
     var dir = av.fzr.dir[el.id];
+    // for some reason, the item that gets appended has 'gu-transit' on it, which means it's an element that is still in transit, which makes it looke grayed out.
+    // so splice it out
+    var idx = el.className.split(" ").indexOf('gu-transit');
+    var newlist = el.className.split(" ");
+    newlist.splice(idx, 1);
+    el.className = newlist.join(' ');
     // give the new dom object a new dom id
     el.id = 'w' + av.fzr.wNum++; 
+    mostRecentlyAddedDomid = el.id;
     // insert element into target containerMap
     av.dnd.insert(target, el, 'w');
     // insert element into the target DOM
@@ -498,8 +503,15 @@ jQuery(document).ready(function($) {
     // console.log('sourceContainer=', source.parent.id, '; world domID=', source.anchor.id, '; world Name=', source.anchor.textContent.trim());
     // get the data for the dragged dish
     var dir = av.fzr.dir[el.id];
+    // for some reason, the item that gets appended has 'gu-transit' on it, which means it's an element that is still in transit, which makes it looke grayed out.
+    // so splice it out
+    var idx = el.className.split(" ").indexOf('gu-transit');
+    var newlist = el.className.split(" ");
+    newlist.splice(idx, 1);
+    el.className = newlist.join(' ');
     // give the new dom object a new dom id
     el.id = 'w' + av.fzr.wNum++;
+    mostRecentlyAddedDomid = el.id;
     // insert element into target containerMap
     av.dnd.insert(source, el, 'w');
     // insert element into DOM
@@ -549,8 +561,16 @@ jQuery(document).ready(function($) {
     av.dnd.empty(av.dnd.activeOrgan);
     // get the data for the dragged organism
     var dir = av.fzr.dir[el.id];
+    el = el.cloneNode(true);
+    // for some reason, the item that gets appended has 'gu-transit' on it, which means it's an element that is still in transit, which makes it looke grayed out.
+    // so splice it out
+    var idx = el.className.split(" ").indexOf('gu-transit');
+    var newlist = el.className.split(" ");
+    newlist.splice(idx, 1);
+    el.className = newlist.join(' ');
     // give a new id to the new dom object
     el.id = 'g' + av.fzr.gNum++;
+    mostRecentlyAddedDomid = el.id;
     // add an entry to av.fzr.dir for this new new dom id
     av.fzr.dir[el.id] = dir;
     // and vice versa
@@ -575,8 +595,15 @@ jQuery(document).ready(function($) {
     av.dnd.empty(av.dnd.activeOrgan);
     // get the data for the dragged organism
     var dir = av.fzr.dir[el.id];
+    // for some reason, the item that gets appended has 'gu-transit' on it, which means it's an element that is still in transit, which makes it looke grayed out.
+    // so splice it out
+    var idx = el.className.split(" ").indexOf('gu-transit');
+    var newlist = el.className.split(" ");
+    newlist.splice(idx, 1);
+    el.className = newlist.join(' ');
     // give a new dom id to the new dom object
     el.id = av.fzr.gNum++;
+    mostRecentlyAddedDomid = el.id;
     // add an entry to av.fzr.dir for this new dom id
     av.fzr.dir[el.id] = dir;
     // and vice versa
@@ -654,6 +681,7 @@ jQuery(document).ready(function($) {
       var dir = av.fzr.dir[el.id];
       // give a new id to the new dom object
       el.id = 'g' + av.fzr.gNum++;
+      mostRecentlyAddedDomid = el.id;
       // add an entry to av.fzr.dir for this new new dom id
       av.fzr.dir[el.id] = dir;
       // and vice versa
@@ -702,6 +730,7 @@ jQuery(document).ready(function($) {
       av.parents.injected.push(false);
       // give a new id to the new dom object
       el.id = 'g' + av.fzr.gNum++;
+      mostRecentlyAddedDomid = el.id;
       // add an entry to av.fzr.dir for this new new dom id
       av.fzr.dir[el.id] = dir;
       // and vice versa
@@ -753,6 +782,7 @@ jQuery(document).ready(function($) {
       av.parents.injected.push(false);
       // give a new id to the new dom object
       el.id = 'g' + av.fzr.gNum++;
+      mostRecentlyAddedDomid = el.id;
       // add an entry to av.fzr.dir for this new new dom id
       av.fzr.dir[el.id] = dir;
       // and vice versa
@@ -800,12 +830,19 @@ jQuery(document).ready(function($) {
     else if (el.id[0] === 'w') el.id = 'w' + av.fzr.wNum++;
     else el.id = 't' + av.fzr.tNum++;
 
+    mostRecentlyAddedDomid = el.id;
     // add an entry to av.fzr.dir for this new new dom id
     av.fzr.dir[el.id] = dir;
     // and vice versa
     av.fzr.domid[dir] = el.id;
     // remove the existing configuration
     av.dnd.empty(target);
+    // for some reason, the item that gets appended has 'gu-transit' on it, which means it's an element that is still in transit, which makes it looke grayed out.
+    // so splice it out
+    var idx = el.className.split(" ").indexOf('gu-transit');
+    var newlist = el.className.split(" ");
+    newlist.splice(idx, 1);
+    el.className = newlist.join(' ');
     // insert element into target DOM
     av.dnd.insertToDOM(target, el);
     // update active config

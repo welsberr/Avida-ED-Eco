@@ -691,14 +691,15 @@ require([
   // });
 
   //When mouse button is released, return cursor to default values
-  $(document).on('mouseup', function (evt) {
+  $(document).on('mouseup touchend', function (evt) {
     'use strict';
     var target = '';
     if (av.debug.mouse) console.log('in mouseup target:', evt.target.id, '; event:', evt);
     if (av.debug.mouse) console.log('in mouseup target:', evt.target.id);
     if (av.debug.mouse) console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
-    
-    // av.mouse.makeCursorDefault();
+    // after everything, reset cursor
+    document.body.style.cursor = "default";
+    av.mouse.makeCursorDefault();
     av.mouse.Dn = false;
 
     // --------- process if something picked to dnd ------------------
