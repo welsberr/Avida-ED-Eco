@@ -125,7 +125,7 @@ jQuery(document).ready(function($) {
   Handle drag
   */
   dra.on('drag', (el, source) => { 
-    document.body.style.cursor = "default";
+    // document.body.style.cursor = "default";
     dragging = true;
     //When mouse button is released, return cursor to default values
     if (source === av.dnd.fzOrgan) { // necessary because for some reason inside mouse events, dra 'source' and 'target' are messed up
@@ -140,8 +140,9 @@ jQuery(document).ready(function($) {
   });
 
   dra.on('over', (el, container, source) => {
+    console.log("h");
+    console.log(container, el, source);
     if (av.dnd.accepts(el, container, source)) {
-      console.log('here');
       document.body.style.cursor = "copy";
     } else {
       document.body.style.cursor = "no-drop";
@@ -165,7 +166,6 @@ jQuery(document).ready(function($) {
       dra.cancel();
       return;
     }
-    console.log(target);
     // el, target, source are dom objects aka stuff you could 'target.id' to
     if ((target === av.dnd.gridCanvas || target === av.dnd.activeConfig || target === av.dnd.ancestorBox || target === av.dnd.trashCan) && av.grd.runState === 'started') {
       av.dom.newDishModalID.style.display = 'block'; // show the 'please save' modal
@@ -228,7 +228,8 @@ jQuery(document).ready(function($) {
     // Special case for gridCanvas
     $(document).on('mouseup touchend', function (evt) {
       'use strict';
-      av.mouse.makeCursorDefault(); // want the mouse to be default after mouseup
+      // av.mouse.makeCursorDefault(); // want the mouse to be default after mouseup
+      document.body.style.cursor = "default";
       if (dragging) { 
         var x;
         var y;
@@ -260,6 +261,9 @@ jQuery(document).ready(function($) {
 
     // change the color back (whatever it was before) of the most recently added dom object
     $('#' + mostRecentlyAddedDomid).css('background', 'inherit');
+    document.body.style.cursor = "default";
+    // for debugging
+    console.log(av.fzr);
   });
 
   /*
@@ -313,7 +317,8 @@ jQuery(document).ready(function($) {
         // insert a new directory into the freezer
         av.fzr.dir[el.id] = 'c'+ av.fzr.cNum;
         // insert a new domid into the freezer
-        av.fzr.domid['c'+ av.fzr.cNum] = el.id;
+        av.fzr.domid['c'+ av.fzr.cNum] = [];
+        av.fzr.domid['c'+ av.fzr.cNum].push(el.id);
         // insert a new file into the freezer
         av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = configName;
         av.fwt.makeFzrConfig(av.fzr.cNum,'av.dnd.landFzConfig');
@@ -359,7 +364,8 @@ jQuery(document).ready(function($) {
         }
         else if (source === av.dnd.activeOrgan) { console.log('bells'); gen = av.fzr.actOrgan.genome; }
         av.fzr.dir[el.id] = 'g' + av.fzr.gNum;
-        av.fzr.domid['g' + av.fzr.gNum] = el.id;
+        av.fzr.domid['g'+ av.fzr.gNum] = [];
+        av.fzr.domid['g' + av.fzr.gNum].push(el.id);
         av.fzr.file['g' + av.fzr.gNum + '/genome.seq'] = gen;
         av.fzr.file['g' + av.fzr.gNum + '/entryname.txt'] = avName;
         if (av.debug.dnd) console.log('fzr', av.fzr);
@@ -401,14 +407,15 @@ jQuery(document).ready(function($) {
         av.dnd.insert(target, el, 'w');
         console.log(containerMap);
         av.fzr.dir[el.id] = 'w'+ av.fzr.wNum;
-        av.fzr.domid['w'+ av.fzr.wNum] = el.id;
-        av.fzr.wNum++;
+        av.fzr.domid['w'+ av.fzr.wNum] = [];
+        av.fzr.domid['w'+ av.fzr.wNum].push(el.id);
         //create a right av.mouse-click context menu for the item just created.
         av.dnd.contextMenu(target, el.id, 'av.dnd.landFzWorldFn');
         av.fwt.makeFzrWorld(av.fzr.wNum, 'av.dnd.landFzWorldFn');
         av.msg.exportExpr('w' + av.fzr.wNum);
         av.msg.sendData();
         av.fzr.saveUpdateState('no');
+        av.fzr.wNum++;
       } else { //user cancelled so the item should NOT be added to the freezer.
         // do nothing
       }
@@ -575,7 +582,7 @@ jQuery(document).ready(function($) {
     // add an entry to av.fzr.dir for this new new dom id
     av.fzr.dir[el.id] = dir;
     // and vice versa
-    av.fzr.domid[dir] = el.id;
+    av.fzr.domid[dir].push(el.id);
     // insert element into target containerMap
     av.dnd.insert(av.dnd.activeOrgan, el, 'g');
     // insert element into target DOM
@@ -603,12 +610,12 @@ jQuery(document).ready(function($) {
     newlist.splice(idx, 1);
     el.className = newlist.join(' ');
     // give a new dom id to the new dom object
-    el.id = av.fzr.gNum++;
+    el.id = 'g' + av.fzr.gNum++;
     mostRecentlyAddedDomid = el.id;
     // add an entry to av.fzr.dir for this new dom id
     av.fzr.dir[el.id] = dir;
     // and vice versa
-    av.fzr.domid[dir] = el.id;
+    av.fzr.domid[dir].push(el.id);
     // insert element into target containerMap
     av.dnd.insert(av.dnd.activeOrgan, el, 'g');
     // insert element into target DOM
@@ -686,7 +693,7 @@ jQuery(document).ready(function($) {
       // add an entry to av.fzr.dir for this new new dom id
       av.fzr.dir[el.id] = dir;
       // and vice versa
-      av.fzr.domid[dir] = el.id;
+      av.fzr.domid[dir].push(el.id);
       // give a new name
       el.textContent = av.dnd.nameParent(el.textContent.trim());
       // insert element into ancestorBox containerMap
@@ -735,7 +742,7 @@ jQuery(document).ready(function($) {
       // add an entry to av.fzr.dir for this new new dom id
       av.fzr.dir[el.id] = dir;
       // and vice versa
-      av.fzr.domid[dir] = el.id;
+      av.fzr.domid[dir].push(el.id);
       // rename the item with a new name
       var newName = av.dnd.nameParent(el.textContent.trim());
       el.textContent = newName;
@@ -787,7 +794,7 @@ jQuery(document).ready(function($) {
       // add an entry to av.fzr.dir for this new new dom id
       av.fzr.dir[el.id] = dir;
       // and vice versa
-      av.fzr.domid[dir] = el.id;
+      av.fzr.domid[dir].push(el.id);
       // rename the item with a new name
       var newName = av.dnd.nameParent(el.textContent.trim());
       el.textContent = newName;
@@ -835,7 +842,7 @@ jQuery(document).ready(function($) {
     // add an entry to av.fzr.dir for this new new dom id
     av.fzr.dir[el.id] = dir;
     // and vice versa
-    av.fzr.domid[dir] = el.id;
+    av.fzr.domid[dir].push(el.id);
     // remove the existing configuration
     av.dnd.empty(target);
     // for some reason, the item that gets appended has 'gu-transit' on it, which means it's an element that is still in transit, which makes it looke grayed out.
@@ -848,7 +855,7 @@ jQuery(document).ready(function($) {
     av.dnd.insertToDOM(target, el);
     // update active config
     av.fzr.actConfig.actDomid = el.id;
-    av.fzr.actConfig.name = el.textContent;
+    av.fzr.actConfig.name = el.textContent.trim();
     av.fzr.actConfig.fzDomid = source.id;
     av.fzr.actConfig.dir = av.fzr.dir[el.id];
     delete av.fzr.actConfig.file['instset.cfg'];

@@ -152,7 +152,8 @@
         break;
     }
     av.fzr.file[av.fio.anID] = name;
-    av.fzr.domid[dir] = domid;
+    av.fzr.domid[dir] = [];
+    av.fzr.domid[dir].push(domid); // yemd: this is because later, more dom objects will share the same 'dir', so make it a list
     av.fzr.dir[domid] = dir;
   };
 
@@ -366,6 +367,7 @@
   av.frd.updateSetup = function(from) {
     'use strict';
     var dir = av.fzr.actConfig.dir;
+    console.log(dir);
     // av.dbg.flg.frd
     if (true) { console.log(from, 'called av.frd.updateSetup; dir=', dir); }
 

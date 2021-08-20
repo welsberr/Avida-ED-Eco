@@ -1115,7 +1115,7 @@ av.fwt.clearResourceConstants = function(from) {
     av.fwt.deleteFzrFile(dir+'/events.cfg');
     av.fwt.deleteFzrFile(dir+'/entryname.txt');
     av.fwt.deleteFzrFile(dir+'/instset.cfg');
-    var domid = av.fzr.domid[dir];
+    var domid = av.fzr.domid[dir][-1];
     delete av.fzr.domid[dir];
     delete av.fzr.dir[domid];
   };
@@ -1125,7 +1125,7 @@ av.fwt.clearResourceConstants = function(from) {
     'use strict';
     av.fwt.deleteFzrFile(dir+'/entryname.txt');
     av.fwt.deleteFzrFile(dir+'/genome.seq');
-    var domid = av.fzr.domid[dir];
+    var domid = av.fzr.domid[dir][-1];
     delete av.fzr.domid[dir];
     delete av.fzr.dir[domid];
     //console.log('after remove genome: dir', dir, '; av.fzr', av.fzr);
@@ -1142,7 +1142,7 @@ av.fwt.clearResourceConstants = function(from) {
     av.fwt.deleteFzrFile(dir+'/entryname.txt');
     av.fwt.deleteFzrFile(dir+'/instset.cfg');
     av.fwt.deleteFzrFile(dir+'/update');
-    var domid = av.fzr.domid[dir];
+    var domid = av.fzr.domid[dir][-1];
     delete av.fzr.domid[dir];
     delete av.fzr.dir[domid];
     //av.fwt.deleteFzrFile(dir+'/');

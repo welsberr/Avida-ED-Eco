@@ -27,9 +27,9 @@
         distance = Math.sqrt(Math.pow(evt.offsetX - av.ind.cx[1], 2) + Math.pow(evt.offsetY - av.ind.cy[1], 2));
         if (25 > distance) {
           for (var dir in av.fzr.domid) {
-            if ('g' == dir.substring(0, 1)) document.getElementById(av.fzr.domid[dir]).style.cursor = 'copy';
+            if ('g' == dir.substring(0, 1)) document.getElementById(av.fzr.domid[dir][-1]).style.cursor = 'copy';
           }
-          av.mouse.sonCursorShape();
+          // av.mouse.sonCursorShape();
           av.mouse.Picked = "offspring";
           if (av.debug.ind) console.log('av.ind.dna', av.ind.dna);
         }
@@ -111,7 +111,7 @@
         av.mouse.ParentNdx = av.mouse.findParentNdx(av.parents);
         if (av.debug.mouse) { console.log('parent', av.mouse.ParentNdx); }
         if (-1 < av.mouse.ParentNdx) { //selected a parent, check for dragging
-          av.mouse.selectedDadMouseStyle();
+          // av.mouse.selectedDadMouseStyle();
           av.mouse.Picked = 'parent';
         }
       }
@@ -131,7 +131,7 @@
             if (av.debug.mouse) console.log('kid found');
             av.grd.kidStatus = 'getgenome';
             av.msg.doWebOrgDataByCell();
-            av.mouse.selectedKidMouseStyle();
+            // av.mouse.selectedKidMouseStyle(); // yemd
             av.grd.kidName = 'temporary';
             av.grd.kidGenome = '0,heads_default,wzcagcccccccccaaaaaaaaaaaaaaaaaaaaccccccczvfcaxgab';  //ancestor
             av.mouse.Picked = 'kid';

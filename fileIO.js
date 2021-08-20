@@ -320,7 +320,7 @@
         }
         av.fwt.deleteFzrItem(fname);
       }
-      av.fzr.domid[dir] = domid;
+      av.fzr.domid[dir].push(domid);
       av.fzr.dir[domid] = dir;
       //if (av.debug.fio) console.log('av.fzr', av.fzr);
     }

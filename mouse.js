@@ -166,7 +166,7 @@
     }
     else if (elements.indexOf('fzOrgan') != -1) { // look for target in the freezer
       var found = false;
-      for (var dir in av.fzr.domid) {if (av.fzr.domid[dir] == evt.target.id) {found=true; break;}}
+      for (var dir in av.fzr.domid) {if (av.fzr.domid[dir].indexOf(evt.target.id) != -1) {found=true; break;}}
       if (found) {
         target  = 'fzOrgan';
         //create a new freezer item
@@ -193,7 +193,7 @@
             //find domId of offspring as listed in dnd.fzOrgan
             var gdir =  'g' + av.fzr.gNum;
             av.fzr.dir[domid] = gdir;
-            av.fzr.domid[gdir] = domid;
+            av.fzr.domid[gdir].push(domid);
             av.fzr.file[gdir + '/entryname.txt'] = avidian;
             av.fzr.file[gdir + '/genome.seq'] = '0,heads_default,' + av.ind.dna[av.ind.son];
             av.fzr.gNum++;
@@ -249,7 +249,7 @@
         else {
           for (var dir in av.fzr.domid) {
             //console.log('dir', dir);
-            if ((av.fzr.domid[dir] == evt.target.id) && ('g' == dir.substring(0, 1))) {
+            if ((av.fzr.domid[dir].indexOf(evt.target.id) != -1) && ('g' == dir.substring(0, 1))) {
               found = true;
               break;
             }
@@ -294,7 +294,7 @@
 
         av.fzr.file[gdir + '/entryname.txt'] = avName;
         av.fzr.dir[domid] = gdir;
-        av.fzr.domid[gdir] = domid;
+        av.fzr.domid[gdir].push(domid);
         //av.fzr.file[gdir + '/genome.seq'] = '0,heads_default,' + av.grd.kidGenome;
         av.fzr.file[gdir + '/genome.seq'] = av.grd.kidGenome;
         av.fzr.gNum++;
@@ -303,7 +303,7 @@
         if (av.debug.mouse) console.log('fzOrgan', av.dnd.fzOrgan);
         if (av.debug.mouse) console.log('Kid-->Snow: dir',gdir, '; fzr', fzr);
         //create a right mouse-click context menu for the item just created.
-        av.dnd.contextMenu(av.dnd.fzOrgan, av.fzr.domid[gdir], 'av.mouse.freezeTheKid');
+        av.dnd.contextMenu(av.dnd.fzOrgan, domid, 'av.mouse.freezeTheKid');
         av.fzr.saveUpdateState('no');
       }
     }
