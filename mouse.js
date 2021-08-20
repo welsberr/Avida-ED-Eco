@@ -193,6 +193,7 @@
             //find domId of offspring as listed in dnd.fzOrgan
             var gdir =  'g' + av.fzr.gNum;
             av.fzr.dir[domid] = gdir;
+            av.fzr.domid[gdir] = [];
             av.fzr.domid[gdir].push(domid);
             av.fzr.file[gdir + '/entryname.txt'] = avidian;
             av.fzr.file[gdir + '/genome.seq'] = '0,heads_default,' + av.ind.dna[av.ind.son];
@@ -294,6 +295,7 @@
 
         av.fzr.file[gdir + '/entryname.txt'] = avName;
         av.fzr.dir[domid] = gdir;
+        av.fzr.domid[gdir] = [];
         av.fzr.domid[gdir].push(domid);
         //av.fzr.file[gdir + '/genome.seq'] = '0,heads_default,' + av.grd.kidGenome;
         av.fzr.file[gdir + '/genome.seq'] = av.grd.kidGenome;

@@ -320,7 +320,7 @@ jQuery(document).ready(function($) {
         av.fzr.domid['c'+ av.fzr.cNum] = [];
         av.fzr.domid['c'+ av.fzr.cNum].push(el.id);
         // insert a new file into the freezer
-        av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = configName;
+        av.fzr.file[av.fzr.dir[el.id]+'/entryname.txt'] = configName;
         av.fwt.makeFzrConfig(av.fzr.cNum,'av.dnd.landFzConfig');
         // increment av.fzr.cNum
         av.fzr.cNum++;
@@ -693,6 +693,7 @@ jQuery(document).ready(function($) {
       // add an entry to av.fzr.dir for this new new dom id
       av.fzr.dir[el.id] = dir;
       // and vice versa
+      console.log(av.fzr.domid[dir]);
       av.fzr.domid[dir].push(el.id);
       // give a new name
       el.textContent = av.dnd.nameParent(el.textContent.trim());
@@ -1035,6 +1036,7 @@ jQuery(document).ready(function($) {
         var index = av.parents.domid.indexOf(el.id);
         // remove parent
         av.parents.removeParent(index);
+        console.log(av.parents);
         // draw an updated grid
         av.grd.drawGridUpdate();
       }

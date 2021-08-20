@@ -27,7 +27,7 @@
         distance = Math.sqrt(Math.pow(evt.offsetX - av.ind.cx[1], 2) + Math.pow(evt.offsetY - av.ind.cy[1], 2));
         if (25 > distance) {
           for (var dir in av.fzr.domid) {
-            if ('g' == dir.substring(0, 1)) document.getElementById(av.fzr.domid[dir][-1]).style.cursor = 'copy';
+            //if ('g' == dir.substring(0, 1)) document.getElementById(av.fzr.domid[dir][-1]).style.cursor = 'copy';
           }
           // av.mouse.sonCursorShape();
           av.mouse.Picked = "offspring";
