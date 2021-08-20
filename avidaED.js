@@ -1247,6 +1247,8 @@ require([
   av.dom.newDishDiscard.onclick = function () {
     av.post.addUser('Button: newDishDiscard');
     av.dom.newDishModalID.style.display = 'none';
+    // only reset if this function was triggered because user clicked the 'new' button
+    // there's one other way this function could be triggered, which is through dnd in dragulaDnd.js 'drop' function
     av.msg.reset();
     //console.log('newDishDiscard click');
   };

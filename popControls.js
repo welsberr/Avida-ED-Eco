@@ -451,6 +451,7 @@
       $(container).append(`<div class="item ${type}" id="${domid}"> ${fzName} </div>`)
       containerMap[container][domid] = {"name": fzName, "type": type};
       av.fzr.dir[domid] = 'g' + av.fzr.gNum;
+      av.fzr.domid['g' + av.fzr.gNum] = [];
       av.fzr.domid['g' + av.fzr.gNum].push(domid);
       av.fzr.file['g' + av.fzr.gNum + '/genome.seq'] = gene;
       av.fzr.file['g' + av.fzr.gNum + '/entryname.txt'] = fzName;
@@ -478,6 +479,7 @@
         $(container).append(`<div class="item ${type}" id="${domid}"> ${fzName} </div>`)
         containerMap[container][domid] = {"name": fzName, "type": type};
         av.fzr.dir[domid] = 'c'+ av.fzr.cNum;
+        av.fzr.domid['c'+ av.fzr.cNum] = [];
         av.fzr.domid['c'+ av.fzr.cNum].push(domid);
         av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = fzName;
         av.fwt.makeFzrConfig(av.fzr.cNum, 'av.ptd.FrConfigFn');
@@ -506,6 +508,7 @@
         $(container).append(`<div class="item ${type}" id="${domid}"> ${fzName} </div>`)
         containerMap[container][domid] = {"name": fzName, "type": type};
         av.fzr.dir[domid] = 'w'+ av.fzr.wNum;
+        av.fzr.domid['w'+ av.fzr.wNum] = [];
         av.fzr.domid['w'+ av.fzr.wNum].push(domid);
         av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = fzName;
         av.fwt.makeFzrWorld(av.fzr.wNum, 'av.ptd.FrPopulationFn');

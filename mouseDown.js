@@ -2,6 +2,7 @@
 
   // if (av.dbg.flg.root) { console.log('Root: before av.mouse.downOrganCanvasFn'); }
   av.mouse.downOrganCanvasFn = function(evt) {
+    document.body.style.cursor = 'copy';
     av.mouse.DnOrganPos = [evt.offsetX, evt.offsetY];
     av.mouse.Dn = true;
     av.mouse.Picked = '';
@@ -91,6 +92,7 @@
 
   // if (av.dbg.flg.root) { console.log('Root: before av.mouse.downGridCanvasFn'); }
   av.mouse.downGridCanvasFn = function (evt) {
+    document.body.style.cursor = 'copy';
     av.mouse.DnGridPos = [evt.offsetX, evt.offsetY];
     av.mouse.Dn = true;
     // Select if it is in the grid
@@ -111,7 +113,7 @@
         av.mouse.ParentNdx = av.mouse.findParentNdx(av.parents);
         if (av.debug.mouse) { console.log('parent', av.mouse.ParentNdx); }
         if (-1 < av.mouse.ParentNdx) { //selected a parent, check for dragging
-          // av.mouse.selectedDadMouseStyle();
+          //av.mouse.selectedDadMouseStyle();
           av.mouse.Picked = 'parent';
         }
       }

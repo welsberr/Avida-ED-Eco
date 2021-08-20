@@ -51,10 +51,14 @@ jQuery(document).ready(function($) {
   var dragging = false;
   var sourceIsFzOrgan = false;
   var sourceIsFzWorld = false;
+  var sourceIsAncestorBox = false;
   var elForGrid = '';
   // yemd: variable to keep the most recently added domid
   // domids are unique for each new item that is drag and dropped
   var mostRecentlyAddedDomid = '';
+  // necessary when new dish modal was called not because user clicked on the 'new' button
+  // but because it was triggered by dragging a dish to the activeConfig where the experiment has started
+  av.dnd.newDishModalCalledFromDnd = false;
 
   /*
   Dragula Initialization
@@ -127,6 +131,8 @@ jQuery(document).ready(function($) {
   dra.on('drag', (el, source) => { 
     // document.body.style.cursor = "default";
     dragging = true;
+    av.dnd.newDishModalCalledFromDnd = false;
+
     //When mouse button is released, return cursor to default values
     if (source === av.dnd.fzOrgan) { // necessary because for some reason inside mouse events, dra 'source' and 'target' are messed up
       sourceIsFzOrgan = true;
@@ -136,12 +142,14 @@ jQuery(document).ready(function($) {
       sourceIsFzWorld = true;
     } else sourceIsFzWorld = false;
 
+    if (source === av.dnd.ancestorBox) {
+      sourceIsAncestorBox = true;
+    } else sourceIsAncestorBox = false;
+
     elForGrid = el;
   });
 
   dra.on('over', (el, container, source) => {
-    console.log("h");
-    console.log(container, el, source);
     if (av.dnd.accepts(el, container, source)) {
       document.body.style.cursor = "copy";
     } else {
@@ -167,97 +175,119 @@ jQuery(document).ready(function($) {
       return;
     }
     // el, target, source are dom objects aka stuff you could 'target.id' to
-    if ((target === av.dnd.gridCanvas || target === av.dnd.activeConfig || target === av.dnd.ancestorBox || target === av.dnd.trashCan) && av.grd.runState === 'started') {
+    if (av.grd.runState === 'started') {
       av.dom.newDishModalID.style.display = 'block'; // show the 'please save' modal
-      dra.cancel(); // cancel the drag event
-    } else if (target === av.dnd.activeConfig) {
-      av.dnd.landActiveConfig(el, target, source);
-    }
-    if (target === av.dnd.testConfig || target === av.dnd.ancestorBoTest && av.grd.runState === 'started') {
-      av.dom.newDishModalID.style.display = 'block';
-      dra.cancel();
-    } else if (target === av.dnd.testConfig) {
-      av.dnd.landTestConfig(el, target, source);
-    }
-    if (target === av.dnd.trashCan) {
-      // yemi: however, if the drag is being initiated from the gridCanvas aka, then the event handler is in mouse.js
-      // refer to av.mouse.ParentMouse or av.mouse.KidMouse
-      av.dnd.landTrashCan(el, source);
-    }
-    if (target === av.dnd.fzConfig) {
-      av.dnd.landFzConfig(el, target, source);
-    }
-    if (target === av.dnd.ancestorBox) {
-      av.dnd.landAncestorBox(el, target, source);
-    }
-    if (target === av.dnd.ancestorBoTest) {
-      av.dnd.landAncestorBoTest(el, target, source);
-    }
-    if (target === av.dnd.fzWorld) {
-      // yemi: does not trigger because techinically there are no 'items' on the grid right now.
-      // on the grid, mouse movements overtake. Code for that is in mouse.js (av.mouse.kidMouse)
-      av.dnd.landFzWorld(el, target, source);
-    }
-    if (target === av.dnd.fzOrgan) {
-      av.dnd.landFzOrgan(el, target, source); // I don't think it's getting called
-    }
-    if (target === av.dnd.organIcon) {
-      av.dnd.landOrganIcon(el, target, source);
-    }
-    if (target === av.dnd.activeOrgan) {
-      av.dnd.landActiveOrgan(el, target, source);
-    }
-    if (target === av.dnd.organCanvas) {
-      av.dnd.landOrganCanvas(el, target, source);
-    }
-    if (target === av.dnd.anlDndChart) {
-      console.log("here");
-      av.dnd.landAnlDndChart(el, target, source);
-    }
-    if (target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2) {
-      if (target === av.dnd.popDish0) {
-        av.dnd.landpopDish(el, target, source, 0);
+      // below not being triggered
+      if (target === av.dnd.gridCanvas) {
+        av.dnd.landGridCanvas(el, target, source);
       }
-      else if (target === av.dnd.popDish1) {
-        av.dnd.landpopDish(el, target, source, 1);
+      if (target === av.dnd.activeConfig) {
+        console.log('here');
+        av.dnd.landActiveConfig(el, target, source);
       }
-      else if (target === av.dnd.popDish2) {
-        av.dnd.landpopDish(el, target, source, 2);
+      if (target === av.dnd.ancestorBox) {
+        av.dnd.landAncestorBox(el, target, source);
       }
-    } 
-    // Special case for gridCanvas
-    $(document).on('mouseup touchend', function (evt) {
-      'use strict';
-      // av.mouse.makeCursorDefault(); // want the mouse to be default after mouseup
-      document.body.style.cursor = "default";
-      if (dragging) { 
-        var x;
-        var y;
-        if(evt.type == 'touchend'){
-          var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
-          x = touch.pageX;
-          y = touch.pageY;
-        } else if (evt.type == 'mouseup') {
-          x = evt.clientX;
-          y = evt.clientY;
+      if (target === av.dnd.trashCan) {
+        dra.cancel();
+      }
+    } else { // if the experiment hasn't started yet
+      if (target === av.dnd.activeConfig) {
+        av.dnd.landActiveConfig(el, target, source);
+      }
+      if (target === av.dnd.testConfig || target === av.dnd.ancestorBoTest && av.grd.runState === 'started') {
+        av.dom.newDishModalID.style.display = 'block';
+        dra.cancel();
+      } else if (target === av.dnd.testConfig) {
+        av.dnd.landTestConfig(el, target, source);
+      }
+      if (target === av.dnd.trashCan) {
+        // yemi: however, if the drag is being initiated from the gridCanvas aka, then the event handler is in mouse.js
+        // refer to av.mouse.ParentMouse or av.mouse.KidMouse
+        av.dnd.landTrashCan(el, source);
+      }
+      if (target === av.dnd.fzConfig) {
+        av.dnd.landFzConfig(el, target, source);
+      }
+      if (target === av.dnd.ancestorBox) {
+        av.dnd.landAncestorBox(el, target, source);
+      }
+      if (target === av.dnd.ancestorBoTest) {
+        av.dnd.landAncestorBoTest(el, target, source);
+      }
+      if (target === av.dnd.fzWorld) {
+        // yemi: does not trigger because techinically there are no 'items' on the grid right now.
+        // on the grid, mouse movements overtake. Code for that is in mouse.js (av.mouse.kidMouse)
+        av.dnd.landFzWorld(el, target, source);
+      }
+      if (target === av.dnd.fzOrgan) {
+        av.dnd.landFzOrgan(el, target, source); // I don't think it's getting called
+      }
+      if (target === av.dnd.organIcon) {
+        av.dnd.landOrganIcon(el, target, source);
+      }
+      if (target === av.dnd.activeOrgan) {
+        av.dnd.landActiveOrgan(el, target, source);
+      }
+      if (target === av.dnd.organCanvas) {
+        av.dnd.landOrganCanvas(el, target, source);
+      }
+      if (target === av.dnd.anlDndChart) {
+        console.log("here");
+        av.dnd.landAnlDndChart(el, target, source);
+      }
+      if (target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2) {
+        if (target === av.dnd.popDish0) {
+          av.dnd.landpopDish(el, target, source, 0);
         }
-        av.mouse.UpGridPos = [x, y];
-        var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
-        if (elements.indexOf("gridCanvas") != -1 && sourceIsFzOrgan) { // if gridCanvas is behind this mouse point
-          av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, source);
-          av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
-        } 
+        else if (target === av.dnd.popDish1) {
+          av.dnd.landpopDish(el, target, source, 1);
+        }
+        else if (target === av.dnd.popDish2) {
+          av.dnd.landpopDish(el, target, source, 2);
+        }
+      } 
 
-        if (elements.indexOf("gridCanvas") != -1 && sourceIsFzWorld) { 
-          var elm = elForGrid.cloneNode(true)
-          elm.id = 'w' + av.fzr.wNum++;
-          av.dnd.activeConfig.append(elm);
-          av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, source);
+      // Special case for gridCanvas
+      $(document).on('mouseup touchend', function (evt) {
+        'use strict';
+        // av.mouse.makeCursorDefault(); // want the mouse to be default after mouseup
+        document.body.style.cursor = "default";
+        if (dragging) { 
+          var x;
+          var y;
+          if(evt.type == 'touchend'){
+            var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
+            x = touch.pageX;
+            y = touch.pageY;
+          } else if (evt.type == 'mouseup') {
+            x = evt.clientX;
+            y = evt.clientY;
+          }
+          av.mouse.UpGridPos = [x, y];
+          var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
+          if (elements.indexOf("gridCanvas") != -1 && sourceIsFzOrgan) { // if gridCanvas is behind this mouse point
+            av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, source);
+            av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
+          } 
+  
+          if (elements.indexOf("gridCanvas") != -1 && sourceIsFzWorld) { 
+            var elm = elForGrid.cloneNode(true)
+            elm.id = 'w' + av.fzr.wNum++;
+            av.dnd.activeConfig.append(elm);
+            av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, source);
+          }
+
+          if (elements.indexOf("gridCanvas") != -1 && sourceIsAncestorBox) { 
+            av.dnd.insertToDOM(av.dnd.ancestorBox, elForGrid); // need to restore the dragged item from ancestorBox
+            av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, source);
+            av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
+          }
         }
-      }
-      dragging = false;
-      $(document).unbind('mousemove touchmove');
-    });
+        dragging = false;
+        $(document).unbind('mousemove touchmove');
+      });
+    }
 
     // change the color back (whatever it was before) of the most recently added dom object
     $('#' + mostRecentlyAddedDomid).css('background', 'inherit');
@@ -269,23 +299,23 @@ jQuery(document).ready(function($) {
   /*
   Select an item from the freezer using click
   */
-  var selectedId = '';
+  av.dnd.selectedId = '';
   $('.navColClass').on('click', function(e) { // allow click selection only if it's within the freezer
     document.body.style.cursor = "default"; // want the mouse to be default for click
     if (e.target) {
       var classList = e.target.className.split(" "); // yemd: e.target.className is a string
-      if (selectedId !== '' && e.target.id === selectedId) {
+      if (av.dnd.selectedId !== '' && e.target.id === av.dnd.selectedId) {
         $('#' + e.target.id).css('background', 'inherit');
-        selectedId = '';
+        av.dnd.selectedId = '';
       } 
-      else if (selectedId === '' && classList.indexOf('item') != -1) { // yemd: if the target is of class 'item' (aka draggable item)
+      else if (av.dnd.selectedId === '' && classList.indexOf('item') != -1) { // yemd: if the target is of class 'item' (aka draggable item)
         $('#' + e.target.id).css('background', 'rgb(189, 229, 245)');
-        selectedId = e.target.id;
+        av.dnd.selectedId = e.target.id;
       }
-      else if (selectedId != '' && classList.indexOf('item') != -1) { // if something is selected already and user selects another one
-        $('#' + selectedId).css('background', 'inherit');
+      else if (av.dnd.selectedId != '' && classList.indexOf('item') != -1) { // if something is selected already and user selects another one
+        $('#' + av.dnd.selectedId).css('background', 'inherit');
         $('#' + e.target.id).css('background', 'rgb(189, 229, 245)');
-        selectedId = e.target.id;
+        av.dnd.selectedId = e.target.id;
       }
     }
   });
@@ -432,10 +462,10 @@ jQuery(document).ready(function($) {
     var targetId = target.id;
 
     // if something is selected
-    if (undefined !== selectedId && '' !== selectedId) {
+    if (undefined !== av.dnd.selectedId && '' !== av.dnd.selectedId) {
       // clone the selected node
-      var el = $.map($('#' + selectedId), (value, key) => { return value })[0].cloneNode(true);
-      console.log('fzSection=', fzSection, '; target=', target, '; selectedId=', selectedId, '; type=', type);
+      var el = $.map($('#' + av.dnd.selectedId), (value, key) => { return value })[0].cloneNode(true);
+      console.log('fzSection=', fzSection, '; target=', target, '; av.dnd.selectedId=', av.dnd.selectedId, '; type=', type);
       var addedPopPage = false;
       var addedAnaPage = false;
       if ('fzOrgan' == fzSection && 'ancestorBox' == targetId) { 
@@ -452,10 +482,10 @@ jQuery(document).ready(function($) {
       }
   
       if (addedPopPage) av.grd.drawGridSetupFn('av.dnd.FzAddExperimentFn');
-      // yemd: reset the selectedId
+      // yemd: reset the av.dnd.selectedId
       $('#' + mostRecentlyAddedDomid).css('background', 'inherit'); // revert the background color of the most recently added dom object
-      $('#' + selectedId).css('background', 'inherit'); // selectedId is the id of the dom object from which the new object was copied from 
-      selectedId = '';
+      $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
+      av.dnd.selectedId = '';
     }
     // if nothing is selected
     else {
@@ -493,6 +523,10 @@ jQuery(document).ready(function($) {
     // give the new dom object a new dom id
     el.id = 'w' + av.fzr.wNum++; 
     mostRecentlyAddedDomid = el.id;
+    // add an entry to av.fzr.dir for this new dom id
+    av.fzr.dir[el.id] = dir;
+    // and vice versa
+    av.fzr.domid[dir].push(el.id);
     // insert element into target containerMap
     av.dnd.insert(target, el, 'w');
     // insert element into the target DOM
@@ -520,6 +554,10 @@ jQuery(document).ready(function($) {
     // give the new dom object a new dom id
     el.id = 'w' + av.fzr.wNum++;
     mostRecentlyAddedDomid = el.id;
+    // add an entry to av.fzr.dir for this new dom id
+    av.fzr.dir[el.id] = dir;
+    // and vice versa
+    av.fzr.domid[dir].push(el.id);
     // insert element into target containerMap
     av.dnd.insert(source, el, 'w');
     // insert element into DOM
@@ -582,6 +620,7 @@ jQuery(document).ready(function($) {
     // add an entry to av.fzr.dir for this new new dom id
     av.fzr.dir[el.id] = dir;
     // and vice versa
+    av.fzr.domid[dir] = [];
     av.fzr.domid[dir].push(el.id);
     // insert element into target containerMap
     av.dnd.insert(av.dnd.activeOrgan, el, 'g');
@@ -599,6 +638,9 @@ jQuery(document).ready(function($) {
     'use strict'
     av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent);
     if (av.debug.dnd) console.log('source', source.id);
+    if (source === av.dnd.ancestorBox) { // you don't want to remove it from ancestorBox, just wanna copy it; so put it back in
+      av.dnd.insertToDOM(source, el);
+    }
     // remove the existing configuration
     av.dnd.empty(av.dnd.activeOrgan);
     // get the data for the dragged organism
@@ -629,6 +671,8 @@ jQuery(document).ready(function($) {
     }
     if (source === av.dnd.ancestorBox) {
       var Ndx = av.parents.domid.indexOf(el.id);
+      console.log(av.parents.domid);
+      console.log(av.parents);
       av.fzr.actOrgan.name = av.parents.name[Ndx];
       av.fzr.actOrgan.genome = av.parents.genome[Ndx];
       if (av.debug.dnd) console.log('fzr', av.fzr, '; parents', av.parents, '; ndx', Ndx);
