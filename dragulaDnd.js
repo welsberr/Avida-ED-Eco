@@ -140,8 +140,8 @@ jQuery(document).ready(function($) {
   });
 
   dra.on('over', (el, container, source) => {
-    console.log('hi');
     if (av.dnd.accepts(el, container, source)) {
+      console.log('here');
       document.body.style.cursor = "copy";
     } else {
       document.body.style.cursor = "no-drop";
@@ -165,6 +165,7 @@ jQuery(document).ready(function($) {
       dra.cancel();
       return;
     }
+    console.log(target);
     // el, target, source are dom objects aka stuff you could 'target.id' to
     if ((target === av.dnd.gridCanvas || target === av.dnd.activeConfig || target === av.dnd.ancestorBox || target === av.dnd.trashCan) && av.grd.runState === 'started') {
       av.dom.newDishModalID.style.display = 'block'; // show the 'please save' modal
@@ -210,6 +211,7 @@ jQuery(document).ready(function($) {
       av.dnd.landOrganCanvas(el, target, source);
     }
     if (target === av.dnd.anlDndChart) {
+      console.log("here");
       av.dnd.landAnlDndChart(el, target, source);
     }
     if (target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2) {

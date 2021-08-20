@@ -520,6 +520,8 @@ av.ptd.ritePanelBtnFn = function () {
 
   av.grd.drawGridSetupFn(); // yemi: redraw the grid
   av.grd.popChartFn(); // yemi: redraw plotly graph
+  /* yemi: update organism canvas */
+  av.ind.updateOrgTrace();
 };
 
 av.ptd.lftPanelBtnFn = function () {
@@ -567,7 +569,9 @@ av.ptd.lftPanelBtnFn = function () {
   }
 
   av.grd.drawGridSetupFn(); // yemi: redraw the grid
-
+  av.anl.AnaChartFn(); // yemi: redraw analysis grid
+  /* yemi: update organism canvas */
+  av.ind.updateOrgTrace();
 };
 
 // if (av.dbg.flg.root) { console.log('Root: before Resize helpers'); }

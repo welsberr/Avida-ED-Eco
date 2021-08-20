@@ -2918,7 +2918,7 @@ require([
     if (av.dbg.flg.divsize) { console.log('AnaPlot: after plot in av.anl.anaChartInit'); }
 
     //console.log('layout=', av.dom.anlChrtSpace.layout);
-    av.dom.anlChrtSpace.style.visibility = 'hidden';
+    av.dom.anlChrtSpace.style.visibility = 'visible'; /* yemi: used to be 'hidden' */
   };
   // if (av.dbg.flg.root) { console.log('Root: before av.anl.anaChartInit called'); }
 
@@ -2932,7 +2932,7 @@ require([
         hasData = true;
     }
     if (!hasData)
-      av.dom.anlChrtSpace.style.visibility = 'hidden';
+      av.dom.anlChrtSpace.style.visibility = 'visible'; /* yemi: used to be hidden but it was buggy */
     else {
       av.dom.anlChrtSpace.style.visibility = 'visible';
       //if ('populationBlock' === av.ui.page && av.ui.popStatFlag && undefined !== av.anl.logFit[1]) {
