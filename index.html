@@ -5,7 +5,9 @@
     <title>Avida-ED 4</title>
     <meta charset='utf-8' />
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-    <!--yemi: import jQuery: Diane remove. jQuery is already added done differently due to dojo so Diane took out  -->
+    <!-- yemi: import jQuery: -->
+    <!-- diane noted that separate jquery scource for dragulaDnd.js because, -->
+    <!-- diane did not explain the require statement in avidaED.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js"></script> 
     <script type='text/javascript' src='lib/dojo-release-1.16.4/dojo/dojo.js'
@@ -43,18 +45,18 @@
     <style>
       @import 'themes/claro/document.css';
       @import 'themes/claro/claro.css';	
+      @import 'resize.css';      
       @import 'avidaED.css';
       @import 'avidaEdEco.css';
-      @import 'resize.css';
     </style>
   </head>
 
-  <body id='Avida-ED main display' class='claro'>
+  <body id='main_display' class='claro'>
 
     <span id="http://stackoverflow.com/questions/20828799/creating-a-splash-page-in-html5"></span>
     <div id='splash'>
       <div align='center'>
-        <h1 style='color:whitesmoke'>Avida-ED 4.0.03 Beta Testing is loading . . .</h1>
+        <h1 class='dfhd' style='style='font-size: 1.15rem; line-height: 1.15rem;'>Avida-ED 4.0.03 Beta Testing is loading . . .</h1>
         <img src='images/Avida-ED-icon.png' /><br />
         <img src='images/AvidaGrid.gif' />
       </div>
@@ -803,12 +805,9 @@
                     <div id='sugarNote'></div>
                     
                    <div id="sugarInsideWrapper">   
-                    <details id="not_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
-                    </details>
-                    <details id="nan_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
-                    </details>
-                    <details id="and_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
-                    </details>
+                    <details id="not_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'></details>
+                    <details id="nan_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'></details>
+                    <details id="and_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'></details>
 
                     <details id='orn_section' class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
                       <summary id='orn_summary' class='sgrSumCls'> 
@@ -856,7 +855,7 @@
                             <label><input id="orn_outflowHiNp" class='sgrOutflwHiNcls' type='text' onchange="av.sgr.outflowChange(this);">&nbsp;
                             <span id="orn_outflowHiText" class='sugOutflowLCls'></span></label>
                           </div>
-                          <div id="orn_chmstatHiTxt" class='sgrSum_grid-item chmsttSumCls'>
+                          <div id="orn_chmstatHiTxt" class='chmsttSumCls'>
                           </div>
                           <div id="orn_periodcheckboxHolder" class="periodGlobalCheck" onchange="av.sgr.eachSugarcheckboxHolderChange(this);">
                             <label><input id="orn_periodCheck" type='checkbox'> Periodic</label>
@@ -1083,18 +1082,12 @@
                       </div><span id="orn_detailsHolder_end" class="display_none"></span>
                     </details>
 
-                    <details id="oro_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
-                    </details>
-                    <details id="ant_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
-v                   </details>
-                    <details id="nor_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
-                    </details>
-                    <details id="xor_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
-                    </details>
-                    <details id="equ_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'>
-                    </details>
+                    <details id="oro_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'></details>
+                    <details id="ant_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'></details>
+                    <details id="nor_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'></details>
+                    <details id="xor_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'></details>
+                    <details id="equ_section" class='sgrAccordSectionCls' onclick='av.sgr.detailsToggle(this);'></details>
                     </div><span id="sugarInsideWrapper_end" class="display_none"></span>
-
                   </div><span id='sugarAccordion_end' class='display_none'></span>
 
                   <div id='sugarFooter' class='changeAllSugarsTogetherNoGlobalContainer'>
@@ -1220,7 +1213,9 @@ v                   </details>
 
             <div id='ex1setupBlock' class="labInfoClass labInfoFlex">
               <div class='ex1holder'>
-                <div class='ex1center' id='ex1notUse'><h1> Not in use Now</h1></div>
+                <div class='ex1center' id='ex1notUse'>
+                  <h1 class='dfhd' style='style='font-size: 1rem; line-height: 1rem;'> Not in use Now</h1>
+                </div>
               </div>
             </div> <span id='ex1setupBlock_end' class='display_none'></span>
 
@@ -1246,9 +1241,9 @@ v                   </details>
             <div id='orgTaskDataDiv'>
             <table id='orgTaskDataTable'>
               <tbody>
-                <tr>
+                <tr style='style='font-size: 1.1rem; line-height: 1.1rem;'>
                   <td>Function</td>
-                  <td>Times Performed</td>
+                  <td>Times<br>Performed</td>
                 </tr>
                 <tr>
                   <td><label id='notOrg'>0 NOT</label></td>
@@ -1291,6 +1286,7 @@ v                   </details>
             </table><span id='orgTaskDataTable_end' class='display_none'></span>
             </div>
             <div id='lowerOrgInfo'>
+              <div id='bitCanvasHolders';
               <p>Input Buffer</p>
               <canvas id='cpuBufferCnvs' class='orgStatCanvas15'></canvas>
               <p>Registers: AX, BX, CX</p>
@@ -1316,7 +1312,7 @@ v                   </details>
 
           <div id='orgSettings' class='orgSettingClass'>
             <div class='repeatMode'>
-            <h3>Repeatability Mode:</h3>
+            <h3 class='dfhd' style='style='font-size: 1.30rem; line-height: 1.30rem;'>Repeatability Mode:</h3>
               <input  type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganExperimentRadio'
                      intermediateChanges='false' name='child' checked value='orgExp' iconClass='dijitNoIcon'></button>
               <label id='OrganExperimentLabel'>Experimental (Natural Variation)</label>
@@ -1335,7 +1331,6 @@ v                   </details>
                 <div id='orgMuteSlide'></div>
               </div>
             </div>
-
           </div><span id='orgSettings_end' class='display_none'></span>
         </div><span id='orgInfoHolder_end' class='display_none'></span>
 

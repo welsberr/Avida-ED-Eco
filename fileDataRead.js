@@ -20,17 +20,17 @@
     }
 
     var names = [];
-    var domItems = $.map($(container), (value, key) => { return value })[0].children
+    var domItems = $.map($(container), (value, key) => { return value })[0].children;
     var lngth = domItems.length;
 
     // 'insertNodes' implementation
-    var domId = `test${testItemId}`
+    var domId = `test${testItemId}`;
     $(container).append(`<div class="item ${type}" id="${domId}"> ${name} </div>`);
     containerMap[container][domId] = {"name": name, "type": type};
 
     testItemId++;
     return domId;
-  }
+  };
 
   // makes a freezer item int the correct freezer sectionl 
   av.fio.addFzItem = function(dndSection, name, type, fileNum) {
@@ -365,7 +365,7 @@
     if (true) { console.log(from, 'called av.frd.updateSetup; dir=', dir); }
 
     var doctext = av.fzr.file[dir + '/avida.cfg'];
-    console.log('');
+    
     av.frd.avidaCFG2form(doctext, 'av.frd.updateSetup');
 
     doctext = av.fzr.file[dir + '/environment.cfg'];

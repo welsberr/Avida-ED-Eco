@@ -455,7 +455,7 @@
     var lngth = obj[av.ind.cycle].buffers.input.length;
     for (var ii = 0; ii < lngth; ii++) {
       av.ind.drawBitStr(av.ind.cpuBufferCtx, ii, obj[av.ind.cycle].buffers.input[ii], 'cpuBufferCtx');
-    }
+    };
     av.ind.drawBitStr(av.ind.cpuRegisterCtx, 0, obj[av.ind.cycle].registers['ax'], 'cpuRegisterCtx A');
     av.ind.drawBitStr(av.ind.cpuRegisterCtx, 1, obj[av.ind.cycle].registers['bx'], 'cpuRegisterCtx B');
     av.ind.drawBitStr(av.ind.cpuRegisterCtx, 2, obj[av.ind.cycle].registers['cx'], 'cpuRegisterCtx C');

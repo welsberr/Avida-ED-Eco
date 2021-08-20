@@ -1,7 +1,7 @@
 
  // this version uses grid box layout for major sections (toop, left side, main, right side)  
  // if (av.dbg.flg.root) { console.log('Root: avidaED.js at beginning of file on 2020_0111 @ 20:21'); };
- console.log('Root: avidaED.js at beginning of file on 2021_801_ Sat'); 
+ console.log('Root: avidaED.js at beginning of file on 2021_814_ Sat'); 
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
@@ -44,7 +44,7 @@
 //
 // The main function change from Avida-ED 3 to four is the addition of limited and gird (local) resources
 // Layout was changed on Population Page 
-// all files in tthe workspace now have a three letter sufix; *.txt was added to those missing a suffix
+// all files in the workspace now have a three letter sufix; *.txt was added to those missing a suffix
 // 
 // Avida-ED 4.0.0
 // - a basic verison works there will be an advanced mode as well, but it is not ready yet
@@ -932,26 +932,13 @@ require([
       + '\n' + av.debug.dTail;
   };
 
-  //********************************************************************************************************************
+  //----------------------------------------------------------------------------------------------------------------------
   // End of Error logging
   //********************************************************************************************************************
 
   //********************************************************************************************************************
-  // buttons in the Header Row
-  //********************************************************************************************s************************
-
-  // supposed to make the center section larger. does not work so button hidden
-    // document.getElementById('ritePanelButton').onclick = function () {
-    //   av.ptd.ritePanelButton();
-    //   console.log('in ritePanelButton.onclick');
-    // };
-    /* yemi: erased because it was interfering with my code */
-  //--------------------------------------------------------------------------------------- end ritePanelButton.onclick --
-
-  //----------------------------------------------------------------------------------------------------------------------
   // Menu Buttons handling
   //----------------------------------------------------------------------------------------------------------------------
-
 
   // if (av.dbg.flg.root) { console.log('Root: dijit test', dijit.byId('mnFlOpenDefaultWS')); }
 
@@ -1170,6 +1157,7 @@ require([
     console.log('av.pch =', av.pch);
     console.log('av.dom.popChart.data=', av.dom.popChart.data);
     console.log('av.anl =', av.anl);
+    console.log('containers = ', containers);
   };
 
   document.getElementById('mnDbThrowError').onclick = function () {
@@ -1182,13 +1170,6 @@ require([
     'use strict';
     av.debug.log += '\n -----------------------------------------------------------------------------------------------\n';
   };
-
-  /*
-   document.getElementById('mnDbLoadProtoType').onclick = function () {
-   'use strict';
-   //code to load the files from the freezer into the space
-   };
-   */
 
   //********************************************************************************************************************
   // end of menu buttons
@@ -2585,8 +2566,8 @@ require([
     /* results in 2% as a default */
     var muteDefault = (Math.pow(10, (muteSlideDefault / 400)) - 1).toFixed(1);
     var slides = $('#orgMuteSlide').slider({
-      orientation: "vertical",
-      range: 'min',   /*causes the left side of the scroll bar to be grey */
+      // orientation: "vertical",    // creates a vertical slide
+      range: 'min',                  //causes the left side of the scroll bar to be grey
       value: muteSlideDefault,
       min: 0.0,
       max: 802,
@@ -3057,31 +3038,35 @@ require([
 
   av.ui.setResourceComplexity(av.sgr.complexityLevel, 'last-things-done');
 
-  av.fwt.clearResourceConstants();
+  av.fwt.clearResourceConstants('Last_things_done');
 
   // Geometry is no longer a drop down. Now it is an opton in Supply Type; tiba delte before 2022
   // document.getElementById('allSugarGeometry').style.display = 'none';
   // document.getElementById('geometrySgr').style.display = 'none';
 
   // **************************************************************************************************************** */
-  //Resize tools might be called here or after "Last_things_done"
+  // Old Resize tools no longer in use. 
   // **************************************************************************************************************** */
 
-  var ro = new ResizeObserver(entries => {
-    //console.log('in ResizeObserver');
-    for (let entry of entries) {
-      const cr = entry.contentRect;
-      if (av.dbg.flg.dsz) { console.log(entry.target.id, `size wd, ht: ${cr.width}px  ${cr.height}px`); }
-      if (av.dbg.flg.dsz) { console.log(entry.target.id,'contntRect: ', cr); }
-      if (av.dbg.flg.dsz) { console.log(entry.target.id, 'size wd, ht:', cr.width-cr.left, cr.height-cr.top, 'might need to multiply left and top by two'); }
-    }
-  });
+  // av.ui.sizeHange = new ResizeObserver(entries => {
+  //   //console.log('in ResizeObserver');
+  //   for (let entry of entries) {
+  //     const cr = entry.contentRect;
+  //     if (av.dbg.flg.dsz) { console.log(entry.target.id, `size wd, ht: ${cr.width}px  ${cr.height}px`); }
+  //     if (av.dbg.flg.dsz) { console.log(entry.target.id,'contntRect: ', cr); }
+  //     if (av.dbg.flg.dsz) { console.log(entry.target.id, 'size wd, ht:', cr.width-cr.left, cr.height-cr.top, 'might need to multiply left and top by two'); }
+  //   }
+  // });
 
-  // Observe one or multiple elements
-  //ro.observe(document.querySelector('div'));
-  
-    
-  //ro.observe(document.querySelector('#gridHolder'));  // commented out on 2021_731 Sat
+  // // Example calls: Observe one or multiple elements
+  // av.ui.av.ui.sizeHange.observe(document.querySelector('div'));
+  // av.ui.sizeHange.observe(document.querySelector('#gridHolder'));  
+
+  // if (av.dbg.flg.root) { console.log('Root: before resize function'); }
+  //------------------------------------------------------------------------------------- $(window).resize(function () --
+  // $(window).resize(function () {
+  // console.log('Does trigger on resizing viewport');
+  // });
 
   // **************************************************************************************************************** */
   //                                          Useful Generic functions
@@ -3091,16 +3076,12 @@ require([
   Math.fmod = function (aa, bb) {
     return Number((aa - (Math.floor(aa / bb) * bb)).toPrecision(8));
   };
-  
-  //console.log('before resize function');
-  //does this need a timer function to delay response slightly so the page is not re-written as frequently when the
-  //page is changing sizes  ??
-  //----------------------------------------------------------------------------------------------------------------------
-  $(window).resize(function () {
-    //console.log('Does trigger on resize');
-    // av.ui.resizePopLayout('window.resize');    //does not work.
-  });
-});
+ 
+}); // end of require([ that contains all of the code that references the dom except dragulaDnd.js
+    // because diane did not explain the require statement used with the dojo library, 
+    // yemi inclosed dragulaDnd.js in jQuery(document).ready(function($) {
+    // so a separate src statement in index.js for jquery, rather than the one in [] of this require statement
+//=========================================================================================== end require([ statement ==
 
 //----------------------------------------------------------------------------------------------------------------------
   //on 2018_0823 this is where height gets messed up when loading the program.

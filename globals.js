@@ -5,7 +5,7 @@
 var av = av || {};  //incase av already exists
 
 //console.log('start of globals on 2021_310_04:22 Thurs');
-console.log('start of globals on 2021_801_Sun');
+console.log('start of globals on 2021_814_Sat');
 
 Number.prototype.pad = function(size) {
   var ss = String(this);
@@ -1549,3 +1549,4 @@ for (var ii = 0; ii < lngth; ii++) {
 // popStatsBlock: min wd = 364 no border. 
 // selOrgType: min wd = 164  (might make a tad smaller) includes 1 px border
 // popStats4grid: min wd = 176   (get left over)
+

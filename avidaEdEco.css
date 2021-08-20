@@ -133,7 +133,7 @@ html {
 .all3org{
   display: grid;
   grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
-  grid-template-columns: 240px 3px auto 3px 200px;    /* 250px */
+  grid-template-columns: 240px 3px auto 3px 220px;    /* 250px */
   grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
   height: 99vh;
@@ -201,6 +201,7 @@ html {
     width: 100%;
     min-width: 200px;
     background-color: inherit; /*mistyrose;*/
+    font-family: Tahoma, Trebuchet MS, sans-serif;
   }
   
 
@@ -631,6 +632,7 @@ html {
     flex-direction: column;
     height: 100%;
     overflow: auto;
+    font-family: Tahoma, Trebuchet MS, sans-serif;
   } /* contains: popInfoTabHolder & labInfoHolder */
 
   #popInfoTabHolder {
@@ -1099,7 +1101,7 @@ details summary {
   text-align: right;
   height: 100%;
   width: 96px;
-  /* background: yellow; */
+  background: yellow; 
 }
 
 
@@ -1107,7 +1109,7 @@ details summary {
   display: flex;
   justify-content: space-between;
   height: 23px;  width: 100%;
-  /* background: LightCyan;  */
+  background: LightCyan;  
 }
 .sgrLftSumCls { flex: 0 1 auto; }
 .sgrRitSumCls { flex: 0 1 auto; width: 96px; }
@@ -1123,6 +1125,8 @@ details summary {
   /* grid-area: sgrRitSumCls;    /* use if sgrSumCls has display: grid; 
 }
 */
+
+/*---------------------------------------------------------- sugar summary grid container classes for tsk_sumLftGrid--*/
 /* no longer in use, but need to keep until removed from javascript */
 .geometryCls{ grid-area:geometryCls; display: none; }
 
@@ -1137,13 +1141,17 @@ details summary {
 .periodTimGlobCls { grid-area: periodTimGlobCls; display: inline-block; }
 .initialGlobCls { grid-area: initialGlobCls; display: inline-block; }
 
-
-.grd-sgr-sum-adv-container {
+.grd-sgr-sum-adv-glb-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls sumFtTxtCls';
+  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls';
   justify-content: start; 
   width: 100%;
-  /* border: 1px solid blue;  */
+}
+.grd-sgr-sum-adv-glb-limited-container {
+  display: inline-grid;
+  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls initialGlobCls';
+  justify-content: start; 
+  width: 100%;
 }
 .grd-sgr-sum-adv-limited-container {
   display: grid;
@@ -1203,6 +1211,8 @@ details summary {
   justify-items: start;  justify-content: start; width: 100%;
   min-height: 23px;
 }
+/*------------------------------------------------------------------------ end sugar summary grid container classes --*/
+
 /*------------------------------------------------------------------------------------- sugar input class formatting --*/
 .sugPeriodNclass { width: 50px; height:13px; text-align:right; }
 .sugInitialNclass { width: 50px; height:13px; text-align:right; }
@@ -1380,7 +1390,7 @@ details summary {
 
 /* ----------------------------------------------------------------- Footer controls that change all tasks are here --*/
 /* background: inherit */
-#allSugarGeometry {display: none;}    /* probably need to delete this option
+#allSugarGeometry {display: none;}    /* probably need to delete this option */
 
 
 #sugarSetTitle { grid-area:setTitle; justify-self: right; background: inherit; font-size: 110%; }
@@ -1414,7 +1424,7 @@ details summary {
   display: grid;
   grid-template-areas: 'setTitle    setTitle        showHideSgr   detailDiv'
                        'geometrySgr regionLayoutSgr supplyTypeSlctSgr patternSgr'
-                       'geometryDiv regionLayoutDiv supplyTypeHolder patternDiv';
+                       'geometryDiv regionLayoutDiv supplyTypeHolder  patternDiv';
   justify-items: start;  justify-content: start; width: 100%;
   background: #DDD;   /* #AAA; is too dark now */    
 }
@@ -1688,6 +1698,8 @@ checkbox:focus {
     height: 1.6em;
   }
   .orgDetailClass{
+    font-size: 0.9rem; 
+    line-height: 0.9rem;
     width: 100%;
   }
   #orgTaskDataDiv{
@@ -1695,17 +1707,30 @@ checkbox:focus {
   }
   #lowerOrgInfo{
     width: 100%;
-    padding: 5px;    
+    padding: 5px;
+    background: lightcyan;
   }
   #orgTaskDataDiv {
     background:#DDD;    
     padding: 5px;
   }
+  #orgTaskDataTable { 
+    text-align:center;
+    width: 100%;
+  }
+  #orgTaskDataTable.td:first-child {
+    padding: 0.2rem;
+  }
+  #orgTaskDataTable.td:first-child {
+    padding: 0.2rem;
+  }
   #InstructionDetail {
-    min-width: 1px;
+    min-width: 160px;
     width: 100%; 
     height: auto;
   }
+  /* might re-write these as grid containers or flex boxes. */
+  /* or re-write them so they scale with the width of the right side bar */
   .orgStatCanvas15{
     width: 162px; 
     height: 17px; 
@@ -1756,8 +1781,8 @@ checkbox:focus {
   }
   
   #orgMuteSlide {
-  /* width:200px; */
-  height: 400px;
+  width:200px; 
+  /* height: 400px;  */
   display: block; 
   vertical-align: top; 
   padding: 20px auto;
@@ -2170,20 +2195,45 @@ label {
     background:#bab1ba;
   }
 
-  
-  /*---------------------------------------------------------------------------------------------------- Not in use --*/
-  
-    /*contains navigation column and pages (population, Organsims, Analysis)         No longer in use*/
-  .mainRowContainer { 
-    flex: 1 1 auto;          /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-    display: grid;
-    grid-template-areas: 'navColClass mainBlockHolder';
-    justify-items: stretch;
-    width: 100%;
-    height: 100%;
-    background: #F5F5F5; /* red; */
-    overflow:hidden;
-  }
+/*********************************************************************************************** end no longer in use */
 
+/************************************************************************************************************** notes */
+/* https://caniuse.com/ to look to see which browsers support a feature. 
 
+/* suggested standards (found in 2021, not used yet)
+/* https://javascript.plainenglish.io/19-simple-javascript-coding-standards-to-keep-your-code-clean-7422d6f9bc0
+
+/* Css variables. 
+/* https://www.freecodecamp.org/news/everything-you-need-to-know-about-css-variables-c74d922ea855/
+
+/* custom properties - I should find time to figure these out. 
+/* https://www.quirksmode.org/blog/archives/2021/05/two_options_for.html
+/*--------------------------------------------------------------- information about grid containers  or display: grid */
+/* https://learncssgrid.com/   //good info about how grid works
+
+/* https://css-tricks.com/snippets/css/complete-guide-grid/  //good info about how grid works
+
+/* https://cssgridgarden.com/ // game made to teach grid css
+
+/* https://gridbyexample.com/examples/
+
+/* https://cssgrid-generator.netlify.app/ .    //tool to make a simple repeated grid 
+
+/*-------------------------------------------------------------------------------------------------------- flex box --*/
+/* explains flex: in a way I might finally understand. 
+/* https://css-tricks.com/understanding-flex-grow-flex-shrink-and-flex-basis/ 
+
+/* width options. might need with flex:
+/* https://www.quirksmode.org/blog/archives/2021/04/fitcontent_and.html
+
+/*--------------------------------------------------------------------------------------------- useful css examples --*/
+
+/* makes fancy buttons https://www.bestcssbuttongenerator.com/#/17
+
+/* used to format details/summary
+/* from: https://stackoverflow.com/questions/51131818/how-to-vertically-align-detailss-arrow-with-summarys-content 
+
+/* use variables in css to convert px to rem
+/* https://codepen.io/andresgalante/pen/abOydOj?editors=1100
+/********************************************************************************************************** end notes */
 
