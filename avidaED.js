@@ -2727,6 +2727,7 @@ require([
   //------------------------------------------------------------------------------------------------- mnCnOrganismTrace --
   dijit.byId('mnCnOrganismTrace').on('Click', function () {
     av.post.addUser('Button: mnCnOrganismTrace');
+    console.log('control drop down menu clicked');
     av.mouse.traceSelected(av.dnd, av.fzr, av.grd);
     av.ui.mainBoxSwap('organismBlock');
     av.ind.organismCanvasHolderSize('mnCnOrganismTrace');

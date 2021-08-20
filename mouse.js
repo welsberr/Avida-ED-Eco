@@ -136,14 +136,21 @@
     //Get name of Mom that is in OrganCurrentNode
     var parent;
     var parentID = Object.keys(containerMap['#activeOrgan'])[0];
+    console.log(parentID);
     if (av.debug.mouse) console.log('parentID', parentID);
     if (undefined == parentID) parent = '';
     else parent = document.getElementById(parentID).textContent.trim();
     av.dnd.empty(av.dnd.activeOrgan);
     $('#activeOrgan').append(`<div class="item ${type}" id="${domid}"> ${parent + "_offspring"} </div>`);
     //Put name of offspring in OrganCurrentNode
-    var domid = 'g' + av.fzr.gNum;
+    var domid = 'g' + av.fzr.gNum++;
     var type = 'g';
+    var gdir = av.fzr.dir[parentID];
+    av.fzr.dir[domid] = gdir;
+    if (Object.keys(av.fzr.domid).indexOf(gdir) === -1) {
+      av.fzr.domid[gdir] = [];
+    }
+    av.fzr.domid[gdir].push(domid);
     containerMap['#activeOrgan'][domid] = {name: parent + "_offspring", type: type};
     av.fzr.actOrgan.actDomid = domid;
     av.fzr.actOrgan.name = parent + "_offspring";
