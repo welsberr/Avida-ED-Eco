@@ -96,7 +96,7 @@ jQuery(document).ready(function($) {
     if (target === source) {
       return true;
     }
-    if ((source === av.dnd.ancestorBox) && (target === av.dnd.organIcon || target === av.dnd.gridCanvas)) {
+    if ((source === av.dnd.ancestorBox) && (target === av.dnd.fzOrgan || target === av.dnd.organIcon || target === av.dnd.gridCanvas)) {
       return true;
     }
     if (source === av.dnd.activeConfig && (target === av.dnd.fzConfig || target === av.dnd.fzWorld)) {
@@ -221,6 +221,15 @@ jQuery(document).ready(function($) {
         av.dnd.landFzWorld(el, target, source);
       }
       if (target === av.dnd.fzOrgan) {
+        if (source === av.dnd.ancestorBox) {
+          var idx = el.className.split(" ").indexOf('gu-transit');
+          var newlist = el.className.split(" ");
+          newlist.splice(idx, 1);
+          el.className = newlist.join(' ');
+          av.dnd.insertToDOM(av.dnd.ancestorBox, el); // you don't want to remove the organism from the box, want to copy; by default dragula will remove 
+          console.log(el.id);
+          console.log(av.fzr);
+        }
         av.dnd.landFzOrgan(el, target, source); // I don't think it's getting called
       }
       if (target === av.dnd.organIcon) {
@@ -385,8 +394,9 @@ jQuery(document).ready(function($) {
           //update structure to hold freezer data for Organisms.
           var Ndx = av.parents.domid.indexOf(el.id); //Find index into parent structure
           gen = av.parents.genome[Ndx];
-          av.parents.removeParent(Ndx);
-          av.parents.placeAncestors();
+          // av.parents.removeParent(Ndx); /* yemd: not sure why we need to remove the parents when we drag it to fzOrgan*/
+          // console.log(av.parents);
+          // av.parents.placeAncestors();
           // need to remove organism from the Ancestor Box.
           // av.dnd.ancestorBox is dojo dnd copyonly to prevent loss of that organsim when the user clicks cancel. The user will
           // see the cancel as cancelling the dnd rather than canceling the rename.
