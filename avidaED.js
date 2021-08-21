@@ -1,7 +1,7 @@
 
  // this version uses grid box layout for major sections (toop, left side, main, right side)  
  // if (av.dbg.flg.root) { console.log('Root: avidaED.js at beginning of file on 2020_0111 @ 20:21'); };
- console.log('Root: avidaED.js at beginning of file on 2021_801_ Sat'); 
+ console.log('Root: avidaED.js at beginning of file on 2021_814_ Sat'); 
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
@@ -44,7 +44,7 @@
 //
 // The main function change from Avida-ED 3 to four is the addition of limited and gird (local) resources
 // Layout was changed on Population Page 
-// all files in tthe workspace now have a three letter sufix; *.txt was added to those missing a suffix
+// all files in the workspace now have a three letter sufix; *.txt was added to those missing a suffix
 // 
 // Avida-ED 4.0.0
 // - a basic verison works there will be an advanced mode as well, but it is not ready yet
@@ -160,7 +160,6 @@ require([
   //'lib/plotly.js',               //version  plotly_v1.44.3   as of 2018
   //'lib/plotly-v1.53.min.js',      //2020_0409 production
   'lib/plotly-v1.53.js',      //2020_0409 development
-  //'lib/dragula/dragula-v3.7.2.min.js',
 
   //'lib/jszip.min.js',        //older version. Not sure what version
   'lib/jszip-v2.6.1.js',        //need to update, but need to figure out update methods. tiba
@@ -186,7 +185,8 @@ require([
   'environment2UI.js',
   'sugar_ui.js',
   'reSizePageParts.js',
-  //'dragulaDnd.js',
+  //    <script type="text/javascript" src="reSizePageParts.js"></script>
+  'dragulaDnd.js',
   //'restartAvida.js',
   //'diagnosticconsole.js',
   'dojo/domReady!'
@@ -256,33 +256,28 @@ require([
   /* Yes they are globals, but they are defined based on the dom and
    when I've tried putting them in another file it does not work */
 
-  // yemd
-  // av.dnd.fzConfig = new dndSource('fzConfig', {
-  //   accept: ['b', 'c'], //b=both; c=config
-  //   copyOnly: true,
-  //   singular: true,
-  //   selfAccept: false
-  // });
+  av.dnd.fzConfig = new dndSource('fzConfig', {
+    accept: ['b', 'c'], //b=both; c=config
+    copyOnly: true,
+    singular: true,
+    selfAccept: false
+  });
   
   // if (av.dbg.flg.root) { console.log('Root: before fzOrgan'); }
-  
-  // yemd
-  // av.dnd.fzOrgan = new dndSource('fzOrgan', {
-  //   accept: ['g'], //g=genome
-  //   copyOnly: true,
-  //   singular: true,
-  //   selfAccept: false
-  // });
+  av.dnd.fzOrgan = new dndSource('fzOrgan', {
+    accept: ['g'], //g=genome
+    copyOnly: true,
+    singular: true,
+    selfAccept: false
+  });
   
   // if (av.dbg.flg.root) { console.log('Root: before fzWorld'); };
-  
-  // yemd
-  // av.dnd.fzWorld = new dndSource('fzWorld', {
-  //   accept: ['b', 'w'],   //b=both; w=world  //only after the population started running
-  //   singular: true,
-  //   copyOnly: true,
-  //   selfAccept: false
-  // });
+  av.dnd.fzWorld = new dndSource('fzWorld', {
+    accept: ['b', 'w'],   //b=both; w=world  //only after the population started running
+    singular: true,
+    copyOnly: true,
+    selfAccept: false
+  });
   
   // yemd
   // av.dnd.fzTdish = new dndSource('fzTdish', {
@@ -292,29 +287,21 @@ require([
   //   selfAccept: false
   // });
   
-  // yemd
-  // av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
+  av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
 
   // if (av.dbg.flg.root) { console.log('Root: before organIcon'); }
   av.dnd.organIcon = new dndTarget('organIcon', {accept: ['g'], selfAccept: false});
-  
-  // yemd
-  // av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
-  
-  // yemd
-  // av.dnd.gridCanvas = new dndTarget('gridCanvas', {accept: ['g']});
-  
-  // yemd
-  // av.dnd.trashCan = new dndSource('trashCan', {accept: ['c', 'g', 't', 'w'], singular: true});
+  av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
+  av.dnd.gridCanvas = new dndTarget('gridCanvas', {accept: ['g']});
+  av.dnd.trashCan = new dndSource('trashCan', {accept: ['c', 'g', 't', 'w'], singular: true});
   // if (av.dbg.flg.root) { console.log('Root: after trashCan'); }
 
-  // yemd
-  // av.dnd.activeConfig = new dndSource('activeConfig', {
-  //   accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
-  //   singular: true,
-  //   copyOnly: true,
-  //   selfAccept: false
-  // });
+  av.dnd.activeConfig = new dndSource('activeConfig', {
+    accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
+    singular: true,
+    copyOnly: true,
+    selfAccept: false
+  });
 
   // yemd
   // av.dnd.testConfig = new dndSource('testConfig', {
@@ -379,14 +366,13 @@ require([
   // I don't think I would have written it this way had I known the single event handler would not work, but I had
   // created the dojodnd.js file before I realized that I needed separate event handelers with the conditional.
 
-  // yemd
-  // av.dnd.activeConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
-  //   'use strict';
-  //   //console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id);
-  //   if ('activeConfig' === target.node.id) {
-  //     av.dnd.makeMove(source, nodes, target);
-  //   }
-  // });
+  av.dnd.activeConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
+    'use strict';
+    //console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id);
+    if ('activeConfig' === target.node.id) {
+      av.dnd.makeMove(source, nodes, target);
+    }
+  });
 
   // yemd
   // av.dnd.testConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
@@ -419,58 +405,54 @@ require([
   // Connect sections to sortDnD function
   // Section names: fcConfig, fzOrgan, fzWorld, fzTdish, fzMdish, fzRdish
 
-  // yemd
   // 2019-04-14: test dragging @default in, then back to freeezer with name change; sort appears to work.
-  // dojo.connect(av.dnd.fzConfig, "onDndDrop", function (source, nodes, copy, target) {
-  //   //This triggers for every dnd drop, not just those of fzConfig  
-  //   if ('fzConfig' === target.node.id) {
-  //     //console.log('fzConfig=', av.dnd.fzConfig);
-  //     //console.log('.childNodes=', av.dnd.fzConfig.childNodes);
-  //     //console.log('nodes=', nodes);
-  //     //console.log('; copy=', copy, '; target=', target);
-  //     //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
-  //     av.dnd.landFzConfig(source, nodes, target);  //needed as part of call to contextMenu
-  //     nodes.forEach(function (node) {
-  //       av.dnd.sortDnD('fzConfig');
-  //     });
-  //   }
-  // });
+  dojo.connect(av.dnd.fzConfig, "onDndDrop", function (source, nodes, copy, target) {
+    //This triggers for every dnd drop, not just those of fzConfig  
+    if ('fzConfig' === target.node.id) {
+      //console.log('fzConfig=', av.dnd.fzConfig);
+      //console.log('.childNodes=', av.dnd.fzConfig.childNodes);
+      //console.log('nodes=', nodes);
+      //console.log('; copy=', copy, '; target=', target);
+      //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
+      av.dnd.landFzConfig(source, nodes, target);  //needed as part of call to contextMenu
+      nodes.forEach(function (node) {
+        av.dnd.sortDnD('fzConfig');
+      });
+    }
+  });
 
   // 2019-04-14: test grabbing organisms, dropping in grid, then from setup textbox to freezer, appears to work
-  
-  // yemd
-  // dojo.connect(av.dnd.fzOrgan, "onDndDrop", function (source, nodes, copy, target) {
-  //   //This triggers for every dnd drop, not just those of fzOrgan
-  //   if ('fzOrgan' === target.node.id) {
-  //     //console.log('fzOrgan=', av.dnd.fzOrgan);
-  //     //console.log('.childNodes=', av.dnd.fzOrgan.childNodes);
-  //     console.log('nodes=', nodes);
-  //     av.dnd.landFzOrgan(source, nodes, target);
-  //     nodes.forEach(function (node) {
-  //       av.dnd.sortDnD('fzOrgan');
-  //     });
-  //   }
-  // });
+  dojo.connect(av.dnd.fzOrgan, "onDndDrop", function (source, nodes, copy, target) {
+    //This triggers for every dnd drop, not just those of fzOrgan
+    if ('fzOrgan' === target.node.id) {
+      //console.log('fzOrgan=', av.dnd.fzOrgan);
+      //console.log('.childNodes=', av.dnd.fzOrgan.childNodes);
+      console.log('nodes=', nodes);
+      av.dnd.landFzOrgan(source, nodes, target);
+      nodes.forEach(function (node) {
+        av.dnd.sortDnD('fzOrgan');
+      });
+    }
+  });
 
-  // yemd
-  // dojo.connect(av.dnd.fzWorld, "onDndDrop", function (source, nodes, copy, target) {
-  //   //This triggers for every dnd drop, not just those of fzWorld
-  //   if ('fzWorld' === target.node.id) {
-  //     var pkg = {};
-  //     av.ui.num = av.fzr.wNum;
-  //     pkg.source = source;
-  //     pkg.nodes = nodes;
-  //     pkg.copy = copy;
-  //     pkg.target = target;
-  //     av.dnd.landFzWorldFn(pkg);
-  //     nodes.forEach(function (node) {
-  //       av.dnd.sortDnD('fzWorld');
-  //     });
-  //     if (av.ui.num !== av.fzr.wNum) {
-  //       av.fwt.makeFzrWorld(av.ui.num, 'dojo.connect');
-  //     } //tiba need to check this
-  //   }
-  // });
+  dojo.connect(av.dnd.fzWorld, "onDndDrop", function (source, nodes, copy, target) {
+    //This triggers for every dnd drop, not just those of fzWorld
+    if ('fzWorld' === target.node.id) {
+      var pkg = {};
+      av.ui.num = av.fzr.wNum;
+      pkg.source = source;
+      pkg.nodes = nodes;
+      pkg.copy = copy;
+      pkg.target = target;
+      av.dnd.landFzWorldFn(pkg);
+      nodes.forEach(function (node) {
+        av.dnd.sortDnD('fzWorld');
+      });
+      if (av.ui.num !== av.fzr.wNum) {
+        av.fwt.makeFzrWorld(av.ui.num, 'dojo.connect');
+      } //tiba need to check this
+    }
+  });
 
   // yemd
   // av.dnd.fzTdish.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
@@ -498,31 +480,27 @@ require([
   });
 
   // if (av.dbg.flg.root) { console.log('Root: before av.dnd.ancestorBox'); }
-  
-  // yemd
-  // av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
-  //   if ('ancestorBox' === target.node.id) {
-  //     //console.log('ancestorBox=', target, av.dnd.ancestorBox);  //yes they are the same. could use in the above if statement.
-  //     av.dnd.makeMove(source, nodes, target);
-  //   }
-  // });
+  av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
+    if ('ancestorBox' === target.node.id) {
+      //console.log('ancestorBox=', target, av.dnd.ancestorBox);  //yes they are the same. could use in the above if statement.
+      av.dnd.makeMove(source, nodes, target);
+    }
+  });
 
-  // yemd
-  // av.dnd.ancestorBoTest.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
-  //   if ('ancestorBoTest' === target.node.id) {
-  //     av.dnd.makeMove(source, nodes, target);
-  //   }
-  // });
+  av.dnd.ancestorBoTest.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
+    if ('ancestorBoTest' === target.node.id) {
+      av.dnd.makeMove(source, nodes, target);
+    }
+  });
 
-  // yemd
-  // av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of gridCanvas
-  //   if ('gridCanvas' === target.node.id) {
-  //     av.dnd.landGridCanvas(source, nodes, target);
-  //     //console.log('before call av.grd.drawGridSetupFn');
-  //     av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
-  //     //console.log('in gridCanvas.on');
-  //   }
-  // });
+  av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of gridCanvas
+    if ('gridCanvas' === target.node.id) {
+      av.dnd.landGridCanvas(source, nodes, target);
+      //console.log('before call av.grd.drawGridSetupFn');
+      av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
+      //console.log('in gridCanvas.on');
+    }
+  });
 
   av.dnd.organIcon.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of organIcon
     //setTimeout(null,1000);
@@ -552,21 +530,20 @@ require([
     }
   });
 
-  // yemd
-  // av.dnd.trashCan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of trashCan
-  //   if ('trashCan' === target.node.id) {
-  //     var remove = {};
-  //     remove.type = '';
-  //     remove.dir = '';
-  //     if (av.debug.dnd) { console.log('trashCan: s, t', source, target); }
-  //     remove = av.dnd.landTrashCan(source, nodes, target);
-  //     if ('' !== remove.type) {
-  //       //removeFzrItem(av.fzr, remove.dir, remove.type);
-  //       remove.dir = av.fzr.dir[remove.domid];
-  //       av.fwt.removeFzrItem(remove.dir, remove.type);
-  //     }
-  //   }
-  // });
+  av.dnd.trashCan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of trashCan
+    if ('trashCan' === target.node.id) {
+      var remove = {};
+      remove.type = '';
+      remove.dir = '';
+      if (av.debug.dnd) { console.log('trashCan: s, t', source, target); }
+      remove = av.dnd.landTrashCan(source, nodes, target);
+      if ('' !== remove.type) {
+        //removeFzrItem(av.fzr, remove.dir, remove.type);
+        remove.dir = av.fzr.dir[remove.domid];
+        av.fwt.removeFzrItem(remove.dir, remove.type);
+      }
+    }
+  });
 
   av.dnd.anlDndChart.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of anlDndChart
     if ('anlDndChart' === target.node.id) {
@@ -676,9 +653,9 @@ require([
    });
    */
 
-  // $(document).on('pointerup', function (evt) {
-  //   av.mouse.UpGridPos = [evt.originalEvent.offsetX, evt.originalEvent.offsetY];
-  // });
+  $(document).on('pointerup', function (evt) {
+    av.mouse.UpGridPos = [evt.originalEvent.offsetX, evt.originalEvent.offsetY];
+  });
 
   //When mouse button is released, return cursor to default values
   $(document).on('mouseup', function (evt) {
@@ -689,8 +666,7 @@ require([
     if (av.debug.mouse)
       console.log('in mouseup target:', evt.target.id);
     av.mouse.makeCursorDefault();
-    // av.mouse.UpGridPos = [evt.offsetX, evt.offsetY];
-    console.log('in avidaEd.js mouseup:', av.mouse.UpGridPos);
+    av.mouse.UpGridPos = [evt.offsetX, evt.offsetY];
     if (av.debug.mouse)
       console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
     av.mouse.Dn = false;
@@ -727,13 +703,12 @@ require([
         av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
       }
       /*      else if ('fzOrgan' == target) {
-      //make_database_entry if using a database (av.fio, av.fzr);
-      }
-      */
+       //make_database_entry if using a database (av.fio, av.fzr);
+       }
+       */
     }
     av.mouse.Picked = '';
   });
-
   //********************************************************************************************************************
   // End of Mouse functions
   //********************************************************************************************************************
@@ -957,26 +932,13 @@ require([
       + '\n' + av.debug.dTail;
   };
 
-  //********************************************************************************************************************
+  //----------------------------------------------------------------------------------------------------------------------
   // End of Error logging
   //********************************************************************************************************************
 
   //********************************************************************************************************************
-  // buttons in the Header Row
-  //********************************************************************************************s************************
-
-  // supposed to make the center section larger. does not work so button hidden
-    // document.getElementById('ritePanelButton').onclick = function () {
-    //   av.ptd.ritePanelButton();
-    //   console.log('in ritePanelButton.onclick');
-    // };
-    /* yemi: erased because it was interfering with my code */
-  //--------------------------------------------------------------------------------------- end ritePanelButton.onclick --
-
-  //----------------------------------------------------------------------------------------------------------------------
   // Menu Buttons handling
   //----------------------------------------------------------------------------------------------------------------------
-
 
   // if (av.dbg.flg.root) { console.log('Root: dijit test', dijit.byId('mnFlOpenDefaultWS')); }
 
@@ -1195,6 +1157,7 @@ require([
     console.log('av.pch =', av.pch);
     console.log('av.dom.popChart.data=', av.dom.popChart.data);
     console.log('av.anl =', av.anl);
+    console.log('containers = ', containers);
   };
 
   document.getElementById('mnDbThrowError').onclick = function () {
@@ -1207,13 +1170,6 @@ require([
     'use strict';
     av.debug.log += '\n -----------------------------------------------------------------------------------------------\n';
   };
-
-  /*
-   document.getElementById('mnDbLoadProtoType').onclick = function () {
-   'use strict';
-   //code to load the files from the freezer into the space
-   };
-   */
 
   //********************************************************************************************************************
   // end of menu buttons
@@ -1461,17 +1417,15 @@ require([
     av.dom.showTextDebugButton.style.background = 'white';
     document.getElementById(showBlock).style.display = "flex";   //orgPageButtonHolder
     var showButton = showBlock.substring(0,showBlock.length-5)+'Button';
-    console.log('showButton=',showButton);
+    // console.log('showButton=',showButton);
     document.getElementById(showButton).style.background = '#DBDBDB'; 
-    //dijit.byId(showBlock).resize();
-    //document.getElementById(showBlock).resize();
 
     //disable menu options. they will be enabled when relevant canvas is drawn
     dijit.byId('mnFzOffspring').attr('disabled', true);
     dijit.byId('mnCnOffspringTrace').attr('disabled', true);
 
     // if the miniplot on the populaton page needs to be initiated call that funciton.
-    console.log('In: av.ui.mainBoxSwap; av.pch.needInit=', av.pch.needInit, '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));
+    // console.log('In: av.ui.mainBoxSwap; av.pch.needInit=', av.pch.needInit, '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));
     if ($(av.dom.popStatsBlock).is(":visible") && (av.pch.needInit) ) {
       av.grd.popChartInit('av.ui.mainBoxSwap');x
     };
@@ -1487,7 +1441,7 @@ require([
     }
     if ('organismBlock' == av.ui.page) {
       document.getElementById('allAvidaContainer').className = 'all3org';
-      console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
+      // console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
       av.dom.orgInfoHolder.style.display = 'block';
       if ('settings' == av.ui.orgInfo) {
         av.dom.orgSettings.style.display = 'block';
@@ -1496,7 +1450,6 @@ require([
       else {
         av.dom.orgSettings.style.display = 'none';
         av.dom.orgDetailID.style.display = 'block';
-        av.ui.adjustOrgInstructionTextAreaSize();
       };
 
       if (undefined !== av.traceObj) {
@@ -1537,24 +1490,13 @@ require([
     // * clientWidth = box + 2*padding - scrollbar_width    
     // * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
     // * csssWidth = box only nothing else
-    console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
-      av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
-      $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
-    if (av.dom.orgInfoHolder.clientWidth < av.ui.orgInfoHolderMinWidth) av.ui.orgInfoHolderWidth = av.ui.orgInfoHolderMinWidth;
+    // console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
+    //  av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
+    //   $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
+    // if (av.dom.orgInfoHolder.clientWidth < av.ui.orgInfoHolderMinWidth) av.ui.orgInfoHolderWidth = av.ui.orgInfoHolderMinWidth;
     av.ui.mainBoxSwap('organismBlock');
-    
-    // av.dom.orgInfoHolder.style.width = av.ui.orgInfoHolderWidth + 'px'; /* yemi: commented this out because it was messing with my resize code. let me know if this is causing problems */
-
-    console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
-      av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
-      $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
-    console.log('orgInfoHolder.paddding=', $("#orgInfoHolder").css('padding'));
-
-    /* yemi: just so that if screen resized in the other layout, you still update the organism page correctly */
     resizeOrganismPage();
-
-    /* yemi: organism trace persists; can be removed if undesired */
-    av.ind.updateOrgTrace()
+    av.ind.updateOrgTrace();       // yemi: organism trace persists; can be removed if undesired 
   };
 
   document.getElementById('analysisButton').onclick = function () {
@@ -1796,15 +1738,11 @@ require([
           };
         };
 
-        // yemi
-        // check if gridHolder is taller or wider
-        // if (av.dom.gridControlContainer.clientWidth < $("#gridHolder").height()) {
-        //   av.dom.scaleCanvas.width = av.dom.gridControlContainer.clientWidth - 22;  //works for canvas; need to use .style for divs
-        // } else {
-        //   av.dom.scaleCanvas.width = $("#gridHolder").height() - 22;  //the 22 was determined by trial and error and works on a mac
-        // }
-
-        av.dom.scaleCanvas.width = $("#sclCnvsHldr").width() + 0.5 * $("#sclCnvsHldr").width();
+        //check if gridHolder is taller or wider
+        if (av.dom.gridControlContainer.clientWidth < $("#gridHolder").height()) {
+          av.dom.scaleCanvas.width = (av.dom.gridControlContainer.clientWidth - 22);  //works for canvas; need to use .style for divs
+        } else
+          av.dom.scaleCanvas.width = $("#gridHolder").height() - 22;  //the 22 was determined by trial and error and works on a mac
 
         //figure out scale or legend
         if ('Ancestor Organism' == document.getElementById('colorMode').value) {
@@ -2617,17 +2555,7 @@ require([
   //********************************************************************************************************************
 
   //adjust instruction text size
-    // if (av.dbg.flg.root) { console.log('Root: before av.ui.adjustOrgInstructionTextAreaSize'); }
-  //---------------------------------------------------------------------------- av.ui.adjustOrgInstructionTextAreaSize --
-  av.ui.adjustOrgInstructionTextAreaSize = function() {
-    var height = ( $('#orgInfoHolder').innerHeight() - $('#orgDetailID').innerHeight() - 10 ) / 2;
-    //console.log('orgInfoHolder.ht=', $('#orgInfoHolder').innerHeight(), '; orgDetailID=',$('#orgDetailID').innerHeight(), '; height=', height);
-    av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
-    av.dom.ExecuteAbout.style.height = height + 'px';
-    av.dom.ExecuteJust.style.width = '100%';
-    av.dom.ExecuteAbout.style.width = '100%';    
-  };
-
+    // if (av.dbg.flg.root) { console.log('Root: before $(function slideOrganism()'); }
   //--------------------------------------------------------------------------------------------------- $ slideOrganism --
   $(function slideOrganism() {
     /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
@@ -2638,8 +2566,8 @@ require([
     /* results in 2% as a default */
     var muteDefault = (Math.pow(10, (muteSlideDefault / 400)) - 1).toFixed(1);
     var slides = $('#orgMuteSlide').slider({
-      orientation: "vertical",
-      range: 'min',   /*causes the left side of the scroll bar to be grey */
+      // orientation: "vertical",    // creates a vertical slide
+      range: 'min',                  //causes the left side of the scroll bar to be grey
       value: muteSlideDefault,
       min: 0.0,
       max: 802,
@@ -2749,10 +2677,10 @@ require([
 
   //set output Canvas Size
   av.ind.cpuOutputCnvsSize = function() {
-    console.log('output Wd Ht: $inner =', $('#cpuOutputCnvs').innerWidth(), $('#cpuOutputCnvs').innerHeight());
+    //console.log('output Wd Ht: $inner =', $('#cpuOutputCnvs').innerWidth(), $('#cpuOutputCnvs').innerHeight());
     av.ind.outputCanvasWd = $('#cpuOutputCnvs').innerWidth();
     av.ind.outputCanvasHt = $('#cpuOutputCnvs').innerHeight();
-    console.log('av.ind.outputCanvas=', av.ind.outputCanvasWd, av.ind.outputCanvasHt);
+    //console.log('av.ind.outputCanvas=', av.ind.outputCanvasWd, av.ind.outputCanvasHt);
   };
 
   av.ind.updateOrgTrace = function (from) {
@@ -3110,31 +3038,35 @@ require([
 
   av.ui.setResourceComplexity(av.sgr.complexityLevel, 'last-things-done');
 
-  av.fwt.clearResourceConstants();
+  av.fwt.clearResourceConstants('Last_things_done');
 
   // Geometry is no longer a drop down. Now it is an opton in Supply Type; tiba delte before 2022
   // document.getElementById('allSugarGeometry').style.display = 'none';
   // document.getElementById('geometrySgr').style.display = 'none';
 
   // **************************************************************************************************************** */
-  //Resize tools might be called here or after "Last_things_done"
+  // Old Resize tools no longer in use. 
   // **************************************************************************************************************** */
 
-  var ro = new ResizeObserver(entries => {
-    //console.log('in ResizeObserver');
-    for (let entry of entries) {
-      const cr = entry.contentRect;
-      if (av.dbg.flg.dsz) { console.log(entry.target.id, `size wd, ht: ${cr.width}px  ${cr.height}px`); }
-      if (av.dbg.flg.dsz) { console.log(entry.target.id,'contntRect: ', cr); }
-      if (av.dbg.flg.dsz) { console.log(entry.target.id, 'size wd, ht:', cr.width-cr.left, cr.height-cr.top, 'might need to multiply left and top by two'); }
-    }
-  });
+  // av.ui.sizeHange = new ResizeObserver(entries => {
+  //   //console.log('in ResizeObserver');
+  //   for (let entry of entries) {
+  //     const cr = entry.contentRect;
+  //     if (av.dbg.flg.dsz) { console.log(entry.target.id, `size wd, ht: ${cr.width}px  ${cr.height}px`); }
+  //     if (av.dbg.flg.dsz) { console.log(entry.target.id,'contntRect: ', cr); }
+  //     if (av.dbg.flg.dsz) { console.log(entry.target.id, 'size wd, ht:', cr.width-cr.left, cr.height-cr.top, 'might need to multiply left and top by two'); }
+  //   }
+  // });
 
-  // Observe one or multiple elements
-  //ro.observe(document.querySelector('div'));
-  
-    
-  //ro.observe(document.querySelector('#gridHolder'));  // commented out on 2021_731 Sat
+  // // Example calls: Observe one or multiple elements
+  // av.ui.av.ui.sizeHange.observe(document.querySelector('div'));
+  // av.ui.sizeHange.observe(document.querySelector('#gridHolder'));  
+
+  // if (av.dbg.flg.root) { console.log('Root: before resize function'); }
+  //------------------------------------------------------------------------------------- $(window).resize(function () --
+  // $(window).resize(function () {
+  // console.log('Does trigger on resizing viewport');
+  // });
 
   // **************************************************************************************************************** */
   //                                          Useful Generic functions
@@ -3144,16 +3076,12 @@ require([
   Math.fmod = function (aa, bb) {
     return Number((aa - (Math.floor(aa / bb) * bb)).toPrecision(8));
   };
-  
-  //console.log('before resize function');
-  //does this need a timer function to delay response slightly so the page is not re-written as frequently when the
-  //page is changing sizes  ??
-  //----------------------------------------------------------------------------------------------------------------------
-  $(window).resize(function () {
-    //console.log('Does trigger on resize');
-    // av.ui.resizePopLayout('window.resize');    //does not work.
-  });
-});
+ 
+}); // end of require([ that contains all of the code that references the dom except dragulaDnd.js
+    // because diane did not explain the require statement used with the dojo library, 
+    // yemi inclosed dragulaDnd.js in jQuery(document).ready(function($) {
+    // so a separate src statement in index.js for jquery, rather than the one in [] of this require statement
+//=========================================================================================== end require([ statement ==
 
 //----------------------------------------------------------------------------------------------------------------------
   //on 2018_0823 this is where height gets messed up when loading the program.

@@ -38,14 +38,14 @@
     av.ind.cpuBufferCtx = av.dom.cpuBuffer.getContext('2d');
     av.ind.cpuBufferCtx.canvas.width = $('#cpuBufferCnvs').innerWidth();   // in pixels
     av.ind.cpuBufferCtx.canvas.height = $('#cpuBufferCnvs').innerHeight();  // in pixels
-    console.log('inputBuffer w, h=', $('#cpuBufferCnvs').innerWidth(), $('#cpuBufferCnvs').innerHeight(), '; iputcanvas.w, h=', av.ind.cpuBufferCtx.canvas.width, av.ind.cpuBufferCtx.canvas.height);
+    ///console.log('inputBuffer w, h=', $('#cpuBufferCnvs').innerWidth(), $('#cpuBufferCnvs').innerHeight(), '; iputcanvas.w, h=', av.ind.cpuBufferCtx.canvas.width, av.ind.cpuBufferCtx.canvas.height);
     av.ind.cpuBufferCtx.translate(0.5, 0.5);
     
     av.dom.cpuRegister = document.getElementById('cpuRegisterCnvs');
     av.ind.cpuRegisterCtx = av.dom.cpuRegister.getContext('2d');
     av.ind.cpuRegisterCtx.canvas.width = $('#cpuRegisterCnvs').innerWidth();   // in pixels
     av.ind.cpuRegisterCtx.canvas.height = $('#cpuRegisterCnvs').innerHeight();  // in pixels
-    console.log('register w, h =', av.ind.cpuRegisterCtx.canvas.width, av.ind.cpuRegisterCtx.canvas.height, '; dom.width=', av.dom.cpuRegister.width, av.dom.cpuRegister.style.width, av.dom.cpuRegister.clientWidth, av.dom.cpuRegister.offsetWidth, av.dom.cpuRegister.scrollWidth);
+    //console.log('register w, h =', av.ind.cpuRegisterCtx.canvas.width, av.ind.cpuRegisterCtx.canvas.height, '; dom.width=', av.dom.cpuRegister.width, av.dom.cpuRegister.style.width, av.dom.cpuRegister.clientWidth, av.dom.cpuRegister.offsetWidth, av.dom.cpuRegister.scrollWidth);
     av.ind.cpuRegisterCtx.translate(0.5, 0.5);
 
     av.dom.cpuStackA = document.getElementById('cpuStackAcnvs');
@@ -70,7 +70,7 @@
     av.ind.ctx.translate(0.5, 0.5);  //makes a crisper image  http://stackoverflow.com/questions/4261090/html5-canvas-and-anti-aliasing
     //av.ind.timeLineCanvas = document.getElementById('timeLine');
     //av.ind.tLctx = av.ind.timeLineCanvas.getContext('2d');
-    console.log('output = ', cpuOutputCnvs);
+    //console.log('output = ', cpuOutputCnvs);
 
   };
 
@@ -455,7 +455,7 @@
     var lngth = obj[av.ind.cycle].buffers.input.length;
     for (var ii = 0; ii < lngth; ii++) {
       av.ind.drawBitStr(av.ind.cpuBufferCtx, ii, obj[av.ind.cycle].buffers.input[ii], 'cpuBufferCtx');
-    }
+    };
     av.ind.drawBitStr(av.ind.cpuRegisterCtx, 0, obj[av.ind.cycle].registers['ax'], 'cpuRegisterCtx A');
     av.ind.drawBitStr(av.ind.cpuRegisterCtx, 1, obj[av.ind.cycle].registers['bx'], 'cpuRegisterCtx B');
     av.ind.drawBitStr(av.ind.cpuRegisterCtx, 2, obj[av.ind.cycle].registers['cx'], 'cpuRegisterCtx C');

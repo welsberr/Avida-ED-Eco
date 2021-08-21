@@ -30,6 +30,8 @@
  * [1] http://www.w3.org/TR/CSS21/cascade.html#cascade
  */
 
+* { margin: 0; padding: 0; }
+
 html, body {
   height: 100%;
   width: 100%;
@@ -61,12 +63,56 @@ ul {
   font-family: Tahoma, Trebuchet MS, sans-serif;
 }
 
-h2, h3 {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  margin-left: 10px;
+/* Trying get headers back to default values
+/* this did not work I wanted to change for all headers inside the main div. 
+#allAvidaContainer h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
   font-family: Tahoma, Trebuchet MS, sans-serif;
 }
+
+
+/* trying classe to get headers back to to what they should be 
+   hdf# classes were over written by .claro in document.css
+*/
+.dfhd {
+  display: block;
+  font-weight: bold;
+  margin: 0rem;
+  padding: 0rem;
+  font-family: Tahoma, Trebuchet MS, sans-serif;
+  margin-block-start: 0rem;
+  margin-block-end: 0rem;
+  margin-inline-start: 0rem;
+  margin-inline-end: 0rem;
+  /* border: 1px solid black; */
+} 
+.hdf1 { font-size: 2.00rem; }
+.hdf2 { font-size: 1.85rem;}
+.hdf3 { font-size: 1.60rem; }
+.hdf4 { font-size: 1.45rem; }
+.hdf5 { font-size: 1.30rem; }
+.hdf6 { font-size: 1.15rem; }
+
+/* font size from w3schools
+.hdf1 { font-size: 2.00rem; }    style='font-size: 2.00rem; line-height: 2.00rem; font-weight: 700; margin: 0rem;'
+.hdf2 { font-size: 1.50rem; }    style='font-size: 1.85rem; line-height: 1.85rem; font-weight: 600; margin: 0rem;'
+.hdf3 { font-size: 1.17rem; }    style='font-size: 1.60rem; line-height: 1.60rem; font-weight: 500; '
+.hdf4 { font-size: 1.00rem; }    style='font-size: 1.45rem; line-height: 1.45rem; font-weight: 400; '
+.hdf5 { font-size: 0.83rem; }    style='font-size: 1.30rem; line-height: 1.30rem; font-weight: 300; '
+.hdf6 { font-size: 0.67rem; }    style='font-size: 1.15rem; line-height: 1.15rem; font-weight: 200; '
+
+examples
+  <div id="headerSizeTest">
+    <h1 class='dfhd hdf1' style='font-size: 2.00rem; line-height: 2.00rem; font-weight: 700; margin: 0rem;'>Header 1</h1>
+    <h2 class='dfhd hdf2' style='font-size: 1.85rem; line-height: 1.85rem; font-weight: 600; margin: 0rem;'>Header 2</h2>
+    <h3 class='dfhd hdf3' style='font-size: 1.60rem; line-height: 1.60rem; font-weight: 500;'>Header 3</h3>
+    <h4 class='dfhd hdf4' style='font-size: 1.45rem; line-height: 1.45rem; font-weight: 400;'>Header 4</h4>
+    <h5 class='dfhd hdf5' style='font-size: 1.30rem; line-height: 1.30rem; font-weight: 300;'>Header 5</h5>
+    <h6 class='dfhd hdf6' style='font-size: 1.15rem; line-height: 1.15rem; font-weight: 200;'>Header 6</h6>
+  </div>
+*/
 
 textarea {
   outline: none;
