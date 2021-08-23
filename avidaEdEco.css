@@ -633,7 +633,7 @@ html {
     display: flex;
     flex-direction: column;
     height: 100%;
-    overflow: auto;
+    /* overflow: auto; */
   } /* contains: popInfoTabHolder & labInfoHolder */
 
   #popInfoTabHolder {
@@ -1100,7 +1100,8 @@ details summary {
   grid-area: tskRewardCls;
   text-align: right;
   height: 100%;
-  width: 96px;
+  /* width: 96px; */
+  overflow: auto;
   /* background: yellow; */
 }
 
@@ -1112,7 +1113,7 @@ details summary {
   /* background: LightCyan;  */
 }
 .sgrLftSumCls { flex: 0 1 auto; }
-.sgrRitSumCls { flex: 0 1 auto; width: 96px; }
+.sgrRitSumCls { flex: 0 1 auto; width: 96px; overflow: auto;}
 
 /*  This works fine, but his not needed. 
 .sgrRitSumCls { 
