@@ -700,6 +700,7 @@ require([
     // after everything, reset cursor
     document.body.style.cursor = "default";
     av.mouse.Dn = false;
+    console.log(containerMap);
 
     // --------- process if something picked to dnd ------------------
     if ('parent' == av.mouse.Picked) {
