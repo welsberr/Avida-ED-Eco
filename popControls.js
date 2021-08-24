@@ -447,7 +447,7 @@
     if (null != fzName) {
       //insert new item into the freezer.
       var type = 'g'
-      var domid = `${type}${av.fzr.gNum}`
+      var domid = `dom_${type}${av.fzr.gNum}`
       $(container).append(`<div class="item ${type}" id="${domid}"> ${fzName} </div>`)
       containerMap[container][domid] = {"name": fzName, "type": type};
       av.fzr.dir[domid] = 'g' + av.fzr.gNum;
@@ -474,7 +474,7 @@
       fzName = av.dnd.getUniqueFzrName(av.dnd.fzConfig, fzName);
       if (null != fzName) {
         var type = 'c'
-        var domid = `${type}${av.fzr.cNum}`
+        var domid = `dom_${type}${av.fzr.cNum}`
         
         $(container).append(`<div class="item ${type}" id="${domid}"> ${fzName} </div>`)
         containerMap[container][domid] = {"name": fzName, "type": type};
@@ -504,7 +504,7 @@
       fzName = av.dnd.getUniqueFzrName(av.dnd.fzWorld, fzName);
       if (null != fzName) {
         var type = 'w'
-        var domid = `${type}${av.fzr.wNum}`
+        var domid = `dom_${type}${av.fzr.wNum}`
         $(container).append(`<div class="item ${type}" id="${domid}"> ${fzName} </div>`)
         containerMap[container][domid] = {"name": fzName, "type": type};
         av.fzr.dir[domid] = 'w'+ av.fzr.wNum;

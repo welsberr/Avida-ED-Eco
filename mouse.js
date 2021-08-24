@@ -225,7 +225,7 @@
     if (Object.keys(containerMap).indexOf(container) === -1) {
       containerMap[container] = {};
     }
-    var domid = 'g' + av.fzr.gNum;
+    var domid = 'dom_g' + av.fzr.gNum;
     var type = 'g';
     $(container).append(`<div class="item ${type}" id="${domid}"> ${av.grd.kidName} </div>`);
     containerMap[container][domid] = {'name': av.grd.kidName , 'type': 'g'};
@@ -288,7 +288,7 @@
         av.post.addUser('Froze kid = ' + avName);
         var gdir =  'g' + av.fzr.gNum;
         var type = 'g';
-        var domid = gdir;
+        var domid = 'dom_' + gdir;
         var container = '#' + av.dnd.fzOrgan.id;
         var mapItems = Object.keys(containerMap[container]);
 

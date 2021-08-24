@@ -847,9 +847,10 @@ jQuery(document).ready(function($) {
     var str = '';
     // get the data for the dragged element
     var dir = av.fzr.dir[el.id];
-    // give a new id to the new dom object 
-    if (el.id[0] === 'c') el.id = 'dom_c' + av.fzr.cNum++;
-    else if (el.id[0] === 'w') el.id = 'dom_w' + av.fzr.wNum++;
+    // give a new id to the new dom object depending on the type
+    var classList = el.className.split(" ");
+    if (classList.indexOf('c') != -1) el.id = 'dom_c' + av.fzr.cNum++;
+    else if (classList.indexOf('w') != -1) el.id = 'dom_w' + av.fzr.wNum++;
     else el.id = 'dom_t' + av.fzr.tNum++;
 
     mostRecentlyAddedDomid = el.id;
@@ -983,7 +984,7 @@ jQuery(document).ready(function($) {
   };
 
   av.dnd.loadDefaultConfigFn = function (from) {
-    el = $.map($("#dom_c0"), (value, key) => { return value })[0];
+    el = $.map($("#dom_c0"), (value, key) => { return value })[0].cloneNode(true);
     av.dnd.landActiveConfig(el, av.dnd.activeConfig, av.dnd.fzConfig);
   };
 

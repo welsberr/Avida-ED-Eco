@@ -14,9 +14,6 @@
     // example 'container' input format: '.className' or '#id'
     'use strict';
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
-    console.log(container);
-    console.log(name);
-    console.log(type);
     if (container !== undefined) {
       // if the container is not yet in the containerMap, add an entry
       if (Object.keys(containerMap).indexOf(container) === -1) {
@@ -24,8 +21,6 @@
       }
       // 'insertNodes' implementation
       var domid = `dom_${type}${fileNum}`
-      console.log(fileNum);
-      console.log(domid);
       $(container).append(`<div class="item ${type}" id="${domid}"> ${name} </div>`);
       containerMap[container][domid] = {"name": name, "type": type};
       if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', containerMap[container][domid]);
@@ -146,9 +141,9 @@
   */
       case 't':
         // yemd
-        // domid = av.fio.addFzItem(av.dnd.fzTdish, name, type, num);
-        // if ('dndSection is undefined' === domid) console.log('av.dnd.fzTdish is undefined');
-        // if (av.fzr.tNum < Number(num)) {av.fzr.tNum = Number(num); } 
+        domid = av.fio.addFzItem(av.dnd.fzTdish, name, type, num);
+        if ('dndSection is undefined' === domid) console.log('av.dnd.fzTdish is undefined');
+        if (av.fzr.tNum < Number(num)) {av.fzr.tNum = Number(num); } 
         break;
       case 'w':
         // yemd
@@ -160,6 +155,7 @@
     av.fzr.file[av.fio.anID] = name;
     av.fzr.domid[dir] = domid;
     av.fzr.dir[domid] = dir;
+    console.log(av.fzr);
   };
 
   /*------------------------------------------------------------------------------------ av.frd.add2multiDishFromFile --*/
@@ -372,7 +368,6 @@
   av.frd.updateSetup = function(from) {
     'use strict';
     var dir = av.fzr.actConfig.dir;
-    console.log(dir);
     // av.dbg.flg.frd
     if (true) { console.log(from, 'called av.frd.updateSetup; dir=', dir); }
 
@@ -920,7 +915,7 @@
       // av.dnd.ancestorBox.insertNodes(false, [{data: av.parents.name[ii], type: ['g']}]);
 
       //Add organism to av.dnd.ancestorBox in settings.
-      var domid = 'g' + av.fzr.gNum;
+      var domid = 'dom_g' + av.fzr.gNum;
       var type = 'g';
       var container = '#' + av.dnd.ancestorBox.id;
       // var domid = av.dnd.insertNode(container, stuff.nam[kk], type);
