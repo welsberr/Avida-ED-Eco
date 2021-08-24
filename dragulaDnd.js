@@ -1272,6 +1272,38 @@ jQuery(document).ready(function($) {
   };
 
   /*
+  Helper For Sorting Things (need to be worked on)
+  */
+  
+  // based on https://stackoverflow.com/questions/27529727/sorta-b-does-not-work-in-dojo-dnd-source
+  av.dnd.sortDnD = function (dndSection) {
+    // Input: dndSection = the text of the class os the Dojo DnD section with elements to be sorted
+    // e.g., var dndSection = 'fzOrgan'; sortDnD(dndSection);
+    // actually full class name is ".element dojoDndItem" to query
+    // console.log('inside sortDnD');
+    //dojo.query(".element",  dojo.byId(dndSection)).sort(
+    dojo.query(".dojoDndItem", dndSection).sort(
+      function (a, b) {
+        var aih = a.innerHTML.toString().toLowerCase();
+        var bih = b.innerHTML.toString().toLowerCase();
+        return (aih == bih ? 0 : (aih > bih ? 1 : -1));
+      }
+    ).forEach(// fire bug debugging cursor move to this section
+      function (a, idx) {
+        dojo.byId(dndSection).insertBefore(a, dojo.byId(dndSection).childNodes[idx]);
+      });
+  };
+
+  // 2019-04-14: Untested.
+  dojo.connect(av.dnd.fzTdish, "onDndDrop", function (source, nodes, copy, target) {
+    if ('fzTdish' === target.node.id) {
+      nodes.forEach(function (node) {
+        av.dnd.sortDnD('fzTdish');
+      });
+    }
+  });
+
+  /*
   Helpers For Touch Screens
   */
   controlMovement();

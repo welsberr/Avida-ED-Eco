@@ -35,61 +35,6 @@
     }
   };
 
-  // yemd
-  // makes a freezer item int the correct freezer sectionl 
-  // av.fio.addFzItem = function(dndSection, name, type, fileNum) {
-  //   'use strict';
-  //   var domid;
-  //   if (undefined !== dndSection) {
-  //     //var items = av.dnd.getAllItems(av.dnd.activeOrgan);
-  //     //console.log('name=',name,'; items=',items);
-  //     //var nodes = dndSection.getAllNodes();
-  //     //console.log('name=',name,'; nodes=',nodes); 
-  //     var names = [];
-  //     var domItems = Object.keys(dndSection.map);
-  //     var lngth = domItems.length;
-
-  //     // creates a dojo dom element that represents the freezer item. 
-  //     dndSection.insertNodes(false, [{data: name, type: [type]}]);
-  //     dndSection.sync();
-  //     var mapItems = Object.keys(dndSection.map);
-  //     domid = mapItems[mapItems.length - 1];
-
-  //     //var domID = av.dnd.getDomId(configName, target);
-
-  //     if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', dndSection.node.id);
-  //     //console.log('fileNum', fileNum, '; name', name, '; Section', dndSection.node.id, '; type', type);
-
-  //     //create a right av.mouse-click context menu for the item just created.
-  //     if (0 < fileNum) {
-  //       av.dnd.contextMenu(dndSection, domid, 'av.fio.addFzItem');
-  //     }
-  //     return domid;
-  //   }
-  //   else {
-  //     //console.log('dndSection=', dndSection, '; name=', name, '; type=', type, '; fileNum=', fileNum);
-  //     return 'dndSection is undefined';
-  //   }
-  // };
-
-  /*------------------------------------------------------------------------------------------ av.fio.setActiveConfig --*/
-  /* yemd
-  av.fio.setActiveConfig = function(dndSection, name, type){
-    'use strict';
-    if (av.dbg.flg.frd) { console.log('name=', name); }
-    av.dnd.activeConfig.selectAll().deleteSelectedNodes();
-    av.dnd.activeConfig.insertNodes(false, [{data: name, type: [type]}]);
-    av.dnd.activeConfig.sync();
-    var mapItems = Object.keys(dndSection.map);
-    av.fzr.actConfig.fzDomid = mapItems[mapItems.length - 1];  //domid from freezer. not sure if this is used.
-    mapItems = Object.keys(av.dnd.activeConfig.map);
-    av.fzr.actConfig.actDomid = mapItems[0];    //domid from active config.  this is used in changing cursor shape
-    av.fzr.actConfig.name = name;
-    av.fzr.actConfig.type = type;
-    return av.fzr.actConfig.actDomid;
-  };
-  */
-
   /*-------------------------------------------------------------------------------------- av.frd.add2freezerFromFile --*/
   av.frd.add2freezerFromFile = function (loadConfigFlag, from) {
     'use strict';
@@ -108,7 +53,6 @@
 
     switch (type) {
       case 'c':
-        // yemd
         domid = av.fio.addFzItem(av.dnd.fzConfig, name, type, num);
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzConfig is undefined');
         if (av.fzr.cNum < Number(num)) {av.fzr.cNum = Number(num); }
@@ -116,7 +60,6 @@
         //if (0 == num && loadConfigFlag) {var ConfigActiveDomID = av.fio.setActiveConfig(av.dnd.activeConfig, name, 'b');}
         break;
       case 'g':
-        // yemd
         domid = av.fio.addFzItem(av.dnd.fzOrgan, name, type, num);
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzOrgan is undefined');
         if (av.fzr.gNum < Number(num)) {av.fzr.gNum = Number(num); }
@@ -139,13 +82,11 @@
         break;
   */
       case 't':
-        // yemd
         domid = av.fio.addFzItem(av.dnd.fzTdish, name, type, num);
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzTdish is undefined');
         if (av.fzr.tNum < Number(num)) {av.fzr.tNum = Number(num); } 
         break;
       case 'w':
-        // yemd
         domid = av.fio.addFzItem(av.dnd.fzWorld, name, type, num);
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzWorld is undefined');
         if (av.fzr.wNum < Number(num)) {av.fzr.wNum = Number(num); }
@@ -909,9 +850,6 @@
       av.parents.injected[ii] = false;
       //console.log('Dads', list[ii]);
 
-      // yemd
-      // av.dnd.ancestorBox.insertNodes(false, [{data: av.parents.name[ii], type: ['g']}]);
-
       //Add organism to av.dnd.ancestorBox in settings.
       var domid = 'dom_g' + av.fzr.gNum;
       var type = 'g';
@@ -933,7 +871,6 @@
         containerMap[container][domid].type = 'g';
       }
 
-      // yemd
       av.parents.domid.push(domid);
       av.fzr.gNum++;
       console.log(containerMap);

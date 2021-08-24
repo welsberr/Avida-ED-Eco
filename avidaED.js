@@ -186,7 +186,6 @@ require([
   'environment2UI.js',
   'sugar_ui.js',
   'reSizePageParts.js',
-  //'dragulaDnd.js',
   //'restartAvida.js',
   //'diagnosticconsole.js',
   'dojo/domReady!'
@@ -224,6 +223,7 @@ require([
   // * The files included in script tags in AvidaED.html cannot access the dom. They contain global
   // * variables and functions that are independent of the dom
   // *
+
   /********************************************************************************************************************/
   // Splash Screen code stopped when ready message from Avida
   /********************************************************************************************************************/
@@ -247,103 +247,6 @@ require([
   av.dom.load();
   av.dom.initilizeDigitData();
   av.dom.initilizeAnalizePage(); 
-
-
-  // if (av.dbg.flg.root) { console.log('Root: before dnd definitions'); };
-  /********************************************************************************************************************/
-  /******************************************* Dojo Drag N Drop Initialization ****************************************/
-  /********************************************************************************************************************/
-  /* Yes they are globals, but they are defined based on the dom and
-   when I've tried putting them in another file it does not work */
-
-  // yemd
-  // av.dnd.fzConfig = new dndSource('fzConfig', {
-  //   accept: ['b', 'c'], //b=both; c=config
-  //   copyOnly: true,
-  //   singular: true,
-  //   selfAccept: false
-  // });
-  
-  // if (av.dbg.flg.root) { console.log('Root: before fzOrgan'); }
-  
-  // yemd
-  // av.dnd.fzOrgan = new dndSource('fzOrgan', {
-  //   accept: ['g'], //g=genome
-  //   copyOnly: true,
-  //   singular: true,
-  //   selfAccept: false
-  // });
-  
-  // if (av.dbg.flg.root) { console.log('Root: before fzWorld'); };
-  
-  // yemd
-  // av.dnd.fzWorld = new dndSource('fzWorld', {
-  //   accept: ['b', 'w'],   //b=both; w=world  //only after the population started running
-  //   singular: true,
-  //   copyOnly: true,
-  //   selfAccept: false
-  // });
-  
-  // yemd
-  // av.dnd.fzTdish = new dndSource('fzTdish', {
-  //   accept: ['b', 't'], //b=both; w=world  //test dishes
-  //   singular: true,
-  //   copyOnly: true,
-  //   selfAccept: false
-  // });
-  
-  // yemd
-  // av.dnd.ancestorBoTest = new dndSource('ancestorBoTest', {accept: ['g'], copyOnly: true, selfAccept: false});
-
-  // yemd
-  // if (av.dbg.flg.root) { console.log('Root: before organIcon'); }
-  // av.dnd.organIcon = new dndTarget('organIcon', {accept: ['g'], selfAccept: false});
-  
-  // yemd
-  // av.dnd.ancestorBox = new dndSource('ancestorBox', {accept: ['g'], copyOnly: true, selfAccept: false});
-  
-  // yemd
-  // av.dnd.gridCanvas = new dndTarget('gridCanvas', {accept: ['g']});
-  
-  // yemd
-  // av.dnd.trashCan = new dndSource('trashCan', {accept: ['c', 'g', 't', 'w'], singular: true});
-  // if (av.dbg.flg.root) { console.log('Root: after trashCan'); }
-
-  // yemd
-  // av.dnd.activeConfig = new dndSource('activeConfig', {
-  //   accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
-  //   singular: true,
-  //   copyOnly: true,
-  //   selfAccept: false
-  // });
-
-  // yemd
-  // av.dnd.testConfig = new dndSource('testConfig', {
-  //   accept: ['b', 'c', 't', 'w'], //b-both; c-configuration; w-world (populated dish); t-test
-  //   singular: true,
-  //   copyOnly: true,
-  //   selfAccept: false
-  // });
-
-  // if (av.dbg.flg.root) { console.log('Root: before activeOrgan'); }
-  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
-  
-  // yemd
-  // av.dnd.activeOrgan = new dndSource('activeOrgan', {
-  //   accept: ['g'],
-  //   singular: true,
-  //   copyOnly: true,
-  //   selfAccept: false
-  // });
-  // av.dnd.organCanvas = new dndSource('organCanvas', {accept: ['g'], singular: true, selfAccept: false});
-  //Targets only accept object, source can do both
-  
-  // yemd
-  // av.dnd.anlDndChart = new dndTarget('anlDndChart', {accept: ['w'], singular: true});
-  // av.dnd.popDish0 = new dndTarget('popDish0', {accept: ['w'], singular: true});
-  // av.dnd.popDish1 = new dndTarget('popDish1', {accept: ['w'], singular: true});
-  // av.dnd.popDish2 = new dndTarget('popDish2', {accept: ['w'], singular: true});
-
   av.parents.clearParentsFn();
 
   //**************************************************************************************************
@@ -373,281 +276,14 @@ require([
     av.msg.readMsg(ee);
   };  // in file messaging.js
 
-  // if (av.dbg.flg.root) { console.log('Root: before dnd triggers'); }
   //*******************************************************************************************************************
-  //       Dojo Dnd drop function - triggers for all dojo dnd drop events
+  // Dojo DND functions - defined in dragulaDnd.js
   //*******************************************************************************************************************
-  // Dojo DndDrop function triggers for drops in all locations (target or source). However not all the information is
-  // available unless the correct source/target name is in the event call. I had one event handler with calls to the
-  // different functions based on the target.node.id, but that did not work, for not all the information was available.
-  // It looks like it is there based on console.logging just the taret, but trying to access subdata results in a null.
-  // I don't think I would have written it this way had I known the single event handler would not work, but I had
-  // created the dojodnd.js file before I realized that I needed separate event handelers with the conditional.
 
-  // yemd
-  // av.dnd.activeConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
-  //   'use strict';
-  //   //console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id);
-  //   if ('activeConfig' === target.node.id) {
-  //     av.dnd.makeMove(source, nodes, target);
-  //   }
-  // });
 
-  // yemd
-  // av.dnd.testConfig.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
-  //   'use strict';
-  //   //console.log('s=', source.node.id, '; n=',nodes, '; c=', copy, '; t=', target.node.id);
-  //   if ('testConfig' === target.node.id) {
-  //     av.dnd.makeMove(source, nodes, target);
-  //   }
-  // });
-
-  // based on https://stackoverflow.com/questions/27529727/sorta-b-does-not-work-in-dojo-dnd-source
-  av.dnd.sortDnD = function (dndSection) {
-    // Input: dndSection = the text of the class os the Dojo DnD section with elements to be sorted
-    // e.g., var dndSection = 'fzOrgan'; sortDnD(dndSection);
-    // actually full class name is ".element dojoDndItem" to query
-    // console.log('inside sortDnD');
-    //dojo.query(".element",  dojo.byId(dndSection)).sort(
-    dojo.query(".dojoDndItem", dndSection).sort(
-      function (a, b) {
-        var aih = a.innerHTML.toString().toLowerCase();
-        var bih = b.innerHTML.toString().toLowerCase();
-        return (aih == bih ? 0 : (aih > bih ? 1 : -1));
-      }
-    ).forEach(// fire bug debugging cursor move to this section
-      function (a, idx) {
-        dojo.byId(dndSection).insertBefore(a, dojo.byId(dndSection).childNodes[idx]);
-      });
-  };
-
-  // Connect sections to sortDnD function
-  // Section names: fcConfig, fzOrgan, fzWorld, fzTdish, fzMdish, fzRdish
-
-  // yemd
-  // 2019-04-14: test dragging @default in, then back to freeezer with name change; sort appears to work.
-  // dojo.connect(av.dnd.fzConfig, "onDndDrop", function (source, nodes, copy, target) {
-  //   //This triggers for every dnd drop, not just those of fzConfig  
-  //   if ('fzConfig' === target.node.id) {
-  //     //console.log('fzConfig=', av.dnd.fzConfig);
-  //     //console.log('.childNodes=', av.dnd.fzConfig.childNodes);
-  //     //console.log('nodes=', nodes);
-  //     //console.log('; copy=', copy, '; target=', target);
-  //     //console.log('av.dnd.fzOrgan=', av.dnd.fzOrgan);
-  //     av.dnd.landFzConfig(source, nodes, target);  //needed as part of call to contextMenu
-  //     nodes.forEach(function (node) {
-  //       av.dnd.sortDnD('fzConfig');
-  //     });
-  //   }
-  // });
-
-  // 2019-04-14: test grabbing organisms, dropping in grid, then from setup textbox to freezer, appears to work
-  
-  // yemd
-  // dojo.connect(av.dnd.fzOrgan, "onDndDrop", function (source, nodes, copy, target) {
-  //   //This triggers for every dnd drop, not just those of fzOrgan
-  //   if ('fzOrgan' === target.node.id) {
-  //     //console.log('fzOrgan=', av.dnd.fzOrgan);
-  //     //console.log('.childNodes=', av.dnd.fzOrgan.childNodes);
-  //     console.log('nodes=', nodes);
-  //     av.dnd.landFzOrgan(source, nodes, target);
-  //     nodes.forEach(function (node) {
-  //       av.dnd.sortDnD('fzOrgan');
-  //     });
-  //   }
-  // });
-
-  // yemd
-  // dojo.connect(av.dnd.fzWorld, "onDndDrop", function (source, nodes, copy, target) {
-  //   //This triggers for every dnd drop, not just those of fzWorld
-  //   if ('fzWorld' === target.node.id) {
-  //     var pkg = {};
-  //     av.ui.num = av.fzr.wNum;
-  //     pkg.source = source;
-  //     pkg.nodes = nodes;
-  //     pkg.copy = copy;
-  //     pkg.target = target;
-  //     av.dnd.landFzWorldFn(pkg);
-  //     nodes.forEach(function (node) {
-  //       av.dnd.sortDnD('fzWorld');
-  //     });
-  //     if (av.ui.num !== av.fzr.wNum) {
-  //       av.fwt.makeFzrWorld(av.ui.num, 'dojo.connect');
-  //     } //tiba need to check this
-  //   }
-  // });
-
-  // yemd
-  // av.dnd.fzTdish.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
-  //   if ('fzTdish' === target.node.id) {
-  //     var pkg = {};
-  //     av.ui.num = av.fzr.wNum;
-  //     pkg.source = source;
-  //     pkg.nodes = nodes;
-  //     pkg.copy = copy;
-  //     pkg.target = target;
-  //     av.dnd.landfzTdishFn(pkg);
-  //     if (av.ui.num !== av.fzr.wNum) {
-  //       av.fwt.makeFzrWorld(av.ui.num, 'av.dnd.fzTdish.on');
-  //     } //tiba need to check this
-  //   }
-  // });
-
-  // 2019-04-14: Untested.
-  dojo.connect(av.dnd.fzTdish, "onDndDrop", function (source, nodes, copy, target) {
-    if ('fzTdish' === target.node.id) {
-      nodes.forEach(function (node) {
-        av.dnd.sortDnD('fzTdish');
-      });
-    }
-  });
-
-  // if (av.dbg.flg.root) { console.log('Root: before av.dnd.ancestorBox'); }
-  
-  // yemd
-  // av.dnd.ancestorBox.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
-  //   if ('ancestorBox' === target.node.id) {
-  //     //console.log('ancestorBox=', target, av.dnd.ancestorBox);  //yes they are the same. could use in the above if statement.
-  //     av.dnd.makeMove(source, nodes, target);
-  //   }
-  // });
-
-  // yemd
-  // av.dnd.ancestorBoTest.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of ancestorBox
-  //   if ('ancestorBoTest' === target.node.id) {
-  //     av.dnd.makeMove(source, nodes, target);
-  //   }
-  // });
-
-  // yemd
-  // av.dnd.gridCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of gridCanvas
-  //   if ('gridCanvas' === target.node.id) {
-  //     av.dnd.landGridCanvas(source, nodes, target);
-  //     //console.log('before call av.grd.drawGridSetupFn');
-  //     av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
-  //     //console.log('in gridCanvas.on');
-  //   }
-  // });
-
-  // yemd
-  // av.dnd.organIcon.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of organIcon
-  //   //setTimeout(null,1000);
-  //   console.log('organIcon');
-  //   if ('organIcon' === target.node.id) {
-  //     if (av.debug.dnd) { console.log('landOrganIcon: s, t', source, target); }
-  //     av.dnd.landOrganIcon(source, nodes, target);
-  //     //Change to Organism Page
-  //     av.ui.mainBoxSwap('organismBlock');
-  //     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-  //   }
-  // });
-
-  // yemd
-  // av.dnd.activeOrgan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeOrgan
-  //   if ('activeOrgan' === target.node.id) {
-  //     if (av.debug.dnd) { console.log('activeOrgan: s, t', source, target); }
-  //     av.dnd.makeMove(source, nodes, target);
-  //     //av.dnd.landActiveOrgan(source, nodes, target);
-  //     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-  //   }
-  // });
-
-  // yemd
-  // av.dnd.organCanvas.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of organCanvas
-  //   if ('organCanvas' === target.node.id) {
-  //     if (av.debug.dnd) { console.log('landorganCanvas: s, t', source, target); }
-  //     av.dnd.landorganCanvas(source, nodes, target);
-  //     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-  //   }
-  // });
-
-  // yemd
-  // av.dnd.trashCan.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of trashCan
-  //   if ('trashCan' === target.node.id) {
-  //     var remove = {};
-  //     remove.type = '';
-  //     remove.dir = '';
-  //     if (av.debug.dnd) { console.log('trashCan: s, t', source, target); }
-  //     remove = av.dnd.landTrashCan(source, nodes, target);
-  //     if ('' !== remove.type) {
-  //       //removeFzrItem(av.fzr, remove.dir, remove.type);
-  //       remove.dir = av.fzr.dir[remove.domid];
-  //       av.fwt.removeFzrItem(remove.dir, remove.type);
-  //     }
-  //   }
-  // });
-
-  // yemd
-  // av.dnd.anlDndChart.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of anlDndChart
-  //   if ('anlDndChart' === target.node.id) {
-  //     if (av.debug.dnd) { console.log('anlDndChart: s, t', source, target); }
-  //     av.dnd.landAnlDndChart(av.dnd, source, nodes, target);
-  //     av.anl.AnaChartFn();
-  //   }
-  // });
-
-  // av.dnd.popDish0.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of popDish0
-  //   if ('popDish0' === target.node.id) {
-  //     if (av.debug.dnd) { console.log('popDish0: s, t', source, target); }
-  //     av.dnd.landpopDish0(av.dnd, source, nodes, target);
-  //     av.anl.AnaChartFn();
-  //   }
-  // });
-
-  // av.dnd.popDish1.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of popDish1
-  //   if ('popDish1' === target.node.id) {
-  //     if (av.debug.dnd) { console.log('popDish1: s, t', source, target); }
-  //     av.dnd.landpopDish1(av.dnd, source, nodes, target);
-  //     av.anl.AnaChartFn();
-  //   }
-  // });
-
-  // av.dnd.popDish2.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of popDish2
-  //   if ('popDish2' === target.node.id) {
-  //     if (av.debug.dnd) { console.log('popDish2: s, t', source, target); }
-  //     av.dnd.landpopDish2(av.dnd, source, nodes, target);
-  //     av.anl.AnaChartFn();
-  //   }
-  // });
-
-  // av.dnd.popDish0.on('DndDrop', function (source, nodes, copy, target) {//This triggers for every dnd drop, not just those of activeConfig
-  //   //The following cases should never happen as they are defined as 'target' not as 'source' dnd types.
-  //   // The code is here in case the dnd type is changed to 'source'
-  //   switch (source.node.id) {
-  //     case 'popDish0':
-  //       av.post.addUser('DnD: delete_from: popDish0?');
-  //       av.anl.wrld[0].left = [];       //remove lines from population 1
-  //       av.anl.wrld[0].right = [];
-  //       av.anl.AnaChartFn();
-  //       break;
-  //     case 'popDish1':
-  //       av.post.addUser('DnD: delete_from: popDish1?');
-  //       av.anl.wrld[1].left = [];       //remove lines from population 2
-  //       av.anl.wrld[1].right = [];
-  //       av.anl.AnaChartFn();
-  //       break;
-  //     case 'popDish2':
-  //       av.post.addUser('DnD: delete_from: popDish2?');
-  //       av.anl.wrld[2].left = [];       //remove lines from population 3
-  //       av.anl.wrld[2].right = [];
-  //       av.anl.AnaChartFn();
-  //       break;
-  //   }
-  // });
-
-  /*  //kept only as an example of how to programatically add data to a dnd container
-   av.dnd.fzWorld.insertNodes(false, [
-   {data: 'm2w30u1000nand', type: ['w']},
-   {data: 'm2w30u1000not', type: ['w']}
-   ]);
-  */
-
-  //----------------------------------------------------------------------------------------------------------------------
-  //                                    End of dojo based DND triggered functions
-  //----------------------------------------------------------------------------------------------------------------------
-  //--------------------------------------------------------------------------------------------------------------------
-  //    mouse DND functions
-  //--------------------------------------------------------------------------------------------------------------------
+  //*******************************************************************************************************************
+  // Mouse DND functions
+  //*******************************************************************************************************************
 
   //mouse click started on Organism Canvas - only offspring can be selected if present
   $(document.getElementById('organCanvas')).on('mousedown', function (evt) {
@@ -669,27 +305,6 @@ require([
     av.mouse.downGridCanvasFn(evt);
   });
 
-  //mouse move anywhere on screen - not currently in use.
-  /*  $(document.getElementById('gridCanvas')).on('mousemove', function handler (evt) {
-   //$(document).on('mousemove', function handler(evt) { //needed so cursor changes shape
-   //console.log('gd move');
-   //document.getElementById('gridCanvas').style.cursor = 'copy';
-   //document.getElementById('trashCan').style.cursor = 'copy';
-   //console.log('av.mouseMove cursor GT', document.getElementById('gridCanvas').style.cursor, dom.byId('trashCan').style.cursor);
-   //if (av.debug.mouse) console.log('________________________________av.mousemove');
-   if (!av.mouse.nearly([evt.offsetX, evt.offsetY], av.mouse.DnGridPos)) {
-   //if (av.debug.mouse) console.log('________________________________');
-   //if (av.debug.mouse) console.log('gd draging');
-   if (av.mouse.Dn) av.mouse.Drag = true;
-   }
-   $(document).off('av.mousemove', handler);
-   });
-   */
-
-  // $(document).on('pointerup', function (evt) {
-  //   av.mouse.UpGridPos = [evt.originalEvent.offsetX, evt.originalEvent.offsetY];
-  // });
-
   //When mouse button is released, return cursor to default values
   $(document).on('mouseup touchend', function (evt) {
     'use strict';
@@ -700,7 +315,6 @@ require([
     // after everything, reset cursor
     document.body.style.cursor = "default";
     av.mouse.Dn = false;
-    console.log(containerMap);
 
     // --------- process if something picked to dnd ------------------
     if ('parent' == av.mouse.Picked) {
@@ -743,13 +357,8 @@ require([
   });
 
   //********************************************************************************************************************
-  // End of Mouse functions
-  //********************************************************************************************************************
-
-  //--------------------------------------------------------------------------------------------------------------------
   // Remind user if they might need to save their workspace
-  //--------------------------------------------------------------------------------------------------------------------
-
+  //********************************************************************************************************************
   window.onbeforeunload = function (event) {
   console.log('window.onbeforeunload: av.ui.sendEmailFlag =', av.ui.sendEmailFlag, '; av.fzr.saveState = ', av.fzr.saveState);
     if (!av.ui.sendEmailFlag) {
@@ -965,27 +574,9 @@ require([
       + '\n' + av.debug.dTail;
   };
 
-  //********************************************************************************************************************
-  // End of Error logging
-  //********************************************************************************************************************
-
-  //********************************************************************************************************************
-  // buttons in the Header Row
-  //********************************************************************************************s************************
-
-  // supposed to make the center section larger. does not work so button hidden
-    // document.getElementById('ritePanelButton').onclick = function () {
-    //   av.ptd.ritePanelButton();
-    //   console.log('in ritePanelButton.onclick');
-    // };
-    /* yemi: erased because it was interfering with my code */
-  //--------------------------------------------------------------------------------------- end ritePanelButton.onclick --
-
-  //----------------------------------------------------------------------------------------------------------------------
+  //**********************************************************************************************************************
   // Menu Buttons handling
-  //----------------------------------------------------------------------------------------------------------------------
-
-
+  //**********************************************************************************************************************
   // if (av.dbg.flg.root) { console.log('Root: dijit test', dijit.byId('mnFlOpenDefaultWS')); }
 
   // if (av.dbg.flg.root) { console.log('Root: before mnFlOpenDefaultWS'); }
@@ -1122,11 +713,9 @@ require([
   };
 
   // if (av.dbg.flg.root) { console.log('Root: before Help drop down menu'); }
-  //--------------------------------------------------------------------------------------------------------------------
+  //********************************************************************************************************************
   // Help Drop down menu buttons
-  //--------------------------------------------------------------------------------------------------------------------
-
-  // onclick='av.ui.aboutAvidaED'
+  //********************************************************************************************************************
   av.ui.aboutAvidaED = function(from) {
     av.post.addUser('Button: display About Avida-ED from:', from);
     document.getElementById('aboutAvidaED_ModalID').style.display = 'block';
@@ -1216,19 +805,8 @@ require([
     av.debug.log += '\n -----------------------------------------------------------------------------------------------\n';
   };
 
-  /*
-   document.getElementById('mnDbLoadProtoType').onclick = function () {
-   'use strict';
-   //code to load the files from the freezer into the space
-   };
-   */
-
   //********************************************************************************************************************
-  // end of menu buttons
-  //********************************************************************************************************************
-
-  //********************************************************************************************************************
-  // Pop up Buttons    Modals 
+  // Pop up Buttons Modals 
   //********************************************************************************************************************
   // some drop down menu  buttons are in here as they open pop ups. 
 
@@ -1243,7 +821,6 @@ require([
   };
 
   /******************************************* New Button and new Dialog **********************************************/
-
   //av.dom.newDishDiscard not in avidaEdEco.html
   av.dom.newDishDiscard.onclick = function () {
     av.post.addUser('Button: newDishDiscard');
@@ -1443,13 +1020,8 @@ require([
       av.ptd.FrConfigFn('restartAvidaFrzConfig');
     };
 
-
   //********************************************************************************************************************
-  // End of Pop up boxes
-  //********************************************************************************************************************
-
-  //********************************************************************************************************************
-  // main Page button scripts
+  // Main Page button scripts
   //********************************************************************************************************************
 
   //The style display: 'none' cannnot be used in the html during the initial load as the dijits won't work right
@@ -1694,16 +1266,13 @@ require([
     }
   };
   // ------- end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
-  //********************************************************************************************************************
-  // End main button scripts
-  //********************************************************************************************************************
 
   //----------------------------------------------------------------------------------------------------------------------
   //                                             Population page Buttons
   //----------------------------------------------------------------------------------------------------------------------
 
   //--------------------------------------------------------------------------------------------------------------------
-  ///   Map Grid buttons - New  Run/Pause Freeze
+  /// Map Grid buttons - New  Run/Pause Freeze
   //--------------------------------------------------------------------------------------------------------------------
 
   //process the run/Stop Button - a separate function is used so it can be flipped if the message to avida is not successful.
@@ -1761,7 +1330,7 @@ require([
   //********************************************************************************************************************
 
   // *******************************************************************************************************************
-  //                                      Pouplation Page
+  //                                      Population Page
   // *******************************************************************************************************************
   //                                      Draw Population Grid
   // *******************************************************************************************************************

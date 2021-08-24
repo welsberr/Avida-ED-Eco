@@ -14,15 +14,6 @@ var dojo = dojo || {};
 
 //---------------------------------------------------------------------------------------------- av.dnd.getAllItems --*/
 
-// yemd
-// av.dnd.getAllItems = function (source) {
-//   'use strict';
-//   var items = source.getAllNodes().map(function (node) {
-//     return source.getItem(node.id);
-//   });
-//   return items;
-// };
-
 //------------------------------------------------------------------------------------------------- av.dnd.getDomId ----
 av.dnd.getDomId = function (name, target){
   'use strict';
