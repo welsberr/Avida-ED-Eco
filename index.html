@@ -834,7 +834,7 @@
                               <option id="orn_none" value='none'>None</option>
                               <option id="orn_unlimited" value='unlimited' selected=''>Unlimited</option>
                               <option id="orn_limited" value="limited">Limited</option>
-                              <option id="orn_chemo" value="combo">Chemo</option>
+                              <option id="orn_chemo" value="chemo">Chemo</option>
                               <option id="orn_combo" value="combo">Combo</option>
                             </select>
                           </div>
@@ -842,7 +842,7 @@
                             <select id="ornWsupplyTypeSlct" onchange="av.sgr.supplyChange(this);">
                               <option id="ornWnone" value='none'>None</option>
                               <option id="ornWunlimited" value='unlimited' selected=''>Unlimited</option>
-                              <option id="ornWLimited" value="limited">Limited</option>
+                              <option id="ornWLimited" value="limited2">Limited</option>
                               <option id="orn_chemostat" class="optChemo" disabled value='chemostat'>Chemostat</option>
                               <option id="orn_debugTyp" value="debug" disabled>debug</option>
                              </select>
@@ -1309,31 +1309,29 @@
               </div>
             </div>
           </div><span id='orgDetailID_end' class='display_none'></span>
-
-          <div id='orgSettings' class='orgSettingClass'>
-            <div class='repeatMode'>
-            <h3 class='dfhd' style='style='font-size: 1.30rem; line-height: 1.30rem;'>Repeatability Mode:</h3>
-              <input  type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganExperimentRadio'
-                     intermediateChanges='false' name='child' checked value='orgExp' iconClass='dijitNoIcon'></button>
-              <label id='OrganExperimentLabel'>Experimental (Natural Variation)</label>
-              <br/>
-              <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganDemoRadio'
-                     intermediateChanges='false' name='child' value='orgDemo' iconClass='dijitNoIcon'></button>
-              <label id='OrganDemoLabel'>Demo (forces exact replay)</label>
-            </div>
-            <div class='muteOrgHolder'>
-              <div id='muteOrgTextHolder'>
-                <div class='lftmargin'>Per Site Mutation Rate:</div>
-                <input id='orgMuteInput' type='text'> %
-                <div><label id='muteOrgError'> &nbsp;</label>&nbsp;</div>
-              </div>
-              <div id='muteOrgSlideHolder'>
-                <div id='orgMuteSlide'></div>
-              </div>
-            </div>
-          </div><span id='orgSettings_end' class='display_none'></span>
         </div><span id='orgInfoHolder_end' class='display_none'></span>
-
+        <div id='orgSettings' class='orgSettingClass'>
+          <div class='repeatMode'>
+          <h3 class='dfhd' style='style='font-size: 1.30rem; line-height: 1.30rem;'>Repeatability Mode:</h3>
+            <input  type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganExperimentRadio'
+                   intermediateChanges='false' name='child' checked value='orgExp' iconClass='dijitNoIcon'></button>
+            <label id='OrganExperimentLabel'>Experimental (Natural Variation)</label>
+            <br/>
+            <input showlabel='true' type='radio' data-dojo-type='dijit/form/RadioButton' id='OrganDemoRadio'
+                   intermediateChanges='false' name='child' value='orgDemo' iconClass='dijitNoIcon'></button>
+            <label id='OrganDemoLabel'>Demo (forces exact replay)</label>
+          </div>
+          <div class='muteOrgHolder'>
+            <div id='muteOrgTextHolder'>
+              <div class='lftmargin'>Per Site Mutation Rate:</div>
+              <input id='orgMuteInput' type='text'> %
+              <div><label id='muteOrgError'> &nbsp;</label>&nbsp;</div>
+            </div>
+            <div id='muteOrgSlideHolder'>
+              <div id='orgMuteSlide'></div>
+            </div>
+          </div>
+        </div><span id='orgSettings_end' class='display_none'></span>
       </div><span id='rightInfoHolder_end' class='display_none'></span>
        
     </div><span id='allAvidaContainer_end'></span>
@@ -1364,7 +1362,7 @@
         <h3>For Mac users</h3>
         <p>Press the combination [command][shift][4] and use your cursor to select the part of the screen desired.
           A png file will be saved to the desktop with a name of the form: <br />
-          Screen Shot 2016-10-11 at 3.34.36 PM.png
+          Screen Shot 2020-10-11 at 3.34.36 PM.png
         </p>
         <h3>For PC users</h3>
         <p>

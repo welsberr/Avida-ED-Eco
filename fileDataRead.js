@@ -360,13 +360,18 @@
   //update config data from file data stored in freezer
   av.frd.updateSetup = function(from) {
     'use strict';
+    console.log('need to create a function that looks for geometry=grid in envirnement.cfg and create pop up to ask about');
+    console.log('switching to advanced mode. *** tiba *** todo put in on 2021_823 *************************************');
+    console.log('needs to be done in lndActiveConfig before, completing putting new configDish in actConfig ***********')
+
+    
     var dir = av.fzr.actConfig.dir;
     // av.dbg.flg.frd
     if (true) { console.log(from, 'called av.frd.updateSetup; dir=', dir); }
 
     var doctext = av.fzr.file[dir + '/avida.cfg'];
-    
-    av.frd.avidaCFG2form(doctext, 'av.frd.updateSetup');
+        
+    av.frd.avidaCFG2form(doctext, 'av.frd.updateSetup');   // if environment file has geometry='grid' this will need to redone
 
     doctext = av.fzr.file[dir + '/environment.cfg'];
     if (av.dbg.flg.frd) { console.log(dir + '/environment.cfg:  ', doctext); }
