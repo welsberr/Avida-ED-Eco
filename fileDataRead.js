@@ -20,7 +20,7 @@
         containerMap[container] = {};
       }
       // 'insertNodes' implementation
-      var domid = `${type}${fileNum}`
+      var domid = `dom_${type}${fileNum}`
       $(container).append(`<div class="item ${type}" id="${domid}"> ${name} </div>`);
       containerMap[container][domid] = {"name": name, "type": type};
       if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', containerMap[container][domid]);
@@ -152,8 +152,7 @@
         break;
     }
     av.fzr.file[av.fio.anID] = name;
-    av.fzr.domid[dir] = [];
-    av.fzr.domid[dir].push(domid); // yemd: this is because later, more dom objects will share the same 'dir', so make it a list
+    av.fzr.domid[dir] = domid;
     av.fzr.dir[domid] = dir;
   };
 
@@ -760,12 +759,12 @@
 
       // var domid;
       if ('test' == av.msg.setupType) {
-        var domid = 'g' + av.fzr.gNum;
+        var domid = 'dom_g' + av.fzr.gNum;
         var type = 'g';
         var container = '#' + av.dnd.ancestorBoTest.id;
       }
       else {
-        var domid = 'g' + av.fzr.gNum;
+        var domid = 'dom_g' + av.fzr.gNum;
         var type = 'g';
         var container = '#' + av.dnd.ancestorBox.id;
       }
@@ -842,12 +841,12 @@
       av.parents.name.push(stuff.nam[kk]);
 
       if ('test' == av.msg.setupType) {
-        var domid = 'g' + av.fzr.gNum; // yemd might need to come back to it
+        var domid = 'dom_g' + av.fzr.gNum; // yemd might need to come back to it
         var type = 'g';
         var container = '#' + av.dnd.ancestorBoTest.id;
       }
       else {
-        var domid = 'g' + av.fzr.gNum;
+        var domid = 'dom_g' + av.fzr.gNum;
         var type = 'g';
         var container = '#' + av.dnd.ancestorBox.id;
       }

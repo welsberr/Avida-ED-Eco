@@ -135,9 +135,7 @@
     'use strict';
     //Get name of Mom that is in OrganCurrentNode
     var parent;
-    console.log(containerMap);
     var parentID = Object.keys(containerMap['#activeOrgan'])[0];
-    console.log(parentID);
     if (av.debug.mouse) console.log('parentID', parentID);
     if (undefined == parentID) parent = '';
     else parent = document.getElementById(parentID).textContent.trim();

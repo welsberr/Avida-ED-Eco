@@ -129,7 +129,6 @@ jQuery(document).ready(function($) {
   Handle drag
   */
   dra.on('drag', (el, source) => { 
-    // document.body.style.cursor = "default";
     dragging = true;
     av.dnd.newDishModalCalledFromDnd = false;
 
@@ -175,134 +174,118 @@ jQuery(document).ready(function($) {
       return;
     }
     // el, target, source are dom objects aka stuff you could 'target.id' to
-    if (av.grd.runState === 'started') {
+    // if the experiment has already started and user is trying to run a new experiment, show the newDishModal
+    if (av.grd.runState === 'started' && (target === av.dnd.gridCanvas || target === av.dnd.activeConfig || target === av.dnd.ancestorBox || target === av.dnd.trashCan)) {
+      dra.cancel(); // cancel the current drag and drop
       av.dom.newDishModalID.style.display = 'block'; // show the 'please save' modal
-      // below not being triggered
-      if (target === av.dnd.gridCanvas) {
-        av.dnd.landGridCanvas(el, target, source);
-      }
-      if (target === av.dnd.activeConfig) {
-        console.log('here');
-        av.dnd.landActiveConfig(el, target, source);
-      }
-      if (target === av.dnd.ancestorBox) {
-        av.dnd.landAncestorBox(el, target, source);
-      }
-      if (target === av.dnd.trashCan) {
-        dra.cancel();
-      }
-    } else { // if the experiment hasn't started yet
-      if (target === av.dnd.activeConfig) {
-        av.dnd.landActiveConfig(el, target, source);
-      }
-      if (target === av.dnd.testConfig || target === av.dnd.ancestorBoTest && av.grd.runState === 'started') {
-        av.dom.newDishModalID.style.display = 'block';
-        dra.cancel();
-      } else if (target === av.dnd.testConfig) {
-        av.dnd.landTestConfig(el, target, source);
-      }
-      if (target === av.dnd.trashCan) {
-        // yemi: however, if the drag is being initiated from the gridCanvas aka, then the event handler is in mouse.js
-        // refer to av.mouse.ParentMouse or av.mouse.KidMouse
-        av.dnd.landTrashCan(el, source);
-      }
-      if (target === av.dnd.fzConfig) {
-        av.dnd.landFzConfig(el, target, source);
-      }
-      if (target === av.dnd.ancestorBox) {
-        av.dnd.landAncestorBox(el, target, source);
-      }
-      if (target === av.dnd.ancestorBoTest) {
-        av.dnd.landAncestorBoTest(el, target, source);
-      }
-      if (target === av.dnd.fzWorld) {
-        // yemi: does not trigger because techinically there are no 'items' on the grid right now.
-        // on the grid, mouse movements overtake. Code for that is in mouse.js (av.mouse.kidMouse)
-        av.dnd.landFzWorld(el, target, source);
-      }
-      if (target === av.dnd.fzOrgan) {
-        if (source === av.dnd.ancestorBox) {
-          var idx = el.className.split(" ").indexOf('gu-transit');
-          var newlist = el.className.split(" ");
-          newlist.splice(idx, 1);
-          el.className = newlist.join(' ');
-          av.dnd.insertToDOM(av.dnd.ancestorBox, el); // you don't want to remove the organism from the box, want to copy; by default dragula will remove 
-          console.log(el.id);
-          console.log(av.fzr);
-        }
-        av.dnd.landFzOrgan(el, target, source); // I don't think it's getting called
-      }
-      if (target === av.dnd.organIcon) {
-        av.dnd.landOrganIcon(el, target, source);
-      }
-      if (target === av.dnd.activeOrgan) {
-        av.dnd.landActiveOrgan(el, target, source);
-      }
-      if (target === av.dnd.organCanvas) {
-        av.dnd.landOrganCanvas(el, target, source);
-      }
-      if (target === av.dnd.anlDndChart) {
-        console.log("here");
-        av.dnd.landAnlDndChart(el, target, source);
-      }
-      if (target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2) {
-        if (target === av.dnd.popDish0) {
-          av.dnd.landpopDish(el, target, source, 0);
-        }
-        else if (target === av.dnd.popDish1) {
-          av.dnd.landpopDish(el, target, source, 1);
-        }
-        else if (target === av.dnd.popDish2) {
-          av.dnd.landpopDish(el, target, source, 2);
-        }
-      } 
-
-      // Special case for gridCanvas
-      $(document).on('mouseup touchend', function (evt) {
-        'use strict';
-        // av.mouse.makeCursorDefault(); // want the mouse to be default after mouseup
-        document.body.style.cursor = "default";
-        if (dragging) { 
-          var x;
-          var y;
-          if(evt.type == 'touchend'){
-            var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
-            x = touch.pageX;
-            y = touch.pageY;
-          } else if (evt.type == 'mouseup') {
-            x = evt.clientX;
-            y = evt.clientY;
-          }
-          av.mouse.UpGridPos = [x, y];
-          var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
-          if (elements.indexOf("gridCanvas") != -1 && sourceIsFzOrgan) { // if gridCanvas is behind this mouse point
-            av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, source);
-            av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
-          } 
-  
-          if (elements.indexOf("gridCanvas") != -1 && sourceIsFzWorld) { 
-            var elm = elForGrid.cloneNode(true)
-            elm.id = 'w' + av.fzr.wNum++;
-            av.dnd.activeConfig.append(elm);
-            av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, source);
-          }
-
-          if (elements.indexOf("gridCanvas") != -1 && sourceIsAncestorBox) { 
-            av.dnd.insertToDOM(av.dnd.ancestorBox, elForGrid); // need to restore the dragged item from ancestorBox
-            av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, source);
-            av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
-          }
-        }
-        dragging = false;
-        $(document).unbind('mousemove touchmove');
-      });
+    } 
+    if (target === av.dnd.activeConfig) {
+      av.dnd.landActiveConfig(el, target, source);
     }
+    if (target === av.dnd.testConfig || target === av.dnd.ancestorBoTest && av.grd.runState === 'started') {
+      av.dom.newDishModalID.style.display = 'block';
+      dra.cancel();
+    } else if (target === av.dnd.testConfig) {
+      av.dnd.landTestConfig(el, target, source);
+    }
+    if (target === av.dnd.trashCan) {
+      // yemi: however, if the drag is being initiated from the gridCanvas aka, then the event handler is in mouse.js
+      // refer to av.mouse.ParentMouse or av.mouse.KidMouse
+      av.dnd.landTrashCan(el, source);
+    }
+    if (target === av.dnd.fzConfig) {
+      av.dnd.landFzConfig(el, target, source);
+    }
+    if (target === av.dnd.ancestorBox) {
+      av.dnd.landAncestorBox(el, target, source);
+    }
+    if (target === av.dnd.ancestorBoTest) {
+      av.dnd.landAncestorBoTest(el, target, source);
+    }
+    if (target === av.dnd.fzWorld) {
+      // yemi: does not trigger because techinically there are no 'items' on the grid right now.
+      // on the grid, mouse movements overtake. Code for that is in mouse.js (av.mouse.kidMouse)
+      av.dnd.landFzWorld(el, target, source);
+    }
+    if (target === av.dnd.fzOrgan) {
+      if (source === av.dnd.ancestorBox) {
+        var idx = el.className.split(" ").indexOf('gu-transit');
+        var newlist = el.className.split(" ");
+        newlist.splice(idx, 1);
+        el.className = newlist.join(' ');
+        av.dnd.insertToDOM(av.dnd.ancestorBox, el); // you don't want to remove the organism from the box, want to copy; by default dragula will remove 
+      }
+      av.dnd.landFzOrgan(el, target, source); // I don't think it's getting called
+    }
+    if (target === av.dnd.organIcon) {
+      av.dnd.landOrganIcon(el, target, source);
+    }
+    if (target === av.dnd.activeOrgan) {
+      av.dnd.landActiveOrgan(el, target, source);
+    }
+    if (target === av.dnd.organCanvas) {
+      av.dnd.landOrganCanvas(el, target, source);
+    }
+    if (target === av.dnd.anlDndChart) {
+      av.dnd.landAnlDndChart(el, target, source);
+    }
+    if (target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2) {
+      if (target === av.dnd.popDish0) {
+        av.dnd.landpopDish(el, target, source, 0);
+      }
+      else if (target === av.dnd.popDish1) {
+        av.dnd.landpopDish(el, target, source, 1);
+      }
+      else if (target === av.dnd.popDish2) {
+        av.dnd.landpopDish(el, target, source, 2);
+      }
+    } 
+
+    // Special case for gridCanvas
+    $(document).on('mouseup touchend', function (evt) {
+      'use strict';
+      document.body.style.cursor = "default"; // want the mouse to be default after mouseup
+      if (dragging) { 
+        var x;
+        var y;
+        if(evt.type == 'touchend'){
+          var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
+          x = touch.pageX;
+          y = touch.pageY;
+        } else if (evt.type == 'mouseup') {
+          x = evt.clientX;
+          y = evt.clientY;
+        }
+        av.mouse.UpGridPos = [x, y];
+        var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
+        if (elements.indexOf("gridCanvas") != -1 && sourceIsFzOrgan) { // if gridCanvas is behind this mouse point
+          av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, source);
+          av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
+        } 
+
+        if (elements.indexOf("gridCanvas") != -1 && sourceIsFzWorld) { 
+          var elm = elForGrid.cloneNode(true)
+          elm.id = 'w' + av.fzr.wNum++;
+          av.dnd.activeConfig.append(elm);
+          av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, source);
+        }
+
+        if (elements.indexOf("gridCanvas") != -1 && sourceIsAncestorBox) { 
+          av.dnd.insertToDOM(av.dnd.ancestorBox, elForGrid); // need to restore the dragged item from ancestorBox
+          av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, source);
+          av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
+        }
+      }
+      dragging = false;
+      $(document).unbind('mousemove touchmove');
+    });
 
     // change the color back (whatever it was before) of the most recently added dom object
     $('#' + mostRecentlyAddedDomid).css('background', 'inherit');
     document.body.style.cursor = "default";
     // for debugging
     console.log(av.fzr);
+    console.log(containerMap);
   });
 
   /*
@@ -337,7 +320,7 @@ jQuery(document).ready(function($) {
     'use strict';
     if (av.debug.dnd) console.log('av.dnd.landFzConfig: fzr', av.fzr);
     // create a new dom id for the new object
-    el.id = 'c' + av.fzr.cNum;
+    el.id = 'dom_c' + av.fzr.cNum;
     mostRecentlyAddedDomid = el.id; // register this as the most recently added dom object
     // give a new name to the object
     var oldName = el.textContent.trim();
@@ -356,8 +339,7 @@ jQuery(document).ready(function($) {
         // insert a new directory into the freezer
         av.fzr.dir[el.id] = 'c'+ av.fzr.cNum;
         // insert a new domid into the freezer
-        av.fzr.domid['c'+ av.fzr.cNum] = [];
-        av.fzr.domid['c'+ av.fzr.cNum].push(el.id);
+        av.fzr.domid['c'+ av.fzr.cNum] = el.id;
         // insert a new file into the freezer
         av.fzr.file[av.fzr.dir[el.id]+'/entryname.txt'] = configName;
         av.fwt.makeFzrConfig(av.fzr.cNum,'av.dnd.landFzConfig');
@@ -377,7 +359,7 @@ jQuery(document).ready(function($) {
 
   //when an organism is added to the freezer
   av.dnd.landFzOrgan = function(el, target, source) {
-    el.id = 'g' + av.fzr.gNum;
+    el.id = 'dom_g' + av.fzr.gNum;
     mostRecentlyAddedDomid = el.id;
     var gen;
     var oldName = el.textContent.trim();
@@ -389,23 +371,14 @@ jQuery(document).ready(function($) {
         av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent + '; --> ' + avName);
         av.dnd.insert(target, el, 'g');
         el.textContent = avName;
-        console.log(containerMap);
         if (source === av.dnd.ancestorBox) { //do not remove if population has started running
           //update structure to hold freezer data for Organisms.
           var Ndx = av.parents.domid.indexOf(el.id); //Find index into parent structure
           gen = av.parents.genome[Ndx];
-          // av.parents.removeParent(Ndx); /* yemd: not sure why we need to remove the parents when we drag it to fzOrgan*/
-          // console.log(av.parents);
-          // av.parents.placeAncestors();
-          // need to remove organism from the Ancestor Box.
-          // av.dnd.ancestorBox is dojo dnd copyonly to prevent loss of that organsim when the user clicks cancel. The user will
-          // see the cancel as cancelling the dnd rather than canceling the rename.
-          // av.dnd.remove(av.dnd.ancestorBox, el);
         }
-        else if (source === av.dnd.activeOrgan) { console.log('bells'); gen = av.fzr.actOrgan.genome; }
+        else if (source === av.dnd.activeOrgan) { gen = av.fzr.actOrgan.genome; }
         av.fzr.dir[el.id] = 'g' + av.fzr.gNum;
-        av.fzr.domid['g'+ av.fzr.gNum] = [];
-        av.fzr.domid['g' + av.fzr.gNum].push(el.id);
+        av.fzr.domid['g'+ av.fzr.gNum] = el.id;
         av.fzr.file['g' + av.fzr.gNum + '/genome.seq'] = gen;
         av.fzr.file['g' + av.fzr.gNum + '/entryname.txt'] = avName;
         if (av.debug.dnd) console.log('fzr', av.fzr);
@@ -434,7 +407,7 @@ jQuery(document).ready(function($) {
   av.dnd.landFzWorld = function(el, target, source) {
     'use strict';
     if (av.debug.dnd) console.log('landFzPopDish: fzr', av.fzr);
-    el.id = 'w' + av.fzr.wNum;
+    el.id = 'dom_w' + av.fzr.wNum;
     mostRecentlyAddedDomid = el.id;
     var oldName = el.textContent.trim() + '@' + av.grd.popStatsMsg.update.formatNum(0);
     var sName = av.dnd.namefzrItem(target, oldName);
@@ -445,10 +418,8 @@ jQuery(document).ready(function($) {
         av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent.trim() + ' --> ' + nameWorld);
         el.textContent = nameWorld;
         av.dnd.insert(target, el, 'w');
-        console.log(containerMap);
         av.fzr.dir[el.id] = 'w'+ av.fzr.wNum;
-        av.fzr.domid['w'+ av.fzr.wNum] = [];
-        av.fzr.domid['w'+ av.fzr.wNum].push(el.id);
+        av.fzr.domid['w'+ av.fzr.wNum] = el.id;
         //create a right av.mouse-click context menu for the item just created.
         av.dnd.contextMenu(target, el.id, 'av.dnd.landFzWorldFn');
         av.fwt.makeFzrWorld(av.fzr.wNum, 'av.dnd.landFzWorldFn');
@@ -531,17 +502,16 @@ jQuery(document).ready(function($) {
     newlist.splice(idx, 1);
     el.className = newlist.join(' ');
     // give the new dom object a new dom id
-    el.id = 'w' + av.fzr.wNum++; 
+    el.id = 'dom_w' + av.fzr.wNum++; 
     mostRecentlyAddedDomid = el.id;
     // add an entry to av.fzr.dir for this new dom id
     av.fzr.dir[el.id] = dir;
     // and vice versa
-    av.fzr.domid[dir].push(el.id);
+    av.fzr.domid[dir] = el.id;
     // insert element into target containerMap
     av.dnd.insert(target, el, 'w');
     // insert element into the target DOM
     av.dnd.insertToDOM(target, el);
-    console.log(containerMap);
     // load world data
     av.anl.loadWorldData(num, dir);
     av.anl.loadSelectedData(num, 'yLeftSelect', 'left', 'av.dnd.landpopDish');
@@ -562,17 +532,16 @@ jQuery(document).ready(function($) {
     newlist.splice(idx, 1);
     el.className = newlist.join(' ');
     // give the new dom object a new dom id
-    el.id = 'w' + av.fzr.wNum++;
+    el.id = 'dom_w' + av.fzr.wNum++;
     mostRecentlyAddedDomid = el.id;
     // add an entry to av.fzr.dir for this new dom id
     av.fzr.dir[el.id] = dir;
     // and vice versa
-    av.fzr.domid[dir].push(el.id);
+    av.fzr.domid[dir] = el.id;
     // insert element into target containerMap
     av.dnd.insert(source, el, 'w');
     // insert element into DOM
     av.dnd.insertToDOM(source, el);
-    console.log(containerMap);
     // load world data
     av.anl.loadWorldData(num, dir);
     av.anl.loadSelectedData(num, 'yLeftSelect', 'left', 'av.dnd.putNslot');
@@ -594,7 +563,6 @@ jQuery(document).ready(function($) {
     }
     // in all cases no population name is stored in the graph div
     av.dnd.empty(target);
-    console.log(containerMap);
     av.anl.AnaChartFn();
   };
 
@@ -625,18 +593,16 @@ jQuery(document).ready(function($) {
     newlist.splice(idx, 1);
     el.className = newlist.join(' ');
     // give a new id to the new dom object
-    el.id = 'g' + av.fzr.gNum++;
+    el.id = 'dom_g' + av.fzr.gNum++;
     mostRecentlyAddedDomid = el.id;
     // add an entry to av.fzr.dir for this new new dom id
     av.fzr.dir[el.id] = dir;
     // and vice versa
-    av.fzr.domid[dir] = [];
-    av.fzr.domid[dir].push(el.id);
+    av.fzr.domid[dir] = el.id;
     // insert element into target containerMap
     av.dnd.insert(av.dnd.activeOrgan, el, 'g');
     // insert element into target DOM
     av.dnd.insertToDOM(av.dnd.activeOrgan, el);
-    console.log(containerMap);
     // update active organ
     av.fzr.actOrgan.actDomid = el.id;
     av.dnd.updateFromFzrOrganism(el);
@@ -662,27 +628,24 @@ jQuery(document).ready(function($) {
     newlist.splice(idx, 1);
     el.className = newlist.join(' ');
     // give a new dom id to the new dom object
-    el.id = 'g' + av.fzr.gNum++;
+    el.id = 'dom_g' + av.fzr.gNum++;
     mostRecentlyAddedDomid = el.id;
     // add an entry to av.fzr.dir for this new dom id
     av.fzr.dir[el.id] = dir;
     // and vice versa
-    av.fzr.domid[dir].push(el.id);
+    av.fzr.domid[dir] = el.id;
     // insert element into target containerMap
     av.dnd.insert(av.dnd.activeOrgan, el, 'g');
     // insert element into target DOM
     av.dnd.insertToDOM(av.dnd.activeOrgan, el);
-    console.log(containerMap);
     // update active organ
     av.fzr.actOrgan.actDomid = el.id;
-
     if (source === av.dnd.fzOrgan) { 
       av.dnd.updateFromFzrOrganism(el); 
     }
     if (source === av.dnd.ancestorBox) {
       var Ndx = av.parents.domid.indexOf(el.id);
-      console.log(av.parents.domid);
-      console.log(av.parents);
+      console.log('test from ancestorBox to organIcon', Ndx);
       av.fzr.actOrgan.name = av.parents.name[Ndx];
       av.fzr.actOrgan.genome = av.parents.genome[Ndx];
       if (av.debug.dnd) console.log('fzr', av.fzr, '; parents', av.parents, '; ndx', Ndx);
@@ -742,20 +705,18 @@ jQuery(document).ready(function($) {
       // get the data for the dragged element
       var dir = av.fzr.dir[el.id];
       // give a new id to the new dom object
-      el.id = 'g' + av.fzr.gNum++;
+      el.id = 'dom_g' + av.fzr.gNum++;
       mostRecentlyAddedDomid = el.id;
       // add an entry to av.fzr.dir for this new new dom id
       av.fzr.dir[el.id] = dir;
       // and vice versa
-      console.log(av.fzr.domid[dir]);
-      av.fzr.domid[dir].push(el.id);
+      av.fzr.domid[dir] = el.id;
       // give a new name
       el.textContent = av.dnd.nameParent(el.textContent.trim());
       // insert element into ancestorBox containerMap
       av.dnd.insert(av.dnd.ancestorBox, el, 'g');
       // insert element into ancestorBox DOM
       av.dnd.insertToDOM(av.dnd.ancestorBox, el);
-      console.log(containerMap);
 
       if (av.debug.dnd) console.log('containerMap[#ancestorBox]', containerMap[container]);
 
@@ -792,18 +753,17 @@ jQuery(document).ready(function($) {
       av.parents.autoNdx.push(nn);
       av.parents.injected.push(false);
       // give a new id to the new dom object
-      el.id = 'g' + av.fzr.gNum++;
+      el.id = 'dom_g' + av.fzr.gNum++;
       mostRecentlyAddedDomid = el.id;
       // add an entry to av.fzr.dir for this new new dom id
       av.fzr.dir[el.id] = dir;
       // and vice versa
-      av.fzr.domid[dir].push(el.id);
+      av.fzr.domid[dir] = el.id;
       // rename the item with a new name
       var newName = av.dnd.nameParent(el.textContent.trim());
       el.textContent = newName;
       // insert element into target containerMap
       av.dnd.insert(target, el, 'g');
-      console.log(containerMap);
       // if you place organism into ancestorBox, placement is set to 'auto'
       av.parents.howPlaced.push('auto');
       av.parents.domid.push(el.id); // domid in ancestorBox used to remove if square in grid moved to trashcan
@@ -844,18 +804,17 @@ jQuery(document).ready(function($) {
       av.parents.autoNdx.push(nn);
       av.parents.injected.push(false);
       // give a new id to the new dom object
-      el.id = 'g' + av.fzr.gNum++;
+      el.id = 'dom_g' + av.fzr.gNum++;
       mostRecentlyAddedDomid = el.id;
       // add an entry to av.fzr.dir for this new new dom id
       av.fzr.dir[el.id] = dir;
       // and vice versa
-      av.fzr.domid[dir].push(el.id);
+      av.fzr.domid[dir] = el.id;
       // rename the item with a new name
       var newName = av.dnd.nameParent(el.textContent.trim());
       el.textContent = newName;
       // insert element into target containerMap
       av.dnd.insert(target, el, 'g');
-      console.log(containerMap);
       // if you place organism into ancestorBox, placement is set to 'auto'
       av.parents.howPlaced.push('auto');
       av.parents.domid.push(el.id); // domid in ancestorBox used to remove if square in grid moved to trashcan
@@ -889,15 +848,11 @@ jQuery(document).ready(function($) {
     // get the data for the dragged element
     var dir = av.fzr.dir[el.id];
     // give a new id to the new dom object 
-    if (el.id[0] === 'c') el.id = 'c' + av.fzr.cNum++;
-    else if (el.id[0] === 'w') el.id = 'w' + av.fzr.wNum++;
-    else el.id = 't' + av.fzr.tNum++;
+    if (el.id[0] === 'c') el.id = 'dom_c' + av.fzr.cNum++;
+    else if (el.id[0] === 'w') el.id = 'dom_w' + av.fzr.wNum++;
+    else el.id = 'dom_t' + av.fzr.tNum++;
 
     mostRecentlyAddedDomid = el.id;
-    // add an entry to av.fzr.dir for this new new dom id
-    av.fzr.dir[el.id] = dir;
-    // and vice versa
-    av.fzr.domid[dir].push(el.id);
     // remove the existing configuration
     av.dnd.empty(target);
     // for some reason, the item that gets appended has 'gu-transit' on it, which means it's an element that is still in transit, which makes it looke grayed out.
@@ -912,7 +867,7 @@ jQuery(document).ready(function($) {
     av.fzr.actConfig.actDomid = el.id;
     av.fzr.actConfig.name = el.textContent.trim();
     av.fzr.actConfig.fzDomid = source.id;
-    av.fzr.actConfig.dir = av.fzr.dir[el.id];
+    av.fzr.actConfig.dir = dir;
     delete av.fzr.actConfig.file['instset.cfg'];
     if (av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg']) {
       av.fzr.actConfig.file['instset.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg'];
@@ -1016,7 +971,6 @@ jQuery(document).ready(function($) {
       av.ptd.popTdishStateUi('av.dnd.landActiveConfig');
     }
 
-    console.log(containerMap);
     av.parents.placeAncestors();
     // load Time Recorder Data
     av.frd.loadTimeRecorderData(av.fzr.actConfig.dir);
@@ -1029,7 +983,7 @@ jQuery(document).ready(function($) {
   };
 
   av.dnd.loadDefaultConfigFn = function (from) {
-    el = $.map($("#c0"), (value, key) => { return value })[0];
+    el = $.map($("#dom_c0"), (value, key) => { return value })[0];
     av.dnd.landActiveConfig(el, av.dnd.activeConfig, av.dnd.fzConfig);
   };
 
@@ -1105,8 +1059,6 @@ jQuery(document).ready(function($) {
         remove.dir = av.fzr.dir[remove.domid];
         av.fwt.removeFzrItem(remove.dir, remove.type);
       }
-      console.log(containerMap);
-      
     }
     return remove;
   };
