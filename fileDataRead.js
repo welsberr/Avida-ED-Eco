@@ -109,7 +109,6 @@
     switch (type) {
       case 'c':
         // yemd
-        console.log('hehe');
         domid = av.fio.addFzItem(av.dnd.fzConfig, name, type, num);
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzConfig is undefined');
         if (av.fzr.cNum < Number(num)) {av.fzr.cNum = Number(num); }
@@ -155,7 +154,6 @@
     av.fzr.file[av.fio.anID] = name;
     av.fzr.domid[dir] = domid;
     av.fzr.dir[domid] = dir;
-    console.log(av.fzr);
   };
 
   /*------------------------------------------------------------------------------------ av.frd.add2multiDishFromFile --*/

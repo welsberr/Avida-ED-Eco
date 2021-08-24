@@ -146,10 +146,7 @@
     $('#activeOrgan').append(`<div class="item ${type}" id="${domid}"> ${parent + "_offspring"} </div>`);
     var gdir = av.fzr.dir[parentID];
     av.fzr.dir[domid] = gdir;
-    if (Object.keys(av.fzr.domid).indexOf(gdir) === -1) {
-      av.fzr.domid[gdir] = [];
-    }
-    av.fzr.domid[gdir].push(domid);
+    av.fzr.domid[gdir] = domid;
     containerMap['#activeOrgan'][domid] = {name: parent + "_offspring", type: type};
     av.fzr.actOrgan.actDomid = domid;
     av.fzr.actOrgan.name = parent + "_offspring";
@@ -199,8 +196,7 @@
             //find domId of offspring as listed in dnd.fzOrgan
             var gdir =  'g' + av.fzr.gNum;
             av.fzr.dir[domid] = gdir;
-            av.fzr.domid[gdir] = [];
-            av.fzr.domid[gdir].push(domid);
+            av.fzr.domid[gdir] = domid;
             av.fzr.file[gdir + '/entryname.txt'] = avidian;
             av.fzr.file[gdir + '/genome.seq'] = '0,heads_default,' + av.ind.dna[av.ind.son];
             av.fzr.gNum++;
@@ -301,8 +297,7 @@
 
         av.fzr.file[gdir + '/entryname.txt'] = avName;
         av.fzr.dir[domid] = gdir;
-        av.fzr.domid[gdir] = [];
-        av.fzr.domid[gdir].push(domid);
+        av.fzr.domid[gdir] = domid;
         //av.fzr.file[gdir + '/genome.seq'] = '0,heads_default,' + av.grd.kidGenome;
         av.fzr.file[gdir + '/genome.seq'] = av.grd.kidGenome;
         av.fzr.gNum++;

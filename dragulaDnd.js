@@ -79,7 +79,7 @@ jQuery(document).ready(function($) {
     },
     copy: function (el, source) {
       //Makes sure the only item that will be copied instead of moved is in the FreezerMove div
-      return source === av.dnd.activeOrgan || source === av.dnd.activeConfig || source === av.dnd.fzConfig || source === av.dnd.fzOrgan || source === av.dnd.fzWorld || source === av.dnd.fzTdish;
+      return source === av.dnd.ancestorBox || source === av.dnd.activeOrgan || source === av.dnd.activeConfig || source === av.dnd.fzConfig || source === av.dnd.fzOrgan || source === av.dnd.fzWorld || source === av.dnd.fzTdish;
     },
     direction: 'vertical',             // Y axis is considered when determining where an element would be dropped                       
     copySortSource: false,             // elements in copy-source containers can be reordered
@@ -271,7 +271,6 @@ jQuery(document).ready(function($) {
         }
 
         if (elements.indexOf("gridCanvas") != -1 && sourceIsAncestorBox) { 
-          av.dnd.insertToDOM(av.dnd.ancestorBox, elForGrid); // need to restore the dragged item from ancestorBox
           av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, source);
           av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
         }
@@ -614,13 +613,11 @@ jQuery(document).ready(function($) {
     'use strict'
     av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent);
     if (av.debug.dnd) console.log('source', source.id);
-    if (source === av.dnd.ancestorBox) { // you don't want to remove it from ancestorBox, just wanna copy it; so put it back in
-      av.dnd.insertToDOM(source, el);
-    }
     // remove the existing configuration
     av.dnd.empty(av.dnd.activeOrgan);
     // get the data for the dragged organism
     var dir = av.fzr.dir[el.id];
+    var parentID = el.id;
     // for some reason, the item that gets appended has 'gu-transit' on it, which means it's an element that is still in transit, which makes it looke grayed out.
     // so splice it out
     var idx = el.className.split(" ").indexOf('gu-transit');
@@ -644,7 +641,7 @@ jQuery(document).ready(function($) {
       av.dnd.updateFromFzrOrganism(el); 
     }
     if (source === av.dnd.ancestorBox) {
-      var Ndx = av.parents.domid.indexOf(el.id);
+      var Ndx = av.parents.domid.indexOf(parentID);
       console.log('test from ancestorBox to organIcon', Ndx);
       av.fzr.actOrgan.name = av.parents.name[Ndx];
       av.fzr.actOrgan.genome = av.parents.genome[Ndx];
@@ -657,6 +654,8 @@ jQuery(document).ready(function($) {
     if (av.debug.mouse) console.log('from parent', av.parent, '; fzr', av.fzr);
     av.post.addUser('Dragged item to Organism Icon');
     av.msg.doOrgTrace();  // request new Organism Trace from Avida and draw that.
+    // /* yemi: update organism canvas */
+    // av.ind.updateOrgTrace();
     // clear out av.dnd.organIcon as nothing is stored there - just moved on to OrganismCurrent
     av.dnd.empty(target); //clear items from icon
   };
@@ -767,6 +766,7 @@ jQuery(document).ready(function($) {
       // if you place organism into ancestorBox, placement is set to 'auto'
       av.parents.howPlaced.push('auto');
       av.parents.domid.push(el.id); // domid in ancestorBox used to remove if square in grid moved to trashcan
+      console.log(av.parents.domid);
       // find color of ancestor
       if (0 < av.parents.Colors.length) { av.parents.color.push(av.parents.Colors.pop());}
       else { av.parents.color.push(av.color.defaultParentColor); }
