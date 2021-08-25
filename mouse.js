@@ -265,8 +265,8 @@
 
     var nameArray = av.dnd.makeNameList(av.dnd.fzOrgan);
     //console.log('name', av.grd.kidName, '; array',  nameArray);
-    var sName = av.dnd.namefzrItem(av.grd.kidName, nameArray);
-    console.log('sName', sName);
+    container = $.map($('#ancestorBox')[0], (key, value) => {return value});
+    var sName = av.dnd.namefzrItem(container, av.grd.kidName);
     var avidian = prompt('Please name your avidian', sName);
     if (avidian) {
       var avName = av.dnd.getUniqueFzrName(avidian, nameArray);

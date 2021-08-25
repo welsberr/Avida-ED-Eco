@@ -209,6 +209,8 @@ function dragbarRightResize() {
     dragging = true;
     
     $(document).mousemove(function(e){
+      av.grd.drawGridSetupFn(); // yemi: redraw the grid
+      av.grd.popChartFn(); // yemi: redraw plotly graph
 
       /* yemi: on mouse move, dragbar changes color */
       $('#dragbarRight').css('background-color', 'blue');
@@ -257,6 +259,8 @@ function dragbarRightResize() {
   $(document).bind('mouseup', function(e) {
 
     if (dragging) {
+      av.grd.drawGridSetupFn(); // yemi: redraw the grid
+      av.grd.popChartFn(); // yemi: redraw plotly graph
 
       /* yemi: dragbar changes color back to original */
       $('#dragbarRight').css('background-color', 'gray');
@@ -495,6 +499,9 @@ av.ptd.ritePanelBtnFn = function () {
     /* yemi: make the following divs take up the entire width of their containers */
     $('orgInfoHolder').css("width", "100%");
   }
+
+  av.grd.drawGridSetupFn(); // yemi: redraw the grid
+  av.grd.popChartFn(); // yemi: redraw plotly graph
 };
 //------------------------------------------------------------------------------------ end show/hide right side panel --
 

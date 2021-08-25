@@ -3096,8 +3096,14 @@ require([
       console.log('ui: PopPlotSize: av.dom.popChrtHolder.ht offset, client ht=', av.dom.popChrtHolder.offsetHeight,
         av.dom.popChrtHolder.clientHeight, '; parseInt(padding)=', parseInt($("#popChrtHolder").css('padding'), 10));
     }
-    av.pch.pixel.ht = av.dom.popChrtHolder.clientHeight - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
-    av.pch.pixel.wd = av.dom.popChrtHolder.clientWidth - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
+    // yemi: trying to remove awkward space between actual plot and its plot holder.
+    // av.pch.pixel.ht = av.dom.popChrtHolder.clientHeight - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
+    // av.pch.pixel.wd = av.dom.popChrtHolder.clientWidth - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
+    av.pch.pixel.ht = av.dom.popChrtHolder.clientHeight;
+    av.pch.pixel.wd = av.dom.popChrtHolder.clientWidth;
+    av.pch.pixel.hdif = 0;
+    av.pch.pixel.wdif = 0;
+
     //console.log(from, 'called av.pch.divSize: av.pch.pixel.wd=', av.pch.pixel.wd, '; av.pch.pixel.ht=', av.pch.pixel.ht);
     av.pch.layout.height = av.pch.pixel.ht - av.pch.pixel.hdif;  //leave a bit more vertical space for plot;
     av.pch.layout.width = av.pch.pixel.wd - av.pch.pixel.wdif;   //leave more horizontal space to right of plot;
