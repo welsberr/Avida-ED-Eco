@@ -1295,13 +1295,13 @@ jQuery(document).ready(function($) {
   };
 
   // 2019-04-14: Untested.
-  dojo.connect(av.dnd.fzTdish, "onDndDrop", function (source, nodes, copy, target) {
-    if ('fzTdish' === target.node.id) {
-      nodes.forEach(function (node) {
-        av.dnd.sortDnD('fzTdish');
-      });
-    }
-  });
+  // dojo.connect(av.dnd.fzTdish, "onDndDrop", function (source, nodes, copy, target) {
+  //   if ('fzTdish' === target.node.id) {
+  //     nodes.forEach(function (node) {
+  //       av.dnd.sortDnD('fzTdish');
+  //     });
+  //   }
+  // });
 
   /*
   Helpers For Touch Screens
