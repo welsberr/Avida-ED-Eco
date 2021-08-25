@@ -134,7 +134,7 @@ av.msg.readMsg = function (ee) {
         av.ui.loadOK = true;
         if (av.debug.msg) console.log('before calling av.grd.popChartInit');
         //av.grd.popChartInit('Message: notification');
-        av.dom.storeInitialSize();
+        av.ui.initialDivSizing();
         break;
       case 'warning':
         userMsgLabel.textContent = '| Avida warning at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);

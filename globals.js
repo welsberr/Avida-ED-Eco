@@ -5,7 +5,7 @@
 var av = av || {};  //incase av already exists
 
 //console.log('start of globals on 2021_310_04:22 Thurs');
-console.log('start of globals on 2021_801_Sun');
+console.log('start of globals on 2021_814_Sat');
 
 Number.prototype.pad = function(size) {
   var ss = String(this);
@@ -40,6 +40,7 @@ av.dbg.flg = {};
 av.dbg.flg.popSetup = false;
 av.dbg.flg.frd = false;  //reading file text strings
 av.dbg.flg.nut = false;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
+av.dbg.flg.nutSum = true; //summary for each function when processing environment.cfg for sugar user interace
 av.dbg.flg.plt = false;  //both popChart and analysis
 av.dbg.flg.root = false;  //statements that look for failers when the code executes outside of functions
 av.dbg.flg.divsize = false;
@@ -1545,3 +1546,4 @@ for (var ii = 0; ii < lngth; ii++) {
 // popStatsBlock: min wd = 364 no border. 
 // selOrgType: min wd = 164  (might make a tad smaller) includes 1 px border
 // popStats4grid: min wd = 176   (get left over)
+

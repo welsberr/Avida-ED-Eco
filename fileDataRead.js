@@ -7,8 +7,6 @@
 
   // replacement for dndSection.map
   var containerMap = {};
-  // example containerMap access: containerMap['#fzConfig']['test 0']
-  // The first key contains '#' or '.'. Second key doesn't.
 
   av.fio.addFzItem = function(target, name, type, fileNum) {
     // example 'container' input format: '.className' or '#id'
@@ -25,12 +23,42 @@
       containerMap[container][domid] = {"name": name, "type": type};
       if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', containerMap[container][domid]);
 
-      // create a right av.mouse-click context menu for the item just created.
+    testItemId++;
+    return domId;
+  };
+
+  // makes a freezer item int the correct freezer sectionl 
+  av.fio.addFzItem = function(dndSection, name, type, fileNum) {
+    'use strict';
+    var domid;
+    if (undefined !== dndSection) {
+      //var items = av.dnd.getAllItems(av.dnd.activeOrgan);
+      //console.log('name=',name,'; items=',items);
+      //var nodes = dndSection.getAllNodes();
+      //console.log('name=',name,'; nodes=',nodes); 
+      var names = [];
+      var domItems = Object.keys(dndSection.map);
+      var lngth = domItems.length;
+
+      // creates a dojo dom element that represents the freezer item. 
+      dndSection.insertNodes(false, [{data: name, type: [type]}]);
+      dndSection.sync();
+      var mapItems = Object.keys(dndSection.map);
+      domid = mapItems[mapItems.length - 1];
+
+      //var domID = av.dnd.getDomId(configName, target);
+
+      if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', dndSection.node.id);
+      //console.log('fileNum', fileNum, '; name', name, '; Section', dndSection.node.id, '; type', type);
+
+      //create a right av.mouse-click context menu for the item just created.
       if (0 < fileNum) {
         av.dnd.contextMenu(target, domid, 'av.fio.addFzItem');
       }
       return domid;
-    } else {
+    }
+    else {
+      //console.log('dndSection=', dndSection, '; name=', name, '; type=', type, '; fileNum=', fileNum);
       return 'dndSection is undefined';
     }
   };
@@ -306,13 +334,18 @@
   //update config data from file data stored in freezer
   av.frd.updateSetup = function(from) {
     'use strict';
+    console.log('need to create a function that looks for geometry=grid in envirnement.cfg and create pop up to ask about');
+    console.log('switching to advanced mode. *** tiba *** todo put in on 2021_823 *************************************');
+    console.log('needs to be done in lndActiveConfig before, completing putting new configDish in actConfig ***********')
+
+    
     var dir = av.fzr.actConfig.dir;
     // av.dbg.flg.frd
     if (true) { console.log(from, 'called av.frd.updateSetup; dir=', dir); }
 
     var doctext = av.fzr.file[dir + '/avida.cfg'];
-    console.log('');
-    av.frd.avidaCFG2form(doctext, 'av.frd.updateSetup');
+        
+    av.frd.avidaCFG2form(doctext, 'av.frd.updateSetup');   // if environment file has geometry='grid' this will need to redone
 
     doctext = av.fzr.file[dir + '/environment.cfg'];
     if (av.dbg.flg.frd) { console.log(dir + '/environment.cfg:  ', doctext); }
@@ -696,8 +729,7 @@
       var nn = av.parents.name.length;
       av.parents.name.push(rslt.nam[ii]);
       av.parents.howPlaced.push('auto');
-
-      // var domid;
+      var domIds;
       if ('test' == av.msg.setupType) {
         var domid = 'dom_g' + av.fzr.gNum;
         var type = 'g';
@@ -879,7 +911,6 @@
       //Find color of ancestor
       if (0 < av.parents.Colors.length) {av.parents.color.push(av.parents.Colors.pop());}
       else {av.parents.color.push(av.color.defaultParentColor);}
-
     }
     //console.log('parents', av.parents);
   };

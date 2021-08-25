@@ -229,7 +229,7 @@
 av.fwt.clearResourceConstants = function(from) {
   var tskTitle;
   av.nut.resrcTyp = av.sgr.resrcTyp;
-  console.log(from,'called av.fwt.clearResourceConstants: resource type =', av.nut.resrcTyp);
+  // console.log(from,'called av.fwt.clearResourceConstants: resource type =', av.nut.resrcTyp);
   for (var ii=0; ii < av.sgr.numTasks; ii++) {
     tskTitle = av.sgr.logicTitleNames[ii];
     document.getElementById('cell'+tskTitle).innerHTML = '';

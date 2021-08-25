@@ -305,7 +305,7 @@
         av.fzr.saveUpdateState('no');
       }
     }
-  };
+  }
 
   av.mouse.ParentMouse = function (evt, av) {
     'use strict';

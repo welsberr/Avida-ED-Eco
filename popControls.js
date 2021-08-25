@@ -139,7 +139,7 @@
     $('#mutePopSlide').slider({disabled: false});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
     av.dom.childParentRadio.disabled = false;
     av.dom.childRandomRadio.disabled = false;
-    console.log('Avida-ED4: need to reset defaults on new Environmental settings.');
+    console.log('Avida-ED4: need to reset defaults on new Environmental seettings.');
 
     av.dom.experimentRadio.disabled = false;
     av.dom.demoRadio.disabled = false;
@@ -315,7 +315,6 @@
       // tiba: fix so 'av.ptd.makeRunState' is not called till after tests are done and remove the extra calls to makePauseState
       av.ptd.makePauseState();
       //NeedAncestorDialog.show();
-      console.log('ancestor not found');
       av.dom.needAncestorModalID.style.display = 'block';
     }
     else if (!av.ptd.validGridSize) {
@@ -399,7 +398,6 @@
 
   //------------------------------------------------------------------------------------------------ av.ptd.runStopFn --
   av.ptd.runStopFn = function () {
-    console.log('inside runStopFn', av.grd.runState);
     if ('Run' == av.dom.runStopButton.innerHTML) {
       av.ptd.makeRunState('av.ptd.runStopFn');
       av.ptd.runPopFn('av.ptd.runStopFn');
@@ -436,6 +434,7 @@
     }
     else {
       fzName = prompt('Please name the organism', 'newOrganism');
+      //console.log('source unknwon', trigger);
     }
     fzName = av.dnd.getUniqueFzrName(av.dnd.fzOrgan, fzName);
     if (null != fzName) {
@@ -488,7 +487,6 @@
     'use strict';
     av.msg.exportExpr('w' + av.fzr.wNum);
     av.msg.sendData();
-    var container = av.dnd.fzWorld.id !== undefined ? "#" + av.dnd.fzWorld.id : "." + av.dnd.fzWorld.className;
     var popName = av.fzr.actConfig.name + '@' + av.grd.popStatsMsg.update.formatNum(0);  // need update here star
     var fzName = prompt('Please name the new population', popName);
     if (fzName) {

@@ -9,7 +9,7 @@
 // var av = av || {};  // consistent with the rest of js files
 
 jQuery(document).ready(function($) {
-  var containers = [
+  var containers = [$(".hi")[0], 
                     $.map($(".freezerContainer"), (value, key) => { return value }),  
                     $.map($("#testConfig"), (value, key) => { return value }),
                     $.map($("#activeConfig"), (value, key) => { return value }), 

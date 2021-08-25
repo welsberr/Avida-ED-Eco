@@ -21,7 +21,7 @@ html {
 */
   body {
     margin: 0;
-    background: #F5F5F5; /* cyan; */
+    background: #F5F5F5;
     padding: 0;
     
   }
@@ -80,12 +80,12 @@ html {
 .rightInfoHolder { grid-area: rightInfoHolder; }
 .navColClass {grid-area: navColID; }
 #dragbarLeft {grid-area: dragbarLeft; } /* yemi:    float: right;*/
-#dragbarRight {float: right; }
+#dragbarRight {grid-area: float: right; }
 
 .all2rit{
   display: grid;
   grid-template-rows: 2.5em auto;
-  grid-template-columns: 3px auto 680px;
+  grid-template-columns: 3px auto 400px;
   grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'dragbarLeft mainBlockHolder rightInfoHolder';
   height: 100vh;
@@ -133,7 +133,7 @@ html {
 .all3org{
   display: grid;
   grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
-  grid-template-columns: 240px 3px auto 3px 250px;    /* 250px */
+  grid-template-columns: 240px 3px auto 3px 220px;    /* 250px */
   grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
   height: 99vh;
@@ -178,7 +178,7 @@ html {
     max-height: 100vh;
     border: 1px solid #AAA;
     overflow: auto;
-    min-width: 100px;
+    min-width: 200px;
   }
 
   .footerRow {
@@ -196,11 +196,11 @@ html {
 
   #orgInfoHolder {
     border: 1px solid #AAA;
-    background: #F5F5F5;
+    background-color: #F5F5F5;  /* mistyrose; */
     height: 100%;
     width: 100%;
-    /* min-width: 250px; */
-    background-color: inherit; /*mistyrose;*/
+    min-width: 200px;
+    font-family: Tahoma, Trebuchet MS, sans-serif;
   }
   
 
@@ -855,7 +855,7 @@ input:focus {
                        '  mxTop   mxNot   mxNan   mxAnd   mxOrn   mxOro   mxAnt   mxNor   mxXor   mxEqu'
                        'cellTop cellNot cellNan cellAnd cellOrn cellOro cellAnt cellNor cellXor cellEqu'
                        ' totTop  totNot  totNan  totAnd  totOrn  totOro  totAnt  totNor  totXor  totEqu';
-  background: mistyrose;
+  /* background: mistyrose; */
   width: 100%;
   justify-content: stretch;
 /*  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
@@ -1037,9 +1037,10 @@ details summary {
 
 .localChemostat { display: inline; }
 
-.2HalfLftRit { display: inline-block; }  /* inline */
-.3TopLftRit { display: none; }  /* inline */
-.4Quarters { display: none; }  /* inline */
+
+.2HalfLftRit { display: inline-block; }  //inline
+.3TopLftRit { display: none; }  //inline
+.4Quarters { display: none; }  //inline
 
 .TopLftRit{
   display: inline-block;  
@@ -1077,20 +1078,17 @@ details summary {
 #equ_section{ border-bottom: 1px solid #888; }
 
 /************************* Sugar controls layout in 'summary' of detail/summary for each task-sugar in sugar according */
-/* I could not get a div with a dispay of inline-gid start on the top line of the summary. 
-.sumHolderDiv { display: inline-block; position: absolute; }
-*/
-/* Sgr summary as a grid container. Something wrong. Try a Flex box
-.sgrLftSumCls { grid-area: sgrLftSumCls; display: inline-block;}
-.sgrRitSumCls { grid-area: sgrRitSumCls; 
-  grid-template-areas: 'sumFtTxtCls tskRewardCls';
-  grid-template-columns: 1px 96px;
+
+/*  This works fine, but his not needed. 
+.sgrRitSumCls { 
+  flex: 0 1 auto;
   display: grid;
+  grid-template-areas: 'tskRewardCls';
+  grid-template-columns: 96px;
   justify-items: end;
-  border: 1px solid green;
+  background: lightyellow;
 }
 */
-
 
 .sumFtTxtCls { 
   grid-area: sumFtTxtCls; 
@@ -1110,29 +1108,26 @@ details summary {
   display: flex;
   justify-content: space-between;
   height: 23px;  width: 100%;
-  /* background: LightCyan;  */
+/*  background: LightCyan;   */
 }
 .sgrLftSumCls { flex: 0 1 auto; }
 .sgrRitSumCls { flex: 0 1 auto; width: 96px; overflow: auto;}
 
-/*  This works fine, but his not needed. 
-.sgrRitSumCls { 
-  flex: 0 1 auto;
-  display: grid;
-  grid-template-areas: 'tskRewardCls';
-  grid-template-columns: 96px;
-  justify-items: end;
-  background: lightyellow;
-  /* grid-area: sgrRitSumCls;    /* use if sgrSumCls has display: grid; 
+.taskRewardCls { 
+  grid-area: tskRewardCls;
+  text-align: right;
+  height: 100%;
+  width: 96px;
 }
-*/
+
+/*---------------------------------------------------------- sugar summary grid container classes for tsk_sumLftGrid--*/
 /* no longer in use, but need to keep until removed from javascript */
 .geometryCls{ grid-area:geometryCls; display: none; }
 
 .sgrTitleCls { grid-area: sgrTitleCls; display: inline-block; width: 54px; }
 .regionLaySumCls { grid-area: regionLayCls; display: inline-block; }
 .supply_HoldCls { grid-area: supply_HoldCls; display: inline-block; }
-.supplyWHoldCls { grid-area: supplyWdCls; display: inline-block;}
+.supplyWHoldCls { grid-area: supplyWdCls; display: inline-block; border: }
 .inflwSumCls { grid-area: inflwSumCls; display: inline-block; }
 .outflwSumCls { grid-area: outflwSumCls; display: inline-block; }
 .chmsttSumCls { grid-area: chmsttSumCls; display: inline-block; }
@@ -1140,13 +1135,17 @@ details summary {
 .periodTimGlobCls { grid-area: periodTimGlobCls; display: inline-block; }
 .initialGlobCls { grid-area: initialGlobCls; display: inline-block; }
 
-
-.grd-sgr-sum-adv-container {
+.grd-sgr-sum-adv-glb-container {
   display: inline-grid;
-  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls sumFtTxtCls';
+  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls';
   justify-content: start; 
   width: 100%;
-  /* border: 1px solid blue;  */
+}
+.grd-sgr-sum-adv-glb-limited-container {
+  display: inline-grid;
+  grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls initialGlobCls';
+  justify-content: start; 
+  width: 100%;
 }
 .grd-sgr-sum-adv-limited-container {
   display: grid;
@@ -1206,6 +1205,8 @@ details summary {
   justify-items: start;  justify-content: start; width: 100%;
   min-height: 23px;
 }
+/*------------------------------------------------------------------------ end sugar summary grid container classes --*/
+
 /*------------------------------------------------------------------------------------- sugar input class formatting --*/
 .sugPeriodNclass { width: 50px; height:13px; text-align:right; }
 .sugInitialNclass { width: 50px; height:13px; text-align:right; }
@@ -1329,9 +1330,7 @@ details summary {
   grid-template-areas: 'subSectionTitle supplyDetailDiv supplyDetailDiv supplyModifierDivClass supplyModifierDivClass sideInput'
                        'inflowHi        inflowHi        outflowHi       outflowHi             chmstatHi             chmstatHi';
                        'inflowLo        inflowLo        outflowLo       outflowLo             chmstatLo             chmstatLo';
-  justify-items: start;  
-  justify-content: start; 
-  width: 100%;
+  justify-items: start;  justify-content: start; width: 100%;
   align-items: stretch;
 }
 
@@ -1385,7 +1384,7 @@ details summary {
 
 /* ----------------------------------------------------------------- Footer controls that change all tasks are here --*/
 /* background: inherit */
-#allSugarGeometry {display: none;}    /* probably need to delete this option
+#allSugarGeometry {display: none;}    /* probably need to delete this option */
 
 
 #sugarSetTitle { grid-area:setTitle; justify-self: right; background: inherit; font-size: 110%; }
@@ -1419,7 +1418,7 @@ details summary {
   display: grid;
   grid-template-areas: 'setTitle    setTitle        showHideSgr   detailDiv'
                        'geometrySgr regionLayoutSgr supplyTypeSlctSgr patternSgr'
-                       'geometryDiv regionLayoutDiv supplyTypeHolder patternDiv';
+                       'geometryDiv regionLayoutDiv supplyTypeHolder  patternDiv';
   justify-items: start;  justify-content: start; width: 100%;
   background: #DDD;   /* #AAA; is too dark now */    
 }
@@ -1518,7 +1517,6 @@ details summary {
 /* body select.select_box option */ 
 
 select {
-/*  background: url("https://i.ibb.co/b7xjLrB/selectbox-arrow.png") right center no-repeat;  */
   height: 18px;
   border-bottom: 1px solid #aaa;
   background-color: white;  
@@ -1616,18 +1614,22 @@ checkbox:focus {
   box-shadow:none;
 }
 
+/*------------------------------------------------------------------------------- End Custom Select/Options DropDown  */
+
 /********************************************************************************* End Custom Select/Options DropDown */
 
-/************************************************************************ used in examples will be deleted eventually */
+/***************************************************************************** example tab will be deleted eventually */
 
 .ex1center {
   display: inline-block;
   vertical-align: middle;
   width: 300px;
-  padding: 10px 15px;
+  padding: 2px 2px;
   border: #a0a0a0 solid 1px;
   background: #f5f5f5;
 }
+
+
  .ex1holder {
   white-space: nowrap;  /* May want to do this if there is risk the container may be narrower than the element inside */
   text-align: center;
@@ -1643,6 +1645,10 @@ checkbox:focus {
   height: 100%; 
   vertical-align: middle;
 }  
+/*-------------------------------------------------------------------------------------------------- End example tab  */
+
+
+/*--------------------------------------------------------------------------------------------------- Organism Block  */
 
 /*Organism Block css */
 .orgBenchTopRow{
@@ -1654,7 +1660,7 @@ checkbox:focus {
     min-height: 40px;
   }
 
-  .orgTopLt{
+  .orgTopLt{     /* in use */
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} fx prevent resize */
     display: flex;
     flex-direction: row;
@@ -1693,6 +1699,9 @@ checkbox:focus {
     height: 1.6em;
   }
   .orgDetailClass{
+    font-size: 0.9rem; 
+    line-height: 0.9rem;
+    height: 90%; 
     width: 100%;
   }
   #orgTaskDataDiv{
@@ -1700,17 +1709,29 @@ checkbox:focus {
   }
   #lowerOrgInfo{
     width: 100%;
-    padding: 5px;    
+    padding: 5px;
   }
   #orgTaskDataDiv {
     background:#DDD;    
     padding: 5px;
   }
+  #orgTaskDataTable { 
+    text-align:center;
+    width: 100%;
+  }
+  #orgTaskDataTable.td:first-child {
+    padding: 0.2rem;
+  }
+  #orgTaskDataTable.td:first-child {
+    padding: 0.2rem;
+  }
   #InstructionDetail {
-    min-width: 1px;
+    min-width: 160px;
     width: 100%; 
     height: auto;
   }
+  /* might re-write these as grid containers or flex boxes. */
+  /* or re-write them so they scale with the width of the right side bar */
   .orgStatCanvas15{
     width: 162px; 
     height: 17px; 
@@ -1737,16 +1758,22 @@ checkbox:focus {
     align-items: stretch;
     width: 100%;
     height: 100%;
-    background: #CCCCCC;
+    min-width: 200px;
+    min-height: 400px;
+    background-color: #CCCCCC; /* palegreen;  */
   }
   .repeatMode{
     flex: 0 1 150px;
     background: #EEEEEE;
+    min-width: inherit;
+    min-height: 50px;
     padding: 1em 0.5em 1em 0.5em;   
   }
   .muteOrgHolder{
     flex: 1;          /* supposed to expand to fill remainting space, but not working */
     background: #CCCCCC;
+    min-width: inherit;
+    min-height: 50px;    
     padding: 1em 0.5em 2em 0.5em;   
   }
   /* top, right, bottom, left;  right and left were 0.3 before*/
@@ -1761,8 +1788,8 @@ checkbox:focus {
   }
   
   #orgMuteSlide {
-  /* width:200px; */
-  height: 400px;
+  width:200px; 
+  /* height: 400px;  */
   display: block; 
   vertical-align: top; 
   padding: 20px auto;
@@ -1785,6 +1812,9 @@ checkbox:focus {
     flex: 1;            /* does this fill the rest of the space like {flex:1} or {flex:1 1 auto;} ? */
     border: 1px solid #AAA;
   }
+/*----------------------------------------------------------------------------------------------- end Organism Block  */
+
+/*--------------------------------------------------------------------------------------------------- Analysis Block  */
   #anlDndChart{
     width: 100%;
     height: 100%;
@@ -1814,6 +1844,7 @@ checkbox:focus {
     grid-template-areas: 'pop0delete pop0color popDish0'
                          'pop1delete pop1color popDish1'
                          'pop2delete pop2color popDish2';
+   font-family: Tahoma, Myriad, Trebuchet MS, Arial Narrow, Arial, Helvetica, clean, sans-serif;
   }
     #pop0deleteDiv { grid-area: pop0delete;}
     #pop1deleteDiv { grid-area: pop1delete;}
@@ -1857,12 +1888,12 @@ checkbox:focus {
       margin: auto;
     }
     .popDishHolder{  
-      padding: 3px;
+      padding 3px;
       background: #F5F5F5;  /*lemonchiffon; */
     }
     /* insdie popDishHolder */
     .popDishClass {
-      min-height: 1.6em;
+      min-height: 1.3rem;
       padding: 5px;
       margin: 2px;
       border: 1px solid #CCCCCC;
@@ -1877,7 +1908,9 @@ checkbox:focus {
     margin: 10px 2px 5px 10px;    /* top right bottom left */
     overflow: auto; /* yemi */
   }
-  
+ /*---------------------------------------------------------------------------------------------- end Analysis Block  */
+ 
+ /* only instance of this string AviaEDabout */
  .AviaEDaboutP {
   font-size: 120%;
 }
@@ -1895,7 +1928,7 @@ checkbox:focus {
     bottom: 0;
 
     z-index: 1; /* Sit on top */
-    /* padding-top: 100px;*/ /* Location of the box */
+    //padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
     width: 100%;   /*   Full width */
@@ -1930,8 +1963,8 @@ checkbox:focus {
     color: black;
 }
 
-/*----------------------------------------------------------------------------------------------------------------------
-/************************************************************************************************* end of model class */                                                                        
+//----------------------------------------------------------------------------------------------------------------------
+/************************************************************************************************* end of model class */                                                                         */
 
 #saveCSVdataModalID {
   position: fixed; /* Stay in place */
@@ -1969,7 +2002,7 @@ checkbox:focus {
   display: flex;
   flex-direction: column;
   background: #fefefe;
-  padding: 0px;   /* was 2 */
+  padding: 0px;   //was 2
   border: 1px solid black; /* #888; */
   width: 94%;
   height: 90%;
@@ -1993,7 +2026,7 @@ checkbox:focus {
 }
 
 .modalBig-footer {
-  flex: 0 0 40px;
+  flex: 0 0 40px
   padding: 8px 0px;    /*top-bottom; left-right */
   width: 100%;
   background: lightgray;
@@ -2177,7 +2210,7 @@ button:hover {
 
 /*************************************************************************************************** no longer in use */
 
-/* Not in use, but could be useful */
+/// Not in use, but could be useful
   /* from https://www.bestcssbuttongenerator.com/#/17 */
   .fancyButton {
     -moz-box-shadow: 5px 4px 7px 0px #899599;
@@ -2214,44 +2247,74 @@ button:hover {
     background:#bab1ba;
   }
 
-  
-  /*---------------------------------------------------------------------------------------------------- Not in use --*/
-  
-    /*contains navigation column and pages (population, Organsims, Analysis)         No longer in use*/
-  .mainRowContainer { 
-    flex: 1 1 auto;          /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-    display: grid;
-    grid-template-areas: 'navColClass mainBlockHolder';
-    justify-items: stretch;
-    width: 100%;
-    height: 100%;
-    background: #F5F5F5; /* red; */
-    overflow:hidden;
-  }
+/*********************************************************************************************** end no longer in use */
 
-  /* --------Dragula--------
-  .gu-mirror {
-    position: fixed !important;
-    margin: 0 !important;
-    z-index: 9999 !important;
-    opacity: 0.8;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
-    filter: alpha(opacity=80);
-  }
-  .gu-hide {
-    display: none !important;
-  }
-  .gu-unselectable {
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-  }
-  .gu-transit {
-    opacity: 0.2;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-    filter: alpha(opacity=20);
-  } */
+/************************************************************************************************************** notes */
+/* https://caniuse.com/ to look to see which browsers support a feature. 
+
+/* suggested standards (found in 2021, not used yet)
+/* https://javascript.plainenglish.io/19-simple-javascript-coding-standards-to-keep-your-code-clean-7422d6f9bc0
+
+/* Css variables. 
+/* https://www.freecodecamp.org/news/everything-you-need-to-know-about-css-variables-c74d922ea855/
+
+/* custom properties - I should find time to figure these out. 
+/* https://www.quirksmode.org/blog/archives/2021/05/two_options_for.html
+/*--------------------------------------------------------------- information about grid containers  or display: grid */
+/* https://learncssgrid.com/   //good info about how grid works
+
+/* https://css-tricks.com/snippets/css/complete-guide-grid/  //good info about how grid works
+
+/* https://cssgridgarden.com/ // game made to teach grid css
+
+/* https://gridbyexample.com/examples/
+
+/* https://cssgrid-generator.netlify.app/ .    //tool to make a simple repeated grid 
+
+/*----------- --------------------------------------------------------------------------------------------- flex box --*/
 
 
+/* https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+
+/* explains flex: in a way I might finally understand. 
+/* https://css-tricks.com/understanding-flex-grow-flex-shrink-and-flex-basis/ 
+/* .child {
+/*   flex: 0 1 auto; /* Default flex value     or 
+/*   flex: [flex-grow] [flex-shrink] [flex-basis];     or 
+/*   flex: [max] [min] [ideal size];
+/* }
+
+/*  default for flex-grow is 0 so don't grow'
+
+/* flex-shrink tells the browser what the minimum size of an element should be. The default value is 1, 
+/*     which is saying, “Take up the same amount of space at all times.”
+
+/* flex: 0 0 auto;   // Flex-shrink: 0 so 
+/* …then we’re telling this element not to shrink at all now. Stay the same size, you blasted element! 
+/* is essentially what this CSS says, and that’s precisely what it’ll do. 
+/* We’ll come back to this property in a bit once we look at the final value in this shorthand.
+
+/* flex-basis: auto is default, which means use my height or width
+/* child elements will take up just enough space for their content unless width is specified. 
+/* set width: 100%    ro use flex-grow: 1; for each child
+
+/* flex: 0 1 1234px;   // will try to have this child use 12334px if it can, 
+/* else take up that much space proportionally to the other elements.
+
+/* flex: 0 0 1000px;  // shrink not allowed so it might overflow
+
+
+/* width options. might need with flex:
+/* https://www.quirksmode.org/blog/archives/2021/04/fitcontent_and.html
+
+/*--------------------------------------------------------------------------------------------- useful css examples --*/
+
+/* makes fancy buttons https://www.bestcssbuttongenerator.com/#/17
+
+/* used to format details/summary
+/* from: https://stackoverflow.com/questions/51131818/how-to-vertically-align-detailss-arrow-with-summarys-content 
+
+/* use variables in css to convert px to rem
+/* https://codepen.io/andresgalante/pen/abOydOj?editors=1100
+/********************************************************************************************************** end notes */
 

@@ -357,8 +357,8 @@
     var re_RESOURCE = /RESOURCE/i;
     var lineArray;
     var ii = 0;
-    if (true) {
-      console.log('------------------------------------ start of av.env.nutrientParse');
+    if (av.dbg.flg.nutSum) {
+      console.log('--------------------------------------------------------------------------------------- start of av.env.nutrientParse --');
       av.nut_beforeParse = {};
       av.nut_beforeParse = JSON.parse(JSON.stringify(av.nut));
       console.log('av.nut_beforeParse = ', av.nut_beforeParse); 
@@ -444,15 +444,17 @@
     } // while that goes through lines in file. 
     
           //if (av.dbg.flg.nut) { 
-    if (true) {
+    if (av.dbg.flg.nutSum) {
       console.log('end of av.env.nutrientParse');
       av.nut_env_cfg = {};
       av.nut_env_cfg = JSON.parse(JSON.stringify(av.nut));
       console.log('av.nut_env_cfg = ', av.nut_env_cfg); 
     }
-    if (av.dbg.flg.nut) { console.log('Nut: ================================ end of nutrientParse:  all environment.cfg lines processed =='); }
+    if (av.dbg.flg.nutSum) { 
+      console.log('Nut: ======================================================================================= end av.env.nutrientParse =='); 
+    }
   };
-    //------------------------------------------------------------------------------------- end of av.env.nutrientParse --
+  //---------------------------------------------------------------------------------------- end av.env.nutrientParse --
     
   //Find subarea based on inflow x, y coordinates
   //--------------------------------------------------------------------------------------- av.env.getInflowAreaResrc --
@@ -835,16 +837,16 @@
     };  // end of logic task loops
 
     //if (av.dbg.flg.nut) { 
-    if (true) { 
+    if (av.dbg.flg.nutSum) { 
       av.nutSupply = {};
       av.nutSupply = JSON.parse(JSON.stringify(av.nut));
       console.log('end of av.env.findsupplyTypeSlct');
       console.log('av.nutSupply = ', av.nutSupply); 
-      console.log('======================================= end of av.Nut.find Supply Type ===================');
+      console.log('======================================================================================= end av.env.findsupplyTypeSlct ==');
     };
 
   };
-  //--------------------------------------------------------------------------------------- end av.env.findsupplyTypeSlct --
+  //----------------------------------------------------------------------------------- end av.env.findsupplyTypeSlct --
 
   //---------------------------------------------------------------------------------------------- av.env.resrc2uiSub --
   // Region information was found when RESOURCE line was parced. 
@@ -997,12 +999,12 @@
           };   // end of checking to make sure name is not null
         };    // end of for subregions loop
       };     // end of task loop
-      if (true) { 
+      if (av.dbg.flg.nutSum) { 
         av.nutUI = {};
         av.nutUI = JSON.parse(JSON.stringify(av.nut));
         console.log('end of av.env.resrc2uiSub');
         console.log('av.nutUI = ', av.nutUI); 
-        console.log('========================================================================================== end of av.env.resrc2uiSub ==');
+        console.log('============================================================================================== end av.env.resrc2uiSub ==');
       }
     };
   //------------------------------------------------------------------------------------------ end av.env.resrc2uiSub --
@@ -1117,7 +1119,9 @@
       //need to just put text of environment.cfg into the text box on the test tab
       console.log('not sure anything needs to  be done for Test');    
     };
-    if (av.dbg.flg.nut) { console.log('Nut: ================================================================== end of av.env.environment2UI =='); }
+    if (av.dbg.flg.nut) { 
+      console.log('Nut: ==================================================================================== end of av.env.environment2UI==');
+    }
   };
   //----------------------------------------------------------------------------------- end av.env.environment2UI --
 
@@ -1342,11 +1346,10 @@
       // update layout for the "sugar" area of UI, based on nutrient structure (nut) from envrironment.cfg
       av.sgr.changeDetailsLayout(tsk, 'av.env.ui2dom');  
     };    // end of task loop
-    if (av.dbg.flg.nut) { console.log('Nut in dom: ================================================================== end of av.env.environment2UI =='); }
-    if (av.dbg.flg.nut) { 
+    if (av.dbg.flg.nutSum) { 
+      console.log('Nut info now  in dom: ========================================================================== end of av.env.ui2dom ==');
       av.nut_ui2dom = {};
       av.nut_ui2dom = JSON.parse(JSON.stringify(av.nut));
-      console.log('end of av.env.ui2dom');
       console.log('av.nut_ui2dom = ', av.nut_ui2dom); 
     };
   };
