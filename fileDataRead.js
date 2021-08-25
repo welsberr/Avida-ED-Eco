@@ -781,7 +781,7 @@
       av.parents.name.push(stuff.nam[kk]);
 
       if ('test' == av.msg.setupType) {
-        var domid = 'dom_g' + av.fzr.gNum; // yemd might need to come back to it
+        var domid = 'dom_g' + av.fzr.gNum; // might need to come back to it
         var type = 'g';
         var container = '#' + av.dnd.ancestorBoTest.id;
       }

@@ -47,13 +47,13 @@ jQuery(document).ready(function($) {
   av.dnd.popDish1 = containers[15]
   av.dnd.popDish2 = containers[16]
 
-  // yemd: variables necessary to make landGridCanvas work (because dragula and regular JavaScript mouseevents are not compatible)
+  // variables necessary to make landGridCanvas work (because dragula and regular JavaScript mouseevents are not compatible)
   var dragging = false;
   var sourceIsFzOrgan = false;
   var sourceIsFzWorld = false;
   var sourceIsAncestorBox = false;
   var elForGrid = '';
-  // yemd: variable to keep the most recently added domid
+  // variable to keep the most recently added domid
   // domids are unique for each new item that is drag and dropped
   var mostRecentlyAddedDomid = '';
   // necessary when new dish modal was called not because user clicked on the 'new' button
@@ -294,12 +294,12 @@ jQuery(document).ready(function($) {
   $('.navColClass').on('click', function(e) { // allow click selection only if it's within the freezer
     document.body.style.cursor = "default"; // want the mouse to be default for click
     if (e.target) {
-      var classList = e.target.className.split(" "); // yemd: e.target.className is a string
+      var classList = e.target.className.split(" "); // e.target.className is a string
       if (av.dnd.selectedId !== '' && e.target.id === av.dnd.selectedId) {
         $('#' + e.target.id).css('background', 'inherit');
         av.dnd.selectedId = '';
       } 
-      else if (av.dnd.selectedId === '' && classList.indexOf('item') != -1) { // yemd: if the target is of class 'item' (aka draggable item)
+      else if (av.dnd.selectedId === '' && classList.indexOf('item') != -1) { // if the target is of class 'item' (aka draggable item)
         $('#' + e.target.id).css('background', 'rgb(189, 229, 245)');
         av.dnd.selectedId = e.target.id;
       }
@@ -462,7 +462,7 @@ jQuery(document).ready(function($) {
       }
   
       if (addedPopPage) av.grd.drawGridSetupFn('av.dnd.FzAddExperimentFn');
-      // yemd: reset the av.dnd.selectedId
+      // reset the av.dnd.selectedId
       $('#' + mostRecentlyAddedDomid).css('background', 'inherit'); // revert the background color of the most recently added dom object
       $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
       av.dnd.selectedId = '';

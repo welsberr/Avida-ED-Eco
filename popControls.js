@@ -59,7 +59,6 @@
     av.grd.runState = 'started';  //the run has now started
     //Disable some of the options on the Setup page
     
-    // yemd
     $('#mutePopSlide').slider({disabled: true});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
     av.dom.sizeCols.disabled = true;
     av.dom.sizeRows.disabled = true;
@@ -121,23 +120,19 @@
   
   //-------------------------------------------------------------------------------------------- av.ptd.popNewExState --
   
-  // yemd
   av.ptd.popNewExState = function () {
     'use strict';
     //set configuation to default
     var fname = '@default';
 
-    // yemd
     var domId = Object.keys(containerMap['#activeConfig'])[0];
     av.fzr.actConfig.actDomid = domId;
     av.fzr.actConfig.name = fname;
     av.fzr.actConfig.type = 'c';
-    av.fzr.actConfig.actDomid = 'c0';
+    av.fzr.actConfig.actDomid = 'dom_c0';
     av.fzr.actConfig.dir = 'c0';
 
     // clear parents
-
-    // yemd
     av.dom.sizeCols.disabled = false;
     av.dom.sizeRows.disabled = false;
     av.dom.mutePopInput.disabled = false;
@@ -233,9 +228,8 @@
 
     var dir = av.fzr.actConfig.dir;
     var fileStr = av.fzr.file[dir + '/avida.cfg'];
-    av.frd.avidaCFG2form(fileStr, 'av.ptd.popNewExState'); // yemd fileStr is not defined
-    
-    // yemd
+    av.frd.avidaCFG2form(fileStr, 'av.ptd.popNewExState'); 
+
     av.dnd.empty(av.dnd.ancestorBox);
     av.dnd.empty(av.dnd.ancestorBoTest);
 
@@ -462,7 +456,6 @@
     }
   };
 
-  // yemd
   //get a name for the new config file for the freezer
   av.ptd.FrConfigFn = function (from) {
     'use strict';
@@ -475,7 +468,6 @@
       if (null != fzName) {
         var type = 'c'
         var domid = `dom_${type}${av.fzr.cNum}`
-        
         $(container).append(`<div class="item ${type}" id="${domid}"> ${fzName} </div>`)
         containerMap[container][domid] = {"name": fzName, "type": type};
         av.fzr.dir[domid] = 'c'+ av.fzr.cNum;
@@ -491,7 +483,6 @@
     }
   };
 
-  // yemd
   //Save a populated dish
   av.ptd.FrPopulationFn = function () {
     'use strict';

@@ -133,7 +133,6 @@
             if (av.debug.mouse) console.log('kid found');
             av.grd.kidStatus = 'getgenome';
             av.msg.doWebOrgDataByCell();
-            // av.mouse.selectedKidMouseStyle(); // yemd
             av.grd.kidName = 'temporary';
             av.grd.kidGenome = '0,heads_default,wzcagcccccccccaaaaaaaaaaaaaaaaaaaaccccccczvfcaxgab';  //ancestor
             av.mouse.Picked = 'kid';

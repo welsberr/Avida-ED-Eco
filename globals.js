@@ -836,15 +836,11 @@ av.fzr.clearMainFzrFn = function () {
 
   //Clear each section of the freezer and active organism and ancestorBox
   if (av.debug.fzr) { console.log('Freezer: before av.dnd.fzConfig.selectAll', av.dnd.fzConfig); }
-  // yemd: av.dnd.fzConfig.selectAll().deleteSelectedNodes();  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
   av.dnd.empty(av.dnd.fzConfig);
   if (av.debug.fzr) { console.log('Freezer: before av.dnd.fzConfig.sync'); }
-  // av.dnd.fzConfig.sync();   //should be done after insertion or deletion // yemd
   if (av.debug.fzr) { console.log('Freezer: before av.dnd.fzOrgan.selectAll=', av.dnd.fzOrgan); }
-  // yemd: av.dnd.fzOrgan.selectAll().deleteSelectedNodes();
   av.dnd.empty(av.dnd.fzOrgan);
   if (av.debug.fzr) { console.log('Freezer: before av.dnd.fzOrgan.sync'); }
-  // yemd: av.dnd.fzOrgan.sync();
   console.log(containerMap);
 /*
   if (av.debug.fzr) console.log('Freezer: before av.dnd.fzMdish.selectAll=', av.dnd.fzMdish);
@@ -854,14 +850,11 @@ av.fzr.clearMainFzrFn = function () {
 */
 
   if (av.debug.fzr) { console.log('Freezer: before av.dnd.fzWorld.selectAll=', av.dnd.fzWorld); }
-  // yemd: av.dnd.fzWorld.selectAll().deleteSelectedNodes();
   console.log(av.dnd.fzWorld);
   av.dnd.empty(av.dnd.fzWorld);
   console.log(av.dnd.fzWorld);
   if (av.debug.fzr) { console.log('Freezer: before av.dnd.fzWorld.sync'); }
-  // yemd: av.dnd.fzWorld.sync();
   if (av.debug.fzr) { console.log('Freezer: before av.dnd.ancestorBox.selectAll=', av.dnd.ancestorBox); }
-  // yemd: av.dnd.ancestorBox.selectAll().deleteSelectedNodes();
   av.dnd.empty(av.dnd.ancestorBox);
   if (av.debug.fzr) { console.log('Freezer: before av.dnd.ancestorBox.sync'); }
   // av.dnd.ancestorBox.sync();

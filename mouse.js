@@ -71,10 +71,6 @@
   av.mouse.makeCursorDefault = function () {
     'use strict';
     av.mouse.frzCurserSet('default');  //pointer
-
-    // yemd
-    // if (1 < av.fzr.actConfig.actDomid.length) {document.getElementById(av.fzr.actConfig.actDomid).style.cursor = 'pointer';}
-    // if (1 < av.fzr.actOrgan.actDomid.length) {document.getElementById(av.fzr.actOrgan.actDomid).style.cursor = 'pointer';}
     av.mouse.setCursorStyle('default', av.mouse.dndTarget);
     av.mouse.setCursorStyle('default', av.mouse.notDndPopList);
     av.mouse.setCursorStyle('default', av.mouse.notDndIndList);
@@ -268,7 +264,6 @@
     return target;
   };
 
-  // yemd
   // possibly move to dragulaDnd just to keep all the dnd functions together?
   av.mouse.freezeTheKid = function () {
     "use strict";
