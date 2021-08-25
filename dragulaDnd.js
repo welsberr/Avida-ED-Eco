@@ -9,7 +9,7 @@
 // var av = av || {};  // consistent with the rest of js files
 
 jQuery(document).ready(function($) {
-  var containers = [$(".hi")[0], 
+  var containers = [
                     $.map($(".freezerContainer"), (value, key) => { return value }),  
                     $.map($("#testConfig"), (value, key) => { return value }),
                     $.map($("#activeConfig"), (value, key) => { return value }), 
@@ -264,6 +264,9 @@ jQuery(document).ready(function($) {
         } 
 
         if (elements.indexOf("gridCanvas") != -1 && sourceIsFzWorld) { 
+          var elm = elForGrid.cloneNode(true)
+          elm.id = 'w' + av.fzr.wNum++;
+          av.dnd.activeConfig.append(elm);
           av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, source);
         }
 
@@ -277,9 +280,7 @@ jQuery(document).ready(function($) {
     });
 
     // change the color back (whatever it was before) of the most recently added dom object
-    if (mostRecentlyAddedDomid != '') {
-      $('#' + mostRecentlyAddedDomid).css('background', 'inherit');
-    }
+    $('#' + mostRecentlyAddedDomid).css('background', 'inherit');
     document.body.style.cursor = "default";
     // for debugging
     console.log(av.fzr);

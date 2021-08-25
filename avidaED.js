@@ -1,7 +1,7 @@
 
  // this version uses grid box layout for major sections (toop, left side, main, right side)  
  // if (av.dbg.flg.root) { console.log('Root: avidaED.js at beginning of file on 2020_0111 @ 20:21'); };
- console.log('Root: avidaED.js at beginning of file on 2021_814_ Sat'); 
+ console.log('Root: avidaED.js at beginning of file on 2021_801_ Sat'); 
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
@@ -44,7 +44,7 @@
 //
 // The main function change from Avida-ED 3 to four is the addition of limited and gird (local) resources
 // Layout was changed on Population Page 
-// all files in the workspace now have a three letter sufix; *.txt was added to those missing a suffix
+// all files in tthe workspace now have a three letter sufix; *.txt was added to those missing a suffix
 // 
 // Avida-ED 4.0.0
 // - a basic verison works there will be an advanced mode as well, but it is not ready yet
@@ -160,6 +160,7 @@ require([
   //'lib/plotly.js',               //version  plotly_v1.44.3   as of 2018
   //'lib/plotly-v1.53.min.js',      //2020_0409 production
   'lib/plotly-v1.53.js',      //2020_0409 development
+  //'lib/dragula/dragula-v3.7.2.min.js',
 
   //'lib/jszip.min.js',        //older version. Not sure what version
   'lib/jszip-v2.6.1.js',        //need to update, but need to figure out update methods. tiba
@@ -354,6 +355,7 @@ require([
     }
     av.mouse.Picked = '';
   });
+
   //********************************************************************************************************************
   // Remind user if they might need to save their workspace
   //********************************************************************************************************************
@@ -790,7 +792,6 @@ require([
     console.log('av.pch =', av.pch);
     console.log('av.dom.popChart.data=', av.dom.popChart.data);
     console.log('av.anl =', av.anl);
-    console.log('containers = ', containers);
   };
 
   document.getElementById('mnDbThrowError').onclick = function () {
@@ -1043,15 +1044,17 @@ require([
     av.dom.showTextDebugButton.style.background = 'white';
     document.getElementById(showBlock).style.display = "flex";   //orgPageButtonHolder
     var showButton = showBlock.substring(0,showBlock.length-5)+'Button';
-    // console.log('showButton=',showButton);
+    console.log('showButton=',showButton);
     document.getElementById(showButton).style.background = '#DBDBDB'; 
+    //dijit.byId(showBlock).resize();
+    //document.getElementById(showBlock).resize();
 
     //disable menu options. they will be enabled when relevant canvas is drawn
     dijit.byId('mnFzOffspring').attr('disabled', true);
     dijit.byId('mnCnOffspringTrace').attr('disabled', true);
 
     // if the miniplot on the populaton page needs to be initiated call that funciton.
-    // console.log('In: av.ui.mainBoxSwap; av.pch.needInit=', av.pch.needInit, '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));
+    console.log('In: av.ui.mainBoxSwap; av.pch.needInit=', av.pch.needInit, '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));
     if ($(av.dom.popStatsBlock).is(":visible") && (av.pch.needInit) ) {
       av.grd.popChartInit('av.ui.mainBoxSwap');x
     };
@@ -1067,7 +1070,7 @@ require([
     }
     if ('organismBlock' == av.ui.page) {
       document.getElementById('allAvidaContainer').className = 'all3org';
-      // console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
+      console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
       av.dom.orgInfoHolder.style.display = 'block';
       if ('settings' == av.ui.orgInfo) {
         av.dom.orgSettings.style.display = 'block';
@@ -1076,6 +1079,7 @@ require([
       else {
         av.dom.orgSettings.style.display = 'none';
         av.dom.orgDetailID.style.display = 'block';
+        av.ui.adjustOrgInstructionTextAreaSize();
       };
 
       if (undefined !== av.traceObj) {
@@ -1116,13 +1120,24 @@ require([
     // * clientWidth = box + 2*padding - scrollbar_width    
     // * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
     // * csssWidth = box only nothing else
-    // console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
-    //  av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
-    //   $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
-    // if (av.dom.orgInfoHolder.clientWidth < av.ui.orgInfoHolderMinWidth) av.ui.orgInfoHolderWidth = av.ui.orgInfoHolderMinWidth;
+    console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
+      av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
+      $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
+    if (av.dom.orgInfoHolder.clientWidth < av.ui.orgInfoHolderMinWidth) av.ui.orgInfoHolderWidth = av.ui.orgInfoHolderMinWidth;
     av.ui.mainBoxSwap('organismBlock');
+    
+    // av.dom.orgInfoHolder.style.width = av.ui.orgInfoHolderWidth + 'px'; /* yemi: commented this out because it was messing with my resize code. let me know if this is causing problems */
+
+    console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
+      av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
+      $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
+    console.log('orgInfoHolder.paddding=', $("#orgInfoHolder").css('padding'));
+
+    /* yemi: just so that if screen resized in the other layout, you still update the organism page correctly */
     resizeOrganismPage();
-    av.ind.updateOrgTrace();       // yemi: organism trace persists; can be removed if undesired 
+
+    /* yemi: organism trace persists; can be removed if undesired */
+    av.ind.updateOrgTrace()
   };
 
   document.getElementById('analysisButton').onclick = function () {
@@ -2181,7 +2196,17 @@ require([
   //********************************************************************************************************************
 
   //adjust instruction text size
-    // if (av.dbg.flg.root) { console.log('Root: before $(function slideOrganism()'); }
+    // if (av.dbg.flg.root) { console.log('Root: before av.ui.adjustOrgInstructionTextAreaSize'); }
+  //---------------------------------------------------------------------------- av.ui.adjustOrgInstructionTextAreaSize --
+  av.ui.adjustOrgInstructionTextAreaSize = function() {
+    var height = ( $('#orgInfoHolder').innerHeight() - $('#orgDetailID').innerHeight() - 10 ) / 2;
+    //console.log('orgInfoHolder.ht=', $('#orgInfoHolder').innerHeight(), '; orgDetailID=',$('#orgDetailID').innerHeight(), '; height=', height);
+    av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
+    av.dom.ExecuteAbout.style.height = height + 'px';
+    av.dom.ExecuteJust.style.width = '100%';
+    av.dom.ExecuteAbout.style.width = '100%';    
+  };
+
   //--------------------------------------------------------------------------------------------------- $ slideOrganism --
   $(function slideOrganism() {
     /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
@@ -2192,8 +2217,8 @@ require([
     /* results in 2% as a default */
     var muteDefault = (Math.pow(10, (muteSlideDefault / 400)) - 1).toFixed(1);
     var slides = $('#orgMuteSlide').slider({
-      // orientation: "vertical",    // creates a vertical slide
-      range: 'min',                  //causes the left side of the scroll bar to be grey
+      orientation: "vertical",
+      range: 'min',   /*causes the left side of the scroll bar to be grey */
       value: muteSlideDefault,
       min: 0.0,
       max: 802,
@@ -2304,10 +2329,10 @@ require([
 
   //set output Canvas Size
   av.ind.cpuOutputCnvsSize = function() {
-    //console.log('output Wd Ht: $inner =', $('#cpuOutputCnvs').innerWidth(), $('#cpuOutputCnvs').innerHeight());
+    console.log('output Wd Ht: $inner =', $('#cpuOutputCnvs').innerWidth(), $('#cpuOutputCnvs').innerHeight());
     av.ind.outputCanvasWd = $('#cpuOutputCnvs').innerWidth();
     av.ind.outputCanvasHt = $('#cpuOutputCnvs').innerHeight();
-    //console.log('av.ind.outputCanvas=', av.ind.outputCanvasWd, av.ind.outputCanvasHt);
+    console.log('av.ind.outputCanvas=', av.ind.outputCanvasWd, av.ind.outputCanvasHt);
   };
 
   av.ind.updateOrgTrace = function (from) {
@@ -2664,35 +2689,31 @@ require([
 
   av.ui.setResourceComplexity(av.sgr.complexityLevel, 'last-things-done');
 
-  av.fwt.clearResourceConstants('Last_things_done');
+  av.fwt.clearResourceConstants();
 
   // Geometry is no longer a drop down. Now it is an opton in Supply Type; tiba delte before 2022
   // document.getElementById('allSugarGeometry').style.display = 'none';
   // document.getElementById('geometrySgr').style.display = 'none';
 
   // **************************************************************************************************************** */
-  // Old Resize tools no longer in use. 
+  //Resize tools might be called here or after "Last_things_done"
   // **************************************************************************************************************** */
 
-  // av.ui.sizeHange = new ResizeObserver(entries => {
-  //   //console.log('in ResizeObserver');
-  //   for (let entry of entries) {
-  //     const cr = entry.contentRect;
-  //     if (av.dbg.flg.dsz) { console.log(entry.target.id, `size wd, ht: ${cr.width}px  ${cr.height}px`); }
-  //     if (av.dbg.flg.dsz) { console.log(entry.target.id,'contntRect: ', cr); }
-  //     if (av.dbg.flg.dsz) { console.log(entry.target.id, 'size wd, ht:', cr.width-cr.left, cr.height-cr.top, 'might need to multiply left and top by two'); }
-  //   }
-  // });
+  var ro = new ResizeObserver(entries => {
+    //console.log('in ResizeObserver');
+    for (let entry of entries) {
+      const cr = entry.contentRect;
+      if (av.dbg.flg.dsz) { console.log(entry.target.id, `size wd, ht: ${cr.width}px  ${cr.height}px`); }
+      if (av.dbg.flg.dsz) { console.log(entry.target.id,'contntRect: ', cr); }
+      if (av.dbg.flg.dsz) { console.log(entry.target.id, 'size wd, ht:', cr.width-cr.left, cr.height-cr.top, 'might need to multiply left and top by two'); }
+    }
+  });
 
-  // // Example calls: Observe one or multiple elements
-  // av.ui.av.ui.sizeHange.observe(document.querySelector('div'));
-  // av.ui.sizeHange.observe(document.querySelector('#gridHolder'));  
-
-  // if (av.dbg.flg.root) { console.log('Root: before resize function'); }
-  //------------------------------------------------------------------------------------- $(window).resize(function () --
-  // $(window).resize(function () {
-  // console.log('Does trigger on resizing viewport');
-  // });
+  // Observe one or multiple elements
+  //ro.observe(document.querySelector('div'));
+  
+    
+  //ro.observe(document.querySelector('#gridHolder'));  // commented out on 2021_731 Sat
 
   // **************************************************************************************************************** */
   //                                          Useful Generic functions
@@ -2702,12 +2723,16 @@ require([
   Math.fmod = function (aa, bb) {
     return Number((aa - (Math.floor(aa / bb) * bb)).toPrecision(8));
   };
- 
-}); // end of require([ that contains all of the code that references the dom except dragulaDnd.js
-    // because diane did not explain the require statement used with the dojo library, 
-    // yemi inclosed dragulaDnd.js in jQuery(document).ready(function($) {
-    // so a separate src statement in index.js for jquery, rather than the one in [] of this require statement
-//=========================================================================================== end require([ statement ==
+  
+  //console.log('before resize function');
+  //does this need a timer function to delay response slightly so the page is not re-written as frequently when the
+  //page is changing sizes  ??
+  //----------------------------------------------------------------------------------------------------------------------
+  $(window).resize(function () {
+    //console.log('Does trigger on resize');
+    // av.ui.resizePopLayout('window.resize');    //does not work.
+  });
+});
 
 //----------------------------------------------------------------------------------------------------------------------
   //on 2018_0823 this is where height gets messed up when loading the program.
