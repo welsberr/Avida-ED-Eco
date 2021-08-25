@@ -22,44 +22,7 @@
       $(container).append(`<div class="item ${type}" id="${domid}"> ${name} </div>`);
       containerMap[container][domid] = {"name": name, "type": type};
       if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', containerMap[container][domid]);
-
-    testItemId++;
-    return domId;
-  };
-
-  // makes a freezer item int the correct freezer sectionl 
-  av.fio.addFzItem = function(dndSection, name, type, fileNum) {
-    'use strict';
-    var domid;
-    if (undefined !== dndSection) {
-      //var items = av.dnd.getAllItems(av.dnd.activeOrgan);
-      //console.log('name=',name,'; items=',items);
-      //var nodes = dndSection.getAllNodes();
-      //console.log('name=',name,'; nodes=',nodes); 
-      var names = [];
-      var domItems = Object.keys(dndSection.map);
-      var lngth = domItems.length;
-
-      // creates a dojo dom element that represents the freezer item. 
-      dndSection.insertNodes(false, [{data: name, type: [type]}]);
-      dndSection.sync();
-      var mapItems = Object.keys(dndSection.map);
-      domid = mapItems[mapItems.length - 1];
-
-      //var domID = av.dnd.getDomId(configName, target);
-
-      if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', dndSection.node.id);
-      //console.log('fileNum', fileNum, '; name', name, '; Section', dndSection.node.id, '; type', type);
-
-      //create a right av.mouse-click context menu for the item just created.
-      if (0 < fileNum) {
-        av.dnd.contextMenu(target, domid, 'av.fio.addFzItem');
-      }
       return domid;
-    }
-    else {
-      //console.log('dndSection=', dndSection, '; name=', name, '; type=', type, '; fileNum=', fileNum);
-      return 'dndSection is undefined';
     }
   };
 
