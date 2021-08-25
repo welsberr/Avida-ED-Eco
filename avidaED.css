@@ -30,474 +30,474 @@
  * [1] http://www.w3.org/TR/CSS21/cascade.html#cascade
  */
 
-* { margin: 0; padding: 0; }
-
-html, body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding:0;
-  background: #F5F5F5; /* cyan; */
-  font-family: Tahoma, Trebuchet MS, sans-serif;
-}
-
-.bit32 {                       /* not in use */
-  font-family: Courier New;
-  font-size: .8em;
-}
-
-p {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  font-family: Tahoma, Trebuchet MS, sans-serif;
-}
-
-li {
-  margin: 0px 0px 0px 0px;
-  font-family: Tahoma, Trebuchet MS, sans-serif;
-}
-
-ul {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  font-family: Tahoma, Trebuchet MS, sans-serif;
-}
-
-/* Trying get headers back to default values
-/* this did not work I wanted to change for all headers inside the main div. 
-#allAvidaContainer h1, h2, h3, h4, h5, h6 {
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
-  font-family: Tahoma, Trebuchet MS, sans-serif;
-}
-
-
-/* trying classe to get headers back to to what they should be 
-   hdf# classes were over written by .claro in document.css
-*/
-.dfhd {
-  display: block;
-  font-weight: bold;
-  margin: 0rem;
-  padding: 0rem;
-  font-family: Tahoma, Trebuchet MS, sans-serif;
-  margin-block-start: 0rem;
-  margin-block-end: 0rem;
-  margin-inline-start: 0rem;
-  margin-inline-end: 0rem;
-  /* border: 1px solid black; */
-} 
-.hdf1 { font-size: 2.00rem; }
-.hdf2 { font-size: 1.85rem;}
-.hdf3 { font-size: 1.60rem; }
-.hdf4 { font-size: 1.45rem; }
-.hdf5 { font-size: 1.30rem; }
-.hdf6 { font-size: 1.15rem; }
-
-/* font size from w3schools
-.hdf1 { font-size: 2.00rem; }    style='font-size: 2.00rem; line-height: 2.00rem; font-weight: 700; margin: 0rem;'
-.hdf2 { font-size: 1.50rem; }    style='font-size: 1.85rem; line-height: 1.85rem; font-weight: 600; margin: 0rem;'
-.hdf3 { font-size: 1.17rem; }    style='font-size: 1.60rem; line-height: 1.60rem; font-weight: 500; '
-.hdf4 { font-size: 1.00rem; }    style='font-size: 1.45rem; line-height: 1.45rem; font-weight: 400; '
-.hdf5 { font-size: 0.83rem; }    style='font-size: 1.30rem; line-height: 1.30rem; font-weight: 300; '
-.hdf6 { font-size: 0.67rem; }    style='font-size: 1.15rem; line-height: 1.15rem; font-weight: 200; '
-
-examples
-  <div id="headerSizeTest">
-    <h1 class='dfhd hdf1' style='font-size: 2.00rem; line-height: 2.00rem; font-weight: 700; margin: 0rem;'>Header 1</h1>
-    <h2 class='dfhd hdf2' style='font-size: 1.85rem; line-height: 1.85rem; font-weight: 600; margin: 0rem;'>Header 2</h2>
-    <h3 class='dfhd hdf3' style='font-size: 1.60rem; line-height: 1.60rem; font-weight: 500;'>Header 3</h3>
-    <h4 class='dfhd hdf4' style='font-size: 1.45rem; line-height: 1.45rem; font-weight: 400;'>Header 4</h4>
-    <h5 class='dfhd hdf5' style='font-size: 1.30rem; line-height: 1.30rem; font-weight: 300;'>Header 5</h5>
-    <h6 class='dfhd hdf6' style='font-size: 1.15rem; line-height: 1.15rem; font-weight: 200;'>Header 6</h6>
-  </div>
-*/
-
-textarea {
-  outline: none;
-}
-
-div {
-  margin: 0;
-  padding: 0;
-}
-
-#anlDndChart {
-  width: 100%;
-  height: 100%;
-}
-
-div.odd {
-  background: #EEEEEE;
-  padding: 0.5em 0.5em 1em 0.5em;   /* top, right, bottom, left;  right and left were 0.3 before*/
-  clear: left;
-}
-
-.even {
-  background: #CCCCCC;
-  padding: 0.5em 0.3em 1em 0.5em;
-  clear: left;
-}
-
-.lftWide {
-  float: left;
-  width: 90%;
-}
-
-.ritThin {
-  float: right;
-  width: 10%;
-}
-
-.fltLeft {
-  float: left;
-}
-
-.lftmargin {
-  float: left;
-  clear: left;
-}
-
-div.popStatsTitle {
-  overflow: visible;
-  background:#ffffff;
-  min-width: 170px;
-  text-align:left;
-  height:18px;
-  font-weight: bold;
-}
-
-div.popStatsTableSot {
-  min-width: 169px;
-  background: #DDD;
-}
-
-.noWrapF {
-  text-align:center;
-  font-weight: bold;
-  max-height: 15px;
-}
-
-.noWrapN {
-  text-align:left;
-  font-weight: bold;
-  /* max-height: 12px; */ /* yemi: fixes inconsistent spacing of rows in Population Statistics */
-  overflow: hidden;
-}
-
-.noWrap2r {
-  text-align:center;
-  max-height: 15px;
-}
-
-.noWrapTitle {
-  text-align:center;
-  font-weight: bold;
-  max-height: 15px;
-}
-button {
-  border: 1px solid #aaa;
-  display:inline;
-  cursor:pointer;
-  border-radius: 5px;
-}
-
-.bitButtonOff {
-  background: #fff;
-  color: #000;
-  border: 1px solid #aaa;
-  padding: 0px 0px 2px 0px;
-  height: 15px;
-  width: 45px;
-  display: block;
-  text-align: center;
-/*
-  font-family: Tahoma, Trebuchet MS, sans-serif;
-  text-decoration: none;
-*/
-}
-
-.bitButtonOn {
-  background: #fff;
-  color: #00f;
-  color: #00bb00;
-  border: 1px solid #00dd00;
-  padding: 0px 0px 2px 0px;
-  height: 15px;
-  width: 45px;
-  display: block;
-  text-align: center;
-/*
-  font-family: Tahoma, Trebuchet MS, sans-serif;
-  text-decoration: none;
-*/
-}
-
-.resourceButton {
-  width: 100px
-}
-
-.dojoDndItem {
-  padding: 3px;
-}
-
-.dojoDndItemOver {
-  background: #EDEDED;
-  cursor: pointer;
-}
-
-.dojoDndItemSelected {
-  background: #5BBDEA;
-  color: #444444;
-}
-
-.dojoDndItemAnchor {
-  background: #5BBDEA;
-  color: black;
-}
-
-.dojoDndItemOver .dojoDndItemSelected {
-  background: #EDEDED;
-}
-
-.dojoDndItemOver .dojoDndItemAnchor {
-  background: #EDEDED;
-}
-
-.dojoDndItemBefore {
-  border-top: 2px solid #336699;
-}
-
-.dojoDndItemAfter {
-  border-bottom: 2px solid #336699;
-}
-
-.dojoDndAvatar {
-  border: 2px solid #CCCCCC;
-}
-
-.dojoDndAvatarHeader {
-  background: #AAAAAA;
-}
-
-.dojoDndAvatarItem {
-  background: #FFFFFF;
-  border-bottom: 1px solid #666666;
-}
-
-.dojoDndAvatarItem .itemText {
-  font-size: 120%;
-}
-
-.container {
-  min-height: 10px;
-  width: 100%;
-}
-
-/* dojo css */
-
-.dijitBorderContainer {
-  padding: 1px;
-}
-
-.claro
-.dijitBorderContainer-dijitContentPane {
-  background: #ffffff;
-  padding: 1px 1px 6px 1px;
-  margin: 1px
-}
-
-table.topSotTable {
-  white-space: nowrap;
-  border-collapse: collapse;
-  /* margin: auto;   /* centers the table */
-  border: 0;
-  padding: 0;
-  table-layout: auto;
-}
-.topSotTable th, .top td {  padding: 0px;  }
-.topTable tr *:nth-child(1) {
-  text-align: right;
-}
-.topSotTable tr *:nth-child(2) {
-  width: 50%;
-}
-
-.topSotTable tr:nth-child(odd) {background: #D7D7D7}
-.topSotTable tr:nth-child(even) {background: #DDDDDD}
-
-table.topPopTable {
-  border-collapse: collapse;
-  border: 0;
-  padding: 0;
-  white-space: nowrap;
-  width: 100%;
-}
-.topPopTable tr *:nth-child(1) {
-  text-align: right;
-  font-size: 1em;
-}
-.topPopTable tr *:nth-child(2) {
-  text-align: left;
-  font-family: monospace;
-  font-size: 1.2em;
-}
-.topPopTable tr:nth-child(odd) {background: #D7D7D7}
-.topPopTable tr:nth-child(even) {background: #DDDDDD}
-
-table.botSotTable {
-  border: 0;
-  padding: 0;
-  border-collapse: collapse;
-  width: 100%; /* yemi */
-}
-
-.botSotTable tr:nth-child(even) {background: #FAFAFA}
-
-.botSotTable th { font-weight: bold}
-.botSotTable td {  line-height: 15px;  }   /* added in javascript ??? */
-
-.botSotTable tr *:nth-child(1) { text-align: center;  }
-.botSotTable tr *:nth-child(2) {  text-align: right;  }
-.botSotTable tr *:nth-child(3) {  width: 80%;  }
-
-.sotR {
-  text-align:left;
-  padding-left: 1px;
-  /* max-height: 125px;  */
-  /* width: 70px; */ /* yemi */
-  overflow: hidden;
-}
-
-.sotL {
-  text-align:right;
-  max-height: 15px;
-  /* width: 110px; */ /* yemi */
-  overflow: hidden;
-}
-.sotodd {
-  background: #BBB;   /* #D7D7D7;    */
-  align-self: center;
-}
-.sotEven {
-  background: #DDD;
-  align-self: center;
-}
-.noWrapR {
-  text-align:left;
-  max-height: 15px;
-  overflow: hidden;
-}
-.popButCls{
-  padding: 0px 2px 0px 2px;  
-  max-height: 15px;
-}
-.noWrap1 {
-  text-align:center;
-}
-
-/*
-web pages about style sheets that are changed with javascript
-https://www.w3.org/wiki/Dynamic_style_-_manipulating_CSS_with_JavaScript
-http://www.shawnolson.net/a/503/altering_css_class_attributes_with_javascript.html  //confusing
-*/
-
-
-/* html and css that did not work when trying to turn Selected Organism Type data table into a grid-container */
-/*
-                    <div id='sotLabel' class='popStatsTitle'>Selected Organism Type</div>
-                      <div id='sotTopTable' class='topSotTable'>
-                        <div class='sotL sotodd'>Name:&nbsp;<canvas id='sotColorBox' width='10' height='10'></canvas></div>
-                        <div class='sotR sotodd'><label id='nameLabel'></label>.</div>
-
-                        <div class='sotL sotEven'>Fitness:&nbsp;</div>
-                        <div class='sotR sotEven'><label id='fitLabel'></label>.</div>
-                      
-                        <div class='sotL sotodd'>Energy Acq. Rate:&nbsp;</div>
-                        <div class='sotR sotodd'><label id='energyAcqRateLabel'></label>.</div>
-                      
-                        <div class='sotL sotEven'>Offspring Cost:&nbsp;</div>
-                        <div class='sotR sotEven'><label id='offspringCostLabel'></label>.</div>
-                      
-                        <div class='sotL sotodd'>Age (updates):&nbsp;</div>
-                        <div class='sotR sotodd'><label id='ageLabel'></label>&nbsp;&nbsp;&nbsp;</div>
-                      
-                        <div class='sotL sotEven'>Ancestor:&nbsp;</div>
-                        <div class='sotR sotEven'><label id='ancestorLabel'></label>.</div>
-                      
-                        <div class='sotL sotodd'>Viable:&nbsp;</div>
-                        <div class='sotR sotodd'><label id='viableLabel'></label>.</div>
-                    </div>
-                    <div id='sotBotTable' class='botSotTable' style="background: white;">
-                      <div class='noWrapF' id='sotFn'>Function</div>
-                      <div class='noWrapN' id='sotTimes'>Times Done</div>
-
-                      <div class='noWrap1' id='notLabel'>NOT</div>
-                      <div class='noWrap2' id='notTime'></div>
-
-                      <div class='noWrap1' id='nanLabel'>NAN</div>
-                      <div class='noWrap2' id='nanTime'></div>
-
-                      <div class='noWrap1' id='andLabel'>AND</div>
-                      <div class='noWrap2' id='andTime'></div>
-
-                      <div class='noWrap1' id='ornLabel'>ORN</div>
-                      <div class='noWrap2' id='ornTime'></div>
-
-                      <div class='noWrap1' id='oroLabel'>ORO</div>
-                      <div class='noWrap2' id='oroTime'></div>
-
-                      <div class='noWrap1' id='antLabel' onclick="av.ui.toggleResourceComplexity('antLable')">ANT</div>
-                      <div class='noWrap2' id='antTime'></div>
-
-                      <div class='noWrap1' id='norLabel'>NOR</div>
-                      <div class='noWrap2' id='norTime'></div>
-
-                      <div class='noWrap1' id='xorLabel' onclick="av.ui.toggleResourceData('xorLabel')">XOR</div>
-                      <div class='noWrap2' id='xorTime'></div>
-                      
-                      <div class='noWrap1' id='equLabel'>ORO</div>
-                      <div class='noWrap2' id='equTime'></div>
-                      <div id='blank_11'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                    </div><span id='sotBotTable_end'>
-
-        #popStatistics{
-    display: flex;
-    flex-direction: row;
-    border: 1px solid #AAA;
-    background: #F5F5F5;
-    height: 280px;
-    resize: vertical;
-    overflow: auto;
-  }
-  /* contains SelOrgType & PopStats4Grid horizontal 
-  
-  #selOrgType {
-    flex: 1 1 175px;        /*was 170 
-  }  
-
-  #sotTopTable {  
-    display: grid;
-    grid-template-columns: 66% 33%;
-/*    grid-template-rows: 15px 15px 15px 15px 15px 15px 15px;  
-    justify-items: stretch;
-    column-gap: 0px;
-    row-gap: 0px;
-    height: 105px;
-    border: 1px solid #AAA;
-    overflow: auto;
-    width: 100%;
-    background: #CCC;
-  }
-  
-/*  
-                        <div class='sotodd'>                         
-                      </div>
-  
-  #sotBotTable {
+ * { margin: 0; padding: 0; }
+
+ html, body {
+   height: 100%;
+   width: 100%;
+   margin: 0;
+   padding:0;
+   background: #F5F5F5; /* cyan; */
+   font-family: Tahoma, Trebuchet MS, sans-serif;
+ }
+ 
+ .bit32 {                       /* not in use */
+   font-family: Courier New;
+   font-size: .8em;
+ }
+ 
+ p {
+   margin-top: 0px;
+   margin-bottom: 0px;
+   font-family: Tahoma, Trebuchet MS, sans-serif;
+ }
+ 
+ li {
+   margin: 0px 0px 0px 0px;
+   font-family: Tahoma, Trebuchet MS, sans-serif;
+ }
+ 
+ ul {
+   margin-top: 0px;
+   margin-bottom: 0px;
+   font-family: Tahoma, Trebuchet MS, sans-serif;
+ }
+ 
+ /* Trying get headers back to default values
+ /* this did not work I wanted to change for all headers inside the main div. 
+ #allAvidaContainer h1, h2, h3, h4, h5, h6 {
+   font-weight: bold;
+   margin: 0;
+   padding: 0;
+   font-family: Tahoma, Trebuchet MS, sans-serif;
+ }
+ 
+ 
+ /* trying classe to get headers back to to what they should be 
+    hdf# classes were over written by .claro in document.css
+ */
+ .dfhd {
+   display: block;
+   font-weight: bold;
+   margin: 0rem;
+   padding: 0rem;
+   font-family: Tahoma, Trebuchet MS, sans-serif;
+   margin-block-start: 0rem;
+   margin-block-end: 0rem;
+   margin-inline-start: 0rem;
+   margin-inline-end: 0rem;
+   /* border: 1px solid black; */
+ } 
+ .hdf1 { font-size: 2.00rem; }
+ .hdf2 { font-size: 1.85rem;}
+ .hdf3 { font-size: 1.60rem; }
+ .hdf4 { font-size: 1.45rem; }
+ .hdf5 { font-size: 1.30rem; }
+ .hdf6 { font-size: 1.15rem; }
+ 
+ /* font size from w3schools
+ .hdf1 { font-size: 2.00rem; }    style='font-size: 2.00rem; line-height: 2.00rem; font-weight: 700; margin: 0rem;'
+ .hdf2 { font-size: 1.50rem; }    style='font-size: 1.85rem; line-height: 1.85rem; font-weight: 600; margin: 0rem;'
+ .hdf3 { font-size: 1.17rem; }    style='font-size: 1.60rem; line-height: 1.60rem; font-weight: 500; '
+ .hdf4 { font-size: 1.00rem; }    style='font-size: 1.45rem; line-height: 1.45rem; font-weight: 400; '
+ .hdf5 { font-size: 0.83rem; }    style='font-size: 1.30rem; line-height: 1.30rem; font-weight: 300; '
+ .hdf6 { font-size: 0.67rem; }    style='font-size: 1.15rem; line-height: 1.15rem; font-weight: 200; '
+ 
+ examples
+   <div id="headerSizeTest">
+     <h1 class='dfhd hdf1' style='font-size: 2.00rem; line-height: 2.00rem; font-weight: 700; margin: 0rem;'>Header 1</h1>
+     <h2 class='dfhd hdf2' style='font-size: 1.85rem; line-height: 1.85rem; font-weight: 600; margin: 0rem;'>Header 2</h2>
+     <h3 class='dfhd hdf3' style='font-size: 1.60rem; line-height: 1.60rem; font-weight: 500;'>Header 3</h3>
+     <h4 class='dfhd hdf4' style='font-size: 1.45rem; line-height: 1.45rem; font-weight: 400;'>Header 4</h4>
+     <h5 class='dfhd hdf5' style='font-size: 1.30rem; line-height: 1.30rem; font-weight: 300;'>Header 5</h5>
+     <h6 class='dfhd hdf6' style='font-size: 1.15rem; line-height: 1.15rem; font-weight: 200;'>Header 6</h6>
+   </div>
+ */
+ 
+ textarea {
+   outline: none;
+ }
+ 
+ div {
+   margin: 0;
+   padding: 0;
+ }
+ 
+ #anlDndChart {
+   width: 100%;
+   height: 100%;
+ }
+ 
+ div.odd {
+   background: #EEEEEE;
+   padding: 0.5em 0.5em 1em 0.5em;   /* top, right, bottom, left;  right and left were 0.3 before*/
+   clear: left;
+ }
+ 
+ .even {
+   background: #CCCCCC;
+   padding: 0.5em 0.3em 1em 0.5em;
+   clear: left;
+ }
+ 
+ .lftWide {
+   float: left;
+   width: 90%;
+ }
+ 
+ .ritThin {
+   float: right;
+   width: 10%;
+ }
+ 
+ .fltLeft {
+   float: left;
+ }
+ 
+ .lftmargin {
+   float: left;
+   clear: left;
+ }
+ 
+ div.popStatsTitle {
+   overflow: visible;
+   background:#ffffff;
+   min-width: 170px;
+   text-align:left;
+   height:18px;
+   font-weight: bold;
+ }
+ 
+ div.popStatsTableSot {
+   min-width: 169px;
+   background: #DDD;
+ }
+ 
+ .noWrapF {
+   text-align:center;
+   font-weight: bold;
+   max-height: 15px;
+ }
+ 
+ .noWrapN {
+   text-align:left;
+   font-weight: bold;
+   /* max-height: 12px; */ /* yemi: fixes inconsistent spacing of rows in Population Statistics */
+   overflow: hidden;
+ }
+ 
+ .noWrap2r {
+   text-align:center;
+   max-height: 15px;
+ }
+ 
+ .noWrapTitle {
+   text-align:center;
+   font-weight: bold;
+   max-height: 15px;
+ }
+ button {
+   border: 1px solid #aaa;
+   display:inline;
+   cursor:pointer;
+   border-radius: 5px;
+ }
+ 
+ .bitButtonOff {
+   background: #fff;
+   color: #000;
+   border: 1px solid #aaa;
+   padding: 0px 0px 2px 0px;
+   height: 15px;
+   width: 45px;
+   display: block;
+   text-align: center;
+ /*
+   font-family: Tahoma, Trebuchet MS, sans-serif;
+   text-decoration: none;
+ */
+ }
+ 
+ .bitButtonOn {
+   background: #fff;
+   color: #00f;
+   color: #00bb00;
+   border: 1px solid #00dd00;
+   padding: 0px 0px 2px 0px;
+   height: 15px;
+   width: 45px;
+   display: block;
+   text-align: center;
+ /*
+   font-family: Tahoma, Trebuchet MS, sans-serif;
+   text-decoration: none;
+ */
+ }
+ 
+ .resourceButton {
+   width: 100px
+ }
+ 
+ .dojoDndItem {
+   padding: 3px;
+ }
+ 
+ .dojoDndItemOver {
+   background: #EDEDED;
+   cursor: pointer;
+ }
+ 
+ .dojoDndItemSelected {
+   background: #5BBDEA;
+   color: #444444;
+ }
+ 
+ .dojoDndItemAnchor {
+   background: #5BBDEA;
+   color: black;
+ }
+ 
+ .dojoDndItemOver .dojoDndItemSelected {
+   background: #EDEDED;
+ }
+ 
+ .dojoDndItemOver .dojoDndItemAnchor {
+   background: #EDEDED;
+ }
+ 
+ .dojoDndItemBefore {
+   border-top: 2px solid #336699;
+ }
+ 
+ .dojoDndItemAfter {
+   border-bottom: 2px solid #336699;
+ }
+ 
+ .dojoDndAvatar {
+   border: 2px solid #CCCCCC;
+ }
+ 
+ .dojoDndAvatarHeader {
+   background: #AAAAAA;
+ }
+ 
+ .dojoDndAvatarItem {
+   background: #FFFFFF;
+   border-bottom: 1px solid #666666;
+ }
+ 
+ .dojoDndAvatarItem .itemText {
+   font-size: 120%;
+ }
+ 
+ .container {
+   min-height: 10px;
+   width: 100%;
+ }
+ 
+ /* dojo css */
+ 
+ .dijitBorderContainer {
+   padding: 1px;
+ }
+ 
+ .claro
+ .dijitBorderContainer-dijitContentPane {
+   background: #ffffff;
+   padding: 1px 1px 6px 1px;
+   margin: 1px
+ }
+ 
+ table.topSotTable {
+   white-space: nowrap;
+   border-collapse: collapse;
+   /* margin: auto;   /* centers the table */
+   border: 0;
+   padding: 0;
+   table-layout: auto;
+ }
+ .topSotTable th, .top td {  padding: 0px;  }
+ .topTable tr *:nth-child(1) {
+   text-align: right;
+ }
+ .topSotTable tr *:nth-child(2) {
+   width: 50%;
+ }
+ 
+ .topSotTable tr:nth-child(odd) {background: #D7D7D7}
+ .topSotTable tr:nth-child(even) {background: #DDDDDD}
+ 
+ table.topPopTable {
+   border-collapse: collapse;
+   border: 0;
+   padding: 0;
+   white-space: nowrap;
+   width: 100%;
+ }
+ .topPopTable tr *:nth-child(1) {
+   text-align: right;
+   font-size: 1em;
+ }
+ .topPopTable tr *:nth-child(2) {
+   text-align: left;
+   font-family: monospace;
+   font-size: 1.2em;
+ }
+ .topPopTable tr:nth-child(odd) {background: #D7D7D7}
+ .topPopTable tr:nth-child(even) {background: #DDDDDD}
+ 
+ table.botSotTable {
+   border: 0;
+   padding: 0;
+   border-collapse: collapse;
+   width: 100%; /* yemi */
+ }
+ 
+ .botSotTable tr:nth-child(even) {background: #FAFAFA}
+ 
+ .botSotTable th { font-weight: bold}
+ .botSotTable td {  line-height: 15px;  }   /* added in javascript ??? */
+ 
+ .botSotTable tr *:nth-child(1) { text-align: center;  }
+ .botSotTable tr *:nth-child(2) {  text-align: right;  }
+ .botSotTable tr *:nth-child(3) {  width: 80%;  }
+ 
+ .sotR {
+   text-align:left;
+   padding-left: 1px;
+   /* max-height: 125px;  */
+   /* width: 70px; */ /* yemi */
+   overflow: hidden;
+ }
+ 
+ .sotL {
+   text-align:right;
+   max-height: 15px;
+   /* width: 110px; */ /* yemi */
+   overflow: hidden;
+ }
+ .sotodd {
+   background: #BBB;   /* #D7D7D7;    */
+   align-self: center;
+ }
+ .sotEven {
+   background: #DDD;
+   align-self: center;
+ }
+ .noWrapR {
+   text-align:left;
+   max-height: 15px;
+   overflow: hidden;
+ }
+ .popButCls{
+   padding: 0px 2px 0px 2px;  
+   max-height: 15px;
+ }
+ .noWrap1 {
+   text-align:center;
+ }
+ 
+ /*
+ web pages about style sheets that are changed with javascript
+ https://www.w3.org/wiki/Dynamic_style_-_manipulating_CSS_with_JavaScript
+ http://www.shawnolson.net/a/503/altering_css_class_attributes_with_javascript.html  //confusing
+ */
+ 
+ 
+ /* html and css that did not work when trying to turn Selected Organism Type data table into a grid-container */
+ /*
+                     <div id='sotLabel' class='popStatsTitle'>Selected Organism Type</div>
+                       <div id='sotTopTable' class='topSotTable'>
+                         <div class='sotL sotodd'>Name:&nbsp;<canvas id='sotColorBox' width='10' height='10'></canvas></div>
+                         <div class='sotR sotodd'><label id='nameLabel'></label>.</div>
+ 
+                         <div class='sotL sotEven'>Fitness:&nbsp;</div>
+                         <div class='sotR sotEven'><label id='fitLabel'></label>.</div>
+                       
+                         <div class='sotL sotodd'>Energy Acq. Rate:&nbsp;</div>
+                         <div class='sotR sotodd'><label id='energyAcqRateLabel'></label>.</div>
+                       
+                         <div class='sotL sotEven'>Offspring Cost:&nbsp;</div>
+                         <div class='sotR sotEven'><label id='offspringCostLabel'></label>.</div>
+                       
+                         <div class='sotL sotodd'>Age (updates):&nbsp;</div>
+                         <div class='sotR sotodd'><label id='ageLabel'></label>&nbsp;&nbsp;&nbsp;</div>
+                       
+                         <div class='sotL sotEven'>Ancestor:&nbsp;</div>
+                         <div class='sotR sotEven'><label id='ancestorLabel'></label>.</div>
+                       
+                         <div class='sotL sotodd'>Viable:&nbsp;</div>
+                         <div class='sotR sotodd'><label id='viableLabel'></label>.</div>
+                     </div>
+                     <div id='sotBotTable' class='botSotTable' style="background: white;">
+                       <div class='noWrapF' id='sotFn'>Function</div>
+                       <div class='noWrapN' id='sotTimes'>Times Done</div>
+ 
+                       <div class='noWrap1' id='notLabel'>NOT</div>
+                       <div class='noWrap2' id='notTime'></div>
+ 
+                       <div class='noWrap1' id='nanLabel'>NAN</div>
+                       <div class='noWrap2' id='nanTime'></div>
+ 
+                       <div class='noWrap1' id='andLabel'>AND</div>
+                       <div class='noWrap2' id='andTime'></div>
+ 
+                       <div class='noWrap1' id='ornLabel'>ORN</div>
+                       <div class='noWrap2' id='ornTime'></div>
+ 
+                       <div class='noWrap1' id='oroLabel'>ORO</div>
+                       <div class='noWrap2' id='oroTime'></div>
+ 
+                       <div class='noWrap1' id='antLabel' onclick="av.ui.toggleResourceComplexity('antLable')">ANT</div>
+                       <div class='noWrap2' id='antTime'></div>
+ 
+                       <div class='noWrap1' id='norLabel'>NOR</div>
+                       <div class='noWrap2' id='norTime'></div>
+ 
+                       <div class='noWrap1' id='xorLabel' onclick="av.ui.toggleResourceData('xorLabel')">XOR</div>
+                       <div class='noWrap2' id='xorTime'></div>
+                       
+                       <div class='noWrap1' id='equLabel'>ORO</div>
+                       <div class='noWrap2' id='equTime'></div>
+                       <div id='blank_11'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                     </div><span id='sotBotTable_end'>
+ 
+         #popStatistics{
+     display: flex;
+     flex-direction: row;
+     border: 1px solid #AAA;
+     background: #F5F5F5;
+     height: 280px;
+     resize: vertical;
+     overflow: auto;
+   }
+   /* contains SelOrgType & PopStats4Grid horizontal 
    
-  }
-  
- */ 
-              
+   #selOrgType {
+     flex: 1 1 175px;        /*was 170 
+   }  
+ 
+   #sotTopTable {  
+     display: grid;
+     grid-template-columns: 66% 33%;
+ /*    grid-template-rows: 15px 15px 15px 15px 15px 15px 15px;  
+     justify-items: stretch;
+     column-gap: 0px;
+     row-gap: 0px;
+     height: 105px;
+     border: 1px solid #AAA;
+     overflow: auto;
+     width: 100%;
+     background: #CCC;
+   }
+   
+ /*  
+                         <div class='sotodd'>                         
+                       </div>
+   
+   #sotBotTable {
+    
+   }
+   
+  */ 
+               

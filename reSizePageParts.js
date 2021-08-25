@@ -334,53 +334,51 @@ function dragbarRightResize() {
 // the splash screen should also be turned off at this time. 
 // stores initial size that are valid when the viewport stays the same
 //
-av.dom.storeInitialSize = function() {
-  av.dom.window_ht_now = $(window).height();
-  av.dom.window_wd_now = $(window).width();
-  av.dom.document_ht_now = $(document).height();
-  av.dom.document_wd_now = $(document).width();
-  av.dom.freezerSection_wd_now = $("#freezerSection").width();
-  av.dom.freezerSection_ht_now = $("#freezerSection").height();
-  av.dom.navColId_wd_now = $("#navColId").width();
-  av.dom.navColId_ht_now = $("#navColId").height();
-  av.dom.popInfoVert_wd_now = $("#popInfoVert").width();
-  av.dom.popInfoVert_ht_now = $("#popInfoVert").height();
-  av.dom.popChrtHolder_wd_now = $("#popChrtHolder").width();
-  av.dom.popChrtHolder_ht_now = $("#popChrtHolder").height();
-  av.dom.sclCnvsHldr_wd_now = $('#sclCnvsHldr').width();
-  av.dom.sclCnvsHldr_ht_now = $('#sclCnvsHldr').height();
-  
-  if (av.dbg.flg.dsz) { console.log('dsz: now: navColId wd,       ht =', av.dom.navColId_wd_now, ',', av.dom.navColId_ht_now); }
-  if (av.dbg.flg.dsz) { console.log('dsz: now: freezerSection wd, ht =', av.dom.freezerSection_wd_now, ',', av.dom.freezerSection_ht_now); }
-  if (av.dbg.flg.dsz) { console.log('dsz: now: popInfoVert wd,    ht =', av.dom.popInfoVert_wd_now, ',', av.dom.popInfoVert_ht_now); }
-  if (av.dbg.flg.dsz) { console.log('dsz: now: popChrtHolder wd,  ht =', av.dom.popChrtHolder_wd_now, ',', av.dom.popChrtHolder_ht_now); }
-  if (av.dbg.flg.dsz) { console.log('dsz: now: sclCnvsHldr_wd, ht =', av.dom.sclCnvsHldr_wd_now, ',', av.dom.sclCnvsHldr_ht_now); }
-
-  av.dom.headerMain_ht_ot_now = $('#headerMain').outerHeight(true);
-  av.dom.navColId_ht_ot_now = $('#navColId').outerHeight(true);
-  av.dom.navColId_ht_now = $('#navColId').height();
-  av.dom.mainButtons_ht_ot_now = $('#mainButtons').outerHeight(true);
-  av.dom.freezerSection_ht_ot_now = $('#freezerSection').outerHeight(true);
-  av.dom.trashDiv_ht_ot_now = $('#trashDiv').outerHeight(true);
-  av.dom.window_ht_now = $(window).height();
-
-  console.log('Ht: header=', av.dom.headerMain_ht_ot_now, '; navColID=', av.dom.navColId_ht_ot_now
-              , '; sum=', (av.dom.headerMain_ht_ot_now+av.dom.navColId_ht_ot_now) );
-  console.log('mainButtons=', av.dom.mainButtons_ht_ot_now, '; freezer=', av.dom.freezerSection_ht_ot_now
-              , '; trash=', av.dom.trashDiv_ht_ot_now, '; navColID_now=', av.dom.navColId_ht_now
-              , '; sum=',(av.dom.mainButtons_ht_ot_now+av.dom.freezerSection_ht_ot_now+av.dom.trashDiv_ht_ot_now) );
-  
+av.ui.initialDivSizing = function() {
+  //  av.dom.window_ht_now = $(window).height();
+  //  av.dom.window_wd_now = $(window).width();
+  //  av.dom.document_ht_now = $(document).height();
+  //  av.dom.document_wd_now = $(document).width();
+  //  av.dom.freezerSection_wd_now = $("#freezerSection").width();
+  //  av.dom.freezerSection_ht_now = $("#freezerSection").height();
+  //  av.dom.navColId_wd_now = $("#navColId").width();
+  //  av.dom.navColId_ht_now = $("#navColId").height();
+  //  av.dom.popInfoVert_wd_now = $("#popInfoVert").width();
+  //  av.dom.popInfoVert_ht_now = $("#popInfoVert").height();
+  //  av.dom.popChrtHolder_wd_now = $("#popChrtHolder").width();
+  //  av.dom.popChrtHolder_ht_now = $("#popChrtHolder").height();
+  //  av.dom.sclCnvsHldr_wd_now = $('#sclCnvsHldr').width();
+  //  av.dom.sclCnvsHldr_ht_now = $('#sclCnvsHldr').height();
+  //  
+  //  if (av.dbg.flg.dsz) { console.log('dsz: now: navColId wd,       ht =', av.dom.navColId_wd_now, ',', av.dom.navColId_ht_now); }
+  //  if (av.dbg.flg.dsz) { console.log('dsz: now: freezerSection wd, ht =', av.dom.freezerSection_wd_now, ',', av.dom.freezerSection_ht_now); }
+  //  if (av.dbg.flg.dsz) { console.log('dsz: now: popInfoVert wd,    ht =', av.dom.popInfoVert_wd_now, ',', av.dom.popInfoVert_ht_now); }
+  //  if (av.dbg.flg.dsz) { console.log('dsz: now: popChrtHolder wd,  ht =', av.dom.popChrtHolder_wd_now, ',', av.dom.popChrtHolder_ht_now); }
+  //  if (av.dbg.flg.dsz) { console.log('dsz: now: sclCnvsHldr_wd, ht =', av.dom.sclCnvsHldr_wd_now, ',', av.dom.sclCnvsHldr_ht_now); }
+  //
+  //  av.dom.headerMain_ht_ot_now = $('#headerMain').outerHeight(true);
+  //  av.dom.navColId_ht_ot_now = $('#navColId').outerHeight(true);
+  //  av.dom.navColId_ht_now = $('#navColId').height();
+  //  av.dom.mainButtons_ht_ot_now = $('#mainButtons').outerHeight(true);
+  //  av.dom.freezerSection_ht_ot_now = $('#freezerSection').outerHeight(true);
+  //  av.dom.trashDiv_ht_ot_now = $('#trashDiv').outerHeight(true);
+  //  av.dom.window_ht_now = $(window).height();
+  //
+  //  console.log('Ht: header=', av.dom.headerMain_ht_ot_now, '; navColID=', av.dom.navColId_ht_ot_now
+  //              , '; sum=', (av.dom.headerMain_ht_ot_now+av.dom.navColId_ht_ot_now) );
+  //  console.log('mainButtons=', av.dom.mainButtons_ht_ot_now, '; freezer=', av.dom.freezerSection_ht_ot_now
+  //              , '; trash=', av.dom.trashDiv_ht_ot_now, '; navColID_now=', av.dom.navColId_ht_now
+  //              , '; sum=',(av.dom.mainButtons_ht_ot_now+av.dom.freezerSection_ht_ot_now+av.dom.trashDiv_ht_ot_now) );
+  //  
   // call other size related function when initializing 
   av.ui.freezerSizeHtFn(); 
-  console.log('sizes=', av.dom.sizes() );
+  console.log('sizes=', av.dom.sizes('av.ui.initialDivSizing') );
   
   /* yemi: call the drag bar left function */
   dragbarLeftResize();
 
   /* yemi: call the drag bar right function */
   dragbarRightResize();
-
-  av.grd.drawGridSetupFn(); // yemi: redraw the grid
 };
 
 //----------------------------------------------------------------------------------------show/hide left side panel --

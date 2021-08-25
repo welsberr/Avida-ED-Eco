@@ -264,9 +264,6 @@ jQuery(document).ready(function($) {
         } 
 
         if (elements.indexOf("gridCanvas") != -1 && sourceIsFzWorld) { 
-          var elm = elForGrid.cloneNode(true)
-          elm.id = 'w' + av.fzr.wNum++;
-          av.dnd.activeConfig.append(elm);
           av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, source);
         }
 
