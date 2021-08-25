@@ -202,7 +202,7 @@ function dragbarRightResize() {
 
   $('#dragbarRight').on('mousedown touchstart', function(e) {
     dragging = true;
-    
+
     $(document).on('mousemove touchmove', function(e){
       av.grd.drawGridSetupFn(); // yemi: redraw the grid
       av.grd.popChartFn(); // yemi: redraw plotly graph
