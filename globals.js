@@ -40,6 +40,7 @@ av.dbg.flg = {};
 av.dbg.flg.popSetup = false;
 av.dbg.flg.frd = false;  //reading file text strings
 av.dbg.flg.nut = false;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
+av.dbg.flg.nutSum = true; //summary for each function when processing environment.cfg for sugar user interace
 av.dbg.flg.plt = false;  //both popChart and analysis
 av.dbg.flg.root = false;  //statements that look for failers when the code executes outside of functions
 av.dbg.flg.divsize = false;

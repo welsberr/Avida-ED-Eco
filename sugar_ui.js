@@ -665,7 +665,7 @@ av.sgr.supplyChange = function (domObj) {
     var dom = '';
     var ndx = av.sgr.logicNames.indexOf(tsk);
     var numTsk = av.sgr.logEdNames[ndx];
-    var regionNameList;
+    var numRegions = 'multi';
     if ( null != document.getElementById(tsk+'_regionLayout').value) {
       if ('1Global' == document.getElementById(tsk+'_regionLayout').value) {av.nut[numTsk].uiAll.geometry = 'global';}
       else { av.nut[numTsk].uiAll.geometry = 'grid';}
@@ -678,12 +678,7 @@ av.sgr.supplyChange = function (domObj) {
         
     //console.log('layout =', av.nut[tsk].uiAll.regionLayout, '; tsk=', tsk, ' subChanged=', subChanged, '; from=', from);
     //console.log('num sub Regions=', av.nut[numTsk].uiAll.regionsNumOf, 'layoutName=', '|'+av.nut[numTsk].uiAll.regionLayout+'|');
-    numRegions = 'multi';
     
-    if ('1All' == av.sgr[av.nut[numTsk].uiAll.regionLayout]) { numRegions = '1All'; }
-    regionNameList = av.sgr.name[av.nut[numTsk].uiAll.regionLayout];
-    //console.log('av.sgr[av.nut['+numTsk+'].uiAll.regionLayout]=', av.nut[numTsk].uiAll.regionLayout, '; regionNameList',regionNameList);
-
     //console.log('regionNameList=', regionNameList);
     //this 2 line method woks to get the value of the option in the select structure, but so does the one line method;
     //var idx = document.getElementById(tsk+'_geometry').selectedIndex;
@@ -696,7 +691,7 @@ av.sgr.supplyChange = function (domObj) {
     document.getElementById(tsk+'_inflowHiDiv').style.display = 'none';
     document.getElementById(tsk+'_outflowHiDiv').style.display = 'none';
     document.getElementById(tsk+'_combo').style.display = 'none';    
-    document.getElementById(tsk+'_chemo').style.display = 'none';    
+    document.getElementById(tsk+'_chemo').style.display = 'none';               // may comment out before Rob sees. 
     document.getElementById(tsk+'_chmstatHiTxt').style.display = 'none';
     document.getElementById(tsk+'0inflowHiNp').style.display = 'inline-block';   //yes block as global chemo turns the inputs 2 none
     document.getElementById(tsk+'0outflowHiNp').style.display = 'inline-block';   //yes block as global chemo turns the inputs 2 none
@@ -757,7 +752,7 @@ av.sgr.supplyChange = function (domObj) {
 av.sgr.processBasicFn = function(numTsk, tsk) {
   // av.sgr.complexityLevel = 'sgrGlobal';   (begingger level)      
   av.nut[numTsk].uiAll.supplyTypeSlct = document.getElementById(tsk + '_supplyTypeSlct').value;
-  console.log('av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
+  //console.log('av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
   
   if ('grid' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
     // modify to treat as if it is global
@@ -858,10 +853,14 @@ av.sgr.processBasicFn = function(numTsk, tsk) {
 //------------------------------------------------------------------------------------------ av.sgr.processAdvancedFn --
 av.sgr.processAdvancedFn = function(numTsk, tsk) {
   av.nut[numTsk].uiAll.supplyTypeSlct = document.getElementById(tsk + '_supplyTypeSlct').value;
-  
   console.log('in av.sgr.processAdvancedFn: av.nut['+numTsk+'].uiAll.supplyTypeSlct=', av.nut[numTsk].uiAll.supplyTypeSlct);
+  // document.getElementById(tsk+'_combo').style.display = 'inline-block';  not used it limited includes inflow and outflow;
+  console.log('av.sgr[av.nut['+numTsk+'].uiAll.regionLayout]=', av.sgr[av.nut[numTsk].uiAll.regionLayout]);
+  var numRegions = av.sgr[av.nut[numTsk].uiAll.regionLayout];
+  var regionNameList = av.sgr.name[av.nut[numTsk].uiAll.regionLayout];
+    
+  console.log('av.sgr[av.nut['+numTsk+'].uiAll.regionLayout]=', av.nut[numTsk].uiAll.regionLayout, '; regionNameList',regionNameList);
 
-  document.getElementById(tsk+'_combo').style.display = 'inline-block';
 
   if ('global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
     // I was not able to get a grid container to start in the top row of the summary secion. 
@@ -969,7 +968,7 @@ av.sgr.processAdvancedFn = function(numTsk, tsk) {
     }    
   }        // end global 
   else {
-    // geometry = grid
+    // geometry = grid    
     document.getElementById(tsk+'_summary').className = 'grd-sgr-sum-adv-space';
     document.getElementById(tsk+'_regionLayHolder').style.display = 'inline-block';
     document.getElementById(tsk+'_section').open = true;
@@ -990,7 +989,8 @@ av.sgr.processAdvancedFn = function(numTsk, tsk) {
         case 'none':
         case 'unlimited': 
             //document.getElementById(tsk+sub+'blank').style.display = 'block';      
-            document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-' + numRegions+ '-unlimited-container';
+            //document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-' + numRegions+ '-unlimited-container';
+            document.getElementById(tsk+sub+'subSection').className = 'grid-sugarDetail-unlimited-container';
           break;
         case 'limited':   //Local
           // if (av.dbg.flg.nut) { console.log('av.nut.hideFlags.gradient=',av.nut.hideFlags.gradient); }

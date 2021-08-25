@@ -573,6 +573,7 @@ av.dnd.landFzConfig = function (source, nodes, target) {
 av.dnd.landFzOrgan = function (source, nodes, target) {
   'use strict';
   var gen;
+  console.log('av.dnd.landFzOrgan: av.dnd.ancestorBox.copyOnly=', av.dnd.ancestorBox.copyOnly, '; source.node.id=', source.node.id);
   var domid = Object.keys(target.selection)[0];
   if (av.debug.dnd) console.log('domid', domid);
   //console.log('target', target, '; fzrOrgan', av.dnd.fzOrgan);
@@ -594,7 +595,7 @@ av.dnd.landFzOrgan = function (source, nodes, target) {
         gen = av.parents.genome[Ndx];
 
         if (false === av.dnd.ancestorBox.copyOnly) {
-
+          console.log('In part that removes data from av.parents source.node.id=', source.node.id);
           // need to remove organism from parents list.
           av.parents.removeParent(Ndx);
           av.parents.placeAncestors();

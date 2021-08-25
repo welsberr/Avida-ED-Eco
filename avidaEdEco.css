@@ -196,11 +196,10 @@ html {
 
   #orgInfoHolder {
     border: 1px solid #AAA;
-    background: #F5F5F5;
+    background-color: mistyrose;  /* #F5F5F5; */
     height: 100%;
     width: 100%;
     min-width: 200px;
-    background-color: inherit; /*mistyrose;*/
     font-family: Tahoma, Trebuchet MS, sans-serif;
   }
   
@@ -1077,42 +1076,6 @@ details summary {
 #equ_section{ border-bottom: 1px solid #888; }
 
 /************************* Sugar controls layout in 'summary' of detail/summary for each task-sugar in sugar according */
-/* I could not get a div with a dispay of inline-gid start on the top line of the summary. 
-.sumHolderDiv { display: inline-block; position: absolute; }
-*/
-/* Sgr summary as a grid container. Something wrong. Try a Flex box
-.sgrLftSumCls { grid-area: sgrLftSumCls; display: inline-block;}
-.sgrRitSumCls { grid-area: sgrRitSumCls; 
-  grid-template-areas: 'sumFtTxtCls tskRewardCls';
-  grid-template-columns: 1px 96px;
-  display: grid;
-  justify-items: end;
-  border: 1px solid green;
-}
-*/
-
-
-.sumFtTxtCls { 
-  grid-area: sumFtTxtCls; 
-  display: inline-block; 
-}
-.taskRewardCls { 
-  grid-area: tskRewardCls;
-  text-align: right;
-  height: 100%;
-  width: 96px;
-  background: yellow; 
-}
-
-
-.sgrSumCls { 
-  display: flex;
-  justify-content: space-between;
-  height: 23px;  width: 100%;
-  background: LightCyan;  
-}
-.sgrLftSumCls { flex: 0 1 auto; }
-.sgrRitSumCls { flex: 0 1 auto; width: 96px; }
 
 /*  This works fine, but his not needed. 
 .sgrRitSumCls { 
@@ -1122,9 +1085,29 @@ details summary {
   grid-template-columns: 96px;
   justify-items: end;
   background: lightyellow;
-  /* grid-area: sgrRitSumCls;    /* use if sgrSumCls has display: grid; 
 }
 */
+
+.sumFtTxtCls { 
+  grid-area: sumFtTxtCls; 
+  display: inline-block; 
+}
+
+.sgrSumCls { 
+  display: flex;
+  justify-content: space-between;
+  height: 23px;  width: 100%;
+/*  background: LightCyan;   */
+}
+.sgrLftSumCls { flex: 0 1 auto; }
+.sgrRitSumCls { flex: 0 1 auto; }   /* width: 96px; */
+
+.taskRewardCls { 
+  grid-area: tskRewardCls;
+  text-align: right;
+  height: 100%;
+  width: 96px;
+}
 
 /*---------------------------------------------------------- sugar summary grid container classes for tsk_sumLftGrid--*/
 /* no longer in use, but need to keep until removed from javascript */
@@ -1523,7 +1506,6 @@ details summary {
 /* body select.select_box option */ 
 
 select {
-/*  background: url("https://i.ibb.co/b7xjLrB/selectbox-arrow.png") right center no-repeat;  */
   height: 18px;
   border-bottom: 1px solid #aaa;
   background-color: white;  
@@ -1700,7 +1682,9 @@ checkbox:focus {
   .orgDetailClass{
     font-size: 0.9rem; 
     line-height: 0.9rem;
+    height: 90%; 
     width: 100%;
+    background-color: mediumpurple;
   }
   #orgTaskDataDiv{
     padding: 5px;
@@ -1757,16 +1741,22 @@ checkbox:focus {
     align-items: stretch;
     width: 100%;
     height: 100%;
-    background: #CCCCCC;
+    min-width: 200px;
+    min-height: 400px;
+    background-color: palegreen; /* #CCCCCC;  */
   }
   .repeatMode{
     flex: 0 1 150px;
-    background: #EEEEEE;
+    background: red;   /* #EEEEEE; */
+    min-width: inherit;
+    min-height: 50px;
     padding: 1em 0.5em 1em 0.5em;   
   }
   .muteOrgHolder{
     flex: 1;          /* supposed to expand to fill remainting space, but not working */
-    background: #CCCCCC;
+    background: blue;  /* #CCCCCC; */
+    min-width: inherit;
+    min-height: 50px;    
     padding: 1em 0.5em 2em 0.5em;   
   }
   /* top, right, bottom, left;  right and left were 0.3 before*/
@@ -2219,9 +2209,38 @@ label {
 
 /* https://cssgrid-generator.netlify.app/ .    //tool to make a simple repeated grid 
 
-/*-------------------------------------------------------------------------------------------------------- flex box --*/
+/*----------- --------------------------------------------------------------------------------------------- flex box --*/
+
+
+/* https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+
 /* explains flex: in a way I might finally understand. 
 /* https://css-tricks.com/understanding-flex-grow-flex-shrink-and-flex-basis/ 
+/* .child {
+/*   flex: 0 1 auto; /* Default flex value     or 
+/*   flex: [flex-grow] [flex-shrink] [flex-basis];     or 
+/*   flex: [max] [min] [ideal size];
+/* }
+
+/*  default for flex-grow is 0 so don't grow'
+
+/* flex-shrink tells the browser what the minimum size of an element should be. The default value is 1, 
+/*     which is saying, “Take up the same amount of space at all times.”
+
+/* flex: 0 0 auto;   // Flex-shrink: 0 so 
+/* …then we’re telling this element not to shrink at all now. Stay the same size, you blasted element! 
+/* is essentially what this CSS says, and that’s precisely what it’ll do. 
+/* We’ll come back to this property in a bit once we look at the final value in this shorthand.
+
+/* flex-basis: auto is default, which means use my height or width
+/* child elements will take up just enough space for their content unless width is specified. 
+/* set width: 100%    ro use flex-grow: 1; for each child
+
+/* flex: 0 1 1234px;   // will try to have this child use 12334px if it can, 
+/* else take up that much space proportionally to the other elements.
+
+/* flex: 0 0 1000px;  // shrink not allowed so it might overflow
+
 
 /* width options. might need with flex:
 /* https://www.quirksmode.org/blog/archives/2021/04/fitcontent_and.html
