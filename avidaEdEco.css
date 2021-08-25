@@ -21,7 +21,7 @@ html {
 */
   body {
     margin: 0;
-    background: #F5F5F5; /* cyan; */
+    background: #F5F5F5;
     padding: 0;
     
   }
@@ -196,7 +196,7 @@ html {
 
   #orgInfoHolder {
     border: 1px solid #AAA;
-    background-color: mistyrose;  /* #F5F5F5; */
+    background-color: #F5F5F5;  /* mistyrose; */
     height: 100%;
     width: 100%;
     min-width: 200px;
@@ -853,7 +853,7 @@ input:focus {
                        '  mxTop   mxNot   mxNan   mxAnd   mxOrn   mxOro   mxAnt   mxNor   mxXor   mxEqu'
                        'cellTop cellNot cellNan cellAnd cellOrn cellOro cellAnt cellNor cellXor cellEqu'
                        ' totTop  totNot  totNan  totAnd  totOrn  totOro  totAnt  totNor  totXor  totEqu';
-  background: mistyrose;
+  /* background: mistyrose; */
   width: 100%;
   justify-content: stretch;
 /*  grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
@@ -1603,18 +1603,22 @@ checkbox:focus {
   box-shadow:none;
 }
 
+/*------------------------------------------------------------------------------- End Custom Select/Options DropDown  */
+
 /********************************************************************************* End Custom Select/Options DropDown */
 
-/************************************************************************ used in examples will be deleted eventually */
+/***************************************************************************** example tab will be deleted eventually */
 
 .ex1center {
   display: inline-block;
   vertical-align: middle;
   width: 300px;
-  padding: 10px 15px;
+  padding: 2px 2px;
   border: #a0a0a0 solid 1px;
   background: #f5f5f5;
 }
+
+
  .ex1holder {
   white-space: nowrap;  /* May want to do this if there is risk the container may be narrower than the element inside */
   text-align: center;
@@ -1630,6 +1634,10 @@ checkbox:focus {
   height: 100%; 
   vertical-align: middle;
 }  
+/*-------------------------------------------------------------------------------------------------- End example tab  */
+
+
+/*--------------------------------------------------------------------------------------------------- Organism Block  */
 
 /*Organism Block css */
 .orgBenchTopRow{
@@ -1641,7 +1649,7 @@ checkbox:focus {
     min-height: 40px;
   }
 
-  .orgTopLt{
+  .orgTopLt{     /* in use */
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} fx prevent resize */
     display: flex;
     flex-direction: row;
@@ -1684,7 +1692,6 @@ checkbox:focus {
     line-height: 0.9rem;
     height: 90%; 
     width: 100%;
-    background-color: mediumpurple;
   }
   #orgTaskDataDiv{
     padding: 5px;
@@ -1692,7 +1699,6 @@ checkbox:focus {
   #lowerOrgInfo{
     width: 100%;
     padding: 5px;
-    background: lightcyan;
   }
   #orgTaskDataDiv {
     background:#DDD;    
@@ -1743,18 +1749,18 @@ checkbox:focus {
     height: 100%;
     min-width: 200px;
     min-height: 400px;
-    background-color: palegreen; /* #CCCCCC;  */
+    background-color: #CCCCCC; /* palegreen;  */
   }
   .repeatMode{
     flex: 0 1 150px;
-    background: red;   /* #EEEEEE; */
+    background: #EEEEEE;
     min-width: inherit;
     min-height: 50px;
     padding: 1em 0.5em 1em 0.5em;   
   }
   .muteOrgHolder{
     flex: 1;          /* supposed to expand to fill remainting space, but not working */
-    background: blue;  /* #CCCCCC; */
+    background: #CCCCCC;
     min-width: inherit;
     min-height: 50px;    
     padding: 1em 0.5em 2em 0.5em;   
@@ -1795,6 +1801,9 @@ checkbox:focus {
     flex: 1;            /* does this fill the rest of the space like {flex:1} or {flex:1 1 auto;} ? */
     border: 1px solid #AAA;
   }
+/*----------------------------------------------------------------------------------------------- end Organism Block  */
+
+/*--------------------------------------------------------------------------------------------------- Analysis Block  */
   #anlDndChart{
     width: 100%;
     height: 100%;
@@ -1824,6 +1833,7 @@ checkbox:focus {
     grid-template-areas: 'pop0delete pop0color popDish0'
                          'pop1delete pop1color popDish1'
                          'pop2delete pop2color popDish2';
+   font-family: Tahoma, Myriad, Trebuchet MS, Arial Narrow, Arial, Helvetica, clean, sans-serif;
   }
     #pop0deleteDiv { grid-area: pop0delete;}
     #pop1deleteDiv { grid-area: pop1delete;}
@@ -1837,10 +1847,12 @@ checkbox:focus {
     
     .anaDeleteButtonDiv{
       padding: 1px 4px;  /*top/bottom  left/right  */
+      padding: 1px 4px;  /*top/bottom  left/right  */
     }
     .anaDeleteButton{
       margin: auto;
-      height: 18px;
+      height: 1.1rem;
+      width: 1.5rem;
       position: absolute;
     };
     .anaColorLineDiv{
@@ -1860,7 +1872,7 @@ checkbox:focus {
     }
     /* insdie popDishHolder */
     .popDishClass {
-      min-height: 1.6em;
+      min-height: 1.3rem;
       padding: 5px;
       margin: 2px;
       border: 1px solid #CCCCCC;
@@ -1874,7 +1886,9 @@ checkbox:focus {
     background: #F5F5F5;/* #F5F5F5; /* pink ;  */
     margin: 10px 2px 5px 10px;    /* top right bottom left */
   }
-  
+ /*---------------------------------------------------------------------------------------------- end Analysis Block  */
+ 
+ /* only instance of this string AviaEDabout */
  .AviaEDaboutP {
   font-size: 120%;
 }
