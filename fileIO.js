@@ -25,9 +25,6 @@
     if (loadConfigFlag) { av.fzr.clearFzr_activeConfig_nutData_Fn(); }
     else { av.fzr.clearMainFzrFn(); }  // clear freezer (globals.js)
     
-    // yemd
-    // av.dnd.clearFrzDojoFn(); 
-    
     //Change loading a workspace will change the freezer, but not parents or configuration
   /*  av.parents.clearParentsFn();  //globals.js
     av.dnd.ancestorBox.selectAll().deleteSelectedNodes();
@@ -89,7 +86,7 @@
       console.log('loadConfigFlag=',loadConfigFlag, '; av.fzr=', av.fzr);
 
       if (loadConfigFlag) {
-        av.dnd.loadDefautlConfigFn('av.fio.readZipWS');
+        av.dnd.loadDefaultConfigFn('av.fio.readZipWS');
 
         if (false) {
           if ('c0/avida.cfg' == av.fio.anID) {
@@ -323,7 +320,7 @@
         }
         av.fwt.deleteFzrItem(fname);
       }
-      av.fzr.domid[dir] = domid;
+      av.fzr.domid[dir].push(domid);
       av.fzr.dir[domid] = dir;
       //if (av.debug.fio) console.log('av.fzr', av.fzr);
     }

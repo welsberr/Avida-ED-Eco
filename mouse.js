@@ -31,13 +31,11 @@
 
   av.mouse.setCursorStyle = function (shape, nodeList) {
     "use strict";
-    //console.log(nodeList);
-    var lnght = nodeList.length;
-    //console.log(lnght)
-    for (var ii = 0; ii < lnght; ii++) {
-      //console.log(ii, nodeList[ii]);
-      //console.log('dom.nodeList[ii]=', document.getElementById(nodeList[ii]));
-      document.getElementById(nodeList[ii]).style.cursor = shape;
+    if (nodeList !== undefined) {
+      var lnght = nodeList.length;
+      for (var ii = 0; ii < lnght; ii++) {
+        document.getElementById(nodeList[ii]).style.cursor = shape;
+      }
     }
   };
 
@@ -66,15 +64,13 @@
     av.mouse.frzCurserSet('no-drop');
     av.mouse.setCursorStyle('copy', av.mouse.sonTarget);
     av.mouse.frzOrgCurserSet('copy');
-    console.log('av.fzr.actOrgan.actDomid', av.fzr.actOrgan.actDomid, '; Object.keys(av.dnd.activeOrgan.map)[0]', Object.keys(av.dnd.activeOrgan.map)[0]);
-    if (1 < av.fzr.actOrgan.actDomid.length) {document.getElementById(av.fzr.actOrgan.actDomid).style.cursor = 'copy';}
+    console.log('av.fzr.actOrgan.actDomid', av.fzr.actOrgan.actDomid, '; containerMap["#activeOrgan"]', containerMap["#activeOrgan"]);
+    // if (1 < av.fzr.actOrgan.actDomid.length) {document.getElementById(av.fzr.actOrgan.actDomid).style.cursor = 'copy';}
   };
 
   av.mouse.makeCursorDefault = function () {
     'use strict';
     av.mouse.frzCurserSet('default');  //pointer
-    if (1 < av.fzr.actConfig.actDomid.length) {document.getElementById(av.fzr.actConfig.actDomid).style.cursor = 'pointer';}
-    if (1 < av.fzr.actOrgan.actDomid.length) {document.getElementById(av.fzr.actOrgan.actDomid).style.cursor = 'pointer';}
     av.mouse.setCursorStyle('default', av.mouse.dndTarget);
     av.mouse.setCursorStyle('default', av.mouse.notDndPopList);
     av.mouse.setCursorStyle('default', av.mouse.notDndIndList);
@@ -124,6 +120,7 @@
     var offsetXLocal = ($("#gridHolder").width() - av.dom.gridCanvas.width) / 2;
     var mouseX = evt.offsetX - av.grd.marginX - av.grd.xOffset - offsetXLocal;
     var mouseY = evt.offsetY - av.grd.marginY - av.grd.yOffset - offsetYLocal;
+    //console.log(mouseX, mouseY);
     av.grd.selectedCol = Math.floor(mouseX / av.grd.cellWd);
     av.grd.selectedRow = Math.floor(mouseY / av.grd.cellHt);
     av.grd.selectedNdx = av.grd.selectedRow * av.grd.cols + av.grd.selectedCol;
@@ -134,65 +131,68 @@
     'use strict';
     //Get name of Mom that is in OrganCurrentNode
     var parent;
-    var parentID = Object.keys(av.dnd.activeOrgan.map)[0];
+    var parentID = Object.keys(containerMap['#activeOrgan'])[0];
     if (av.debug.mouse) console.log('parentID', parentID);
     if (undefined == parentID) parent = '';
-    else parent = document.getElementById(parentID).textContent;
-    av.dnd.activeOrgan.selectAll().deleteSelectedNodes();  //clear items
-    av.dnd.activeOrgan.sync();   //should be done after insertion or deletion
+    else parent = document.getElementById(parentID).textContent.trim();
+    av.dnd.empty(av.dnd.activeOrgan);
     //Put name of offspring in OrganCurrentNode
-    av.dnd.activeOrgan.insertNodes(false, [{data: parent + "_offspring", type: ["g"]}]);
-    av.dnd.activeOrgan.sync();
-    av.fzr.actOrgan.actDomid = Object.keys(av.dnd.activeOrgan.map)[0];
-
+    var domid = 'g' + av.fzr.gNum++;
+    var type = 'g';
+    $('#activeOrgan').append(`<div class="item ${type}" id="${domid}"> ${parent + "_offspring"} </div>`);
+    var gdir = av.fzr.dir[parentID];
+    av.fzr.dir[domid] = gdir;
+    av.fzr.domid[gdir] = domid;
+    containerMap['#activeOrgan'][domid] = {name: parent + "_offspring", type: type};
+    av.fzr.actOrgan.actDomid = domid;
     av.fzr.actOrgan.name = parent + "_offspring";
     av.fzr.actOrgan.genome = '0,heads_default,' + av.ind.dna[av.ind.son];  //this should be the full genome when the offspring is complete.
-    av.fzr.actOrgan.actDomid = Object.keys(av.dnd.activeOrgan.map)[0];
     if (av.debug.mouse) console.log('av.fzr.actOrgan', av.fzr.actOrgan);
     //get genome from offspring data //needs work!!
     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
   };
 
+  // yemi: 'offspring' is for organism page, 'kid' for population page
   av.mouse.offspringMouse = function(evt, dnd, fio, fzr, gen) {
     'use strict';
     var target = '';
-    //console.log('av.fzr.actOrgan.actDomid', av.fzr.actOrgan.actDomid);
-    if ('organIcon' == evt.target.id || 'actOrgImg' == evt.target.id || av.fzr.actOrgan.actDomid == evt.target.id ) {
+    var elements = $.map(document.elementsFromPoint(evt.clientX, evt.clientY), (x) => {return x.id});
+    if (elements.indexOf('organIcon') != -1 || elements.indexOf('actOrgImg') != -1 || elements.indexOf('activeOrgan') != -1) {
+      console.log('inside offspringMouse');
       offspringTrace(dnd, fio, fzr, gen);
       av.post.addUser('Moved something to organsim Icon');
       target = 'organIcon';
     }
-    else { // look for target in the freezer
+    else if (elements.indexOf('fzOrgan') != -1) { // look for target in the freezer
       var found = false;
-      for (var dir in av.fzr.domid) {if (av.fzr.domid[dir] == evt.target.id) {found=true; break;}}
+      for (var dir in av.fzr.domid) {if (av.fzr.domid[dir].indexOf(evt.target.id) != -1) {found=true; break;}}
       if (found) {
         target  = 'fzOrgan';
         //create a new freezer item
         if (av.debug.mouse) console.log('offSpring->freezerDiv');
         var parent;
-        var parentID = Object.keys(dnd.activeOrgan.map)[0];
+        var container = dnd.activeOrgan.id !== undefined ? "#" + dnd.activeOrgan.id : "." + dnd.activeOrgan.className;
+        var parentID = $(container).children()[0].id; // yemi: not sure it will work
         if (av.debug.mouse) console.log('parentID', parentID);
         if (undefined == parentID) parent = 'noParentName';
-        else parent = document.getElementById(parentID).textContent;
+        else parent = document.getElementById(parentID).textContent.trim();
         //make sure there is a name.
-        var oldname = parent + '_offspring';
-
-        var nameArray = av.dnd.makeNameList(av.dnd.fzOrgan);
-        //console.log('name', oldname, '; array',  nameArray);
-        var sName = av.dnd.namefzrItem(oldname, nameArray);
-        console.log('sName', sName);
+        var oldName = parent + '_offspring';
+        var sName = av.dnd.namefzrItem(av.dnd.activeOrgan, oldName);
         var avidian = prompt('Please name your avidian', sName);
         if (avidian) {
-          avidian = av.dnd.getUniqueFzrName(avidian, nameArray);
+          avidian = av.dnd.getUniqueFzrName(av.dnd.activeOrgan, avidian);
           if (null != avidian) {  //add to Freezer
             av.post.addUser('Moved offspring, ' + avidian + ', to organism freezer');
-            dnd.fzOrgan.insertNodes(false, [{data: avidian, type: ['g']}]);
-            dnd.fzOrgan.sync();
+            var domid = 'g' + av.fzr.gNum;
+            var type = 'g';
+            $('#fzOrgan').append(`<div class="item ${type}" id="${domid}"> ${avidian} </div>`);
+            // Add an entry to containerMap
+            containerMap[container][domid] = {'name': avidian , 'type': 'g'};
             //find domId of offspring as listed in dnd.fzOrgan
-            var mapItems = Object.keys(dnd.fzOrgan.map);
             var gdir =  'g' + av.fzr.gNum;
-            av.fzr.dir[mapItems[mapItems.length - 1]] = gdir;
-            av.fzr.domid[gdir] = mapItems[mapItems.length - 1];
+            av.fzr.dir[domid] = gdir;
+            av.fzr.domid[gdir] = domid;
             av.fzr.file[gdir + '/entryname.txt'] = avidian;
             av.fzr.file[gdir + '/genome.seq'] = '0,heads_default,' + av.ind.dna[av.ind.son];
             av.fzr.gNum++;
@@ -200,7 +200,7 @@
             if (av.debug.mouse) console.log('Offspring-->freezer, dir', gdir, 'fzr', fzr);
             //create a right mouse-click context menu for the item just created.
             if (av.debug.mouse) console.log('Offspring-->freezer; fzf', fzr);
-            av.dnd.contextMenu(dnd.fzOrgan, av.fzr.domid[gdir], 'av.mouse.offspringMouse');
+            av.dnd.contextMenu(av.dnd.fzOrgan, domid, 'av.mouse.offspringMouse');
           }
         }
       }
@@ -210,19 +210,26 @@
 
   av.mouse.traceSelected = function(dnd, fzr, grd) {
     'use strict';
-    dnd.activeOrgan.selectAll().deleteSelectedNodes();  //clear items
-    dnd.activeOrgan.sync();   //should be done after insertion or deletion
+    av.dnd.empty(av.dnd.activeOrgan);
     //Put name of offspring in OrganCurrentNode
-    dnd.activeOrgan.insertNodes(false, [{data: av.grd.kidName, type: ['g']}]);
-    dnd.activeOrgan.sync();
+    var container = '#' + av.dnd.activeOrgan.id;
+    // Add an entry to containerMap
+    if (Object.keys(containerMap).indexOf(container) === -1) {
+      containerMap[container] = {};
+    }
+    var domid = 'dom_g' + av.fzr.gNum;
+    var type = 'g';
+    $(container).append(`<div class="item ${type}" id="${domid}"> ${av.grd.kidName} </div>`);
+    containerMap[container][domid] = {'name': av.grd.kidName , 'type': 'g'};
     //genome data should be in av.parents.genome[av.mouse.ParentNdx];
     if (av.debug.mouse) console.log('genome', av.grd.kidGenome);
     av.fzr.actOrgan.genome = av.grd.kidGenome;
     av.fzr.actOrgan.name = av.grd.kidName;
     av.fzr.actOrgan.fzDomid = "";
-    av.fzr.actOrgan.actDomid = Object.keys(av.dnd.activeOrgan.map)[0];
+    av.fzr.actOrgan.actDomid = domid;
   }
 
+  // yemi: 'offspring' is for organism page, 'kid' for population page
   av.mouse.kidMouse = function (evt, dnd, fzr, grd){
     'use strict';
     var target = '';
@@ -241,7 +248,7 @@
         else {
           for (var dir in av.fzr.domid) {
             //console.log('dir', dir);
-            if ((av.fzr.domid[dir] == evt.target.id) && ('g' == dir.substring(0, 1))) {
+            if ((av.fzr.domid[dir].indexOf(evt.target.id) != -1) && ('g' == dir.substring(0, 1))) {
               found = true;
               break;
             }
@@ -257,36 +264,44 @@
     return target;
   };
 
+  // possibly move to dragulaDnd just to keep all the dnd functions together?
   av.mouse.freezeTheKid = function () {
     "use strict";
     av.post.addUser('Moved avidian from grid to freezer');
     if (av.debug.mouse) console.log('freezerDiv');
-    //make sure there is a name.
-
-    var nameArray = av.dnd.makeNameList(av.dnd.fzOrgan);
-    //console.log('name', av.grd.kidName, '; array',  nameArray);
-    container = $.map($('#ancestorBox')[0], (key, value) => {return value});
-    var sName = av.dnd.namefzrItem(container, av.grd.kidName);
+    //make sure there is a name
+    var sName = av.dnd.namefzrItem(av.dnd.fzOrgan, av.grd.kidName);
     var avidian = prompt('Please name your avidian', sName);
+    var container = '#' + av.dnd.fzOrgan.id;
     if (avidian) {
-      var avName = av.dnd.getUniqueFzrName(avidian, nameArray);
+      var avName = av.dnd.getUniqueFzrName(av.dnd.fzOrgan, avidian);
       if (null != avName) {  //give dom item new avName name
         av.post.addUser('Froze kid = ' + avName);
-        av.dnd.fzOrgan.insertNodes(false, [{data: avName, type: ['g']}]);
-        av.dnd.fzOrgan.sync();
-        var mapItems = Object.keys(av.dnd.fzOrgan.map);
         var gdir =  'g' + av.fzr.gNum;
+        var type = 'g';
+        var domid = 'dom_' + gdir;
+        var container = '#' + av.dnd.fzOrgan.id;
+        var mapItems = Object.keys(containerMap[container]);
+
+        $(container).append(`<div class="item ${type}" id="${domid}"> ${avName} </div>`);
+        // Add an entry to containerMap
+        if (Object.keys(containerMap).indexOf(container) === -1) {
+          containerMap[container] = {};
+        }
+        containerMap[container][domid] = {'name': avName , 'type': 'g'};
+
         av.fzr.file[gdir + '/entryname.txt'] = avName;
-        av.fzr.dir[mapItems[mapItems.length - 1]] = gdir;
-        av.fzr.domid[gdir] = mapItems[mapItems.length - 1];
+        av.fzr.dir[domid] = gdir;
+        av.fzr.domid[gdir] = domid;
         //av.fzr.file[gdir + '/genome.seq'] = '0,heads_default,' + av.grd.kidGenome;
         av.fzr.file[gdir + '/genome.seq'] = av.grd.kidGenome;
         av.fzr.gNum++;
         av.fzr.saveUpdateState('no');
+        console.log(av.fzr);
         if (av.debug.mouse) console.log('fzOrgan', av.dnd.fzOrgan);
         if (av.debug.mouse) console.log('Kid-->Snow: dir',gdir, '; fzr', fzr);
         //create a right mouse-click context menu for the item just created.
-        av.dnd.contextMenu(av.dnd.fzOrgan, av.fzr.domid[gdir], 'av.mouse.freezeTheKid');
+        av.dnd.contextMenu(av.dnd.fzOrgan, domid, 'av.mouse.freezeTheKid');
         av.fzr.saveUpdateState('no');
       }
     }
@@ -325,47 +340,34 @@
       if (av.debug.mouse) console.log('av.mouse.ParentNdx', av.mouse.ParentNdx, '; domid', av.parents.domid[av.mouse.ParentNdx]);
       if (av.debug.mouse) console.log('ancestorBox', av.dnd.ancestorBox);
       if (av.debug.mouse) console.log('av.parents.domid', av.parents.domid);
-      var node = dojo.byId(av.parents.domid[av.mouse.ParentNdx]);
-      console.log('node', node);
-      av.dnd.ancestorBox.parent.removeChild(node);
-      av.dnd.ancestorBox.sync();
+      // yemi: delete from containerMap as well as erase dom object
+      var domid = av.parents.domid[av.mouse.ParentNdx];
+      var container = '#' + av.dnd.ancestorBox.id;
+      $(container).children('#' + domid).remove();
+      delete containerMap[container][domid];
       av.post.addUser('Moved ancestor to trash');
-
       //remove from main list.
       av.parents.removeParent(av.mouse.ParentNdx);
     }
     //-------------------------------------------- organism view
     else if ('organIcon' == evt.target.id) {
       av.post.addUser('Moved ancestor to Organsim View');
-      av.dnd.activeOrgan.selectAll().deleteSelectedNodes();  //clear items
-      av.dnd.activeOrgan.sync();   //should be done after insertion or deletion
+      av.dnd.empty(av.dnd.activeOrgan);
+      var container = '#' + av.dnd.activeOrgan.id;
+      var domid = av.parents.domid[av.mouse.ParentNdx];
+      var type = 'g';
       //Put name of offspring in av.dnd.activeOrganism
-      av.dnd.activeOrgan.insertNodes(false, [{data: av.parents.name[av.mouse.ParentNdx], type: ['g']}]);
-      av.dnd.activeOrgan.sync();
-      av.fzr.actOrgan.actDomid = Object.keys(av.dnd.activeOrgan.map)[0];
-
+      if (Object.keys(containerMap).indexOf(container) === -1) {
+        containerMap[container] = {};
+      }
+      containerMap[container][domid] = {'name': av.parents.name[av.mouse.ParentNdx] , 'type': 'g'};
+      $(container).append(`<div class="item ${type}" id="${domid}"> ${av.parents.name[av.mouse.ParentNdx]} </div>`)
+      av.fzr.actOrgan.actDomid = domid;
       //genome data should be in av.parents.genome[av.mouse.ParentNdx];
       av.fzr.actOrgan.genome = av.parents.genome[av.mouse.ParentNdx];
       av.fzr.actOrgan.name = av.parents.name[av.mouse.ParentNdx];
       av.fzr.actOrgan.fzDomid = av.parents.domid[av.mouse.ParentNdx];
     }
-  }
-
-  av.mouse.fromAncestorBoxRemove = function (removeName) {
-    'use strict';
-    var domItems = Object.keys(dnd.ancestorBox.map);
-    //console.log("domItems=", domItems);
-    var nodeIndex = -1;
-    var lngth = domItems.length;
-    for (var ii = 0; ii < lngth; ii++) { //http://stackoverflow.com/questions/5837558/dojo-drag-and-drop-how-to-retrieve-order-of-items
-      if (dnd.ancestorBox.map[domItems[ii]].data == removeName) {
-        nodeIndex = ii;
-      }
-    }
-    var node = dojo.byId(domItems[nodeIndex]);
-    if (av.debug.mouse) console.log('nodeIndex', nodeIndex, domItems[nodeIndex]);
-    dnd.ancestorBox.parent.removeChild(node);
-    dnd.ancestorBox.sync();
   }
 
   //Key movement on grid

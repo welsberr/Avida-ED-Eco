@@ -11,7 +11,6 @@
     dijit.byId('mnCnPause').attr('disabled', true);
     dijit.byId('mnCnRun').attr('disabled', false);
     dijit.byId('mnCnOne').attr('disabled', false);
-    //console.log('pauseState; button=run');
     av.dom.runStopButton.textContent = 'Run';
     av.dom.oneUpdateButton.disabled = false;
   };
@@ -20,7 +19,6 @@
   //probably should not be called until after program is sure that it is valid to start running, but it works this way
   //might change someday.
   av.ptd.makeRunState = function (from) {
-    //console.log(from, ' called av.ptd.makeRunState');
     av.dom.runStopButton.textContent = 'Pause';
     dijit.byId('mnCnPause').attr('disabled', false);
     dijit.byId('mnCnRun').attr('disabled', true);
@@ -33,21 +31,10 @@
     console.log(from, 'called av.ptd.popWorldStateUi');
     av.grd.runState = 'world';
     //Disable some of the options on the Setup page
-    //av.dnd.ancestorBox.isSource = false;
-    av.dnd.ancestorBox.copyOnly = true;
-    av.dnd.ancestorBoTest.copyOnly = true;
-    av.dnd.activeConfig.isSource = true;
-    //delete av.dnd.ancestorBox.accept['g'];
-    //delete av.dnd.gridCanvas.accept['g'];
-    delete av.dnd.activeConfig.accept['c'];
-    delete av.dnd.activeConfig.accept['w'];
-    av.dnd.fzWorld.accept['w'] = 1;
-    av.dnd.fzWorld.accept['b'] = 1;
     av.dom.sizeCols.disabled = true;
     av.dom.sizeRows.disabled = true;
     //av.dom.experimentRadio.disabled = true;
     //av.dom.demoRadio.disabled = true;
-
     //there will be a population so it can now be frozen.
     dijit.byId('mnFzPopulation').attr('disabled', false);
   };
@@ -57,21 +44,10 @@
     console.log(from, 'called av.ptd.popTdishStateUi');
     av.grd.runState = 'tDish';
     //Disable normal Setup page and setup testDish setup Page   
-    //av.dnd.ancestorBox.isSource = false;
-    av.dnd.ancestorBox.copyOnly = true;
-    av.dnd.ancestorBoTest.copyOnly = true;
-    av.dnd.activeConfig.isSource = true;
-    //delete av.dnd.ancestorBox.accept['g'];
-    //delete av.dnd.gridCanvas.accept['g'];
-    delete av.dnd.activeConfig.accept['c'];
-    delete av.dnd.activeConfig.accept['w'];
-    av.dnd.fzWorld.accept['t'] = 1;
-    av.dnd.fzWorld.accept['b'] = 1;
     av.dom.sizeCols.disabled = true;
     av.dom.sizeRows.disabled = true;
     //av.dom.experimentRadio.disabled = true;
     //av.dom.demoRadio.disabled = true;
-
     //there will be a population so it can now be frozen.
     dijit.byId('mnFzPopulation').attr('disabled', false);
   };
@@ -82,17 +58,7 @@
     'use strict';
     av.grd.runState = 'started';  //the run has now started
     //Disable some of the options on the Setup page
-    av.dnd.ancestorBox.copyOnly = true;
-    av.dnd.ancestorBoTest.copyOnly = true;
-    //av.dnd.ancestorBox.isSource = false;
-    //av.dnd.activeConfig.isSource = false;
-    delete av.dnd.ancestorBox.accept['g'];
-    delete av.dnd.ancestorBoTest.accept['g'];
-    delete av.dnd.gridCanvas.accept['g'];
-    delete av.dnd.activeConfig.accept['c'];
-    delete av.dnd.activeConfig.accept['w'];
-    av.dnd.fzWorld.accept['w'] = 1;
-    av.dnd.fzWorld.accept['b'] = 1;
+    
     $('#mutePopSlide').slider({disabled: true});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
     av.dom.sizeCols.disabled = true;
     av.dom.sizeRows.disabled = true;
@@ -153,33 +119,20 @@
   //------------------------------------------------------------------------------------ end av.ptd.popRunningStateUi --
   
   //-------------------------------------------------------------------------------------------- av.ptd.popNewExState --
+  
   av.ptd.popNewExState = function () {
     'use strict';
     //set configuation to default
     var fname = '@default';
-    av.dnd.activeConfig.selectAll().deleteSelectedNodes();
-    av.dnd.activeConfig.insertNodes(false, [{data: fname, type: ['c']}]);
-    av.dnd.activeConfig.sync();
-    var domId = Object.keys(av.dnd.activeConfig.map)[0];
+
+    var domId = Object.keys(containerMap['#activeConfig'])[0];
     av.fzr.actConfig.actDomid = domId;
     av.fzr.actConfig.name = fname;
     av.fzr.actConfig.type = 'c';
-    av.fzr.actConfig._id = 'c0';
+    av.fzr.actConfig.actDomid = 'dom_c0';
+    av.fzr.actConfig.dir = 'c0';
+
     // clear parents
-    av.dnd.ancestorBox.accept['g'] = 1;
-    av.dnd.ancestorBoTest.accept['g'] = 1;
-    av.dnd.gridCanvas.accept['g'] = 1;
-    av.dnd.activeConfig.accept['c'] = 1;
-    av.dnd.activeConfig.accept['b'] = 1;
-    av.dnd.activeConfig.accept['t'] = 1;
-    av.dnd.activeConfig.accept['w'] = 1;
-    av.dnd.fzWorld.accept['w'] = 0;
-    av.dnd.fzWorld.accept['b'] = 0;
-    av.dnd.ancestorBox.isSource = true;
-    av.dnd.ancestorBox.copyOnly = true;
-    av.dnd.ancestorBoTest.isSource = true;
-    av.dnd.ancestorBoTest.copyOnly = true;
-    av.dnd.activeConfig.isSource = true;
     av.dom.sizeCols.disabled = false;
     av.dom.sizeRows.disabled = false;
     av.dom.mutePopInput.disabled = false;
@@ -272,13 +225,13 @@
     av.pch.logNum = [];
 
     TimeLabel.textContent = 0;
-    //av.frd.avidaCFG2form(fileStr, 'av.ptd.popNewExState');
-    av.dnd.ancestorBox.selectAll().deleteSelectedNodes();
-    av.dnd.ancestorBox.sync();
-    av.dnd.ancestorBoTest.selectAll().deleteSelectedNodes();
-    av.dnd.ancestorBoTest.sync();
-    av.dnd.gridCanvas.selectAll().deleteSelectedNodes();
-    av.dnd.gridCanvas.sync();
+
+    var dir = av.fzr.actConfig.dir;
+    var fileStr = av.fzr.file[dir + '/avida.cfg'];
+    av.frd.avidaCFG2form(fileStr, 'av.ptd.popNewExState'); 
+
+    av.dnd.empty(av.dnd.ancestorBox);
+    av.dnd.empty(av.dnd.ancestorBoTest);
 
     //Update data for Selected Organism Type
     av.dom.sotColorBox.style.backgroundColor = '#D7D7D7';
@@ -350,14 +303,14 @@
     var namelist;
     // used only for testing new dish configurations don't work in the current computer interface
     if ('test' == av.msg.setupType)
-      namelist = dojo.query('> .dojoDndItem', 'ancestorBoTest'); 
+      namelist = $.map(document.querySelector('#ancestorBoTest').children, (x) => {return x.innerHTML.trim()});
     // normal end user version
     else
       //get a list of names of organisms that are in the starting population. 
       //works for both configured dishes and populated dishes
-      namelist = dojo.query('> .dojoDndItem', 'ancestorBox');
-    //console.log('namelist = namelist);
-    if (1 > namelist.length) {
+      namelist = $.map(document.querySelector('#ancestorBox').children, (x) => {return x.innerHTML.trim()});
+  
+    if (namelist.length < 1) {
       //console.log('about to call av.ptd.makePauseState()');
       // tiba: fix so 'av.ptd.makeRunState' is not called till after tests are done and remove the extra calls to makePauseState
       av.ptd.makePauseState();
@@ -468,35 +421,36 @@
     var fzName = 'new';
     var parentName = '';
     var gene;
+    var container = av.dnd.fzOrgan.id !== undefined ? "#" + av.dnd.fzOrgan.id : "." + av.dnd.fzOrgan.className;
     if ('selected' == trigger) {
-      fzName = prompt('Please name the selected organism', 'av.grd.kidName');
+      fzName = prompt('Please name the selected organism', av.grd.kidName);
       gene = av.grd.kidGenome;
     }
     else if ('offspring' == trigger) {
       //get name from parent
-      parentName = document.getElementById(Object.keys(av.dnd.activeOrgan.map)[0]).textContent;
-      fzName = prompt('Please name the offspring', parentName + '_Offspring');
+      parentName = av.dnd.activeOrgan.textContent; 
+      fzName = prompt('Please name the offspring', parentName + '_offspring');
       gene = '0,heads_default,' + av.ind.dna[1];
     }
     else {
       fzName = prompt('Please name the organism', 'newOrganism');
       //console.log('source unknwon', trigger);
     }
-    fzName = av.dnd.getUniqueName(fzName, av.dnd.fzOrgan);
+    fzName = av.dnd.getUniqueFzrName(av.dnd.fzOrgan, fzName);
     if (null != fzName) {
       //insert new item into the freezer.
-      av.dnd.fzOrgan.insertNodes(false, [{data: fzName, type: ['g']}]);
-      av.dnd.fzOrgan.sync();
-
-      //Find out the dom ID the node element just inserted.
-      var mapItems = Object.keys(av.dnd.fzOrgan.map);
-      var domid = mapItems[mapItems.length - 1];
+      var type = 'g'
+      var domid = `dom_${type}${av.fzr.gNum}`
+      $(container).append(`<div class="item ${type}" id="${domid}"> ${fzName} </div>`)
+      containerMap[container][domid] = {"name": fzName, "type": type};
       av.fzr.dir[domid] = 'g' + av.fzr.gNum;
-      av.fzr.domid['g' + av.fzr.gNum] = domid;
+      av.fzr.domid['g' + av.fzr.gNum] = [];
+      av.fzr.domid['g' + av.fzr.gNum].push(domid);
       av.fzr.file['g' + av.fzr.gNum + '/genome.seq'] = gene;
       av.fzr.file['g' + av.fzr.gNum + '/entryname.txt'] = fzName;
       av.fzr.gNum++;
-      av.dnd.contextMenu(av.dnd.fzOrgan, domid, 'av.ptd.FrOrganismFn');
+      console.log(av.fzr);
+      av.dnd.contextMenu(av.dnd.fzWorld, domid, 'av.ptd.FrOrganismFn');
       av.fzr.saveUpdateState('no');
     }
   };
@@ -505,16 +459,19 @@
   av.ptd.FrConfigFn = function (from) {
     'use strict';
     console.log(from, ' called av.ptd.FrConfigFn');
-    var fzName = prompt('Please name the new configuration', 'newConfig');
+    var sName = av.dnd.namefzrItem(av.dnd.fzConfig, 'newConfig');
+    var fzName = prompt('Please name the new configuration', sName);
+    var container = av.dnd.fzConfig.id !== undefined ? "#" + av.dnd.fzConfig.id : "." + av.dnd.fzConfig.className;
     if (fzName) {
-      //var namelist = dojo.query('> .dojoDndItem', 'fzConfig');  console.log('namelist', namelist); not in use, but does show another way to get data
-      fzName = av.dnd.getUniqueName(fzName, av.dnd.fzConfig);
+      fzName = av.dnd.getUniqueFzrName(av.dnd.fzConfig, fzName);
       if (null != fzName) {
-        av.dnd.fzConfig.insertNodes(false, [{data: fzName, type: ['c']}]);
-        av.dnd.fzConfig.sync();
-        var domid = av.dnd.getDomId(fzName, av.dnd.fzConfig);
+        var type = 'c'
+        var domid = `dom_${type}${av.fzr.cNum}`
+        $(container).append(`<div class="item ${type}" id="${domid}"> ${fzName} </div>`)
+        containerMap[container][domid] = {"name": fzName, "type": type};
         av.fzr.dir[domid] = 'c'+ av.fzr.cNum;
-        av.fzr.domid['c'+ av.fzr.cNum] = domid;
+        av.fzr.domid['c'+ av.fzr.cNum] = [];
+        av.fzr.domid['c'+ av.fzr.cNum].push(domid);
         av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = fzName;
         av.fwt.makeFzrConfig(av.fzr.cNum, 'av.ptd.FrConfigFn');
         av.fzr.cNum++;
@@ -533,14 +490,15 @@
     var popName = av.fzr.actConfig.name + '@' + av.grd.popStatsMsg.update.formatNum(0);  // need update here star
     var fzName = prompt('Please name the new population', popName);
     if (fzName) {
-      fzName = av.dnd.getUniqueName(fzName, av.dnd.fzWorld);
+      fzName = av.dnd.getUniqueFzrName(av.dnd.fzWorld, fzName);
       if (null != fzName) {
-        av.dnd.fzWorld.insertNodes(false, [{data: fzName, type: ['w']}]);
-        av.dnd.fzWorld.sync();
-        //Find out the dom ID the node element just inserted.
-        var domid = av.dnd.getDomId(fzName, av.dnd.fzWorld);
+        var type = 'w'
+        var domid = `dom_${type}${av.fzr.wNum}`
+        $(container).append(`<div class="item ${type}" id="${domid}"> ${fzName} </div>`)
+        containerMap[container][domid] = {"name": fzName, "type": type};
         av.fzr.dir[domid] = 'w'+ av.fzr.wNum;
-        av.fzr.domid['w'+ av.fzr.wNum] = domid;
+        av.fzr.domid['w'+ av.fzr.wNum] = [];
+        av.fzr.domid['w'+ av.fzr.wNum].push(domid);
         av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = fzName;
         av.fwt.makeFzrWorld(av.fzr.wNum, 'av.ptd.FrPopulationFn');
         av.fzr.wNum++;
