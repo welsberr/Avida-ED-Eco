@@ -19,6 +19,7 @@ function resizeAnalysisPage() {
   var dragbarLeftWidth = $('#dragbarLeft').css("width");
   var newColumns = leftNavBarWidth + " " + dragbarLeftWidth + " auto";
   $('.all2lft').css("grid-template-columns", newColumns);
+  av.anl.AnaChartFn(); // yemi: redraw analysis grid
 }
 
 /* diane modieved yemi's work: function to automatically resize the Analysis page when button clicked; called in avidaED.js */

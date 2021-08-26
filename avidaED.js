@@ -2505,7 +2505,7 @@ require([
         hasData = true;
     }
     if (!hasData) {
-      av.dom.anlChrtSpace.style.visibility = 'visible'; /* yemi: used to be hidden but if it's hidden, you can't drag and drop to it */
+      av.dom.anlChrtSpace.style.visibility = 'hidden'; /* yemi: used to be hidden but if it's hidden, you can't drag and drop to it */
     }
     else {
       av.dom.anlChrtSpace.style.visibility = 'visible';

@@ -20,7 +20,7 @@ jQuery(document).ready(function($) {
                     $.map($("#activeOrgan"), (value, key) => { return value }),
                     $.map($("#organCanvas"), (value, key) => { return value }),
                     $.map($("#organIcon"), (value, key) => { return value }),
-                    $.map($("#anlDndChart"), (value, key) => { return value }),
+                    $.map($("#anlChrtHolder"), (value, key) => { return value }),
                     $.map($("#popDish0"), (value, key) => { return value }),
                     $.map($("#popDish1"), (value, key) => { return value }),
                     $.map($("#popDish2"), (value, key) => { return value }),
