@@ -2665,10 +2665,10 @@ require([
 
   av.doj.mnDebug.style.visibility = 'visible';   // set visiable so that av.ui.toggleDevelopentDisplays will hide devo stuff
 
-  // Avida-ED 4.0.03 Beta Testing fix this too. 
+  // Avida-ED 4.0.04 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; set to false before public release for Avida-ED 4.0.03 Beta Testing. ');
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.04 Beta Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x
