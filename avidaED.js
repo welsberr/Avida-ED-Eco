@@ -2217,7 +2217,7 @@ require([
     /* results in 2% as a default */
     var muteDefault = (Math.pow(10, (muteSlideDefault / 400)) - 1).toFixed(1);
     var slides = $('#orgMuteSlide').slider({
-      orientation: "vertical",
+      /* orientation: "vertical", */
       range: 'min',   /*causes the left side of the scroll bar to be grey */
       value: muteSlideDefault,
       min: 0.0,
