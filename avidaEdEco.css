@@ -343,8 +343,6 @@ html {
 #freezerSection{
   border: 1px solid #BABABA;
   flex: 1;                /* fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
-  /* height: 99%; */
-  /* width: 99%; */
   overflow:hidden;
 }
 #FreezerTitle {
@@ -1612,28 +1610,31 @@ checkbox:focus {
 .ex1center {
   display: inline-block;
   vertical-align: middle;
-  width: 300px;
-  padding: 2px 2px;
+  width: 95%;
+  padding: auto;
   border: #a0a0a0 solid 1px;
   background: #f5f5f5;
 }
 
-
+#fontTest{
+  text-align: left;
+}
  .ex1holder {
   white-space: nowrap;  /* May want to do this if there is risk the container may be narrower than the element inside */
-  text-align: center;
+  /* text-align: center;  */
   background: #c0c0c0;
   border: black solid 1px;
-  margin: 20px;
  }
+ /*
 .ex1holder:before {
  content: '\200B';
 /*   content: '';
-  margin-left: -0.25em; */
+  margin-left: -0.25em;   *   /
   display: inline-block;
   height: 100%; 
   vertical-align: middle;
 }  
+*/
 /*-------------------------------------------------------------------------------------------------- End example tab  */
 
 
@@ -2202,6 +2203,57 @@ label {
 /*********************************************************************************************** end no longer in use */
 
 /************************************************************************************************************** notes */
+
+/* web safe fonts, best 30 fonts with examples show of upper and lower case and numbers
+/* San-Serif: tell letters apart
+/*   Tahoma ==> Font-family: Tahoma, Verdana, Segoe, sans-serif.
+/*   Trebuchet MS ==> Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, sans-serif.
+/*        funny lower case g
+/*   Verdana ==> Verdana, Geneva, sans-serif.
+/* 
+/*   Diane ==> Tahoma, Trebuchet MS, Verdana, Lucida Grande, Comic Sans MS, Arial, sans-serif
+                 look at example 1 again
+/* 
+/*   Diane likes, but most don't: Comic Sans MS
+/* 
+/* San-Serif where capital I looks like a lower case l
+/*   Arial, Calibri, Candara, Century Gothic, Dejavu Sans, Franklin Gothic (thick)
+/*   Gill Sans (narrow), Helvetica, Impact (thick), Lucida Sans, Optima, Segoe UI, 
+/*   Arial Narrow, 
+/*   
+/* Monospace Fonts (micro serif)  where I is different from l
+/*   Consolas ==> Font-family: Consolas, monaco, monospace. 
+/*   Monaco
+/*   Courier (monospace) ==> Courier, Courier, Lucida Sans Typewriter, Lucida Typewriter, 
+/*   Courier New ==> from MS
+/*   Andalé Monov ==> 
+/*     cannot tell I from l
+/*   Lucida Console ==> 
+/* 
+/* Capital letters Only
+/* Copperplate Gothic (micor serif)
+/*
+/* Min Serif
+/*   Palatino
+/* 
+/* Serif Fonts
+/*   Baskerville, . Bodoni MT / Bodoni 72, Calisto MT, Cambria, Didot, Garamond, 
+/*   Georgia, Goudy Old Style, Lucida Bright, Palatino, Rockwell (thick), 
+/*   Other: American Typewriter, Bookman
+/*   better? Georgia, Palatino
+/* 
+/* Web Safe Cursive Fonts = Segoe script, Sage, Script MT, Snell Roundhand, Lucida Handwriting
+/* 
+/* list of web safe fonts and which % of OS groups that include that font
+/* https://www.cssfontstack.com/
+/* 
+/* Other urls: 
+/* https://www.webhostingsecretrevealed.net/blog/web-business-ideas/25-gorgeous-web-safe-fonts-for-your-website/
+/* https://www.webdesigndev.com/16-gorgeous-web-safe-fonts-to-use-with-css/#Abel_Web_Safe_Font
+/*----------- --------------------------------------------------------------------------------------------- flex box --*/
+/* 
+/* https://kinsta.com/blog/web-safe-fonts/
+
 /* https://caniuse.com/ to look to see which browsers support a feature. 
 
 /* suggested standards (found in 2021, not used yet)
