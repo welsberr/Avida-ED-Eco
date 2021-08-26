@@ -93,35 +93,40 @@ jQuery(document).ready(function($) {
   This is defining which containers can accept what
   */
   av.dnd.accepts = function(el, target, source) {
-    if (target === source) {
-      return true;
-    }
-    if ((source === av.dnd.ancestorBox) && (target === av.dnd.fzOrgan || target === av.dnd.organIcon || target === av.dnd.gridCanvas)) {
-      return true;
-    }
-    if (source === av.dnd.activeConfig && (target === av.dnd.fzConfig || target === av.dnd.fzWorld)) {
-      return true;
-    }
-    if (source === av.dnd.activeOrgan && (target === av.dnd.fzOrgan || target === av.dnd.organIcon || target === av.dnd.organCanvas)) {
-      return true;
-    }
-    if ((source === av.dnd.fzConfig || source === av.dnd.fzWorld) && target === av.dnd.activeConfig) {
-      return true;
-    }
-    if (source === av.dnd.fzWorld && (target === av.dnd.gridCanvas || target === av.dnd.anlDndChart || target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2)) {
-      return true;
-    }
-    if (source === av.dnd.fzOrgan && (target === av.dnd.activeOrgan || target === av.dnd.organCanvas || target === av.dnd.organIcon || target === av.dnd.gridCanvas || target === av.dnd.ancestorBox || target === av.dnd.ancestorBoTest)) {
-      return true;
-    }
-    if (source === av.dnd.fzTdish && target === av.dnd.testConfig) {
-      return true;
-    } 
-    if (target === av.dnd.trashCan) {
-      return true;
+    if (source === av.dnd.anlDndChart) { // prevent dragging from analysis chart
+      return false;
     }
     else {
-      return false;
+      if (target === source) {
+        return true;
+      }
+      if ((source === av.dnd.ancestorBox) && (target === av.dnd.fzOrgan || target === av.dnd.organIcon || target === av.dnd.gridCanvas)) {
+        return true;
+      }
+      if (source === av.dnd.activeConfig && (target === av.dnd.fzConfig || target === av.dnd.fzWorld)) {
+        return true;
+      }
+      if (source === av.dnd.activeOrgan && (target === av.dnd.fzOrgan || target === av.dnd.organIcon || target === av.dnd.organCanvas)) {
+        return true;
+      }
+      if ((source === av.dnd.fzConfig || source === av.dnd.fzWorld) && target === av.dnd.activeConfig) {
+        return true;
+      }
+      if (source === av.dnd.fzWorld && (target === av.dnd.gridCanvas || target === av.dnd.anlDndChart || target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2)) {
+        return true;
+      }
+      if (source === av.dnd.fzOrgan && (target === av.dnd.activeOrgan || target === av.dnd.organCanvas || target === av.dnd.organIcon || target === av.dnd.gridCanvas || target === av.dnd.ancestorBox || target === av.dnd.ancestorBoTest)) {
+        return true;
+      }
+      if (source === av.dnd.fzTdish && target === av.dnd.testConfig) {
+        return true;
+      } 
+      if (target === av.dnd.trashCan) {
+        return true;
+      }
+      else {
+        return false;
+      }
     }
   }
 
@@ -995,68 +1000,72 @@ jQuery(document).ready(function($) {
   // When item is added to the trash can
   av.dnd.landTrashCan = function (el, source) {
     'use strict';
+    // empty the trashCan of all children elements except for the trashCan image
+    for (var i = 0; i < $('#trashCan')[0].children.length; i++) {
+      if ($('#trashCan')[0].children[i].id !== 'trashCanImage') {
+        $('#trashCan')[0].children[i].remove();
+      }
+    }
     var remove = {};
     remove.type = '';
     remove.domid = '';
     if (av.debug.dnd) console.log('in av.dnd.landTrashCan');
-
-    var sure = confirm(`Are you sure you want to delete ${el.textContent.trim()}?`);
-    if (sure) {
-      // if the item is from the freezer, delete from freezer unless it is original stock (@)
-      if (av.dnd.fzOrgan === source && '@ancestor' !== el.textContent.trim()) {
-        if (av.debug.dnd) {console.log('fzOrgan->trash', av.fzr.genome);}
-        remove.domid = el.id;
-        remove.type = 'g';
-        // remove the dom object
-        el.remove();       
-        // remove the object from source containerMap
-        av.dnd.remove(source, el);
-        av.fzr.saveUpdateState('no');
-      }
-      else if (av.dnd.fzConfig === source && '@default' !== el.textContent.trim()) {
-        remove.domid = el.id;
-        remove.type = 'g';
-        // remove the dom object
-        el.remove();       
-        // remove the object from source containerMap
-        av.dnd.remove(source, el);
-        av.fzr.saveUpdateState('no');
-      }
-      else if (av.dnd.fzWorld === source && '@example' !== el.textContent.trim()) {
-        remove.domid = el.id;
-        remove.type = 'w';
-        // remove the dom object
-        el.remove();       
-        // remove the object from source containerMap
-        av.dnd.remove(source, el);
-        av.fzr.saveUpdateState('no');
-      } 
-      else if (av.dnd.ancestorBox === source) {
-        remove.domid = el.id;
-        remove.type = 'g';
-        // remove the dom object
-        el.remove();       
-        // remove the object from source containerMap
-        av.dnd.remove(source, el);
-        av.fzr.saveUpdateState('no');
-        var index = av.parents.domid.indexOf(el.id);
-        // remove parent
-        av.parents.removeParent(index);
-        console.log(av.parents);
-        // draw an updated grid
-        av.grd.drawGridUpdate();
-      }
-
-      // empty the trashCan of all children elements except for the trashCan image
-      for (var i = 0; i < $('#trashCan')[0].children.length; i++) {
-        if ($('#trashCan')[0].children[i].id !== 'trashCanImage') {
-          $('#trashCan')[0].children[i].remove();
+    var elName = el.textContent.trim();
+    if (elName === '@ancestor' || elName === '@default' || elName === '@example') {
+      alert(`You cannot delete ${elName} because it is part of the default workspace.`);
+    } else {
+      var sure = confirm(`Are you sure you want to delete ${elName}?`);
+      if (sure) {
+        // if the item is from the freezer, delete from freezer unless it is original stock (@)
+        if (av.dnd.fzOrgan === source && '@ancestor' !== elName) {
+          if (av.debug.dnd) {console.log('fzOrgan->trash', av.fzr.genome);}
+          remove.domid = el.id;
+          remove.type = 'g';
+          // remove the dom object
+          el.remove();       
+          // remove the object from source containerMap
+          av.dnd.remove(source, el);
+          av.fzr.saveUpdateState('no');
+        }
+        else if (av.dnd.fzConfig === source && '@default' !== elName) {
+          remove.domid = el.id;
+          remove.type = 'g';
+          // remove the dom object
+          el.remove();       
+          // remove the object from source containerMap
+          av.dnd.remove(source, el);
+          av.fzr.saveUpdateState('no');
+        }
+        else if (av.dnd.fzWorld === source && '@example' !== elName) {
+          remove.domid = el.id;
+          remove.type = 'w';
+          // remove the dom object
+          el.remove();       
+          // remove the object from source containerMap
+          av.dnd.remove(source, el);
+          av.fzr.saveUpdateState('no');
+        } 
+        else if (av.dnd.ancestorBox === source) {
+          remove.domid = el.id;
+          remove.type = 'g';
+          // remove the dom object
+          el.remove();       
+          // remove the object from source containerMap
+          av.dnd.remove(source, el);
+          av.fzr.saveUpdateState('no');
+          var index = av.parents.domid.indexOf(el.id);
+          // remove parent
+          av.parents.removeParent(index);
+          console.log(av.parents);
+          // draw an updated grid
+          av.grd.drawGridUpdate();
         }
       }
-      if ('' !== remove.type) {
-        remove.dir = av.fzr.dir[remove.domid];
-        av.fwt.removeFzrItem(remove.dir, remove.type);
-      }
+    }
+    
+    if ('' !== remove.type) {
+      remove.dir = av.fzr.dir[remove.domid];
+      av.fwt.removeFzrItem(remove.dir, remove.type);
     }
     return remove;
   };
