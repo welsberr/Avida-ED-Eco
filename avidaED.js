@@ -2504,8 +2504,9 @@ require([
       if (0 < document.getElementById('popDish' + ii).textContent.length)
         hasData = true;
     }
-    if (!hasData)
-      av.dom.anlChrtSpace.style.visibility = 'visible'; /* yemi: used to be hidden but it was buggy */
+    if (!hasData) {
+      av.dom.anlChrtSpace.style.visibility = 'visible'; /* yemi: used to be hidden but if it's hidden, you can't drag and drop to it */
+    }
     else {
       av.dom.anlChrtSpace.style.visibility = 'visible';
       //if ('populationBlock' === av.ui.page && av.ui.popStatFlag && undefined !== av.anl.logFit[1]) {
@@ -2581,6 +2582,7 @@ require([
     av.anl.wrld[0].left = [];
     av.anl.wrld[0].right = [];
     av.anl.clearWorldData(0);
+    console.log('pop0delete');
     av.dnd.empty(av.dnd.popDish0);
     av.anl.AnaChartFn();
   };
