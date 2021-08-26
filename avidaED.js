@@ -2494,6 +2494,7 @@ require([
     av.dom.anlChrtSpace.style.visibility = 'visible'; /* yemi: used to be 'hidden' */
   };
   // if (av.dbg.flg.root) { console.log('Root: before av.anl.anaChartInit called'); }
+  av.anl.anaChartInit();
 
   //----------------------------------------------------------------------------------------------- av.anl.AnaChartFn --
   av.anl.AnaChartFn = function () {
@@ -2504,9 +2505,8 @@ require([
       if (0 < document.getElementById('popDish' + ii).textContent.length)
         hasData = true;
     }
-    if (!hasData) {
-      av.dom.anlChrtSpace.style.visibility = 'hidden'; /* yemi: used to be hidden but if it's hidden, you can't drag and drop to it */
-    }
+    if (!hasData)
+      av.dom.anlChrtSpace.style.visibility = 'hidden';
     else {
       av.dom.anlChrtSpace.style.visibility = 'visible';
       //if ('populationBlock' === av.ui.page && av.ui.popStatFlag && undefined !== av.anl.logFit[1]) {

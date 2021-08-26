@@ -157,6 +157,7 @@ av.dnd.runTestDish2 = function(fzSection, target, type) {
 
 av.anl.loadWorldData = function (worldNum, dir) {
   if (av.debug.dnd) console.log('loadWorldData: WoldNum:', worldNum, '; dir', dir);
+  av.anl.hasWrldData[worldNum] = true;
   av.fzr.pop[worldNum].fit = av.fio.tr2chart(av.fzr.file[dir + '/tr0.txt']);
   av.fzr.pop[worldNum].ges = av.fio.tr2chart(av.fzr.file[dir + '/tr1.txt']);
   av.fzr.pop[worldNum].met = av.fio.tr2chart(av.fzr.file[dir + '/tr2.txt']);
