@@ -913,6 +913,7 @@ av.grd.clearGrd = function () {
 
   av.grd.rescaleTolerance = 0.1;
   av.grd.rescaleTimeConstant = 1;
+  av.grd.rescaleUpdateStart = 500;   // was 1000
   av.grd.SelectedColor = '#ffffff';
   av.grd.LogicColor = '#00ff00';   //color used to outline cells with avidians that can do the selected logic functions
   av.grd.cellOutline = '#00aa00';  //color used to outline all cells with avidians 

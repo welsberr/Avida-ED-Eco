@@ -75,6 +75,14 @@ html {
   background: #ccc;
 }
 
+/* yemi: dragbar */
+.dragbar {
+  background-color:gray;
+  width :3px;
+  height : 100%;
+  cursor: col-resize;
+}
+
 .headerRow { grid-area: headerRow; }
 .mainBlockHolder { grid-area: mainBlockHolder; }
 .rightInfoHolder { grid-area: rightInfoHolder; }
@@ -607,10 +615,10 @@ html {
 #avidianOutline { display: none; }
 
 .zoomSlideClass { grid-area: zoomSlide; visibility: hidden; }
-.timeUpdateClass { grid-area: timeUpdate; padding-bottom: 5px;}
+.timeUpdateClass { grid-area: timeUpdate; padding-bottom: 5px;}  /* Yemi added padding 2021_826 */
 .freezeButtonDivClass { grid-area: freezeButton;}
-.modeHolderClass { grid-area: modeHolder; padding-bottom: 5px; justify-self: end;}
-.gridButtonClass { grid-area: gridButton; justify-self: end;}
+.modeHolderClass { grid-area: modeHolder; padding-bottom: 5px; } /* Yemi added padding 2021_826; Diane removed justify-self: end; */
+.gridButtonClass { grid-area: gridButton; } /* Yemi added padding 2021_826; Diane removed justify-self: end; */
 .rescalingClass { grid-area: rescaling;}
 .popBotRiteClas { grid-area: popBotRite;}
 
@@ -618,6 +626,7 @@ html {
   display: grid;
   grid-template-areas: 'timeUpdate  modeHolder  rescaling'
                        'freezeButton gridButton popBotRite';
+/* rescaling is a label, not a button and it appears when the numerical values of the color scale change. 
   grid-template-columns: 50% 50% 0px; /* yemi: since rescaling button is not implemented yet, we don't save a column for it now */
   width: 100%;
 }
@@ -768,6 +777,10 @@ table.botPopTable {
   flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
   height: 100%;
 } 
+
+/* Yemi added */
+#miniChartOptionsLabel { margin: 0; }    /* diane thinks it is redant as this is covered in label css
+
 #miniChartControls{
   flex: 0 0 20px;
   display: flex;
@@ -1642,7 +1655,13 @@ checkbox:focus {
 
 /*--------------------------------------------------------------------------------------------------- Organism Block  */
 
-/*Organism Block css */
+/* css for Organism Page  inside .orgBenchCol and #orgInfoHolder or related dom objects */
+
+#actOrgImg {
+  alt: 'Avida-ED ancestor Icon image';
+  /* height: 32px; */   /* to make the same height as this row on the population page */
+}
+
 .orgBenchTopRow{
     border: 1px solid #AAA;
     flex:0 1 30px;    /* describes this as element in a bigger flex box */
@@ -1683,6 +1702,18 @@ checkbox:focus {
     flex: 0 1 40px;
     border: 1px solid #AAA;
   }
+  
+  /* yemi added, but djb does not think it does anything'  */
+  .organismControls {
+    padding: 5px;
+  }
+  
+  /* diane tried, does not work either */
+  .organismControls.button {
+    padding: 0.3rem;
+    background: lightgreen;
+  }
+  
   #cycleSlider{
     background: #F5F5F5; /* mediumpurple; */
   }
@@ -1850,7 +1881,6 @@ checkbox:focus {
     
     .anaDeleteButtonDiv{
       /* padding: 1px 4px;  /*top/bottom  left/right  */
-      /* padding: 1px 4px;  /*top/bottom  left/right  */
       padding-left: 5px;
       padding-right: 4px;
       padding-top: 1px;
@@ -1858,11 +1888,12 @@ checkbox:focus {
     }
     .anaDeleteButton{
       margin: auto;
-      height: fit-content;
-      /* position: absolute; */
-      background-color: rgb(238, 176, 176);
+      height: fit-content;       /* was 1.1rem; */
+      /* width: 1.5rem;   diane had in, might not have been in push */
+      /* position: absolute;  I think yemi removed  */    
+      background-color: rgb(238, 176, 176);   /* Diane does not like the red */
       text-align: center;
-      font-size: smaller;
+      font-size: smaller;   /* diane asks why? */
     };
 
     .anaDeleteButton:hover {
@@ -1897,7 +1928,7 @@ checkbox:focus {
   .anaYaxis{
     flex: 0 1 50%;       /* need a way to put drop down description on another line if screen is narrow */
     /* min-width: 350px; */ /* yemd: messes with layout when screen resized */
-    background: #F5F5F5;/* #F5F5F5; /* pink ;  */
+    background: #F5F5F5;  
     margin: 10px 2px 5px 10px;    /* top right bottom left */
     overflow: auto;
   }
@@ -2144,7 +2175,8 @@ checkbox:focus {
 }
 
 /*
- * Yemi's Changes
+ * Yemi's Changes  if were on a dom key word, look at the top of avidaED.css
+                   else lookin this file near css for near by html elements 
  */
 
 canvas {
@@ -2153,21 +2185,7 @@ canvas {
   object-fit: contain; /* yemi: this is the make sure canvas fills the entire container while also maintaining aspect ratio */
 }
 
-/* yemi: dragbar */
-.dragbar {
-  background-color:gray;
-  width :3px;
-  height : 100%;
-  cursor: col-resize;
-}
 
-.organismControls {
-  padding: 5px;
-}
-
-#miniChartOptionsLabel {
-  margin: 0;
-}
 
 label {
   margin-bottom: 0em; /* yemi: overwrites margin on the bottom set by Bootstrap */
@@ -2176,7 +2194,7 @@ label {
 button {
   border: none;
   background-color: #d1d9df;
-  padding: 0.5em;
+  padding: 0.3rem;    /* was 0.5em */
   color: #000000;
 }
 
