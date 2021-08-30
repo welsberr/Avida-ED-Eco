@@ -5,52 +5,7 @@
     <title>Avida-ED 4</title>
     <meta charset='utf-8' />
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-    <!-- yemi: import jQuery: -->
-    <!-- diane noted that separate jquery scource for dragulaDnd.js because, -->
-    <!-- diane did not explain the require statement in avidaED.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js"></script> 
-    <script type='text/javascript' src='lib/dojo-release-1.16.4/dojo/dojo.js'
-          data-dojo-config="'parseOnLoad':false,'async':true,
-          'packages':[
-              {'name':'gridx','location':'../gridx'},
-              {'name':'clipart','location':'../clipart'},
-              {'name':'maqettaSamples','location':'../../samples'},
-              {'name':'maqetta','location':'../../maqetta'},
-              {'name':'jquery','location':'../../','main':'jquery-v3.4.1.min'},
-              {'name':'dragula','location':'../../dragula','main':'dragula-v3.7.2.min.js'},
-              {'name':'jquery-ui','location':'../../jquery-ui-1.12.1.custom','main':'jquery-ui.min'}
-          ],
-          'themeMap':[
-              ['Android','',['../../themes/android/android.css']],
-              ['BlackBerry','',['../../themes/blackberry/blackberry.css']],
-              ['iPad','',['../../themes/ipad/ipad.css']],
-              ['iPhone','',['../../themes/iphone/iphone.css']],
-              ['.*','',['../../themes/iphone/iphone.css']]
-          ],
-          'mblThemeFiles':[],
-          'mblLoadCompatModifier':''">
-    </script>
-
-    <!--yemi: removed the console.logs because they were not doing anything-->
-    <script type='text/javascript' src='colormap.js'></script>
-    <script type='text/javascript' src='monoColor.js'></script>
-    <script type='text/javascript' src='globals.js'></script>
-    <script type='text/javascript' src='placeParent.js'></script>
-    <script type='text/javascript' src='utilities.js'></script>
-    <script type='text/javascript' src='avidaED.js'></script>
-    <script type="text/javascript" src="dragulaDnd.js"></script>
-    <link href='images/favicon.ico' rel='icon' type='image/x-icon' />
-    <link rel='stylesheet' href='lib/jquery-ui-1.12.1.custom/jquery-ui.css'>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css">
-    <style>
-      @import 'themes/claro/document.css';
-      @import 'themes/claro/claro.css';	
-      @import 'resize.css';      
-      @import 'avidaED.css';
-      @import 'avidaEdEco.css';
-      @import 'lib/dragula/dragula-v3.7.2.min.css';
-    </style>
+    
   </head>
 
   <body id='main_display' class='claro'>
@@ -2216,4 +2171,50 @@
       </div>
     </div><span class='notSeen' id='o________________________________________________________end_saveCSVdataModalID___'></span>
 
+    <!-- yemi: import jQuery: -->
+    <!-- diane noted that separate jquery scource for dragulaDnd.js because, -->
+    <!-- diane did not explain the require statement in avidaED.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js"></script> 
+    <script type='text/javascript' src='lib/dojo-release-1.16.4/dojo/dojo.js'
+          data-dojo-config="'parseOnLoad':false,'async':true,
+          'packages':[
+              {'name':'gridx','location':'../gridx'},
+              {'name':'clipart','location':'../clipart'},
+              {'name':'maqettaSamples','location':'../../samples'},
+              {'name':'maqetta','location':'../../maqetta'},
+              {'name':'jquery','location':'../../','main':'jquery-v3.4.1.min'},
+              {'name':'dragula','location':'../../dragula','main':'dragula-v3.7.2.min.js'},
+              {'name':'jquery-ui','location':'../../jquery-ui-1.12.1.custom','main':'jquery-ui.min'}
+          ],
+          'themeMap':[
+              ['Android','',['../../themes/android/android.css']],
+              ['BlackBerry','',['../../themes/blackberry/blackberry.css']],
+              ['iPad','',['../../themes/ipad/ipad.css']],
+              ['iPhone','',['../../themes/iphone/iphone.css']],
+              ['.*','',['../../themes/iphone/iphone.css']]
+          ],
+          'mblThemeFiles':[],
+          'mblLoadCompatModifier':''">
+    </script>
+
+    <!--yemi: removed the console.logs because they were not doing anything-->
+    <script type='text/javascript' src='colormap.js'></script>
+    <script type='text/javascript' src='monoColor.js'></script>
+    <script type='text/javascript' src='globals.js'></script>
+    <script type='text/javascript' src='placeParent.js'></script>
+    <script type='text/javascript' src='utilities.js'></script>
+    <script type='text/javascript' src='avidaED.js'></script>
+    <script type="text/javascript" src="dragulaDnd.js"></script>
+    <link href='images/favicon.ico' rel='icon' type='image/x-icon' />
+    <link rel='stylesheet' href='lib/jquery-ui-1.12.1.custom/jquery-ui.css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css">
+    <style>
+      @import 'themes/claro/document.css';
+      @import 'themes/claro/claro.css';	
+      @import 'resize.css';      
+      @import 'avidaED.css';
+      @import 'avidaEdEco.css';
+      @import 'lib/dragula/dragula-v3.7.2.min.css';
+    </style>
  </body>

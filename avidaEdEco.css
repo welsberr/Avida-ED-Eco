@@ -88,7 +88,7 @@ html {
 .rightInfoHolder { grid-area: rightInfoHolder; }
 .navColClass {grid-area: navColID; }
 #dragbarLeft {grid-area: dragbarLeft; } /* yemi:    float: right;*/
-#dragbarRight {grid-area: float: right; }
+#dragbarRight {grid-area: dragbarRight; float: right; }
 
 .all2rit{
   display: grid;
@@ -1129,7 +1129,7 @@ details summary {
 .sgrTitleCls { grid-area: sgrTitleCls; display: inline-block; width: 54px; }
 .regionLaySumCls { grid-area: regionLayCls; display: inline-block; }
 .supply_HoldCls { grid-area: supply_HoldCls; display: inline-block; }
-.supplyWHoldCls { grid-area: supplyWdCls; display: inline-block; border: }
+.supplyWHoldCls { grid-area: supplyWdCls; display: inline-block;}
 .inflwSumCls { grid-area: inflwSumCls; display: inline-block; }
 .outflwSumCls { grid-area: outflwSumCls; display: inline-block; }
 .chmsttSumCls { grid-area: chmsttSumCls; display: inline-block; }
@@ -1541,11 +1541,11 @@ select:hover::after {
   background:  #F5F5F5;  /*can't tell that this does anything'*/
 }
 
-/* select:focus{    /*https://stackoverflow.com/questions/8352867/how-to-disable-chrome-details-label-default-behavior 
+/* select:focus { /*https://stackoverflow.com/questions/8352867/how-to-disable-chrome-details-label-default-behavior 
               web site gave me clue to not hide the arrow when selected. Need to not change the background */
-  /* background: white;  /*changes background off all the options not the one highlighted */
-  /* border: solid 1px black;   /*does have effect, but 1px looks the same as withoutsx . */
-}
+  /* background: white;  /*changes background off all the options not the one highlighted */ 
+  /* border: solid 1px black;   /*does have effect, but 1px looks the same as withoutsx . */ 
+/*}*/
 
 select:option { 
     padding: 0px 1px;    /*top/bottom  left/right  */
@@ -1912,7 +1912,7 @@ checkbox:focus {
       margin: auto;
     }
     .popDishHolder{  
-      padding 3px;
+      padding: 3px;
       background: #F5F5F5;  /*lemonchiffon; */
     }
     /* insdie popDishHolder */
@@ -1952,7 +1952,7 @@ checkbox:focus {
     bottom: 0;
 
     z-index: 1; /* Sit on top */
-    //padding-top: 100px; /* Location of the box */
+    /* padding-top: 100px; */ /* Location of the box */
     left: 0;
     top: 0;
     width: 100%;   /*   Full width */
@@ -1987,7 +1987,7 @@ checkbox:focus {
     color: black;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+/*----------------------------------------------------------------------------------------------------------------------
 /************************************************************************************************* end of model class */                                                                         */
 
 #saveCSVdataModalID {
@@ -2026,7 +2026,7 @@ checkbox:focus {
   display: flex;
   flex-direction: column;
   background: #fefefe;
-  padding: 0px;   //was 2
+  padding: 0px;   /* was 2 */
   border: 1px solid black; /* #888; */
   width: 94%;
   height: 90%;
@@ -2050,7 +2050,7 @@ checkbox:focus {
 }
 
 .modalBig-footer {
-  flex: 0 0 40px
+  flex: 0 0 40px;
   padding: 8px 0px;    /*top-bottom; left-right */
   width: 100%;
   background: lightgray;
@@ -2185,8 +2185,6 @@ canvas {
   object-fit: contain; /* yemi: this is the make sure canvas fills the entire container while also maintaining aspect ratio */
 }
 
-
-
 label {
   margin-bottom: 0em; /* yemi: overwrites margin on the bottom set by Bootstrap */
 }
@@ -2216,7 +2214,7 @@ input[type='button']:hover {
 
 /*************************************************************************************************** no longer in use */
 
-/// Not in use, but could be useful
+/* Not in use, but could be useful */
   /* from https://www.bestcssbuttongenerator.com/#/17 */
   .fancyButton {
     -moz-box-shadow: 5px 4px 7px 0px #899599;
@@ -2322,7 +2320,7 @@ input[type='button']:hover {
 /* https://www.freecodecamp.org/news/everything-you-need-to-know-about-css-variables-c74d922ea855/
 /*-------------------------------------------------------------------------- use css variables to convert px to rem --*/
 /* use variables in css to convert px to rem
-/* css for example 
+/* css for example */
       * { 
         --font-size: calc((var(--pixels)/16) * 1rem);
         font-size: var(--font-size); /* To use on an HTML element */
@@ -2342,7 +2340,7 @@ input[type='button']:hover {
       .fnt12 {
        --pixels: 16; /* Equals to 24px */
         font-size: var(--font-size);
-      }      
+      } 
 /* html for examle 
       <h1>Header 1: 30px</h1>
       <h2>Header 2: 25x</h2>
