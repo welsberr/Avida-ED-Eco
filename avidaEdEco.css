@@ -778,8 +778,8 @@ table.botPopTable {
   height: 100%;
 } 
 
-/* Yemi added */
-#miniChartOptionsLabel { margin: 0; }    /* diane thinks it is redant as this is covered in label css
+/* Yemi added 
+#miniChartOptionsLabel { margin: 0; }    /* diane thinks it is redant as this is covered in label css */
 
 #miniChartControls{
   flex: 0 0 20px;
@@ -2304,6 +2304,9 @@ input[type='button']:hover {
 /* 
 /* list of web safe fonts and which % of OS groups that include that font
 /* https://www.cssfontstack.com/
+/* 14.1.2 ROB
+/* 14.0 (15610.1.28.1.9, 15610) diane
+/*  both macOS 10.15.7
 /* 
 /* Other urls: 
 /* https://www.webhostingsecretrevealed.net/blog/web-business-ideas/25-gorgeous-web-safe-fonts-for-your-website/
