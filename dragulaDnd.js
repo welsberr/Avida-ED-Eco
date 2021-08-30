@@ -264,16 +264,16 @@ jQuery(document).ready(function($) {
         av.mouse.UpGridPos = [x, y];
         var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
         if (elements.indexOf("gridCanvas") != -1 && sourceIsFzOrgan) { // if gridCanvas is behind this mouse point
-          av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, source);
+          av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, av.dnd.fzOrgan);
           av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
         } 
 
         if (elements.indexOf("gridCanvas") != -1 && sourceIsFzWorld) { 
-          av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, source);
+          av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, av.dnd.fzWorld);
         }
 
         if (elements.indexOf("gridCanvas") != -1 && sourceIsAncestorBox) { 
-          av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, source);
+          av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, av.dnd.ancestorBox);
           av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
         }
       }
