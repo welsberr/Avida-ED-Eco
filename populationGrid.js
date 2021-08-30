@@ -83,7 +83,7 @@
       //console.log('av.grd.mxFit=', av.grd.mxFit, '; av.grd.msg.fitness.maxVal=', av.grd.msg.fitness.maxVal, '; low limit=',
       //  (1 - av.grd.rescaleTolerance) * av.grd.mxFit, '; lo2 limit = ', (1 - 2*av.grd.rescaleTolerance) * av.grd.mxFit );
       
-      if (av.grd.mxFit < av.grd.msg.fitness.maxVal || ( av.grd.updateNum >10000 && (1 - av.grd.rescaleTolerance) * av.grd.mxFit > av.grd.msg.fitness.maxVal) ) {
+      if (av.grd.mxFit < av.grd.msg.fitness.maxVal || ( av.grd.updateNum >av.grd.rescaleUpdateStart && (1 - av.grd.rescaleTolerance) * av.grd.mxFit > av.grd.msg.fitness.maxVal) ) {
         av.grd.mxFit = av.grd.mxFit + ((1 + av.grd.rescaleTolerance) * av.grd.msg.fitness.maxVal - av.grd.mxFit) / av.grd.rescaleTimeConstant;
         av.grd.reScaleFit = 'rescaling';
         console.log('rescaling: av.grd.msg.fitness.maxVal=', av.grd.msg.fitness.maxVal);
@@ -97,54 +97,54 @@
       }
       else av.grd.reScaleGest = '';
 
-      if (av.grd.mxRate < av.grd.msg.metabolism.maxVal || ( av.grd.updateNum >10000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRate > av.grd.msg.metabolism.maxVal)) {
+      if (av.grd.mxRate < av.grd.msg.metabolism.maxVal || ( av.grd.updateNum >av.grd.rescaleUpdateStart && (1 - av.grd.rescaleTolerance) * av.grd.mxRate > av.grd.msg.metabolism.maxVal)) {
         av.grd.mxRate = av.grd.mxRate + ((1 + av.grd.rescaleTolerance) * av.grd.msg.metabolism.maxVal - av.grd.mxRate) / av.grd.rescaleTimeConstant;
         av.grd.reScaleRate = 'rescaling';
       }
       else av.grd.reScaleRate = '';
 
-      if (av.grd.mxRnot < av.grd.msg.rnot.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRnot > av.grd.msg.rnot.maxVal)) {
+      if (av.grd.mxRnot < av.grd.msg.rnot.maxVal || ( av.grd.updateNum >av.grd.rescaleUpdateStart && (1 - av.grd.rescaleTolerance) * av.grd.mxRnot > av.grd.msg.rnot.maxVal)) {
         av.grd.mxRnot = av.grd.mxRnot + ((1 + av.grd.rescaleTolerance) * av.grd.msg.rnot.maxVal - av.grd.mxRnot) / av.grd.rescaleTimeConstant;
         av.grd.reScaleRate = 'rescaling';
       }
       else av.grd.reScaleRate = '';
 
-      if (av.grd.mxRnan < av.grd.msg.rnan.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRnan > av.grd.msg.rnan.maxVal)) {
+      if (av.grd.mxRnan < av.grd.msg.rnan.maxVal || ( av.grd.updateNum >av.grd.rescaleUpdateStart && (1 - av.grd.rescaleTolerance) * av.grd.mxRnan > av.grd.msg.rnan.maxVal)) {
         av.grd.mxRnan = av.grd.mxRnan + ((1 + av.grd.rescaleTolerance) * av.grd.msg.rnan.maxVal - av.grd.mxRnan) / av.grd.rescaleTimeConstant;
         av.grd.reScaleRate = 'rescaling';
       }
       else av.grd.reScaleRate = '';
-      if (av.grd.mxRand < av.grd.msg.rand.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRand > av.grd.msg.rand.maxVal)) {
+      if (av.grd.mxRand < av.grd.msg.rand.maxVal || ( av.grd.updateNum >av.grd.rescaleUpdateStart && (1 - av.grd.rescaleTolerance) * av.grd.mxRand > av.grd.msg.rand.maxVal)) {
         av.grd.mxRand = av.grd.mxRand + ((1 + av.grd.rescaleTolerance) * av.grd.msg.rand.maxVal - av.grd.mxRand) / av.grd.rescaleTimeConstant;
         av.grd.reScaleRate = 'rescaling';
       }
       else av.grd.reScaleRate = '';
 
-      if (av.grd.mxRorn < av.grd.msg.rorn.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRorn > av.grd.msg.rorn.maxVal)) {
+      if (av.grd.mxRorn < av.grd.msg.rorn.maxVal || ( av.grd.updateNum >av.grd.rescaleUpdateStart && (1 - av.grd.rescaleTolerance) * av.grd.mxRorn > av.grd.msg.rorn.maxVal)) {
         av.grd.mxRorn = av.grd.mxRorn + ((1 + av.grd.rescaleTolerance) * av.grd.msg.rorn.maxVal - av.grd.mxRorn) / av.grd.rescaleTimeConstant;
         av.grd.reScaleRate = 'rescaling';
       }
       else av.grd.reScaleRate = '';
 
-      if (av.grd.mxRoro < av.grd.msg.roro.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRoro > av.grd.msg.roro.maxVal)) {
+      if (av.grd.mxRoro < av.grd.msg.roro.maxVal || ( av.grd.updateNum >av.grd.rescaleUpdateStart && (1 - av.grd.rescaleTolerance) * av.grd.mxRoro > av.grd.msg.roro.maxVal)) {
         av.grd.mxRoro = av.grd.mxRoro + ((1 + av.grd.rescaleTolerance) * av.grd.msg.roro.maxVal - av.grd.mxRoro) / av.grd.rescaleTimeConstant;
         av.grd.reScaleRate = 'rescaling';
       }
       else av.grd.reScaleRate = '';
 
-      if (av.grd.mxRant < av.grd.msg.rant.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRant > av.grd.msg.rant.maxVal)) {
+      if (av.grd.mxRant < av.grd.msg.rant.maxVal || ( av.grd.updateNum >av.grd.rescaleUpdateStart && (1 - av.grd.rescaleTolerance) * av.grd.mxRant > av.grd.msg.rant.maxVal)) {
         av.grd.mxRant = av.grd.mxRant + ((1 + av.grd.rescaleTolerance) * av.grd.msg.rant.maxVal - av.grd.mxRant) / av.grd.rescaleTimeConstant;
         av.grd.reScaleRate = 'rescaling';
       }
       else av.grd.reScaleRate = '';
 
-      if (av.grd.mxRnor < av.grd.msg.rnor.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRnor > av.grd.msg.rnor.maxVal)) {
+      if (av.grd.mxRnor < av.grd.msg.rnor.maxVal || ( av.grd.updateNum >av.grd.rescaleUpdateStart && (1 - av.grd.rescaleTolerance) * av.grd.mxRnor > av.grd.msg.rnor.maxVal)) {
         av.grd.mxRnor = av.grd.mxRnor + ((1 + av.grd.rescaleTolerance) * av.grd.msg.rnor.maxVal - av.grd.mxRnor) / av.grd.rescaleTimeConstant;
         av.grd.reScaleRate = 'rescaling';
       }
       else av.grd.reScaleRate = '';
 
-      if (av.grd.mxRxor < av.grd.msg.rxor.maxVal || ( av.grd.updateNum >1000 && (1 - av.grd.rescaleTolerance) * av.grd.mxRxor > av.grd.msg.rxor.maxVal)) {
+      if (av.grd.mxRxor < av.grd.msg.rxor.maxVal || ( av.grd.updateNum >av.grd.rescaleUpdateStart && (1 - av.grd.rescaleTolerance) * av.grd.mxRxor > av.grd.msg.rxor.maxVal)) {
         av.grd.mxRxor = av.grd.mxRxor + ((1 + av.grd.rescaleTolerance) * av.grd.msg.rxor.maxVal - av.grd.mxRxor) / av.grd.rescaleTimeConstant;
         av.grd.reScaleRate = 'rescaling';
       }
