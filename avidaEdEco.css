@@ -2255,8 +2255,15 @@ input[type='button']:hover {
 
 /*********************************************************************************************** end no longer in use */
 
-/************************************************************************************************************** notes */
-
+/********************************************************************************************************** css notes */
+/*
+/* custom properties - I should find time to figure these out. 
+/* https://www.quirksmode.org/blog/archives/2021/05/two_options_for.html
+/*----------------------------------------------------------------------------------------------------------- fonts --*/
+/* info on fonts
+/* https://css-tricks.com/almanac/properties/f/font/
+/*
+/* https://kinsta.com/blog/web-safe-fonts/
 /* web safe fonts, best 30 fonts with examples show of upper and lower case and numbers
 /* San-Serif: tell letters apart
 /*   Tahoma ==> Font-family: Tahoma, Verdana, Segoe, sans-serif.
@@ -2265,7 +2272,7 @@ input[type='button']:hover {
 /*   Verdana ==> Verdana, Geneva, sans-serif.
 /* 
 /*   Diane ==> Tahoma, Trebuchet MS, Verdana, Lucida Grande, Comic Sans MS, Arial, sans-serif
-                 look at example 1 again
+/*                 look at example 1 again
 /* 
 /*   Diane likes, but most don't: Comic Sans MS
 /* 
@@ -2303,20 +2310,51 @@ input[type='button']:hover {
 /* Other urls: 
 /* https://www.webhostingsecretrevealed.net/blog/web-business-ideas/25-gorgeous-web-safe-fonts-for-your-website/
 /* https://www.webdesigndev.com/16-gorgeous-web-safe-fonts-to-use-with-css/#Abel_Web_Safe_Font
-/*----------- --------------------------------------------------------------------------------------------- flex box --*/
-/* 
-/* https://kinsta.com/blog/web-safe-fonts/
-
+/*
+/*-------------------------------------------------------------------------------------------------------- flex box --*/
 /* https://caniuse.com/ to look to see which browsers support a feature. 
 
 /* suggested standards (found in 2021, not used yet)
 /* https://javascript.plainenglish.io/19-simple-javascript-coding-standards-to-keep-your-code-clean-7422d6f9bc0
 
+/*----------- --------------------------------------------------------------------------------------- css varaibles --*/
 /* Css variables. 
 /* https://www.freecodecamp.org/news/everything-you-need-to-know-about-css-variables-c74d922ea855/
+/*-------------------------------------------------------------------------- use css variables to convert px to rem --*/
+/* use variables in css to convert px to rem
+/* css for example 
+      * { 
+        --font-size: calc((var(--pixels)/16) * 1rem);
+        font-size: var(--font-size); /* To use on an HTML element */
+      }
 
-/* custom properties - I should find time to figure these out. 
-/* https://www.quirksmode.org/blog/archives/2021/05/two_options_for.html
+      h1 {
+        --pixels: 30; /* Equals to 48px */
+        font-size: var(--font-size);
+      }
+
+
+      h2 {
+        --pixels:25; /* Equals to 24px */
+        font-size: var(--font-size);
+      }
+
+      .fnt12 {
+       --pixels: 16; /* Equals to 24px */
+        font-size: var(--font-size);
+      }      
+/* html for examle 
+      <h1>Header 1: 30px</h1>
+      <h2>Header 2: 25x</h2>
+      <h3 style="--pixels: 20;">
+        Header 3: 20px</h3>
+      <h4 class='fnt12'>Header 4: 16 px</h4>
+      <p>
+        from: https://codepen.io/andresgalante/pen/abOydOj?editors=1100
+      </p>
+      <p>
+        this version: https://codepen.io/dblackwood/pen/RwgWxBm?editors=1100
+</p>
 /*--------------------------------------------------------------- information about grid containers  or display: grid */
 /* https://learncssgrid.com/   //good info about how grid works
 
@@ -2328,9 +2366,8 @@ input[type='button']:hover {
 
 /* https://cssgrid-generator.netlify.app/ .    //tool to make a simple repeated grid 
 
-/*----------- --------------------------------------------------------------------------------------------- flex box --*/
-
-
+/*-------------------------------------------------------------------------------------------------------- flex box --*/
+/* 
 /* https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 
 /* explains flex: in a way I might finally understand. 
@@ -2371,7 +2408,5 @@ input[type='button']:hover {
 /* used to format details/summary
 /* from: https://stackoverflow.com/questions/51131818/how-to-vertically-align-detailss-arrow-with-summarys-content 
 
-/* use variables in css to convert px to rem
-/* https://codepen.io/andresgalante/pen/abOydOj?editors=1100
 /********************************************************************************************************** end notes */
 
