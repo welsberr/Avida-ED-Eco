@@ -21,7 +21,15 @@
       }
       // 'insertNodes' implementation
       var domid = `dom_${type}${fileNum}`
-      $(container).append(`<div class="item ${type}" id="${domid}"> ${name} </div>`);
+      if (type === 'g') 
+      {
+        $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${name} </div>`);
+      } 
+      else 
+      {
+        $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-dish-icon.png' class='DishIcon'> ${name} </div>`);
+      }
+      
       containerMap[container][domid] = {"name": name, "type": type};
       if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', containerMap[container][domid]);
 

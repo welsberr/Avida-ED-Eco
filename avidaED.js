@@ -2575,6 +2575,64 @@ require([
     }
   };
 
+  //--------------------------------------------------------------------------------------------------------------------//
+  //          DND Analysis page
+  //--------------------------------------------------------------------------------------------------------------------//
+
+  av.anl.loadWorldData = function (worldNum, dir) {
+    if (av.debug.dnd) console.log('loadWorldData: WoldNum:', worldNum, '; dir', dir);
+    av.anl.hasWrldData[worldNum] = true;
+    av.fzr.pop[worldNum].fit = av.fio.tr2chart(av.fzr.file[dir + '/tr0.txt']);
+    av.fzr.pop[worldNum].ges = av.fio.tr2chart(av.fzr.file[dir + '/tr1.txt']);
+    av.fzr.pop[worldNum].met = av.fio.tr2chart(av.fzr.file[dir + '/tr2.txt']);
+    av.fzr.pop[worldNum].num = av.fio.tr2chart(av.fzr.file[dir + '/tr3.txt']);
+    av.fzr.pop[worldNum].via = av.fio.tr2chart(av.fzr.file[dir + '/tr4.txt']);
+  };
+
+  av.anl.clearWorldData = function (worldNum){
+    'use strict';
+    av.fzr.pop[worldNum].fit = [];
+    av.fzr.pop[worldNum].ges = [];
+    av.fzr.pop[worldNum].met = [];
+    av.fzr.pop[worldNum].num = [];
+    av.fzr.pop[worldNum].via = [];
+  };
+
+  //worldNum is a number 0-2 of the population loaded into analysis page
+  av.anl.loadSelectedData = function (worldNum, axisSide, side, from) {
+    'use strict';
+    console.log(from, 'called v.anl.loadSelectedData: worldNum=',worldNum, '; axis=', axisSide, '; side=', side);
+    var dataType = document.getElementById(axisSide).value.toLowerCase();
+    switch(dataType) {
+      case 'none':
+        av.anl.wrld[worldNum][side] = [];
+        break;
+      case 'average fitness':
+        av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].fit;
+        break;
+      case 'average offspring cost':
+        av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].ges;
+        break;
+      case 'average energy acq. rate':
+        av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].met;
+        break;
+      case 'number of organisms':
+        av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].num;
+        break;
+      case 'number viable':
+        av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].via;
+        break;
+    }
+    var begin = av.anl.xx.length;
+    var end = av.fzr.pop[worldNum].fit.length;
+    //console.log('begin=', begin, '; end=', end);
+    if (av.anl.xx.length < av.fzr.pop[worldNum].fit.length) {
+      for (ii = begin; ii< end; ii++) {
+        av.anl.xx[ii] = ii;
+      }
+    }
+  };
+
   /* Chart buttons ****************************************/
   document.getElementById('pop0delete').onclick = function () {
     av.post.addUser('Button: pop0delete');

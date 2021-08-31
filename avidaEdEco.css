@@ -1565,7 +1565,7 @@ select:disabled::-ms-expand {
 	background-color: #fafafa;
 	border: 1px solid #cacece;
 	/* box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05); */
-	padding: 8px;
+	padding: 8px !important;
 	border-radius: 3px;
 	display: inline-block;
 	position: relative;
@@ -2208,6 +2208,14 @@ input[type='button']:hover {
 .item:hover {
   background-color: #afd9fa;
   opacity: 50%;
+}
+
+.AvidianIcon {
+  height: 20px;
+}
+
+.DishIcon {
+  height: 20px;
 }
 
 /********************************************************************************************** end of modalBig class */                                                                         */
