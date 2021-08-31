@@ -88,7 +88,7 @@ html {
 .rightInfoHolder { grid-area: rightInfoHolder; }
 .navColClass {grid-area: navColID; }
 #dragbarLeft {grid-area: dragbarLeft; } /* yemi:    float: right;*/
-#dragbarRight {grid-area: dragbarRight; float: right; }
+#dragbarRight {float: right; }
 
 .all2rit{
   display: grid;
@@ -109,7 +109,8 @@ html {
 .all2lft{
   display: grid;
   grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
-  grid-template-columns: 240px 3px auto;
+  /* grid-template-columns: 250px 3px auto; */
+  grid-template-columns: 20% 3px auto;
   grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder';
   height: 99vh;
@@ -125,7 +126,8 @@ html {
 .all3pop{ 
   display: grid;
   grid-template-rows: 2.5em 1fr;   /* 2.5em */
-  grid-template-columns: 240px 3px auto 3px 400px;    /* 440px */
+  /* grid-template-columns: 240px 3px auto 3px 400px;*/    /* 440px */
+  grid-template-columns: 20% 3px auto 3px auto;
   grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
   height: 99vh;
@@ -141,7 +143,8 @@ html {
 .all3org{
   display: grid;
   grid-template-rows: 2.5em 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
-  grid-template-columns: 240px 3px auto 3px 220px;    /* 250px */
+  /* grid-template-columns: 240px 3px auto 3px 220px;*/    /* 250px */
+  grid-template-columns: 20% 3px auto 3px auto;
   grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
   height: 99vh;
@@ -171,7 +174,7 @@ html {
   background: #F5F5F5; /* lavender; */
   border: 1px solid #AAA;
   height: 100%;
-  /* resize: horizontal;      /* diane removed */
+  /* resize: horizontal; */     /* diane removed */
   min-width: 160px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
   max-width: 620px;
 }
@@ -203,6 +206,7 @@ html {
   }  /* Contain the blocks popInfoVert and orgInfoHolder  */
 
   #orgInfoHolder {
+    grid-area: orgInfoHolder;
     border: 1px solid #AAA;
     background-color: #F5F5F5;  /* mistyrose; */
     height: 100%;
