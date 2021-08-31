@@ -941,18 +941,21 @@ require([
 
   //Buttons on drop down menu to add Configured Dish to an Experiment
   dijit.byId('mnFzAddConfigEx').on('Click', function () {
+    av.dnd.clickedMenu = "addConfig";
     av.post.addUser('Button: mnFzAddConfigEx');
     av.dnd.FzAddExperimentFn(av.dnd.fzConfig, av.dnd.activeConfig, 'c');
   });
 
   //Buttons on drop down menu to add Organism to an Experiment - does not work on Test
   dijit.byId('mnFzAddGenomeEx').on('Click', function () {
+    av.dnd.clickedMenu = "addOrgan";
     av.post.addUser('Button: mnFzAddGenomeEx');
     av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.ancestorBox, 'g');
   });
 
   //Buttons on drop down menu to add Populated Dish to an Experiment
   dijit.byId('mnFzAddPopEx').on('Click', function () {
+    av.dnd.clickedMenu = "addPop";
     av.post.addUser('Button: mnFzAddPopEx');
     av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.activeConfig, 'w');
   });
