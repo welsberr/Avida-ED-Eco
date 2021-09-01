@@ -234,6 +234,9 @@
     'use strict';
     var target = '';
     if (av.debug.mouse) console.log('in KidMouse', evt.target.id, evt);
+    if (av.grd.kidGenome === undefined) {
+      return target;
+    }
     if (5 < av.grd.kidGenome.length) {
       if ('organIcon' == evt.target.id) {
         target = 'organIcon';

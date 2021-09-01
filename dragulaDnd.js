@@ -59,6 +59,7 @@ jQuery(document).ready(function($) {
   // necessary when new dish modal was called not because user clicked on the 'new' button
   // but because it was triggered by dragging a dish to the activeConfig where the experiment has started
   av.dnd.newDishModalCalledFromDnd = false;
+  av.dnd.clickedMenu = "";
 
   /*
   Dragula Initialization
@@ -264,16 +265,16 @@ jQuery(document).ready(function($) {
         av.mouse.UpGridPos = [x, y];
         var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
         if (elements.indexOf("gridCanvas") != -1 && sourceIsFzOrgan) { // if gridCanvas is behind this mouse point
-          av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, source);
+          av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, av.dnd.fzOrgan);
           av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
         } 
 
         if (elements.indexOf("gridCanvas") != -1 && sourceIsFzWorld) { 
-          av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, source);
+          av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, av.dnd.fzWorld);
         }
 
         if (elements.indexOf("gridCanvas") != -1 && sourceIsAncestorBox) { 
-          av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, source);
+          av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, av.dnd.ancestorBox);
           av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
         }
       }
@@ -299,15 +300,18 @@ jQuery(document).ready(function($) {
       var classList = e.target.className.split(" "); // e.target.className is a string
       if (av.dnd.selectedId !== '' && e.target.id === av.dnd.selectedId) {
         $('#' + e.target.id).css('background', 'inherit');
+        $('#' + e.target.id).css('border-color', 'inherit');
         av.dnd.selectedId = '';
       } 
       else if (av.dnd.selectedId === '' && classList.indexOf('item') != -1) { // if the target is of class 'item' (aka draggable item)
         $('#' + e.target.id).css('background', 'rgb(189, 229, 245)');
+        $('#' + e.target.id).css('border-color', '#3440e6');
         av.dnd.selectedId = e.target.id;
       }
       else if (av.dnd.selectedId != '' && classList.indexOf('item') != -1) { // if something is selected already and user selects another one
         $('#' + av.dnd.selectedId).css('background', 'inherit');
         $('#' + e.target.id).css('background', 'rgb(189, 229, 245)');
+        $('#' + e.target.id).css('border-color', '#3440e6');
         av.dnd.selectedId = e.target.id;
       }
     }
@@ -445,6 +449,25 @@ jQuery(document).ready(function($) {
 
     // if something is selected
     if (undefined !== av.dnd.selectedId && '' !== av.dnd.selectedId) {
+      var classList = document.getElementById(av.dnd.selectedId).className.split(" ");
+      if (classList.indexOf('g') != -1 && av.dnd.clickedMenu != "addOrgan") {
+        // if the selected is a genome and the user misclicked something other than 'add this organism to the experiment'
+        $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
+        av.dnd.selectedId = '';
+        return;
+      }  
+      if (classList.indexOf('w') != -1 && av.dnd.clickedMenu != "addPop") {
+        // if the selected is a populated dish or configured dish and the user misclicked something other than 'add this dish to the experiment'
+        $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
+        av.dnd.selectedId = '';
+        return;
+      }
+      if (classList.indexOf('c') != -1 && av.dnd.clickedMenu != "addConfig") {
+        // if the selected is a populated dish or configured dish and the user misclicked something other than 'add this dish to the experiment'
+        $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
+        av.dnd.selectedId = '';
+        return;
+      }
       // clone the selected node
       var el = $.map($('#' + av.dnd.selectedId), (value, key) => { return value })[0].cloneNode(true);
       console.log('fzSection=', fzSection, '; target=', target, '; av.dnd.selectedId=', av.dnd.selectedId, '; type=', type);
@@ -1014,6 +1037,7 @@ jQuery(document).ready(function($) {
     var elName = el.textContent.trim();
     if (elName === '@ancestor' || elName === '@default' || elName === '@example') {
       alert(`You cannot delete ${elName} because it is part of the default workspace.`);
+      dra.cancel();
     } else {
       var sure = confirm(`Are you sure you want to delete ${elName}?`);
       if (sure) {

@@ -941,18 +941,21 @@ require([
 
   //Buttons on drop down menu to add Configured Dish to an Experiment
   dijit.byId('mnFzAddConfigEx').on('Click', function () {
+    av.dnd.clickedMenu = "addConfig";
     av.post.addUser('Button: mnFzAddConfigEx');
     av.dnd.FzAddExperimentFn(av.dnd.fzConfig, av.dnd.activeConfig, 'c');
   });
 
   //Buttons on drop down menu to add Organism to an Experiment - does not work on Test
   dijit.byId('mnFzAddGenomeEx').on('Click', function () {
+    av.dnd.clickedMenu = "addOrgan";
     av.post.addUser('Button: mnFzAddGenomeEx');
     av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.ancestorBox, 'g');
   });
 
   //Buttons on drop down menu to add Populated Dish to an Experiment
   dijit.byId('mnFzAddPopEx').on('Click', function () {
+    av.dnd.clickedMenu = "addPop";
     av.post.addUser('Button: mnFzAddPopEx');
     av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.activeConfig, 'w');
   });
@@ -2571,6 +2574,64 @@ require([
         av.utl.dTailWrite('avidaED.js', (new Error).lineNumber, 'av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg', [av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg]);
         Plotly.plot(av.dom.anlChrtSpace, anaData, av.anl.layout, av.anl.widg);
         if (av.dbg.flg.plt) { console.log('AnaPlot: after plot anlChrtSpace'); }
+      }
+    }
+  };
+
+  //--------------------------------------------------------------------------------------------------------------------//
+  //          DND Analysis page
+  //--------------------------------------------------------------------------------------------------------------------//
+
+  av.anl.loadWorldData = function (worldNum, dir) {
+    if (av.debug.dnd) console.log('loadWorldData: WoldNum:', worldNum, '; dir', dir);
+    av.anl.hasWrldData[worldNum] = true;
+    av.fzr.pop[worldNum].fit = av.fio.tr2chart(av.fzr.file[dir + '/tr0.txt']);
+    av.fzr.pop[worldNum].ges = av.fio.tr2chart(av.fzr.file[dir + '/tr1.txt']);
+    av.fzr.pop[worldNum].met = av.fio.tr2chart(av.fzr.file[dir + '/tr2.txt']);
+    av.fzr.pop[worldNum].num = av.fio.tr2chart(av.fzr.file[dir + '/tr3.txt']);
+    av.fzr.pop[worldNum].via = av.fio.tr2chart(av.fzr.file[dir + '/tr4.txt']);
+  };
+
+  av.anl.clearWorldData = function (worldNum){
+    'use strict';
+    av.fzr.pop[worldNum].fit = [];
+    av.fzr.pop[worldNum].ges = [];
+    av.fzr.pop[worldNum].met = [];
+    av.fzr.pop[worldNum].num = [];
+    av.fzr.pop[worldNum].via = [];
+  };
+
+  //worldNum is a number 0-2 of the population loaded into analysis page
+  av.anl.loadSelectedData = function (worldNum, axisSide, side, from) {
+    'use strict';
+    console.log(from, 'called v.anl.loadSelectedData: worldNum=',worldNum, '; axis=', axisSide, '; side=', side);
+    var dataType = document.getElementById(axisSide).value.toLowerCase();
+    switch(dataType) {
+      case 'none':
+        av.anl.wrld[worldNum][side] = [];
+        break;
+      case 'average fitness':
+        av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].fit;
+        break;
+      case 'average offspring cost':
+        av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].ges;
+        break;
+      case 'average energy acq. rate':
+        av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].met;
+        break;
+      case 'number of organisms':
+        av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].num;
+        break;
+      case 'number viable':
+        av.anl.wrld[worldNum][side] = av.fzr.pop[worldNum].via;
+        break;
+    }
+    var begin = av.anl.xx.length;
+    var end = av.fzr.pop[worldNum].fit.length;
+    //console.log('begin=', begin, '; end=', end);
+    if (av.anl.xx.length < av.fzr.pop[worldNum].fit.length) {
+      for (ii = begin; ii< end; ii++) {
+        av.anl.xx[ii] = ii;
       }
     }
   };

@@ -35,7 +35,7 @@ av.ui.resizeShowTextDebugPage =function() {
 function resizePopulationPage() {
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('.dragbar').css("width");
-  var rightSideWidth = $('#rightInfoHolder').css("width");
+  var rightSideWidth = $('#selOrgType').css("width");
   var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
   $('.all3pop').css("grid-template-columns", newColumns);
   av.grd.drawGridSetupFn(); // yemi: redraw the grid
@@ -380,6 +380,7 @@ av.ui.initialDivSizing = function() {
 
   /* yemi: call the drag bar right function */
   dragbarRightResize();
+  resizePopulationPage();
 };
 
 //----------------------------------------------------------------------------------------show/hide left side panel --
