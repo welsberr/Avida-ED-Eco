@@ -511,7 +511,7 @@
 
   av.pch.processLogic = function() {
     "use strict";
-    console.log('In av.pch.processLogic: av.pch.fnBinary = ', av.pch.fnBinary);
+    //console.log('In av.pch.processLogic: av.pch.fnBinary = ', av.pch.fnBinary);
     if ( (null !== av.pch.fnBinary) && (undefined !== av.pch.fnBinary) ) {
       for (var ii = 0; ii<9; ii++) {
         //console.log('substring = ', av.pch.fnBinary.substring(ii,ii+1));

@@ -90,6 +90,11 @@ canvas {
   object-fit: contain; /* yemi: this is the make sure canvas fills the entire container while also maintaining aspect ratio */
 }
 
+div {
+  margin: 0;
+  padding: 0;
+}
+
 /* Yemi made */
 label {
   margin-bottom: 0rem; /* yemi: overwrites margin on the bottom set by Bootstrap */
@@ -112,25 +117,23 @@ ul {
   font-family: Tahoma, Trebuchet MS, sans-serif;
 }
  
-/*
- * Yemi's Changes  if were on a dom key word, look at the top of avidaED.css
-                   else lookin this file near css for near by html elements 
- */
+textarea {
+  outline: none;
+}
 
- 
- /* Trying get headers back to default values
- /* this did not work I wanted to change for all headers inside the main div. 
- #allAvidaContainer h1, h2, h3, h4, h5, h6 {
+/* Trying get headers back to default values
+/* this did not work I wanted to change for all headers inside the main div. */
+#allAvidaContainer h1, h2, h3, h4, h5, h6 {
    font-weight: bold;
    margin: 0;
    padding: 0;
    font-family: Tahoma, Trebuchet MS, sans-serif;
- }
+}
  
- 
- /* trying classe to get headers back to to what they should be 
+
+/* trying classe to get headers back to to what they should be 
     hdf# classes were over written by .claro in document.css
- */
+*/
  .dfhd {
    display: block;
    font-weight: bold;
@@ -169,16 +172,36 @@ ul {
    </div>
  */
  
- textarea {
-   outline: none;
- }
  
- div {
-   margin: 0;
-   padding: 0;
- }
- 
- #anlDndChart {
+ #splash{
+  display: block;
+  position: absolute; 
+  top: 0px; 
+  bottom: 0px; 
+  left: 0px; 
+  right: 0px; 
+  width: 100%; 
+  height: 100%; 
+  z-index: 1000; 
+  background: #13332A
+}
+
+#populationBlock {
+  display: flex;
+}
+#organismBlock{
+  display: flex;
+}
+#analysisBlock{
+  display: none;
+}
+#zoomSlide {display: none;}
+
+.noSize{display: none}
+
+.notSeen{ margin: 0; display: none; }
+
+#anlDndChart {
    width: 100%;
    height: 100%;
  }
@@ -261,10 +284,8 @@ ul {
    width: 45px;
    display: block;
    text-align: center;
- /*
    font-family: Tahoma, Trebuchet MS, sans-serif;
    text-decoration: none;
- */
  }
  
  .bitButtonOn {
@@ -277,10 +298,8 @@ ul {
    width: 45px;
    display: block;
    text-align: center;
- /*
    font-family: Tahoma, Trebuchet MS, sans-serif;
    text-decoration: none;
- */
  }
  
  .resourceButton {

@@ -264,15 +264,17 @@ jQuery(document).ready(function($) {
         }
         av.mouse.UpGridPos = [x, y];
         var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
-        if (elements.indexOf("gridCanvas") != -1 && sourceIsFzOrgan) { // if gridCanvas is behind this mouse point
+        // if gridCanvas is behind this mouse point
+        if (elements.indexOf("gridCanvas") != -1 && sourceIsFzOrgan) { 
           av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, av.dnd.fzOrgan);
           av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
         } 
 
         if (elements.indexOf("gridCanvas") != -1 && sourceIsFzWorld) { 
           av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, av.dnd.fzWorld);
-        }
-
+        };
+        
+        // This is a new feature. We have never been able to drag AncestorBox ==> gridCanvas before
         if (elements.indexOf("gridCanvas") != -1 && sourceIsAncestorBox) { 
           av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, av.dnd.ancestorBox);
           av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
@@ -294,7 +296,8 @@ jQuery(document).ready(function($) {
   Select an item from the freezer using click
   */
   av.dnd.selectedId = '';
-  $('.navColClass').on('click', function(e) { // allow click selection only if it's within the freezer
+  // allow click selection only if it's within the freezer
+  $('.navColClass').on('click', function(e) { 
     document.body.style.cursor = "default"; // want the mouse to be default for click
     if (e.target) {
       var classList = e.target.className.split(" "); // e.target.className is a string
@@ -440,9 +443,12 @@ jQuery(document).ready(function($) {
     }
   };
 
-  /*
-  Running actions from drop down menu
-  */
+  
+  // Running actions from drop down menu
+  // When using dojoDnd, the an item coudl be selected in each section of the freezer. 
+  // Also I did not know an easy way to see if an item was selected in each freezer section. 
+  
+  
   av.dnd.FzAddExperimentFn = function (source, target, type) {
     var fzSection = source.id;
     var targetId = target.id;
@@ -1036,7 +1042,7 @@ jQuery(document).ready(function($) {
     if (av.debug.dnd) console.log('in av.dnd.landTrashCan');
     var elName = el.textContent.trim();
     if (elName === '@ancestor' || elName === '@default' || elName === '@example') {
-      alert(`You cannot delete ${elName} because it is part of the default workspace.`);
+      alert(`You cannot delete ${elName} because it is a reserve item.`);
       dra.cancel();
     } else {
       var sure = confirm(`Are you sure you want to delete ${elName}?`);

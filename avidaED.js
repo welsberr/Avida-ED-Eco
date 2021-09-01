@@ -2193,6 +2193,7 @@ require([
   //------------------------------------------------------- call StatsButton.click to get the display in default mode --
   // if (av.dbg.flg.root) { console.log('Root: before call StatsButton.click'); }
   document.getElementById('StatsButton').click();
+  console.log('after StatsButton.click');
 
   //********************************************************************************************************************
   //                                                     Oranism Page methods

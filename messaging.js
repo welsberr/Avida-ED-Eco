@@ -118,6 +118,7 @@ av.msg.readMsg = function (ee) {
         }
         break;
       case 'notification':
+        $('#splash').remove(); //hides splash screen.
         if (av.debug.msg) console.log('avida:notify: ',msg.message);
         console.log('avida:notify:', msg.message, '; inhtml=', document.getElementById('avidaVersion').innerHTML );
         tmpStr = msg.message;
@@ -129,7 +130,6 @@ av.msg.readMsg = function (ee) {
         // Worked on a better splash screen gif. Used licecap, an application on the Mac to record the gif.
         // Then used http://gifmaker.me/reverser/ to make a gif in reverse time order. Then Wesley used gifsicle
         // to combine the forward and reverse gif.
-        $('#splash').remove(); //hides splash screen.
         document.getElementById("appReloadDialog").style.display="none";
         av.ui.loadOK = true;
         if (av.debug.msg) console.log('before calling av.grd.popChartInit');
