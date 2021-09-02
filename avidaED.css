@@ -258,7 +258,7 @@ textarea {
  }
  
  .noWrapN {
-   text-align:left;
+   text-align:center; /* yemi: used to be left; consistent with SelOrgType table
    font-weight: bold;
    /* max-height: 12px; */ /* yemi: fixes inconsistent spacing of rows in Population Statistics */
    overflow: hidden;

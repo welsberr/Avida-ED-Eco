@@ -110,7 +110,7 @@ html {
   display: grid;
   grid-template-rows: 2rem 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
   /* grid-template-columns: 250px 3px auto; */
-  grid-template-columns: 20% 3px auto;    /* djb curious on this one */
+  grid-template-columns: 25% 3px auto;    /* djb curious on this one */
   grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder';
   height: 99vh;
@@ -127,7 +127,7 @@ html {
   display: grid;
   grid-template-rows: 2rem 1fr;   /* 2.5em */
   /* grid-template-columns: 240px 3px auto 3px 400px;*/    /* 440px */
-  grid-template-columns: 20% 3px auto 3px auto;
+  grid-template-columns: 25% 3px auto 3px 35%;
   grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
   height: 99vh;
@@ -144,7 +144,7 @@ html {
   display: grid;
   grid-template-rows: 2rem 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
   /* grid-template-columns: 240px 3px auto 3px 220px;*/    /* 250px */
-  grid-template-columns: 20% 3px auto 3px auto;
+  grid-template-columns: 25% 3px auto 3px 35%;
   grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
   height: 99vh;
@@ -667,7 +667,7 @@ html {
     height: 100%;
     width: 100%;
     min-width: 200px; /* yemi: */
-    max-width: 45vh; /* yemi: diane does not see why a max is needed: sometimes want popChart big */
+    max-width: 60vh; /* yemi: diane does not see why a max is needed: sometimes want popChart big */
   }
   
   #popStatsBlock{
@@ -711,9 +711,9 @@ html {
   /* contains SelOrgType & PopStats4Grid horizontal */
   
 #selOrgType{
-  flex: 1 1 auto;    /* yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
+  flex: 1 1 100px;    /* yemi: used to be 1 1 auto; yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
   border: 1px solid #AAA;
-  /* overflow: auto; */
+  overflow: scroll;
 }  /*contains sotTopTable and sotBotTable  */
 
 #sotTopTable { width: 100%; }
@@ -723,8 +723,9 @@ html {
 .timePerform { min-width: 120px; background: #fff }
   
 #popStats4grid{
-  flex: 1 1 240px; /* yemi: fixed the weird width problem by useing 240px as the width; auto adjusts */     
+  flex: 1 1 100px; /* yemi: used to be 1 1 240px; yemi: fixed the weird width problem by useing 240px as the width; auto adjusts */     
   border: 1px solid #AAA;
+  overflow: scroll;
   /* min-width: 200px;*/  /* yemi commented out; diane put back in */
   /* width: 100%; */
 } /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
@@ -2188,6 +2189,10 @@ checkbox:focus {
   justify-self: center;
   margin: auto;
   width: 50%;
+}
+
+#psFn {
+  padding: 0px 5px 0px 5px;
 }
 
 /********************************************************************************************** end of modalBig class */                                                                         */

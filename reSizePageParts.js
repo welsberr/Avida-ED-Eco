@@ -507,12 +507,12 @@ av.ptd.ritePanelBtnFn = function () {
     $('#ritePanelButton').val('>> ');
     $('#ritePanelBUtton').css('background', 'inherit');
 
-    var widthOfRight = parseInt($('.labInfoHoldCls').css("width"));
+    var widthOfRight = "35%";
     // var widthOfRight = 400;
 
     /* yemi: when modifying the column sizes, need to modify all two layouts */
-    var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
-    var organism_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
+    var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight;
+    var organism_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight;
 
     $('.all3pop').css("grid-template-columns", population_colInfo);
     $('.all3org').css("grid-template-columns", organism_colInfo);
@@ -560,12 +560,12 @@ av.ptd.lftPanelBtnFn = function () {
     $('#leftPanelButton').val('<< ');
     $('#leftPanelBUtton').css('background', 'inherit');
 
-    var widthOfNav = parseInt($('.navColClass').css("width"));; // yemi: default width
+    var widthOfNav = "25%" // yemi: default width
 
     /* yemi: when modifying the column sizes, need to modify all three layouts */
-    var population_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
-    var organism_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
-    var analysis_colInfo = widthOfNav + "px 3px auto";
+    var population_colInfo = widthOfNav + " 3px " + "auto 3px " + rightSideWidth;
+    var organism_colInfo = widthOfNav + " 3px " + "auto 3px " + rightSideWidth;
+    var analysis_colInfo = widthOfNav + " 3px auto";
     $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
     $('.all3pop').css("grid-template-columns", population_colInfo);
     $('.all3org').css("grid-template-columns", organism_colInfo);
@@ -655,6 +655,9 @@ window.addEventListener('resize', function() {
 	av.viewPortClientHeight = document.documentElement.clientHeight;
   av.grd.drawGridSetupFn(); // yemi: redraw the grid
   av.anl.AnaChartFn(); // yemi: redraw analysis grid
+  resizePopulationPage();
+  resizeAnalysisPage();
+  resizeOrganismPage();
 });
 //--------------------------------------------------------------------------------------- end window.addEventListener --
 
