@@ -445,97 +445,84 @@
                 <div id='popStatistics'>
                   <div id='selOrgType'>
                     <div class='popStatsTitle'>
-                      <label id='sotLabel'>Selected Organism Type</label>
+                      <span id='sotTitle'>Selected Organism Type</span>&nbsp;&nbsp;<div id='sotColorBox'></div>
                     </div>
                     <table id='sotTopTable' class='topSotTable'>
                       <tbody>
-                        
                         <tr>
-                          <td><div class='sotL'>Name:&nbsp;<div id='sotColorBox'></div></div></td>
-                          <td colspan='2'><div class='noWrapR'>&nbsp;&nbsp;<label id='nameLabel'></label></div></td>
+                          <td><div class='sotL'>Name:&nbsp;</div></td>
+                          <td><div class='sotR'><label id='nameLabel'></label></div></td>
                         </tr>
                         <tr>
                           <td><div class='sotL'>Fitness:&nbsp;</div></td>
                           <td><div class='sotR'><label id='fitLabel'></label></div></td>
-                          <td></td>
                         </tr>
                         <tr>
                           <td><div class='sotL'>Energy Acq. Rate:&nbsp;</div></td>
                           <td><div class='sotR'><label id='energyAcqRateLabel'></label></div></td>
-                          <td></td>
                         </tr>
                         <tr>
                           <td><div class='sotL'>Offspring Cost:&nbsp;</div></td>
                           <td><div class='sotR'><label id='offspringCostLabel'></label></div></td>
-                          <td></td>
                         </tr>
                         <tr>
                           <td><div class='sotL'>Age (updates):&nbsp;</div></td>
                           <td><div class='sotR'><label id='ageLabel'></label>&nbsp;&nbsp;&nbsp;</div></td>
-                          <td></td>
                         </tr>
                         <tr>
                           <td><div class='sotL'>Ancestor:&nbsp;</div></td>
-                          <td colspan='2'><div class='noWrapR'><label id='ancestorLabel'></label></div></td>
+                          <td><div class='sotR'><label id='ancestorLabel'></label></div></td>
                         </tr>
                         <tr>
                           <td>
                             <div class='sotL'>Viable:&nbsp;</div></td>
-                          <td colspan='2'><div class='noWrapR'><label id='viableLabel'></label></div></td>
+                          <td><div class='sotR'><label id='viableLabel'></label></div></td>
                         </tr>
                       </tbody>
                     </table>
+                    
                     <table id='sotBotTable' class='botSotTable' style="background: white;">
                       <tbody>
                         <tr>
                           <th>
                             <div class='noWrapF'><label id='sotFn'>Function&nbsp;&nbsp;</label></div></th>
-                          <th class='timePerform' colspan='2' ><div class='noWrapN'><label id='sotTimes'>Times Performed</label></div></th>
+                          <th class='timePerform'><div class='noWrapN'><label id='sotTimes'>Performed</label></div></th>
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='notLabel'>NOT</label></div></td>
                           <td><div class='noWrap2'><label id='notTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>--> <!-- yemi -->
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='nanLabel'>NAN</label></div></td>
                           <td><div class='noWrap2'><label id='nanTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='andLabel'>AND</label></div></td>
                           <td><div class='noWrap2'><label id='andTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='ornLabel'>ORN</label></div></td>
                           <td><div class='noWrap2'><label id='ornTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='oroLabel'>ORO</label></div></td>
                           <td><div class='noWrap2'><label id='oroTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='antLabel' onclick="av.ui.toggleDebugMenu()">ANT</label></div></td>
                           <td><div class='noWrap2'><label id='antTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='norLabel'>NOR</label></div></td>
                           <td><div class='noWrap2'><label id='norTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='xorLabel' onclick="av.ui.toggleResourceData('xorLabel')">XOR</label></div></td>
                           <td><div class='noWrap2'><label id='xorTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
                         </tr>
                         <tr>
                           <td><div class='noWrap1'><label id='equLabel'>EQU</label></div></td>
                           <td><div class='noWrap2'><label id='equTime'></label></div></td>
-                          <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>-->
                         </tr>
                       </tbody>
                     </table>
