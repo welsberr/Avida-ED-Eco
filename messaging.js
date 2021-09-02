@@ -985,17 +985,6 @@ av.grd.updateSelectedOrganismType = function (msg) {
     equTime.textContent = msg.tasks.equ;
   }
   else {
-/*     delete this section in 2021
-    notLabel.textContent = 'NOT';
-    nanLabel.textContent = 'NAN';
-    andLabel.textContent = 'AND';
-    ornLabel.textContent = 'ORN';
-    oroLabel.textContent = 'ORO';
-    antLabel.textContent = 'ANT';
-    norLabel.textContent = 'NOR';
-    xorLabel.textContent = 'XOR';
-    equLabel.textContent = 'EQU';
-*/
     notTime.textContent = '-';
     nanTime.textContent = '-';
     andTime.textContent = '-';
@@ -1012,7 +1001,7 @@ av.grd.updateSelectedOrganismType = function (msg) {
   else if (0 < msg.isViable) viableLabel.textContent = 'yes';
   else viableLabel.textContent = 'unknown';
 
-  av.msg.fillColorBlock(msg);   // make the color block next to name contain the color that is on the grid for that cell
+  av.msg.fillColorBlock(msg, 'av.grd.updateSelectedOrganismType');   // make the color block next to name contain the color that is on the grid for that cell
   if (av.debug.msg) console.log('Kidstatus', av.grd.kidStatus);
   
   //set status of selected grid locaton to know if an organism is present to drag and drop
@@ -1030,12 +1019,11 @@ av.grd.updateSelectedOrganismType = function (msg) {
 //--------------------------------------------------------------------------------------------- av.msg.fillColorBlock --
 // Draw a box with the color of the selected organism in the Selected Organsim Type (SOT) table next to name.
 // if (av.dbg.flg.root) { console.log('Root: before av.msg.fillColorBlock'); }
-av.msg.fillColorBlock = function (msg) {  
+av.msg.fillColorBlock = function (msg, from) {  
   'use strict';
   var bkcolor = '#000';
-  if (av.debug.msg) {console.log('in fillColorBlock'); }
-  //if (av.debug.msg) { console.log('ndx', av.grd.selectedNdx, '; msg.ancestor.data[ndx]',av.grd.msg.ancestor.data[av.grd.selectedNdx]); }
-  if (av.debug.msg) { console.log('av.grd.fill[av.grd.selectedNdx]',av.grd.fill[av.grd.selectedNdx]); }
+  if (true) {console.log(from, 'called fillColorBlock'); }
+  if (av.debug.msg) { console.log('av.grd.fill[av.grd.selectedNdx]=',av.grd.fill[av.grd.selectedNdx]); }
 
   if ('Ancestor Organism' == document.getElementById('colorMode').value) {
     // the display mode is Ancestor so used the color for the ancstor, if none exits. 
@@ -1044,13 +1032,20 @@ av.msg.fillColorBlock = function (msg) {
     };
   }
   else {
-    // color mode is not ancestor so use the color in that cell if one is prescent. 
-    if (null != av.grd.fill[av.grd.selectedNdx]) { bkcolor = '#888'; }
-  };
+    if (null != av.grd.fill[av.grd.selectedNdx]) {
+      bkcolor = av.utl.get_color0(av.grd.cmap, av.grd.fill[av.grd.selectedNdx], 0, av.grd.fillmax);
+    }
+    else {
+      if (null != av.grd.msg.ancestor.data[av.grd.selectedNdx]) { 
+        bkcolor = '#888';
+      }
+    }
+  } 
   if (av.debug.msg) console.log('sot bkcolor', bkcolor);
   av.dom.sotColorBox.style.backgroundColor = bkcolor;
   av.dom.sotColorBox.style.border = '2px solid ' + bkcolor;
 };
+
 //----------------------------------------------------------------------------------------- end av.msg.fillColorBlock --
 // if (av.dbg.flg.root) { console.log('Root: end of messaging'); }
 

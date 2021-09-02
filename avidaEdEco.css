@@ -711,7 +711,6 @@ html {
   /* contains SelOrgType & PopStats4Grid horizontal */
   
 #selOrgType{
-  /* flex: 0 1 190px;        /*was 170 */
   flex: 1 1 auto;    /* yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
   border: 1px solid #AAA;
   /* overflow: auto; */
