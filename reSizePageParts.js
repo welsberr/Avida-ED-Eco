@@ -507,8 +507,8 @@ av.ptd.ritePanelBtnFn = function () {
     $('#ritePanelButton').val('>> ');
     $('#ritePanelBUtton').css('background', 'inherit');
 
-    // var widthOfRight = parseInt($('.labInfoHoldCls').css("min-width"));
-    var widthOfRight = 400;
+    var widthOfRight = parseInt($('.labInfoHoldCls').css("width"));
+    // var widthOfRight = 400;
 
     /* yemi: when modifying the column sizes, need to modify all two layouts */
     var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
@@ -560,7 +560,7 @@ av.ptd.lftPanelBtnFn = function () {
     $('#leftPanelButton').val('<< ');
     $('#leftPanelBUtton').css('background', 'inherit');
 
-    var widthOfNav = 240; // yemi: default width
+    var widthOfNav = parseInt($('.navColClass').css("width"));; // yemi: default width
 
     /* yemi: when modifying the column sizes, need to modify all three layouts */
     var population_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
