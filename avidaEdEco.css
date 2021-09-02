@@ -726,7 +726,7 @@ html {
 #popStats4grid{
   flex: 1 1 240px; /* yemi: fixed the weird width problem by useing 240px as the width; auto adjusts */     
   border: 1px solid #AAA;
-  min-width: 200px;  /* yemi commented out; diane put back in */
+  /* min-width: 200px;*/  /* yemi commented out; diane put back in */
   /* width: 100%; */
 } /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
 
@@ -744,7 +744,7 @@ div.popsTopTableHold {
   min-width: 150px;
 }
 
-.popsTopTblcol1 {min-width: 134px; }
+.popsTopTblcol1 {/* min-width: 134px; */ }
 .popsTopTblcol2 {min-width: 60px; } /* yemi: changed from 45px to 60px */
 
 #popsBotTableHold { width: 100%; background:white; }
