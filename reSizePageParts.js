@@ -19,6 +19,7 @@ function resizeAnalysisPage() {
   var dragbarLeftWidth = $('#dragbarLeft').css("width");
   var newColumns = leftNavBarWidth + " " + dragbarLeftWidth + " auto";
   $('.all2lft').css("grid-template-columns", newColumns);
+  console.log(newColumns);
   av.anl.AnaChartFn(); // yemi: redraw analysis grid
 }
 
@@ -246,7 +247,7 @@ function dragbarRightResize() {
       /* yemi: when modifying the column sizes, need to modify all two layouts */
       var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
       var organism_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
-      //console.log(population_colInfo);
+      console.log(population_colInfo);
       
       $('.all3pop').css("grid-template-columns", population_colInfo);
       $('.all3org').css("grid-template-columns", organism_colInfo);
@@ -421,14 +422,16 @@ av.anl.divSize = function (from) {
   //console.log(from,'anlChrtSpace Ht client scroll', av.dom.anlChrtSpace.clientHeight, av.dom.anlChrtSpace.scrollHeight);
 
   if (av.debug.alo) { console.log('alo: av.dom.anaChrtHolder.clientWd, Ht=', av.dom.anaChrtHolder.clientWidth, av.dom.anaChrtHolder.clientHeight); }
-  av.anl.ht = av.dom.anaChrtHolder.clientHeight - 1;
-  av.anl.wd = av.dom.anaChrtHolder.clientWidth - 1;
-  av.dom.anaChrtHolder.style.height = av.anl.ht + 'px';
+  av.anl.ht = av.dom.anaChrtHolder.getBoundingClientRect().height - 1;
+  av.anl.wd = av.dom.anaChrtHolder.getBoundingClientRect().width - 1;
+  //av.dom.anaChrtHolder.style.height = av.anl.ht + 'px';
   av.anl.ht = av.dom.anaChrtHolder.clientHeight - 6;
+  console.log(av.dom.anaChrtHolder.getBoundingClientRect());
   av.dom.anlChrtSpace.style.height = av.anl.ht + 'px';
   av.dom.anlChrtSpace.style.width = av.anl.wd + 'px';
   av.anl.layout.height = av.anl.ht;
   av.anl.layout.width = av.anl.wd;
+  console.log(av.anl.ht, av.anl.wd);
 };
 
 

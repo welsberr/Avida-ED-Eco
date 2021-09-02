@@ -203,6 +203,7 @@ html {
     background: #F5F5F5;
     height: 100%;
     overflow: hidden;    /* scroll;  */
+    max-width: 650px;
   }  /* Contain the blocks popInfoVert and orgInfoHolder  */
 
   #orgInfoHolder {
@@ -266,6 +267,7 @@ html {
     border: 1px solid #888;
     overflow: auto;
     resize: horizontal;
+    max-width: fit-content;
   }
 
   .claro .dijitMenuBar {
@@ -665,7 +667,7 @@ html {
     height: 100%;
     width: 100%;
     min-width: 200px; /* yemi: */
-    max-width: 650px; /* yemi: diane does not see why a max is needed: sometimes want popChart big */
+    max-width: 45vh; /* yemi: diane does not see why a max is needed: sometimes want popChart big */
   }
   
   #popStatsBlock{
