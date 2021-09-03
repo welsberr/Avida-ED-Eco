@@ -88,11 +88,11 @@ html {
 .rightInfoHolder { grid-area: rightInfoHolder; }
 .navColClass {grid-area: navColID; }
 #dragbarLeft {grid-area: dragbarLeft; }    /* Yemi: float: right; */
-#dragbarRight {grid-area: dragbarRight; }  /* Yemi: float: right; */
+#dragbarRight {float: right; }  /* Yemi: float: right; */
 
 .all2rit{
   display: grid;
-  grid-template-rows: 2.5em auto;
+  grid-template-rows: 2em auto;
   grid-template-columns: 3px auto 400px;
   grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'dragbarLeft mainBlockHolder rightInfoHolder';
@@ -108,9 +108,9 @@ html {
 
 .all2lft{
   display: grid;
-  grid-template-rows: 2.5rem 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
+  grid-template-rows: 2rem 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
   /* grid-template-columns: 250px 3px auto; */
-  grid-template-columns: 20% 3px auto;    /* djb curious on this one */
+  grid-template-columns: 25% 3px auto;    /* djb curious on this one */
   grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder';
   height: 99vh;
@@ -125,9 +125,9 @@ html {
 
 .all3pop{ 
   display: grid;
-  grid-template-rows: 2.5rem 1fr;   /* 2.5em */
+  grid-template-rows: 2rem 1fr;   /* 2.5em */
   /* grid-template-columns: 240px 3px auto 3px 400px;*/    /* 440px */
-  grid-template-columns: 20% 3px auto 3px auto;
+  grid-template-columns: 25% 3px auto 3px 35%;
   grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
   height: 99vh;
@@ -142,9 +142,9 @@ html {
 
 .all3org{
   display: grid;
-  grid-template-rows: 2.5rem 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
+  grid-template-rows: 2rem 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
   /* grid-template-columns: 240px 3px auto 3px 220px;*/    /* 250px */
-  grid-template-columns: 20% 3px auto 3px auto;
+  grid-template-columns: 25% 3px auto 3px 35%;
   grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
   height: 99vh;
@@ -203,6 +203,7 @@ html {
     background: #F5F5F5;
     height: 100%;
     overflow: hidden;    /* scroll;  */
+    max-width: 650px;
   }  /* Contain the blocks popInfoVert and orgInfoHolder  */
 
   #orgInfoHolder {
@@ -261,9 +262,17 @@ html {
 }
 
   #mainMenu{
-    flex: 0 1 350px;
-    height: 2.5em;
+    /* flex: 0 1 350px;*/
+    height: 2.7em; /* 2.5em */
     border: 1px solid #888;
+    overflow: auto;
+    resize: horizontal;
+    max-width: fit-content;
+  }
+
+  .claro .dijitMenuBar {
+    border: none;
+    background-color: inherit;
   }
   /* looks bad
   #mnAvidaEd {border: 1px solid #999;}
@@ -658,7 +667,7 @@ html {
     height: 100%;
     width: 100%;
     min-width: 200px; /* yemi: */
-    max-width: 650px; /* yemi: diane does not see why a max is needed: sometimes want popChart big */
+    max-width: 60vh; /* yemi: diane does not see why a max is needed: sometimes want popChart big */
   }
   
   #popStatsBlock{
@@ -702,9 +711,9 @@ html {
   /* contains SelOrgType & PopStats4Grid horizontal */
   
 #selOrgType{
-  flex: 1 1 auto;    /* yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
+  flex: 1 1 100px;    /* yemi: used to be 1 1 auto; yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
   border: 1px solid #AAA;
-  /* overflow: auto; */
+  overflow: scroll;
 }  /*contains sotTopTable and sotBotTable  */
 
 #sotTopTable { width: 100%; }
@@ -714,9 +723,10 @@ html {
 .timePerform { min-width: 120px; background: #fff }
   
 #popStats4grid{
-  flex: 1 1 240px; /* yemi: fixed the weird width problem by useing 240px as the width; auto adjusts */     
+  flex: 1 1 100px; /* yemi: used to be 1 1 240px; yemi: fixed the weird width problem by useing 240px as the width; auto adjusts */     
   border: 1px solid #AAA;
-  /*  min-width: 200px;  yemi commented out; diane put back in */
+  overflow: scroll;
+  /* min-width: 200px;*/  /* yemi commented out; diane put back in */
   /* width: 100%; */
 } /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
 
@@ -734,7 +744,7 @@ div.popsTopTableHold {
   min-width: 150px;
 }
 
-.popsTopTblcol1 {min-width: 134px; }
+.popsTopTblcol1 {/* min-width: 134px; */ }
 .popsTopTblcol2 {min-width: 60px; } /* yemi: changed from 45px to 60px */
 
 #popsBotTableHold { width: 100%; background:white; }
@@ -2179,6 +2189,10 @@ checkbox:focus {
   justify-self: center;
   margin: auto;
   width: 50%;
+}
+
+#psFn {
+  padding: 0px 5px 0px 5px;
 }
 
 /********************************************************************************************** end of modalBig class */                                                                         */
