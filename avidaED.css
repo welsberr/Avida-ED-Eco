@@ -244,11 +244,13 @@ textarea {
    text-align:left;
    height:18px;
    font-weight: bold;
+   width: 100%;
  }
  
  div.popStatsTableSot {
    min-width: 169px;
    background: #DDD;
+   width: 100%;   /* djb: no change seen */
  }
  
  .noWrapF {

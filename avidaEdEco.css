@@ -88,11 +88,11 @@ html {
 .rightInfoHolder { grid-area: rightInfoHolder; }
 .navColClass {grid-area: navColID; }
 #dragbarLeft {grid-area: dragbarLeft; }    /* Yemi: float: right; */
-#dragbarRight {float: right; }  /* Yemi: float: right; */
+#dragbarRight {grid-area: dragbarRight; }  /* Yemi: float: right; */
 
 .all2rit{
   display: grid;
-  grid-template-rows: 2em auto;
+  grid-template-rows: 2rem auto;
   grid-template-columns: 3px auto 400px;
   grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'dragbarLeft mainBlockHolder rightInfoHolder';
@@ -263,7 +263,7 @@ html {
 
   #mainMenu{
     /* flex: 0 1 350px;*/
-    height: 2.7em; /* 2.5em */
+    height: 2.0rem; /* 2.5em */
     border: 1px solid #888;
     overflow: auto;
     resize: horizontal;
@@ -711,7 +711,8 @@ html {
   /* contains SelOrgType & PopStats4Grid horizontal */
   
 #selOrgType{
-  flex: 1 1 100px;    /* yemi: used to be 1 1 auto; yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
+  /* yemi: used to be 1 1 auto; yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
+  flex: 1 1 100px;    /* djb: 100 px becaome 192px; 150px became 167px */
   border: 1px solid #AAA;
   overflow: scroll;
 }  /*contains sotTopTable and sotBotTable  */
@@ -726,8 +727,6 @@ html {
   flex: 1 1 100px; /* yemi: used to be 1 1 240px; yemi: fixed the weird width problem by useing 240px as the width; auto adjusts */     
   border: 1px solid #AAA;
   overflow: scroll;
-  /* min-width: 200px;*/  /* yemi commented out; diane put back in */
-  /* width: 100%; */
 } /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
 
 div.popsTopTableHold { 
@@ -744,7 +743,7 @@ div.popsTopTableHold {
   min-width: 150px;
 }
 
-.popsTopTblcol1 {/* min-width: 134px; */ }
+.popsTopTblcol1 {min-width: 10px;  }  /* Yemi removed min-width; Diane tried a smaller min-width; was 134px */
 .popsTopTblcol2 {min-width: 60px; } /* yemi: changed from 45px to 60px */
 
 #popsBotTableHold { width: 100%; background:white; }
@@ -2191,7 +2190,7 @@ checkbox:focus {
   width: 50%;
 }
 
-#psFn {
+#popStatsFunction {
   padding: 0px 5px 0px 5px;
 }
 

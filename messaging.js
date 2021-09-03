@@ -1029,19 +1029,19 @@ av.msg.fillColorBlock = function (msg, from) {
     // the display mode is Ancestor so used the color for the ancstor, if one exits. 
     if (null != av.grd.fill[av.grd.selectedNdx]) {
       bkcolor = av.parents.color[av.parents.name.indexOf(msg.ancestor)];
-      console.log('Ancestor Organimsm mode: bkColor=', bkcolor);
+      //console.log('Ancestor Organimsm mode: bkColor=', bkcolor);
     };
   }
   else {
-    console.log('Gradient mode');
+    //console.log('Gradient mode');
     if (null != av.grd.fill[av.grd.selectedNdx]) {
       if (0 >= av.grd.msg.gestation.data[av.grd.selectedNdx]) {  
         bkcolor = '#888';
-      console.log('Gradient mode,  null != fill, - = ancestor.data: bkColor=', bkcolor);
+      //console.log('Gradient mode,  null != fill, - = ancestor.data: bkColor=', bkcolor);
       }
       else {
         bkcolor = av.utl.get_color0(av.grd.cmap, av.grd.fill[av.grd.selectedNdx], 0, av.grd.fillmax);
-        console.log('Gradient mode,  null != fill, - = ancestor.data: bkColor=', bkcolor);
+        //console.log('Gradient mode,  null != fill, - = ancestor.data: bkColor=', bkcolor);
       };
     }
     else {
@@ -1053,26 +1053,6 @@ av.msg.fillColorBlock = function (msg, from) {
     }
   } 
 
-/*
-  if ('Ancestor Organism' == document.getElementById('colorMode').value) {
-    if (null === av.grd.fill[av.grd.selectedNdx]) {
-      bkcolor = '#000';
-    } else {
-      bkcolor = av.parents.color[av.parents.name.indexOf(msg.ancestor)];
-    }
-  } else {
-    if (null === av.grd.fill[av.grd.selectedNdx]) {
-      if (null === av.grd.msg.ancestor.data[av.grd.selectedNdx])
-        bkcolor = '#000';
-      else
-        bkcolor = '#888';
-    } else if (0 == av.grd.fill[av.grd.selectedNdx])
-      bkcolor = av.color.defaultKidColor;
-    else {  //av.utl.get_color0 = function(cmap, dx, d1, d2)
-      bkcolor = av.utl.get_color0(av.grd.cmap, av.grd.fill[av.grd.selectedNdx], 0, av.grd.fillmax);
-    }
-  }
-  */
   if (true) {
     console.log(from, 'called fillColorBlock: colorMode=', colorMode
                 , '; av.grd.fill['+av.grd.selectedNdx+']=',  av.grd.fill[av.grd.selectedNdx] 
