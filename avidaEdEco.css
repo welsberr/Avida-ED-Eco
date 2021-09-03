@@ -88,7 +88,7 @@ html {
 .rightInfoHolder { grid-area: rightInfoHolder; }
 .navColClass {grid-area: navColID; }
 #dragbarLeft {grid-area: dragbarLeft; }    /* Yemi: float: right; */
-#dragbarRight {grid-area: dragbarRight; }  /* Yemi: float: right; */
+#dragbarRight {float: right;}  /* Yemi: float: right; */
 
 .all2rit{
   display: grid;
