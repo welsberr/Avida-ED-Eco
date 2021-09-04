@@ -248,7 +248,6 @@ function dragbarRightResize() {
       /* yemi: when modifying the column sizes, need to modify all two layouts */
       var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
       var organism_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight + "px";
-      console.log(population_colInfo);
       
       $('.all3pop').css("grid-template-columns", population_colInfo);
       $('.all3org').css("grid-template-columns", organism_colInfo);
@@ -508,7 +507,7 @@ av.ptd.ritePanelBtnFn = function () {
     $('#ritePanelButton').val('>> ');
     $('#ritePanelBUtton').css('background', 'inherit');
 
-    var widthOfRight = "35%";
+    var widthOfRight = "400px";
     // var widthOfRight = 400;
 
     /* yemi: when modifying the column sizes, need to modify all two layouts */
