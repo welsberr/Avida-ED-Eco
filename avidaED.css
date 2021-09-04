@@ -438,6 +438,7 @@ textarea {
    max-height: 15px;    /* from noWrapR */
    /* width: 70px; */ /* yemi */
    overflow: hidden;
+   width: 100%;
  }
  
  .sotL {

@@ -88,7 +88,7 @@ html {
 .rightInfoHolder { grid-area: rightInfoHolder; }
 .navColClass {grid-area: navColID; }
 #dragbarLeft {grid-area: dragbarLeft; }    /* Yemi: float: right; */
-#dragbarRight {grid-area: dragbarRight; }  /* Yemi: float: right; */
+#dragbarRight {float: right;}  /* Yemi: float: right; */
 
 .all2rit{
   display: grid;
@@ -174,9 +174,10 @@ html {
   background: #F5F5F5; /* lavender; */
   border: 1px solid #AAA;
   height: 100%;
+  width: 100%;
   /* resize: horizontal; */     /* diane removed */
   min-width: 160px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
-  max-width: 620px;
+  max-width: 45vh;
 }
 
 /*contains pages (population, Organsims, Analysis) */
