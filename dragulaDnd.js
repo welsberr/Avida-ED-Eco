@@ -1138,7 +1138,7 @@ jQuery(document).ready(function($) {
         onClick: function () {
           av.post.addUser('Button: export:' + document.getElementById(fzItemID).textContent);
           var type;
-          var itemName = $(fzItemID).textContent.trim();
+          var itemName = document.getElementById(fzItemID).textContent.trim();
           var zName = prompt(itemName + ' will be saved as ' + itemName + '.avidaED_fi.zip', itemName + '.avidaED_fi.zip');
           if (zName) {
             if (0 === zName.length) zName = itemName + '.avidaED_fi.zip';  //.avidaED_fi.zip is 23 characters
@@ -1166,7 +1166,6 @@ jQuery(document).ready(function($) {
         av.post.addUser('Button: delete:' + document.getElementById(fzItemID).textContent);
         var sure = confirm('Do you want to delete ' + document.getElementById(fzItemID).textContent + '?');
         if (sure) {
-          console.log(container);
           dir = av.fzr.dir[fzItemID];
           av.fzr.file[dir+'/entryname.txt'];
           if ('fzOrgan' == container) {
