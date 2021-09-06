@@ -1310,7 +1310,7 @@ jQuery(document).ready(function($) {
   };
 
   /*
-  Helper For Sorting Things (need to be worked on)
+  Helper For Sorting Things (not sure if still needed)
   */
   // based on https://stackoverflow.com/questions/27529727/sorta-b-does-not-work-in-dojo-dnd-source
   // av.dnd.sortDnD = function (dndSection) {
