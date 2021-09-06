@@ -35,16 +35,21 @@
 /*--------------------------------------------------------------------------------------------------------------------*/
 
 
-* { margin: 0; padding: 0; }
+* { 
+  margin: 0; 
+  padding: 0; 
+  --rem-size: calc((var(--pixels)/16) * 1rem);
+  /* font-size: var(--rem-size); /* To use on an HTML element */
+}
  
- html, body {
-   height: 100%;
-   width: 100%;
-   margin: 0;
-   padding:0;
-   background: #F5F5F5; /* cyan; */
-   font-family: Tahoma, Trebuchet MS, sans-serif;
- }
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding:0;
+  background: #F5F5F5; /* cyan; */
+  font-family: Tahoma, Trebuchet MS, sans-serif;
+}
 
 /* diane's version  */
 button {
@@ -436,9 +441,8 @@ textarea {
    text-align:left;
    padding-left: 1px;
    max-height: 15px;    /* from noWrapR */
-   /* width: 70px; */ /* yemi */
    overflow: hidden;
-   width: 100%;
+   width: 100%;   /*tiba remove? */
  }
  
  .sotL {
