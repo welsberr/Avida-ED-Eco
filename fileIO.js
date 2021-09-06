@@ -72,7 +72,7 @@
       
       
       //sort TestDishes here
-      av.dnd.sortDnD('fzTdish');
+      // av.dnd.sortDnD('fzTdish');
 
       //note setup form is updated when the files are read.
       //if (av.debug.fio) console.log('after read loop: fzr', av.fzr);
