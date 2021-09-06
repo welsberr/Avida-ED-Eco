@@ -109,8 +109,7 @@ html {
 .all2lft{
   display: grid;
   grid-template-rows: 2rem 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
-  /* grid-template-columns: 250px 3px auto; */
-  grid-template-columns: 25% 3px auto;    /* djb curious on this one */
+  grid-template-columns: 250px 3px auto;
   grid-template-areas: 'headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder';
   height: 99vh;
@@ -126,8 +125,7 @@ html {
 .all3pop{ 
   display: grid;
   grid-template-rows: 2rem 1fr;   /* 2.5em */
-  /* grid-template-columns: 240px 3px auto 3px 400px;*/    /* 440px */
-  grid-template-columns: 25% 3px auto 3px 400px;
+  grid-template-columns: 240px 3px auto 3px 400px;    /* 440px */
   grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
   height: 99vh;
@@ -143,8 +141,7 @@ html {
 .all3org{
   display: grid;
   grid-template-rows: 2rem 1fr; /* yemi: changed from 2.5em auto to 2.5 1fr */
-  /* grid-template-columns: 240px 3px auto 3px 220px;*/    /* 250px */
-  grid-template-columns: 25% 3px auto 3px 35%;
+  grid-template-columns: 240px 3px auto 3px 220px;    /* 250px */
   grid-template-areas: 'headerRow headerRow headerRow headerRow headerRow' /* yemi: changed the number of cols to accomodate the dragbar */
                         'navColClass dragbarLeft mainBlockHolder dragbarRight rightInfoHolder';
   height: 99vh;
@@ -177,7 +174,7 @@ html {
   width: 100%;
   /* resize: horizontal; */     /* diane removed */
   min-width: 160px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
-  max-width: 45vh;
+  max-width: 350px;
 }
 
 /*contains pages (population, Organsims, Analysis) */
@@ -245,6 +242,7 @@ html {
   padding: 0px 6px 0px 4px;    /* top right bottom left */  
   visibility: hidden;    
 }
+
 #ritePanelButton{
     border-radius: 5px 5px 5px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
     height: 16px;

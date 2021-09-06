@@ -19,8 +19,7 @@ function resizeAnalysisPage() {
   var dragbarLeftWidth = $('#dragbarLeft').css("width");
   var newColumns = leftNavBarWidth + " " + dragbarLeftWidth + " auto";
   $('.all2lft').css("grid-template-columns", newColumns);
-  console.log(newColumns);
-  av.anl.AnaChartFn(); // yemi: redraw analysis grid
+  av.anl.AnaChartFn(); 
 }
 
 /* diane modieved yemi's work: function to automatically resize the Analysis page when button clicked; called in avidaED.js */
@@ -37,26 +36,23 @@ function resizePopulationPage() {
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('.dragbar').css("width");
   var rightSideWidth = $('#rightInfoHolder').css("width");
-  // var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
-  var newColumns = "auto " + dragbarWidth + " auto " + dragbarWidth + " auto";
+  var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
   $('.all3pop').css("grid-template-columns", newColumns);
-  av.grd.drawGridSetupFn(); // yemi: redraw the grid
+  av.grd.drawGridSetupFn(); 
 }
 
 /* yemi: function to automatically resize the Organisms page when button clicked; called in avidaED.js */
 function resizeOrganismPage() {
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('.dragbar').css("width");
-  console.log('$("#rightInfoHolder").css("width"); = ', $('#rightInfoHolder').css("width"));
-  //var rightSideWidth = $('#rightInfoHolder').css("width");
-  var rightSideWidth = '240px';
+  var rightSideWidth = $('#rightInfoHolder').css("width");
+  // var rightSideWidth = '240px';
   var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
   $('.all3org').css("grid-template-columns", newColumns);
 }
 
 /* yemi: functions for left dragbar */
 function dragbarLeftResize() {
-  console.log('navColID=', parseInt($('#navColId').css("min-width")));
   var dragging = false;
 
   /* yemi: when there's a mousehover over dragbar, dragbar changes color */
@@ -93,10 +89,12 @@ function dragbarLeftResize() {
       var percentage = (x / widthAvailable);
       var widthOfNav = widthAvailable * percentage;
 
+      $('#freezerSection').children().css("display", "block");
 
       /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
       if (widthOfNav < parseInt($('#navColId').css("min-width"))) {
         widthOfNav = 0; /* yemi: if width too small, collapse it*/
+        $('#freezerSection').children().css("display", "none");
         IS_LEFT_CLOSED = true;
       } 
       /* yemi: if thhe width of the user's cursor is larger than the maximum width of the navigation column, choose the maximum width */
@@ -125,7 +123,6 @@ function dragbarLeftResize() {
   });
 
   $(document).on('mouseup touchend', function(e) {
-
     if (dragging) {
       av.grd.drawGridSetupFn(); // yemi: redraw the grid
       av.anl.AnaChartFn(); // yemi: redraw analysis grid
@@ -148,9 +145,12 @@ function dragbarLeftResize() {
       var percentage = (x / widthAvailable);
       var widthOfNav = widthAvailable * percentage;
 
+      $('#freezerSection').children().css("display", "block");
+
       /* yemi: if the width of the user's cursor is smaller than the minimum width of the navigation column, choose the minimum width */
       if (widthOfNav < parseInt($('.navColClass').css("min-width"))) {
         widthOfNav = 0; /* yemi: if width too small, collapse it */
+        $('#freezerSection').children().css("display", "none");
         IS_LEFT_CLOSED = true;
         /* yemi: change the button's contents and look */
         $('#leftPanelButton').val('>> ');
@@ -183,7 +183,6 @@ function dragbarLeftResize() {
       $('orgInfoHolder').css("width", "100%");
       
       $(document).unbind('mousemove touchmove'); // yemi: need it
-      
       dragging = false;
     }
   });
@@ -191,7 +190,6 @@ function dragbarLeftResize() {
 
 /* yemi: functions for right dragbar */
 function dragbarRightResize() {
-
   var dragging = false;
 
   /* yemi: when there's a mousehover over dragbar, dragbar changes color */
@@ -329,7 +327,6 @@ function dragbarRightResize() {
   });
 };
 
-
 //------------------------------------------------------------------------------------------- av.dom.storeInitialSize --
 // Called in messaging.js in av.msg.readMsg()
 // called when the avida webworker indicates that it is ready.
@@ -378,10 +375,8 @@ av.ui.initialDivSizing = function() {
   
   /* yemi: call the drag bar left function */
   dragbarLeftResize();
-
   /* yemi: call the drag bar right function */
   dragbarRightResize();
-  resizePopulationPage();
 };
 
 //----------------------------------------------------------------------------------------show/hide left side panel --
@@ -508,7 +503,6 @@ av.ptd.ritePanelBtnFn = function () {
     $('#ritePanelBUtton').css('background', 'inherit');
 
     var widthOfRight = "400px";
-    // var widthOfRight = 400;
 
     /* yemi: when modifying the column sizes, need to modify all two layouts */
     var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight;
@@ -550,6 +544,8 @@ av.ptd.lftPanelBtnFn = function () {
     $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
     $('.all3pop').css("grid-template-columns", population_colInfo);
     $('.all3org').css("grid-template-columns", organism_colInfo);
+
+    $('#freezerSection').children().css("display", "none"); // yemi: to fix the problem of fzConfig items being visible even with the left sidebar collapsed
   }
 
   else if (IS_LEFT_CLOSED) {
@@ -560,8 +556,7 @@ av.ptd.lftPanelBtnFn = function () {
     $('#leftPanelButton').val('<< ');
     $('#leftPanelBUtton').css('background', 'inherit');
 
-    var widthOfNav = "25%" // yemi: default width
-
+    var widthOfNav = "240px" // yemi: default width
     /* yemi: when modifying the column sizes, need to modify all three layouts */
     var population_colInfo = widthOfNav + " 3px " + "auto 3px " + rightSideWidth;
     var organism_colInfo = widthOfNav + " 3px " + "auto 3px " + rightSideWidth;
@@ -569,6 +564,8 @@ av.ptd.lftPanelBtnFn = function () {
     $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
     $('.all3pop').css("grid-template-columns", population_colInfo);
     $('.all3org').css("grid-template-columns", organism_colInfo);
+
+    $('#freezerSection').children().css("display", "block"); 
   }
 
   av.grd.drawGridSetupFn(); // yemi: redraw the grid
@@ -655,9 +652,6 @@ window.addEventListener('resize', function() {
 	av.viewPortClientHeight = document.documentElement.clientHeight;
   av.grd.drawGridSetupFn(); // yemi: redraw the grid
   av.anl.AnaChartFn(); // yemi: redraw analysis grid
-  resizePopulationPage();
-  resizeAnalysisPage();
-  resizeOrganismPage();
 });
 //--------------------------------------------------------------------------------------- end window.addEventListener --
 
