@@ -720,9 +720,9 @@ html {
   
 #selOrgType{
   /* yemi: used to be 1 1 auto; yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
-  flex: 1 1 100px;    /* djb: 100 px becaome 192px; 150px became 167px */
+  flex: 1 1 auto;    /* djb: 100 px becaome 192px; 150px became 167px */
   border: 1px solid #AAA;
-  overflow: scroll;
+  /* overflow: scroll; */ /* yemi: prevents awkward leftover space on the right when table gets smaller */
 }  /*contains sotTopTable and sotBotTable  */
 
 #sotTopTable { width: 100%; }
@@ -732,9 +732,9 @@ html {
 .timePerform { min-width: 120px; background: #fff }
   
 #popStats4grid{
-  flex: 1 1 100px; /* yemi: used to be 1 1 240px; yemi: fixed the weird width problem by useing 240px as the width; auto adjusts */     
+  flex: 1 1 auto; /* yemi: used to be 1 1 240px; yemi: fixed the weird width problem by useing 240px as the width; auto adjusts */     
   border: 1px solid #AAA;
-  overflow: scroll;
+  /* overflow: scroll; */ /* yemi: prevents awkward leftover space on the right when table gets smaller */
 } /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
 
 div.popsTopTableHold { 
