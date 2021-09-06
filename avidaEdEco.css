@@ -88,7 +88,7 @@ html {
 .rightInfoHolder { grid-area: rightInfoHolder; }
 .navColClass {grid-area: navColID; }
 #dragbarLeft {grid-area: dragbarLeft; }    /* Yemi: float: right; */
-#dragbarRight {float: right;}  /* Yemi: float: right; */
+#dragbarRight {grid-area: dragbarRight; }  /* Yemi: float: right; automerge keeps removing this one tiba grid-area: dragbarRight; */
 
 .all2rit{
   display: grid;
@@ -173,8 +173,8 @@ html {
   flex-direction: column;
   background: #F5F5F5; /* lavender; */
   border: 1px solid #AAA;
-  height: 100%;
-  width: 100%;
+  height: 100%;   
+  width: 100%;     /* tiba remove ? */
   /* resize: horizontal; */     /* diane removed */
   min-width: 160px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
   max-width: 45vh;
@@ -285,7 +285,13 @@ html {
   mnDebug {visibility: hidden;}
   
   #headerMsg{
-    flex: 1 1 auto;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+    /* flex: [flex-grow] [flex-shrink] [flex-basis]; */
+    /* flex: [max] [min] [ideal size]; */
+    /* flex: 0 1 auto; /* Default flex value 0=grow=don't grow; take minimum size for the conents  */    
+    /* flex: 0 0 auto; /* stay the same size blasted element */    
+    /* flex: 1 1 auto; /* all elements will be the same size if all have this flex defintion and no content is too big */
+    /* flex: 1 1 auto; /* elements fill the container.
+    /* flex-shrink: 1 allows so shrinking */ 
   }
   #msgHolder {
     padding: 4px 4px 4px 8px;    /* top right bottom left */   
@@ -320,16 +326,18 @@ html {
     background: #ccc;
   }
 
-  #CanPutButtonHere{
-    flex: 0 0 130px;
+  #versionNumHolder{
+    /* flex: 0 0 130px; */
     padding-top: 5px;
     height: 25px;
-    display: inline-block;
   }
   
   #avidaVersion{
     text-align: left;
     vertical-align: middle;
+    --pixels: 120; /* Equals to 120px */ 
+    min-width: : var(--rem-size);
+    height: inherit;
   }
   
 /* structures in the left side panel */
@@ -1877,9 +1885,9 @@ checkbox:focus {
     min-width: 250px;
     display: grid;
     align-items: center;   /* up down */
-    grid-template-columns: 35px 60px auto;
+    grid-template-columns: 29px 75px auto;
     grid-template-rows: 25px 25px 25px;
-    grid-column-gap: 10px;
+    grid-column-gap: 1px;
     /* grid-row-gap: 5px; */
     grid-template-areas: 'pop0delete pop0color popDish0'
                          'pop1delete pop1color popDish1'
@@ -1898,19 +1906,22 @@ checkbox:focus {
     
     .anaDeleteButtonDiv{
       /* padding: 1px 4px;  /*top/bottom  left/right  */
+      padding: 1px 0px 1px 5px;       /* top right bottom left */
+/*
       padding-left: 5px;
       padding-right: 4px;
       padding-top: 1px;
       padding-right: 1px;
+*/
     }
     .anaDeleteButton{
       margin: auto;
       height: fit-content;       /* was 1.1rem; */
-      /* width: 1.5rem;   diane had in, might not have been in push */
-      /* position: absolute;  I think yemi removed  */    
-      background-color: rgb(238, 176, 176);   /* Diane does not like the red */
+      width: 1.5em;   /* diane had in, might not have been in push */
+      /* position: absolute;  djb think yemi removed, needed if width in rem, but not in em which is confusing  */    
+      /* background-color: rgb(238, 176, 176);   /* Diane does not like the red */
       text-align: center;
-      font-size: smaller;   /* diane asks why? */
+      /* font-size: smaller;   /* diane asks why? */
     };
 
     .anaDeleteButton:hover {
@@ -1929,7 +1940,7 @@ checkbox:focus {
       margin: auto;
     }
     .popDishHolder{  
-      padding: 3px;
+      padding: auto;
       background: #F5F5F5;  /*lemonchiffon; */
     }
     /* insdie popDishHolder */
@@ -2297,7 +2308,7 @@ checkbox:focus {
 /* https://www.webhostingsecretrevealed.net/blog/web-business-ideas/25-gorgeous-web-safe-fonts-for-your-website/
 /* https://www.webdesigndev.com/16-gorgeous-web-safe-fonts-to-use-with-css/#Abel_Web_Safe_Font
 /*
-/*-------------------------------------------------------------------------------------------------------- flex box --*/
+/*------------------------------------------------------------------------------------ browser support of standards --*/
 /* https://caniuse.com/ to look to see which browsers support a feature. 
 
 /* suggested standards (found in 2021, not used yet)
@@ -2315,18 +2326,18 @@ checkbox:focus {
       }
 
       h1 {
-        --pixels: 30; /* Equals to 48px 
+        --pixels: 30; /* Equals to 30px 
         font-size: var(--font-size);
       }
 
 
       h2 {
-        --pixels:25; /* Equals to 24px
+        --pixels:25; /* Equals to 25px
         font-size: var(--font-size);
       }
 
-      .fnt12 {
-       --pixels: 16; /* Equals to 24px 
+      .fnt16 {
+       --pixels: 16; /* Equals to 12px 
         font-size: var(--font-size);
       } 
 /* html for examle 
@@ -2334,7 +2345,7 @@ checkbox:focus {
       <h2>Header 2: 25x</h2>
       <h3 style="--pixels: 20;">
         Header 3: 20px</h3>
-      <h4 class='fnt12'>Header 4: 16 px</h4>
+      <h4 class='fnt16'>Header 4: 16 px</h4>
       <p>
         from: https://codepen.io/andresgalante/pen/abOydOj?editors=1100
       </p>
@@ -2359,7 +2370,7 @@ checkbox:focus {
 /* explains flex: in a way I might finally understand. 
 /* https://css-tricks.com/understanding-flex-grow-flex-shrink-and-flex-basis/ 
 /* .child {
-/*   flex: 0 1 auto; /* Default flex value     or 
+/*   flex: 0 1 auto; /* Default flex value     or  stay the same size all the  time
 /*   flex: [flex-grow] [flex-shrink] [flex-basis];     or 
 /*   flex: [max] [min] [ideal size];
 /* }
@@ -2376,7 +2387,7 @@ checkbox:focus {
 
 /* flex-basis: auto is default, which means use my height or width
 /* child elements will take up just enough space for their content unless width is specified. 
-/* set width: 100%    ro use flex-grow: 1; for each child
+/* set width: 100%    or use flex-grow: 1; for each child
 
 /* flex: 0 1 1234px;   // will try to have this child use 12334px if it can, 
 /* else take up that much space proportionally to the other elements.

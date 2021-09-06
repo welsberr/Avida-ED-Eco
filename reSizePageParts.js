@@ -37,8 +37,8 @@ function resizePopulationPage() {
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('.dragbar').css("width");
   var rightSideWidth = $('#rightInfoHolder').css("width");
-  // var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
-  var newColumns = "auto " + dragbarWidth + " auto " + dragbarWidth + " auto";
+  var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
+  // var newColumns = "auto " + dragbarWidth + " auto " + dragbarWidth + " auto";  // from Yemi version that did not come with automerge
   $('.all3pop').css("grid-template-columns", newColumns);
   av.grd.drawGridSetupFn(); // yemi: redraw the grid
 }
