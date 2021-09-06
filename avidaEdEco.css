@@ -88,7 +88,7 @@ html {
 .rightInfoHolder { grid-area: rightInfoHolder; }
 .navColClass {grid-area: navColID; }
 #dragbarLeft {grid-area: dragbarLeft; }    /* Yemi: float: right; */
-#dragbarRight {grid-area: dragbarRight; }  /* Yemi: float: right; automerge keeps removing this one tiba grid-area: dragbarRight; */
+#dragbarRight {/* grid-area: dragbarRight; */  float: right; }  /* Yemi: float: right; automerge keeps removing this one tiba grid-area: dragbarRight; that was an intentional remove*/
 
 .all2rit{
   display: grid;
@@ -283,6 +283,7 @@ html {
   mnDebug {visibility: hidden;}
   
   #headerMsg{
+    flex: 1 1 auto; /* yemi: removal of this code results in weird header button spacing */
     /* flex: [flex-grow] [flex-shrink] [flex-basis]; */
     /* flex: [max] [min] [ideal size]; */
     /* flex: 0 1 auto; /* Default flex value 0=grow=don't grow; take minimum size for the conents  */    
