@@ -326,7 +326,7 @@ html {
   }
 
   #versionNumHolder{
-    /* flex: 0 0 130px; */
+    flex: 0 0 130px;
     padding-top: 5px;
     height: 25px;
   }
@@ -1835,7 +1835,7 @@ checkbox:focus {
   }
   
   #orgMuteSlide {
-  width:200px; 
+  width: 150px; /* was 200px; */
   /* height: 400px;  */
   display: block; 
   vertical-align: top; 
