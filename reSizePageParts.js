@@ -45,7 +45,7 @@ function resizePopulationPage() {
 function resizeOrganismPage() {
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('.dragbar').css("width");
-  var rightSideWidth = $('#rightInfoHolder').css("width");
+  var rightSideWidth = $('#orgInfoHolder').css("width");
   var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
   $('.all3org').css("grid-template-columns", newColumns);
 }
@@ -500,30 +500,28 @@ av.ptd.ritePanelBtnFn = function () {
 
     $('.all3pop').css("grid-template-columns", population_colInfo);
     $('.all3org').css("grid-template-columns", organism_colInfo);
-
-    /* make the following divs take up the entire width of their containers */
-    $('orgInfoHolder').css("width", "100%");
   }
   // if right is not collapsed
   else if (IS_RIGHT_COLLAPSED) {
     IS_RIGHT_COLLAPSED = false;
-
-    // open up the right sidebar
-    var widthOfRight = "400px";
 
     /* change the button's contents and look */
     $('#ritePanelButton').val('>> ');
     $('#ritePanelBUtton').css('background', 'inherit');
 
     /* when modifying the column sizes, need to modify all two layouts */
-    var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight;
-    var organism_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight;
+    var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + "440px";
+    var organism_colInfo = leftSideWidth + " 3px auto" + " 3px " + "220px";
+    $('#rightInfoHolder').css("width", "440px");
+    /* make the following divs take up the entire width of their containers */
+    $('#orgInfoHolder').css("width", "220px");
 
     $('.all3pop').css("grid-template-columns", population_colInfo);
     $('.all3org').css("grid-template-columns", organism_colInfo);
     
     /* make the following divs take up the entire width of their containers */
     $('orgInfoHolder').css("width", "100%");
+    $('rightInfoHolder').css("width", "100%");
   }
 
   av.grd.drawGridSetupFn(); // redraw the grid
