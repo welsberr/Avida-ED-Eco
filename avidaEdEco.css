@@ -88,7 +88,7 @@ html {
 .rightInfoHolder { grid-area: rightInfoHolder; }
 .navColClass {grid-area: navColID; }
 #dragbarLeft {grid-area: dragbarLeft; }    /* Yemi: float: right; */
-#dragbarRight {grid-area: dragbarRight; }  /* Yemi: float: right; automerge keeps removing this one tiba grid-area: dragbarRight; */
+#dragbarRight {/* grid-area: dragbarRight; */  float: right; }  /* Yemi: float: right; automerge keeps removing this one tiba grid-area: dragbarRight; that was an intentional remove*/
 
 .all2rit{
   display: grid;
@@ -261,7 +261,7 @@ html {
 }
 
   #mainMenu{
-    /* flex: 0 1 350px;*/
+    flex: 0 1 350px;
     height: 2.0rem; /* 2.5em */
     border: 1px solid #888;
     overflow: auto;
@@ -283,6 +283,7 @@ html {
   mnDebug {visibility: hidden;}
   
   #headerMsg{
+    flex: 1 1 auto; /* yemi: removal of this code results in weird header button spacing */
     /* flex: [flex-grow] [flex-shrink] [flex-basis]; */
     /* flex: [max] [min] [ideal size]; */
     /* flex: 0 1 auto; /* Default flex value 0=grow=don't grow; take minimum size for the conents  */    
@@ -719,9 +720,9 @@ html {
   
 #selOrgType{
   /* yemi: used to be 1 1 auto; yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
-  flex: 1 1 100px;    /* djb: 100 px becaome 192px; 150px became 167px */
+  flex: 1 1 auto;    /* djb: 100 px becaome 192px; 150px became 167px */
   border: 1px solid #AAA;
-  overflow: scroll;
+  /* overflow: scroll; */ /* yemi: prevents awkward leftover space on the right when table gets smaller */
 }  /*contains sotTopTable and sotBotTable  */
 
 #sotTopTable { width: 100%; }
@@ -731,9 +732,9 @@ html {
 .timePerform { min-width: 120px; background: #fff }
   
 #popStats4grid{
-  flex: 1 1 100px; /* yemi: used to be 1 1 240px; yemi: fixed the weird width problem by useing 240px as the width; auto adjusts */     
+  flex: 1 1 auto; /* yemi: used to be 1 1 240px; yemi: fixed the weird width problem by useing 240px as the width; auto adjusts */     
   border: 1px solid #AAA;
-  overflow: scroll;
+  /* overflow: scroll; */ /* yemi: prevents awkward leftover space on the right when table gets smaller */
 } /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
 
 div.popsTopTableHold { 

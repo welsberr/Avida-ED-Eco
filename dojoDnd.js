@@ -1,14 +1,8 @@
 var av = av || {};  //incase av already exists
 var dojo = dojo || {};
 
-//global definitions based dom that involve DND
-
-//functions used to process events that happen when a dojo drag and drop lands on the particular dnd 'target'.
-//Note that all dnd 'source' elements can also be 'targets'.
-
-//http://stackoverflow.com/questions/1134572/dojo-is-there-an-event-after-drag-drop-finished
-//Puts the contents of the source in a object (list) called items.
-// if (av.dbg.flg.root) { console.log('Root: before av.dnd.getAllItems'); }
+// global definitions based dom that involve DND
+// OBSOLETE: all of dnd functions were replaced in dragulaDnd.js
 
 //------------------------------------------------------------------------------------------ av.msg.TestDishSetupPrep --
 av.dnd.TestDishSetupPrep = function(fzSection, target, type) {

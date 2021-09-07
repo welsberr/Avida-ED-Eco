@@ -6,9 +6,10 @@
  *       // yemd is a tag for all the legacy code that is getting commented out in development
  */
 
-// var av = av || {};  // consistent with the rest of js files
+var av = av || {};  // consistent with the rest of js files
 
 jQuery(document).ready(function($) {
+  // containers are divs that are capable of accepting and intiating drag and drop
   var containers = [
                     $.map($(".freezerContainer"), (value, key) => { return value }),  
                     $.map($("#testConfig"), (value, key) => { return value }),
@@ -27,8 +28,7 @@ jQuery(document).ready(function($) {
                    ].flat();
   console.log('dragula containters: ', containers);
 
-  // currently only have draggable containers on the Population page. 
-  // Organism and Analysis page draggable containers will be implemented soon.
+  // initialize globally availble references to dnd containers
   av.dnd.fzConfig = containers[0]
   av.dnd.fzOrgan = containers[1]
   av.dnd.fzWorld = containers[2]
@@ -56,9 +56,6 @@ jQuery(document).ready(function($) {
   // variable to keep the most recently added domid
   // domids are unique for each new item that is drag and dropped
   var mostRecentlyAddedDomid = '';
-  // necessary when new dish modal was called not because user clicked on the 'new' button
-  // but because it was triggered by dragging a dish to the activeConfig where the experiment has started
-  av.dnd.newDishModalCalledFromDnd = false;
   av.dnd.clickedMenu = "";
 
   /*
@@ -136,10 +133,10 @@ jQuery(document).ready(function($) {
   */
   dra.on('drag', (el, source) => { 
     dragging = true;
-    av.dnd.newDishModalCalledFromDnd = false;
 
-    //When mouse button is released, return cursor to default values
-    if (source === av.dnd.fzOrgan) { // necessary because for some reason inside mouse events, dra 'source' and 'target' are messed up
+    // these three if's are for handling drops on gridCanvas 
+    // necessary because for some reason inside mouse events, dra 'source' and 'target' are messed up
+    if (source === av.dnd.fzOrgan) {
       sourceIsFzOrgan = true;
     } else sourceIsFzOrgan = false;
 
@@ -155,6 +152,7 @@ jQuery(document).ready(function($) {
   });
 
   dra.on('over', (el, container, source) => {
+    // when mouse is over some container, change cursor shape according to whether or not item is accepted at target container
     if (av.dnd.accepts(el, container, source)) {
       document.body.style.cursor = "copy";
     } else {
@@ -163,10 +161,12 @@ jQuery(document).ready(function($) {
   });
 
   dra.on('out', (el, container, source) => {
+    // when mouse is out of some container, revert to default cursor shape
     document.body.style.cursor = "default";
   });
 
   dra.on('cancel', (el, container, source) => {
+    // if drag was canceled, revert to default cursor shape
     document.body.style.cursor = "default";
   });
 
@@ -174,13 +174,13 @@ jQuery(document).ready(function($) {
   Handle drop
   */
   dra.on('drop', (el, target, source) => {
-    // if the drop is not acceptable, cancel and return
+    // if the drop is not accepted at this target, cancel and return
     if (!av.dnd.accepts(el, target, source)) {
       dra.cancel();
       return;
     }
-    // el, target, source are dom objects aka stuff you could 'target.id' to
-    // if the experiment has already started and user is trying to run a new experiment, show the newDishModal
+    // el, target, source are dom objects aka things you could 'target.id' to
+    // if the experiment has already started and user is trying to run a new experiment, show the newDishModal, which prompts user to save
     if (av.grd.runState === 'started' && (target === av.dnd.gridCanvas || target === av.dnd.activeConfig || target === av.dnd.ancestorBox || target === av.dnd.trashCan)) {
       dra.cancel(); // cancel the current drag and drop
       av.dom.newDishModalID.style.display = 'block'; // show the 'please save' modal
@@ -195,7 +195,7 @@ jQuery(document).ready(function($) {
       av.dnd.landTestConfig(el, target, source);
     }
     if (target === av.dnd.trashCan) {
-      // yemi: however, if the drag is being initiated from the gridCanvas aka, then the event handler is in mouse.js
+      // however, if the drag is being initiated from the gridCanvas aka, then the event handler is in mouse.js
       // refer to av.mouse.ParentMouse or av.mouse.KidMouse
       av.dnd.landTrashCan(el, source);
     }
@@ -209,7 +209,7 @@ jQuery(document).ready(function($) {
       av.dnd.landAncestorBoTest(el, target, source);
     }
     if (target === av.dnd.fzWorld) {
-      // yemi: does not trigger because techinically there are no 'items' on the grid right now.
+      // does not trigger because techinically there are no 'items' on the grid right now.
       // on the grid, mouse movements overtake. Code for that is in mouse.js (av.mouse.kidMouse)
       av.dnd.landFzWorld(el, target, source);
     }
@@ -221,7 +221,7 @@ jQuery(document).ready(function($) {
         el.className = newlist.join(' ');
         av.dnd.insertToDOM(av.dnd.ancestorBox, el); // you don't want to remove the organism from the box, want to copy; by default dragula will remove 
       }
-      av.dnd.landFzOrgan(el, target, source); // I don't think it's getting called
+      av.dnd.landFzOrgan(el, target, source); // not getting called
     }
     if (target === av.dnd.organIcon) {
       av.dnd.landOrganIcon(el, target, source);
@@ -254,6 +254,7 @@ jQuery(document).ready(function($) {
       if (dragging) { 
         var x;
         var y;
+        // capture the x and y coordinates
         if(evt.type == 'touchend'){
           var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
           x = touch.pageX;
@@ -263,33 +264,34 @@ jQuery(document).ready(function($) {
           y = evt.clientY;
         }
         av.mouse.UpGridPos = [x, y];
+        // the below convoluted method is necessary to see which elements are below the mouse cursor at this moment
         var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
         // if gridCanvas is behind this mouse point
-        if (elements.indexOf("gridCanvas") != -1 && sourceIsFzOrgan) { 
-          av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, av.dnd.fzOrgan);
-          av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
-        } 
-
-        if (elements.indexOf("gridCanvas") != -1 && sourceIsFzWorld) { 
-          av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, av.dnd.fzWorld);
-        };
-        
-        // This is a new feature. We have never been able to drag AncestorBox ==> gridCanvas before
-        if (elements.indexOf("gridCanvas") != -1 && sourceIsAncestorBox) { 
-          av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, av.dnd.ancestorBox);
-          av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
+        if (elements.indexOf("gridCanvas") != -1) {
+          if (sourceIsFzOrgan) { 
+            av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, av.dnd.fzOrgan);
+            av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
+          }
+          else if (sourceIsFzWorld) {
+            av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, av.dnd.fzWorld);
+          }
+          else if (sourceIsAncestorBox) {
+            av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, av.dnd.ancestorBox);
+            av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
+          }
         }
+        dragging = false;
+        $(document).unbind('mousemove touchmove');
       }
-      dragging = false;
-      $(document).unbind('mousemove touchmove');
+      // change the color back (whatever it was before) of the most recently added dom object
+      if (mostRecentlyAddedDomid != '') {
+        $('#' + mostRecentlyAddedDomid).css('background', 'inherit');
+      }
+      document.body.style.cursor = "default";
+      // for debugging
+      console.log(av.fzr);
+      console.log(containerMap);
     });
-
-    // change the color back (whatever it was before) of the most recently added dom object
-    $('#' + mostRecentlyAddedDomid).css('background', 'inherit');
-    document.body.style.cursor = "default";
-    // for debugging
-    console.log(av.fzr);
-    console.log(containerMap);
   });
 
   /*
@@ -445,10 +447,8 @@ jQuery(document).ready(function($) {
 
   
   // Running actions from drop down menu
-  // When using dojoDnd, the an item coudl be selected in each section of the freezer. 
+  // When using dojoDnd, the an item could be selected in each section of the freezer. 
   // Also I did not know an easy way to see if an item was selected in each freezer section. 
-  
-  
   av.dnd.FzAddExperimentFn = function (source, target, type) {
     var fzSection = source.id;
     var targetId = target.id;
@@ -456,20 +456,20 @@ jQuery(document).ready(function($) {
     // if something is selected
     if (undefined !== av.dnd.selectedId && '' !== av.dnd.selectedId) {
       var classList = document.getElementById(av.dnd.selectedId).className.split(" ");
+      // if the selected is a genome and the user misclicked something other than 'add this organism to the experiment'
       if (classList.indexOf('g') != -1 && av.dnd.clickedMenu != "addOrgan") {
-        // if the selected is a genome and the user misclicked something other than 'add this organism to the experiment'
         $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
         av.dnd.selectedId = '';
         return;
       }  
+      // if the selected is a populated dish and the user misclicked something other than 'add this populated dish to the experiment'
       if (classList.indexOf('w') != -1 && av.dnd.clickedMenu != "addPop") {
-        // if the selected is a populated dish or configured dish and the user misclicked something other than 'add this dish to the experiment'
         $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
         av.dnd.selectedId = '';
         return;
       }
+      // if the selected is a configured dish and the user misclicked something other than 'add this configured dish to the experiment'
       if (classList.indexOf('c') != -1 && av.dnd.clickedMenu != "addConfig") {
-        // if the selected is a populated dish or configured dish and the user misclicked something other than 'add this dish to the experiment'
         $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
         av.dnd.selectedId = '';
         return;
@@ -1015,6 +1015,7 @@ jQuery(document).ready(function($) {
     av.grd.popChartFn('av.dnd.landActiveConfig');
   };
 
+  // function that is called in the beginning to load the default configuration
   av.dnd.loadDefaultConfigFn = function (from) {
     el = $.map($("#dom_c0"), (value, key) => { return value })[0].cloneNode(true);
     av.dnd.landActiveConfig(el, av.dnd.activeConfig, av.dnd.fzConfig);
@@ -1138,7 +1139,7 @@ jQuery(document).ready(function($) {
         onClick: function () {
           av.post.addUser('Button: export:' + document.getElementById(fzItemID).textContent);
           var type;
-          var itemName = $(fzItemID).textContent.trim();
+          var itemName = document.getElementById(fzItemID).textContent.trim();
           var zName = prompt(itemName + ' will be saved as ' + itemName + '.avidaED_fi.zip', itemName + '.avidaED_fi.zip');
           if (zName) {
             if (0 === zName.length) zName = itemName + '.avidaED_fi.zip';  //.avidaED_fi.zip is 23 characters
@@ -1166,7 +1167,6 @@ jQuery(document).ready(function($) {
         av.post.addUser('Button: delete:' + document.getElementById(fzItemID).textContent);
         var sure = confirm('Do you want to delete ' + document.getElementById(fzItemID).textContent + '?');
         if (sure) {
-          console.log(container);
           dir = av.fzr.dir[fzItemID];
           av.fzr.file[dir+'/entryname.txt'];
           if ('fzOrgan' == container) {
@@ -1176,12 +1176,9 @@ jQuery(document).ready(function($) {
           } else if ('fzWorld' == container){
             av.fwt.removeFzrItem(dir, 'w');
           }
-
           document.querySelector(container).removeChild(document.getElementById(fzItemID));
           delete containerMap[container][fzItemID];
-
           av.fzr.saveUpdateState('no');
-          //need to remove from fzr and pouchDB
         }
       }
     }));
@@ -1191,6 +1188,7 @@ jQuery(document).ready(function($) {
   /*
   Helpers for Inserting and Removing Items from Dragula Containers
   */
+  // empty a target container
   av.dnd.empty = function(target) {
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     $(container).empty();
@@ -1199,6 +1197,7 @@ jQuery(document).ready(function($) {
     }
   }
 
+  // remove an element from target container
   av.dnd.remove = function(target, el) {
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     $(container).remove(el);
@@ -1207,10 +1206,10 @@ jQuery(document).ready(function($) {
     } catch {
       console.log('oops');
     }
-
     delete containerMap[container][el.id];
   }
 
+  // insert an element into target container
   av.dnd.insert = function(target, el, type) {
     var domid = el.id;
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
@@ -1220,12 +1219,14 @@ jQuery(document).ready(function($) {
     containerMap[container][domid] = {'name': el.textContent.trim() , 'type': type};
   }
 
+  // insert an element into target container DOM
   av.dnd.insertToDOM = function(target, el) {
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     el = el.cloneNode(true);
     $(container).append(el);
   }
 
+  // get all the items currently in source
   av.dnd.getAllItems = function (source) {
     'use strict';
     var container = source.id !== undefined ? "#" + source.id : "." + source.className;
@@ -1309,27 +1310,26 @@ jQuery(document).ready(function($) {
   };
 
   /*
-  Helper For Sorting Things (need to be worked on)
+  Helper For Sorting Things (not sure if still needed)
   */
-  
   // based on https://stackoverflow.com/questions/27529727/sorta-b-does-not-work-in-dojo-dnd-source
-  av.dnd.sortDnD = function (dndSection) {
-    // Input: dndSection = the text of the class os the Dojo DnD section with elements to be sorted
-    // e.g., var dndSection = 'fzOrgan'; sortDnD(dndSection);
-    // actually full class name is ".element dojoDndItem" to query
-    // console.log('inside sortDnD');
-    //dojo.query(".element",  dojo.byId(dndSection)).sort(
-    dojo.query(".dojoDndItem", dndSection).sort(
-      function (a, b) {
-        var aih = a.innerHTML.toString().toLowerCase();
-        var bih = b.innerHTML.toString().toLowerCase();
-        return (aih == bih ? 0 : (aih > bih ? 1 : -1));
-      }
-    ).forEach(// fire bug debugging cursor move to this section
-      function (a, idx) {
-        dojo.byId(dndSection).insertBefore(a, dojo.byId(dndSection).childNodes[idx]);
-      });
-  };
+  // av.dnd.sortDnD = function (dndSection) {
+  //   // Input: dndSection = the text of the class os the Dojo DnD section with elements to be sorted
+  //   // e.g., var dndSection = 'fzOrgan'; sortDnD(dndSection);
+  //   // actually full class name is ".element dojoDndItem" to query
+  //   // console.log('inside sortDnD');
+  //   //dojo.query(".element",  dojo.byId(dndSection)).sort(
+  //   dojo.query(".dojoDndItem", dndSection).sort(
+  //     function (a, b) {
+  //       var aih = a.innerHTML.toString().toLowerCase();
+  //       var bih = b.innerHTML.toString().toLowerCase();
+  //       return (aih == bih ? 0 : (aih > bih ? 1 : -1));
+  //     }
+  //   ).forEach(// fire bug debugging cursor move to this section
+  //     function (a, idx) {
+  //       dojo.byId(dndSection).insertBefore(a, dojo.byId(dndSection).childNodes[idx]);
+  //     });
+  // };
 
   // 2019-04-14: Untested.
   // dojo.connect(av.dnd.fzTdish, "onDndDrop", function (source, nodes, copy, target) {

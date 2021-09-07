@@ -24,14 +24,6 @@
     'use strict';
     if (loadConfigFlag) { av.fzr.clearFzr_activeConfig_nutData_Fn(); }
     else { av.fzr.clearMainFzrFn(); }  // clear freezer (globals.js)
-    
-    //Change loading a workspace will change the freezer, but not parents or configuration
-  /*  av.parents.clearParentsFn();  //globals.js
-    av.dnd.ancestorBox.selectAll().deleteSelectedNodes();
-    av.dnd.ancestorBox.sync();
-    av.dnd.activeOrgan.selectAll().deleteSelectedNodes();
-    av.dnd.activeOrgan.sync();
-  */
  
     av.fzr.loadedFromFile = 'before oReg defined.';
     var oReq = new XMLHttpRequest();
@@ -70,9 +62,8 @@
         }  //do not load configfile
       };  //end of process files loops
       
-      
       //sort TestDishes here
-      av.dnd.sortDnD('fzTdish');
+      // av.dnd.sortDnD('fzTdish');
 
       //note setup form is updated when the files are read.
       //if (av.debug.fio) console.log('after read loop: fzr', av.fzr);

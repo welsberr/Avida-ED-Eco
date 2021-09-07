@@ -233,9 +233,6 @@ require([
       document.getElementById('appReloadDialog').style.display = 'show';
     }
   }, 121000);
- 
-  //initiallize default mouse shapes
-  //av.mouse.getOriginalShapes(); only gets empty strings
 
   /********************************************************************************************************************/
   // if (av.dbg.flg.root) { console.log('Root: after splash screen code'); }
@@ -249,11 +246,11 @@ require([
   av.dom.initilizeAnalizePage(); 
   av.parents.clearParentsFn();
 
-  //**************************************************************************************************
-  //                web worker to talk to avida
-  //**************************************************************************************************/
+  //********************************************************************************************************************
+  // Web worker to talk to Avida
+  //********************************************************************************************************************
 
-  //Avida as a web worker
+  // Avida as a web worker
   // if (av.dbg.flg.root) { console.log('Root: before call avida'); }
   //
   // if (av.dbg.flg.root) { console.log('Root: typeof(av.aww.uiWorker', typeof(av.aww.uiWorker)); }
@@ -279,7 +276,6 @@ require([
   //*******************************************************************************************************************
   // Dojo DND functions - defined in dragulaDnd.js
   //*******************************************************************************************************************
-
 
   //*******************************************************************************************************************
   // Mouse DND functions
@@ -333,13 +329,13 @@ require([
         av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
       }
     } 
-    // yemi: this is for organism page
+    // this is for organism page
     else if ('offspring' == av.mouse.Picked) {
       console.log('offspring picked');
       target = av.mouse.offspringMouse(evt, av.dnd, av.fio, av.fzr, av.gen);
       av.mouse.Picked = '';
     } 
-    // yemi: this is for population page
+    // this is for population page
     else if ('kid' == av.mouse.Picked) {
       av.mouse.Picked = '';
       target = av.mouse.kidMouse(evt, av.dnd, av.fzr, av.grd);
@@ -779,7 +775,6 @@ require([
   });
 
   //------------------------------------------------------------------------------------------------------ debug menu --
-
   document.getElementById('mnDbThrowData').onclick = function () {
     'use strict';
     av.post.addUser('Button: mnDbThrowData');
@@ -873,7 +868,7 @@ require([
     av.ui.newButtonBoth();
   });
 
-  //**************************************      Freeze Button      *****************************************************
+  //*******************************************      Freeze Button      **********************************************
   //Saves either configuration or populated dish
   //Also creates context menu for all new freezer items.*/
   av.dom.freezeButton.onclick = function () {
@@ -989,39 +984,39 @@ require([
 
   //---------------------------------------------- Restart Avida web worker --------------------------------------------
 
-    //http://www.w3schools.com/html/tryit.asp?filename=tryhtml5_webworker
-    av.ui.restartAvida = function () {
-      userMsgLabel.textContent = 'reloading Avida . . .';
+  //http://www.w3schools.com/html/tryit.asp?filename=tryhtml5_webworker
+  av.ui.restartAvida = function () {
+    userMsgLabel.textContent = 'reloading Avida . . .';
 
-      av.aww.uiWorker.terminate();
-      av.aww.uiWorker = null;
+    av.aww.uiWorker.terminate();
+    av.aww.uiWorker = null;
 
-      //console.log('just killed webWorker');
+    //console.log('just killed webWorker');
 
-      if (typeof (Worker) !== 'undefined') {
-        if (null == av.aww.uiWorker) {
-          av.aww.uiWorker = new Worker('avida.js');
-          console.log('webworker recreated');
-          av.debug.log += '\nuiA: ui killed avida webworker and started a new webworker';
-        }
-      } else {
-        userMsgLabel.textContent = "Sorry, your browser does not support Web workers and Avida won't run";
+    if (typeof (Worker) !== 'undefined') {
+      if (null == av.aww.uiWorker) {
+        av.aww.uiWorker = new Worker('avida.js');
+        console.log('webworker recreated');
+        av.debug.log += '\nuiA: ui killed avida webworker and started a new webworker';
       }
+    } else {
+      userMsgLabel.textContent = "Sorry, your browser does not support Web workers and Avida won't run";
+    }
 
-      //need to 'start new experiment'
-      av.ptd.resetDishFn(false);  //do not send reset to avida; avida restarted
-      restartAvidaDialog.hide();
-    };
+    //need to 'start new experiment'
+    av.ptd.resetDishFn(false);  //do not send reset to avida; avida restarted
+    restartAvidaDialog.hide();
+  };
 
-    document.getElementById('restartAvidaNow').onclick = function () {
-      av.post.addUser('Button: restartAvidaNow');
-      av.ui.restartAvida();
-    };
+  document.getElementById('restartAvidaNow').onclick = function () {
+    av.post.addUser('Button: restartAvidaNow');
+    av.ui.restartAvida();
+  };
 
-    document.getElementById('restartAvidaFrzConfig').onclick = function () {
-      av.post.addUser('Button: restartAvidaFzrConfig');
-      av.ptd.FrConfigFn('restartAvidaFrzConfig');
-    };
+  document.getElementById('restartAvidaFrzConfig').onclick = function () {
+    av.post.addUser('Button: restartAvidaFzrConfig');
+    av.ptd.FrConfigFn('restartAvidaFrzConfig');
+  };
 
   //********************************************************************************************************************
   // Main Page button scripts
@@ -1049,8 +1044,6 @@ require([
     var showButton = showBlock.substring(0,showBlock.length-5)+'Button';
     console.log('showButton=',showButton);
     document.getElementById(showButton).style.background = '#DBDBDB'; 
-    //dijit.byId(showBlock).resize();
-    //document.getElementById(showBlock).resize();
 
     //disable menu options. they will be enabled when relevant canvas is drawn
     dijit.byId('mnFzOffspring').attr('disabled', true);
@@ -1113,7 +1106,7 @@ require([
       console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
     av.ui.mainBoxSwap('populationBlock');
 
-    /* yemi: just so that if screen resized in the other layout, you still update the population page correctly */
+    /* just so that if screen resized in the other layout, you still update the population page correctly */
     resizePopulationPage();
   };
 
@@ -1128,19 +1121,16 @@ require([
       $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
     if (av.dom.orgInfoHolder.clientWidth < av.ui.orgInfoHolderMinWidth) av.ui.orgInfoHolderWidth = av.ui.orgInfoHolderMinWidth;
     av.ui.mainBoxSwap('organismBlock');
-    
-    // av.dom.orgInfoHolder.style.width = av.ui.orgInfoHolderWidth + 'px'; /* yemi: commented this out because it was messing with my resize code. let me know if this is causing problems */
 
     console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
       av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
       $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
     console.log('orgInfoHolder.paddding=', $("#orgInfoHolder").css('padding'));
 
-    /* yemi: just so that if screen resized in the other layout, you still update the organism page correctly */
+    /* just so that if screen resized in the other layout, you still update the organism page correctly */
     resizeOrganismPage();
-
-    /* yemi: organism trace persists; can be removed if undesired */
-    av.ind.updateOrgTrace()
+    /* organism trace persists; can be removed if undesired */
+    av.ind.updateOrgTrace();
   };
 
   document.getElementById('analysisButton').onclick = function () {
@@ -1150,7 +1140,7 @@ require([
     av.anl.AnaChartFn();
     //console.log('fzWorld wd =', document.getElementById('fzWld').style.width );
     
-    /* yemi: just so that if screen resized in the other layout, you still update the analysis page correctly */
+    /* just so that if screen resized in the other layout, you still update the analysis page correctly */
     resizeAnalysisPage();
   };
 
@@ -1378,14 +1368,6 @@ require([
             //av.grd.findLogicOutline(); //needs to be done for all updates
           };
         };
-
-        // yemi
-        // check if gridHolder is taller or wider
-        // if (av.dom.gridControlContainer.clientWidth < $("#gridHolder").height()) {
-        //   av.dom.scaleCanvas.width = av.dom.gridControlContainer.clientWidth - 22;  //works for canvas; need to use .style for divs
-        // } else {
-        //   av.dom.scaleCanvas.width = $("#gridHolder").height() - 22;  //the 22 was determined by trial and error and works on a mac
-        // }
         av.dom.scaleCanvas.width = $("#sclCnvsHldr").width() + 0.5 * $("#sclCnvsHldr").width();
 
         //figure out scale or legend
@@ -2325,9 +2307,9 @@ require([
 
   //set canvas size; called from many places
   av.ind.organismCanvasHolderSize = function() {
-    av.dom.organCanvas.width = $('#organismCanvasHolder').innerWidth() - 6; // yemi: hopefully $('organismCanvasHolder').innerWidth is equivalent to 100%
-    av.dom.organCanvas.height = $('#organismCanvasHolder').innerHeight() - 15; // yemi: changed it from -12 to -15 (works better I guess? when I tried using percentages, did not work as well)
-    /* yemi: IMPORTANT THING TO NOTE: innerHeight() returns just the number, .css("width") returns a string with 'px' suffix
+    av.dom.organCanvas.width = $('#organismCanvasHolder').innerWidth() - 6; // hopefully $('organismCanvasHolder').innerWidth is equivalent to 100%
+    av.dom.organCanvas.height = $('#organismCanvasHolder').innerHeight() - 15; // changed it from -12 to -15 (works better I guess? when I tried using percentages, did not work as well)
+    /* IMPORTANT THING TO NOTE: innerHeight() returns just the number, .css("width") returns a string with 'px' suffix
              Canvas widths CANNOT have 'px' suffix, it just needs to be a number. So in conclusion, do NOT use .css("width") to set the width of a canvas. I learned it the hard way. */
   };
 
@@ -2495,10 +2477,10 @@ require([
     if (av.dbg.flg.divsize) { console.log('AnaPlot: after plot in av.anl.anaChartInit'); }
 
     //console.log('layout=', av.dom.anlChrtSpace.layout);
-    av.dom.anlChrtSpace.style.visibility = 'visible'; /* yemi: used to be 'hidden' */
+    av.dom.anlChrtSpace.style.visibility = 'visible'; /* used to be 'hidden' */
   };
   // if (av.dbg.flg.root) { console.log('Root: before av.anl.anaChartInit called'); }
-  av.anl.anaChartInit();
+  av.anl.anaChartInit(); // bug
 
   //----------------------------------------------------------------------------------------------- av.anl.AnaChartFn --
   av.anl.AnaChartFn = function () {
@@ -2813,9 +2795,7 @@ require([
       console.log('ui: PopPlotSize: av.dom.popChrtHolder.ht offset, client ht=', av.dom.popChrtHolder.offsetHeight,
         av.dom.popChrtHolder.clientHeight, '; parseInt(padding)=', parseInt($("#popChrtHolder").css('padding'), 10));
     }
-    // yemi: trying to remove awkward space between actual plot and its plot holder.
-    // av.pch.pixel.ht = av.dom.popChrtHolder.clientHeight - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
-    // av.pch.pixel.wd = av.dom.popChrtHolder.clientWidth - 2 * parseInt($("#popChrtHolder").css('padding'), 10);
+    // trying to remove awkward space between actual plot and its plot holder.
     av.pch.pixel.ht = av.dom.popChrtHolder.clientHeight;
     av.pch.pixel.wd = av.dom.popChrtHolder.clientWidth;
     av.pch.pixel.hdif = 0;
