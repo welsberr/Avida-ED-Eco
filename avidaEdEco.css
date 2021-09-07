@@ -264,8 +264,8 @@ html {
     flex: 0 1 350px;
     height: 2.0rem; /* 2.5em */
     border: 1px solid #888;
-    overflow: auto;
-    resize: horizontal;
+    overflow: scroll;
+    /* resize: horizontal;*/
     max-width: fit-content;
   }
 
