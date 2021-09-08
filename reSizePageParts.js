@@ -463,7 +463,6 @@ av.anl.divSize = function (from) {
   av.anl.wd = av.dom.anaChrtHolder.getBoundingClientRect().width - 1;
   //av.dom.anaChrtHolder.style.height = av.anl.ht + 'px';
   av.anl.ht = av.dom.anaChrtHolder.clientHeight - 6;
-  console.log(av.dom.anaChrtHolder.getBoundingClientRect());
   av.dom.anlChrtSpace.style.height = av.anl.ht + 'px';
   av.dom.anlChrtSpace.style.width = av.anl.wd + 'px';
   av.anl.layout.height = av.anl.ht;

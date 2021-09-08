@@ -57,6 +57,7 @@ jQuery(document).ready(function($) {
   // domids are unique for each new item that is drag and dropped
   var mostRecentlyAddedDomid = '';
   av.dnd.clickedMenu = "";
+  av.dnd.userDraggedNewConfig = false; // needed to let the modal know whether or not to reset the grid or not
 
   /*
   Dragula Initialization
@@ -182,70 +183,104 @@ jQuery(document).ready(function($) {
     // el, target, source are dom objects aka things you could 'target.id' to
     // if the experiment has already started and user is trying to run a new experiment, show the newDishModal, which prompts user to save
     if (av.grd.runState === 'started' && (target === av.dnd.gridCanvas || target === av.dnd.activeConfig || target === av.dnd.ancestorBox || target === av.dnd.trashCan)) {
-      dra.cancel(); // cancel the current drag and drop
+      av.dnd.userDraggedNewConfig = true;
       av.dom.newDishModalID.style.display = 'block'; // show the 'please save' modal
+      console.log(target);
+      av.dom.newDishCancel.onclick = function () {
+        av.dom.newDishModalID.style.display = 'none';
+        console.log(target, el);
+        dra.cancel();
+        av.dnd.remove(target, el);
+        return;
+      };
+      
+      av.dom.newDishDiscard.onclick = function () {
+        av.post.addUser('Button: newDishDiscard');
+        av.dom.newDishModalID.style.display = 'none';
+        av.dnd.landActiveConfig(el, target, source);
+        // only reset if this function was triggered because user clicked the 'new' button
+        // there's one other way this function could be triggered, which is through dnd in dragulaDnd.js 'drop' function
+      };
+    
+      // av.dom.newDishSaveConfig not in avidaEdEco.html
+      av.dom.newDishSaveWorld.onclick = function () {
+        av.post.addUser('Button: newDishSaveWorld');
+        av.ptd.FrPopulationFn();
+        av.dom.newDishModalID.style.display = 'none';
+        av.dnd.landActiveConfig(el, target, source);
+      };
+    
+      av.dom.newDishSaveConfig.onclick = function (domObj) {
+        console.log('in av.dom.newDishSaveConfig, domObj = ', domObj);
+        av.post.addUser('Button: newDishSaveConfig');
+        av.ptd.FrConfigFn('av.dom.newDishSaveConfig.onclick');
+        av.dom.newDishModalID.style.display = 'none';
+        av.dnd.landActiveConfig(el, target, source);
+      };
     } 
-    if (target === av.dnd.activeConfig) {
-      av.dnd.landActiveConfig(el, target, source);
-    }
-    if (target === av.dnd.testConfig || target === av.dnd.ancestorBoTest && av.grd.runState === 'started') {
-      av.dom.newDishModalID.style.display = 'block';
-      dra.cancel();
-    } else if (target === av.dnd.testConfig) {
-      av.dnd.landTestConfig(el, target, source);
-    }
-    if (target === av.dnd.trashCan) {
-      // however, if the drag is being initiated from the gridCanvas aka, then the event handler is in mouse.js
-      // refer to av.mouse.ParentMouse or av.mouse.KidMouse
-      av.dnd.landTrashCan(el, source);
-    }
-    if (target === av.dnd.fzConfig) {
-      av.dnd.landFzConfig(el, target, source);
-    }
-    if (target === av.dnd.ancestorBox) {
-      av.dnd.landAncestorBox(el, target, source);
-    }
-    if (target === av.dnd.ancestorBoTest) {
-      av.dnd.landAncestorBoTest(el, target, source);
-    }
-    if (target === av.dnd.fzWorld) {
-      // does not trigger because techinically there are no 'items' on the grid right now.
-      // on the grid, mouse movements overtake. Code for that is in mouse.js (av.mouse.kidMouse)
-      av.dnd.landFzWorld(el, target, source);
-    }
-    if (target === av.dnd.fzOrgan) {
-      if (source === av.dnd.ancestorBox) {
-        var idx = el.className.split(" ").indexOf('gu-transit');
-        var newlist = el.className.split(" ");
-        newlist.splice(idx, 1);
-        el.className = newlist.join(' ');
-        av.dnd.insertToDOM(av.dnd.ancestorBox, el); // you don't want to remove the organism from the box, want to copy; by default dragula will remove 
+    else {
+      if (target === av.dnd.activeConfig) {
+        av.dnd.landActiveConfig(el, target, source);
       }
-      av.dnd.landFzOrgan(el, target, source); // not getting called
-    }
-    if (target === av.dnd.organIcon) {
-      av.dnd.landOrganIcon(el, target, source);
-    }
-    if (target === av.dnd.activeOrgan) {
-      av.dnd.landActiveOrgan(el, target, source);
-    }
-    if (target === av.dnd.organCanvas) {
-      av.dnd.landOrganCanvas(el, target, source);
-    }
-    if (target === av.dnd.anlDndChart) {
-      av.dnd.landAnlDndChart(el, target, source);
-    }
-    if (target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2) {
-      if (target === av.dnd.popDish0) {
-        av.dnd.landpopDish(el, target, source, 0);
+      if (target === av.dnd.testConfig || target === av.dnd.ancestorBoTest && av.grd.runState === 'started') {
+        av.dom.newDishModalID.style.display = 'block';
+        dra.cancel();
+      } else if (target === av.dnd.testConfig) {
+        av.dnd.landTestConfig(el, target, source);
       }
-      else if (target === av.dnd.popDish1) {
-        av.dnd.landpopDish(el, target, source, 1);
+      if (target === av.dnd.trashCan) {
+        // however, if the drag is being initiated from the gridCanvas aka, then the event handler is in mouse.js
+        // refer to av.mouse.ParentMouse or av.mouse.KidMouse
+        av.dnd.landTrashCan(el, source);
       }
-      else if (target === av.dnd.popDish2) {
-        av.dnd.landpopDish(el, target, source, 2);
+      if (target === av.dnd.fzConfig) {
+        av.dnd.landFzConfig(el, target, source);
       }
-    } 
+      if (target === av.dnd.ancestorBox) {
+        av.dnd.landAncestorBox(el, target, source);
+      }
+      if (target === av.dnd.ancestorBoTest) {
+        av.dnd.landAncestorBoTest(el, target, source);
+      }
+      if (target === av.dnd.fzWorld) {
+        // does not trigger because techinically there are no 'items' on the grid right now.
+        // on the grid, mouse movements overtake. Code for that is in mouse.js (av.mouse.kidMouse)
+        av.dnd.landFzWorld(el, target, source);
+      }
+      if (target === av.dnd.fzOrgan) {
+        if (source === av.dnd.ancestorBox) {
+          var idx = el.className.split(" ").indexOf('gu-transit');
+          var newlist = el.className.split(" ");
+          newlist.splice(idx, 1);
+          el.className = newlist.join(' ');
+          av.dnd.insertToDOM(av.dnd.ancestorBox, el); // you don't want to remove the organism from the box, want to copy; by default dragula will remove 
+        }
+        av.dnd.landFzOrgan(el, target, source); // not getting called
+      }
+      if (target === av.dnd.organIcon) {
+        av.dnd.landOrganIcon(el, target, source);
+      }
+      if (target === av.dnd.activeOrgan) {
+        av.dnd.landActiveOrgan(el, target, source);
+      }
+      if (target === av.dnd.organCanvas) {
+        av.dnd.landOrganCanvas(el, target, source);
+      }
+      if (target === av.dnd.anlDndChart) {
+        av.dnd.landAnlDndChart(el, target, source);
+      }
+      if (target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2) {
+        if (target === av.dnd.popDish0) {
+          av.dnd.landpopDish(el, target, source, 0);
+        }
+        else if (target === av.dnd.popDish1) {
+          av.dnd.landpopDish(el, target, source, 1);
+        }
+        else if (target === av.dnd.popDish2) {
+          av.dnd.landpopDish(el, target, source, 2);
+        }
+      } 
+    }
 
     // Special case for gridCanvas
     $(document).on('mouseup touchend', function (evt) {
@@ -873,6 +908,14 @@ jQuery(document).ready(function($) {
     'use strict';
     av.dnd.configFlag = 'normal';
 
+    av.grd.clearGrd();
+    // av.grd.popChartInit('restDishFn');
+    av.grd.runState = 'prepping';
+    dijit.byId('mnCnOrganismTrace').attr('disabled', true);
+    dijit.byId('mnFzOrganism').attr('disabled', true);
+    //Clear grid settings
+    av.parents.clearParentsFn();
+
     var ndx = -1;
     var klen = 0;
     var kk = 0;
@@ -1200,14 +1243,25 @@ jQuery(document).ready(function($) {
   // remove an element from target container
   av.dnd.remove = function(target, el) {
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
-    $(container).remove(el);
-    try{
-      document.querySelector(container).removeChild(document.getElementById(el.id));
-    } catch {
-      console.log('oops');
-    }
+    // below code is accounting for cases where dra.cancel fails, and 
+    // you have the item that is not supposed to be in the target container still persist.
+    // in this case, because so no official drag and drop event triggered,
+    // the dragged (copied) item has the same dom id as its original copy
+    // so you end up having multiple dom objects with the same id.
+    // so you need to identify which dom object you need to remove from its parentNode
+    // and delete the (wrongly copied) dom object that exists within a parentNode that is the (misdirected) target
+    var node_to_be_removed;
+    for (var i=0; i < document.querySelectorAll("#" + el.id).length; i++) {
+      // just make sure the dom object you're trying to remove has a parent who is the target 
+      // from which you're trying to remove it
+      if (document.querySelectorAll("#" + el.id)[i].parentNode === target) {
+        node_to_be_removed = document.querySelectorAll("#" + el.id)[i];
+        break;
+      }
+    } 
+    document.querySelector(container).removeChild(node_to_be_removed);
     delete containerMap[container][el.id];
-  }
+  };
 
   // insert an element into target container
   av.dnd.insert = function(target, el, type) {
