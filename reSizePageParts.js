@@ -17,7 +17,13 @@ var IS_RIGHT_COLLAPSED = false;
 function resizeAnalysisPage() {
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarLeftWidth = $('#dragbarLeft').css("width");
-  var newColumns = leftNavBarWidth + " " + dragbarLeftWidth + " auto";
+  var newColumns;
+
+  if (IS_LEFT_COLLAPSED) {
+    newColumns = "0px " + dragbarWidth + " auto " + dragbarWidth + " auto";
+  } else {
+    newColumns = leftNavBarWidth + " " + dragbarLeftWidth + " auto";
+  }
   $('.all2lft').css("grid-template-columns", newColumns);
   av.anl.AnaChartFn(); 
 }
@@ -35,8 +41,23 @@ av.ui.resizeShowTextDebugPage =function() {
 function resizePopulationPage() {
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('.dragbar').css("width");
-  var rightSideWidth = $('#rightInfoHolder').css("width");
-  var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
+  var rightSideWidth = $('#popInfoVert').css("width");
+  console.log(rightSideWidth);
+  var newColumns;
+  if (!IS_LEFT_COLLAPSED && !IS_RIGHT_COLLAPSED) {
+    newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
+  }
+  else {
+    if (IS_RIGHT_COLLAPSED) {
+      newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " 0px";
+    }
+    if (IS_LEFT_COLLAPSED) {
+      newColumns = "0px " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
+      if (IS_RIGHT_COLLAPSED) {
+        newColumns = "0px " + dragbarWidth + " auto " + dragbarWidth + " 0px";
+      }
+    } 
+  }
   $('.all3pop').css("grid-template-columns", newColumns);
   av.grd.drawGridSetupFn(); 
 }
@@ -45,8 +66,22 @@ function resizePopulationPage() {
 function resizeOrganismPage() {
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('.dragbar').css("width");
-  var rightSideWidth = $('#rightInfoHolder').css("width");
-  var newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
+  var rightSideWidth = $('#orgInfoHolder').css("width");
+  var newColumns;
+  if (!IS_LEFT_COLLAPSED && !IS_RIGHT_COLLAPSED) {
+    newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
+  }
+  else {
+    if (IS_RIGHT_COLLAPSED) {
+      newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " 0px";
+    }
+    if (IS_LEFT_COLLAPSED) {
+      newColumns = "0px " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
+      if (IS_RIGHT_COLLAPSED) {
+        newColumns = "0px " + dragbarWidth + " auto " + dragbarWidth + " 0px";
+      }
+    } 
+  }
   $('.all3org').css("grid-template-columns", newColumns);
 }
 
@@ -428,7 +463,6 @@ av.anl.divSize = function (from) {
   av.anl.wd = av.dom.anaChrtHolder.getBoundingClientRect().width - 1;
   //av.dom.anaChrtHolder.style.height = av.anl.ht + 'px';
   av.anl.ht = av.dom.anaChrtHolder.clientHeight - 6;
-  console.log(av.dom.anaChrtHolder.getBoundingClientRect());
   av.dom.anlChrtSpace.style.height = av.anl.ht + 'px';
   av.dom.anlChrtSpace.style.width = av.anl.wd + 'px';
   av.anl.layout.height = av.anl.ht;
@@ -500,30 +534,26 @@ av.ptd.ritePanelBtnFn = function () {
 
     $('.all3pop').css("grid-template-columns", population_colInfo);
     $('.all3org').css("grid-template-columns", organism_colInfo);
-
-    /* make the following divs take up the entire width of their containers */
-    $('orgInfoHolder').css("width", "100%");
+    $('#orgInfoHolder').css("width", "0px");
+    $('#popInfoVert').css("width", "0px");
   }
   // if right is not collapsed
   else if (IS_RIGHT_COLLAPSED) {
     IS_RIGHT_COLLAPSED = false;
-
-    // open up the right sidebar
-    var widthOfRight = "400px";
 
     /* change the button's contents and look */
     $('#ritePanelButton').val('>> ');
     $('#ritePanelBUtton').css('background', 'inherit');
 
     /* when modifying the column sizes, need to modify all two layouts */
-    var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight;
-    var organism_colInfo = leftSideWidth + " 3px auto" + " 3px " + widthOfRight;
+    var population_colInfo = leftSideWidth + " 3px auto" + " 3px " + "440px";
+    var organism_colInfo = leftSideWidth + " 3px auto" + " 3px " + "220px";
 
     $('.all3pop').css("grid-template-columns", population_colInfo);
     $('.all3org').css("grid-template-columns", organism_colInfo);
-    
+    $('#orgInfoHolder').css("width", "220px");
+    $('#popInfoVert').css("width", "440px");
     /* make the following divs take up the entire width of their containers */
-    $('orgInfoHolder').css("width", "100%");
   }
 
   av.grd.drawGridSetupFn(); // redraw the grid
@@ -534,24 +564,29 @@ av.ptd.ritePanelBtnFn = function () {
 av.ptd.lftPanelBtnFn = function () {
   setTimeout(function() {}, 80);  
 
-  const rightSideWidth = $('#rightInfoHolder').css("width");
-
   /* if left is not collapsed */
   if (!IS_LEFT_COLLAPSED) {
     IS_LEFT_COLLAPSED = true;
 
     // collapse left
-    var widthOfNav = 0
+    var widthOfNav = "0px";
 
     /* change the button's contents and look */
     $('#leftPanelButton').val('>> ');
-    $('#leftPanelBUtton').css('background', '#ccc');
+    $('#leftPanelButton').css('background', '#ccc');
 
-    /* when modifying the column sizes, need to modify all three layouts */
-    var population_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
-    var organism_colInfo = widthOfNav + "px 3px " + "auto 3px " + rightSideWidth;
-    var analysis_colInfo = widthOfNav + "px 3px auto";
-
+    if (IS_RIGHT_COLLAPSED) {
+      /* when modifying the column sizes, need to modify all three layouts */
+      var population_colInfo = widthOfNav + " 3px " + "auto 3px " + "0px";
+      var organism_colInfo = widthOfNav + " 3px " + "auto 3px " + "0px";
+      var analysis_colInfo = widthOfNav + " 3px auto";
+    } else {
+      /* when modifying the column sizes, need to modify all three layouts */
+      var population_colInfo = widthOfNav + " 3px " + "auto 3px " + $('#popInfoVert').css("width");
+      var organism_colInfo = widthOfNav + " 3px " + "auto 3px " + $('#orgInfoHolder').css("width");
+      var analysis_colInfo = widthOfNav + " 3px auto";
+    }
+    
     $('.all2lft').css("grid-template-columns", analysis_colInfo); /* you need to resize again on the analysis page to resize it correctly */
     $('.all3pop').css("grid-template-columns", population_colInfo);
     $('.all3org').css("grid-template-columns", organism_colInfo);
@@ -570,10 +605,22 @@ av.ptd.lftPanelBtnFn = function () {
     $('#leftPanelButton').val('<< ');
     $('#leftPanelBUtton').css('background', 'inherit');
     
-    /* when modifying the column sizes, need to modify all three layouts */
-    var population_colInfo = widthOfNav + " 3px " + "auto 3px " + rightSideWidth;
-    var organism_colInfo = widthOfNav + " 3px " + "auto 3px " + rightSideWidth;
-    var analysis_colInfo = widthOfNav + " 3px auto";
+    var population_colInfo;
+    var organism_colInfo;
+    var analysis_colInfo;
+    
+    if (IS_RIGHT_COLLAPSED) {
+      /* when modifying the column sizes, need to modify all three layouts */
+      var population_colInfo = widthOfNav + " 3px " + "auto 3px " + "0px";
+      var organism_colInfo = widthOfNav + " 3px " + "auto 3px " + "0px";
+      var analysis_colInfo = widthOfNav + " 3px auto";
+    } else {
+      /* when modifying the column sizes, need to modify all three layouts */
+      var population_colInfo = widthOfNav + " 3px " + "auto 3px " + $('#popInfoVert').css("width");
+      var organism_colInfo = widthOfNav + " 3px " + "auto 3px " + $('#orgInfoHolder').css("width");
+      var analysis_colInfo = widthOfNav + " 3px auto";
+    }
+
     $('.all2lft').css("grid-template-columns", analysis_colInfo); /* yemi: you need to resize again on the analysis page to resize it correctly */
     $('.all3pop').css("grid-template-columns", population_colInfo);
     $('.all3org').css("grid-template-columns", organism_colInfo);

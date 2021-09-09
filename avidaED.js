@@ -812,7 +812,9 @@ require([
   };
 
   av.dom.newDishCancel.onclick = function () {
+    av.dnd.userDraggedNewConfig = false;
     av.dom.newDishModalID.style.display = 'none';
+    console.log("hadoop");
   };
 
   /******************************************* New Button and new Dialog **********************************************/
@@ -822,7 +824,14 @@ require([
     av.dom.newDishModalID.style.display = 'none';
     // only reset if this function was triggered because user clicked the 'new' button
     // there's one other way this function could be triggered, which is through dnd in dragulaDnd.js 'drop' function
-    av.msg.reset();
+    if (!av.dnd.userDraggedNewConfig) {
+      // if this is the case user dragged a new populated dish 
+      // and that's why this modal was triggered, 
+      // you want to replace the old dish with a new one, 
+      // in which case you don't want to reset
+      av.msg.reset(); 
+    }
+    av.dnd.userDraggedNewConfig = false;
     //console.log('newDishDiscard click');
   };
 
@@ -831,7 +840,14 @@ require([
     av.post.addUser('Button: newDishSaveWorld');
     av.ptd.FrPopulationFn();
     av.dom.newDishModalID.style.display = 'none';
-    av.msg.reset();
+    if (!av.dnd.userDraggedNewConfig) {
+      // if this is the case user dragged a new populated dish 
+      // and that's why this modal was triggered, 
+      // you want to replace the old dish with a new one, 
+      // in which case you don't want to reset
+      av.msg.reset(); 
+    }
+    av.dnd.userDraggedNewConfig = false;
     //console.log('newDishSaveWorld click');
   };
 
@@ -840,7 +856,14 @@ require([
     av.post.addUser('Button: newDishSaveConfig');
     av.ptd.FrConfigFn('av.dom.newDishSaveConfig.onclick');
     av.dom.newDishModalID.style.display = 'none';
-    av.msg.reset();
+    if (!av.dnd.userDraggedNewConfig) { 
+      // if this is the case user dragged a new config 
+      // and that's why this modal was triggered, 
+      // you want to replace the old config with a new one, 
+      // in which case you don't want to reset
+      av.msg.reset(); 
+    }
+    av.dnd.userDraggedNewConfig = false;
     //console.log('newDishSaveConfig click');
   };
 

@@ -707,12 +707,12 @@
 
       // var domid;
       if ('test' == av.msg.setupType) {
-        var domid = 'dom_g' + av.fzr.gNum;
+        var domid = 'dom_g' + av.fzr.gNum++;
         var type = 'g';
         var container = '#' + av.dnd.ancestorBoTest.id;
       }
       else {
-        var domid = 'dom_g' + av.fzr.gNum;
+        var domid = 'dom_g' + av.fzr.gNum++;
         var type = 'g';
         var container = '#' + av.dnd.ancestorBox.id;
       }
@@ -789,12 +789,12 @@
       av.parents.name.push(stuff.nam[kk]);
 
       if ('test' == av.msg.setupType) {
-        var domid = 'dom_g' + av.fzr.gNum; // might need to come back to it
+        var domid = 'dom_g' + av.fzr.gNum++; // might need to come back to it
         var type = 'g';
         var container = '#' + av.dnd.ancestorBoTest.id;
       }
       else {
-        var domid = 'dom_g' + av.fzr.gNum;
+        var domid = 'dom_g' + av.fzr.gNum++;
         var type = 'g';
         var container = '#' + av.dnd.ancestorBox.id;
       }
@@ -808,7 +808,6 @@
       }
       containerMap[container][domid] = {'name': stuff.nam[kk] , 'type': 'g'};
       av.parents.domid.push(domid); //domid in ancestorBox used to remove if square in grid moved to trashcan
-      av.fzr.gNum++;
 
       //Find color of ancestor
       if (0 < av.parents.Colors.length) { av.parents.color.push(av.parents.Colors.pop());}

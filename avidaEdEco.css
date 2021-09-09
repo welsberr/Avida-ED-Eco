@@ -187,7 +187,7 @@ html {
     max-height: 100vh;
     border: 1px solid #AAA;
     overflow: auto;
-    min-width: 200px;
+    min-width: 150px; /* used to be 200px */
   }
 
   .footerRow {
@@ -264,8 +264,8 @@ html {
     flex: 0 1 350px;
     height: 2.0rem; /* 2.5em */
     border: 1px solid #888;
-    overflow: auto;
-    resize: horizontal;
+    overflow: scroll;
+    /* resize: horizontal;*/
     max-width: fit-content;
   }
 
@@ -326,7 +326,7 @@ html {
   }
 
   #versionNumHolder{
-    /* flex: 0 0 130px; */
+    flex: 0 0 130px;
     padding-top: 5px;
     height: 25px;
   }
@@ -573,7 +573,7 @@ html {
   flex: auto;  /* yemi: changed from 1 to auto */   
   background: #F5F5F5; /* blue; */
   overflow:auto;
-  min-width: 20px;
+  /* min-width: 20px; */
   margin: 0px;
   padding: 3px;
   background: darkgrey;
@@ -1835,8 +1835,8 @@ checkbox:focus {
   }
   
   #orgMuteSlide {
-  width:150px;    /* was 150 */
-  /* height: 400px;  */  use for verticle slide
+  width: 150px; /* was 200px; */
+  /* height: 400px;  */  /* use for verticle slide */
   display: block; 
   vertical-align: top; 
   padding: 20px auto;

@@ -441,11 +441,10 @@
       //insert new item into the freezer.
       var type = 'g'
       var domid = `dom_${type}${av.fzr.gNum}`
-      $(container).append(`<div class="item ${type}" id="${domid}"> ${fzName} </div>`)
+      $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${fzName} </div>`)
       containerMap[container][domid] = {"name": fzName, "type": type};
       av.fzr.dir[domid] = 'g' + av.fzr.gNum;
-      av.fzr.domid['g' + av.fzr.gNum] = [];
-      av.fzr.domid['g' + av.fzr.gNum].push(domid);
+      av.fzr.domid['g' + av.fzr.gNum] = domid;
       av.fzr.file['g' + av.fzr.gNum + '/genome.seq'] = gene;
       av.fzr.file['g' + av.fzr.gNum + '/entryname.txt'] = fzName;
       av.fzr.gNum++;
@@ -467,11 +466,10 @@
       if (null != fzName) {
         var type = 'c'
         var domid = `dom_${type}${av.fzr.cNum}`
-        $(container).append(`<div class="item ${type}" id="${domid}"> ${fzName} </div>`)
+        $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-dish-icon.png' class='DishIcon'> ${fzName} </div>`)
         containerMap[container][domid] = {"name": fzName, "type": type};
         av.fzr.dir[domid] = 'c'+ av.fzr.cNum;
-        av.fzr.domid['c'+ av.fzr.cNum] = [];
-        av.fzr.domid['c'+ av.fzr.cNum].push(domid);
+        av.fzr.domid['c'+ av.fzr.cNum] = domid;
         av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = fzName;
         av.fwt.makeFzrConfig(av.fzr.cNum, 'av.ptd.FrConfigFn');
         av.fzr.cNum++;
@@ -489,16 +487,16 @@
     av.msg.sendData();
     var popName = av.fzr.actConfig.name + '@' + av.grd.popStatsMsg.update.formatNum(0);  // need update here star
     var fzName = prompt('Please name the new population', popName);
+    var container = av.dnd.fzWorld.id !== undefined ? "#" + av.dnd.fzWorld.id : "." + av.dnd.fzWorld.className;
     if (fzName) {
       fzName = av.dnd.getUniqueFzrName(av.dnd.fzWorld, fzName);
       if (null != fzName) {
         var type = 'w'
         var domid = `dom_${type}${av.fzr.wNum}`
-        $(container).append(`<div class="item ${type}" id="${domid}"> ${fzName} </div>`)
+        $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-dish-icon.png' class='DishIcon'> ${fzName} </div>`)
         containerMap[container][domid] = {"name": fzName, "type": type};
         av.fzr.dir[domid] = 'w'+ av.fzr.wNum;
-        av.fzr.domid['w'+ av.fzr.wNum] = [];
-        av.fzr.domid['w'+ av.fzr.wNum].push(domid);
+        av.fzr.domid['w'+ av.fzr.wNum] = domid;
         av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = fzName;
         av.fwt.makeFzrWorld(av.fzr.wNum, 'av.ptd.FrPopulationFn');
         av.fzr.wNum++;
