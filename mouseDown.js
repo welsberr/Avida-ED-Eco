@@ -92,8 +92,6 @@
 
   // if (av.dbg.flg.root) { console.log('Root: before av.mouse.downGridCanvasFn'); }
   av.mouse.downGridCanvasFn = function (evt) {
-    
-    
     document.body.style.cursor = 'copy';
     av.mouse.DnGridPos = [evt.offsetX, evt.offsetY];
     av.mouse.Dn = true;

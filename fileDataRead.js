@@ -720,8 +720,7 @@
       }
 
       // Add a DOM object
-      $(container).append(`<div class="item ${type}" id="${domid}"> ${rslt.nam[ii]} </div>`);
-
+      $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${rslt.nam[ii]} </div>`);
       // Add an entry to containerMap
       if (Object.keys(containerMap).indexOf(container) === -1) {
         containerMap[container] = {};
@@ -802,7 +801,7 @@
       }
 
       // Add a DOM object
-      $(container).append(`<div class="item ${type}" id="${domid}"> ${stuff.nam[kk]} </div>`);
+      $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${stuff.nam[kk]} </div>`);
 
       // Add an entry to containerMap
       if (Object.keys(containerMap).indexOf(container) === -1) {
@@ -866,7 +865,7 @@
       // var domid = av.dnd.insertNode(container, stuff.nam[kk], type);
 
       // Add a DOM object
-      $(container).append(`<div class="item ${type}" id="${domid}"> ${av.parents.name[ii]} </div>`);
+      $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${av.parents.name[ii]} </div>`);
 
       // Add an entry to containerMap
       if (Object.keys(containerMap).indexOf(container) === -1) {

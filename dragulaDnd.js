@@ -395,8 +395,12 @@ jQuery(document).ready(function($) {
     var oldName = el.textContent.trim();
     var sName = av.dnd.namefzrItem(target, oldName);
     var configurationName = prompt('Please name your dish configuration', sName);
-    // if a name is given
-    if (configurationName) {
+    if (configurationName === null) {
+      //cancelled so the item should NOT be added to the freezer.
+      dra.cancel();
+      return;
+    }
+    else {
       // confirm that it is a unique name
       var configName = av.dnd.getUniqueFzrName(target, configurationName);
       if (configName !== null) {
@@ -418,11 +422,10 @@ jQuery(document).ready(function($) {
         av.fzr.saveUpdateState('no');
         if (av.debug.dnd) console.log('dir', av.fzr.dir[domid], '; configName', configName );
       } else { //user cancelled so the item should NOT be added to the freezer.
-        // do nothing
+        dra.cancel();
+        return;
       }
-    } else { //user cancelled so the item should NOT be added to the freezer.
-      // do nothing
-    }
+    } 
   };
 
   //when an organism is added to the freezer
@@ -433,9 +436,14 @@ jQuery(document).ready(function($) {
     var oldName = el.textContent.trim();
     var sName = av.dnd.namefzrItem(target, oldName);
     var avidian = prompt('Please name your avidian', sName);
-    if (avidian) {
+    if (avidian === null) {
+      //cancelled so the item should NOT be added to the freezer.
+      dra.cancel();
+      return;
+    }
+    else {
       var avName = av.dnd.getUniqueFzrName(target, avidian);
-      if (null != avName) { //give dom item new avName name
+      if (null !== avName) { //give dom item new avName name
         av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent + '; --> ' + avName);
         av.dnd.insert(target, el, 'g');
         el.textContent = avName;
@@ -459,10 +467,9 @@ jQuery(document).ready(function($) {
       }
       else { //Not given a name, so it should NOT be added to the freezer.
         // do not do anything
+        dra.cancel();
+        return;
       }
-    }
-    else { //cancelled so the item should NOT be added to the freezer.
-      // do not do anything
     }
     if (av.debug.dnd) console.log('near end of av.dnd.landFzOrgan');
     if (source != av.dnd.ancestorBox) {
@@ -480,7 +487,12 @@ jQuery(document).ready(function($) {
     var oldName = el.textContent.trim() + '@' + av.grd.popStatsMsg.update.formatNum(0);
     var sName = av.dnd.namefzrItem(target, oldName);
     var worldName = prompt('Please name your populated dish', sName);
-    if (worldName) {
+    if (worldName === null) {
+      //cancelled so the item should NOT be added to the freezer.
+      dra.cancel();
+      return;
+    }
+    else {
       var nameWorld = av.dnd.getUniqueFzrName(target, worldName);
       if (nameWorld !== null) {
         av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent.trim() + ' --> ' + nameWorld);
@@ -497,9 +509,9 @@ jQuery(document).ready(function($) {
         av.fzr.wNum++;
       } else { //user cancelled so the item should NOT be added to the freezer.
         // do nothing
+        dra.cancel();
+        return;
       }
-    } else { //user cancelled so the item should NOT be added to the freezer.
-      // do nothing
     }
   };
 
