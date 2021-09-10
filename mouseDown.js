@@ -92,49 +92,7 @@
 
   // if (av.dbg.flg.root) { console.log('Root: before av.mouse.downGridCanvasFn'); }
   av.mouse.downGridCanvasFn = function (evt) {
-    var mouseDown = false;
-    $(document).mousedown(() => { mouseDown = true;}).mouseup(() => {mouseDown = false;});
-    $(av.dnd.activeConfig).hover(
-      () => {
-        if (mouseDown) {
-          document.body.style.cursor = 'no-drop';
-        }
-      }, 
-      () => {
-        if (mouseDown) {
-          document.body.style.cursor = 'copy';
-        } else {
-          document.body.style.cursor = 'default';
-        }
-      });
-    $(av.dnd.ancestorBox).hover(
-      () => {
-        if (mouseDown) {
-          document.body.style.cursor = 'no-drop';
-        }
-      }, 
-      () => {
-        if (mouseDown) {
-          document.body.style.cursor = 'copy';
-        } else {
-          document.body.style.cursor = 'default';
-        }
-      });
-    $(av.dnd.trashCan).hover(
-      () => {
-        if (mouseDown) {
-          if (av.grd.runState === "started") {
-            document.body.style.cursor = 'no-drop';
-          }
-        }
-      }, 
-      () => {
-        if (mouseDown) {
-          document.body.style.cursor = 'copy';
-        } else {
-          document.body.style.cursor = 'default';
-        }
-      });
+    
     
     document.body.style.cursor = 'copy';
     av.mouse.DnGridPos = [evt.offsetX, evt.offsetY];
