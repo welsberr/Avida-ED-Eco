@@ -51,6 +51,7 @@ jQuery(document).ready(function($) {
   var dragging = false;
   var sourceIsFzOrgan = false;
   var sourceIsFzWorld = false;
+  var sourceIsFzConfig = false;
   var sourceIsAncestorBox = false;
   var elForGrid = '';
   // variable to keep the most recently added domid
@@ -95,37 +96,51 @@ jQuery(document).ready(function($) {
     if (source === av.dnd.anlDndChart) { // prevent dragging from analysis chart
       return false;
     }
-    else {
-      if (target === source) {
-        return true;
-      }
-      if ((source === av.dnd.ancestorBox) && (target === av.dnd.fzOrgan || target === av.dnd.organIcon || target === av.dnd.gridCanvas)) {
-        return true;
-      }
-      if (source === av.dnd.activeConfig && (target === av.dnd.fzConfig || target === av.dnd.fzWorld)) {
-        return true;
-      }
-      if (source === av.dnd.activeOrgan && (target === av.dnd.fzOrgan || target === av.dnd.organIcon || target === av.dnd.organCanvas)) {
-        return true;
-      }
-      if ((source === av.dnd.fzConfig || source === av.dnd.fzWorld) && target === av.dnd.activeConfig) {
-        return true;
-      }
-      if (source === av.dnd.fzWorld && (target === av.dnd.gridCanvas || target === av.dnd.anlDndChart || target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2)) {
-        return true;
-      }
-      if (source === av.dnd.fzOrgan && (target === av.dnd.activeOrgan || target === av.dnd.organCanvas || target === av.dnd.organIcon || target === av.dnd.gridCanvas || target === av.dnd.ancestorBox || target === av.dnd.ancestorBoTest)) {
-        return true;
-      }
-      if (source === av.dnd.fzTdish && target === av.dnd.testConfig) {
-        return true;
-      } 
-      if (target === av.dnd.trashCan) {
-        return true;
-      }
-      else {
+    if (target === source) {
+      return true;
+    }
+    if (source === av.dnd.ancestorBox) {
+      if (av.grd.runState === "started") {
         return false;
+      } else if (target === av.dnd.activeConfig) {
+        return false;
+      } else {
+        return true;
       }
+    } 
+    if (source === av.dnd.activeConfig) {
+      if (av.grd.runState != "started" && target === av.dnd.fzWorld) {
+        return false;
+      } else if (target === av.dnd.fzConfig || target === av.dnd.fzWorld) {
+        return true;
+      }
+    }
+    if (source === av.dnd.activeOrgan && (target === av.dnd.fzOrgan || target === av.dnd.organIcon || target === av.dnd.organCanvas)) {
+      return true;
+    }
+    if (source === av.dnd.fzConfig && (target === av.dnd.activeConfig || target === av.dnd.gridCanvas)) {
+      return true;
+    }
+    if (source === av.dnd.fzWorld && (target === av.dnd.activeConfig || target === av.dnd.gridCanvas || target === av.dnd.anlDndChart || target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2)) {
+      return true;
+    }
+    if (source === av.dnd.fzOrgan) {
+      if (av.grd.runState === "started" && (target === av.dnd.gridCanvas || target === av.dnd.ancestorBox)) {
+        return false;
+      } else if (target === av.dnd.activeConfig) {
+        return false;
+      } else {
+        return true;
+      }
+    } 
+    if (source === av.dnd.fzTdish && target === av.dnd.testConfig) {
+      return true;
+    } 
+    if (target === av.dnd.trashCan) {
+      return true;
+    }
+    else {
+      return false;
     }
   }
 
@@ -145,7 +160,12 @@ jQuery(document).ready(function($) {
       sourceIsFzWorld = true;
     } else sourceIsFzWorld = false;
 
+    if (source === av.dnd.fzConfig) {
+      sourceIsFzConfig = true;
+    } else sourceIsFzConfig = false;
+
     if (source === av.dnd.ancestorBox) {
+      console.log("ancestor");
       sourceIsAncestorBox = true;
     } else sourceIsAncestorBox = false;
 
@@ -180,15 +200,14 @@ jQuery(document).ready(function($) {
       dra.cancel();
       return;
     }
+
     // el, target, source are dom objects aka things you could 'target.id' to
     // if the experiment has already started and user is trying to run a new experiment, show the newDishModal, which prompts user to save
-    if (av.grd.runState === 'started' && (target === av.dnd.gridCanvas || target === av.dnd.activeConfig || target === av.dnd.ancestorBox || target === av.dnd.trashCan)) {
+    if (av.grd.runState === 'started' && (source === av.dnd.fzConfig || source === av.dnd.fzWorld) && (target === av.dnd.gridCanvas || target === av.dnd.activeConfig)) {
       av.dnd.userDraggedNewConfig = true;
       av.dom.newDishModalID.style.display = 'block'; // show the 'please save' modal
-      console.log(target);
       av.dom.newDishCancel.onclick = function () {
         av.dom.newDishModalID.style.display = 'none';
-        console.log(target, el);
         dra.cancel();
         av.dnd.remove(target, el);
         return;
@@ -197,25 +216,26 @@ jQuery(document).ready(function($) {
       av.dom.newDishDiscard.onclick = function () {
         av.post.addUser('Button: newDishDiscard');
         av.dom.newDishModalID.style.display = 'none';
-        av.dnd.landActiveConfig(el, target, source);
-        // only reset if this function was triggered because user clicked the 'new' button
-        // there's one other way this function could be triggered, which is through dnd in dragulaDnd.js 'drop' function
+        if ((source === av.dnd.fzWorld || source === av.dnd.fzConfig) && target === av.dnd.gridCanvas) { 
+          av.dnd.landActiveConfig(el, av.dnd.activeConfig, source);
+        } 
+        else if ((source === av.dnd.fzWorld || source === av.dnd.fzConfig) && target === av.dnd.activeConfig) {
+          av.dnd.landActiveConfig(el, target, source);
+        }
       };
-    
-      // av.dom.newDishSaveConfig not in avidaEdEco.html
+
       av.dom.newDishSaveWorld.onclick = function () {
         av.post.addUser('Button: newDishSaveWorld');
         av.ptd.FrPopulationFn();
         av.dom.newDishModalID.style.display = 'none';
-        av.dnd.landActiveConfig(el, target, source);
+        av.dnd.landActiveConfig(el, av.dnd.activeConfig, source);
       };
     
-      av.dom.newDishSaveConfig.onclick = function (domObj) {
-        console.log('in av.dom.newDishSaveConfig, domObj = ', domObj);
+      av.dom.newDishSaveConfig.onclick = function () {
         av.post.addUser('Button: newDishSaveConfig');
         av.ptd.FrConfigFn('av.dom.newDishSaveConfig.onclick');
         av.dom.newDishModalID.style.display = 'none';
-        av.dnd.landActiveConfig(el, target, source);
+        av.dnd.landActiveConfig(el, av.dnd.activeConfig, source);
       };
     } 
     else {
@@ -302,7 +322,7 @@ jQuery(document).ready(function($) {
         // the below convoluted method is necessary to see which elements are below the mouse cursor at this moment
         var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
         // if gridCanvas is behind this mouse point
-        if (elements.indexOf("gridCanvas") != -1) {
+        if (elements.indexOf("gridCanvas") != -1 && av.grd.runState != 'started') {
           if (sourceIsFzOrgan) { 
             av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, av.dnd.fzOrgan);
             av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
@@ -310,7 +330,11 @@ jQuery(document).ready(function($) {
           else if (sourceIsFzWorld) {
             av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, av.dnd.fzWorld);
           }
+          else if (sourceIsFzConfig) {
+            av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, av.dnd.fzConfig);
+          }
           else if (sourceIsAncestorBox) {
+            console.log("hehe");
             av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, av.dnd.ancestorBox);
             av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
           }
@@ -380,7 +404,6 @@ jQuery(document).ready(function($) {
         el.textContent = configName;
         // Add an entry to containerMap
         av.dnd.insert(target, el, 'c');
-        console.log(containerMap);
         // insert a new directory into the freezer
         av.fzr.dir[el.id] = 'c'+ av.fzr.cNum;
         // insert a new domid into the freezer
@@ -921,23 +944,20 @@ jQuery(document).ready(function($) {
     var kk = 0;
     var str = '';
     // get the data for the dragged element
+    // need to make a clone, so as to now modify the original
+    el = el.cloneNode(true);
     var dir = av.fzr.dir[el.id];
     // give a new id to the new dom object depending on the type
     var classList = el.className.split(" ");
-    if (classList.indexOf('c') != -1) el.id = 'dom_c' + av.fzr.cNum++;
-    else if (classList.indexOf('w') != -1) el.id = 'dom_w' + av.fzr.wNum++;
-    else el.id = 'dom_t' + av.fzr.tNum++;
+    if (classList.indexOf('c') != -1 || source == av.dnd.fzConfig) el.id = 'dom_c' + av.fzr.cNum++;
+    else if (classList.indexOf('w') != -1 || source == av.dnd.fzWorld) el.id = 'dom_w' + av.fzr.wNum++;
+    else if (classList.indexOf('t') != -1 || source == av.dnd.fzTdish) el.id = 'dom_t' + av.fzr.tNum++;
 
     mostRecentlyAddedDomid = el.id;
     // remove the existing configuration
     av.dnd.empty(target);
-    // for some reason, the item that gets appended has 'gu-transit' on it, which means it's an element that is still in transit, which makes it looke grayed out.
-    // so splice it out
-    var idx = el.className.split(" ").indexOf('gu-transit');
-    var newlist = el.className.split(" ");
-    newlist.splice(idx, 1);
-    el.className = newlist.join(' ');
     // insert element into target DOM
+    console.log(el);
     av.dnd.insertToDOM(target, el);
     // update active config
     av.fzr.actConfig.actDomid = el.id;
@@ -1260,7 +1280,7 @@ jQuery(document).ready(function($) {
       }
     } 
     document.querySelector(container).removeChild(node_to_be_removed);
-    delete containerMap[container][el.id];
+    try { delete containerMap[container][el.id];} catch { console.log("delete failed");}
   };
 
   // insert an element into target container

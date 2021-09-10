@@ -1046,10 +1046,12 @@ av.msg.fillColorBlock = function (msg, from) {
     }
     else {
       console.log('Gradient mode,  null = fill: bkColor=', bkcolor);
-      if ('-' != av.grd.msg.ancestor.data[av.grd.selectedNdx]) { 
-        bkcolor = '#888';
-      console.log('Gradient mode,  null = fill, - = ancestor.data: bkColor=', bkcolor);
-      }
+      try {
+        if ('-' != av.grd.msg.ancestor.data[av.grd.selectedNdx]) { 
+          bkcolor = '#888';
+        console.log('Gradient mode,  null = fill, - = ancestor.data: bkColor=', bkcolor);
+        }
+      } catch (e){ console.error(e, e.stack);} // buggy
     }
   } 
 

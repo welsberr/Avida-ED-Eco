@@ -814,7 +814,6 @@ require([
   av.dom.newDishCancel.onclick = function () {
     av.dnd.userDraggedNewConfig = false;
     av.dom.newDishModalID.style.display = 'none';
-    console.log("hadoop");
   };
 
   /******************************************* New Button and new Dialog **********************************************/
