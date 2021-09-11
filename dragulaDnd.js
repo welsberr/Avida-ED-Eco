@@ -322,7 +322,7 @@ jQuery(document).ready(function($) {
         // the below convoluted method is necessary to see which elements are below the mouse cursor at this moment
         var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
         // if gridCanvas is behind this mouse point
-        if (elements.indexOf("gridCanvas") != -1 && av.grd.runState != 'started') {
+        if (elements.indexOf("gridCanvas") != -1 && av.grd.runState !== 'started') {
           if (sourceIsFzOrgan) { 
             av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, av.dnd.fzOrgan);
             av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
@@ -550,15 +550,22 @@ jQuery(document).ready(function($) {
       var addedPopPage = false;
       var addedAnaPage = false;
       if ('fzOrgan' == fzSection && 'ancestorBox' == targetId) { 
-        addedPopPage = av.dnd.landAncestorBox(el, target, source); 
-      }
-      else if ('fzOrgan' == fzSection && 'activeOrgan' == targetId) { 
+        if (av.grd.runState === "started") {
+          alert("Can't add a new organism to a running experiment. Start a new experiment to continue.");
+        } else {
+          addedPopPage = av.dnd.landAncestorBox(el, target, source); 
+        }
+        
+      } else if (('fzConfig' == fzSection || 'fzWorld' == fzSection) && 'activeConfig' == targetId) { 
+        if (av.grd.runState === "started") {
+          alert("Can't add a new configuration to a running experiment. Start a new experiment to continue.");
+        } else {
+          addedPopPage = av.dnd.landActiveConfig(el, target, source);
+        }
+        
+      } else if ('fzOrgan' == fzSection && 'activeOrgan' == targetId) { 
         addedPopPage = av.dnd.landActiveOrgan(el, target, source); 
-      }
-      else if (('fzConfig' == fzSection || 'fzWorld' == fzSection) && 'activeConfig' == targetId) { 
-        addedPopPage = av.dnd.landActiveConfig(el, target, source);
-      }
-      else if ('anlDndChart' == targetId && 'fzWorld' == fzSection) {
+      } else if ('anlDndChart' == targetId && 'fzWorld' == fzSection) {
         addedAnaPage = av.dnd.landAnlDndChart(el, target, source);
       }
   
@@ -1288,10 +1295,11 @@ jQuery(document).ready(function($) {
       // from which you're trying to remove it
       if (document.querySelectorAll("#" + el.id)[i].parentNode === target) {
         node_to_be_removed = document.querySelectorAll("#" + el.id)[i];
+        document.querySelector(container).removeChild(node_to_be_removed);
         break;
-      }
+      } 
     } 
-    document.querySelector(container).removeChild(node_to_be_removed);
+    
     try { delete containerMap[container][el.id];} catch { console.log("delete failed");}
   };
 
