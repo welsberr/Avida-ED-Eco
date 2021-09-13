@@ -96,17 +96,20 @@ jQuery(document).ready(function($) {
     if (source === av.dnd.anlDndChart) { // prevent dragging from analysis chart
       return false;
     }
+    if (source === av.dnd.popDish0 || source === av.dnd.popDish1 || source === av.dnd.popDish2) {
+      return false;
+    }
     if (target === source) {
       return true;
     }
     if (source === av.dnd.ancestorBox) {
-      if (av.grd.runState === "started") {
+      if (av.grd.runState === "started" && (target === av.dnd.trashCan || target === av.dnd.gridCanvas)) {
         return false;
-      } else if (target === av.dnd.activeConfig) {
+      } 
+      if (target === av.dnd.activeConfig) {
         return false;
-      } else {
-        return true;
       }
+      return true;
     } 
     if (source === av.dnd.activeConfig) {
       if (av.grd.runState != "started" && target === av.dnd.fzWorld) {
@@ -127,21 +130,25 @@ jQuery(document).ready(function($) {
     if (source === av.dnd.fzOrgan) {
       if (av.grd.runState === "started" && (target === av.dnd.gridCanvas || target === av.dnd.ancestorBox)) {
         return false;
-      } else if (target === av.dnd.activeConfig) {
+      } 
+      else if (target === av.dnd.anlDndChart || target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2) {
         return false;
-      } else {
-        return true;
       }
+      else if (target === av.dnd.organCanvas || target === av.dnd.organIcon || target === av.dnd.gridCanvas || av.dnd.ancestorBox) {
+        return true;
+      } 
     } 
     if (source === av.dnd.fzTdish && target === av.dnd.testConfig) {
       return true;
     } 
     if (target === av.dnd.trashCan) {
+      if (source === av.dnd.activeOrgan || source === av.dnd.organCanvas) { // according to avida ed 3, unable to delete from activeOrgan or organCanvas
+        return false;
+      }
       return true;
     }
-    else {
-      return false;
-    }
+    
+    return false;
   }
 
   /*
@@ -165,7 +172,6 @@ jQuery(document).ready(function($) {
     } else sourceIsFzConfig = false;
 
     if (source === av.dnd.ancestorBox) {
-      console.log("ancestor");
       sourceIsAncestorBox = true;
     } else sourceIsAncestorBox = false;
 
@@ -268,13 +274,6 @@ jQuery(document).ready(function($) {
         av.dnd.landFzWorld(el, target, source);
       }
       if (target === av.dnd.fzOrgan) {
-        if (source === av.dnd.ancestorBox) {
-          var idx = el.className.split(" ").indexOf('gu-transit');
-          var newlist = el.className.split(" ");
-          newlist.splice(idx, 1);
-          el.className = newlist.join(' ');
-          av.dnd.insertToDOM(av.dnd.ancestorBox, el); // you don't want to remove the organism from the box, want to copy; by default dragula will remove 
-        }
         av.dnd.landFzOrgan(el, target, source); // not getting called
       }
       if (target === av.dnd.organIcon) {
@@ -334,7 +333,6 @@ jQuery(document).ready(function($) {
             av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, av.dnd.fzConfig);
           }
           else if (sourceIsAncestorBox) {
-            console.log("hehe");
             av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, av.dnd.ancestorBox);
             av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
           }
@@ -527,13 +525,13 @@ jQuery(document).ready(function($) {
     if (undefined !== av.dnd.selectedId && '' !== av.dnd.selectedId) {
       var classList = document.getElementById(av.dnd.selectedId).className.split(" ");
       // if the selected is a genome and the user misclicked something other than 'add this organism to the experiment'
-      if (classList.indexOf('g') != -1 && av.dnd.clickedMenu != "addOrgan") {
+      if (classList.indexOf('g') != -1 && av.dnd.clickedMenu != "addOrgan" && av.dnd.clickedMenu != "addToGenomeView") {
         $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
         av.dnd.selectedId = '';
         return;
       }  
       // if the selected is a populated dish and the user misclicked something other than 'add this populated dish to the experiment'
-      if (classList.indexOf('w') != -1 && av.dnd.clickedMenu != "addPop") {
+      if (classList.indexOf('w') != -1 && av.dnd.clickedMenu != "addPop" && av.dnd.clickedMenu != "addToAnalysisView") {
         $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
         av.dnd.selectedId = '';
         return;
@@ -558,13 +556,23 @@ jQuery(document).ready(function($) {
         
       } else if (('fzConfig' == fzSection || 'fzWorld' == fzSection) && 'activeConfig' == targetId) { 
         if (av.grd.runState === "started") {
-          alert("Can't add a new configuration to a running experiment. Start a new experiment to continue.");
+          if ('fzConfig' == fzSection) {
+            alert("Can't add a new configuration to a running experiment. Start a new experiment to continue.");
+          }
+          else if ('fzWorld' == fzSection) {
+            alert("Can't add a new populated dish to a running experiment. Start a new experiment to continue.");
+          }
         } else {
           addedPopPage = av.dnd.landActiveConfig(el, target, source);
         }
         
       } else if ('fzOrgan' == fzSection && 'activeOrgan' == targetId) { 
-        addedPopPage = av.dnd.landActiveOrgan(el, target, source); 
+        if (av.dnd.clickedMenu === "addOrgan") {
+          if (source === av.dnd.fzOrgan) {
+            addedPopPage = av.dnd.landActiveOrgan(el, target, source); 
+          } 
+        }
+        
       } else if ('anlDndChart' == targetId && 'fzWorld' == fzSection) {
         addedAnaPage = av.dnd.landAnlDndChart(el, target, source);
       }
@@ -797,7 +805,7 @@ jQuery(document).ready(function($) {
     var offsetYLocal = ($("#gridHolder").height() - av.dom.gridCanvas.height) / 2;
     var widthOfNav = parseInt($('#navColId').css('width'));
     var heightOfTop = parseInt($('#popTopRw').css('height')) + parseInt($('#headerMain').css('height'));
-    var mouseX = av.mouse.UpGridPos[0] - av.grd.marginX - av.grd.xOffset - offsetXLocal - widthOfNav - 5; // yemi: hardcoded 5; works for now
+    var mouseX = av.mouse.UpGridPos[0] - av.grd.marginX - av.grd.xOffset - offsetXLocal - widthOfNav; -5 // yemi: hardcoded 5; works for now
     var mouseY = av.mouse.UpGridPos[1] - av.grd.marginY - av.grd.yOffset - offsetYLocal - heightOfTop - 5;
     if (av.debug.dnd) console.log('mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
     if (av.debug.dnd) console.log('mouseX, y', mouseX, mouseY);
@@ -966,6 +974,7 @@ jQuery(document).ready(function($) {
     // need to make a clone, so as to now modify the original
     el = el.cloneNode(true);
     var dir = av.fzr.dir[el.id];
+    console.log(dir);
     // give a new id to the new dom object depending on the type
     var classList = el.className.split(" ");
     if (classList.indexOf('c') != -1 || source == av.dnd.fzConfig) el.id = 'dom_c' + av.fzr.cNum++;
@@ -1103,6 +1112,17 @@ jQuery(document).ready(function($) {
     av.dnd.landActiveConfig(el, av.dnd.activeConfig, av.dnd.fzConfig);
   };
 
+  av.dnd.loadConfigByName = function (name) {
+    configs = $('#fzConfig').children();
+    console.log(configs);
+    for (var i = 0; i < configs.length; i++) {
+      if (configs[i].outerText.trim() === name) {
+        console.log(configs[i]);
+        av.dnd.landActiveConfig(configs[i].cloneNode(true), av.dnd.activeConfig, av.dnd.fzConfig);
+      }
+    }
+  }
+
   // when a test dish is added to the test config box
   av.dnd.landTestConfig = (el, target, source) => {
     'use strict';
@@ -1125,59 +1145,71 @@ jQuery(document).ready(function($) {
     if (av.debug.dnd) console.log('in av.dnd.landTrashCan');
     var elName = el.textContent.trim();
     if (elName === '@ancestor' || elName === '@default' || elName === '@example') {
-      alert(`You cannot delete ${elName} because it is a reserve item.`);
-      dra.cancel();
-    } else {
-      var sure = confirm(`Are you sure you want to delete ${elName}?`);
-      if (sure) {
-        // if the item is from the freezer, delete from freezer unless it is original stock (@)
-        if (av.dnd.fzOrgan === source && '@ancestor' !== elName) {
-          if (av.debug.dnd) {console.log('fzOrgan->trash', av.fzr.genome);}
-          remove.domid = el.id;
-          remove.type = 'g';
-          // remove the dom object
-          el.remove();       
-          // remove the object from source containerMap
-          av.dnd.remove(source, el);
-          av.fzr.saveUpdateState('no');
-        }
-        else if (av.dnd.fzConfig === source && '@default' !== elName) {
-          remove.domid = el.id;
-          remove.type = 'g';
-          // remove the dom object
-          el.remove();       
-          // remove the object from source containerMap
-          av.dnd.remove(source, el);
-          av.fzr.saveUpdateState('no');
-        }
-        else if (av.dnd.fzWorld === source && '@example' !== elName) {
-          remove.domid = el.id;
-          remove.type = 'w';
-          // remove the dom object
-          el.remove();       
-          // remove the object from source containerMap
-          av.dnd.remove(source, el);
-          av.fzr.saveUpdateState('no');
-        } 
-        else if (av.dnd.ancestorBox === source) {
-          remove.domid = el.id;
-          remove.type = 'g';
-          // remove the dom object
-          el.remove();       
-          // remove the object from source containerMap
-          av.dnd.remove(source, el);
-          av.fzr.saveUpdateState('no');
-          var index = av.parents.domid.indexOf(el.id);
-          // remove parent
-          av.parents.removeParent(index);
-          console.log(av.parents);
-          // draw an updated grid
-          av.grd.drawGridUpdate();
-        }
+      if (elName === '@ancestor' && source === av.dnd.fzOrgan) {
+        alert(`You cannot delete ${elName} because it is a reserve item.`);
+        dra.cancel();
+        return;
+      }
+      else if (elName === '@default' && source === av.dnd.fzConfig) {
+        alert(`You cannot delete ${elName} because it is a reserve item.`);
+        dra.cancel();
+        return;
+      }
+      else if (elName === '@example' && source === av.dnd.fzWorld) {
+        alert(`You cannot delete ${elName} because it is a reserve item.`);
+        dra.cancel();
+        return;
+      }
+    } 
+    var sure = confirm(`Are you sure you want to delete ${elName}?`);
+    if (sure) {
+      // if the item is from the freezer, delete from freezer unless it is original stock (@)
+      if (av.dnd.fzOrgan === source && '@ancestor' !== elName) {
+        if (av.debug.dnd) {console.log('fzOrgan->trash', av.fzr.genome);}
+        remove.domid = el.id;
+        remove.type = 'g';
+        // remove the dom object
+        el.remove();       
+        // remove the object from source containerMap
+        av.dnd.remove(source, el);
+        av.fzr.saveUpdateState('no');
+      }
+      else if (av.dnd.fzConfig === source && '@default' !== elName) {
+        remove.domid = el.id;
+        remove.type = 'g';
+        // remove the dom object
+        el.remove();       
+        // remove the object from source containerMap
+        av.dnd.remove(source, el);
+        av.fzr.saveUpdateState('no');
+      }
+      else if (av.dnd.fzWorld === source && '@example' !== elName) {
+        remove.domid = el.id;
+        remove.type = 'w';
+        // remove the dom object
+        el.remove();       
+        // remove the object from source containerMap
+        av.dnd.remove(source, el);
+        av.fzr.saveUpdateState('no');
+      } 
+      else if (av.dnd.ancestorBox === source) {
+        // remove the dom object
+        el.remove();       
+        // remove the object from source containerMap
+        av.dnd.remove(source, el);
+        av.fzr.saveUpdateState('no');
+        var index = av.parents.domid.indexOf(el.id);
+        // remove parent
+        av.parents.removeParent(index);
+        console.log(av.parents);
+        // draw an updated grid
+        av.grd.drawGridUpdate();
+      }
+      else if (av.dnd.gridCanvas === source) {
+        // taken care of in avidaED.js under mouse drag and drop
       }
     }
-    
-    if ('' !== remove.type) {
+    if ((source === av.dnd.fzConfig || av.dnd.fzOrgan || av.dnd.fzWorld) && '' !== remove.type) {
       remove.dir = av.fzr.dir[remove.domid];
       av.fwt.removeFzrItem(remove.dir, remove.type);
     }

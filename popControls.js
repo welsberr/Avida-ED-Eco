@@ -122,6 +122,13 @@
   
   av.ptd.popNewExState = function () {
     'use strict';
+    if (av.fzr.actConfig.name != '@default') {
+      console.log('here');
+      av.dnd.loadConfigByName(av.fzr.actConfig.name);
+      return;
+    } else {
+      av.dnd.loadDefaultConfigFn(); 
+    }
     //set configuation to default
     var fname = '@default';
 
@@ -292,6 +299,7 @@
     av.grd.flagSelected = false;
     dijit.byId('mnCnOrganismTrace').attr('disabled', true);
     dijit.byId('mnFzOrganism').attr('disabled', true);
+
   };
 
   //after Run button pushed for population
@@ -428,7 +436,7 @@
     }
     else if ('offspring' == trigger) {
       //get name from parent
-      parentName = av.dnd.activeOrgan.textContent; 
+      parentName = av.dnd.activeOrgan.textContent.trim(); 
       fzName = prompt('Please name the offspring', parentName + '_offspring');
       gene = '0,heads_default,' + av.ind.dna[1];
     }
@@ -604,33 +612,33 @@
     dijit.byId('mnFzOrganism').attr('disabled', true);
     //Enable the options on the Setup page
     av.ptd.popNewExState();
-    //Clear grid settings
-    av.parents.clearParentsFn();
-    // reset values in population settings based on a 'file' @default
-    av.fzr.actConfig.file = {};
-    // write if @default not found - need to figure out a test for this
-    // av.ptd.writeHardDefault(av);
-    av.fzr.actConfig.dir = 'c0';
-    av.fzr.actConfig.file['events.cfg'] = ' ';
-    if (av.fzr.actConfig.file['clade.ssg']) {delete av.fzr.actConfig.file['clade.ssg'];}
-    if (av.fzr.actConfig.file['detail.spop']) {delete av.fzr.actConfig.file['detail.spop'];}
-    if (av.fzr.actConfig.file['update']) {delete av.fzr.actConfig.file['update'];}
-    if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt']) {
-      str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt'];
-      av.fio.autoAncestorLoad(str);
-    }
-    if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt']) {
-      str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt'];
-      av.fio.handAncestorLoad(str);
-    }
+    // //Clear grid settings
+    // av.parents.clearParentsFn();
+    // // reset values in population settings based on a 'file' @default
+    // av.fzr.actConfig.file = {};
+    // // write if @default not found - need to figure out a test for this
+    // // av.ptd.writeHardDefault(av);
+    // av.fzr.actConfig.dir = 'c0';
+    // av.fzr.actConfig.file['events.cfg'] = ' ';
+    // if (av.fzr.actConfig.file['clade.ssg']) {delete av.fzr.actConfig.file['clade.ssg'];}
+    // if (av.fzr.actConfig.file['detail.spop']) {delete av.fzr.actConfig.file['detail.spop'];}
+    // if (av.fzr.actConfig.file['update']) {delete av.fzr.actConfig.file['update'];}
+    // if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt']) {
+    //   str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt'];
+    //   av.fio.autoAncestorLoad(str);
+    // }
+    // if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt']) {
+    //   str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt'];
+    //   av.fio.handAncestorLoad(str);
+    // }
 
-    av.frd.updateSetup('av.ptd.resetDishFn');
+    // av.frd.updateSetup('av.ptd.resetDishFn');
 
     if (av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg']) {av.fzr.actConfig.file['instset.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg'];}
 
-      //Clear options that are not in the config files
-      av.dom.autoPauseCheck.checked = false;
-      av.dom.autoPauseNum.value = av.ptd.autoPauseUpdate;
+    //Clear options that are not in the config files
+    av.dom.autoPauseCheck.checked = false;
+    av.dom.autoPauseNum.value = av.ptd.autoPauseUpdate;
 
     av.ptd.clearLogicButtons();
     //console.log('fzr.activeCon', av.fzr.actConfig);

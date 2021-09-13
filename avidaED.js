@@ -392,7 +392,7 @@ require([
         av.ind.organismCanvasHolderSize('mouseup_organIcon_Kid');
         av.ui.adjustOrgInstructionTextAreaSize();
         av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-      }
+      } 
     }
     av.mouse.Picked = '';
   });
@@ -874,6 +874,7 @@ require([
       // you want to replace the old dish with a new one, 
       // in which case you don't want to reset
       av.msg.reset(); 
+      av.dnd.loadConfigByName(av.fzr.actConfig.name); // reload the current active config
     }
     av.dnd.userDraggedNewConfig = false;
     //console.log('newDishDiscard click');
@@ -890,6 +891,7 @@ require([
       // you want to replace the old dish with a new one, 
       // in which case you don't want to reset
       av.msg.reset(); 
+      av.dnd.loadConfigByName(av.fzr.actConfig.name); // reload the current active config
     }
     av.dnd.userDraggedNewConfig = false;
     //console.log('newDishSaveWorld click');
@@ -906,6 +908,7 @@ require([
       // you want to replace the old config with a new one, 
       // in which case you don't want to reset
       av.msg.reset(); 
+      av.dnd.loadConfigByName(av.fzr.actConfig.name); // reload the current active config
     }
     av.dnd.userDraggedNewConfig = false;
     //console.log('newDishSaveConfig click');
@@ -915,6 +918,7 @@ require([
     'use strict';
     if ('prepping' == av.grd.runState) {// reset petri dish
       av.msg.reset();
+      av.dnd.loadConfigByName(av.fzr.actConfig.name); // reload the current active config
       console.log('in prepping');
       //av.ptd.resetDishFn(true); //Only do when get reset back from avida after sending reset, commented out in v3.0
     } else {// check to see about saving current population
@@ -1034,6 +1038,7 @@ require([
   //Buttons on drop down menu to put an organism in Organism Viewer
   dijit.byId('mnFzAddGenomeView').on('Click', function () {
     av.post.addUser('Button: mnFzAddGenomeEx');
+    av.dnd.clickedMenu = "addToGenomeView";
     av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.activeOrgan, 'g');
     av.ui.mainBoxSwap('organismBlock');
     av.ind.organismCanvasHolderSize('mnFzAddGenomeView');
@@ -1043,6 +1048,7 @@ require([
 
   //Buttons on drop down menu to add Populated Dish to Analysis
   dijit.byId('mnFzAddPopAnalysis').on('Click', function () {
+    av.dnd.clickedMenu = "addToAnalysisView";
     av.post.addUser('Button: mnFzAddPopEx');
     av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.anlDndChart, 'w');
     av.ui.mainBoxSwap('analysisBlock');

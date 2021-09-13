@@ -220,7 +220,7 @@
     if (Object.keys(containerMap).indexOf(container) === -1) {
       containerMap[container] = {};
     }
-    var domid = 'dom_g' + av.fzr.gNum;
+    var domid = 'dom_g' + av.fzr.gNum++;
     var type = 'g';
     $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${av.grd.kidName} </div>`);
     containerMap[container][domid] = {'name': av.grd.kidName , 'type': 'g'};
