@@ -315,8 +315,6 @@
   av.frd.updateSetup = function(from) {
     'use strict';
     var dir = av.fzr.actConfig.dir;
-    console.log(dir);
-    console.log(av.fzr);
     // av.dbg.flg.frd
     if (true) { console.log(from, 'called av.frd.updateSetup; dir=', dir); }
 

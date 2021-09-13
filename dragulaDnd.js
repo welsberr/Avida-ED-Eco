@@ -131,7 +131,7 @@ jQuery(document).ready(function($) {
       if (av.grd.runState === "started" && (target === av.dnd.gridCanvas || target === av.dnd.ancestorBox)) {
         return false;
       } 
-      else if (target === av.dnd.anlDndChart || target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2) {
+      else if (target === av.dnd.activeConfig || target === av.dnd.anlDndChart || target === av.dnd.popDish0 || target === av.dnd.popDish1 || target === av.dnd.popDish2) {
         return false;
       }
       else if (target === av.dnd.organCanvas || target === av.dnd.organIcon || target === av.dnd.gridCanvas || av.dnd.ancestorBox) {
@@ -974,7 +974,6 @@ jQuery(document).ready(function($) {
     // need to make a clone, so as to now modify the original
     el = el.cloneNode(true);
     var dir = av.fzr.dir[el.id];
-    console.log(dir);
     // give a new id to the new dom object depending on the type
     var classList = el.className.split(" ");
     if (classList.indexOf('c') != -1 || source == av.dnd.fzConfig) el.id = 'dom_c' + av.fzr.cNum++;
@@ -985,7 +984,6 @@ jQuery(document).ready(function($) {
     // remove the existing configuration
     av.dnd.empty(target);
     // insert element into target DOM
-    console.log(el);
     av.dnd.insertToDOM(target, el);
     // update active config
     av.fzr.actConfig.actDomid = el.id;
@@ -1349,6 +1347,12 @@ jQuery(document).ready(function($) {
   av.dnd.insertToDOM = function(target, el) {
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     el = el.cloneNode(true);
+    var classList = el.className.split(" ");
+    if (classList.indexOf('gu-transit') != -1) {
+      classList.splice(classList.indexOf('gu-transit'), 1);
+    }
+    el.className = classList.join(" ");
+    console.log(el);
     $(container).append(el);
   }
 
