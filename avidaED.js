@@ -1182,6 +1182,7 @@ require([
     if (av.debug.dnd || av.debug.mouse)
       console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
     av.ui.mainBoxSwap('populationBlock');
+    resizePopulationPage();
   };
 
   av.dom.organismButton.onclick = function () {
@@ -1195,6 +1196,7 @@ require([
       $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
     if (av.dom.orgInfoHolder.clientWidth < av.ui.orgInfoHolderMinWidth) av.ui.orgInfoHolderWidth = av.ui.orgInfoHolderMinWidth;
     av.ui.mainBoxSwap('organismBlock');
+    resizeOrganismPage();
 
     console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
       av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
@@ -1208,10 +1210,10 @@ require([
   document.getElementById('analysisButton').onclick = function () {
     av.post.addUser('Button: analysisButton');
     av.ui.mainBoxSwap('analysisBlock');
+    resizeAnalysisPage();
     //console.log('after mainBoxSwap to analysisBlock');
     av.anl.AnaChartFn();
     //console.log('fzWorld wd =', document.getElementById('fzWld').style.width );
-    
   };
 
   // if (av.dbg.flg.root) { console.log('Root: before showTextDebugButton.onclick'); }
