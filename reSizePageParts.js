@@ -155,6 +155,9 @@ function dragbarLeftResize() {
       if (av.ui.page === "organismBlock") {
         $('#orgInfoHolder').css("width", "100%");
       }
+      else if (av.ui.page === "populationBlock") {
+        $('#labInfoHolder').css("width", "100%");
+      }
 
       /* update organism canvas */
       av.ind.updateOrgTrace();
@@ -223,6 +226,9 @@ function dragbarLeftResize() {
       /* make the following divs take up the entire width of their containers */
       if (av.ui.page === "organismBlock") {
         $('#orgInfoHolder').css("width", "100%");
+      }
+      else if (av.ui.page === "populationBlock") {
+        $('#labInfoHolder').css("width", "100%");
       }
       
       $(document).unbind('mousemove touchmove'); // yemi: need it to disasssociate mouse action from the page
@@ -300,6 +306,9 @@ function dragbarRightResize() {
       if (av.ui.page === "organismBlock") {
         $('#orgInfoHolder').css("width", "100%");
       }
+      else if (av.ui.page === "populationBlock") {
+        $('#labInfoHolder').css("width", "100%");
+      }
       
       /* yemi: update organism canvas */
       av.ind.updateOrgTrace();
@@ -370,6 +379,9 @@ function dragbarRightResize() {
       /* make the following divs take up the entire width of their containers */
       if (av.ui.page === "organismBlock") {
         $('#orgInfoHolder').css("width", "100%");
+      }
+      else if (av.ui.page === "populationBlock") {
+        $('#labInfoHolder').css("width", "100%");
       }
 
       $(document).unbind('mousemove touchmove');
