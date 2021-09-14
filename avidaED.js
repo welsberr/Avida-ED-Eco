@@ -344,7 +344,6 @@ require([
     av.post.addUser('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
     //console.log('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
     av.mouse.downGridCanvasFn(evt);
-    console.log(av.mouse.Picked);
   });
 
   //When mouse button is released, return cursor to default values
@@ -377,7 +376,6 @@ require([
     } 
     // this is for organism page
     else if ('offspring' == av.mouse.Picked) {
-      console.log('offspring picked');
       target = av.mouse.offspringMouse(evt, av.dnd, av.fio, av.fzr, av.gen);
       av.mouse.Picked = '';
     } 
@@ -1006,6 +1004,8 @@ require([
     av.ptd.FrOrganismFn('offspring');
   });
 
+  // Menu Buttons from 'Freezer' to Add things to Experiment
+
   //Buttons on drop down menu to add Configured Dish to an Experiment
   dijit.byId('mnFzAddConfigEx').on('Click', function () {
     av.dnd.clickedMenu = "addConfig";
@@ -1131,9 +1131,11 @@ require([
     if ('populationBlock' == av.ui.page) {
       av.dom.popInfoVert.style.display = 'block';
       document.getElementById('allAvidaContainer').className = 'all3pop';
+      resizePopulationPage();
     };    
     if ('analysisBlock' == av.ui.page) {
       document.getElementById('allAvidaContainer').className = 'all2lft';
+      resizeAnalysisPage();
     };
     if ('showTextDebugBlock' == av.ui.page) {
       document.getElementById('allAvidaContainer').className = 'all2lft';
@@ -1158,6 +1160,7 @@ require([
       av.ind.organismCanvasHolderSize('mainBoxSwap_organismBlock');   ///??????
       av.ind.clearGen('mainBoxSwap_organismBlock');
       av.ind.cpuOutputCnvsSize();
+      resizeOrganismPage();
     }
      if (('populationBlock' == av.ui.page) || ('organismBlock' == av.ui.page)) {
       document.getElementById('RtSideToggleButtons').style.display = 'block';
@@ -1179,9 +1182,6 @@ require([
     if (av.debug.dnd || av.debug.mouse)
       console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
     av.ui.mainBoxSwap('populationBlock');
-
-    /* just so that if screen resized in the other layout, you still update the population page correctly */
-    resizePopulationPage();
   };
 
   av.dom.organismButton.onclick = function () {
@@ -1200,9 +1200,7 @@ require([
       av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
       $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
     console.log('orgInfoHolder.paddding=', $("#orgInfoHolder").css('padding'));
-
-    /* just so that if screen resized in the other layout, you still update the organism page correctly */
-    resizeOrganismPage();
+    
     /* organism trace persists; can be removed if undesired */
     av.ind.updateOrgTrace();
   };
@@ -1214,8 +1212,6 @@ require([
     av.anl.AnaChartFn();
     //console.log('fzWorld wd =', document.getElementById('fzWld').style.width );
     
-    /* just so that if screen resized in the other layout, you still update the analysis page correctly */
-    resizeAnalysisPage();
   };
 
   // if (av.dbg.flg.root) { console.log('Root: before showTextDebugButton.onclick'); }

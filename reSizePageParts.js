@@ -14,7 +14,7 @@ var IS_LEFT_COLLAPSED = false;
 var IS_RIGHT_COLLAPSED = false;
 
 /* function to automatically resize the Analysis page when button clicked; called in avidaED.js */
-function resizeAnalysisPage() {
+resizeAnalysisPage = function() {
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarLeftWidth = $('#dragbarLeft').css("width");
   var newColumns;
@@ -29,7 +29,7 @@ function resizeAnalysisPage() {
 }
 
 /* diane modified yemi's work: function to automatically resize the Analysis page when button clicked; called in avidaED.js */
-av.ui.resizeShowTextDebugPage =function() {
+av.ui.resizeShowTextDebugPage = function() {
   console.log('in av.ui.resizeShowTextDebugPage');
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarLeftWidth = $('#dragbarLeft').css("width");
@@ -38,7 +38,7 @@ av.ui.resizeShowTextDebugPage =function() {
 };
 
 /* function to automatically resize the Populations page when button clicked; called in avidaED.js */
-function resizePopulationPage() {
+resizePopulationPage = function() {
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('.dragbar').css("width");
   var rightSideWidth = $('#popInfoVert').css("width");
@@ -63,7 +63,7 @@ function resizePopulationPage() {
 }
 
 /* function to automatically resize the Organisms page when button clicked; called in avidaED.js */
-function resizeOrganismPage() {
+resizeOrganismPage = function() {
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('.dragbar').css("width");
   var rightSideWidth = $('#orgInfoHolder').css("width");

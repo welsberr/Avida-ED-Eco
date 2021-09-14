@@ -523,83 +523,121 @@ jQuery(document).ready(function($) {
   av.dnd.FzAddExperimentFn = function (source, target, type) {
     var fzSection = source.id;
     var targetId = target.id;
-
-    if (av.dnd.selectedId != "") {
-      var classList = document.getElementById(av.dnd.selectedId).className.split(" ");
-      // clone the selected node
-      var el = $.map($('#' + av.dnd.selectedId), (value, key) => { return value })[0].cloneNode(true);
-      console.log('fzSection=', fzSection, '; target=', target, '; av.dnd.selectedId=', av.dnd.selectedId, '; type=', type);
-    }
     var addedPopPage = false;
     var addedAnaPage = false;
 
-    // buggy
-    // if the selected is a genome and the user misclicked something other than 'add this organism to the experiment'
-    if (classList.indexOf('g') != -1 && av.dnd.clickedMenu != "addOrgan" && av.dnd.clickedMenu != "addToGenomeView") {
-      $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
-      av.dnd.selectedId = '';
-      return;
-    }  
-    // if the selected is a populated dish and the user misclicked something other than 'add this populated dish to the experiment'
-    if (classList.indexOf('w') != -1 && av.dnd.clickedMenu != "addPop" && av.dnd.clickedMenu != "addToAnalysisView") {
-      $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
-      av.dnd.selectedId = '';
-      return;
-    }
-    // if the selected is a configured dish and the user misclicked something other than 'add this configured dish to the experiment'
-    if (classList.indexOf('c') != -1 && av.dnd.clickedMenu != "addConfig") {
-      $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
-      av.dnd.selectedId = '';
-      return;
-    }
-
-    console.log(fzSection, targetId);
-    // if something is selected
-    if ('fzOrgan' == fzSection && 'activeOrgan' == targetId) { 
-      if (av.dnd.clickedMenu === "addToGenomeView") {
-        if (source === av.dnd.fzOrgan) {
-          addedPopPage = av.dnd.landActiveOrgan(el, target, source); 
+    switch (av.dnd.clickedMenu) {
+      case "addOrgan":
+        if (av.dnd.selectedId === "") {
+          alert('You must select an organism first');
+        }
+        else {
+          var classList = document.getElementById(av.dnd.selectedId).className.split(" ");
+          var el = $.map($('#' + av.dnd.selectedId), (value, key) => { return value })[0].cloneNode(true);
+          if (classList.indexOf('g') === -1) {
+            $('#' + av.dnd.selectedId).css('background', 'inherit');
+            av.dnd.selectedId = '';
+            return;
+          } else if (av.grd.runState === "started") {
+            alert("Can't add a new organism to a running experiment. Start a new experiment to continue.");
+          } else {
+            addedPopPage = av.dnd.landAncestorBox(el, target, source); 
+          }
+          // reset the av.dnd.selectedId
+          $('#' + mostRecentlyAddedDomid).css('background', 'inherit'); // revert the background color of the most recently added dom object
+          $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
+          av.dnd.selectedId = '';
+        }
+        break;
+      case "addPop":
+        if (av.dnd.selectedId === "") {
+          alert('You must select an populated dish first');
         } 
-      }
-    } else if ('anlDndChart' == targetId && 'fzWorld' == fzSection) {
-      if (av.dnd.clickedMenu === "addToAnalysisView") {
-        addedAnaPage = av.dnd.landAnlDndChart(el, target, source);
-      }
-    } else if ('fzOrgan' == fzSection && 'ancestorBox' == targetId) { 
-      if (av.dnd.selectedId != "") {
-        if (av.grd.runState === "started") {
-          alert("Can't add a new organism to a running experiment. Start a new experiment to continue.");
-        } else {
-          addedPopPage = av.dnd.landAncestorBox(el, target, source); 
-        }
-      } else {
-        alert('You must select an organism first');
-      }
-    } else if (('fzConfig' == fzSection || 'fzWorld' == fzSection) && 'activeConfig' == targetId) { 
-      if (av.dnd.selectedId != "") {
-        if (av.grd.runState === "started") {
-          if ('fzConfig' == fzSection) {
-            alert("Can't add a new configuration to a running experiment. Start a new experiment to continue.");
-          }
-          else if ('fzWorld' == fzSection) {
+        else {
+          var classList = document.getElementById(av.dnd.selectedId).className.split(" ");
+          var el = $.map($('#' + av.dnd.selectedId), (value, key) => { return value })[0].cloneNode(true);
+          if (classList.indexOf('w') === -1) {
+            $('#' + av.dnd.selectedId).css('background', 'inherit');
+            av.dnd.selectedId = '';
+            return;
+          } else if (av.grd.runState === "started") {
             alert("Can't add a new populated dish to a running experiment. Start a new experiment to continue.");
+          } else {
+            addedPopPage = av.dnd.landActiveConfig(el, target, source); 
           }
-        } else {
-          addedPopPage = av.dnd.landActiveConfig(el, target, source);
+          // reset the av.dnd.selectedId
+          $('#' + mostRecentlyAddedDomid).css('background', 'inherit'); // revert the background color of the most recently added dom object
+          $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
+          av.dnd.selectedId = '';
         }
-      } else {
-        if ('fzConfig' == fzSection) {
-          alert('You must select a configurated dish first');
-        } else if ('fzWorld' == fzSection) {
-          alert('You must select a populated dish first');
+        break;
+      case "addConfig":
+        if (av.dnd.selectedId === "") {
+          alert('You must select an configured dish first');
+        } 
+        else {
+          var classList = document.getElementById(av.dnd.selectedId).className.split(" ");
+          var el = $.map($('#' + av.dnd.selectedId), (value, key) => { return value })[0].cloneNode(true);
+          if (classList.indexOf('c') === -1) {
+            $('#' + av.dnd.selectedId).css('background', 'inherit');
+            av.dnd.selectedId = '';
+            return;
+          } else if (av.grd.runState === "started") {
+            alert("Can't add a new configured dish to a running experiment. Start a new experiment to continue.");
+          } else {
+            addedPopPage = av.dnd.landActiveConfig(el, target, source); 
+          }
+          // reset the av.dnd.selectedId
+          $('#' + mostRecentlyAddedDomid).css('background', 'inherit'); // revert the background color of the most recently added dom object
+          $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
+          av.dnd.selectedId = '';
         }
-      }
-    } 
+        break;
+      case "addToGenomeView":
+        if (av.dnd.selectedId != "") {
+          var classList = document.getElementById(av.dnd.selectedId).className.split(" ");
+          var el = $.map($('#' + av.dnd.selectedId), (value, key) => { return value })[0].cloneNode(true);
+          if (classList.indexOf('g') === -1) {
+            $('#' + av.dnd.selectedId).css('background', 'inherit');
+            av.dnd.selectedId = '';
+            return;
+          } else {
+            addedPopPage = av.dnd.landActiveOrgan(el, target, source); 
+          }
+          // reset the av.dnd.selectedId
+          $('#' + mostRecentlyAddedDomid).css('background', 'inherit'); // revert the background color of the most recently added dom object
+          $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
+          av.dnd.selectedId = '';
+        } else if (av.dnd.gridSelected != "" && av.dnd.gridSelected != undefined) {
+          if (av.dnd.gridSelected == "parent") { // if ancestor is selected
+            av.mouse.traceSelectedParent();
+          } else if (av.dnd.gridSelected == "kid") { // if kid is selected
+            av.mouse.traceSelected();
+          }
+        }
+        break;
+      case "addToAnalysisView":
+        if (av.dnd.selectedId === "") {
+          alert('You must select an populated dish first');
+        } 
+        else {
+          var classList = document.getElementById(av.dnd.selectedId).className.split(" ");
+          var el = $.map($('#' + av.dnd.selectedId), (value, key) => { return value })[0].cloneNode(true);
+          if (classList.indexOf('w') === -1) {
+            $('#' + av.dnd.selectedId).css('background', 'inherit');
+            av.dnd.selectedId = '';
+            return;
+          } else {
+            addedAnaPage = av.dnd.landAnlDndChart(el, target, source);
+          }
+          // reset the av.dnd.selectedId
+          $('#' + mostRecentlyAddedDomid).css('background', 'inherit'); // revert the background color of the most recently added dom object
+          $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
+          av.dnd.selectedId = '';
+        }
+        break;
+    }
     if (addedPopPage) av.grd.drawGridSetupFn('av.dnd.FzAddExperimentFn');
-    // reset the av.dnd.selectedId
-    $('#' + mostRecentlyAddedDomid).css('background', 'inherit'); // revert the background color of the most recently added dom object
-    $('#' + av.dnd.selectedId).css('background', 'inherit'); // av.dnd.selectedId is the id of the dom object from which the new object was copied from 
-    av.dnd.selectedId = '';
   };
 
   /*

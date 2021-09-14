@@ -232,6 +232,24 @@
     av.fzr.actOrgan.actDomid = domid;
   }
 
+  av.mouse.traceSelectedParent = function() {
+    av.dnd.empty(av.dnd.activeOrgan);
+    var container = '#' + av.dnd.activeOrgan.id;
+    var domid = av.parents.domid[av.mouse.ParentNdx];
+    var type = 'g';
+    //Put name of offspring in av.dnd.activeOrganism
+    if (Object.keys(containerMap).indexOf(container) === -1) {
+      containerMap[container] = {};
+    }
+    containerMap[container][domid] = {'name': av.parents.name[av.mouse.ParentNdx] , 'type': 'g'};
+    $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${av.parents.name[av.mouse.ParentNdx]} </div>`)
+    av.fzr.actOrgan.actDomid = domid;
+    //genome data should be in av.parents.genome[av.mouse.ParentNdx];
+    av.fzr.actOrgan.genome = av.parents.genome[av.mouse.ParentNdx];
+    av.fzr.actOrgan.name = av.parents.name[av.mouse.ParentNdx];
+    av.fzr.actOrgan.fzDomid = av.parents.domid[av.mouse.ParentNdx];
+  }
+
   // yemi: 'offspring' is for organism page, 'kid' for population page
   av.mouse.kidMouse = function (evt, dnd, fzr, grd){
     'use strict';
@@ -358,21 +376,7 @@
     //-------------------------------------------- organism view
     else if ('organIcon' == evt.target.id) {
       av.post.addUser('Moved ancestor to Organsim View');
-      av.dnd.empty(av.dnd.activeOrgan);
-      var container = '#' + av.dnd.activeOrgan.id;
-      var domid = av.parents.domid[av.mouse.ParentNdx];
-      var type = 'g';
-      //Put name of offspring in av.dnd.activeOrganism
-      if (Object.keys(containerMap).indexOf(container) === -1) {
-        containerMap[container] = {};
-      }
-      containerMap[container][domid] = {'name': av.parents.name[av.mouse.ParentNdx] , 'type': 'g'};
-      $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${av.parents.name[av.mouse.ParentNdx]} </div>`)
-      av.fzr.actOrgan.actDomid = domid;
-      //genome data should be in av.parents.genome[av.mouse.ParentNdx];
-      av.fzr.actOrgan.genome = av.parents.genome[av.mouse.ParentNdx];
-      av.fzr.actOrgan.name = av.parents.name[av.mouse.ParentNdx];
-      av.fzr.actOrgan.fzDomid = av.parents.domid[av.mouse.ParentNdx];
+      av.mouse.traceSelectedParent();
     }
   }
 

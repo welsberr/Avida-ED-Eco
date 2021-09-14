@@ -154,5 +154,9 @@
       dijit.byId('mnFzOrganism').attr('disabled', true);
     }
     av.grd.drawGridSetupFn('av.mouse.downGridCanvasFn outside grid?');
+    // if something was picked up, grid was selected (will be used in dragulaDnd.js)
+    if (av.mouse.Picked != "" && av.mouse.Picked != undefined) {
+      av.dnd.gridSelected = av.mouse.Picked;
+    }
   };
 
