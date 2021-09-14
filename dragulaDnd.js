@@ -76,7 +76,7 @@ jQuery(document).ready(function($) {
     },
     accepts: function (el, target, source, sibling) {
       // actual accepts function is taken out into its own function to be usable outside the dragula constructor
-      return true;
+      return av.dnd.accepts(el, target, source);
     },
     invalid: function (el, handle) {
       return false; // don't prevent any drags from initiating by default
@@ -1259,8 +1259,12 @@ jQuery(document).ready(function($) {
         if (fzName) {
           fzName = av.dnd.getUniqueFzrName(target, fzName);
           if (null != fzName) {
-            document.getElementById(fzItemID).innerHTML = fzName;
-            document.getElementById(fzItemID).data = fzName;
+            if (target === av.dnd.fzConfig || target === av.dnd.fzWorld) {
+              document.getElementById(fzItemID).innerHTML = `<img src='images/Avida-ED-dish-icon.png' class='DishIcon'></img> ${fzName}`;
+            } else if (target === av.dnd.fzOrgan) {
+              document.getElementById(fzItemID).innerHTML = `<img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'></img> ${fzName}`;
+            }
+            // document.getElementById(fzItemID).data = fzName;
             containerMap[container][fzItemID].name = fzName;
             //update freezer structure
             dir = av.fzr.dir[fzItemID];
