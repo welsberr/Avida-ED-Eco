@@ -68,7 +68,11 @@ jQuery(document).ready(function($) {
       return false; // only elements in drake.containers will be taken into account
     },
     moves: function (el, source, handle, sibling) {
-      return true; // elements are always draggable by default
+      // these sources only receive, they do not give
+      if (source === av.dnd.anlDndChart || source === av.dnd.organIcon || source === av.dnd.trashCan) {
+        return false;
+      }
+      return true; // otherwise they both work as receivers and givers
     },
     accepts: function (el, target, source, sibling) {
       // actual accepts function is taken out into its own function to be usable outside the dragula constructor
