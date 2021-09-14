@@ -344,6 +344,7 @@ require([
     av.post.addUser('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
     //console.log('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
     av.mouse.downGridCanvasFn(evt);
+    console.log(av.mouse.Picked);
   });
 
   //When mouse button is released, return cursor to default values
