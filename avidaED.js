@@ -2369,6 +2369,8 @@ require([
     av.ind.organismCanvasHolderSize('mnCnOffspringTrace');
     av.ui.adjustOrgInstructionTextAreaSize();
     offspringTrace(av.dnd, av.fio, av.fzr, av.gen);
+    /* update organism canvas */ /* it doesn't automatically update */
+    setTimeout(() => {av.ind.updateOrgTrace();}, 1000);
   });
 
   //----------------------------------------------------------------------------------------------------------------------

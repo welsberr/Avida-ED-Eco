@@ -146,6 +146,7 @@
     containerMap['#activeOrgan'][domid] = {name: parent + "_offspring", type: type};
     av.fzr.actOrgan.actDomid = domid;
     av.fzr.actOrgan.name = parent + "_offspring";
+    console.log(av.ind.dna[av.ind.son]);
     av.fzr.actOrgan.genome = '0,heads_default,' + av.ind.dna[av.ind.son];  //this should be the full genome when the offspring is complete.
     if (av.debug.mouse) console.log('av.fzr.actOrgan', av.fzr.actOrgan);
     //get genome from offspring data //needs work!!
