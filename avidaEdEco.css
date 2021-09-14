@@ -1836,7 +1836,7 @@ checkbox:focus {
   }
   
   #orgMuteSlide {
-  width: 150px; /* was 200px; */
+  /* width: 150px;*/ /* was 200px; */ /* make it fit the entire width of the right side panel*/
   /* height: 400px;  */  /* use for verticle slide */
   display: block; 
   vertical-align: top; 
