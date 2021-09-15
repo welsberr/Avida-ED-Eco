@@ -521,7 +521,8 @@
   // makes a dictionary out of a avida.cfg file
   av.frd.avidaCFGparse = function (filestr, from) {
     'use strict';
-    console.log(from, 'called av.frd.avidaCFGparse: filestr.length=', filestr.length);
+    console.log(from, 'called av.frd.avidaCFGparse');
+    console.log('filestr.length=', filestr.length);
     var rslt = {};
     var lines = filestr.split('\n');
     var lngth = lines.length;

@@ -128,13 +128,18 @@ textarea {
 
 /* Trying get headers back to default values
 /* this did not work I wanted to change for all headers inside the main div. */
-#allAvidaContainer h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
    font-weight: bold;
    margin: 0;
    padding: 0;
    font-family: Tahoma, Trebuchet MS, sans-serif;
+   cursor: no-drop;
 }
- 
+#allAvidaContainer {
+   margin: 0;
+   padding: 0;
+   cursor: pointer;  
+} 
 
 /* trying classe to get headers back to to what they should be 
     hdf# classes were over written by .claro in document.css
