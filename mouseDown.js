@@ -92,8 +92,6 @@
 
   // if (av.dbg.flg.root) { console.log('Root: before av.mouse.downGridCanvasFn'); }
   av.mouse.downGridCanvasFn = function (evt) {
-    $(av.dnd.activeConfig).hover(() => {document.body.style.cursor = 'no-drop';}, () => {document.body.style.cursor = 'copy';});
-    
     document.body.style.cursor = 'copy';
     av.mouse.DnGridPos = [evt.offsetX, evt.offsetY];
     av.mouse.Dn = true;
@@ -156,5 +154,9 @@
       dijit.byId('mnFzOrganism').attr('disabled', true);
     }
     av.grd.drawGridSetupFn('av.mouse.downGridCanvasFn outside grid?');
+    // if something was picked up, grid was selected (will be used in dragulaDnd.js)
+    if (av.mouse.Picked != "" && av.mouse.Picked != undefined) {
+      av.dnd.gridSelected = av.mouse.Picked;
+    }
   };
 

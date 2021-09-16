@@ -139,13 +139,14 @@
     //Put name of offspring in OrganCurrentNode
     var domid = 'g' + av.fzr.gNum++;
     var type = 'g';
-    $('#activeOrgan').append(`<div class="item ${type}" id="${domid}"> ${parent + "_offspring"} </div>`);
+    $('#activeOrgan').append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${parent + "_offspring"} </div>`);
     var gdir = av.fzr.dir[parentID];
     av.fzr.dir[domid] = gdir;
     av.fzr.domid[gdir] = domid;
     containerMap['#activeOrgan'][domid] = {name: parent + "_offspring", type: type};
     av.fzr.actOrgan.actDomid = domid;
     av.fzr.actOrgan.name = parent + "_offspring";
+    console.log(av.ind.dna[av.ind.son]);
     av.fzr.actOrgan.genome = '0,heads_default,' + av.ind.dna[av.ind.son];  //this should be the full genome when the offspring is complete.
     if (av.debug.mouse) console.log('av.fzr.actOrgan', av.fzr.actOrgan);
     //get genome from offspring data //needs work!!
@@ -165,7 +166,10 @@
     }
     else if (elements.indexOf('fzOrgan') != -1) { // look for target in the freezer
       var found = false;
-      for (var dir in av.fzr.domid) {if (av.fzr.domid[dir].indexOf(evt.target.id) != -1) {found=true; break;}}
+      console.log(av.fzr);
+      console.log(evt.target.id);
+      // for (var dir in av.fzr.domid) {if (av.fzr.domid[dir] === evt.target.id) {found=true; break;}}
+      found = true;
       if (found) {
         target  = 'fzOrgan';
         //create a new freezer item
@@ -186,7 +190,7 @@
             av.post.addUser('Moved offspring, ' + avidian + ', to organism freezer');
             var domid = 'g' + av.fzr.gNum;
             var type = 'g';
-            $('#fzOrgan').append(`<div class="item ${type}" id="${domid}"> ${avidian} </div>`);
+            $('#fzOrgan').append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${avidian} </div>`);
             // Add an entry to containerMap
             containerMap[container][domid] = {'name': avidian , 'type': 'g'};
             //find domId of offspring as listed in dnd.fzOrgan
@@ -217,9 +221,9 @@
     if (Object.keys(containerMap).indexOf(container) === -1) {
       containerMap[container] = {};
     }
-    var domid = 'dom_g' + av.fzr.gNum;
+    var domid = 'dom_g' + av.fzr.gNum++;
     var type = 'g';
-    $(container).append(`<div class="item ${type}" id="${domid}"> ${av.grd.kidName} </div>`);
+    $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${av.grd.kidName} </div>`);
     containerMap[container][domid] = {'name': av.grd.kidName , 'type': 'g'};
     //genome data should be in av.parents.genome[av.mouse.ParentNdx];
     if (av.debug.mouse) console.log('genome', av.grd.kidGenome);
@@ -227,6 +231,24 @@
     av.fzr.actOrgan.name = av.grd.kidName;
     av.fzr.actOrgan.fzDomid = "";
     av.fzr.actOrgan.actDomid = domid;
+  }
+
+  av.mouse.traceSelectedParent = function() {
+    av.dnd.empty(av.dnd.activeOrgan);
+    var container = '#' + av.dnd.activeOrgan.id;
+    var domid = av.parents.domid[av.mouse.ParentNdx];
+    var type = 'g';
+    //Put name of offspring in av.dnd.activeOrganism
+    if (Object.keys(containerMap).indexOf(container) === -1) {
+      containerMap[container] = {};
+    }
+    containerMap[container][domid] = {'name': av.parents.name[av.mouse.ParentNdx] , 'type': 'g'};
+    $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${av.parents.name[av.mouse.ParentNdx]} </div>`)
+    av.fzr.actOrgan.actDomid = domid;
+    //genome data should be in av.parents.genome[av.mouse.ParentNdx];
+    av.fzr.actOrgan.genome = av.parents.genome[av.mouse.ParentNdx];
+    av.fzr.actOrgan.name = av.parents.name[av.mouse.ParentNdx];
+    av.fzr.actOrgan.fzDomid = av.parents.domid[av.mouse.ParentNdx];
   }
 
   // yemi: 'offspring' is for organism page, 'kid' for population page
@@ -286,7 +308,7 @@
         var container = '#' + av.dnd.fzOrgan.id;
         var mapItems = Object.keys(containerMap[container]);
 
-        $(container).append(`<div class="item ${type}" id="${domid}"> ${avName} </div>`);
+        $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${avName} </div>`);
         // Add an entry to containerMap
         if (Object.keys(containerMap).indexOf(container) === -1) {
           containerMap[container] = {};
@@ -355,21 +377,7 @@
     //-------------------------------------------- organism view
     else if ('organIcon' == evt.target.id) {
       av.post.addUser('Moved ancestor to Organsim View');
-      av.dnd.empty(av.dnd.activeOrgan);
-      var container = '#' + av.dnd.activeOrgan.id;
-      var domid = av.parents.domid[av.mouse.ParentNdx];
-      var type = 'g';
-      //Put name of offspring in av.dnd.activeOrganism
-      if (Object.keys(containerMap).indexOf(container) === -1) {
-        containerMap[container] = {};
-      }
-      containerMap[container][domid] = {'name': av.parents.name[av.mouse.ParentNdx] , 'type': 'g'};
-      $(container).append(`<div class="item ${type}" id="${domid}"> ${av.parents.name[av.mouse.ParentNdx]} </div>`)
-      av.fzr.actOrgan.actDomid = domid;
-      //genome data should be in av.parents.genome[av.mouse.ParentNdx];
-      av.fzr.actOrgan.genome = av.parents.genome[av.mouse.ParentNdx];
-      av.fzr.actOrgan.name = av.parents.name[av.mouse.ParentNdx];
-      av.fzr.actOrgan.fzDomid = av.parents.domid[av.mouse.ParentNdx];
+      av.mouse.traceSelectedParent();
     }
   }
 

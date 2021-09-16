@@ -1046,17 +1046,24 @@ av.msg.fillColorBlock = function (msg, from) {
     }
     else {
       console.log('Gradient mode,  null = fill: bkColor=', bkcolor);
-      if ('-' != av.grd.msg.ancestor.data[av.grd.selectedNdx]) { 
-        bkcolor = '#888';
-      console.log('Gradient mode,  null = fill, - = ancestor.data: bkColor=', bkcolor);
-      }
+      try {
+        if (av.grd.msg.ancestor.data != undefined) {
+          console.log("av.grd.msg.ancestor.data is defined");
+          if ('-' != av.grd.msg.ancestor.data[av.grd.selectedNdx]) { 
+            bkcolor = '#888';
+          console.log('Gradient mode,  null = fill, - = ancestor.data: bkColor=', bkcolor);
+          }
+        }
+      } catch (e){ console.log(e, e.stack);} // buggy
     }
   } 
 
   if (true) {
-    console.log(from, 'called fillColorBlock: colorMode=', colorMode
-                , '; av.grd.fill['+av.grd.selectedNdx+']=',  av.grd.fill[av.grd.selectedNdx] 
-                , '; av.grd.msg.ancestor.data['+av.grd.selectedNdx+']=',  av.grd.msg.ancestor.data[av.grd.selectedNdx]); 
+    if (av.grd.msg.ancestor.data != undefined) {
+      console.log(from, 'called fillColorBlock: colorMode=', colorMode
+                  , '; av.grd.fill['+av.grd.selectedNdx+']=',  av.grd.fill[av.grd.selectedNdx] 
+                  , '; av.grd.msg.ancestor.data['+av.grd.selectedNdx+']=',  av.grd.msg.ancestor.data[av.grd.selectedNdx]); 
+    }
   }
 
 

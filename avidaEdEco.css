@@ -211,6 +211,7 @@ html {
     height: 100%;
     width: 100%;
     min-width: 200px;
+    width: 220px;
     font-family: Tahoma, Trebuchet MS, sans-serif;
   }
   
@@ -674,8 +675,9 @@ html {
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
     height: 100%;
     width: 100%;
-    min-width: 340px; /* yemi: */
-    max-width: 60vh; /* yemi: diane does not see why a max is needed: sometimes want popChart big */
+    min-width: 200px; /* yemi: */
+    /* max-width: 60vh; */ /* yemi: diane does not see why a max is needed: sometimes want popChart big */
+    max-width: 500px;
   }
   
   #popStatsBlock{
@@ -1835,7 +1837,7 @@ checkbox:focus {
   }
   
   #orgMuteSlide {
-  width: 150px; /* was 200px; */
+  /* width: 150px;*/ /* was 200px; */ /* make it fit the entire width of the right side panel*/
   /* height: 400px;  */  /* use for verticle slide */
   display: block; 
   vertical-align: top; 

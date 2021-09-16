@@ -14,7 +14,7 @@ var IS_LEFT_COLLAPSED = false;
 var IS_RIGHT_COLLAPSED = false;
 
 /* function to automatically resize the Analysis page when button clicked; called in avidaED.js */
-function resizeAnalysisPage() {
+resizeAnalysisPage = function() {
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarLeftWidth = $('#dragbarLeft').css("width");
   var newColumns;
@@ -29,7 +29,7 @@ function resizeAnalysisPage() {
 }
 
 /* diane modified yemi's work: function to automatically resize the Analysis page when button clicked; called in avidaED.js */
-av.ui.resizeShowTextDebugPage =function() {
+av.ui.resizeShowTextDebugPage = function() {
   console.log('in av.ui.resizeShowTextDebugPage');
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarLeftWidth = $('#dragbarLeft').css("width");
@@ -38,11 +38,11 @@ av.ui.resizeShowTextDebugPage =function() {
 };
 
 /* function to automatically resize the Populations page when button clicked; called in avidaED.js */
-function resizePopulationPage() {
+resizePopulationPage = function() {
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('.dragbar').css("width");
-  var rightSideWidth = $('#popInfoVert').css("width");
-  console.log(rightSideWidth);
+  // var rightSideWidth = $('#labInfoHolder').css("width");
+  rightSideWidth = '440px';
   var newColumns;
   if (!IS_LEFT_COLLAPSED && !IS_RIGHT_COLLAPSED) {
     newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
@@ -63,10 +63,11 @@ function resizePopulationPage() {
 }
 
 /* function to automatically resize the Organisms page when button clicked; called in avidaED.js */
-function resizeOrganismPage() {
+resizeOrganismPage = function() {
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('.dragbar').css("width");
-  var rightSideWidth = $('#orgInfoHolder').css("width");
+  // var rightSideWidth = $('#orgInfoHolder').css("width");
+  rightSideWidth = '220px';
   var newColumns;
   if (!IS_LEFT_COLLAPSED && !IS_RIGHT_COLLAPSED) {
     newColumns = leftNavBarWidth + " " + dragbarWidth + " auto " + dragbarWidth + " " + rightSideWidth;
@@ -151,7 +152,12 @@ function dragbarLeftResize() {
       $('.all3org').css("grid-template-columns", organism_colInfo);
 
       /* make the following divs take up the entire width of their containers */
-      $('orgInfoHolder').css("width", "100%");
+      if (av.ui.page === "organismBlock") {
+        $('#orgInfoHolder').css("width", "100%");
+      }
+      else if (av.ui.page === "populationBlock") {
+        $('#labInfoHolder').css("width", "100%");
+      }
 
       /* update organism canvas */
       av.ind.updateOrgTrace();
@@ -218,7 +224,12 @@ function dragbarLeftResize() {
       $('.all3org').css("grid-template-columns", organism_colInfo);
 
       /* make the following divs take up the entire width of their containers */
-      $('orgInfoHolder').css("width", "100%");
+      if (av.ui.page === "organismBlock") {
+        $('#orgInfoHolder').css("width", "100%");
+      }
+      else if (av.ui.page === "populationBlock") {
+        $('#labInfoHolder').css("width", "100%");
+      }
       
       $(document).unbind('mousemove touchmove'); // yemi: need it to disasssociate mouse action from the page
       dragging = false;
@@ -292,8 +303,13 @@ function dragbarRightResize() {
       $('.all3org').css("grid-template-columns", organism_colInfo);
 
       /* yemi: make the following divs take up the entire width of their containers */
-      $('#orgInfoHolder').css("width", "100%");
-
+      if (av.ui.page === "organismBlock") {
+        $('#orgInfoHolder').css("width", "100%");
+      }
+      else if (av.ui.page === "populationBlock") {
+        $('#labInfoHolder').css("width", "100%");
+      }
+      
       /* yemi: update organism canvas */
       av.ind.updateOrgTrace();
     });
@@ -361,7 +377,12 @@ function dragbarRightResize() {
       $('.all3org').css("grid-template-columns", organism_colInfo);
 
       /* make the following divs take up the entire width of their containers */
-      $('orgInfoHolder').css("width", "100%");
+      if (av.ui.page === "organismBlock") {
+        $('#orgInfoHolder').css("width", "100%");
+      }
+      else if (av.ui.page === "populationBlock") {
+        $('#labInfoHolder').css("width", "100%");
+      }
 
       $(document).unbind('mousemove touchmove');
       
