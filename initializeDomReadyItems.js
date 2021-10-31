@@ -343,19 +343,12 @@ av.ui.toggleDevelopmentDisplays = function () {
     //hide all development elements
     av.ui.hideDevelopment = true;
     av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopmentDisplays');
-
-    //debug menu??Î
-    dijit.byId('mnHpDebug').set('label', 'Show debug menu');   //???????
-
     av.post.addUser('Button: mnHpDebug: now hidden; InitlizeDomReadyItems.js');
     //-------------------------------------------------------------------------------- hide stuff --
   } else {
     // development sectiomn can be seen.
     av.ui.hideDevelopment = false;
     av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopmentDisplays.onclick_show');
-
-    //Show debug on dropdown menu
-    dijit.byId('mnHpDebug').set('label', 'Hide debug menu');   //????????
     av.post.addUser('Button: mnHpDebug: now visible');
   }  // end of development section can be seen 
   //------------------------------------------------------------------------------------ process changes using ndx2b--

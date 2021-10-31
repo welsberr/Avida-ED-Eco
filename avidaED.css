@@ -38,8 +38,13 @@
 * { 
   margin: 0; 
   padding: 0; 
-  --rem-size: calc((var(--pixels)/16) * 1rem);
-  /* font-size: var(--rem-size); /* To use on an HTML element */
+  /*this does not appear to work */
+  /* several versions of rem-size so I could define two sizes in one css definition with the same ratio */
+  --rem-size0: calc((var(--pixel)/16) * 1rem);
+  --rem-size1: calc((var(--pix1)/16) * 1rem);
+  --rem-size2: calc((var(--pix2)/16) * 1rem);
+  /* To use on an HTML element, where pixel is defined in css/HTML element */
+  /* font-size: var(--rem-size0); */
 }
  
 html, body {
@@ -245,6 +250,10 @@ h1, h2, h3, h4, h5, h6 {
  .lftmargin {
    float: left;
    clear: left;
+ }
+ .ritmargin {
+   float: right;
+   clear: right;
  }
  
  div.popStatsTitle {

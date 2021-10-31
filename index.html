@@ -148,14 +148,14 @@
         <div id="headerMsg">
           <div id='msgHolder'>
             Workspace: `<label id='wsNameMsg'>Default</label>`
-            <label id='wsSavedMsg'> is saved</label> &nbsp;&nbsp;&nbsp;
+            <label id='wsSavedMsg'> - Save workspace if you want use items saved to the freezer after this session</label> &nbsp;&nbsp;&nbsp;
             <span style='text-align: right'>
               <label id='userMsgLabel'> </label>
             </span>
           </div>
         </div>
         <div id='versionNumHolder'>
-              <span id='avidaVersion'>Avida-ED 4.0.04 Beta</span>
+              <div id='avidaVersion'>Avida-ED 4</div>
         </div>
         <div id='RtSideToggleButtons'>
           <input id='StatsButton' type='button' class='toggleLftButton' value='Stats' onclick='av.ptd.rightInfoPanelToggleButton(this)'/>
@@ -229,10 +229,10 @@
               
               <div id='popTopRw' class="benchPopTopRow">
                 <div id='activeConfigHolder'>
-                  <div class='lftmargin'>
-                    <img src='images/Avida-ED-dish-icon.png' alt='Avida-ED dish icon'>
+                  <div >
+                    <img src='images/Avida-ED-dish-icon.png' class='lftmargin' alt='Avida-ED dish icon'>
+                    <div id='activeConfig' class='activeConfigDojoDNDcontainer'></div>
                   </div>
-                  <div id='activeConfig' class='activeConfigDojoDNDcontainer'></div>
                   <div id='testConfigLableHolder'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;test</div>
                   <div id='testConfig' class='activeConfigDojoDNDcontainer'></div>
                 </div>
@@ -1412,10 +1412,10 @@
     <div class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='mnFlStandAloneAppDialog'
          title='Stand alone version of Avida-ED 4.0.04 Beta Testing'>
       <div class='dijitDialogPaneContentArea'>
-        <h3>For working where there is no internet access</h3>
+        <h3>For working where there is no internet access: No working Avida-ED 4 versions for off-line use at this time.  </h3>
         <ul>
           <li class="slim"><a href="pkgs/Avida-ED-Web-PC_2016_0918.exe" target='_blank'>Avida-ED Windows installer for self-hosted version 2016_0918</a></li>
-          <li><a href="pkgs/Avida-ED_Server_Avida-ED 4.0.01.app.zip" target='_blank'>Avida-ED 4.0.04 Beta Testing for Mac OS 10.6 and above</a></li>
+          <li><a href="pkgs/Avida-ED_Server_Avida-ED.app.zip" target='_blank'>Avida-ED Beta Testing for Mac OS 10.6 and above</a></li>
           <ul>
             <li>Unzip the file once it is downloaded</li>
             <li>Move the file ‘Avida-ED Web.app’ to the Applications Folder</li>

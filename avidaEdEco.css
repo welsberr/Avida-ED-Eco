@@ -333,11 +333,19 @@ html {
   }
   
   #avidaVersion{
-    text-align: left;
-    vertical-align: middle;
-    --pixels: 120; /* Equals to 120px */ 
-    min-width: : var(--rem-size);
+    --pixel: 120; /* Equals to 120px */ 
+    width: : var(--rem-size0);
+    text-align: right;
+    --pix1: 3; /* Equals to 3px */ 
+    --pix2: 5; /* Equals to 5px */ 
+    padding: var(--rem-size1) var(--rem-size2) 0px 0px;  /* top right bottom left  */     
     height: inherit;
+    vertical-align: middle;
+/*
+    float: right;
+    clear: right;
+    padding: 1px : var(--rem-size2) var(--rem-size2) 0px 0px;  /* top right bottom left  */
+*/
   }
   
 /* structures in the left side panel */

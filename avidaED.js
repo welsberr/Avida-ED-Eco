@@ -399,20 +399,58 @@ require([
   //********************************************************************************************************************
   // Remind user if they might need to save their workspace
   //********************************************************************************************************************
+
+  //from Avida-ED 3
+  //http://stackoverflow.com/questions/20773306/mozilla-firefox-not-working-with-window-onbeforeunload  //not used
+  //More usefull websites to catch errors
+  // https://davidwalsh.name/javascript-stack-trace
+  // https://danlimerick.wordpress.com/2014/01/18/how-to-catch-javascript-errors-with-window-onerror-even-on-chrome-and-firefox/
+  //to send e-mail  http://stackoverflow.com/questions/7381150/how-to-send-an-email-from-javascript
+
+  // how to send e-mail
+  // http://www.codeproject.com/Questions/303284/How-to-send-email-in-HTML-or-Javascript
+
+  // selected text
+  // http://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
+  // http://www.javascriptkit.com/javatutors/copytoclipboard.shtml
+
+  //http://www.technicaladvices.com/2012/03/26/detecting-the-page-leave-event-in-javascript/
   window.onbeforeunload = function (event) {
+    console.log("in window.onbeforeunload = function (event)");
+    if (!av.ui.sendEmailFlag) {
+      if ('no' === av.fzr.saveState || 'maybe' === av.fzr.saveState) {
+        return 'Your workspace may have changed sine you last saved. Do you want to save first?';
+
+        // this needs to be inside the if that checks the value of av.fzr.saveState
+        // yes it gives an error: 'unreachable code after return statement'
+        // but it must be here to get the pop up message in Firefox. 
+        // Want pop up message when user tries to leave page,
+        //   if the user saved anything to the freezer this session
+        // e.stopPropagation works in Firefox.
+        if (event.stopPropagation) {
+          event.stopPropagation();
+          event.preventDefault();
+        }  //end fireFoxs
+      }
+    }
+  };
+  //end from Avida-ED 3
+
+/* version Yemi fixed. Delete in 2022
+  window.onbeforeunload__ = function (event) {
   console.log('window.onbeforeunload: av.ui.sendEmailFlag =', av.ui.sendEmailFlag, '; av.fzr.saveState = ', av.fzr.saveState);
     if (!av.ui.sendEmailFlag) {
       if ('no' === av.fzr.saveState || 'maybe' === av.fzr.saveState) {
         return 'Your workspace may have changed sine you last saved. Do you want to save first?';
-      };
 
-      //e.stopPropagation works in Firefox.
-      if (event.stopPropagation) {
-        event.stopPropagation();
-        event.preventDefault();
-      };
-    };
+        if (event.stopPropagation) {
+          event.stopPropagation();
+          event.preventDefault();
+        }
+      };      
+    }
   };
+*/
 
   // if (av.dbg.flg.root) { console.log('Root: before Error Logging'); }
   //********************************************************************************************************************
@@ -2785,7 +2823,7 @@ require([
   av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
   av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
 
-  av.doj.mnDebug.style.visibility = 'visible';   // set visiable so that av.ui.toggleDevelopentDisplays will hide devo stuff
+  av.doj.mnDebug.style.visibility = 'hidden';
 
   // Avida-ED 4.0.04 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  

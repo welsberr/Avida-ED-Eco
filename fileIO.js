@@ -402,40 +402,36 @@
   //    wsSavedMsg.textcontent = 'Workspace: default  ';
   av.fzr.saveUpdateState = function (newSaveState) {
     'use strict';
-    //console.log('oldState', av.fzr.saveState, '; newState', newSaveState);
-    if ('maybe' === newSaveState) {
-      //console.log('newSaveState', newSaveState)
-      if ('no' === av.fzr.saveState) {
-        //console.log('oldSaveState', av.fzr.saveState)
-        //av.fzr.saveState = 'maybe';
-      }
+    console.log('oldState', av.fzr.saveState, '; newState', newSaveState);
+    av.fzr.saveState = newSaveState;
+    if (true) {
+      // Do not change work space message in Avida-ED 4
     } 
+    //We did change the workspaace message in Avida-ED 3
     else {
-      //console.log('newSaveState', newSaveState, ' is not maybe');
-      av.fzr.saveState = newSaveState;
-    }
-    switch (av.fzr.saveState) {
-      case 'yes':
-      case 'default':
-        wsSavedMsg.textContent = ' is saved ';
-        wsSavedMsg.textContent = ' save status: saved ';
-        wsSavedMsg.style.color = 'rgb(  0,  93,  93)'  //'green';
-        break;
-      case 'maybe':
-        wsSavedMsg.textContent = ' might be saved';
-        wsSavedMsg.textContent = ' save status: unknown';
-        wsSavedMsg.style.color = 'rgb(  0, 109, 219)';  //'blue';
-        break;
-      case 'no':
-        wsSavedMsg.textContent = ' is not saved';
-        wsSavedMsg.textContent = ' save status: NO';
-        wsSavedMsg.style.color = 'rgb(156,  10,  10)';  //red brown      //'red'; 'rgb(255,   0,  10)'
-        break;
-      default:
-        wsSavedMsg.textContent = ' is confused ';
-        wsSavedMsg.textContent = ' saved status: confused ';
-        wsSavedMsg.style.color = 'rgb( 93,  20, 166)';  //  6 purple   //'deeppink';
-        break;
+      switch (av.fzr.saveState) {
+        case 'yes':
+        case 'default':
+          wsSavedMsg.textContent = ' is saved ';
+          wsSavedMsg.textContent = ' save status: saved ';
+          wsSavedMsg.style.color = 'rgb(  0,  93,  93)'  //'green';
+          break;
+        case 'maybe':
+          wsSavedMsg.textContent = ' might be saved';
+          wsSavedMsg.textContent = ' save status: unknown';
+          wsSavedMsg.style.color = 'rgb(  0, 109, 219)';  //'blue';
+          break;
+        case 'no':
+          wsSavedMsg.textContent = ' is not saved';
+          wsSavedMsg.textContent = ' save status: NO';
+          wsSavedMsg.style.color = 'rgb(156,  10,  10)';  //red brown      //'red'; 'rgb(255,   0,  10)'
+          break;
+        default:
+          wsSavedMsg.textContent = ' is confused ';
+          wsSavedMsg.textContent = ' saved status: confused ';
+          wsSavedMsg.style.color = 'rgb( 93,  20, 166)';  //  6 purple   //'deeppink';
+          break;
+      }
     }
   };
   //-------------------------------------------------------------------------------------- end av.fzr.saveUpdateState --
