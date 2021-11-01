@@ -785,8 +785,8 @@
                               <option value="grid">Local</option>
                             </select>
                           </div>
-                          <div id="orn_regionLayHolder" class='regionLaySumCls' onclick='av.sgr.detailToggle'>
-                            <select id="orn_regionLayout" onchange="av.sgr.regionLayoutChange(this)">
+                          <div id="orn_regionLayHolder" class='regionLaySumCls sgrSelectHoldCls' onclick='av.sgr.detailToggle'>
+                            <select id="orn_regionLayout" class="sgrSlctCls" onchange="av.sgr.regionLayoutChange(this)">
                               <option id="orn_globalDish" value="1Global" selected=''>Global Dish</option>
                               <option id="orn_wholeDish" value="1All">Whole Dish</option>
                               <option id="orn_LftRit" value="2LftRit">Halves L/R</option>
@@ -794,7 +794,7 @@
                               <option id="orn_quarters" class="4Quarters" value="4Quarters">Quarters</option>
                             </select>
                           </div>
-                          <div id="orn_supplyTypeHolder" class='supply_HoldCls'>
+                          <div id="orn_supplyTypeHolder" class='supply_HoldCls sgrSelectHoldCls'>
                             <select id='orn_supplyTypeSlct' class='supplyTypeSClass' onchange='av.sgr.supplyChange(this);'>
                               <option id="orn_none" value='none'>None</option>
                               <option id="orn_unlimited" value='unlimited' selected=''>Unlimited</option>
@@ -803,8 +803,8 @@
                               <option id="orn_combo" value="combo">Combo</option>
                             </select>
                           </div>
-                          <div id="ornWsupplyTypeHolder" class='supplyWHoldCls'>
-                            <select id="ornWsupplyTypeSlct" onchange="av.sgr.supplyChange(this);">
+                          <div id="ornWsupplyTypeHolder" class='supply_HoldCls sgrSelectHoldCls'>
+                            <select id="ornWsupplyTypeSlct" class='supplyTypeSClass' onchange="av.sgr.supplyChange(this);">
                               <option id="ornWnone" value='none'>None</option>
                               <option id="ornWunlimited" value='unlimited' selected=''>Unlimited</option>
                               <option id="ornWLimited" value="limited2">Limited</option>
@@ -812,11 +812,11 @@
                               <option id="orn_debugTyp" value="debug" disabled>debug</option>
                              </select>
                           </div>
-                          <div id='orn_inflowHiDiv' class='sgrDetail_grid-item inflwSumCls'>
+                          <div id='orn_inflowHiDiv' class='inflwSumCls sgrNputTxtCls'>
                                 <label><input id='orn_inflowHiNp' class='sugInflwHiNcls' type='text' onchange="av.sgr.inflowChange(this);">&nbsp;
                               <span id='orn_inflowHiText' class='sugInflowLCls'> / </span></label>
                           </div>
-                          <div id="orn_outflowHiDiv" class='sgrDetail_grid-item outflwSumCls'>
+                          <div id="orn_outflowHiDiv" class='outflwSumCls sgrNputTxtCls'>
                             <label><input id="orn_outflowHiNp" class='sgrOutflwHiNcls' type='text' onchange="av.sgr.outflowChange(this);">&nbsp;
                             <span id="orn_outflowHiText" class='sugOutflowLCls'></span></label>
                           </div>
@@ -825,11 +825,11 @@
                           <div id="orn_periodcheckboxHolder" class="periodGlobalCheck" onchange="av.sgr.eachSugarcheckboxHolderChange(this);">
                             <label><input id="orn_periodCheck" type='checkbox'> Periodic</label>
                           </div>
-                          <div id="orn_periodTimeHolder" class="periodTimeGlobClass">
+                          <div id="orn_periodTimeHolder" class="periodTimeGlobClass sgrNputTxtCls">
                             <label><input id="orn_periodNp" class="sugPeriodNclass" type='text' onchange="av.sgr.periodChange(this);"> Period</label>
                           </div>
 
-                          <div id="orn_initialHiHolder" class='initialGlobCls'>
+                          <div id="orn_initialHiHolder" class='initialGlobCls sgrNputTxtCls'>
                             <input id="orn_initialHiNp" class="sugInitialNclass" type='text' value='100' onchange="av.sgr.initialChange(this);">&nbsp;initial / cell
                           </div>
                           <div id="orn_summaryFooterText" class='sumFtTxtCls'> period &lt; 1 ==&gt; non-periodic</div>
@@ -844,7 +844,7 @@
                         <div id="orn0subSection" class='sugarDishSubsection'>
                           <div id='orn0detailText' class='detailTxtCls'></div>
                           <div id="orn0regionName" class='sgrDetail_grid-item subSectionTitle'>Whole Dish</div>
-                          <div id="orn0supplyTypeHolder" class='sgrDetail_grid-item supplyTypeHoldcls'>
+                          <div id="orn0supplyTypeHolder" class='supplyTypeHoldcls sgrSelectHoldCls'>
                             <select id="orn0supplyTypeSlct" class='supplyTypeSClass' onchange='av.sgr.supplyChange(this);'>
                               <option id='orn0none' value='none'>None</option>
                               <option id='orn0unlimited' value='unlimited' selected=''>Unlimited</option>
@@ -852,7 +852,7 @@
                               <option id='orn0Chemostat' class='localChemostat' value='chemostat'>Chemostat</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
-                          <div id="orn0supplyModifierHolder" class='sgrDetail_grid-item supplyModifierDivClass'>
+                          <div id="orn0supplyModifierHolder" class='supplyModifierDivClass sgrSelectHoldCls'>
                             <select id="orn0supplyModifierSelect" class='supplyModSelClass' onchange="av.sgr.supplyModifierChange(this);">
                               <option id="orn0default" value='default' selected=''>Default</option>
                               <option id="orn0diffuse" value='diffuse'>Diffusion</option>
@@ -863,10 +863,10 @@
                           <div id="orn0periodcheckboxHolder" class="periodGlobalCheck" onchange="av.sgr.eachSugarcheckboxHolderChange(this);">
                             <label><input id="orn0periodCheck" type='checkbox'> Periodic</label>
                           </div>
-                          <div id="orn0periodTimeHolder" class="sgrDetail_grid-item periodTimeDivClass">
+                          <div id="orn0periodTimeHolder" class="periodTimeDivClass sgrNputTxtCls">
                             <label><input id="orn0periodNp" class="sugPeriodNclass" type='text' onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
-                          <div id="orn0hiSideSelectHolder" class="sgrDetail_grid-item sideNclass">
+                          <div id="orn0hiSideSelectHolder" class="sideNclass sgrSelectHoldCls">
                             <label><select id="orn0hiSide">
                               <option value="top">Top</option>
                               <option value="bottom">Bottom</option>
@@ -877,27 +877,27 @@
                           <div id="orn0sideLoText" class='sgrDetail_grid-item sideTitleLoDcls'>Low Side</div>
                           <div id="orn0blank" class="sgrDetail_grid-item sgrBlank">&nbsp;&nbsp;&nbsp;&nbsp;</div>  
 
-                          <div id="orn0initialHiHolder" class="sgrDetail_grid-item initialHiHoldcls">
+                          <div id="orn0initialHiHolder" class="initialHiHoldcls sgrNputTxtCls">
                             <label><input id="orn0initialHiNp" class="sugInitialHiNclass" type='text' value='100' onchange="av.sgr.initialChange(this);">&nbsp;
                               <span id="orn0initialHiText">High amount</span></label>
                           </div>
-                          <div id="orn0initialLoDiv" class="sgrDetail_grid-item initialLoDclass">
+                          <div id="orn0initialLoDiv" class="initialLoDclass sgrNputTxtCls">
                             <label><input id="orn0initialLoNp" class="sugInitialLoNclass" type='text' value='100' onchange="av.sgr.initialChange(this);">&nbsp;
                               <span id="orn0initialLoText">Low initial</span></label>
                           </div>
-                          <div id="orn0inflowHiDiv" class='sgrDetail_grid-item inflwHiDcls'>
+                          <div id="orn0inflowHiDiv" class="inflwHiDcls sgrNputTxtCls">
                             <label><input id="orn0inflowHiNp" class="sugInflwHiNcls" type='text' onchange="av.sgr.inflowChange(this);">&nbsp;
                               <span id="orn0inflowHiText" class='sugInflowLabel'>Inflow/cell &nbsp;</span></label>
                           </div>
-                          <div id="orn0inflowLoDiv" class='sgrDetail_grid-item inflwLoDcls'>
+                          <div id="orn0inflowLoDiv" class="inflwLoDcls sgrNputTxtCls">
                             <label><input id="orn0inflowLoNp" class="sugInflwLoNcls" type='text' onchange="av.sgr.inflowChange(this);">&nbsp;
                             <span id="orn0inflowLoText" class='sugOutflowLabel'>Inflow/cell &nbsp;</span></label>
                           </div>
-                          <div id="orn0outflowHiDiv" class='sgrDetail_grid-item outflwHiDcls'>
+                          <div id="orn0outflowHiDiv" class='outflwHiDcls sgrNputTxtCls'>
                             <label><input id='orn0outflowHiNp' class='sgrOutflwHiNcls' type='text' onchange="av.sgr.outflowChange(this);">&nbsp;
                             <span id="orn0outflowHiText" class='sugOutflowLabel'>Outflow fract</span></label>
                           </div>
-                          <div id="orn0outflowLoDiv" class='sgrDetail_grid-item outflwLoDcls'>
+                          <div id="orn0outflowLoDiv" class="outflwLoDcls sgrNputTxtCls">
                             <label><input id="orn0outflowLoNp" class="sgrOutflwLoNcls" type='text' onchange="av.sgr.outflowChange(this);">&nbsp;
                               <span id="orn0outflowLoText" class='sugOutflowLabel'>Outflow fract</span></label>
                           </div>
@@ -914,7 +914,7 @@
                         <div id="orn1subSection" class='sugarDishSubsection'>
                           <div id="orn1detailText" class='detailTxtCls'></div>
                           <div id="orn1regionName" class='sgrDetail_grid-item subSectionTitle'>Whole Dish</div>
-                          <div id="orn1supplyTypeHolder" class='sgrDetail_grid-item supplyTypeHoldcls'>
+                          <div id="orn1supplyTypeHolder" class='supplyTypeHoldcls sgrSelectHoldCls'>
                             <select id="orn1supplyTypeSlct" class='supplyTypeSClass' onchange='av.sgr.supplyChange(this);'>
                               <option id="orn1none" value='none'>None</option>
                               <option id="orn1unlimited" value='unlimited' selected=''>Unlimited</option>
@@ -922,7 +922,7 @@
                               <option id="orn1Chemostat" class='localChemostat' value='chemostat'>Chemostat</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
-                          <div id="orn1supplyModifierHolder" class='sgrDetail_grid-item supplyModifierDivClass'>
+                          <div id="orn1supplyModifierHolder" class='supplyModifierDivClass sgrSelectHoldCls'>
                             <select id="orn1supplyModifierSelect" class='supplyModSelClass' onchange="av.sgr.supplyModifierChange(this);">
                               <option id="orn1default" value='default' selected=''>Default</option>
                               <option id="orn1diffuse" value='diffuse'>Diffusion</option>
@@ -930,10 +930,10 @@
                               <option id="orn1periodic" class='periodic' value='periodic'>Periodic</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
-                          <div id="orn1periodTimeHolder" class="sgrDetail_grid-item periodTimeDivClass">
+                          <div id="orn1periodTimeHolder" class="periodTimeDivClass sgrNputTxtCls">
                             <label><input id="orn1periodNp" class="sugPeriodNclass" type='text' onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
-                          <div id="orn1hiSideSelectHolder" class="sgrDetail_grid-item sideNclass">
+                          <div id="orn1hiSideSelectHolder" class="sideNclass sgrSelectHoldCls">
                             <label><select id="orn1hiSide">
                               <option value="top">Top</option>
                               <option value="bottom">Bottom</option>
@@ -944,27 +944,27 @@
                           <div id="orn1sideLoText" class='sgrDetail_grid-item sideTitleLoDcls'>Low Side</div>
                           <div id="orn1blank" class="sgrDetail_grid-item sgrBlank">&nbsp;&nbsp;&nbsp;&nbsp;</div>  
 
-                          <div id="orn1initialHiHolder" class="sgrDetail_grid-item initialHiHoldcls">
+                          <div id="orn1initialHiHolder" class="initialHiHoldcls sgrNputTxtCls">
                             <label><input id="orn1initialHiNp" class="sugInitialHiNclass" type='text' value='100' onchange="av.sgr.initialChange(this);">&nbsp;
                               <span id="orn1initialHiText">High amount</span></label>
                           </div>
-                          <div id="orn1initialLoDiv" class="sgrDetail_grid-item initialLoDclass">
+                          <div id="orn1initialLoDiv" class="initialLoDclass sgrNputTxtCls">
                             <label><input id="orn1initialLoNp" class="sugInitialLoNclass" type='text' value='100' onchange="av.sgr.initialChange(this);">&nbsp;
                               <span id="orn1initialLoText">Low initial</span></label>
                           </div>
-                          <div id="orn1inflowHiDiv" class='sgrDetail_grid-item inflwHiDcls'>
+                          <div id="orn1inflowHiDiv" class="inflwHiDcls sgrNputTxtCls">
                             <label><input id="orn1inflowHiNp" class="sugInflwHiNcls" type='text' onchange="av.sgr.inflowChange(this);">&nbsp;
                               <span id="orn1inflowHiText" class='sugInflowLabel'>Inflow</span></label>
                           </div>
-                          <div id="orn1inflowLoDiv" class='sgrDetail_grid-item inflwLoDcls'>
+                          <div id="orn1inflowLoDiv" class="inflwLoDcls sgrNputTxtCls">
                             <label><input id="orn1inflowLoNp" class="sugInflwLoNcls" type='text' onchange="av.sgr.inflowChange(this);">&nbsp;
                             <span id="orn1inflowLoText" class='sugOutflowLabel'>Inflow</span></label>
                           </div>
-                          <div id="orn1outflowHiDiv" class='sgrDetail_grid-item outflwHiDcls'>
+                          <div id="orn1outflowHiDiv" class="outflwHiDcls sgrNputTxtCls">
                             <label><input id="orn1outflowHiNp" class='sgrOutflwHiNcls' type='text' onchange="av.sgr.outflowChange(this);">&nbsp;
                             <span id="orn1outflowHiText" class='sugOutflowLabel'>Outflow fract</span></label>
                           </div>
-                          <div id="orn1outflowLoDiv" class='sgrDetail_grid-item outflwLoDcls'>
+                          <div id="orn1outflowLoDiv" class="outflwLoDcls sgrNputTxtCls">
                             <label><input id="orn1outflowLoNp" class="sgrOutflwLoNcls" type='text' onchange="av.sgr.outflowChange(this);">&nbsp;
                               <span id="orn1outflowLoText" class='sugOutflowLabel'>Outflow fract</span></label>
                           </div>
@@ -980,7 +980,7 @@
                         <div id="orn2subSection" class='sugarDishSubsection'>
                           <div id="orn2detailText" class='detailTxtCls'></div>
                           <div id="orn2regionName" class='sgrDetail_grid-item subSectionTitle'>Whole Dish</div>
-                          <div id="orn2supplyTypeHolder" class='sgrDetail_grid-item supplyTypeHoldcls'>
+                          <div id="orn2supplyTypeHolder" class='supplyTypeHoldcls sgrSelectHoldCls'>
                             <select id="orn2supplyTypeSlct" class='supplyTypeSClass' onchange='av.sgr.supplyChange(this);'>
                               <option id="orn2none" value='none'>None</option>
                               <option id="orn2unlimited" value='unlimited' selected=''>Unlimited</option>
@@ -988,7 +988,7 @@
                               <option id="orn2Chemostat" value='chemostat'>Chemostat</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
-                         <div id="orn2supplyModifierHolder" class='sgrDetail_grid-item supplyModifierDivClass'>
+                         <div id="orn2supplyModifierHolder" class='supplyModifierDivClass sgrSelectHoldCls'>
                             <select id="orn2supplyModifierSelect" class='supplyModSelClass' onchange="av.sgr.supplyModifierChange(this);">
                               <option id="orn2default" value='default' selected=''>Default</option>
                               <option id="orn2diffuse" value='diffuse'>Diffusion</option>
@@ -996,11 +996,11 @@
                               <option id="orn2periodic" class='periodic' value='periodic'>Periodic</option>
                             </select>&nbsp;&nbsp;&nbsp;
                           </div>
-                          <div id="orn2periodTimeHolder" class="sgrDetail_grid-item periodTimeDivClass">
+                          <div id="orn2periodTimeHolder" class="periodTimeDivClass sgrNputTxtCls">
                             <label><input id="orn2periodNp" class="sugPeriodNclass" type='text' onchange="av.sgr.periodChange(this);"> time</label>
                           </div>
 
-                          <div id="orn2hiSideSelectHolder" class="sgrDetail_grid-item sideNclass">
+                          <div id="orn2hiSideSelectHolder" class="sideNclass sgrSelectHoldCls">
                             <label><select id="orn2hiSide">
                               <option value="top">Top</option>
                               <option value="bottom">Bottom</option>
@@ -1011,27 +1011,27 @@
                           <div id="orn2sideLoText" class='sgrDetail_grid-item sideTitleLoDcls'>Low Side</div>
                           <div id="orn2blank" class="sgrDetail_grid-item sgrBlank">&nbsp;&nbsp;&nbsp;&nbsp;</div>  
 
-                          <div id="orn2initialHiHolder" class="sgrDetail_grid-item initialHiHoldcls">
+                          <div id="orn2initialHiHolder" class="initialHiHoldcls sgrNputTxtCls">
                             <label><input id="orn2initialHiNp" class="sugInitialHiNclass" type='text' value='100' onchange="av.sgr.initialChange(this);">&nbsp;
                               <span id="orn2initialHiText">High side amount</span></label>
                           </div>
-                          <div id="orn2initialLoDiv" class="sgrDetail_grid-item initialLoDclass">
+                          <div id="orn2initialLoDiv" class="initialLoDclass sgrNputTxtCls">
                             <label><input id="orn2initialLoNp" class="sugInitialLoNclass" type='text' value='100' onchange="av.sgr.initialChange(this);">&nbsp;
                               <span id="orn2initialLoText">Low side amount</span></label>
                           </div>
-                          <div id="orn2inflowHiDiv" class='sgrDetail_grid-item inflwHiDcls'>
+                          <div id="orn2inflowHiDiv" class="inflwHiDcls sgrNputTxtCls">
                             <label><input id="orn2inflowHiNp" class="sugInflwHiNcls" type='text' onchange="av.sgr.inflowChange(this);">&nbsp;
                               <span id="orn2inflowHiText" class='sugInflowLabel'>Inflow</span></label>
                           </div>
-                          <div id="orn2inflowLoDiv" class='sgrDetail_grid-item inflwLoDcls'>
+                          <div id="orn2inflowLoDiv" class="inflwLoDcls sgrNputTxtCls">
                             <label><input id="orn2inflowLoNp" class="sugInflwLoNcls" type='text' onchange="av.sgr.inflowChange(this);">&nbsp;
                             <span id="orn2inflowLoText" class='sugOutflowLabel'>Inflow</span></label>
                           </div>
-                          <div id="orn2outflowHiDiv" class='sgrDetail_grid-item outflwHiDcls'>
+                          <div id="orn2outflowHiDiv" class="outflwHiDcls sgrNputTxtCls">
                             <label><input id="orn2outflowHiNp" class='sgrOutflwHiNcls' type='text' onchange="av.sgr.outflowChange(this);">&nbsp;
                             <span id="orn2outflowHiText" class='sugOutflowLabel'>Outflow fract</span></label>
                           </div>
-                          <div id="orn2outflowLoDiv" class='sgrDetail_grid-item outflwLoDcls'>
+                          <div id="orn2outflowLoDiv" class="outflwLoDcls sgrNputTxtCls">
                             <label><input id="orn2outflowLoNp" class="sgrOutflwLoNcls" type='text' onchange="av.sgr.outflowChange(this);">&nbsp;
                               <span id="orn2outflowLoText" class='sugOutflowLabel'>Outflow fract</span></label>
                           </div>

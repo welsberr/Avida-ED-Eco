@@ -341,11 +341,6 @@ html {
     padding: var(--rem-size1) var(--rem-size2) 0px 0px;  /* top right bottom left  */     
     height: inherit;
     vertical-align: middle;
-/*
-    float: right;
-    clear: right;
-    padding: 1px : var(--rem-size2) var(--rem-size2) 0px 0px;  /* top right bottom left  */
-*/
   }
   
 /* structures in the left side panel */
@@ -1077,9 +1072,7 @@ details summary {
 .groupDebug{  display: inline; }
 .grooupLimited { display: inline; }
 .groupChemostat { display: inline; }
-
 .localChemostat { display: inline; }
-
 
 .2HalfLftRit { display: inline-block; }  //inline
 .3TopLftRit { display: none; }  //inline
@@ -1140,8 +1133,12 @@ details summary {
 
 .sgrSumCls { 
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  --pix1: 0; /* Equals to 0px */
+  padding: var(--rem-size1) 0px 0px 0px;  /* top right bottom left  */       
   height: 23px;  width: 100%;
+  
 /*  background: LightCyan;   */
 }
 .sgrLftSumCls { flex: 0 1 auto; }
@@ -1154,8 +1151,19 @@ details summary {
   width: 96px;
 }
 
+.supplyTypeSClass {
+  --pixel: 77;
+  width: var(--rem-size0);
+}
+.sgrSlctCls{
+  --pix1: 2; /* equals 2px when used with --rem-size1 */
+  padding: 0px 0px 0px var(--rem-size1);  /* top right bottom left  */         
+}
+
+.sgrNputTxtCls {}
+
 /*---------------------------------------------------------- sugar summary grid container classes for tsk_sumLftGrid--*/
-/* no longer in use, but need to keep until removed from javascript */
+/* geometryCls no longer in use, but need to keep until removed from javascript */
 .geometryCls{ grid-area:geometryCls; display: none; }
 
 .sgrTitleCls { grid-area: sgrTitleCls; display: inline-block; width: 54px; }
@@ -1208,19 +1216,19 @@ details summary {
 .grd-sgr-sum-global-container {
   display: grid;
   grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls initialGlobCls";
-  justify-content: start; 
+  justify-content: start; align-items: center;
   height: 23px;
 }
 .grd-sgr-sum-global-limited-container {
   display: grid;
   grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls initialGlobCls";
-  justify-content: start; 
+  justify-content: start; align-items: center;
   height: 23px;  
 }
 .grd-sgr-sum-global-chemo-container {
   display: grid;
   grid-template-areas: 'detailArrow sgrTitleCls regionLayCls supply_HoldCls tskRewardCls';
-  justify-content: start; 
+  justify-content: start; align-items: center;
   height: 23px;  width: 100%;
 }
 .grd-sgr-sum-global-chemo-container_block {
@@ -1229,14 +1237,15 @@ details summary {
 .grd-sgr-sum-global-chemo-container_columns {
   display: grid;
   grid-template-areas: "detailArrow sgrTitleCls regionLayCls supply_HoldCls  chmsttSumCls inflwSumCls outflwSumCls";
-  justify-content: start; 
+  justify-content: start; align-items: center;
   height: 23px;  width: 100%;
 }
-
+/*-------  below this not in use -- */
 .grid-sugar-summary-geo-basic-container_ {
   display: inline-grid;
   grid-template-areas: 'detailArrow sgrTitleCls geometryCls supplyWdCls supply_HoldCls sumFtTxtCls initialGlobCls';
-  justify-items: start;  justify-content: start; width: 100%;
+  justify-items: start;  justify-content: start; 
+  width: 100%;
   min-height: 23px;
 }
 /*------------------------------------------------------------------------ end sugar summary grid container classes --*/

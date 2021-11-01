@@ -254,9 +254,9 @@ av.fwt.clearResourceConstants = function(from) {
       //console.log('tsk=', numTsk, '; geo=', av.nut[numTsk].uiAll.geometry.toLowerCase() );
       if ( 'global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         if ('unlimited' == av.nut.resrcTyp[ii] ) {
-          document.getElementById('cell'+tskTitle).innerHTML = 'inf';
-          document.getElementById('mx'+tskTitle).innerHTML = '&infin; ';
-          document.getElementById('tot'+tskTitle).innerHTML = '&infin; ';
+          document.getElementById('cell'+tskTitle).innerHTML = 'unlim';
+          document.getElementById('mx'+tskTitle).innerHTML = 'unlim';      //&infin is infinity symbol
+          document.getElementById('tot'+tskTitle).innerHTML = 'unlim';        //&infin is infinity symbol
         } else if ('none' == av.nut.resrcTyp[ii].toLowerCase() ) {
           document.getElementById('cell'+tskTitle).innerHTML = 'none';
           document.getElementById('mx'+tskTitle).innerHTML = '-';
@@ -278,8 +278,8 @@ av.fwt.clearResourceConstants = function(from) {
         document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;';
           if (1 >= av.nut[numTsk].uiAll.regionsNumOf ) { 
           if ('unlimited' == av.nut.resrcTyp[ii] ) {
-            document.getElementById('cell'+tskTitle).innerHTML = '&infin; ';
-            document.getElementById('mx'+tskTitle).innerHTML = '&infin; ';
+            document.getElementById('cell'+tskTitle).innerHTML = 'unlim';
+            document.getElementById('mx'+tskTitle).innerHTML = 'unlim';
           } else {
             document.getElementById('cell'+tskTitle).innerHTML = '0 ';
             document.getElementById('mx'+tskTitle).innerHTML = '0 ';
@@ -339,7 +339,7 @@ av.fwt.clearResourceConstants = function(from) {
     console.log('after calling av.fwt.nut2cfgFile');
     av.fwt.setResourceConstants();    
   };
-  
+
   //------------------------------------------------------------------------------------------ av.fwt.dom2nutUIfields --
   //convert dom data into nutUI data fields
   av.fwt.dom2nutUIfields = function (from) {

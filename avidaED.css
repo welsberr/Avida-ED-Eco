@@ -38,7 +38,6 @@
 * { 
   margin: 0; 
   padding: 0; 
-  /*this does not appear to work */
   /* several versions of rem-size so I could define two sizes in one css definition with the same ratio */
   --rem-size0: calc((var(--pixel)/16) * 1rem);
   --rem-size1: calc((var(--pix1)/16) * 1rem);

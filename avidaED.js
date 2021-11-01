@@ -1,13 +1,12 @@
 
  // this version uses grid box layout for major sections (toop, left side, main, right side)  
  // if (av.dbg.flg.root) { console.log('Root: avidaED.js at beginning of file on 2020_0111 @ 20:21'); };
- console.log('Root: avidaED.js at beginning of file on 2021_801_ Sat'); 
+ console.log('Root: avidaED.js at beginning of file on 2021_a31_Sun'); 
 
 // need a server to run Avida-ED from a file. The one below works.
 // python -m SimpleHTTPServer 
-// python -m SimpleHTTPServer 8001  to put on 8001 instead of 8000
-// Then visit 
-// pouchDB requied a server to run, but no longer using pouchDB, but still using the server. 
+// python -m SimpleHTTPServer 8004  to put on 8004 instead of 8000
+// Then visit http://localhost:8004/   on browser
 //
 // Using NetBeans as IDE in 2019 Different versions exists see
 // https://netbeans.apache.org/download/archive/index.html
@@ -32,6 +31,19 @@
 // To get a local copy of a pull request:
 // git pull origin pull/18/head    //where '18' is the number of the pull request
 //
+// github.com now requires personal access tokens
+// log in at 
+// https://github.com/settings/tokens/677090811/regenerate
+// generate a new access token. 
+// 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
+// git2021_819a Expires on Sun, Jan 30 2022. 
+// 
+// This url states that it will automatically add to keychain if use to push or clone a repository
+// https://gist.github.com/jonjack/bf295d4170edeb00e96fb158f9b1ba3c?fbclid=IwAR2ZsG8_wGUJtUtMSLNVCpKX-PuVG0IfaXGzOHBEAGqQ66Fxzomvih2BCSA
+// 
+// more information about Access Tokens
+// https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/
+// 
 // Avida -------------------
 //
 // to thet the parse value go to the current version of avida folder and
@@ -74,8 +86,8 @@
 // [option]<alt>{go} to get library in the list for finder
 //
 // to have chrome run from file
-///Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --allow-file-access-from-files
-////
+// Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --allow-file-access-from-files
+// 
 // Path in TX for Filezilla /var/www/vhosts/bwng/public_html/projects/Avida-ED
 //                          /var/www/vhosts/bwng/public_html/projects/
 //
