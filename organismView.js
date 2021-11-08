@@ -48,6 +48,18 @@
     //console.log('register w, h =', av.ind.cpuRegisterCtx.canvas.width, av.ind.cpuRegisterCtx.canvas.height, '; dom.width=', av.dom.cpuRegister.width, av.dom.cpuRegister.style.width, av.dom.cpuRegister.clientWidth, av.dom.cpuRegister.offsetWidth, av.dom.cpuRegister.scrollWidth);
     av.ind.cpuRegisterCtx.translate(0.5, 0.5);
 
+//   .orgStatCanvas2row{
+//    width: 162px; 
+//    height: 12px; 
+
+    
+    av.ind.bitboxTotwd = av.ind.bitboxwd * 32 + 2;
+    av.ind.bitbox1ht = av.ind.bitboxwd * 1 + 2;
+    av.ind.bitbox2ht = av.ind.bitboxwd * 2 + 2;
+    av.ind.bitbox3ht = av.ind.bitboxwd * 3 + 2;
+    
+    
+    
     av.dom.cpuStackA = document.getElementById('cpuStackAcnvs');
     av.ind.cpuStackActx = av.dom.cpuStackA.getContext('2d');
     av.ind.cpuStackActx.canvas.width =  $('#cpuStackAcnvs').innerWidth();   // in pixels
@@ -71,7 +83,6 @@
     //av.ind.timeLineCanvas = document.getElementById('timeLine');
     //av.ind.tLctx = av.ind.timeLineCanvas.getContext('2d');
     //console.log('output = ', cpuOutputCnvs);
-
   };
 
   /*--------------------------------------------------------------------------------------------- av.ind.drawTimeline --*/
@@ -187,8 +198,8 @@
     //console.log(from, ' called av.ind.drawBitStr: context=', context, '; row=', row, '; bitStr=', bitStr);
     //console.log(from, ' called av.ind.drawBitStr: row=', row, '; bitStr=', bitStr);
     //console.log('wd, ht =', context.canvas.width, ',', context.canvas.height);
-    var recWidth = 5;   //The width of the rectangle, in pixels
-    var recHeight = 5;  //The height of the rectangle, in pixels
+    var recWidth = av.ind.bitboxwd;   //The width of the rectangle, in pixels
+    var recHeight = av.ind.bitboxht;  //The height of the rectangle, in pixels
     var xx; //The x-coordinate of the upper-left corner of the rectangle
     var yy = row * recHeight;    //upper-left corner of rectangle
     var str = "1";

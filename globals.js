@@ -77,6 +77,8 @@ av.ind = {};
 av.ind.cycle = 0;
 av.ind.update_timer = null;
 av.ind.labeled = [];
+av.ind.bitboxwd = 6;   //x direction
+av.ind.bitboxht = 6;   //y direction
 for (ii=0; ii <101; ii++) { av.ind.labeled[ii] = false;}
 
 av.aww = {}; //avida web worker

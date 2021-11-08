@@ -263,10 +263,11 @@ html {
 
   #mainMenu{
     flex: 0 1 350px;
-    height: 2.0rem; /* 2.5em */
+    --pix1: 30; 
+    height: var(--rem-size1)
     border: 1px solid #888;
-    overflow: scroll;
-    /* resize: horizontal;*/
+    overflow: visible;       /* was scroll */
+    /* does not work=resize: horizontal; */
     max-width: fit-content;
   }
 
@@ -333,6 +334,7 @@ html {
   }
   
   #avidaVersion{
+    display: none;
     --pixel: 120; /* Equals to 120px */ 
     width: : var(--rem-size0);
     text-align: right;
@@ -712,6 +714,8 @@ html {
     flex: 1 1 280px;
     /* min-height: 280px; */
   }
+  
+  /* contains SelOrgType & PopStats4Grid horizontal */
   #popStatistics{
     display: flex;
     flex-direction: row;
@@ -721,7 +725,6 @@ html {
     resize: vertical;     /*should get yemi to replaces with a popChartDragbar */
     overflow: auto;
   }
-  /* contains SelOrgType & PopStats4Grid horizontal */
   
 #selOrgType{
   /* yemi: used to be 1 1 auto; yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
@@ -784,6 +787,7 @@ table.botPopTable {
 #logTit6 { font-style: italic; color: dimgray; }
 #logTit7 { font-style: italic; color: dimgray; }
 
+/* ---------------------- Population (right) side of tables */
 #popChrtHolder{
   flex: auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
   border: 1px solid #AAA;
@@ -791,19 +795,12 @@ table.botPopTable {
   width: 100%;
 }
 
-/* ---------------------- Population (right) side of tables */
-
 #resrceDataHolder{
-  display: none;  /* none; */
-  /* flex: 0 0 53; */
+  display: inline-block;
+  /* flex: 0 0 auto; */
   border: 1px solid #AAA;
-  width: 100%; /* yemi: changed from 99% to 100% to remove awkward space at the end */
-/* visibility: hidden; */
+  width: 100%; 
 }
-#popChrtHolder{
-  flex: 1 1 auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-  height: 100%;
-} 
 
 /* Yemi added 
 #miniChartOptionsLabel { margin: 0; }    /* diane thinks it is redant as this is covered in label css */
@@ -825,12 +822,15 @@ table.botPopTable {
 }
 #pauseOptions {
   flex: 0 0 20px;
+  align-items: center;
   border: 1px solid #AAA;
   background: #DDD;
 }
 #pausePrefix { display: inline-block; }
 #pauseMidText { display: inline-block; }
 #itemDone1st { display: none; }
+#pauseChkTxt { display: inline-block; }
+#autoPauseCheck {}
 #pauseCriteriaHolder { }  /* tried to use to give a white background to select box rather than a inherit background */
   
 input:focus {
@@ -879,8 +879,8 @@ input:focus {
 .sugarGlobal-gridContainer {   /*on stats tab of population page   resourceDataGrid held by resrceDataHolder */
   display: grid;
   grid-template-areas: ' sgrTop  sgrNot  sgrNan  sgrAnd  sgrOrn  sgrOro  sgrAnt  sgrNor  sgrXor  sgrEqu'
-                       ' totTop  totNot  totNan  totAnd  totOrn  totOro  totAnt  totNor  totXor  totEqu'
-                       'cellTop cellNot cellNan cellAnd cellOrn cellOro cellAnt cellNor cellXor cellEqu';
+                       'cellTop cellNot cellNan cellAnd cellOrn cellOro cellAnt cellNor cellXor cellEqu'
+                       ' totTop  totNot  totNan  totAnd  totOrn  totOro  totAnt  totNor  totXor  totEqu';
   grid-template-columns: 3fr      2fr    2fr    2fr    2fr    2fr    2fr    2fr    2fr    2fr; 
   width: 100%;
   overflow: auto;
@@ -1798,19 +1798,20 @@ checkbox:focus {
   }
   /* might re-write these as grid containers or flex boxes. */
   /* or re-write them so they scale with the width of the right side bar */
-  .orgStatCanvas15{
-    width: 162px; 
-    height: 17px; 
+  .orgStatCanvas3row{
+    width: 194px; /* 6*32+2 */
+    height: 20px; /* 6*3+2 */
     border:1px solid #000000;
   }
-  .orgStatCanvas10{
-    width: 162px; 
-    height: 12px; 
+  .orgStatCanvas2row{
+    width: 194px; 
+    height: 14px; 
     border:1px solid #000000;
   }
-  .orgStatCanvas5{
-    width: 162px; 
-    height:  7px; 
+  .orgStatCanvas1row{
+    
+    width: 194px; 
+    height:  8px; 
     border:1px solid #000000;
   }
   .instructionText{

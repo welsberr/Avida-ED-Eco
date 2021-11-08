@@ -44,6 +44,12 @@
   --rem-size2: calc((var(--pix2)/16) * 1rem);
   /* To use on an HTML element, where pixel is defined in css/HTML element */
   /* font-size: var(--rem-size0); */
+  --bitboxWd: 6px;
+  --bitboxHt: 6px;
+  --bitHolderWd: calc((var(--bitboxWd)*32)+2px);
+  --bitHolderHt: calc((var(--bitboxHt)*(var(--numlines)))+2px;)
+  /*  --numlines: 1; */
+  /*  height: var(--bitHolderHt); */ /* where numlines is defined */
 }
  
 html, body {

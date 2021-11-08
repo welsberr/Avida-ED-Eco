@@ -43,17 +43,16 @@
       </div>
     </div>
 
+    <input id='putWS' type='file' class='display_none' onchange='av.fio.userPickZipRead()' />
+    <input id='importFzrItem' type='file' class='display_none' onchange='av.fio.importZipRead()' />
+    <input type='hidden' value='mymail@gmail.com' id='mailto' />
+    
     <div id='allAvidaContainer' class='all3pop'>
       <div id='headerMain' class='headerRow'>
         <div id='leftPnlBtnHolder' class='leftPnlBtnHlderShow'>
           <input id='leftPanelButton' type='button' value='<<&nbsp;' onclick='av.ptd.lftPanelBtnFn();'/>
         </div>
         <div id="mainMenu">
-          <input id='putWS' type='file' class='display_none' onchange='av.fio.userPickZipRead()' />
-          <input id='importFzrItem' type='file' class='display_none' onchange='av.fio.importZipRead()' />
-
-          <input type='hidden' value='mymail@gmail.com' id='mailto' />
-
           <span data-dojo-type='dijit/MenuBar' tabIndex='0'>
             <span data-dojo-type='dijit/PopupMenuBarItem' label='Avida-ED' iconClass='dijitNoIcon' id='mnAvidaEd'>
               <span data-dojo-type='dijit/Menu'>
@@ -148,7 +147,7 @@
         <div id="headerMsg">
           <div id='msgHolder'>
             Workspace: `<label id='wsNameMsg'>Default</label>`
-            <label id='wsSavedMsg'> - Save workspace if you want use items saved to the freezer after this session</label> &nbsp;&nbsp;&nbsp;
+            <label id='wsSavedMsg'> - Save workspace if you want to use items saved to the freezer after this session</label> &nbsp;&nbsp;&nbsp;
             <span style='text-align: right'>
               <label id='userMsgLabel'> </label>
             </span>
@@ -716,7 +715,7 @@
                   </select>
                 </span>
                 <input id='autoPauseNum' type='text' value='1000' style='width:80px'>
-                <span id='pauseChkTxt'> when checked </span>
+                <div id='pauseChkTxt'> when checked </div>
                 <input id="autoPauseCheck" type="checkbox" class="blk_wite_checkbox"> </label>
               </div>
                
@@ -1318,15 +1317,15 @@
             <div id='lowerOrgInfo'>
               <div id='bitCanvasHolders';
               <p>Input Buffer</p>
-              <canvas id='cpuBufferCnvs' class='orgStatCanvas15'></canvas>
+              <canvas id='cpuBufferCnvs' class='orgStatCanvas3row'></canvas>
               <p>Registers: AX, BX, CX</p>
-              <canvas id='cpuRegisterCnvs' class='orgStatCanvas15'></canvas>
+              <canvas id='cpuRegisterCnvs' class='orgStatCanvas3row'></canvas>
               <p>Stack A (first two frames)</p>
-              <canvas id='cpuStackAcnvs' class='orgStatCanvas10'></canvas>
+              <canvas id='cpuStackAcnvs' class='orgStatCanvas2row'></canvas>
               <p>Stack B (first two frames)</p>
-              <canvas id='cpuStackBcnvs' class='orgStatCanvas10'></canvas>
+              <canvas id='cpuStackBcnvs' class='orgStatCanvas2row'></canvas>
               <p>Last Output</p>
-              <canvas id='cpuOutputCnvs' class='orgStatCanvas5'></canvas>
+              <canvas id='cpuOutputCnvs' class='orgStatCanvas1row'></canvas>
               <div id='InstructionDetail'>Instruction Details
                 <details>
                   <summary>Just Executed:</summary>

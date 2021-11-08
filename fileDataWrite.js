@@ -255,8 +255,8 @@ av.fwt.clearResourceConstants = function(from) {
       if ( 'global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         if ('unlimited' == av.nut.resrcTyp[ii] ) {
           document.getElementById('cell'+tskTitle).innerHTML = 'unlim';
-          document.getElementById('mx'+tskTitle).innerHTML = 'unlim';      //&infin is infinity symbol
-          document.getElementById('tot'+tskTitle).innerHTML = 'unlim';        //&infin is infinity symbol
+          document.getElementById('mx'+tskTitle).innerHTML = '&infin; ';      //&infin is infinity symbol
+          document.getElementById('tot'+tskTitle).innerHTML = '&infin; ';        //&infin is infinity symbol
         } else if ('none' == av.nut.resrcTyp[ii].toLowerCase() ) {
           document.getElementById('cell'+tskTitle).innerHTML = 'none';
           document.getElementById('mx'+tskTitle).innerHTML = '-';
@@ -294,7 +294,7 @@ av.fwt.clearResourceConstants = function(from) {
   av.fwt.setResourceGridDisplay = function (from) {
     console.log(from, 'called av.fwt.setResourceGridDisplay');
     var hideFlag = [false, false, false, false, false, false, false, false, false];
-    var hideResourceGrid = true;  // show resource grid;
+    var hideResourceGrid = true;  // hide resource grid when true. Show grid when false. 
     var numTsk = '0not';
     var supplyType = 'other';
     
