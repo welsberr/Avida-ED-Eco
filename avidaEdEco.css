@@ -730,10 +730,11 @@ html {
   /* yemi: used to be 1 1 auto; yemi commented this out; fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
   flex: 1 1 auto;    /* djb: 100 px becaome 192px; 150px became 167px */
   border: 1px solid #AAA;
+  overflow: auto;  /* djb added might not be a good idea */
   /* overflow: scroll; */ /* yemi: prevents awkward leftover space on the right when table gets smaller */
-}  /*contains sotTopTable and sotBotTable  */
+}  /*contains sotTopTbID and sotBotTbCls  */
 
-#sotTopTable { width: 100%; }
+#sotTopTbID { width: 100%; }
 #sotBopTable { width: 100%; background: white; }
 #sotColorBox { display: inline-block; width: 10px; height: 10px;}
 
@@ -743,14 +744,14 @@ html {
   flex: 1 1 auto; /* yemi: used to be 1 1 240px; yemi: fixed the weird width problem by useing 240px as the width; auto adjusts */     
   border: 1px solid #AAA;
   /* overflow: scroll; */ /* yemi: prevents awkward leftover space on the right when table gets smaller */
-} /* contains popsTopTable & popsBotTableHold(popsBotTable) min-width: 168px;*/
+} /* contains psTopTbID & psBotTbIdHold(psBotTbId) min-width: 168px;*/
 
-div.popsTopTableHold { 
+div.psTopTbIDHold { 
   min-width: 168px;
   background: #DDD; 
 }
 
-.table.topPopTable {
+.table.psTopTbCls {
 /*  margin: auto;  /* centers table in div */
   border: 0;  
   padding: 0;
@@ -762,8 +763,94 @@ div.popsTopTableHold {
 .popsTopTblcol1 {min-width: 10px;  }  /* Yemi removed min-width; Diane tried a smaller min-width; was 134px */
 .popsTopTblcol2 {min-width: 60px; } /* yemi: changed from 45px to 60px */
 
-#popsBotTableHold { width: 100%; background:white; }
-table.botPopTable {
+#psBotTbIdHold { width: 100%; background:white; }
+
+ table.sotTopTbCls {
+   white-space: nowrap;
+   border-collapse: collapse;
+   /* margin: auto;   /* centers the table */
+   border: 0;
+   padding: 0;
+   table-layout: auto;
+ }
+ .sotTopTbCls th, .top td {  padding: 0px;  }
+ .topTable tr *:nth-child(1) {
+   text-align: right;
+ }
+ .sotTopTbCls tr *:nth-child(2) {
+   width: 50%;
+ }
+ 
+ .sotTopTbCls tr:nth-child(odd) {background: #D7D7D7}
+ .sotTopTbCls tr:nth-child(even) {background: #DDDDDD}
+ 
+ table.psTopTbCls {
+   border-collapse: collapse;
+   border: 0;
+   padding: 0;
+   white-space: nowrap;
+   width: 100%;
+ }
+ .psTopTbCls tr *:nth-child(1) {
+   text-align: right;
+   font-size: 1em;
+ }
+ .psTopTbCls tr *:nth-child(2) {
+   text-align: left;
+   font-family: monospace;
+   font-size: 1.2em;
+ }
+ .psTopTbCls tr:nth-child(odd) {background: #D7D7D7}
+ .psTopTbCls tr:nth-child(even) {background: #DDDDDD}
+ 
+ table.sotBotTbCls {
+   border: 0;
+   padding: 0;
+   border-collapse: collapse;
+   width: 100%; /* yemi */
+ }
+ 
+ .sotBotTbCls tr:nth-child(even) {background: #FAFAFA}
+ 
+ .sotBotTbCls th { font-weight: bold}
+ .sotBotTbCls td {  line-height: 15px;  }   /* added in javascript ??? */
+ 
+ .sotBotTbCls tr *:nth-child(1) { text-align: center;  }
+ .sotBotTbCls tr *:nth-child(2) {  text-align: right;  }
+ .sotBotTbCls tr *:nth-child(3) {  width: 80%;  }
+ 
+ .sotR {
+   text-align:left;
+   padding-left: 1px;
+   max-height: 15px;    /* from noWrapR */
+   overflow: hidden;
+   width: 100%;   /*tiba remove? */
+ }
+ 
+ .sotL {
+   text-align:right;
+   max-height: 15px;
+   /* width: 110px; */ /* yemi */
+   overflow: hidden;
+ }
+ .sotodd {
+   background: #BBB;   /* #D7D7D7;    */
+   align-self: center;
+ }
+ .sotEven {
+   background: #DDD;
+   align-self: center;
+ }
+ .popButCls{
+   padding: 0px 2px 0px 2px;  
+   max-height: 15px;
+ }
+ .noWrap1 {
+   text-align:center;
+ }
+
+
+table.psBotTbCls {
 /*  margin: auto;  /* centers table in div */
   border: 0;   padding: 0;
   border-collapse: collapse;
@@ -775,14 +862,14 @@ table.botPopTable {
 .popsBotTblcol3 {width: 110px; }
 .numAvidians {  background: #fff }   /* min-width: 110px; */
 
-.botPopTable tr:nth-child(even) {background: #FAFAFA}
-.botPopTable th {
+.psBotTbCls tr:nth-child(even) {background: #FAFAFA}
+.psBotTbCls th {
   font-weight: bold;
 }
-.botPopTable td {  line-height: 15px;  }   /* added in javascript */
+.psBotTbCls td {  line-height: 15px;  }   /* added in javascript */
 
-.botPopTable tr *:nth-child(2) {  text-align: right;  }
-.botPopTable tr *:nth-child(3) {  width: 80%;  }
+.psBotTbCls tr *:nth-child(2) {  text-align: right;  }
+.psBotTbCls tr *:nth-child(3) {  width: 80%;  }
 
 #logTit6 { font-style: italic; color: dimgray; }
 #logTit7 { font-style: italic; color: dimgray; }
@@ -839,24 +926,25 @@ input:focus {
 
 /*--------------------------------------------------------------------------------------------- Resource Data Table --*/
 
-.sugarTsk{
+/* background colors set for order used in sugarGlobal-gridContainer */
+.sugarTsk{  /*Resource */
   background: #DDD; /* #DDD; */
   border: 1px solid #BBB;   /*lower darker*/
   text-align: center;
 }
-.mxTask{
+.mxTask{  /* Highest*/
   display: none;
-  background: #EEE; /* #EEE; */
+  background: #CCC; /* #EEE; */
   border: 1px solid #BBB;   /*lower darker*/
   text-align: center;
 }
-.cellTask{
-  background: #DDD; /*#DDD;*/
+.cellTask{    /* Type */
+  background: #EEE; /*#DDD;*/
   border: 1px solid #BBB;   /*lower darker*/
   text-align: center;
 }
-.totTask{
-  background: #EEE; /* #EEE; */
+.totTask{   /* Amount */
+  background: #DDD; /* #EEE; */
   border: 1px solid #BBB;   /*lower darker*/
   text-align: center;
 }
@@ -886,7 +974,6 @@ input:focus {
   overflow: auto;
   justify-content: stretch;
 }
-
 .sugarBoth-gridContainer {   /*on stats tab of population page */
   display: grid;
   grid-template-areas: ' sgrTop  sgrNot  sgrNan  sgrAnd  sgrOrn  sgrOro  sgrAnt  sgrNor  sgrXor  sgrEqu'

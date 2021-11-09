@@ -248,13 +248,13 @@ av.fwt.clearResourceConstants = function(from) {
       numTsk = av.sgr.logEdNames[ii];
       tskTitle = av.sgr.logicTitleNames[ii];
       //console.log('numTsk', numTsk, '; nut_resr type =', av.nut[numTsk].uiAll.supplyTypeSlct);
-      document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;';
+      document.getElementById('cell'+tskTitle).innerHTML = '&nbsp;';   //Type
       document.getElementById('mx'+tskTitle).innerHTML = '&nbsp;';
-      document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;';
+      document.getElementById('tot'+tskTitle).innerHTML = '&nbsp;';   //Amount
       //console.log('tsk=', numTsk, '; geo=', av.nut[numTsk].uiAll.geometry.toLowerCase() );
       if ( 'global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         if ('unlimited' == av.nut.resrcTyp[ii] ) {
-          document.getElementById('cell'+tskTitle).innerHTML = 'unlim';
+          document.getElementById('cell'+tskTitle).innerHTML = 'unlm';
           document.getElementById('mx'+tskTitle).innerHTML = '&infin; ';      //&infin is infinity symbol
           document.getElementById('tot'+tskTitle).innerHTML = '&infin; ';        //&infin is infinity symbol
         } else if ('none' == av.nut.resrcTyp[ii].toLowerCase() ) {
@@ -267,7 +267,7 @@ av.fwt.clearResourceConstants = function(from) {
           av.nut.cntGlobalDataTasks++;
           if ('limited' == av.nut.resrcTyp[ii].toLowerCase() ) {
 //          if ('limited' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
-            document.getElementById('cell'+tskTitle).innerHTML = 'limited';
+            document.getElementById('cell'+tskTitle).innerHTML = 'limit';
           } else {
             document.getElementById('cell'+tskTitle).innerHTML = 'chem';
           }
