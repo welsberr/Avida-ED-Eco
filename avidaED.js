@@ -80,6 +80,30 @@
 //  - - jquery-v3.4.1.min
 //  - - FileSaver.min.2.0.4
 //    
+// Avida-ED 4.0.04 (2021_804)
+// - merged av4ths back to main
+// - cleaned testing workspace
+// - made world (grid) canvas so that it is sized based on inital viwport size and does not change size.
+// - Yemi fixed right and left side panel buttons so they can be open or closed. 
+// - more work on resource UI and converting from environment.cfg -> av.env -> UI -> av.env -> environment.cfg
+// - Yemi added drag bars between main and left and right sidebars
+// - - there are some overflow and extra space gaps that need more work. 
+// - Main area including canvas in main area for Population and Organism Pages now resize with Viewport size change.
+// - - they also change size in response to change in size of left and/or right side panels
+// - Removed server.py as it is no longer in use
+// - Removed functions no longer in use in avidaED.js and reSizePageParts.js
+// - changed visible.css to resize.css for css specific to resizeing
+// - fixed formatting issues in labinfoHoldCls
+//
+// Avida-ED 4.0.05 (2021_826)
+// 
+// Avida-ED 4.0.06 (2021_812) Dragula branch
+// 
+// Avida-ED 4.0.09
+// - working with Dragula
+// 
+// Avida-ED 4.0.10
+// - mostly more formating and making the site look 'pretty'
 //
 // Generic Notes -------------------------------------------------------------------------------------------------------
 //
@@ -2837,10 +2861,10 @@ require([
 
   av.doj.mnDebug.style.visibility = 'hidden';
 
-  // Avida-ED 4.0.04 Beta Testing fix this too. 
+  // Avida-ED 4.0.10 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; set to false before public release for Avida-ED 4.0.04 Beta Testing. ');
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.10 Beta Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x
