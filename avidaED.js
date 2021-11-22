@@ -99,11 +99,14 @@
 // 
 // Avida-ED 4.0.06 (2021_812) Dragula branch
 // 
-// Avida-ED 4.0.09
+// Avida-ED 4.0.09 Beta
 // - working with Dragula
 // 
-// Avida-ED 4.0.10
+// Avida-ED 4.0.10 Beta
 // - mostly more formating and making the site look 'pretty'
+// 
+// Avida-ED 4.0.11 Beta
+// - changing options and labels on the mini-chart on the Population Page
 //
 // Generic Notes -------------------------------------------------------------------------------------------------------
 //
@@ -1332,13 +1335,13 @@ require([
         av.dom.setupBlock.className = 'labInfoClass labInfoNone';
         av.dom.statsTab.className = 'tablinks active'; 
 
-        if (av.dbg.flg.plt) {      //
+        if (av.dbg.flg.pch) {      //
           console.log('In: av.ptd.rightInfoPanelToggleButton; av.pch.needInit=', av.pch.needInit
               , '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") ); 
         }
         // if the miniplot on the populaton page needs to be updated.
         if ( $(av.dom.popStatsBlock).is(":visible")) {
-          if (av.dbg.flg.plt) { console.log('need to call av.grd.popChartInit'); }
+          if (av.dbg.flg.pch) { console.log('need to call av.grd.popChartInit'); }
           av.grd.popChartFn('av.ptd.rightInfoPanelToggleButton');
         }
       };
@@ -1661,19 +1664,16 @@ require([
   //                    Population Chart   ; pop chart; popchart
   // -------------------------------------------------------------------------------------------------------------------
 
-  // Chart control on population page
-  //Set Y-axis title and choose the correct array to plot
-  document.getElementById('yaxis').onchange = function () {
-    av.grd.ytitle = document.getElementById('yaxis').value;
-    //need to get correct array to plot from freezer
-    //console.log('changeyaxis popChartFn');
-    av.grd.popChartFn('av.dom.yaxis. onchange');
-  };
-
-  //---------------------------------------------------------------------------------------- av.ui.miniChartOptionsFn --
-  av.ui.miniChartOptionsFn = function (domobj) {
-    av.pch.option = domobj.value;
-    av.grd.popChartFn('av.ui.miniChartOptionsFn');    
+  //------------------------------------------------------------------------------------- av.pch.popChrtYaxisChangeFn --
+  av.pch.popChrtYaxisChangeFn = function (domobj) {
+    var side = domobj.id;
+    side = side.substring(7,10);
+    console.log('popChrtYaxisChangeFn: domobj.id=', domobj.id, '; substring=', side);
+    var yTitle = side+'Ytitle';
+    side = 'popChrt'+side+'Yaxis';
+    console.log('side=', side, 'yTitle=', yTitle, '; Title=', document.getElementById(side).value, '; option=', domobj.value);
+    av.grd[yTitle] = document.getElementById(side).value;
+    av.grd.popChartFn('popChrtYaxisChangeFn');    
   };
 
   // if (av.dbg.flg.root) { console.log('Root: before av.grd.popChartInit defined'); }
@@ -1682,17 +1682,11 @@ require([
   // Should be done before av.grd.popChartFn is run.  
   av.grd.popChartInit = function (from) {
     var data;
-    console.log(from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
+    if (av.dbg.flg.pch) { console.log('popChrt',from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
                    '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display, '; av.ui.page=', av.ui.page, 
-                    '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
+                    '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") ); }
 
-    if (av.dbg.flg.plt) { 
-      console.log(from , 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
-                    '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") );
-    }
-    //
     //look to see if poplulation page mini-chart is showing
-    //if ('flex' != av.dom.popStatsBlock.style.display || ('populationBlock' !== av.ui.page)) {
     if ( !$(av.dom.popStatsBlock).is(":visible") ) {
       av.pch.needInit = true;
       return;
@@ -1701,12 +1695,11 @@ require([
 
     //minichart is visible on population page
     av.pch.clearPopChrt();
-    av.pch.divSize('av.grd.popChartInit');
+    av.pch.divSize('av.grd.popChartInit');    //changes the size of the div to get max chart that fits on page
     av.pch.popData = av.pch.data;
 
-    //if (av.dbg.flg.plt) { console.log('PopPlot: dom of popChart=', document.getElementById('popChart') ); }
-    if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart=', av.dom.popChart); }
-    if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
+    //if (av.dbg.flg.pch) { console.log('popChrt: av.dom.popChart=', av.dom.popChart); }
+    //if (av.dbg.flg.pch) { console.log('popChrt: av.dom.popChart.data=',av.dom.popChart.data); }
 
   //    if (null == av.dom.popChart.data) {
     if (true) {
@@ -1719,15 +1712,17 @@ require([
       Plotly.newPlot(av.dom.popChart, data, av.pch.update);
     } 
     else {
+      // never happens because if is hard coded with a true;
       if (undefined != av.dom.popChart.data[0]) {
         Plotly.deleteTraces(av.dom.popChart, [0, 1]);
         Plotly.relayout(av.dom.popChart, av.pch.update);
-        if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
+        if (av.dbg.flg.pch) { console.log('PopPlot: av.dom.popChart.data=',av.dom.popChart.data); }
       };
     };
 
     av.dom.popChart.style.visibility = 'hidden';
-    //if (av.dbg.flg.plt) { console.log('PopPlot: layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width); }
+    av.pch.ChartVisibleNow = false;
+    //if (av.dbg.flg.pch) { console.log('popChrt: layout.ht, wd =', av.dom.popChart.layout.height, av.dom.popChart.layout.width); }
     av.pch.needInit = false;
   };
   // if (av.dbg.flg.root) { console.log('Root: after av.grd.popChartInit defined'); }
@@ -1738,50 +1733,68 @@ require([
     'use strict';
     var popData;
     var numof;
-    var jj = 0; //count y data arrays
+    var layout = av.pch.layout;
+    var widg = av.pch.widg;
 
-    //console.log(from, 'called popChartFn: av.pch.needInit= ', av.pch.needInit, 
-    //                  '; $(statsBlock.display = ', $(av.dom.popStatsBlock).css('display'),
-    //                  '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display,
-    //                  '; av.ui.page=', av.ui.page,
-    //                  '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));     
-    //console.log('PopPlot:',from, 'called popChartFn: av.pch.needInit= ', av.pch.needInit, 
+    var cntY = 0; //count y data arrays
+
+    // if (av.dbg.flg.pch) { console.log('popChrt:', from, 'called popChartFn: $(statsBlock.display = ', $(av.dom.popStatsBlock).css('display'),
+    //                   '; av.ui.page=', av.ui.page);
+    //  console.log('popChrt: av.pch.needInit= ', av.pch.needInit, 
     //                  '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible")); 
+    //}
+    // Check to see if Initialization is needed.
     if (av.pch.needInit) {
-      //console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, '; av.ui.page=', av.ui.page);
+      if (av.dbg.flg.pch) { console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, '; av.ui.page=', av.ui.page); }
 
-      //initialize if needed; but condistion seems wrong.
-      if ( !$(av.dom.popStatsBlock).is(":visible") ) {
-        if (av.dbg.flg.plt) { console.log('PopPlot: if $popStatsBlock is visible & needInit - then call popChartInit'); }
+      //initialize if needed; 
+      // if (av.dbg.flg.pch) { console.log('before IF: $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"), '; $(av.dom.popStatsBlock).is(":visible") =', $(av.dom.popStatsBlock).is(":visible") ); }
+      if ( $(av.dom.popStatsBlock).is(":visible") ) {
+        // if (av.dbg.flg.pch) { console.log('in IF: $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") ); }
+        // if (av.dbg.flg.pch) { console.log('popChrt: if $popStatsBlock is visible & needInit - then call popChartInit'); }
         av.grd.popChartInit('av.grd.popChartFn');
-        if (av.dbg.flg.plt) { console.log('PopPlot: av.grd.runState = ', av.grd.runState); }
+        if (av.dbg.flg.pch) { console.log('popChrt: av.grd.runState = ', av.grd.runState); }
       };
     };
 
     // Do not display chart if the chart is not on the screen. Data seems to be getting updated. need to verify this.
     if ( !$(av.dom.popStatsBlock).is(":visible") ) {
-      if (av.dbg.flg.plt) { console.log('PopPlot: Not visible: so skip rest of function'); }
+      if (av.dbg.flg.pch) { console.log('popChrt: Not visible: so skip rest of function'); }
       return;
     };
 
-    if (av.dbg.flg.plt) { console.log('PopPlot: av.grd.runState = ', av.grd.runState); }
+    if (av.dbg.flg.pch) { console.log('popChrt: av.grd.runState = ', av.grd.runState); }
+    
     //values can be prepping, started, or world
     if ('prepping' === av.grd.runState) {
       av.dom.popChart.style.visibility = 'hidden';  //hide mini-chart when an experiment is not running. 
-      av.pch.noneWas = av.pch.noneNow;
-      av.pch.noneNow = true;
+      av.pch.ChartVisibleWas = av.pch.ChartVisibleNow;
+      av.pch.ChartVisibleNow = false;
       return;
     };
-    av.pch.chartContained = av.pch.chartContains;
-    av.pch.organismWasTrait = av.pch.organismTrait;
-    av.pch.chartContains = document.getElementById('miniCharts').value;
-    av.pch.organismTrait = document.getElementById('yaxis').value;
-    if (av.dbg.flg.plt) { console.log('av.pch.chartContains=', av.pch.chartContains, '; av.pch.organismTrait=', av.pch.organismTrait); }
+    
+    // update the previous and currrent meaning of the of the Y-axis (left and right)
+    av.pch.lftYaxisWas = av.pch.lftYaxisNow;
+    av.pch.ritYaxisWas = av.pch.ritYaxisNow;
 
-    if ('none' === av.pch.chartContains) {
-      av.pch.noneWas = av.pch.noneNow;
-      av.pch.noneNow = true;
+    // update current values of Y-axis (left and right)
+    av.pch.lftYaxisNow = document.getElementById('popChrtLftYaxis').value;
+    av.pch.ritYaxisNow = document.getElementById('popChrtRitYaxis').value;
+    if (av.pch.lftYaxisWas != av.pch.lftYaxisNow) { av.pch.lftYchange = true; }
+    else { av.pch.lftYchange = false; }
+    if (av.pch.ritYaxisWas != av.pch.ritYaxisNow) { av.pch.ritYchange = true; }
+    else { av.pch.ritYchange = false; }
+    
+    if (av.dbg.flg.pch) { console.log('popChrt: lftYaxisWas=', av.pch.lftYaxisWas, '; lftYaxisNow =', av.pch.lftYaxisNow, '; av.pch.lftYchange =', av.pch.lftYchange); }
+    if (av.dbg.flg.pch) { console.log('popChrt: ritYaxisWas=', av.pch.ritYaxisWas, '; ritYaxisNow =', av.pch.ritYaxisNow, '; av.pch.ritYchange =', av.pch.ritYchange); }
+
+    // only draw chart if drawing data on at least one axis
+    if ('none' === av.pch.ritYaxisNow && 'none' === av.pch.lftYaxisNow) {
+      av.pch.ChartVisibleWas = av.pch.ChartVisibleNow;
+      av.pch.ChartVisibleNow = false;
       av.dom.popChart.style.visibility = 'hidden';
+      
+      // debug
       if (undefined !== av.dom.popChart.data) {
         console.log('av.dom.popChart.data is', av.dom.popChart.data);
       };
@@ -1789,80 +1802,70 @@ require([
       return;
     };
 
-    // process chart options and y-axis for organisms. 
-    av.dom.popChart.style.visibility = 'visible';  
+    // Need to update Chart: process chart options and y-axis for organisms. 
+    av.dom.popChart.style.visibility = 'visible';
+    av.pch.ChartVisibleNow = true;
     // this adusts the size. Seems like the size should only change when window/div changes size rather than checking very time. 
-    av.pch.divSize('av.grd.popChartFn');
+    av.pch.divSize('av.grd.popChartFn');   
     //console.log('after av.pch.divSize');
 
-    if ('organism' == av.pch.chartContains || 'combined' == av.pch.chartContains
-      || 'offspring' == av.pch.chartContains ) {
+    if ('None' !== av.pch.lftYaxisNow) {
+//      if (av.pch.lftYchange) { 
+      if (true) { 
+        if (av.dbg.flg.pch) { console.log('PopChrt: ~~~~~~~~~~~~~~~left Y change =', av.pch.lftYchange, '; av.pch.lftYaxisNow=', av.pch.lftYaxisNow, '; cntY=', cntY); }
+        if (av.dbg.flg.pch) { console.log('PopChrt: av.pch.aveFit = ', av.pch.aveFit); }
+        if (av.dbg.flg.pch) { console.log('PopChrt: av.pch.logFit = ', av.pch.logFit); }
+        if (av.dbg.flg.pch) { console.log('PopChrt: av.pch.maxFit =', av.pch.aveMaxFit, '; av.pch.logMaxFit=',av.pch.logMaxFit, '~~~~~~~~~~~~~~~'); }
+          switch (av.pch.lftYaxisNow) {
+            case 'Average Fitness':
+              av.pch.popY = av.pch.aveFit;
+              av.pch.dadY = av.pch.aveDadFit;
+              av.pch.logY = av.pch.logFit;
+              av.pch.maxY = (av.pch.aveMaxFit > av.pch.logMaxFit) ? av.pch.aveMaxFit : av.pch.logMaxFit;
+              if (av.dbg.flg.pch) { console.log('PopChrt: aveMaxFit=', av.pch.aveMaxFit, '; logMaxFit=', av.pch.logMaxFit, '; maxY=', av.pch.maxY); }
+              //if (av.dbg.flg.pch) { console.log('PopChrt: av.pch.aveFit = ', av.pch.aveFit); }
+              //if (av.dbg.flg.pch) { console.log('PopChrt: popY', av.pch.popY); }
+              break;
+            case 'Average Offspring Cost':
+              av.pch.popY = av.pch.aveCst;
+              av.pch.dadY = av.pch.aveDadCst;
+              av.pch.logY = av.pch.logCst;
+              av.pch.maxY = (av.pch.aveMaxCst > av.pch.logMaxCst) ? av.pch.aveMaxCst : av.pch.logMaxCst;
+              if (av.dbg.flg.pch) { console.log('PopChrt: aveMaxCst=', av.pch.aveMaxCst, '; logMaxCst=', av.pch.logMaxCst, '; maxY=', av.pch.maxY); }
+              break;
+            case 'Average Energy Acq. Rate':
+            av.pch.popY = av.pch.aveEar;
+            av.pch.dadY = av.pch.aveDadEar;
+            av.pch.logY = av.pch.logEar;
+            av.pch.maxY = (av.pch.aveMaxEar > av.pch.logMaxEar) ? av.pch.aveMaxEar : av.pch.logMaxEar;
+              break;
+            case 'Number of Organisms':
+            av.pch.popY = av.pch.aveNum;
+            av.pch.dadY = av.pch.aveDadVia;
+            av.pch.logY = av.pch.logNum;
+            av.pch.maxY = (av.pch.aveMaxNum > av.pch.logMaxNum) ? av.pch.aveMaxNum : av.pch.logMaxNum;
+              break;
+            case 'Number Viable':
+            av.pch.popY = av.pch.aveVia;
+            av.pch.dadY = av.pch.aveDadVia;
+            av.pch.logY = av.pch.logNum;
+            av.pch.maxY = (av.pch.aveMaxVia > av.pch.logMaxNum) ? av.pch.aveMaxVia : av.pch.logMaxNum;
+            default:
+            av.pch.yValue = 'none';
+            av.pch.dadY = [];
+            av.pch.popY = [];
+            av.pch.logY = [];
+            av.pch.maxY = 0.1;
+              break;
+          }; // end switch
+        }; //   end of left y-axis change
+      
 
-      //not in current use. Seems if the y-axis had not changed we might not need to redo case statement
-      if (document.getElementById('yaxis').value === av.pch.yValue) {
-        av.pch.yChange = false;
-      } else {
-        av.pch.yChange = true;
-        av.pch.yValue = document.getElementById('yaxis').value;
-      };
-      if (av.dbg.flg.plt) { console.log('av.pch.yChange=', av.pch.yChange, '; av.pch.chartContains=', av.pch.chartContains, '; jj=', jj); }
-      //console.log('av.pch.maxFit=',av.pch.aveMaxFit, '; av.pch.logMaxFit=',av.pch.logMaxFit, '; av.pch.aveFit = ', av.pch.aveFit);
-      //console.log('av.pch.logFit = ', av.pch.logFit);
-      switch (av.pch.organismTrait) {
-        case 'Average Fitness':
-          av.pch.popY = av.pch.aveFit;
-          av.pch.dadY = av.pch.aveDadFit;
-          av.pch.logY = av.pch.logFit;
-          av.pch.maxY = (av.pch.aveMaxFit > av.pch.logMaxFit) ? av.pch.aveMaxFit : av.pch.logMaxFit;
-          //console.log('av.pch.maxFit=',av.pch.aveMaxFit, '; av.pch.logMaxFit=',av.pch.logMaxFit);
-          //console.log('aveMaxFit=', av.pch.aveMaxFit, '; logMaxFit=', av.pch.logMaxFit, '; maxY=', av.pch.maxY);
-          //console.log('aveFit', av.pch.aveFit);
-          //console.log('logFit', av.pch.logFit);
-          break;
-        case 'Average Offspring Cost':
-          av.pch.popY = av.pch.aveCst;
-          av.pch.dadY = av.pch.aveDadCst;
-          av.pch.logY = av.pch.logCst;
-          av.pch.maxY = (av.pch.aveMaxCst > av.pch.logMaxCst) ? av.pch.aveMaxCst : av.pch.logMaxCst;
-          break;
-        case 'Average Energy Acq. Rate':
-        av.pch.popY = av.pch.aveEar;
-        av.pch.dadY = av.pch.aveDadEar;
-        av.pch.logY = av.pch.logEar;
-        av.pch.maxY = (av.pch.aveMaxEar > av.pch.logMaxEar) ? av.pch.aveMaxEar : av.pch.logMaxEar;
-          break;
-        case 'Number of Organisms':
-        av.pch.popY = av.pch.aveNum;
-        av.pch.dadY = av.pch.aveDadVia;
-        av.pch.logY = av.pch.logNum;
-        av.pch.maxY = (av.pch.aveMaxNum > av.pch.logMaxNum) ? av.pch.aveMaxNum : av.pch.logMaxNum;
-          break;
-        case 'Number Viable':
-        av.pch.popY = av.pch.aveVia;
-        av.pch.dadY = av.pch.aveDadVia;
-        av.pch.logY = av.pch.logNum;
-        av.pch.maxY = (av.pch.aveMaxVia > av.pch.logMaxNum) ? av.pch.aveMaxVia : av.pch.logMaxNum;
-        default:
-        av.pch.yValue = 'none';
-        av.pch.popY = [];
-        av.pch.logY = [];
-        av.pch.maxY = 0.1;
-          break;
-      }; //end switch
-
-      //console.log('xx   after', av.pch.xx);
-      //console.log('popY after', av.pch.logY);
-      //console.log('maxY', av.pch.maxY);
-      //console.log('logY after', av.pch.logY);
-
-      // tiba delete in 2021
-      // I don' think these are used
-      //av.pch.tracePop.x = av.pch.xx;
-      //av.pch.tracePop.y = av.pch.popY;
-      //av.pch.traceLog.x = av.pch.xx;
-      //av.pch.traceLog.y = av.pch.logY;
-      //console.log('trace0',av.pch.tracePop);
-      //console.log('trace1',av.pch.traceLog);
+      if (av.dbg.flg.pch) { console.log('PopChrt: lft   xx=', av.pch.xx); }
+      if (av.dbg.flg.pch) { console.log('PopChrt: lft popY=', av.pch.popY); }
+      if (av.dbg.flg.pch) { console.log('PopChrt: lft logY=', av.pch.logY); }
+      if (av.dbg.flg.pch) { console.log('PopChrt: lft dadY=', av.pch.dadY); }
+      if (av.dbg.flg.pch) { console.log('PopChrt: lft maxY=', av.pch.maxY, '-------------------------'); }
 
       //av.pch.tracePop = {x:av.pch.xx, y:av.pch.popY, type:'scatter', mode: 'lines', name: 'Population'};
       //av.pch.traceLog = {x:av.pch.xx, y:av.pch.logY, type:'scatter', mode: 'lines', name: 'Function Subset'};
@@ -1873,21 +1876,25 @@ require([
       av.pch.popData = [av.pch.tracePop, av.pch.traceLog]; //popData
       av.pch.traceList = [];
 
-      av.pch.traceList[jj] = {x: [av.pch.xx], y: [av.pch.popY]};
-      av.pch.traceList[jj+1] = {x: [av.pch.xx], y: [av.pch.logY]};
-      jj = jj+2;
-      if ('offspring' == av.pch.chartContains) {
+      av.pch.traceList[cntY] = {x: [av.pch.xx], y: [av.pch.popY]};
+      av.pch.traceList[cntY+1] = {x: [av.pch.xx], y: [av.pch.logY]};
+      cntY = cntY+2;
+      
+      // This is the show information about the sub group of avidans that have produced offspring. 
+      // This options has a display: none; so has not been verified to work after 2021_b15
+      if ('moms only' == av.pch.ritYaxisNow.toString().toLowerCase() ) {
         av.pch.traceDad.y = av.pch.dadY;
         av.pch.popData = [av.pch.tracePop, av.pch.traceLog, av.pch.traceDad]; //popData
-        jj++;
+        cntY++;
       }
-    }; // chart contains trait determined by yaxis select dom-object
-    if (av.dbg.flg.plt) { console.log('jj=', jj, '; av.pch.popData=', av.pch.popData, '; av.pch.chartContains=', av.pch.chartContains ); }
-
-    if ('resource' == av.pch.chartContains || 'combined' == av.pch.chartContains) {
+    }; // end chart contains trait determined by left y-Axis
+    
+    if (av.dbg.flg.pch) { console.log('cntY=', cntY, '; av.pch.popData=', av.pch.popData, '; av.pch.ritYaxisNow='+ av.pch.ritYaxisNow ); } 
+    if ('resources' == av.pch.ritYaxisNow.toString().toLowerCase() ) {
 
       // need to check to see if there are any valid global resources before adding them to the structure
-      //console.log('cntGlobalDataTask=', av.nut.cntGlobalDataTasks, '; av.pch.resrcGlobal=', av.pch.resrcGlobal);
+      console.log('--------------------------------------------------------- chart resources');
+      console.log('cntGlobalDataTask=', av.nut.cntGlobalDataTasks, '; av.pch.resrcGlobal=', av.pch.resrcGlobal);
       if (0 < av.nut.cntGlobalDataTasks) {
         for (var ii=0; ii < av.sgr.numTasks; ii++) {
           numTsk = av.sgr.logEdNames[ii];
@@ -1895,11 +1902,12 @@ require([
            av.pch.sgr[numTsk] = av.pch.resrcGlobal[tsk];
            av.pch.trc[numTsk].x = av.pch.xx;
            av.pch.trc[numTsk].y = av.pch.sgr[numTsk];
-           av.pch.popData[ii+jj] = av.pch.trc[numTsk];
-           av.pch.traceList[ii+jj] = {x: [av.pch.xx], y: [ av.pch.sgr[numTsk] ]};
+           av.pch.popData[ii+cntY] = av.pch.trc[numTsk];
+           av.pch.traceList[ii+cntY] = {x: [av.pch.xx], y: [ av.pch.sgr[numTsk] ]};
         };
       };
     };  // end of chart contains amount of resource
+
 
     if (true) {
       numof = av.pch.traceList.length;
@@ -1912,15 +1920,31 @@ require([
         height: av.pch.layout.height
       };
 
-      if (av.pch.chartContained != av.pch.chartContains) { av.dom.popChart.data = null; }
+      // if either Y-axis has changed, then make av.dom.popChart.data = null
+      if (av.pch.lftYaxisWas != av.pch.lftYaxisNow) { av.dom.popChart.data = null; }
+      if (av.pch.ritYaxisWas != av.pch.ritYaxisNow) { av.dom.popChart.data = null; }
 
-      //if (av.dom.popChart.data) console.log('av.dom.popChart.data.length=', av.dom.popChart.data.length);
+      //plotly.animate will not accept a . in the variable name so the 
+      popData = av.pch.popData;
+      console.log('popData=', av.pch.popData);
+      console.log('=================================================== before test for null');
+      
       if (null == av.dom.popChart.data || 0 == av.dom.popChart.data.length) {
+        // No chart data, but data is in several av.pch variables. 
+        console.log('?? data is null or length 0; av.dom.popChart.data is', av.dom.popChart.data);
+        console.log('before Plotly.plot; av.pch.popData is', av.pch.popData);
+        console.log('before Plotly.plot; av.pch.layout is', av.pch.layout);
+        console.log('before Plotly.plot; av.pch.widg is', av.pch.widg);
+
         Plotly.plot('popChart', av.pch.popData, av.pch.layout, av.pch.widg);
-        console.log('av.dom.popChart.data is', av.dom.popChart.data);
+
+        console.log('after Plotly.plot; av.dom.popChart.data is', av.dom.popChart.data);
+        console.log('after Plotly.plot; av.pch.popData is', av.pch.popData);
+        console.log('after Plotly.plot; av.pch.layout is', av.pch.layout);
+        console.log('after Plotly.plot; av.pch.widg is', av.pch.widg);
       } else {
         if (av.brs.isChrome) {
-          console.log('av.brs.isChrome=', av.brs.isChrome);
+          if (av.dbg.flg.pch) { console.log('PopChrt: true? av.brs.isChrome=', av.brs.isChrome); }
           for (var ii=0; ii< numof; ii++) {
             av.debug.log += '\n     --uiD: Plotly: Plotly.restyle("popChart", av.pch.traceList['+ii+'], ['+ii+'])';
             av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.pch.traceList[]', [av.pch.traceList[ii]]);
@@ -1929,13 +1953,15 @@ require([
           av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
           Plotly.relayout(av.dom.popChart, av.pch.update);
         } else {
-          if (av.dbg.flg.plt) { console.log('av.brs.isChrome=', av.brs.isChrome, ); }
+          
+          if (av.dbg.flg.pch) { console.log('PopChrt: false? av.brs.isChrome=', av.brs.isChrome, ); }
           //Plotly.restyle(graphDiv, update, [1, 2]);
           //Plotly.restyle(av.dom.popChart, av.pch.tracePop, [0]);
           //Plotly.restyle(av.dom.popChart, av.pch.traceLog, [1]);
           av.debug.log += '\n     --uiD: Plotly.relayout(av.dom.popChart, av.pch.update) in AvidaED.js at 2304';
           av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.dom.popChart, av.pch.update', [av.dom.popChart, av.pch.update]);
           if (undefined == av.pch.update) {
+            console.log('undefined == av.pch.update');
             av.pch.update = {
               autorange: true,
               width: av.pch.layout.width,
@@ -1944,21 +1970,24 @@ require([
           };
           // the div holding the chart  must be 'visible' for plotly actions to work. 
           Plotly.relayout(av.dom.popChart, av.pch.update);
-          //console.log('after relayout in update grid chart');
-
-          if (av.dbg.flg.plt) { console.log('PopPlot: av.pch.popData', av.pch.popData); }
-          av.debug.log += '\n     --uiD: Plotly.animate("popChart", {av.pch.popData}) in AvidaED.js at 1757';
-          av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.pch.popData', [av.pch.popData]);
-          //plotly.animate will not accept a . in the variable name so the 
+          console.log('after relayout in update grid chart: av.dom.popChart=', av.dom.popChart, '; av.pch.update=', av.pch.update);
           popData = av.pch.popData;
+          if (av.dbg.flg.pch) { console.log('popChrt: before Plotly.animate; av.pch.popData', av.pch.popData); }
+          av.debug.log += '\n     --uiD: Plotly.animate("popChart", {av.pch.popData}) in AvidaED.js at 1971';
+          av.utl.dTailWrite('AvidaED.js', (new Error).lineNumber, 'av.pch.popData', [av.pch.popData]);
+          if (av.dbg.flg.pch) { console.log('popChrt: before Plotly.animate; popData', popData); }
+          if (av.dbg.flg.pch) { console.log('popChrt: before Plotly.animate; av.dom.popChart=', av.dom.popChart); }
           Plotly.animate('popChart', {popData});
-          if (av.dbg.flg.plt) { console.log('PopPlot: after animate in update grid chart'); }
-        }
-      };
-      if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.data=', av.dom.popChart.data); }
-      if (av.dbg.flg.plt) { console.log('PopPlot: av.dom.popChart.layout=', av.dom.popChart.layout); }
+          
+          if (av.dbg.flg.pch) { console.log('popChrt: after Plotly.animate; av.dom.popChart=', av.dom.popChart); }
+        }   //  end of else for av.brs.isChrome
+      };    //  end of else related to data in av.dom.popChart.data
+      
+      if (av.dbg.flg.pch) { console.log('popChrt: av.dom.popChart.data=', av.dom.popChart.data); }
+      if (av.dbg.flg.pch) { console.log('popChrt: av.dom.popChart.layout=', av.dom.popChart.layout); }
     };  //end of true
   };
+  //------------------------------------------------------------------------------------------- end av.grd.popChartFn --
 
 
   // **************************************************************************************************************** */
@@ -2861,10 +2890,10 @@ require([
 
   av.doj.mnDebug.style.visibility = 'hidden';
 
-  // Avida-ED 4.0.10 Beta Testing fix this too. 
+  // Avida-ED 4.0.11 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; set to false before public release for Avida-ED 4.0.10 Beta Testing. ');
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.11 Beta Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x
@@ -2931,7 +2960,7 @@ require([
 });
 
 //----------------------------------------------------------------------------------------------------------------------
-  //on 2018_0823 this is where height gets messed up when loading the program.
+  //on 2018_0823 this is where height gets messed up when loading the program. 2021_b15 still in use
   av.pch.divSize = function (from) {
     //av.debug.uil = true;
     if (av.debug.uil) { console.log('ui: PopPlotSize: ',from, 'called av.pch.divSize'); }

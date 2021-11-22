@@ -285,7 +285,8 @@ html {
   mnDebug {visibility: hidden;}
   
   #headerMsg{
-    flex: 1 1 auto; /* yemi: removal of this code results in weird header button spacing */
+    overflow: visible;
+    flex: 3 3 auto; /* yemi: removal of this code results in weird header button spacing */
     /* flex: [flex-grow] [flex-shrink] [flex-basis]; */
     /* flex: [max] [min] [ideal size]; */
     /* flex: 0 1 auto; /* Default flex value 0=grow=don't grow; take minimum size for the conents  */    
@@ -328,8 +329,10 @@ html {
   }
 
   #versionNumHolder{
-    flex: 0 0 130px;
+    display: none;  /* we are not displaying the version at this time */
+    flex: 0 0 auto;
     padding-top: 5px;
+    width: 130px;
     height: 25px;
   }
   
@@ -550,6 +553,11 @@ html {
   /* flex: 0 1 120px; */ /* yemi: this is not allowing for flexible resizing of the box, ironically */
   padding-top: 5px;
   width: fit-content;
+  min-height: 30px;
+  min-width: 6em;
+  border: 1px solid #CCCCCC;
+  display: inline-block;
+  overflow: visible;
 }
 #testConfigLableHolder {
   display: none;
@@ -559,13 +567,6 @@ html {
 #testConfig {
   flex: 0 1 80px;
   display: none;
-}
-.activeConfigDojoDNDcontainer {
-  min-height: 30px;
-  min-width: 6em;
-  border: 1px solid #CCCCCC;
-  display: inline-block;
-  overflow: visible;
 }
 #popTopMsgSpace {
   flex: 1 1 auto;          /* fills remaining space; {flex:1 1 auto;} is the same as {flex:1;} both prevent resize */
@@ -890,23 +891,25 @@ table.psBotTbCls {
 }
 
 /* Yemi added 
-#miniChartOptionsLabel { margin: 0; }    /* diane thinks it is redant as this is covered in label css */
+#popChrtRitYaxLbl { margin: 0; }    /* diane thinks it is redant as this is covered in label css */
 
-#miniChartControls{
+#popChrtCntrlHldr{
   flex: 0 0 20px;
   display: flex;
   border: 1px solid #AAA;   
   overflow: auto;
   height: 25px; 
 }
-#miniChartYaxis{
+#popChrtlftYaxHldr{
   flex: 0 0 220px;
 }
-#miniChartOptHolder{
+#popChrtRitYaxHldr{
   flex: 0 0 auto;
   padding-left: 15px;
   align-self: flex-end;
 }
+#popChrtRitYmomsOnly{ display: none; }
+
 #pauseOptions {
   flex: 0 0 20px;
   align-items: center;
@@ -1002,7 +1005,7 @@ input:focus {
 }
 
 .colrow {
-  width: 4.5em; height:1.6em;
+  width: 4.5em; height:1.5em;  
 }
 
 #popSetupMutationRate {
@@ -1018,9 +1021,8 @@ input:focus {
 
 .mutePopInputClass{
   width:4em;
-  height:13px;
+  height:1.5em;
   margin: 0px 2px;     /* top right bottom left  */   /*top left/right bottom */ /*top/bottom  left/right */
-  /* padding: 0px 0px;   /* top right bottom left  */  /* box padding border margin outside now */
   display: inline-block; 
   float: left;
 }

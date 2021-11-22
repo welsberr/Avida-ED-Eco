@@ -647,7 +647,6 @@ av.sgr.supplyChange = function (domObj) {
       tsk = av.sgr.logicNames[ii];
       document.getElementById(tsk+'_regionLayout').value = '1Global';      
       document.getElementById(tsk+'_regionLayHolder').style.display = basicDisplayNone;
-      document.getElementById(tsk+'_debugTyp').style.display = basicDisplayNone;
       //document.getElementById(tsk+'_limited').disabled = optionDisabled;
       //document.getElementById(tsk+'_chemostat').disabled = optionDisabled;
       document.getElementById(tsk+'_topLftRit').style.display = basicDisplayNone;
@@ -945,7 +944,7 @@ av.sgr.processAdvancedFn = function(numTsk, tsk) {
         // if (av.dbg.flg.nut) { console.log('task='+tsk,'; Details.class=', document.getElementById(tsk+'0Details').className); }
         // if (av.dbg.flg.nut) { console.log(tsk+'0periodcheckboxHolder.checked value =', document.getElementById(tsk+'0periodCheck').checked, document.getElementById(tsk+'0periodCheck').value); }
         break;
-      case 'debug':
+      case 'combo':
         document.getElementById(tsk+'_section').open = true;
         //document.getElementById(tsk+'_periodcheckboxHolder').style.display = 'inline-block';
         //document.getElementById(tsk+'_gradientcheckboxHolder').style.display = 'inline-block';
@@ -1100,7 +1099,7 @@ av.sgr.processAdvancedFn = function(numTsk, tsk) {
        // if (av.dbg.flg.nut) { console.log('nanDetails.class=', document.getElementById(tsk+'Details').className); }
           break;
           */
-        case 'Debug':
+        case 'combo':
           document.getElementById(tsk+'_regionLayHolder').style.display = 'inline-block';
           //document.getElementById(tsk+sub+'periodcheckboxHolder').style.display = 'inline-block';
           //document.getElementById(tsk+sub+'gradientcheckboxHolder').style.display = 'inline-block';

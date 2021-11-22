@@ -2,7 +2,7 @@
 <html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <head>
-    <title>Avida-ED 4.0.10</title>
+    <title>Avida-ED 4.0.11</title>
     <meta charset='utf-8' />
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <style>
@@ -37,7 +37,7 @@
     <span id="http://stackoverflow.com/questions/20828799/creating-a-splash-page-in-html5"></span>
     <div id='splash' style='display: none;'>
       <div align='center'>
-        <h1>Avida-ED 4.0.10 Beta Testing is loading . . .</h1>
+        <h1>Avida-ED 4.0.11 Beta Testing is loading . . .</h1>
         <img src='images/Avida-ED-icon.png' /><br />
         <img src='images/AvidaGrid.gif' />
       </div>
@@ -136,6 +136,7 @@
             </span>
             <span data-dojo-type='dijit/PopupMenuBarItem' label='Debug' id='mnDebug'> <!--visible/hidden-->
               <span data-dojo-type='dijit/Menu'>
+                <span data-dojo-type='dijit/MenuItem' id='mnDbDadsOnly' label='Show Parents only on ritYaxis on PopChart'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnDbThrowError' label='Throw Error'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnDbThrowData' label='Send Data to console'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnDbLineLog' label='Add Line to Session Log'></span>
@@ -230,7 +231,7 @@
                 <div id='activeConfigHolder'>
                   <div >
                     <img src='images/Avida-ED-dish-icon.png' class='lftmargin' alt='Avida-ED dish icon'>
-                    <div id='activeConfig' class='activeConfigDojoDNDcontainer'></div>
+                    <div id='activeConfig'></div>
                   </div>
                   <div id='testConfigLableHolder'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;test</div>
                   <div id='testConfig' class='activeConfigDojoDNDcontainer'></div>
@@ -313,7 +314,7 @@
                 <div id='a_control_or_info_can_go_here' class="orgTopRt"></div>
               </div>
               <div class="orgMid" id='organismCanvasHolder'>
-                <!-- yemi canvas comment; diane move style info to #organCanvas in avidaedEco.css -->
+                <!-- yemi canvas comment; diane moved style info to #organCanvas in avidaedEco.css -->
                 <canvas data-dojo-type='dojo.dnd.Target' id='organCanvas'></canvas> 
               </div>
               <div class="orgBotClass" id='orgBotId'>
@@ -663,33 +664,31 @@
                 <div id='popChartDiv'></div>
               </div>
               
-             <div id='miniChartControls'>
-                <div id='miniChartYaxis'>
-                  <label id='yaxisLabel'>Y-axis
-                    <select  id='yaxis'>
+             <div id='popChrtCntrlHldr'>
+                <div id='popChrtlftYaxHldr'>
+                  <label id='popChrtlftYaxLbl'>Left Y-axis
+                    <select  id='popChrtLftYaxis' onchange='av.pch.popChrtYaxisChangeFn(this)'>
                       <option value='Average Fitness' selected>Ave. Fitness</option>
                       <option value='Average Offspring Cost'>Ave. Offspring Cost</option>
                       <option value='Average Energy Acq. Rate'>Ave. Energy Acq. Rate</option>
                       <option value='Number of Organisms'># of Organisms</option>
                       <option value='Number Viable'># Viable</option>
-                      <option value='none'>None</option>
+                      <option value='Number by Ancestor'># By Ancestor</option>
+                      <option value='None'>None</option>
                     </select>
                     </label>
-                </div><span id='miniChartYaxis_end' class='display_none'></span>
-                <div id='miniChartOptHolder'>
-                  <div id='miniChartOptions'>
-                    <label id='miniChartOptionsLabel'>Options
-                      <select  id='miniCharts' onchange='av.ui.miniChartOptionsFn(this)'>
-                        <option value='organism'>Organism</option>
-                        <option value='combined' selected>Combined</option>
-                        <option value='resource'>Resource</option>
-                        <option id='offspring' value='offspring' disabled>Offspring</option>
-                        <option value='both' disabled>Both</option>
-                        <option value='none'>None</option>
+                </div><span id='popChrtlftYaxHldr_end' class='display_none'></span>
+                <div id='popChrtRitYaxHldr'>
+                  <div id='popChrtRitYaxDiv'>
+                    <label id='popChrtRitYaxLbl'>Right Y-axis
+                      <select  id='popChrtRitYaxis' onchange='av.pch.popChrtYaxisChangeFn(this)'>
+                        <option id='popChrtRitYNone' value='None'>None</option>
+                        <option id='popChrtRitYResources' value='Resources'>Resources</option>
+                        <option id='popChrtRitYmomsOnly' value='Moms Only'>Moms Only</option>
                       </select>
                     </label>
                   </div>
-                </div><span id='miniChartOptHolder_end' class='display_none'></span>
+                </div><span id='popChrtRitYaxHldr_end' class='display_none'></span>
                </div><span id='miniChartConrols_end' class='display_none'></span>
 
               <div id='pauseOptions' class='pauseGridContainer'>
@@ -726,16 +725,16 @@
                 <div id='environmentSettingTitle'>Environmental Settings</div>
                 <div  class='odd'>
                   <div id='suDishSize' class='enviroSubHeading'>Dish Size:</div>
-                    <input id='sizeCols' type='text' class='colrow' onchange='av.ptd.gridChange(this)' value = '10';/>
+                    <input id='sizeCols' type='text' class='colrow' onchange='av.ptd.gridChange(this)' value = '30'/>
                     &nbsp; x &nbsp;
-                    <input id='sizeRows' type='text' class='colrow' onchange='av.ptd.gridChange(this)' value = '10'/>
+                    <input id='sizeRows' type='text' class='colrow' onchange='av.ptd.gridChange(this)' value = '30'/>
                     cells&nbsp; 
                     <label id='sizeCells'>There are 900 cells by default</label>
                 </div>
                 <div class='even'>
                   <div id='popSetupMutationRate'>
                     <span class='enviroSubHeading lftmargin' >Per Site Mutation Rate:</span>
-                    <input id='mutePopInput' type='text' class='mutePopInputClass'>&nbsp;%                    
+                    <input id='mutePopInput' type='text' class='mutePopInputClass' value='2'>&nbsp;%                    
                   </div>
                   <div id='mutePopError' onclick="av.ui.toggleResourceComplexity('muteErrorNotice')"></div>
                   <div id='mutePopSlideHolder'>
@@ -807,8 +806,8 @@
                               <option id="ornWnone" value='none'>None</option>
                               <option id="ornWunlimited" value='unlimited' selected=''>Unlimited</option>
                               <option id="ornWLimited" value="limited2">Limited</option>
-                              <option id="orn_chemostat" class="optChemo" disabled value='chemostat'>Chemostat</option>
-                              <option id="orn_debugTyp" value="debug" disabled>debug</option>
+                              <option id="ornWchemostat" class="chemo" disabled value='chemostat'>Chemostat</option>
+                              <option id="ornWcombo" value="combo" disabled>Combo</option>
                              </select>
                           </div>
                           <div id='orn_inflowHiDiv' class='inflwSumCls sgrNputTxtCls'>
@@ -1409,7 +1408,7 @@
 
     <span class='notSeen' id='o_______________________________________________________Export_Stand_Alone_Dialog_box___'></span>
     <div class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='mnFlStandAloneAppDialog'
-         title='Stand alone version of Avida-ED 4.0.10 Beta Testing'>
+         title='Stand alone version of Avida-ED 4.0.11 Beta Testing'>
       <div class='dijitDialogPaneContentArea'>
         <h3>For working where there is no internet access: No working Avida-ED 4 versions for off-line use at this time.  </h3>
         <ul>
@@ -1727,7 +1726,7 @@
       <div id='aboutAvidaED_content' class='modalBig-content'>
         <div id='aboutAvidaED_header' class='modalBig-header'>
           <span class='aboutAvidaEDcloseHldr'></span>
-          <h2 id='aboutAvidaEDtitle'>Avida-ED 4.0.10 Beta</h2> 
+          <h2 id='aboutAvidaEDtitle'>Avida-ED 4.0.11 Beta</h2> 
           <span class='aboutAvidaEDcloseHldr'>
             <button id='aboutAvidaEDcloseButton' onclick='av.ui.aboutAvidaED_Close();'>Close</button>
           </span>
@@ -1740,7 +1739,7 @@
               <p class='centerPbig'>An educational artificial life platform developed at Michigan State University for learning evolution and the nature of science using digital organisms.</p>
             </span>
             <span id='aboutAvidaEDupperTextHolder'>
-              <p class='centerPbig'><strong>Avida-ED 4.0.10 Beta</strong></p>
+              <p class='centerPbig'><strong>Avida-ED 4.0.11 Beta</strong></p>
               <br>
               <p class='centerP'>https://Avida-ED.msu.edu</p>
               <br>

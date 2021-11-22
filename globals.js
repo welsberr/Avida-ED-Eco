@@ -41,7 +41,8 @@ av.dbg.flg.popSetup = false;
 av.dbg.flg.frd = false;  //reading file text strings
 av.dbg.flg.nut = false;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
 av.dbg.flg.nutSum = true; //summary for each function when processing environment.cfg for sugar user interace
-av.dbg.flg.plt = false;  //both popChart and analysis
+av.dbg.flg.plt = false;  //analysis plot 
+av.dbg.flg.pch = true;  //popChart and analysis
 av.dbg.flg.root = false;  //statements that look for failers when the code executes outside of functions
 av.dbg.flg.divsize = false;
 av.dbg.flg.dsz = false;   //div size; used to eliminate scroll bars
@@ -103,7 +104,7 @@ av.ui.orgInfo = 'details';   //settings is the other option
 av.ui.beginFlag = true;
 av.ui.oneUpdateFlag = false;
 av.ui.lftSidePnlShowing = true;
-av.ui.version = '4.0.03 Beta';
+av.ui.version = '4.0.11 Beta';
 av.debug.log = '';
 av.debug.log = '--hed: message and error log: Version:' + av.ui.version;
 av.debug.triggered = 'unknown';
@@ -877,7 +878,6 @@ av.grd.fnChosen = [];
 for (var ii = 0; ii < 9; ii++) { av.grd.fnChosen[av.ptd.logicButtons[ii]] = false; }
 
 // initialize data for chart on population page
-av.grd.ytitle = 'Average Fitness';
 av.grd.need2DrawGrid = true;
 av.grd.newlyNone = true;
 
@@ -954,6 +954,7 @@ av.pch = {};   // related to the chart on the population page
 av.pch.dadMax = 16;
 av.pch.resrcGlobal = {};
 av.pch.sgr = {};
+popChrtRitYaxisNow = 'None'
 
 av.sgr.lineDash = ['solid', 'dot', 'solid', 'longdash', 'solid',  'dash', 'solid', 'dashdot', 'longdashdot'];
 av.sgr.lineDash = ['10px,5px', 'dot', 'solid', 'longdashdot', 'solid',  'dot', 'solid', 'dashdot', 'solid'];
@@ -1024,10 +1025,10 @@ av.pch.clearPopChrt = function () {
   av.pch.maxX = 10;
   av.pch.maxY = 1;
   
-  av.pch.chartContains = 'organism';
-  av.pch.chartContained = 'organism';
-  av.pch.organismTrait = 'Average Fitness';
-  av.pch.organismWasTrait = 'Average Fitness';
+  av.pch.ritYaxisNow = 'None';
+  av.pch.ritYaxisWas = 'None';
+  av.pch.lftYaxisNow = 'Average Fitness';
+  av.pch.lftYaxisWas = 'Average Fitness';
 
   av.pch.makeTrace = function(xx, yy, type, mode, name, color, width, texture) {
     this.x = xx;
@@ -1473,7 +1474,7 @@ av.mouse.notDndPopList = ['colorMode'
   , 'equPop'
   // chart
   , 'yaxis'
-  , 'yaxisLabel'
+  , 'popChrtlftYaxLbl'
 ];
 var lngth = av.mouse.notDndPopList.length;
 av.mouse.notDndPopShape = [];

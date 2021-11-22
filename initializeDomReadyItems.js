@@ -35,7 +35,7 @@
     av.dom.popStats4grid = document.getElementById('popStats4grid');
     av.dom.selOrgType = document.getElementById('selOrgType');
     av.dom.resrceDataHolder = document.getElementById('resrceDataHolder');
-    av.dom.miniChartControls = document.getElementById('miniChartControls');
+    av.dom.popChrtCntrlHldr = document.getElementById('popChrtCntrlHldr');
     av.dom.popChrtHolder = document.getElementById('popChrtHolder');
     av.dom.pauseOptions = document.getElementById('pauseOptions');
 
