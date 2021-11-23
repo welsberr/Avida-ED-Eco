@@ -1069,7 +1069,7 @@ av.msg.fillColorBlock = function (msg, from) {
 
   if (av.debug.msg) console.log('sot bkcolor', bkcolor);
   av.dom.sotColorBox.style.backgroundColor = bkcolor;
-  av.dom.sotColorBox.style.border = '2px solid ' + bkcolor;
+  av.dom.sotColorBox.style.border = '1xpx solid ' + 'blacks';   //was bkcolor
 };
 
 

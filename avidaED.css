@@ -276,31 +276,7 @@ h1, h2, h3, h4, h5, h6 {
    background: #DDD;
    width: 100%;   /* djb: no change seen */
  }
- 
- .noWrapF {
-   text-align:center;
-   font-weight: bold;
-   max-height: 15px;
- }
- 
- .noWrapN {
-   text-align:center; /* yemi: used to be left; consistent with SelOrgType table
-   font-weight: bold;
-   /* max-height: 12px; */ /* yemi: fixes inconsistent spacing of rows in Population Statistics */
-   overflow: hidden;
- }
- 
- .noWrap2r {
-   text-align:center;
-   max-height: 15px;
- }
- 
- .noWrapTitle {
-   text-align:center;
-   font-weight: bold;
-   max-height: 15px;
- }
- 
+  
  .bitButtonOff {
    background: #fff;
    color: #000;

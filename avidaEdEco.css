@@ -687,6 +687,7 @@ html {
   }
   
   #popStatsBlock{
+    display: flex;
     flex-direction: column;
     height: 100%;
     width: 100%;
@@ -721,7 +722,7 @@ html {
     display: flex;
     flex-direction: row;
     border: 1px solid #AAA;
-    background: #F5F5F5;
+    background: #FFF;   
     height: auto;
     resize: vertical;     /*should get yemi to replaces with a popChartDragbar */
     overflow: auto;
@@ -737,9 +738,7 @@ html {
 
 #sotTopTbID { width: 100%; }
 #sotBopTable { width: 100%; background: white; }
-#sotColorBox { display: inline-block; width: 10px; height: 10px;}
-
-.timePerform { min-width: 120px; background: #fff }
+#sotColorBox { display: inline-block; width: 10px; height: 10px; border: solid 1px white; }
   
 #popStats4grid{
   flex: 1 1 auto; /* yemi: used to be 1 1 240px; yemi: fixed the weird width problem by useing 240px as the width; auto adjusts */     
@@ -752,7 +751,31 @@ div.psTopTbIDHold {
   background: #DDD; 
 }
 
-.table.psTopTbCls {
+.popsTopTblcol1 {min-width: 10px;  }  /* Yemi removed min-width; Diane tried a smaller min-width; was 134px */
+.popsTopTblcol2 {min-width: 60px; } /* yemi: changed from 45px to 60px */
+
+#psBotTbIdHold { width: 100%; background:white; }
+
+table.sotTopTbCls {
+  white-space: nowrap;
+  border-collapse: collapse;
+  /* margin: auto;   /* centers the table */
+  border: 0;
+  padding: 0;
+  table-layout: auto;
+}
+.sotTopTbCls th, .top td {  padding: 0px;  }
+.topTable tr *:nth-child(1) {
+  text-align: right;
+}
+.sotTopTbCls tr *:nth-child(2) {
+  width: 50%;
+}
+
+.sotTopTbCls tr:nth-child(odd) {background: #D7D7D7}
+.sotTopTbCls tr:nth-child(even) {background: #DDDDDD}
+ 
+ .table.psTopTbCls {
 /*  margin: auto;  /* centers table in div */
   border: 0;  
   padding: 0;
@@ -761,45 +784,12 @@ div.psTopTbIDHold {
   min-width: 150px;
 }
 
-.popsTopTblcol1 {min-width: 10px;  }  /* Yemi removed min-width; Diane tried a smaller min-width; was 134px */
-.popsTopTblcol2 {min-width: 60px; } /* yemi: changed from 45px to 60px */
-
-#psBotTbIdHold { width: 100%; background:white; }
-
- table.sotTopTbCls {
-   white-space: nowrap;
-   border-collapse: collapse;
-   /* margin: auto;   /* centers the table */
-   border: 0;
-   padding: 0;
-   table-layout: auto;
- }
- .sotTopTbCls th, .top td {  padding: 0px;  }
- .topTable tr *:nth-child(1) {
-   text-align: right;
- }
- .sotTopTbCls tr *:nth-child(2) {
-   width: 50%;
- }
- 
- .sotTopTbCls tr:nth-child(odd) {background: #D7D7D7}
- .sotTopTbCls tr:nth-child(even) {background: #DDDDDD}
- 
  table.psTopTbCls {
    border-collapse: collapse;
    border: 0;
    padding: 0;
-   white-space: nowrap;
    width: 100%;
- }
- .psTopTbCls tr *:nth-child(1) {
-   text-align: right;
    font-size: 1em;
- }
- .psTopTbCls tr *:nth-child(2) {
-   text-align: left;
-   font-family: monospace;
-   font-size: 1.2em;
  }
  .psTopTbCls tr:nth-child(odd) {background: #D7D7D7}
  .psTopTbCls tr:nth-child(even) {background: #DDDDDD}
@@ -809,17 +799,21 @@ div.psTopTbIDHold {
    padding: 0;
    border-collapse: collapse;
    width: 100%; /* yemi */
+   background: white;
  }
  
- .sotBotTbCls tr:nth-child(even) {background: #FAFAFA}
+ .sotBotTbCls th { line-height: 17px; font-weight: bold; }
+ .sotBotTbCls td { line-height: 15px; }
  
- .sotBotTbCls th { font-weight: bold}
- .sotBotTbCls td {  line-height: 15px;  }   /* added in javascript ??? */
- 
- .sotBotTbCls tr *:nth-child(1) { text-align: center;  }
- .sotBotTbCls tr *:nth-child(2) {  text-align: right;  }
- .sotBotTbCls tr *:nth-child(3) {  width: 80%;  }
- 
+ .sotBotTbCls tr:nth-child(even) {background: #F4F4F4}
+
+.noWrapTitle {
+  text-align:center;
+  font-weight: bold;
+  max-height: 15px;
+  overflow: hidden;
+}
+
  .sotR {
    text-align:left;
    padding-left: 1px;
@@ -837,40 +831,46 @@ div.psTopTbIDHold {
  .sotodd {
    background: #BBB;   /* #D7D7D7;    */
    align-self: center;
+   max-height: 15px;
  }
  .sotEven {
    background: #DDD;
    align-self: center;
+   max-height: 15px;
  }
  .popButCls{
    padding: 0px 2px 0px 2px;  
    max-height: 15px;
  }
- .noWrap1 {
+ .sotFn {
    text-align:center;
+   max-height: 15px;
+ }
+ .sotNumDoFn {
+   text-align:center;
+   max-height: 15px;
  }
 
+.popFnNum {
+  text-align:center;
+  max-height: 15px;
+}
 
 table.psBotTbCls {
 /*  margin: auto;  /* centers table in div */
   border: 0;   padding: 0;
   border-collapse: collapse;
   width: 100%;
+  background: white;
   table-layout: auto;
 }
 .popsBotTblcol1 {width: 55px; }
 .popsBotTblcol2 {width: 13px; }
 .popsBotTblcol3 {width: 110px; }
-.numAvidians {  background: #fff }   /* min-width: 110px; */
 
-.psBotTbCls tr:nth-child(even) {background: #FAFAFA}
-.psBotTbCls th {
-  font-weight: bold;
-}
-.psBotTbCls td {  line-height: 15px;  }   /* added in javascript */
-
-.psBotTbCls tr *:nth-child(2) {  text-align: right;  }
-.psBotTbCls tr *:nth-child(3) {  width: 80%;  }
+.psBotTbCls tr:nth-child(even) {background: #F4F4F4}
+.psBotTbCls th { line-height: 17px; font-weight: bold; }
+.psBotTbCls td {  line-height: 15px;  }
 
 #logTit6 { font-style: italic; color: dimgray; }
 #logTit7 { font-style: italic; color: dimgray; }
@@ -2308,10 +2308,6 @@ checkbox:focus {
   justify-self: center;
   margin: auto;
   width: 50%;
-}
-
-#popStatsFunction {
-  padding: 0px 5px 0px 5px;
 }
 
 /********************************************************************************************** end of modalBig class */                                                                         */
