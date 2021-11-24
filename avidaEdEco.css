@@ -681,9 +681,10 @@ html {
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
     height: 100%;
     width: 100%;
-    min-width: 200px; /* yemi: */
+    min-width: 200px; /* yemi:   */
     /* max-width: 60vh; */ /* yemi: diane does not see why a max is needed: sometimes want popChart big */
     max-width: 500px;
+    overflow: auto;
   }
   
   #popStatsBlock{
@@ -714,6 +715,7 @@ html {
 
   #popStatHolder{
     flex: 1 1 280px;
+    /* default width of 356px min */ 
     /* min-height: 280px; */
   }
   
@@ -751,8 +753,8 @@ div.psTopTbIDHold {
   background: #DDD; 
 }
 
-.popsTopTblcol1 {min-width: 10px;  }  /* Yemi removed min-width; Diane tried a smaller min-width; was 134px */
-.popsTopTblcol2 {min-width: 60px; } /* yemi: changed from 45px to 60px */
+.popsTopTblcol1 {min-width: 10px; width: 127px }  /* Yemi removed min-width; Diane tried a smaller min-width; was 134px; 127 min */
+.popsTopTblcol2 {min-width: 45px; } /* yemi: changed from 45px to 60px */
 
 #psBotTbIdHold { width: 100%; background:white; }
 
@@ -875,59 +877,19 @@ table.psBotTbCls {
 #logTit6 { font-style: italic; color: dimgray; }
 #logTit7 { font-style: italic; color: dimgray; }
 
-/* ---------------------- Population (right) side of tables */
-#popChrtHolder{
-  flex: auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
-  border: 1px solid #AAA;
-  height: 100%;
-  width: 100%;
-}
+/* end ---------------------------------------------------------------------------- Population (right) side of tables */
 
+
+/*--------------------------------------------------------------------------------------------- Resource Data Table --*/
 #resrceDataHolder{
   display: inline-block;
   /* flex: 0 0 auto; */
   border: 1px solid #AAA;
-  width: 100%; 
-}
-
-/* Yemi added 
-#popChrtRitYaxLbl { margin: 0; }    /* diane thinks it is redant as this is covered in label css */
-
-#popChrtCntrlHldr{
-  flex: 0 0 20px;
-  display: flex;
-  border: 1px solid #AAA;   
+  min-width: 312px;
+  min-height: 48px; 
+  width: 100%;
   overflow: auto;
-  height: 25px; 
 }
-#popChrtlftYaxHldr{
-  flex: 0 0 220px;
-}
-#popChrtRitYaxHldr{
-  flex: 0 0 auto;
-  padding-left: 15px;
-  align-self: flex-end;
-}
-#popChrtRitYmomsOnly{ display: none; }
-
-#pauseOptions {
-  flex: 0 0 20px;
-  align-items: center;
-  border: 1px solid #AAA;
-  background: #DDD;
-}
-#pausePrefix { display: inline-block; }
-#pauseMidText { display: inline-block; }
-#itemDone1st { display: none; }
-#pauseChkTxt { display: inline-block; }
-#autoPauseCheck {}
-#pauseCriteriaHolder { }  /* tried to use to give a white background to select box rather than a inherit background */
-  
-input:focus {
-/*  background-color: yellow;  */
-}
-
-/*--------------------------------------------------------------------------------------------- Resource Data Table --*/
 
 /* background colors set for order used in sugarGlobal-gridContainer */
 .sugarTsk{  /*Resource */
@@ -995,7 +957,65 @@ input:focus {
 }
 /*----------------------------------------------------------------------------------------- end Resource Data Table --*/
 
+/*----------------------------------------------------------------------------------- mini-Chart on Population Page --*/
 
+#popChrtHolder{
+  display: flex;
+  flex: auto;        /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
+  border: 1px solid #AAA;
+  height: 100%;
+  width: 100%;
+}
+
+#popChrtCntrlHldr{
+  flex: 0 0 20px;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #AAA;   
+  overflow: auto;
+  min-width: 320px;   /* only have room for 312; or just make resource info table wider */
+  min-height: 20px;
+  overflow: auto;
+}
+/*
+#popChrtlftYaxHldr{
+  min-width: 193px;
+}
+#popChrtRitYaxHldr{
+  min-width: 146px;
+}
+*/
+
+/* option to look at data only on organisms that have produced offspring; need to delete logic ad then option */
+#popChrtRitYmomsOnly{ display: none; }  
+
+/*------------------------------------------------------------------------------- end mini-Chart on Population Page --*/
+
+/*-------------------------------------------------------------------------------- pause options on Population Page --*/
+
+#pauseOptions {
+  flex: 0 0 20px;
+  align-items: center;
+  /* border: 1px solid #AAA; */
+  background: #DDD;
+  min-width: 320px;
+}
+#pausePrefix { display: inline-block; }
+#pauseMidText { display: inline-block; }
+#itemDone1st { display: none; }
+#pauseChkTxt { display: inline-block; }
+#autoPauseNum { display: inline-block; width: 60px; }
+#autoPauseCheck {}
+#pauseCriteriaHolder { }  /* tried to use to give a white background to select box rather than a inherit background */
+  
+input:focus {
+/*  background-color: yellow;  */
+}
+
+#scrollBarSpace { background: #DDD; min-width: 320px; }
+/*---------------------------------------------------------------------------- end pause options on Population Page --*/
+
+/*---------------------------------------------------------------------------------------- Setup on Population Page --*/
 #environmentSettingTitle{
   font-size: 130%;
 }

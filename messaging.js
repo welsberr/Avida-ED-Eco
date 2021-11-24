@@ -64,7 +64,7 @@ av.msg.readMsg = function (ee) {
           av.msg.updatePopStats(av.grd.popStatsMsg);
           //av.msg.sync('webPopulationStats-update:' + msg.update.toString());
 //          console.log('stub=', stub);
-          av.grd.popChartFn('av.msg.readMsg');
+          av.grd.popChartFn(false, 'av.msg.readMsg');
         }
         else {
           //console.log('Repeat so webPopulationStats and chart not redrawn');

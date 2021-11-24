@@ -589,7 +589,7 @@
       av.pch.logNum[ii] = null;
     }
     av.grd.drawGridSetupFn('av.ptd.bitToggle');
-    av.grd.popChartFn('av.ptd.bitToggle');
+    av.grd.popChartFn(false, 'av.ptd.bitToggle');
     //console.log('bitToggle: av.grd.popStatsMsg.update', av.grd.popStatsMsg.update);
     av.ptd.updateLogicFn(av.grd.popStatsMsg.update);
   };

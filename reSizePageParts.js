@@ -59,7 +59,7 @@ resizePopulationPage = function() {
     } 
   }
   $('.all3pop').css("grid-template-columns", newColumns);
-  av.grd.drawGridSetupFn(); 
+  av.grd.drawGridSetupFn('resizePopulationPage'); 
 }
 
 /* function to automatically resize the Organisms page when button clicked; called in avidaED.js */
@@ -103,8 +103,8 @@ function dragbarLeftResize() {
     dragging = true;
     
     $(document).on('mousemove touchmove', function(e){
-      av.grd.drawGridSetupFn(); // redraw the grid
-      av.anl.AnaChartFn(); // redraw analysis grid
+      av.grd.drawGridSetupFn('dragbarLeftResize 1'); // redraw the grid
+      av.anl.AnaChartFn('dragbarLeftResize'); // redraw analysis grid
       
       // need to account for both touch and mouse event
       var x;
@@ -166,8 +166,8 @@ function dragbarLeftResize() {
 
   $(document).on('mouseup touchend', function(e) {
     if (dragging) {
-      av.grd.drawGridSetupFn(); // redraw the grid
-      av.anl.AnaChartFn(); // redraw analysis grid
+      av.grd.drawGridSetupFn('dragbarLeftResize 2'); // redraw the grid
+      av.anl.AnaChartFn('dragbarLeftResize 2'); // redraw analysis grid
 
       // need to account for both touch and mouse event
       var x;
@@ -254,8 +254,8 @@ function dragbarRightResize() {
     dragging = true;
 
     $(document).on('mousemove touchmove', function(e){
-      av.grd.drawGridSetupFn(); // redraw the grid
-      av.grd.popChartFn(); // redraw plotly graph
+      av.grd.drawGridSetupFn('dragbarRightResize'); // redraw the grid
+      av.grd.popChartFn(true, 'dragbarRightResize'); // redraw plotly graph
 
       // need to account for both touch and mouse event
       var x;
@@ -318,8 +318,8 @@ function dragbarRightResize() {
   $(document).on('mouseup touchend', function(e) {
 
     if (dragging) {
-      av.grd.drawGridSetupFn(); // yemi: redraw the grid
-      av.grd.popChartFn(); // yemi: redraw plotly graph
+      av.grd.drawGridSetupFn('dragbarRightResize 2'); // yemi: redraw the grid
+      av.grd.popChartFn(true, 'dragbarRightResize 2'); // yemi: redraw plotly graph
 
       // yemi: need to account for both touch and mouse event
       var x;
@@ -442,7 +442,7 @@ av.ui.initialDivSizing = function() {
   dragbarRightResize();
 };
 
-//----------------------------------------------------------------------------------------show/hide left side panel --
+//--------------------------------------------------------------------------------------------- av.ui.freezerSizeHtFn --
 // fix Freezer div size
 // only called from within av.dom.storeInitialSize
 // the notation 
@@ -467,9 +467,7 @@ av.ui.freezerSizeHtFn = () => {
   };  
 };
 
-//********************************************************************************************************************
-//                                             Resize window helpers 
-//********************************************************************************************************************
+//---------------------------------------------------------------------------------------------------- av.anl.divSize --
 
 //called from two places in avidaED.js
 av.anl.divSize = function (from) {
@@ -491,36 +489,7 @@ av.anl.divSize = function (from) {
   console.log(av.anl.ht, av.anl.wd);
 };
 
-
-//----------------------------------------------------------------------------------------------------------------------
-//  Code below this is not in use. Can be deleted. 
-//
-//------------------------------------------------------------------------------------------------------ av.dom.sizes --
-// https://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
-// not in use, could be useful. So I did not delete 
-
-av.dom.sizes = () => {
-  let contentWidth = [...document.body.children].reduce(
-    (a, el) => Math.max(a, el.getBoundingClientRect().right), 0)
-    - document.body.getBoundingClientRect().x;
-
-  return {
-    windowWidth: document.documentElement.clientWidth,
-    windowHeight: document.documentElement.clientHeight,
-    pageWidth: Math.min(document.body.scrollWidth, contentWidth),
-    pageHeight: document.body.scrollHeight,
-    screenWidth: window.screen.width,
-    screenHeight: window.screen.height,
-    pageX: document.body.getBoundingClientRect().x,
-    pageY: document.body.getBoundingClientRect().y,
-    screenX: -window.screenX,
-    screenY: -window.screenY - (window.outerHeight - window.innerHeight)
-  };
-};
-
-// av.dom.page = av.dom.sizes();  //only call for av.dom.sizes
-
-//----------------------------------------------------------------------------------------show/hide left side panel --
+//------------------------------------------------------------------------------------------show/hide rite side panel --
 // if (av.dbg.flg.root) { console.log('Root: before av.ptd.lftPanelBtnFn'); }
 // Used for a presentation to hide the left panel and make the right panel bigger.
 // Rob wants a button like this that hides the left panel and makes the center panel bigger. 
@@ -577,11 +546,12 @@ av.ptd.ritePanelBtnFn = function () {
     /* make the following divs take up the entire width of their containers */
   }
 
-  av.grd.drawGridSetupFn(); // redraw the grid
-  av.grd.popChartFn(); // redraw plotly graph
-  av.ind.updateOrgTrace(); // update organism canvas
+  av.grd.drawGridSetupFn('av.ptd.ritePanelBtnFn'); // redraw the grid
+  av.grd.popChartFn(true, 'av.ptd.ritePanelBtnFn'); // redraw plotly graph
+  av.ind.updateOrgTrace('av.ptd.ritePanelBtnFn'); // update organism canvas
 };
 
+//------------------------------------------------------------------------------------------show/hide left side panel --
 av.ptd.lftPanelBtnFn = function () {
   setTimeout(function() {}, 80);  
 
@@ -620,7 +590,7 @@ av.ptd.lftPanelBtnFn = function () {
     IS_LEFT_COLLAPSED = false;
 
     // open up left sidebar
-    var widthOfNav = "240px" // default width
+    var widthOfNav = "240px"; // default width --------- should be in globals for consistency ---------
 
     /* change the button's contents and look */
     $('#leftPanelButton').val('<< ');
@@ -649,10 +619,117 @@ av.ptd.lftPanelBtnFn = function () {
     $('#freezerSection').children().css("display", "block"); // re-display freezer section after being collapsed
   }
 
-  av.grd.drawGridSetupFn(); // redraw the grid
-  av.anl.AnaChartFn(); // redraw analysis grid
-  av.ind.updateOrgTrace(); // update organism canvas
+  av.grd.drawGridSetupFn('av.ptd.lftPanelBtnFn'); // redraw the grid
+  av.anl.AnaChartFn('av.ptd.lftPanelBtnFn'); // redraw analysis grid
+  av.ind.updateOrgTrace('av.ptd.lftPanelBtnFn'); // update organism canvas
 };
+//------------------------------------------------------------------------------------- end show/hide left side panel --
+
+
+
+//--------------------------------------------------------------------------------------------------- detect overflow --
+// https://stackoverflow.com/questions/9333379/check-if-an-elements-content-is-overflowing
+// https://newbedev.com/javascript-how-to-detect-if-my-element-is-overflowing-css-code-example
+// https://pretagteam.com/question/javascript-check-if-element-is-overflowing
+// https://www.codegrepper.com/code-examples/javascript/javascript+check+if+element+is+overflowing
+
+
+av.ui.isOverflownXorY = function(elName, orient) {
+  //elName = name of a dom element; orient = orientation that is "Width" or "Height"
+  var element = document.getElementById(elName);
+  return element['scroll'+orient] > element['client'+orient];
+};
+
+//----------------------------------------------------------------------------------------------------------------------
+//  Code below this is not in use. But might be usefull
+//
+//------------------------------------------------------------------------------------------------------ av.dom.sizes --
+// https://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
+// not in use, could be useful. So I did not delete 
+
+av.dom.sizes = () => {
+  let contentWidth = [...document.body.children].reduce(
+    (a, el) => Math.max(a, el.getBoundingClientRect().right), 0)
+    - document.body.getBoundingClientRect().x;
+
+  return {
+    windowWidth: document.documentElement.clientWidth,
+    windowHeight: document.documentElement.clientHeight,
+    pageWidth: Math.min(document.body.scrollWidth, contentWidth),
+    pageHeight: document.body.scrollHeight,
+    screenWidth: window.screen.width,
+    screenHeight: window.screen.height,
+    pageX: document.body.getBoundingClientRect().x,
+    pageY: document.body.getBoundingClientRect().y,
+    screenX: -window.screenX,
+    screenY: -window.screenY - (window.outerHeight - window.innerHeight)
+  };
+};
+
+// av.dom.page = av.dom.sizes();  //only call for av.dom.sizes
+
+//-------------------------------------------------------------------------------- finds elements wider than document --
+// https://davidwalsh.name/detect-overflow-elements
+
+av.ui.isAnElementTooWide = function() {
+  document.querySelectorAll('*').forEach(el => {
+    if (el.offsetWidth > document.documentElement.offsetWidth) {
+        console.log('Found the worst element ever: ', el);
+    }
+  });
+};
+
+//-------------------------------------------------------- check-if-an-elements-content-is-overflowing all in a class --
+//https://stackoverflow.com/questions/9333379/check-if-an-elements-content-is-overflowing
+
+av.ui.isAnElementInClassOverlown = function(elName) {
+
+  isOverflown = function(element) {
+    // looks at both direction
+    return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+  };
+
+  var els = document.getElementsByClassName(elName);
+  for (var ii = 0; ii < els.length; ii++) {
+    var el = els[ii];
+    el.style.borderColor = (isOverflown(el) ? 'red' : 'green');
+    console.log("Element #" + ii + " is " + (isOverflown(el) ? '' : 'not ') + "overflown.");
+  }
+};
+
+//------------------------------------------------------------------- end check-if-an-elements-content-is-overflowing --
+
+// https://twitter.com/beevorr/status/1379692518489591810
+/*
+var docWidth = document.documentElement.offsetWidth;
+[].forEach.call(
+  document.querySelectorAll('*'),
+  function(el) {
+    if (el.offsetWidth > docWidth) {
+      console.log(el);
+    }
+  }
+);
+*/
+
+//----------------------------------------------------------------------------------------- findOverflows in document --
+// https://www.webtips.dev/webtips/javascript/find-overflowing-elements-with-javascript
+
+const findOverflows = () => {
+    const documentWidth = document.documentElement.offsetWidth;
+
+    document.querySelectorAll('*').forEach(element => {
+        const box = element.getBoundingClientRect();
+
+        if (box.left < 0 || box.right > documentWidth) {
+            console.log(element);
+            element.style.border = '1px solid red';
+        }
+    });
+};
+
+// Execute findOverflows to find overflows on the page.
+// findOverflows();
 
 //------------------------------------------------------------------------------------------- window.addEventListener --
 // triggers when viewport is resized, values are not used. so could be deleted
@@ -663,8 +740,8 @@ window.addEventListener('resize', function() {
 	av.viewPortInnerHeight = window.innerHeight;
 	av.viewPortClientWidth = document.documentElement.clientWidth;
 	av.viewPortClientHeight = document.documentElement.clientHeight;
-  av.grd.drawGridSetupFn(); // redraw the grid
-  av.anl.AnaChartFn(); // redraw analysis grid
+  av.grd.drawGridSetupFn('window.addEventListener'); // redraw the grid
+  av.anl.AnaChartFn('window.addEventListener'); // redraw analysis grid
 });
 //--------------------------------------------------------------------------------------- end window.addEventListener --
 

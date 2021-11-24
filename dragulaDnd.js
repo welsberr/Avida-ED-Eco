@@ -1154,7 +1154,7 @@ jQuery(document).ready(function($) {
     av.msg.importPopExpr();
     av.msg.requestGridData();
     av.msg.sendData();
-    av.grd.popChartFn('av.dnd.landActiveConfig');
+    av.grd.popChartFn(false, 'av.dnd.landActiveConfig');
   };
   //------------------------------------------------------------------------------------- end av.dnd.landActiveConfig --
 

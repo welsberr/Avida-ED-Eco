@@ -104,7 +104,7 @@ av.ui.orgInfo = 'details';   //settings is the other option
 av.ui.beginFlag = true;
 av.ui.oneUpdateFlag = false;
 av.ui.lftSidePnlShowing = true;
-av.ui.version = '4.0.11 Beta';
+av.ui.version = '4.0.12 Beta';
 av.debug.log = '';
 av.debug.log = '--hed: message and error log: Version:' + av.ui.version;
 av.debug.triggered = 'unknown';
@@ -1155,6 +1155,8 @@ av.pch.clearPopChrt = function () {
   av.pch.yRightTitle = 'Resource Amount';
   
     // Plotly configuration including that of the modebar
+    // widg is also called config or configuration
+    // https://plotly.com/javascript/configuration-options/
     // https://plot.ly/javascript/configuration-options/#hide-the-modebar-with-plotly.js
     // https://community.plot.ly/search?q=modebar%20options%20list    might also be useful
     av.pch.widg = {                // https://github.com/plotly/plotly.js/blob/master/src/plot_api/plot_config.js

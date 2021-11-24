@@ -108,6 +108,11 @@
 // Avida-ED 4.0.11 Beta
 // - changing options and labels on the mini-chart on the Population Page
 //
+// Avida-ED 4.0.12 Beta
+// - cleaned up formatting on Statistics Tables on Population Page
+// - working on formatting on Left & Right mini-chart Y axis and Pause Run at sections
+// - Added utilities to look for elements with overlow in reSizePageParts.js
+//
 // Generic Notes -------------------------------------------------------------------------------------------------------
 //
 // [option]<alt>{go} to get library in the list for finder
@@ -1342,7 +1347,7 @@ require([
         // if the miniplot on the populaton page needs to be updated.
         if ( $(av.dom.popStatsBlock).is(":visible")) {
           if (av.dbg.flg.pch) { console.log('need to call av.grd.popChartInit'); }
-          av.grd.popChartFn('av.ptd.rightInfoPanelToggleButton');
+          av.grd.popChartFn(false, 'av.ptd.rightInfoPanelToggleButton');
         }
       };
       //console.log('Stats.class=', document.getElementById('StatsButton').className, '; Setup.class=', document.getElementById('SetupButton').className);
@@ -1673,7 +1678,7 @@ require([
     side = 'popChrt'+side+'Yaxis';
     console.log('side=', side, 'yTitle=', yTitle, '; Title=', document.getElementById(side).value, '; option=', domobj.value);
     av.grd[yTitle] = document.getElementById(side).value;
-    av.grd.popChartFn('popChrtYaxisChangeFn');    
+    av.grd.popChartFn(false, 'popChrtYaxisChangeFn');    
   };
 
   // if (av.dbg.flg.root) { console.log('Root: before av.grd.popChartInit defined'); }
@@ -1682,9 +1687,10 @@ require([
   // Should be done before av.grd.popChartFn is run.  
   av.grd.popChartInit = function (from) {
     var data;
-    if (av.dbg.flg.pch) { console.log('popChrt',from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit, 
-                   '; av.dom.popStatsBlock.style.display=', av.dom.popStatsBlock.style.display, '; av.ui.page=', av.ui.page, 
-                    '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") ); }
+    if (av.dbg.flg.pch) { console.log('popChrt',from, 'called av.grd.popChartInit; av.pch.needInit=', av.pch.needInit
+                   , '; av.ui.page=', av.ui.page
+                   , '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") 
+                   , '; av.dom.popStatsBlock.style =', av.dom.popStatsBlock.style); }
 
     //look to see if poplulation page mini-chart is showing
     if ( !$(av.dom.popStatsBlock).is(":visible") ) {
@@ -1708,8 +1714,16 @@ require([
         width: av.pch.layout.width,
         height: av.pch.layout.height
       };
+      av.pch.shortLayout = { autorange: true };
+      av.pch.config = { responsive: true };
       data = [];
-      Plotly.newPlot(av.dom.popChart, data, av.pch.update);
+      // find out layout vs update in Plotly.js
+      // Plotly.newPlot(av.dom.popChart, data, av.pch.update);    // older version   
+      // Plotly.newPlot(av.dom.popChart, data, av.pch.update, av.pch.config);   //
+      Plotly.newPlot(av.dom.popChart, data, av.pch.shortLayout, av.pch.config);   //
+      
+      
+      
     } 
     else {
       // never happens because if is hard coded with a true;
@@ -1738,14 +1752,14 @@ require([
 
     var cntY = 0; //count y data arrays
 
-    // if (av.dbg.flg.pch) { console.log('popChrt:', from, 'called popChartFn: $(statsBlock.display = ', $(av.dom.popStatsBlock).css('display'),
-    //                   '; av.ui.page=', av.ui.page);
+     if (av.dbg.flg.pch) { console.log('popChrt:', from, 'called popChartFn: $(statsBlock.display = ', $(av.dom.popStatsBlock).css('display'),
+                       '; av.ui.page=', av.ui.page); }
     //  console.log('popChrt: av.pch.needInit= ', av.pch.needInit, 
     //                  '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible")); 
     //}
     // Check to see if Initialization is needed.
     if (av.pch.needInit) {
-      if (av.dbg.flg.pch) { console.log(from + ' called av.grd.popChartFn: av.pch.needInit=', av.pch.needInit, '; av.ui.page=', av.ui.page); }
+      if (av.dbg.flg.pch) { console.log(from + ' called av.grd.popChartFn: av.pch.needInit= ', av.pch.needInit, '; av.ui.page =', av.ui.page); }
 
       //initialize if needed; 
       // if (av.dbg.flg.pch) { console.log('before IF: $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"), '; $(av.dom.popStatsBlock).is(":visible") =', $(av.dom.popStatsBlock).is(":visible") ); }
@@ -1806,7 +1820,7 @@ require([
     av.dom.popChart.style.visibility = 'visible';
     av.pch.ChartVisibleNow = true;
     // this adusts the size. Seems like the size should only change when window/div changes size rather than checking very time. 
-    av.pch.divSize('av.grd.popChartFn');   
+    av.pch.divSize(true, 'av.grd.popChartFn');   
     //console.log('after av.pch.divSize');
 
     if ('None' !== av.pch.lftYaxisNow) {
@@ -2660,8 +2674,9 @@ require([
   av.anl.anaChartInit(); // bug
 
   //----------------------------------------------------------------------------------------------- av.anl.AnaChartFn --
-  av.anl.AnaChartFn = function () {
+  av.anl.AnaChartFn = function (from) {
     'use strict';
+    // console.log(from, 'called av.anl.AnaChartFn');
     var hasData = false;
     var hideChart = true;
     for (var ii = 0; ii < 3; ii++) {
@@ -2890,10 +2905,10 @@ require([
 
   av.doj.mnDebug.style.visibility = 'hidden';
 
-  // Avida-ED 4.0.11 Beta Testing fix this too. 
+  // Avida-ED 4.0.12 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; set to false before public release for Avida-ED 4.0.11 Beta Testing. ');
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.12 Beta Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x
