@@ -254,11 +254,11 @@ av.fwt.clearResourceConstants = function(from) {
       //console.log('tsk=', numTsk, '; geo=', av.nut[numTsk].uiAll.geometry.toLowerCase() );
       if ( 'global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         if ('unlimited' == av.nut.resrcTyp[ii] ) {
-          document.getElementById('cell'+tskTitle).innerHTML = 'unlm';
+          document.getElementById('cell'+tskTitle).innerHTML = 'U';
           document.getElementById('mx'+tskTitle).innerHTML = '&infin; ';      //&infin is infinity symbol
           document.getElementById('tot'+tskTitle).innerHTML = '&infin; ';        //&infin is infinity symbol
         } else if ('none' == av.nut.resrcTyp[ii].toLowerCase() ) {
-          document.getElementById('cell'+tskTitle).innerHTML = 'none';
+          document.getElementById('cell'+tskTitle).innerHTML = 'N';
           document.getElementById('mx'+tskTitle).innerHTML = '-';
           document.getElementById('tot'+tskTitle).innerHTML = '-';
         } else {
@@ -267,9 +267,9 @@ av.fwt.clearResourceConstants = function(from) {
           av.nut.cntGlobalDataTasks++;
           if ('limited' == av.nut.resrcTyp[ii].toLowerCase() ) {
 //          if ('limited' == av.nut[numTsk].uiAll.supplyTypeSlct.toLowerCase() ) {
-            document.getElementById('cell'+tskTitle).innerHTML = 'limit';
+            document.getElementById('cell'+tskTitle).innerHTML = 'L';
           } else {
-            document.getElementById('cell'+tskTitle).innerHTML = 'chem';
+            document.getElementById('cell'+tskTitle).innerHTML = 'C';
           }
         };
       } else {

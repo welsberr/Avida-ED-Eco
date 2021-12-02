@@ -814,7 +814,7 @@ av.msg.updatePopStats = function (msg) {
     aOffspringCostLabel.textContent = 'non-viable'; 
   }
   
-  aAgeLabel.textContent = av.utl.toMetric(msg.ave_age, 0);
+  aAgeLabel.textContent = msg.ave_age.formatNum(1);
 
   parentNumLabel.textContent = av.parents.name.length;  //number of original ancesstors
 

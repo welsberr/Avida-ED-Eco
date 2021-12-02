@@ -497,26 +497,30 @@ av.sgr.supplyChange = function (domObj) {
   //-------------------------------------------------------------------------------------- av.sgr.setSingleSugarColor --
   av.sgr.setSingleSugarColor = function(colorFlg, tskNum, from) {
     //if (av.dbg.flg.nut) { console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg); }
-    //console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg);
+    console.log(from, 'called av.sgr.setSingleSugarColor: tskNum=', tskNum, '; colorFlg=', colorFlg);
 
     var idname;
     var backgndColor = av.color.greyMap[av.sgr.sugarGreyShade];
     var nameColor = 'Black';
     var darkColor = '#eee';
-      //need to think this thru as eventually there will be up to 4 subsections. Just one for now.
-      idname = av.sgr.logicNames[tskNum]+'_section';
+    var darkBkgndColor = av.color.greyMap[av.sgr.sugarGreyShade+10];
+    
+    //need to think this thru as eventually there will be up to 4 subsections. Just one for now.
+    idname = av.sgr.logicNames[tskNum]+'_section';
       
       if (colorFlg) {
         backgndColor = av.color[av.sgr.sugarColors[tskNum]][av.sgr.sugarBackgroundShade];
+        darkBkgndColor = av.color[av.sgr.sugarColors[tskNum]][av.sgr.sugarBackgroundShade+20];
         nameColor = av.color[av.sgr.sugarColors[tskNum]][av.sgr.sugarNameShade]; 
-        darkColor = av.color[av.sgr.sugarColors[tskNum]][av.sgr.sugarNameShade+10]; 
+        darkColor = av.color[av.sgr.sugarColors[tskNum]][av.sgr.sugarNameShade+20];
       }
       // make grey
       else {
         backgndColor = av.color.greyMap[av.sgr.sugarBackgroundShade];
         nameColor = av.color.greyMap[av.sgr.sugarNameShade]; 
-        darkColor = av.color.greyMap[av.sgr.sugarNameShade+10];         
-      }
+        darkColor = av.color.greyMap[av.sgr.sugarNameShade+10]; 
+        darkBkgndColor = av.color.greyMap[av.sgr.sugarGreyShade+20];
+      };
       idname = av.sgr.logicNames[tskNum]+'_section';
       document.getElementById(idname).style.backgroundColor = backgndColor;
       idname = av.sgr.logicNames[tskNum]+'_title';
@@ -529,7 +533,18 @@ av.sgr.supplyChange = function (domObj) {
         document.getElementById(idname).style.color = darkColor;  
         idname = av.sgr.logicNames[tskNum]+sub+'subSection';
         document.getElementById(idname).style['border-top'] = '1px solid '+darkColor;  
-      }
+        
+        //update colors for Resource Data table. 
+        idname = 'sgr' + av.sgr.logicTitleNames[tskNum];
+        console.log('idname=', idname);
+        document.getElementById(idname).style.color = nameColor;  
+        //document.getElementById(idname).style.backgroundColor = darkBkgndColor;
+        document.getElementById(idname).innerHTML = av.sgr.logicTitleNames[tskNum];
+        idname = 'cell' + av.sgr.logicTitleNames[tskNum];
+        //document.getElementById(idname).style.backgroundColor = backgndColor;
+        idname = 'tot' + av.sgr.logicTitleNames[tskNum];
+        //document.getElementById(idname).style.backgroundColor = darkBkgndColor;
+    }  //end of loop thru subsections
   };
   //---------------------------------------------------------------------------------- end av.sgr.setSingleSugarColor --
 

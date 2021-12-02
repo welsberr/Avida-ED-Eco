@@ -507,7 +507,7 @@ require([
     av.dom.runStopButton.innerHTML = 'Run';  //av.msg.pause('now');
     av.debug.finalizeDtail();
     av.debug.triggered = 'errorTriggered';
-    av.post.postLogPara = 'Please send the info below to help us make Avida-ED better by clicking on the [Send] button';
+    av.post.postLogPara = 'Please send the info below to Help us make Avida-ED better by clicking on the [Send] button';
     av.debug.sendLogPara = 'The error is at the beginning and end of the session log in the text below.';
     av.debug.postEmailLabel = 'Please include your e-mail if you would like feed back or are willing to further assist in debug';
     av.debug.postNoteLabel = 'Please include any additional comments in the field below.';
@@ -889,7 +889,7 @@ require([
     av.debug.finalizeDtail();
     av.debug.triggered = 'userTriggered';
     av.debug.postStatus = '';
-    av.post.postLogPara = 'Please send the data below to help us make Avida-ED better by clicking on the [Send] button';
+    av.post.postLogPara = 'Please send the data below to Help us make Avida-ED better by clicking on the [Send] button';
     av.debug.sendLogPara = 'Please describe the problem and put that at the beginning of the e-mail along with the session log from the text area seeen below.';
     av.debug.postNoteLabel = 'Please describe the problem or suggestion in the comment field below.';
     av.debug.postEmailLabel = 'Please include your e-mail so we can discuss your problem or suggeston further.';
@@ -1308,22 +1308,30 @@ require([
 
   //Toggle switch for Population/Organism pages
   // if (av.dbg.flg.root) { console.log('Root: before av.ptd.rightInfoPanelToggleButton'); }
-  //Population page
+  //------------------------------------------------------------------------------- av.ptd.rightInfoPanelToggleButton --
   av.ptd.rightInfoPanelToggleButton = function(domObj) {
+    console.log('in av.ptd.rightInfoPanelToggleButton: domObj.id is', domObj.id);
+    
+    // change items with the class 'labInfoClass' to 'labInfoClass labInfoNone';
     if ('populationBlock' == av.ui.page) {
       var tabcontent = document.getElementsByClassName("labInfoClass");
-      //console.log('tabcontent=', tabcontent);
+      console.log('populationBlock: before loop: labInfoClass(tabcontent) =', tabcontent);
       for (ii = 0; ii < tabcontent.length; ii++) {
         //console.log('ii=', ii, '; tabcontent[ii]=', tabcontent[ii]);
         tabcontent[ii].className = 'labInfoClass labInfoNone';
         //console.log('ii=', ii, '; tabcontent[ii].className =', tabcontent[ii].className);
       };
+      console.log('populationBlock: before loop: labInfoClass(tabcontent) =', tabcontent);
+      
+      // change the class from 'tablinks' to tablinks active'
       var tablinks = document.getElementsByClassName("tablinks");
+      console.log('populationBlock: before loop: tablinks =', tabcontent);
       for (var ii = 0; ii < tablinks.length; ii++) {
         //console.log('ii=', ii, '; tablinks[ii]=', tablinks[ii], '; tablinks[ii].className =', tablinks[ii].className);
         tablinks[ii].className = tablinks[ii].className.replace(" active", "");
         //console.log('tablinks[ii].className =', tablinks[ii].className);
       };
+      console.log('populationBlock: after loop: tablinks =', tabcontent);
 
       // show set up panel
       if ('SetupButton' == domObj.id) {
@@ -1332,6 +1340,7 @@ require([
         av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
         av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
         av.dom.setupTab.className = 'tablinks active';
+        console.log('setupButton.className =', document.getElementById('SetupButton').className);
       } else {
         // show Statisitcal data about grid
         document.getElementById('StatsButton').className = 'toggleLftButton activeBtn';
@@ -1340,17 +1349,17 @@ require([
         av.dom.setupBlock.className = 'labInfoClass labInfoNone';
         av.dom.statsTab.className = 'tablinks active'; 
 
-        if (av.dbg.flg.pch) {      //
-          console.log('In: av.ptd.rightInfoPanelToggleButton; av.pch.needInit=', av.pch.needInit
-              , '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") ); 
-        }
+        //if (av.dbg.flg.pch) {      //
+        //  console.log('In: av.ptd.rightInfoPanelToggleButton; av.pch.needInit=', av.pch.needInit
+        //      , '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible") ); 
+        //}
         // if the miniplot on the populaton page needs to be updated.
         if ( $(av.dom.popStatsBlock).is(":visible")) {
           if (av.dbg.flg.pch) { console.log('need to call av.grd.popChartInit'); }
           av.grd.popChartFn(false, 'av.ptd.rightInfoPanelToggleButton');
         }
       };
-      //console.log('Stats.class=', document.getElementById('StatsButton').className, '; Setup.class=', document.getElementById('SetupButton').className);
+      console.log('Stats.class=', document.getElementById('StatsButton').className, '; Setup.class=', document.getElementById('SetupButton').className);
     }
     //Organism Page
     else if ('organismBlock' == av.ui.page) {
@@ -1367,15 +1376,18 @@ require([
         av.dom.orgDetailID.style.display = 'block';
         console.log('av.ind.settingsChanged=', av.ind.settingsChanged);
         if (av.ind.settingsChanged) av.msg.doOrgTrace();
-      }  
+      }
+      console.log('organismBlock: Display: orgSetting is', av.dom.orgSettings.style.display, '; orgDetailID', av.dom.orgDetailID.style.display);
     }
     else {
       // Analysis Page or Big text display for debug
       console.log('should not be avaiable on analysis or showText page');
     }
   };
+  //--------------------------------------------------------------------------- end av.ptd.rightInfoPanelToggleButton --
 
   //Development section with tabs
+  //----------------------------------------------------------------------------------------------- av.ptd.processTab --
   // if (av.dbg.flg.root) { console.log('Root: before av.ptd.processTab'); }
   av.ptd.processTab = function (evt, contentType) {
     var ii, tablinks;
@@ -1412,6 +1424,8 @@ require([
       document.getElementById('StatsButton').className = 'toggleLftButton';            
     }
   };
+  //------------------------------------------------------------------------------------------- end av.ptd.processTab --
+
   // ------- end of two controls for the same purpose; took work to get tabs to look right so I'm keeping tab example --
 
   //----------------------------------------------------------------------------------------------------------------------
