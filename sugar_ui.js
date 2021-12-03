@@ -536,7 +536,7 @@ av.sgr.supplyChange = function (domObj) {
         
         //update colors for Resource Data table. 
         idname = 'sgr' + av.sgr.logicTitleNames[tskNum];
-        console.log('idname=', idname);
+        console.log('idname=', idname, '; tskNum =', tskNum);
         document.getElementById(idname).style.color = nameColor;  
         //document.getElementById(idname).style.backgroundColor = darkBkgndColor;
         document.getElementById(idname).innerHTML = av.sgr.logicTitleNames[tskNum];
