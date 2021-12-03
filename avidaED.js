@@ -108,7 +108,7 @@
 // Avida-ED 4.0.11 Beta
 // - changing options and labels on the mini-chart on the Population Page
 //
-// Avida-ED 4.0.12 Beta
+// Avida-ED 4.0.13 Beta
 // - cleaned up formatting on Statistics Tables on Population Page
 // - working on formatting on Left & Right mini-chart Y axis and Pause Run at sections
 // - Added utilities to look for elements with overlow in reSizePageParts.js
@@ -1310,28 +1310,28 @@ require([
   // if (av.dbg.flg.root) { console.log('Root: before av.ptd.rightInfoPanelToggleButton'); }
   //------------------------------------------------------------------------------- av.ptd.rightInfoPanelToggleButton --
   av.ptd.rightInfoPanelToggleButton = function(domObj) {
-    console.log('in av.ptd.rightInfoPanelToggleButton: domObj.id is', domObj.id);
+    //console.log('in av.ptd.rightInfoPanelToggleButton: domObj.id is', domObj.id);
     
     // change items with the class 'labInfoClass' to 'labInfoClass labInfoNone';
     if ('populationBlock' == av.ui.page) {
       var tabcontent = document.getElementsByClassName("labInfoClass");
-      console.log('populationBlock: before loop: labInfoClass(tabcontent) =', tabcontent);
+      //console.log('populationBlock: before loop: labInfoClass(tabcontent) =', tabcontent);
       for (ii = 0; ii < tabcontent.length; ii++) {
         //console.log('ii=', ii, '; tabcontent[ii]=', tabcontent[ii]);
         tabcontent[ii].className = 'labInfoClass labInfoNone';
         //console.log('ii=', ii, '; tabcontent[ii].className =', tabcontent[ii].className);
       };
-      console.log('populationBlock: before loop: labInfoClass(tabcontent) =', tabcontent);
+      //console.log('populationBlock: before loop: labInfoClass(tabcontent) =', tabcontent);
       
       // change the class from 'tablinks' to tablinks active'
       var tablinks = document.getElementsByClassName("tablinks");
-      console.log('populationBlock: before loop: tablinks =', tabcontent);
+      //console.log('populationBlock: before loop: tablinks =', tabcontent);
       for (var ii = 0; ii < tablinks.length; ii++) {
         //console.log('ii=', ii, '; tablinks[ii]=', tablinks[ii], '; tablinks[ii].className =', tablinks[ii].className);
         tablinks[ii].className = tablinks[ii].className.replace(" active", "");
         //console.log('tablinks[ii].className =', tablinks[ii].className);
       };
-      console.log('populationBlock: after loop: tablinks =', tabcontent);
+      //console.log('populationBlock: after loop: tablinks =', tabcontent);
 
       // show set up panel
       if ('SetupButton' == domObj.id) {
@@ -1340,7 +1340,7 @@ require([
         av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
         av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
         av.dom.setupTab.className = 'tablinks active';
-        console.log('setupButton.className =', document.getElementById('SetupButton').className);
+        //console.log('setupButton.className =', document.getElementById('SetupButton').className);
       } else {
         // show Statisitcal data about grid
         document.getElementById('StatsButton').className = 'toggleLftButton activeBtn';
@@ -1355,11 +1355,11 @@ require([
         //}
         // if the miniplot on the populaton page needs to be updated.
         if ( $(av.dom.popStatsBlock).is(":visible")) {
-          if (av.dbg.flg.pch) { console.log('need to call av.grd.popChartInit'); }
+          if (av.dbg.flg.pch) { console.log('popChrt: need to call av.grd.popChartInit'); }
           av.grd.popChartFn(false, 'av.ptd.rightInfoPanelToggleButton');
         }
       };
-      console.log('Stats.class=', document.getElementById('StatsButton').className, '; Setup.class=', document.getElementById('SetupButton').className);
+      //console.log('Stats.class=', document.getElementById('StatsButton').className, '; Setup.class=', document.getElementById('SetupButton').className);
     }
     //Organism Page
     else if ('organismBlock' == av.ui.page) {
@@ -1374,14 +1374,14 @@ require([
         av.ui.orgInfo = 'details';
         av.dom.orgSettings.style.display = 'none';
         av.dom.orgDetailID.style.display = 'block';
-        console.log('av.ind.settingsChanged=', av.ind.settingsChanged);
+        // console.log('av.ind.settingsChanged=', av.ind.settingsChanged);
         if (av.ind.settingsChanged) av.msg.doOrgTrace();
       }
-      console.log('organismBlock: Display: orgSetting is', av.dom.orgSettings.style.display, '; orgDetailID', av.dom.orgDetailID.style.display);
+      //console.log('organismBlock: Display: orgSetting is', av.dom.orgSettings.style.display, '; orgDetailID', av.dom.orgDetailID.style.display);
     }
     else {
       // Analysis Page or Big text display for debug
-      console.log('should not be avaiable on analysis or showText page');
+      // console.log('should not be avaiable on analysis or showText page');
     }
   };
   //--------------------------------------------------------------------------- end av.ptd.rightInfoPanelToggleButton --
@@ -2919,10 +2919,10 @@ require([
 
   av.doj.mnDebug.style.visibility = 'hidden';
 
-  // Avida-ED 4.0.12 Beta Testing fix this too. 
+  // Avida-ED 4.0.13 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; set to false before public release for Avida-ED 4.0.12 Beta Testing. ');
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.13 Beta Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x
