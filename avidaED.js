@@ -843,7 +843,7 @@ require([
     document.getElementById('aboutAvidaED_ModalID').style.display = 'block';
     var num = $('#aboutAvidaED_content').height() - ($('#aboutAvidaED_grid_container').height() + 80);
     console.log('ht = ', num);
-    document.getElementById('avidaEDaboutScrollBox').style.height = num + 'px';
+    document.getElementById('AvidaedaboutdetailBox').style.height = num + 'px';
     console.log('in av.ui.aboutAvidaED: from=', from);    
   };
 
@@ -1086,8 +1086,12 @@ require([
     av.ptd.FrOrganismFn('offspring');
   });
 
+  //------------------------------------------------------------------------------------------------ av.ui.mnFzItemFn --
   // Menu Buttons from 'Freezer' to Add things to Experiment
-
+  av.ui.mnFzItemFn = function(domobj) {
+    
+  };
+/*
   //Buttons on drop down menu to add Configured Dish to an Experiment
   dijit.byId('mnFzAddConfigEx').on('Click', function () {
     av.dnd.clickedMenu = "addConfig";
@@ -1108,16 +1112,7 @@ require([
     av.post.addUser('Button: mnFzAddPopEx');
     av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.activeConfig, 'w');
   });
-
-  /*
-   //Buttons on drop down menu to add Multi-Dish to an Experiment
-   dijit.byId('mnFzAddMdishEx').on('Click', function () {
-    av.post.addUser('Button: mnFzAddMdishEx');
-    //av.dnd.FzAddExperimentFn('fzMdish', 'activeConfig', 'm');
-    av.msg.runMultiDish('fzMdish', 'activeConfig', 'm');
-   });
-   */
-
+*/
   //Buttons on drop down menu to put an organism in Organism Viewer
   dijit.byId('mnFzAddGenomeView').on('Click', function () {
     av.post.addUser('Button: mnFzAddGenomeEx');
@@ -1138,7 +1133,7 @@ require([
     av.anl.AnaChartFn();
   });
 
-  //---------------------------------------------- Restart Avida web worker --------------------------------------------
+  //---------------------------------------------------------------------------------------- Restart Avida web worker --
 
   //http://www.w3schools.com/html/tryit.asp?filename=tryhtml5_webworker
   av.ui.restartAvida = function () {
@@ -1178,6 +1173,7 @@ require([
   // Main Page button scripts
   //********************************************************************************************************************
 
+  //----------------------------------------------------------------------------------------------- av.ui.mainBoxSwap --
   //The style display: 'none' cannnot be used in the html during the initial load as the dijits won't work right
   //visibility:hidden can be used, but it leaves the white space and just does not display dijits.
   //So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
@@ -1205,23 +1201,12 @@ require([
     dijit.byId('mnFzOffspring').attr('disabled', true);
     dijit.byId('mnCnOffspringTrace').attr('disabled', true);
 
-    // if the miniplot on the populaton page needs to be initiated call that funciton.
-    console.log('In: av.ui.mainBoxSwap; av.pch.needInit=', av.pch.needInit, '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));
-    if ($(av.dom.popStatsBlock).is(":visible") && (av.pch.needInit) ) {
-      av.grd.popChartInit('av.ui.mainBoxSwap');x
-    };
     if ('populationBlock' == av.ui.page) {
       av.dom.popInfoVert.style.display = 'block';
       document.getElementById('allAvidaContainer').className = 'all3pop';
       resizePopulationPage();
     };    
-    if ('analysisBlock' == av.ui.page) {
-      document.getElementById('allAvidaContainer').className = 'all2lft';
-      resizeAnalysisPage();
-    };
-    if ('showTextDebugBlock' == av.ui.page) {
-      document.getElementById('allAvidaContainer').className = 'all2lft';
-    }
+    
     if ('organismBlock' == av.ui.page) {
       document.getElementById('allAvidaContainer').className = 'all3org';
       console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
@@ -1254,10 +1239,24 @@ require([
       document.getElementById('ritePnlBtnHolder').style.display = 'none';
       document.getElementById('rightInfoHolder').style.display = 'none';
     };
+
+    // if the miniplot on the populaton page needs to be initiated call that funciton.
+    console.log('In: av.ui.mainBoxSwap; av.pch.needInit=', av.pch.needInit, '; $(av.dom.popStatsBlock).is(":visible")=', $(av.dom.popStatsBlock).is(":visible"));
+    if ($(av.dom.popStatsBlock).is(":visible") && (av.pch.needInit) ) {
+      av.grd.popChartInit('av.ui.mainBoxSwap');
+    };
+    if ('analysisBlock' == av.ui.page) {
+      document.getElementById('allAvidaContainer').className = 'all2lft';
+      resizeAnalysisPage();
+    };
+    if ('showTextDebugBlock' == av.ui.page) {
+      document.getElementById('allAvidaContainer').className = 'all2lft';
+    }
     //console.log('allAvidaContainer.class=', document.getElementById('allAvidaContainer').className );
   };
+  //------------------------------------------------------------------------------------------- end av.ui.mainBoxSwap --
 
-  // Buttons that call MainBoxSwap
+  //----------------------------------------------------------------------------------- Buttons that call MainBoxSwap --
   // if (av.dbg.flg.root) { console.log('Root: before av.dom.populationButton.onclick'); }
   av.dom.populationButton.onclick = function () {
     av.post.addUser('Button: populationButton');
@@ -1297,6 +1296,8 @@ require([
     av.anl.AnaChartFn();
     //console.log('fzWorld wd =', document.getElementById('fzWld').style.width );
   };
+  //------------------------------------------------------------------------------- end Buttons that call MainBoxSwap --
+
 
   // if (av.dbg.flg.root) { console.log('Root: before showTextDebugButton.onclick'); }
   document.getElementById('showTextDebugButton').onclick = function () {
@@ -1304,6 +1305,8 @@ require([
     av.ui.mainBoxSwap('showTextDebugBlock');
     av.ui.resizeShowTextDebugPage('showTextDebug');
   };
+  
+  
   // ------------------ two controls for the same purpose; tabs used in develoopment mode --
 
   //Toggle switch for Population/Organism pages

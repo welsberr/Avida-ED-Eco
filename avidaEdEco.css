@@ -2092,11 +2092,6 @@ checkbox:focus {
   }
  /*---------------------------------------------------------------------------------------------- end Analysis Block  */
  
- /* only instance of this string AviaEDabout */
- .AviaEDaboutP {
-  font-size: 120%;
-}
-
 /**********************************************************************************************************************/
 /* the class model is used to create dialog boxes without dojo                                                        */
 /**********************************************************************************************************************/
@@ -2131,7 +2126,7 @@ checkbox:focus {
 
 .modal-header {
     padding: 2px 2px;
-    font-size: 130%;
+    font-size: 120%;
     font-weight: bold;
     background: lightgray;
     color: black;
@@ -2184,12 +2179,13 @@ checkbox:focus {
   display: flex;
   flex-direction: column;
   background: #fefefe;
-  padding: 0px;   /* was 2 */
+  padding: auto;   /* was 2 */
   border: 1px solid black; /* #888; */
   width: 94%;
   height: 90%;
-  font-size: 120%;
-}
+}  /* contains modalBig-header, modalBig-body, modalBig-footer */
+
+
 .modalBig-header {
   flex: 0 0 40px;
   display: flex;
@@ -2214,6 +2210,8 @@ checkbox:focus {
   background: lightgray;
   color: black;
 }
+/********************************************************************************************** end of modalBig class */                                                                         */
+
 /* ---------------------------------------------------------------------- markup for Error Form that uses modalBig -- */
 
 #sendLogTitle { 
@@ -2271,6 +2269,16 @@ checkbox:focus {
   padding: 4px 8px;
   margin: 0px;
 }
+#AvidaEDaboutScrll{
+  overflow: auto;
+  resize: both;
+  border: 1px solid #aaa;
+  padding: 2px;
+  margin: auto;
+  width: 98%;
+  height: 70vh;
+}
+
 #aboutAvidaEDcloseButton {
   padding: 1px 2x 1px 2px;
 }
@@ -2296,17 +2304,14 @@ checkbox:focus {
 .AvidaEDaboutP {
   font-weight: bold;
 }
-#aboutAvidaEDscrllTextHldr {
+#AvidaedaboutDtailBxHldr {
   padding: 1px auto;
 }
-#avidaEDaboutScrollBox {
-  border: 1px solid #aaa;
+#AvidaedaboutdetailBox {
   padding: 15px;
-  overflow: auto;
-  resize: both;
   margin: auto;
-  width: 90%;
-  height: 100px;
+  width: 95%;
+  height: 100%;
  }
 #funding {
   display: block;
@@ -2323,7 +2328,7 @@ checkbox:focus {
   margin-bottom: 10px;
 }
 .centerP{ text-align: center; justify-self: center; }
-.centerPbig{ text-align: center; justify-self: center; font-size: 140%;}
+.centerPbig{ text-align: center; justify-self: center; font-size: 120%;}
 .centerImg{ 
   display: block;
   text-align: center; 
@@ -2332,7 +2337,7 @@ checkbox:focus {
   width: 50%;
 }
 
-/********************************************************************************************** end of modalBig class */                                                                         */
+/****************************************************************************************** end of aboutAvidaED class */                                                                         */
 
 /*************************************************************************************************** no longer in use */
 

@@ -77,15 +77,14 @@
             </span>
             <span data-dojo-type='dijit/PopupMenuBarItem' label='Freezer' iconClass='dijitNoIcon' id='mnFreezer'>
               <span data-dojo-type='dijit/Menu'>
-                <span data-dojo-type='dijit/MenuItem' id='mnFzConfig' label='Save Experiment Configuration to Freezer'></span>
+                <span data-dojo-type='dijit/MenuItem' id='mnFzConfig' label='Save Current Configuration to Freezer'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnFzPopulation' label='Save Current Population to Freezer'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnFzOrganism' label='Save Selected Organism to Freezer'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnFzOffspring' label='Save Offspring Organism to Freezer'></span>
                 <div data-dojo-type='dijit/MenuSeparator'></div>
                 <div data-dojo-type='dijit/MenuSeparator'></div>
-                <span data-dojo-type='dijit/MenuItem' id='mnFzAddConfigEx' label='Add Highlighted Configured Dish in Freezer to Experiment'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnFzAddGenomeEx' label='Add Highlighted Organism in Freezer to Experiment'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnFzAddPopEx' label='Add Highlighted Populated Dish in Freezer to Experiment'></span>
+                <span data-dojo-type='dijit/MenuItem' id='mnFzAddFzItem' label='Add Highlighted Freezer Item in Experiment'
+                      onclick='av.ui.mnFzItemFn(this)'></span>
                 <div data-dojo-type='dijit/MenuSeparator'></div>
                 <span data-dojo-type='dijit/MenuItem' id='mnFzAddGenomeView' label='Put Highlighted Organism from Freezer in Organism View'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnFzAddPopAnalysis' label='Put Highlighted Populated Dish from Freezer in Analysis'></span>
@@ -112,8 +111,8 @@
                 <span data-dojo-type='dijit/MenuItem' id='mnHpInfo'>
                   <a href='http://Avida-ED.msu.edu/' target='_blank'>more info about Avida-ED
                   </a></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnHpEnvironment'>
-                  <a href='https://docs.google.com/document/d/1si3tVEjo2A_1PSvFosNPxk-_Qio00uvmwokQLEpdB-E/' target='_blank'>Environment file Help</a>
+                <span data-dojo-type='dijit/MenuItem' id='mnHpShortCuts'>
+                  <a href='https://docs.google.com/document/d/1si3tVEjo2A_1PSvFosNPxk-_Qio00uvmwokQLEpdB-E/' target='_blank'>will be Short Cuts</a>
                 </span>
                 <span data-dojo-type='dijit/MenuItem' id='mnHpProblem' label='Report Problem(s)'></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnHpEmail'>email with questions or comments</span>
@@ -1723,39 +1722,42 @@
             <button id='aboutAvidaEDcloseButton' onclick='av.ui.aboutAvidaED_Close();'>Close</button>
           </span>
         </div>
-        
         <div id='AvidaEDaboutModalContainer' class='modalBig-body'>
-          <div id='aboutAvidaED_grid_container'>
-            <span id='aboutAvidaEDlogoHolder'>
-             <img class='centerImg' src='images/Avida-ED-logo.png' alt='logo for Avida-ED' /><br>
-              <p class='centerPbig'>An educational artificial life platform developed at Michigan State University for learning evolution and the nature of science using digital organisms.</p>
-            </span>
-            <span id='aboutAvidaEDupperTextHolder'>
-              <p class='centerPbig'><strong>Avida-ED 4.0.13 Beta</strong></p>
-              <br>
-              <p class='centerP'>https://Avida-ED.msu.edu</p>
-              <br>
-              <p class='centerP'>Send mail to: avida-ed-development@googlegroups.com</p>
-              <p class='centerP'>for bug reports or for questions about program function</p>
-              <br>
-              <br>&nbsp;
-              <p><strong>This material is based upon work supported by the following foundations:</strong></p>
-              <br>
-              <div id='funding'>
-                <p class='negIndent'>Avida-ED 4 - National Science Foundation under Grant No. 1432563 (2019-2021)</p>
+          <div id='AvidaEDaboutScrll'>
+            <div id='aboutAvidaED_grid_container'>
+              <span id='aboutAvidaEDlogoHolder'>
+               <img class='centerImg' src='images/Avida-ED-logo.png' alt='logo for Avida-ED' /><br>
+                <p class='centerPbig'>An educational artificial life platform developed at Michigan State University for learning evolution and the nature of science using digital organisms.</p>
+              </span>
+              <span id='aboutAvidaEDupperTextHolder'>
+                <p class='centerPbig'><strong>Avida-ED Home Page</strong></p>
+                <p class='centerP'>https://Avida-ED.msu.edu</p>
+
+                <p class='centerP'><strong>Avida-ED Mirror Site</strong></p>
+                <p class='centerP'>http://avida-ed-mirror1.beacon-center.org/</p>
+
                 <br>
-                <p class='negIndent'>Avida-ED 3 - Howard Hughes Medical Institute under Grant No. 52008102 & <br>
-                                        NSF under Grant No. DBI-1446483 & 1432563 (2014-2021)</p>
+                <p class='centerP'>Send mail to: avida-ed-development@googlegroups.com</p>
+                <p class='centerP'>for bug reports or for questions about program function</p>
                 <br>
-                <p class='negIndent'>Avida-ED 2 - National Science Foundation under Grant No. OIA-0939454 (2010-2014)</p>
+                <br>&nbsp;
+                <p><strong>This material is based upon work supported by the following foundations:</strong></p>
                 <br>
-                <p class='negIndent'>Avida-ED 1 - National Science Foundation under Grant No. DUE-0341484 (2004-2009)</p>
-              </div>
-            </span>
-          </div>
-          <br>
-          <div id='aboutAvidaEDscrllTextHldr'>
-            <div id='avidaEDaboutScrollBox'>
+                <div id='funding'>
+                  <p class='negIndent'>Avida-ED 4 - National Science Foundation under Grant No. 1432563 (2019-2021)</p>
+                  <br>
+                  <p class='negIndent'>Avida-ED 3 - Howard Hughes Medical Institute under Grant No. 52008102 & <br>
+                                          NSF under Grant No. DBI-1446483 & 1432563 (2014-2021)</p>
+                  <br>
+                  <p class='negIndent'>Avida-ED 2 - National Science Foundation under Grant No. OIA-0939454 (2010-2014)</p>
+                  <br>
+                  <p class='negIndent'>Avida-ED 1 - National Science Foundation under Grant No. DUE-0341484 (2004-2009)</p>
+                </div>
+              </span>
+            </div>
+            <br>
+            <div id='AvidaedaboutDtailBxHldr'>
+              <div id='AvidaedaboutdetailBox'>
 <h1 class='aboutCls'><u>Avida-ED</u></h1> 
 <p>Copyright 2006-2021 Michigan State University</p>
 <br>
@@ -2105,13 +2107,17 @@
   <li>Neither the name of the Core Plot Project nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.</li>
 </ol>
 <p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
-            </div><span id='AvidaedaboutScrollBox_end' class='notSeen'></span>
-          </div><span id='aboutAvidaEDscrllTextHldr_end' class='notSeen'></span>
+            </div><span id='AvidaedaboutdetailBox_end' class='notSeen'></span>
+          </div><span id='AvidaedaboutDtailBxHldr_end' class='notSeen'></span>
           <br><br>
+          </div><span id='AvidaEDaboutScrll_end'  class='notSeen'></span>
         </div><span id='AvidaEDaboutModalContainer_end' class='notSeen'></span>
       </div><span id='modalBig-content_end' class='notSeen'></span>
     </div><span id='aboutAvidaED_ModalID_end' class='notSeen'></span>
 
+    
+    
+    
     <span class='notSeen' id='o________________________________________Restart_Avida_with_in_same_browser_Session__Does_NOT_work___'></span>
     <div class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='restartAvidaDialog'
          title='There has been a fatal error in Avida'>
