@@ -109,13 +109,11 @@
                 <span data-dojo-type='dijit/MenuItem' id='mnHpHardware'>
                   <a href='cpu_tour.html' target='_blank'>Ancestor and Hardware</a></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnHpInfo'>
-                  <a href='http://Avida-ED.msu.edu/' target='_blank'>more info about Avida-ED
-                  </a></span>
+                  <a href='' target='_blank'>Avida-ED Home Page</a></span>
                 <span data-dojo-type='dijit/MenuItem' id='mnHpShortCuts'>
-                  <a href='https://docs.google.com/document/d/1si3tVEjo2A_1PSvFosNPxk-_Qio00uvmwokQLEpdB-E/' target='_blank'>will be Short Cuts</a>
+                  <a href='short_cuts.html' target='_blank'>Short Cuts</a>
                 </span>
-                <span data-dojo-type='dijit/MenuItem' id='mnHpProblem' label="Send Feedback (please)"></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnHpEmail'>email with questions or comments</span>
+                <span data-dojo-type='dijit/MenuItem' id='mnHpFeedback' label="Send Feedback (please)" onclick='av.ui.feedback("feedback")'></span>
 
                 <div id='hide_menu_lines_for_development' style='display: none'>
                   <span data-dojo-type='dijit/MenuItem' id='mnHpDebug' label='Toggle Debug Menu'></span>
@@ -1685,20 +1683,18 @@
 
       <div class='modal-content'>
         <div class='modal-header'>
-          <h1 id='sendLogTitle'>Avida-ED Problem Report Email<br>Help us make Avida-ED better.</h1>
+          <div id='sendLogHead'>Avida-ED Feedback Email<br>Help us make Avida-ED better.</div>
         </div>
         <div class='modal-body'>
-          <p id='sendLogPara' class='sendLogP'>
-            Please describe the problem and put that at the beginning of the e-mail along with the session log from the text
-            area seen below.
+          <p id='sendLogPara1' class='sendLogP'>
+            sendLogPara1
           </p>
           <p id='sendLogPara2' class='sendLogP'>
-            Please send the text below to 'Avida-ED-development@googlegroups.com'. Either copy and paste
-            selected text or click on the send e-mail button.
+            sendLogPara2
           </p>
           <br />
           <div id='sendLogtTxtAreaHldr'>
-            <textarea id='sendLogScrollBox' ols='80' rows='10'></textarea>
+            <textarea id='sendLogScrollBox' cols='80' rows='10'></textarea>
           </div>
         </div>
           <br><br>

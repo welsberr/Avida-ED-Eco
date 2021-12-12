@@ -2093,7 +2093,7 @@ checkbox:focus {
  /*---------------------------------------------------------------------------------------------- end Analysis Block  */
  
 /**********************************************************************************************************************/
-/* the class model is used to create dialog boxes without dojo                                                        */
+/* the class modal is used to create dialog boxes without dojo                                                        */
 /**********************************************************************************************************************/
 /* https://www.w3schools.com/howto/howto_css_modals.asp                                                               */
 /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal                                                */
@@ -2118,6 +2118,7 @@ checkbox:focus {
 /* Modal Content */
 .modal-content {
     background: #fefefe;
+    justify-content: center;
     margin: auto;
     padding: 2px;
     border: 1px solid black; /* #888; */
@@ -2125,11 +2126,12 @@ checkbox:focus {
 }
 
 .modal-header {
-    padding: 2px 2px;
-    font-size: 120%;
-    font-weight: bold;
-    background: lightgray;
-    color: black;
+  padding: 2px 2px;
+  font-size: 120%;
+  font-weight: bold;
+  justify-items: center;
+  background: lightgray;
+  color: black;
 }
 
 .modal-body {padding: 8px 8px;}
@@ -2214,11 +2216,11 @@ checkbox:focus {
 
 /* ---------------------------------------------------------------------- markup for Error Form that uses modalBig -- */
 
-#sendLogTitle { 
-  flex: 0 0 100%;  
+#sendLogHead { 
   display: inline-block; 
-  align-self: flex-center;
+  align-self: center;
   text-align: center;
+  text-justify: center;
   padding: 1px auto;      /*top-bottom; left-right */
   margin: 0px;
 }

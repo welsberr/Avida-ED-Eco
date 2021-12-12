@@ -198,7 +198,8 @@
     av.dom.environConfigEdit = document.getElementById('environConfigEdit');
     av.dom.tst2textarea = document.getElementById('tst2textarea');
 
-    av.dom.sendLogPara = document.getElementById('sendLogPara');
+    av.dom.sendLogPara1 = document.getElementById('sendLogPara1');
+    av.dom.sendLogPara2 = document.getElementById('sendLogPara2');
     av.dom.sendLogScrollBox = document.getElementById('sendLogScrollBox');
 
     //Organism Page

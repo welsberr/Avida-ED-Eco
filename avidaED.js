@@ -508,7 +508,7 @@ require([
     av.debug.finalizeDtail();
     av.debug.triggered = 'errorTriggered';
     av.post.postLogPara = 'Please send the info below to Help us make Avida-ED better by clicking on the [Send] button';
-    av.debug.sendLogPara = 'The error is at the beginning and end of the session log in the text below.';
+    av.debug.sendLogPara1 = 'The error is at the beginning and end of the session log in the text below.';
     av.debug.postEmailLabel = 'Please include your e-mail if you would like feed back or are willing to further assist in debug';
     av.debug.postNoteLabel = 'Please include any additional comments in the field below.';
     av.debug.postEmailLabel = 'Please include your e-mail for feedback or so we can discuss the problem further';
@@ -533,9 +533,11 @@ require([
   // http://www.javascriptkit.com/javatutors/copytoclipboard.shtml
 
   // if (av.dbg.flg.root) { console.log('Root: defore av.ui.problemWindow'); }
+  
+  //--------------------------------------------------------------------------------------------- av.ui.problemWindow --
   //process problme pop-up window
   av.ui.problemWindow = function (from) {
-    console.log(from, 'called av.ui.problemWindow 665');
+    console.log(from, 'called av.ui.problemWindow');
     av.debug.vars = {
       isBlink: av.brs.isBlink,
       isChrome: av.brs.isChrome,
@@ -570,18 +572,23 @@ require([
       document.getElementById('sendLogModalID').style.display = "block";  //textarea must be visable first
       av.dom.sendLogScrollBox.focus();   //must not be commented out or extra error
       document.getElementById('sendLogModalID').style.display = "none";   //sendLogDialog.hide();  
-      av.post.sendWindow();
+      av.post.sendWindow('av.ui.problemWindow');
     }
     //e-mail in production version until database worked out.
     else {
-      av.post.emailWindow();
+      av.post.emailWindow('av.ui.problemWindow');
     }
   };
+  //----------------------------------------------------------------------------------------- end av.ui.problemWindow --
 
-  av.post.emailWindow = function () {
-    //console.log('in av.post.emailWindow 708');
+
+  //--------------------------------------------------------------------------------------------- av.post.emailWindow --
+  av.post.emailWindow = function (from) {
+    console.log(from, 'called av.post.emailWindow');
     av.dom.sendLogScrollBox.textContent = av.debug.sendLogScrollBox;
-    av.dom.sendLogPara.textContent = av.debug.sendLogPara;
+    av.dom.sendLogPara1.textContent = av.debug.sendLogPara1;
+    av.debug.sendLogPara2 = 'test of para2';
+    $('sendLogPara2').text('jquery test of para2');
 
     //document.getElementById('postLogTextarea').textContent = av.debug.sendLogScrollBox;
     //document.getElementById('postLogPara').textContent = av.debug.sendLogPara;
@@ -595,10 +602,9 @@ require([
     document.getElementById('sendLogmodalID').style.display = 'none';
   };
 
-  //--------------------------------------------------------------------------------------------------------------------
-
-  av.post.sendWindow = function () {
-    console.log('in av.post.sendWindow; used for database; not email');
+  //---------------------------------------------------------------------------------------------- av.post.sendWindow --
+  av.post.sendWindow = function (from) {
+    console.log(from, 'called av.post.sendWindow; used for database; not email');
     av.dom.postLogPara.textContent = av.post.postLogPara;  //textarea must be visable first
     document.getElementById('postLogModalID').style.display = 'block';
     av.dom.postVersionLabel.textContent = av.ui.version;
@@ -884,21 +890,29 @@ require([
     document.getElementById('preferences_ModalID').style.display = 'none';
   };
 
-  dijit.byId('mnHpProblem').on('Click', function () {
-    av.post.addUser('Button: mnHpProblem');
-    av.debug.finalizeDtail();
-    av.debug.triggered = 'userTriggered';
-    av.debug.postStatus = '';
-    av.post.postLogPara = 'Please send the data below to Help us make Avida-ED better by clicking on the [Send] button';
-    av.debug.sendLogPara = 'Please describe the problem and put that at the beginning of the e-mail along with the session log from the text area seeen below.';
-    av.debug.postNoteLabel = 'Please describe the problem or suggestion in the comment field below.';
-    av.debug.postEmailLabel = 'Please include your e-mail so we can discuss your problem or suggeston further.';
-    av.debug.sendLogScrollBox = av.fio.mailAddress + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail;
-    av.debug.error = '';
-    av.dom.postError.style.color = 'grey';
-    av.ui.problemWindow("dijit.byId('mnHpProblem').on('Click', function ()");
-    // only shows one line = prompt('Please put this in an e-mail to help us improve Avida-ED: Copy to clipboard: Ctrl+C, Enter', '\nto: ' + av.fio.mailAddress + '\n' + av.debug.log);
-  });
+av.ui.feedback = function(){
+  console.log('in feedback');
+  av.post.addUser('Button: mnHpFeedback');
+  av.debug.finalizeDtail();    //info on grid size
+  av.debug.triggered = 'userTriggered';
+  av.debug.postStatus = '';
+  av.post.postLogPara = 'Please send your comment, suggestion or problem to ' + av.fio.mailAddress;
+  av.debug.postNoteLabel = 'Please describe the problem or suggestion in the comment field below.';
+  av.debug.postEmailLabel = 'Please include your e-mail so we can discuss your problem or suggeston further.';
+  av.dom.postError.style.color = 'grey';
+  
+  // sendLogParagraph lines
+  av.debug.sendLogPara1 = 'Please send your comment, suggestion or problem to Avida-ED-development@googlegroups.com';
+
+  av.debug.sendLogPara2 = 'If there was an error or odd application behavior in this session, '
+                       + 'please use copy and pasete to include the session log that is in the text box below.'
+                       + 'The [Send email] button will open your default email program and include the session log in a new message.';
+
+  av.debug.sendLogScrollBox = 'Session Log' + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail;
+  av.debug.error = '';
+  av.ui.problemWindow("av.ui.feedback");
+  // only shows one line = prompt('Please put this in an e-mail to help us improve Avida-ED: Copy to clipboard: Ctrl+C, Enter', '\nto: ' + av.fio.mailAddress + '\n' + av.debug.log);
+};
 
   //------------------------------------------------------------------------------------------------------ debug menu --
   document.getElementById('mnDbThrowData').onclick = function () {

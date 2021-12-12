@@ -83,6 +83,7 @@ av.ind.bitboxht = 6;   //y direction
 for (ii=0; ii <101; ii++) { av.ind.labeled[ii] = false;}
 
 av.aww = {}; //avida web worker
+av.aww.uiWorker = null;
 
 av.msg = {}; //holds functions to send messages between the ui and Avida (web worker)
 av.msg.uiReqestedReset = false;
@@ -202,7 +203,6 @@ av.fio.dbName = 'wsdb';  //for workspace database
 //av.fio.wsdb = null;
 av.fio.defaultFname = 'default.avidaWs.zip';
 //av.fio.defaultFname = 'default.avidaedworkspace.zip';
-av.aww.uiWorker = null;
 av.fio.fileReadingDone = false;
 //av.fio.defaultUserFname = 'avidaWS.avidaedworkspace.zip';
 av.fio.defaultUserFname = 'avidaWS.avidaWs.zip';

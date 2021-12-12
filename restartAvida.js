@@ -8,4 +8,4 @@ av.aww.restartAvidaFn = function () {
   restartMsgLabel.textContent = 'Avida message: simulated message from Avida'
   restartAvidaDialog.show();
   console.log('after dialog show');
-}
+};
