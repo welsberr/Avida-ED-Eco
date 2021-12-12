@@ -108,7 +108,7 @@
 // Avida-ED 4.0.11 Beta
 // - changing options and labels on the mini-chart on the Population Page
 //
-// Avida-ED 4.0.13 Beta
+// Avida-ED 4.0.14 Beta
 // - cleaned up formatting on Statistics Tables on Population Page
 // - working on formatting on Left & Right mini-chart Y axis and Pause Run at sections
 // - Added utilities to look for elements with overlow in reSizePageParts.js
@@ -2922,10 +2922,10 @@ require([
 
   av.doj.mnDebug.style.visibility = 'hidden';
 
-  // Avida-ED 4.0.13 Beta Testing fix this too. 
+  // Avida-ED 4.0.14 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; set to false before public release for Avida-ED 4.0.13 Beta Testing. ');
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.14 Beta Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x
