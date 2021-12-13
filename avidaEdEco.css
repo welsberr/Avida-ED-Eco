@@ -2123,14 +2123,19 @@ checkbox:focus {
     padding: 2px;
     border: 1px solid black; /* #888; */
     width: 50%;
+    /* background: lightyellow; */
 }
 
 .modal-header {
-  padding: 2px 2px;
+  display: flex;
+  padding: 2px 1px;      /*top-bottom; left-right */
+  width: 100%;
   font-size: 120%;
   font-weight: bold;
-  justify-items: center;
-  background: lightgray;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: lightgray;    /* lightgray */
   color: black;
 }
 
@@ -2205,7 +2210,7 @@ checkbox:focus {
   flex: 0 0 fr;
 }
 
-.modalBig-footer {
+.modalBig-footer {a
   flex: 0 0 40px;
   padding: 8px 0px;    /*top-bottom; left-right */
   width: 100%;
@@ -2216,9 +2221,12 @@ checkbox:focus {
 
 /* ---------------------------------------------------------------------- markup for Error Form that uses modalBig -- */
 
+/* could not get browser to recognize this element style  */
 #sendLogHead { 
-  display: inline-block; 
-  align-self: center;
+  display: inline-block;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   text-justify: center;
   padding: 1px auto;      /*top-bottom; left-right */
