@@ -2123,7 +2123,6 @@ checkbox:focus {
     padding: 2px;
     border: 1px solid black; /* #888; */
     width: 50%;
-    /* background: lightyellow; */
 }
 
 .modal-header {
@@ -2166,15 +2165,18 @@ checkbox:focus {
     display: none; /* Hidden by default */
     z-index: 1; /* Sit on top */
     position: fixed; /* Stay in place */
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
     padding-left: 5%; /* Location of the box */
     padding-top: 5%; /* Location of the box */
     width: 100%;   /*   Full width */
     height: 100%; /* Full height */
+
     overflow: auto; /* Enable scroll if needed */
     background: rgb(0,0,0); /* Fallback color */
-    background: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background: rgba(0,0,0,0.4); /* Black w/ opacity */  
 }
 /* The Modal (background) */
 .modalBig__ {
@@ -2185,6 +2187,8 @@ checkbox:focus {
 .modalBig-content {
   display: flex;
   flex-direction: column;
+  justify-content: stretch;
+  align-items: center; 
   background: #fefefe;
   padding: auto;   /* was 2 */
   border: 1px solid black; /* #888; */
@@ -2194,19 +2198,22 @@ checkbox:focus {
 
 
 .modalBig-header {
-  flex: 0 0 40px;
+  flex: 0 0 40px;   /* was 0 0 40px */
   display: flex;
+  flex-direction: row;
   width: 100%;
+  padding: 2px 1px;      /*top-bottom; left-right */
   align-items: center;
-  padding: 0px;    /* top-bottom; left-right */
+  justify-content: space-between;
+  text-align: center;
   font-size: 130%;
+  font-weight: bold;
   background: lightgray;
   color: black;
 }
 
-
 .modalBig-body {
-  padding: 8px 8px; 
+  padding: 1%; 
   flex: 0 0 fr;
 }
 
@@ -2219,32 +2226,57 @@ checkbox:focus {
 }
 /********************************************************************************************** end of modalBig class */                                                                         */
 
-/* ---------------------------------------------------------------------- markup for Error Form that uses modalBig -- */
+/* ---------------------------------------------------------------------- markup for email Form that uses modalBig -- */
 
 /* could not get browser to recognize this element style  */
 #sendLogHead { 
-  display: inline-block;
   width: 100%;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  text-justify: center;
-  padding: 1px auto;      /*top-bottom; left-right */
+}
+
+#sendLogHdTitle { 
+  flex: auto; 
+  display: inline-block;
+  min-height: 60px;
+  min-width: 100px;
+  padding: 4px 8px;
   margin: 0px;
 }
 
+.sendLogCloseHldr { 
+  text-justify: center;
+  flex: 0 0 auto;
+  padding: 4px 8px;
+}
+#sendLogCloseButton { min-width: 75px; margin: 5px; }
+#sendLogEmail { min-width: 110px; margin: 5px; }
+
+#sendLog-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  width: 90%;
+  align-items: center; 
+}    /* contains sendLogInstructions & sendLogtTxtAreaHldr  */
+
+#sendLogInstructions{
+  align-items: center;
+  font-size: 130%;
+  padding: 10px;
+  width: 90%;
+}
 #sendLogP { font-size: 120%; }
 #sendLogTxtAreaHldr {
-  padding: 1px auto;
+  
 }
+
 #sendLogScrollBox {
   border: 1px solid #aaa;
   padding: 15px;
   overflow: auto;
   resize: both;
   margin: auto;
-  width: 90%;
-  height: 100px;
+  width: 98%;
+  height: 40vh;
 }
 /* ------------------------------------------------------------------ markup for About Avida-ED that uses modalBig -- */
 #AvidaEDaboutModalContainer{
@@ -2256,20 +2288,17 @@ checkbox:focus {
   height: auto;
 }
 #aboutAvidaED_header{
-  flex-direction: row-reverse;
   display: flex;
+  flex-direction: row;
   width: 100%;
   align-items: center;
-  height: 40px; 
+  min-height: 40px; 
   justify-content: space-between;
 }
 #aboutAvidaEDtitle { 
   flex: 0 0 600px;  
-  display: inline-block; 
-  align-self: flex-center;
+  display: inline-block;
   text-align: center;
-  padding: 1px auto;
-  margin: 0px;
 }
 .aboutAvidaEDcloseHldr { 
   flex: 0 0 70px; 
@@ -2277,7 +2306,6 @@ checkbox:focus {
   height: 30px;
   width: 50px;
   padding: 4px 8px;
-  margin: 0px;
 }
 #AvidaEDaboutScrll{
   overflow: auto;

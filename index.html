@@ -1679,29 +1679,34 @@
     </div><span class='notSeen' id='o____________________________________________________________end_postLogModalID___'></span>
 
     <span class='notSeen' id='o____________________________________________Send_Log_Data_via_e-mail_client_modal___'></span>
-    <div id='sendLogModalID' class='modal'>
+    <div id='sendLogModalID' class='modalBig'>
 
-      <div class='modal-content'>
-        <div id='sendLogHead' class='modal-header'>
-          Avida-ED Feedback Email<br>Help us make Avida-ED better
+      <div class='modalBig-content'>
+        
+        <div id="sendLogHead" class='modalBig-header'>
+          <span class='sendLogCloseHldr'>
+            <button id='sendLogCloseButton' onclick='av.ui.closeSendModalFn();'>Close</button>
+          </span>
+          <h2 id="sendLogHdTitle">Avida-ED Feedback Email<br>Help us make Avida-ED better</h2>
+          <span class='sendLogCloseHldr'>
+            <button id='sendLogEmail' onclick='av.ui.sendLogEmailFn()'>Send email</button>
+          </span>
         </div>
-        <div class='modal-body'>
-          <p id='sendLogPara1' class='sendLogP'>
-            sendLogPara1
-          </p>
-          <p id='sendLogPara2' class='sendLogP'>
-            sendLogPara2
-          </p>
-          <br />
-          <div id='sendLogtTxtAreaHldr'>
+        
+        <div id='sendLog-body' class='modalBig-body'>
+          <div id="sendLogInstructions">
+            <p id='sendLogPara1' class='sendLogP'>
+              Please send your comment, suggestion or problem to Avida-ED-development@googlegroups.com
+            </p>
+            <br />
+            <p id='sendLogPara2' class='sendLogP'>
+              If there was an error or odd behavior in this session, include the session log (below) in your email
+            </p>
+            <br />
+          </div>
+          <div id='sendLogTxtAreaHldr'>
             <textarea id='sendLogScrollBox' cols='80' rows='10'></textarea>
           </div>
-        </div>
-          <br><br>
-        <div class='modal-footer'>
-          <button id='sendPost' style = 'visibility: hidden'>Send POST</button>
-          <button id='sendLogEmail' onclick='av.ui.sendLogEmailFn()'>Send email</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button id='sendLogmodalClose' onclick='av.ui.closeSendModalFn()'>Close</button>
         </div>
       </div>
     </div>
@@ -1712,10 +1717,11 @@
       <!-- Modal content -->
       <div id='aboutAvidaED_content' class='modalBig-content'>
         <div id='aboutAvidaED_header' class='modalBig-header'>
-          <span class='aboutAvidaEDcloseHldr'></span>
-          <h2 id='aboutAvidaEDtitle'>Avida-ED 4.0.14 Beta</h2> 
           <span class='aboutAvidaEDcloseHldr'>
             <button id='aboutAvidaEDcloseButton' onclick='av.ui.aboutAvidaED_Close();'>Close</button>
+          </span>
+          <h2 id='aboutAvidaEDtitle'>Avida-ED 4.0.14 Beta</h2>
+          <span class='aboutAvidaEDcloseHldr'>
           </span>
         </div>
         <div id='AvidaEDaboutModalContainer' class='modalBig-body'>

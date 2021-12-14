@@ -587,8 +587,7 @@ require([
     console.log(from, 'called av.post.emailWindow');
     av.dom.sendLogScrollBox.textContent = av.debug.sendLogScrollBox;
     av.dom.sendLogPara1.textContent = av.debug.sendLogPara1;
-    av.debug.sendLogPara2 = 'test of para2';
-    $('sendLogPara2').text('jquery test of para2');
+    $('#sendLogPara2').text(av.debug.sendLogPara2);
 
     //document.getElementById('postLogTextarea').textContent = av.debug.sendLogScrollBox;
     //document.getElementById('postLogPara').textContent = av.debug.sendLogPara;
@@ -897,16 +896,16 @@ av.ui.feedback = function(){
   av.debug.triggered = 'userTriggered';
   av.debug.postStatus = '';
   av.post.postLogPara = 'Please send your comment, suggestion or problem to ' + av.fio.mailAddress;
-  av.debug.postNoteLabel = 'Please describe the problem or suggestion in the comment field below.';
+  av.debug.postNoteLabel = 'Please describe the problem or suggestion in the comment field below. ';
   av.debug.postEmailLabel = 'Please include your e-mail so we can discuss your problem or suggeston further.';
   av.dom.postError.style.color = 'grey';
   
   // sendLogParagraph lines
   av.debug.sendLogPara1 = 'Please send your comment, suggestion or problem to Avida-ED-development@googlegroups.com';
 
-  av.debug.sendLogPara2 = 'If there was an error or odd application behavior in this session, '
-                       + 'please use copy and pasete to include the session log that is in the text box below.'
-                       + 'The [Send email] button will open your default email program and include the session log in a new message.';
+  av.debug.sendLogPara2 = 'If there was an error or odd behavior in this session, include the session log, which is in the text box below. '
+                       + 'The [Send email] button will open your default email program and include the session log in a new message. ';
+                       + 'Or, copy and past the Session Log (the contents of the textbox) and put this in your email.'
 
   av.debug.sendLogScrollBox = 'Session Log' + '\n\n' + av.debug.log + '\n\nDebug Details:\n' + av.debug.dTail;
   av.debug.error = '';
