@@ -1102,7 +1102,8 @@ av.ui.feedback = function(){
   //------------------------------------------------------------------------------------------------ av.ui.mnFzItemFn --
   // Menu Buttons from 'Freezer' to Add things to Experiment
   av.ui.mnFzItemFn = function(domobj) {
-    
+    console.log('av.ui.mnFzItemFn: domobj =', domobj);
+    var domID = domobj.id;
   };
 /*
   //Buttons on drop down menu to add Configured Dish to an Experiment

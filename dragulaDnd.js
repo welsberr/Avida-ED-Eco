@@ -354,8 +354,8 @@ jQuery(document).ready(function($) {
       }
       document.body.style.cursor = "default";
       // for debugging
-      console.log(av.fzr);
-      console.log(containerMap);
+      console.log('av.fzr =',av.fzr);
+      console.log('containerMap =', containerMap);
     });
   });
   //------------------------------------------------------------------------------------------------- end dra.on drop --

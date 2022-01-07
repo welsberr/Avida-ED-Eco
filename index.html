@@ -261,7 +261,10 @@
               <div id='benchPopBot'>
                 <div id='gridControlContainer' class='gridControlContainerClass'>
                   <div id='timeUpdates' class='timeUpdateClass'>Time: <label id='TimeLabel'>(not started)</label></div>
-                  <div id='freezeButtonDiv' class='freezeButtonDivClass'><button id='freezeButton'>Freeze</button></div>
+                  <div id='freezeButtonDiv' class='freezeButtonDivClass'>
+                    <button id='freezeButton'>Freeze</button>
+                    <button id='newDishButton'>New</button>
+                  </div>
                   <div id='modeHolder' class='modeHolderClass'>
                     Mode:
                     <select  id='colorMode'>
@@ -281,17 +284,16 @@
                       <option id='rnone' value='none'>None</option>
                     </select>
                   </div>
-                  <div id='gridButtons' class='gridButtonClass'>
-                      <button id='newDishButton'>New</button>
+                  <div id='gridButtons' class='gridButtonClass'>                      
                       <button id='runStopButton'>Run</button>
                       <button id='oneUpdateButton'>Forward</button>
                   </div>
-                  <div id='rescaling' class='rescalingClass'>
-                      <label id='rescaleLabel2'> </label><br />
+                  <div id='rescaleDiv' class='rescalingClass'>
+                      <label id='rescaleLabel'> </label><br />
                   </div>
                   <div id='popBotRight' class='botBotRiteClass'>
                       <button id='avidianOutline' class='display_none' onclick='av.ui.avidianOutlineOnclick(this);'>Resource Mode: show Avidian Outlines</button>
-                      <label id='rescaleLabel'> </label><br />
+                      <label id='rescaleOldLabel'> </label><br />
                       <div id='zoomSlide' class='zoomSlide'>
                       </div>
                   </div>

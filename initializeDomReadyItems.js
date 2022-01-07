@@ -268,6 +268,7 @@
     dijit.byId('mnFzOrganism').attr('disabled', true);
     dijit.byId('mnFzOffspring').attr('disabled', true);
     dijit.byId('mnFzPopulation').attr('disabled', true);
+    dijit.byId('mnFzAddFzItem').attr('disabled', true);   //tiba need to fix this so freezer button works when I freezer item is highlighted
     //dijit.byId('mnFzAddConfigEx').attr('disabled', true);
     //dijit.byId('mnFzAddGenomeEx').attr('disabled', true);
     //dijit.byId('mnFzAddPopEx').attr('disabled', true);
