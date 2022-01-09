@@ -651,13 +651,19 @@ html {
 .gridButtonClass { grid-area: gridButton; } /* Yemi added padding 2021_826; Diane removed justify-self: end; */
 .rescalingClass { grid-area: rescaling;}
 .popBotRiteClas { grid-area: popBotRite;}
+/* rescaling is a label, not a button and it appears when the numerical values of the color scale change. 
+  grid-template-columns: 50% 50% 0px; /* yemi: since rescaling button is not implemented yet, we don't save a column for it now */
 
 .gridControlContainerClass{
   display: grid;
   grid-template-areas: 'timeUpdate  modeHolder  rescaling'
                        'freezeButton gridButton popBotRite';
-/* rescaling is a label, not a button and it appears when the numerical values of the color scale change. 
-  grid-template-columns: 50% 50% 0px; /* yemi: since rescaling button is not implemented yet, we don't save a column for it now */
+  width: 100%;
+}
+.gridControlContainerClass_old{
+  display: grid;
+  grid-template-areas: 'timeUpdate  modeHolder  rescaling'
+                       'freezeButton gridButton popBotRite';
   width: 100%;
 }
 
