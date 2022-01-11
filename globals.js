@@ -42,7 +42,7 @@ av.dbg.flg.frd = false;  //reading file text strings
 av.dbg.flg.nut = false;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
 av.dbg.flg.nutSum = true; //summary for each function when processing environment.cfg for sugar user interace
 av.dbg.flg.plt = false;  //analysis plot 
-av.dbg.flg.pch = true;  //popChart and analysis
+av.dbg.flg.pch = false;  //popChart and analysis
 av.dbg.flg.root = false;  //statements that look for failers when the code executes outside of functions
 av.dbg.flg.divsize = false;
 av.dbg.flg.dsz = false;   //div size; used to eliminate scroll bars
@@ -914,7 +914,7 @@ av.grd.clearGrd = function () {
   av.grd.mxRequ = 1.0;  //store initial maximum equ Resource in any cell during an experiment.
 
   av.grd.rescaleTolerance = 0.1;
-  av.grd.rescaleTimeConstant = 1;
+  av.grd.rescaleTimeConstant = 10;     // was 1  //used to adjust scale over several updates rather than all at once. 
   av.grd.rescaleUpdateStart = 200;   // was ; 500 or 1000
   av.grd.SelectedColor = '#ffffff';
   av.grd.LogicColor = '#00ff00';   //color used to outline cells with avidians that can do the selected logic functions

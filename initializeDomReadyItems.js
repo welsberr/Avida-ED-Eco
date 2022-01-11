@@ -73,7 +73,6 @@
     av.dom.scaleCanvas = document.getElementById('scaleCanvas');
     av.dom.dadLegendHldr = document.getElementById('dadLegendHldr');
     av.dom.dadInfo00 = document.getElementById('dadInfo00');
-    av.dom.benchPopBot = document.getElementById('benchPopBot');
     av.dom.popStatsBlock = document.getElementById('popStatsBlock');
     av.dom.sotColorBox = document.getElementById('sotColorBox');
     av.dom.StatsButton = document.getElementById('StatsButton');
@@ -88,7 +87,7 @@
     av.dom.avidianOutline = document.getElementById('avidianOutline');
 
 
-    av.dom.gridControlContainer = document.getElementById('gridControlContainer');
+    av.dom.popPgCntrlHolder = document.getElementById('popPgCntrlHolder');
 
     //Test setup page
     av.dom.sizeCellTest = document.getElementById('sizeCellTest');

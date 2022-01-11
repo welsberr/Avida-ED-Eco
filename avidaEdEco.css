@@ -632,40 +632,65 @@ html {
 }
 
 #benchPopBot{
-  /* flex: 0 1 60px; */
+  display: inline-block;
   /* border: 1px solid #AAA; */ /* yemi: removed border */
   min-height: 41px;
   overflow: auto;
-  background: #F5F5F5; /* peachpuff;*/
-  padding: 10px; /* yemi: added padding */
+  padding: 5px; /* yemi: added padding */
   width: 100%; /* yemi: added width and height */
-  height: 100%;
+  min-height: 30px;
+  background: #F5F5F5; /* peachpuff;*/
+  background: peachpuff;
 };
+
+.popPgCntrlHldrCls {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  justify-content: space-between;
+  width: 100%; /* djb: added width and height */
+  height: 100%;
+  min-height: 30px;
+  background: lightblue;
+}
+.popPgUnderTopRow {
+  display: flex;
+  justify-content: space-between;
+  background: palegoldenrod;
+}
+.timeUpdateClass { min-width: 20px; }
+.modeHolderClass { min-width: 20px; }
+.popPgUnderTopRowRit { min-width: 20px; }
+
+.popPgUnderBotRow {
+  display: flex;
+  justify-content: space-between;
+  background: palegreen;
+}
+.popPgFreezeExperimentCls { min-width: 20px; }
+.gridUnderButCls { min-width: 20px; }
+.popPgUnderBotRowRit { min-width: 20px; }
 
 #avidianOutline { display: none; }
 
-.zoomSlideClass { grid-area: zoomSlide; visibility: hidden; }
-.timeUpdateClass { grid-area: timeUpdate; padding-bottom: 5px;}  /* Yemi added padding 2021_826 */
-.freezeButtonDivClass { grid-area: freezeButton;}
-.modeHolderClass { grid-area: modeHolder; padding-bottom: 5px; } /* Yemi added padding 2021_826; Diane removed justify-self: end; */
-.gridButtonClass { grid-area: gridButton; } /* Yemi added padding 2021_826; Diane removed justify-self: end; */
-.rescalingClass { grid-area: rescaling;}
-.popBotRiteClas { grid-area: popBotRite;}
+/*
+.popPgUnderTopRowRit { grid-area: zoomSlide; visibility: hidden; }
+.timeUpdateClass { grid-area: timeUpdate; padding-bottom: 5px;}
+.popPgFreezeExperimentCls { grid-area: freezeButton;}
+.modeHolderClass { grid-area: modeHolder; padding-bottom: 5px; } 
+.gridUnderButCls { grid-area: gridButton; } 
+.popPgUnderBotRowRit { grid-area: rescaling; }
+.popBotRiteCls { grid-area: popBotRite;}  /* does not exist in html on 2022_108 2100 */
 /* rescaling is a label, not a button and it appears when the numerical values of the color scale change. 
   grid-template-columns: 50% 50% 0px; /* yemi: since rescaling button is not implemented yet, we don't save a column for it now */
-
-.gridControlContainerClass{
+/*
+.popPgCntrlHldrCls_old{
   display: grid;
   grid-template-areas: 'timeUpdate  modeHolder  rescaling'
-                       'freezeButton gridButton popBotRite';
+                       'freezeButton gridButton popBotRite';  
   width: 100%;
 }
-.gridControlContainerClass_old{
-  display: grid;
-  grid-template-areas: 'timeUpdate  modeHolder  rescaling'
-                       'freezeButton gridButton popBotRite';
-  width: 100%;
-}
+*/
 
 /* ---------------------------------------------------------------------------- end main work bench center section -- */
 
@@ -681,6 +706,7 @@ html {
 
   #popInfoTabHolder {
       flex: 0 0 24px;
+      align-items: baseline;
   }
   
   .labInfoHoldCls {          /* right side panel with info about the lab benche */

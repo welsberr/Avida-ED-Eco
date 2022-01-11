@@ -1523,7 +1523,6 @@ av.ui.feedback = function(){
   av.grd.drawGridSetupFn = function (from) {
     'use strict';
     if (av.dbg.flg.dsz) { console.log(from, 'called av.grd.drawGridSetupFn__________________________________________________'); }
-    av.dom.benchPopBot.style.height = '60px';
 
     // about total window size
     // av.dsz.windowWd = window.innerWidth || document.documentElement.clientWidth  || document.body.clientWidth;
@@ -1574,9 +1573,10 @@ av.ui.feedback = function(){
         if (av.dbg.flg.dsz) { console.log('dsz: ', $('#sclCnvsHldr').height(), '= sclCnvsHldr ht'); }
 
         if (av.dbg.flg.dsz) { console.log('--------------- gridHolder ht =',$('#gridHolder').height().toFixed(1)); }
-
-        av.dom.benchPopBot.style.height = av.dom.benchPopBot.scrollHeight + 'px';
-
+        if (true) { console.log('dsz: before: benchPopBot.scroll.Height =', document.getElementById('benchPopBot').scrollHeight + 'px'); }
+        document.getElementById('benchPopBot').style.height = document.getElementById('benchPopBot').scrollHeight + 'px';
+        if (true) { console.log('dsz: post: benchPopBot.scroll.Height =', document.getElementById('benchPopBot').scrollHeight + 'px'); }
+        
         if ($("#gridHolder").height() < $("#gridHolder").width()) {
           av.grd.canvasSize = Math.floor( $("#gridHolder").height() ) - 4;
           //console.log('smaller height: canvasSize = ', av.grd.canvasSize);
