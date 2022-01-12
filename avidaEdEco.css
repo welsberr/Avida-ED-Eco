@@ -639,8 +639,8 @@ html {
   padding: 5px; /* yemi: added padding */
   width: 100%; /* yemi: added width and height */
   min-height: 30px;
-  background: #F5F5F5; /* peachpuff;*/
-  background: peachpuff;
+  background: #F5F5F5;
+  /* background: peachpuff; */
 };
 
 .popPgCntrlHldrCls {
@@ -651,21 +651,23 @@ html {
   width: 100%; /* djb: added width and height */
   height: 100%;
   min-height: 30px;
-  background: lightblue;
+  /* background: lightblue; */
 }
 .popPgUnderTopRow {
   display: flex;
   justify-content: space-between;
-  background: palegoldenrod;
+  /* background: palegoldenrod; */
 }
 .timeUpdateClass { min-width: 20px; }
 .modeHolderClass { min-width: 20px; }
 .popPgUnderTopRowRit { min-width: 20px; }
 
+#TimeLabel { min-width: 10px; }  /* 71px "not started"; 51px "0 updates" */
+
 .popPgUnderBotRow {
   display: flex;
   justify-content: space-between;
-  background: palegreen;
+  /* background: palegreen; */
 }
 .popPgFreezeExperimentCls { min-width: 20px; }
 .gridUnderButCls { min-width: 20px; }

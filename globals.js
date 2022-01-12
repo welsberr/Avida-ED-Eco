@@ -914,8 +914,8 @@ av.grd.clearGrd = function () {
   av.grd.mxRequ = 1.0;  //store initial maximum equ Resource in any cell during an experiment.
 
   av.grd.rescaleTolerance = 0.1;
-  av.grd.rescaleTimeConstant = 10;     // was 1  //used to adjust scale over several updates rather than all at once. 
-  av.grd.rescaleUpdateStart = 200;   // was ; 500 or 1000
+  av.grd.rescaleTimeConstant = 5;     // was 1  //used to adjust scale over several updates rather than all at once. 
+  av.grd.rescaleUpdateStart = 100;   // was ; 500 or 1000
   av.grd.SelectedColor = '#ffffff';
   av.grd.LogicColor = '#00ff00';   //color used to outline cells with avidians that can do the selected logic functions
   av.grd.cellOutline = '#00aa00';  //color used to outline all cells with avidians 
