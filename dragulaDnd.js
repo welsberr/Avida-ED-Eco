@@ -355,7 +355,7 @@ jQuery(document).ready(function($) {
       document.body.style.cursor = "default";
       // for debugging
       //console.log('av.fzr =',av.fzr);
-      //console.log('containerMap =', containerMap);
+      //console.log('av.dnd.containerMap =', av.dnd.containerMap);
     });
   });
   //------------------------------------------------------------------------------------------------- end dra.on drop --
@@ -414,7 +414,7 @@ jQuery(document).ready(function($) {
       if (configName !== null) {
         el.innerHTML = `<img src='images/Avida-ED-dish-icon.png' class='DishIcon'></img> ${configName}`;
         // el.textContent = configName;
-        // Add an entry to containerMap
+        // Add an entry to av.dnd.containerMap
         av.dnd.insert(target, el, 'c');
         // insert a new directory into the freezer
         av.fzr.dir[el.id] = 'c'+ av.fzr.cNum;
@@ -673,7 +673,7 @@ jQuery(document).ready(function($) {
     av.fzr.dir[el.id] = dir;
     // and vice versa
     av.fzr.domid[dir] = el.id;
-    // insert element into target containerMap
+    // insert element into target av.dnd.containerMap
     av.dnd.insert(target, el, 'w');
     // insert element into the target DOM
     av.dnd.insertToDOM(target, el);
@@ -699,7 +699,7 @@ jQuery(document).ready(function($) {
     av.fzr.dir[el.id] = dir;
     // and vice versa
     av.fzr.domid[dir] = el.id;
-    // insert element into target containerMap
+    // insert element into target av.dnd.containerMap
     av.dnd.insert(source, el, 'w');
     // insert element into DOM
     av.dnd.insertToDOM(source, el);
@@ -759,7 +759,7 @@ jQuery(document).ready(function($) {
     av.fzr.dir[el.id] = dir;
     // and vice versa
     av.fzr.domid[dir] = el.id;
-    // insert element into target containerMap
+    // insert element into target av.dnd.containerMap
     av.dnd.insert(av.dnd.activeOrgan, el, 'g');
     // insert element into target DOM
     av.dnd.insertToDOM(av.dnd.activeOrgan, el);
@@ -788,7 +788,7 @@ jQuery(document).ready(function($) {
     av.fzr.dir[el.id] = dir;
     // and vice versa
     av.fzr.domid[dir] = el.id;
-    // insert element into target containerMap
+    // insert element into target av.dnd.containerMap
     av.dnd.insert(av.dnd.activeOrgan, el, 'g');
     // insert element into target DOM
     av.dnd.insertToDOM(av.dnd.activeOrgan, el);
@@ -872,13 +872,13 @@ jQuery(document).ready(function($) {
       // give a new name
       el.innerHTML = `<img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'></img> ${av.dnd.nameParent(el.textContent.trim())}`;
       // el.textContent = av.dnd.nameParent(el.textContent.trim());
-      // insert element into ancestorBox containerMap
+      // insert element into ancestorBox av.dnd.containerMap
       av.dnd.insert(av.dnd.ancestorBox, el, 'g');
       // insert element into ancestorBox DOM
       av.dnd.insertToDOM(av.dnd.ancestorBox, el);
       
       var container = target.id !== undefined ? "#" + av.dnd.ancestorBox.id : "." + av.dnd.ancestorBox.className;
-      if (av.debug.dnd) console.log('containerMap[#ancestorBox]', containerMap[container]);   //containerMap not defined?
+      if (av.debug.dnd) console.log('av.dnd.containerMap[#ancestorBox]', av.dnd.containerMap[container]);   //av.dnd.containerMap not defined?
 
       // Push the item to av.parents
       av.parents.domid.push(el.id);
@@ -925,7 +925,7 @@ jQuery(document).ready(function($) {
       var newName = av.dnd.nameParent(el.textContent.trim());
       el.innerHTML = `<img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'></img> ${newName}`;
       // el.textContent = newName;
-      // insert element into target containerMap
+      // insert element into target av.dnd.containerMap
       av.dnd.insert(target, el, 'g');
       // if you place organism into ancestorBox, placement is set to 'auto'
       av.parents.howPlaced.push('auto');
@@ -980,7 +980,7 @@ jQuery(document).ready(function($) {
       var newName = av.dnd.nameParent(el.textContent.trim());
       el.innerHTML = `<img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'></img> ${newName}`;
       // el.textContent = newName;
-      // insert element into target containerMap
+      // insert element into target av.dnd.containerMap
       av.dnd.insert(target, el, 'g');
       // if you place organism into ancestorBox, placement is set to 'auto'
       av.parents.howPlaced.push('auto');
@@ -1057,7 +1057,7 @@ jQuery(document).ready(function($) {
     av.parents.clearParentsFn();
 
     if (source === av.dnd.fzConfig || source === av.dnd.fzTdish) {
-      // insert element into target containerMap
+      // insert element into target av.dnd.containerMap
       av.dnd.insert(target, el, 'c');
       av.fzr.actConfig.type = 'c';
       av.fzr.actConfig.file['events.cfg'] = ' ';
@@ -1087,7 +1087,7 @@ jQuery(document).ready(function($) {
     }
 
     else if (source === av.dnd.fzWorld) {
-      // insert element into target containerMap
+      // insert element into target av.dnd.containerMap
       av.dnd.insert(target, el, 'w');
       av.fzr.actConfig.type = 'w';
       av.ptd.popWorldStateUi('av.dnd.landActiveConfigFn');
@@ -1140,7 +1140,7 @@ jQuery(document).ready(function($) {
         }
       }
     } else {
-      // insert element into target containerMap
+      // insert element into target av.dnd.containerMap
       av.dnd.insert(target, el, 't');
       av.fzr.actConfig.type = 't';
       av.ptd.popTdishStateUi('av.dnd.landActiveConfigFn');
@@ -1231,7 +1231,7 @@ jQuery(document).ready(function($) {
         remove.type = 'g';
         // remove the dom object
         el.remove();       
-        // remove the object from source containerMap
+        // remove the object from source av.dnd.containerMap
         av.dnd.remove(source, el);
         av.fzr.saveUpdateState('no');
       }
@@ -1240,7 +1240,7 @@ jQuery(document).ready(function($) {
         remove.type = 'g';
         // remove the dom object
         el.remove();       
-        // remove the object from source containerMap
+        // remove the object from source av.dnd.containerMap
         av.dnd.remove(source, el);
         av.fzr.saveUpdateState('no');
       }
@@ -1249,14 +1249,14 @@ jQuery(document).ready(function($) {
         remove.type = 'w';
         // remove the dom object
         el.remove();       
-        // remove the object from source containerMap
+        // remove the object from source av.dnd.containerMap
         av.dnd.remove(source, el);
         av.fzr.saveUpdateState('no');
       } 
       else if (av.dnd.ancestorBox === source) {
         // remove the dom object
         el.remove();       
-        // remove the object from source containerMap
+        // remove the object from source av.dnd.containerMap
         av.dnd.remove(source, el);
         av.fzr.saveUpdateState('no');
         var index = av.parents.domid.indexOf(el.id);
@@ -1305,7 +1305,7 @@ jQuery(document).ready(function($) {
               document.getElementById(fzItemID).innerHTML = `<img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'></img> ${fzName}`;
             }
             // document.getElementById(fzItemID).data = fzName;
-            containerMap[container][fzItemID].name = fzName;
+            av.dnd.containerMap[container][fzItemID].name = fzName;
             //update freezer structure
             dir = av.fzr.dir[fzItemID];
             av.fzr.file[dir+'/entryname.txt']=fzName;
@@ -1358,7 +1358,7 @@ jQuery(document).ready(function($) {
             av.fwt.removeFzrItem(dir, 'w');
           }
           document.querySelector(container).removeChild(document.getElementById(fzItemID));
-          delete containerMap[container][fzItemID];
+          delete av.dnd.containerMap[container][fzItemID];
           av.fzr.saveUpdateState('no');
         }
       }
@@ -1372,8 +1372,8 @@ jQuery(document).ready(function($) {
   av.dnd.empty = function(target) {
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     $(container).empty();
-    if (Object.keys(containerMap).indexOf(container) != -1) {
-      containerMap[container] = {}
+    if (Object.keys(av.dnd.containerMap).indexOf(container) != -1) {
+      av.dnd.containerMap[container] = {}
     }
   };
   //------------------------------------------------------------------------------------------------ end av.dnd.empty --
@@ -1400,7 +1400,7 @@ jQuery(document).ready(function($) {
       } 
     } 
     
-    try { delete containerMap[container][el.id];} 
+    try { delete av.dnd.containerMap[container][el.id];} 
     catch { console.log("delete failed");}
   }
   //----------------------------------------------------------------------------------------------- end av.dnd.remove --
@@ -1410,10 +1410,10 @@ jQuery(document).ready(function($) {
   av.dnd.insert = function(target, el, type) {
     var domid = el.id;
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
-    if (Object.keys(containerMap).indexOf(container) === -1) {
-      containerMap[container] = {};
+    if (Object.keys(av.dnd.containerMap).indexOf(container) === -1) {
+      av.dnd.containerMap[container] = {};
     }
-    containerMap[container][domid] = {'name': el.textContent.trim() , 'type': type};
+    av.dnd.containerMap[container][domid] = {'name': el.textContent.trim() , 'type': type};
   };
   //----------------------------------------------------------------------------------------------- end av.dnd.insert --
 
@@ -1441,7 +1441,7 @@ jQuery(document).ready(function($) {
     'use strict';
     var container = source.id !== undefined ? "#" + source.id : "." + source.className;
     try {
-      var items = Object.keys(containerMap[container]);
+      var items = Object.keys(av.dnd.containerMap[container]);
       console.log('in av.dnd.getAllItems: items=', items);
     } catch (error) {
       var items = [];

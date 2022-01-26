@@ -5,19 +5,14 @@
   // if (av.dbg.flg.root) { console.log('Root: before av.fio.addFzItem'); }
   /*------------------------------------------------------------------------------------------------ av.fio.addFzItem --*/
 
-  // replacement for dndSection.map
-  var containerMap = {};
-  // example containerMap access: containerMap['#fzConfig']['test 0']
-  // The first key contains '#' or '.'. Second key doesn't.
-
   av.fio.addFzItem = function(target, name, type, fileNum) {
     // example 'container' input format: '.className' or '#id'
     'use strict';
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     if (container !== undefined) {
-      // if the container is not yet in the containerMap, add an entry
-      if (Object.keys(containerMap).indexOf(container) === -1) {
-        containerMap[container] = {};
+      // if the container is not yet in the av.dnd.containerMap, add an entry
+      if (Object.keys(av.dnd.containerMap).indexOf(container) === -1) {
+        av.dnd.containerMap[container] = {};
       }
       // 'insertNodes' implementation
       var domid = `dom_${type}${fileNum}`
@@ -30,8 +25,8 @@
         $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-dish-icon.png' class='DishIcon'> ${name} </div>`);
       }
       
-      containerMap[container][domid] = {"name": name, "type": type};
-      if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', containerMap[container][domid]);
+      av.dnd.containerMap[container][domid] = {"name": name, "type": type};
+      if (av.dbg.flg.frd) console.log('fileNum=', fileNum, '; name=', name, '; Section=', av.dnd.containerMap[container][domid]);
 
       // create a right av.mouse-click context menu for the item just created.
       if (0 < fileNum) {
@@ -720,11 +715,11 @@
 
       // Add a DOM object
       $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${rslt.nam[ii]} </div>`);
-      // Add an entry to containerMap
-      if (Object.keys(containerMap).indexOf(container) === -1) {
-        containerMap[container] = {};
+      // Add an entry to av.dnd.containerMap
+      if (Object.keys(av.dnd.containerMap).indexOf(container) === -1) {
+        av.dnd.containerMap[container] = {};
       }
-      containerMap[container][domid] = {'name': rslt.nam[ii] , 'type': 'g'};
+      av.dnd.containerMap[container][domid] = {'name': rslt.nam[ii] , 'type': 'g'};
     
       // if (av.dbg.flg.frd) console.log('autoPlaceParent: domIds', domid, '; length', domIds.length);
       av.parents.domid.push(domid); //domid in ancestorBox used to remove if square in grid moved to trashcan
@@ -802,11 +797,11 @@
       // Add a DOM object
       $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${stuff.nam[kk]} </div>`);
 
-      // Add an entry to containerMap
-      if (Object.keys(containerMap).indexOf(container) === -1) {
-        containerMap[container] = {};
+      // Add an entry to av.dnd.containerMap
+      if (Object.keys(av.dnd.containerMap).indexOf(container) === -1) {
+        av.dnd.containerMap[container] = {};
       }
-      containerMap[container][domid] = {'name': stuff.nam[kk] , 'type': 'g'};
+      av.dnd.containerMap[container][domid] = {'name': stuff.nam[kk] , 'type': 'g'};
       av.parents.domid.push(domid); //domid in ancestorBox used to remove if square in grid moved to trashcan
 
       //Find color of ancestor
@@ -866,21 +861,21 @@
       // Add a DOM object
       $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${av.parents.name[ii]} </div>`);
 
-      // Add an entry to containerMap
-      if (Object.keys(containerMap).indexOf(container) === -1) {
-        containerMap[container] = {};
+      // Add an entry to av.dnd.containerMap
+      if (Object.keys(av.dnd.containerMap).indexOf(container) === -1) {
+        av.dnd.containerMap[container] = {};
       }
 
-      if (Object.keys(containerMap[container]).indexOf(domid) === -1) {
-        containerMap[container][domid] = {'name': av.parents.name[ii] , 'type': 'g'};
+      if (Object.keys(av.dnd.containerMap[container]).indexOf(domid) === -1) {
+        av.dnd.containerMap[container][domid] = {'name': av.parents.name[ii] , 'type': 'g'};
       } else {
-        containerMap[container][domid].name = av.parents.name[ii];
-        containerMap[container][domid].type = 'g';
+        av.dnd.containerMap[container][domid].name = av.parents.name[ii];
+        av.dnd.containerMap[container][domid].type = 'g';
       }
 
       av.parents.domid.push(domid);
       av.fzr.gNum++;
-      console.log(containerMap);
+      console.log(av.dnd.containerMap);
       console.log(av.fzr);
 
       //Find color of ancestor

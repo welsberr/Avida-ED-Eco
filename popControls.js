@@ -136,7 +136,7 @@
     //set configuation to default
     var fname = '@default';
 
-    var domId = Object.keys(containerMap['#activeConfig'])[0];
+    var domId = Object.keys(av.dnd.containerMap['#activeConfig'])[0];
     av.fzr.actConfig.actDomid = domId;
     av.fzr.actConfig.name = fname;
     av.fzr.actConfig.type = 'c';
@@ -454,7 +454,7 @@
       var type = 'g'
       var domid = `dom_${type}${av.fzr.gNum}`
       $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${fzName} </div>`)
-      containerMap[container][domid] = {"name": fzName, "type": type};
+      av.dnd.containerMap[container][domid] = {"name": fzName, "type": type};
       av.fzr.dir[domid] = 'g' + av.fzr.gNum;
       av.fzr.domid['g' + av.fzr.gNum] = domid;
       av.fzr.file['g' + av.fzr.gNum + '/genome.seq'] = gene;
@@ -479,7 +479,7 @@
         var type = 'c'
         var domid = `dom_${type}${av.fzr.cNum}`
         $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-dish-icon.png' class='DishIcon'> ${fzName} </div>`)
-        containerMap[container][domid] = {"name": fzName, "type": type};
+        av.dnd.containerMap[container][domid] = {"name": fzName, "type": type};
         av.fzr.dir[domid] = 'c'+ av.fzr.cNum;
         av.fzr.domid['c'+ av.fzr.cNum] = domid;
         av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = fzName;
@@ -506,7 +506,7 @@
         var type = 'w'
         var domid = `dom_${type}${av.fzr.wNum}`
         $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-dish-icon.png' class='DishIcon'> ${fzName} </div>`)
-        containerMap[container][domid] = {"name": fzName, "type": type};
+        av.dnd.containerMap[container][domid] = {"name": fzName, "type": type};
         av.fzr.dir[domid] = 'w'+ av.fzr.wNum;
         av.fzr.domid['w'+ av.fzr.wNum] = domid;
         av.fzr.file[av.fzr.dir[domid]+'/entryname.txt'] = fzName;

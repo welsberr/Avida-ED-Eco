@@ -217,7 +217,7 @@ av.dnd.move = {};  //used to hold data needed for dnd type move.
 
 // replacement for dndSection.map
 av.dnd.containerMap = {};
-// example containerMap access: containerMap['#fzConfig']['test 0']
+// example av.dnd.containerMap access: av.dnd.containerMap['#fzConfig']['test 0']
 // The first key contains '#' or '.'. Second key doesn't.
 
 
@@ -851,7 +851,7 @@ av.fzr.clearMainFzrFn = function () {
   if (av.debug.fzr) { console.log('Freezer: before av.dnd.fzOrgan.selectAll=', av.dnd.fzOrgan); }
   av.dnd.empty(av.dnd.fzOrgan);
   if (av.debug.fzr) { console.log('Freezer: before av.dnd.fzOrgan.sync'); }
-  console.log(containerMap);
+  console.log(av.dnd.containerMap);
 /*
   if (av.debug.fzr) console.log('Freezer: before av.dnd.fzMdish.selectAll=', av.dnd.fzMdish);
   av.dnd.fzMdish.selectAll().deleteSelectedNodes();
