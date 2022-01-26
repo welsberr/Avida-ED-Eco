@@ -3166,7 +3166,7 @@ av.ui.feedback = function(){
  * cssWidth = box only nothing else
  * dom.name.width
  * $('#name').innerWidth()
- *    where name is from the id='name'   of the dom objecte in the html
+ *    where name is from the id='name'   of the dom object in the html
  *    
  * scrollbarWidth = offsetWidth - clientWidth - getComputedStyle().borderLeftWidth - getComputedStyle().borderRightWidth
  *  

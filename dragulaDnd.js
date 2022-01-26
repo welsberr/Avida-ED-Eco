@@ -1372,6 +1372,9 @@ jQuery(document).ready(function($) {
   av.dnd.empty = function(target) {
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     $(container).empty();
+    console.log('container =', container);
+    console.log('av.dnd.containerMap =', av.dnd.containerMap);
+    console.log('Object =', Object);
     if (Object.keys(av.dnd.containerMap).indexOf(container) != -1) {
       av.dnd.containerMap[container] = {}
     }
@@ -1410,6 +1413,10 @@ jQuery(document).ready(function($) {
   av.dnd.insert = function(target, el, type) {
     var domid = el.id;
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
+
+    console.log('container =', container);
+    console.log('av.dnd.containerMap =', av.dnd.containerMap);
+    console.log('Object =', Object);
     if (Object.keys(av.dnd.containerMap).indexOf(container) === -1) {
       av.dnd.containerMap[container] = {};
     }

@@ -11,9 +11,13 @@
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     if (container !== undefined) {
       // if the container is not yet in the av.dnd.containerMap, add an entry
+
+      console.log('container =', container);
+      console.log('av.dnd.containerMap =', av.dnd.containerMap);
+      console.log('Object =', Object);
       if (Object.keys(av.dnd.containerMap).indexOf(container) === -1) {
         av.dnd.containerMap[container] = {};
-      }
+      };
       // 'insertNodes' implementation
       var domid = `dom_${type}${fileNum}`
       if (type === 'g') 
@@ -716,6 +720,9 @@
       // Add a DOM object
       $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${rslt.nam[ii]} </div>`);
       // Add an entry to av.dnd.containerMap
+      console.log('container =', container);
+      console.log('av.dnd.containerMap =', av.dnd.containerMap);
+      console.log('Object =', Object);
       if (Object.keys(av.dnd.containerMap).indexOf(container) === -1) {
         av.dnd.containerMap[container] = {};
       }
@@ -798,6 +805,9 @@
       $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${stuff.nam[kk]} </div>`);
 
       // Add an entry to av.dnd.containerMap
+      console.log('container =', container);
+      console.log('av.dnd.containerMap =', av.dnd.containerMap);
+      console.log('Object =', Object);
       if (Object.keys(av.dnd.containerMap).indexOf(container) === -1) {
         av.dnd.containerMap[container] = {};
       }
@@ -862,6 +872,9 @@
       $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${av.parents.name[ii]} </div>`);
 
       // Add an entry to av.dnd.containerMap
+      console.log('container =', container);
+      console.log('av.dnd.containerMap =', av.dnd.containerMap);
+      console.log('Object =', Object);
       if (Object.keys(av.dnd.containerMap).indexOf(container) === -1) {
         av.dnd.containerMap[container] = {};
       }
