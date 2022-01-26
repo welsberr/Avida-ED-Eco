@@ -504,7 +504,7 @@ require([
   //http://blog.bugsnag.com/js-stacktraces
   window.onerror = function (message, file, line, col, error) {
     //console.log('in window.onerror 633');
-    av.dom.runStopButton.innerHTML = 'Run';  //av.msg.pause('now');
+    av.dom.runStopButton.innerHTML = 'Run';  
     av.debug.finalizeDtail();
     av.debug.triggered = 'errorTriggered';
     av.post.postLogPara = 'Please send the info below to Help us make Avida-ED better by clicking on the [Send] button';
@@ -967,8 +967,8 @@ av.ui.feedback = function(){
       // and that's why this modal was triggered, 
       // you want to replace the old dish with a new one, 
       // in which case you don't want to reset
-      av.msg.reset(); 
-      av.dnd.loadConfigByName(av.fzr.actConfig.name); // reload the current active config
+      av.msg.resetFn('av.dom.newDishDiscard.onclick'); 
+      av.dnd.loadConfigByNameFn(av.fzr.actConfig.name, 'av.dom.newDishDiscard.onclick'); // reload the current active config
     }
     av.dnd.userDraggedNewConfig = false;
     //console.log('newDishDiscard click');
@@ -984,8 +984,8 @@ av.ui.feedback = function(){
       // and that's why this modal was triggered, 
       // you want to replace the old dish with a new one, 
       // in which case you don't want to reset
-      av.msg.reset(); 
-      av.dnd.loadConfigByName(av.fzr.actConfig.name); // reload the current active config
+      av.msg.resetFn('av.dom.newDishSaveWorld.onclick'); 
+      av.dnd.loadConfigByNameFn(av.fzr.actConfig.name, 'av.dom.newDishSaveWorld.onclick'); // reload the current active config
     }
     av.dnd.userDraggedNewConfig = false;
     //console.log('newDishSaveWorld click');
@@ -1001,36 +1001,35 @@ av.ui.feedback = function(){
       // and that's why this modal was triggered, 
       // you want to replace the old config with a new one, 
       // in which case you don't want to reset
-      av.msg.reset(); 
-      av.dnd.loadConfigByName(av.fzr.actConfig.name); // reload the current active config
+      av.msg.resetFn('av.dom.newDishSaveConfig.onclick'); 
+      av.dnd.loadConfigByNameFn(av.fzr.actConfig.name, 'av.dom.newDishSaveConfig.onclick'); // reload the current active config
     }
     av.dnd.userDraggedNewConfig = false;
     //console.log('newDishSaveConfig click');
   };
 
-  av.ui.newButtonBoth = function() {
+  av.ui.newButtonBothFn = function() {
     'use strict';
     if ('prepping' == av.grd.runState) {// reset petri dish
-      av.msg.reset();
-      av.dnd.loadConfigByName(av.fzr.actConfig.name); // reload the current active config
-      console.log('in prepping');
-      //av.ptd.resetDishFn(true); //Only do when get reset back from avida after sending reset, commented out in v3.0
+      av.msg.resetFn('av.ui.newButtonBothFn');
+      //av.dnd.loadConfigByNameFn(av.fzr.actConfig.name, 'av.ui.newButtonBothFn'); // put @default back as the active Config 
+      console.log('av.ui.newButtonBothFn: in prepping');
     } else {// check to see about saving current population
-      av.msg.pause('now');
       av.ptd.makePauseState();
-      console.log('av.dom.newDishModalID=', av.dom.newDishModalID);
+      console.log('av.ui.newButtonBothFn: av.dom.newDishModalID=', av.dom.newDishModalID);
       av.dom.newDishModalID.style.display = "block";
     }
   };
 
-  av.dom.newDishButton.onclick = function () {
+  //av.dom.newDishButton.onclick = function () {
+  av.ptd.newDishButton = function () {
     av.post.addUser('Button: newDishButton');
-    av.ui.newButtonBoth();
+    av.ui.newButtonBothFn();
   };
 
   dijit.byId('mnCnNewpop').on('Click', function () {
     av.post.addUser('Button: mnCnNewpop');
-    av.ui.newButtonBoth();
+    av.ui.newButtonBothFn();
   });
 
   //*******************************************      Freeze Button      **********************************************
@@ -1462,7 +1461,6 @@ av.ui.feedback = function(){
   dijit.byId('mnCnPause').on('Click', function () {
     av.post.addUser('Button: mnCnPause');
     //console.log('about to call av.ptd.makePauseState()');
-    av.msg.pause('now');
     //av.debug.log += '______Debug Note: about to call av.ptd.makePauseState() in AvidaEd.js line 986 \n';
     av.ptd.makePauseState();
   });
@@ -1573,9 +1571,9 @@ av.ui.feedback = function(){
         if (av.dbg.flg.dsz) { console.log('dsz: ', $('#sclCnvsHldr').height(), '= sclCnvsHldr ht'); }
 
         if (av.dbg.flg.dsz) { console.log('--------------- gridHolder ht =',$('#gridHolder').height().toFixed(1)); }
-        if (true) { console.log('dsz: before: benchPopBot.scroll.Height =', document.getElementById('benchPopBot').scrollHeight + 'px'); }
+        //if (av.dbg.flg.dsz) { console.log('dsz: before: benchPopBot.scroll.Height =', document.getElementById('benchPopBot').scrollHeight + 'px'); }
         document.getElementById('benchPopBot').style.height = document.getElementById('benchPopBot').scrollHeight + 'px';
-        if (true) { console.log('dsz: post: benchPopBot.scroll.Height =', document.getElementById('benchPopBot').scrollHeight + 'px'); }
+        //if (av.dbg.flg.dsz) { console.log('dsz: post: benchPopBot.scroll.Height =', document.getElementById('benchPopBot').scrollHeight + 'px'); }
         
         if ($("#gridHolder").height() < $("#gridHolder").width()) {
           av.grd.canvasSize = Math.floor( $("#gridHolder").height() ) - 4;

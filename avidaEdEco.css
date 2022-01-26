@@ -658,9 +658,17 @@ html {
   justify-content: space-between;
   /* background: palegoldenrod; */
 }
-.timeUpdateClass { min-width: 20px; }
-.modeHolderClass { min-width: 20px; }
-.popPgUnderTopRowRit { min-width: 20px; }
+.popPgUnderTopRowLft { 
+  min-width: 20px; padding-bottom: 5px; 
+  /* background: lightcyan; */
+}
+.popPgUnderTopRowCtr { 
+  min-width: 20px; padding-bottom: 7px; 
+  /* background: lightgrey; */
+}
+.popPgUnderTopRowRit { min-width: 20px; 
+  /* background: lightgreen; */
+}
 
 #TimeLabel { min-width: 10px; }  /* 71px "not started"; 51px "0 updates" */
 
@@ -669,17 +677,21 @@ html {
   justify-content: space-between;
   /* background: palegreen; */
 }
-.popPgFreezeExperimentCls { min-width: 20px; }
+.popPgFreezeExperimentCls { min-width: 20px;}
 .gridUnderButCls { min-width: 20px; }
 .popPgUnderBotRowRit { min-width: 20px; }
 
 #avidianOutline { display: none; }
 
+
+
+
+
 /*
 .popPgUnderTopRowRit { grid-area: zoomSlide; visibility: hidden; }
-.timeUpdateClass { grid-area: timeUpdate; padding-bottom: 5px;}
+.timeUpdateCls { grid-area: timeUpdate; padding-bottom: 5px;}
 .popPgFreezeExperimentCls { grid-area: freezeButton;}
-.modeHolderClass { grid-area: modeHolder; padding-bottom: 5px; } 
+.modeHldrCls { grid-area: modeHolder; padding-bottom: 5px; } 
 .gridUnderButCls { grid-area: gridButton; } 
 .popPgUnderBotRowRit { grid-area: rescaling; }
 .popBotRiteCls { grid-area: popBotRite;}  /* does not exist in html on 2022_108 2100 */

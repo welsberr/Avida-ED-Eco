@@ -118,17 +118,21 @@
   };
   //------------------------------------------------------------------------------------ end av.ptd.popRunningStateUi --
   
-  //-------------------------------------------------------------------------------------------- av.ptd.popNewExState --
+  //------------------------------------------------------------------------------------------ av.ptd.popNewExStateFn --
   
-  av.ptd.popNewExState = function () {
+  av.ptd.popNewExStateFn = function (from) {
     'use strict';
-    if (av.fzr.actConfig.name != '@default') {
-      console.log('here');
-      av.dnd.loadConfigByName(av.fzr.actConfig.name);
-      return;
-    } else {
-      av.dnd.loadDefaultConfigFn(); 
-    }
+    console.log(from, 'called av.ptd.popNewExStateFn: actConfig was', av.fzr.actConfig.name);
+    
+    // a way to keep the same active configuration
+    // if (av.fzr.actConfig.name != '@default') {
+    //   console.log('av.fzr.actConfig.name =', av.fzr.actConfig.name);
+    //   av.dnd.loadConfigByNameFn(av.fzr.actConfig.name, 'av.ptd.popNewExStateFn');
+    //   return;
+    // }
+    
+    av.dnd.loadDefaultConfigFn('av.ptd.popNewExStateFn'); 
+    
     //set configuation to default
     var fname = '@default';
 
@@ -219,7 +223,7 @@
     dijit.byId('mnCnPause').attr('disabled', true);
     dijit.byId('mnCnRun').attr('disabled', false);
     av.dom.runStopButton.innerHTML = 'Run';
-    //console.log('pauseState; button=run in av.ptd.popNewExState');
+    //console.log('pauseState; button=run in av.ptd.popNewExStateFn');
 
     //clear the time series graphs
     av.pch.aveFit = [];
@@ -235,7 +239,7 @@
 
     var dir = av.fzr.actConfig.dir;
     var fileStr = av.fzr.file[dir + '/avida.cfg'];
-    av.frd.avidaCFG2form(fileStr, 'av.ptd.popNewExState'); 
+    av.frd.avidaCFG2form(fileStr, 'av.ptd.popNewExStateFn'); 
 
     av.dnd.empty(av.dnd.ancestorBox);
     av.dnd.empty(av.dnd.ancestorBoTest);
@@ -402,7 +406,7 @@
     if (av.debug.popCon) console.log('end of av.ptd.runPopFn 331');
     //update screen based on data from C++
   };
-  //---------------------------------------------------------------------------------------- end av.ptd.popNewExState --
+  //-------------------------------------------------------------------------------------- end av.ptd.popNewExStateFn --
 
   //------------------------------------------------------------------------------------------------ av.ptd.runStopFn --
   av.ptd.runStopFn = function () {
@@ -594,15 +598,18 @@
     av.ptd.updateLogicFn(av.grd.popStatsMsg.update);
   };
 
-  //reset values
-  av.ptd.resetDishFn = function (need2sendRest2avida) { //Need to reset all settings to @default
+  //Need to reset all settings to @default
+  av.ptd.resetDishFn = function (need2sendRest2avida) { 
     'use strict';
+    
+    //Take this out if we only reset when avida resets After sending a request for reset.
     // send reset to Avida adaptor
-    //if (need2sendRest2avida) {av.msg.reset();} //Take this out if we only reset when avida resets After sending a request for reset.
+    // this is still here because the code to remove the attempt to restart avida without reloading the web app has not been removed.
+    // Restarting avida without restarting the web app has never worked. 
+    //if (need2sendRest2avida) {av.msg.reset();} 
 
     var Tsk;
     console.log('in resetDishFn');
-    av.msg.pause('now');
     av.ptd.makePauseState();
     av.grd.clearGrd();
     if (av.debug.grid) console.log('before calling av.grd.popChartInit');
@@ -611,7 +618,7 @@
     dijit.byId('mnCnOrganismTrace').attr('disabled', true);
     dijit.byId('mnFzOrganism').attr('disabled', true);
     //Enable the options on the Setup page
-    av.ptd.popNewExState();
+    av.ptd.popNewExStateFn('av.ptd.resetDishFn');
     // //Clear grid settings
     // av.parents.clearParentsFn();
     // // reset values in population settings based on a 'file' @default

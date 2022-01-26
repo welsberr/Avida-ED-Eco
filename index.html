@@ -262,25 +262,29 @@
               <div id='benchPopBot'>
                 <div id='popPgCntrlHolder' class='popPgCntrlHldrCls'>
                   <div class='popPgUnderTopRow'>
-                    <div id='timeUpdates' class='timeUpdateClass'>Time: <label id='TimeLabel'>(not started)</label></div>
-                    <div id='modeHolder' class='modeHolderClass'>
-                      Mode:
-                      <select  id='colorMode'>
-                        <option value='Fitness' selected>Fitness</option>
-                        <option value='Offspring Cost'>Offspring Cost</option>
-                        <option value='Energy Acq. Rate'>Energy Acq. Rate</option>
-                        <option value='Ancestor Organism'>Ancestor Organism</option>
-                        <option id='rsnot' value='rnot'>Resource: Notose</option>
-                        <option id='rsnan' value='rnan'>Resource: Nanose</option>
-                        <option id='rsand' value='rand'>Resource: Andose</option>
-                        <option id='rsorn' value='rorn'>Resource: Ornose</option>
-                        <option id='rsoro' value='roro'>Resource: Orose</option>
-                        <option id='rsant' value='rant'>Resource: Antose</option>
-                        <option id='rsnor' value='rnor'>Resource: Norose</option>
-                        <option id='rsxor' value='rxor'>Resource: Xorose</option>
-                        <option id='rsequ' value='requ'>Resource: Equose</option>
-                        <option id='rnone' value='none'>None</option>
-                      </select>
+                    <div class='popPgUnderTopRowLft'>
+                      <div id='timeUpdates' class='timeUpdateCls'>Time: <label id='TimeLabel'>(not started)</label></div>
+                    </div>
+                    <div class='popPgUnderTopRowCtr'>
+                      <div id='modeHolder' class='modeHldrCls'>
+                        Mode:
+                        <select  id='colorMode'>
+                          <option value='Fitness' selected>Fitness</option>
+                          <option value='Offspring Cost'>Offspring Cost</option>
+                          <option value='Energy Acq. Rate'>Energy Acq. Rate</option>
+                          <option value='Ancestor Organism'>Ancestor Organism</option>
+                          <option id='rsnot' value='rnot'>Resource: Notose</option>
+                          <option id='rsnan' value='rnan'>Resource: Nanose</option>
+                          <option id='rsand' value='rand'>Resource: Andose</option>
+                          <option id='rsorn' value='rorn'>Resource: Ornose</option>
+                          <option id='rsoro' value='roro'>Resource: Orose</option>
+                          <option id='rsant' value='rant'>Resource: Antose</option>
+                          <option id='rsnor' value='rnor'>Resource: Norose</option>
+                          <option id='rsxor' value='rxor'>Resource: Xorose</option>
+                          <option id='rsequ' value='requ'>Resource: Equose</option>
+                          <option id='rnone' value='none'>None</option>
+                        </select>
+                      </div>
                     </div>
                     <div class='popPgUnderTopRowRit'>
                       <div id='zoomSlideID'></div>
@@ -290,7 +294,7 @@
                   <div class='popPgUnderBotRow'>
                     <div class='popPgFreezeExperimentCls'>
                       <button id='freezeButton'>Freeze</button>
-                      <button id='newDishButton'>New</button>
+                      <button id='newDishButton' onclick='av.ptd.newDishButton()'>New</button>
                     </div>
                     <div id='gridButtons' class='gridUnderButCls'>                      
                       <button id='runStopButton'>Run</button>
@@ -1711,6 +1715,9 @@
             </p>
             <br />
           </div>
+          <div id='sendLogCommentAreaHldr'>
+            <textarea id='CommentAreaScrollBox' cols='80' rows='10'>Describe what what you were doing and what happened here:</textarea>
+          </div>
           <div id='sendLogTxtAreaHldr'>
             <textarea id='sendLogScrollBox' cols='80' rows='10'></textarea>
           </div>
@@ -1768,7 +1775,7 @@
             <div id='AvidaedaboutDtailBxHldr'>
               <div id='AvidaedaboutdetailBox'>
 <h1 class='aboutCls'><u>Avida-ED</u></h1> 
-<p>Copyright 2006-2021 Michigan State University</p>
+<p>Copyright 2006-present Michigan State University</p>
 <br>
 <p>THIS SOFTWARE IS PROVIDED BY MICHIGAN STATE UNIVERSITY AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL MICHIGAN STATE UNIVERSITY OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 
@@ -1789,7 +1796,7 @@
 <p>THIS SOFTWARE IS PROVIDED BY MICHIGAN STATE UNIVERSITY AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL MICHIGAN STATE UNIVERSITY OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 
 <h1 class='aboutCls'>Avida-ED (avida/apps/viewer-macos)</h1>
-<p>Copyright 2010-2021 Michigan State University. All rights reserved.</p>
+<p>Copyright 2010-present Michigan State University. All rights reserved.</p>
 <p>https://avida.devosoft.org/   <br>
   https://github.com/devosoft</p>
 
@@ -1804,7 +1811,7 @@
 
 <h1 class='aboutCls'>AVIDA (AVIDA-CORE AND VIEWER LIBRARIES)</h1>
 
-<p>Copyright 1999-2021 Michigan State University. All rights reserved.</p>
+<p>Copyright 1999-present Michigan State University. All rights reserved.</p>
 <p>Copyright 1993-2003 California Institute of Technology.</p>
 
 <p class='marginBelow'>Avida is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version of the License or (at your option) any later version.</p>

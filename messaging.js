@@ -26,7 +26,7 @@ av.msg.readMsg = function (ee) {
         av.debug.log += '\n--Aui: \n' + av.utl.json2stringFn(msg);
         if (av.debug.userMsg) userMsgLabel.textContent = '| Avida: ' + msg.name;
         if (true === av.msg.uiReqestedReset) {
-          av.ptd.resetDishFn();
+          av.ptd.resetDishFn(false);
           av.msg.uiReqestedReset = false;
         }
         break;
@@ -111,7 +111,7 @@ av.msg.readMsg = function (ee) {
         //console.log('type:userFeedback; level:error');
         if (msg.isFatal) {
           //kill and restart avida worker
-          restartAvidaDialog.show();
+          restartAvidaDialog.show();  //DJB: this does not work as of 2022; never did
         }
         else {
           //return everything to defaults
@@ -682,8 +682,9 @@ av.msg.doRunPause = function () {
 */
 
 //fio.uiWorker function
-av.msg.reset = function () {
+av.msg.resetFn = function (from) {
   'use strict';
+  console.log(from, 'called av.msg.resetFn');
   av.msg.setupType = 'normal';
   av.msg.uiReqestedReset = true;
   var request = {
@@ -698,16 +699,6 @@ av.msg.reset = function () {
 
 //Not used when handshaking is used.
 av.msg.pause = function(update) {};
-/*
-av.msg.pause = function(update) {
-  var request = {
-    'type': 'addEvent',
-    'name': 'pause',
-    'start': update
-  };
-  av.aww.uiWorker.postMessage(request);
-}
-*/
 
 av.msg.injectAncestors = function (from) {
   'use strict';

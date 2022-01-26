@@ -5,7 +5,7 @@
 var av = av || {};  //incase av already exists
 
 //console.log('start of globals on 2021_310_04:22 Thurs');
-console.log('start of globals on 2021_909_Fri');
+console.log('start of globals on 2022_121_Fri');
 
 Number.prototype.pad = function(size) {
   var ss = String(this);
@@ -214,6 +214,12 @@ av.fio.mailAddress = 'Avida-ED-development@googlegroups.com';  //'mailto:diane.b
 av.dnd = {};  //details in AvidiaEd.js as it access the DOM
 av.dnd.configFlag = 'normal';
 av.dnd.move = {};  //used to hold data needed for dnd type move.
+
+// replacement for dndSection.map
+av.dnd.containerMap = {};
+// example containerMap access: containerMap['#fzConfig']['test 0']
+// The first key contains '#' or '.'. Second key doesn't.
+
 
 av.ptd = {};  // on population page that are not part of the grid. (PeTri Dish)
 av.ptd.logicButtons = ['notButton', 'nanButton', 'andButton', 'ornButton', 'oroButton', 'antButton', 'norButton', 'xorButton', 'equButton'];

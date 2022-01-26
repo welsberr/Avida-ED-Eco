@@ -231,10 +231,10 @@ jQuery(document).ready(function($) {
         av.post.addUser('Button: newDishDiscard');
         av.dom.newDishModalID.style.display = 'none';
         if ((source === av.dnd.fzWorld || source === av.dnd.fzConfig) && target === av.dnd.gridCanvas) { 
-          av.dnd.landActiveConfig(el, av.dnd.activeConfig, source);
+          av.dnd.landActiveConfigFn(el, av.dnd.activeConfig, source, 'av.dom.newDishDiscard.onclick1');
         } 
         else if ((source === av.dnd.fzWorld || source === av.dnd.fzConfig) && target === av.dnd.activeConfig) {
-          av.dnd.landActiveConfig(el, target, source);
+          av.dnd.landActiveConfigFn(el, target, source, 'av.dom.newDishDiscard.onclick2');
         }
       };
 
@@ -242,25 +242,25 @@ jQuery(document).ready(function($) {
         av.post.addUser('Button: newDishSaveWorld');
         av.ptd.FrPopulationFn();
         av.dom.newDishModalID.style.display = 'none';
-        av.dnd.landActiveConfig(el, av.dnd.activeConfig, source);
+        av.dnd.landActiveConfigFn(el, av.dnd.activeConfig, source, 'av.dom.newDishSaveWorld.onclick');
       };
     
       av.dom.newDishSaveConfig.onclick = function () {
         av.post.addUser('Button: newDishSaveConfig');
         av.ptd.FrConfigFn('av.dom.newDishSaveConfig.onclick');
         av.dom.newDishModalID.style.display = 'none';
-        av.dnd.landActiveConfig(el, av.dnd.activeConfig, source);
+        av.dnd.landActiveConfigFn(el, av.dnd.activeConfig, source, 'av.dom.newDishSaveConfig.onclick');
       };
     } 
     else {
       if (target === av.dnd.activeConfig) {
-        av.dnd.landActiveConfig(el, target, source);
+        av.dnd.landActiveConfigFn(el, target, source, 'target=av.dnd.activeConfig');
       }
       if (target === av.dnd.testConfig || target === av.dnd.ancestorBoTest && av.grd.runState === 'started') {
         av.dom.newDishModalID.style.display = 'block';
         dra.cancel();
       } else if (target === av.dnd.testConfig) {
-        av.dnd.landTestConfig(el, target, source);
+        av.dnd.landTestConfigFn(el, target, source, 'dra.on drop: target=av.dnd.activeConfig');
       }
       if (target === av.dnd.trashCan) {
         // however, if the drag is being initiated from the gridCanvas aka, then the event handler is in mouse.js
@@ -335,10 +335,10 @@ jQuery(document).ready(function($) {
             av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
           }
           else if (sourceIsFzWorld) {
-            av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, av.dnd.fzWorld);
+            av.dnd.landActiveConfigFn(elForGrid, av.dnd.activeConfig, av.dnd.fzWorld, 'sourceIsFzWorld');
           }
           else if (sourceIsFzConfig) {
-            av.dnd.landActiveConfig(elForGrid, av.dnd.activeConfig, av.dnd.fzConfig);
+            av.dnd.landActiveConfigFn(elForGrid, av.dnd.activeConfig, av.dnd.fzConfig, 'sourceIsFzConfig');
           }
           else if (sourceIsAncestorBox) {
             av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, av.dnd.ancestorBox);
@@ -354,8 +354,8 @@ jQuery(document).ready(function($) {
       }
       document.body.style.cursor = "default";
       // for debugging
-      console.log('av.fzr =',av.fzr);
-      console.log('containerMap =', containerMap);
+      //console.log('av.fzr =',av.fzr);
+      //console.log('containerMap =', containerMap);
     });
   });
   //------------------------------------------------------------------------------------------------- end dra.on drop --
@@ -578,7 +578,7 @@ jQuery(document).ready(function($) {
           } else if (av.grd.runState === "started") {
             alert("Can't add a new populated dish to a running experiment. Start a new experiment to continue.");
           } else {
-            addedPopPage = av.dnd.landActiveConfig(el, target, source); 
+            addedPopPage = av.dnd.landActiveConfigFn(el, target, source, 'addedPopPage1'); 
           }
           // reset the av.dnd.selectedId
           $('#' + mostRecentlyAddedDomid).css('background', 'inherit'); // revert the background color of the most recently added dom object
@@ -600,7 +600,7 @@ jQuery(document).ready(function($) {
           } else if (av.grd.runState === "started") {
             alert("Can't add a new configured dish to a running experiment. Start a new experiment to continue.");
           } else {
-            addedPopPage = av.dnd.landActiveConfig(el, target, source); 
+            addedPopPage = av.dnd.landActiveConfigFn(el, target, source, 'addedPopPage2'); 
           }
           // reset the av.dnd.selectedId
           $('#' + mostRecentlyAddedDomid).css('background', 'inherit'); // revert the background color of the most recently added dom object
@@ -878,7 +878,7 @@ jQuery(document).ready(function($) {
       av.dnd.insertToDOM(av.dnd.ancestorBox, el);
       
       var container = target.id !== undefined ? "#" + av.dnd.ancestorBox.id : "." + av.dnd.ancestorBox.className;
-      if (av.debug.dnd) console.log('containerMap[#ancestorBox]', containerMap[container]);   //container not defined?
+      if (av.debug.dnd) console.log('containerMap[#ancestorBox]', containerMap[container]);   //containerMap not defined?
 
       // Push the item to av.parents
       av.parents.domid.push(el.id);
@@ -1004,12 +1004,12 @@ jQuery(document).ready(function($) {
   };
   //----------------------------------------------------------------------------------- end av.dnd.landAncestorBoTest --
 
-  //----------------------------------------------------------------------------------------- av.dnd.landActiveConfig --
+  //--------------------------------------------------------------------------------------- av.dnd.landActiveConfigFn --
   // when a configured dish is added to the config box
-  av.dnd.landActiveConfig = function (el, target, source) {
+  av.dnd.landActiveConfigFn = function (el, target, source, from) {
     'use strict';
+    console.log(from, 'called av.dnd.landActiveConfigFn: el =', el);
     av.dnd.configFlag = 'normal';
-
     av.grd.clearGrd();
     // av.grd.popChartInit('restDishFn');
     av.grd.runState = 'prepping';
@@ -1049,7 +1049,7 @@ jQuery(document).ready(function($) {
     }
 
     // types are reassigned to indicate that they might be the populated form of the dishes.
-    av.frd.updateSetup('av.dnd.landActiveConfig');                  // call the avida-ED 3.0 style setup page
+    av.frd.updateSetup('av.dnd.landActiveConfigFn');                  // call the avida-ED 3.0 style setup page
     av.msg.setupType = 'standard';
     // empty ancestorBox and ancestorBoTest
     av.dnd.empty(av.dnd.ancestorBoTest);
@@ -1090,7 +1090,7 @@ jQuery(document).ready(function($) {
       // insert element into target containerMap
       av.dnd.insert(target, el, 'w');
       av.fzr.actConfig.type = 'w';
-      av.ptd.popWorldStateUi('av.dnd.landActiveConfig');
+      av.ptd.popWorldStateUi('av.dnd.landActiveConfigFn');
 
       // load files from freezer
       av.fzr.actConfig.file['avida.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/avida.cfg'];
@@ -1143,7 +1143,7 @@ jQuery(document).ready(function($) {
       // insert element into target containerMap
       av.dnd.insert(target, el, 't');
       av.fzr.actConfig.type = 't';
-      av.ptd.popTdishStateUi('av.dnd.landActiveConfig');
+      av.ptd.popTdishStateUi('av.dnd.landActiveConfigFn');
     }
 
     av.parents.placeAncestors();
@@ -1154,39 +1154,41 @@ jQuery(document).ready(function($) {
     av.msg.importPopExpr();
     av.msg.requestGridData();
     av.msg.sendData();
-    av.grd.popChartFn(false, 'av.dnd.landActiveConfig');
+    av.grd.popChartFn(false, 'av.dnd.landActiveConfigFn');
   };
-  //------------------------------------------------------------------------------------- end av.dnd.landActiveConfig --
+  //----------------------------------------------------------------------------------- end av.dnd.landActiveConfigFn --
 
   //-------------------------------------------------------------------------------------- av.dnd.loadDefaultConfigFn --
   // function that is called in the beginning to load the default configuration
   av.dnd.loadDefaultConfigFn = function (from) {
+    console.log(from, 'called av.dnd.loadDefaultConfigFn');
     el = $.map($("#dom_c0"), (value, key) => { return value })[0].cloneNode(true);
-    av.dnd.landActiveConfig(el, av.dnd.activeConfig, av.dnd.fzConfig);
+    av.dnd.landActiveConfigFn(el, av.dnd.activeConfig, av.dnd.fzConfig, 'av.dnd.loadDefaultConfigFn');
   };
   //---------------------------------------------------------------------------------- end av.dnd.loadDefaultConfigFn --
 
-  //----------------------------------------------------------------------------------------- av.dnd.loadConfigByName --
-  av.dnd.loadConfigByName = function (name) {
+  //--------------------------------------------------------------------------------------- av.dnd.loadConfigByNameFn --
+  av.dnd.loadConfigByNameFn = function (name, from) {
     configs = $('#fzConfig').children();
-    console.log(configs);
-    for (var i = 0; i < configs.length; i++) {
-      if (configs[i].outerText.trim() === name) {
-        console.log(configs[i]);
-        av.dnd.landActiveConfig(configs[i].cloneNode(true), av.dnd.activeConfig, av.dnd.fzConfig);
+    console.log(from, 'called av.dnd.loadConfigByName: configs =',configs);
+    for (var ii = 0; ii < configs.length; ii++) {
+      if (configs[ii].outerText.trim() === name) {
+        console.log('configs['+ii+']=', configs[ii]);
+        av.dnd.landActiveConfigFn(configs[ii].cloneNode(true), av.dnd.activeConfig, av.dnd.fzConfig, av.dnd.loadConfigByNameFn);
       }
     }
   };
-  //------------------------------------------------------------------------------------- end av.dnd.loadConfigByName --
+  //----------------------------------------------------------------------------------- end av.dnd.loadConfigByNameFn --
 
-  //------------------------------------------------------------------------------------------- av.dnd.landTestConfig --
+  //----------------------------------------------------------------------------------------- av.dnd.landTestConfigFn --
   // when a test dish is added to the test config box
-  av.dnd.landTestConfig = (el, target, source) => {
+  av.dnd.landTestConfigFn = (el, target, source, find) => {
     'use strict';
+    console.log(find, 'called av.dnd.landTestConfigFn: will call av.dnd.landActiveConfigFn');
     av.dnd.configFlag = 'test';
-    av.dnd.landActiveConfig(el, target, source);
+    av.dnd.landActiveConfigFn(el, target, source, 'av.dnd.landTestConfigFn');
   };
-  //--------------------------------------------------------------------------------------- end av.dnd.landTestConfig --
+  //------------------------------------------------------------------------------------- end av.dnd.landTestConfigFn --
 
   //--------------------------------------------------------------------------------------------- av.dnd.landTrashCan --
   // When item is added to the trash can
