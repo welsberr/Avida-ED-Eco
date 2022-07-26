@@ -990,11 +990,15 @@ require([
   // });
 
   //=====refactored========
-  // error with loading clickable dialog box
   document.getElementById("mnFlExportGraph").onclick = function () {
     "use strict";
     av.post.addUser("Button: mnFlExportGraph");
-    mnFlExportGraphDialog.show();
+    //mnFlExportGraphDialog.show();
+    document.getElementById("mnFlExportGraphModalID").style.display = "block";
+  };
+
+  document.getElementById("mnFlExportGraphModClose").onclick = function () {
+    document.getElementById("mnFlExportGraphModalID").style.display = "none";
   };
 
   //--------------------------------------------------------------------------------------------------------------------
