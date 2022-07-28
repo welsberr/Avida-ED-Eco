@@ -852,14 +852,36 @@ require([
     }
   };
 
-  dijit.byId("sWSfSave").on("Click", function () {
-    av.post.addUser("Button: sWSSave");
-    //console.log('before call save workspace');
-    av.fio.fzSaveCurrentWorkspaceFn(); //fileIO.js
-    //console.log('after call to save workspace');
-  });
+  // ===Original - Save current workspace====
+  // dijit.byId("sWSfSave").on("Click", function () {
+  //   av.post.addUser("Button: sWSSave");
+  //   //console.log('before call save workspace');
+  //   av.fio.fzSaveCurrentWorkspaceFn(); //fileIO.js
+  //   //console.log('after call to save workspace');
+  // });
 
-  dijit.byId("sWSfOpen").on("Click", function () {
+  // ===refactored - Save current workspace====
+  document.getElementById("sWSfSave").onclick = function () {
+    av.post.addUser("Button: sWSSave");
+    av.fio.fzSaveCurrentWorkspaceFn();
+  };
+
+  // ===original - Open Workspace ====
+  // dijit.byId("sWSfOpen").on("Click", function () {
+  //   av.post.addUser("Button: sWSfOpen");
+  //   sWSfDialog.hide(sWSfDialog.hide);
+  //   if (av.fio.useDefault) {
+  //     av.fio.readZipWS(av.fio.defaultFname, false); //loadConfigFlag = false = do not load config file
+  //   }
+  //   //false = do not load config file
+  //   else {
+  //     //document.getElementById('inputFile').click();  //to get user picked file
+  //     document.getElementById("putWS").click(); //to get user picked file
+  //   }
+  // });
+
+  // ===refactored -Open Workspace====
+  document.getElementById("sWSfOpen").onclick = function () {
     av.post.addUser("Button: sWSfOpen");
     sWSfDialog.hide(sWSfDialog.hide);
     if (av.fio.useDefault) {
@@ -870,7 +892,7 @@ require([
       //document.getElementById('inputFile').click();  //to get user picked file
       document.getElementById("putWS").click(); //to get user picked file
     }
-  });
+  };
 
   // open and read user picked file
   //--------------------------------------------------------------------------------------------------------------------
@@ -2954,75 +2976,75 @@ require([
   };
 
   //------------------------------------------------------------------------------------ dojo controls that will change --
-  dojo.connect(dijit.byId("childParentRadio"), "onClick", function () {
-    av.post.addUser("Button: childParentRadio");
-  });
+  // dojo.connect(dijit.byId("childParentRadio"), "onClick", function () {
+  //   av.post.addUser("Button: childParentRadio");
+  // });
 
-  dojo.connect(dijit.byId("childRandomRadio"), "onClick", function () {
-    av.post.addUser("Button: childRandomRadio");
-  });
+  // dojo.connect(dijit.byId("childRandomRadio"), "onClick", function () {
+  //   av.post.addUser("Button: childRandomRadio");
+  // });
 
-  dojo.connect(dijit.byId("notose"), "onClick", function () {
-    av.post.addUser(
-      "Button: notose = " + dijit.byId("notose").get("checked").toString()
-    );
-  });
+  // dojo.connect(dijit.byId("notose"), "onClick", function () {
+  //   av.post.addUser(
+  //     "Button: notose = " + dijit.byId("notose").get("checked").toString()
+  //   );
+  // });
 
-  dojo.connect(dijit.byId("andose"), "onClick", function () {
-    av.post.addUser(
-      "Button: andose = " + dijit.byId("andose").get("checked").toString()
-    );
-  });
+  // dojo.connect(dijit.byId("andose"), "onClick", function () {
+  //   av.post.addUser(
+  //     "Button: andose = " + dijit.byId("andose").get("checked").toString()
+  //   );
+  // });
 
-  dojo.connect(dijit.byId("orose"), "onClick", function () {
-    av.post.addUser(
-      "Button: orose = " + dijit.byId("orose").get("checked").toString()
-    );
-  });
+  // dojo.connect(dijit.byId("orose"), "onClick", function () {
+  //   av.post.addUser(
+  //     "Button: orose = " + dijit.byId("orose").get("checked").toString()
+  //   );
+  // });
 
-  dojo.connect(dijit.byId("norose"), "onClick", function () {
-    av.post.addUser(
-      "Button: norose = " + dijit.byId("norose").get("checked").toString()
-    );
-  });
+  // dojo.connect(dijit.byId("norose"), "onClick", function () {
+  //   av.post.addUser(
+  //     "Button: norose = " + dijit.byId("norose").get("checked").toString()
+  //   );
+  // });
 
-  dojo.connect(dijit.byId("equose"), "onClick", function () {
-    av.post.addUser(
-      "Button: equose = " + dijit.byId("equose").get("checked").toString()
-    );
-  });
+  // dojo.connect(dijit.byId("equose"), "onClick", function () {
+  //   av.post.addUser(
+  //     "Button: equose = " + dijit.byId("equose").get("checked").toString()
+  //   );
+  // });
 
-  dojo.connect(dijit.byId("nanose"), "onClick", function () {
-    av.post.addUser(
-      "Button: nanose = " + dijit.byId("nanose").get("checked").toString()
-    );
-  });
+  // dojo.connect(dijit.byId("nanose"), "onClick", function () {
+  //   av.post.addUser(
+  //     "Button: nanose = " + dijit.byId("nanose").get("checked").toString()
+  //   );
+  // });
 
-  dojo.connect(dijit.byId("ornose"), "onClick", function () {
-    av.post.addUser(
-      "Button: ornose = " + dijit.byId("ornose").get("checked").toString()
-    );
-  });
+  // dojo.connect(dijit.byId("ornose"), "onClick", function () {
+  //   av.post.addUser(
+  //     "Button: ornose = " + dijit.byId("ornose").get("checked").toString()
+  //   );
+  // });
 
-  dojo.connect(dijit.byId("andnose"), "onClick", function () {
-    av.post.addUser(
-      "Button: andnose = " + dijit.byId("andnose").get("checked").toString()
-    );
-  });
+  // dojo.connect(dijit.byId("andnose"), "onClick", function () {
+  //   av.post.addUser(
+  //     "Button: andnose = " + dijit.byId("andnose").get("checked").toString()
+  //   );
+  // });
 
-  dojo.connect(dijit.byId("xorose"), "onClick", function () {
-    av.post.addUser(
-      "Button: xorose = " + dijit.byId("xorose").get("checked").toString()
-    );
-  });
+  // dojo.connect(dijit.byId("xorose"), "onClick", function () {
+  //   av.post.addUser(
+  //     "Button: xorose = " + dijit.byId("xorose").get("checked").toString()
+  //   );
+  // });
 
-  dojo.connect(dijit.byId("experimentRadio"), "onClick", function () {
-    av.post.addUser("Button: experimentRadio");
-  });
+  // dojo.connect(dijit.byId("experimentRadio"), "onClick", function () {
+  //   av.post.addUser("Button: experimentRadio");
+  // });
 
-  dojo.connect(dijit.byId("demoRadio"), "onClick", function () {
-    av.post.addUser("Button: demoRadio");
-  });
+  // dojo.connect(dijit.byId("demoRadio"), "onClick", function () {
+  //   av.post.addUser("Button: demoRadio");
+  // });
 
   av.dom.autoPauseNum.onchange = function () {
     av.post.addUser(": autoPauseNum = " + av.dom.autoPauseNum.value);
@@ -3030,10 +3052,25 @@ require([
     //console.log('autoPauseNum=', av.dom.autoPauseNum.value);
   };
 
-  dojo.connect(dijit.byId("autoUpdateRadiTest"), "onClick", function () {
-    av.post.addUser("Button: autoUpdateRadiTest");
-    av.ui.autoStopFlag = true;
-  });
+  // dojo.connect(dijit.byId("autoUpdateRadiTest"), "onClick", function () {
+  //   av.post.addUser("Button: autoUpdateRadiTest");
+  //   av.ui.autoStopFlag = true;
+  // });
+
+  // ===refactored====
+  // -near parent
+  // document.getElementById("childParentRadio").onclick = function () {
+  //   av.post.addUser("Button: childParentRadio");
+  // };
+
+  // // --random
+  // document.getElementById("childRandomRadio").onclick = function () {
+  //   av.post.addUser("Button: childRandomRadio");
+  // };
+
+  // document.getElementById("notose").onclick = function () {
+  //   av.post.addUser("Button: notose = ");
+  // };
 
   av.ptd.pauseSlctFn = (domObj) => {
     var value = document.getElementById("pauseCriteria").value;
