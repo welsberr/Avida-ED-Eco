@@ -232,7 +232,7 @@
                     <div id='activeConfig'></div>
                   </div>
                   <div id='testConfigLableHolder'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;test</div>
-                  <div id='testConfig' class='activeConfigDojoDNDcontainer'></div>
+                  <div id='testConfig'></div>
                 </div>
                 <div id='popTopMsgSpace'></div>
                 <div id='aControl_could_be_here' class='ritThin'>
@@ -453,8 +453,6 @@
               <button class="tablinks active" id="statsTab" onclick="av.ptd.processTab(event, 'popStatsBlock')">Stats</button>
               <button class="tablinks" id="setupTab" onclick="av.ptd.processTab(event, 'setupBlock')">Setup</button>
               <button class="tablinks" id="testTab" onclick="av.ptd.processTab(event, 'testSetupBlock')">Test Setup</button>
-              <button class="tablinks" id="ex1Tab" onclick="av.ptd.processTab(event, 'ex1setupBlock')">Example 1</button>
-              <button class="tablinks" id="tst2Tab" onclick="av.ptd.processTab(event, 'tst2setupBlock')">Test 2</button>
             </div>
           </div>
           <div id='labInfoHolder' class='labInfoHoldCls'>  
@@ -1124,13 +1122,11 @@
                   <input id='sizeRowTest' type='text' class='colrow' onchange='av.ptd.gridChangTest(this.value)' value = '5'/>
                   cells&nbsp;<br />
                   <label id='sizeCellTest'>There are 900 cells by default</label>
+                  changing dish size is not implemented 2022_727
                 </div>
                 <div class='even'>
                   <span class='lftmargin'>Per Site Mutation Rate:</span>
-                  <input id='muteInpuTest' type='text' data-dojo-type='dijit/form/NumberTextBox' value=1 required='true'
-                         data-dojo-props='constraints:{min:0, max:100},
-                         invalidMessage:"Please enter a numeric value.", rangeMessage:"Invalid mutation rate."'
-                         style='width: 4.5em; height:1.6em' onchange='av.ptd.muteInputChange(this.value, "muteErroTest")'> %<br />
+                  <input id='muteInpuTest' style='width: 4.5em; height:1.6em' onchange='av.ptd.muteInpuTestChng(this.value, "muteErroTest")'> %<br />
                   <label id='muteErroTest'></label>
                 </div>
                 <div class='odd'>Ancestral Organism(s): Must be put in this box, not on grid. 
@@ -1173,93 +1169,6 @@
                 
               </form>
             </div><span id='testSetupBlock_end' class='display_none'></span>
-
-            <div id='ex1setupBlock' class="labInfoClass labInfoFlex">
-              <div class='ex1holder'>
-                <div id='ex1notUse' class='ex1center'>
-                  <h1 class='dfhd ex1center' style='style='font-size: 1rem; line-height: 1rem;'> Not in use Now</h1>
-                  <div id="fontTest">
-                  <p style='font: 1rem/1rem serif;'>
-                    The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 serif
-                  </p>
-                  <p style='font: 1rem/1rem Tahoma, serif;'>
-                    The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Tahoma
-                  </p>
-                  <p style='font: 1rem Myriad, serif;'>
-                    The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Myriad: not web safe
-                  </p>
-                  <p style='font: 1rem/1rem  Georgia, Times New Roman, serif;'>
-                     The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Georgia: 
-                  </p>
-                  <p style='font: 1rem/1rem  Lucida Console, Consolas, serif;'>
-                     The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Lucida Console: mono?
-                  </p>
-                  <p style='font: 1rem Arial, serif;'>
-                    The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Arial: I and l look the same, but width fits
-                  </p>
-                  <p style='font: 1rem Trebuchet MS, serif;'>
-                    The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Trebuchet MS
-                  </p>
-                  <p style='font: 1rem/1rem Palatino, Times New Roman, serif;'>
-                     The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Palatino: better than Ariel but wider
-                  </p>
-                  <p style='font: 1rem/1rem Chalkboard, serif; '>
-                    The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Chalkboard:  ?? web safe like but wider
-                  </p>
-                  <p style='font: 1rem/1rem Verdana, serif;'>
-                    The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Verdana  better Il, but wider
-                  </p>
-                  <p style='font: 1rem Lucida Grande, serif;'>
-                    The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Lucida Grande: 
-                  </p>
-                  <br>
-                  <p style='font: 1rem Arial Narrow, serif;'>
-                    The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Arial Narrow: 
-                  </p>
-                  <br>
-                  <p style='font: 1rem/1rem Consolas, monospace;'>
-                    The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 monospace: 
-                  </p>
-                  <p style='font: 1rem/1rem Consolas, Times New Roman, serif;'>
-                    The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Consolas: 
-                  </p>
-                  <p style='font: 1rem/1rem  Monaco, Times New Roman, serif;'>
-                     The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Monaco: 
-                  </p>
-                  <p style='font: 1rem/1rem  Courier, Times New Roman, serif;'>
-                     The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Courier: 
-                  </p>
-                  <p style='font: 1rem/1rem Courier New, Times New Roman, serif;'>
-                    The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Courier New: 
-                  </p>
-                  <p style='font: 1rem/1rem  Andale Monov, Arial Narrow, serif;'>
-                     The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Andalé Monov: 
-                  </p>
-                  <br>
-                  <p style='font: 1rem/1rem serif;'>
-                     The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 serif: 
-                  </p>
-                  <p style='font: 1rem/1rem  Cambria, Times New Roman, serif;'>
-                     The quick brown fox jumps over a lazy dog. meorn1iIlLoCO0 Cambria: 
-                  </p>
-                  </div>
-                </div>
-              </div>
-            </div> <span id='ex1setupBlock_end' class='display_none'></span>
-
-
-            <div id='tst2setupBlock' class="labInfoClass labInfoFlex">
-              <form id='tst2setupForm'>
-                Test ideas
-                <div  class='even'>
-                  Text Area to show long text strings:<br />
-                  <div>
-                    <textarea id='tst2textarea' cols='80' rows='50'></textarea><br />
-                  </div>
-                </div>
-
-              </form><span id='tst2setupForm_end' class='display_none'></span>
-            </div> <span id='tst2setupBlock_end' class='display_none'></span>  
 
           </div><span id='labInfoHolder_end' class='display_none'></span>
         </div><span id='popInfoVert_end' class='display_none'></span>

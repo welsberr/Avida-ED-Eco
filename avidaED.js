@@ -4,6 +4,7 @@
  console.log('Root: avidaED.js at beginning of file on 2021_a31_Sun'); 
 
 // need a server to run Avida-ED from a file. The one below works.
+// python server.py                    for http://localhost:8000/
 // python -m SimpleHTTPServer 
 // python -m SimpleHTTPServer 8004  to put on 8004 instead of 8000
 // Then visit http://localhost:8004/   on browser
@@ -798,11 +799,14 @@ require([
 
   //--------------------------------------------------------------------------------------------------------------------
   //Export csv data from current run.
-  dijit.byId('mnFlExportData').on('Click', function () {
+  //dijit.byId('mnFlExportData').on('Click', function () {
+  document.getElementById('mnFlExportData').onclick = function() {
     'use strict';
     av.post.addUser('Button: mnFlExportData');
+    console.log('before av.fwt.writeCurrentCSV');
     av.fwt.writeCurrentCSV(av.fzr.actConfig.name + '@' + av.grd.popStatsMsg.update + '\n');
-  });
+  };
+//  });
 
   //--------------------------------------------------------------------------------------------------------------------
   //Export chart data from current run.
@@ -2109,73 +2113,40 @@ av.ui.feedback = function(){
   };
 
 
-  // changing the base does not seem change position on the slider:  because it a ratio
-  //----------------------------------------------------------------------------------------- $(function slidePopmute() --
-  $(function slidePopMute() {
-   // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 
-   // the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, 
-   // so I multiplied by 200 to get 100.000% to get a reasonable number of values for the pixils in the slide
-   //console.log('before defaultslide value');
-   var muteSlideDefault = 95.4242509439325;
-   // results in 2% as a default 
-   var muteDefault = (Math.pow(10, (muteSlideDefault / 200)) - 1).toFixed(1);
-   var slides = $('#mutePopSlide').slider({
-     range: 'min',   /*causes the left side of the scroll bar to be grey */
-     value: muteSlideDefault,
-     min: 0.0,
-     max: 401,
-     theme: 'summer',
-     slide: function (event, ui) {
-       var tmpVal = (Math.pow(10, (ui.value / 200)) - 1);
-       if (10 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }     //had been 12, but 10 is more consistent with 2 sig figs
-       else if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
-       else if (0.3 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
-       else {tmpVal = tmpVal.toFixed(2); }
-       //put the value in the text box 
-       // console.log('input', tmpVal, '; slide=', ui.value);
-       $('#mutePopInput').val(tmpVal); //put slider value in the text near slider 
-     }
-   });
-   // initialize
-    $('#mutePopInput').val(muteDefault);
+  // no slider for muteTest
+  //------------------------------------------------------------------------------------------ av.ptd.muteInpuTestChng --
+  av.ptd.muteInpuTestChng = function () {
+    var value = this.value;
+    var muteNum = parseFloat(value);
+    //if (av.debug.uil) { console.log('ui: muteNum=', muteNum); }
+    if (muteNum >= 0 && muteNum <= 100) {
+      av.ptd.validMuteInuput = true;
+      av.dom.muteErroTest.style.color = 'black';
+      av.dom.muteErroTest.innerHTML = '';
 
-   /*update slide based on textbox */
-   $('#mutePopInput').change(function () {
-     var value = this.value;
-     var muteNum = parseFloat(value);
-     //if (av.debug.uil) { console.log('ui: muteNum=', muteNum); }
-     if (muteNum >= 0 && muteNum <= 100) {
-       av.ptd.validMuteInuput = true;
-       av.dom.mutePopError.style.color = 'black';
-       av.dom.mutePopError.innerHTML = '';
-       //update slide value
-       slides.slider('value', 200 * av.utl.log(10,1 + (muteNum)));
-       //console.log('value=', muteNum, '; slide=', 200 * av.utl.log(10,1 + (muteNum) ) );
-
-       //av.ind.settingsChanged = true;
-       if (av.debug.trace) { console.log('Mute changed', av.ind.settingsChanged); };
-       av.post.addUser('mutePopInput =' + av.dom.mutePopInput.value,  '1add ? 949');
-     } 
-     else {
-       av.ptd.validMuteInuput = false;
-       av.dom.mutePopError.style.color = 'red';
-       av.dom.mutePopError.innerHTML = '';
-       av.dom.userMsgLabel.innerHTML = '';
-       if (muteNum <= 0) {
-         av.dom.mutePopError.innerHTML += 'Mutation rate must be >= than zero percent. ';
-         if (av.debug.popCon) { console.log('<0'); }
-       }
-       if (muteNum >= 100) {
-         av.dom.mutePopError.innerHTML += 'Mutation rate must be 100% or less. ';
-         if (av.debug.popCon) { console.log('>0'); }
-       }
+      //av.ind.settingsChanged = true;
+      if (av.debug.trace) { console.log('Mute changed', av.ind.settingsChanged); };
+      av.post.addUser('muteInpuTest =' + av.dom.muteInpuTest.value,  '1add ? 949');
+    }
+    else {
+      av.ptd.validMuteInuput = false;
+      av.dom.muteErroTest.style.color = 'red';
+      av.dom.muteErroTest.innerHTML = '';
+      av.dom.userMsgLabel.innerHTML = '';
+      if (muteNum <= 0) {
+        av.dom.muteErroTest.innerHTML += 'Mutation rate must be >= than zero percent. ';
+        if (av.debug.popCon) { console.log('<0'); }
+      }
+      if (muteNum >= 100) {
+        av.dom.muteErroTest.innerHTML += 'Mutation rate must be 100% or less. ';
+        if (av.debug.popCon) { console.log('>0'); }
+      }
        if (isNaN(muteNum)) {
-         av.dom.mutePopError.innerHTML += 'Mutation rate must be a valid number. ';
-         if (av.debug.popCon) { console.log('==NaN'); }
-       }
-     };
-   });
-  });
+        av.dom.muteErroTest.innerHTML += 'Mutation rate must be a valid number. ';
+        if (av.debug.popCon) { console.log('==NaN'); }
+      }
+    };
+  };
 
   //*********************************************************************************** enviornment (sugar) settings ****/
   //***************************************************************************** Tests for Population Setup section ****/

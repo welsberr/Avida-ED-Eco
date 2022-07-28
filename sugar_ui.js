@@ -12,7 +12,6 @@
       av.dom.orn_summary = document.getElementById('orn_summary'); 
       av.dom.orn_detailsHolder = document.getElementById('orn_detailsHolder'); 
       av.dom.orn1subSection = document.getElementById('orn1subSection'); 
-      av.dom.tst2textarea
   */
 
   var av = av || {};  //incase av already exists
@@ -67,12 +66,12 @@
         av.dom.showBigTextarea.value =+ tskSectionStr;
         //console.log('tsk_detailsHolder=', tsk+'_detailsHolder');
         document.getElementById(tsk+'_detailsHolder').innerHTML = newstr;
-      }
-    }
+      };
+    };
       //Was using this to display how I was building sugar according data
       //console.log('av.dom.orn_section.innerHTML=', av.dom.orn_section.innerHTML);
-      //av.dom.tst2textarea.value = document.getElementById('equorn_detailsHolder').innerHTML;
-      //av.dom.tst2textarea.value = tskSectionStr;
+      //document.getElementById('showBigTextarea').value = document.getElementById('equorn_detailsHolder').innerHTML;
+      //document.getElementById('showBigTextarea').value = tskSectionStr;
 
       av.dom.showBigTextarea.value = av.dom.sugarAccordion.innerHTML;  
   };

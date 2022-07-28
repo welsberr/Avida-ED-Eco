@@ -256,7 +256,10 @@ jQuery(document).ready(function($) {
       if (target === av.dnd.activeConfig) {
         av.dnd.landActiveConfigFn(el, target, source, 'target=av.dnd.activeConfig');
       }
-      if (target === av.dnd.testConfig || target === av.dnd.ancestorBoTest && av.grd.runState === 'started') {
+
+      if (av.grd.runState === 'started' && (source === av.dnd.fzTdish) && (target === av.dnd.gridCanvas || target === av.dnd.testConfig)) {
+      //below is older and does not work
+      //if (target === av.dnd.testConfig || target === av.dnd.ancestorBoTest && av.grd.runState === 'started') {
         av.dom.newDishModalID.style.display = 'block';
         dra.cancel();
       } else if (target === av.dnd.testConfig) {
@@ -1009,7 +1012,8 @@ jQuery(document).ready(function($) {
   av.dnd.landActiveConfigFn = function (el, target, source, from) {
     'use strict';
     console.log(from, 'called av.dnd.landActiveConfigFn: el =', el);
-    av.dnd.configFlag = 'normal';
+    if ('test' != av.dnd.configFlag) av.dnd.configFlag = 'normal'; 
+   
     av.grd.clearGrd();
     // av.grd.popChartInit('restDishFn');
     av.grd.runState = 'prepping';
@@ -1083,7 +1087,7 @@ jQuery(document).ready(function($) {
       av.fzr.actConfig.file['events.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/events.cfg'];
       av.fzr.actConfig.file['update'] = av.fzr.file[av.fzr.actConfig.dir + '/update'];
 
-      av.grd.drawGridSetupFn('Yemi\'s Implementation of landTestConfig'); // draw grid
+      av.grd.drawGridSetupFn("Yemi's Implementation of landTestConfig. Tiba???"); // draw grid
     }
 
     else if (source === av.dnd.fzWorld) {
@@ -1186,7 +1190,154 @@ jQuery(document).ready(function($) {
     'use strict';
     console.log(find, 'called av.dnd.landTestConfigFn: will call av.dnd.landActiveConfigFn');
     av.dnd.configFlag = 'test';
-    av.dnd.landActiveConfigFn(el, target, source, 'av.dnd.landTestConfigFn');
+    //av.dnd.landActiveConfigFn(el, target, source, 'av.dnd.landTestConfigFn');
+    console.log('testconfig', av.fzr.actConfig.file['environment.cfg']);
+    document.getElementById('showBigTextarea').value = av.fzr.actConfig.file['environment.cfg'];
+    document.getElementById('environConfigEdit').value = av.fzr.actConfig.file['environment.cfg'];
+    av.grd.clearGrd();
+    av.grd.runState = 'prepping';
+    dijit.byId('mnCnOrganismTrace').attr('disabled', true);    //???
+    dijit.byId('mnFzOrganism').attr('disabled', true);         //???
+    // Clear grid settings
+    av.parents.clearParentsFn();
+    // old settings cleaned out now
+    
+    var ndx = -1;
+    var klen = 0;
+    var kk = 0;
+    var str = '';
+    // get the data for the dragged element
+    // need to make a clone, so as to now modify the original   //should modify the copy (djb)
+    el = el.cloneNode(true);
+    var dir = av.fzr.dir[el.id];
+    // give a new id to the new dom object depending on the type
+    var classList = el.className.split(" ");
+    if (classList.indexOf('c') != -1 || source == av.dnd.fzConfig) el.id = 'dom_c' + av.fzr.cNum++;
+    else if (classList.indexOf('w') != -1 || source == av.dnd.fzWorld) el.id = 'dom_w' + av.fzr.wNum++;
+    else if (classList.indexOf('t') != -1 || source == av.dnd.fzTdish) el.id = 'dom_t' + av.fzr.tNum++;
+
+    mostRecentlyAddedDomid = el.id;
+    // remove the existing configuration
+    av.dnd.empty(target);
+    // insert element into target DOM
+    av.dnd.insertToDOM(target, el);
+    // update active config
+    av.fzr.actConfig.actDomid = el.id;
+    av.fzr.actConfig.name = el.textContent.trim();
+    av.fzr.actConfig.fzDomid = source.id;
+    av.fzr.actConfig.dir = dir;
+    delete av.fzr.actConfig.file['instset.cfg'];
+    if (av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg']) {
+      av.fzr.actConfig.file['instset.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/instset.cfg'];
+    }
+
+    // types are reassigned to indicate that they might be the populated form of the dishes.
+    av.frd.updateSetup('av.dnd.landActiveConfigFn');                  // call the avida-ED 3.0 style setup page
+    av.msg.setupType = 'standard';
+    // empty ancestorBox and ancestorBoTest
+    av.dnd.empty(av.dnd.ancestorBoTest);
+    av.dnd.empty(av.dnd.ancestorBox);
+    av.parents.clearParentsFn();
+
+    if (source === av.dnd.fzConfig || source === av.dnd.fzTdish) {
+      // insert element into target av.dnd.containerMap
+      av.dnd.insert(target, el, 'c');
+      av.fzr.actConfig.type = 'c';
+      av.fzr.actConfig.file['events.cfg'] = ' ';
+
+      // delete any files in activeConfig part of freezer
+      if (av.fzr.actConfig.file['clade.ssg']) {delete av.fzr.actConfig.file['clade.ssg'];}
+      if (av.fzr.actConfig.file['detail.spop']) {delete av.fzr.actConfig.file['detail.spop'];}
+      if (av.fzr.actConfig.file['update']) {delete av.fzr.actConfig.file['update'];}
+
+      // load ancestors if present.
+      if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt']) {
+        str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt'];
+        av.fio.autoAncestorLoad(str);
+      };
+      if (av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt']) {
+        str = av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt'];
+        av.fio.handAncestorLoad(str);
+      };
+
+      // load files from freezer
+      av.fzr.actConfig.file['avida.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/avida.cfg'];
+      av.fzr.actConfig.file['environment.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/environment.cfg'];
+      av.fzr.actConfig.file['events.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/events.cfg'];
+      av.fzr.actConfig.file['update'] = av.fzr.file[av.fzr.actConfig.dir + '/update'];
+
+      av.grd.drawGridSetupFn("Yemi's Implementation of landTestConfig"); // draw grid
+    }
+
+    else if (source === av.dnd.fzWorld) {
+      // insert element into target av.dnd.containerMap
+      av.dnd.insert(target, el, 'w');
+      av.fzr.actConfig.type = 'w';
+      av.ptd.popWorldStateUi('av.dnd.landActiveConfigFn');
+
+      // load files from freezer
+      av.fzr.actConfig.file['avida.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/avida.cfg'];
+      av.fzr.actConfig.file['clade.ssg'] = av.fzr.file[av.fzr.actConfig.dir + '/clade.ssg'];
+      av.fzr.actConfig.file['detail.spop'] = av.fzr.file[av.fzr.actConfig.dir + '/detail.spop'];
+      av.fzr.actConfig.file['environment.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/environment.cfg'];
+      av.fzr.actConfig.file['events.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/events.cfg'];
+      av.fzr.actConfig.file['update'] = av.fzr.file[av.fzr.actConfig.dir + '/update'];
+      av.grd.oldUpdate = av.fzr.actConfig.file['update'];
+      TimeLabel.textContent = av.grd.oldUpdate;
+      
+      // load parents from clade.ssg and ancestors.
+      av.fio.cladeSSG2parents(av.fzr.file[av.fzr.actConfig.dir + '/clade.ssg']);
+      var handList = av.fio.handAncestorParse(av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt']);
+      var autoList = av.fio.autoAncestorParse(av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt']);
+      console.log('handList=', handList);
+      console.log('autoList=', autoList);
+      var ndx = 0;
+      klen = av.parents.name.length;
+      for (kk = 0; kk < klen; kk++) {
+        ndx = autoList.nam.indexOf(av.parents.name[kk]);
+        if (-1 < ndx) {
+          av.parents.genome[kk] = autoList.gen[ndx];
+          av.parents.howPlaced[kk] = 'auto';
+          av.parents.injected[kk] = true;
+          av.parents.autoNdx.push(kk);
+          autoList.nam.splice(ndx, 1);
+          autoList.gen.splice(ndx, 1);
+        }
+        else {
+          ndx = handList.nam.indexOf(av.parents.name[kk]);
+          if (-1 < ndx) {
+            av.parents.genome[kk] = handList.gen[ndx];
+            av.parents.col[kk] = handList.col[ndx];
+            av.parents.row[kk] = handList.row[ndx];
+            av.parents.howPlaced[kk] = 'hand';
+            av.parents.injected[kk] = true;
+            av.parents.handNdx.push(kk);
+            handList.nam.splice(ndx, 1);
+            handList.gen.splice(ndx, 1);
+            handList.col.splice(ndx, 1);
+            handList.row.splice(ndx, 1);
+          }
+          else {
+            console.log('Name, ', av.parents.name[kk], ', not found');
+          }
+        }
+      }
+    } else {
+      // insert element into target av.dnd.containerMap
+      av.dnd.insert(target, el, 't');
+      av.fzr.actConfig.type = 't';
+      av.ptd.popTdishStateUi('av.dnd.landActiveConfigFn');
+    }
+
+    av.parents.placeAncestors();
+    // load Time Recorder Data
+    av.frd.loadTimeRecorderData(av.fzr.actConfig.dir);
+    av.pch.processLogic();
+    // send message to Avida
+    av.msg.importPopExpr();
+    av.msg.requestGridData();
+    av.msg.sendData();
+    av.grd.popChartFn(false, 'av.dnd.landActiveConfigFn');
   };
   //------------------------------------------------------------------------------------- end av.dnd.landTestConfigFn --
 

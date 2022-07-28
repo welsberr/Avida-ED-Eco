@@ -1280,8 +1280,8 @@ av.fwt.clearResourceConstants = function(from) {
           else av.fwt.csvStrg += ', , , , , ';
         }
       }
-    }
-    //console.log(av.fwt.csvStrg);
+    };
+    console.log(av.fwt.csvStrg.substr(0, 40));
   };
   /*------------------------------------------------------------------------------------------- End of av.fwt.makeCSV --*/
 
