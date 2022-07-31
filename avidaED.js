@@ -725,7 +725,7 @@ require([
     //console.log('before call save workspace');
     av.fio.fzSaveCurrentWorkspaceFn();  //fileIO.js
     //console.log('after call to save workspace');
-  });
+  }); 
 
   dijit.byId('sWSfOpen').on('Click', function () {
     av.post.addUser('Button: sWSfOpen');
@@ -2261,6 +2261,7 @@ av.ui.feedback = function(){
   };
 
   //------------------------------------------------------------------------------------ dojo controls that will change --
+  /*
     dojo.connect(dijit.byId('childParentRadio'), 'onClick', function () {
      av.post.addUser('Button: childParentRadio');
    });
@@ -2313,7 +2314,7 @@ av.ui.feedback = function(){
    dojo.connect(dijit.byId('demoRadio'), 'onClick', function () {
      av.post.addUser('Button: demoRadio');
    });
-
+*/
    av.dom.autoPauseNum.onchange = function () {
      av.post.addUser(': autoPauseNum = ' + av.dom.autoPauseNum.value);
      av.ui.autoStopValue = av.dom.autoPauseNum.value;   //switching to using av.dom.autoPauseNum.value directly
