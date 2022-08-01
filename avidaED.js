@@ -711,21 +711,7 @@ require([
 
   // if (av.dbg.flg.root) { console.log('Root: before mnFlOpenDefaultWS'); }
 
-  // =====original=======
-
-  // dijit.byId("mnFlOpenDefaultWS").on("Click", function () {
-  //   "use strict";
-  //   av.post.addUser("Button: mnFlOpenDefaultWS");
-  //   av.fio.useDefault = true;
-  //   if ("no" === av.fzr.saveState) {
-  //     sWSfDialog.show(); //Save WSfile Dialog box
-  //   } else {
-  //     av.fio.readZipWS(av.fio.defaultFname, false); //loadConfigFlag = false = do not load config file
-  //   }
-  // });
-
   //=====refactored========
-
   document.getElementById("mnFlOpenDefaultWS").onclick = function () {
     "use strict";
     av.post.addUser("Button: mnFlOpenDefaultWS");
@@ -751,20 +737,6 @@ require([
     av.fio.fzSaveCurrentWorkspaceFn();
   };
 
-  // ===original - Open Workspace ====
-  // dijit.byId("sWSfOpen").on("Click", function () {
-  //   av.post.addUser("Button: sWSfOpen");
-  //   sWSfDialog.hide(sWSfDialog.hide);
-  //   if (av.fio.useDefault) {
-  //     av.fio.readZipWS(av.fio.defaultFname, false); //loadConfigFlag = false = do not load config file
-  //   }
-  //   //false = do not load config file
-  //   else {
-  //     //document.getElementById('inputFile').click();  //to get user picked file
-  //     document.getElementById("putWS").click(); //to get user picked file
-  //   }
-  // });
-
   // ===refactored -Open Workspace====
   document.getElementById("sWSfOpen").onclick = function () {
     av.post.addUser("Button: sWSfOpen");
@@ -777,25 +749,11 @@ require([
       //document.getElementById('inputFile').click();  //to get user picked file
       document.getElementById('putWS').click();  //to get user picked file
     }
-  });
+  };
 
   // open and read user picked file
   //--------------------------------------------------------------------------------------------------------------------
-  // dijit.byId("mnFlOpenWS").on("Click", function () {
-  //   "use strict";
-  //   av.post.addUser("Button: mnFlOpenWS");
-  //   av.fio.useDefault = false;
-  //   if ("no" === av.fzr.saveState) {
-  //     sWSfDialog.show(); //Need to change to include might be saved tiba fix
-  //   }
-  //   //else document.getElementById('inputFile').click();
-  //   else {
-  //     document.getElementById("putWS").click(); // calls av.fio.userPickZipRead
-  //   }
-  // });
-
   //=====refactored========
-
   document.getElementById("mnFlOpenWS").onclick = function () {
     "use strict";
     av.post.addUser("Button: mnFlOpenWS");
@@ -807,26 +765,17 @@ require([
     else {
       document.getElementById('putWS').click();  // calls av.fio.userPickZipRead
     }
-  });
+  };
 
   //--------------------------------------------------------------------------------------------------------------------
-  // dijit.byId("mnFlFzItem").on("Click", function () {
-  //   "use strict";
-  //   av.post.addUser("Button: mnFlFzItem");
-  //   av.fio.useDefault = false;
-  //   //console.log('importFzrItem', importFzrItem);
-  //   document.getElementById("importFzrItem").click();
-  // });
-
   //=====refactored========
-
   document.getElementById("mnFlFzItem").onclick = function () {
     "use strict";
     av.post.addUser("Button: mnFlFzItem");
     av.fio.useDefault = false;
     //console.log('importFzrItem', importFzrItem);
     document.getElementById('importFzrItem').click();
-  });
+  };
 
   //--------------------------------------------------------------------------------------------------------------------
   // Save current workspace (mnFzSaveWorkspace)
@@ -863,33 +812,16 @@ require([
 
   //--------------------------------------------------------------------------------------------------------------------
   //Export csv data from current run.
-  // dijit.byId("mnFlExportData").on("Click", function () {
-  //   "use strict";
-  //   av.post.addUser("Button: mnFlExportData");
-  //   av.fwt.writeCurrentCSV(
-  //     av.fzr.actConfig.name + "@" + av.grd.popStatsMsg.update + "\n"
-  //   );
-  // });
-
   //=====refactored========
-
   document.getElementById("mnFlExportData").onclick = function () {
     "use strict";
     av.post.addUser("Button: mnFlExportData");
-    av.fwt.writeCurrentCSV(
-      av.fzr.actConfig.name + "@" + av.grd.popStatsMsg.update + "\n"
-    );
+    console.log('filename is ' + av.fzr.actConfig.name + "@" + av.grd.popStatsMsg.update + "\n");
+    av.fwt.writeCurrentCSV(av.fzr.actConfig.name + "@" + av.grd.popStatsMsg.update + "\n", 'mnFlExportData');
   };
-//  });
 
   //--------------------------------------------------------------------------------------------------------------------
   //Export chart data from current run.
-  // dijit.byId("mnFlExportGraph").on("Click", function () {
-  //   "use strict";
-  //   av.post.addUser("Button: mnFlExportGraph");
-  //   mnFlExportGraphDialog.show();
-  // });
-
   //=====refactored========
   document.getElementById("mnFlExportGraph").onclick = function () {
     "use strict";
@@ -904,19 +836,13 @@ require([
 
   //--------------------------------------------------------------------------------------------------------------------
   //Save Stand alone applicaton.
-  // dijit.byId("mnFlStandAloneApp").on("Click", function () {
-  //   "use strict";
-  //   av.post.addUser("Button: mnFlExportGraph");
-  //   mnFlStandAloneAppDialog.show();
-  // });
-
   //=====refactored========
   // error loading dialog box
   document.getElementById("mnFlStandAloneApp").onclick = function () {
     "use strict";
     av.post.addUser("Button: mnFlExportGraph");
     mnFlStandAloneAppDialog.show();
-  });
+  };
 
   //----------------------------------------- Testing & Development Tools that are hidden from from User .---------------
   av.doj.mnHpDebug.onclick = function () {
@@ -955,18 +881,12 @@ require([
     document.getElementById('aboutAvidaED_ModalID').style.display = 'none';
   };
 
-  // dijit.byId("mnAePreferences").on("Click", function () {
-  //   av.post.addUser("Button: mnAePreferences");
-  //   //console.log('in mnAePreferences.click');
-  //   document.getElementById("preferences_ModalID").style.display = "block";
-  // });
-
   //====refactored=====
   document.getElementById("mnAePreferences").onclick = function () {
     av.post.addUser("Button: mnAePreferences");
     //console.log('in mnAePreferences.click');
     document.getElementById('preferences_ModalID').style.display = 'block';
-  });
+  };
 
   av.ui.email = function() {
     av.post.addUser('Button: mnHpAbout');
@@ -1132,11 +1052,6 @@ av.ui.feedback = function(){
     av.ui.newButtonBothFn();
   };
 
-  // dijit.byId("mnCnNewpop").on("Click", function () {
-  //   av.post.addUser("Button: mnCnNewpop");
-  //   av.ui.newButtonBothFn();
-  // });
-
   // ====refactored======
   document.getElementById("mnCnNewpop").onclick = function () {
     av.post.addUser("Button: mnCnNewpop");
@@ -1169,11 +1084,6 @@ av.ui.feedback = function(){
   };
 
   //Drop down menu to save a configuration item
-  // dijit.byId("mnFzConfig").on("Click", function () {
-  //   av.post.addUser("Button: mnFzConfig");
-  //   av.ptd.FrConfigFn("mnFzConfig");
-  // });
-
   // ====refactored========
   document.getElementById("mnFzConfig").onclick = function () {
     av.post.addUser("Button: mnFzConfig");
@@ -1209,11 +1119,6 @@ av.ui.feedback = function(){
   };
 
   //Buttons on drop down menu to save an organism
-  // dijit.byId("mnFzOrganism").on("Click", function () {
-  //   av.post.addUser("Button: mnFzOrganism");
-  //   av.ptd.FrOrganismFn("selected");
-  // });
-
   // ====refactored========
   document.getElementById("mnFzOrganism").onclick = function () {
     av.post.addUser("Button: mnFzOrganism");
@@ -1221,11 +1126,6 @@ av.ui.feedback = function(){
   };
 
   //Buttons on drop down menu to save an offspring
-  // dijit.byId("mnFzOffspring").on("Click", function () {
-  //   av.post.addUser("Button: mnFzOffspring");
-  //   av.ptd.FrOrganismFn("offspring");
-  // });
-
   // ====refactored========
   document.getElementById("mnFzOffspring").onclick = function () {
     av.post.addUser("Button: mnFzOffspring");
@@ -1261,16 +1161,6 @@ av.ui.feedback = function(){
   });
 */
   //Buttons on drop down menu to put an organism in Organism Viewer
-  // dijit.byId("mnFzAddGenomeView").on("Click", function () {
-  //   av.post.addUser("Button: mnFzAddGenomeEx");
-  //   av.dnd.clickedMenu = "addToGenomeView";
-  //   av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.activeOrgan, "g");
-  //   av.ui.mainBoxSwap("organismBlock");
-  //   av.ind.organismCanvasHolderSize("mnFzAddGenomeView");
-  //   av.ui.adjustOrgInstructionTextAreaSize();
-  //   av.msg.doOrgTrace(); //request new Organism Trace from Avida and draw that.
-  // });
-
   // ====refactored========
   document.getElementById("mnFzAddGenomeView").onclick = function () {
     av.post.addUser("Button: mnFzAddGenomeEx");
@@ -1280,17 +1170,9 @@ av.ui.feedback = function(){
     av.ind.organismCanvasHolderSize('mnFzAddGenomeView');
     av.ui.adjustOrgInstructionTextAreaSize();
     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-  });
+  };
 
   //Buttons on drop down menu to add Populated Dish to Analysis
-  // dijit.byId("mnFzAddPopAnalysis").on("Click", function () {
-  //   av.dnd.clickedMenu = "addToAnalysisView";
-  //   av.post.addUser("Button: mnFzAddPopEx");
-  //   av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.anlDndChart, "w");
-  //   av.ui.mainBoxSwap("analysisBlock");
-  //   av.anl.AnaChartFn();
-  // });
-
   // ====refactored========
   document.getElementById("mnFzAddPopAnalysis").onclick = function () {
     av.dnd.clickedMenu = "addToAnalysisView";
@@ -1298,7 +1180,7 @@ av.ui.feedback = function(){
     av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.anlDndChart, 'w');
     av.ui.mainBoxSwap('analysisBlock');
     av.anl.AnaChartFn();
-  });
+  };
 
   //---------------------------------------------------------------------------------------- Restart Avida web worker --
 
@@ -1611,13 +1493,6 @@ av.ui.feedback = function(){
     av.ptd.runStopFn();
   };
 
-  // dijit.byId("mnCnPause").on("Click", function () {
-  //   av.post.addUser("Button: mnCnPause");
-  //   //console.log('about to call av.ptd.makePauseState()');
-  //   //av.debug.log += '______Debug Note: about to call av.ptd.makePauseState() in AvidaEd.js line 986 \n';
-  //   av.ptd.makePauseState();
-  // });
-
   //====refactored========
   document.getElementById("mnCnPause").onclick = function () {
     av.post.addUser("Button: mnCnPause");
@@ -1627,12 +1502,6 @@ av.ui.feedback = function(){
   };
 
   //process run/Stop buttons as above but for drop down menu
-  // dijit.byId("mnCnRun").on("Click", function () {
-  //   av.post.addUser("Button: mnCnRun");
-  //   av.ptd.makeRunState("mnCnRun.Click");
-  //   av.ptd.runPopFn("mnCnRun.Click");
-  // });
-
   // ====refactored======
   document.getElementById("mnCnRun").onclick = function () {
     av.post.addUser("Button: mnCnRun");
@@ -1641,20 +1510,13 @@ av.ui.feedback = function(){
   };
 
   //process run/Stop buttons as above but for drop down menu
-  // dijit.byId("mnCnOne").on("Click", function () {
-  //   av.post.addUser("Button: mnCnOne");
-  //   av.ui.oneUpdateFlag = true;
-  //   av.ptd.makeRunState("mnCnOne.Click");
-  //   av.ptd.runPopFn("mnCnOne.Click");
-  // });
-
   //====refactored======
   document.getElementById("mnCnOne").onclick = function () {
     av.post.addUser("Button: mnCnOne");
     av.ui.oneUpdateFlag = true;
     av.ptd.makeRunState('mnCnOne.Click');
     av.ptd.runPopFn('mnCnOne.Click');
-  });
+  };
 
   av.dom.oneUpdateButton.onclick = function () {
     av.post.addUser('Button: oneUpdateButton', '=updateNum; ' + av.grd.msg.update + '=msg.update;  ' + av.grd.popStatsMsg.update + '=popStatsMsg.update');
@@ -2689,24 +2551,9 @@ av.ui.feedback = function(){
     av.ind.organismCanvasHolderSize('mnCnOrganismTrace');
     av.ui.adjustOrgInstructionTextAreaSize();
     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
-  });
+  };
 
   //Put the offspring in the parent position on Organism Trace
-  // dijit.byId("mnCnOffspringTrace").on("Click", function () {
-  //   //Open Oranism view
-  //   av.post.addUser("Button: mnCnOffspringTrace");
-  //   av.ui.mainBoxSwap("organismBlock");
-  //   av.ind.organismCanvasHolderSize("mnCnOffspringTrace");
-  //   av.ui.adjustOrgInstructionTextAreaSize();
-  //   offspringTrace(av.dnd, av.fio, av.fzr, av.gen);
-  //   /* update organism canvas */ /* it doesn't automatically update */ setTimeout(
-  //     () => {
-  //       av.ind.updateOrgTrace();
-  //     },
-  //     1000
-  //   );
-  // });
-
   // ====refactored======
   document.getElementById("mnCnOffspringTrace").onclick = function () {
     //Open Oranism view
@@ -2717,7 +2564,7 @@ av.ui.feedback = function(){
     offspringTrace(av.dnd, av.fio, av.fzr, av.gen);
     /* update organism canvas */ /* it doesn't automatically update */
     setTimeout(() => {av.ind.updateOrgTrace();}, 1000);
-  });
+  };
 
   //----------------------------------------------------------------------------------------------------------------------
   //                                             Canvas for Organsim View (genome)

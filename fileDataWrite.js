@@ -229,7 +229,7 @@
     'use strict';
      var toActiveConfigFlag = false; // true is to Config spot for experiment; false is to Freezer
 
-    console.log(from, 'called av.fwt.makeFzrWorld');
+    console.log(from, 'called av.fwt.makeFzrWorld; num =', num);
     av.fwt.makeFzrAvidaCfg('w'+num, toActiveConfigFlag, 'av.fwt.makeFzrWorld');
     av.fwt.makeFzrEnvironmentCfg('w'+num, toActiveConfigFlag, 'av.fwt.makeFzrWorld');
     //console.log('after av.fwt.makeFzrEnvironmentCfg in av.fwt.makeFzrWorld');
@@ -244,6 +244,7 @@
     av.fwt.makeFzrTRfile('w'+num+'/tr3.txt', av.pch.aveNum);
     av.fwt.makeFzrTRfile('w'+num+'/tr4.txt', av.pch.aveVia);
     av.fwt.makeFzrFile('w'+num + '/update.txt', av.grd.updateNum.toString(), 'av.fwt.makeFzrWorld' );
+    console.log('before call av.fwt.makeFzrCSV(w'+num+')');
     av.fwt.makeFzrCSV('w'+num);
   };
 
@@ -333,10 +334,11 @@
   /*----------------------------------------------------------------------------------------------- av.fwt.makeFzrCSV --*/
   av.fwt.makeFzrCSV = function(idStr) {
     "use strict";
-    console.log('name is ', idStr + '/entryname.txt');
-    var fileNm = av.fzr.file[idStr + '/entryname.txt'];
-    console.log('fileName = ', fileNm, '; idStr=', idStr,'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
-    av.fwt.makeCSV(fileNm, 'av.fwt.makeFzrCSV');
+    console.log('name is ', idStr + '/timeRecorder.csv');
+    var fileName = idStr + '/timeRecorder.csv';
+    console.log('fileName = ', fileName, '; idStr=', idStr,'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+    console.log('before call av.fwt.makeFzrCSV('+fileName+')');
+    av.fwt.makeCSV(fileName, 'av.fwt.makeFzrCSV');
     // only ever makes in the active Config area
     if (false) {av.fwt.makeActConfigFile('/timeRecorder.csv', av.fwt.csvStrg, 'av.fwt.popExpWrite');}
     else {av.fwt.makeFzrFile(idStr+'/timeRecorder.csv', av.fwt.csvStrg, 'av.fwt.popExpWrite');}  
@@ -345,21 +347,23 @@
   };
 
   /*------------------------------------------------------------------------------------------ av.fwt.writeCurrentCSV --*/
-  av.fwt.writeCurrentCSV = function(idStr) {  
+  av.fwt.writeCurrentCSV = function(idStr, from) {  
     "use strict";
+    console.log(from+' called av.fwt.writeCurrentCSV: idStr =', idStr);
     av.fwt.makeCSV(idStr, 'av.fwt.writeCurrentCSV');
-    av.fio.fzSaveCsvfn();
+    // the contents of the file is now in av.fwt.csvStrg
+    av.fio.fzSaveCsvfn('av.fwt.writeCurrentCSV');
   };
 
   // if (av.dbg.flg.root) { console.log('Root: before av.fwt.makeCSV'); }
   /*-------------------------------------------------------------------------------------------------- av.fwt.makeCSV --*/
-  av.fwt.makeCSV = function(fileNm, from) {
+  av.fwt.makeCSV = function(fileName, from) {
     'use strict';
-    console.log(from, 'called av.fwt.makeCSV: fileNm=', fileNm);
+    console.log(from, 'called av.fwt.makeCSV: fileName=', fileName);
     if ('populationBlock' === av.ui.page) {
       //  '@default at update 141 Average Fitness,@default at update 141 Average Gestation Time,' +
       //  '@default at update 141 Average Energy Acq. Rate,@default at update 141 Count of Organisms in the World';
-      av.fwt.csvStrg = '# Name = ' + fileNm + '\n';
+      av.fwt.csvStrg = '# Name = ' + fileName + '\n';
       av.fwt.csvStrg += '# Functions = ' + av.grd.selFnBinary + ' = ' + av.grd.selFnText + ' are picked \n'
         + '# FitP = Average Fitness of Viable Population \n'
         + '# CstP = Average Offspring Cost of Viable Population \n'
@@ -445,7 +449,7 @@
         }
       }
     };
-    console.log(av.fwt.csvStrg.substr(0, 40));
+    console.log(av.fwt.csvStrg.substr(0, 80));
   };
   /*------------------------------------------------------------------------------------------- End of av.fwt.makeCSV --*/
 

@@ -319,21 +319,32 @@
 
   // Save datarecorder info to a csv file 
   //---------------------------------------------------------------------------------------------- av.fio.fzSaveCsvfn --
-  av.fio.fzSaveCsvfn = function () {
-    if (0 === av.fio.csvFileName.length) av.fio.csvFileName = prompt('Choose a name for your csv file', av.fzr.actConfig.name + '@' + av.grd.popStatsMsg.update);
+  av.fio.fzSaveCsvfn = function (from) {
+    //console.log('av.fio.csvFileName =', av.fio.csvFileName);
+    //console.log(from + ' called av.fio.fzSaveCsvfn name = ', av.fzr.actConfig.name + '@' + av.grd.popStatsMsg.update + '.cvs');
+    if (0 === av.fio.csvFileName.length) av.fio.csvFileName = prompt('Choose a name for your csv file', av.fzr.actConfig.name + '@' + av.grd.popStatsMsg.update + '.cvs');
     if (0 === av.fio.csvFileName.length) av.fio.csvFileName = 'avidaDataRecorder.csv';
     var end = av.fio.csvFileName.substring(av.fio.csvFileName.length - 4);
     if ('.csv' != end) av.fio.userFname = av.fio.csvFileName + '.csv';
+    console.log('Name = ', av.fio.csvFileName);
+    // look at top of file string
+    console.log('top two lines of file string');
+    console.log(av.fwt.csvStrg.substr(0, 80));
 
+    
     var typeStrng = 'data:attachment/csv;charset=utf-8,';
     //console.log('brs', av.brs);
     if (av.brs.isSafari) alert("The name of the file will be 'unknown' in Safari. Please change the name to end in .csv. Safari will also open a blank tab. Please close the tab when you are done saving and resume work in Avida-ED");
-    av.fio.SaveUsingDomElement(av.fwt.csvStrg, av.fio.csvFileName, typeStrng);
+    av.fio.SaveUsingDomElement(av.fwt.csvStrg, av.fio.csvFileName, typeStrng, 'av.fio.fzSaveCsvfn');
   };
 
   //-------------------------------------------------------------------------------------- av.fio.SaveUsingDomElement --
-  av.fio.SaveUsingDomElement = function(aStr, fName, typeStr) {
+  av.fio.SaveUsingDomElement = function(aStr, fName, typeStr, from) {
     "use strict";
+    console.log(from + ' called av.fio.SaveUsingDomElement: fName =', fName);
+    console.log('top two lines of file string');
+    console.log(aStr.substr(0, 80));
+    
     var a = document.createElement('a');
     a.href     = typeStr + encodeURI(aStr);
     a.target   = '_blank';
