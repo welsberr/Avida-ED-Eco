@@ -277,7 +277,7 @@ av.env = {}; //used for functions to process information beteen the environment 
 // thinking about a situation where either 4ths or 9 ths were allowed in Avida-ED
 // av.sqr.postfix_q    | 1, 2, |  //layout   tsk001q
 //                     | 3, 4  |
-//
+// not in use
 // av.sqr.postfix_n | 1 2 3 |   //sub-sections can be done as for quarters below
 //      layout      | 4 5 6 |   // not123n = top one third row
 //                  | 7 8 9 |

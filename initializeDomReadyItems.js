@@ -195,7 +195,6 @@
     
     //test dishes setup
     av.dom.environConfigEdit = document.getElementById('environConfigEdit');
-    av.dom.tst2textarea = document.getElementById('tst2textarea');
 
     av.dom.sendLogPara1 = document.getElementById('sendLogPara1');
     av.dom.sendLogPara2 = document.getElementById('sendLogPara2');
@@ -354,18 +353,18 @@ av.ui.toggleDevelopmentDisplays = function () {
   }  // end of development section can be seen 
   //------------------------------------------------------------------------------------ process changes using ndx2b--
 
-len = document.getElementsByClassName('3TopLftRit').length;
-for (ii = 0; ii < len; ii++) {
-  document.getElementsByClassName('3TopLftRit')[ii].style.display = block2b[ndx2b];
-  document.getElementsByClassName('4Quarters')[ii].style.display = block2b[ndx2b];
-}
+  len = document.getElementsByClassName('3TopLftRit').length;
+  for (ii = 0; ii < len; ii++) {
+    document.getElementsByClassName('3TopLftRit')[ii].style.display = block2b[ndx2b];
+    document.getElementsByClassName('4Quarters')[ii].style.display = block2b[ndx2b];
+  }
 
-if (av.sgr.gridOnly) {
-  document.getElementById('sugarFooter').className = sgrfooter2b[ndx2b];
-  document.getElementById('geometrySgr').style.display = block2b[ndx2b];
-  document.getElementById('allSugarGeometryDiv').style.display = block2b[ndx2b];
-  document.getElementById('allSugarGeometry').style.display = block2b[ndx2b]; 
-}
+  if (av.sgr.gridOnly) {
+    document.getElementById('sugarFooter').className = sgrfooter2b[ndx2b];
+    document.getElementById('geometrySgr').style.display = block2b[ndx2b];
+    document.getElementById('allSugarGeometryDiv').style.display = block2b[ndx2b];
+    document.getElementById('allSugarGeometry').style.display = block2b[ndx2b]; 
+  }
 
   document.getElementById('testConfig').style.display = block2b[ndx2b];
   console.log('block2b[ndx2b]', block2b[ndx2b]);

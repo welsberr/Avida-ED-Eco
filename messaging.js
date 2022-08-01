@@ -309,7 +309,7 @@ av.msg.importConfigExpr = function (from) {
     }
     if (av.debug.msg) console.log('importExpr', request);
     //console.log('importExpr', request);
-    av.dom.tst2textarea.value = '\n--uiA: importExpr:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importTestDishExpr';
+    document.getElementById('showBigTextarea').value = '\n--uiA: importExpr:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + '  from importTestDishExpr';
     console.log('\n--uiA: importExpr:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request) + ' from importConfigExpr');
     //console.log('Debug: NOT SENT TO AVIDA');
     av.aww.uiWorker.postMessage(request);

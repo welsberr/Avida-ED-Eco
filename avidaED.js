@@ -3,7 +3,12 @@
 console.log("Root: avidaED.js at beginning of file on 2021_a31_Sun");
 
 // need a server to run Avida-ED from a file. The one below works.
+<<<<<<< HEAD
 // python -m SimpleHTTPServer
+=======
+// python server.py                    for http://localhost:8000/
+// python -m SimpleHTTPServer 
+>>>>>>> decb6d0fe5591c9b599031e8837a04efd5a2a5f5
 // python -m SimpleHTTPServer 8004  to put on 8004 instead of 8000
 // Then visit http://localhost:8004/   on browser
 //
@@ -214,6 +219,7 @@ require([
   "lib/FileSaver.min.2.0.4.js",
   //'lib/FileSaver.js',
   //'avida-messages.js',
+<<<<<<< HEAD
   "messaging.js",
   "initializeDomReadyItems.js",
   "fileDataRead.js",
@@ -228,6 +234,24 @@ require([
   "environment2UI.js",
   "sugar_ui.js",
   "reSizePageParts.js",
+=======
+  'messaging.js',
+  'initializeDomReadyItems.js',
+  'fileDataRead.js',
+  'fileDataWrite.js',
+  'fileIO.js',
+  'populationGrid.js',
+  'organismView.js',
+  'dojoDnd.js',
+  'popControls.js',
+  'mouse.js',
+  'mouseDown.js',
+  'environmentRead.js',
+  'environment2UI.js',
+  'environmentWrite.js',
+  'sugar_ui.js',
+  'reSizePageParts.js',
+>>>>>>> decb6d0fe5591c9b599031e8837a04efd5a2a5f5
   //'restartAvida.js',
   //'diagnosticconsole.js',
   "dojo/domReady!",
@@ -852,6 +876,7 @@ require([
     }
   };
 
+<<<<<<< HEAD
   // ===Original - Save current workspace====
   // dijit.byId("sWSfSave").on("Click", function () {
   //   av.post.addUser("Button: sWSSave");
@@ -865,6 +890,14 @@ require([
     av.post.addUser("Button: sWSSave");
     av.fio.fzSaveCurrentWorkspaceFn();
   };
+=======
+  dijit.byId('sWSfSave').on('Click', function () {
+    av.post.addUser('Button: sWSSave');
+    //console.log('before call save workspace');
+    av.fio.fzSaveCurrentWorkspaceFn();  //fileIO.js
+    //console.log('after call to save workspace');
+  }); 
+>>>>>>> decb6d0fe5591c9b599031e8837a04efd5a2a5f5
 
   // ===original - Open Workspace ====
   // dijit.byId("sWSfOpen").on("Click", function () {
@@ -985,6 +1018,7 @@ require([
 
   //--------------------------------------------------------------------------------------------------------------------
   //Export csv data from current run.
+<<<<<<< HEAD
   // dijit.byId("mnFlExportData").on("Click", function () {
   //   "use strict";
   //   av.post.addUser("Button: mnFlExportData");
@@ -1002,6 +1036,16 @@ require([
       av.fzr.actConfig.name + "@" + av.grd.popStatsMsg.update + "\n"
     );
   };
+=======
+  //dijit.byId('mnFlExportData').on('Click', function () {
+  document.getElementById('mnFlExportData').onclick = function() {
+    'use strict';
+    av.post.addUser('Button: mnFlExportData');
+    console.log('before av.fwt.writeCurrentCSV');
+    av.fwt.writeCurrentCSV(av.fzr.actConfig.name + '@' + av.grd.popStatsMsg.update + '\n');
+  };
+//  });
+>>>>>>> decb6d0fe5591c9b599031e8837a04efd5a2a5f5
 
   //--------------------------------------------------------------------------------------------------------------------
   //Export chart data from current run.
@@ -2776,6 +2820,7 @@ require([
     av.grd.drawGridSetupFn("av.ptd.popSizeFn");
   };
 
+<<<<<<< HEAD
   // changing the base does not seem change position on the slider:  because it a ratio
   //----------------------------------------------------------------------------------------- $(function slidePopmute() --
   $(function slidePopMute() {
@@ -2862,6 +2907,43 @@ require([
       }
     });
   });
+=======
+
+  // no slider for muteTest
+  //------------------------------------------------------------------------------------------ av.ptd.muteInpuTestChng --
+  av.ptd.muteInpuTestChng = function () {
+    var value = this.value;
+    var muteNum = parseFloat(value);
+    //if (av.debug.uil) { console.log('ui: muteNum=', muteNum); }
+    if (muteNum >= 0 && muteNum <= 100) {
+      av.ptd.validMuteInuput = true;
+      av.dom.muteErroTest.style.color = 'black';
+      av.dom.muteErroTest.innerHTML = '';
+
+      //av.ind.settingsChanged = true;
+      if (av.debug.trace) { console.log('Mute changed', av.ind.settingsChanged); };
+      av.post.addUser('muteInpuTest =' + av.dom.muteInpuTest.value,  '1add ? 949');
+    }
+    else {
+      av.ptd.validMuteInuput = false;
+      av.dom.muteErroTest.style.color = 'red';
+      av.dom.muteErroTest.innerHTML = '';
+      av.dom.userMsgLabel.innerHTML = '';
+      if (muteNum <= 0) {
+        av.dom.muteErroTest.innerHTML += 'Mutation rate must be >= than zero percent. ';
+        if (av.debug.popCon) { console.log('<0'); }
+      }
+      if (muteNum >= 100) {
+        av.dom.muteErroTest.innerHTML += 'Mutation rate must be 100% or less. ';
+        if (av.debug.popCon) { console.log('>0'); }
+      }
+       if (isNaN(muteNum)) {
+        av.dom.muteErroTest.innerHTML += 'Mutation rate must be a valid number. ';
+        if (av.debug.popCon) { console.log('==NaN'); }
+      }
+    };
+  };
+>>>>>>> decb6d0fe5591c9b599031e8837a04efd5a2a5f5
 
   //*********************************************************************************** enviornment (sugar) settings ****/
   //***************************************************************************** Tests for Population Setup section ****/
@@ -2976,6 +3058,7 @@ require([
   };
 
   //------------------------------------------------------------------------------------ dojo controls that will change --
+<<<<<<< HEAD
   // dojo.connect(dijit.byId("childParentRadio"), "onClick", function () {
   //   av.post.addUser("Button: childParentRadio");
   // });
@@ -3051,6 +3134,67 @@ require([
     av.ui.autoStopValue = av.dom.autoPauseNum.value; //switching to using av.dom.autoPauseNum.value directly
     //console.log('autoPauseNum=', av.dom.autoPauseNum.value);
   };
+=======
+  /*
+    dojo.connect(dijit.byId('childParentRadio'), 'onClick', function () {
+     av.post.addUser('Button: childParentRadio');
+   });
+
+   dojo.connect(dijit.byId('childRandomRadio'), 'onClick', function () {
+     av.post.addUser('Button: childRandomRadio');
+   });
+
+   dojo.connect(dijit.byId('notose'), 'onClick', function () {
+     av.post.addUser('Button: notose = ' + dijit.byId('notose').get('checked').toString());
+   });
+
+
+   dojo.connect(dijit.byId('andose'), 'onClick', function () {
+     av.post.addUser('Button: andose = ' + dijit.byId('andose').get('checked').toString());
+   });
+
+   dojo.connect(dijit.byId('orose'), 'onClick', function () {
+     av.post.addUser('Button: orose = ' + dijit.byId('orose').get('checked').toString());
+   });
+
+   dojo.connect(dijit.byId('norose'), 'onClick', function () {
+     av.post.addUser('Button: norose = ' + dijit.byId('norose').get('checked').toString());
+   });
+
+   dojo.connect(dijit.byId('equose'), 'onClick', function () {
+     av.post.addUser('Button: equose = ' + dijit.byId('equose').get('checked').toString());
+   });
+
+   dojo.connect(dijit.byId('nanose'), 'onClick', function () {
+     av.post.addUser('Button: nanose = ' + dijit.byId('nanose').get('checked').toString());
+   });
+
+   dojo.connect(dijit.byId('ornose'), 'onClick', function () {
+     av.post.addUser('Button: ornose = ' + dijit.byId('ornose').get('checked').toString());
+   });
+
+   dojo.connect(dijit.byId('andnose'), 'onClick', function () {
+     av.post.addUser('Button: andnose = ' + dijit.byId('andnose').get('checked').toString());
+   });
+
+   dojo.connect(dijit.byId('xorose'), 'onClick', function () {
+     av.post.addUser('Button: xorose = ' + dijit.byId('xorose').get('checked').toString());
+   });
+
+   dojo.connect(dijit.byId('experimentRadio'), 'onClick', function () {
+     av.post.addUser('Button: experimentRadio');
+   });
+
+   dojo.connect(dijit.byId('demoRadio'), 'onClick', function () {
+     av.post.addUser('Button: demoRadio');
+   });
+*/
+   av.dom.autoPauseNum.onchange = function () {
+     av.post.addUser(': autoPauseNum = ' + av.dom.autoPauseNum.value);
+     av.ui.autoStopValue = av.dom.autoPauseNum.value;   //switching to using av.dom.autoPauseNum.value directly
+     //console.log('autoPauseNum=', av.dom.autoPauseNum.value);
+   };
+>>>>>>> decb6d0fe5591c9b599031e8837a04efd5a2a5f5
 
   // dojo.connect(dijit.byId("autoUpdateRadiTest"), "onClick", function () {
   //   av.post.addUser("Button: autoUpdateRadiTest");
