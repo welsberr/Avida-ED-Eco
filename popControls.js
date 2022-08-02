@@ -98,18 +98,6 @@
     document.getElementById('allSugarModifier').disabled = true;
     document.getElementById('allSugarDetails').disabled = true;
 
-    /*
-     * These checkboxHolderes no longer exist; tiba delete by 2021
-    av.dom.notose.disabled = true;
-    av.dom.nanose.disabled = true;
-    av.dom.andose.disabled = true;
-    av.dom.ornose.disabled = true;
-    av.dom.orose.disabled = true;
-    av.dom.andnose.disabled = true;
-    av.dom.norose.disabled = true;
-    av.dom.xorose.disabled = true;
-    av.dom.equose.disabled = true;
-    */
     av.dom.experimentRadio.disabled = true;
     av.dom.demoRadio.disabled = true;
 

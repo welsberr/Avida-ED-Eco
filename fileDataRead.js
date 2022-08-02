@@ -412,18 +412,6 @@
     'use strict';
     var dict = av.frd.environmentCFGparse(fileStr);
     //console.log('av.frd.environmentCFG2form; dict=',dict);
-
-    /*
-    dijit.byId('notose').set('checked', dict.NOT);
-    dijit.byId('nanose').set('checked', dict.NAND);
-    dijit.byId('andose').set('checked', dict.AND);
-    dijit.byId('ornose').set('checked', dict.ORN);
-    dijit.byId('orose').set('checked', dict.OR);
-    dijit.byId('andnose').set('checked', dict.ANDN);
-    dijit.byId('norose').set('checked', dict.NOR);
-    dijit.byId('xorose').set('checked', dict.XOR);
-    dijit.byId('equose').set('checked', dict.EQU);
-    */
   };
   //======================================================================================== end read environment.cfg ==
 //======================================================================================================================

@@ -321,10 +321,6 @@ require([
   };  // in file messaging.js
 
   //*******************************************************************************************************************
-  // Dojo DND functions - defined in dragulaDnd.js
-  //*******************************************************************************************************************
-
-  //*******************************************************************************************************************
   // Mouse DND functions
   //*******************************************************************************************************************
 
@@ -629,7 +625,12 @@ require([
   //http://www.technicaladvices.com/2012/03/26/detecting-the-page-leave-event-in-javascript/
   //Cannot get custom message in Firefox (or Safari for now)
 
+// the function 'postPost' below used to use dojo.toJson(obj)
+// https://dojotoolkit.org/reference-guide/1.7/dojo/toJson.html
+// On 2022_801 this was changed JSON.stringify(obj) 
+// https://www.w3schools.com/js/js_json_stringify.asp
 
+// part of updating database
   on(document.getElementById('postPost'), 'click', function () {
     console.log('in on(document.getElementById(postPost)');
     av.post.addUser('Button: postPost');
@@ -646,8 +647,9 @@ require([
 
     xhr.post(//Post is a helper function to xhr, a more generic class
       hostname, //URL parameter
-      {//Data and halding parameter
-        data: dojo.toJson(av.debug.postData),
+      {//Data and holding parameter
+        // data: dojo.toJson(av.debug.postData), //This function takes an object and converts it to a String serialization of that object.
+        data: JSON.stringify(av.debug.postData),
         headers: {'X-Requested-With': null}
       }
     ).then(function (received) { //Promise format; received data from request (first param of then)
@@ -2294,72 +2296,30 @@ av.ui.feedback = function(){
   // dojo.connect(dijit.byId("childParentRadio"), "onClick", function () {
   //   av.post.addUser("Button: childParentRadio");
   // });
+  document.getElementById('childParentRadio').onclick = function () {
+    av.post.addUser('Button: childParentRadio');
+  };
 
   // dojo.connect(dijit.byId("childRandomRadio"), "onClick", function () {
   //   av.post.addUser("Button: childRandomRadio");
   // });
-
-  // dojo.connect(dijit.byId("notose"), "onClick", function () {
-  //   av.post.addUser(
-  //     "Button: notose = " + dijit.byId("notose").get("checked").toString()
-  //   );
-  // });
-
-  // dojo.connect(dijit.byId("andose"), "onClick", function () {
-  //   av.post.addUser(
-  //     "Button: andose = " + dijit.byId("andose").get("checked").toString()
-  //   );
-  // });
-
-  // dojo.connect(dijit.byId("orose"), "onClick", function () {
-  //   av.post.addUser(
-  //     "Button: orose = " + dijit.byId("orose").get("checked").toString()
-  //   );
-  // });
-
-  // dojo.connect(dijit.byId("norose"), "onClick", function () {
-  //   av.post.addUser(
-  //     "Button: norose = " + dijit.byId("norose").get("checked").toString()
-  //   );
-  // });
-
-  // dojo.connect(dijit.byId("equose"), "onClick", function () {
-  //   av.post.addUser(
-  //     "Button: equose = " + dijit.byId("equose").get("checked").toString()
-  //   );
-  // });
-
-  // dojo.connect(dijit.byId("nanose"), "onClick", function () {
-  //   av.post.addUser(
-  //     "Button: nanose = " + dijit.byId("nanose").get("checked").toString()
-  //   );
-  // });
-
-  // dojo.connect(dijit.byId("ornose"), "onClick", function () {
-  //   av.post.addUser(
-  //     "Button: ornose = " + dijit.byId("ornose").get("checked").toString()
-  //   );
-  // });
-
-  // dojo.connect(dijit.byId("andnose"), "onClick", function () {
-  //   av.post.addUser(
-  //     "Button: andnose = " + dijit.byId("andnose").get("checked").toString()
-  //   );
-  // });
-
-  // dojo.connect(dijit.byId("xorose"), "onClick", function () {
-  //   av.post.addUser(
-  //     "Button: xorose = " + dijit.byId("xorose").get("checked").toString()
-  //   );
-  // });
+  document.getElementById('childRandomRadio').onclick = function () {
+    av.post.addUser('Button: childRandomRadio');
+  };
 
   // dojo.connect(dijit.byId("experimentRadio"), "onClick", function () {
   //   av.post.addUser("Button: experimentRadio");
   // });
+  document.getElementById('experimentRadio').onclick = function () {
+    av.post.addUser('Button: experimentRadio');
+  };
 
   // dojo.connect(dijit.byId("demoRadio"), "onClick", function () {
   //   av.post.addUser("Button: demoRadio");
   // });
+  document.getElementById('demoRadio').onclick = function () {
+    av.post.addUser('Button: demoRadio');
+  };
 
   av.dom.autoPauseNum.onchange = function () {
     av.post.addUser(": autoPauseNum = " + av.dom.autoPauseNum.value);
@@ -2367,10 +2327,13 @@ av.ui.feedback = function(){
     //console.log('autoPauseNum=', av.dom.autoPauseNum.value);
   };
 
-  // dojo.connect(dijit.byId("autoUpdateRadiTest"), "onClick", function () {
-  //   av.post.addUser("Button: autoUpdateRadiTest");
-  //   av.ui.autoStopFlag = true;
+  // dojo.connect(dijit.byId("postPost"), "onClick", function () {
+  //   av.post.addUser('Button: postPost');
   // });
+  document.getElementById('postPost').onclick = function () {
+    av.post.addUser('Button: postPost');
+  };
+
 
   // ===refactored====
   // -near parent

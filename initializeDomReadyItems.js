@@ -121,18 +121,6 @@
     av.dom.envGrOutflow = document.getElementById('envGrOutflow');
     //av.dom.env = document.getElementById(''); 
 
-/*
-    av.dom.notose = document.getElementById('notose');
-    av.dom.andose = document.getElementById('andose');
-    av.dom.orose = document.getElementById('orose');
-    av.dom.norose = document.getElementById('norose');
-    av.dom.equose = document.getElementById('equose');  //5
-    av.dom.nanose = document.getElementById('nanose');
-    av.dom.ornose = document.getElementById('ornose');
-    av.dom.andnose = document.getElementById('andnose');
-    av.dom.xorose = document.getElementById('xorose');
-*/
-
     av.dom.notButton = document.getElementById('notButton');
     av.dom.andButton = document.getElementById('andButton');
     av.dom.orButton = document.getElementById('orButton');
