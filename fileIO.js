@@ -331,14 +331,45 @@
     console.log('top two lines of file string');
     console.log(av.fwt.csvStrg.substr(0, 80));
 
-    
-    var typeStrng = 'data:attachment/csv;charset=utf-8,';
+    var typeStrng = "text/plain;charset=utf-8";  //used with av.fio.SaveOneFile
+    //var typeStrng = 'data:attachment/csv;charset=utf-8,';  // used with av.fio.SaveUsingDomElement
+    //var typeStrng = 'text/plain';    //used with av.fio.SaveFileFromDomElement example
     //console.log('brs', av.brs);
     if (av.brs.isSafari) alert("The name of the file will be 'unknown' in Safari. Please change the name to end in .csv. Safari will also open a blank tab. Please close the tab when you are done saving and resume work in Avida-ED");
-    av.fio.SaveUsingDomElement(av.fwt.csvStrg, av.fio.csvFileName, typeStrng, 'av.fio.fzSaveCsvfn');
+    //av.fio.SaveUsingDomElement(av.fwt.csvStrg, av.fio.csvFileName, typeStrng, 'av.fio.fzSaveCsvfn');
+    //av.fio.SaveFileFromDomElement(av.fwt.csvStrg, av.fio.csvFileName, typeStrng, 'av.fio.fzSaveCsvfn');
+    av.fio.SaveOneFile(av.fwt.csvStrg, av.fio.csvFileName, typeStrng, 'av.fio.fzSaveCsvfn');
+  };
+
+  //---------------------------------------------------------------------------------------------- av.fio.SaveOneFile --
+  // from https://websparrow.org/web/how-to-create-and-save-text-file-in-javascript
+  // uses the library FileSaver.js
+  av.fio.SaveOneFile = function(aStr, fName, typeStr, from) {
+    "use strict";
+    console.log(from + ' called av.fio.SaveOneFile: fName =', fName);
+    //aStr is the contents of the file
+    var blob = new Blob([aStr], { type: typeStr });
+    saveAs(blob, fName);   //where fName is the name of the file
+  };
+
+  //---------------------------------------------------------------------------------------------- av.fio.SaveOneFile --
+  // from https://stackoverflow.com/questions/70336658/how-to-to-save-txt-file-on-server-in-html-js
+  // works, but not in use  
+  av.fio.SaveFileFromDomElement = function(aStr, fName, typeStr, from) {
+    "use strict";
+    console.log(from + ' called av.fio.SaveOneFile: fName =', fName);
+    //aStr is the contents of the file
+    var blob = new Blob([aStr], { type: typeStr }), anchor = document.createElement('a');
+
+    anchor.download = fName;  //where fName is the name of the file
+    anchor;
+    anchor.href = (window.webkitURL || window.URL).createObjectURL(blob);
+    anchor.dataset.downloadurl = [typeStr, anchor.download, anchor.href].join(':');
+    anchor.click();
   };
 
   //-------------------------------------------------------------------------------------- av.fio.SaveUsingDomElement --
+  // this saves a file, but does not put the string "aStr" as the conent of the file. so Broken. 
   av.fio.SaveUsingDomElement = function(aStr, fName, typeStr, from) {
     "use strict";
     console.log(from + ' called av.fio.SaveUsingDomElement: fName =', fName);
