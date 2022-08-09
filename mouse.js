@@ -7,6 +7,7 @@
   //get domID list for freezer; just organism section
   // if (av.dbg.flg.root) { console.log('Root: before av.mouse.frzOrgCurserSet'); }
   av.mouse.frzOrgCurserSet = function(state) {
+    console.log('in av.mouse.frzOrgCurserSet: state is', state);
     'use strict';
     for (var dir in av.fzr.domid) {
       //console.log('dir', dir, '; domid', av.fzr.domid[dir]);
@@ -20,8 +21,9 @@
   //this does all entries in freezer.
   av.mouse.frzCurserSet = function(state) {
     'use strict';
+    console.log('in av.mouse.frzCurserSet: state is', state);
     for (var dir in av.fzr.domid) {
-      //console.log('dir', dir, '; domid', av.fzr.domid[dir]);
+      console.log('dir', dir, '; domid', av.fzr.domid[dir]);
       if (null != document.getElementById(av.fzr.domid[dir])) {
         document.getElementById(av.fzr.domid[dir]).style.cursor = state;
         // expect state = 'copy' or 'default'
@@ -31,6 +33,7 @@
 
   av.mouse.setCursorStyle = function (shape, nodeList) {
     "use strict";
+    console.log('in av.mouse.setCursorStyle: shape is', shape, 'nodeList =', nodeList);
     if (nodeList !== undefined) {
       var lnght = nodeList.length;
       for (var ii = 0; ii < lnght; ii++) {
@@ -41,7 +44,7 @@
 
   av.mouse.selectedDadMouseStyle = function () {
     'use strict';
-    //console.log('in Dad');
+    console.log('av.mouse.selectedDadMouseStyle');
     av.mouse.setCursorStyle('no-drop', av.mouse.notDndPopList);
     av.mouse.frzCurserSet('no-drop');
     av.mouse.setCursorStyle('copy', av.mouse.dadTarget);
@@ -51,6 +54,7 @@
   //update data about a kid in the selected organism to move = primarily genome and name
   av.mouse.selectedKidMouseStyle = function () {
     'use strict';
+    console.log('in av.mouse.selectedKidMouseStyle');
     av.mouse.setCursorStyle('no-drop', av.mouse.notDndPopList);
     av.mouse.setCursorStyle('copy', av.mouse.kidTarget);
     av.mouse.frzOrgCurserSet('copy');
@@ -59,7 +63,7 @@
 
   av.mouse.sonCursorShape = function () {
     'use strict';
-    //console.log('in son')
+    console.log('in av.mouse.sonCursorShape');
     av.mouse.setCursorStyle('no-drop', av.mouse.notDndIndList);
     av.mouse.frzCurserSet('no-drop');
     av.mouse.setCursorStyle('copy', av.mouse.sonTarget);
@@ -70,6 +74,7 @@
 
   av.mouse.makeCursorDefault = function () {
     'use strict';
+    console.log('in av.mouse.makeCursorDefault');
     av.mouse.frzCurserSet('default');  //pointer
     av.mouse.setCursorStyle('default', av.mouse.dndTarget);
     av.mouse.setCursorStyle('default', av.mouse.notDndPopList);
@@ -81,14 +86,16 @@
   //is the mouse nearly in the same place??? not sure if in use
   av.mouse.nearly = function (aa, bb) {
     'use strict';
+    console.log('in av.mouse.nearly');
     var epsilon = 3;
     var distance = Math.sqrt(Math.pow(aa[0] - bb[0], 2) + Math.pow(aa[1] - bb[1], 2));
     if (distance > epsilon) return false;
     else return true;
   };
 
-  av.mouse.findParentNdx  = function (parents) {
+  av.mouse.findParentNdx  = function (from) {
     'use strict';
+    console.log(from, 'called av.mouse.findParentNdx');
     var MomNdx = -1;
     var lngth = av.parents.name.length;
     for (var ii = 0; ii < lngth; ii++) {
@@ -102,7 +109,7 @@
     return MomNdx;
   };
 
-  av.mouse.findSelected = function (evt) {
+  av.mouse.findSelected = function (evt, from) {
     'use strict';
     /* yemi: The actual height of the grid is $("#gridHolder").height(). 
              The height of the displayed population grid canvas, is determined in populationGrid.js.
@@ -116,23 +123,23 @@
              I was mindful not to confuse this with the global variable, av.grd.yOffset, which I believe is not really in use right now.
              I know this because in av.grd.findGridSize function of populationGrid.js, it is set to 0.
     */
+    if (!from) from = unknown
     var offsetYLocal = ($("#gridHolder").height() - av.dom.gridCanvas.height) / 2;
     var offsetXLocal = ($("#gridHolder").width() - av.dom.gridCanvas.width) / 2;
     var mouseX = evt.offsetX - av.grd.marginX - av.grd.xOffset - offsetXLocal;
     var mouseY = evt.offsetY - av.grd.marginY - av.grd.yOffset - offsetYLocal;
-    //console.log(mouseX, mouseY);
     av.grd.selectedCol = Math.floor(mouseX / av.grd.cellWd);
     av.grd.selectedRow = Math.floor(mouseY / av.grd.cellHt);
     av.grd.selectedNdx = av.grd.selectedRow * av.grd.cols + av.grd.selectedCol;
-    if (av.debug.mouse) console.log('mx,y', mouseX, mouseY, '; selected Col, Row', av.grd.selectedCol, av.grd.selectedRow);
+    if (av.dbg.flg.mouse) console.log(from, 'called av.mouse.findSelected: mx,y', mouseX, mouseY, '; selected Col, Row', av.grd.selectedCol, av.grd.selectedRow);
   };
 
-  function offspringTrace(dnd, fio, fzr, gen) {
+  function offspringTrace(from) {
     'use strict';
     //Get name of Mom that is in OrganCurrentNode
     var parent;
     var parentID = Object.keys(av.dnd.containerMap['#activeOrgan'])[0];
-    if (av.debug.mouse) console.log('parentID', parentID);
+    if (av.dbg.flg.mouse) console.log('in offspringTrace: parentID =', parentID);
     if (undefined == parentID) parent = '';
     else parent = document.getElementById(parentID).textContent.trim();
     av.dnd.empty(av.dnd.activeOrgan);
@@ -148,7 +155,7 @@
     av.fzr.actOrgan.name = parent + "_offspring";
     console.log(av.ind.dna[av.ind.son]);
     av.fzr.actOrgan.genome = '0,heads_default,' + av.ind.dna[av.ind.son];  //this should be the full genome when the offspring is complete.
-    if (av.debug.mouse) console.log('av.fzr.actOrgan', av.fzr.actOrgan);
+    if (av.dbg.flg.mouse) console.log('av.fzr.actOrgan', av.fzr.actOrgan);
     //get genome from offspring data //needs work!!
     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
   };
@@ -156,6 +163,7 @@
   // yemi: 'offspring' is for organism page, 'kid' for population page
   av.mouse.offspringMouse = function(evt, dnd, fio, fzr, gen) {
     'use strict';
+    console.log('in av.mouse.offspringMouse');
     var target = '';
     var elements = $.map(document.elementsFromPoint(evt.clientX, evt.clientY), (x) => {return x.id});
     if (elements.indexOf('organIcon') != -1 || elements.indexOf('actOrgImg') != -1 || elements.indexOf('activeOrgan') != -1) {
@@ -173,11 +181,11 @@
       if (found) {
         target  = 'fzOrgan';
         //create a new freezer item
-        if (av.debug.mouse) console.log('offSpring->freezerDiv');
+        if (av.dbg.flg.mouse) console.log('offSpring->freezerDiv');
         var parent;
         var container = dnd.activeOrgan.id !== undefined ? "#" + dnd.activeOrgan.id : "." + dnd.activeOrgan.className;
         var parentID = $(container).children()[0].id; // yemi: not sure it will work
-        if (av.debug.mouse) console.log('parentID', parentID);
+        if (av.dbg.flg.mouse) console.log('parentID', parentID);
         if (undefined == parentID) parent = 'noParentName';
         else parent = document.getElementById(parentID).textContent.trim();
         //make sure there is a name.
@@ -201,9 +209,9 @@
             av.fzr.file[gdir + '/genome.seq'] = '0,heads_default,' + av.ind.dna[av.ind.son];
             av.fzr.gNum++;
             av.fzr.saveUpdateState('no');
-            if (av.debug.mouse) console.log('Offspring-->freezer, dir', gdir, 'fzr', fzr);
+            if (av.dbg.flg.mouse) console.log('Offspring-->freezer, dir', gdir, 'fzr', fzr);
             //create a right mouse-click context menu for the item just created.
-            if (av.debug.mouse) console.log('Offspring-->freezer; fzf', fzr);
+            if (av.dbg.flg.mouse) console.log('Offspring-->freezer; fzf', fzr);
             av.dnd.contextMenu(av.dnd.fzOrgan, domid, 'av.mouse.offspringMouse');
           }
         }
@@ -212,8 +220,9 @@
     return target;
   };
 
-  av.mouse.traceSelected = function(dnd, fzr, grd) {
+  av.mouse.traceSelected = function(from) {
     'use strict';
+    console.log(from, 'called av.mouse.traceSelected');
     av.dnd.empty(av.dnd.activeOrgan);
     //Put name of offspring in OrganCurrentNode
     var container = '#' + av.dnd.activeOrgan.id;
@@ -226,14 +235,15 @@
     $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${av.grd.kidName} </div>`);
     av.dnd.containerMap[container][domid] = {'name': av.grd.kidName , 'type': 'g'};
     //genome data should be in av.parents.genome[av.mouse.ParentNdx];
-    if (av.debug.mouse) console.log('genome', av.grd.kidGenome);
+    if (av.dbg.flg.mouse) console.log('genome', av.grd.kidGenome);
     av.fzr.actOrgan.genome = av.grd.kidGenome;
     av.fzr.actOrgan.name = av.grd.kidName;
     av.fzr.actOrgan.fzDomid = "";
     av.fzr.actOrgan.actDomid = domid;
-  }
+  };
 
-  av.mouse.traceSelectedParent = function() {
+  av.mouse.traceSelectedParent = function(from) {
+    console.log(from, 'called av.mouse.traceSelectedParent');
     av.dnd.empty(av.dnd.activeOrgan);
     var container = '#' + av.dnd.activeOrgan.id;
     var domid = av.parents.domid[av.mouse.ParentNdx];
@@ -249,13 +259,14 @@
     av.fzr.actOrgan.genome = av.parents.genome[av.mouse.ParentNdx];
     av.fzr.actOrgan.name = av.parents.name[av.mouse.ParentNdx];
     av.fzr.actOrgan.fzDomid = av.parents.domid[av.mouse.ParentNdx];
-  }
+  };
 
   // yemi: 'offspring' is for organism page, 'kid' for population page
-  av.mouse.kidMouse = function (evt, dnd, fzr, grd){
+  av.mouse.kidMouse = function (evt, from){
     'use strict';
+    console.log(from, 'called av.mouse.kidMouse');
     var target = '';
-    if (av.debug.mouse) console.log('in KidMouse', evt.target.id, evt);
+    if (av.dbg.flg.mouse) console.log('in KidMouse', evt.target.id, evt);
     if (av.grd.kidGenome === undefined) {
       return target;
     }
@@ -263,11 +274,11 @@
       if ('organIcon' == evt.target.id) {
         target = 'organIcon';
         av.post.addUser('Moved something to Organism Icon');
-        av.mouse.traceSelected(dnd, fzr, grd);
+        av.mouse.traceSelected('av.mouse.kidMouse');
       }
       else { // look for target in the freezer
         var found = false;
-        if (av.debug.mouse) console.log('target.id',evt.target.id, '; av.fzr.domid', av.fzr.domid);
+        if (av.dbg.flg.mouse) console.log('target.id',evt.target.id, '; av.fzr.domid', av.fzr.domid);
         //note below index of 0 indicates gridCanvas and if the target is canvas it should not be frozen
         if (0 < av.mouse.kidTarget.indexOf(evt.target.id)) {found = true;}
         else {
@@ -292,8 +303,8 @@
   // possibly move to dragulaDnd just to keep all the dnd functions together?
   av.mouse.freezeTheKid = function () {
     "use strict";
-    av.post.addUser('Moved avidian from grid to freezer');
-    if (av.debug.mouse) console.log('freezerDiv');
+    av.post.addUser('moved avidian from grid to freezer');
+    if (av.dbg.flg.mouse) console.log('in av.mouse.freezeTheKid: moved avidian from grid to freezer');
     //make sure there is a name
     var sName = av.dnd.namefzrItem(av.dnd.fzOrgan, av.grd.kidName);
     var avidian = prompt('Please name your avidian', sName);
@@ -323,48 +334,49 @@
         av.fzr.gNum++;
         av.fzr.saveUpdateState('no');
         console.log(av.fzr);
-        if (av.debug.mouse) console.log('fzOrgan', av.dnd.fzOrgan);
-        if (av.debug.mouse) console.log('Kid-->Snow: dir',gdir, '; fzr', fzr);
+        if (av.dbg.flg.mouse) console.log('fzOrgan', av.dnd.fzOrgan);
+        if (av.dbg.flg.mouse) console.log('Kid-->Snow: dir',gdir, '; fzr', fzr);
         //create a right mouse-click context menu for the item just created.
         av.dnd.contextMenu(av.dnd.fzOrgan, domid, 'av.mouse.freezeTheKid');
         av.fzr.saveUpdateState('no');
       }
     }
-  }
+  };
 
-  av.mouse.ParentMouse = function (evt, av) {
+  av.mouse.ParentMouse = function (evt, from) {
     'use strict';
-    if (av.debug.mouse) console.log('ParentMouse', evt.target.id, evt);
+    if (!from) from = 'unknown';
+    if (av.dbg.flg.mouse) console.log(from, 'called av.mouse.ParentMouse', evt.target.id, evt);
     if ('gridCanvas' == evt.target.id) { // parent moved to another location on grid canvas
       av.mouse.UpGridPos = [evt.offsetX, evt.offsetY]; //not used for now
       //Move the ancestor on the canvas
-      av.mouse.findSelected(evt);
+      av.mouse.findSelected(evt, 'av.mouse.ParentMouse');
       // look to see if this is a valid grid cell
       if (av.grd.selectedCol >= 0 && av.grd.selectedCol < av.grd.cols && av.grd.selectedRow >= 0 && av.grd.selectedRow < av.grd.rows) {
-        if (av.debug.mouse) console.log('parentMouse, selected,',av.grd.selectedCol, av.grd.selectedRow, av.grd.selectedNdx);
+        if (av.dbg.flg.mouse) console.log('parentMouse, selected,',av.grd.selectedCol, av.grd.selectedRow, av.grd.selectedNdx);
         av.parents.col[av.mouse.ParentNdx] = av.grd.selectedCol;
         av.parents.row[av.mouse.ParentNdx] = av.grd.selectedRow;
         av.parents.AvidaNdx[av.mouse.ParentNdx] = av.parents.col[av.mouse.ParentNdx] + av.grd.cols * av.parents.row[av.mouse.ParentNdx];
         av.post.addUser('Moved ancestor to col=' + av.grd.selectedCol + '; row=' + av.grd.selectedRow);
-        if (av.debug.mouse) console.log('mvparent', av.mouse.ParentNdx, av.parents.col[av.mouse.ParentNdx], av.parents.row[av.mouse.ParentNdx]);
-        if (av.debug.mouse) console.log('b auto', av.parents.autoNdx.length, av.parents.autoNdx, av.parents.name);
-        if (av.debug.mouse) console.log('b hand', av.parents.handNdx.length, av.parents.handNdx);
+        if (av.dbg.flg.mouse) console.log('mvparent', av.mouse.ParentNdx, av.parents.col[av.mouse.ParentNdx], av.parents.row[av.mouse.ParentNdx]);
+        if (av.dbg.flg.mouse) console.log('b auto', av.parents.autoNdx.length, av.parents.autoNdx, av.parents.name);
+        if (av.dbg.flg.mouse) console.log('b hand', av.parents.handNdx.length, av.parents.handNdx);
         //change from auto placed to hand placed if needed
         if ('auto' == av.parents.howPlaced[av.mouse.ParentNdx]) {
           av.parents.howPlaced[av.mouse.ParentNdx] = 'hand';
           av.parents.makeHandAutoNdx();
           //av.parents.placeAncestors(parents);
         }
-        if (av.debug.mouse) console.log('auto', av.parents.autoNdx.length, av.parents.autoNdx, av.parents.name);
-        if (av.debug.mouse) console.log('hand', av.parents.handNdx.length, av.parents.handNdx);
+        if (av.dbg.flg.mouse) console.log('auto', av.parents.autoNdx.length, av.parents.autoNdx, av.parents.name);
+        if (av.dbg.flg.mouse) console.log('hand', av.parents.handNdx.length, av.parents.handNdx);
       }
     }  // close on canvas
     //-------------------------------------------- av.dnd.trashCan
     else if ('trashCanImage' == evt.target.id) {
-      if (av.debug.mouse) console.log('parent->trashCan', evt);
-      if (av.debug.mouse) console.log('av.mouse.ParentNdx', av.mouse.ParentNdx, '; domid', av.parents.domid[av.mouse.ParentNdx]);
-      if (av.debug.mouse) console.log('ancestorBox', av.dnd.ancestorBox);
-      if (av.debug.mouse) console.log('av.parents.domid', av.parents.domid);
+      if (av.dbg.flg.mouse) console.log('parent->trashCan', evt);
+      if (av.dbg.flg.mouse) console.log('av.mouse.ParentNdx', av.mouse.ParentNdx, '; domid', av.parents.domid[av.mouse.ParentNdx]);
+      if (av.dbg.flg.mouse) console.log('ancestorBox', av.dnd.ancestorBox);
+      if (av.dbg.flg.mouse) console.log('av.parents.domid', av.parents.domid);
       // yemi: delete from av.dnd.containerMap as well as erase dom object
       var domid = av.parents.domid[av.mouse.ParentNdx];
       var container = '#' + av.dnd.ancestorBox.id;
@@ -377,16 +389,16 @@
     //-------------------------------------------- organism view
     else if ('organIcon' == evt.target.id) {
       av.post.addUser('Moved ancestor to Organsim View');
-      av.mouse.traceSelectedParent();
-    }
-  }
+      av.mouse.traceSelectedParent('av.mouse.ParentMouse');
+    };
+  };
 
   //Key movement on grid
   // if (av.dbg.flg.root) { console.log('Root: before av.mouse.arrowKeysOnGrid'); }
   av.mouse.arrowKeysOnGrid = function (event) {
     'use strict';
     var arrowkey = true;
-    //console.log('document.activeElement', document.activeElement, document.activeElement.tagName);
+    console.log('document.activeElement', document.activeElement, document.activeElement.tagName);
     if ('INPUT' != document.activeElement.tagName && 'TEXTAREA' != document.activeElement.tagName) {
       if (av.grd.flagSelected) {
         var moved = false;
@@ -433,7 +445,7 @@
               av.grd.kidStatus = 'getgenome';
               av.post.addUser('ArrowKey was used to pick kid cellID=' + av.grd.selectedNdx);
               av.msg.doWebOrgDataByCell();
-              if (av.debug.mouse) console.log('kid', av.grd.kidName, av.grd.kidGenome);
+              if (av.dbg.flg.mouse) console.log('kid', av.grd.kidName, av.grd.kidGenome);
               dijit.byId("mnFzOrganism").attr("disabled", false);  //When an organism is selected, then it can be save via the menu
               dijit.byId("mnCnOrganismTrace").attr("disabled", false);
             }

@@ -224,7 +224,7 @@ require([
   'fileIO.js',
   'populationGrid.js',
   'organismView.js',
-  'dojoDnd.js',
+  //'dojoDnd.js',
   'popControls.js',
   'mouse.js',
   'mouseDown.js',
@@ -386,16 +386,16 @@ require([
   $(av.dom.gridCanvas).on('mousedown', function (evt) {
     av.post.addUser('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
     //console.log('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
-    av.mouse.downGridCanvasFn(evt);
+    av.mouse.downGridCanvasFn(evt, 'av.mouse.downGridCanvasFn');
   });
 
   //When mouse button is released, return cursor to default values
   $(document).on('mouseup touchend', function (evt) {
     'use strict';
     var target = '';
-    if (av.debug.mouse) console.log('in mouseup target:', evt.target.id, '; event:', evt);
-    if (av.debug.mouse) console.log('in mouseup target:', evt.target.id);
-    if (av.debug.mouse) console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
+    //if (av.dbg.flg.mouse) console.log('in mouseup target:', evt.target.id, '; event:', evt);
+    if (av.dbg.flg.mouse) console.log('in mouseup target:', evt.target.id);
+    if (av.dbg.flg.mouse) console.log('AvidaED.js: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
     // after everything, reset cursor
     document.body.style.cursor = "default";
     av.mouse.Dn = false;
@@ -411,7 +411,7 @@ require([
         av.ui.mainBoxSwap('organismBlock');
         av.ind.organismCanvasHolderSize('mouseup_organIcon_parent');
         av.ui.adjustOrgInstructionTextAreaSize();
-        if (av.debug.mouse)
+        if (av.dbg.flg.mouse)
           console.log('from parent', av.parent, '; fzr', av.fzr);
         av.post.addUser('Dragged item to Organism Icon');
         av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
@@ -426,7 +426,7 @@ require([
     else if ('kid' == av.mouse.Picked) {
       av.mouse.Picked = '';
       target = av.mouse.kidMouse(evt, av.dnd, av.fzr, av.grd);
-      if (av.debug.mouse)
+      if (av.dbg.flg.mouse)
         console.log('kidMouse: target', target, '===============', evt.target.id);
       if ('organIcon' == evt.target.id) {
         //Change to Organism Page
@@ -1311,7 +1311,7 @@ av.ui.feedback = function(){
   // if (av.dbg.flg.root) { console.log('Root: before av.dom.populationButton.onclick'); }
   av.dom.populationButton.onclick = function () {
     av.post.addUser('Button: populationButton');
-    if (av.debug.dnd || av.debug.mouse)
+    if (av.debug.dnd || av.dbg.flg.mouse)
       console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
     av.ui.mainBoxSwap('populationBlock');
     resizePopulationPage();
@@ -2506,10 +2506,10 @@ av.ui.feedback = function(){
   // });
 
   // ===refactored====
-  document.getElementById("mnCnOrganismTrace").onclick = function () {
-    av.post.addUser("Button: mnCnOrganismTrace");
-    console.log("control drop down menu clicked");
-    av.mouse.traceSelected(av.dnd, av.fzr, av.grd);
+  document.getElementById('mnCnOrganismTrace').onclick = function () {
+    av.post.addUser('Button: mnCnOrganismTrace');
+    console.log('control drop down menu clicked');
+    av.mouse.traceSelected('mnCnOrganismTrace.onclick');
     av.ui.mainBoxSwap('organismBlock');
     av.ind.organismCanvasHolderSize('mnCnOrganismTrace');
     av.ui.adjustOrgInstructionTextAreaSize();
@@ -2518,7 +2518,7 @@ av.ui.feedback = function(){
 
   //Put the offspring in the parent position on Organism Trace
   // ====refactored======
-  document.getElementById("mnCnOffspringTrace").onclick = function () {
+  document.getElementById('mnCnOffspringTrace').onclick = function () {
     //Open Oranism view
     av.post.addUser('Button: mnCnOffspringTrace');
     av.ui.mainBoxSwap('organismBlock');

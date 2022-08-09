@@ -16,10 +16,19 @@ else:
 
 if __name__ == "__main__":
 
+    port = 8000
+    try:
+        port = int( sys.argv[-1])
+    except:
+        estr = "Warning: no port specified for server, using 8000."
+        print(estr)
+        port = 8000
+        
+        
     os.chdir('.')
     if pyver in [3]:
         print(dir(http))
-        server_object = HTTPServer(server_address=('', 8000), RequestHandlerClass=CGIHTTPRequestHandler)
+        server_object = HTTPServer(server_address=('', port), RequestHandlerClass=CGIHTTPRequestHandler)
         server_object.serve_forever()
     elif pyver in [2]:
         cmd = '/usr/bin/python -m SimpleHTTPServer'

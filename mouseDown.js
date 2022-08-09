@@ -1,7 +1,9 @@
   var av = av || {};  //incase av already exists
+  var dijit = dijit || {}; 
 
   // if (av.dbg.flg.root) { console.log('Root: before av.mouse.downOrganCanvasFn'); }
   av.mouse.downOrganCanvasFn = function(evt) {
+    console.log('in av.mouse.downOrganCanvasFn');
     document.body.style.cursor = 'copy';
     av.mouse.DnOrganPos = [evt.offsetX, evt.offsetY];
     av.mouse.Dn = true;
@@ -65,7 +67,7 @@
         else {//hh is generation, ith is the instruction
           var labX = av.ind.cx[hh] + (av.ind.bigR[hh] + 2.1 * av.ind.smallR) * Math.cos(ith * 2 * Math.PI / av.ind.size[hh] + av.ind.rotate[hh]);
           var labY = av.ind.cy[hh] + (av.ind.bigR[hh] + 2.1 * av.ind.smallR) * Math.sin(ith * 2 * Math.PI / av.ind.size[hh] + av.ind.rotate[hh]);
-          if (av.debug.mouse) console.log('ith, gn', ith, hh, '; rotate', av.ind.rotate[hh], '; xy', labX, labY);
+          if (av.dbg.flg.mouse) console.log('ith, gn', ith, hh, '; rotate', av.ind.rotate[hh], '; xy', labX, labY);
           av.ind.ctx.beginPath();
           av.ind.ctx.arc(labX, labY, 1.1 * av.ind.smallR, 0, 2 * Math.PI);
           av.ind.ctx.fillStyle = av.color.names['White'];  //use if av.ind.dna is a string
@@ -87,39 +89,40 @@
           }
         }
       }
-    }
+    };
   };
 
   // if (av.dbg.flg.root) { console.log('Root: before av.mouse.downGridCanvasFn'); }
-  av.mouse.downGridCanvasFn = function (evt) {
+  av.mouse.downGridCanvasFn = function (evt, from) {
+    console.log(from, 'called av.mouse.downGridCanvasFn');
     document.body.style.cursor = 'copy';
     av.mouse.DnGridPos = [evt.offsetX, evt.offsetY];
     av.mouse.Dn = true;
     // Select if it is in the grid
-    av.mouse.findSelected(evt);
+    av.mouse.findSelected(evt, 'av.mouse.downGridCanvasFn');
     //check to see if in the grid part of the canvas
-    if (av.debug.mouse) { console.log('av.mousedown', av.grd.selectedNdx); }
-    //if (av.debug.mouse) console.log('grid Canvas; selectedNdx', av.grd.selectedNdx,'________________________________');
-    //if (av.debug.mouse) console.log('grid Canvas; av.grd.msg.ancestor[av.grd.selectedNdx]', av.grd.msg.ancestor.data[av.grd.selectedNdx]);
+    if (av.dbg.flg.mouse) { console.log('in av.mouse.downGridCanvasFn: av.mousedown', av.grd.selectedNdx); }
+    //if (av.dbg.flg.mouse) console.log('grid Canvas; selectedNdx', av.grd.selectedNdx,'________________________________');
+    //if (av.dbg.flg.mouse) console.log('grid Canvas; av.grd.msg.ancestor[av.grd.selectedNdx]', av.grd.msg.ancestor.data[av.grd.selectedNdx]);
     if (av.grd.selectedCol >= 0 && av.grd.selectedCol < av.grd.cols && av.grd.selectedRow >= 0 && av.grd.selectedRow < av.grd.rows) {
       av.grd.flagSelected = true;
-      if (av.debug.mouse) console.log('ongrid', av.grd.selectedNdx);
+      if (av.dbg.flg.mouse) console.log('ongrid', av.grd.selectedNdx);
       av.post.addUser('Click on grid cell with index: ' + av.grd.selectedNdx + '');
       av.grd.drawGridSetupFn('av.mouse.downGridCanvasFn in grid');
 
       //In the grid and selected. Now look to see contents of cell are dragable.
       av.mouse.ParentNdx = -1; //index into parents array if parent selected else -1;
       if ('prepping' == av.grd.runState) {  //run has not started so look to see if cell contains ancestor
-        av.mouse.ParentNdx = av.mouse.findParentNdx(av.parents);
-        if (av.debug.mouse) { console.log('parent', av.mouse.ParentNdx); }
+        av.mouse.ParentNdx = av.mouse.findParentNdx('av.mouse.downGridCanvasFn');
+        if (av.dbg.flg.mouse) { console.log('parent', av.mouse.ParentNdx); }
         if (-1 < av.mouse.ParentNdx) { //selected a parent, check for dragging
           //av.mouse.selectedDadMouseStyle();
           av.mouse.Picked = 'parent';
         }
       }
       else {  //look for decendents (kids)
-        if (av.debug.mouse) console.log('kidSelected; selectedNdx', av.grd.selectedNdx, '________________________________');
-        if (av.debug.mouse) console.log('kidSelected; av.grd.msg.ancestor[av.grd.selectedNdx]', av.grd.msg.ancestor.data[av.grd.selectedNdx]);
+        if (av.dbg.flg.mouse) console.log('kidSelected; selectedNdx', av.grd.selectedNdx, '________________________________');
+        if (av.dbg.flg.mouse) console.log('kidSelected; av.grd.msg.ancestor[av.grd.selectedNdx]', av.grd.msg.ancestor.data[av.grd.selectedNdx]);
         //find out if there is a kid in that cell
         //if ancestor not null then there is a 'kid' there.
         //if (null != av.grd.msg.ancestor.data[av.grd.selectedNdx]) {
@@ -130,13 +133,14 @@
             dijit.byId('mnFzOrganism').attr('disabled', true);  //kid not selected, then it cannot be save via the menu
           }
           else {
-            if (av.debug.mouse) console.log('kid found');
+            if (av.dbg.flg.mouse) console.log('kid found');
             av.grd.kidStatus = 'getgenome';
             av.msg.doWebOrgDataByCell();
             av.grd.kidName = 'temporary';
             av.grd.kidGenome = '0,heads_default,wzcagcccccccccaaaaaaaaaaaaaaaaaaaaccccccczvfcaxgab';  //ancestor
+            // mouse down on organism
             av.mouse.Picked = 'kid';
-            if (av.debug.mouse) console.log('kid', av.grd.kidName, av.grd.kidGenome);
+            if (av.dbg.flg.mouse) console.log('kid', av.grd.kidName, av.grd.kidGenome);
             dijit.byId('mnFzOrganism').attr('disabled', false);  //When an organism is selected, then it can be save via the menu
             dijit.byId('mnCnOrganismTrace').attr('disabled', false);
           }
@@ -152,11 +156,19 @@
       av.grd.selectedNdx = -1;
       dijit.byId('mnCnOrganismTrace').attr('disabled', true);
       dijit.byId('mnFzOrganism').attr('disabled', true);
-    }
+    };
     av.grd.drawGridSetupFn('av.mouse.downGridCanvasFn outside grid?');
     // if something was picked up, grid was selected (will be used in dragulaDnd.js)
+    // also time to change cursor shape
     if (av.mouse.Picked != "" && av.mouse.Picked != undefined) {
+      document.body.style.cursor = 'copy';
       av.dnd.gridSelected = av.mouse.Picked;
+      console.log('av.dnd.gridSelected =', av.dnd.gridSelected, 
+               'document.body.style.cursor =', document.body.style.cursor);    
     }
+    else {
+      av.dnd.gridSelected = '';
+    };
+    console.log('end av.mouse.downGridCanvasFn: av.mouse.Picked =', av.mouse.Picked, '; av.dnd.gridSelected =', av.dnd.gridSelected);
   };
 

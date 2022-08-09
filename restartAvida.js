@@ -1,7 +1,9 @@
 
 
 //this does not work (diane)
-av.aww.restartAvidaFn = function () {
+/*function name(parameters) {
+    
+}av.aww.restartAvidaFn = function () {
   av.post.addUser('Button: testRestartButton');
   console.log('------------------------------------------------------------------------------ in testRestartButton --');
   av.debug.log += '\nAvida -->ui simulated level:error';
@@ -9,3 +11,4 @@ av.aww.restartAvidaFn = function () {
   restartAvidaDialog.show();
   console.log('--------------------------------------------------------------------------------- after dialog show --');
 };
+*/

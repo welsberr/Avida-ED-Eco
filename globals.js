@@ -28,7 +28,6 @@ av.debug.fio = false;  // file input/output; fio, read, write
 av.debug.fzr = false;  // statements about freezer
 av.debug.grid = false;  //population grid
 av.debug.ind = false;  //oranism page
-av.debug.mouse = false;  //av.debug statements about non-dojo drag and drop
 av.debug.msg = false;  //messages to and from avida
 av.debug.popCon = false;  //population Controls
 av.debug.trace = false;  //organism page
@@ -37,15 +36,16 @@ av.debug.userMsg = false; //debug of user messages.
 
 av.dbg = {};
 av.dbg.flg = {}; 
-av.dbg.flg.popSetup = false;
+av.dbg.flg.divsize = false;
+av.dbg.flg.dsz = false;   //div size; used to eliminate scroll bars
 av.dbg.flg.frd = false;  //reading file text strings
+av.dbg.flg.mouse = true;  //av.debug statements about non-dojo drag and drop
 av.dbg.flg.nut = false;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
 av.dbg.flg.nutSum = true; //summary for each function when processing environment.cfg for sugar user interace
 av.dbg.flg.plt = false;  //analysis plot 
 av.dbg.flg.pch = false;  //popChart and analysis
+av.dbg.flg.popSetup = false;
 av.dbg.flg.root = false;  //statements that look for failers when the code executes outside of functions
-av.dbg.flg.divsize = false;
-av.dbg.flg.dsz = false;   //div size; used to eliminate scroll bars
 av.debug.usr = ''; //working on log for user actions.
 
 av.post = {};

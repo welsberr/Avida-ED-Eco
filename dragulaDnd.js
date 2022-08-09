@@ -357,8 +357,8 @@ jQuery(document).ready(function($) {
       }
       document.body.style.cursor = "default";
       // for debugging
-      //console.log('av.fzr =',av.fzr);
-      //console.log('av.dnd.containerMap =', av.dnd.containerMap);
+      console.log('end mouseup touchend: av.fzr =', av.fzr);
+      console.log('end mouseup touchend: av.dnd.containerMap =', av.dnd.containerMap);
     });
   });
   //------------------------------------------------------------------------------------------------- end dra.on drop --
@@ -628,9 +628,9 @@ jQuery(document).ready(function($) {
           av.dnd.selectedId = '';
         } else if (av.dnd.gridSelected != "" && av.dnd.gridSelected != undefined) {
           if (av.dnd.gridSelected == "parent") { // if ancestor is selected
-            av.mouse.traceSelectedParent();
+            av.mouse.traceSelectedParent('av.dnd.FzAddExperimentFn');
           } else if (av.dnd.gridSelected == "kid") { // if kid is selected
-            av.mouse.traceSelected();
+            av.mouse.traceSelected('av.dnd.FzAddExperimentFn');
           }
         }
         break;
@@ -811,7 +811,7 @@ jQuery(document).ready(function($) {
     av.ui.mainBoxSwap('organismBlock');
     av.ind.organismCanvasHolderSize('mouseup_organIcon_parent');
     av.ui.adjustOrgInstructionTextAreaSize();
-    if (av.debug.mouse) console.log('from parent', av.parent, '; fzr', av.fzr);
+    if (av.dbg.flg.mouse) console.log('from parent', av.parent, '; fzr', av.fzr);
     av.post.addUser('Dragged item to Organism Icon');
     av.msg.doOrgTrace();  // request new Organism Trace from Avida and draw that.
     // /* yemi: update organism canvas */
@@ -1565,7 +1565,7 @@ jQuery(document).ready(function($) {
     var domid = el.id;
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
 
-    console.log('container =', container);
+    console.log('in av.dnd.insert: container =', container);
     console.log('av.dnd.containerMap =', av.dnd.containerMap);
     console.log('Object =', Object);
     if (Object.keys(av.dnd.containerMap).indexOf(container) === -1) {
