@@ -5,7 +5,7 @@
   // if (av.dbg.flg.root) { console.log('Root: before av.fio.addFzItem'); }
   /*------------------------------------------------------------------------------------------------ av.fio.addFzItem --*/
 
-  av.fio.addFzItem = function(target, name, type, fileNum) {
+  av.fio.addFzItem = function(target, name, type, fileNum, from) {
     // example 'container' input format: '.className' or '#id'
     'use strict';
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
@@ -60,20 +60,20 @@
 
     switch (type) {
       case 'c':
-        domid = av.fio.addFzItem(av.dnd.fzConfig, name, type, num);
+        domid = av.fio.addFzItem(av.dnd.fzConfig, name, type, num, 'av.frd.add2freezerFromFile: c');
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzConfig is undefined');
         if (av.fzr.cNum < Number(num)) {av.fzr.cNum = Number(num); }
         //The default config file is loaded as the activeConfig after all the files are loaded. 
         //if (0 == num && loadConfigFlag) {var ConfigActiveDomID = av.fio.setActiveConfig(av.dnd.activeConfig, name, 'b');}
         break;
       case 'g':
-        domid = av.fio.addFzItem(av.dnd.fzOrgan, name, type, num);
+        domid = av.fio.addFzItem(av.dnd.fzOrgan, name, type, num, 'av.frd.add2freezerFromFile: g');
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzOrgan is undefined');
         if (av.fzr.gNum < Number(num)) {av.fzr.gNum = Number(num); }
         break;
   /*
       case 'm':
-        domid = av.fio.addFzItem(av.dnd.fzMdish, name, type, num);
+        domid = av.fio.addFzItem(av.dnd.fzMdish, name, type, num, 'frd.add2freezerFromFile: m');
         av.fzr.mDish[dir] = {};
         av.fzr.mDish[dir].dir = {};
         av.fzr.mDish[dir].domid = {};
@@ -83,18 +83,18 @@
         if (av.fzr.mNum < Number(num)) {av.fzr.mNum = Number(num); }
         break;
       case 'r':
-        domid = av.fio.addFzItem(av.dnd.fzRdish, name, type, num);
+        domid = av.fio.addFzItem(av.dnd.fzRdish, name, type, num, 'av.frd.add2freezerFromFile: r');
         if ('dndSection is undefined' == domid) console.log('av.dnd.fzrDish is undefined');
         if (av.fzr.rNum < Number(num)) {av.fzr.rNum = Number(num); }
         break;
   */
       case 't':
-        domid = av.fio.addFzItem(av.dnd.fzTdish, name, type, num);
+        domid = av.fio.addFzItem(av.dnd.fzTdish, name, type, num, 'av.frd.add2freezerFromFile: t');
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzTdish is undefined');
         if (av.fzr.tNum < Number(num)) {av.fzr.tNum = Number(num); } 
         break;
       case 'w':
-        domid = av.fio.addFzItem(av.dnd.fzWorld, name, type, num);
+        domid = av.fio.addFzItem(av.dnd.fzWorld, name, type, num, 'av.frd.add2freezerFromFile: w');
         if ('dndSection is undefined' === domid) console.log('av.dnd.fzWorld is undefined');
         if (av.fzr.wNum < Number(num)) {av.fzr.wNum = Number(num); }
         break;

@@ -284,20 +284,20 @@
       type = av.fzr.item['entrytype.txt'].trim();
       switch (type) {
         case 'c':
-          domid = av.fio.addFzItem(av.dnd.fzConfig, name, type, av.fzr.cNum);
+          domid = av.fio.addFzItem(av.dnd.fzConfig, name, type, av.fzr.cNum, 'av.fio.fixFname: c');
           if ('dndSection is undefined' == domid) console.log('av.dnd.fzConfig is undefined');
           dir = 'c' + av.fzr.cNum;
           av.fzr.cNum++;
           if (av.debug.fio) console.log('c: num', num, '; name', name);
           break;
         case 'g':
-          domid = av.fio.addFzItem(av.dnd.fzOrgan, name, type, av.fzr.gNum);
+          domid = av.fio.addFzItem(av.dnd.fzOrgan, name, type, av.fzr.gNum, 'av.fio.fixFname: g');
           if ('dndSection is undefined' == domid) console.log('av.dnd.fzOrgan is undefined');
           dir = 'g' + av.fzr.gNum;
           av.fzr.gNum++;
           break;
         case 'w':
-          domid = av.fio.addFzItem(av.dnd.fzWorld, name, type, av.fzr.wNum);
+          domid = av.fio.addFzItem(av.dnd.fzWorld, name, type, av.fzr.wNum, 'av.fio.fixFname: w');
           if ('dndSection is undefined' == domid) console.log('av.dnd.fzWorld is undefined');
           dir = 'w' + av.fzr.wNum;
           av.fzr.wNum++;

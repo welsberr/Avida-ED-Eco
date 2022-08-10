@@ -114,6 +114,11 @@
 // - working on formatting on Left & Right mini-chart Y axis and Pause Run at sections
 // - Added utilities to look for elements with overlow in reSizePageParts.js
 //
+// Avida-ED 4.0.16 Beta
+// - repaired drag-n-drop so that the cursor changes shape to cue the user
+// - Analysis: need to fix clicking on instruction circle to get the instruction number. 
+// - - loook at mouseDown, line 70
+// 
 // Generic Notes -------------------------------------------------------------------------------------------------------
 //
 // [option]<alt>{go} to get library in the list for finder
@@ -2944,10 +2949,10 @@ av.ui.feedback = function(){
 
   av.doj.mnDebug.style.visibility = 'hidden';
 
-  // Avida-ED 4.0.14 Beta Testing fix this too. 
+  // Avida-ED 4.0.16 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; set to false before public release for Avida-ED 4.0.14 Beta Testing. ');
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.16 Beta Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x

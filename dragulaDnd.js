@@ -29,7 +29,7 @@ jQuery(document).ready(function($) {
                     $.map($("#popDish1"), (value, key) => { return value }),
                     $.map($("#popDish2"), (value, key) => { return value }),
                    ].flat();
-  console.log('dragula containters: ', containers);
+  if (av.debug.dnd) { console.log('DnD: dragula containters: ', containers); }
 
   // initialize globally availble references to dnd containers
   av.dnd.fzConfig = containers[0];
@@ -179,7 +179,7 @@ jQuery(document).ready(function($) {
     if (source === av.dnd.ancestorBox) {
       sourceIsAncestorBox = true;
     } else sourceIsAncestorBox = false;
-    console.log(el);
+    if (av.debug.dnd) { console.log('DnD: el =', el); }
     elForGrid = el;
   });
 
@@ -208,7 +208,7 @@ jQuery(document).ready(function($) {
   //----------------------------------------------------------------------------------------------------- dra.on drop --
   // handle drop
   dra.on('drop', (el, target, source) => {
-    console.log(el);
+    if (av.debug.dnd) { console.log('DnD: el=', el); }
     // if the drop is not accepted at this target, cancel and return
     if (!av.dnd.accepts(el, target, source)) {
       dra.cancel();
@@ -357,8 +357,8 @@ jQuery(document).ready(function($) {
       }
       document.body.style.cursor = "default";
       // for debugging
-      console.log('end mouseup touchend: av.fzr =', av.fzr);
-      console.log('end mouseup touchend: av.dnd.containerMap =', av.dnd.containerMap);
+      // if (av.dbg.flg.drg) { console.log('dragula: end mouseup touchend: av.fzr =', av.fzr); }
+      if (av.dbg.flg.drg) { console.log('dragula: end mouseup touchend: av.dnd.containerMap =', av.dnd.containerMap); }
     });
   });
   //------------------------------------------------------------------------------------------------- end dra.on drop --
@@ -398,7 +398,7 @@ jQuery(document).ready(function($) {
   // when a configuration is added to the freezer
   av.dnd.landFzConfig = function(el, target, source) {
     'use strict';
-    if (av.debug.dnd) console.log('av.dnd.landFzConfig: fzr', av.fzr);
+    if (av.debug.dnd) { console.log('av.dnd.landFzConfig: fzr', av.fzr); }
     // create a new dom id for the new object
     el.id = 'dom_c' + av.fzr.cNum;
     mostRecentlyAddedDomid = el.id; // register this as the most recently added dom object
@@ -431,7 +431,7 @@ jQuery(document).ready(function($) {
         //create a right av.mouse-click context menu for the item just created.
         av.dnd.contextMenu(target, el.id, 'av.dnd.landFzConfig');   //might need to comment out again (djb)
         av.fzr.saveUpdateState('no');
-        if (av.debug.dnd) console.log('dir', av.fzr.dir[el.id], '; configName', configName );    //domid is el.id
+        if (av.debug.dnd) { console.log('dir', av.fzr.dir[el.id], '; configName', configName ); }   //domid is el.id
       } else { //user cancelled so the item should NOT be added to the freezer.
         dra.cancel();
         return;
@@ -471,10 +471,10 @@ jQuery(document).ready(function($) {
         av.fzr.domid['g'+ av.fzr.gNum] = el.id;
         av.fzr.file['g' + av.fzr.gNum + '/genome.seq'] = gen;
         av.fzr.file['g' + av.fzr.gNum + '/entryname.txt'] = avName;
-        if (av.debug.dnd) console.log('fzr', av.fzr);
-        if (av.debug.dnd) console.log('fzOrgan', av.dnd.fzOrgan);
+        if (av.debug.dnd) { console.log('fzr', av.fzr); }
+        if (av.debug.dnd) { console.log('fzOrgan', av.dnd.fzOrgan); }
         //create a right av.mouse-click context menu for the item just created.
-        if (av.debug.dnd) console.log('before context menu: target',target, '; domId', domid );
+        if (av.debug.dnd) { console.log('before context menu: target',target, '; domId', domid ); }
         av.fzr.gNum++;
         av.dnd.contextMenu(target, el.id, 'av.dnd.landFzOrgan', av.dnd.landFzOrgan);
         av.fzr.saveUpdateState('no');
@@ -716,7 +716,7 @@ jQuery(document).ready(function($) {
   //------------------------------------------------------------------------------------------ av.dnd.landAnlDndChart --
   av.dnd.landAnlDndChart = function(el, target, source) {
     'use strict';
-    console.log('heaoiefogj');
+    if (av.dbg.flg.drg) { console.log('dragula: in av.dnd.landAnlDndChart'); }
     av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent);
     var items = av.dnd.getAllItems(av.dnd.popDish0);
     if (0 === items.length) { av.dnd.putNslot(el, 0, av.dnd.popDish0); }
@@ -749,7 +749,7 @@ jQuery(document).ready(function($) {
     // need to have only the most recent dropped organism in av.dnd.activeOrgan. 
     // Do this by deleting everything in activeOrgan and reinserting the most resent one after a drop event.
     'use strict';
-    console.log('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent);
+    if (av.debug.dnd) { console.log('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent); }
     //clear out the old data if an organism is already there
     av.dnd.empty(av.dnd.activeOrgan);
     // get the data for the dragged organism
@@ -778,7 +778,7 @@ jQuery(document).ready(function($) {
     // clear out the old data if an organism is already there
     'use strict';
     av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent);
-    if (av.debug.dnd) console.log('source', source.id);
+    if (av.debug.dnd) { console.log('DnD: source', source.id); }
     // remove the existing configuration
     av.dnd.empty(av.dnd.activeOrgan);
     // get the data for the dragged organism
@@ -802,16 +802,16 @@ jQuery(document).ready(function($) {
     }
     if (source === av.dnd.ancestorBox) {
       var Ndx = av.parents.domid.indexOf(parentID);
-      console.log('test from ancestorBox to organIcon', Ndx);
+      if (av.debug.dnd) { console.log('DnD: test from ancestorBox to organIcon', Ndx); }
       av.fzr.actOrgan.name = av.parents.name[Ndx];
       av.fzr.actOrgan.genome = av.parents.genome[Ndx];
-      if (av.debug.dnd) console.log('fzr', av.fzr, '; parents', av.parents, '; ndx', Ndx);
+      if (av.debug.dnd) { console.log('fzr', av.fzr, '; parents', av.parents, '; ndx', Ndx); }
     }
     // change to organism page
     av.ui.mainBoxSwap('organismBlock');
     av.ind.organismCanvasHolderSize('mouseup_organIcon_parent');
     av.ui.adjustOrgInstructionTextAreaSize();
-    if (av.dbg.flg.mouse) console.log('from parent', av.parent, '; fzr', av.fzr);
+    if (av.dbg.flg.mouse) { console.log('mouse: from parent', av.parent, '; fzr', av.fzr); }
     av.post.addUser('Dragged item to Organism Icon');
     av.msg.doOrgTrace();  // request new Organism Trace from Avida and draw that.
     // /* yemi: update organism canvas */
@@ -826,13 +826,13 @@ jQuery(document).ready(function($) {
     'use strict';
     var domId = el.id;
     var dir = av.fzr.dir[domId];
-    if (av.debug.dnd) console.log('domId', domId, '; dir', dir);
+    if (av.debug.dnd) { console.log('DnD: domId', domId, '; dir', dir); }
     av.fzr.actOrgan.name = av.fzr.file[dir+'/entryname.txt'];
     av.fzr.actOrgan.genome = av.fzr.file[dir+'/genome.seq'];
-    if (av.debug.dnd) console.log('domId', domId);
-    if (av.debug.dnd) console.log('domId', domId, '; dir', dir, '; name', av.fzr.actOrgan.name, '; genome', av.fzr.actOrgan.genome);
-    if (av.debug.dnd) console.log('fzr', av.fzr);
-    if (av.debug.dnd) console.log('av.fzr.actOrgan', av.fzr.actOrgan);
+    if (av.debug.dnd) { console.log('DnD: domId', domId); } 
+    if (av.debug.dnd) { console.log('DnD: domId', domId, '; dir', dir, '; name', av.fzr.actOrgan.name, '; genome', av.fzr.actOrgan.genome); }
+    if (av.debug.dnd) { console.log('DnD: fzr', av.fzr); }
+    if (av.debug.dnd) { console.log('DnD: av.fzr.actOrgan', av.fzr.actOrgan); }
   };
   //-------------------------------------------------------------------------------- end av.dnd.updateFromFzrOrganism --
 
@@ -840,8 +840,8 @@ jQuery(document).ready(function($) {
   //------------------------------------------------------------------------------------ av.dnd.updateFromFzrOrganism --
   av.dnd.landGridCanvas = function(el, target, source) {
     'use strict';
-    if (av.debug.dnd) console.log('inside gridCanvas dnd');
-    if (av.debug.dnd) console.log('parents', av.parents);
+    if (av.debug.dnd) { console.log('DnD: inside gridCanvas dnd'); }
+    if (av.debug.dnd) { console.log('DnD: parents', av.parents); }
 
     var nn = av.parents.name.length;
     av.post.addUser('DnD: ' + source.id + '--> GridCanvas: by: ' + el.textContent.trim() + ' on (' +  av.mouse.UpGridPos[0] + ', ' + av.mouse.UpGridPos[1] + ')' );
@@ -852,8 +852,8 @@ jQuery(document).ready(function($) {
     var heightOfTop = parseInt($('#popTopRw').css('height')) + parseInt($('#headerMain').css('height'));
     var mouseX = av.mouse.UpGridPos[0] - av.grd.marginX - av.grd.xOffset - offsetXLocal - widthOfNav - 5;   // diane moved semicolen to right of -5
     var mouseY = av.mouse.UpGridPos[1] - av.grd.marginY - av.grd.yOffset - offsetYLocal - heightOfTop - 5;  // yemi: hardcoded 5; works for now
-    if (av.debug.dnd) console.log('mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]);
-    if (av.debug.dnd) console.log('mouseX, y', mouseX, mouseY);
+    if (av.debug.dnd) { console.log('DnD: mouse.UpGridPosX, y', av.mouse.UpGridPos[0], av.mouse.UpGridPos[1]); }
+    if (av.debug.dnd) { console.log('DnD: mouseX, y', mouseX, mouseY); }
     av.parents.col[nn] = Math.floor(mouseX / av.grd.cellWd);
     av.parents.row[nn] = Math.floor(mouseY / av.grd.cellHt);
     // check to see if in the grid part of the canvas
@@ -881,7 +881,7 @@ jQuery(document).ready(function($) {
       av.dnd.insertToDOM(av.dnd.ancestorBox, el);
       
       var container = target.id !== undefined ? "#" + av.dnd.ancestorBox.id : "." + av.dnd.ancestorBox.className;
-      if (av.debug.dnd) console.log('av.dnd.containerMap[#ancestorBox]', av.dnd.containerMap[container]);   //av.dnd.containerMap not defined?
+      if (av.debug.dnd) { console.log('DnD: av.dnd.containerMap[#ancestorBox]', av.dnd.containerMap[container]); }  //av.dnd.containerMap not defined? 
 
       // Push the item to av.parents
       av.parents.domid.push(el.id);
@@ -889,7 +889,7 @@ jQuery(document).ready(function($) {
       av.parents.handNdx.push(nn);
       av.parents.howPlaced[nn] = 'hand';
       av.parents.injected[nn] = false;
-      if (av.debug.dnd) console.log('av.dnd.landGridCanvas; domId', el.id, '; av.fzr.genome', av.fzr.genome);
+      if (av.debug.dnd) { console.log('DnD: av.dnd.landGridCanvas; domId', el.id, '; av.fzr.genome', av.fzr.genome); }
       av.parents.genome.push(av.fzr.file[dir+'/genome.seq']);
       //Find color of ancestor
       if (0 < av.parents.Colors.length) {av.parents.color.push(av.parents.Colors.pop());}
@@ -902,7 +902,7 @@ jQuery(document).ready(function($) {
     }
     //In all cases remove the ancestor from the gridCanvas so we only keep them in the av.dnd.ancestorBox.
     av.dnd.empty(av.dnd.gridCanvas);  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
-    if (av.debug.dnd) console.log('parents', av.parents);
+    if (av.debug.dnd) { console.log('DnD: parents', av.parents); }
   };
   //-------------------------------------------------------------------------------- end av.dnd.updateFromFzrOrganism --
 
@@ -933,13 +933,13 @@ jQuery(document).ready(function($) {
       // if you place organism into ancestorBox, placement is set to 'auto'
       av.parents.howPlaced.push('auto');
       av.parents.domid.push(el.id); // domid in ancestorBox used to remove if square in grid moved to trashcan
-      console.log(av.parents.domid);
+      if (av.debug.dnd) { console.log('DnD: av.parents.domid=', av.parents.domid); }
       // find color of ancestor
       if (0 < av.parents.Colors.length) { av.parents.color.push(av.parents.Colors.pop());}
       else { av.parents.color.push(av.color.defaultParentColor); }
       av.parents.placeAncestors();
 
-      if (av.debug.dnd) console.log('parents', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]);
+      if (av.debug.dnd) { console.log('DnD: parents', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]); }
       av.grd.drawGridSetupFn('av.dnd.landAncestorBox');
 
       // if the element has not been added yet to target because it has been moved from outside the dragula framework, manually add them
@@ -993,7 +993,7 @@ jQuery(document).ready(function($) {
       else { av.parents.color.push(av.color.defaultParentColor); }
       av.parents.placeAncestors();
 
-      if (av.debug.dnd) console.log('parents', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]);
+      if (av.debug.dnd) { console.log('DnD: parents', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]); }
       av.grd.drawGridSetupFn('av.dnd.landAncestorBox');
 
       // if the element has not been added yet to target because it has been moved from outside the dragula framework, manually add them
@@ -1011,7 +1011,7 @@ jQuery(document).ready(function($) {
   // when a configured dish is added to the config box
   av.dnd.landActiveConfigFn = function (el, target, source, from) {
     'use strict';
-    console.log(from, 'called av.dnd.landActiveConfigFn: el =', el);
+    if (av.debug.dnd) { console.log('DnD:', from, 'called av.dnd.landActiveConfigFn: el =', el); }
     if ('test' != av.dnd.configFlag) av.dnd.configFlag = 'normal'; 
    
     av.grd.clearGrd();
@@ -1110,8 +1110,8 @@ jQuery(document).ready(function($) {
       av.fio.cladeSSG2parents(av.fzr.file[av.fzr.actConfig.dir + '/clade.ssg']);
       var handList = av.fio.handAncestorParse(av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt']);
       var autoList = av.fio.autoAncestorParse(av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt']);
-      console.log('handList=', handList);
-      console.log('autoList=', autoList);
+      if (av.debug.dnd) { console.log('DnD: handList=', handList); }
+      if (av.debug.dnd) { console.log('DnD: autoList=', autoList); }
       var ndx = 0;
       klen = av.parents.name.length;
       for (kk = 0; kk < klen; kk++) {
@@ -1139,7 +1139,7 @@ jQuery(document).ready(function($) {
             handList.row.splice(ndx, 1);
           }
           else {
-            console.log('Name, ', av.parents.name[kk], ', not found');
+            if (av.debug.dnd) { console.log('DnD: Name, ', av.parents.name[kk], ', not found'); }
           }
         }
       }
@@ -1165,7 +1165,7 @@ jQuery(document).ready(function($) {
   //-------------------------------------------------------------------------------------- av.dnd.loadDefaultConfigFn --
   // function that is called in the beginning to load the default configuration
   av.dnd.loadDefaultConfigFn = function (from) {
-    console.log(from, 'called av.dnd.loadDefaultConfigFn');
+    if (av.debug.dnd) { console.log('DnD:', from, 'called av.dnd.loadDefaultConfigFn'); }
     el = $.map($("#dom_c0"), (value, key) => { return value })[0].cloneNode(true);
     av.dnd.landActiveConfigFn(el, av.dnd.activeConfig, av.dnd.fzConfig, 'av.dnd.loadDefaultConfigFn');
   };
@@ -1174,10 +1174,10 @@ jQuery(document).ready(function($) {
   //--------------------------------------------------------------------------------------- av.dnd.loadConfigByNameFn --
   av.dnd.loadConfigByNameFn = function (name, from) {
     configs = $('#fzConfig').children();
-    console.log(from, 'called av.dnd.loadConfigByName: configs =',configs);
+    if (av.debug.dnd) { console.log('DnD:', from, 'called av.dnd.loadConfigByName: configs =',configs); }
     for (var ii = 0; ii < configs.length; ii++) {
       if (configs[ii].outerText.trim() === name) {
-        console.log('configs['+ii+']=', configs[ii]);
+        if (av.debug.dnd) { console.log('DnD: configs['+ii+']=', configs[ii]); }
         av.dnd.landActiveConfigFn(configs[ii].cloneNode(true), av.dnd.activeConfig, av.dnd.fzConfig, av.dnd.loadConfigByNameFn);
       }
     }
@@ -1188,10 +1188,10 @@ jQuery(document).ready(function($) {
   // when a test dish is added to the test config box
   av.dnd.landTestConfigFn = (el, target, source, find) => {
     'use strict';
-    console.log(find, 'called av.dnd.landTestConfigFn: will call av.dnd.landActiveConfigFn');
+    if (av.debug.dnd) { console.log('DnD:', find, 'called av.dnd.landTestConfigFn: will call av.dnd.landActiveConfigFn'); }
     av.dnd.configFlag = 'test';
     //av.dnd.landActiveConfigFn(el, target, source, 'av.dnd.landTestConfigFn');
-    console.log('testconfig', av.fzr.actConfig.file['environment.cfg']);
+    if (av.debug.dnd) { console.log('DnD: testconfig', av.fzr.actConfig.file['environment.cfg']); }
     document.getElementById('showBigTextarea').value = av.fzr.actConfig.file['environment.cfg'];
     document.getElementById('environConfigEdit').value = av.fzr.actConfig.file['environment.cfg'];
     av.grd.clearGrd();
@@ -1289,8 +1289,8 @@ jQuery(document).ready(function($) {
       av.fio.cladeSSG2parents(av.fzr.file[av.fzr.actConfig.dir + '/clade.ssg']);
       var handList = av.fio.handAncestorParse(av.fzr.file[av.fzr.actConfig.dir + '/ancestors_manual.txt']);
       var autoList = av.fio.autoAncestorParse(av.fzr.file[av.fzr.actConfig.dir + '/ancestors.txt']);
-      console.log('handList=', handList);
-      console.log('autoList=', autoList);
+      if (av.debug.dnd) { console.log('DnD: handList=', handList); }
+      if (av.debug.dnd) { console.log('DnD: autoList=', autoList); }
       var ndx = 0;
       klen = av.parents.name.length;
       for (kk = 0; kk < klen; kk++) {
@@ -1318,7 +1318,7 @@ jQuery(document).ready(function($) {
             handList.row.splice(ndx, 1);
           }
           else {
-            console.log('Name, ', av.parents.name[kk], ', not found');
+            if (av.debug.dnd) { console.log('DnD: Name, ', av.parents.name[kk], ', not found'); }
           }
         }
       }
@@ -1354,7 +1354,7 @@ jQuery(document).ready(function($) {
     var remove = {};
     remove.type = '';
     remove.domid = '';
-    if (av.debug.dnd) console.log('in av.dnd.landTrashCan');
+    if (av.debug.dnd) { console.log('in av.dnd.landTrashCan'); }
     var elName = el.textContent.trim();
     if (elName === '@ancestor' || elName === '@default' || elName === '@example') {
       if (elName === '@ancestor' && source === av.dnd.fzOrgan) {
@@ -1377,7 +1377,7 @@ jQuery(document).ready(function($) {
     if (sure) {
       // if the item is from the freezer, delete from freezer unless it is original stock (@)
       if (av.dnd.fzOrgan === source && '@ancestor' !== elName) {
-        if (av.debug.dnd) {console.log('fzOrgan->trash', av.fzr.genome);}
+        if (av.debug.dnd) { console.log('DnD: fzOrgan->trash', av.fzr.genome); }
         remove.domid = el.id;
         remove.type = 'g';
         // remove the dom object
@@ -1413,7 +1413,7 @@ jQuery(document).ready(function($) {
         var index = av.parents.domid.indexOf(el.id);
         // remove parent
         av.parents.removeParent(index);
-        console.log(av.parents);
+        if (av.debug.dnd) { console.log('DnD: parents =', av.parents); }
         // draw an updated grid
         av.grd.drawGridUpdate();
       }
@@ -1433,13 +1433,13 @@ jQuery(document).ready(function($) {
   //---------------------------------------------------------------------------------------------- av.dnd.contextMenu --
   av.dnd.contextMenu = function(target, fzItemID, from) {
     'use strict';
-    console.log(from, 'called contextMenu: fzItemID=', fzItemID);
-    //console.log(from, 'called contextMenu: target=', target);
+    if (av.debug.dnd) { console.log('DnD:', from, 'called contextMenu: fzItemID=', fzItemID); }
+    if (av.debug.dnd) { console.log('DnD:', from, 'called contextMenu: target=', target); }
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     var dir = '';
-    if (av.debug.dnd) console.log('contextMenu; target.id =',container);
-    if (av.debug.dnd) console.log('contextMenu; fzItemID=',fzItemID, ' container=', container);
-    if (av.debug.dnd) console.log('contextMenu: fzr', av.fzr);
+    if (av.debug.dnd) { console.log('contextMenu; target.id =',container); }
+    if (av.debug.dnd) { console.log('contextMenu; fzItemID=',fzItemID, ' container=', container); }
+    if (av.debug.dnd) { console.log('contextMenu: fzr', av.fzr); }
 
     var aMenu = new dijit.Menu({targetNodeIds: [fzItemID]});
     aMenu.addChild(new dijit.MenuItem({
@@ -1480,10 +1480,10 @@ jQuery(document).ready(function($) {
             type = dir.substring(0, 1);
             var FIzip = new av.fio.JSZip();  //FreezerItemZip
             FIzip.file('entrytype.txt', type);
-            if (av.debug.dnd) console.log('type', type);
+            if (av.debug.dnd) { console.log('DnD: type', type); }
             for (var fname in av.fzr.file) {
               if (dir == fname.substring(0, dir.length)) {
-                if (av.debug.dnd) console.log('export filename', fname.substring(dir.length + 1));
+                if (av.debug.dnd) { console.log('DnD: export filename', fname.substring(dir.length + 1)); }
                 FIzip.file(fname.substring(dir.length + 1), av.fzr.file[fname]);
               }
             }
@@ -1523,9 +1523,9 @@ jQuery(document).ready(function($) {
   av.dnd.empty = function(target) {
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     $(container).empty();
-    console.log('container =', container);
-    console.log('av.dnd.containerMap =', av.dnd.containerMap);
-    console.log('Object =', Object);
+    if (av.debug.dnd) { console.log('DnD: container =', container); }
+    if (av.debug.dnd) { console.log('DnD: av.dnd.containerMap =', av.dnd.containerMap); }
+    if (av.debug.dnd) { console.log('DnD: Object =', Object); }
     if (Object.keys(av.dnd.containerMap).indexOf(container) != -1) {
       av.dnd.containerMap[container] = {}
     }
@@ -1555,7 +1555,7 @@ jQuery(document).ready(function($) {
     } 
     
     try { delete av.dnd.containerMap[container][el.id];} 
-    catch { console.log("delete failed");}
+    catch { console.log("delete failed"); }
   }
   //----------------------------------------------------------------------------------------------- end av.dnd.remove --
 
@@ -1565,9 +1565,9 @@ jQuery(document).ready(function($) {
     var domid = el.id;
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
 
-    console.log('in av.dnd.insert: container =', container);
-    console.log('av.dnd.containerMap =', av.dnd.containerMap);
-    console.log('Object =', Object);
+    if (av.debug.dnd) { console.log('DnD: in av.dnd.insert: container =', container); }
+    if (av.debug.dnd) { console.log('DnD: av.dnd.containerMap =', av.dnd.containerMap); }
+    if (av.debug.dnd) { console.log('DnD: Object =', Object); }
     if (Object.keys(av.dnd.containerMap).indexOf(container) === -1) {
       av.dnd.containerMap[container] = {};
     }
@@ -1578,17 +1578,17 @@ jQuery(document).ready(function($) {
   //---------------------------------------------------------------------------------------------- av.dnd.insertToDOM --
   // insert an element into target container DOM
   av.dnd.insertToDOM = function(target, el) {
-    console.log('in av.dnd.insertToDOM: target=', target);
-    console.log('el=', el);
+    if (av.debug.dnd) { console.log('DnD: in av.dnd.insertToDOM: target=', target); }
+    if (av.debug.dnd) { console.log('DnD: el=', el); }
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     el = el.cloneNode(true);
     var classList = el.className.split(" ");
-    console.log('classList=', classList);
+    if (av.debug.dnd) { console.log('DnD: classList=', classList); }
     if (classList.indexOf('gu-transit') != -1) {
       classList.splice(classList.indexOf('gu-transit'), 1);
     };
     el.className = classList.join(" ");
-    console.log('in av.dnd.insertToDOM: el=', el);
+    if (av.debug.dnd) { console.log('DnD: in av.dnd.insertToDOM: el=', el); }
     $(container).append(el);
   };
   //------------------------------------------------------------------------------------------ end av.dnd.insertToDOM --
@@ -1600,7 +1600,7 @@ jQuery(document).ready(function($) {
     var container = source.id !== undefined ? "#" + source.id : "." + source.className;
     try {
       var items = Object.keys(av.dnd.containerMap[container]);
-      console.log('in av.dnd.getAllItems: items=', items);
+      if (av.debug.dnd) { console.log('DnD: in av.dnd.getAllItems: items=', items); }
     } catch (error) {
       var items = [];
     }
@@ -1638,7 +1638,7 @@ jQuery(document).ready(function($) {
     var theName;
     //look for name in freezer section
     if (0 <= namelist.indexOf(name)) {
-      console.log(namelist, name);
+      if (av.debug.dnd) { console.log('DnD: namelist =',namelist, '; name=',name); }
       theName = av.dnd.nameNfrzItem(namelist, name, 1);
     } else { theName = name; }
 
@@ -1696,7 +1696,7 @@ jQuery(document).ready(function($) {
   //   // Input: dndSection = the text of the class os the Dojo DnD section with elements to be sorted
   //   // e.g., var dndSection = 'fzOrgan'; sortDnD(dndSection);
   //   // actually full class name is ".element dojoDndItem" to query
-  //   // console.log('inside sortDnD');
+  //   // if (av.debug.dnd) { console.log('DnD: inside sortDnD'); }
   //   //dojo.query(".element",  dojo.byId(dndSection)).sort(
   //   dojo.query(".dojoDndItem", dndSection).sort(
   //     function (a, b) {

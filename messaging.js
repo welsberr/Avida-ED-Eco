@@ -1037,6 +1037,11 @@ av.msg.fillColorBlock = function (msg, from) {
     }
     else {
       console.log('Gradient mode,  null = fill: bkColor=', bkcolor);
+      if (undefined == av.grd.msg.ancestor) { 
+        console.log ('av.grd.msg.ancestor is undefined');
+      } else {
+        console.log('av.grd.msg.ancestor =', av.grd.msg.ancestor);
+      };
       try {
         if (av.grd.msg.ancestor.data != undefined) {
           console.log("av.grd.msg.ancestor.data is defined");
@@ -1045,7 +1050,7 @@ av.msg.fillColorBlock = function (msg, from) {
           console.log('Gradient mode,  null = fill, - = ancestor.data: bkColor=', bkcolor);
           }
         }
-      } catch (e){ console.log(e, e.stack);} // buggy
+      } catch (e) { console.log('ERROR: e =', e, 'e.stack =', e.stack); } // buggy
     }
   } 
 

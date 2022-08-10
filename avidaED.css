@@ -65,7 +65,7 @@ html, body {
 button {
    border: 1px solid #aaa;
    display:inline;
-   /* cursor:pointer; */
+   cursor:pointer;
    border-radius: 5px;
  }
  
@@ -136,6 +136,7 @@ h1, h2, h3, h4, h5, h6 {
 #allAvidaContainer {
    margin: 0;
    padding: 0;
+   /* cursor: pointer;  */ /* need to delete completely tiba */
 } 
 
 /* trying classe to get headers back to to what they should be 
@@ -281,7 +282,7 @@ h1, h2, h3, h4, h5, h6 {
  
  .dojoDndItemOver {
    background: #EDEDED;
-   /* cursor: pointer; */
+   cursor: pointer;
  }
  
  .dojoDndItemSelected {

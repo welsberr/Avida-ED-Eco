@@ -210,9 +210,9 @@
             av.fzr.file[gdir + '/genome.seq'] = '0,heads_default,' + av.ind.dna[av.ind.son];
             av.fzr.gNum++;
             av.fzr.saveUpdateState('no');
-            if (av.dbg.flg.mouse) console.log('Offspring-->freezer, dir', gdir, 'fzr', av.fzr);
+            if (av.dbg.flg.mouse) console.log('dragula: Offspring-->freezer, dir', gdir, 'fzr', av.fzr);
             //create a right mouse-click context menu for the item just created.
-            if (av.dbg.flg.mouse) console.log('Offspring-->freezer; fzf', av.fzr);
+            if (av.dbg.flg.mouse) console.log('mouse: Offspring-->freezer; fzf', av.fzr);
             av.dnd.contextMenu(av.dnd.fzOrgan, domid, 'av.mouse.offspringMouse');
           }
         }
@@ -223,7 +223,7 @@
 
   av.mouse.traceSelected = function(from) {
     'use strict';
-    console.log(from, 'called av.mouse.traceSelected');
+    if (av.dbg.flg.mouse) { console.log('mouse:', from, 'called av.mouse.traceSelected'); }
     av.dnd.empty(av.dnd.activeOrgan);
     //Put name of offspring in OrganCurrentNode
     var container = '#' + av.dnd.activeOrgan.id;
@@ -236,7 +236,7 @@
     $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${av.grd.kidName} </div>`);
     av.dnd.containerMap[container][domid] = {'name': av.grd.kidName , 'type': 'g'};
     //genome data should be in av.parents.genome[av.mouse.ParentNdx];
-    if (av.dbg.flg.mouse) console.log('genome', av.grd.kidGenome);
+    if (av.dbg.flg.mouse) { console.log('mouse: genome =', av.grd.kidGenome); }
     av.fzr.actOrgan.genome = av.grd.kidGenome;
     av.fzr.actOrgan.name = av.grd.kidName;
     av.fzr.actOrgan.fzDomid = "";
@@ -244,7 +244,7 @@
   };
 
   av.mouse.traceSelectedParent = function(from) {
-    console.log(from, 'called av.mouse.traceSelectedParent');
+    if (av.dbg.flg.mouse) { console.log('mouse:', from, 'called av.mouse.traceSelectedParent'); }
     av.dnd.empty(av.dnd.activeOrgan);
     var container = '#' + av.dnd.activeOrgan.id;
     var domid = av.parents.domid[av.mouse.ParentNdx];
