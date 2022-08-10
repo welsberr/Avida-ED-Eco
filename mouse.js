@@ -75,7 +75,7 @@
   av.mouse.makeCursorDefault = function () {
     'use strict';
     console.log('in av.mouse.makeCursorDefault');
-    av.mouse.frzCurserSet('default');  //pointer
+    av.mouse.frzCurserSet('default');  //arrow
     av.mouse.setCursorStyle('default', av.mouse.dndTarget);
     av.mouse.setCursorStyle('default', av.mouse.notDndPopList);
     av.mouse.setCursorStyle('default', av.mouse.notDndIndList);
@@ -134,12 +134,12 @@
     if (av.dbg.flg.mouse) console.log(from, 'called av.mouse.findSelected: mx,y', mouseX, mouseY, '; selected Col, Row', av.grd.selectedCol, av.grd.selectedRow);
   };
 
-  function offspringTrace(from) {
+  av.mouse.offspringTrace = function(from) {
     'use strict';
     //Get name of Mom that is in OrganCurrentNode
     var parent;
     var parentID = Object.keys(av.dnd.containerMap['#activeOrgan'])[0];
-    if (av.dbg.flg.mouse) console.log('in offspringTrace: parentID =', parentID);
+    if (av.dbg.flg.mouse) console.log(from, 'called av.mouse.offspringTrace: parentID =', parentID);
     if (undefined == parentID) parent = '';
     else parent = document.getElementById(parentID).textContent.trim();
     av.dnd.empty(av.dnd.activeOrgan);
@@ -161,14 +161,15 @@
   };
 
   // yemi: 'offspring' is for organism page, 'kid' for population page
-  av.mouse.offspringMouse = function(evt, dnd, fio, fzr, gen) {
+  av.mouse.offspringMouse = function(evt, from) {
     'use strict';
-    console.log('in av.mouse.offspringMouse');
+    if (!from) from = 'unkn';
+    console.log(from, 'called av.mouse.offspringMouse');
     var target = '';
     var elements = $.map(document.elementsFromPoint(evt.clientX, evt.clientY), (x) => {return x.id});
     if (elements.indexOf('organIcon') != -1 || elements.indexOf('actOrgImg') != -1 || elements.indexOf('activeOrgan') != -1) {
       console.log('inside offspringMouse');
-      offspringTrace(dnd, fio, fzr, gen);
+      av.mouse.offspringTrace('av.mouse.offspringMouse');
       av.post.addUser('Moved something to organsim Icon');
       target = 'organIcon';
     }
@@ -183,7 +184,7 @@
         //create a new freezer item
         if (av.dbg.flg.mouse) console.log('offSpring->freezerDiv');
         var parent;
-        var container = dnd.activeOrgan.id !== undefined ? "#" + dnd.activeOrgan.id : "." + dnd.activeOrgan.className;
+        var container = av.dnd.activeOrgan.id !== undefined ? "#" + av.dnd.activeOrgan.id : "." + av.dnd.activeOrgan.className;
         var parentID = $(container).children()[0].id; // yemi: not sure it will work
         if (av.dbg.flg.mouse) console.log('parentID', parentID);
         if (undefined == parentID) parent = 'noParentName';
@@ -209,9 +210,9 @@
             av.fzr.file[gdir + '/genome.seq'] = '0,heads_default,' + av.ind.dna[av.ind.son];
             av.fzr.gNum++;
             av.fzr.saveUpdateState('no');
-            if (av.dbg.flg.mouse) console.log('Offspring-->freezer, dir', gdir, 'fzr', fzr);
+            if (av.dbg.flg.mouse) console.log('Offspring-->freezer, dir', gdir, 'fzr', av.fzr);
             //create a right mouse-click context menu for the item just created.
-            if (av.dbg.flg.mouse) console.log('Offspring-->freezer; fzf', fzr);
+            if (av.dbg.flg.mouse) console.log('Offspring-->freezer; fzf', av.fzr);
             av.dnd.contextMenu(av.dnd.fzOrgan, domid, 'av.mouse.offspringMouse');
           }
         }
@@ -335,7 +336,7 @@
         av.fzr.saveUpdateState('no');
         console.log(av.fzr);
         if (av.dbg.flg.mouse) console.log('fzOrgan', av.dnd.fzOrgan);
-        if (av.dbg.flg.mouse) console.log('Kid-->Snow: dir',gdir, '; fzr', fzr);
+        if (av.dbg.flg.mouse) console.log('Kid-->Snow: dir',gdir, '; fzr', av.fzr);
         //create a right mouse-click context menu for the item just created.
         av.dnd.contextMenu(av.dnd.fzOrgan, domid, 'av.mouse.freezeTheKid');
         av.fzr.saveUpdateState('no');

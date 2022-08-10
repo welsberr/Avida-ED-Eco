@@ -337,7 +337,7 @@ require([
     av.mouse.arrowKeysOnGrid(event);
   });
 
-  // change mouse cursor shape
+  //-------------------------------------------------------------------------------- .hover change mouse cursor shape --
   var mouseDown = false;
   $(document).mousedown(() => { mouseDown = true;}).mouseup(() => {mouseDown = false;});
     $(av.dnd.activeConfig).hover(
@@ -382,6 +382,8 @@ require([
         }
       });
 
+  //---------------------------------------------------------------------------- end .hover change mouse cursor shape --
+
   //av.mouse down on the grid
   $(av.dom.gridCanvas).on('mousedown', function (evt) {
     av.post.addUser('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
@@ -419,7 +421,7 @@ require([
     } 
     // this is for organism page
     else if ('offspring' == av.mouse.Picked) {
-      target = av.mouse.offspringMouse(evt, av.dnd, av.fio, av.fzr, av.gen);
+      target = av.mouse.offspringMouse(evt, 'document.on_mouseup_touchend');
       av.mouse.Picked = '';
     } 
     // this is for population page
@@ -2524,7 +2526,7 @@ av.ui.feedback = function(){
     av.ui.mainBoxSwap('organismBlock');
     av.ind.organismCanvasHolderSize('mnCnOffspringTrace');
     av.ui.adjustOrgInstructionTextAreaSize();
-    offspringTrace(av.dnd, av.fio, av.fzr, av.gen);
+    av.mouse.offspringTrace(av.dnd, av.fio, av.fzr, av.gen);
     /* update organism canvas */ /* it doesn't automatically update */
     setTimeout(() => {av.ind.updateOrgTrace();}, 1000);
   };

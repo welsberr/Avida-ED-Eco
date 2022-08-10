@@ -65,22 +65,10 @@ html, body {
 button {
    border: 1px solid #aaa;
    display:inline;
-   cursor:pointer;
+   /* cursor:pointer; */
    border-radius: 5px;
  }
  
-/* Yemi made 
- button {
-  border: none;
-  background-color: #d1d9df;
-  padding: 0.4rem;    /* yemi had 0.5em, dianed changed 
-  color: #000000;
-
-   display:inline;      /* from Diane's version which was active till commentted out on 2021_827 
-   cursor:pointer;      /* from Diane's version which was active till commentted out on 2021_827 
-   border-radius: 5px;  /* from Diane's version which was active till commentted out on 2021_827 
-}
- */
 
 /* Yemi made */
 button:hover {
@@ -148,7 +136,6 @@ h1, h2, h3, h4, h5, h6 {
 #allAvidaContainer {
    margin: 0;
    padding: 0;
-   cursor: pointer;  
 } 
 
 /* trying classe to get headers back to to what they should be 
@@ -172,27 +159,7 @@ h1, h2, h3, h4, h5, h6 {
  .hdf4 { font-size: 1.45rem; }
  .hdf5 { font-size: 1.30rem; }
  .hdf6 { font-size: 1.15rem; }
- 
- /* font size from w3schools
- .hdf1 { font-size: 2.00rem; }    style='font-size: 2.00rem; line-height: 2.00rem; font-weight: 700; margin: 0rem;'
- .hdf2 { font-size: 1.50rem; }    style='font-size: 1.85rem; line-height: 1.85rem; font-weight: 600; margin: 0rem;'
- .hdf3 { font-size: 1.17rem; }    style='font-size: 1.60rem; line-height: 1.60rem; font-weight: 500; '
- .hdf4 { font-size: 1.00rem; }    style='font-size: 1.45rem; line-height: 1.45rem; font-weight: 400; '
- .hdf5 { font-size: 0.83rem; }    style='font-size: 1.30rem; line-height: 1.30rem; font-weight: 300; '
- .hdf6 { font-size: 0.67rem; }    style='font-size: 1.15rem; line-height: 1.15rem; font-weight: 200; '
- 
- examples
-   <div id="headerSizeTest">
-     <h1 class='dfhd hdf1' style='font-size: 2.00rem; line-height: 2.00rem; font-weight: 700; margin: 0rem;'>Header 1</h1>
-     <h2 class='dfhd hdf2' style='font-size: 1.85rem; line-height: 1.85rem; font-weight: 600; margin: 0rem;'>Header 2</h2>
-     <h3 class='dfhd hdf3' style='font-size: 1.60rem; line-height: 1.60rem; font-weight: 500;'>Header 3</h3>
-     <h4 class='dfhd hdf4' style='font-size: 1.45rem; line-height: 1.45rem; font-weight: 400;'>Header 4</h4>
-     <h5 class='dfhd hdf5' style='font-size: 1.30rem; line-height: 1.30rem; font-weight: 300;'>Header 5</h5>
-     <h6 class='dfhd hdf6' style='font-size: 1.15rem; line-height: 1.15rem; font-weight: 200;'>Header 6</h6>
-   </div>
- */
- 
- 
+
  #splash{
   display: block;
   position: absolute; 
@@ -314,7 +281,7 @@ h1, h2, h3, h4, h5, h6 {
  
  .dojoDndItemOver {
    background: #EDEDED;
-   cursor: pointer;
+   /* cursor: pointer; */
  }
  
  .dojoDndItemSelected {
