@@ -262,7 +262,7 @@ html {
 }
 
   #mainMenu{
-    flex: 0 1 350px;
+    flex: 0 1 1000px;
     --pix1: 30; 
     height: var(--rem-size1)
     border: 1px solid #888;
