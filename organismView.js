@@ -426,15 +426,15 @@
         av.ind.rotate[av.ind.son] = 0;
         av.ind.drawIcon(gen);
         //there is an offspring, so it can be saved in the freezer or fed back into Organism viewer
-        dijit.byId("mnFzOffspring").attr("disabled", false);
-        dijit.byId("mnCnOffspringTrace").attr("disabled", false);
+        document.getElementById('mnFzOffspring').disabled = false;
+        document.getElementById('mnCnOffspringTrace').disabled = false;
       }
       else {
         av.ind.cx[av.ind.son] = av.ind.cx[av.ind.mom] + av.ind.bigR[av.ind.mom] + 2 * av.ind.smallR + av.ind.bigR[av.ind.son];
         av.ind.rotate[av.ind.son] = Math.PI;            //offspring rotated 180 degrees when still growing.
         //no organism, so menu item is disabled
-        dijit.byId("mnFzOffspring").attr("disabled", true);
-        dijit.byId("mnCnOffspringTrace").attr("disabled", true);
+        document.getElementById('mnFzOffspring').disabled = true;
+        document.getElementById('mnCnOffspringTrace').disabled = true;
         //console.log("xy", av.ind.cx[av.ind.son], av.ind.cy[av.ind.son], " size", av.ind.size[av.ind.mom]);
       }
       av.ind.genomeCircle(gen, 1, obj);

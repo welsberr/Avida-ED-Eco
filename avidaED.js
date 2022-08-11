@@ -1,7 +1,7 @@
 
  // this version uses grid box layout for major sections (toop, left side, main, right side)  
  // if (av.dbg.flg.root) { console.log('Root: avidaED.js at beginning of file on 2020_0111 @ 20:21'); };
- console.log('Root: avidaED.js at beginning of file on 2021_a31_Sun'); 
+ console.log('Root: avidaED.js at beginning of file on 2022_804_Sat'); 
 
 // need a server to run Avida-ED from a file. The one below works.
 // python server.py                    for http://localhost:8000/
@@ -854,18 +854,21 @@ require([
   };
 
   //----------------------------------------- Testing & Development Tools that are hidden from from User .---------------
-  av.doj.mnHpDebug.onclick = function () {
-    console.log('in av.doj.mnHpDebug.onclick');
-    if ('visible' === av.doj.mnDebug.style.visibility) {
-      av.doj.mnDebug.style.visibility = 'hidden';
-      dijit.byId('mnHpDebug').set('label', 'Show debug menu');
-      av.post.addUser('Button: mnHpDebug: now hidden; avidaED.js');
-    } else {
-      av.doj.mnDebug.style.visibility = 'visible';
-      dijit.byId('mnHpDebug').set('label', 'Hide debug menu');
-      av.post.addUser('Button: mnHpDebug: now visible');
-    }
-  };
+  // av.dom.mnHpDebug.onclick = function () {
+  //   console.log('in av.dom.mnHpDebug.onclick');
+  //   if ('visible' === av.dom.mnDebug.style.visibility) {
+  //     // av.doj.mnDebug.style.visibility = 'hidden';
+  //     // document.getElementById('mnDebug').style.visibility = 'hidden';
+  //     av.dom.mnDebug.style.visibility = 'hidden';
+  //     document.getElementById('mnHpDebug').label = 'Show debug menu';
+  //     // dijit.byId('mnHpDebug').set('label', 'Show debug menu');
+  //     av.post.addUser('Button: mnHpDebug: now hidden; avidaED.js');
+  //   } else {
+  //     document.getElementById('mnDebug').style.visibility = 'visible';
+  //     document.getElementById('mnHpDebug').label = 'Hide debug menu';
+  //     av.post.addUser('Button: mnHpDebug: now visible');
+  //   }
+  // };
 
   av.ui.where = function (domobj) {
     // placeholder that was to return the cell ID in the grid; this was never done. 
@@ -1256,8 +1259,8 @@ av.ui.feedback = function(){
     document.getElementById(showButton).style.background = '#DBDBDB'; 
 
     //disable menu options. they will be enabled when relevant canvas is drawn
-    dijit.byId('mnFzOffspring').attr('disabled', true);
-    dijit.byId('mnCnOffspringTrace').attr('disabled', true);
+    document.getElementById('mnFzOffspring').disabled = true;
+    document.getElementById('mnCnOffspringTrace').disabled = true;
 
     if ('populationBlock' == av.ui.page) {
       av.dom.popInfoVert.style.display = 'block';
@@ -2947,7 +2950,8 @@ av.ui.feedback = function(){
   av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
   av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
 
-  av.doj.mnDebug.style.visibility = 'hidden';
+  // av.doj.mnDebug.style.visibility = 'hidden';
+  av.dom.mnDebug.style.visibility = 'hidden';
 
   // Avida-ED 4.0.16 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
@@ -2956,7 +2960,7 @@ av.ui.feedback = function(){
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x
-    av.doj.mnDebug.style.visibility = 'hidden';   //visible
+    av.dom.mnDebug.style.visibility = 'hidden';   //visible
   };
   //av.ui.toggleDevelopmentDisplays('Last_things_done');  // this needs to be called in production version
 
@@ -3058,6 +3062,31 @@ av.ui.feedback = function(){
     if (av.debug.uil) { console.log('ui: PopPlotSize: av.pch.layout.wd ht=', av.pch.layout.width, av.pch.layout.height); }
     //av.debug.uil = false;
   };
+
+  let linkBtn = document.querySelectorAll(".link-btn");
+      for (i = 0; i < linkBtn.length; i++) {
+        linkBtn[i].addEventListener("click", function (e) {
+          let subMenu = this.nextElementSibling;
+          if (subMenu.style.display === "block") {
+            subMenu.style.display = "none";
+          } else {
+            dismiss();
+            subMenu.style.display = "block";
+            e.stopPropagation();
+          }
+        });
+      }
+
+      function dismiss() {
+        let submenu = document.querySelectorAll(".dismiss");
+        for (i = 0; i < submenu.length; i++) {
+          submenu[i].style.display = "none";
+        }
+      }
+
+      window.addEventListener("click", function (e) {
+        dismiss();
+      });
 
 // **************************************************************************************************************** */
 //                                       Notes on things I learned writing this code

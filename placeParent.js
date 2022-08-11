@@ -1,8 +1,6 @@
   // Place Parent on grid
   // if (av.dbg.flg.root) { console.log('Root: start of placeParent'); }
   var av = av || {};  //incase av already exists
-  var dojo = dojo || {};  //incase av already exists
-  var dijit = dijit || {};  //incase av already exists
 
   // if (av.dbg.flg.root) { console.log('Root: before av.parents.placeAncestors'); }
   //---------- set Ancestors ------------------/

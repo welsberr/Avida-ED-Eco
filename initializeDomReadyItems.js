@@ -1,23 +1,21 @@
   //Just a definition of pointes to DOM objecs. I'm not sure if this speeds up running at all just slows down lading the app
 
   var av = av || {};  //because av already exists, want to let editor know that av is valid
-  var dojo = dojo || {};
-  var dijit = dijit || {};
 
   // if (av.dbg.flg.root) { console.log('Root: before av.dom.load'); }
   av.dom.load = function () {
     'use strict';
     //Menu
-    av.doj.mnCnPopRun = document.getElementById('mnCnPopRun');
+    av.dom.mnCnPopRun = document.getElementById('mnCnPopRun');
 
-    av.doj.mnFlStandAloneApp = document.getElementById('mnFlStandAloneApp');
-    av.doj.mnHpAbout = document.getElementById('mnHpAbout');
-    av.doj.mnHpManual = document.getElementById('mnHpManual');
-    av.doj.mnHpHardware = document.getElementById('mnHpHardware');
-    av.doj.mnHpInfo = document.getElementById('mnHpInfo');
-    av.doj.mnHpProblem = document.getElementById('mnHpProblem');
-    av.doj.mnHpDebug = document.getElementById('mnHpDebug');
-    av.doj.mnDebug = document.getElementById('mnDebug');
+    av.dom.mnFlStandAloneApp = document.getElementById('mnFlStandAloneApp');
+    av.dom.mnHpAbout = document.getElementById('mnHpAbout');
+    av.dom.mnHpManual = document.getElementById('mnHpManual');
+    av.dom.mnHpHardware = document.getElementById('mnHpHardware');
+    av.dom.mnHpInfo = document.getElementById('mnHpInfo');
+    av.dom.mnHpProblem = document.getElementById('mnHpProblem');
+    av.dom.mnHpDebug = document.getElementById('mnHpDebug');
+    av.dom.mnDebug = document.getElementById('mnDebug');
 
     //main area
     av.dom.userMsgLabel = document.getElementById('userMsgLabel');
@@ -249,12 +247,12 @@
   //av.dom.load();
 
   av.dom.initilizeDigitData = function () {
-    dijit.byId('mnCnPause').attr('disabled', true);
-    dijit.byId('mnCnOrganismTrace').attr('disabled', true);
-    dijit.byId('mnFzOrganism').attr('disabled', true);
-    dijit.byId('mnFzOffspring').attr('disabled', true);
-    dijit.byId('mnFzPopulation').attr('disabled', true);
-    dijit.byId('mnFzAddFzItem').attr('disabled', true);   //tiba need to fix this so freezer button works when I freezer item is highlighted
+    document.getElementById('mnCnPause').disabled = true;
+    document.getElementById('mnCnOrganismTrace').disabled = true;
+    document.getElementById('mnFzOrganism').disabled = true;
+    document.getElementById('mnFzOffspring').disabled = true;
+    document.getElementById('mnFzPopulation').disabled = true;
+    document.getElementById('mnFzAddFzItem').disabled = true; //tiba need to fix this so freezer button works when I freezer item is highlighted
     //dijit.byId('mnFzAddConfigEx').attr('disabled', true);
     //dijit.byId('mnFzAddGenomeEx').attr('disabled', true);
     //dijit.byId('mnFzAddPopEx').attr('disabled', true);
@@ -325,7 +323,7 @@ av.ui.toggleDevelopmentDisplays = function () {
   var popInfoTab2b = ['tabHolderShow', 'tabHolderHide'];
   var sgrfooter2b = ['changeAllSugarsTogetherContainer', 'changeAllSugarsTogetherNoGlobalContainer'];
 
-  console.log('av.doj.mnDebug.style.visibility=', av.doj.mnDebug.style.visibility);
+  console.log('av.dom.mnDebug.style.visibility=', av.dom.mnDebug.style.visibility);
   if ('devoShow' === document.getElementById('developmentToggle').className) {
     ndx2b = 1;
     //hide all development elements
@@ -363,7 +361,7 @@ av.ui.toggleDevelopmentDisplays = function () {
   document.getElementById('geometyHideButton').className = geoHideBut2b[ndx2b];
   document.getElementById('popInfoTabHolder').className = popInfoTab2b[ndx2b];
 
-  av.doj.mnDebug.style.visibility = visible2b[ndx2b];
+  av.dom.mnDebug.style.visibility = visible2b[ndx2b];
   document.getElementById('testConfigLableHolder').style.display = flex2b[ndx2b];   //none
 
   document.getElementById('showTextDebugButtonDiv').style.visibility = visible2b[ndx2b];   //hidden
@@ -385,12 +383,12 @@ av.ui.toggleDevelopmentDisplays = function () {
 
   
   av.ui.toggleDebugMenu =function () {
-    //console.log('in av.ui.toggleDebugMenu: av.doj.mnDebug.style.visibility=', av.doj.mnDebug.style.visibility);
-    if ('visible' === av.doj.mnDebug.style.visibility) {
-      av.doj.mnDebug.style.visibility = 'hidden';
+    //console.log('in av.ui.toggleDebugMenu: av.dom.mnDebug.style.visibility=', av.dom.mnDebug.style.visibility);
+    if ('visible' === av.dom.mnDebug.style.visibility) {
+      av.dom.mnDebug.style.visibility = 'hidden';
     }
     else 
-      av.doj.mnDebug.style.visibility = 'visible';
+      av.dom.mnDebug.style.visibility = 'visible';
   };
   
   // if (av.dbg.flg.root) { console.log('Root: before av.ui.toggleResourceData'); }

@@ -3,14 +3,12 @@
   // *********************************************************************************************************************
   // ptd = PeTri Dish
   var av = av || {};  //incase av already exists
-  var dojo = dojo || {};  //incase av already exists
-  var dijit = dijit || {};  //incase av already exists
 
   // if (av.dbg.flg.root) { console.log('Root: before av.ptd.makePauseState'); }
     av.ptd.makePauseState = function () {
-    dijit.byId('mnCnPause').attr('disabled', true);
-    dijit.byId('mnCnRun').attr('disabled', false);
-    dijit.byId('mnCnOne').attr('disabled', false);
+    document.getElementById('mnCnPause').disabled = true;
+    document.getElementById('mnCnRun').disabled = false;
+    document.getElementById('mnCnOne').disabled = false;
     av.dom.runStopButton.textContent = 'Run';
     av.dom.oneUpdateButton.disabled = false;
   };
@@ -20,9 +18,9 @@
   //might change someday.
   av.ptd.makeRunState = function (from) {
     av.dom.runStopButton.textContent = 'Pause';
-    dijit.byId('mnCnPause').attr('disabled', false);
-    dijit.byId('mnCnRun').attr('disabled', true);
-    dijit.byId('mnCnOne').attr('disabled', true);
+    document.getElementById('mnCnPause').disabled = false;
+    document.getElementById('mnCnRun').disabled = true;
+    document.getElementById('mnCnOne').disabled = true;
     av.dom.oneUpdateButton.disabled = true;
   };
 
@@ -36,7 +34,7 @@
     //av.dom.experimentRadio.disabled = true;
     //av.dom.demoRadio.disabled = true;
     //there will be a population so it can now be frozen.
-    dijit.byId('mnFzPopulation').attr('disabled', false);
+    document.getElementById('mnFzPopulation').disabled = false;
   };
 
   av.ptd.popTdishStateUi = function (from) {
@@ -49,7 +47,7 @@
     //av.dom.experimentRadio.disabled = true;
     //av.dom.demoRadio.disabled = true;
     //there will be a population so it can now be frozen.
-    dijit.byId('mnFzPopulation').attr('disabled', false);
+    document.getElementById('mnFzPopulation').disabled = false;
   };
 
 
@@ -102,7 +100,7 @@
     av.dom.demoRadio.disabled = true;
 
     //there will be a population so it can now be frozen.
-    dijit.byId('mnFzPopulation').attr('disabled', false);
+    document.getElementById('mnFzPopulation').disabled = false;
   };
   //------------------------------------------------------------------------------------ end av.ptd.popRunningStateUi --
   
@@ -208,8 +206,8 @@
     //av.parents.Colors = av.color.parentColorList.slice();   //delete this later
     av.parents.Colors.reverse();
     //set run/stop and drop down menu to the 'stopped' state
-    dijit.byId('mnCnPause').attr('disabled', true);
-    dijit.byId('mnCnRun').attr('disabled', false);
+    document.getElementById('mnCnPause').disabled = true;
+    document.getElementById('mnCnRun').disabled = false;
     av.dom.runStopButton.innerHTML = 'Run';
     //console.log('pauseState; button=run in av.ptd.popNewExStateFn');
 
@@ -289,9 +287,8 @@
     logTit6.textContent = '';
     logTit7.textContent = '';
     av.grd.flagSelected = false;
-    dijit.byId('mnCnOrganismTrace').attr('disabled', true);
-    dijit.byId('mnFzOrganism').attr('disabled', true);
-
+    document.getElementById('mnCnOrganismTrace').disabled = true;
+    document.getElementById('mnFzOrganism').disabled = true;
   };
 
   //after Run button pushed for population
@@ -603,8 +600,8 @@
     if (av.debug.grid) console.log('before calling av.grd.popChartInit');
     av.grd.popChartInit('restDishFn');
     av.grd.runState = 'prepping';
-    dijit.byId('mnCnOrganismTrace').attr('disabled', true);
-    dijit.byId('mnFzOrganism').attr('disabled', true);
+    document.getElementById('mnCnOrganismTrace').disabled = true;
+    document.getElementById('mnFzOrganism').disabled = true;
     //Enable the options on the Setup page
     av.ptd.popNewExStateFn('av.ptd.resetDishFn');
     // //Clear grid settings

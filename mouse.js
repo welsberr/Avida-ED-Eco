@@ -447,8 +447,8 @@
               av.post.addUser('ArrowKey was used to pick kid cellID=' + av.grd.selectedNdx);
               av.msg.doWebOrgDataByCell();
               if (av.dbg.flg.mouse) console.log('kid', av.grd.kidName, av.grd.kidGenome);
-              dijit.byId("mnFzOrganism").attr("disabled", false);  //When an organism is selected, then it can be save via the menu
-              dijit.byId("mnCnOrganismTrace").attr("disabled", false);
+              document.getElementById('mnFzOrganism').disabled = false; //When an organism is selected, then it can be save via the menu
+              document.getElementById('mnCnOrganismTrace').disabled = false
             }
           }
           av.grd.drawGridSetupFn('av.mouse.arrowKeysOnGrid');
