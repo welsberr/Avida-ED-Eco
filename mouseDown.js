@@ -130,8 +130,8 @@
         if (av.grd.msg.ancestor) {
           //console.log('SelectedNdx', av.grd.selectedNdx, '; ancestor', av.grd.msg.ancestor.data[av.grd.selectedNdx]);
           if ('-' == av.grd.msg.ancestor.data[av.grd.selectedNdx] || '-' == av.grd.msg.ancestor.data[av.grd.selectedNdx]) {
-            dijit.byId('mnCnOrganismTrace').attr('disabled', true);
-            dijit.byId('mnFzOrganism').attr('disabled', true);  //kid not selected, then it cannot be save via the menu
+            document.getElementById('mnCnOrganismTrace').disabled=true;
+            document.getElementById('mnFzOrganism').disabled=true;            
           }
           else {
             if (av.dbg.flg.mouse) console.log('kid found');
@@ -142,22 +142,22 @@
             // mouse down on organism
             av.mouse.Picked = 'kid';
             if (av.dbg.flg.mouse) console.log('kid', av.grd.kidName, av.grd.kidGenome);
-            dijit.byId('mnFzOrganism').attr('disabled', false);  //When an organism is selected, then it can be save via the menu
-            dijit.byId('mnCnOrganismTrace').attr('disabled', false);
+            document.getElementById('mnFzOrganism').disabled=false;
+            document.getElementById('mnCnOrganismTrace').disabled=false;
           }
         }
         else {
-          dijit.byId('mnCnOrganismTrace').attr('disabled', true);
-          dijit.byId('mnFzOrganism').attr('disabled', true);  //kid not selected, then it cannot be save via the menu
+          document.getElementById('mnCnOrganismTrace').disabled=true;
+          document.getElementById('mnFzOrganism').disabled=true;
         }
       }
     }
     else {
       av.grd.flagSelected = false;
       av.grd.selectedNdx = -1;
-      dijit.byId('mnCnOrganismTrace').attr('disabled', true);
-      dijit.byId('mnFzOrganism').attr('disabled', true);
-    };
+      document.getElementById('mnCnOrganismTrace').disabled=true;
+      document.getElementById('mnFzOrganism').disabled=true;
+    }
     av.grd.drawGridSetupFn('av.mouse.downGridCanvasFn outside grid?');
     // if something was picked up, grid was selected (will be used in dragulaDnd.js)
     // also time to change cursor shape

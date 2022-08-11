@@ -28,6 +28,7 @@
       @import 'themes/claro/claro.css';	
       @import 'avidaED.css';
       @import 'avidaEdEco.css';
+      @import 'menubar.css';
       @import 'lib/dragula/dragula-v3.7.2.min.css';
 
     </style>
@@ -54,94 +55,81 @@
           <input id='leftPanelButton' type='button' value='<<&nbsp;' onclick='av.ptd.lftPanelBtnFn();'/>
         </div>
         <div id="mainMenu">
-          <span data-dojo-type='dijit/MenuBar' tabIndex='0'>
-            <span data-dojo-type='dijit/PopupMenuBarItem' label='Avida-ED' iconClass='dijitNoIcon' id='mnAvidaEd'>
-              <span data-dojo-type='dijit/Menu'>
-                <span data-dojo-type='dijit/MenuItem' id='mnAeAbout' label='About' onclick='av.ui.aboutAvidaED("mnAeAbout")'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnAePreferences' label='Preferences' disabled='true'></span>
-              </span>
-            </span>
-            <span data-dojo-type='dijit/PopupMenuBarItem' label='File' iconClass='dijitNoIcon' id='mnFile'>
-              <span data-dojo-type='dijit/Menu'>
-                <span data-dojo-type='dijit/MenuItem' id='mnFlSaveWorkspace' label='Save Current Workspace'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnFlSaveAs' label='Save Workspace As'></span>
-                <div data-dojo-type='dijit/MenuSeparator'></div>
-                <span data-dojo-type='dijit/MenuItem' id='mnFlOpenDefaultWS' label='Open Default Workspace'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnFlOpenWS' label='Open Workspace'></span>
-                <div data-dojo-type='dijit/MenuSeparator'></div>
-                <span data-dojo-type='dijit/MenuItem' id='mnFlFzItem' label='Import Freezer Item'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnFlExportData' label='Export Data'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnFlExportGraph' label='Export Graphics'></span>
-                <div data-dojo-type='dijit/MenuSeparator'></div>
-                <span data-dojo-type='dijit/MenuItem' id='mnFlStandAloneApp' label='Stand Alone Application'></span>
-              </span>
-            </span>
-            <span data-dojo-type='dijit/PopupMenuBarItem' label='Freezer' iconClass='dijitNoIcon' id='mnFreezer'>
-              <span data-dojo-type='dijit/Menu'>
-                <span data-dojo-type='dijit/MenuItem' id='mnFzConfig' label='Save Current Configuration to Freezer'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnFzPopulation' label='Save Current Population to Freezer'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnFzOrganism' label='Save Selected Organism to Freezer'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnFzOffspring' label='Save Offspring Organism to Freezer'></span>
-                <div data-dojo-type='dijit/MenuSeparator'></div>
-                <div data-dojo-type='dijit/MenuSeparator'></div>
-                <span data-dojo-type='dijit/MenuItem' id='mnFzAddFzItem' label='Add Highlighted Freezer Item in Experiment'
-                      onclick='av.ui.mnFzItemFn(this)'></span>
-                <div data-dojo-type='dijit/MenuSeparator'></div>
-                <span data-dojo-type='dijit/MenuItem' id='mnFzAddGenomeView' label='Put Highlighted Organism from Freezer in Organism View'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnFzAddPopAnalysis' label='Put Highlighted Populated Dish from Freezer in Analysis'></span>
-              </span>
-            </span>
-            <span data-dojo-type='dijit/PopupMenuBarItem' label='Control' id='mnControl'>
-              <span data-dojo-type='dijit/Menu'>
-                <!--<span data-dojo-type='dijit/MenuItem' id='mnCnPopRun' label='Population: Run'></span>-->
-                <span data-dojo-type='dijit/MenuItem' id='mnCnRun' label='Run'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnCnPause' label='Pause'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnCnOne' label='Forward (Do one update)'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnCnNewpop' label='Start New Experiment'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnCnOrganismTrace' label='Put Selected Organism in Organism View'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnCnOffspringTrace' label='Put Offspring in Organism View'></span>
-              </span>
-            </span>
-            <span data-dojo-type='dijit/PopupMenuBarItem' label='Help' id='mnHelp'>
-              <span data-dojo-type='dijit/Menu'>
-                <span data-dojo-type='dijit/MenuItem' id='mnHpAbout' label='About' onclick='av.ui.aboutAvidaED("mnHpAbout")'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnHpManual'>
-                  <a href='images/Avida-ED_UserManualv3.0.pdf' target='_blank'>Quick Start Manual</a></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnHpHardware'>
-                  <a href='cpu_tour.html' target='_blank'>Ancestor and Hardware</a></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnHpInfo'>
-                  <a href='' target='_blank'>Avida-ED Home Page</a></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnHpShortCuts'>
-                  <a href='short_cuts.html' target='_blank'>Short Cuts</a>
-                </span>
-                <span data-dojo-type='dijit/MenuItem' id='mnHpFeedback' label="Send Feedback (please)" onclick='av.ui.feedback("feedback")'></span>
-
-                <div id='hide_menu_lines_for_development' style='display: none'>
-                  <span data-dojo-type='dijit/MenuItem' id='mnHpDebug' label='Toggle Debug Menu'></span>
-                  <div data-dojo-type='dijit/MenuSeparator'></div>
-                  <div data-dojo-type='dijit/PopupMenuItem'>
-                    <span>Color Gradient</span>
-                    <span data-dojo-type='dijit/Menu' id='mnHpColorGradient' label='Color'>
-                      <span data-dojo-type='dijit/MenuItem' id='mnViridis' label='Viridis'></span>
-                      <span data-dojo-type='dijit/MenuItem' id='mnCubehelix' label='Cubehelix'></span>
-                      <span data-dojo-type='dijit/MenuItem' id='mnGnuplot2' label='Gnuplot2'></span>
-                      <div data-dojo-type='dijit/MenuSeparator'></div>
-                    </span>
-                  </div>
-                </div><span id='end_hide_menu_lines_for_development'></span>
-
-              </span>
-            </span>
-            <span data-dojo-type='dijit/PopupMenuBarItem' label='Debug' id='mnDebug'> <!--visible/hidden-->
-              <span data-dojo-type='dijit/Menu'>
-                <span data-dojo-type='dijit/MenuItem' id='mnDbDadsOnly' label='Show Parents only on ritYaxis on PopChart'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnDbThrowError' label='Throw Error'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnDbThrowData' label='Send Data to console'></span>
-                <span data-dojo-type='dijit/MenuItem' id='mnDbLineLog' label='Add Line to Session Log'></span>
-              </span>
-            </span>
-          </span>     
-        </div>  <span id='mainMenu_end' class='display_none'></span>
+          <div class="toplist">
+            <nav>
+              <ul>
+                <li>
+                  <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnAvidaEd">Avida-ED </button>
+                  <ul class="submenu dismiss">
+                    <li> <button id="mnAeAbout" onclick="av.ui.aboutAvidaED('mnAeAbout')">About</button></li>
+                    <li><button id="mnAePreferences">Preferences</button></li>
+                  </ul>
+                </li>
+                <li>
+                  <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnFile">File </button>
+                  <ul class="submenu dismiss">
+                    <li><button id="mnFlSaveWorkspace">Save Current Workspace</button></li>
+                    <li><button id="mnFlSaveAs">Save Workspace As</button></li>
+                    <div class="dropdown-divider" href="#"></div>
+                    <li><button id="mnFlOpenDefaultWS">Open Default Workspace</button></li>
+                    <li><button id="mnFlOpenWS">Open Workspace</button></li>
+                    <div class="dropdown-divider" href="#"></div>
+                    <li><button id="mnFlFzItem">Import Freezer Item</button></li>
+                    <li><button id="mnFlExportData">Export Data</button></li>
+                    <li><button id="mnFlExportGraph">Export Graphics</button></li>
+                    <div class="dropdown-divider" href="#"></div>
+                    <li><button id="mnFlStandAloneApp">Stand Alone Application</button></li>
+                  </ul>
+                </li>
+                <li>
+                  <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnFreezer">Freezer </button>
+                  <ul class="submenu dismiss">
+                    <li><button id="mnFzConfig">Save Current Configuration to Freezer</button></li>
+                    <li><button id="mnFzPopulation">Save Current Population to Freezer</button></li>
+                    <li><button id="mnFzOrganism">Save Selected Organism to Freezer</button>
+                    <li><button id="mnFzOffspring">Save Offspring Organism to Freezer</button></li>
+                    <li><div class="dropdown-divider" href="#"></div></li>
+                    <li><button id="mnFzAddFzItem">Add Highlighted Freezer Item in Experiment</button></li>
+                    <li><div class="dropdown-divider" href="#"></div></li></li>
+                    <li><button id="mnFzAddGenomeView">Put Highlighted Organism from Freezer in Organism View</button></li>
+                    <li><button id="mnFzAddPopAnalysis">Put Highlighted Populated Dish from Freezer in Analysis</button></li>
+                  </ul>
+                </li>
+                <li>
+                  <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnControl">Control</button>
+                  <ul class="submenu dismiss">
+                    <li><button id="mnCnRun">Run</button></li>
+                    <li><button id="mnCnPause">Pause</button></li>
+                    <li><button id="mnCnOne">Forward (Do one update)</button></li>
+                    <li><button id="mnCnNewpop">Start New Experiment</button></li>
+                    <li><button id="mnCnOrganismTrace">Put Selected Organism in Organism View</button></li>
+                    <li><button id="mnCnOffspringTrace" >Put Offspring in Organism View</button></li>
+                  </ul>
+                </li>
+                <li>
+                  <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnHelp">Help</button>
+                  <ul class="submenu dismiss">
+                     <li><button onclick="av.ui.aboutAvidaED('mnHpAbout')" id="mnHpAbout">About</button></li>
+                    <li><button onclick="window.location='images/Avida-ED_UserManualv3.0.pdf';" style="color: blue"id="mnHpManual">Quick Start Manual</button></li>
+                    <li><button onclick="window.location='cpu_tour.html';" style="color: blue" id="mnHpHardware">Ancestor and Hardware</button></li>
+                    <li><button style="color: blue" id="mnHpInfo">Avida-ED Home Page</button></li>
+                    <li><button onclick="window.location='short_cuts.html';" style="color: blue" id="mnHpShortCuts">Short Cuts</button></li>
+                    <li><button onclick="av.ui.feedback('feedback')" id="mnHpFeedback">Send Feedback (please)</button></li>
+                  </ul>
+                </li>
+                <li>
+                  <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnDebug">Debug</button>
+                  <ul class="submenu dismiss">
+                    <li><button id="mnDbDadsOnly">Show Parents only on ritYaxis on PopChart</button></li>
+                    <li><button id="mnDbThrowError">Throw Error</button></li>
+                    <li><button id="mnDbThrowData">Send Data to console</button></li>
+                    <li><button id="mnDbLineLog">Add Line to Session Log</button></li>
+                  </ul>
+                 </li>
+              </ul>
+            </nav>
+          </div>         
+       </div>  <span id='mainMenu_end' class='display_none'></span>
 
         <div id="headerMsg">
           <div id='msgHolder'>

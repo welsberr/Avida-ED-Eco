@@ -303,7 +303,7 @@ html {
     color: blue;
   }
   #RtSideToggleButtons{
-    flex: 0 0 82px;
+    flex: 0 0 85px;
     background: inherit;     /* #eee; better color ? */
     margin: auto;
     height: 18px;

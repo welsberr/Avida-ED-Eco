@@ -1017,8 +1017,8 @@ jQuery(document).ready(function($) {
     av.grd.clearGrd();
     // av.grd.popChartInit('restDishFn');
     av.grd.runState = 'prepping';
-    dijit.byId('mnCnOrganismTrace').attr('disabled', true);    //???
-    dijit.byId('mnFzOrganism').attr('disabled', true);         //???
+    document.getElementById('mnCnOrganismTrace').disabled = true;
+    document.getElementById('mnFzOrganism').disabled = true;
     // Clear grid settings
     av.parents.clearParentsFn();
     // old settings cleaned out now
