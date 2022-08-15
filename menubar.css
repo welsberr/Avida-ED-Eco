@@ -185,7 +185,7 @@
       }
 
       li > .submenu {
-        display: block;
+        display: none;
         position: absolute;
         width: 300%;
         margin-top: 10px;

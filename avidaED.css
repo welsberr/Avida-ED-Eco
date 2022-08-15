@@ -139,7 +139,7 @@ h1, h2, h3, h4, h5, h6 {
    margin: 0;
    padding: 0;
    /* cursor: pointer;  */ /* need to delete completely tiba */
-} 
+}
 
 /* trying classe to get headers back to to what they should be 
     hdf# classes were over written by .claro in document.css
