@@ -68,7 +68,7 @@ button {
    cursor:pointer;
    border-radius: 5px;
    /* may change later- responsive button design */
-   min-width: 4.5vw;
+   /* min-width: 4.5vw; */
  }
  
 
