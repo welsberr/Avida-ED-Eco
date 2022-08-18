@@ -846,7 +846,7 @@ require([
   //--------------------------------------------------------------------------------------------------------------------
   //Save Stand alone applicaton.
   //=====refactored========
-  // error loading dialog box
+  // error loading Modal box
   document.getElementById("mnFlStandAloneApp").onclick = function () {
     "use strict";
     av.post.addUser("Button: mnFlExportGraph");
@@ -981,7 +981,7 @@ av.ui.feedback = function(){
   //********************************************************************************************************************
   // some drop down menu  buttons are in here as they open pop ups. 
 
-  //------------------------------------------------------------------------------------- modal dialog cancel buttons --
+  //------------------------------------------------------------------------------------- modal cancel buttons --
 
   av.dom.needAncestorCancel.onclick = function () {
     av.dom.needAncestorModalID.style.display = 'none';
@@ -992,7 +992,7 @@ av.ui.feedback = function(){
     av.dom.newDishModalID.style.display = 'none';
   };
 
-  /******************************************* New Button and new Dialog **********************************************/
+  /******************************************* New Button and new Modal **********************************************/
   //av.dom.newDishDiscard not in avidaEdEco.html
   av.dom.newDishDiscard.onclick = function () {
     av.post.addUser('Button: newDishDiscard');
@@ -2486,7 +2486,7 @@ av.ui.feedback = function(){
     });
   });
 
-  //triggers flag that requests more data when the settings dialog is closed.
+  //triggers flag that requests more data when the settings ModalID is closed.
   //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
   //----------------------------------------------------------------------------------------------------------------------  
 
@@ -3264,16 +3264,16 @@ av.ui.feedback = function(){
 // 
 // 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Modal Dialog Popup
+// Modal ModalID Popup
 // 
 // https://www.webdesignerdepot.com/2012/10/creating-a-modal-window-with-html5-and-css3/
 // http://webreference.com/js/column90/2.html
-// https://jqueryhouse.com/30-best-jquery-modal-dialog-boxes/
-// https://www.sitepoint.com/14-jquery-modal-dialog-boxes/
-// https://www.sitepoint.com/14-jquery-modal-dialog-boxes/
+// https://jqueryhouse.com/30-best-jquery-modal-ModalID-boxes/
+// https://www.sitepoint.com/14-jquery-modal-ModalID-boxes/
+// https://www.sitepoint.com/14-jquery-modal-ModalID-boxes/
 // https://www.w3schools.com/howto/howto_css_modals.asp
 // 
-// other dialog boxes premade
+// other ModalID boxes premade
 // https://www.w3schools.com/js/js_popup.asp
 //
 //
