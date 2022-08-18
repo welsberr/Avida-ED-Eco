@@ -850,7 +850,7 @@ require([
   document.getElementById("mnFlStandAloneApp").onclick = function () {
     "use strict";
     av.post.addUser("Button: mnFlExportGraph");
-    mnFlStandAloneAppDialog.show();
+    mnFlStandAloneAppModalID.show();
   };
 
   //----------------------------------------- Testing & Development Tools that are hidden from from User .---------------
@@ -1080,19 +1080,19 @@ av.ui.feedback = function(){
       av.ptd.FrConfigFn('av.dom.freezeButton.onclick');
     else {
       if (5 > av.msg.ByCellIDgenome.length) {
-        document.getElementById('fzDialogModFzOrganismSpan').style.display = 'none';
+        document.getElementById('fzModFzOrganismSpan').style.display = 'none';
       } 
       else
-        document.getElementById('fzDialogModFzOrganismSpan').style.display = 'inline';
-      console.log('before fzDialog.show()');
-      document.getElementById('fzDialogModalID').style.display = "block";    //fzDialog.show();
+        document.getElementById('fzModFzOrganismSpan').style.display = 'inline';
+      console.log('before fzModalID.show()');
+      document.getElementById('fzModalID').style.display = "block";    //fzModalID.show();
     }
   };
 
-  document.getElementById('fzDialogModSaveConfig').onclick = function () {
-    av.post.addUser('Button: fzDialogModSaveConfig');
-    document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide();
-    av.ptd.FrConfigFn('fzDialogModSaveConfig.onClick');
+  document.getElementById('fzModSaveConfig').onclick = function () {
+    av.post.addUser('Button: fzModSaveConfig');
+    document.getElementById('fzModalID').style.display = 'none';    //fzModalID.hide();
+    av.ptd.FrConfigFn('fzModSaveConfig.onClick');
   };
 
   //Drop down menu to save a configuration item
@@ -1102,22 +1102,22 @@ av.ui.feedback = function(){
     av.ptd.FrConfigFn("mnFzConfig");
   };
 
-  document.getElementById("fzDialogModSaveOrganism").onclick = function () {
-    av.post.addUser("Button: fzDialogModSaveOrganism");
-    document.getElementById("fzDialogModalID").style.display = "none"; //fzDialog.hide
+  document.getElementById("fzModSaveOrganism").onclick = function () {
+    av.post.addUser("Button: fzModSaveOrganism");
+    document.getElementById("fzModalID").style.display = "none"; //fzModalID.hide
     av.ptd.FrOrganismFn("selected");
   };
 
   //button to freeze a population
-  document.getElementById("fzDialogModSaveWorld").onclick = function () {
+  document.getElementById("fzModSaveWorld").onclick = function () {
     //dijit.byId('FzPopulationButton').on('Click', function () {
-    av.post.addUser("Button: fzDialogModSaveWorld");
-    document.getElementById("fzDialogModalID").style.display = "none"; //fzDialog.hide
+    av.post.addUser("Button: fzModSaveWorld");
+    document.getElementById("fzModalID").style.display = "none"; //fzModalID.hide
     av.ptd.FrPopulationFn();
   };
 
-  document.getElementById("fzDialogModCancel").onclick = function () {
-    document.getElementById("fzDialogModalID").style.display = "none"; //fzDialog.hide
+  document.getElementById("fzModCancel").onclick = function () {
+    document.getElementById("fzModalID").style.display = "none"; //fzModalID.hide
   };
 
   // dijit.byId("mnFzPopulation").on("Click", function () {
