@@ -726,7 +726,7 @@ require([
     av.post.addUser("Button: mnFlOpenDefaultWS");
     av.fio.useDefault = true;
     if ("no" === av.fzr.saveState) {
-      sWSfDialog.show(); //Save WSfile Dialog box
+      sWSfModalID.show(); 
     } else {
       av.fio.readZipWS(av.fio.defaultFname, false); //loadConfigFlag = false = do not load config file
     }
@@ -749,7 +749,7 @@ require([
   // ===refactored -Open Workspace====
   document.getElementById("sWSfOpen").onclick = function () {
     av.post.addUser("Button: sWSfOpen");
-    sWSfDialog.hide(sWSfDialog.hide);
+    sWSfModalID.hide(sWSfModalID.hide);
     if (av.fio.useDefault) {
       av.fio.readZipWS(av.fio.defaultFname, false);  //loadConfigFlag = false = do not load config file
     }  
@@ -768,7 +768,7 @@ require([
     av.post.addUser("Button: mnFlOpenWS");
     av.fio.useDefault = false;
     if ('no' === av.fzr.saveState) {
-      sWSfDialog.show();   //Need to change to include might be saved tiba fix
+      sWSfModalID.show();   //Need to change to include might be saved tiba fix
     }
     //else document.getElementById('inputFile').click();
     else {

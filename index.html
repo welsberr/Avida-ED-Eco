@@ -1253,25 +1253,29 @@
        
     </div><span id='allAvidaContainer_end'></span>
 
-    <!-------------- End_AllAvidaContainer_Main_Section -------------->
+<!--------------------------------------- End_AllAvidaContainer_Main_Section ->
 
-    <!-------------- Begin_making_Dialog_or_Model_Boxes -------------->
+<!--------------------------------------- Begin___Modal_Boxes ---------------->
 
-    <!-------------------- Save_WSfile_Dialog_box -------------->
-    <div  class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='sWSfDialog' title='The freezer has changed since last saved in a workspace'>
-      <div class='dijitDialogPaneContentArea'>
-        <p>Would you like to save before loading another workspace?</p>
-      </div>
-      <div class='dijitDialogPaneActionBar'>
-        <button data-dojo-type='dijit/form/Button' type='button' data-dojo-props='onClick:function(){sWSfDialog.hide();}'
-                id='sWSfCancel'>Cancel loading workspace
-        </button>
-        <button data-dojo-type='dijit/form/Button' type='button' id='sWSfSave'>Save current workspace</button>
-        <button data-dojo-type='dijit/form/Button' type='button' id='sWSfOpen'>Open workspace</button>
-      </div>
-    </div><span class='notSeen' id='end_sWSfDialog'></span>
-    <!-------------------- Pasted in -------------------------->
-    <!-------------- mnFlExportGraph_Modal -------------------->
+<!--------------------------------------- Save_WorkSpaceFile_Modal_box -------------->
+        <div id='sWSfModalID' class='modal'>
+          <!-- Modal content -->
+          <div class="modal-content" > 
+            <div class="modal-header">
+              <h2>The freezer has changed since last saved in a workspace</h2>
+            </div> 
+            <div class="modal-body">
+              Would you like to save before loading another workspace?
+            </div>
+            <div class="modal-footer">
+              <button id='sWSfSave'>Save current workspace</button>
+              <button id='sWSfOpen'>Open workspace</button>
+            </div>
+          </div>
+        </div>
+<!--------------------------------------- End_WorkSpaceFile_Modal_box ---------->
+
+<!--------------------------------------- Export_Graph_Modal_Box -------------->
     <div id='mnFlExportGraphModalID' class='modal'>
       <!-- Modal content -->
       <div class="modal-content" >
