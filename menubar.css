@@ -159,14 +159,14 @@ ul.submenu {
   background: #f7f7f7;
   position: relative;
   transition: all 3s ease-in-out;
-}
+} */
 
 .dropdown-divider {
   height: 0;
-  margin: 0 rem 0;
+  margin: 0.25rem 0;
   overflow: hidden;
   border-top: 1px solid rgba(0, 0, 0, 0.15);
-} */
+} 
 nav > ul {
   display: flex;
   /* align-items: center; */
