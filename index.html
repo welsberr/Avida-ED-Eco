@@ -1977,15 +1977,20 @@
     
     
 <!------------ Restart_Avida_with_in_same_browser_Session__Does_NOT_work ------------>
-    <div class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='restartAvidaDialog'
-         title='There has been a fatal error in Avida'>
-      <div class='dijitDialogPaneContentArea'>
-        <p>Would you like to save or discard the current petri dish configuration before restarting Avida?</p>
-        <label id='restartMsgLabel' />
-      </div>
-      <div class='dijitDialogPaneActionBar'>
-        <button id='restartAvidaFrzConfig'>Freeze configuration</button>
-        <button id='restartAvidaNow'>Restart Avida (maintains current workspace)</button>
+    <div class="modal" id='restartAvidaDialog'>
+
+      <!-- Modal content -->
+      <div class="modal-content" >
+        <div class="modal-header">
+          <h2>There has been a fatal error in Avida</h2>
+        </div>
+        <div class="modal-body">
+          <p>Would you like to save or discard the current petri dish configuration before restarting Avida?</p>
+        </div>
+        <div class="modal-footer">
+          <button id='restartAvidaFrzConfig'>Freeze configuration</button>
+          <button id='restartAvidaNow'>Restart Avida (maintains current workspace)</button>
+        </div>
       </div>
     </div>
 <!---------------------- Suggesting-restart-if-not-loaded-after-a-time-delay ------------>
