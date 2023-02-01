@@ -86,6 +86,10 @@ resizeOrganismPage = function() {
   $('.all3org').css("grid-template-columns", newColumns);
 }
 
+function dragbarPopStatsResize () {
+  
+}
+
 /* functions for left dragbar */
 function dragbarLeftResize() {
   var dragging = false;

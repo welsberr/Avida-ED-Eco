@@ -2,7 +2,7 @@
 <html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <head>
-    <title>Avida-ED 4.0.16</title>
+    <title>Avida-ED 4.0.17</title>
     <meta charset='utf-8' />
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <style>
@@ -39,7 +39,7 @@
     <span id="http://stackoverflow.com/questions/20828799/creating-a-splash-page-in-html5"></span>
     <div id='splash' style='display: none;'>
       <div align='center'>
-        <h1>Avida-ED 4.0.16 Beta Testing is loading . . .</h1>
+        <h1>Avida-ED 4.0.17 Beta Testing is loading . . .</h1>
         <img src='images/Avida-ED-icon.png' /><br />
         <img src='images/AvidaGrid.gif' />
       </div>
@@ -304,14 +304,17 @@
             <div id='oranismRunCol' class="orgBenchCol">
               <div id="orgTopId" class="orgBenchTopRow">
                 <div class='orgTopLt'>
-                  <img id='actOrgImg' src='images/Avida-ED-ancestor-icon.png' /*djb moved alt and style to avidaEdEco.css */>
+                  <img id='actOrgImg' src='images/Avida-ED-ancestor-icon.png'>
                   <div id='activeOrgan' class='popDishClass'></div>
                 </div>
                 <div id='a_control_or_info_can_go_here' class="orgTopRt"></div>
               </div>
-              <div class="orgMid" id='organismCanvasHolder'>
-                <!-- yemi canvas comment; diane moved style info to #organCanvas in avidaedEco.css -->
-                <canvas data-dojo-type='dojo.dnd.Target' id='organCanvas'></canvas> 
+              <div id='organismCanvasHolder' class="orgMid">
+                <div id="orgViewIntro">
+                  <img id='introOrgImg' src='images/Avida-ED-ancestor-icon.png'>
+                  <span id="orgViewIntroTxt">Drag organism here to see details</span>
+                </div>
+                <canvas id='organCanvas' class="display_none"></canvas> 
               </div>
               <div class="orgBotClass" id='orgBotId'>
                 <div id='cycleSlider'></div><br />
@@ -531,6 +534,7 @@
                     </table>
                     <label id='dnaLabel'></label>
                   </div><span id='selOrgType_end' class='display_none'></span>
+                 <div class='dragbar' id="dragbarPopStats"></div> <!-- in right side of population page -->
 
                   <div id='popStats4grid'>
                     <div class='popStatsTitle'>
@@ -653,7 +657,7 @@
               
              <div id='popChrtCntrlHldr'>
                 <div id='popChrtlftYaxHldr'>
-                  <label id='popChrtlftYaxLbl'>Lft Y-axis
+                  <label id='popChrtlftYaxLbl'>&nbsp;Lft Y-axis
                     <select  id='popChrtLftYaxis' onchange='av.pch.popChrtYaxisChangeFn(this)'>
                       <option value='Average Fitness' selected>Ave. Fitness</option>
                       <option value='Average Offspring Cost'>Ave. Offspring Cost</option>
@@ -677,7 +681,7 @@
                </div>
 
               <div id='pauseOptions'>
-                <p id='pausePrefix'>Pause Run at</p>
+                <p id='pausePrefix'>&nbsp;Pause Run at</p>
                 <select id='itemDone1st' onchange='av.ptd.sgr1stSlctFn("onchange")'>
                   <option value='task' selected>any task</option>
                   <option value='not'>NOT</option>
@@ -722,10 +726,10 @@
                     <span class='enviroSubHeading lftmargin' >Per Site Mutation Rate:</span>
                     <input id='mutePopInput' type='text' class='mutePopInputClass' value='2'>&nbsp;%                    
                   </div>
-                  <div id='mutePopError' onclick="av.ui.toggleResourceComplexity('muteErrorNotice')"></div>
                   <div id='mutePopSlideHolder'>
-                    <span id='mutePopSlide' class='mutePopSlideClass'></span>&nbsp;
+                    <span id='popMuteSlide'></span>&nbsp;
                   </div>
+                  <div id='mutePopError' onclick="av.ui.toggleResourceComplexity('muteErrorNotice')"></div>
                 </div>
                 <div class='odd'><div class='enviroSubHeading'>Ancestral Organism(s):</div>
                   <div id='ancestorRow'>
@@ -1324,7 +1328,7 @@
 
     <span class='notSeen' id='o_______________________________________________________Export_Stand_Alone_Dialog_box___'></span>
     <div class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='mnFlStandAloneAppDialog'
-         title='Stand alone version of Avida-ED 4.0.16 Beta Testing'>
+         title='Stand alone version of Avida-ED 4.0.17 Beta Testing'>
       <div class='dijitDialogPaneContentArea'>
         <h3>For working where there is no internet access: No working Avida-ED 4 versions for off-line use at this time.  </h3>
         <ul>
@@ -1365,7 +1369,7 @@
     </div>
 
     <span class='notSeen' id='o_______________________________________________________________________example_Modal___'></span>
-    <div id='fzDialogModalID' class='modal'>
+      <div id='fzDialogModalID' class='modal'>
       <!-- Modal content -->
       <div class="modal-content" >
         <div class="modal-header">
@@ -1650,7 +1654,7 @@
           <span class='aboutAvidaEDcloseHldr'>
             <button id='aboutAvidaEDcloseButton' onclick='av.ui.aboutAvidaED_Close();'>Close</button>
           </span>
-          <h2 id='aboutAvidaEDtitle'>Avida-ED 4.0.16 Beta</h2>
+          <h2 id='aboutAvidaEDtitle'>Avida-ED 4.0.17 Beta</h2>
           <span class='aboutAvidaEDcloseHldr'>
           </span>
         </div>

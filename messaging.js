@@ -43,6 +43,7 @@ av.msg.readMsg = function (ee) {
         break;
       case 'webOrgTraceBySequence': //reset values and call organism tracing routines.
         //console.log('webOrgTraceBySequence', msg);
+        av.ind.webOrgTraceBySequence = msg;
         av.traceObj = msg.snapshots;
         //console.log('av.traceObj', av.traceObj);
         av.ind.cycle = 0;
@@ -52,6 +53,7 @@ av.msg.readMsg = function (ee) {
         av.ind.cycleSlider.set('value', av.ind.cycle);
         av.ind.updateOrgTrace('messaging_webOrgTraceBySequence');
         av.debug.log += '\n--Aui: \n' + av.utl.json2stringFn(msg);
+        console.log('webOrgTraceBySequence \n',  av.utl.json2stringFn(msg));
         break;
       case 'webPopulationStats':
         av.grd.popStatsMsg = msg;

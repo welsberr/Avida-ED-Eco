@@ -57,7 +57,7 @@
     av.grd.runState = 'started';  //the run has now started
     //Disable some of the options on the Setup page
     
-    $('#mutePopSlide').slider({disabled: true});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
+    $('#popMuteSlide').slider({disabled: true});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
     av.dom.sizeCols.disabled = true;
     av.dom.sizeRows.disabled = true;
 
@@ -133,7 +133,7 @@
     av.dom.sizeCols.disabled = false;
     av.dom.sizeRows.disabled = false;
     av.dom.mutePopInput.disabled = false;
-    $('#mutePopSlide').slider({disabled: false});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
+    $('#popMuteSlide').slider({disabled: false});  //http://stackoverflow.com/questions/970358/jquery-readonly-slider-how-to-do
     av.dom.childParentRadio.disabled = false;
     av.dom.childRandomRadio.disabled = false;
     console.log('Avida-ED4: need to reset defaults on new Environmental seettings.');

@@ -13,6 +13,8 @@
   /*------------------------------------------------------------------------------------------------- av.ind.clearGen --*/
   av.ind.clearGen = function(from) {
     'use strict';
+    $(#orgViewIntroTxt).html('In av.ind.clearGen');
+    av.dom.organCanvas.className = "organCanvasCls";
     av.ind.settingsChanged = false;
     av.ind.cycle = 0;
     av.ind.bigR = [120, 120]; //radius of full circle
