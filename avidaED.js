@@ -36,17 +36,11 @@
 // git pull origin pull/18/head    //where '18' is the number of the pull request
 //
 // github.com now requires personal access tokens
-// log in at 
-// https://github.com/settings/tokens/677090811/regenerate
-// generate a new access token. 
-// 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
-// git2021_819a Expires on Sun, Jan 30 2022. 
 // 
-// This url states that it will automatically add to keychain if use to push or clone a repository
-// https://gist.github.com/jonjack/bf295d4170edeb00e96fb158f9b1ba3c?fbclid=IwAR2ZsG8_wGUJtUtMSLNVCpKX-PuVG0IfaXGzOHBEAGqQ66Fxzomvih2BCSA
-// 
-// more information about Access Tokens
+// more information about Access Tokens written before they required tokens. Need to find links to make a new token. 
 // https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/
+// 
+// https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 // 
 // Avida -------------------
 //
