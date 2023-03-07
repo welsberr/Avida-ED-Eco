@@ -116,7 +116,7 @@
 // - Analysis: need to fix clicking on instruction circle to get the instruction number. 
 // - - loook at mouseDown, line 70
 // 
-// Avida-ED 4.0.16 Beta
+// Avida-ED 4.0.18 Beta
 // - repaired drag-n-drop so that the cursor changes shape to cue the user
 // - Analysis: need to fix clicking on instruction circle to get the instruction number. 
 // - - loook at mouseDown, line 70
@@ -127,10 +127,10 @@
 // 
 // Avida-ED 4.018 Beta
 // - fixed broken slider for mutation rate on population page
-// - on branch with 4.0.16 in git
+// - on branch with 4.0.18 in git
 // 
-// 
-// 
+// Avida-ED 4.019 Beta
+// - changed format on main menu. 
 // 
 // Generic Notes -------------------------------------------------------------------------------------------------------
 
