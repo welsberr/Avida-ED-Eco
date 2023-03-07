@@ -13,7 +13,8 @@
   /*------------------------------------------------------------------------------------------------- av.ind.clearGen --*/
   av.ind.clearGen = function(from) {
     'use strict';
-    $(#orgViewIntroTxt).html('In av.ind.clearGen');
+    
+    //Text looks bettter in hatml, but easier in this case to write on the canvase. 
     av.dom.organCanvas.className = "organCanvasCls";
     av.ind.settingsChanged = false;
     av.ind.cycle = 0;

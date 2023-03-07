@@ -116,7 +116,24 @@
 // - Analysis: need to fix clicking on instruction circle to get the instruction number. 
 // - - loook at mouseDown, line 70
 // 
+// Avida-ED 4.0.16 Beta
+// - repaired drag-n-drop so that the cursor changes shape to cue the user
+// - Analysis: need to fix clicking on instruction circle to get the instruction number. 
+// - - loook at mouseDown, line 70
+// - - failed to merge with work Wendell did in 2022 August. So in own branch unitl merge
+// 
+// Avida-ED 4.0.17 Beta
+// - version wendell merged into main on 2022 Aug 25
+// 
+// Avida-ED 4.018 Beta
+// - fixed broken slider for mutation rate on population page
+// - on branch with 4.0.16 in git
+// 
+// 
+// 
+// 
 // Generic Notes -------------------------------------------------------------------------------------------------------
+
 //
 // [option]<alt>{go} to get library in the list for finder
 //
@@ -1278,10 +1295,13 @@ av.ui.feedback = function(){
         av.dom.orgDetailID.style.display = 'block';
         av.ui.adjustOrgInstructionTextAreaSize();
       };
-
+      
       if (undefined !== av.traceObj) {
         av.ind.updateOrgTrace('mainBoxSwap_organismBlock');
-      };
+      } else {
+        console.log("'undefined' = av.traceObj"); 
+        //could write canvase message here. 
+      }
       av.ind.organismCanvasHolderSize('mainBoxSwap_organismBlock');   ///??????
       av.ind.clearGen('mainBoxSwap_organismBlock');
       av.ind.cpuOutputCnvsSize();
@@ -1558,7 +1578,7 @@ av.ui.feedback = function(){
   //                                      Draw Population Grid
   // *******************************************************************************************************************
 
-  //Set up canvas objects
+  //Set up canvas objects: only do once
   av.grd.sCtx = av.dom.scaleCanvas.getContext('2d');
   av.grd.cntx = av.dom.gridCanvas.getContext('2d');
 
@@ -1656,7 +1676,8 @@ av.ui.feedback = function(){
     av.grd.drawGridSetupFn('colorMode_onchange');
   };
 
-  // Zoom slide - display only not avida
+  // Zoom slide - display only not avida _NOT_ in use
+  /*
   av.grd.zoomSlide = new HorizontalSlider({
     name: 'zoomSlide',
     value: 1,
@@ -1671,7 +1692,7 @@ av.ui.feedback = function(){
       av.grd.drawGridSetupFn('av.grd.zoomSlide');
     }
   }, 'zoomSlide');
-
+*/
   av.grd.colorMap = 'Gnuplot2';
   /*
    *  This secton allowed one to change the color map of the scale, but Rob did not like it.
@@ -2399,12 +2420,12 @@ av.ui.feedback = function(){
   console.log('after StatsButton.click');
 
   // changing the base does not seem change position on the slider:  because it a ratio
-  //----------------------------------------------------------------------------------------- $(function slidePopmute() --
-  $(function slidePopMute() {
+  //----------------------------------------------------------------------------------------- $(function mutePopSldFn() --
+  $(function mutePopSldFn() {
    // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 
    // the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, 
    // so I multiplied by 200 to get 100.000% to get a reasonable number of values for the pixils in the slide
-   //console.log('before defaultslide value');
+   //console.log('In mutePopSldFn: before defaultslide muteSlideDefault');
    var muteSlideDefault = 95.4242509439325;
    // results in 2% as a default 
    var muteDefault = (Math.pow(10, (muteSlideDefault / 200)) - 1).toFixed(1);
@@ -2413,7 +2434,7 @@ av.ui.feedback = function(){
      value: muteSlideDefault,
      min: 0.0,
      max: 401,
-     theme: 'summer',
+     // theme: 'summer',
      slide: function (event, ui) {
        var tmpVal = (Math.pow(10, (ui.value / 200)) - 1);
        if (10 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }     //had been 12, but 10 is more consistent with 2 sig figs
@@ -2471,18 +2492,6 @@ av.ui.feedback = function(){
   //                                                     Oranism Page methods
   //********************************************************************************************************************
 
-  //adjust instruction text size
-    // if (av.dbg.flg.root) { console.log('Root: before av.ui.adjustOrgInstructionTextAreaSize'); }
-  //---------------------------------------------------------------------------- av.ui.adjustOrgInstructionTextAreaSize --
-  av.ui.adjustOrgInstructionTextAreaSize = function() {
-    var height = ( $('#orgInfoHolder').innerHeight() - $('#orgDetailID').innerHeight() - 10 ) / 2;
-    //console.log('orgInfoHolder.ht=', $('#orgInfoHolder').innerHeight(), '; orgDetailID=',$('#orgDetailID').innerHeight(), '; height=', height);
-    av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
-    av.dom.ExecuteAbout.style.height = height + 'px';
-    av.dom.ExecuteJust.style.width = '100%';
-    av.dom.ExecuteAbout.style.width = '100%';    
-  };
-
   //--------------------------------------------------------------------------------------------------- $ slideOrganism --
   $(function slideOrganism() {
     /* because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED */
@@ -2492,7 +2501,7 @@ av.ui.feedback = function(){
     var muteSlideDefault = 190.848501887865;
     /* results in 2% as a default */
     var muteDefault = (Math.pow(10, (muteSlideDefault / 400)) - 1).toFixed(1);
-    var slides = $('#orgMuteSlide').slider({
+    var slides = $('#muteOrgSlide').slider({
       /* orientation: "vertical", */
       range: 'min',   /*causes the left side of the scroll bar to be grey */
       value: muteSlideDefault,
@@ -2505,17 +2514,17 @@ av.ui.feedback = function(){
         else if (0.3 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
         else {tmpVal = tmpVal.toFixed(2); }
          //console.log('mutation rate =', tmpVal, 'slider = ', ui.value);
-        $('#orgMuteInput').val(tmpVal); //put slider value in the text near slider 
+        $('#muteOrgInput').val(tmpVal); //put slider value in the text near slider 
         //put the value in the text box 
         av.ind.settingsChanged = true;
         if (av.debug.trace) { console.log('orSlide changed', av.ind.settingsChanged); }
       }
     });
     // initialize
-    $('#orgMuteInput').val(muteDefault);
+    $('#muteOrgInput').val(muteDefault);
 
     // update slide based on textbox 
-    $('#orgMuteInput').change(function () {
+    $('#muteOrgInput').change(function () {
       var value = this.value;
       var muteNum = Number(value);
       //if (av.debug.uil) { console.log('ui: muteNum=', muteNum); }
@@ -2529,7 +2538,7 @@ av.ui.feedback = function(){
         av.ind.settingsChanged = true;
         if (av.debug.trace) { console.log('Mute changed', av.ind.settingsChanged); };
         //console.log('value=', muteNum, '; slide=', 400 * av.utl.log(10,1 + (muteNum) ) );
-        av.post.addUser('orgMuteInput =' + document.getElementById('orgMuteInput').value,  '1add ? 949');
+        av.post.addUser('muteOrgInput =' + document.getElementById('muteOrgInput').value,  '1add ? 949');
       } 
       else {
         av.ptd.validMuteInuput = false;
@@ -2552,6 +2561,19 @@ av.ui.feedback = function(){
     });
   });
 
+  //adjust instruction text size
+    // if (av.dbg.flg.root) { console.log('Root: before av.ui.adjustOrgInstructionTextAreaSize'); }
+  //---------------------------------------------------------------------------- av.ui.adjustOrgInstructionTextAreaSize --
+  av.ui.adjustOrgInstructionTextAreaSize = function() {
+    var height = ( $('#orgInfoHolder').innerHeight() - $('#orgDetailID').innerHeight() - 10 ) / 2;
+    //console.log('orgInfoHolder.ht=', $('#orgInfoHolder').innerHeight(), '; orgDetailID=',$('#orgDetailID').innerHeight(), '; height=', height);
+    av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
+    av.dom.ExecuteAbout.style.height = height + 'px';
+    av.dom.ExecuteJust.style.width = '100%';
+    av.dom.ExecuteAbout.style.width = '100%';    
+  };
+
+
   //triggers flag that requests more data when the settings dialog is closed.
   //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
   //----------------------------------------------------------------------------------------------------------------------  
@@ -2571,17 +2593,8 @@ av.ui.feedback = function(){
   //----------------------------------------------------------------------------------------------------------------------
   //
   //------------------------------------------------------------------------------------------------- mnCnOrganismTrace --
-  // dijit.byId("mnCnOrganismTrace").on("Click", function () {
-  //   av.post.addUser("Button: mnCnOrganismTrace");
-  //   console.log("control drop down menu clicked");
-  //   av.mouse.traceSelected(av.dnd, av.fzr, av.grd);
-  //   av.ui.mainBoxSwap("organismBlock");
-  //   av.ind.organismCanvasHolderSize("mnCnOrganismTrace");
-  //   av.ui.adjustOrgInstructionTextAreaSize();
-  //   av.msg.doOrgTrace(); //request new Organism Trace from Avida and draw that.
-  // });
 
-  // ===refactored====
+  // Put Selected Organism in Organism View 
   document.getElementById('mnCnOrganismTrace').onclick = function () {
     av.post.addUser('Button: mnCnOrganismTrace');
     console.log('control drop down menu clicked');
@@ -2593,7 +2606,6 @@ av.ui.feedback = function(){
   };
 
   //Put the offspring in the parent position on Organism Trace
-  // ====refactored======
   document.getElementById('mnCnOffspringTrace').onclick = function () {
     //Open Oranism view
     av.post.addUser('Button: mnCnOffspringTrace');

@@ -750,7 +750,14 @@ jQuery(document).ready(function($) {
     // Do this by deleting everything in activeOrgan and reinserting the most resent one after a drop event.
     'use strict';
     if (av.debug.dnd) { console.log('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent); }
-    //clear out the old data if an organism is already there
+    // set flag to true when an organism put in viewer
+    
+    // do not initialize canvas unitl the first time the user puts an organism in the viewer
+    if (av.ind.viewEmpty) {
+      av.ind.viewEmpty = false; 
+      console.log('setting av.ind.viewEmpty to false');
+    }
+    // clear out the old data if an organism is already there
     av.dnd.empty(av.dnd.activeOrgan);
     // get the data for the dragged organism
     var dir = av.fzr.dir[el.id];

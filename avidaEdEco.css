@@ -1075,6 +1075,71 @@ input:focus {
 #scrollBarSpace { background: #DDD; min-width: 320px; }
 /*---------------------------------------------------------------------------- end pause options on Population Page --*/
 
+/*------------------------------------------------------------------------------------------------ mutation Sliders --*/
+
+#mutePopNputHldr {
+  /* background: lightpink; */
+}
+#mutePopInput{
+  width:4em;
+  height:1.5em;
+  margin: 0px 2px;     /* top right bottom left  */   /*top left/right bottom */ /*top/bottom  left/right */
+  display: inline-block; 
+  float: left;
+}
+
+#mutePopSldHldr{
+  background-color: inherit;
+  width: 100%;
+  height: 1.5em;
+}
+
+#mutePopSlide {
+  display: block; 
+  vertical-align: top; 
+  padding: 20px auto; /* was 20px auto; */
+  margin: auto; 
+  background: #666;  /* #888; */
+}
+
+#mutePopError {  
+  width: 100%; height: 15px;
+  /* background-color: lightyellow;  */
+  /* text-align: left; */
+}
+
+/* holdes both input box and slider (and text) */
+.muteOrgAllHldr{
+  flex: 1;          /* supposed to expand to fill remainting space, but not working */
+  background: #CCCCCC;
+  min-width: inherit;
+  min-height: 1em;    
+  padding: 1em 0.5em 2em 0.5em;   
+}
+/* top, right, bottom, left;  right and left were 0.3 before*/
+#muteOrgNputHldr{
+  background: inherit;
+  padding: 10px 0px;
+}
+#muteOrgInput{
+  width: 50px; height:13px;
+}
+#muteOrgSldHldr{
+  background-color: inherit;
+  width: 100%;
+  height: 1em;
+}
+
+#muteOrgSlide {
+/* width: 150px;*/ /* was 200px; */ /* make it fit the entire width of the right side panel*/
+/* height: 400px;  */  /* use for verticle slide */
+display: block; 
+vertical-align: top; 
+padding: 20px auto;
+margin: auto; 
+background: #888;
+}
+
 /*---------------------------------------------------------------------------------------- Setup on Population Page --*/
 #environmentSettingTitle{
   font-size: 130%;
@@ -1087,33 +1152,6 @@ input:focus {
 .colrow {
   width: 4.5em; height:1.5em;  
 }
-
-#popSetupMutationRate {
-  /* background: lightpink; */
-}
-
-#mutePopError { 
- 
-  width: 100%; height: 15px;
-  /* background-color: lightyellow;  */
-  /* text-align: left; */
-}
-
-.mutePopInputClass{
-  width:4em;
-  height:1.5em;
-  margin: 0px 2px;     /* top right bottom left  */   /*top left/right bottom */ /*top/bottom  left/right */
-  display: inline-block; 
-  float: left;
-}
-
-#popMuteSlide {
-  display: block; 
-  padding: 10px; /* TRBL 20px auto; */
-  margin: auto; 
-  background: #666;  /* #888; */
-}
-
 
 .ancestorContainer {
   grid-area: ancestorContainer;
@@ -1982,37 +2020,6 @@ checkbox:focus {
     min-height: 50px;
     padding: 1em 0.5em 1em 0.5em;   
   }
-  .muteOrgHolder{
-    flex: 1;          /* supposed to expand to fill remainting space, but not working */
-    background: #CCCCCC;
-    min-width: inherit;
-    min-height: 50px;    
-    padding: 1em 0.5em 2em 0.5em;   
-  }
-  /* top, right, bottom, left;  right and left were 0.3 before*/
-  #muteOrgTextHolder{
-    background: inherit;
-    padding: 10px 0px;
-  }
-  #muteOrgSlideHolder{
-    background-color: inherit;
-    width: 100%;
-    height: 50px;
-  }
-  
-  #orgMuteSlide {
-  /* width: 150px;*/ /* was 200px; */ /* make it fit the entire width of the right side panel*/
-  /* height: 400px;  */  /* use for verticle slide */
-  display: block; 
-  vertical-align: top; 
-  padding: 20px auto;
-  margin: auto; 
-  background: #888;
-}
-  #orgMuteInput{
-    width: 50px; height:13px;
-  }
-  
   
   .analysisArea{
     display: flex;

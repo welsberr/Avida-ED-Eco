@@ -587,7 +587,7 @@ av.msg.doOrgTrace = function () {
         'args': [
           //'0,heads_default,' + av.fzr.actOrgan.genome,                                  //genome string
           av.fzr.actOrgan.genome,                                  //genome string
-          document.getElementById('orgMuteInput').value / 100,     // point mutation rate
+          document.getElementById('muteOrgInput').value / 100,     // point mutation rate
           seed                                            //seed where 0 = random; >0 to replay that number
         ]
       };
