@@ -1108,10 +1108,10 @@ input:focus {
 }
 
 .muteInputVertSpace {
-  height:0.7em;
+  height:0.7em;  /* not in mutePop ,used in muteOrg */
 }
 .muteBeloSlideVertSpace{
-  height: 1em;
+  height: .5em;
 }
 
 /* holdes both input box and slider (and text) */
