@@ -159,8 +159,11 @@ html {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   border: 1px solid #AAA;               /* #AAA; */
 }
+  /* headerRow flex contains leftPnlBtnHolder mainMenu HeaderMsg VersionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+
 
 .navColClass {                  /* left side bar with freezer */
   grid-area:navColClass;
@@ -236,10 +239,10 @@ html {
   padding: 0px 6px 0px 4px;    /* top right bottom left */  
   margin: auto;
   background: inherit;     /* #eee; better color ? */
-  flex: 0 1 50px;
+  flex: 0 0 50px;    /* grow shrink basis */
 }
 .pnlBtnHldrHide{
-  flex: 0 1 50px;
+  flex: 0 0 50px;
   padding: 0px 6px 0px 4px;    /* top right bottom left */  
   visibility: hidden;    
 }
@@ -258,17 +261,18 @@ html {
   padding: 0px 6px 0px 4px;    /* top right bottom left */  
   margin: auto;
   background: inherit;     /* #eee; better color ? */
-  flex: 0 1 50px;
+  flex: 0 0 50px;
 }
 
   #mainMenu{
-    flex: 0 1 1000px;
+    flex: 0 0 445px;
     --pix1: 30; 
-    height: var(--rem-size1)
+    height: var(--rem-size1);
     border: 1px solid #888;
     overflow: visible;       /* was scroll */
+    width: 445px;
     /* does not work=resize: horizontal; */
-    max-width: fit-content;
+/*    max-width: fit-content; */
   }
 
   .claro .dijitMenuBar {
@@ -282,11 +286,20 @@ html {
   #mnControl {border: 1px solid #999;}
   #mnHelp {border: 1px solid #999;}
   */
-  mnDebug {visibility: hidden;}
   
+  #mnAvidaEd {white-space: nowrap;}
+  
+  #mnDebug {visibility: hidden;}
+  
+  /* headerRow flex contains leftPnlBtnHolder mainMenu HeaderMsg VersionNumHolder RtSideToggleButtons ritePnlBtnHolder */
   #headerMsg{
-    overflow: visible;
-    flex: 3 3 auto; /* yemi: removal of this code results in weird header button spacing */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 630px); /* 185+445=630 */
+    flex: 0 1 auto;
+    /*   yemi: removal of this code results in weird header button spacing 
+    overflow: visible;  */
     /* flex: [flex-grow] [flex-shrink] [flex-basis]; */
     /* flex: [max] [min] [ideal size]; */
     /* flex: 0 1 auto; /* Default flex value 0=grow=don't grow; take minimum size for the conents  */    
@@ -296,8 +309,10 @@ html {
     /* flex-shrink: 1 allows so shrinking */ 
   }
   #msgHolder {
-    padding: 4px 4px 4px 8px;    /* top right bottom left */   
+    padding: 1px 4px 1px 8px; 
+/*    padding: 3px 4px 3px 8px;    /* top right bottom left */   
     height: 100%;
+    font-size: 1.1em;
   }
   #wsSavedMsg{
     color: blue;
@@ -339,7 +354,7 @@ html {
   #avidaVersion{
     display: none;
     --pixel: 120; /* Equals to 120px */ 
-    width: : var(--rem-size0);
+    width: var(--rem-size0);
     text-align: right;
     --pix1: 3; /* Equals to 3px */ 
     --pix2: 5; /* Equals to 5px */ 
@@ -352,7 +367,7 @@ html {
   .mainPageButtons{
     border: 1px solid #AAA;
     width: 100%;
-    flex:0 1 112px;
+    flex: 0 1 112px;
   }
   .PageButtonHolder {
     display: flex;

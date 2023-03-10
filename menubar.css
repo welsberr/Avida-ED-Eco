@@ -1,3 +1,5 @@
+/* 
+
 *,
       *:before,
       *:after {
@@ -8,7 +10,7 @@
 body {
   font-family: sans-serif;
 }
-/* 
+
 i {
   margin-right: 10px;
 } */
@@ -138,6 +140,7 @@ nav {
   margin: 0 auto;
   max-width: 600px;
 }
+
 /* nav > ul > li {
   display: grid;
   flex-direction: column;
@@ -205,7 +208,8 @@ nav > ul > li {
 .submenu > li> button {
   border: none;
   background-color: #f7f7f7;
-  min-width: none;
+  min-width: 0;
+  text-align: left;
 }
 
 /* remove excess space from both menus */
