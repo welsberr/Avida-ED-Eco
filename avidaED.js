@@ -130,7 +130,8 @@
 // - on branch with 4.0.18 in git
 // 
 // Avida-ED 4.019 Beta
-// - changed format on main menu. 
+// - adjusted spacing/layout of mutation rate sliders
+// - moved error messsage for mutation rate input to below slider for both population and organism page. 
 // 
 // Generic Notes -------------------------------------------------------------------------------------------------------
 
@@ -2444,6 +2445,8 @@ av.ui.feedback = function(){
        //put the value in the text box 
        // console.log('input', tmpVal, '; slide=', ui.value);
        $('#mutePopInput').val(tmpVal); //put slider value in the text near slider 
+       av.dom.mutePopError.style.color = 'black';
+       av.dom.mutePopError.innerHTML = '';
      }
    });
    // initialize
@@ -2470,7 +2473,6 @@ av.ui.feedback = function(){
        av.ptd.validMuteInuput = false;
        av.dom.mutePopError.style.color = 'red';
        av.dom.mutePopError.innerHTML = '';
-       av.dom.userMsgLabel.innerHTML = '';
        if (muteNum <= 0) {
          av.dom.mutePopError.innerHTML += 'Mutation rate must be >= than zero percent. ';
          if (av.debug.popCon) { console.log('<0'); }
@@ -2515,7 +2517,9 @@ av.ui.feedback = function(){
         else {tmpVal = tmpVal.toFixed(2); }
          //console.log('mutation rate =', tmpVal, 'slider = ', ui.value);
         $('#muteOrgInput').val(tmpVal); //put slider value in the text near slider 
-        //put the value in the text box 
+        //put the value in the text box
+        av.dom.muteOrgError.style.color = 'black';
+        av.dom.muteOrgError.innerHTML = '';
         av.ind.settingsChanged = true;
         if (av.debug.trace) { console.log('orSlide changed', av.ind.settingsChanged); }
       }
