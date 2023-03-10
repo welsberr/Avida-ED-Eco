@@ -1087,49 +1087,51 @@ input:focus {
   display: inline-block; 
   float: left;
 }
-
 #mutePopSldHldr{
   background-color: inherit;
   width: 100%;
-  height: 1.5em;
+  height: 1em;  /* was 1.5em */
+  padding: 0em 0.3em 0em 0em;   /* top, right, bottom, left; */
 }
-
 #mutePopSlide {
   display: block; 
   vertical-align: top; 
-  padding: 20px auto; /* was 20px auto; */
-  margin: auto; 
   background: #666;  /* #888; */
+  /* padding: 20px auto; 
+    margin: auto; 
+*/
 }
-
 #mutePopError {  
-  width: 100%; height: 15px;
+  width: 100%; height: 1.1em;
   /* background-color: lightyellow;  */
   /* text-align: left; */
+}
+
+.muteInputVertSpace {
+  height:0.7em;
+}
+.muteBeloSlideVertSpace{
+  height: 1em;
 }
 
 /* holdes both input box and slider (and text) */
 .muteOrgAllHldr{
   flex: 1;          /* supposed to expand to fill remainting space, but not working */
-  background: #CCCCCC;
+  background: #CCCCCC;   /* burlywood to see */
   min-width: inherit;
   min-height: 1em;    
   padding: 1em 0.5em 2em 0.5em;   
 }
 /* top, right, bottom, left;  right and left were 0.3 before*/
-#muteOrgNputHldr{
-  background: inherit;
-  padding: 10px 0px;
-}
 #muteOrgInput{
-  width: 50px; height:13px;
+  width:4em;
+  height:1.5em;
 }
 #muteOrgSldHldr{
   background-color: inherit;
   width: 100%;
   height: 1em;
 }
-
 #muteOrgSlide {
 /* width: 150px;*/ /* was 200px; */ /* make it fit the entire width of the right side panel*/
 /* height: 400px;  */  /* use for verticle slide */
