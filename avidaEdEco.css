@@ -297,7 +297,7 @@ html {
     white-space: nowrap;
     text-overflow: ellipsis;
     max-width: calc(100% - 630px); /* 185+445=630 */
-    flex: 0 1 auto;
+    flex: 0 1 auto;h
     /*   yemi: removal of this code results in weird header button spacing 
     overflow: visible;  */
     /* flex: [flex-grow] [flex-shrink] [flex-basis]; */

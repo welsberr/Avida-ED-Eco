@@ -111,12 +111,12 @@
 // - working on formatting on Left & Right mini-chart Y axis and Pause Run at sections
 // - Added utilities to look for elements with overlow in reSizePageParts.js
 //
-// Avida-ED 4.0.16 Beta
+// Avida-ED 4.0.15 Beta
 // - repaired drag-n-drop so that the cursor changes shape to cue the user
 // - Analysis: need to fix clicking on instruction circle to get the instruction number. 
 // - - loook at mouseDown, line 70
 // 
-// Avida-ED 4.0.18 Beta
+// Avida-ED 4.0.16 Beta
 // - repaired drag-n-drop so that the cursor changes shape to cue the user
 // - Analysis: need to fix clicking on instruction circle to get the instruction number. 
 // - - loook at mouseDown, line 70
@@ -127,7 +127,7 @@
 // 
 // Avida-ED 4.018 Beta
 // - fixed broken slider for mutation rate on population page
-// - on branch with 4.0.18 in git
+// - on branch with 4.0.17 in git
 // 
 // Avida-ED 4.019 Beta
 // - adjusted spacing/layout of mutation rate sliders
@@ -3035,10 +3035,10 @@ av.ui.feedback = function(){
   // av.doj.mnDebug.style.visibility = 'hidden';
   av.dom.mnDebug.style.visibility = 'hidden';
 
-  // Avida-ED 4.0.17 Beta Testing fix this too. 
+  // Avida-ED 4.0.19 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; set to false before public release for Avida-ED 4.0.17 Beta Testing. ');
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.19 Beta Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x

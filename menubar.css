@@ -192,7 +192,7 @@ nav > ul > li {
 .submenu {
   display: none;
   position: absolute;
-  width: 400%;
+  width: 500%;  /* was 400% */
   margin-top: 10px;
   background: #f7f7f7;
   border: 1px solid #aaa;
@@ -210,6 +210,10 @@ nav > ul > li {
   background-color: #f7f7f7;
   min-width: 0;
   text-align: left;
+}
+
+.mnWide > li > button {
+  
 }
 
 /* remove excess space from both menus */
