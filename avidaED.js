@@ -125,11 +125,11 @@
 // Avida-ED 4.0.17 Beta
 // - version wendell merged into main on 2022 Aug 25
 // 
-// Avida-ED 4.018 Beta
+// Avida-ED 4.0.18 Beta
 // - fixed broken slider for mutation rate on population page
 // - on branch with 4.0.17 in git
 // 
-// Avida-ED 4.019 Beta
+// Avida-ED 4.0.19 Beta
 // - adjusted spacing/layout of mutation rate sliders
 // - moved error messsage for mutation rate input to below slider for both population and organism page. 
 // 

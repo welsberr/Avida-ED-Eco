@@ -160,7 +160,6 @@ html {
 #leftPnlBnt { grid-area: leftPnlBnt; }
 #mainMenu { grid-area: mainMenu; }
 #headerMsgOutHldr { grid-area: headerMsgOutHldr; }
-#versionNumHolder { grid-area: versionNumHolder; }  /*display = none, but needs to be there if left in html */
 #RtSideToggleButtons { grid-area: RtSideToggleButtons; }
 #ritePnlBtnHolder { grid-area: ritePnlBtnHolder; }
 
@@ -168,8 +167,8 @@ html {
   grid-area:headerRow;
   display: grid;
   grid-template-rows: 1.1rem; 
-  grid-template-columns: 3.2rem          28rem    auto             0.8rem             7rem                 3.2rem;
-  grid-template-areas: 'leftPnlBtnHolder mainMenu headerMsgOutHldr versionNumHolder RtSideToggleButtons ritePnlBtnHolder';
+  grid-template-columns: 3.2rem          28rem    auto             7rem                3.2rem;
+  grid-template-areas: 'leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder';
   align-items: baseline;  /* was center */
   border: 1px solid #AAA;               /* #AAA; */
   gap: 0px 0.5rem; /* row_gap col_gap */
@@ -177,7 +176,7 @@ html {
   /* background: inherit; */
 }
 
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr versionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
 
 
 
@@ -234,7 +233,7 @@ html {
     font-family: Tahoma, Trebuchet MS, sans-serif;
   }
   
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr versionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
 
 #leftPnlBtnHolder{
   width: 2rem; 
@@ -287,7 +286,7 @@ html {
   flex: 0 0 50px;
 }
 
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr versionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
 
 #mainMenu{
   flex: 0 0 445px;
@@ -318,37 +317,23 @@ html {
   
   #mnDebug {visibility: hidden;}
   
-  /* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr versionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+  /* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
   #headerMsgOutHldr{
     overflow: hidden;
-    white-space: nowrap; 
     text-overflow: ellipsis;
-    max-width: calc(100% - 630px); /* 185+445=630 */
-    flex: 0 1 auto;
     background: lightblue;
     border: 3px red;
-
-    /*   yemi: removal of this code results in weird header button spacing 
-    overflow: visible;  */
-    /* flex: [flex-grow] [flex-shrink] [flex-basis]; */
-    /* flex: [max] [min] [ideal size]; */
-    /* flex: 0 1 auto; /* Default flex value 0=grow=don't grow; take minimum size for the conents  */    
-    /* flex: 0 0 auto; /* stay the same size blasted element */    
-    /* flex: 1 1 auto; /* all elements will be the same size if all have this flex defintion and no content is too big */
-    /* flex: 1 1 auto; /* elements fill the container.
-    /* flex-shrink: 1 allows so shrinking */ 
   }
   #headerMsgInnerHldr {
-    padding: 1px 4px 1px 8px; 
-/*    padding: 3px 4px 3px 8px;    /* top right bottom left */   
+/*    padding: 1px 4px 1px 8px; 
+    padding: 3px 4px 3px 8px;    /* top right bottom left */   
     height: 100%;
-    font-size: 1.1em;
   }
   #wsSavedMsg{
     color: blue;
   }
   
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr versionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
   
   #RtSideToggleButtons{
     flex: 0 0 85px;
@@ -377,28 +362,7 @@ html {
     background: #ccc;
   }
 
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr versionNumHolder RtSideToggleButtons ritePnlBtnHolder */
-  
-  #versionNumHolder{
-    display: none;  /* we are not displaying the version at this time */
-    /* look again if ever used. 
-    padding-top: 5px;  
-    width: 130px;
-    height: 25px;
-    */
-  }
-  
-  #avidaVersion{
-    display: none;
-    --pixel: 120; /* Equals to 120px */ 
-    width: var(--rem-size0);
-    text-align: right;
-    --pix1: 3; /* Equals to 3px */ 
-    --pix2: 5; /* Equals to 5px */ 
-    padding: var(--rem-size1) var(--rem-size2) 0px 0px;  /* top right bottom left  */     
-    height: inherit;
-    vertical-align: middle;
-  }
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
   
 /* structures in the left side panel */
   .mainPageButtons{
