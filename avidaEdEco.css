@@ -154,17 +154,31 @@ html {
   background:  #F5F5F5;   /* lightsalmon;  */
 }
 
+/* in version 4.0.19 changing how I do headerRow from flex to grid, 
+ even as it is only one row. I think I can specify it better */
+
+#leftPnlBnt { grid-area: leftPnlBnt; }
+#mainMenu { grid-area: mainMenu; }
+#headerMsgOutHldr { grid-area: headerMsgOutHldr; }
+#versionNumHolder { grid-area: versionNumHolder; }  /*display = none, but needs to be there if left in html */
+#RtSideToggleButtons { grid-area: RtSideToggleButtons; }
+#ritePnlBtnHolder { grid-area: ritePnlBtnHolder; }
+
 .headerRow {
   grid-area:headerRow;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;  /*should leave subdiv at each end and space between otherwise */
+  display: grid;
+  grid-template-rows: 1.1rem; 
+  grid-template-columns: 3.2rem          28rem    auto             0.8rem             7rem                 3.2rem;
+  grid-template-areas: 'leftPnlBtnHolder mainMenu headerMsgOutHldr versionNumHolder RtSideToggleButtons ritePnlBtnHolder';
   align-items: baseline;  /* was center */
   border: 1px solid #AAA;               /* #AAA; */
-  background: #bbb;
+  gap: 0px 0.5rem; /* row_gap col_gap */
+  background: #bbb;   /* only while debugging */
   /* background: inherit; */
 }
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr VersionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr versionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+
 
 
 .navColClass {                  /* left side bar with freezer */
@@ -220,7 +234,7 @@ html {
     font-family: Tahoma, Trebuchet MS, sans-serif;
   }
   
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr VersionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr versionNumHolder RtSideToggleButtons ritePnlBtnHolder */
 
 #leftPnlBtnHolder{
   width: 2rem; 
@@ -273,7 +287,7 @@ html {
   flex: 0 0 50px;
 }
 
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr VersionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr versionNumHolder RtSideToggleButtons ritePnlBtnHolder */
 
 #mainMenu{
   flex: 0 0 445px;
@@ -304,7 +318,7 @@ html {
   
   #mnDebug {visibility: hidden;}
   
-  /* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr VersionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+  /* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr versionNumHolder RtSideToggleButtons ritePnlBtnHolder */
   #headerMsgOutHldr{
     overflow: hidden;
     white-space: nowrap; 
@@ -334,7 +348,7 @@ html {
     color: blue;
   }
   
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr VersionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr versionNumHolder RtSideToggleButtons ritePnlBtnHolder */
   
   #RtSideToggleButtons{
     flex: 0 0 85px;
@@ -363,15 +377,15 @@ html {
     background: #ccc;
   }
 
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr VersionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr versionNumHolder RtSideToggleButtons ritePnlBtnHolder */
   
   #versionNumHolder{
     display: none;  /* we are not displaying the version at this time */
-    flex: 0 0 auto;
-    padding-top: 5px;
+    /* look again if ever used. 
+    padding-top: 5px;  
     width: 130px;
     height: 25px;
-    background: palegreen;
+    */
   }
   
   #avidaVersion{

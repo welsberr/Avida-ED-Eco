@@ -28,6 +28,12 @@
  * selectors used throughout the Claro theme.
  *
  * [1] http://www.w3.org/TR/CSS21/cascade.html#cascade
+ *
+ * Use rem rather than em so that nested elements use an equilivant size for 1rem
+ * the default for rem = 16px; 
+ * rem values are relative to the root font-size
+ * em values are relative to the font-size of the nearest parent element, 
+ *
  */
 
 /****************************************************************************************************** css variables */
