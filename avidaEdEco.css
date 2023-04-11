@@ -20,9 +20,9 @@ html {
   }
 */
   body {
-    margin: 0;
+    margin: 0px;
     background: #F5F5F5;
-    padding: 0;
+    padding: 0px;
     
   }
   .display_none { display: none; }
@@ -30,8 +30,8 @@ html {
   .visibility_hidden {visibility: hidden; }
   
   .thin{
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
   }
   
   .tabHolderShow {
@@ -102,7 +102,7 @@ html {
   min-width: 100vw;
   max-height: 100vh;
   max-width: 100vw;
-  margin: 0;
+  margin: 0px;
   background:  #F5F5F5;   /* lightsalmon;  */
 }
 
@@ -118,7 +118,7 @@ html {
   min-width: 100vw;
   max-height: 99vh;
   max-width: 100vw;
-  margin: 0;
+  margin: 0px;
   background:  #F5F5F5;   /* lightsalmon;  */
 }
 
@@ -134,7 +134,7 @@ html {
   min-width: 100vw;
   max-height: 99vh;
   max-width: 100vw;
-  margin: 0;
+  margin: 0px;
   background:  #F5F5F5;   /* lightsalmon;  */
 }
 
@@ -150,7 +150,7 @@ html {
   min-width: 100vw;
   max-height: 99vh;
   max-width: 99vw;
-  margin: 0;
+  margin: 0px;
   background:  #F5F5F5;   /* lightsalmon;  */
 }
 
@@ -158,11 +158,13 @@ html {
   grid-area:headerRow;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-between;  /*should leave subdiv at each end and space between otherwise */
+  align-items: baseline;  /* was center */
   border: 1px solid #AAA;               /* #AAA; */
+  background: #bbb;
+  /* background: inherit; */
 }
-  /* headerRow flex contains leftPnlBtnHolder mainMenu HeaderMsg VersionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr VersionNumHolder RtSideToggleButtons ritePnlBtnHolder */
 
 
 .navColClass {                  /* left side bar with freezer */
@@ -218,7 +220,13 @@ html {
     font-family: Tahoma, Trebuchet MS, sans-serif;
   }
   
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr VersionNumHolder RtSideToggleButtons ritePnlBtnHolder */
 
+#leftPnlBtnHolder{
+  width: 2rem; 
+  background: pink; /* inherit; */ 
+  border: 1px cyan;
+}
 /* structures in the headerRow */  
 #leftPanelButton{
     border-radius: 5px 5px 5px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
@@ -237,7 +245,6 @@ html {
 .leftPnlBtnHlderShow{
   height: 18px;
   padding: 0px 6px 0px 4px;    /* top right bottom left */  
-  margin: auto;
   background: inherit;     /* #eee; better color ? */
   flex: 0 0 50px;    /* grow shrink basis */
 }
@@ -246,6 +253,8 @@ html {
   padding: 0px 6px 0px 4px;    /* top right bottom left */  
   visibility: hidden;    
 }
+
+#ritePnlBtnHolder{ background: lightsalmon; }
 
 #ritePanelButton{
     border-radius: 5px 5px 5px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
@@ -259,21 +268,25 @@ html {
 .ritePnlBtnHlderShow{
   height: 18px;
   padding: 0px 6px 0px 4px;    /* top right bottom left */  
-  margin: auto;
+  margin: 0px;
   background: inherit;     /* #eee; better color ? */
   flex: 0 0 50px;
 }
 
-  #mainMenu{
-    flex: 0 0 445px;
-    --pix1: 30; 
-    height: var(--rem-size1);
-    border: 1px solid #888;
-    overflow: visible;       /* was scroll */
-    width: 445px;
-    /* does not work=resize: horizontal; */
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr VersionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+
+#mainMenu{
+  flex: 0 0 445px;
+  --pix1: 30; 
+  height: var(--rem-size1);
+  border: 1px solid #888;
+  overflow: visible;       /* was scroll */
+  width: 445px;
+  background: palegreen;
+
+/* does not work=resize: horizontal; */
 /*    max-width: fit-content; */
-  }
+}
 
   .claro .dijitMenuBar {
     border: none;
@@ -291,13 +304,16 @@ html {
   
   #mnDebug {visibility: hidden;}
   
-  /* headerRow flex contains leftPnlBtnHolder mainMenu HeaderMsg VersionNumHolder RtSideToggleButtons ritePnlBtnHolder */
-  #headerMsg{
+  /* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr VersionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+  #headerMsgOutHldr{
     overflow: hidden;
-    white-space: nowrap;
+    white-space: nowrap; 
     text-overflow: ellipsis;
     max-width: calc(100% - 630px); /* 185+445=630 */
-    flex: 0 1 auto;h
+    flex: 0 1 auto;
+    background: lightblue;
+    border: 3px red;
+
     /*   yemi: removal of this code results in weird header button spacing 
     overflow: visible;  */
     /* flex: [flex-grow] [flex-shrink] [flex-basis]; */
@@ -308,7 +324,7 @@ html {
     /* flex: 1 1 auto; /* elements fill the container.
     /* flex-shrink: 1 allows so shrinking */ 
   }
-  #msgHolder {
+  #headerMsgInnerHldr {
     padding: 1px 4px 1px 8px; 
 /*    padding: 3px 4px 3px 8px;    /* top right bottom left */   
     height: 100%;
@@ -317,11 +333,15 @@ html {
   #wsSavedMsg{
     color: blue;
   }
+  
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr VersionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+  
   #RtSideToggleButtons{
     flex: 0 0 85px;
     background: inherit;     /* #eee; better color ? */
-    margin: auto;
+    margin: 0px;
     height: 18px;
+    background: palegoldenrod;
   }
   .toggleLftButton {
     border-radius: 5px 0px 0px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
@@ -343,12 +363,15 @@ html {
     background: #ccc;
   }
 
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr VersionNumHolder RtSideToggleButtons ritePnlBtnHolder */
+  
   #versionNumHolder{
     display: none;  /* we are not displaying the version at this time */
     flex: 0 0 auto;
     padding-top: 5px;
     width: 130px;
     height: 25px;
+    background: palegreen;
   }
   
   #avidaVersion{
