@@ -330,7 +330,7 @@ require([
     } else { console.log('av.aww.uiWorker is not null'); }
   } 
   else {
-    userMsgLabel.textContent = "Sorry, your browser does not support Web workers and Avida won't run";
+    av.dom.userErrorMsg.innerHTML = "Sorry, your browser does not support Web workers and Avida won't run";
   };
 
   //process message from web worker
@@ -1213,7 +1213,7 @@ av.ui.feedback = function(){
 
   //http://www.w3schools.com/html/tryit.asp?filename=tryhtml5_webworker
   av.ui.restartAvida = function () {
-    userMsgLabel.textContent = 'reloading Avida . . .';
+    av.dom.userErrorMsg.innerHTML = 'reloading Avida . . .';
 
     av.aww.uiWorker.terminate();
     av.aww.uiWorker = null;
@@ -1227,12 +1227,12 @@ av.ui.feedback = function(){
         av.debug.log += '\nuiA: ui killed avida webworker and started a new webworker';
       }
     } else {
-      userMsgLabel.textContent = "Sorry, your browser does not support Web workers and Avida won't run";
+      av.dom.userErrorMsg.innerHTML = "Sorry, your browser does not support Web workers and Avida won't run";
     }
 
     //need to 'start new experiment'
     av.ptd.resetDishFn(false);  //do not send reset to avida; avida restarted
-    restartAvidaDialog.hide();
+    restartAvidaDialog.hide();    //tiba check this
   };
 
   document.getElementById('restartAvidaNow').onclick = function () {
@@ -2116,7 +2116,6 @@ av.ui.feedback = function(){
     //console.log(from, 'called av.ptd.popSizeFn: new col, row', av.grd.setupCols, av.grd.setupRows);
     //console.log('av.grd.setupCols, Rows', av.grd.setupCols, av.grd.setupRows);
     av.dom.sizeCells.innerHTML = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
-    //av.dom.sizeCells.text = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
     av.dom.sizeCols.style.color = 'black';
     av.dom.sizeRows.style.color = 'black';
     av.dom.sizeCells.style.color = 'black';
@@ -2148,8 +2147,7 @@ av.ui.feedback = function(){
     //console.log(from, 'called av.ptd.popSizeFnTest: new col, row', av.grd.setupCols, av.grd.setupRows);
     //console.log('av.grd.setupCols, Rows', av.grd.setupCols, av.grd.setupRows);
     av.dom.sizeCellTest.innerHTML = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
-    //av.dom.sizeCells.text = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
-    av.dom.sizeColTest.style.color = 'black';
+]   av.dom.sizeColTest.style.color = 'black';
     av.dom.sizeRowTest.style.color = 'black';
     av.dom.sizeCellTest.style.color = 'black';
     //Linear scale the position for Ancestors added by hand;
@@ -2176,6 +2174,7 @@ av.ui.feedback = function(){
 
   // no slider for muteTest
   //------------------------------------------------------------------------------------------ av.ptd.muteInpuTestChng --
+  // take this out, it should not be user
   av.ptd.muteInpuTestChng = function () {
     var value = this.value;
     var muteNum = parseFloat(value);
@@ -2193,7 +2192,6 @@ av.ui.feedback = function(){
       av.ptd.validMuteInuput = false;
       av.dom.muteErroTest.style.color = 'red';
       av.dom.muteErroTest.innerHTML = '';
-      av.dom.userMsgLabel.innerHTML = '';
       if (muteNum <= 0) {
         av.dom.muteErroTest.innerHTML += 'Mutation rate must be >= than zero percent. ';
         if (av.debug.popCon) { console.log('<0'); }
@@ -2223,7 +2221,6 @@ av.ui.feedback = function(){
       //console.log('valid response');
       av.ptd.popSizeFn('gridChange');
       av.ptd.validGridSize = true;
-      av.dom.userMsgLabel.innerHTML = '';
       //redraw grid
       av.grd.drawGridSetupFn('av.ptd.gridChange');
     } else {
@@ -2241,7 +2238,6 @@ av.ui.feedback = function(){
       av.dom.sizeCells.style.color = 'red';
       // if (av.dbg.flg.popSetup ) { console.log('popSetup: not valid; col, row=', colNum, rowNum); }
       av.dom.sizeCells.innerHTML = '';
-      av.dom.userMsgLabel.innerHTML = '';
       if (colNum <= 0) {
         av.dom.sizeCells.innerHTML += 'Number of columns must be greater than zero. ';
         // if (av.dbg.flg.popSetup ) { console.log('popSetup: <0'); }
@@ -2277,7 +2273,6 @@ av.ui.feedback = function(){
       //console.log('valid response');
       av.ptd.popSizeFnTest('gridChangTest');
       av.ptd.validGridSizTest = true;
-      av.dom.userMsgLabel.innerHTML = '';
       //redraw grid
       av.grd.drawGridSetupFn('av.ptd.gridChangTest');
     } else {
@@ -2293,7 +2288,6 @@ av.ui.feedback = function(){
       av.dom.sizeCellTest.style.color = 'red';
       //console.log('not valid; col, row=', colNum, rowNum);
       av.dom.sizeCellTest.innerHTML = '';
-      av.dom.userMsgLabel.innerHTML = '';
       if (colNum <= 0) {
         av.dom.sizeCellTest.innerHTML += 'Number of columns must be greater than zero. ';
         //console.log('<0');
@@ -2548,7 +2542,6 @@ av.ui.feedback = function(){
         av.ptd.validMuteInuput = false;
         av.dom.muteOrgError.style.color = 'red';
         av.dom.muteOrgError.innerHTML = '';
-        av.dom.userMsgLabel.innerHTML = '';
         if (muteNum <= 0) {
           av.dom.muteOrgError.innerHTML += 'Mutation rate must be >= than zero percent. ';
           if (av.debug.popCon) { console.log('<0'); }

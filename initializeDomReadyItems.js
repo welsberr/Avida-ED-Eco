@@ -5,7 +5,7 @@
   // if (av.dbg.flg.root) { console.log('Root: before av.dom.load'); }
   av.dom.load = function () {
     'use strict';
-    //Menu
+    //Header Row: main Menu
     av.dom.mnCnPopRun = document.getElementById('mnCnPopRun');
 
     av.dom.mnFlStandAloneApp = document.getElementById('mnFlStandAloneApp');
@@ -17,7 +17,10 @@
     av.dom.mnHpDebug = document.getElementById('mnHpDebug');
     av.dom.mnDebug = document.getElementById('mnDebug');
 
-    //main area
+    //Header Row: other items
+    av.dom.userErrorMsg= document.getElementById('userErrorMsg');
+    
+    //Near Trash Can: 
     av.dom.userMsgLabel = document.getElementById('userMsgLabel');
     av.dom.wsSavedMsg = document.getElementById('wsSavedMsg');
     av.dom.wsNameMsg = document.getElementById('wsNameMsg');

@@ -38,6 +38,16 @@
  *
  */
 
+/* Notes about flex */
+    /* flex: [flex-grow] [flex-shrink] [flex-basis]; */
+    /* flex: [max] [min] [ideal size]; */
+    /* flex: 0 1 auto; /* Default flex value 0=grow=don't grow; take minimum size for the conents  */    
+    /* flex: 0 0 auto; /* stay the same size blasted element */    
+    /* flex: 1 1 auto; /* all elements will be the same size if all have this flex defintion and no content is too big */
+    /* flex: 1 1 auto; /* elements fill the container.
+    /* flex-shrink: 1 allows so shrinking */ 
+
+
 /****************************************************************************************************** css variables */
 /* Variables: global csss
 /*--------------------------------------------------------------------------------------------------------------------*/

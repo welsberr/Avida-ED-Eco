@@ -54,7 +54,7 @@ html {
 .tab button {
   background: white;
   float: left;
-  border: 1px black;
+  border: 1px solid black;
   border-style: solid solid none;
   border-radius: 9px 9px 0px 0px;
   outline: none;
@@ -159,7 +159,7 @@ html {
 
 #leftPnlBnt { grid-area: leftPnlBnt; }
 #mainMenu { grid-area: mainMenu; }
-#headerMsgOutHldr { grid-area: headerMsgOutHldr; }
+.headerMsgOutHldr { grid-area: headerMsgOutHldr; }
 #RtSideToggleButtons { grid-area: RtSideToggleButtons; }
 #ritePnlBtnHolder { grid-area: ritePnlBtnHolder; }
 
@@ -167,15 +167,20 @@ html {
   grid-area:headerRow;
   display: grid;
   grid-template-rows: 1.1rem; 
-  grid-template-columns: 3.2rem          28rem    auto             7rem                3.2rem;
+  grid-template-columns: 3.2rem          40rem    auto             5rem                3.2rem;
   grid-template-areas: 'leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder';
   align-items: baseline;  /* was center */
   border: 1px solid #AAA;               /* #AAA; */
-  gap: 0px 0.5rem; /* row_gap col_gap */
-  background: #bbb;   /* only while debugging */
+  gap: 0px 10px; /* row_gap col_gap */
+  background: #ddd;   /* only while debugging */
   /* background: inherit; */
 }
 
+.headerRow > div {
+  border: 1px solid red;
+  height: 100%;
+  text-align: center;
+}
 /* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
 
 
@@ -238,7 +243,7 @@ html {
 #leftPnlBtnHolder{
   width: 2rem; 
   background: pink; /* inherit; */ 
-  border: 1px cyan;
+  border: 1px solid cyan;
 }
 /* structures in the headerRow */  
 #leftPanelButton{
@@ -289,7 +294,6 @@ html {
 /* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
 
 #mainMenu{
-  flex: 0 0 445px;
   --pix1: 30; 
   height: var(--rem-size1);
   border: 1px solid #888;
@@ -318,11 +322,16 @@ html {
   #mnDebug {visibility: hidden;}
   
   /* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
-  #headerMsgOutHldr{
-    overflow: hidden;
-    text-overflow: ellipsis;
+   /* overflow: hidden;
+    text-overflow: ellipsis;  */
+
+  #userErrorMsg {     /* class is headerMsgOutHldr */
+    --pix1: 30; 
+    height: var(--rem-size1);
+    border: 1px solid #888;
+    overflow: hidden;       /* was scroll */
+   
     background: lightblue;
-    border: 3px red;
   }
   #headerMsgInnerHldr {
 /*    padding: 1px 4px 1px 8px; 
