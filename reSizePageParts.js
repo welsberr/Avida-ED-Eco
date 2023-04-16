@@ -442,7 +442,7 @@ av.ui.findInitialDivSizingFn = function(from) {
 };
 
 av.ui.initialDivSizingFn = function(from) {
-  console.log(from, 'called av.ui.initialDivSizingFn: sizes=', av.dom.sizes('av.ui.initialDivSizing') );
+  console.log(from, 'called av.ui.initialDivSizingFn: av.dom.sizes() =', av.dom.sizes('av.ui.initialDivSizing') );
   av.ui.findInitialDivSizingFn('av.ui.initialDivSizingFn');
 
   // call the drag bar left function
@@ -485,7 +485,7 @@ av.ui.freezerSizeHtFn = () => {
 //called from two places in avidaED.js
 av.anl.divSize = function (from) {
   if (av.debug.alo) { console.log('alo: ', from, 'called av.anl.divSize'); }
-  console.log('alo: ', from, 'called av.anl.divSize');
+  console.log(from, 'called av.anl.divSize');
   //console.log(from,'anaChrtHolder Ht client scroll ', av.dom.anaChrtHolder.clientHeight, av.dom.anaChrtHolder.scrollHeight);
   //console.log(from,'anlDndChart Ht client scroll', av.dom.anlDndChart.clientHeight, av.dom.anlDndChart.scrollHeight);
   //console.log(from,'anlChrtSpace Ht client scroll', av.dom.anlChrtSpace.clientHeight, av.dom.anlChrtSpace.scrollHeight);
@@ -495,11 +495,14 @@ av.anl.divSize = function (from) {
   av.anl.wd = av.dom.anaChrtHolder.getBoundingClientRect().width - 1;
   //av.dom.anaChrtHolder.style.height = av.anl.ht + 'px';
   av.anl.ht = av.dom.anaChrtHolder.clientHeight - 6;
+  if (0 > av.anl.ht) av.anl.ht = 0;
+  if (0 > av.anl.wd) av.anl.wd = 0;
+  
   av.dom.anlChrtSpace.style.height = av.anl.ht + 'px';
   av.dom.anlChrtSpace.style.width = av.anl.wd + 'px';
   av.anl.layout.height = av.anl.ht;
   av.anl.layout.width = av.anl.wd;
-  console.log(av.anl.ht, av.anl.wd);
+  console.log('av.anl.layout ht & wd:', av.anl.ht, av.anl.wd);
 };
 
 //------------------------------------------------------------------------------------------show/hide rite side panel --

@@ -1,7 +1,7 @@
 
  // this version uses grid box layout for major sections (toop, left side, main, right side)  
  // if (av.dbg.flg.root) { console.log('Root: avidaED.js at beginning of file on 2020_0111 @ 20:21'); };
- console.log('Root: avidaED.js at beginning of file on 2022_804_Sat'); 
+ console.log('Root: avidaED.js at beginning of file on 2023_414_Fri'); 
 
 // need a server to run Avida-ED from a file. The one below works.
 // python server.py                    for http://localhost:8000/
@@ -129,9 +129,15 @@
 // - fixed broken slider for mutation rate on population page
 // - on branch with 4.0.17 in git
 // 
-// Avida-ED 4.0.19 Beta
+// Avida-ED 4.0.29 Beta
 // - adjusted spacing/layout of mutation rate sliders
 // - moved error messsage for mutation rate input to below slider for both population and organism page. 
+// 
+// Avida-ED 4.0.20 Beta
+// - Moved Workspace Name and messages about saving the freezer as a workspace to right of the trash can
+// - Left error messsage for in space between Main Menu and toggle buttons on HeaderRow.
+// - worked on improving spacing and alignment on header row. 
+// - moved debug buttons that were next to trash can to under freezer and above trash can.  
 // 
 // Generic Notes -------------------------------------------------------------------------------------------------------
 
@@ -2996,10 +3002,10 @@ av.ui.feedback = function(){
   av.dom.mnDebug.style.visibility = 'hidden';
   av.dom.mnDebug.style.display = 'none';
 
-  // Avida-ED 4.0.19 Beta Testing fix this too. 
+  // Avida-ED 4.0.20 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; set to false before public release for Avida-ED 4.0.19 Beta Testing. ');
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.20 Beta Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x

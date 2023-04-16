@@ -163,7 +163,7 @@ html {
 
 /* --------------------------------------------------------------------------------------------- header row formating */
 
-/* in version 4.0.19 changing how I do headerRow from flex to grid, 
+/* in version 4.0.20 changing how I do headerRow from flex to grid, 
  even as it is only one row. I think I can specify it better */
 
 #leftPnlBtnHolder { grid-area: leftPnlBtnHolder; }
@@ -242,7 +242,7 @@ html {
    /* overflow: hidden;
     text-overflow: ellipsis;  */
 
-  #userErrorMsg {     /* class is headerMsgOutHldr */
+#userErrorMsg {     /* class is headerMsgOutHldr */
     height: 1.25rem;
     overflow: hidden;       /* was scroll */   
     background: inherit;

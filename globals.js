@@ -5,7 +5,7 @@
 var av = av || {};  //incase av already exists
 
 //console.log('start of globals on 2021_310_04:22 Thurs');
-console.log('start of globals on 2022_121_Fri');
+console.log('start of globals on 2023_416_Sun');
 
 Number.prototype.pad = function(size) {
   var ss = String(this);
@@ -107,7 +107,7 @@ av.ui.orgInfo = 'details';   //settings is the other option
 av.ui.beginFlag = true;
 av.ui.oneUpdateFlag = false;
 av.ui.lftSidePnlShowing = true;
-av.ui.version = '4.0.19 Beta';
+av.ui.version = '4.0.20 Beta';
 av.debug.log = '';
 av.debug.log = '--hed: message and error log: Version:' + av.ui.version;
 av.debug.triggered = 'unknown';
