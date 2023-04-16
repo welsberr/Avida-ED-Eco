@@ -61,7 +61,7 @@ button.navbar-btn{
 }
 
 .btn.border-zero {
-  border: 2 solid #aaa;
+  border: 2px solid #aaa;
 }
 
 .btn.btn-custom:hover {
@@ -179,7 +179,7 @@ nav > ul > li {
   list-style: none;
   position:relative; 
   display: block;
-  transition: 0.5;
+  transition: 0.5s;
 }
 
 .navbar-btn{
@@ -192,7 +192,7 @@ nav > ul > li {
 .submenu {
   display: none;
   position: absolute;
-  width: 500%;  /* was 400% */
+  width: 170px;  /* was 400% */
   margin-top: 10px;
   background: #f7f7f7;
   border: 1px solid #aaa;
@@ -212,9 +212,9 @@ nav > ul > li {
   text-align: left;
 }
 
-.mnWide > li > button {
-  
-}
+#mnAeWide { width: 100px; }
+#mnFzWide { width: 350px; }
+#mnCnWide { width: 250px; }
 
 /* remove excess space from both menus */
 .aboutMenu,  .helpMenu{

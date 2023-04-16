@@ -256,11 +256,14 @@
     document.getElementById('mnFzOffspring').disabled = true;
     document.getElementById('mnFzPopulation').disabled = true;
     document.getElementById('mnFzAddFzItem').disabled = true; //tiba need to fix this so freezer button works when I freezer item is highlighted
-    //dijit.byId('mnFzAddConfigEx').attr('disabled', true);
-    //dijit.byId('mnFzAddGenomeEx').attr('disabled', true);
-    //dijit.byId('mnFzAddPopEx').attr('disabled', true);
-    //dijit.byId('mnFzAddGenomeView').attr('disabled', true);
-    //dijit.byId('mnFzAddPopAnalysis').attr('disabled', true);
+    
+    //document.getElementById('mnFzOrganism').disabled = true;   ///???
+    //document.getElementById('mnFzAddConfigEx').disabled = true;   ///???
+    //document.getElementById('mnFzAddGenomeEx').disabled = true;   ///???
+    //document.getElementById('mnFzAddPopEx').disabled = true;   ///???
+    //document.getElementById('mnFzAddGenomeView').disabled = true;   ///???
+    //document.getElementById('mnFzAddPopAnalysis').disabled = true;   ///???
+    //document.getElementById('').disabled = true;   ///???
   };
 
   // for analyze page

@@ -154,6 +154,15 @@ html {
   background:  #F5F5F5;   /* lightsalmon;  */
 }
 
+
+/* just as an example of formating the div contained by the div with class = headerRow
+.headerRow > div {
+  background: inherit;
+}
+*/
+
+/* --------------------------------------------------------------------------------------------- header row formating */
+
 /* in version 4.0.19 changing how I do headerRow from flex to grid, 
  even as it is only one row. I think I can specify it better */
 
@@ -163,12 +172,13 @@ html {
 #RtSideToggleButtons { grid-area: RtSideToggleButtons; }
 #ritePnlBtnHolder { grid-area: ritePnlBtnHolder; }
 
-.headerRow {
+.headerRowSwitch_old_do_NOT_use {
   grid-area:headerRow;
   display: grid;
   grid-template-rows: 1.1rem; 
-  grid-template-columns: 3.2rem          40rem    auto             5rem                3.2rem;
-  grid-template-areas: 'leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder';
+  grid-template-columns: 3.2rem           auto            40rem    5rem                3.2rem;
+  grid-template-areas: 'leftPnlBtnHolder headerMsgOutHldr mainMenu RtSideToggleButtons ritePnlBtnHolder';
+  /* align-content: center; /*  baseline? */
   align-items: baseline;  /* was center */
   border: 1px solid #AAA;               /* #AAA; */
   gap: 0px 10px; /* row_gap col_gap */
@@ -176,14 +186,159 @@ html {
   /* background: inherit; */
 }
 
-.headerRow > div {
-  border: 1px solid red;
-  height: 100%;
-  text-align: center;
+.headerRow {
+  grid-area:headerRow;
+  display: grid;
+  grid-template-rows: 1.1rem; 
+  grid-template-columns: 3.2rem          40rem    auto             5rem                3.2rem;
+  grid-template-areas: 'leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder';
+  align-items: baseline;
+  /*   align-content: center; */
+  border: 1px solid #AAA;               /* #AAA; */
+  gap: 0px 10px; /* row_gap col_gap */
+  background: #ddd;   /* only while debugging */
+  /* background: inherit; */
 }
+
 /* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
 
+#leftPnlBtnHolder{
+  width: 2rem; 
+  background: pink; /* inherit; */ 
+  border: 1px solid cyan;
+}
+/* structures in the headerRow */  
+#leftPanelButton{
+    border-radius: 5px 5px 5px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 16px;
+    padding: 0px 4px 0px 2px;  /* top right bottom left */
+    alt: 'button to open/close left panel'; 
+    text-align: center;
+    vertical-align: middle;
+}
+/* not in use - used to get image to fit in a space better
+.scaleImg{
+  height: 80px;
+  object-fit: contain;
+}  
+*/
+.leftPnlBtnHlderShow{
+  height: 18px;
+  padding: 0px 6px 0px 4px;    /* top right bottom left */  
+  background: inherit;     /* #eee; better color ? */
+  flex: 0 0 50px;    /* grow shrink basis */
+}
+.pnlBtnHldrHide{
+  flex: 0 0 50px;
+  padding: 0px 6px 0px 4px;    /* top right bottom left */  
+  visibility: hidden;    
+}
 
+#ritePnlBtnHolder{ 
+  background: lightsalmon;
+/*   align-self: center; */
+}
+
+#ritePanelButton{
+    border-radius: 5px 5px 5px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 16px;
+    padding: 0px 4px 0px 2px;  /* top right bottom left */
+    alt: 'button to open/close right panel'; 
+    text-align: center;
+    vertical-align: middle;
+}
+
+.ritePnlBtnHlderShow{
+  height: 18px;
+  padding: 0px 6px 0px 4px;    /* top right bottom left */  
+  margin: 0px;
+  background: inherit;     /* #eee; better color ? */
+  flex: 0 0 50px;
+}
+
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
+
+#mainMenu{
+  --pix1: 30; 
+  height: var(--rem-size1);
+  border: 1px solid #888;
+  overflow: visible;       /* was scroll */
+  width: 445px;
+  background: palegreen;
+
+/* does not work=resize: horizontal; */
+/*    max-width: fit-content; */
+}
+
+  .claro .dijitMenuBar {
+    border: none;
+    background-color: inherit;
+  }
+  /* looks bad
+  #mnAvidaEd {border: 1px solid #999;}
+  #mnFile {border: 1px solid #999;}
+  #mnFreezer {border: 1px solid #999;}
+  #mnControl {border: 1px solid #999;}
+  #mnHelp {border: 1px solid #999;}
+  */
+  
+  #mnAvidaEd {white-space: nowrap;}
+  
+  #mnDebug {
+    visibility: hidden;
+    display: none;
+  }
+  
+  /* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
+   /* overflow: hidden;
+    text-overflow: ellipsis;  */
+
+  #userErrorMsg {     /* class is headerMsgOutHldr */
+    /* --pix1: 30; 
+    height: var(--rem-size1); */
+    height: 100%;
+    position: static;
+    border: 1px solid #888;
+    overflow: hidden;       /* was scroll */
+   
+    background: lightblue;
+  }
+  #wsSavedMsg{
+    color: blue;
+  }
+  
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
+  
+  #RtSideToggleButtons{
+    flex: 0 0 85px;
+    background: inherit;     /* #eee; better color ? */
+    margin: 0px;
+    height: 18px;
+    background: palegoldenrod;
+  }
+  .toggleLftButton {
+    border-radius: 5px 0px 0px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 16px;
+    padding: 0px 2px 3px 2px;    /* top right bottom left */  
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .toggleRitButton {
+    border-radius: 0px 5px 5px 0px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 16px;
+    padding: 0px 2px 0px 2px;    /* top right bottom left */  
+    text-align: center;
+    vertical-align: middle;
+    margin-left: -4px;
+  }
+  .activeBtn {
+    background: #ccc;
+  }
+
+/* headerRow contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
+
+/*----------------------------------------------------------------------------------------- end of header row         */
 
 .navColClass {                  /* left side bar with freezer */
   grid-area:navColClass;
@@ -238,140 +393,7 @@ html {
     font-family: Tahoma, Trebuchet MS, sans-serif;
   }
   
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
-
-#leftPnlBtnHolder{
-  width: 2rem; 
-  background: pink; /* inherit; */ 
-  border: 1px solid cyan;
-}
-/* structures in the headerRow */  
-#leftPanelButton{
-    border-radius: 5px 5px 5px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 16px;
-    padding: 0px 4px 0px 2px;  /* top right bottom left */
-    alt: 'button to open/close left panel'; 
-    text-align: center;
-    vertical-align: middle;
-}
-/* not in use - used to get image to fit in a space better
-.scaleImg{
-  height: 80px;
-  object-fit: contain;
-}  
-*/
-.leftPnlBtnHlderShow{
-  height: 18px;
-  padding: 0px 6px 0px 4px;    /* top right bottom left */  
-  background: inherit;     /* #eee; better color ? */
-  flex: 0 0 50px;    /* grow shrink basis */
-}
-.pnlBtnHldrHide{
-  flex: 0 0 50px;
-  padding: 0px 6px 0px 4px;    /* top right bottom left */  
-  visibility: hidden;    
-}
-
-#ritePnlBtnHolder{ background: lightsalmon; }
-
-#ritePanelButton{
-    border-radius: 5px 5px 5px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 16px;
-    padding: 0px 4px 0px 2px;  /* top right bottom left */
-    alt: 'button to open/close right panel'; 
-    text-align: center;
-    vertical-align: middle;
-}
-
-.ritePnlBtnHlderShow{
-  height: 18px;
-  padding: 0px 6px 0px 4px;    /* top right bottom left */  
-  margin: 0px;
-  background: inherit;     /* #eee; better color ? */
-  flex: 0 0 50px;
-}
-
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
-
-#mainMenu{
-  --pix1: 30; 
-  height: var(--rem-size1);
-  border: 1px solid #888;
-  overflow: visible;       /* was scroll */
-  width: 445px;
-  background: palegreen;
-
-/* does not work=resize: horizontal; */
-/*    max-width: fit-content; */
-}
-
-  .claro .dijitMenuBar {
-    border: none;
-    background-color: inherit;
-  }
-  /* looks bad
-  #mnAvidaEd {border: 1px solid #999;}
-  #mnFile {border: 1px solid #999;}
-  #mnFreezer {border: 1px solid #999;}
-  #mnControl {border: 1px solid #999;}
-  #mnHelp {border: 1px solid #999;}
-  */
-  
-  #mnAvidaEd {white-space: nowrap;}
-  
-  #mnDebug {visibility: hidden;}
-  
-  /* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
-   /* overflow: hidden;
-    text-overflow: ellipsis;  */
-
-  #userErrorMsg {     /* class is headerMsgOutHldr */
-    --pix1: 30; 
-    height: var(--rem-size1);
-    border: 1px solid #888;
-    overflow: hidden;       /* was scroll */
-   
-    background: lightblue;
-  }
-  #headerMsgInnerHldr {
-/*    padding: 1px 4px 1px 8px; 
-    padding: 3px 4px 3px 8px;    /* top right bottom left */   
-    height: 100%;
-  }
-  #wsSavedMsg{
-    color: blue;
-  }
-  
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
-  
-  #RtSideToggleButtons{
-    flex: 0 0 85px;
-    background: inherit;     /* #eee; better color ? */
-    margin: 0px;
-    height: 18px;
-    background: palegoldenrod;
-  }
-  .toggleLftButton {
-    border-radius: 5px 0px 0px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 16px;
-    padding: 0px 2px 3px 2px;    /* top right bottom left */  
-    text-align: center;
-    vertical-align: middle;
-  }
-
-  .toggleRitButton {
-    border-radius: 0px 5px 5px 0px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 16px;
-    padding: 0px 2px 0px 2px;    /* top right bottom left */  
-    text-align: center;
-    vertical-align: middle;
-    margin-left: -4px;
-  }
-  .activeBtn {
-    background: #ccc;
-  }
-
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
+/*----------------------------------------------------------------------------------------- left side panel items  -- */
   
 /* structures in the left side panel */
   .mainPageButtons{
@@ -403,6 +425,9 @@ html {
     border-radius: 5px;
     min-width: 82px;
   }
+  
+/* ----------------------------------------------------------------------------------- freezer section in left column */
+  
 #freezerSection{
   border: 1px solid #BABABA;
   flex: 1;                /* fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
@@ -439,12 +464,12 @@ html {
 #fzTdishSec { visibility: hidden; }
 #testDishDetailDiv {display: none; }
 
-/* trash area below freezer */
-#trashCan { 
-  grid-area: trashCan;
-  align-self: stretch;
-  justify-self: stretch;
-}
+
+/* --------------------------------------------------------------------------------- debug buttons in freezer section */
+
+
+/* debug buttons moved to below freezer at bottom of that div and above the trashcan */
+
 #showTextDebugButtonDiv { 
   grid-area: showTextDebugButtonDiv;
   align-self: stretch;
@@ -463,19 +488,6 @@ html {
   justify-content: flex-end;
 }
 
-.trash-grid-container{
-  display: grid;
-  grid-template-areas: 'trashCan showTextDebugButtonDiv '
-                       'trashCan developmentToggleDiv';
-  align-items: center;   /* up down */
-  grid-template-columns: auto auto;
-  grid-template-rows: 50% 50%;
-  grid-column-gap: 1px;
-  grid-row-gap: 1px;
-  width: 100%;
-  flex: 0 1 40px;
-  border: 1px solid #AAA;
-}
 #showTextDebugButton{
   min-width: 60px;
   visibility: hidden;
@@ -516,6 +528,29 @@ html {
     height: 100%;
     ;
     /* cols:'150' rows:'50' */
+}
+
+/* ----------------------------------------------------------------------------------------- trash area below freezer */
+#trashCan { 
+  grid-area: trashCan;
+  align-self: stretch;
+  justify-self: stretch;
+}
+
+#wsNameHolder { grid-area: wsNameHolder; }
+#userMsgLabel { grid-area: msgHolder; }
+
+/* modified to use with messages rather than debug buttons */
+.trash-grid-container{
+  display: grid;
+  grid-template-areas: 'trashCan wsNameHolder'
+                       'trashCan msgHolder';
+/*  align-items: center;   /* up down */
+  grid-template-columns: auto auto;
+  gap: 1px 1px;
+  width: 100%;
+  flex: 0 1 40px;
+  border: 1px solid #AAA;
 }
 
 /* -------------------------------------------------------------------------------- main work bench center section -- */
@@ -1834,7 +1869,7 @@ select:disabled::-ms-expand {
 .blk_wite_checkbox:checked:after {
 	content: '\2714';
 	font-size: 100%;
-	position: absolute;
+	position: absolute;    /*really absolute? **/
 	top: 0px;
 	left: 3px;
 	color: black;    /* #99a1a7;  */

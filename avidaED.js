@@ -1695,39 +1695,6 @@ av.ui.feedback = function(){
   }, 'zoomSlide');
 */
   av.grd.colorMap = 'Gnuplot2';
-  /*
-   *  This secton allowed one to change the color map of the scale, but Rob did not like it.
-   * 
-   dijit.byId('mnGnuplot2').attr('disabled', true);
-
-   dijit.byId('mnViridis').on('Click', function () {
-   av.post.addUser('Button: mnViridis');
-   dijit.byId('mnCubehelix').attr('disabled', false);
-   dijit.byId('mnGnuplot2').attr('disabled', false);
-   dijit.byId('mnViridis').attr('disabled', true);
-   av.grd.colorMap = 'Viridis';
-   av.grd.drawGridSetupFn('digjit.byID(mnViridis');
-   });
-
-   dijit.byId('mnGnuplot2').on('Click', function () {
-   av.post.addUser('Button: mnGnuplot2');
-   dijit.byId('mnCubehelix').attr('disabled', false);
-   dijit.byId('mnGnuplot2').attr('disabled', true);
-   dijit.byId('mnViridis').attr('disabled', false);
-   av.grd.colorMap = 'Gnuplot2';
-   av.grd.drawGridSetupFn('digit.byID(mnGnuplot2)');
-   });
-
-   dijit.byId('mnCubehelix').on('Click', function () {
-   av.post.addUser('Button: mnCubehelix');
-   dijit.byId('mnCubehelix').attr('disabled', true);
-   dijit.byId('mnGnuplot2').attr('disabled', false);
-   dijit.byId('mnViridis').attr('disabled', false);
-   av.grd.colorMap = 'Cubehelix';
-   av.grd.drawGridSetupFn('digit.byID(mnCubehelix)');
-   av.post.addUser('Button: mnCubehelix pressed');
-   });
-   */
 
   // *******************************************************************************************************************
   //    Buttons that select organisms that perform a logic function
@@ -2146,8 +2113,9 @@ av.ui.feedback = function(){
     av.grd.setupRows = Number(av.dom.sizeRowTest.value);
     //console.log(from, 'called av.ptd.popSizeFnTest: new col, row', av.grd.setupCols, av.grd.setupRows);
     //console.log('av.grd.setupCols, Rows', av.grd.setupCols, av.grd.setupRows);
-    av.dom.sizeCellTest.innerHTML = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
-]   av.dom.sizeColTest.style.color = 'black';
+    var thestr = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
+    av.dom.sizeCellTest.innerHTML = thestr;
+   av.dom.sizeColTest.style.color = 'black';
     av.dom.sizeRowTest.style.color = 'black';
     av.dom.sizeCellTest.style.color = 'black';
     //Linear scale the position for Ancestors added by hand;

@@ -54,13 +54,15 @@
         <div id='leftPnlBtnHolder' class='leftPnlBtnHlderShow'>
           <input id='leftPanelButton' type='button' value='<<&nbsp;' onclick='av.ptd.lftPanelBtnFn();'/>
         </div>
+
+        
         <div id="mainMenu">
           <div class="toplist">
             <nav>
               <ul>
                 <li>
                   <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnAvidaEd">Avida-ED </button>
-                  <ul class="submenu dismiss">
+                  <ul class="submenu dismiss" id='mnAeWide'>
                     <li> <button id="mnAeAbout" onclick="av.ui.aboutAvidaED('mnAeAbout')">About</button></li>
                     <li><button id="mnAePreferences">Preferences</button></li>
                   </ul>
@@ -83,7 +85,7 @@
                 </li>
                 <li>
                   <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnFreezer">Freezer </button>
-                  <ul class="submenu dismiss mnWide">
+                  <ul class="submenu dismiss" id='mnFzWide'>
                     <li><button id="mnFzConfig">Save Current Configuration to Freezer</button></li>
                     <li><button id="mnFzPopulation">Save Current Population to Freezer</button></li>
                     <li><button id="mnFzOrganism">Save Selected Organism to Freezer</button>
@@ -97,7 +99,7 @@
                 </li>
                 <li>
                   <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnControl">Control</button>
-                  <ul class="submenu dismiss">
+                  <ul class="submenu dismiss" id='mnCnWide'>
                     <li><button id="mnCnRun">Run</button></li>
                     <li><button id="mnCnPause">Pause</button></li>
                     <li><button id="mnCnOne">Forward (Do one update)</button></li>
@@ -132,9 +134,7 @@
        </div>  <span id='mainMenu_end' class='display_none'></span>
 
         <div id='userErrorMsg' class="headerMsgOutHldr">
-          <div id='headerMsgInnerHldr'>
-              Dummy userMsgLabel: `Default` - Save workspace if you want to use items saved to the freezer
-          </div>   
+              Dummy userErrorMsg: why is this the width it is?
         </div>
 
        <div id='RtSideToggleButtons'>
@@ -186,19 +186,30 @@
                 </div>            
                 </div>
             </details>
-          </div><span id='freezerSection_end' class='display_none'></span>
-
-          <div id="trashDiv" class='trash-grid-container'>
-            <div id='trashCan'>
-              <img id='trashCanImage' src='images/Avida-ED-trash-icon.png' style='width: 32px;' alt='trash can' />
-            </div>
             <div id='showTextDebugButtonDiv'>
               <button id='showTextDebugButton' type='button' value='Big Text'>Big Text</button>
             </div>
             <div id='developmentToggleDiv'>
               <input id='developmentToggle' class='devoCammo' type='button' value=' in Development View ' onclick='av.ui.toggleDevelopmentDisplays()' />
             </div>
+            
+          </div><span id='freezerSection_end' class='display_none'></span>
+
+          <div id="trashDiv" class='trash-grid-container'>
+            <div id='trashCan'>
+              <img id='trashCanImage' src='images/Avida-ED-trash-icon.png' style='width: 32px;' alt='trash can' />
+            </div>
+            <div id='wsNameHolder'>
+              Workspace: `<label id='wsNameMsg'>Default</label>`
+            </div>
+            <div id='msgHolder'>
+              <label id='wsSavedMsg'> - Save workspace if you want to use items saved to the freezer after this session</label> &nbsp;&nbsp;&nbsp;
+              <span style='text-align: right'>
+                <label id='userMsgLabel'> </label>
+              </span>
+            </div>
           </div>
+          
         </div><span id='navColId_end' class='display_none'></span>
 
         <div class='dragbar' id="dragbarLeft"></div> <!--yemi: dragbar on the left-->

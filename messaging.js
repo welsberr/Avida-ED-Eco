@@ -1000,7 +1000,7 @@ av.grd.updateSelectedOrganismType = function (msg) {
     av.grd.kidName = msg.genotypeName;
     av.grd.kidGenome = msg.genome;
     if (av.debug.msg) console.log('genome',av.grd.kidGenome, '-------------------');
-    dijit.byId('mnCnOrganismTrace').attr('disabled', false);
+    document.getElementById('mnCnOrganismTrace').disabled = false;
   }
 };
 //----------------------------------------------------------------------------- end av.grd.updateSelectedOrganismType --

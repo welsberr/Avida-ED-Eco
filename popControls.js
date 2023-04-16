@@ -334,7 +334,7 @@
       // tiba: eventually put the 'av.ptd.makeRunState' here.
 
       if ('started' !== av.grd.runState) {
-        if ('test' == av.msg.setupType) { 
+        if ('test' === av.msg.setupType) { 
           console.log('test files just allow edits directly to the environment file so rest of form is ignored');
           //get original files. 
           av.fwt.testForm2folder();
