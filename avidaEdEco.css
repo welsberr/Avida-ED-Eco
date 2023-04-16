@@ -168,7 +168,7 @@ html {
 
 #leftPnlBtnHolder { grid-area: leftPnlBtnHolder; }
 #mainMenu { grid-area: mainMenu; }
-.headerMsgOutHldr { grid-area: headerMsgOutHldr; }
+.headerMsg { grid-area: headerMsg; }
 #RtSideToggleButtons { grid-area: RtSideToggleButtons; }
 #ritePnlBtnHolder { grid-area: ritePnlBtnHolder; }
 
@@ -177,7 +177,7 @@ html {
   display: grid;
   grid-template-rows: 1.1rem; 
   grid-template-columns: 3.2rem           auto            40rem    5rem                3.2rem;
-  grid-template-areas: 'leftPnlBtnHolder headerMsgOutHldr mainMenu RtSideToggleButtons ritePnlBtnHolder';
+  grid-template-areas: 'leftPnlBtnHolder headerMsg mainMenu RtSideToggleButtons ritePnlBtnHolder';
   /* align-content: center; /*  baseline? */
   align-items: baseline;  /* was center */
   border: 1px solid #AAA;               /* #AAA; */
@@ -188,7 +188,7 @@ html {
   display: grid;
   grid-template-rows: 1.1rem; 
   grid-template-columns: 2.2rem          24rem    auto             5rem                3.2rem;
-  grid-template-areas: 'leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder';
+  grid-template-areas: 'leftPnlBtnHolder mainMenu headerMsg RtSideToggleButtons ritePnlBtnHolder';
   align-items: baseline;
   /*   align-content: center; */
   border: 1px solid #AAA;               /* #AAA; */
@@ -196,7 +196,7 @@ html {
   background: inherit;
 }
 
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsg RtSideToggleButtons ritePnlBtnHolder */
 
 #leftPnlBtnHolder{
   padding: 0px 0px 0px 0.25rem;  /* top right bottom left */  
@@ -221,7 +221,7 @@ html {
     vertical-align: baseline;
 }
 
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsg RtSideToggleButtons ritePnlBtnHolder */
 
 #mainMenu{
   --pix1: 30; 
@@ -238,11 +238,11 @@ html {
     display: none;
   }
   
-  /* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
+  /* headerRow flex contains leftPnlBtnHolder mainMenu headerMsg RtSideToggleButtons ritePnlBtnHolder */
    /* overflow: hidden;
     text-overflow: ellipsis;  */
 
-#userErrorMsg {     /* class is headerMsgOutHldr */
+#userErrorMsg {     /* class is headerMsg */
     height: 1.25rem;
     overflow: hidden;       /* was scroll */   
     background: inherit;
@@ -252,7 +252,7 @@ html {
     color: blue;
   }
   
-/* headerRow contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
+/* headerRow contains leftPnlBtnHolder mainMenu headerMsg RtSideToggleButtons ritePnlBtnHolder */
   
   #RtSideToggleButtons{
     height: 1.25rem;
@@ -276,7 +276,7 @@ html {
     background: #ccc;
   }
 
-/* headerRow contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
+/* headerRow contains leftPnlBtnHolder mainMenu headerMsg RtSideToggleButtons ritePnlBtnHolder */
 
 /*----------------------------------------------------------------------------------------- end of header row         */
 
