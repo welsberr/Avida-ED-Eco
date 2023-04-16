@@ -166,7 +166,7 @@ html {
 /* in version 4.0.19 changing how I do headerRow from flex to grid, 
  even as it is only one row. I think I can specify it better */
 
-#leftPnlBnt { grid-area: leftPnlBnt; }
+#leftPnlBtnHolder { grid-area: leftPnlBtnHolder; }
 #mainMenu { grid-area: mainMenu; }
 .headerMsgOutHldr { grid-area: headerMsgOutHldr; }
 #RtSideToggleButtons { grid-area: RtSideToggleButtons; }
@@ -181,106 +181,55 @@ html {
   /* align-content: center; /*  baseline? */
   align-items: baseline;  /* was center */
   border: 1px solid #AAA;               /* #AAA; */
-  gap: 0px 10px; /* row_gap col_gap */
-  background: #ddd;   /* only while debugging */
-  /* background: inherit; */
 }
 
 .headerRow {
   grid-area:headerRow;
   display: grid;
   grid-template-rows: 1.1rem; 
-  grid-template-columns: 3.2rem          40rem    auto             5rem                3.2rem;
+  grid-template-columns: 2.2rem          24rem    auto             5rem                3.2rem;
   grid-template-areas: 'leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder';
   align-items: baseline;
   /*   align-content: center; */
   border: 1px solid #AAA;               /* #AAA; */
-  gap: 0px 10px; /* row_gap col_gap */
-  background: #ddd;   /* only while debugging */
-  /* background: inherit; */
+  gap: 0px 0.625rem; /* row_gap col_gap   0.625rem = 10px */
+  background: inherit;
 }
 
 /* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
 
 #leftPnlBtnHolder{
-  width: 2rem; 
-  background: pink; /* inherit; */ 
-  border: 1px solid cyan;
+  padding: 0px 0px 0px 0.25rem;  /* top right bottom left */  
 }
-/* structures in the headerRow */  
-#leftPanelButton{
+  #leftPanelButton{
     border-radius: 5px 5px 5px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 16px;
-    padding: 0px 4px 0px 2px;  /* top right bottom left */
-    alt: 'button to open/close left panel'; 
+    height: 1.25rem;   /* default 1.25rem = 20px */
+    padding: 0px 4px 0px 2px;  /* top right bottom left */  
     text-align: center;
-    vertical-align: middle;
-}
-/* not in use - used to get image to fit in a space better
-.scaleImg{
-  height: 80px;
-  object-fit: contain;
-}  
-*/
-.leftPnlBtnHlderShow{
-  height: 18px;
-  padding: 0px 6px 0px 4px;    /* top right bottom left */  
-  background: inherit;     /* #eee; better color ? */
-  flex: 0 0 50px;    /* grow shrink basis */
-}
-.pnlBtnHldrHide{
-  flex: 0 0 50px;
-  padding: 0px 6px 0px 4px;    /* top right bottom left */  
-  visibility: hidden;    
-}
+    vertical-align: baseline;
+  }
 
 #ritePnlBtnHolder{ 
-  background: lightsalmon;
-/*   align-self: center; */
+  padding: 0px 0.375rem 0px 0px;  /* top right bottom left */  
 }
 
 #ritePanelButton{
     border-radius: 5px 5px 5px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 16px;
+    height: 1.25rem;
     padding: 0px 4px 0px 2px;  /* top right bottom left */
-    alt: 'button to open/close right panel'; 
     text-align: center;
-    vertical-align: middle;
-}
-
-.ritePnlBtnHlderShow{
-  height: 18px;
-  padding: 0px 6px 0px 4px;    /* top right bottom left */  
-  margin: 0px;
-  background: inherit;     /* #eee; better color ? */
-  flex: 0 0 50px;
+    vertical-align: baseline;
 }
 
 /* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
 
 #mainMenu{
   --pix1: 30; 
-  height: var(--rem-size1);
-  border: 1px solid #888;
+  height: var(--rem-size1);  /* 1.875rem = 30px */
   overflow: visible;       /* was scroll */
-  width: 445px;
-  background: palegreen;
-
-/* does not work=resize: horizontal; */
-/*    max-width: fit-content; */
+  /* border: 1px solid red; */
+  /* background: pink; */
 }
-
-  .claro .dijitMenuBar {
-    border: none;
-    background-color: inherit;
-  }
-  /* looks bad
-  #mnAvidaEd {border: 1px solid #999;}
-  #mnFile {border: 1px solid #999;}
-  #mnFreezer {border: 1px solid #999;}
-  #mnControl {border: 1px solid #999;}
-  #mnHelp {border: 1px solid #999;}
-  */
   
   #mnAvidaEd {white-space: nowrap;}
   
@@ -294,42 +243,33 @@ html {
     text-overflow: ellipsis;  */
 
   #userErrorMsg {     /* class is headerMsgOutHldr */
-    /* --pix1: 30; 
-    height: var(--rem-size1); */
-    height: 100%;
-    position: static;
-    border: 1px solid #888;
-    overflow: hidden;       /* was scroll */
-   
-    background: lightblue;
+    height: 1.25rem;
+    overflow: hidden;       /* was scroll */   
+    background: inherit;
+    vertical-align: baseline;
   }
   #wsSavedMsg{
     color: blue;
   }
   
-/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
+/* headerRow contains leftPnlBtnHolder mainMenu headerMsgOutHldr RtSideToggleButtons ritePnlBtnHolder */
   
   #RtSideToggleButtons{
-    flex: 0 0 85px;
+    height: 1.25rem;
     background: inherit;     /* #eee; better color ? */
     margin: 0px;
-    height: 18px;
-    background: palegoldenrod;
+    padding-bottom: 4px;
   }
   .toggleLftButton {
     border-radius: 5px 0px 0px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 16px;
-    padding: 0px 2px 3px 2px;    /* top right bottom left */  
-    text-align: center;
-    vertical-align: middle;
+    height: 1.25rem;
+    padding: 0px 2px 2px 2px;    /* top right bottom left */
   }
 
   .toggleRitButton {
     border-radius: 0px 5px 5px 0px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 16px;
-    padding: 0px 2px 0px 2px;    /* top right bottom left */  
-    text-align: center;
-    vertical-align: middle;
+    height: 1.25rem;
+    padding: 0px 2px 2px 2px;    /* top right bottom left */  
     margin-left: -4px;
   }
   .activeBtn {

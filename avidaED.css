@@ -75,7 +75,7 @@ html, body {
   width: 100%;
   margin: 0;
   padding:0;
-  background: #F5F5F5; /* cyan; */
+  background: #F5F5F5; /* main Avida-ED background-color = aed_background */
   font-family: Tahoma, Trebuchet MS, sans-serif;
 }
 

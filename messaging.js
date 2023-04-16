@@ -130,9 +130,10 @@ av.msg.readMsg = function (ee) {
         // to combine the forward and reverse gif.
         document.getElementById("appReloadDialog").style.display="none";
         av.ui.loadOK = true;
-        if (av.debug.msg) console.log('before calling av.grd.popChartInit');
+        if (av.debug.msg) console.log('before calling av.dom.sizes');
         //av.grd.popChartInit('Message: notification');
-        av.ui.initialDivSizing(); 
+        av.ui.initialDivSizingFn('messeging.js:notification');
+        av.ui.freezerSizeHtFn('messeging.js:notification'); 
         break;
       case 'warning':
         userMsgLabel.textContent = '| Avida warning at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);

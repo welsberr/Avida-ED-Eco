@@ -401,7 +401,9 @@ function dragbarRightResize() {
 // the splash screen should also be turned off at this time. 
 // stores initial size that are valid when the viewport stays the same
 //
-av.ui.initialDivSizing = function() {
+
+av.ui.findInitialDivSizingFn = function(from) {
+  console.log(from, 'called av.ui.findInitialDivSizingFn');
   //  av.dom.window_ht_now = $(window).height();
   //  av.dom.window_wd_now = $(window).width();
   //  av.dom.document_ht_now = $(document).height();
@@ -437,21 +439,28 @@ av.ui.initialDivSizing = function() {
   //              , '; trash=', av.dom.trashDiv_ht_ot_now, '; navColID_now=', av.dom.navColId_ht_now
   //              , '; sum=',(av.dom.mainButtons_ht_ot_now+av.dom.freezerSection_ht_ot_now+av.dom.trashDiv_ht_ot_now) );
   //  
-  // call other size related function when initializing 
-  av.ui.freezerSizeHtFn(); 
-  console.log('sizes=', av.dom.sizes('av.ui.initialDivSizing') );
-  /* call the drag bar left function */
+};
+
+av.ui.initialDivSizingFn = function(from) {
+  console.log(from, 'called av.ui.initialDivSizingFn: sizes=', av.dom.sizes('av.ui.initialDivSizing') );
+  av.ui.findInitialDivSizingFn('av.ui.initialDivSizingFn');
+
+  // call the drag bar left function
   dragbarLeftResize();
-  /* call the drag bar right function */
+  // call the drag bar right function
   dragbarRightResize();
 };
 
-//--------------------------------------------------------------------------------------------- av.ui.freezerSizeHtFn --
-// fix Freezer div size
-// only called from within av.dom.storeInitialSize
+
+
+//---------------------------------------------------------------------------------- about new notation for functions -- 
 // the notation 
 // = function() {        is the same as 
 // = () => {
+
+//--------------------------------------------------------------------------------------------- av.ui.freezerSizeHtFn --
+// freezerSizeHtFn is only called from messaging.js when av.msg.readMsg returns ('notification' = msg.level)
+// to fix freezer size;
 av.ui.freezerSizeHtFn = () => {
   var dif = 0;
   console.log('window=', $(window).height(), '; docu=', $(document).height() );
@@ -651,7 +660,8 @@ av.ui.isOverflownXorY = function(elName, orient) {
 // https://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
 // not in use, could be useful. So I did not delete 
 
-av.dom.sizes = () => {
+av.dom.sizes = (from) => {
+  console.log(from, 'called av.dom.sizes');
   let contentWidth = [...document.body.children].reduce(
     (a, el) => Math.max(a, el.getBoundingClientRect().right), 0)
     - document.body.getBoundingClientRect().x;
@@ -669,8 +679,6 @@ av.dom.sizes = () => {
     screenY: -window.screenY - (window.outerHeight - window.innerHeight)
   };
 };
-
-// av.dom.page = av.dom.sizes();  //only call for av.dom.sizes
 
 //-------------------------------------------------------------------------------- finds elements wider than document --
 // https://davidwalsh.name/detect-overflow-elements

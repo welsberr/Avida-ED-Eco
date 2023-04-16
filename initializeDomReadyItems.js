@@ -329,7 +329,7 @@ av.ui.toggleDevelopmentDisplays = function () {
   var popInfoTab2b = ['tabHolderShow', 'tabHolderHide'];
   var sgrfooter2b = ['changeAllSugarsTogetherContainer', 'changeAllSugarsTogetherNoGlobalContainer'];
 
-  console.log('av.dom.mnDebug.style.visibility=', av.dom.mnDebug.style.visibility);
+  console.log('av.dom.mnDebug.style.visibility=', av.dom.mnDebug.style.visibility, "; display=", av.dom.mnDebug.style.display);
   if ('devoShow' === document.getElementById('developmentToggle').className) {
     ndx2b = 1;
     //hide all development elements
@@ -368,6 +368,8 @@ av.ui.toggleDevelopmentDisplays = function () {
   document.getElementById('popInfoTabHolder').className = popInfoTab2b[ndx2b];
 
   av.dom.mnDebug.style.visibility = visible2b[ndx2b];
+  av.dom.mnDebug.style.display = block2b[ndx2b];
+  
   document.getElementById('testConfigLableHolder').style.display = flex2b[ndx2b];   //none
 
   document.getElementById('showTextDebugButtonDiv').style.visibility = visible2b[ndx2b];   //hidden

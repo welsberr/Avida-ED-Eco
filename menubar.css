@@ -21,7 +21,7 @@ i {
   height: 100%; */
   position: static;
   display: flex;
-  flex-wrap: wrap;
+  /*flex-wrap: wrap; */
   /* align-items: center; */
   overflow: visible;
   justify-content: space-between;
@@ -61,7 +61,7 @@ button.navbar-btn{
 }
 
 .btn.border-zero {
-  border: 2px solid #aaa;
+  border: 0px solid #aaa;
 }
 
 .btn.btn-custom:hover {
@@ -185,7 +185,7 @@ nav > ul > li {
 .navbar-btn{
   border: none;
   font-size: .9rem;
-  background-color: #f7f7f7;
+  background-color: #F5F5F5
   min-width: 4vw;
 }
 

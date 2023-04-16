@@ -2993,8 +2993,8 @@ av.ui.feedback = function(){
   av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
   av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
 
-  // av.doj.mnDebug.style.visibility = 'hidden';
   av.dom.mnDebug.style.visibility = 'hidden';
+  av.dom.mnDebug.style.display = 'none';
 
   // Avida-ED 4.0.19 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
@@ -3003,7 +3003,8 @@ av.ui.feedback = function(){
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x
-    av.dom.mnDebug.style.visibility = 'hidden';   //visible
+    av.dom.mnDebug.style.visibility = 'hidden';  
+    av.dom.mnDebug.style.display = 'none';
   };
   //av.ui.toggleDevelopmentDisplays('Last_things_done');  // this needs to be called in production version
 
