@@ -129,7 +129,7 @@
 // - fixed broken slider for mutation rate on population page
 // - on branch with 4.0.17 in git
 // 
-// Avida-ED 4.0.29 Beta
+// Avida-ED 4.0.19 Beta
 // - adjusted spacing/layout of mutation rate sliders
 // - moved error messsage for mutation rate input to below slider for both population and organism page. 
 // 
@@ -138,6 +138,12 @@
 // - Left error messsage for in space between Main Menu and toggle buttons on HeaderRow.
 // - worked on improving spacing and alignment on header row. 
 // - moved debug buttons that were next to trash can to under freezer and above trash can.  
+// 
+// Avida-ED 4.0.21 Beta
+// - changed default values of fixed inital resources per cell. They were 100/cell which looks the same 
+// as unlimited for the first 1000 updates. 
+// - - set limited values to show the population shifiting from using one resource to another. 
+// 
 // 
 // Generic Notes -------------------------------------------------------------------------------------------------------
 

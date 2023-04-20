@@ -602,11 +602,11 @@ av.sgr.makeNutDefault = function () {
   av.sgr.nutdft.uiAll.supplyTypeSlct = 'unlimited';    //this is only for whem ui.geometry = global
   av.sgr.nutdft.uiAll.regionLayout = '1Global';  //only Whole Dish for now; '1All' is the code for 'Whole Dish';
   av.sgr.nutdft.uiAll.regionsNumOf = 1;   // whole dish = there is only one dish 
-  av.sgr.nutdft.uiAll.initialHiNp = 100;      //only used when whem ui.geometry = global and  supplyTypeSlct = 'limited' set per cell ; need to multiply by wrldSize
+  av.sgr.nutdft.uiAll.initialHiNp = 1;      //only used when whem ui.geometry = global and  supplyTypeSlct = 'limited' set per cell ; need to multiply by wrldSize
 
   //defaults for subtasks which must be Grid or Local
   av.sgr.nutdft.uiSub.supplyTypeSlct = 'unlimited';  // unlimited default from Avida-ED 3: I think Should change to Limited
-  av.sgr.nutdft.uiSub.initialHiNp = 100;  //sugar units/cell guess at an initial value when supplyTypeSlct='limited'; need to multiply by wrldSize
+  av.sgr.nutdft.uiSub.initialHiNp = 1;  //sugar units/cell guess at an initial value when supplyTypeSlct='limited'; need to multiply by wrldSize
   av.sgr.nutdft.uiSub.inflowHi  = 0.1;   //sugar units/cell guess at an initial value when supplyTypeSlct='chemostat'; need to multiply by wrldSize
   av.sgr.nutdft.uiSub.outflowHi = 0.1;   //sugar units (fraction) guess at an initial value when supplyTypeSlct='chemostat';
   av.sgr.nutdft.uiSub.area = -1;   //based on a standard 30 x 30 world
