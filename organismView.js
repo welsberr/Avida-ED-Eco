@@ -13,6 +13,9 @@
   /*------------------------------------------------------------------------------------------------- av.ind.clearGen --*/
   av.ind.clearGen = function(from) {
     'use strict';
+    
+    //Text looks bettter in hatml, but easier in this case to write on the canvase. 
+    av.dom.organCanvas.className = "organCanvasCls";
     av.ind.settingsChanged = false;
     av.ind.cycle = 0;
     av.ind.bigR = [120, 120]; //radius of full circle

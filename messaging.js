@@ -43,6 +43,7 @@ av.msg.readMsg = function (ee) {
         break;
       case 'webOrgTraceBySequence': //reset values and call organism tracing routines.
         //console.log('webOrgTraceBySequence', msg);
+        av.ind.webOrgTraceBySequence = msg;
         av.traceObj = msg.snapshots;
         //console.log('av.traceObj', av.traceObj);
         av.ind.cycle = 0;
@@ -52,6 +53,7 @@ av.msg.readMsg = function (ee) {
         av.ind.cycleSlider.set('value', av.ind.cycle);
         av.ind.updateOrgTrace('messaging_webOrgTraceBySequence');
         av.debug.log += '\n--Aui: \n' + av.utl.json2stringFn(msg);
+        console.log('webOrgTraceBySequence \n',  av.utl.json2stringFn(msg));
         break;
       case 'webPopulationStats':
         av.grd.popStatsMsg = msg;
@@ -120,21 +122,18 @@ av.msg.readMsg = function (ee) {
       case 'notification':
         $('#splash').remove(); //hides splash screen.
         if (av.debug.msg) console.log('avida:notify: ',msg.message);
-        console.log('avida:notify:', msg.message, '; inhtml=', document.getElementById('avidaVersion').innerHTML );
-        tmpStr = msg.message;
-        tmpStr = 'avida V:' + tmpStr.substr(tmpStr.length - 13, 13);
+        console.log('avida:notify:msg.message:', msg.message);
         console.log('================================================================================================');
-        console.log('tmpStr=', tmpStr);
-        //document.getElementById('avidaVersion').innerHTML = tmpStr;
         if (av.debug.msg) userMsgLabel.textContent = '| Avidia notification: ' + msg.message; //with splash screen no longer need ready message
         // Worked on a better splash screen gif. Used licecap, an application on the Mac to record the gif.
         // Then used http://gifmaker.me/reverser/ to make a gif in reverse time order. Then Wesley used gifsicle
         // to combine the forward and reverse gif.
         document.getElementById("appReloadDialog").style.display="none";
         av.ui.loadOK = true;
-        if (av.debug.msg) console.log('before calling av.grd.popChartInit');
+        if (av.debug.msg) console.log('before calling av.dom.sizes');
         //av.grd.popChartInit('Message: notification');
-        av.ui.initialDivSizing(); 
+        av.ui.initialDivSizingFn('messeging.js:notification');
+        av.ui.freezerSizeHtFn('messeging.js:notification'); 
         break;
       case 'warning':
         userMsgLabel.textContent = '| Avida warning at ' + av.grd.oldUpdate.toString() + ' is ' + av.utl.json2oneLine(msg);
@@ -585,7 +584,7 @@ av.msg.doOrgTrace = function () {
         'args': [
           //'0,heads_default,' + av.fzr.actOrgan.genome,                                  //genome string
           av.fzr.actOrgan.genome,                                  //genome string
-          document.getElementById('orgMuteInput').value / 100,     // point mutation rate
+          document.getElementById('muteOrgInput').value / 100,     // point mutation rate
           seed                                            //seed where 0 = random; >0 to replay that number
         ]
       };
@@ -1002,7 +1001,7 @@ av.grd.updateSelectedOrganismType = function (msg) {
     av.grd.kidName = msg.genotypeName;
     av.grd.kidGenome = msg.genome;
     if (av.debug.msg) console.log('genome',av.grd.kidGenome, '-------------------');
-    dijit.byId('mnCnOrganismTrace').attr('disabled', false);
+    document.getElementById('mnCnOrganismTrace').disabled = false;
   }
 };
 //----------------------------------------------------------------------------- end av.grd.updateSelectedOrganismType --

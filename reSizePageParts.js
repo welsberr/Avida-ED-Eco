@@ -86,6 +86,10 @@ resizeOrganismPage = function() {
   $('.all3org').css("grid-template-columns", newColumns);
 }
 
+function dragbarPopStatsResize () {
+  
+}
+
 /* functions for left dragbar */
 function dragbarLeftResize() {
   var dragging = false;
@@ -397,7 +401,9 @@ function dragbarRightResize() {
 // the splash screen should also be turned off at this time. 
 // stores initial size that are valid when the viewport stays the same
 //
-av.ui.initialDivSizing = function() {
+
+av.ui.findInitialDivSizingFn = function(from) {
+  console.log(from, 'called av.ui.findInitialDivSizingFn');
   //  av.dom.window_ht_now = $(window).height();
   //  av.dom.window_wd_now = $(window).width();
   //  av.dom.document_ht_now = $(document).height();
@@ -433,21 +439,28 @@ av.ui.initialDivSizing = function() {
   //              , '; trash=', av.dom.trashDiv_ht_ot_now, '; navColID_now=', av.dom.navColId_ht_now
   //              , '; sum=',(av.dom.mainButtons_ht_ot_now+av.dom.freezerSection_ht_ot_now+av.dom.trashDiv_ht_ot_now) );
   //  
-  // call other size related function when initializing 
-  av.ui.freezerSizeHtFn(); 
-  console.log('sizes=', av.dom.sizes('av.ui.initialDivSizing') );
-  /* call the drag bar left function */
+};
+
+av.ui.initialDivSizingFn = function(from) {
+  console.log(from, 'called av.ui.initialDivSizingFn: av.dom.sizes() =', av.dom.sizes('av.ui.initialDivSizing') );
+  av.ui.findInitialDivSizingFn('av.ui.initialDivSizingFn');
+
+  // call the drag bar left function
   dragbarLeftResize();
-  /* call the drag bar right function */
+  // call the drag bar right function
   dragbarRightResize();
 };
 
-//--------------------------------------------------------------------------------------------- av.ui.freezerSizeHtFn --
-// fix Freezer div size
-// only called from within av.dom.storeInitialSize
+
+
+//---------------------------------------------------------------------------------- about new notation for functions -- 
 // the notation 
 // = function() {        is the same as 
 // = () => {
+
+//--------------------------------------------------------------------------------------------- av.ui.freezerSizeHtFn --
+// freezerSizeHtFn is only called from messaging.js when av.msg.readMsg returns ('notification' = msg.level)
+// to fix freezer size;
 av.ui.freezerSizeHtFn = () => {
   var dif = 0;
   console.log('window=', $(window).height(), '; docu=', $(document).height() );
@@ -472,7 +485,7 @@ av.ui.freezerSizeHtFn = () => {
 //called from two places in avidaED.js
 av.anl.divSize = function (from) {
   if (av.debug.alo) { console.log('alo: ', from, 'called av.anl.divSize'); }
-  console.log('alo: ', from, 'called av.anl.divSize');
+  console.log(from, 'called av.anl.divSize');
   //console.log(from,'anaChrtHolder Ht client scroll ', av.dom.anaChrtHolder.clientHeight, av.dom.anaChrtHolder.scrollHeight);
   //console.log(from,'anlDndChart Ht client scroll', av.dom.anlDndChart.clientHeight, av.dom.anlDndChart.scrollHeight);
   //console.log(from,'anlChrtSpace Ht client scroll', av.dom.anlChrtSpace.clientHeight, av.dom.anlChrtSpace.scrollHeight);
@@ -482,11 +495,14 @@ av.anl.divSize = function (from) {
   av.anl.wd = av.dom.anaChrtHolder.getBoundingClientRect().width - 1;
   //av.dom.anaChrtHolder.style.height = av.anl.ht + 'px';
   av.anl.ht = av.dom.anaChrtHolder.clientHeight - 6;
+  if (0 > av.anl.ht) av.anl.ht = 0;
+  if (0 > av.anl.wd) av.anl.wd = 0;
+  
   av.dom.anlChrtSpace.style.height = av.anl.ht + 'px';
   av.dom.anlChrtSpace.style.width = av.anl.wd + 'px';
   av.anl.layout.height = av.anl.ht;
   av.anl.layout.width = av.anl.wd;
-  console.log(av.anl.ht, av.anl.wd);
+  console.log('av.anl.layout ht & wd:', av.anl.ht, av.anl.wd);
 };
 
 //------------------------------------------------------------------------------------------show/hide rite side panel --
@@ -647,7 +663,8 @@ av.ui.isOverflownXorY = function(elName, orient) {
 // https://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
 // not in use, could be useful. So I did not delete 
 
-av.dom.sizes = () => {
+av.dom.sizes = (from) => {
+  console.log(from, 'called av.dom.sizes');
   let contentWidth = [...document.body.children].reduce(
     (a, el) => Math.max(a, el.getBoundingClientRect().right), 0)
     - document.body.getBoundingClientRect().x;
@@ -665,8 +682,6 @@ av.dom.sizes = () => {
     screenY: -window.screenY - (window.outerHeight - window.innerHeight)
   };
 };
-
-// av.dom.page = av.dom.sizes();  //only call for av.dom.sizes
 
 //-------------------------------------------------------------------------------- finds elements wider than document --
 // https://davidwalsh.name/detect-overflow-elements

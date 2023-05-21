@@ -1,10 +1,13 @@
 
  // this version uses grid box layout for major sections (toop, left side, main, right side)  
  // if (av.dbg.flg.root) { console.log('Root: avidaED.js at beginning of file on 2020_0111 @ 20:21'); };
- console.log('Root: avidaED.js at beginning of file on 2022_804_Sat'); 
+ console.log('Root: avidaED.js at beginning of file on 2023_414_Fri'); 
 
 // need a server to run Avida-ED from a file. The one below works.
 // python server.py                    for http://localhost:8000/
+// 
+// 
+// Oldway for a server is below
 // python -m SimpleHTTPServer 
 // python -m SimpleHTTPServer 8004  to put on 8004 instead of 8000
 // Then visit http://localhost:8004/   on browser
@@ -33,17 +36,11 @@
 // git pull origin pull/18/head    //where '18' is the number of the pull request
 //
 // github.com now requires personal access tokens
-// log in at 
-// https://github.com/settings/tokens/677090811/regenerate
-// generate a new access token. 
-// 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
-// git2021_819a Expires on Sun, Jan 30 2022. 
 // 
-// This url states that it will automatically add to keychain if use to push or clone a repository
-// https://gist.github.com/jonjack/bf295d4170edeb00e96fb158f9b1ba3c?fbclid=IwAR2ZsG8_wGUJtUtMSLNVCpKX-PuVG0IfaXGzOHBEAGqQ66Fxzomvih2BCSA
-// 
-// more information about Access Tokens
+// more information about Access Tokens written before they required tokens. Need to find links to make a new token. 
 // https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/
+// 
+// https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 // 
 // Avida -------------------
 //
@@ -114,14 +111,50 @@
 // - working on formatting on Left & Right mini-chart Y axis and Pause Run at sections
 // - Added utilities to look for elements with overlow in reSizePageParts.js
 //
+<<<<<<< HEAD
 // Avida-ED 4.0.17 Beta
+=======
+// Avida-ED 4.0.15 Beta
+>>>>>>> origin/pre_wendell
 // - repaired drag-n-drop so that the cursor changes shape to cue the user
 // - Analysis: need to fix clicking on instruction circle to get the instruction number. 
 // - - loook at mouseDown, line 70
 // 
 // Avida-ED 4.0.16 Beta
+<<<<<<< HEAD
 //
+=======
+// - repaired drag-n-drop so that the cursor changes shape to cue the user
+// - Analysis: need to fix clicking on instruction circle to get the instruction number. 
+// - - loook at mouseDown, line 70
+// - - failed to merge with work Wendell did in 2022 August. So in own branch unitl merge
+// 
+// Avida-ED 4.0.17 Beta
+// - version wendell merged into main on 2022 Aug 25
+// 
+// Avida-ED 4.0.18 Beta
+// - fixed broken slider for mutation rate on population page     
+// - on branch with 4.0.17 in git
+// 
+// Avida-ED 4.0.19 Beta
+// - adjusted spacing/layout of mutation rate sliders
+// - moved error messsage for mutation rate input to below slider for both population and organism page. 
+// 
+// Avida-ED 4.0.20 Beta
+// - Moved Workspace Name and messages about saving the freezer as a workspace to right of the trash can
+// - Left error messsage for in space between Main Menu and toggle buttons on HeaderRow.
+// - worked on improving spacing and alignment on header row. 
+// - moved debug buttons that were next to trash can to under freezer and above trash can.  
+// 
+// Avida-ED 4.0.21 Beta
+// - changed default values of fixed inital resources per cell. They were 100/cell which looks the same 
+// as unlimited for the first 1000 updates. 
+// - - set limited values to show the population shifiting from using one resource to another. 
+// 
+// 
+>>>>>>> origin/pre_wendell
 // Generic Notes -------------------------------------------------------------------------------------------------------
+
 //
 // [option]<alt>{go} to get library in the list for finder
 //
@@ -317,7 +350,7 @@ require([
     } else { console.log('av.aww.uiWorker is not null'); }
   } 
   else {
-    userMsgLabel.textContent = "Sorry, your browser does not support Web workers and Avida won't run";
+    av.dom.userErrorMsg.innerHTML = "Sorry, your browser does not support Web workers and Avida won't run";
   };
 
   //process message from web worker
@@ -789,7 +822,7 @@ require([
   };
 
   //--------------------------------------------------------------------------------------------------------------------
-  // Save current workspace (mnFzSaveWorkspace)
+  // Save current workspace (mnFlSaveWorkspace)
   document.getElementById('mnFlSaveWorkspace').onclick = function () {
     if (!av.brs.isSafari) {
       //if (true) {
@@ -1147,9 +1180,26 @@ av.ui.feedback = function(){
   };
 
   //------------------------------------------------------------------------------------------------ av.ui.mnFzItemFn --
+
+  // Listen for clicks on items
+  $('.item').on('click', function() {
+      // If there is a previously selected item, remove its 'selected' class
+      if (lastSelectedItem) {
+          $(lastSelectedItem).removeClass('selected');
+      }
+
+      // Store the current item as the most recently selected item
+      lastSelectedItem = this;
+
+      // Add the 'selected' class to the currently selected item
+      $(this).addClass('selected');
+  });    
+
   // Menu Buttons from 'Freezer' to Add things to Experiment
   av.ui.mnFzItemFn = function(domobj) {
     console.log('av.ui.mnFzItemFn: domobj =', domobj);
+
+    
     var domID = domobj.id;
   };
 /*
@@ -1174,12 +1224,30 @@ av.ui.feedback = function(){
     av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.activeConfig, 'w');
   });
 */
+
+
+  document.getElementById("mnFzAddFzItem").onclick = function () {
+    av.post.addUser("Button: mnFzAddFzItem");
+    
+    // need to find which freezer type first
+    // g = addOrgan
+    // c = addConfig
+    // w = addPop
+    
+    av.dnd.clickedMenu = "addOrgan";
+    av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.activeOrgan, 'g', 'mnFzAddGenomeView');
+    
+  };
+  
   //Buttons on drop down menu to put an organism in Organism Viewer
   // ====refactored========
   document.getElementById("mnFzAddGenomeView").onclick = function () {
     av.post.addUser("Button: mnFzAddGenomeEx");
     av.dnd.clickedMenu = "addToGenomeView";
-    av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.activeOrgan, 'g');
+    console.log('av.dnd.fzOrgan =', av.dnd.fzOrgan);
+    console.log('av.dnd.activeOrgan =', av.dnd.activeOrgan);
+    
+    av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.activeOrgan, 'g', 'mnFzAddGenomeView');
     av.ui.mainBoxSwap('organismBlock');
     av.ind.organismCanvasHolderSize('mnFzAddGenomeView');
     av.ui.adjustOrgInstructionTextAreaSize();
@@ -1191,7 +1259,7 @@ av.ui.feedback = function(){
   document.getElementById("mnFzAddPopAnalysis").onclick = function () {
     av.dnd.clickedMenu = "addToAnalysisView";
     av.post.addUser('Button: mnFzAddPopEx');
-    av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.anlDndChart, 'w');
+    av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.anlDndChart, 'w', 'mnFzAddGenomeView');
     av.ui.mainBoxSwap('analysisBlock');
     av.anl.AnaChartFn();
   };
@@ -1200,7 +1268,7 @@ av.ui.feedback = function(){
 
   //http://www.w3schools.com/html/tryit.asp?filename=tryhtml5_webworker
   av.ui.restartAvida = function () {
-    userMsgLabel.textContent = 'reloading Avida . . .';
+    av.dom.userErrorMsg.innerHTML = 'reloading Avida . . .';
 
     av.aww.uiWorker.terminate();
     av.aww.uiWorker = null;
@@ -1208,18 +1276,18 @@ av.ui.feedback = function(){
     //console.log('just killed webWorker');
 
     if (typeof (Worker) !== 'undefined') {
-      if (null == av.aww.uiWorker) {
+      if (null === av.aww.uiWorker) {
         av.aww.uiWorker = new Worker('avida.js');
         console.log('webworker recreated');
         av.debug.log += '\nuiA: ui killed avida webworker and started a new webworker';
       }
     } else {
-      userMsgLabel.textContent = "Sorry, your browser does not support Web workers and Avida won't run";
+      av.dom.userErrorMsg.innerHTML = "Sorry, your browser does not support Web workers and Avida won't run";
     }
 
     //need to 'start new experiment'
     av.ptd.resetDishFn(false);  //do not send reset to avida; avida restarted
-    restartAvidaDialog.hide();
+    restartAvidaDialog.hide();    //tiba check this
   };
 
   document.getElementById('restartAvidaNow').onclick = function () {
@@ -1283,10 +1351,13 @@ av.ui.feedback = function(){
         av.dom.orgDetailID.style.display = 'block';
         av.ui.adjustOrgInstructionTextAreaSize();
       };
-
+      
       if (undefined !== av.traceObj) {
         av.ind.updateOrgTrace('mainBoxSwap_organismBlock');
-      };
+      } else {
+        console.log("'undefined' = av.traceObj"); 
+        //could write canvase message here. 
+      }
       av.ind.organismCanvasHolderSize('mainBoxSwap_organismBlock');   ///??????
       av.ind.clearGen('mainBoxSwap_organismBlock');
       av.ind.cpuOutputCnvsSize();
@@ -1563,7 +1634,7 @@ av.ui.feedback = function(){
   //                                      Draw Population Grid
   // *******************************************************************************************************************
 
-  //Set up canvas objects
+  //Set up canvas objects: only do once
   av.grd.sCtx = av.dom.scaleCanvas.getContext('2d');
   av.grd.cntx = av.dom.gridCanvas.getContext('2d');
 
@@ -1661,7 +1732,8 @@ av.ui.feedback = function(){
     av.grd.drawGridSetupFn('colorMode_onchange');
   };
 
-  // Zoom slide - display only not avida
+  // Zoom slide - display only not avida _NOT_ in use
+  /*
   av.grd.zoomSlide = new HorizontalSlider({
     name: 'zoomSlide',
     value: 1,
@@ -1676,41 +1748,8 @@ av.ui.feedback = function(){
       av.grd.drawGridSetupFn('av.grd.zoomSlide');
     }
   }, 'zoomSlide');
-
+*/
   av.grd.colorMap = 'Gnuplot2';
-  /*
-   *  This secton allowed one to change the color map of the scale, but Rob did not like it.
-   * 
-   dijit.byId('mnGnuplot2').attr('disabled', true);
-
-   dijit.byId('mnViridis').on('Click', function () {
-   av.post.addUser('Button: mnViridis');
-   dijit.byId('mnCubehelix').attr('disabled', false);
-   dijit.byId('mnGnuplot2').attr('disabled', false);
-   dijit.byId('mnViridis').attr('disabled', true);
-   av.grd.colorMap = 'Viridis';
-   av.grd.drawGridSetupFn('digjit.byID(mnViridis');
-   });
-
-   dijit.byId('mnGnuplot2').on('Click', function () {
-   av.post.addUser('Button: mnGnuplot2');
-   dijit.byId('mnCubehelix').attr('disabled', false);
-   dijit.byId('mnGnuplot2').attr('disabled', true);
-   dijit.byId('mnViridis').attr('disabled', false);
-   av.grd.colorMap = 'Gnuplot2';
-   av.grd.drawGridSetupFn('digit.byID(mnGnuplot2)');
-   });
-
-   dijit.byId('mnCubehelix').on('Click', function () {
-   av.post.addUser('Button: mnCubehelix');
-   dijit.byId('mnCubehelix').attr('disabled', true);
-   dijit.byId('mnGnuplot2').attr('disabled', false);
-   dijit.byId('mnViridis').attr('disabled', false);
-   av.grd.colorMap = 'Cubehelix';
-   av.grd.drawGridSetupFn('digit.byID(mnCubehelix)');
-   av.post.addUser('Button: mnCubehelix pressed');
-   });
-   */
 
   // *******************************************************************************************************************
   //    Buttons that select organisms that perform a logic function
@@ -2099,7 +2138,6 @@ av.ui.feedback = function(){
     //console.log(from, 'called av.ptd.popSizeFn: new col, row', av.grd.setupCols, av.grd.setupRows);
     //console.log('av.grd.setupCols, Rows', av.grd.setupCols, av.grd.setupRows);
     av.dom.sizeCells.innerHTML = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
-    //av.dom.sizeCells.text = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
     av.dom.sizeCols.style.color = 'black';
     av.dom.sizeRows.style.color = 'black';
     av.dom.sizeCells.style.color = 'black';
@@ -2130,9 +2168,9 @@ av.ui.feedback = function(){
     av.grd.setupRows = Number(av.dom.sizeRowTest.value);
     //console.log(from, 'called av.ptd.popSizeFnTest: new col, row', av.grd.setupCols, av.grd.setupRows);
     //console.log('av.grd.setupCols, Rows', av.grd.setupCols, av.grd.setupRows);
-    av.dom.sizeCellTest.innerHTML = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
-    //av.dom.sizeCells.text = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
-    av.dom.sizeColTest.style.color = 'black';
+    var thestr = 'for a total of ' + av.grd.setupCols * av.grd.setupRows + ' cells';
+    av.dom.sizeCellTest.innerHTML = thestr;
+   av.dom.sizeColTest.style.color = 'black';
     av.dom.sizeRowTest.style.color = 'black';
     av.dom.sizeCellTest.style.color = 'black';
     //Linear scale the position for Ancestors added by hand;
@@ -2159,6 +2197,7 @@ av.ui.feedback = function(){
 
   // no slider for muteTest
   //------------------------------------------------------------------------------------------ av.ptd.muteInpuTestChng --
+  // take this out, it should not be user
   av.ptd.muteInpuTestChng = function () {
     var value = this.value;
     var muteNum = parseFloat(value);
@@ -2176,7 +2215,6 @@ av.ui.feedback = function(){
       av.ptd.validMuteInuput = false;
       av.dom.muteErroTest.style.color = 'red';
       av.dom.muteErroTest.innerHTML = '';
-      av.dom.userMsgLabel.innerHTML = '';
       if (muteNum <= 0) {
         av.dom.muteErroTest.innerHTML += 'Mutation rate must be >= than zero percent. ';
         if (av.debug.popCon) { console.log('<0'); }
@@ -2206,7 +2244,6 @@ av.ui.feedback = function(){
       //console.log('valid response');
       av.ptd.popSizeFn('gridChange');
       av.ptd.validGridSize = true;
-      av.dom.userMsgLabel.innerHTML = '';
       //redraw grid
       av.grd.drawGridSetupFn('av.ptd.gridChange');
     } else {
@@ -2224,7 +2261,6 @@ av.ui.feedback = function(){
       av.dom.sizeCells.style.color = 'red';
       // if (av.dbg.flg.popSetup ) { console.log('popSetup: not valid; col, row=', colNum, rowNum); }
       av.dom.sizeCells.innerHTML = '';
-      av.dom.userMsgLabel.innerHTML = '';
       if (colNum <= 0) {
         av.dom.sizeCells.innerHTML += 'Number of columns must be greater than zero. ';
         // if (av.dbg.flg.popSetup ) { console.log('popSetup: <0'); }
@@ -2260,7 +2296,6 @@ av.ui.feedback = function(){
       //console.log('valid response');
       av.ptd.popSizeFnTest('gridChangTest');
       av.ptd.validGridSizTest = true;
-      av.dom.userMsgLabel.innerHTML = '';
       //redraw grid
       av.grd.drawGridSetupFn('av.ptd.gridChangTest');
     } else {
@@ -2276,7 +2311,6 @@ av.ui.feedback = function(){
       av.dom.sizeCellTest.style.color = 'red';
       //console.log('not valid; col, row=', colNum, rowNum);
       av.dom.sizeCellTest.innerHTML = '';
-      av.dom.userMsgLabel.innerHTML = '';
       if (colNum <= 0) {
         av.dom.sizeCellTest.innerHTML += 'Number of columns must be greater than zero. ';
         //console.log('<0');
@@ -2403,21 +2437,79 @@ av.ui.feedback = function(){
   document.getElementById('StatsButton').click();
   console.log('after StatsButton.click');
 
+  // changing the base does not seem change position on the slider:  because it a ratio
+  //----------------------------------------------------------------------------------------- $(function mutePopSldFn() --
+  $(function mutePopSldFn() {
+   // because most mutation rates will be less than 2% I set up a non-linear scale as was done in the Mac Avida-ED 
+   // the jQuery slider I found only deals in integers and the fix function truncates rather than rounds, 
+   // so I multiplied by 200 to get 100.000% to get a reasonable number of values for the pixils in the slide
+   //console.log('In mutePopSldFn: before defaultslide muteSlideDefault');
+   var muteSlideDefault = 95.4242509439325;
+   // results in 2% as a default 
+   var muteDefault = (Math.pow(10, (muteSlideDefault / 200)) - 1).toFixed(1);
+   var slides = $('#mutePopSlide').slider({
+     range: 'min',   /*causes the left side of the scroll bar to be grey */
+     value: muteSlideDefault,
+     min: 0.0,
+     max: 401,
+     // theme: 'summer',
+     slide: function (event, ui) {
+       var tmpVal = (Math.pow(10, (ui.value / 200)) - 1);
+       if (10 <= tmpVal ) {tmpVal = tmpVal.toFixed(0); }     //had been 12, but 10 is more consistent with 2 sig figs
+       else if (1 <= tmpVal ) {tmpVal = tmpVal.toFixed(1); }
+       else if (0.3 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
+       else {tmpVal = tmpVal.toFixed(2); }
+       //put the value in the text box 
+       // console.log('input', tmpVal, '; slide=', ui.value);
+       $('#mutePopInput').val(tmpVal); //put slider value in the text near slider 
+       av.dom.mutePopError.style.color = 'black';
+       av.dom.mutePopError.innerHTML = '';
+     }
+   });
+   // initialize
+    $('#mutePopInput').val(muteDefault);
+
+   /*update slide based on textbox */
+   $('#mutePopInput').change(function () {
+     var value = this.value;
+     var muteNum = parseFloat(value);
+     //if (av.debug.uil) { console.log('ui: muteNum=', muteNum); }
+     if (muteNum >= 0 && muteNum <= 100) {
+       av.ptd.validMuteInuput = true;
+       av.dom.mutePopError.style.color = 'black';
+       av.dom.mutePopError.innerHTML = '';
+       //update slide value
+       slides.slider('value', 200 * av.utl.log(10,1 + (muteNum)));
+       //console.log('value=', muteNum, '; slide=', 200 * av.utl.log(10,1 + (muteNum) ) );
+
+       //av.ind.settingsChanged = true;
+       if (av.debug.trace) { console.log('Mute changed', av.ind.settingsChanged); };
+       av.post.addUser('mutePopInput =' + av.dom.mutePopInput.value,  '1add ? 949');
+     } 
+     else {
+       av.ptd.validMuteInuput = false;
+       av.dom.mutePopError.style.color = 'red';
+       av.dom.mutePopError.innerHTML = '';
+       if (muteNum <= 0) {
+         av.dom.mutePopError.innerHTML += 'Mutation rate must be >= than zero percent. ';
+         if (av.debug.popCon) { console.log('<0'); }
+       }
+       if (muteNum >= 100) {
+         av.dom.mutePopError.innerHTML += 'Mutation rate must be 100% or less. ';
+         if (av.debug.popCon) { console.log('>0'); }
+       }
+       if (isNaN(muteNum)) {
+         av.dom.mutePopError.innerHTML += 'Mutation rate must be a valid number. ';
+         if (av.debug.popCon) { console.log('==NaN'); }
+       }
+     };
+   });
+  });
+
+
   //********************************************************************************************************************
   //                                                     Oranism Page methods
   //********************************************************************************************************************
-
-  //adjust instruction text size
-    // if (av.dbg.flg.root) { console.log('Root: before av.ui.adjustOrgInstructionTextAreaSize'); }
-  //---------------------------------------------------------------------------- av.ui.adjustOrgInstructionTextAreaSize --
-  av.ui.adjustOrgInstructionTextAreaSize = function() {
-    var height = ( $('#orgInfoHolder').innerHeight() - $('#orgDetailID').innerHeight() - 10 ) / 2;
-    //console.log('orgInfoHolder.ht=', $('#orgInfoHolder').innerHeight(), '; orgDetailID=',$('#orgDetailID').innerHeight(), '; height=', height);
-    av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
-    av.dom.ExecuteAbout.style.height = height + 'px';
-    av.dom.ExecuteJust.style.width = '100%';
-    av.dom.ExecuteAbout.style.width = '100%';    
-  };
 
   //--------------------------------------------------------------------------------------------------- $ slideOrganism --
   $(function slideOrganism() {
@@ -2428,7 +2520,7 @@ av.ui.feedback = function(){
     var muteSlideDefault = 190.848501887865;
     /* results in 2% as a default */
     var muteDefault = (Math.pow(10, (muteSlideDefault / 400)) - 1).toFixed(1);
-    var slides = $('#orgMuteSlide').slider({
+    var slides = $('#muteOrgSlide').slider({
       /* orientation: "vertical", */
       range: 'min',   /*causes the left side of the scroll bar to be grey */
       value: muteSlideDefault,
@@ -2441,17 +2533,19 @@ av.ui.feedback = function(){
         else if (0.3 <= tmpVal ) {tmpVal = tmpVal.toFixed(2); }
         else {tmpVal = tmpVal.toFixed(2); }
          //console.log('mutation rate =', tmpVal, 'slider = ', ui.value);
-        $('#orgMuteInput').val(tmpVal); //put slider value in the text near slider 
-        //put the value in the text box 
+        $('#muteOrgInput').val(tmpVal); //put slider value in the text near slider 
+        //put the value in the text box
+        av.dom.muteOrgError.style.color = 'black';
+        av.dom.muteOrgError.innerHTML = '';
         av.ind.settingsChanged = true;
         if (av.debug.trace) { console.log('orSlide changed', av.ind.settingsChanged); }
       }
     });
     // initialize
-    $('#orgMuteInput').val(muteDefault);
+    $('#muteOrgInput').val(muteDefault);
 
     // update slide based on textbox 
-    $('#orgMuteInput').change(function () {
+    $('#muteOrgInput').change(function () {
       var value = this.value;
       var muteNum = Number(value);
       //if (av.debug.uil) { console.log('ui: muteNum=', muteNum); }
@@ -2465,13 +2559,12 @@ av.ui.feedback = function(){
         av.ind.settingsChanged = true;
         if (av.debug.trace) { console.log('Mute changed', av.ind.settingsChanged); };
         //console.log('value=', muteNum, '; slide=', 400 * av.utl.log(10,1 + (muteNum) ) );
-        av.post.addUser('orgMuteInput =' + document.getElementById('orgMuteInput').value,  '1add ? 949');
+        av.post.addUser('muteOrgInput =' + document.getElementById('muteOrgInput').value,  '1add ? 949');
       } 
       else {
         av.ptd.validMuteInuput = false;
         av.dom.muteOrgError.style.color = 'red';
         av.dom.muteOrgError.innerHTML = '';
-        av.dom.userMsgLabel.innerHTML = '';
         if (muteNum <= 0) {
           av.dom.muteOrgError.innerHTML += 'Mutation rate must be >= than zero percent. ';
           if (av.debug.popCon) { console.log('<0'); }
@@ -2488,7 +2581,24 @@ av.ui.feedback = function(){
     });
   });
 
+<<<<<<< HEAD
   //triggers flag that requests more data when the settings ModalID is closed.
+=======
+  //adjust instruction text size
+    // if (av.dbg.flg.root) { console.log('Root: before av.ui.adjustOrgInstructionTextAreaSize'); }
+  //---------------------------------------------------------------------------- av.ui.adjustOrgInstructionTextAreaSize --
+  av.ui.adjustOrgInstructionTextAreaSize = function() {
+    var height = ( $('#orgInfoHolder').innerHeight() - $('#orgDetailID').innerHeight() - 10 ) / 2;
+    //console.log('orgInfoHolder.ht=', $('#orgInfoHolder').innerHeight(), '; orgDetailID=',$('#orgDetailID').innerHeight(), '; height=', height);
+    av.dom.ExecuteJust.style.height = height + 'px';  //from http://stackoverflow.com/questions/18295766/javascript-overriding-styles-previously-declared-in-another-function
+    av.dom.ExecuteAbout.style.height = height + 'px';
+    av.dom.ExecuteJust.style.width = '100%';
+    av.dom.ExecuteAbout.style.width = '100%';    
+  };
+
+
+  //triggers flag that requests more data when the settings dialog is closed.
+>>>>>>> origin/pre_wendell
   //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
   //----------------------------------------------------------------------------------------------------------------------  
 
@@ -2507,17 +2617,8 @@ av.ui.feedback = function(){
   //----------------------------------------------------------------------------------------------------------------------
   //
   //------------------------------------------------------------------------------------------------- mnCnOrganismTrace --
-  // dijit.byId("mnCnOrganismTrace").on("Click", function () {
-  //   av.post.addUser("Button: mnCnOrganismTrace");
-  //   console.log("control drop down menu clicked");
-  //   av.mouse.traceSelected(av.dnd, av.fzr, av.grd);
-  //   av.ui.mainBoxSwap("organismBlock");
-  //   av.ind.organismCanvasHolderSize("mnCnOrganismTrace");
-  //   av.ui.adjustOrgInstructionTextAreaSize();
-  //   av.msg.doOrgTrace(); //request new Organism Trace from Avida and draw that.
-  // });
 
-  // ===refactored====
+  // Put Selected Organism in Organism View 
   document.getElementById('mnCnOrganismTrace').onclick = function () {
     av.post.addUser('Button: mnCnOrganismTrace');
     console.log('control drop down menu clicked');
@@ -2529,7 +2630,6 @@ av.ui.feedback = function(){
   };
 
   //Put the offspring in the parent position on Organism Trace
-  // ====refactored======
   document.getElementById('mnCnOffspringTrace').onclick = function () {
     //Open Oranism view
     av.post.addUser('Button: mnCnOffspringTrace');
@@ -2952,17 +3052,25 @@ av.ui.feedback = function(){
   av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
   av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
 
-  // av.doj.mnDebug.style.visibility = 'hidden';
   av.dom.mnDebug.style.visibility = 'hidden';
+  av.dom.mnDebug.style.display = 'none';
 
+<<<<<<< HEAD
   // Avida-ED 4.0.17 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
   if (false) {
     console.log('testing mode; set to false before public release for Avida-ED 4.0.17 Beta Testing. ');
+=======
+  // Avida-ED 4.0.20 Beta Testing fix this too. 
+  //true for development; false for all production releases even in alpha testsing.  
+  if (false) {
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.20 Beta Testing. ');
+>>>>>>> origin/pre_wendell
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x
-    av.dom.mnDebug.style.visibility = 'hidden';   //visible
+    av.dom.mnDebug.style.visibility = 'hidden';  
+    av.dom.mnDebug.style.display = 'none';
   };
   //av.ui.toggleDevelopmentDisplays('Last_things_done');  // this needs to be called in production version
 

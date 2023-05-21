@@ -146,3 +146,56 @@ av.dnd.runTestDish2 = function(fzSection, target, type) {
 };
 
 
+//Add items from freezer section using the menu
+//---------------------------------------------------------------------------------------- av.dnd.FzAddExperimentFn --*/
+av.dnd.FzAddExperiment_Fn_old = function (fzSection, target, type) {
+  //console.log('fzrObject=', av.dnd[fzSection].getSelectedNodes()[0]);
+  //need to find selected item. looking for 'dojoDndItem dojoDndItemAnchor' might help
+  //console.log('fzOrgan selected keys', Object.keys(av.dnd.fzOrgan.selection)[0]);
+  //Object.keys(av.dnd.fzOrgan.selection)[0] and av.dnd.fzOrgan.getSelectedNodes()[0].id return the same thing
+
+  if (undefined != av.dnd[fzSection].getSelectedNodes()[0]) {
+    var nodeMvDomid = av.dnd[fzSection].getSelectedNodes()[0].id;
+    console.log('fzSection=', fzSection, '; target=', target, '; nodeMvDomid=', nodeMvDomid, '; type=', type);
+    var addedPopPage = false;
+    var addedAnaPage = false;
+    av.dnd.move.via = 'menu';
+    av.dnd.move.source = av.dnd[fzSection];
+    av.dnd.move.target = av.dnd[target];
+    av.dnd.move.type = type;
+    //av.dnd.move.sourceDomId = Object.keys(av.dnd.move.source.selection)[0];  //does not work here even if same basic thing work in AvidaED.js
+    av.dnd.move.sourceDomId = nodeMvDomid;
+    av.dnd.move.dir = av.fzr.dir[av.dnd.move.sourceDomId];
+    av.dnd.move.nodeName = av.fzr.file[av.dnd.move.dir + '/entryname.txt'];
+    av.dnd[target].insertNodes(false, [{data: av.dnd.move.nodeName, type: [type]}]);
+    av.dnd[target].sync();
+    var domIDs = Object.keys(av.dnd[target].map);
+    av.dnd.move.targetDomId = domIDs[domIDs.length - 1];
+    av.dnd.move.sourceMoveData = av.dnd.move.source.map[av.dnd.move.sourceDomId];
+    console.log('move', av.dnd.move);
+    
+    if ('fzOrgan' == fzSection && 'ancestorBox' == target) { addedPopPage = av.dnd.lndAncestorBox(av.dnd.move); }
+    else if ('fzOrgan' == fzSection && 'activeOrgan' == target) { addedPopPage = av.dnd.lndActiveOrgan(av.dnd.move); }
+    else if (('fzConfig' == fzSection || 'fzWorld' == fzSection) && 'activeConfig' == target) { 
+      addedPopPage = av.dnd.lndActiveConfig(av.dnd.move, 'av.dnd.FzAddExperimentFn');
+    }
+    else if ('anlDndChart' == target && 'fzWorld' == fzSection) addedAnaPage = av.dnd.lndAnlDndChart(av.dnd.move);
+
+    if (addedPopPage) av.grd.drawGridSetupFn('av.dnd.FzAddExperimentFn');
+    
+  }
+  else {
+    switch(fzSection) {
+      case 'fzConfig':
+        alert('You must select a configurated dish first');
+        break;
+      case 'fzOrgan':
+        alert('You must select an organism first');
+        break;
+      case 'fzWorld':
+        alert('You must select a populated dish first');
+        break;
+    }
+  }
+};
+//------------------------------------------------------------------------------------ end av.dnd.FzAddExperimentFn --*/

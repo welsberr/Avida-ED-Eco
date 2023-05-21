@@ -29,7 +29,7 @@ jQuery(document).ready(function($) {
                     $.map($("#popDish1"), (value, key) => { return value }),
                     $.map($("#popDish2"), (value, key) => { return value }),
                    ].flat();
-  if (av.debug.dnd) { console.log('DnD: dragula containters: ', containers); }
+  if (av.debug.dnd) { console.log('DnD: dragula containers: ', containers); }
 
   // initialize globally availble references to dnd containers
   av.dnd.fzConfig = containers[0];
@@ -117,7 +117,7 @@ jQuery(document).ready(function($) {
       return true;
     } 
     if (source === av.dnd.activeConfig) {
-      if (av.grd.runState != "started" && target === av.dnd.fzWorld) {
+      if (av.grd.runState !== "started" && target === av.dnd.fzWorld) {
         return false;
       } else if (target === av.dnd.fzConfig || target === av.dnd.fzWorld) {
         return true;
@@ -332,7 +332,7 @@ jQuery(document).ready(function($) {
         // the below convoluted method is necessary to see which elements are below the mouse cursor at this moment
         var elements = $.map(document.elementsFromPoint(x, y), (x) => {return x.id});
         // if gridCanvas is behind this mouse point
-        if (elements.indexOf("gridCanvas") != -1 && av.grd.runState !== 'started') {
+        if (elements.indexOf("gridCanvas") !== -1 && av.grd.runState !== 'started') {
           if (sourceIsFzOrgan) { 
             av.dnd.landGridCanvas(elForGrid, av.dnd.gridCanvas, av.dnd.fzOrgan);
             av.grd.drawGridSetupFn('av.dnd.gridCanvas where target = gridCanvas');
@@ -538,7 +538,11 @@ jQuery(document).ready(function($) {
   // Running actions from drop down menu
   // When using dojoDnd, the an item could be selected in each section of the freezer. 
   // Also I did not know an easy way to see if an item was selected in each freezer section. 
-  av.dnd.FzAddExperimentFn = function (source, target, type) {
+  av.dnd.FzAddExperimentFn = function (source, target, type, from) {
+    console.log(from, ' called av.dnd.FzAddExperimentFn');
+    console.log('source =', source);
+    console.log('target =', target);
+    console.log('type =', type);
     var fzSection = source.id;
     var targetId = target.id;
     var addedPopPage = false;
@@ -750,7 +754,14 @@ jQuery(document).ready(function($) {
     // Do this by deleting everything in activeOrgan and reinserting the most resent one after a drop event.
     'use strict';
     if (av.debug.dnd) { console.log('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent); }
-    //clear out the old data if an organism is already there
+    // set flag to true when an organism put in viewer
+    
+    // do not initialize canvas unitl the first time the user puts an organism in the viewer
+    if (av.ind.viewEmpty) {
+      av.ind.viewEmpty = false; 
+      console.log('setting av.ind.viewEmpty to false');
+    }
+    // clear out the old data if an organism is already there
     av.dnd.empty(av.dnd.activeOrgan);
     // get the data for the dragged organism
     var dir = av.fzr.dir[el.id];
@@ -1197,7 +1208,8 @@ jQuery(document).ready(function($) {
     av.grd.clearGrd();
     av.grd.runState = 'prepping';
     dijit.byId('mnCnOrganismTrace').attr('disabled', true);    //???
-    dijit.byId('mnFzOrganism').attr('disabled', true);         //???
+    document.getElementById('mnCnOrganismTrace').disabled = true;   //???
+    document.getElementById('mnFzOrganism').disabled = true;   //???
     // Clear grid settings
     av.parents.clearParentsFn();
     // old settings cleaned out now

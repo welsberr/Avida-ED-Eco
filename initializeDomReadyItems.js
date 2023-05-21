@@ -5,7 +5,7 @@
   // if (av.dbg.flg.root) { console.log('Root: before av.dom.load'); }
   av.dom.load = function () {
     'use strict';
-    //Menu
+    //Header Row: main Menu
     av.dom.mnCnPopRun = document.getElementById('mnCnPopRun');
 
     av.dom.mnFlStandAloneApp = document.getElementById('mnFlStandAloneApp');
@@ -17,7 +17,10 @@
     av.dom.mnHpDebug = document.getElementById('mnHpDebug');
     av.dom.mnDebug = document.getElementById('mnDebug');
 
-    //main area
+    //Header Row: other items
+    av.dom.userErrorMsg= document.getElementById('userErrorMsg');
+    
+    //Near Trash Can: 
     av.dom.userMsgLabel = document.getElementById('userMsgLabel');
     av.dom.wsSavedMsg = document.getElementById('wsSavedMsg');
     av.dom.wsNameMsg = document.getElementById('wsNameMsg');
@@ -253,11 +256,14 @@
     document.getElementById('mnFzOffspring').disabled = true;
     document.getElementById('mnFzPopulation').disabled = true;
     document.getElementById('mnFzAddFzItem').disabled = true; //tiba need to fix this so freezer button works when I freezer item is highlighted
-    //dijit.byId('mnFzAddConfigEx').attr('disabled', true);
-    //dijit.byId('mnFzAddGenomeEx').attr('disabled', true);
-    //dijit.byId('mnFzAddPopEx').attr('disabled', true);
-    //dijit.byId('mnFzAddGenomeView').attr('disabled', true);
-    //dijit.byId('mnFzAddPopAnalysis').attr('disabled', true);
+    
+    //document.getElementById('mnFzOrganism').disabled = true;   ///???
+    //document.getElementById('mnFzAddConfigEx').disabled = true;   ///???
+    //document.getElementById('mnFzAddGenomeEx').disabled = true;   ///???
+    //document.getElementById('mnFzAddPopEx').disabled = true;   ///???
+    //document.getElementById('mnFzAddGenomeView').disabled = true;   ///???
+    //document.getElementById('mnFzAddPopAnalysis').disabled = true;   ///???
+    //document.getElementById('').disabled = true;   ///???
   };
 
   // for analyze page
@@ -323,7 +329,7 @@ av.ui.toggleDevelopmentDisplays = function () {
   var popInfoTab2b = ['tabHolderShow', 'tabHolderHide'];
   var sgrfooter2b = ['changeAllSugarsTogetherContainer', 'changeAllSugarsTogetherNoGlobalContainer'];
 
-  console.log('av.dom.mnDebug.style.visibility=', av.dom.mnDebug.style.visibility);
+  console.log('av.dom.mnDebug.style.visibility=', av.dom.mnDebug.style.visibility, "; display=", av.dom.mnDebug.style.display);
   if ('devoShow' === document.getElementById('developmentToggle').className) {
     ndx2b = 1;
     //hide all development elements
@@ -362,6 +368,8 @@ av.ui.toggleDevelopmentDisplays = function () {
   document.getElementById('popInfoTabHolder').className = popInfoTab2b[ndx2b];
 
   av.dom.mnDebug.style.visibility = visible2b[ndx2b];
+  av.dom.mnDebug.style.display = block2b[ndx2b];
+  
   document.getElementById('testConfigLableHolder').style.display = flex2b[ndx2b];   //none
 
   document.getElementById('showTextDebugButtonDiv').style.visibility = visible2b[ndx2b];   //hidden

@@ -2,7 +2,11 @@
 <html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <head>
+<<<<<<< HEAD
     <title>Avida-ED 4.0.17</title>
+=======
+    <title>Avida-ED 4.0.20</title>
+>>>>>>> origin/pre_wendell
     <meta charset='utf-8' />
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <style>
@@ -39,7 +43,11 @@
     <span id="http://stackoverflow.com/questions/20828799/creating-a-splash-page-in-html5"></span>
     <div id='splash' style='display: none;'>
       <div align='center'>
+<<<<<<< HEAD
         <h1>Avida-ED 4.0.17 Beta Testing is loading . . .</h1>
+=======
+        <h1>Avida-ED 4.0.20 Beta Testing is loading . . .</h1>
+>>>>>>> origin/pre_wendell
         <img src='images/Avida-ED-icon.png' /><br />
         <img src='images/AvidaGrid.gif' />
       </div>
@@ -51,16 +59,21 @@
     
     <div id='allAvidaContainer' class='all3pop'>
       <div id='headerMain' class='headerRow'>
-        <div id='leftPnlBtnHolder' class='leftPnlBtnHlderShow'>
+        <div id='leftPnlBtnHolder'>
           <input id='leftPanelButton' type='button' value='<<&nbsp;' onclick='av.ptd.lftPanelBtnFn();'/>
         </div>
+        
         <div id="mainMenu">
           <div class="toplist">
             <nav>
               <ul>
                 <li>
                   <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnAvidaEd">Avida-ED </button>
+<<<<<<< HEAD
                   <ul class="submenu dismiss aboutMenu">
+=======
+                  <ul class="submenu dismiss" id='mnAeWide'>
+>>>>>>> origin/pre_wendell
                     <li> <button id="mnAeAbout" onclick="av.ui.aboutAvidaED('mnAeAbout')">About</button></li>
                     <li><button id="mnAePreferences">Preferences</button></li>
                   </ul>
@@ -83,13 +96,17 @@
                 </li>
                 <li>
                   <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnFreezer">Freezer </button>
+<<<<<<< HEAD
                   <ul class="submenu dismiss freezerMenu">
+=======
+                  <ul class="submenu dismiss" id='mnFzWide'>
+>>>>>>> origin/pre_wendell
                     <li><button id="mnFzConfig">Save Current Configuration to Freezer</button></li>
                     <li><button id="mnFzPopulation">Save Current Population to Freezer</button></li>
                     <li><button id="mnFzOrganism">Save Selected Organism to Freezer</button>
                     <li><button id="mnFzOffspring">Save Offspring Organism to Freezer</button></li>
                     <li><div class="dropdown-divider" href="#"></div></li>
-                    <li><button id="mnFzAddFzItem">Add Highlighted Freezer Item in Experiment</button></li>
+                    <li><button id="mnFzAddFzItem" onclick="av.ui.mnFzAddFzItemFn('menu')">Add Highlighted Freezer Item into Experiment</button></li>
                     <li><div class="dropdown-divider" href="#"></div></li></li>
                     <li><button id="mnFzAddGenomeView">Put Highlighted Organism from Freezer in Organism View</button></li>
                     <li><button id="mnFzAddPopAnalysis">Put Highlighted Populated Dish from Freezer in Analysis</button></li>
@@ -97,7 +114,11 @@
                 </li>
                 <li>
                   <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnControl">Control</button>
+<<<<<<< HEAD
                   <ul class="submenu dismiss controlMenu">
+=======
+                  <ul class="submenu dismiss" id='mnCnWide'>
+>>>>>>> origin/pre_wendell
                     <li><button id="mnCnRun">Run</button></li>
                     <li><button id="mnCnPause">Pause</button></li>
                     <li><button id="mnCnOne">Forward (Do one update)</button></li>
@@ -108,10 +129,17 @@
                 </li>
                 <li>
                   <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnHelp">Help</button>
+<<<<<<< HEAD
                   <ul class="submenu dismiss helpMenu">
                      <li><button onclick="av.ui.aboutAvidaED('mnHpAbout')" id="mnHpAbout">About</button></li>                    
                     <li><button onclick="window.open('images/Avida-ED_UserManualv3.0.pdf')" style="color: blue"id="mnHpManual">Quick Start Manual</button>
                     <li><button onclick="window.open('cpu_tour.html')" style="color: blue"id="mnHpHardware">Ancestor and Hardware</button>
+=======
+                  <ul class="submenu dismiss">
+                     <li><button onclick="av.ui.aboutAvidaED('mnHpAbout')" id="mnHpAbout">About</button></li>
+                    <li><button onclick="window.location='images/Avida-ED_UserManualv3.0.pdf';" style="color: blue" id="mnHpManual">Quick Start Manual</button></li>
+                    <li><button onclick="window.location='cpu_tour.html';" style="color: blue" id="mnHpHardware">Ancestor and Hardware</button></li>
+>>>>>>> origin/pre_wendell
                     <li><button style="color: blue" id="mnHpInfo">Avida-ED Home Page</button></li>
                     <li><button onclick="window.open('short_cuts.html')" style="color: blue" id="mnHpShortCuts">Short Cuts</button>
                     <li><button onclick="av.ui.feedback('feedback')" id="mnHpFeedback">Send Feedback (please)</button></li>
@@ -131,24 +159,15 @@
           </div>         
        </div>  <span id='mainMenu_end' class='display_none'></span>
 
-        <div id="headerMsg">
-          <div id='msgHolder'>
-            Workspace: `<label id='wsNameMsg'>Default</label>`
-            <label id='wsSavedMsg'> - Save workspace if you want to use items saved to the freezer after this session</label> &nbsp;&nbsp;&nbsp;
-            <span style='text-align: right'>
-              <label id='userMsgLabel'> </label>
-            </span>
-          </div>
+        <div id='userErrorMsg' class="headerMsg">
         </div>
-        <div id='versionNumHolder'>
-              <div id='avidaVersion'>Avida-ED 4</div>
-        </div>
-        <div id='RtSideToggleButtons'>
+
+       <div id='RtSideToggleButtons'>
           <input id='StatsButton' type='button' class='toggleLftButton' value='Stats' onclick='av.ptd.rightInfoPanelToggleButton(this)'/>
           <input id='SetupButton' type='button' class='toggleRitButton' value='Setup' onclick='av.ptd.rightInfoPanelToggleButton(this)'/>
         </div>
 
-        <div id='ritePnlBtnHolder' class='ritePnlBtnHlderShow'>
+        <div id='ritePnlBtnHolder'>
           <input id='ritePanelButton' type='button' value='&nbsp;>>' onclick='av.ptd.ritePanelBtnFn();'/>
         </div>
       </div><span id='headerMain_end' class='display_none'></span>
@@ -192,19 +211,30 @@
                 </div>            
                 </div>
             </details>
-          </div><span id='freezerSection_end' class='display_none'></span>
-
-          <div id="trashDiv" class='trash-grid-container'>
-            <div id='trashCan'>
-              <img id='trashCanImage' src='images/Avida-ED-trash-icon.png' style='width: 32px;' alt='trash can' />
-            </div>
             <div id='showTextDebugButtonDiv'>
               <button id='showTextDebugButton' type='button' value='Big Text'>Big Text</button>
             </div>
             <div id='developmentToggleDiv'>
               <input id='developmentToggle' class='devoCammo' type='button' value=' in Development View ' onclick='av.ui.toggleDevelopmentDisplays()' />
             </div>
+            
+          </div><span id='freezerSection_end' class='display_none'></span>
+
+          <div id="trashDiv" class='trash-grid-container'>
+            <div id='trashCan'>
+              <img id='trashCanImage' src='images/Avida-ED-trash-icon.png' style='width: 32px;' alt='trash can' />
+            </div>
+            <div id='wsNameHolder'>
+              Workspace: `<label id='wsNameMsg'>Default</label>`
+            </div>
+            <div id='msgHolder'>
+              <label id='wsSavedMsg'> - Save workspace if you want to use items saved to the freezer after this session</label> &nbsp;&nbsp;&nbsp;
+              <span style='text-align: right'>
+                <label id='userMsgLabel'> </label>
+              </span>
+            </div>
           </div>
+          
         </div><span id='navColId_end' class='display_none'></span>
 
         <div class='dragbar' id="dragbarLeft"></div> <!--yemi: dragbar on the left-->
@@ -304,14 +334,14 @@
             <div id='oranismRunCol' class="orgBenchCol">
               <div id="orgTopId" class="orgBenchTopRow">
                 <div class='orgTopLt'>
-                  <img id='actOrgImg' src='images/Avida-ED-ancestor-icon.png' /*djb moved alt and style to avidaEdEco.css */>
+                  <img id='actOrgImg' src='images/Avida-ED-ancestor-icon.png'>
                   <div id='activeOrgan' class='popDishClass'></div>
                 </div>
                 <div id='a_control_or_info_can_go_here' class="orgTopRt"></div>
               </div>
               <div class="orgMid" id='organismCanvasHolder'>
                 <!-- yemi canvas comment; diane moved style info to #organCanvas in avidaedEco.css -->
-                <canvas data-dojo-type='dojo.dnd.Target' id='organCanvas'></canvas> 
+                <canvas id='organCanvas'></canvas> 
               </div>
               <div class="orgBotClass" id='orgBotId'>
                 <div id='cycleSlider'></div><br />
@@ -531,6 +561,7 @@
                     </table>
                     <label id='dnaLabel'></label>
                   </div><span id='selOrgType_end' class='display_none'></span>
+                 <div class='dragbar' id="dragbarPopStats"></div> <!-- in right side of population page -->
 
                   <div id='popStats4grid'>
                     <div class='popStatsTitle'>
@@ -653,7 +684,7 @@
               
              <div id='popChrtCntrlHldr'>
                 <div id='popChrtlftYaxHldr'>
-                  <label id='popChrtlftYaxLbl'>Lft Y-axis
+                  <label id='popChrtlftYaxLbl'>&nbsp;Lft Y-axis
                     <select  id='popChrtLftYaxis' onchange='av.pch.popChrtYaxisChangeFn(this)'>
                       <option value='Average Fitness' selected>Ave. Fitness</option>
                       <option value='Average Offspring Cost'>Ave. Offspring Cost</option>
@@ -677,7 +708,7 @@
                </div>
 
               <div id='pauseOptions'>
-                <p id='pausePrefix'>Pause Run at</p>
+                <p id='pausePrefix'>&nbsp;Pause Run at</p>
                 <select id='itemDone1st' onchange='av.ptd.sgr1stSlctFn("onchange")'>
                   <option value='task' selected>any task</option>
                   <option value='not'>NOT</option>
@@ -718,14 +749,15 @@
                     <label id='sizeCells'>There are 900 cells by default</label>
                 </div>
                 <div class='even'>
-                  <div id='popSetupMutationRate'>
+                  <div id='mutePopNputHldr'>
                     <span class='enviroSubHeading lftmargin' >Per Site Mutation Rate:</span>
-                    <input id='mutePopInput' type='text' class='mutePopInputClass' value='2'>&nbsp;%                    
+                    <input id='mutePopInput' type='text' value='2'>&nbsp;%<br />&nbsp;
                   </div>
-                  <div id='mutePopError' onclick="av.ui.toggleResourceComplexity('muteErrorNotice')"></div>
-                  <div id='mutePopSlideHolder'>
-                    <span id='mutePopSlide' class='mutePopSlideClass'></span>&nbsp;
+                  <div id='mutePopSldHldr'>
+                    <span id='mutePopSlide'></span>&nbsp;
                   </div>
+                  <div class='muteBeloSlideVertSpace'></div>
+                  <div id='mutePopError' onclick="av.ui.toggleResourceComplexity('muteErrorNotice')">&nbsp;</div>
                 </div>
                 <div class='odd'><div class='enviroSubHeading'>Ancestral Organism(s):</div>
                   <div id='ancestorRow'>
@@ -1238,15 +1270,17 @@
                    intermediateChanges='false' name='child' value='orgDemo' iconClass='dijitNoIcon'></button>
             <label id='OrganDemoLabel'>Demo (forces exact replay)</label>
           </div>
-          <div class='muteOrgHolder'>
-            <div id='muteOrgTextHolder'>
+          <div class='muteOrgAllHldr'>
+            <div id='muteOrgNputHldr'>
               <div class='lftmargin'>Per Site Mutation Rate:</div>
-              <input id='orgMuteInput' type='text'> %
-              <div><label id='muteOrgError'> &nbsp;</label>&nbsp;</div>
+              <input id='muteOrgInput' type='text'> %
+              <div class="muteInputVertSpace"></div>
             </div>
-            <div id='muteOrgSlideHolder'>
-              <div id='orgMuteSlide'></div>
+            <div id='muteOrgSldHldr'>
+              <div id='muteOrgSlide'></div>
             </div>
+            <div class='muteBeloSlideVertSpace'></div>
+            <div><label id='muteOrgError'> &nbsp;</label>&nbsp;</div>
           </div>
         </div><span id='orgSettings_end' class='display_none'></span>
       </div><span id='rightInfoHolder_end' class='display_none'></span>
@@ -1304,6 +1338,7 @@
     </div>
 <!--------------------------------------- End_ Export_Graph_Modal_Box -------->
 
+<<<<<<< HEAD
 <!--------------------------------------- Export_Stand_Alone_Modal_Nox ------->
 <div id='mnFlStandAloneAppModalID' class='modal'>
   <!-- Modal content -->
@@ -1316,6 +1351,13 @@
       <ul>
         <li class="slim"><a href="pkgs/Avida-ED-Web-PC_2016_0918.exe" target='_blank'>Avida-ED Windows installer for self-hosted version 2016_0918</a></li>
         <li><a href="pkgs/Avida-ED_Server_Avida-ED.app.zip" target='_blank'>Avida-ED Beta Testing for Mac OS 10.6 and above</a></li>
+=======
+    <span class='notSeen' id='o_______________________________________________________Export_Stand_Alone_Dialog_box___'></span>
+    <div class='notSeen' data-dojo-type='dijit/Dialog' data-dojo-id='mnFlStandAloneAppDialog'
+         title='Stand alone version of Avida-ED 4.0.20 Beta Testing'>
+      <div class='dijitDialogPaneContentArea'>
+        <h3>For working where there is no internet access: No working Avida-ED 4 versions for off-line use at this time.  </h3>
+>>>>>>> origin/pre_wendell
         <ul>
           <li>Unzip the file once it is downloaded</li>
           <li>Move the file ‘Avida-ED Web.app’ to the Applications Folder</li>
@@ -1331,8 +1373,13 @@
 </div>
 <!--------------------------------------- End_Export_Stand_Alone_Modal_Nox  -->
 
+<<<<<<< HEAD
 <!--------------------------------------- Freezer_Modal_Box------------------->
     <div id='fzModalID' class='modal'>
+=======
+    <span class='notSeen' id='o_______________________________________________________________________example_Modal___'></span>
+      <div id='fzDialogModalID' class='modal'>
+>>>>>>> origin/pre_wendell
       <!-- Modal content -->
       <div class="modal-content" >
         <div class="modal-header">
@@ -1577,7 +1624,11 @@
           <span class='aboutAvidaEDcloseHldr'>
             <button id='aboutAvidaEDcloseButton' onclick='av.ui.aboutAvidaED_Close();'>Close</button>
           </span>
+<<<<<<< HEAD
           <h2 id='aboutAvidaEDtitle'>Avida-ED 4.0.17 Beta</h2>
+=======
+          <h2 id='aboutAvidaEDtitle'>Avida-ED 4.0.20 Beta</h2>
+>>>>>>> origin/pre_wendell
           <span class='aboutAvidaEDcloseHldr'>
           </span>
         </div>

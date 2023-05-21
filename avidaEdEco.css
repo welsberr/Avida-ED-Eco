@@ -20,9 +20,9 @@ html {
   }
 */
   body {
-    margin: 0;
+    margin: 0px;
     background: #F5F5F5;
-    padding: 0;
+    padding: 0px;
     
   }
   .display_none { display: none; }
@@ -30,8 +30,8 @@ html {
   .visibility_hidden {visibility: hidden; }
   
   .thin{
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
   }
   
   .tabHolderShow {
@@ -54,7 +54,7 @@ html {
 .tab button {
   background: white;
   float: left;
-  border: 1px black;
+  border: 1px solid black;
   border-style: solid solid none;
   border-radius: 9px 9px 0px 0px;
   outline: none;
@@ -102,7 +102,7 @@ html {
   min-width: 100vw;
   max-height: 100vh;
   max-width: 100vw;
-  margin: 0;
+  margin: 0px;
   background:  #F5F5F5;   /* lightsalmon;  */
 }
 
@@ -118,7 +118,7 @@ html {
   min-width: 100vw;
   max-height: 99vh;
   max-width: 100vw;
-  margin: 0;
+  margin: 0px;
   background:  #F5F5F5;   /* lightsalmon;  */
 }
 
@@ -134,7 +134,7 @@ html {
   min-width: 100vw;
   max-height: 99vh;
   max-width: 100vw;
-  margin: 0;
+  margin: 0px;
   background:  #F5F5F5;   /* lightsalmon;  */
 }
 
@@ -150,17 +150,135 @@ html {
   min-width: 100vw;
   max-height: 99vh;
   max-width: 99vw;
-  margin: 0;
+  margin: 0px;
   background:  #F5F5F5;   /* lightsalmon;  */
+}
+
+
+/* just as an example of formating the div contained by the div with class = headerRow
+.headerRow > div {
+  background: inherit;
+}
+*/
+
+/* --------------------------------------------------------------------------------------------- header row formating */
+
+/* in version 4.0.20 changing how I do headerRow from flex to grid, 
+ even as it is only one row. I think I can specify it better */
+
+#leftPnlBtnHolder { grid-area: leftPnlBtnHolder; }
+#mainMenu { grid-area: mainMenu; }
+.headerMsg { grid-area: headerMsg; }
+#RtSideToggleButtons { grid-area: RtSideToggleButtons; }
+#ritePnlBtnHolder { grid-area: ritePnlBtnHolder; }
+
+.headerRowSwitch_old_do_NOT_use {
+  grid-area:headerRow;
+  display: grid;
+  grid-template-rows: 1.1rem; 
+  grid-template-columns: 3.2rem           auto            40rem    5rem                3.2rem;
+  grid-template-areas: 'leftPnlBtnHolder headerMsg mainMenu RtSideToggleButtons ritePnlBtnHolder';
+  /* align-content: center; /*  baseline? */
+  align-items: baseline;  /* was center */
+  border: 1px solid #AAA;               /* #AAA; */
 }
 
 .headerRow {
   grid-area:headerRow;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-rows: 1.1rem; 
+  grid-template-columns: 2.2rem          24rem    auto             5rem                3.2rem;
+  grid-template-areas: 'leftPnlBtnHolder mainMenu headerMsg RtSideToggleButtons ritePnlBtnHolder';
+  align-items: baseline;
+  /*   align-content: center; */
   border: 1px solid #AAA;               /* #AAA; */
+  gap: 0px 0.625rem; /* row_gap col_gap   0.625rem = 10px */
+  background: inherit;
 }
+
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsg RtSideToggleButtons ritePnlBtnHolder */
+
+#leftPnlBtnHolder{
+  padding: 0px 0px 0px 0.25rem;  /* top right bottom left */  
+}
+  #leftPanelButton{
+    border-radius: 5px 5px 5px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 1.25rem;   /* default 1.25rem = 20px */
+    padding: 0px 4px 0px 2px;  /* top right bottom left */  
+    text-align: center;
+    vertical-align: baseline;
+  }
+
+#ritePnlBtnHolder{ 
+  padding: 0px 0.375rem 0px 0px;  /* top right bottom left */  
+}
+
+#ritePanelButton{
+    border-radius: 5px 5px 5px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 1.25rem;
+    padding: 0px 4px 0px 2px;  /* top right bottom left */
+    text-align: center;
+    vertical-align: baseline;
+}
+
+/* headerRow flex contains leftPnlBtnHolder mainMenu headerMsg RtSideToggleButtons ritePnlBtnHolder */
+
+#mainMenu{
+  --pix1: 30; 
+  height: var(--rem-size1);  /* 1.875rem = 30px */
+  overflow: visible;       /* was scroll */
+  /* border: 1px solid red; */
+  /* background: pink; */
+}
+  
+  #mnAvidaEd {white-space: nowrap;}
+  
+  #mnDebug {
+    visibility: hidden;
+    display: none;
+  }
+  
+  /* headerRow flex contains leftPnlBtnHolder mainMenu headerMsg RtSideToggleButtons ritePnlBtnHolder */
+   /* overflow: hidden;
+    text-overflow: ellipsis;  */
+
+#userErrorMsg {     /* class is headerMsg */
+    height: 1.25rem;
+    overflow: hidden;       /* was scroll */   
+    background: inherit;
+    vertical-align: baseline;
+  }
+  #wsSavedMsg{
+    color: blue;
+  }
+  
+/* headerRow contains leftPnlBtnHolder mainMenu headerMsg RtSideToggleButtons ritePnlBtnHolder */
+  
+  #RtSideToggleButtons{
+    height: 1.25rem;
+    background: inherit;     /* #eee; better color ? */
+    margin: 0px;
+    padding-bottom: 4px;
+  }
+  .toggleLftButton {
+    border-radius: 5px 0px 0px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 1.25rem;
+    padding: 0px 2px 2px 2px;    /* top right bottom left */
+  }
+
+  .toggleRitButton {
+    border-radius: 0px 5px 5px 0px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 1.25rem;
+    padding: 0px 2px 2px 2px;    /* top right bottom left */  
+    margin-left: -4px;
+  }
+  .activeBtn {
+    background: #ccc;
+  }
+
+/* headerRow contains leftPnlBtnHolder mainMenu headerMsg RtSideToggleButtons ritePnlBtnHolder */
+
+/*----------------------------------------------------------------------------------------- end of header row         */
 
 .navColClass {                  /* left side bar with freezer */
   grid-area:navColClass;
@@ -215,6 +333,7 @@ html {
     font-family: Tahoma, Trebuchet MS, sans-serif;
   }
   
+<<<<<<< HEAD
 
 /* structures in the headerRow */  
 #leftPanelButton{
@@ -347,12 +466,15 @@ html {
     height: inherit;
     vertical-align: middle;
   }
+=======
+/*----------------------------------------------------------------------------------------- left side panel items  -- */
+>>>>>>> origin/pre_wendell
   
 /* structures in the left side panel */
   .mainPageButtons{
     border: 1px solid #AAA;
     width: 100%;
-    flex:0 1 112px;
+    flex: 0 1 112px;
   }
   .PageButtonHolder {
     display: flex;
@@ -378,6 +500,9 @@ html {
     border-radius: 5px;
     min-width: 90px;
   }
+  
+/* ----------------------------------------------------------------------------------- freezer section in left column */
+  
 #freezerSection{
   border: 1px solid #BABABA;
   flex: 1;                /* fills remaining space; flex:1 1 auto; is the same as flex:1; both prevent resize */
@@ -414,12 +539,12 @@ html {
 #fzTdishSec { visibility: hidden; }
 #testDishDetailDiv {display: none; }
 
-/* trash area below freezer */
-#trashCan { 
-  grid-area: trashCan;
-  align-self: stretch;
-  justify-self: stretch;
-}
+
+/* --------------------------------------------------------------------------------- debug buttons in freezer section */
+
+
+/* debug buttons moved to below freezer at bottom of that div and above the trashcan */
+
 #showTextDebugButtonDiv { 
   grid-area: showTextDebugButtonDiv;
   align-self: stretch;
@@ -438,19 +563,6 @@ html {
   justify-content: flex-end;
 }
 
-.trash-grid-container{
-  display: grid;
-  grid-template-areas: 'trashCan showTextDebugButtonDiv '
-                       'trashCan developmentToggleDiv';
-  align-items: center;   /* up down */
-  grid-template-columns: auto auto;
-  grid-template-rows: 50% 50%;
-  grid-column-gap: 1px;
-  grid-row-gap: 1px;
-  width: 100%;
-  flex: 0 1 40px;
-  border: 1px solid #AAA;
-}
 #showTextDebugButton{
   min-width: 60px;
   visibility: hidden;
@@ -491,6 +603,30 @@ html {
     height: 100%;
     ;
     /* cols:'150' rows:'50' */
+}
+
+/* ----------------------------------------------------------------------------------------- trash area below freezer */
+#trashCan { 
+  grid-area: trashCan;
+  align-self: stretch;
+  justify-self: stretch;
+  border-right: 1px solid #ccc;
+}
+
+#wsNameHolder { grid-area: wsNameHolder; }
+#userMsgLabel { grid-area: msgHolder; }
+
+/* modified to use with messages rather than debug buttons */
+.trash-grid-container{
+  display: grid;
+  grid-template-areas: 'trashCan wsNameHolder'
+                       'trashCan msgHolder';
+/*  align-items: center;   /* up down */
+  grid-template-columns: auto auto;
+  gap: 1px 3px;
+  width: 100%;
+  flex: 0 1 40px;
+  border: 1px solid #AAA;
 }
 
 /* -------------------------------------------------------------------------------- main work bench center section -- */
@@ -1080,6 +1216,73 @@ input:focus {
 #scrollBarSpace { background: #DDD; min-width: 320px; }
 /*---------------------------------------------------------------------------- end pause options on Population Page --*/
 
+/*------------------------------------------------------------------------------------------------ mutation Sliders --*/
+
+#mutePopNputHldr {
+  /* background: lightpink; */
+}
+#mutePopInput{
+  width:4em;
+  height:1.5em;
+  margin: 0px 2px;     /* top right bottom left  */   /*top left/right bottom */ /*top/bottom  left/right */
+  display: inline-block; 
+  float: left;
+}
+#mutePopSldHldr{
+  background-color: inherit;
+  width: 100%;
+  height: 1em;  /* was 1.5em */
+  padding: 0em 0.3em 0em 0em;   /* top, right, bottom, left; */
+}
+#mutePopSlide {
+  display: block; 
+  vertical-align: top; 
+  background: #666;  /* #888; */
+  /* padding: 20px auto; 
+    margin: auto; 
+*/
+}
+#mutePopError {  
+  width: 100%; height: 1.1em;
+  /* background-color: lightyellow;  */
+  /* text-align: left; */
+}
+
+.muteInputVertSpace {
+  height:0.7em;  /* not in mutePop ,used in muteOrg */
+}
+.muteBeloSlideVertSpace{
+  height: .5em;
+}
+
+/* holdes both input box and slider (and text) */
+.muteOrgAllHldr{
+  flex: 1;          /* supposed to expand to fill remainting space, but not working */
+  background: #CCCCCC;   /* burlywood to see */
+  min-width: inherit;
+  min-height: 1em;    
+  padding: 1em 0.5em 2em 0.5em;   
+}
+/* top, right, bottom, left;  right and left were 0.3 before*/
+#muteOrgInput{
+  width:4em;
+  height:1.5em;
+}
+#muteOrgSldHldr{
+  background-color: inherit;
+  width: 100%;
+  height: 1em;
+}
+#muteOrgSlide {
+/* width: 150px;*/ /* was 200px; */ /* make it fit the entire width of the right side panel*/
+/* height: 400px;  */  /* use for verticle slide */
+display: block; 
+vertical-align: top; 
+padding: 20px auto;
+margin: auto; 
+background: #888;
+}
+
 /*---------------------------------------------------------------------------------------- Setup on Population Page --*/
 #environmentSettingTitle{
   font-size: 130%;
@@ -1091,31 +1294,6 @@ input:focus {
 
 .colrow {
   width: 4.5em; height:1.5em;  
-}
-
-#popSetupMutationRate {
-  /* background: lightpink; */
-}
-
-#mutePopError { 
- 
-  width: 100%; height: 15px;
-  /* background-color: lightyellow;  */
-  /* text-align: left; */
-}
-
-.mutePopInputClass{
-  width:4em;
-  height:1.5em;
-  margin: 0px 2px;     /* top right bottom left  */   /*top left/right bottom */ /*top/bottom  left/right */
-  display: inline-block; 
-  float: left;
-}
-.mutePopSlideClass{
-  /* width:360px; */
-  display: block; 
-  vertical-align: middle; 
-  background: #666;    /* #666 */
 }
 
 .ancestorContainer {
@@ -1772,7 +1950,7 @@ select:disabled::-ms-expand {
 .blk_wite_checkbox:checked:after {
 	content: '\2714';
 	font-size: 100%;
-	position: absolute;
+	position: absolute;    /*really absolute? **/
 	top: 0px;
 	left: 3px;
 	color: black;    /* #99a1a7;  */
@@ -1880,7 +2058,11 @@ checkbox:focus {
     width: 100%;
     flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */
   }
-  #organCanvas{
+  #orgViewIntro{
+    margin: auto;
+    padding: auto;
+  }
+  .organCanvasCls{
     /* border:1px solid #000000; */     /*black*/    
     top: 50%;
     left: 50%;
@@ -1981,37 +2163,6 @@ checkbox:focus {
     min-height: 50px;
     padding: 1em 0.5em 1em 0.5em;   
   }
-  .muteOrgHolder{
-    flex: 1;          /* supposed to expand to fill remainting space, but not working */
-    background: #CCCCCC;
-    min-width: inherit;
-    min-height: 50px;    
-    padding: 1em 0.5em 2em 0.5em;   
-  }
-  /* top, right, bottom, left;  right and left were 0.3 before*/
-  #muteOrgTextHolder{
-    background: inherit;
-    padding: 10px 0px;
-  }
-  #muteOrgSlideHolder{
-    background-color: inherit;
-    width: 100%;
-    height: 450px;
-  }
-  
-  #orgMuteSlide {
-  /* width: 150px;*/ /* was 200px; */ /* make it fit the entire width of the right side panel*/
-  /* height: 400px;  */  /* use for verticle slide */
-  display: block; 
-  vertical-align: top; 
-  padding: 20px auto;
-  margin:auto; 
-  background: #888;
-}
-  #orgMuteInput{
-    width: 50px; height:13px;
-  }
-  
   
   .analysisArea{
     display: flex;

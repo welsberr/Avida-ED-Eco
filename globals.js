@@ -5,7 +5,7 @@
 var av = av || {};  //incase av already exists
 
 //console.log('start of globals on 2021_310_04:22 Thurs');
-console.log('start of globals on 2022_121_Fri');
+console.log('start of globals on 2023_416_Sun');
 
 Number.prototype.pad = function(size) {
   var ss = String(this);
@@ -76,6 +76,7 @@ var traceObj = {}; //global that holds the traceObject that was sent from Avida
 
 //initialize gen (genome) object. Used in organism view
 av.ind = {};
+av.ind.viewEmpty = true;
 av.ind.cycle = 0;
 av.ind.update_timer = null;
 av.ind.labeled = [];
@@ -106,7 +107,7 @@ av.ui.orgInfo = 'details';   //settings is the other option
 av.ui.beginFlag = true;
 av.ui.oneUpdateFlag = false;
 av.ui.lftSidePnlShowing = true;
-av.ui.version = '4.0.16 Beta';
+av.ui.version = '4.0.20 Beta';
 av.debug.log = '';
 av.debug.log = '--hed: message and error log: Version:' + av.ui.version;
 av.debug.triggered = 'unknown';
@@ -601,11 +602,11 @@ av.sgr.makeNutDefault = function () {
   av.sgr.nutdft.uiAll.supplyTypeSlct = 'unlimited';    //this is only for whem ui.geometry = global
   av.sgr.nutdft.uiAll.regionLayout = '1Global';  //only Whole Dish for now; '1All' is the code for 'Whole Dish';
   av.sgr.nutdft.uiAll.regionsNumOf = 1;   // whole dish = there is only one dish 
-  av.sgr.nutdft.uiAll.initialHiNp = 100;      //only used when whem ui.geometry = global and  supplyTypeSlct = 'limited' set per cell ; need to multiply by wrldSize
+  av.sgr.nutdft.uiAll.initialHiNp = 1;      //only used when whem ui.geometry = global and  supplyTypeSlct = 'limited' set per cell ; need to multiply by wrldSize
 
   //defaults for subtasks which must be Grid or Local
   av.sgr.nutdft.uiSub.supplyTypeSlct = 'unlimited';  // unlimited default from Avida-ED 3: I think Should change to Limited
-  av.sgr.nutdft.uiSub.initialHiNp = 100;  //sugar units/cell guess at an initial value when supplyTypeSlct='limited'; need to multiply by wrldSize
+  av.sgr.nutdft.uiSub.initialHiNp = 1;  //sugar units/cell guess at an initial value when supplyTypeSlct='limited'; need to multiply by wrldSize
   av.sgr.nutdft.uiSub.inflowHi  = 0.1;   //sugar units/cell guess at an initial value when supplyTypeSlct='chemostat'; need to multiply by wrldSize
   av.sgr.nutdft.uiSub.outflowHi = 0.1;   //sugar units (fraction) guess at an initial value when supplyTypeSlct='chemostat';
   av.sgr.nutdft.uiSub.area = -1;   //based on a standard 30 x 30 world

@@ -28,7 +28,25 @@
  * selectors used throughout the Claro theme.
  *
  * [1] http://www.w3.org/TR/CSS21/cascade.html#cascade
+ *
+ * Use rem rather than em so that nested elements use an equilivant size for 1rem
+ * the default for 1rem = 16px; 
+ * Xrem/1rem = 50px/16px
+ * Xrem = 1rem (50px/16px) = 3.125
+ * rem values are relative to the root font-size
+ * em values are relative to the font-size of the nearest parent element, 
+ *
  */
+
+/* Notes about flex */
+    /* flex: [flex-grow] [flex-shrink] [flex-basis]; */
+    /* flex: [max] [min] [ideal size]; */
+    /* flex: 0 1 auto; /* Default flex value 0=grow=don't grow; take minimum size for the conents  */    
+    /* flex: 0 0 auto; /* stay the same size blasted element */    
+    /* flex: 1 1 auto; /* all elements will be the same size if all have this flex defintion and no content is too big */
+    /* flex: 1 1 auto; /* elements fill the container.
+    /* flex-shrink: 1 allows so shrinking */ 
+
 
 /****************************************************************************************************** css variables */
 /* Variables: global csss
@@ -57,7 +75,7 @@ html, body {
   width: 100%;
   margin: 0;
   padding:0;
-  background: #F5F5F5; /* cyan; */
+  background: #F5F5F5; /* main Avida-ED background-color = aed_background */
   font-family: Tahoma, Trebuchet MS, sans-serif;
 }
 
@@ -277,6 +295,7 @@ h1, h2, h3, h4, h5, h6 {
    width: 100px;
  }
  
+<<<<<<< HEAD
  /* Tiba tiba needs to delete all dojo and dijit references.  */
  .dojoDndItem {
    padding: 3px;
@@ -330,6 +349,8 @@ h1, h2, h3, h4, h5, h6 {
    font-size: 120%;
  }
  
+=======
+>>>>>>> origin/pre_wendell
  .container {
    min-height: 10px;
    width: 100%;

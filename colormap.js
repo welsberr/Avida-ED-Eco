@@ -1310,11 +1310,16 @@ av.color.cubehelixCmap = [  //djb version
 //----------------------------------------------------------------------------------------------------------------------
 /* web sites about color 
  *  
+ *  
+ *  
  
  Instructions for color brewer
 http://www.personal.psu.edu/cab38/ColorBrewer/ColorBrewer_intro.html   old requires flash 
 http://colorbrewer2.org  color selection tool      use this one
     creates a set of colors, does not look at colors from your site. 
+
+Another Color site that I've not yet used. 
+https://color.adobe.com/create/color-accessibility
 
 Paul Tol has information on color
    set of 9 color blind friendly distinct colors 
