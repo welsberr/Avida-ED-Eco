@@ -293,6 +293,59 @@ h1, h2, h3, h4, h5, h6 {
    width: 100px
  }
  
+ //Tiba tiba needs to delete all dojo and dijit references. 
+ .dojoDndItem {
+   padding: 3px;
+ }
+ 
+ .dojoDndItemOver {
+   background: #EDEDED;
+   cursor: pointer;
+ }
+ 
+ .dojoDndItemSelected {
+   background: #5BBDEA;
+   color: #444444;
+ }
+ 
+ .dojoDndItemAnchor {
+   background: #5BBDEA;
+   color: black;
+ }
+ 
+ .dojoDndItemOver .dojoDndItemSelected {
+   background: #EDEDED;
+ }
+ 
+ .dojoDndItemOver .dojoDndItemAnchor {
+   background: #EDEDED;
+ }
+ 
+ .dojoDndItemBefore {
+   border-top: 2px solid #336699;
+ }
+ 
+ .dojoDndItemAfter {
+   border-bottom: 2px solid #336699;
+ }
+ 
+ .dojoDndAvatar {
+   border: 2px solid #CCCCCC;
+ }
+ 
+ .dojoDndAvatarHeader {
+   background: #AAAAAA;
+ }
+ 
+ .dojoDndAvatarItem {
+   background: #FFFFFF;
+   border-bottom: 1px solid #666666;
+ }
+ 
+ .dojoDndAvatarItem .itemText {
+   font-size: 120%;
+ }
+ 
  .container {
    min-height: 10px;
    width: 100%;
