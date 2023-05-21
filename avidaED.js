@@ -126,7 +126,7 @@
 // - version wendell merged into main on 2022 Aug 25
 // 
 // Avida-ED 4.0.18 Beta
-// - fixed broken slider for mutation rate on population page
+// - fixed broken slider for mutation rate on population page     
 // - on branch with 4.0.17 in git
 // 
 // Avida-ED 4.0.19 Beta
@@ -814,7 +814,7 @@ require([
   };
 
   //--------------------------------------------------------------------------------------------------------------------
-  // Save current workspace (mnFzSaveWorkspace)
+  // Save current workspace (mnFlSaveWorkspace)
   document.getElementById('mnFlSaveWorkspace').onclick = function () {
     if (!av.brs.isSafari) {
       //if (true) {
@@ -1172,9 +1172,26 @@ av.ui.feedback = function(){
   };
 
   //------------------------------------------------------------------------------------------------ av.ui.mnFzItemFn --
+
+  // Listen for clicks on items
+  $('.item').on('click', function() {
+      // If there is a previously selected item, remove its 'selected' class
+      if (lastSelectedItem) {
+          $(lastSelectedItem).removeClass('selected');
+      }
+
+      // Store the current item as the most recently selected item
+      lastSelectedItem = this;
+
+      // Add the 'selected' class to the currently selected item
+      $(this).addClass('selected');
+  });    
+
   // Menu Buttons from 'Freezer' to Add things to Experiment
   av.ui.mnFzItemFn = function(domobj) {
     console.log('av.ui.mnFzItemFn: domobj =', domobj);
+
+    
     var domID = domobj.id;
   };
 /*
@@ -1199,12 +1216,30 @@ av.ui.feedback = function(){
     av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.activeConfig, 'w');
   });
 */
+
+
+  document.getElementById("mnFzAddFzItem").onclick = function () {
+    av.post.addUser("Button: mnFzAddFzItem");
+    
+    // need to find which freezer type first
+    // g = addOrgan
+    // c = addConfig
+    // w = addPop
+    
+    av.dnd.clickedMenu = "addOrgan";
+    av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.activeOrgan, 'g', 'mnFzAddGenomeView');
+    
+  };
+  
   //Buttons on drop down menu to put an organism in Organism Viewer
   // ====refactored========
   document.getElementById("mnFzAddGenomeView").onclick = function () {
     av.post.addUser("Button: mnFzAddGenomeEx");
     av.dnd.clickedMenu = "addToGenomeView";
-    av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.activeOrgan, 'g');
+    console.log('av.dnd.fzOrgan =', av.dnd.fzOrgan);
+    console.log('av.dnd.activeOrgan =', av.dnd.activeOrgan);
+    
+    av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.activeOrgan, 'g', 'mnFzAddGenomeView');
     av.ui.mainBoxSwap('organismBlock');
     av.ind.organismCanvasHolderSize('mnFzAddGenomeView');
     av.ui.adjustOrgInstructionTextAreaSize();
@@ -1216,7 +1251,7 @@ av.ui.feedback = function(){
   document.getElementById("mnFzAddPopAnalysis").onclick = function () {
     av.dnd.clickedMenu = "addToAnalysisView";
     av.post.addUser('Button: mnFzAddPopEx');
-    av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.anlDndChart, 'w');
+    av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.anlDndChart, 'w', 'mnFzAddGenomeView');
     av.ui.mainBoxSwap('analysisBlock');
     av.anl.AnaChartFn();
   };
@@ -1233,7 +1268,7 @@ av.ui.feedback = function(){
     //console.log('just killed webWorker');
 
     if (typeof (Worker) !== 'undefined') {
-      if (null == av.aww.uiWorker) {
+      if (null === av.aww.uiWorker) {
         av.aww.uiWorker = new Worker('avida.js');
         console.log('webworker recreated');
         av.debug.log += '\nuiA: ui killed avida webworker and started a new webworker';

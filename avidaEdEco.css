@@ -475,6 +475,7 @@ html {
   grid-area: trashCan;
   align-self: stretch;
   justify-self: stretch;
+  border-right: 1px solid #ccc;
 }
 
 #wsNameHolder { grid-area: wsNameHolder; }
@@ -487,7 +488,7 @@ html {
                        'trashCan msgHolder';
 /*  align-items: center;   /* up down */
   grid-template-columns: auto auto;
-  gap: 1px 1px;
+  gap: 1px 3px;
   width: 100%;
   flex: 0 1 40px;
   border: 1px solid #AAA;
