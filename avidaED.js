@@ -111,12 +111,19 @@
 // - working on formatting on Left & Right mini-chart Y axis and Pause Run at sections
 // - Added utilities to look for elements with overlow in reSizePageParts.js
 //
+<<<<<<< HEAD
+// Avida-ED 4.0.17 Beta
+=======
 // Avida-ED 4.0.15 Beta
+>>>>>>> origin/pre_wendell
 // - repaired drag-n-drop so that the cursor changes shape to cue the user
 // - Analysis: need to fix clicking on instruction circle to get the instruction number. 
 // - - loook at mouseDown, line 70
 // 
 // Avida-ED 4.0.16 Beta
+<<<<<<< HEAD
+//
+=======
 // - repaired drag-n-drop so that the cursor changes shape to cue the user
 // - Analysis: need to fix clicking on instruction circle to get the instruction number. 
 // - - loook at mouseDown, line 70
@@ -145,6 +152,7 @@
 // - - set limited values to show the population shifiting from using one resource to another. 
 // 
 // 
+>>>>>>> origin/pre_wendell
 // Generic Notes -------------------------------------------------------------------------------------------------------
 
 //
@@ -753,7 +761,7 @@ require([
     av.post.addUser("Button: mnFlOpenDefaultWS");
     av.fio.useDefault = true;
     if ("no" === av.fzr.saveState) {
-      sWSfDialog.show(); //Save WSfile Dialog box
+      sWSfModalID.show(); 
     } else {
       av.fio.readZipWS(av.fio.defaultFname, false); //loadConfigFlag = false = do not load config file
     }
@@ -776,7 +784,7 @@ require([
   // ===refactored -Open Workspace====
   document.getElementById("sWSfOpen").onclick = function () {
     av.post.addUser("Button: sWSfOpen");
-    sWSfDialog.hide(sWSfDialog.hide);
+    sWSfModalID.hide(sWSfModalID.hide);
     if (av.fio.useDefault) {
       av.fio.readZipWS(av.fio.defaultFname, false);  //loadConfigFlag = false = do not load config file
     }  
@@ -795,7 +803,7 @@ require([
     av.post.addUser("Button: mnFlOpenWS");
     av.fio.useDefault = false;
     if ('no' === av.fzr.saveState) {
-      sWSfDialog.show();   //Need to change to include might be saved tiba fix
+      sWSfModalID.show();   //Need to change to include might be saved tiba fix
     }
     //else document.getElementById('inputFile').click();
     else {
@@ -873,11 +881,11 @@ require([
   //--------------------------------------------------------------------------------------------------------------------
   //Save Stand alone applicaton.
   //=====refactored========
-  // error loading dialog box
+  // error loading Modal box
   document.getElementById("mnFlStandAloneApp").onclick = function () {
     "use strict";
     av.post.addUser("Button: mnFlExportGraph");
-    mnFlStandAloneAppDialog.show();
+    mnFlStandAloneAppModalID.show();
   };
 
   //----------------------------------------- Testing & Development Tools that are hidden from from User .---------------
@@ -1008,7 +1016,7 @@ av.ui.feedback = function(){
   //********************************************************************************************************************
   // some drop down menu  buttons are in here as they open pop ups. 
 
-  //------------------------------------------------------------------------------------- modal dialog cancel buttons --
+  //------------------------------------------------------------------------------------- modal cancel buttons --
 
   av.dom.needAncestorCancel.onclick = function () {
     av.dom.needAncestorModalID.style.display = 'none';
@@ -1019,7 +1027,7 @@ av.ui.feedback = function(){
     av.dom.newDishModalID.style.display = 'none';
   };
 
-  /******************************************* New Button and new Dialog **********************************************/
+  /******************************************* New Button and new Modal **********************************************/
   //av.dom.newDishDiscard not in avidaEdEco.html
   av.dom.newDishDiscard.onclick = function () {
     av.post.addUser('Button: newDishDiscard');
@@ -1107,19 +1115,19 @@ av.ui.feedback = function(){
       av.ptd.FrConfigFn('av.dom.freezeButton.onclick');
     else {
       if (5 > av.msg.ByCellIDgenome.length) {
-        document.getElementById('fzDialogModFzOrganismSpan').style.display = 'none';
+        document.getElementById('fzModFzOrganismSpan').style.display = 'none';
       } 
       else
-        document.getElementById('fzDialogModFzOrganismSpan').style.display = 'inline';
-      console.log('before fzDialog.show()');
-      document.getElementById('fzDialogModalID').style.display = "block";    //fzDialog.show();
+        document.getElementById('fzModFzOrganismSpan').style.display = 'inline';
+      console.log('before fzModalID.show()');
+      document.getElementById('fzModalID').style.display = "block";    //fzModalID.show();
     }
   };
 
-  document.getElementById('fzDialogModSaveConfig').onclick = function () {
-    av.post.addUser('Button: fzDialogModSaveConfig');
-    document.getElementById('fzDialogModalID').style.display = 'none';    //fzDialog.hide();
-    av.ptd.FrConfigFn('fzDialogModSaveConfig.onClick');
+  document.getElementById('fzModSaveConfig').onclick = function () {
+    av.post.addUser('Button: fzModSaveConfig');
+    document.getElementById('fzModalID').style.display = 'none';    //fzModalID.hide();
+    av.ptd.FrConfigFn('fzModSaveConfig.onClick');
   };
 
   //Drop down menu to save a configuration item
@@ -1129,22 +1137,22 @@ av.ui.feedback = function(){
     av.ptd.FrConfigFn("mnFzConfig");
   };
 
-  document.getElementById("fzDialogModSaveOrganism").onclick = function () {
-    av.post.addUser("Button: fzDialogModSaveOrganism");
-    document.getElementById("fzDialogModalID").style.display = "none"; //fzDialog.hide
+  document.getElementById("fzModSaveOrganism").onclick = function () {
+    av.post.addUser("Button: fzModSaveOrganism");
+    document.getElementById("fzModalID").style.display = "none"; //fzModalID.hide
     av.ptd.FrOrganismFn("selected");
   };
 
   //button to freeze a population
-  document.getElementById("fzDialogModSaveWorld").onclick = function () {
+  document.getElementById("fzModSaveWorld").onclick = function () {
     //dijit.byId('FzPopulationButton').on('Click', function () {
-    av.post.addUser("Button: fzDialogModSaveWorld");
-    document.getElementById("fzDialogModalID").style.display = "none"; //fzDialog.hide
+    av.post.addUser("Button: fzModSaveWorld");
+    document.getElementById("fzModalID").style.display = "none"; //fzModalID.hide
     av.ptd.FrPopulationFn();
   };
 
-  document.getElementById("fzDialogModCancel").onclick = function () {
-    document.getElementById("fzDialogModalID").style.display = "none"; //fzDialog.hide
+  document.getElementById("fzModCancel").onclick = function () {
+    document.getElementById("fzModalID").style.display = "none"; //fzModalID.hide
   };
 
   // dijit.byId("mnFzPopulation").on("Click", function () {
@@ -2573,6 +2581,9 @@ av.ui.feedback = function(){
     });
   });
 
+<<<<<<< HEAD
+  //triggers flag that requests more data when the settings ModalID is closed.
+=======
   //adjust instruction text size
     // if (av.dbg.flg.root) { console.log('Root: before av.ui.adjustOrgInstructionTextAreaSize'); }
   //---------------------------------------------------------------------------- av.ui.adjustOrgInstructionTextAreaSize --
@@ -2587,6 +2598,7 @@ av.ui.feedback = function(){
 
 
   //triggers flag that requests more data when the settings dialog is closed.
+>>>>>>> origin/pre_wendell
   //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
   //----------------------------------------------------------------------------------------------------------------------  
 
@@ -3043,10 +3055,17 @@ av.ui.feedback = function(){
   av.dom.mnDebug.style.visibility = 'hidden';
   av.dom.mnDebug.style.display = 'none';
 
+<<<<<<< HEAD
+  // Avida-ED 4.0.17 Beta Testing fix this too. 
+  //true for development; false for all production releases even in alpha testsing.  
+  if (false) {
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.17 Beta Testing. ');
+=======
   // Avida-ED 4.0.20 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
   if (false) {
     console.log('testing mode; set to false before public release for Avida-ED 4.0.20 Beta Testing. ');
+>>>>>>> origin/pre_wendell
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x
@@ -3355,16 +3374,16 @@ av.ui.feedback = function(){
 // 
 // 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Modal Dialog Popup
+// Modal ModalID Popup
 // 
 // https://www.webdesignerdepot.com/2012/10/creating-a-modal-window-with-html5-and-css3/
 // http://webreference.com/js/column90/2.html
-// https://jqueryhouse.com/30-best-jquery-modal-dialog-boxes/
-// https://www.sitepoint.com/14-jquery-modal-dialog-boxes/
-// https://www.sitepoint.com/14-jquery-modal-dialog-boxes/
+// https://jqueryhouse.com/30-best-jquery-modal-ModalID-boxes/
+// https://www.sitepoint.com/14-jquery-modal-ModalID-boxes/
+// https://www.sitepoint.com/14-jquery-modal-ModalID-boxes/
 // https://www.w3schools.com/howto/howto_css_modals.asp
 // 
-// other dialog boxes premade
+// other ModalID boxes premade
 // https://www.w3schools.com/js/js_popup.asp
 //
 //

@@ -51,7 +51,11 @@ av.env.findNameIndex = function(nutrientObj, rtag, geometry) {
 // Avida-ED 3 version for no resource is 
 // REACTION ANDN andn process:value=0.0:type=pow requisite:max_count=1  #value=3.0
 //
+<<<<<<< HEAD
+// For now in Avida-ED 4.0.17 Beta; the the Resource MUST be defined before the Reaction for that resource. 
+=======
 // For now in Avida-ED 4.0.16+ Beta; the the Resource MUST be defined before the Reaction for that resource. 
+>>>>>>> origin/pre_wendell
 
 //------------------------------------------------------------------------------------------- av.env.reActLineParse --
 av.env.reActLineParse = function(lnArray, from) {

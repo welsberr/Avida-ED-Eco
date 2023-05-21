@@ -333,7 +333,142 @@ html {
     font-family: Tahoma, Trebuchet MS, sans-serif;
   }
   
+<<<<<<< HEAD
+
+/* structures in the headerRow */  
+#leftPanelButton{
+    border-radius: 5px;                  /* top-left, top-right, bottom-right, bottom-left */
+    /* height: 16px; */
+    padding: 0px 4px 0px 5px;  /* top right bottom left */
+    alt: 'button to open/close left panel'; 
+    text-align: center;
+    vertical-align: middle;
+}
+/* not in use - used to get image to fit in a space better
+.scaleImg{
+  height: 80px;
+  object-fit: contain;
+}  
+*/
+.leftPnlBtnHlderShow{
+  height: 18px;
+  padding: 0px 6px 0px 4px;    /* top right bottom left */  
+  margin: auto;
+  background: inherit;     /* #eee; better color ? */
+  flex: 0 1 50px;
+}
+.pnlBtnHldrHide{
+  flex: 0 1 50px;
+  padding: 0px 6px 0px 4px;    /* top right bottom left */  
+  visibility: hidden;    
+}
+
+#ritePanelButton{
+    border-radius: 5px;                  /* top-left, top-right, bottom-right, bottom-left */
+    /* height: 16px; */
+    padding: 0px 5px 0px 4px;  /* top right bottom left */
+    alt: 'button to open/close right panel'; 
+    text-align: center;
+    vertical-align: middle;
+}
+
+.ritePnlBtnHlderShow{
+  height: 18px;
+  padding: 0px 6px 0px 4px;    /* top right bottom left */  
+  margin: auto;
+  background: inherit;     /* #eee; better color ? */
+  flex: 0 1 50px;
+}
+
+  #mainMenu{
+    flex: 0 1 1000px;
+    --pix1: 30; 
+    height: var(--rem-size1)
+    border: 1px solid #888;
+    overflow: visible;       /* was scroll */
+    /* does not work=resize: horizontal; */
+    max-width: fit-content;
+  }
+
+  .claro .dijitMenuBar {
+    border: none;
+    background-color: inherit;
+  }
+  /* looks bad
+  #mnAvidaEd {border: 1px solid #999;}
+  #mnFile {border: 1px solid #999;}
+  #mnFreezer {border: 1px solid #999;}
+  #mnControl {border: 1px solid #999;}
+  #mnHelp {border: 1px solid #999;}
+  */
+  mnDebug {visibility: hidden;}
+  
+  #headerMsg{
+    overflow: visible;
+    flex: 3 3 auto; /* yemi: removal of this code results in weird header button spacing */
+    /* flex: [flex-grow] [flex-shrink] [flex-basis]; */
+    /* flex: [max] [min] [ideal size]; */
+    /* flex: 0 1 auto; /* Default flex value 0=grow=don't grow; take minimum size for the conents  */    
+    /* flex: 0 0 auto; /* stay the same size blasted element */    
+    /* flex: 1 1 auto; /* all elements will be the same size if all have this flex defintion and no content is too big */
+    /* flex: 1 1 auto; /* elements fill the container.
+    /* flex-shrink: 1 allows so shrinking */ 
+  }
+  #msgHolder {
+    padding: 4px 4px 4px 8px;    /* top right bottom left */   
+    height: 100%;
+  }
+  #wsSavedMsg{
+    color: blue;
+  }
+  #RtSideToggleButtons{
+    flex: 0 0 85px;
+    background: inherit;     /* #eee; better color ? */
+    margin: auto;
+    height: 18px;
+  }
+  .toggleLftButton {
+    border-radius: 5px 0px 0px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 16px;
+    padding: 0px 2px 3px 2px;    /* top right bottom left */  
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .toggleRitButton {
+    border-radius: 0px 5px 5px 0px;                  /* top-left, top-right, bottom-right, bottom-left */
+    height: 16px;
+    padding: 0px 2px 0px 2px;    /* top right bottom left */  
+    text-align: center;
+    vertical-align: middle;
+    margin-left: -4px;
+  }
+  .activeBtn {
+    background: #ccc;
+  }
+
+  #versionNumHolder{
+    display: none;  /* we are not displaying the version at this time */
+    flex: 0 0 auto;
+    padding-top: 5px;
+    width: 130px;
+    height: 25px;
+  }
+  
+  #avidaVersion{
+    display: none;
+    --pixel: 120; /* Equals to 120px */ 
+    width: : var(--rem-size0);
+    text-align: right;
+    --pix1: 3; /* Equals to 3px */ 
+    --pix2: 5; /* Equals to 5px */ 
+    padding: var(--rem-size1) var(--rem-size2) 0px 0px;  /* top right bottom left  */     
+    height: inherit;
+    vertical-align: middle;
+  }
+=======
 /*----------------------------------------------------------------------------------------- left side panel items  -- */
+>>>>>>> origin/pre_wendell
   
 /* structures in the left side panel */
   .mainPageButtons{
@@ -363,7 +498,7 @@ html {
     font-size: 13px;
     padding:4px 8px;
     border-radius: 5px;
-    min-width: 82px;
+    min-width: 90px;
   }
   
 /* ----------------------------------------------------------------------------------- freezer section in left column */
@@ -693,6 +828,11 @@ html {
 .popPgFreezeExperimentCls { min-width: 20px;}
 .gridUnderButCls { min-width: 20px; }
 .popPgUnderBotRowRit { min-width: 20px; }
+
+/* buttons under the grid */
+.benchBtns{
+  min-width: 4.5vw;
+}
 
 #avidianOutline { display: none; }
 
