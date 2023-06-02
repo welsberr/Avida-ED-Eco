@@ -37,10 +37,14 @@
 //
 // github.com now requires personal access tokens
 // 
-// more information about Access Tokens written before they required tokens. Need to find links to make a new token. 
+// Security that github started in 2021
+// information about Access Tokens written before they required tokens. Need to find links to make a new token. 
 // https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/
 // 
+// more information about access tokens
 // https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+// 
+// 
 // 
 // Avida -------------------
 //
@@ -2575,11 +2579,8 @@ av.ui.feedback = function(){
     });
   });
 
-<<<<<<< HEAD
-  //triggers flag that requests more data when the settings ModalID is closed.
-=======
+  // if (av.dbg.flg.root) { console.log('Root: before av.ui.adjustOrgInstructionTextAreaSize'); }
   //adjust instruction text size
-    // if (av.dbg.flg.root) { console.log('Root: before av.ui.adjustOrgInstructionTextAreaSize'); }
   //---------------------------------------------------------------------------- av.ui.adjustOrgInstructionTextAreaSize --
   av.ui.adjustOrgInstructionTextAreaSize = function() {
     var height = ( $('#orgInfoHolder').innerHeight() - $('#orgDetailID').innerHeight() - 10 ) / 2;
@@ -2592,7 +2593,6 @@ av.ui.feedback = function(){
 
 
   //triggers flag that requests more data when the settings dialog is closed.
->>>>>>> origin/pre_wendell
   //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
   //----------------------------------------------------------------------------------------------------------------------  
 
@@ -3049,17 +3049,10 @@ av.ui.feedback = function(){
   av.dom.mnDebug.style.visibility = 'hidden';
   av.dom.mnDebug.style.display = 'none';
 
-<<<<<<< HEAD
-  // Avida-ED 4.0.17 Beta Testing fix this too. 
-  //true for development; false for all production releases even in alpha testsing.  
-  if (false) {
-    console.log('testing mode; set to false before public release for Avida-ED 4.0.17 Beta Testing. ');
-=======
   // Avida-ED 4.0.20 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; set to false before public release for Avida-ED 4.0.20 Beta Testing. ');
->>>>>>> origin/pre_wendell
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.22 Beta Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x

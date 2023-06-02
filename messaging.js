@@ -128,7 +128,7 @@ av.msg.readMsg = function (ee) {
         // Worked on a better splash screen gif. Used licecap, an application on the Mac to record the gif.
         // Then used http://gifmaker.me/reverser/ to make a gif in reverse time order. Then Wesley used gifsicle
         // to combine the forward and reverse gif.
-        document.getElementById("appReloadDialog").style.display="none";
+        document.getElementById("appReloadModelID").style.display="none";
         av.ui.loadOK = true;
         if (av.debug.msg) console.log('before calling av.dom.sizes');
         //av.grd.popChartInit('Message: notification');
