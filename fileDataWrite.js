@@ -126,8 +126,7 @@
     txt += 'DIVIDE_DEL_PROB 0.0 \n';
     txt += 'OFFSPRING_SIZE_RANGE 1.0 \n';
     // parents (ancestors) are injected into avida separately.
-    if (av.dom.childParentRadiTest.checked) txt += 'BIRTH_METHOD 0 \n';  //near parent
-    else txt += 'BIRTH_METHOD 4 \n';   //anywhere randomly
+    txt += 'BIRTH_METHOD 0 \n';  //near parent
     txt += 'RANDOM_SEED ' + av.dom.randInpuTest.value + '\n';
 
     //if (av.dom.experimentRadiTest.checked) txt += 'RANDOM_SEED -1 \n';

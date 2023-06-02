@@ -2596,15 +2596,15 @@ av.ui.feedback = function(){
   //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
   //----------------------------------------------------------------------------------------------------------------------  
 
-  dojo.connect(dijit.byId('OrganExperimentRadio'), 'onClick', function () {
+  document.getElementById('OrganExperimentRadio').onclick = function () {
     av.post.addUser('Button: OrganExperimentRadio');
     av.ind.settingsChanged = true;
-  });
+  };
 
-  dojo.connect(dijit.byId('OrganDemoRadio'), 'onClick', function () {
+  document.getElementById('OrganDemoRadio').onclick = function () {
     av.ind.settingsChanged = true;
     av.post.addUser('Button: OrganDemoRadio');
-  });
+  };
 
   //----------------------------------------------------------------------------------------------------------------------
   //                                        Menu buttons that call for genome/Organism trace

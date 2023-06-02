@@ -552,23 +552,31 @@
     var event = new window.CustomEvent('change');
     document.getElementById('mutePopInput').dispatchEvent(event);
     
-    
     if (0==dict.BIRTH_METHOD) {
-      dijit.byId('childParentRadio').set('checked', true);
-      dijit.byId('childRandomRadio').set('checked', false);
+      //dijit.byId('childParentRadio').set('checked', true);
+      //dijit.byId('childRandomRadio').set('checked', false);
+      $('#childParentRadio').prop('checked', true);
+      $('#childRandomRadio').prop('checked', false);
     }
     else {
-      dijit.byId('childParentRadio').set('checked', false);
-      dijit.byId('childRandomRadio').set('checked', true);
+      //dijit.byId('childParentRadio').set('checked', false);
+      //dijit.byId('childRandomRadio').set('checked', true);
+      $('#childParentRadio').prop('checked', false);
+      $('#childRandomRadio').prop('checked', true);
     }
 
+    console.log('dict.RANDOM_SEED =', dict.RANDOM_SEED, '- - - - - - - - - - ');
     if (-1 == dict.RANDOM_SEED) {
-      dijit.byId('experimentRadio').set('checked', true);
-      dijit.byId('demoRadio').set('checked', false);
+      //dijit.byId('experimentRadio').set('checked', true);
+      //dijit.byId('demoRadio').set('checked', false);
+      $('#experimentRadio').prop('checked', true);
+      $('#demoRadio').prop('checked', false);
     }
     else {
-      dijit.byId('experimentRadio').set('checked', false);
-      dijit.byId('demoRadio').set('checked', true);
+      //dijit.byId('experimentRadio').set('checked', false);
+      //dijit.byId('demoRadio').set('checked', true);
+      $('#experimentRadio').prop('checked', false);
+      $('#demoRadio').prop('checked', true);
     };
     
   };
@@ -594,25 +602,6 @@
 
     //var event = new Event('change');
     var event = new window.CustomEvent('change');
-    document.getElementById('muteInpuTest').dispatchEvent(event);
-    if (0==dict.BIRTH_METHOD) {
-      dijit.byId('childParentRadiTest').set('checked', true);
-      dijit.byId('childRandomRadiTest').set('checked', false);
-    }
-    else {
-      dijit.byId('childParentRadiTest').set('checked', false);
-      dijit.byId('childRandomRadiTest').set('checked', true);
-    }
-  /*
-    if (-1 == dict.RANDOM_SEED) {
-      dijit.byId('experimentRadiTest').set('checked', true);
-      dijit.byId('demoRadiTest').set('checked', false);
-    }
-    else {
-      dijit.byId('experimentRadiTest').set('checked', false);
-      dijit.byId('demoRadiTest').set('checked', true);
-    }
-    */
   };
   //---------------------------------------------------------------------------------------- end av.frd.avidaTestform --
 
