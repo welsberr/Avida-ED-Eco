@@ -111,19 +111,12 @@
 // - working on formatting on Left & Right mini-chart Y axis and Pause Run at sections
 // - Added utilities to look for elements with overlow in reSizePageParts.js
 //
-<<<<<<< HEAD
-// Avida-ED 4.0.17 Beta
-=======
 // Avida-ED 4.0.15 Beta
->>>>>>> origin/pre_wendell
 // - repaired drag-n-drop so that the cursor changes shape to cue the user
 // - Analysis: need to fix clicking on instruction circle to get the instruction number. 
 // - - loook at mouseDown, line 70
 // 
 // Avida-ED 4.0.16 Beta
-<<<<<<< HEAD
-//
-=======
 // - repaired drag-n-drop so that the cursor changes shape to cue the user
 // - Analysis: need to fix clicking on instruction circle to get the instruction number. 
 // - - loook at mouseDown, line 70
@@ -151,8 +144,9 @@
 // as unlimited for the first 1000 updates. 
 // - - set limited values to show the population shifiting from using one resource to another. 
 // 
+// Avida-ED 4.0.22 Beta
+// - tried to merge pre-wendell back into main
 // 
->>>>>>> origin/pre_wendell
 // Generic Notes -------------------------------------------------------------------------------------------------------
 
 //
