@@ -289,9 +289,12 @@ nav > ul > li {
   text-align: left;
 }
 
-#mnAeWide { width: 100px; }
-#mnFzWide { width: 350px; }
-#mnCnWide { width: 250px; }
+#mnAeWidth { width: 100px; }
+#mnFlWidth { width: 160px; }
+#mnFzWidth { width: 350px; }
+#mnCnWidth { width: 250px; }
+#mnHpWidth { width: 165px; }
+#mnDbWidth { width: 170px; }
 
 >>>>>>> origin/pre_wendell
 /* remove excess space from both menus */

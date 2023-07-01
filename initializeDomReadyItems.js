@@ -253,6 +253,9 @@
     document.getElementById('mnCnPause').disabled = true;
     document.getElementById('mnCnOrganismTrace').disabled = true;
     document.getElementById('mnFzOrganism').disabled = true;
+    document.getElementById('mnFzAddGenomeView').disabled = true;
+    document.getElementById('mnFzAddPopAnalysis').disabled = true;
+
     document.getElementById('mnFzOffspring').disabled = true;
     document.getElementById('mnFzPopulation').disabled = true;
     document.getElementById('mnFzAddFzItem').disabled = true; 

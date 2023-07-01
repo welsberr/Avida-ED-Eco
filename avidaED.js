@@ -1169,14 +1169,8 @@ av.ui.feedback = function(){
     av.ptd.FrOrganismFn("offspring");
   };
 
-  //------------------------------------------------------------------------------------------------ track user click --
-
-  // Listen for clicks on items 
-  
-
-
-
-//The only function in this list that returns anything.   
+  //------------------------------------------------------------------------------------------------ track user clicks --
+  // responds to ALL clicks on page.
   $(document).on('click', function(event) {
       console.log('targetElement =', event.target);
       console.log('targetElement.id =', event.target.id);
@@ -1189,41 +1183,27 @@ av.ui.feedback = function(){
       if ('item' === event.target.classList[0]) {
         av.fzr.selectedType = event.target.classList[1];
         av.fzr.selectedId = event.target.id;
-        document.getElementById('mnFzAddFzItem').disabled = false; 
+        document.getElementById('mnFzAddFzItem').disabled = false;
+        if ('g' === av.fzr.selectedType) 
+          { document.getElementById('mnFzAddGenomeView').disabled = false; }
+        else
+          { document.getElementById('mnFzAddGenomeView').disabled = true; }
+        if ('w' === av.fzr.selectedType) 
+          { document.getElementById('mnFzAddPopAnalysis').disabled = false; }
+        else
+          { document.getElementById('mnFzAddPopAnalysis').disabled = true; }
       }
   });
-
-/*
-  $(document).hasClass('item').on('click', function(event) {
-    console.log('event.target =', event.target);
-    console.log('event.target.classList =', event.target.classList);
-    console.log('event.target.id =', event.target.id);
-  });
-*/
-
-$(document).ready(function() {
-    $(".item").click(function() {
-        var selectedElement = $(this);
-        console.log(selectedElement);
-    });
-});
-
-$('div.item').on('click', function(event) {
-    var targetElement = $(event.target);
-    //console.log(targetElement.text());
-    console.log('targetElement=', targetElement);
-  });
-
   //--------------------------------------------------------------------------------- end track selected Freezer item --  
 
   //------------------------------------------------------------------------------------------------ av.ui.mnFzItemFn --
   
   // Menu Buttons from 'Freezer' to Add things to Experiment
   document.getElementById("mnFzAddFzItem").onclick = function () {
-    console.log('mnFzAddFzItem.onclick: av.fzr.selectedType =', av.fzr.selectedType, '; id =', av.fzr.selectedId);
     var type = 'x';
-    if (undefined != av.fzr.selectedType) type = av.fzr.selectedType;
+    if (undefined !== av.fzr.selectedType) type = av.fzr.selectedType;
     av.post.addUser('Button: mnFzAddFzItem.type='+type);
+    console.log('mnFzAddFzItem.onclick: av.fzr.selectedType =', av.fzr.selectedType, '; type =', type, '; id =', av.fzr.selectedId);
     switch (av.fzr.selectedType) {
       case "c":
         av.dnd.clickedMenu = "addConfig";
@@ -1242,7 +1222,7 @@ $('div.item').on('click', function(event) {
         break;
     };
   };
-/*
+/*  Delete this soon
   //Buttons on drop down menu to add Configured Dish to an Experiment
   dijit.byId('mnFzAddConfigEx').on('Click', function () {
     av.dnd.clickedMenu = "addConfig";

@@ -60,14 +60,14 @@
               <ul>
                 <li>
                   <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnAvidaEd">Avida-ED </button>
-                  <ul class="submenu dismiss aboutMenu" id='mnAeWide'>
+                  <ul class="submenu dismiss aboutMenu" id='mnAeWidth'>
                     <li> <button id="mnAeAbout" onclick="av.ui.aboutAvidaED('mnAeAbout')">About</button></li>
                     <li><button id="mnAePreferences">Preferences</button></li>
                   </ul>
                 </li>
                 <li>
                   <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnFile">File </button>
-                  <ul class="submenu dismiss fileMenu">
+                  <ul class="submenu dismiss fileMenu" id="mnFlWidth">
                     <li><button id="mnFlSaveWorkspace">Save Current Workspace</button></li>
                     <li><button id="mnFlSaveAs">Save Workspace As</button></li>
                     <div class="dropdown-divider" href="#"></div>
@@ -83,7 +83,7 @@
                 </li>
                 <li>
                   <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnFreezer">Freezer </button>
-                  <ul class="submenu dismiss freezerMenu" id='mnFzWide'>
+                  <ul class="submenu dismiss freezerMenu" id='mnFzWidth'>
                     <li><button id="mnFzConfig">Save Current Configuration to Freezer</button></li>
                     <li><button id="mnFzPopulation">Save Current Population to Freezer</button></li>
                     <li><button id="mnFzOrganism">Save Selected Organism to Freezer</button>
@@ -97,7 +97,7 @@
                 </li>
                 <li>
                   <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnControl">Control</button>
-                  <ul class="submenu dismiss controlMenu" id='mnCnWide'>
+                  <ul class="submenu dismiss controlMenu" id='mnCnWidth'>
                     <li><button id="mnCnRun">Run</button></li>
                     <li><button id="mnCnPause">Pause</button></li>
                     <li><button id="mnCnOne">Forward (Do one update)</button></li>
@@ -108,7 +108,7 @@
                 </li>
                 <li>
                   <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnHelp">Help</button>
-                  <ul class="submenu dismiss helpMenu">
+                  <ul class="submenu dismiss helpMenu" id='mnHpWidth'>
                      <li><button onclick="av.ui.aboutAvidaED('mnHpAbout')" id="mnHpAbout">About</button></li>
                     <li><button onclick="window.location='images/Avida-ED_UserManualv3.0.pdf';" style="color: blue" id="mnHpManual">Quick Start Manual</button></li>
                     <li><button onclick="window.location='cpu_tour.html';" style="color: blue" id="mnHpHardware">Ancestor and Hardware</button></li>
@@ -119,7 +119,7 @@
                 </li>
                 <li>
                   <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnDebug">Debug</button>
-                  <ul class="submenu dismiss debugMenu">
+                  <ul class="submenu dismiss debugMenu" id='mnDbWidth'>
                     <li><button id="mnDbDadsOnly">Show Parents only on ritYaxis on PopChart</button></li>
                     <li><button id="mnDbThrowError">Throw Error</button></li>
                     <li><button id="mnDbThrowData">Send Data to console</button></li>
