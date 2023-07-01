@@ -255,7 +255,7 @@
     document.getElementById('mnFzOrganism').disabled = true;
     document.getElementById('mnFzOffspring').disabled = true;
     document.getElementById('mnFzPopulation').disabled = true;
-    document.getElementById('mnFzAddFzItem').disabled = true; //tiba need to fix this so freezer button works when I freezer item is highlighted
+    document.getElementById('mnFzAddFzItem').disabled = true; 
     
     //document.getElementById('mnFzOrganism').disabled = true;   ///???
     //document.getElementById('mnFzAddConfigEx').disabled = true;   ///???

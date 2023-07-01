@@ -12,14 +12,11 @@
     if (container !== undefined) {
       // if the container is not yet in the av.dnd.containerMap, add an entry
 
-      console.log('container =', container);
-      console.log('av.dnd.containerMap =', av.dnd.containerMap);
-      console.log('Object =', Object);
       if (Object.keys(av.dnd.containerMap).indexOf(container) === -1) {
         av.dnd.containerMap[container] = {};
       };
       // 'insertNodes' implementation
-      var domid = `dom_${type}${fileNum}`
+      var domid = `dom_${type}${fileNum}`;
       if (type === 'g') 
       {
         $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${name} </div>`);
@@ -36,6 +33,12 @@
       if (0 < fileNum) {
         av.dnd.contextMenu(target, domid, 'av.fio.addFzItem');
       }
+      //console.log('container =', container);
+      //console.log('av.dnd.containerMap =', av.dnd.containerMap);
+      //console.log('Object =', Object);
+      //console.log('av.dnd.containerMap[container][domid].name');
+      
+      //console.log('av.dnd.containerMap['+container+']['+domid+'].name =', av.dnd.containerMap[container][domid].name);
       return domid;
     } else {
       return 'dndSection is undefined';
@@ -565,7 +568,6 @@
       $('#childRandomRadio').prop('checked', true);
     }
 
-    console.log('dict.RANDOM_SEED =', dict.RANDOM_SEED, '- - - - - - - - - - ');
     if (-1 == dict.RANDOM_SEED) {
       //dijit.byId('experimentRadio').set('checked', true);
       //dijit.byId('demoRadio').set('checked', false);

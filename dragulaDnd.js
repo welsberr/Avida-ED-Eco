@@ -539,10 +539,10 @@ jQuery(document).ready(function($) {
   // When using dojoDnd, the an item could be selected in each section of the freezer. 
   // Also I did not know an easy way to see if an item was selected in each freezer section. 
   av.dnd.FzAddExperimentFn = function (source, target, type, from) {
-    console.log(from, ' called av.dnd.FzAddExperimentFn');
-    console.log('source =', source);
-    console.log('target =', target);
-    console.log('type =', type);
+    if (av.dbg.flg.slt) { console.log(from, ' called av.dnd.FzAddExperimentFn'); };
+    if (av.dbg.flg.slt) { console.log('source =', source); };
+    if (av.dbg.flg.slt) { console.log('target =', target); };
+    if (av.dbg.flg.slt) { console.log('type =', type); };
     var fzSection = source.id;
     var targetId = target.id;
     var addedPopPage = false;
@@ -564,6 +564,7 @@ jQuery(document).ready(function($) {
             alert("Can't add a new organism to a running experiment. Start a new experiment to continue.");
           } else {
             addedPopPage = av.dnd.landAncestorBox(el, target, source); 
+            console.log('after addedPopPage = av.dnd.landAncestorBox(el, target, source);');
           }
           // reset the av.dnd.selectedId
           $('#' + mostRecentlyAddedDomid).css('background', 'inherit'); // revert the background color of the most recently added dom object
@@ -922,12 +923,16 @@ jQuery(document).ready(function($) {
     'use strict';
     // get the data for the dragged element
     var dir = av.fzr.dir[el.id];
+    if (av.dbg.flg.slt) { console.log('dir = ', dir); };
+    if (av.dbg.flg.slt) { console.log('el=', el); };
+    if (av.dbg.flg.slt) { console.log('target=', target); };
+    if (av.dbg.flg.slt) { console.log('source=', source); };
     if (source !== av.dnd.ancestorBox) {
       //find genome by finding source
       av.parents.genome.push(av.fzr.file[dir + '/genome.seq']);
       var nn = av.parents.name.length;
       av.parents.autoNdx.push(nn);
-      av.parents.injected.push(false);
+      av.parents.injected.push(false); 
       // give a new id to the new dom object
       el.id = 'dom_g' + av.fzr.gNum++;
       mostRecentlyAddedDomid = el.id;
@@ -937,25 +942,33 @@ jQuery(document).ready(function($) {
       av.fzr.domid[dir] = el.id;
       // rename the item with a new name
       var newName = av.dnd.nameParent(el.textContent.trim());
-      el.innerHTML = `<img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'></img> ${newName}`;
+      if (av.dbg.flg.slt) { console.log('after newName'); };
+      if (av.dbg.flg.slt) { console.log('before: el.innerHTML=', el.innerHTML); };
+      //Diane commented out the line below (writtem by Yemi) to see if that will leave the Freezer line selected. 
+      // - nothing is selected in the Freezer when the whole sequence is completed. 
+      //el.innerHTML = `<img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'></img> ${newName}`;
+      if (av.dbg.flg.slt) { console.log('after:  el.innerHTML=', el.innerHTML); };
       // el.textContent = newName;
       // insert element into target av.dnd.containerMap
+      if (av.dbg.flg.slt) { console.log('before av.dnd.insert'); };
       av.dnd.insert(target, el, 'g');
       // if you place organism into ancestorBox, placement is set to 'auto'
       av.parents.howPlaced.push('auto');
+      if (av.dbg.flg.slt) { console.log('after parents.howPlaced'); };
       av.parents.domid.push(el.id); // domid in ancestorBox used to remove if square in grid moved to trashcan
       if (av.debug.dnd) { console.log('DnD: av.parents.domid=', av.parents.domid); }
       // find color of ancestor
       if (0 < av.parents.Colors.length) { av.parents.color.push(av.parents.Colors.pop());}
       else { av.parents.color.push(av.color.defaultParentColor); }
       av.parents.placeAncestors();
-
+      if (av.dbg.flg.slt) { console.log('after av.parents.placeAncestors()'); };
       if (av.debug.dnd) { console.log('DnD: parents', av.parents.name[nn], av.parents.domid[nn], av.parents.genome[nn]); }
       av.grd.drawGridSetupFn('av.dnd.landAncestorBox');
 
       // if the element has not been added yet to target because it has been moved from outside the dragula framework, manually add them
       var childDomIds = $.map(document.querySelector('#' + target.id).children, (x) => { if (!x.classList.contains('gu-transit')) return x.id; });
       if (childDomIds.indexOf(el.id) === -1) {
+        if (av.dbg.flg.slt) { console.log('inside childDomIDs'); };
         target.append(el);
       }
       return (true);

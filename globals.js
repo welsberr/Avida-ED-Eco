@@ -47,6 +47,8 @@ av.dbg.flg.plt = false;  //analysis plot
 av.dbg.flg.pch = false;  //popChart and analysis
 av.dbg.flg.popSetup = false;
 av.dbg.flg.root = false;  //statements that look for failers when the code executes outside of functions
+av.dbg.flg.slt = true; // used to look at why using mn options deselects items in freezer
+
 av.debug.usr = ''; //working on log for user actions.
 
 av.post = {};
@@ -247,8 +249,6 @@ av.parents.clearParentsFn = function () {
   return av.parents;
 };
 //console.log('after clearParents', av.parents.clearParentsFn);
-
-av.fzr = {};
 
 av.env = {}; //used for functions to process information beteen the environment file and the User Interface (UI)
 
@@ -639,10 +639,14 @@ av.nut = {};  // within Nutrients (av.nut) the first element in all arrays refer
               // the dom elelment tsk#regionLayout.value will determine number and labels for the subsections. 
               // When more subdishes are implemented, an array or dictionary will be defined for each of the tsk.regionLayout values. 
 
+av.fzr = {};
+av.fzr.selectedType = 'n';  //n - indicates none selected
+av.fzr.selectedId = 'none'; //none selected
+
 //----------------------------------------------------------------------------------------- av.fzr.clearEnvironment --
 // used to create several structures used in defining parameters for the environment.cfg file
 av.fzr.clearEnvironment = function(from) {
-  //console.log(from + ' called av.fzr.clearEnvironment');
+  console.log(from + ' called av.fzr.clearEnvironment');
   av.oldNut = {};
   av.oldNut = JSON.parse(JSON.stringify(av.nut));
   av.nut = {};

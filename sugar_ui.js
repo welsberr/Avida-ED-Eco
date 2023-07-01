@@ -660,7 +660,7 @@ av.sgr.supplyChange = function (domObj) {
       av.sgr.complexSumGridPrefix = 'grd-sgr-sum-adv-';
       optionDisabled = false;
     };
-    console.log('------------------------------------------------------------------------------geoDispay=', basicDisplayNone);
+    console.log('---------------------------------------------geoDispay=', basicDisplayNone);
     document.getElementById('sugarFooter').className = clssnam;
     document.getElementById('allSugarModifierDiv').style.display = basicDisplayNone;
     document.getElementById('allSugarRegionLayoutDiv').style.display = basicDisplayNone;

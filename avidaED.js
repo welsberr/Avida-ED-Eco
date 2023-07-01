@@ -574,7 +574,7 @@ require([
   // if (av.dbg.flg.root) { console.log('Root: defore av.ui.problemWindow'); }
   
   //--------------------------------------------------------------------------------------------- av.ui.problemWindow --
-  //process problme pop-up window
+  //process problem pop-up window
   av.ui.problemWindow = function (from) {
     console.log(from, 'called av.ui.problemWindow');
     av.debug.vars = {
@@ -1014,7 +1014,7 @@ av.ui.feedback = function(){
   //********************************************************************************************************************
   // some drop down menu  buttons are in here as they open pop ups. 
 
-  //------------------------------------------------------------------------------------- modal cancel buttons --
+  //-------------------------------------------------------------------------------------------- modal cancel buttons --
 
   av.dom.needAncestorCancel.onclick = function () {
     av.dom.needAncestorModalID.style.display = 'none';
@@ -1128,8 +1128,8 @@ av.ui.feedback = function(){
     av.ptd.FrConfigFn('fzModSaveConfig.onClick');
   };
 
+  //------------------------------------------------------------------------------------ processing mnFZ menu buttons --
   //Drop down menu to save a configuration item
-  // ====refactored========
   document.getElementById("mnFzConfig").onclick = function () {
     av.post.addUser("Button: mnFzConfig");
     av.ptd.FrConfigFn("mnFzConfig");
@@ -1143,7 +1143,6 @@ av.ui.feedback = function(){
 
   //button to freeze a population
   document.getElementById("fzModSaveWorld").onclick = function () {
-    //dijit.byId('FzPopulationButton').on('Click', function () {
     av.post.addUser("Button: fzModSaveWorld");
     document.getElementById("fzModalID").style.display = "none"; //fzModalID.hide
     av.ptd.FrPopulationFn();
@@ -1153,52 +1152,95 @@ av.ui.feedback = function(){
     document.getElementById("fzModalID").style.display = "none"; //fzModalID.hide
   };
 
-  // dijit.byId("mnFzPopulation").on("Click", function () {
-  //   av.post.addUser("Button: mnFzPopulation");
-  //   av.ptd.FrPopulationFn();
-  // });
-
   document.getElementById("mnFzPopulation").onclick = function () {
     av.post.addUser("Button: mnFzPopulation");
     av.ptd.FrPopulationFn();
   };
 
   //Buttons on drop down menu to save an organism
-  // ====refactored========
   document.getElementById("mnFzOrganism").onclick = function () {
     av.post.addUser("Button: mnFzOrganism");
     av.ptd.FrOrganismFn("selected");
   };
 
   //Buttons on drop down menu to save an offspring
-  // ====refactored========
   document.getElementById("mnFzOffspring").onclick = function () {
     av.post.addUser("Button: mnFzOffspring");
     av.ptd.FrOrganismFn("offspring");
   };
 
-  //------------------------------------------------------------------------------------------------ av.ui.mnFzItemFn --
+  //------------------------------------------------------------------------------------------------ track user click --
 
-  // Listen for clicks on items
-  $('.item').on('click', function() {
-      // If there is a previously selected item, remove its 'selected' class
-      if (lastSelectedItem) {
-          $(lastSelectedItem).removeClass('selected');
+  // Listen for clicks on items 
+  
+
+
+
+//The only function in this list that returns anything.   
+  $(document).on('click', function(event) {
+      console.log('targetElement =', event.target);
+      console.log('targetElement.id =', event.target.id);
+      console.log('targetElement.classList =', event.target.classList);
+      console.log('targetElement.classList[0] =', event.target.classList[0]); //item
+      console.log('targetElement.classList[0] =', event.target.classList[1]); //type
+      //console.log('try = ', $(".item.c, .item.g, item.w"));
+      
+      // Assign target.id as selected freezer item if user clicked on a freezer item
+      if ('item' === event.target.classList[0]) {
+        av.fzr.selectedType = event.target.classList[1];
+        av.fzr.selectedId = event.target.id;
+        document.getElementById('mnFzAddFzItem').disabled = false; 
       }
+  });
 
-      // Store the current item as the most recently selected item
-      lastSelectedItem = this;
+/*
+  $(document).hasClass('item').on('click', function(event) {
+    console.log('event.target =', event.target);
+    console.log('event.target.classList =', event.target.classList);
+    console.log('event.target.id =', event.target.id);
+  });
+*/
 
-      // Add the 'selected' class to the currently selected item
-      $(this).addClass('selected');
-  });    
+$(document).ready(function() {
+    $(".item").click(function() {
+        var selectedElement = $(this);
+        console.log(selectedElement);
+    });
+});
 
+$('div.item').on('click', function(event) {
+    var targetElement = $(event.target);
+    //console.log(targetElement.text());
+    console.log('targetElement=', targetElement);
+  });
+
+  //--------------------------------------------------------------------------------- end track selected Freezer item --  
+
+  //------------------------------------------------------------------------------------------------ av.ui.mnFzItemFn --
+  
   // Menu Buttons from 'Freezer' to Add things to Experiment
-  av.ui.mnFzItemFn = function(domobj) {
-    console.log('av.ui.mnFzItemFn: domobj =', domobj);
-
-    
-    var domID = domobj.id;
+  document.getElementById("mnFzAddFzItem").onclick = function () {
+    console.log('mnFzAddFzItem.onclick: av.fzr.selectedType =', av.fzr.selectedType, '; id =', av.fzr.selectedId);
+    var type = 'x';
+    if (undefined != av.fzr.selectedType) type = av.fzr.selectedType;
+    av.post.addUser('Button: mnFzAddFzItem.type='+type);
+    switch (av.fzr.selectedType) {
+      case "c":
+        av.dnd.clickedMenu = "addConfig";
+        av.dnd.FzAddExperimentFn(av.dnd.fzConfig, av.dnd.activeConfig, 'c');
+        break;
+      case "g":
+        av.dnd.clickedMenu = "addOrgan";
+        av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.ancestorBox, 'g');
+        break;
+      case "w":
+        av.dnd.clickedMenu = "addPop";
+        av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.activeConfig, 'w');
+        break;
+      default:
+        console.log('mnFzAddFzItem.onclick: Error=type not found: av.fzr.selectedId =', av.fzr.selectedId);
+        break;
+    };
   };
 /*
   //Buttons on drop down menu to add Configured Dish to an Experiment
@@ -1224,8 +1266,8 @@ av.ui.feedback = function(){
 */
 
 
-  document.getElementById("mnFzAddFzItem").onclick = function () {
-    av.post.addUser("Button: mnFzAddFzItem");
+  document.getElementById("mnFzAddGenomeView").onclick = function () {
+    av.post.addUser("Button: mnFzAddGenomeView");
     
     // need to find which freezer type first
     // g = addOrgan
