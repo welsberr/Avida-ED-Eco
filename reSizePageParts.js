@@ -60,10 +60,11 @@ resizePopulationPage = function() {
   }
   $('.all3pop').css("grid-template-columns", newColumns);
   av.grd.drawGridSetupFn('resizePopulationPage'); 
-}
+};
 
 /* function to automatically resize the Organisms page when button clicked; called in avidaED.js */
-resizeOrganismPage = function() {
+resizeOrganismPage = function(from) {
+  //console.log(from,'called resizeOrganismPage');
   var leftNavBarWidth = $('.navColClass').css("width");
   var dragbarWidth = $('.dragbar').css("width");
   // var rightSideWidth = $('#orgInfoHolder').css("width");

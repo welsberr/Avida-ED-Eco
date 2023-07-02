@@ -454,7 +454,7 @@ require([
         if (av.dbg.flg.mouse)
           console.log('from parent', av.parent, '; fzr', av.fzr);
         av.post.addUser('Dragged item to Organism Icon');
-        av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+        av.msg.doOrgTrace('mouseup touchend parent');  //request new Organism Trace from Avida and draw that.
       }
     } 
     // this is for organism page
@@ -473,7 +473,7 @@ require([
         av.ui.mainBoxSwap('organismBlock', 'mouseup touchend organIcon kid');
         av.ind.organismCanvasHolderSize('mouseup_organIcon_Kid');
         av.ui.adjustOrgInstructionTextAreaSize();
-        av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+        av.msg.doOrgTrace('mouseup touchend kid');  //request new Organism Trace from Avida and draw that.
       } 
     }
     av.mouse.Picked = '';
@@ -1253,11 +1253,11 @@ av.ui.feedback = function(){
     console.log('av.dnd.fzOrgan =', av.dnd.fzOrgan);
     console.log('av.dnd.activeOrgan =', av.dnd.activeOrgan);
     
-//    av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.activeOrgan, 'g', 'mnFzAddGenomeView');
+    av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.activeOrgan, 'g', 'mnFzAddGenomeView');
     av.ui.mainBoxSwap('organismBlock', 'mnFzAddGenomeView.onclick');
     av.ind.organismCanvasHolderSize('mnFzAddGenomeView');
     av.ui.adjustOrgInstructionTextAreaSize();
-    av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+    av.msg.doOrgTrace('mnFzAddGenomeView.onclick');  //request new Organism Trace from Avida and draw that.
   };
 
   //Buttons on drop down menu to add Populated Dish to Analysis
@@ -1265,7 +1265,7 @@ av.ui.feedback = function(){
   document.getElementById("mnFzAddPopAnalysis").onclick = function () {
     av.dnd.clickedMenu = "addToAnalysisView";
     av.post.addUser('Button: mnFzAddPopEx');
-//    av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.anlDndChart, 'w', 'mnFzAddGenomeView');
+    av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.anlDndChart, 'w', 'mnFzAddGenomeView');
     av.ui.mainBoxSwap('analysisBlock', 'mnFzAddPopAnalysis.onclick');
     av.anl.AnaChartFn();
   };
@@ -1366,8 +1366,8 @@ av.ui.feedback = function(){
       }
       av.ind.organismCanvasHolderSize('mainBoxSwap_organismBlock');   ///??????
       av.ind.clearGen('mainBoxSwap_organismBlock');
-      av.ind.cpuOutputCnvsSize();
-      resizeOrganismPage();
+      av.ind.cpuOutputCnvsSize('mainBoxSwap_organismBlock');
+      resizeOrganismPage('mainBoxSwap_organismBlock');
     }
      if (('populationBlock' == av.ui.page) || ('organismBlock' == av.ui.page)) {
       document.getElementById('RtSideToggleButtons').style.display = 'block';
@@ -1412,12 +1412,12 @@ av.ui.feedback = function(){
     // * clientWidth = box + 2*padding - scrollbar_width    
     // * scrollWidth = incudes all of the boxes content even that hidden outside scrolling area
     // * csssWidth = box only nothing else
-    console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
+    console.log('av.dom.organismButton.onclick: orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
       av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
       $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
     if (av.dom.orgInfoHolder.clientWidth < av.ui.orgInfoHolderMinWidth) av.ui.orgInfoHolderWidth = av.ui.orgInfoHolderMinWidth;
     av.ui.mainBoxSwap('organismBlock', 'av.dom.organismButton.onclick');
-    resizeOrganismPage();
+    resizeOrganismPage('av.dom.organismButton.onclick');
 
     console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
       av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
@@ -1518,7 +1518,7 @@ av.ui.feedback = function(){
         av.dom.orgSettings.style.display = 'none';
         av.dom.orgDetailID.style.display = 'block';
         // console.log('av.ind.settingsChanged=', av.ind.settingsChanged);
-        if (av.ind.settingsChanged) av.msg.doOrgTrace();
+        if (av.ind.settingsChanged) av.msg.doOrgTrace('av.ptd.rightInfoPanelToggleButton:av.ind.settingsChanged');
       }
       //console.log('organismBlock: Display: orgSetting is', av.dom.orgSettings.style.display, '; orgDetailID', av.dom.orgDetailID.style.display);
     } else {
@@ -2628,7 +2628,7 @@ av.ui.feedback = function(){
     av.ui.mainBoxSwap('organismBlock','mnCnOrganismTrace');
     av.ind.organismCanvasHolderSize('mnCnOrganismTrace');
     av.ui.adjustOrgInstructionTextAreaSize();
-    av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+    av.msg.doOrgTrace('mnCnOrganismTrace');  //request new Organism Trace from Avida and draw that.
   };
 
   //Put the offspring in the parent position on Organism Trace
@@ -2656,8 +2656,8 @@ av.ui.feedback = function(){
   };
 
   //set output Canvas Size
-  av.ind.cpuOutputCnvsSize = function() {
-    console.log('output Wd Ht: $inner =', $('#cpuOutputCnvs').innerWidth(), $('#cpuOutputCnvs').innerHeight());
+  av.ind.cpuOutputCnvsSize = function(from) {
+    console.log(from, 'called av.ind.cpuOutputCnvsSize: output Wd Ht: $inner =', $('#cpuOutputCnvs').innerWidth(), $('#cpuOutputCnvs').innerHeight());
     av.ind.outputCanvasWd = $('#cpuOutputCnvs').innerWidth();
     av.ind.outputCanvasHt = $('#cpuOutputCnvs').innerHeight();
     console.log('av.ind.outputCanvas=', av.ind.outputCanvasWd, av.ind.outputCanvasHt);
@@ -2722,7 +2722,7 @@ av.ui.feedback = function(){
   document.getElementById('orgReset').onclick = function () {
     //console.log('orgReset');
     av.post.addUser('Button: orgReset');
-    av.msg.doOrgTrace();
+    av.msg.doOrgTrace('orgReset.onclick');
   };
 
   //----------------------------------------------------------------------------------------------------------------------

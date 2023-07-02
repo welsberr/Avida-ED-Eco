@@ -157,7 +157,7 @@
     av.fzr.actOrgan.genome = '0,heads_default,' + av.ind.dna[av.ind.son];  //this should be the full genome when the offspring is complete.
     if (av.dbg.flg.mouse) console.log('av.fzr.actOrgan', av.fzr.actOrgan);
     //get genome from offspring data //needs work!!
-    av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
+    av.msg.doOrgTrace('av.mouse.offspringTrace');  //request new Organism Trace from Avida and draw that.
   };
 
   // yemi: 'offspring' is for organism page, 'kid' for population page

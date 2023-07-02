@@ -567,10 +567,10 @@ av.msg.exportExpr = function (popName) {
 };
 
 //fio.uiWorker function
-av.msg.doOrgTrace = function () {
+av.msg.doOrgTrace = function (from) {
   'use strict';
   if (av.fzr.actOrgan.genome) {
-    //console.log('in send webOrgTraceBySequence; av.fzr.actOrgan.genome', av.fzr.actOrgan.genome.length, av.fzr.actOrgan.genome);
+    console.log(from, 'called av.msg.doOrgTrace: webOrgTraceBySequence; length av.fzr.actOrgan.genome =', av.fzr.actOrgan.genome.length, av.fzr.actOrgan.genome);
     if ( 50 < av.fzr.actOrgan.genome.length) {
       if (av.debug.msg) console.log('doOrgTrace: fzr', av.fzr);
       var seed = 100 * Math.random();

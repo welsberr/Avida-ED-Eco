@@ -208,7 +208,8 @@ jQuery(document).ready(function($) {
   //----------------------------------------------------------------------------------------------------- dra.on drop --
   // handle drop
   dra.on('drop', (el, target, source) => {
-    if (av.debug.dnd) { console.log('DnD: el=', el); }
+    if (av.debug.dnd) { console.log('DnD: dra.on_drop: el=', el); }
+    console.log('DnD: dra.on_drop: el=', el);
     // if the drop is not accepted at this target, cancel and return
     if (!av.dnd.accepts(el, target, source)) {
       dra.cancel();
@@ -292,7 +293,7 @@ jQuery(document).ready(function($) {
         av.dnd.landOrganIcon(el, target, source, 'dra.on_drop');
       }
       if (target === av.dnd.activeOrgan) {
-        av.dnd.landActiveOrgan(el, target, source);
+        av.dnd.landActiveOrgan(el, target, source, 'dra.on_drop');
       }
       if (target === av.dnd.organCanvas) {
         av.dnd.landOrganCanvas(el, target, source);
@@ -626,7 +627,7 @@ jQuery(document).ready(function($) {
             av.dnd.selectedId = '';
             return;
           } else {
-            addedPopPage = av.dnd.landActiveOrgan(el, target, source); 
+            addedPopPage = av.dnd.landActiveOrgan(el, target, source, 'case: addToGenomeView'); 
           }
           // reset the av.dnd.selectedId
           $('#' + mostRecentlyAddedDomid).css('background', 'inherit'); // revert the background color of the most recently added dom object
@@ -746,15 +747,16 @@ jQuery(document).ready(function($) {
     'use strict';
     av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent);
     // behave the same way as if organism was dropped onto active organ box
-    av.dnd.landActiveOrgan(el, target, source);
+    av.dnd.landActiveOrgan(el, target, source, 'av.dnd.landOrganCanvas');
   };
   //-------------------------------------------------------------------------------------- end av.dnd.landOrganCanvas --
 
   //------------------------------------------------------------------------------------------ av.dnd.landActiveOrgan --
-  av.dnd.landActiveOrgan = function(el, target, source) {
+  av.dnd.landActiveOrgan = function(el, target, source, from) {
     // need to have only the most recent dropped organism in av.dnd.activeOrgan. 
     // Do this by deleting everything in activeOrgan and reinserting the most resent one after a drop event.
     'use strict';
+    console.log(from,'called av.dnd.landActiveOrgan');
     if (av.debug.dnd) { console.log('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent); }
     // set flag to true when an organism put in viewer
     
@@ -782,7 +784,7 @@ jQuery(document).ready(function($) {
     // update active organ
     av.fzr.actOrgan.actDomid = el.id;
     av.dnd.updateFromFzrOrganism(el);
-    av.msg.doOrgTrace();
+    av.msg.doOrgTrace('av.dnd.landActiveOrgan');
   };
   //------------------------------------------------------------------------------------------ av.dnd.landActiveOrgan --
   
@@ -814,6 +816,7 @@ jQuery(document).ready(function($) {
     // update active organ
     av.fzr.actOrgan.actDomid = el.id;
     if (source === av.dnd.fzOrgan) { 
+      console.log('before av.dnd.updateFromFzrOrganism el.id');
       av.dnd.updateFromFzrOrganism(el); 
     }
     if (source === av.dnd.ancestorBox) {
@@ -829,7 +832,7 @@ jQuery(document).ready(function($) {
     av.ui.adjustOrgInstructionTextAreaSize();
     if (av.dbg.flg.mouse) { console.log('mouse: from parent', av.parent, '; fzr', av.fzr); }
     av.post.addUser('Dragged item to Organism Icon');
-    av.msg.doOrgTrace();  // request new Organism Trace from Avida and draw that.
+    av.msg.doOrgTrace('av.dnd.landOrganIcon');  // request new Organism Trace from Avida and draw that.
     // /* yemi: update organism canvas */
     // av.ind.updateOrgTrace();
     // clear out av.dnd.organIcon as nothing is stored there - just moved on to OrganismCurrent
