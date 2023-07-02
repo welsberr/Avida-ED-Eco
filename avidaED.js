@@ -842,14 +842,6 @@ console.log('Root: before postPost');
     document.getElementById("mnFlExportGraphModalID").style.display = "none";
   };
 
-  //-------------------------------------------------------------------------- Send user to a stand alone application --
-  // error loading Modal box
-  document.getElementById("mnFlStandAloneApp").onclick = function () {
-    "use strict";
-    av.post.addUser("Button: mnFlExportGraph");
-    mnFlStandAloneAppModalID.show();
-  };
-
   //----------------------------------------- Testing & Development Tools that are hidden from from User .---------------
   // av.dom.mnHpDebug.onclick = function () {
   //   console.log('in av.dom.mnHpDebug.onclick');
@@ -3125,19 +3117,9 @@ av.ui.feedback = function(){
 
 //Use Meld to compare two folders worth of stuff. Evoke from a terminal prompt. Does not seem to be be in applications folder
 
-//http://dojo-toolkit.33424.n3.nabble.com/dojo-dnd-problems-selection-object-from-nodes-etc-td3753366.html
-//This is supposed to select a node; lists as selected programatically, but does not show up on screen.
-
 //A method to distinguish a av.mouse click from a av.mouse drag
 //http://stackoverflow.com/questions/6042202/how-to-distinguish-av.mouse-click-and-drag
 
-//A method to get the data items in a dojo DND container in order
-//av.dnd.fzConfig.on('DndDrop', function(source, nodes, copy, target){  //This triggers for every dnd drop, not just those of freezeConfigureNode
-//http://stackoverflow.com/questions/5837558/dojo-drag-and-drop-how-to-retrieve-order-of-items
-//var orderedDataItems = av.dnd.fzConfig.getAllNodes().map(function(node){
-//  return av.dnd.fzConfig.getItem(node.id).data;
-//});
-//console.log('orderedDataItems', orderedDataItems);
 /*
  var matches = function (aa, bb) {
  if (aa[0] == bb[0] && aa[1] == bb[1]) return true;

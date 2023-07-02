@@ -255,30 +255,35 @@ html {
 /* headerRow contains leftPnlBtnHolder mainMenu headerMsg RtSideToggleButtons ritePnlBtnHolder */
   
   #RtSideToggleButtons{
-    height: 1.25rem;
     background: inherit;     /* #eee; better color ? */
-    margin: 0px;
+    margin: 0px;     /* was 0px */
     padding-bottom: 4px;
   }
+
   .toggleLftButton {
     border-radius: 5px 0px 0px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 1.25rem;
-    padding: 0px 2px 2px 2px;    /* top right bottom left */
+    height: 16px;   /* was 1.25rem; */
+    padding: 0px 2px 3px 2px;    /* top right bottom left */  
+    text-align: center;
+    vertical-align: middle;
   }
-
+  
   .toggleRitButton {
-    border-radius: 0px 5px 5px 0px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 1.25rem;
-    padding: 0px 2px 2px 2px;    /* top right bottom left */  
+    border-radius: 0px 5px 5px 0px;   /* top-left, top-right, bottom-right, bottom-left */
+    height: 16px;            /* was 1.25rem; */
+    padding: 0px 2px 0px 2px;    /* top right bottom left */  
+    text-align: center;
+    vertical-align: middle;
     margin-left: -4px;
   }
+  
   .activeBtn {
     background: #ccc;
   }
-
+  
 /* headerRow contains leftPnlBtnHolder mainMenu headerMsg RtSideToggleButtons ritePnlBtnHolder */
 
-/*----------------------------------------------------------------------------------------- end of header row         */
+/*----------------------------------------------------------------------------------------------- end of header row --*/
 
 .navColClass {                  /* left side bar with freezer */
   grid-area:navColClass;
@@ -421,31 +426,6 @@ html {
   #wsSavedMsg{
     color: blue;
   }
-  #RtSideToggleButtons{
-    flex: 0 0 85px;
-    background: inherit;     /* #eee; better color ? */
-    margin: auto;
-    height: 18px;
-  }
-  .toggleLftButton {
-    border-radius: 5px 0px 0px 5px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 16px;
-    padding: 0px 2px 3px 2px;    /* top right bottom left */  
-    text-align: center;
-    vertical-align: middle;
-  }
-
-  .toggleRitButton {
-    border-radius: 0px 5px 5px 0px;                  /* top-left, top-right, bottom-right, bottom-left */
-    height: 16px;
-    padding: 0px 2px 0px 2px;    /* top right bottom left */  
-    text-align: center;
-    vertical-align: middle;
-    margin-left: -4px;
-  }
-  .activeBtn {
-    background: #ccc;
-  }
 
   #versionNumHolder{
     display: none;  /* we are not displaying the version at this time */
@@ -466,11 +446,8 @@ html {
     height: inherit;
     vertical-align: middle;
   }
-=======
+
 /*----------------------------------------------------------------------------------------- left side panel items  -- */
->>>>>>> origin/pre_wendell
-  
-/* structures in the left side panel */
   .mainPageButtons{
     border: 1px solid #AAA;
     width: 100%;
@@ -687,7 +664,7 @@ html {
 }
 #activeConfig {
   /* flex: 0 1 120px; */ /* yemi: this is not allowing for flexible resizing of the box, ironically */
-  padding-top: 5px;
+  padding: 5px 5px 0px 5px;      /* top right bottom left  */   /*top left/right bottom */ /*top/bottom  left/right */
   width: fit-content;
   min-height: 30px;
   min-width: 6em;
@@ -707,7 +684,7 @@ html {
   overflow: visible;
 }
 #testConfig {
-  padding-top: 5px;
+  padding: 5px 5px 0px 5px;      /* top right bottom left  */   /*top left/right bottom */ /*top/bottom  left/right */
   width: fit-content;
   min-height: 30px;
   min-width: 6em;

@@ -78,7 +78,9 @@
                     <li><button id="mnFlExportData">Export Data</button></li>
                     <li><button id="mnFlExportGraph">Export Graphics</button></li>
                     <div class="dropdown-divider" href="#"></div>
-                    <li><button id="mnFlStandAloneApp">Stand Alone Application</button></li>
+                    <li><button id="mnFlStandAloneApp" onclick="window.open('https://avida-ed.msu.edu/download-avida-ed/')">
+                      Stand Alone Application
+                    </button>
                   </ul>
                 </li>
                 <li>
@@ -90,7 +92,7 @@
                     <li><button id="mnFzOffspring">Save Offspring Organism to Freezer</button></li>
                     <li><div class="dropdown-divider" href="#"></div></li>
                     <li><button id="mnFzAddFzItem">Add Highlighted Freezer Item into Experiment</button></li>
-                    <li><div class="dropdown-divider" href="#"></div></li></li>
+                    <li><div class="dropdown-divider" href="#"></div></li>
                     <li><button id="mnFzAddGenomeView">Put Highlighted Organism from Freezer in Organism View</button></li>
                     <li><button id="mnFzAddPopAnalysis">Put Highlighted Populated Dish from Freezer in Analysis</button></li>
                   </ul>
@@ -110,10 +112,11 @@
                   <button class="link-btn navbar-btn btn btn-custom override-nav-btn border-zero" id="mnHelp">Help</button>
                   <ul class="submenu dismiss helpMenu" id='mnHpWidth'>
                      <li><button onclick="av.ui.aboutAvidaED('mnHpAbout')" id="mnHpAbout">About</button></li>
-                    <li><button onclick="window.location='images/Avida-ED_UserManualv3.0.pdf';" style="color: blue" id="mnHpManual">Quick Start Manual</button></li>
-                    <li><button onclick="window.location='cpu_tour.html';" style="color: blue" id="mnHpHardware">Ancestor and Hardware</button></li>
-                    <li><button style="color: blue" id="mnHpInfo">Avida-ED Home Page</button></li>
+                    <li><button onclick="window.open('images/Avida-ED_UserManualv3.0.pdf')" style="color: blue" id="mnHpManual">Quick Start Manual</button>
+                    <li><button onclick="window.open('cpu_tour.html')" style="color: blue" id="mnHpHardware">Ancestor and Hardware</button>
+                    <li><button onclick="window.open('https://avida-ed.msu.edu/')" style="color: blue" id="mnHpInfo">Avida-ED Home Page</button>
                     <li><button onclick="window.open('short_cuts.html')" style="color: blue" id="mnHpShortCuts">Short Cuts</button>
+                    <li><div class="dropdown-divider" href="#"></div></li>
                     <li><button onclick="av.ui.feedback('feedback')" id="mnHpFeedback">Send Feedback (please)</button></li>
                   </ul>
                 </li>
