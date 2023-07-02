@@ -448,7 +448,7 @@ require([
         av.grd.drawGridSetupFn('on mouseup where evt.target.id=gridCanvas or trashCanImage');
       } else if ('organIcon' == evt.target.id) {
         //Change to Organism Page
-        av.ui.mainBoxSwap('organismBlock');
+        av.ui.mainBoxSwap('organismBlock','mouseup touchend gridparent');
         av.ind.organismCanvasHolderSize('mouseup_organIcon_parent');
         av.ui.adjustOrgInstructionTextAreaSize();
         if (av.dbg.flg.mouse)
@@ -470,7 +470,7 @@ require([
         console.log('kidMouse: target', target, '===============', evt.target.id);
       if ('organIcon' == evt.target.id) {
         //Change to Organism Page
-        av.ui.mainBoxSwap('organismBlock');
+        av.ui.mainBoxSwap('organismBlock', 'mouseup touchend organIcon kid');
         av.ind.organismCanvasHolderSize('mouseup_organIcon_Kid');
         av.ui.adjustOrgInstructionTextAreaSize();
         av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
@@ -1207,15 +1207,15 @@ av.ui.feedback = function(){
     switch (av.fzr.selectedType) {
       case "c":
         av.dnd.clickedMenu = "addConfig";
-        av.dnd.FzAddExperimentFn(av.dnd.fzConfig, av.dnd.activeConfig, 'c');
+        av.dnd.FzAddExperimentFn(av.dnd.fzConfig, av.dnd.activeConfig, 'c', 'mnFzAddFzItem.onclick');
         break;
       case "g":
         av.dnd.clickedMenu = "addOrgan";
-        av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.ancestorBox, 'g');
+        av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.ancestorBox, 'g', 'mnFzAddFzItem.onclick');
         break;
       case "w":
         av.dnd.clickedMenu = "addPop";
-        av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.activeConfig, 'w');
+        av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.activeConfig, 'w', 'mnFzAddFzItem.onclick');
         break;
       default:
         console.log('mnFzAddFzItem.onclick: Error=type not found: av.fzr.selectedId =', av.fzr.selectedId);
@@ -1244,20 +1244,6 @@ av.ui.feedback = function(){
     av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.activeConfig, 'w');
   });
 */
-
-
-  document.getElementById("mnFzAddGenomeView").onclick = function () {
-    av.post.addUser("Button: mnFzAddGenomeView");
-    
-    // need to find which freezer type first
-    // g = addOrgan
-    // c = addConfig
-    // w = addPop
-    
-    av.dnd.clickedMenu = "addOrgan";
-    av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.activeOrgan, 'g', 'mnFzAddGenomeView');
-    
-  };
   
   //Buttons on drop down menu to put an organism in Organism Viewer
   // ====refactored========
@@ -1267,8 +1253,8 @@ av.ui.feedback = function(){
     console.log('av.dnd.fzOrgan =', av.dnd.fzOrgan);
     console.log('av.dnd.activeOrgan =', av.dnd.activeOrgan);
     
-    av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.activeOrgan, 'g', 'mnFzAddGenomeView');
-    av.ui.mainBoxSwap('organismBlock');
+//    av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.activeOrgan, 'g', 'mnFzAddGenomeView');
+    av.ui.mainBoxSwap('organismBlock', 'mnFzAddGenomeView.onclick');
     av.ind.organismCanvasHolderSize('mnFzAddGenomeView');
     av.ui.adjustOrgInstructionTextAreaSize();
     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
@@ -1279,8 +1265,8 @@ av.ui.feedback = function(){
   document.getElementById("mnFzAddPopAnalysis").onclick = function () {
     av.dnd.clickedMenu = "addToAnalysisView";
     av.post.addUser('Button: mnFzAddPopEx');
-    av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.anlDndChart, 'w', 'mnFzAddGenomeView');
-    av.ui.mainBoxSwap('analysisBlock');
+//    av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.anlDndChart, 'w', 'mnFzAddGenomeView');
+    av.ui.mainBoxSwap('analysisBlock', 'mnFzAddPopAnalysis.onclick');
     av.anl.AnaChartFn();
   };
 
@@ -1330,8 +1316,8 @@ av.ui.feedback = function(){
   //So all areas are loaded, then the mainBoxSwap is called to set display to none after the load on all but
   //the default option.
   // if (av.dbg.flg.root) { console.log('Root: before av.ui.mainBoxSwap defined'); }
-  av.ui.mainBoxSwap = function (showBlock) {
-    //console.log('showBlock=', showBlock);
+  av.ui.mainBoxSwap = function (showBlock, from) {
+    console.log(from, 'called av.mainBoxSwap: showBlock=', showBlock);
     av.ui.page = showBlock;
     av.dom.populationBlock.style.display = "none";
     av.dom.organismBlock.style.display = "none";
@@ -1416,7 +1402,7 @@ av.ui.feedback = function(){
     av.post.addUser('Button: populationButton');
     if (av.debug.dnd || av.dbg.flg.mouse)
       console.log('PopulationButton, av.fzr.genome', av.fzr.genome);
-    av.ui.mainBoxSwap('populationBlock');
+    av.ui.mainBoxSwap('populationBlock','av.dom.populationButton.onclick');
     resizePopulationPage();
   };
 
@@ -1430,7 +1416,7 @@ av.ui.feedback = function(){
       av.dom.orgInfoHolder.offsetWidth, '; $width, $innerWidth, $outerWidth, css(width)=',
       $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
     if (av.dom.orgInfoHolder.clientWidth < av.ui.orgInfoHolderMinWidth) av.ui.orgInfoHolderWidth = av.ui.orgInfoHolderMinWidth;
-    av.ui.mainBoxSwap('organismBlock');
+    av.ui.mainBoxSwap('organismBlock', 'av.dom.organismButton.onclick');
     resizeOrganismPage();
 
     console.log('orgInfoHolder.scrollWidth, client, offset =', av.dom.orgInfoHolder.scrollWidth, av.dom.orgInfoHolder.clientWidth, 
@@ -1444,7 +1430,7 @@ av.ui.feedback = function(){
 
   document.getElementById('analysisButton').onclick = function () {
     av.post.addUser('Button: analysisButton');
-    av.ui.mainBoxSwap('analysisBlock');
+    av.ui.mainBoxSwap('analysisBlock', 'analysisButton.onclick');
     resizeAnalysisPage();
     //console.log('after mainBoxSwap to analysisBlock');
     av.anl.AnaChartFn();
@@ -1456,7 +1442,7 @@ av.ui.feedback = function(){
   // if (av.dbg.flg.root) { console.log('Root: before showTextDebugButton.onclick'); }
   document.getElementById('showTextDebugButton').onclick = function () {
     av.post.addUser('Button: showTextDebugButton');
-    av.ui.mainBoxSwap('showTextDebugBlock');
+    av.ui.mainBoxSwap('showTextDebugBlock','showTextDebugButton');
     av.ui.resizeShowTextDebugPage('showTextDebug');
   };
   
@@ -2639,7 +2625,7 @@ av.ui.feedback = function(){
     av.post.addUser('Button: mnCnOrganismTrace');
     console.log('control drop down menu clicked');
     av.mouse.traceSelected('mnCnOrganismTrace.onclick');
-    av.ui.mainBoxSwap('organismBlock');
+    av.ui.mainBoxSwap('organismBlock','mnCnOrganismTrace');
     av.ind.organismCanvasHolderSize('mnCnOrganismTrace');
     av.ui.adjustOrgInstructionTextAreaSize();
     av.msg.doOrgTrace();  //request new Organism Trace from Avida and draw that.
@@ -2649,7 +2635,7 @@ av.ui.feedback = function(){
   document.getElementById('mnCnOffspringTrace').onclick = function () {
     //Open Oranism view
     av.post.addUser('Button: mnCnOffspringTrace');
-    av.ui.mainBoxSwap('organismBlock');
+    av.ui.mainBoxSwap('organismBlock','mnCnOffspringTrace');
     av.ind.organismCanvasHolderSize('mnCnOffspringTrace');
     av.ui.adjustOrgInstructionTextAreaSize();
     av.mouse.offspringTrace(av.dnd, av.fio, av.fzr, av.gen);
@@ -3064,7 +3050,7 @@ av.ui.feedback = function(){
     $("#orgInfoHolder").width(), $("#orgInfoHolder").innerWidth(), $("#orgInfoHolder").outerWidth(), $("#orgInfoHolder").css('width') );
   }
   // if (av.dbg.flg.root) { console.log('Root: before mainBoxSwap'); }
-  av.ui.mainBoxSwap('populationBlock');  // just uncommented jan 2019
+  av.ui.mainBoxSwap('populationBlock','last_things_done');  // just uncommented jan 2019
   av.dom.popStatsBlock.className = 'labInfoClass labInfoNone';
   av.dom.setupBlock.className = 'labInfoClass labInfoFlex';
 

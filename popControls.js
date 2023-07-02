@@ -319,14 +319,14 @@
       // tiba: fix so 'av.ptd.makeRunState' is not called till after tests are done and remove the extra calls to makePauseState
       av.ptd.makePauseState();
       av.dom.userMsgLabel.innerHTML = 'A valid grid size is required before Avida will run';
-      if ('populationBlock' !== av.ui.page) av.ui.mainBoxSwap('populationBlock');
+      if ('populationBlock' !== av.ui.page) av.ui.mainBoxSwap('populationBlock','av.ptd.runPopFn:gridSize_notValid');
     }
     else if (!av.ptd.validMuteInuput) {
       console.log('Not option: av.ptd.validMuteInuput=',av.ptd.validMuteInuput);
       // tiba: fix so 'av.ptd.makeRunState' is not called till after tests are done and remove the extra calls to makePauseState
       av.ptd.makePauseState();
       av.dom.userMsgLabel.innerHTML = 'A valid mutation rate is required before Avida will run';
-      if ('populationBlock' !== av.ui.page) av.ui.mainBoxSwap('populationBlock');
+      if ('populationBlock' !== av.ui.page) av.ui.mainBoxSwap('populationBlock','av.ptd.runPopFn:muteInput_notValid');
     }
     else { // setup for a new run by sending config data to avida
       if (av.debug.popCon) console.log('else: av.ptd.validMuteInuput=',av.ptd.validMuteInuput);

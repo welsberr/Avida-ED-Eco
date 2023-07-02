@@ -252,6 +252,7 @@ jQuery(document).ready(function($) {
         av.dnd.landActiveConfigFn(el, av.dnd.activeConfig, source, 'av.dom.newDishSaveConfig.onclick');
       };
     } 
+    //not a situation where the user is trying to start a new experiment while an experiment is already running.
     else {
       if (target === av.dnd.activeConfig) {
         av.dnd.landActiveConfigFn(el, target, source, 'target=av.dnd.activeConfig');
@@ -288,7 +289,7 @@ jQuery(document).ready(function($) {
         av.dnd.landFzOrgan(el, target, source); // not getting called if source is gridCanvas
       }
       if (target === av.dnd.organIcon) {
-        av.dnd.landOrganIcon(el, target, source);
+        av.dnd.landOrganIcon(el, target, source, 'dra.on_drop');
       }
       if (target === av.dnd.activeOrgan) {
         av.dnd.landActiveOrgan(el, target, source);
@@ -786,9 +787,12 @@ jQuery(document).ready(function($) {
   //------------------------------------------------------------------------------------------ av.dnd.landActiveOrgan --
   
   //-------------------------------------------------------------------------------------------- av.dnd.landOrganIcon --
-  av.dnd.landOrganIcon = function(el, target, source) {
+  av.dnd.landOrganIcon = function(el, target, source, from) {
     // clear out the old data if an organism is already there
     'use strict';
+    console.log(from,'called av.dnd.landOrganIcon: el=', el);
+    console.log('target=',target);
+    console.log('source=', source);
     av.post.addUser('DnD: ' + source.id + '--> ' + target.id + ': by: ' + el.textContent);
     if (av.debug.dnd) { console.log('DnD: source', source.id); }
     // remove the existing configuration
@@ -820,7 +824,7 @@ jQuery(document).ready(function($) {
       if (av.debug.dnd) { console.log('fzr', av.fzr, '; parents', av.parents, '; ndx', Ndx); }
     }
     // change to organism page
-    av.ui.mainBoxSwap('organismBlock');
+    av.ui.mainBoxSwap('organismBlock','av.dnd.landOrganIcon');
     av.ind.organismCanvasHolderSize('mouseup_organIcon_parent');
     av.ui.adjustOrgInstructionTextAreaSize();
     if (av.dbg.flg.mouse) { console.log('mouse: from parent', av.parent, '; fzr', av.fzr); }

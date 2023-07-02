@@ -45,7 +45,7 @@ av.msg.readMsg = function (ee) {
         //console.log('webOrgTraceBySequence', msg);
         av.ind.webOrgTraceBySequence = msg;
         av.traceObj = msg.snapshots;
-        //console.log('av.traceObj', av.traceObj);
+        console.log('av.traceObj', av.traceObj);
         av.ind.cycle = 0;
         av.dom.orgCycle.value = 0;
         av.ind.cycleSlider.set('maximum', av.traceObj.length - 1);
@@ -574,7 +574,7 @@ av.msg.doOrgTrace = function () {
     if ( 50 < av.fzr.actOrgan.genome.length) {
       if (av.debug.msg) console.log('doOrgTrace: fzr', av.fzr);
       var seed = 100 * Math.random();
-      if (dijit.byId('OrganDemoRadio').get('checked', true)) {seed = 0;}
+      if (document.getElementById('demoRadio').checked) {seed = 0;}
       else {seed = -1;}
       var request = {
         'type': 'addEvent',
