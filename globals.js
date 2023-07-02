@@ -23,7 +23,7 @@ av.debug = {};
 av.debug.alo = false; //analysis page layout
 av.debug.anl = false;  //analysis page
 av.debug.bool = false;  //av.debug statements that look for errors outlining logic functions
-av.debug.dnd = false;  //debug statements about dojo dnd
+av.debug.dnd = false;  //debug statements about drag and drop
 av.debug.fio = false;  // file input/output; fio, read, write
 av.debug.fzr = false;  // statements about freezer
 av.debug.grid = false;  //population grid
@@ -40,7 +40,7 @@ av.dbg.flg.divsize = false;
 av.dbg.flg.drg = false;   // used for dragula relate code
 av.dbg.flg.dsz = false;   //div size; used to eliminate scroll bars
 av.dbg.flg.frd = false;  //reading file text strings
-av.dbg.flg.mouse = false;  //av.debug statements about non-dojo drag and drop
+av.dbg.flg.mouse = false;  //av.debug statements about non-dragula drag and drop
 av.dbg.flg.nut = false;  //processing nutrients (sugars) for the new new structures related to ecology (resources/reactions/sugars/logic functions
 av.dbg.flg.nutSum = false; //summary for each function when processing environment.cfg for sugar user interace
 av.dbg.flg.plt = false;  //analysis plot 
@@ -884,7 +884,6 @@ av.grd = {};         //data about the grid canvas
 av.grd.popStatsMsg = {};
 av.dom = {};    //dom id shortcuts and dimensions
 av.dsz = {};    //dom size of elements in the dom
-av.doj = {};    //dom dojo id shortcuts
 
 av.grd.fnChosen = [];
 for (var ii = 0; ii < 9; ii++) { av.grd.fnChosen[av.ptd.logicButtons[ii]] = false; }

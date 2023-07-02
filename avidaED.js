@@ -191,7 +191,6 @@
 
 // if (av.dbg.flg.root) { console.log('Root: before require statement'); }
 var av = av || {};  //incase av already exists
-var dojo = dojo || {};
 
 define.amd.jQuery = true;
 require([
@@ -666,8 +665,6 @@ require([
   //http://www.technicaladvices.com/2012/03/26/detecting-the-page-leave-event-in-javascript/
   //Cannot get custom message in Firefox (or Safari for now)
 
-// the function 'postPost' below used to use dojo.toJson(obj)
-// https://dojotoolkit.org/reference-guide/1.7/dojo/toJson.html
 // On 2022_801 this was changed JSON.stringify(obj) 
 // https://www.w3schools.com/js/js_json_stringify.asp
 
@@ -690,8 +687,7 @@ console.log('Root: before postPost');
     xhr.post(//Post is a helper function to xhr, a more generic class
       hostname, //URL parameter
       {//Data and holding parameter
-        // data: dojo.toJson(av.debug.postData), //This function takes an object and converts it to a String serialization of that object.
-        data: JSON.stringify(av.debug.postData),
+        data: JSON.stringify(av.debug.postData),  //This function takes an object and converts it to a String serialization of that object.
         headers: {'X-Requested-With': null}
       }
     ).then(function (received) { //Promise format; received data from request (first param of then)
@@ -2528,9 +2524,7 @@ av.ui.feedback = function(){
   };
 
 
-  //triggers flag that requests more data when the settings dialog is closed.
-  //http://stackoverflow.com/questions/3008406/dojo-connect-wont-connect-onclick-with-button
-  //----------------------------------------------------------------------------------------------------------------------  
+  //----------------------------------------------------------- process organsim view radio buttons for mutation rate --  
 
   document.getElementById('OrganExperimentRadio').onclick = function () {
     av.post.addUser('Button: OrganExperimentRadio');

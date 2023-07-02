@@ -1,5 +1,4 @@
 var av = av || {};  // variable exists; this just lets the ide konw that av is defnined
-var dijit = dijit || {};  //variable exists; this just lets the ide konw that dijit is defnined
 
 
 ////Find subarea based on region code

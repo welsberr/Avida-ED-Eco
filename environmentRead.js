@@ -1,7 +1,6 @@
 // Process environment.cfg
   
 var av = av || {};  // variable exists; this just lets the ide konw that av is defnined
-var dijit = dijit || {};  //variable exists; this just lets the ide konw that dijit is defnined
 
 //============================================================================================ read environment.cfg ==
 // to make nutrient structure; and then to create user controls

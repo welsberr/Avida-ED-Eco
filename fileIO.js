@@ -584,10 +584,6 @@
   //window.downloadFile.isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
   //window.downloadFile.isSafari = navigator.userAgent.toLowerCase().indexOf('safari') > -1;
 
-  // Dojo file uploads and downloads
-  // https://infrequently.org/2005/12/file-uploading-with-dojo/
-  // http://www.mikejuniper.com/fun-with-dojoioiframesend/
-
   // Iframe file download
   // http://encosia.com/ajax-file-downloads-and-iframes/
 

@@ -488,7 +488,7 @@ jQuery(document).ready(function($) {
     }
     if (av.debug.dnd) console.log('near end of av.dnd.landFzOrgan');
     if (source != av.dnd.ancestorBox) {
-      if (av.debug.dnd) console.log('dojo dnd to Organ Freezer, not from Ancestor Box');
+      if (av.debug.dnd) console.log(' draguladnd to Organ Freezer, not from Ancestor Box');
     }
     if (av.debug.dnd) console.log('End of av.dnd.landFzOrgan');
   };
@@ -537,8 +537,6 @@ jQuery(document).ready(function($) {
   //================================================================================== Process drop down menu choices ==
   //---------------------------------------------------------------------------------------- av.dnd.FzAddExperimentFn --
   // Running actions from drop down menu
-  // When using dojoDnd, the an item could be selected in each section of the freezer. 
-  // Also I did not know an easy way to see if an item was selected in each freezer section. 
   av.dnd.FzAddExperimentFn = function (source, target, type, from) {
     if (av.dbg.flg.slt) { console.log(from, ' called av.dnd.FzAddExperimentFn'); };
     if (av.dbg.flg.slt) { console.log('source =', source); };
@@ -919,7 +917,7 @@ jQuery(document).ready(function($) {
       av.post.addUser('DnD: ' + source.id + '--> GridCanvas: by: ' + el.textContent.trim());
     }
     //In all cases remove the ancestor from the gridCanvas so we only keep them in the av.dnd.ancestorBox.
-    av.dnd.empty(av.dnd.gridCanvas);  //http://stackoverflow.com/questions/11909540/how-to-remove-delete-an-item-from-a-dojo-drag-and-drop-source
+    av.dnd.empty(av.dnd.gridCanvas); 
     if (av.debug.dnd) { console.log('DnD: parents', av.parents); }
   };
   //-------------------------------------------------------------------------------- end av.dnd.updateFromFzrOrganism --
@@ -991,7 +989,7 @@ jQuery(document).ready(function($) {
     var dir = av.fzr.dir[el.id];
     if (source !== av.dnd.ancestorBoTest) {
       av.post.data = {
-        'operation' : 'DojoDnd',
+        'operation' : 'dragulaDnd',
         'name' : 'av.dnd.landAncestorBoTest',
         //'vars' : {'source' : 'av.dnd.fzOrgan', 'nodeDir': move.dir, 'target': 'av.dnd.ancestorBoTest'},
         'vars' : {'source' : source.id, 'nodeDir': dir, 'target': target.id, 'call': 'dnd.landAncestorBoTest'},
@@ -1716,39 +1714,6 @@ jQuery(document).ready(function($) {
     return theName;
   };
   //------------------------------------------------------------------------------------------- end av.dnd.nameParent --
-
-  //-------------------------------------------------------------------------------------------------- av.dnd.sortDnD --
-  // Helper For Sorting Things (not sure if still needed)
-  // would need to be re written if we want a freezer section sorted
-  //
-  // based on https://stackoverflow.com/questions/27529727/sorta-b-does-not-work-in-dojo-dnd-source
-  // av.dnd.sortDnD = function (dndSection) {
-  //   // Input: dndSection = the text of the class os the Dojo DnD section with elements to be sorted
-  //   // e.g., var dndSection = 'fzOrgan'; sortDnD(dndSection);
-  //   // actually full class name is ".element dojoDndItem" to query
-  //   // if (av.debug.dnd) { console.log('DnD: inside sortDnD'); }
-  //   //dojo.query(".element",  dojo.byId(dndSection)).sort(
-  //   dojo.query(".dojoDndItem", dndSection).sort(
-  //     function (a, b) {
-  //       var aih = a.innerHTML.toString().toLowerCase();
-  //       var bih = b.innerHTML.toString().toLowerCase();
-  //       return (aih == bih ? 0 : (aih > bih ? 1 : -1));
-  //     }
-  //   ).forEach(// fire bug debugging cursor move to this section
-  //     function (a, idx) {
-  //       dojo.byId(dndSection).insertBefore(a, dojo.byId(dndSection).childNodes[idx]);
-  //     });
-  // };
-
-  // 2019-04-14: Untested.
-  // dojo.connect(av.dnd.fzTdish, "onDndDrop", function (source, nodes, copy, target) {
-  //   if ('fzTdish' === target.node.id) {
-  //     nodes.forEach(function (node) {
-  //       av.dnd.sortDnD('fzTdish');
-  //     });
-  //   }
-  // });
-  //-------------------------------------------------------------------------------------------------- av.dnd.sortDnD --
 
   /*
   Helpers For Touch Screens

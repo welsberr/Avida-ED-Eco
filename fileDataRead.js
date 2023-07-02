@@ -1,6 +1,5 @@
   //Read file data
   var av = av || {};  //incase av already exists
-  var dijit = dijit || {};  //incase av already exists
 
   // if (av.dbg.flg.root) { console.log('Root: before av.fio.addFzItem'); }
   /*------------------------------------------------------------------------------------------------ av.fio.addFzItem --*/
@@ -556,27 +555,19 @@
     document.getElementById('mutePopInput').dispatchEvent(event);
     
     if (0==dict.BIRTH_METHOD) {
-      //dijit.byId('childParentRadio').set('checked', true);
-      //dijit.byId('childRandomRadio').set('checked', false);
       $('#childParentRadio').prop('checked', true);
       $('#childRandomRadio').prop('checked', false);
     }
     else {
-      //dijit.byId('childParentRadio').set('checked', false);
-      //dijit.byId('childRandomRadio').set('checked', true);
       $('#childParentRadio').prop('checked', false);
       $('#childRandomRadio').prop('checked', true);
     }
 
     if (-1 == dict.RANDOM_SEED) {
-      //dijit.byId('experimentRadio').set('checked', true);
-      //dijit.byId('demoRadio').set('checked', false);
       $('#experimentRadio').prop('checked', true);
       $('#demoRadio').prop('checked', false);
     }
     else {
-      //dijit.byId('experimentRadio').set('checked', false);
-      //dijit.byId('demoRadio').set('checked', true);
       $('#experimentRadio').prop('checked', false);
       $('#demoRadio').prop('checked', true);
     };
@@ -803,7 +794,6 @@
       av.parents.row[nn] = stuff.row[kk];
       av.parents.injected[nn] = false;
       av.parents.AvidaNdx[nn] = av.parents.col[nn] + parseInt(av.parents.row[nn]) * parseInt(av.dom.sizeCols.value);
-      //av.parents.AvidaNdx[nn] = av.parents.col[nn] + parseInt(av.parents.row[nn]) * parseInt(dijit.byId('sizeCols').get('value'));
       //av.parents.AvidaNdx[av.parents.autoNdx[ii]] = av.parents.col[av.parents.autoNdx[ii]] + cols * av.parents.row[av.parents.autoNdx[ii]];
       if (av.dbg.flg.frd) console.log('av.parents:  name', av.parents.name[nn], '; domid', av.parents.domid[nn], '; gen', av.parents.genome[nn]);
     }

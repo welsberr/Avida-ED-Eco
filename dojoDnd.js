@@ -147,7 +147,8 @@ av.dnd.runTestDish2 = function(fzSection, target, type) {
 
 
 //Add items from freezer section using the menu
-//---------------------------------------------------------------------------------------- av.dnd.FzAddExperimentFn --*/
+//------------------------------------------------------------------------------------------ av.dnd.FzAddExperimentFn --
+/* delete soon
 av.dnd.FzAddExperiment_Fn_old = function (fzSection, target, type) {
   //console.log('fzrObject=', av.dnd[fzSection].getSelectedNodes()[0]);
   //need to find selected item. looking for 'dojoDndItem dojoDndItemAnchor' might help
@@ -198,4 +199,18 @@ av.dnd.FzAddExperiment_Fn_old = function (fzSection, target, type) {
     }
   }
 };
+*/
 //------------------------------------------------------------------------------------ end av.dnd.FzAddExperimentFn --*/
+//
+//  general comments
+//http://dojo-toolkit.33424.n3.nabble.com/dojo-dnd-problems-selection-object-from-nodes-etc-td3753366.html
+//This is supposed to select a node; lists as selected programatically, but does not show up on screen.
+
+
+//A method to get the data items in a dojo DND container in order
+//av.dnd.fzConfig.on('DndDrop', function(source, nodes, copy, target){  //This triggers for every dnd drop, not just those of freezeConfigureNode
+//http://stackoverflow.com/questions/5837558/dojo-drag-and-drop-how-to-retrieve-order-of-items
+//var orderedDataItems = av.dnd.fzConfig.getAllNodes().map(function(node){
+//  return av.dnd.fzConfig.getItem(node.id).data;
+//});
+//console.log('orderedDataItems', orderedDataItems);

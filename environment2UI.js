@@ -2,7 +2,6 @@
 //Convert nutrient structure to ui & ui to nutrient structure
 
 var av = av || {};  // variable exists; this just lets the ide konw that av is defnined
-var dijit = dijit || {};  //variable exists; this just lets the ide konw that dijit is defnined
 
 //Find subarea based on inflow x, y coordinates
 // this function does not appear to be called
