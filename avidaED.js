@@ -640,6 +640,7 @@ require([
     document.getElementById('sendLogmodalID').style.display = 'none';
   };
 
+  console.log('Root: before av.post.sendWindow');
   //---------------------------------------------------------------------------------------------- av.post.sendWindow --
   av.post.sendWindow = function (from) {
     console.log(from, 'called av.post.sendWindow; used for database; not email');
@@ -670,6 +671,7 @@ require([
 // On 2022_801 this was changed JSON.stringify(obj) 
 // https://www.w3schools.com/js/js_json_stringify.asp
 
+console.log('Root: before postPost');
 // part of updating database
   on(document.getElementById('postPost'), 'click', function () {
     console.log('in on(document.getElementById(postPost)');
@@ -718,20 +720,6 @@ require([
     av.ui.sendEmailFlag = false;
   };
 
-  /* 
-  //http://stackoverflow.com/questions/7080269/javascript-before-leaving-the-page
-    dijit.byId('sendEmail').on('Click', function () {
-      av.ui.sendEmailFlag = true;
-      av.post.addUser('Button: sendEmail');
-      var link = 'mailto:' + av.fio.mailAddress +
-        //'?cc=CCaddress@example.com' +
-        '?subject=' + escape('Avida-ED session log') +
-        '&body=' + escape(av.debug.log);
-      window.location.href = link;
-      av.ui.sendEmailFlag = false;
-    });
-  */
-
   av.debug.finalizeDtail = function () {
     //finalize dTail
     //dom dimensions clientWidth clientHeight scrollWidth scrollHeight innerWidth innerHeight outerWidth outerHeight
@@ -749,11 +737,9 @@ require([
   //**********************************************************************************************************************
   // Menu Buttons handling
   //**********************************************************************************************************************
-  // if (av.dbg.flg.root) { console.log('Root: dijit test', dijit.byId('mnFlOpenDefaultWS')); }
 
   // if (av.dbg.flg.root) { console.log('Root: before mnFlOpenDefaultWS'); }
 
-  //=====refactored========
   document.getElementById("mnFlOpenDefaultWS").onclick = function () {
     "use strict";
     av.post.addUser("Button: mnFlOpenDefaultWS");
@@ -765,21 +751,11 @@ require([
     }
   };
 
-  // ===Original - Save current workspace====
-  // dijit.byId("sWSfSave").on("Click", function () {
-  //   av.post.addUser("Button: sWSSave");
-  //   //console.log('before call save workspace');
-  //   av.fio.fzSaveCurrentWorkspaceFn(); //fileIO.js
-  //   //console.log('after call to save workspace');
-  // });
-
-  // ===refactored - Save current workspace====
   document.getElementById("sWSfSave").onclick = function () {
     av.post.addUser("Button: sWSSave");
     av.fio.fzSaveCurrentWorkspaceFn();
   };
 
-  // ===refactored -Open Workspace====
   document.getElementById("sWSfOpen").onclick = function () {
     av.post.addUser("Button: sWSfOpen");
     sWSfModalID.hide(sWSfModalID.hide);
@@ -794,8 +770,7 @@ require([
   };
 
   // open and read user picked file
-  //--------------------------------------------------------------------------------------------------------------------
-  //=====refactored========
+  //---------------------------------------------------------------------------------------------- mnFlOpenWS.onclick --
   document.getElementById("mnFlOpenWS").onclick = function () {
     "use strict";
     av.post.addUser("Button: mnFlOpenWS");
@@ -809,8 +784,7 @@ require([
     }
   };
 
-  //--------------------------------------------------------------------------------------------------------------------
-  //=====refactored========
+  //---------------------------------------------------------------------------------------------- mnFlFzItem.onclick --
   document.getElementById("mnFlFzItem").onclick = function () {
     "use strict";
     av.post.addUser("Button: mnFlFzItem");
@@ -852,9 +826,7 @@ require([
     }
   };
 
-  //--------------------------------------------------------------------------------------------------------------------
-  //Export csv data from current run.
-  //=====refactored========
+  //-------------------------------------------------------------------------------- Export csv data from current run --
   document.getElementById("mnFlExportData").onclick = function () {
     "use strict";
     av.post.addUser("Button: mnFlExportData");
@@ -862,9 +834,7 @@ require([
     av.fwt.writeCurrentCSV(av.fzr.actConfig.name + "@" + av.grd.popStatsMsg.update + "\n", 'mnFlExportData');
   };
 
-  //--------------------------------------------------------------------------------------------------------------------
-  //Export chart data from current run.
-  //=====refactored========
+  //------------------------------------------------------------------------------ Export chart data from current run --
   document.getElementById("mnFlExportGraph").onclick = function () {
     "use strict";
     av.post.addUser("Button: mnFlExportGraph");
@@ -876,9 +846,7 @@ require([
     document.getElementById("mnFlExportGraphModalID").style.display = "none";
   };
 
-  //--------------------------------------------------------------------------------------------------------------------
-  //Save Stand alone applicaton.
-  //=====refactored========
+  //-------------------------------------------------------------------------- Send user to a stand alone application --
   // error loading Modal box
   document.getElementById("mnFlStandAloneApp").onclick = function () {
     "use strict";
@@ -1222,31 +1190,8 @@ av.ui.feedback = function(){
         break;
     };
   };
-/*  Delete this soon
-  //Buttons on drop down menu to add Configured Dish to an Experiment
-  dijit.byId('mnFzAddConfigEx').on('Click', function () {
-    av.dnd.clickedMenu = "addConfig";
-    av.post.addUser('Button: mnFzAddConfigEx');
-    av.dnd.FzAddExperimentFn(av.dnd.fzConfig, av.dnd.activeConfig, 'c');
-  });
-
-  //Buttons on drop down menu to add Organism to an Experiment - does not work on Test
-  dijit.byId('mnFzAddGenomeEx').on('Click', function () {
-    av.dnd.clickedMenu = "addOrgan";
-    av.post.addUser('Button: mnFzAddGenomeEx');
-    av.dnd.FzAddExperimentFn(av.dnd.fzOrgan, av.dnd.ancestorBox, 'g');
-  });
-
-  //Buttons on drop down menu to add Populated Dish to an Experiment
-  dijit.byId('mnFzAddPopEx').on('Click', function () {
-    av.dnd.clickedMenu = "addPop";
-    av.post.addUser('Button: mnFzAddPopEx');
-    av.dnd.FzAddExperimentFn(av.dnd.fzWorld, av.dnd.activeConfig, 'w');
-  });
-*/
   
-  //Buttons on drop down menu to put an organism in Organism Viewer
-  // ====refactored========
+  //-------------------------------------------------- Button on drop down menu to put an organism in Organism Viewer --
   document.getElementById("mnFzAddGenomeView").onclick = function () {
     av.post.addUser("Button: mnFzAddGenomeEx");
     av.dnd.clickedMenu = "addToGenomeView";
@@ -1260,8 +1205,7 @@ av.ui.feedback = function(){
     av.msg.doOrgTrace('mnFzAddGenomeView.onclick');  //request new Organism Trace from Avida and draw that.
   };
 
-  //Buttons on drop down menu to add Populated Dish to Analysis
-  // ====refactored========
+  //------------------------------------------------------ Button on drop down menu to add Populated Dish to Analysis --
   document.getElementById("mnFzAddPopAnalysis").onclick = function () {
     av.dnd.clickedMenu = "addToAnalysisView";
     av.post.addUser('Button: mnFzAddPopEx');
@@ -1278,7 +1222,6 @@ av.ui.feedback = function(){
 
     av.aww.uiWorker.terminate();
     av.aww.uiWorker = null;
-
     //console.log('just killed webWorker');
 
     if (typeof (Worker) !== 'undefined') {
@@ -2344,31 +2287,19 @@ av.ui.feedback = function(){
     }
   };
 
-  //------------------------------------------------------------------------------------ dojo controls that will change --
-  // dojo.connect(dijit.byId("childParentRadio"), "onClick", function () {
-  //   av.post.addUser("Button: childParentRadio");
-  // });
+  //------------------------------------------------------------------------------------------ settings radio buttons --
   document.getElementById('childParentRadio').onclick = function () {
     av.post.addUser('Button: childParentRadio');
   };
 
-  // dojo.connect(dijit.byId("childRandomRadio"), "onClick", function () {
-  //   av.post.addUser("Button: childRandomRadio");
-  // });
   document.getElementById('childRandomRadio').onclick = function () {
     av.post.addUser('Button: childRandomRadio');
   };
 
-  // dojo.connect(dijit.byId("experimentRadio"), "onClick", function () {
-  //   av.post.addUser("Button: experimentRadio");
-  // });
   document.getElementById('experimentRadio').onclick = function () {
     av.post.addUser('Button: experimentRadio');
   };
 
-  // dojo.connect(dijit.byId("demoRadio"), "onClick", function () {
-  //   av.post.addUser("Button: demoRadio");
-  // });
   document.getElementById('demoRadio').onclick = function () {
     av.post.addUser('Button: demoRadio');
   };
@@ -2379,9 +2310,6 @@ av.ui.feedback = function(){
     //console.log('autoPauseNum=', av.dom.autoPauseNum.value);
   };
 
-  // dojo.connect(dijit.byId("postPost"), "onClick", function () {
-  //   av.post.addUser('Button: postPost');
-  // });
   document.getElementById('postPost').onclick = function () {
     av.post.addUser('Button: postPost');
   };

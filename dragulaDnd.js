@@ -7,7 +7,6 @@
  */
 
 var av = av || {};  // consistent with the rest of js files
-var dijit = dijit || {}; // lets NetBeans know that dijit is defined
 
 // ******************************************************************************************* jQuery(document).ready **
 // keep as is since I'm trying to get rid of dojo 
@@ -1227,7 +1226,6 @@ jQuery(document).ready(function($) {
     document.getElementById('environConfigEdit').value = av.fzr.actConfig.file['environment.cfg'];
     av.grd.clearGrd();
     av.grd.runState = 'prepping';
-    dijit.byId('mnCnOrganismTrace').attr('disabled', true);    //???
     document.getElementById('mnCnOrganismTrace').disabled = true;   //???
     document.getElementById('mnFzOrganism').disabled = true;   //???
     // Clear grid settings
