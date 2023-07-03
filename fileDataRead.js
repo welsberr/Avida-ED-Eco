@@ -355,9 +355,10 @@
     // av.frd.environmentTestform(doctext);     //for now editing the whole file
     //console.log('av.dom.environConfigEdit=',av.dom.environConfigEdit);
 
-    if (av.fzr.file[av.dnd.move.dir+'/'+ 'environment.cfg'] ) {
-      av.dom.environConfigEdit.value = av.fzr.file[av.dnd.move.dir+'/'+'environment.cfg'];
-    };
+    // test data will need fixing is used again 
+//    if (av.fzr.file[av.dnd.move.dir+'/'+ 'environment.cfg'] ) {
+//      av.dom.environConfigEdit.value = av.fzr.file[av.dnd.move.dir+'/'+'environment.cfg'];
+//    };
 
 
     //doctext = av.fzr.file[dir + '/environment.cfg'];
@@ -641,14 +642,13 @@
     var rslt = {};
     rslt.nam = [];
     rslt.gen = [];
-    var lineobj, gen, name;
     var lines = filestr.split('\n');
     var kk = 0;
     var lngth = lines.length;
     for (var ii = 0; ii < lngth; ii++) {
       if (1 < lines[ii].length) {
         if (ii % 2 < 1) {//even
-          rslt.nam[kk] = lines[ii];  //tiba need to get rid of whitespace in string
+          rslt.nam[kk] = lines[ii];  //does tiba need to get rid of whitespace in string
         }
         else { //odd
           rslt.gen[kk] = lines[ii]; //content will be genome line; leave white space alone
@@ -729,7 +729,7 @@
     for (var ii = 0; ii < lngth; ii++) {
       if (1 < lines[ii].length) {
         if (0 === ii % 3) {// divide by 3 evenly => first line
-          rslt.nam[kk] = lines[ii];  //tiba need to get rid of whitespace in string
+          rslt.nam[kk] = lines[ii];  //does tiba need to get rid of whitespace in string
         }
         else if (1 === ii % 3){ //second line
           rslt.gen[kk] = lines[ii]; //content will be genome line; leave white space alone

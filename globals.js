@@ -217,7 +217,11 @@ av.fio.mailAddress = 'Avida-ED-development@googlegroups.com';  //'mailto:diane.b
 
 av.dnd = {};  //details in AvidiaEd.js as it access the DOM
 av.dnd.configFlag = 'normal';
-av.dnd.move = {};  //used to hold data needed for dnd type move.
+av.dnd.selectedType = 'n';  //n - indicates none selected
+av.dnd.selectedId = 'none'; //none selected
+
+// tiba delete laters
+//av.dnd.move = {};  //used to hold data needed for dnd type move.  //tiba check to see if av.dnd.move is still in use
 
 // replacement for dndSection.map
 av.dnd.containerMap = {};
@@ -640,8 +644,6 @@ av.nut = {};  // within Nutrients (av.nut) the first element in all arrays refer
               // When more subdishes are implemented, an array or dictionary will be defined for each of the tsk.regionLayout values. 
 
 av.fzr = {};
-av.fzr.selectedType = 'n';  //n - indicates none selected
-av.fzr.selectedId = 'none'; //none selected
 
 //----------------------------------------------------------------------------------------- av.fzr.clearEnvironment --
 // used to create several structures used in defining parameters for the environment.cfg file

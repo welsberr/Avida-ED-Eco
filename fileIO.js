@@ -179,7 +179,7 @@
           av.fzr.rNum++;
           av.fzr.tNum++;
           av.fzr.wNum++;
-          //tiba; will need to increment cNum and wNum for each superdish when userInterface is built.
+          //tiba; will need to increment cNum and wNum for each superdish when userInterface is built: super disheswill not be used
           for (var key in av.fzr.mDish) {
             if (av.debug.fio) console.log('key=', key, '; object=', av.fzr.mDish[key]);
             av.fzr.mDish[key].cNum++;

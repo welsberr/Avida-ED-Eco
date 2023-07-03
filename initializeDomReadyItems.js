@@ -269,6 +269,11 @@
     //document.getElementById('').disabled = true;   ///???
   };
 
+  //------------------------------------------------------------------------------------------ for main dropdown menu --
+  document.getElementById('mnAePreferences').disabled = true;
+
+  //---------------------------------------------------------------------------------------------------- Analuze Page --
+
   // for analyze page
   av.dom.initilizeAnalizePage = function() {
     //console.log('getDomByID of pop0color=', document.getElementById('pop0color') );

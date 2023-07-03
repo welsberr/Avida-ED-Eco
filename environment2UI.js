@@ -686,7 +686,6 @@ av.env.defaultNut2dom = function(from) {
     tsk = av.sgr.logicNames[ii];
     tskose = av.sgr.oseNames[ii];
 
-    //document.getElementById(tsk+'_geometry').value = av.sgr.nutdft.uiAll.geometry;    tiba should be deleted in 2021
     document.getElementById(tsk+'_supplyTypeSlct').value = av.sgr.nutdft.uiAll.supplyTypeSlct;
     document.getElementById(tsk+'_regionLayout').value = av.sgr.nutdft.uiAll.regionLayout;
     document.getElementById(tsk+'_initialHiNp').value = av.sgr.nutdft.uiAll.initialHiNp;

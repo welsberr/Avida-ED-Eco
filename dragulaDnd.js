@@ -367,32 +367,84 @@ jQuery(document).ready(function($) {
   // Select an item from the freezer using click
   av.dnd.selectedId = '';
 
-  //--------------------------------------------------------------------------------------------- navColClass.onClick --
+  //------------------------------------------------------------------ selection of freezer item: navColClass.onClick --
   // allow click selection only if it's within the freezer
-  $('.navColClass').on('click', function(e) {
+  $('.navColClass').on('click', function(eleClck) {
     document.body.style.cursor = "default"; // want the mouse to be default for click
-    if (e.target) {
-      var classList = e.target.className.split(" "); // e.target.className is a string
-      if (av.dnd.selectedId !== '' && e.target.id === av.dnd.selectedId) {
-        $('#' + e.target.id).css('background', 'inherit');
-        $('#' + e.target.id).css('border-color', 'inherit');
+    console.log('in $navColClass.onclick: eleClck.target.className=', eleClck.target.className);
+    console.log('eleClck=', eleClck);
+    console.log('eleClck.target.id=', eleClck.target.id);
+    if (eleClck.target) {
+      var classList = eleClck.target.className.split(" "); // eleClck.target.className is a string
+      av.dnd.selectedType = eleClck.target.classList[1];
+      console.log('classList=', classList);
+      if (av.dnd.selectedId !== '' && eleClck.target.id === av.dnd.selectedId) {
+        $('#' + eleClck.target.id).css('background', 'inherit');
+        $('#' + eleClck.target.id).css('border-color', 'inherit');
+        console.log('unclicked?: eleClck.target=', eleClck.target);
         av.dnd.selectedId = '';
-      } 
+      }
       else if (av.dnd.selectedId === '' && classList.indexOf('item') != -1) { // if the target is of class 'item' (aka draggable item)
-        $('#' + e.target.id).css('background', 'rgb(189, 229, 245)');
-        $('#' + e.target.id).css('border-color', '#3440e6');
-        av.dnd.selectedId = e.target.id;
+        $('#' + eleClck.target.id).css('background', 'rgb(189, 229, 245)');
+        $('#' + eleClck.target.id).css('border-color', '#3440e6');
+        av.dnd.selectedId = eleClck.target.id;
       }
-      else if (av.dnd.selectedId != '' && classList.indexOf('item') != -1) { // if something is selected already and user selects another one
+      else if (av.dnd.selectedId != '' && classList.indexOf('item') != -1) { 
+        // if something is selected already and user selects another one
         $('#' + av.dnd.selectedId).css('background', 'inherit');
-        $('#' + e.target.id).css('background', 'rgb(189, 229, 245)');
-        $('#' + e.target.id).css('border-color', '#3440e6');
-        av.dnd.selectedId = e.target.id;
+        $('#' + eleClck.target.id).css('background', 'rgb(189, 229, 245)');
+        $('#' + eleClck.target.id).css('border-color', '#3440e6');
+        av.dnd.selectedId = eleClck.target.id;
+      };
+      if ('' == av.dnd.selectedId) {
+      document.getElementById('mnFzAddFzItem').disabled = true;
+      document.getElementById('mnFzAddPopAnalysis').disabled = true;
+      document.getElementById('mnFzAddGenomeView').disabled = true;
       }
-    }
+      else {
+        document.getElementById('mnFzAddFzItem').disabled = false;
+        switch (av.dnd.selectedType) {
+          case "c": 
+            break;
+          case "g": 
+            document.getElementById('mnFzAddGenomeView').disabled = false;
+            break;
+          case "w": 
+            document.getElementById('mnFzAddPopAnalysis').disabled = false;
+            break;
+        } // end switch statement
+      }; // end else (that is the selectedID is not empty
+    };  // end there is an eleClck.target
   });
   //----------------------------------------------------------------------------------------- end navColClass.onClick --
 
+  //-------------------------------------------------------------------------- track user clicks in a freezer section --
+  // responds to ALL clicks on page.
+  $(document).on('click', function(event) {
+      console.log('targetElement =', event.target);
+      console.log('targetElement.id =', event.target.id);
+      console.log('targetElement.classList =', event.target.classList);
+      console.log('targetElement.classList[0] =', event.target.classList[0]); //item
+      console.log('targetElement.classList[1] =', event.target.classList[1]); //type
+      //console.log('try = ', $(".item.c, .item.g, item.w"));
+      
+      // Assign target.id as selected freezer item if user clicked on a freezer item
+
+      if ('item' === event.target.classList[0]) {
+        av.fzr.selectedType = event.target.classList[1];
+        av.fzr.selectedId = event.target.id;
+        document.getElementById('mnFzAddFzItem').disabled = false;
+        if ('g' === av.fzr.selectedType) 
+          { document.getElementById('mnFzAddGenomeView').disabled = false; }
+        else
+          { document.getElementById('mnFzAddGenomeView').disabled = true; }
+        if ('w' === av.fzr.selectedType) 
+          { document.getElementById('mnFzAddPopAnalysis').disabled = false; }
+        else
+          { document.getElementById('mnFzAddPopAnalysis').disabled = true; }
+      }
+  });
+  //--------------------------------------------------------------------------------- end track selected Freezer item --  
 
   //========================================================================== When something is added to the Freezer ==
   //--------------------------------------------------------------------------------------------- av.dnd.landFzConfig --
@@ -1115,7 +1167,7 @@ jQuery(document).ready(function($) {
       av.fzr.actConfig.file['events.cfg'] = av.fzr.file[av.fzr.actConfig.dir + '/events.cfg'];
       av.fzr.actConfig.file['update'] = av.fzr.file[av.fzr.actConfig.dir + '/update'];
 
-      av.grd.drawGridSetupFn("Yemi's Implementation of landTestConfig. Tiba???"); // draw grid
+      av.grd.drawGridSetupFn("Yemi's Implementation of landTestConfig"); // draw grid
     }
 
     else if (source === av.dnd.fzWorld) {

@@ -76,7 +76,8 @@
 // 
 // Avida-ED 4.0.03
 //  - Changed resource type from Infinite/Finite to Unlimited/Limited
-//  - Changed it so that the heat map scale for Fitness does not changed until after 10,000 updated for Cory. tiba
+//  - Changed it so that the heat map scale for Fitness does not changed until after 10,000 updated for Cory. 
+//  - need to fix this if this has not been done. tiba
 //  - updated the following libraries to the versions listed
 //  - - dojo-release-1.16.4
 //  - - jquery-v3.4.1.min
@@ -252,8 +253,6 @@ require([
   //'lib/FileSaver_v1.1_date-2016_0328.js',
   //'lib/FileSaver-2.0.3/FileSaver.min.js',
   'lib/FileSaver.min.2.0.4.js',
-  //'lib/FileSaver.js',
-  //'avida-messages.js',
   'messaging.js',
   'initializeDomReadyItems.js',
   'fileDataRead.js',
@@ -261,7 +260,6 @@ require([
   'fileIO.js',
   'populationGrid.js',
   'organismView.js',
-  //'dojoDnd.js',
   'popControls.js',
   'mouse.js',
   'mouseDown.js',
@@ -270,8 +268,6 @@ require([
   'environmentWrite.js',
   'sugar_ui.js',
   'reSizePageParts.js',
-  //'restartAvida.js',
-  //'diagnosticconsole.js',
   'dojo/domReady!'
 ], function (space, AppStates, dijit, registry,
   Button, Select,
@@ -1125,34 +1121,7 @@ av.ui.feedback = function(){
     av.ptd.FrOrganismFn("offspring");
   };
 
-  //------------------------------------------------------------------------------------------------ track user clicks --
-  // responds to ALL clicks on page.
-  $(document).on('click', function(event) {
-      console.log('targetElement =', event.target);
-      console.log('targetElement.id =', event.target.id);
-      console.log('targetElement.classList =', event.target.classList);
-      console.log('targetElement.classList[0] =', event.target.classList[0]); //item
-      console.log('targetElement.classList[0] =', event.target.classList[1]); //type
-      //console.log('try = ', $(".item.c, .item.g, item.w"));
-      
-      // Assign target.id as selected freezer item if user clicked on a freezer item
-      if ('item' === event.target.classList[0]) {
-        av.fzr.selectedType = event.target.classList[1];
-        av.fzr.selectedId = event.target.id;
-        document.getElementById('mnFzAddFzItem').disabled = false;
-        if ('g' === av.fzr.selectedType) 
-          { document.getElementById('mnFzAddGenomeView').disabled = false; }
-        else
-          { document.getElementById('mnFzAddGenomeView').disabled = true; }
-        if ('w' === av.fzr.selectedType) 
-          { document.getElementById('mnFzAddPopAnalysis').disabled = false; }
-        else
-          { document.getElementById('mnFzAddPopAnalysis').disabled = true; }
-      }
-  });
-  //--------------------------------------------------------------------------------- end track selected Freezer item --  
-
-  //------------------------------------------------------------------------------------------------ av.ui.mnFzItemFn --
+  //------------------------------------------------------------------------------------------- mnFzAddFzItem.onclick --
   
   // Menu Buttons from 'Freezer' to Add things to Experiment
   document.getElementById("mnFzAddFzItem").onclick = function () {
@@ -1179,7 +1148,7 @@ av.ui.feedback = function(){
     };
   };
   
-  //-------------------------------------------------- Button on drop down menu to put an organism in Organism Viewer --
+  //----------------------- Button on drop down menu to put an organism in Organism Viewer: mnFzAddGenomeView.onclick --
   document.getElementById("mnFzAddGenomeView").onclick = function () {
     av.post.addUser("Button: mnFzAddGenomeEx");
     av.dnd.clickedMenu = "addToGenomeView";
@@ -1193,7 +1162,7 @@ av.ui.feedback = function(){
     av.msg.doOrgTrace('mnFzAddGenomeView.onclick');  //request new Organism Trace from Avida and draw that.
   };
 
-  //------------------------------------------------------ Button on drop down menu to add Populated Dish to Analysis --
+  //---------------------------------- Button on drop down menu to add Populated Dish to Analysis: mnFzAddPopAnalysis --
   document.getElementById("mnFzAddPopAnalysis").onclick = function () {
     av.dnd.clickedMenu = "addToAnalysisView";
     av.post.addUser('Button: mnFzAddPopEx');
@@ -1203,9 +1172,10 @@ av.ui.feedback = function(){
   };
 
   //---------------------------------------------------------------------------------------- Restart Avida web worker --
-
+  // 2023_0702 Diane does not think this works or is used
   //http://www.w3schools.com/html/tryit.asp?filename=tryhtml5_webworker
   av.ui.restartAvida = function () {
+    console.log('================================================================= av.restartAvida ==');
     av.dom.userErrorMsg.innerHTML = 'reloading Avida . . .';
 
     av.aww.uiWorker.terminate();
@@ -1224,7 +1194,7 @@ av.ui.feedback = function(){
 
     //need to 'start new experiment'
     av.ptd.resetDishFn(false);  //do not send reset to avida; avida restarted
-    restartAvidaDialog.hide();    //tiba check this
+    restartAvidaDialog.hide();    //this is not useds
   };
 
   document.getElementById('restartAvidaNow').onclick = function () {
@@ -2998,7 +2968,6 @@ av.ui.feedback = function(){
 
   av.fwt.clearResourceConstants();
 
-  // Geometry is no longer a drop down. Now it is an opton in Supply Type; tiba delte before 2022
   // document.getElementById('allSugarGeometry').style.display = 'none';
   // document.getElementById('geometrySgr').style.display = 'none';
 

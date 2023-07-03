@@ -156,7 +156,6 @@ h1, h2, h3, h4, h5, h6 {
 #allAvidaContainer {
    margin: 0;
    padding: 0;
-   /* cursor: pointer;  */ /* need to delete completely tiba */
 }
 
 /* trying classe to get headers back to to what they should be 
@@ -295,8 +294,7 @@ h1, h2, h3, h4, h5, h6 {
    width: 100px;
  }
  
-<<<<<<< HEAD
- /* Tiba tiba needs to delete all dojo and dijit references.  */
+ /* Tiba needs to delete all dojo and dijit references.  */
  .dojoDndItem {
    padding: 3px;
  }

@@ -88,7 +88,7 @@ html {
 .rightInfoHolder { grid-area: rightInfoHolder; }
 .navColClass {grid-area: navColID; }
 #dragbarLeft {grid-area: dragbarLeft; }    /* Yemi: float: right; */
-#dragbarRight {/* grid-area: dragbarRight; */  float: right; }  /* Yemi: float: right; automerge keeps removing this one tiba grid-area: dragbarRight; that was an intentional remove*/
+#dragbarRight {/* grid-area: dragbarRight; */  float: right; }  /* Yemi: float: right; automerge keeps removing this one Diane grid-area: dragbarRight; that was an intentional remove*/
 
 .all2rit{
   display: grid;
@@ -294,8 +294,7 @@ html {
   background: #F5F5F5; /* lavender; */
   border: 1px solid #AAA;
   height: 100%;   
-  width: 100%;     /* tiba remove ? */
-  /* resize: horizontal; */     /* diane removed */
+  width: 100%;     
   min-width: 160px; /* yemi: attempted to limit how much the user could shrink the left nav bar, but failed so far*/
   max-width: 350px;
 }
@@ -631,7 +630,7 @@ html {
 
 .popBenchCol{
   background: #F5F5F5; /* lightgoldenrodyellow; */
-  flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as {}flex:1;} both prevent resize */ 
+  flex: 1;                 /* fills remaining space; {flex:1 1 auto;} is the same as (flex:1;) both prevent resize */ 
   /* flex: 0 1 auto;       should scale with window size, but does not do what I want???? */
   /* border: 1px solid #AAA; */ /* yemi: removed border */
   display: flex;
@@ -639,7 +638,6 @@ html {
   width: 100%;
   max-height: 100%;
   overflow:hidden;
-  /*max-width: 430px;   /* tiba; temp fix will need to change this later */
 }
 
 .benchPopTopRow {
@@ -996,7 +994,7 @@ table.sotTopTbCls {
    padding-left: 1px;
    max-height: 15px;    /* from noWrapR */
    overflow: hidden;
-   width: 100%;   /*tiba remove? */
+   width: 100%;
  }
  
  .sotL {
