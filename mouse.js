@@ -221,9 +221,11 @@
     return target;
   };
 
+  
   av.mouse.traceSelected = function(from) {
     'use strict';
     if (av.dbg.flg.mouse) { console.log('mouse:', from, 'called av.mouse.traceSelected'); }
+    console.log('mouse:', from, 'called av.mouse.traceSelected');
     av.dnd.empty(av.dnd.activeOrgan);
     //Put name of offspring in OrganCurrentNode
     var container = '#' + av.dnd.activeOrgan.id;
@@ -243,8 +245,8 @@
     av.fzr.actOrgan.actDomid = domid;
   };
 
-  av.mouse.traceSelectedParent = function(from) {
-    if (av.dbg.flg.mouse) { console.log('mouse:', from, 'called av.mouse.traceSelectedParent'); }
+  av.mouse.traceParentSelectFn = function(from) {
+    if (av.dbg.flg.mouse) { console.log('mouse:', from, 'called av.mouse.traceParentSelectFn'); }
     av.dnd.empty(av.dnd.activeOrgan);
     var container = '#' + av.dnd.activeOrgan.id;
     var domid = av.parents.domid[av.mouse.ParentNdx];
@@ -262,6 +264,7 @@
     av.fzr.actOrgan.fzDomid = av.parents.domid[av.mouse.ParentNdx];
   };
 
+  //------------------------------------------------------------------- process drag ancestor or kid to Organism Icon --
   // yemi: 'offspring' is for organism page, 'kid' for population page
   av.mouse.kidMouse = function (evt, from){
     'use strict';
@@ -269,6 +272,7 @@
     var target = '';
     if (av.dbg.flg.mouse) console.log('in KidMouse', evt.target.id, evt);
     if (av.grd.kidGenome === undefined) {
+      console.log('av.grd.kidGnome is undefined');
       return target;
     }
     if (5 < av.grd.kidGenome.length) {
@@ -390,7 +394,7 @@
     //-------------------------------------------- organism view
     else if ('organIcon' == evt.target.id) {
       av.post.addUser('Moved ancestor to Organsim View');
-      av.mouse.traceSelectedParent('av.mouse.ParentMouse');
+      av.mouse.traceParentSelectFn('av.mouse.ParentMouse');
     };
   };
 

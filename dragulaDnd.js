@@ -397,12 +397,18 @@ jQuery(document).ready(function($) {
         av.dnd.selectedId = eleClck.target.id;
       };
       if ('' == av.dnd.selectedId) {
-      document.getElementById('mnFzAddFzItem').disabled = true;
-      document.getElementById('mnFzAddPopAnalysis').disabled = true;
-      document.getElementById('mnFzAddGenomeView').disabled = true;
+        document.getElementById('mnFzAddFzItem').disabled = true;
+        document.getElementById('mnFzAddPopAnalysis').disabled = true;
+        document.getElementById('mnFzAddGenomeView').disabled = true;
+        document.getElementById('mnFzRename').disabled = true; 
+        document.getElementById('mnFzExport').disabled = true; 
+        document.getElementById('mnFzDelete').disabled = true; 
       }
       else {
         document.getElementById('mnFzAddFzItem').disabled = false;
+        document.getElementById('mnFzRename').disabled = false; 
+        document.getElementById('mnFzExport').disabled = false; 
+        document.getElementById('mnFzDelete').disabled = false;         
         switch (av.dnd.selectedType) {
           case "c": 
             break;
@@ -434,6 +440,9 @@ jQuery(document).ready(function($) {
         av.fzr.selectedType = event.target.classList[1];
         av.fzr.selectedId = event.target.id;
         document.getElementById('mnFzAddFzItem').disabled = false;
+        document.getElementById('mnFzRename').disabled = false; 
+        document.getElementById('mnFzExport').disabled = false; 
+        document.getElementById('mnFzDelete').disabled = false;         
         if ('g' === av.fzr.selectedType) 
           { document.getElementById('mnFzAddGenomeView').disabled = false; }
         else
@@ -684,7 +693,7 @@ jQuery(document).ready(function($) {
           av.dnd.selectedId = '';
         } else if (av.dnd.gridSelected != "" && av.dnd.gridSelected != undefined) {
           if (av.dnd.gridSelected == "parent") { // if ancestor is selected
-            av.mouse.traceSelectedParent('av.dnd.FzAddExperimentFn');
+            av.mouse.traceParentSelectFn('av.dnd.FzAddExperimentFn');
           } else if (av.dnd.gridSelected == "kid") { // if kid is selected
             av.mouse.traceSelected('av.dnd.FzAddExperimentFn');
           }
@@ -1510,6 +1519,7 @@ jQuery(document).ready(function($) {
   //----------------------------------------------------------------------------------------- end av.dnd.landTrashCan --
 
   //============================================================================================= Adding context menu ==
+  // need to re-write this as dojo is going away. 
   //---------------------------------------------------------------------------------------------- av.dnd.contextMenu --
   av.dnd.contextMenu = function(target, fzItemID, from) {
     'use strict';

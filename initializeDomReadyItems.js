@@ -258,7 +258,10 @@
 
     document.getElementById('mnFzOffspring').disabled = true;
     document.getElementById('mnFzPopulation').disabled = true;
-    document.getElementById('mnFzAddFzItem').disabled = true; 
+    document.getElementById('mnFzAddFzItem').disabled = true;
+    document.getElementById('mnFzRename').disabled = true; 
+    document.getElementById('mnFzExport').disabled = true; 
+    document.getElementById('mnFzDelete').disabled = true; 
     
     //document.getElementById('mnFzOrganism').disabled = true;   ///???
     //document.getElementById('mnFzAddConfigEx').disabled = true;   ///???

@@ -416,14 +416,14 @@ require([
       });
 
   //---------------------------------------------------------------------------- end .hover change mouse cursor shape --
-
   //av.mouse down on the grid
   $(av.dom.gridCanvas).on('mousedown', function (evt) {
     av.post.addUser('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
     //console.log('mousedown: gridCanvas(' + evt.offsetX + ', ' + evt.offsetY + ')');
-    av.mouse.downGridCanvasFn(evt, 'av.mouse.downGridCanvasFn');
+    av.mouse.downGridCanvasFn(evt, 'av.dom.gridCanvis_on_mousedown');
   });
 
+  //------------------------------------------------------------------ mouse released - process drag-n-drop if needed --
   //When mouse button is released, return cursor to default values
   $(document).on('mouseup touchend', function (evt) {
     'use strict';
@@ -514,25 +514,9 @@ require([
   };
   //end from Avida-ED 3
 
-/* version Yemi fixed. Delete in 2022
-  window.onbeforeunload__ = function (event) {
-  console.log('window.onbeforeunload: av.ui.sendEmailFlag =', av.ui.sendEmailFlag, '; av.fzr.saveState = ', av.fzr.saveState);
-    if (!av.ui.sendEmailFlag) {
-      if ('no' === av.fzr.saveState || 'maybe' === av.fzr.saveState) {
-        return 'Your workspace may have changed sine you last saved. Do you want to save first?';
-
-        if (event.stopPropagation) {
-          event.stopPropagation();
-          event.preventDefault();
-        }
-      };      
-    }
-  };
-*/
-
   // if (av.dbg.flg.root) { console.log('Root: before Error Logging'); }
   //********************************************************************************************************************
-  // Error logging
+  //                                                                                                     Error logging  
   //********************************************************************************************************************
   //https://bugsnag.com/blog/js-stacktracess
   //http://blog.bugsnag.com/js-stacktraces
@@ -614,7 +598,6 @@ require([
     }
   };
   //----------------------------------------------------------------------------------------- end av.ui.problemWindow --
-
 
   //--------------------------------------------------------------------------------------------- av.post.emailWindow --
   av.post.emailWindow = function (from) {
@@ -726,12 +709,14 @@ console.log('Root: before postPost');
       + '\n' + av.debug.dTail;
   };
 
-  //**********************************************************************************************************************
-  // Menu Buttons handling
-  //**********************************************************************************************************************
+  //********************************************************************************************************************
+  //                                                                                                 End Error logging  
+  //********************************************************************************************************************
 
-  // if (av.dbg.flg.root) { console.log('Root: before mnFlOpenDefaultWS'); }
+  //===================================================================== start processing main dropdown menu buttons ==
+  // if (av.dbg.flg.root) { console.log('Root: before handling main menu buttons'); }
 
+  //----------------------------------------------------------------------------------- process file dropdown buttons --
   document.getElementById("mnFlOpenDefaultWS").onclick = function () {
     "use strict";
     av.post.addUser("Button: mnFlOpenDefaultWS");
@@ -785,8 +770,7 @@ console.log('Root: before postPost');
     document.getElementById('importFzrItem').click();
   };
 
-  //--------------------------------------------------------------------------------------------------------------------
-  // Save current workspace (mnFlSaveWorkspace)
+  //------------------------------------------------------------------------------------------ Save current workspace --
   document.getElementById('mnFlSaveWorkspace').onclick = function () {
     if (!av.brs.isSafari) {
       //if (true) {
@@ -801,8 +785,7 @@ console.log('Root: before postPost');
     console.log('----------------------------------------------------------filesaver supported?', e);
   }
 
-  //--------------------------------------------------------------------------------------------------------------------
-  // Save current workspace with a new name
+  //------------------------------------------------------------------------------------ save workspace with new name --
   document.getElementById('mnFlSaveAs').onclick = function () {
     if (!av.brs.isSafari) {
       //if (true) {
@@ -838,32 +821,14 @@ console.log('Root: before postPost');
     document.getElementById("mnFlExportGraphModalID").style.display = "none";
   };
 
-  //----------------------------------------- Testing & Development Tools that are hidden from from User .---------------
-  // av.dom.mnHpDebug.onclick = function () {
-  //   console.log('in av.dom.mnHpDebug.onclick');
-  //   if ('visible' === av.dom.mnDebug.style.visibility) {
-  //     // av.doj.mnDebug.style.visibility = 'hidden';
-  //     // document.getElementById('mnDebug').style.visibility = 'hidden';
-  //     av.dom.mnDebug.style.visibility = 'hidden';
-  //     document.getElementById('mnHpDebug').label = 'Show debug menu';
-  //     // dijit.byId('mnHpDebug').set('label', 'Show debug menu');
-  //     av.post.addUser('Button: mnHpDebug: now hidden; avidaED.js');
-  //   } else {
-  //     document.getElementById('mnDebug').style.visibility = 'visible';
-  //     document.getElementById('mnHpDebug').label = 'Hide debug menu';
-  //     av.post.addUser('Button: mnHpDebug: now visible');
-  //   }
-  // };
 
   av.ui.where = function (domobj) {
     // placeholder that was to return the cell ID in the grid; this was never done. 
     console.log('domobj=', domobj);
   };
 
-  // if (av.dbg.flg.root) { console.log('Root: before Help drop down menu'); }
-  //********************************************************************************************************************
-  // Help Drop down menu buttons
-  //********************************************************************************************************************
+//--------------------------------------------------------------------------------------------- Avida-ED menu buttons --
+  // if (av.dbg.flg.root) { console.log('Root: before Avidia-ED drop down menu'); }
   av.ui.aboutAvidaED = function(from) {
     av.post.addUser('Button: display About Avida-ED from:', from);
     document.getElementById('aboutAvidaED_ModalID').style.display = 'block';
@@ -873,27 +838,14 @@ console.log('Root: before postPost');
     console.log('in av.ui.aboutAvidaED: from=', from);    
   };
 
-  //document.getElementById('aboutAvidaED_Cancel').onclick = function () {
   av.ui.aboutAvidaED_Close = function() {
     document.getElementById('aboutAvidaED_ModalID').style.display = 'none';
   };
 
-  //====refactored=====
   document.getElementById("mnAePreferences").onclick = function () {
     av.post.addUser("Button: mnAePreferences");
     //console.log('in mnAePreferences.click');
     document.getElementById('preferences_ModalID').style.display = 'block';
-  };
-
-  av.ui.email = function() {
-    av.post.addUser('Button: mnHpAbout');
-    av.ui.emailAvidaED();
-    document.getElementById('email_ModalID').style.display = 'block';
-    console.log('in av.ui.email');    
-  };
-
-  av.ui.closeSendModalFn = () => {
-    document.getElementById('sendLogModalID').style.display = 'none';
   };
 
   av.sgr.complexityChange = function (domObj) {
@@ -909,6 +861,20 @@ console.log('Root: before postPost');
 
   av.ui.closePreferences = function () {
     document.getElementById('preferences_ModalID').style.display = 'none';
+  };
+
+
+//------------------------------------------------------------------------------------------------- help menu buttons --
+
+  av.ui.email = function() {
+    av.post.addUser('Button: mnHpAbout');
+    av.ui.emailAvidaED();
+    document.getElementById('email_ModalID').style.display = 'block';
+    console.log('in av.ui.email');    
+  };
+  
+  av.ui.closeSendModalFn = () => {
+    document.getElementById('sendLogModalID').style.display = 'none';
   };
 
 av.ui.feedback = function(){
@@ -934,6 +900,25 @@ av.ui.feedback = function(){
   av.ui.problemWindow("av.ui.feedback");
   // only shows one line = prompt('Please put this in an e-mail to help us improve Avida-ED: Copy to clipboard: Ctrl+C, Enter', '\nto: ' + av.fio.mailAddress + '\n' + av.debug.log);
 };
+
+  //------------------------------------------------------ Testing & Development Tools that are hidden from from User --
+  // av.dom.mnHpDebug.onclick = function () {
+  //   console.log('in av.dom.mnHpDebug.onclick');
+  //   if ('visible' === av.dom.mnDebug.style.visibility) {
+  //     // av.doj.mnDebug.style.visibility = 'hidden';
+  //     // document.getElementById('mnDebug').style.visibility = 'hidden';
+  //     av.dom.mnDebug.style.visibility = 'hidden';
+  //     document.getElementById('mnHpDebug').label = 'Show debug menu';
+  //     // dijit.byId('mnHpDebug').set('label', 'Show debug menu');
+  //     av.post.addUser('Button: mnHpDebug: now hidden; avidaED.js');
+  //   } else {
+  //     document.getElementById('mnDebug').style.visibility = 'visible';
+  //     document.getElementById('mnHpDebug').label = 'Hide debug menu';
+  //     av.post.addUser('Button: mnHpDebug: now visible');
+  //   }
+  // };
+
+//--------------------------------------------------------------------------------------------- end help menu buttons --
 
   //------------------------------------------------------------------------------------------------------ debug menu --
   document.getElementById('mnDbThrowData').onclick = function () {
@@ -1080,6 +1065,7 @@ av.ui.feedback = function(){
     av.ptd.FrConfigFn('fzModSaveConfig.onClick');
   };
 
+
   //------------------------------------------------------------------------------------ processing mnFZ menu buttons --
   //Drop down menu to save a configuration item
   document.getElementById("mnFzConfig").onclick = function () {
@@ -1170,6 +1156,8 @@ av.ui.feedback = function(){
     av.ui.mainBoxSwap('analysisBlock', 'mnFzAddPopAnalysis.onclick');
     av.anl.AnaChartFn();
   };
+
+  //======================================================================= end processing main dropdown menu buttons 
 
   //---------------------------------------------------------------------------------------- Restart Avida web worker --
   // 2023_0702 Diane does not think this works or is used
@@ -2502,12 +2490,12 @@ av.ui.feedback = function(){
   //                                        Menu buttons that call for genome/Organism trace
   //----------------------------------------------------------------------------------------------------------------------
   //
-  //------------------------------------------------------------------------------------------------- mnCnOrganismTrace --
+  //----------------------------------------------------------------------------------------------- mnCnOrganismTrace --
 
-  // Put Selected Organism in Organism View 
+  // Put Selected Organism in Organism View       -  works for kid, but not for parent  (tiba)
   document.getElementById('mnCnOrganismTrace').onclick = function () {
     av.post.addUser('Button: mnCnOrganismTrace');
-    console.log('control drop down menu clicked');
+    console.log('mnCnOrganismTrace clicked');
     av.mouse.traceSelected('mnCnOrganismTrace.onclick');
     av.ui.mainBoxSwap('organismBlock','mnCnOrganismTrace');
     av.ind.organismCanvasHolderSize('mnCnOrganismTrace');

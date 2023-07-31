@@ -1,5 +1,4 @@
   var av = av || {};  //incase av already exists
-  var dijit = dijit || {}; 
 
   // if (av.dbg.flg.root) { console.log('Root: before av.mouse.downOrganCanvasFn'); }
   av.mouse.downOrganCanvasFn = function(evt) {
@@ -119,6 +118,13 @@
         if (-1 < av.mouse.ParentNdx) { //selected a parent, check for dragging
           //av.mouse.selectedDadMouseStyle();
           av.mouse.Picked = 'parent';
+          console.log('parent', av.mouse.ParentNdx);
+          document.getElementById('mnCnOrganismTrace').disabled=false;
+          document.getElementById('mnFzOrganism').disabled=false;            
+        }
+        else {
+          document.getElementById('mnCnOrganismTrace').disabled=true;
+          document.getElementById('mnFzOrganism').disabled=true;                      
         }
       }
       else {  //look for decendents (kids)
@@ -141,9 +147,10 @@
             av.grd.kidGenome = '0,heads_default,wzcagcccccccccaaaaaaaaaaaaaaaaaaaaccccccczvfcaxgab';  //ancestor
             // mouse down on organism
             av.mouse.Picked = 'kid';
-            if (av.dbg.flg.mouse) console.log('kid', av.grd.kidName, av.grd.kidGenome);
+            if (av.dbg.flg.mouse) { console.log('kid', av.grd.kidName, av.grd.kidGenome); }
             document.getElementById('mnFzOrganism').disabled=false;
             document.getElementById('mnCnOrganismTrace').disabled=false;
+            console.log('kid', av.grd.kidName, av.grd.kidGenome);
           }
         }
         else {
