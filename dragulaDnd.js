@@ -314,6 +314,7 @@ jQuery(document).ready(function($) {
     }
 
     // Special case for gridCanvas
+    // note the same function is also in avidaED.js
     $(document).on('mouseup touchend', function (evt) {
       'use strict';
       document.body.style.cursor = "default"; // want the mouse to be default after mouseup
@@ -695,7 +696,7 @@ jQuery(document).ready(function($) {
           if (av.dnd.gridSelected == "parent") { // if ancestor is selected
             av.mouse.traceParentSelectFn('av.dnd.FzAddExperimentFn');
           } else if (av.dnd.gridSelected == "kid") { // if kid is selected
-            av.mouse.traceSelected('av.dnd.FzAddExperimentFn');
+            av.mouse.traceKidSelectFn('av.dnd.FzAddExperimentFn');
           }
         }
         break;
@@ -841,7 +842,7 @@ jQuery(document).ready(function($) {
     av.dnd.insertToDOM(av.dnd.activeOrgan, el);
     // update active organ
     av.fzr.actOrgan.actDomid = el.id;
-    av.dnd.updateFromFzrOrganism(el);
+    av.dnd.updateFromFzrOrganism(el, 'av.dnd.landActiveOrgan');
     av.msg.doOrgTrace('av.dnd.landActiveOrgan');
   };
   //------------------------------------------------------------------------------------------ av.dnd.landActiveOrgan --
@@ -875,7 +876,7 @@ jQuery(document).ready(function($) {
     av.fzr.actOrgan.actDomid = el.id;
     if (source === av.dnd.fzOrgan) { 
       console.log('before av.dnd.updateFromFzrOrganism el.id');
-      av.dnd.updateFromFzrOrganism(el); 
+      av.dnd.updateFromFzrOrganism(el, 'av.dnd.landOrganIcon'); 
     }
     if (source === av.dnd.ancestorBox) {
       var Ndx = av.parents.domid.indexOf(parentID);
@@ -883,6 +884,7 @@ jQuery(document).ready(function($) {
       av.fzr.actOrgan.name = av.parents.name[Ndx];
       av.fzr.actOrgan.genome = av.parents.genome[Ndx];
       if (av.debug.dnd) { console.log('fzr', av.fzr, '; parents', av.parents, '; ndx', Ndx); }
+      console.log('fzr', av.fzr, '; parents', av.parents, '; ndx', Ndx);
     }
     // change to organism page
     av.ui.mainBoxSwap('organismBlock','av.dnd.landOrganIcon');
@@ -899,10 +901,11 @@ jQuery(document).ready(function($) {
   //---------------------------------------------------------------------------------------- end av.dnd.landOrganIcon --
 
   //------------------------------------------------------------------------------------ av.dnd.updateFromFzrOrganism --
-  av.dnd.updateFromFzrOrganism = function (el) {
+  av.dnd.updateFromFzrOrganism = function (el, from) {
     'use strict';
     var domId = el.id;
     var dir = av.fzr.dir[domId];
+    console.log('DnD:', from, 'called av.dnd.updateFromFzrOrganism: domId', domId, '; dir', dir);
     if (av.debug.dnd) { console.log('DnD: domId', domId, '; dir', dir); }
     av.fzr.actOrgan.name = av.fzr.file[dir+'/entryname.txt'];
     av.fzr.actOrgan.genome = av.fzr.file[dir+'/genome.seq'];

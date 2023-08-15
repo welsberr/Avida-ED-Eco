@@ -438,7 +438,7 @@ require([
     // --------- process if something picked to dnd ------------------
     if ('parent' == av.mouse.Picked) {
       av.mouse.Picked = '';
-      av.mouse.ParentMouse(evt, av);
+      av.mouse.ParentMouse(evt, 'avidaED.js_mouseup touchend');
       if ('gridCanvas' == evt.target.id || 'trashCanImage' == evt.target.id) {
         av.grd.drawGridSetupFn('on mouseup where evt.target.id=gridCanvas or trashCanImage');
       } else if ('organIcon' == evt.target.id) {
@@ -446,8 +446,7 @@ require([
         av.ui.mainBoxSwap('organismBlock','mouseup touchend gridparent');
         av.ind.organismCanvasHolderSize('mouseup_organIcon_parent');
         av.ui.adjustOrgInstructionTextAreaSize();
-        if (av.dbg.flg.mouse)
-          console.log('from parent', av.parent, '; fzr', av.fzr);
+        if (av.dbg.flg.mouse) {console.log('from parent', av.parent, '; fzr', av.fzr); }
         av.post.addUser('Dragged item to Organism Icon');
         av.msg.doOrgTrace('mouseup touchend parent');  //request new Organism Trace from Avida and draw that.
       }
@@ -460,15 +459,15 @@ require([
     // this is for population page
     else if ('kid' == av.mouse.Picked) {
       av.mouse.Picked = '';
-      target = av.mouse.kidMouse(evt, av.dnd, av.fzr, av.grd);
+      target = av.mouse.kidMouse(evt, 'mouseup touchend kid');
       if (av.dbg.flg.mouse)
         console.log('kidMouse: target', target, '===============', evt.target.id);
       if ('organIcon' == evt.target.id) {
         //Change to Organism Page
-        av.ui.mainBoxSwap('organismBlock', 'mouseup touchend organIcon kid');
-        av.ind.organismCanvasHolderSize('mouseup_organIcon_Kid');
+        av.ui.mainBoxSwap('organismBlock', 'mouseup touchend kid organIcon');
+        av.ind.organismCanvasHolderSize('mouseup touchend kid organIcon');
         av.ui.adjustOrgInstructionTextAreaSize();
-        av.msg.doOrgTrace('mouseup touchend kid');  //request new Organism Trace from Avida and draw that.
+        av.msg.doOrgTrace('mouseup touchend kid organIcon');  //request new Organism Trace from Avida and draw that.
       } 
     }
     av.mouse.Picked = '';
@@ -2496,10 +2495,21 @@ av.ui.feedback = function(){
   document.getElementById('mnCnOrganismTrace').onclick = function () {
     av.post.addUser('Button: mnCnOrganismTrace');
     console.log('mnCnOrganismTrace clicked');
-    av.mouse.traceSelected('mnCnOrganismTrace.onclick');
+    console.log('av.mouse=', av.mouse);
+    if ('parent' == av.mouse.Picked) { 
+      av.mouse.traceParentSelectFn('mnCnOrganismTrace.onclick');
+      console.log('after av.mouse.traceParentSelectFn');
+    }
+    else { 
+      av.mouse.traceKidSelectFn('mnCnOrganismTrace.onclick'); 
+      console.log('after av.mouse.traceKidSelectFn');
+    }
     av.ui.mainBoxSwap('organismBlock','mnCnOrganismTrace');
     av.ind.organismCanvasHolderSize('mnCnOrganismTrace');
     av.ui.adjustOrgInstructionTextAreaSize();
+    
+    // need to get data from parent into av.fzr.actOrgan.genome
+    console.log('before calling av.msg.doOrgTrace: av.fzr.actOrgan =', av.fzr.actOrgan);
     av.msg.doOrgTrace('mnCnOrganismTrace');  //request new Organism Trace from Avida and draw that.
   };
 

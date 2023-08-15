@@ -118,7 +118,7 @@
         if (-1 < av.mouse.ParentNdx) { //selected a parent, check for dragging
           //av.mouse.selectedDadMouseStyle();
           av.mouse.Picked = 'parent';
-          console.log('parent', av.mouse.ParentNdx);
+          console.log('av.mouse.Picked = parent', ';   av.mouse.ParentNdx =', av.mouse.ParentNdx);
           document.getElementById('mnCnOrganismTrace').disabled=false;
           document.getElementById('mnFzOrganism').disabled=false;            
         }
@@ -128,16 +128,18 @@
         }
       }
       else {  //look for decendents (kids)
-        if (av.dbg.flg.mouse) console.log('kidSelected; selectedNdx', av.grd.selectedNdx, '________________________________');
-        if (av.dbg.flg.mouse) console.log('kidSelected; av.grd.msg.ancestor[av.grd.selectedNdx]', av.grd.msg.ancestor.data[av.grd.selectedNdx]);
+        if (av.dbg.flg.mouse) { console.log('kidSelected; selectedNdx', av.grd.selectedNdx, '________________________________'); }
+        if (av.dbg.flg.mouse) { console.log('kidSelected; av.grd.msg.ancestor[av.grd.selectedNdx]', av.grd.msg.ancestor.data[av.grd.selectedNdx]); }
+        console.log('kidSelected; selectedNdx', av.grd.selectedNdx, '________________________________');
         //find out if there is a kid in that cell
         //if ancestor not null then there is a 'kid' there.
         //if (null != av.grd.msg.ancestor.data[av.grd.selectedNdx]) {
         if (av.grd.msg.ancestor) {
-          //console.log('SelectedNdx', av.grd.selectedNdx, '; ancestor', av.grd.msg.ancestor.data[av.grd.selectedNdx]);
+          console.log('SelectedNdx', av.grd.selectedNdx, '; ancestor', av.grd.msg.ancestor.data[av.grd.selectedNdx]);
           if ('-' == av.grd.msg.ancestor.data[av.grd.selectedNdx] || '-' == av.grd.msg.ancestor.data[av.grd.selectedNdx]) {
             document.getElementById('mnCnOrganismTrace').disabled=true;
-            document.getElementById('mnFzOrganism').disabled=true;            
+            document.getElementById('mnFzOrganism').disabled=true;   
+            console.log('av.grd.msg.ancestor.data[av.grd.selectedNdx] = ', av.grd.msg.ancestor.data[av.grd.selectedNdx], '; av.grd.selectedNdx =', av.grd.selectedNdx);
           }
           else {
             if (av.dbg.flg.mouse) console.log('kid found');

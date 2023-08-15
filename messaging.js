@@ -566,7 +566,7 @@ av.msg.exportExpr = function (popName) {
   av.debug.log += '\n--uiA: grdUpdate:' + av.msg.previousUpdate + '; \n' + av.utl.jsonStringify(request);
 };
 
-//fio.uiWorker function
+//fzr.actOrgan must be defined before this function is called. 
 av.msg.doOrgTrace = function (from) {
   'use strict';
   if (av.fzr.actOrgan.genome) {

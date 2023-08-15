@@ -221,12 +221,15 @@
     return target;
   };
 
-  
-  av.mouse.traceSelected = function(from) {
+  //-------------------------------------------------------- part of setup for showing kid from grid in organism view --
+  av.mouse.traceKidSelectFn = function(from) {
     'use strict';
-    if (av.dbg.flg.mouse) { console.log('mouse:', from, 'called av.mouse.traceSelected'); }
-    console.log('mouse:', from, 'called av.mouse.traceSelected');
+    if (av.dbg.flg.mouse) { console.log('mouse:', from, 'called av.mouse.traceKidSelectFn'); }
+    console.log('mouse:', from, 'called av.mouse.traceKidSelectFn');
+    console.log('av=', av);
+    console.log('before av.dnd.activeOrgan ', av.dnd.activeOrgan);
     av.dnd.empty(av.dnd.activeOrgan);
+    console.log('after av.dnd.activeOrgan ', av.dnd.activeOrgan);
     //Put name of offspring in OrganCurrentNode
     var container = '#' + av.dnd.activeOrgan.id;
     // Add an entry to av.dnd.containerMap
@@ -243,11 +246,16 @@
     av.fzr.actOrgan.name = av.grd.kidName;
     av.fzr.actOrgan.fzDomid = "";
     av.fzr.actOrgan.actDomid = domid;
+    console.log('av.fzr =', av.fzr);
   };
 
   av.mouse.traceParentSelectFn = function(from) {
     if (av.dbg.flg.mouse) { console.log('mouse:', from, 'called av.mouse.traceParentSelectFn'); }
+    console.log('mouse:', from, 'called av.mouse.traceParentSelectFn');
+    console.log('av=', av);
+    console.log('before av.dnd.activeOrgan ', av.dnd.activeOrgan, '; av.dnd.activeOrgan.id =', av.dnd.activeOrgan.id);
     av.dnd.empty(av.dnd.activeOrgan);
+    
     var container = '#' + av.dnd.activeOrgan.id;
     var domid = av.parents.domid[av.mouse.ParentNdx];
     var type = 'g';
@@ -258,58 +266,24 @@
     av.dnd.containerMap[container][domid] = {'name': av.parents.name[av.mouse.ParentNdx] , 'type': 'g'};
     $(container).append(`<div class="item ${type}" id="${domid}"> <img src='images/Avida-ED-ancestor-icon.png' class='AvidianIcon'> ${av.parents.name[av.mouse.ParentNdx]} </div>`)
     av.fzr.actOrgan.actDomid = domid;
+    console.log('av.parents=', av.parents)
     //genome data should be in av.parents.genome[av.mouse.ParentNdx];
     av.fzr.actOrgan.genome = av.parents.genome[av.mouse.ParentNdx];
     av.fzr.actOrgan.name = av.parents.name[av.mouse.ParentNdx];
     av.fzr.actOrgan.fzDomid = av.parents.domid[av.mouse.ParentNdx];
+    av.fzr.actOrgan.actDomid = domid;
+    console.log('av.mouse.ParentNdx=',av.mouse.ParentNdx, '; av.parents ', av.parents);
+    console.log('av.fzr =', av.fzr);
+
+
   };
 
-  //------------------------------------------------------------------- process drag ancestor or kid to Organism Icon --
-  // yemi: 'offspring' is for organism page, 'kid' for population page
-  av.mouse.kidMouse = function (evt, from){
-    'use strict';
-    console.log(from, 'called av.mouse.kidMouse');
-    var target = '';
-    if (av.dbg.flg.mouse) console.log('in KidMouse', evt.target.id, evt);
-    if (av.grd.kidGenome === undefined) {
-      console.log('av.grd.kidGnome is undefined');
-      return target;
-    }
-    if (5 < av.grd.kidGenome.length) {
-      if ('organIcon' == evt.target.id) {
-        target = 'organIcon';
-        av.post.addUser('Moved something to Organism Icon');
-        av.mouse.traceSelected('av.mouse.kidMouse');
-      }
-      else { // look for target in the freezer
-        var found = false;
-        if (av.dbg.flg.mouse) console.log('target.id',evt.target.id, '; av.fzr.domid', av.fzr.domid);
-        //note below index of 0 indicates gridCanvas and if the target is canvas it should not be frozen
-        if (0 < av.mouse.kidTarget.indexOf(evt.target.id)) {found = true;}
-        else {
-          for (var dir in av.fzr.domid) {
-            //console.log('dir', dir);
-            if ((av.fzr.domid[dir].indexOf(evt.target.id) != -1) && ('g' == dir.substring(0, 1))) {
-              found = true;
-              break;
-            }
-          }
-        }
-        if (found) {
-          target = 'fzOrgan';
-          av.mouse.freezeTheKid();
-        }
-      }
-    }
-    else console.log('Kid->OrganismIcon: genome too short ', av.grd.kidGenome);
-    return target;
-  };
-
-  // possibly move to dragulaDnd just to keep all the dnd functions together?
+  //---------------------------------------- possibly move to dragulaDnd just to keep all the dnd functions together? --
   av.mouse.freezeTheKid = function () {
     "use strict";
     av.post.addUser('moved avidian from grid to freezer');
-    if (av.dbg.flg.mouse) console.log('in av.mouse.freezeTheKid: moved avidian from grid to freezer');
+    if (av.dbg.flg.mouse) { console.log('in av.mouse.freezeTheKid: moved avidian from grid to freezer'); }
+    console.log('in av.mouse.freezeTheKid: moved avidian from grid to freezer');
     //make sure there is a name
     var sName = av.dnd.namefzrItem(av.dnd.fzOrgan, av.grd.kidName);
     var avidian = prompt('Please name your avidian', sName);
@@ -348,14 +322,58 @@
     }
   };
 
+  //------------------------------------------------------------------------------- process drag kid to Organism Icon --
+  // yemi: 'offspring' is for organism page, 'kid' for population page
+  av.mouse.kidMouse = function (evt, from){
+    'use strict';
+    console.log(from, 'called av.mouse.kidMouse. evt.target.id =', evt.target.id, '; evt = ', evt);
+    var target = '';
+    if (av.grd.kidGenome === undefined) {
+      console.log('av.grd.kidGnome is undefined');
+      return target;
+    }
+    if (5 < av.grd.kidGenome.length) {
+      if ('organIcon' == evt.target.id) {
+        target = 'organIcon';
+        av.post.addUser('Moved something to Organism Icon');
+        av.mouse.traceKidSelectFn('av.mouse.kidMouse');
+      }
+      else { // look for target in the freezer
+        var found = false;
+        if (av.dbg.flg.mouse) console.log('target.id',evt.target.id, '; av.fzr.domid', av.fzr.domid);
+        //note below index of 0 indicates gridCanvas and if the target is canvas it should not be frozen
+        if (0 < av.mouse.kidTarget.indexOf(evt.target.id)) {found = true;}
+        else {
+          for (var dir in av.fzr.domid) {
+            //console.log('dir', dir);
+            if ((av.fzr.domid[dir].indexOf(evt.target.id) != -1) && ('g' == dir.substring(0, 1))) {
+              found = true;
+              break;
+            }
+          }
+        }
+        if (found) {
+          target = 'fzOrgan';
+          av.mouse.freezeTheKid();
+        }
+      }
+    }
+    else console.log('Kid->OrganismIcon: genome too short ', av.grd.kidGenome);
+    return target;
+  };
+
+  //-------------------------------------------------------------- process using menu button to move to Organism View --
+ 
+  //-------------------------------------------------------------------------- process drag ancestor to Organism Icon --
   av.mouse.ParentMouse = function (evt, from) {
     'use strict';
     if (!from) from = 'unknown';
-    if (av.dbg.flg.mouse) console.log(from, 'called av.mouse.ParentMouse', evt.target.id, evt);
+    if (av.dbg.flg.mouse) { console.log(from, 'called av.mouse.ParentMouse: target.id', evt.target.id, evt); }
+    console.log(from, 'called av.mouse.ParentMouse. evt.target.id = ', evt.target.id, '; evt =', evt);
     if ('gridCanvas' == evt.target.id) { // parent moved to another location on grid canvas
       av.mouse.UpGridPos = [evt.offsetX, evt.offsetY]; //not used for now
       //Move the ancestor on the canvas
-      av.mouse.findSelected(evt, 'av.mouse.ParentMouse');
+      av.mouse.findSelected(evt, 'av.mouse.ParentMouse');  // the location the parent will move to. 
       // look to see if this is a valid grid cell
       if (av.grd.selectedCol >= 0 && av.grd.selectedCol < av.grd.cols && av.grd.selectedRow >= 0 && av.grd.selectedRow < av.grd.rows) {
         if (av.dbg.flg.mouse) console.log('parentMouse, selected,',av.grd.selectedCol, av.grd.selectedRow, av.grd.selectedNdx);
@@ -394,7 +412,11 @@
     //-------------------------------------------- organism view
     else if ('organIcon' == evt.target.id) {
       av.post.addUser('Moved ancestor to Organsim View');
+      var domid = av.parents.domid[av.mouse.ParentNdx];
+      var container = '#' + av.dnd.ancestorBox.id;
+      console.log('domid =', domid, '; av.dnd.ancestorBox.id =', av.dnd.ancestorBox.id, '; av.parents =', av.parents);
       av.mouse.traceParentSelectFn('av.mouse.ParentMouse');
+      console.log('av.fzr.actOrgan');
     };
   };
 
