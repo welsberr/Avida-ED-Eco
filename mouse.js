@@ -2,12 +2,12 @@
   // Dad and kid are on the population page
   // Mom and Son are on the Individual Organism page
   av = av || {};  //incase av already exists
-
+  console.log('av=', av);
 
   //get domID list for freezer; just organism section
-  // if (av.dbg.flg.root) { console.log('Root: before av.mouse.frzOrgCurserSet'); }
-  av.mouse.frzOrgCurserSet = function(state) {
-    console.log('in av.mouse.frzOrgCurserSet: state is', state);
+  // if (av.dbg.flg.root) { console.log('Root: before av.mouse.fn.frzOrgCurserSet'); }
+  av.mouse.fn.frzOrgCurserSet = function(state) {
+    console.log('in av.mouse.fn.frzOrgCurserSet: state is', state);
     'use strict';
     for (var dir in av.fzr.domid) {
       //console.log('dir', dir, '; domid', av.fzr.domid[dir]);
@@ -19,9 +19,9 @@
   };
 
   //this does all entries in freezer.
-  av.mouse.frzCurserSet = function(state) {
+  av.mouse.fn.frzCurserSet = function(state) {
     'use strict';
-    console.log('in av.mouse.frzCurserSet: state is', state);
+    console.log('in av.mouse.fn.frzCurserSet: state is', state);
     for (var dir in av.fzr.domid) {
       console.log('dir', dir, '; domid', av.fzr.domid[dir]);
       if (null != document.getElementById(av.fzr.domid[dir])) {
@@ -31,9 +31,9 @@
     }
   };
 
-  av.mouse.setCursorStyle = function (shape, nodeList) {
+  av.mouse.fn.setCursorStyle = function (shape, nodeList) {
     "use strict";
-    console.log('in av.mouse.setCursorStyle: shape is', shape, 'nodeList =', nodeList);
+    console.log('in av.mouse.fn.setCursorStyle: shape is', shape, 'nodeList =', nodeList);
     if (nodeList !== undefined) {
       var lnght = nodeList.length;
       for (var ii = 0; ii < lnght; ii++) {
@@ -42,12 +42,12 @@
     }
   };
 
-  av.mouse.selectedDadMouseStyle = function () {
+  av.mouse.fn.selectedDadMouseStyle = function () {
     'use strict';
-    console.log('av.mouse.selectedDadMouseStyle');
-    av.mouse.setCursorStyle('no-drop', av.mouse.notDndPopList);
-    av.mouse.frzCurserSet('no-drop');
-    av.mouse.setCursorStyle('copy', av.mouse.dadTarget);
+    console.log('av.mouse.fn.selectedDadMouseStyle');
+    av.mouse.fn.setCursorStyle('no-drop', av.mouse.notDndPopList);
+    av.mouse.fn.frzCurserSet('no-drop');
+    av.mouse.fn.setCursorStyle('copy', av.mouse.dadTarget);
     if (1 < av.fzr.actConfig.actDomid.length) {document.getElementById(av.fzr.actConfig.actDomid).style.cursor = 'no-drop';}
   };
 
@@ -55,19 +55,19 @@
   av.mouse.selectedKidMouseStyle = function () {
     'use strict';
     console.log('in av.mouse.selectedKidMouseStyle');
-    av.mouse.setCursorStyle('no-drop', av.mouse.notDndPopList);
-    av.mouse.setCursorStyle('copy', av.mouse.kidTarget);
-    av.mouse.frzOrgCurserSet('copy');
+    av.mouse.fn.setCursorStyle('no-drop', av.mouse.notDndPopList);
+    av.mouse.fn.setCursorStyle('copy', av.mouse.kidTarget);
+    av.mouse.fn.frzOrgCurserSet('copy');
     if (1 < av.fzr.actConfig.actDomid.length) {document.getElementById(av.fzr.actConfig.actDomid).style.cursor = 'no-drop';}
   };
 
   av.mouse.sonCursorShape = function () {
     'use strict';
     console.log('in av.mouse.sonCursorShape');
-    av.mouse.setCursorStyle('no-drop', av.mouse.notDndIndList);
-    av.mouse.frzCurserSet('no-drop');
-    av.mouse.setCursorStyle('copy', av.mouse.sonTarget);
-    av.mouse.frzOrgCurserSet('copy');
+    av.mouse.fn.setCursorStyle('no-drop', av.mouse.notDndIndList);
+    av.mouse.fn.frzCurserSet('no-drop');
+    av.mouse.fn.setCursorStyle('copy', av.mouse.sonTarget);
+    av.mouse.fn.frzOrgCurserSet('copy');
     console.log('av.fzr.actOrgan.actDomid', av.fzr.actOrgan.actDomid, '; av.dnd.containerMap["#activeOrgan"]', av.dnd.containerMap["#activeOrgan"]);
     // if (1 < av.fzr.actOrgan.actDomid.length) {document.getElementById(av.fzr.actOrgan.actDomid).style.cursor = 'copy';}
   };
@@ -75,10 +75,10 @@
   av.mouse.makeCursorDefault = function () {
     'use strict';
     console.log('in av.mouse.makeCursorDefault');
-    av.mouse.frzCurserSet('default');  //arrow
-    av.mouse.setCursorStyle('default', av.mouse.dndTarget);
-    av.mouse.setCursorStyle('default', av.mouse.notDndPopList);
-    av.mouse.setCursorStyle('default', av.mouse.notDndIndList);
+    av.mouse.fn.frzCurserSet('default');  //arrow
+    av.mouse.fn.setCursorStyle('default', av.mouse.dndTarget);
+    av.mouse.fn.setCursorStyle('default', av.mouse.notDndPopList);
+    av.mouse.fn.setCursorStyle('default', av.mouse.notDndIndList);
   };
 
   //----------------------------------------------------------------------------------------------------------------------

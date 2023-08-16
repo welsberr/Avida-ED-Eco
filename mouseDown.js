@@ -116,7 +116,7 @@
         av.mouse.ParentNdx = av.mouse.findParentNdx('av.mouse.downGridCanvasFn');
         if (av.dbg.flg.mouse) { console.log('parent', av.mouse.ParentNdx); }
         if (-1 < av.mouse.ParentNdx) { //selected a parent, check for dragging
-          //av.mouse.selectedDadMouseStyle();
+          //av.mouse.fn.selectedDadMouseStyle();
           av.mouse.Picked = 'parent';
           console.log('av.mouse.Picked = parent', ';   av.mouse.ParentNdx =', av.mouse.ParentNdx);
           document.getElementById('mnCnOrganismTrace').disabled=false;

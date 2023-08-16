@@ -608,7 +608,7 @@ jQuery(document).ready(function($) {
     var targetId = target.id;
     var addedPopPage = false;
     var addedAnaPage = false;
-
+    console.log(from, 'called av.dnd.FzAddExperimentFn');
     switch (av.dnd.clickedMenu) {
       case "addOrgan":
         if (av.dnd.selectedId === "") {
@@ -678,6 +678,7 @@ jQuery(document).ready(function($) {
         }
         break;
       case "addToGenomeView":
+        console.log('in av.dnd.FzAddExperimentFn: av.dnd.gridSelected=', av.dnd.gridSelected);
         if (av.dnd.selectedId != "") {
           var classList = document.getElementById(av.dnd.selectedId).className.split(" ");
           var el = $.map($('#' + av.dnd.selectedId), (value, key) => { return value; })[0].cloneNode(true);

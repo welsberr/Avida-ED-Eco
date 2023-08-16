@@ -1356,6 +1356,7 @@ console.log('length =', av.ptd.muteScaleAry.length, 'max = ', av.ptd.muteScaleAr
   //-------------------------------------------------------------------------------------------- av.mousse.clearMouse --
 
 av.mouse = {};
+av.mouse.fn = {};
 
 av.mouse.clearMouse = function (av) {
   'use strict';

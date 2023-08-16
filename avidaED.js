@@ -437,6 +437,7 @@ require([
 
     // --------- process if something picked to dnd ------------------
     if ('parent' == av.mouse.Picked) {
+      console.log('av.mouse.Picked=', av.mouse.Picked, '; av.dnd.gridSelected=', av.dnd.gridSelected);
       av.mouse.Picked = '';
       av.mouse.ParentMouse(evt, 'avidaED.js_mouseup touchend');
       if ('gridCanvas' == evt.target.id || 'trashCanImage' == evt.target.id) {
@@ -454,10 +455,12 @@ require([
     // this is for organism page
     else if ('offspring' == av.mouse.Picked) {
       target = av.mouse.offspringMouse(evt, 'document.on_mouseup_touchend');
+      console.log('av.mouse.Picked=', av.mouse.Picked, '; av.dnd.gridSelected=', av.dnd.gridSelected);
       av.mouse.Picked = '';
     } 
     // this is for population page
     else if ('kid' == av.mouse.Picked) {
+      console.log('av.mouse.Picked=', av.mouse.Picked, '; av.dnd.gridSelected=', av.dnd.gridSelected);
       av.mouse.Picked = '';
       target = av.mouse.kidMouse(evt, 'mouseup touchend kid');
       if (av.dbg.flg.mouse)
@@ -470,6 +473,7 @@ require([
         av.msg.doOrgTrace('mouseup touchend kid organIcon');  //request new Organism Trace from Avida and draw that.
       } 
     }
+    console.log('av.mouse.Picked=', av.mouse.Picked, '; av.dnd.gridSelected=', av.dnd.gridSelected);
     av.mouse.Picked = '';
   });
 
@@ -2487,7 +2491,7 @@ av.ui.feedback = function(){
 
   //----------------------------------------------------------------------------------------------------------------------
   //                                        Menu buttons that call for genome/Organism trace
-  //----------------------------------------------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------------------------------------------------
   //
   //----------------------------------------------------------------------------------------------- mnCnOrganismTrace --
 
@@ -2496,7 +2500,8 @@ av.ui.feedback = function(){
     av.post.addUser('Button: mnCnOrganismTrace');
     console.log('mnCnOrganismTrace clicked');
     console.log('av.mouse=', av.mouse);
-    if ('parent' == av.mouse.Picked) { 
+    console.log('av.mouse.Picked=', av.mouse.Picked, '; av.dnd.gridSelected=', av.dnd.gridSelected);
+    if ('parent' == av.dnd.gridSelected) { 
       av.mouse.traceParentSelectFn('mnCnOrganismTrace.onclick');
       console.log('after av.mouse.traceParentSelectFn');
     }
