@@ -150,7 +150,11 @@
 // - - set limited values to show the population shifiting from using one resource to another. 
 // 
 // Avida-ED 4.0.22 Beta
-// - tried to merge pre-wendell back into main
+// - merged pre-wendell back into main
+// 
+// Avida-ED 4.0.23 Beta
+// - fixed some of the main menu drop down buttons
+// - - mnCnOrganismTrace
 // 
 // Generic Notes -------------------------------------------------------------------------------------------------------
 
@@ -2947,7 +2951,7 @@ av.ui.feedback = function(){
   // Avida-ED 4.0.20 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; set to false before public release for Avida-ED 4.0.22 Beta Testing. ');
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.23 Beta Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x
