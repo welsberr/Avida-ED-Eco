@@ -120,7 +120,6 @@ button.navbar-btn{
   border: 0px solid #aaa;
 }
 
->>>>>>> origin/pre_wendell
 .btn.btn-custom:hover {
   color: inherit;
   /* font-weight: 600;
@@ -197,10 +196,6 @@ nav {
   margin: 0 auto;
   max-width: 600px;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/pre_wendell
 /* nav > ul > li {
   display: grid;
   flex-direction: column;
@@ -239,37 +234,27 @@ nav > ul > li {
   list-style: none;
   position:relative; 
   display: block;
-<<<<<<< HEAD
-  transition: 0.5;
-=======
   transition: 0.5s;
->>>>>>> origin/pre_wendell
 }
 
 .navbar-btn{
   border: none;
   font-size: .9rem;
-<<<<<<< HEAD
   background-color: #f7f7f7;
-=======
-  background-color: #F5F5F5
->>>>>>> origin/pre_wendell
+  background-color: #F5F5F5; /*chec this tiba */
   min-width: 4vw;
 }
 
 .submenu {
   display: none;
   position: absolute;
-<<<<<<< HEAD
-  width: 400%;
-=======
   width: 170px;  /* was 400% */
->>>>>>> origin/pre_wendell
   margin-top: 10px;
   background: #f7f7f7;
   border: 1px solid #aaa;
   border-radius: 5px;
   box-shadow: 0px 3px 5px -2px #aaa;
+  z-index: 1;
 }
 
 .submenu > li {
@@ -280,11 +265,7 @@ nav > ul > li {
 .submenu > li> button {
   border: none;
   background-color: #f7f7f7;
-<<<<<<< HEAD
   min-width: none;
-}
-
-=======
   min-width: 0;
   text-align: left;
 }
@@ -296,7 +277,6 @@ nav > ul > li {
 #mnHpWidth { width: 160px; }
 #mnDbWidth { width: 170px; }
 
->>>>>>> origin/pre_wendell
 /* remove excess space from both menus */
 .aboutMenu,  .helpMenu{
   width: 10vw;
