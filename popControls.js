@@ -363,7 +363,7 @@
 
         av.msg.requestGridData();
         av.msg.requestPopStats();
-        if (0 < av.grd.selectedNdx) av.msg.doWebOrgDataByCell();
+        if (0 < av.grd.selectedNdx) av.msg.doWebOrgDataByCell('av.ptd.runPopFn');
 
         //initialize arrays to store data by_clade (or can be called by_ancestor)
         av.pch.numDads = (av.pch.dadMax < av.parents.name.length) ? av.pch.dadMax : av.parents.name.length;

@@ -144,7 +144,7 @@
           else {
             if (av.dbg.flg.mouse) console.log('kid found');
             av.grd.kidStatus = 'getgenome';
-            av.msg.doWebOrgDataByCell();
+            av.msg.doWebOrgDataByCell('av.mouse.downGridCanvasFn');
             av.grd.kidName = 'temporary';
             av.grd.kidGenome = '0,heads_default,wzcagcccccccccaaaaaaaaaaaaaaaaaaaaccccccczvfcaxgab';  //ancestor
             // mouse down on organism

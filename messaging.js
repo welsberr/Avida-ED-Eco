@@ -598,8 +598,9 @@ av.msg.doOrgTrace = function (from) {
 };
 
 //request data from Avida to update SelectedOrganismType
-av.msg.doWebOrgDataByCell = function () {
+av.msg.doWebOrgDataByCell = function (from) {
   'use strict';
+  console.log(from, 'called av.msg.doWebOrgDataByCell: av.grd.selectedNdx=', av.grd.selectedNdx);
   var request = {
     'type': 'addEvent',
     'name': 'WebOrgDataByCellID',
@@ -928,7 +929,7 @@ av.ptd.updateLogicFn = function (mUpdate){
 
 //--------------------------------------------------------------------------------- av.grd.updateSelectedOrganismType --
 //writes out data for WebOrgDataByCellID
-av.grd.updateSelectedOrganismType = function (msg) {
+av.grd.updateSelectedOrganismType = function (msg,) {
   'use strict';
   var prefix = '';
   if (av.debug.msg) console.log('selected_msg', msg);
@@ -1010,60 +1011,64 @@ av.grd.updateSelectedOrganismType = function (msg) {
 // if (av.dbg.flg.root) { console.log('Root: before av.msg.fillColorBlock'); }
 av.msg.fillColorBlock = function (msg, from) {  
   'use strict';
-  var bkcolor = '#000';
-  var colorMode = document.getElementById('colorMode').value;
-  if (av.debug.msg) { console.log('Msg: av.grd.fill[av.grd.selectedNdx]=',av.grd.fill[av.grd.selectedNdx]); }
-
-  if ('Ancestor Organism' == document.getElementById('colorMode').value) {
-    // the display mode is Ancestor so used the color for the ancstor, if one exits. 
-    if (null != av.grd.fill[av.grd.selectedNdx]) {
-      bkcolor = av.parents.color[av.parents.name.indexOf(msg.ancestor)];
-      //console.log('Ancestor Organimsm mode: bkColor=', bkcolor);
-    };
-  }
-  else {
-    //console.log('Gradient mode');
-    if (null != av.grd.fill[av.grd.selectedNdx]) {
-      if (0 >= av.grd.msg.gestation.data[av.grd.selectedNdx]) {  
-        bkcolor = '#888';
-      //console.log('Gradient mode,  null != fill, - = ancestor.data: bkColor=', bkcolor);
-      }
-      else {
-        bkcolor = av.utl.get_color0(av.grd.cmap, av.grd.fill[av.grd.selectedNdx], 0, av.grd.fillmax);
-        //console.log('Gradient mode,  null != fill, - = ancestor.data: bkColor=', bkcolor);
+  console.log(from, 'called av.msg.fillColorBlock');
+  console.log('av.grd.selectedNdx=', av.grd.selectedNdx);
+  if (0 <= av.grd.selectedNdx) {
+    var bkcolor = '#000';
+    var colorMode = document.getElementById('colorMode').value;
+    if (av.debug.msg) { console.log('Msg: av.grd.fill[av.grd.selectedNdx]=',av.grd.fill[av.grd.selectedNdx]); }
+    console.log('Msg: av.grd.fill[av.grd.selectedNdx]=',av.grd.fill[av.grd.selectedNdx]);
+    if ('Ancestor Organism' == document.getElementById('colorMode').value) {
+      // the display mode is Ancestor so used the color for the ancstor, if one exits. 
+      if (null != av.grd.fill[av.grd.selectedNdx]) {
+        bkcolor = av.parents.color[av.parents.name.indexOf(msg.ancestor)];
+        //console.log('Ancestor Organimsm mode: bkColor=', bkcolor);
       };
     }
     else {
-      console.log('Gradient mode,  null = fill: bkColor=', bkcolor);
-      if (undefined == av.grd.msg.ancestor) { 
-        console.log ('av.grd.msg.ancestor is undefined');
-      } else {
-        console.log('av.grd.msg.ancestor =', av.grd.msg.ancestor);
-      };
-      try {
-        if (av.grd.msg.ancestor.data != undefined) {
-          console.log("av.grd.msg.ancestor.data is defined");
-          if ('-' != av.grd.msg.ancestor.data[av.grd.selectedNdx]) { 
-            bkcolor = '#888';
-          console.log('Gradient mode,  null = fill, - = ancestor.data: bkColor=', bkcolor);
-          }
+      //console.log('Gradient mode');
+      if (null != av.grd.fill[av.grd.selectedNdx]) {
+        if (0 >= av.grd.msg.gestation.data[av.grd.selectedNdx]) {  
+          bkcolor = '#888';
+        //console.log('Gradient mode,  null != fill, - = ancestor.data: bkColor=', bkcolor);
         }
-      } catch (e) { console.log('ERROR: e =', e, 'e.stack =', e.stack); } // buggy
-    }
-  } 
+        else {
+          bkcolor = av.utl.get_color0(av.grd.cmap, av.grd.fill[av.grd.selectedNdx], 0, av.grd.fillmax);
+          //console.log('Gradient mode,  null != fill, - = ancestor.data: bkColor=', bkcolor);
+        };
+      }
+      else {
+        console.log('Gradient mode,  null = fill: bkColor=', bkcolor);
+        if (undefined == av.grd.msg.ancestor) { 
+          console.log ('av.grd.msg.ancestor is undefined');
+        } else {
+          console.log('av.grd.msg.ancestor =', av.grd.msg.ancestor);
+        };
+        try {
+          if (av.grd.msg.ancestor.data != undefined) {
+            console.log("av.grd.msg.ancestor.data is defined");
+            if ('-' != av.grd.msg.ancestor.data[av.grd.selectedNdx]) { 
+              bkcolor = '#888';
+            console.log('Gradient mode,  null = fill, - = ancestor.data: bkColor=', bkcolor);
+            }
+          }
+        } catch (e) { console.log('ERROR: e =', e, 'e.stack =', e.stack); } // buggy
+      }
+    } 
 
-  if (true) {
-    if (av.grd.msg.ancestor.data != undefined) {
-      console.log(from, 'called fillColorBlock: colorMode=', colorMode
-                  , '; av.grd.fill['+av.grd.selectedNdx+']=',  av.grd.fill[av.grd.selectedNdx] 
-                  , '; av.grd.msg.ancestor.data['+av.grd.selectedNdx+']=',  av.grd.msg.ancestor.data[av.grd.selectedNdx]); 
+    if (true) {
+      if (av.grd.msg.ancestor.data != undefined) {
+        console.log(from, 'called fillColorBlock: colorMode=', colorMode
+                    , '; av.grd.fill['+av.grd.selectedNdx+']=',  av.grd.fill[av.grd.selectedNdx] 
+                    , '; av.grd.msg.ancestor.data['+av.grd.selectedNdx+']=',  av.grd.msg.ancestor.data[av.grd.selectedNdx]); 
+      }
     }
+
+
+    if (av.debug.msg) console.log('sot bkcolor', bkcolor);
+    av.dom.sotColorBox.style.backgroundColor = bkcolor;
+    av.dom.sotColorBox.style.border = '1xpx solid ' + 'blacks';   //was bkcolor
   }
-
-
-  if (av.debug.msg) console.log('sot bkcolor', bkcolor);
-  av.dom.sotColorBox.style.backgroundColor = bkcolor;
-  av.dom.sotColorBox.style.border = '1xpx solid ' + 'blacks';   //was bkcolor
 };
 
 

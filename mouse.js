@@ -471,7 +471,7 @@
             if (null != av.grd.msg.ancestor.data[av.grd.selectedNdx]) {
               av.grd.kidStatus = 'getgenome';
               av.post.addUser('ArrowKey was used to pick kid cellID=' + av.grd.selectedNdx);
-              av.msg.doWebOrgDataByCell();
+              av.msg.doWebOrgDataByCell('av.mouse.arrowKeysOnGrid');
               if (av.dbg.flg.mouse) console.log('kid', av.grd.kidName, av.grd.kidGenome);
               document.getElementById('mnFzOrganism').disabled = false; //When an organism is selected, then it can be save via the menu
               document.getElementById('mnCnOrganismTrace').disabled = false

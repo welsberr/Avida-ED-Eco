@@ -970,7 +970,6 @@ av.ui.feedback = function(){
   };
 
   /******************************************* New Button and new Modal **********************************************/
-  //av.dom.newDishDiscard not in avidaEdEco.html
   av.dom.newDishDiscard.onclick = function () {
     av.post.addUser('Button: newDishDiscard');
     av.dom.newDishModalID.style.display = 'none';
