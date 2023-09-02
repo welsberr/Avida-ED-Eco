@@ -1299,6 +1299,15 @@ background: #888;
   justify-content: start;
 }
 
+.next2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: baseline;
+}
+
+.flxItem {flex: none;}
+
 /* Evidently cannot click a button with visibility: hidden or display;none */
 .geoButtonShow {
   background: inherit;

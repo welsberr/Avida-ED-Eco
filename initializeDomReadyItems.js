@@ -77,6 +77,7 @@
     av.dom.popStatsBlock = document.getElementById('popStatsBlock');
     av.dom.sotColorBox = document.getElementById('sotColorBox');
     av.dom.StatsButton = document.getElementById('StatsButton');
+    av.dom.SetupButton = document.getElementById('SetupButton');
 
     av.dom.popChrtHolder = document.getElementById('popChrtHolder'); 
     av.dom.popChart = document.getElementById('popChart');  //easier handle for div with chart

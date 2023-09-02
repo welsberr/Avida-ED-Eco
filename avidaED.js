@@ -2959,7 +2959,11 @@ av.ui.feedback = function(){
   };
   //av.ui.toggleDevelopmentDisplays('Last_things_done');  // this needs to be called in production version
 
-  av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
+  // test Setup Section line  - comment out for production
+  av.ptd.rightInfoPanelToggleButton(av.dom.SetupButton);
+  // production line
+  // av.ptd.rightInfoPanelToggleButton(av.dom.StatsButton);
+  
   //av.changeAllSgrRegionLayout(av.sgr.nutdft.uiAll.regionLayout, 'last_things_done');   //does not seem to be needed. 2021_714
   //av.sgr.ChangeAllsugarsupplyTypeSlct('unlimited','Last_things_done');    //does not seem to be needed. 2021_714
   av.sgr.OpenCloseAllSugarDetails('allClose', 'Last_things_done');
