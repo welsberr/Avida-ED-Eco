@@ -1097,15 +1097,19 @@
 
                 </div> <span tag='end of odd'></span>
 
-                <div class='even'>
-                  <span class='enviroSubHeading'>Repeatability Mode:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <input type='radio' id='experimentRadio'
+                <div class='even next2'>
+                  <div class='flxItem enviroSubHeading'>Repeatability Mode:</div>
+                  <div class='flxItem'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                  <div class='flxItem>
+                    <label id='experimentLabel'><input type='radio' id='experimentRadio'
                          intermediateChanges='false' name='repeat'
-                         value='experimental'>
-                  <label id='experimentLabel'>Experimental</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <input type='radio' id='demoRadio' checked
-                         intermediateChanges='false' name='repeat' value='demo'>
-                  <label id='demoLabel'>Demo</label>
+                         value='experimental'> Experimental</label>
+                  </div> 
+                  <div class='flxItem'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                  <div class='flxItem'>
+                    <label id='demoLabel'><input type='radio' id='demoRadio' checked
+                         intermediateChanges='false' name='repeat' value='demo'> Demo</label>
+                  </div>
                 </div>
 
               </form>
