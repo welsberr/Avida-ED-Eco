@@ -156,7 +156,7 @@
 // - fixed some of the main menu drop down buttons
 // - - fixed mnCnOrganismTrace button on main drop down menu (under Freezer)
 // 
-// Avida-ED 4.0.23 Beta
+// Avida-ED 4.0.24 Beta
 // - Still working on main menu drop down button functions and able-disable settings
 // - fixed radios butons so not in dojo and black rather than blue. 
 // 
