@@ -154,7 +154,11 @@
 // 
 // Avida-ED 4.0.23 Beta
 // - fixed some of the main menu drop down buttons
-// - - mnCnOrganismTrace button on main drop down menu (under Freezer)
+// - - fixed mnCnOrganismTrace button on main drop down menu (under Freezer)
+// 
+// Avida-ED 4.0.23 Beta
+// - Still working on main menu drop down button functions and able-disable settings
+// - fixed radios butons so not in dojo and black rather than blue. 
 // 
 // Generic Notes -------------------------------------------------------------------------------------------------------
 
@@ -1034,7 +1038,6 @@ av.ui.feedback = function(){
     }
   };
 
-  //av.dom.newDishButton.onclick = function () {
   av.ptd.newDishButton = function () {
     av.post.addUser("Button: newDishButton");
     av.ui.newButtonBothFn();
@@ -1082,7 +1085,7 @@ av.ui.feedback = function(){
   document.getElementById("fzModSaveOrganism").onclick = function () {
     av.post.addUser("Button: fzModSaveOrganism");
     document.getElementById("fzModalID").style.display = "none"; //fzModalID.hide
-    av.ptd.FrOrganismFn("selected");
+    av.ptd.FrOrganismFn("selected", 'fzModSaveOrganism');
   };
 
   //button to freeze a population
@@ -1104,13 +1107,13 @@ av.ui.feedback = function(){
   //Buttons on drop down menu to save an organism
   document.getElementById("mnFzOrganism").onclick = function () {
     av.post.addUser("Button: mnFzOrganism");
-    av.ptd.FrOrganismFn("selected");
+    av.ptd.FrOrganismFn("selected", 'mnFzOrganism');
   };
 
   //Buttons on drop down menu to save an offspring
   document.getElementById("mnFzOffspring").onclick = function () {
     av.post.addUser("Button: mnFzOffspring");
-    av.ptd.FrOrganismFn("offspring");
+    av.ptd.FrOrganismFn("offspring", 'mnFzOffspring');
   };
 
   //------------------------------------------------------------------------------------------- mnFzAddFzItem.onclick --
@@ -2950,7 +2953,7 @@ av.ui.feedback = function(){
   // Avida-ED 4.0.20 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; set to false before public release for Avida-ED 4.0.23 Beta Testing. ');
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.24 Beta Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x
