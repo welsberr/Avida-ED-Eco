@@ -413,11 +413,12 @@
   //--------------------------------------------------------------------------------------------------------------------
 
   //Freeze the selected organism
-  av.ptd.FrOrganismFn = function (trigger) {
+  av.ptd.FrOrganismFn = function (trigger, from) {
     'use strict';
     var fzName = 'new';
     var parentName = '';
     var gene;
+    console.log(from, 'called av.ptd.FrOrganismFn');
     var container = av.dnd.fzOrgan.id !== undefined ? "#" + av.dnd.fzOrgan.id : "." + av.dnd.fzOrgan.className;
     if ('selected' == trigger) {
       fzName = prompt('Please name the selected organism', av.grd.kidName);
@@ -456,6 +457,7 @@
     'use strict';
     console.log(from, ' called av.ptd.FrConfigFn');
     var sName = av.dnd.namefzrItem(av.dnd.fzConfig, 'newConfig');
+    //console.log('sName=', sName);
     var fzName = prompt('Please name the new configuration', sName);
     var container = av.dnd.fzConfig.id !== undefined ? "#" + av.dnd.fzConfig.id : "." + av.dnd.fzConfig.className;
     if (fzName) {

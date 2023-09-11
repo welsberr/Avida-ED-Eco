@@ -1727,6 +1727,7 @@ jQuery(document).ready(function($) {
   // used to name an item that's being introduced to the freezer
   av.dnd.namefzrItem = function(target, name) {
     'use strict';
+    //console.log('in av.dnd.namefzrItem: target=', target, '; name=', name);
     var container = target.id !== undefined ? "#" + target.id : "." + target.className;
     var namelist = $.map(document.querySelector(container).children, (x) => { if (!x.classList.contains('gu-transit')) return x.textContent.trim()});
     var theName;
@@ -1735,7 +1736,7 @@ jQuery(document).ready(function($) {
       if (av.debug.dnd) { console.log('DnD: namelist =',namelist, '; name=',name); }
       theName = av.dnd.nameNfrzItem(namelist, name, 1);
     } else { theName = name; }
-
+    //console.log('theName =', theName);
     return theName;
   };
   //------------------------------------------------------------------------------------------ end av.dnd.namefzrItem --

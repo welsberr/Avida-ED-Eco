@@ -41,7 +41,7 @@
 // information about Access Tokens written before they required tokens. Need to find links to make a new token. 
 // https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/
 // 
-// more information about access tokens
+// more information about access tokens = use this one
 // https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 // 
 // 
@@ -154,7 +154,7 @@
 // 
 // Avida-ED 4.0.23 Beta
 // - fixed some of the main menu drop down buttons
-// - - mnCnOrganismTrace
+// - - mnCnOrganismTrace button on main drop down menu (under Freezer)
 // 
 // Generic Notes -------------------------------------------------------------------------------------------------------
 
