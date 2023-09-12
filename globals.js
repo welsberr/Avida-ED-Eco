@@ -20,6 +20,7 @@ String.prototype.replaceAll = function(search, replacement) {
 
 //av.debug flags
 av.debug = {};
+av.debug.development = false;
 av.debug.alo = false; //analysis page layout
 av.debug.anl = false;  //analysis page
 av.debug.bool = false;  //av.debug statements that look for errors outlining logic functions

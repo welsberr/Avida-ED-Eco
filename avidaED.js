@@ -160,6 +160,11 @@
 // - Still working on main menu drop down button functions and able-disable settings
 // - fixed radios butons so not in dojo and black rather than blue. 
 // 
+// Avida-ED 4.0.25 Beta
+// - Still working on main menu drop down button functions and able-disable settings
+// - added url parameter so that default is that debug buttons do not work
+// - parameter format ?devo=true or http://localhost:8000/?devo=true
+// 
 // Generic Notes -------------------------------------------------------------------------------------------------------
 
 //
@@ -2929,6 +2934,37 @@ av.ui.feedback = function(){
   //                                       end of Analysis Page
   // **************************************************************************************************************** */
 
+  //------------------------------------------------------------------------------- get value of a parameter from url --
+  
+  // Function to get a specific GET parameter value from the URL
+  // from Wesley and openai chatGTP
+  function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, '\\$&');
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+
+  // Get the value of the 'devo' parameter
+  var devoValue = getParameterByName('devo');
+
+  // Log the value to the console
+  
+  if (devoValue) {
+    if ('true' == devoValue) {
+      av.debug.development = true;
+    };    
+    console.log("Value of 'devo' parameter:", devoValue);
+  } else {
+      console.log("'devo' parameter not found in the URL.");
+  }
+
+
+  //------------------------------------------------------------------------ end of get value of a parameter from url --
+
   // **************************************************************************************************************** */
   //                                          Last_things_done; Last things done; Last done last done
   // **************************************************************************************************************** */
@@ -2953,7 +2989,7 @@ av.ui.feedback = function(){
   // Avida-ED 4.0.20 Beta Testing fix this too. 
   //true for development; false for all production releases even in alpha testsing.  
   if (false) {
-    console.log('testing mode; set to false before public release for Avida-ED 4.0.24 Beta Testing. ');
+    console.log('testing mode; set to false before public release for Avida-ED 4.0.25 Beta Testing. ');
     av.ui.toggleResourceData('lastDone');   //now only turns grid resource value table on and off
     //
     //set mmDebug to hidden so that when toggle called it will show the development sections x
@@ -2985,7 +3021,7 @@ av.ui.feedback = function(){
   // document.getElementById('geometrySgr').style.display = 'none';
 
   // **************************************************************************************************************** */
-  //Resize tools might be called here or after "Last_things_done"
+  // Resize tools called after "Last_things_done"
   // **************************************************************************************************************** */
 
   var ro = new ResizeObserver(entries => {

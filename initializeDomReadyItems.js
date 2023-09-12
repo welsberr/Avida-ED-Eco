@@ -331,97 +331,104 @@
 //----------------------------------------------------------------------------------- av.ui.toggleDevelopmentDisplays --
 // opens items used in development that are not for the user to see. 
 av.ui.toggleDevelopmentDisplays = function () {
-  var len, tsk, sub;
-  var ndx2b = 0;
-  var visible2b = ['visible', 'hidden'];
-  var block2b = ['inline-block', 'none'];
-  var flex2b = ['flex', 'none'];
-  var devoTog2b = ['devoShow', 'devoCammo'];
-  var geoHideBut2b =['devoShow', 'geoButtonCammo'];
-  var popInfoTab2b = ['tabHolderShow', 'tabHolderHide'];
-  var sgrfooter2b = ['changeAllSugarsTogetherContainer', 'changeAllSugarsTogetherNoGlobalContainer'];
+  if (av.debug.development) {
+    var len, tsk, sub;
+    var ndx2b = 0;
+    var visible2b = ['visible', 'hidden'];
+    var block2b = ['inline-block', 'none'];
+    var flex2b = ['flex', 'none'];
+    var devoTog2b = ['devoShow', 'devoCammo'];
+    var geoHideBut2b =['devoShow', 'geoButtonCammo'];
+    var popInfoTab2b = ['tabHolderShow', 'tabHolderHide'];
+    var sgrfooter2b = ['changeAllSugarsTogetherContainer', 'changeAllSugarsTogetherNoGlobalContainer'];
 
-  console.log('av.dom.mnDebug.style.visibility=', av.dom.mnDebug.style.visibility, "; display=", av.dom.mnDebug.style.display);
-  if ('devoShow' === document.getElementById('developmentToggle').className) {
-    ndx2b = 1;
-    //hide all development elements
-    av.ui.hideDevelopment = true;
-    av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopmentDisplays');
-    av.post.addUser('Button: mnHpDebug: now hidden; InitlizeDomReadyItems.js');
-    //-------------------------------------------------------------------------------- hide stuff --
-  } else {
-    // development sectiomn can be seen.
-    av.ui.hideDevelopment = false;
-    av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopmentDisplays.onclick_show');
-    av.post.addUser('Button: mnHpDebug: now visible');
-  }  // end of development section can be seen 
-  //------------------------------------------------------------------------------------ process changes using ndx2b--
+    console.log('av.dom.mnDebug.style.visibility=', av.dom.mnDebug.style.visibility, "; display=", av.dom.mnDebug.style.display);
+    if ('devoShow' === document.getElementById('developmentToggle').className) {
+      ndx2b = 1;
+      //hide all development elements
+      av.ui.hideDevelopment = true;
+      av.sgr.processHideFlags(av.sgr.hideFlagInit, 'av.ui.toggleDevelopmentDisplays');
+      av.post.addUser('Button: mnHpDebug: now hidden; InitlizeDomReadyItems.js');
+      //-------------------------------------------------------------------------------- hide stuff --
+    } else {
+      // development sectiomn can be seen.
+      av.ui.hideDevelopment = false;
+      av.sgr.processHideFlags(av.sgr.flagInitOpposite, 'av.ui.toggleDevelopmentDisplays.onclick_show');
+      av.post.addUser('Button: mnHpDebug: now visible');
+    }  // end of development section can be seen 
+    //------------------------------------------------------------------------------------ process changes using ndx2b--
 
-  len = document.getElementsByClassName('3TopLftRit').length;
-  for (ii = 0; ii < len; ii++) {
-    document.getElementsByClassName('3TopLftRit')[ii].style.display = block2b[ndx2b];
-    document.getElementsByClassName('4Quarters')[ii].style.display = block2b[ndx2b];
+    len = document.getElementsByClassName('3TopLftRit').length;
+    for (ii = 0; ii < len; ii++) {
+      document.getElementsByClassName('3TopLftRit')[ii].style.display = block2b[ndx2b];
+      document.getElementsByClassName('4Quarters')[ii].style.display = block2b[ndx2b];
+    }
+
+    if (av.sgr.gridOnly) {
+      document.getElementById('sugarFooter').className = sgrfooter2b[ndx2b];
+      document.getElementById('geometrySgr').style.display = block2b[ndx2b];
+      document.getElementById('allSugarGeometryDiv').style.display = block2b[ndx2b];
+      document.getElementById('allSugarGeometry').style.display = block2b[ndx2b]; 
+    }
+
+    document.getElementById('testConfig').style.display = block2b[ndx2b];
+    console.log('block2b[ndx2b]', block2b[ndx2b]);
+    document.getElementById('avidianOutline').style.display = block2b[ndx2b];   //none
+    document.getElementById('resrceDataHolder').style.display = block2b[ndx2b];
+
+    document.getElementById('developmentToggle').className = devoTog2b[ndx2b];
+    document.getElementById('geometyHideButton').className = geoHideBut2b[ndx2b];
+    document.getElementById('popInfoTabHolder').className = popInfoTab2b[ndx2b];
+
+    av.dom.mnDebug.style.visibility = visible2b[ndx2b];
+    av.dom.mnDebug.style.display = block2b[ndx2b];
+
+    document.getElementById('testConfigLableHolder').style.display = flex2b[ndx2b];   //none
+
+    document.getElementById('showTextDebugButtonDiv').style.visibility = visible2b[ndx2b];   //hidden
+    av.dom.showTextDebugButton.style.visibility = visible2b[ndx2b]
+    document.getElementById('fzTdishSec').style.visibility = visible2b[ndx2b];       // hidden
+    document.getElementById('testDishDetailDiv').style.display = block2b[ndx2b];   //none
+    document.getElementById('testConfig').style.display = block2b[ndx2b];    //none
+
+    len = av.sgr.logicNames.length;
+    sub = 1;   //this may change later;
+    for (ii = 0; ii < len; ii++) {
+      tsk = av.sgr.logicNames[ii];
+      av.sgr.changeDetailsLayout(tsk, 'av.ui.toggleDevelopmentDisplays');
+    };
+
+    //console.log('in av.ui.hideDevelopment=', av.ui.hideDevelopment, 'at end of function');
   }
-
-  if (av.sgr.gridOnly) {
-    document.getElementById('sugarFooter').className = sgrfooter2b[ndx2b];
-    document.getElementById('geometrySgr').style.display = block2b[ndx2b];
-    document.getElementById('allSugarGeometryDiv').style.display = block2b[ndx2b];
-    document.getElementById('allSugarGeometry').style.display = block2b[ndx2b]; 
-  }
-
-  document.getElementById('testConfig').style.display = block2b[ndx2b];
-  console.log('block2b[ndx2b]', block2b[ndx2b]);
-  document.getElementById('avidianOutline').style.display = block2b[ndx2b];   //none
-  document.getElementById('resrceDataHolder').style.display = block2b[ndx2b];
-
-  document.getElementById('developmentToggle').className = devoTog2b[ndx2b];
-  document.getElementById('geometyHideButton').className = geoHideBut2b[ndx2b];
-  document.getElementById('popInfoTabHolder').className = popInfoTab2b[ndx2b];
-
-  av.dom.mnDebug.style.visibility = visible2b[ndx2b];
-  av.dom.mnDebug.style.display = block2b[ndx2b];
-  
-  document.getElementById('testConfigLableHolder').style.display = flex2b[ndx2b];   //none
-
-  document.getElementById('showTextDebugButtonDiv').style.visibility = visible2b[ndx2b];   //hidden
-  av.dom.showTextDebugButton.style.visibility = visible2b[ndx2b]
-  document.getElementById('fzTdishSec').style.visibility = visible2b[ndx2b];       // hidden
-  document.getElementById('testDishDetailDiv').style.display = block2b[ndx2b];   //none
-  document.getElementById('testConfig').style.display = block2b[ndx2b];    //none
-
-  len = av.sgr.logicNames.length;
-  sub = 1;   //this may change later;
-  for (ii = 0; ii < len; ii++) {
-    tsk = av.sgr.logicNames[ii];
-    av.sgr.changeDetailsLayout(tsk, 'av.ui.toggleDevelopmentDisplays');
-  };
-
-  //console.log('in av.ui.hideDevelopment=', av.ui.hideDevelopment, 'at end of function');
-  };
+};
 //----------------------------------------------------------------------------------- av.ui.toggleDevelopmentDisplays --
 
   
   av.ui.toggleDebugMenu =function () {
-    //console.log('in av.ui.toggleDebugMenu: av.dom.mnDebug.style.visibility=', av.dom.mnDebug.style.visibility);
-    if ('visible' === av.dom.mnDebug.style.visibility) {
-      av.dom.mnDebug.style.visibility = 'hidden';
-    }
-    else 
-      av.dom.mnDebug.style.visibility = 'visible';
+    console.log('av.debug.development =', av.debug.development);
+    if (av.debug.development) {
+      //console.log('in av.ui.toggleDebugMenu: av.dom.mnDebug.style.visibility=', av.dom.mnDebug.style.visibility);
+      if ('visible' === av.dom.mnDebug.style.visibility) {
+        av.dom.mnDebug.style.visibility = 'hidden';
+      }
+      else 
+        av.dom.mnDebug.style.visibility = 'visible';
+    };
   };
   
   // if (av.dbg.flg.root) { console.log('Root: before av.ui.toggleResourceData'); }
   //----------------------------------------------------------------------------------------------------------------------
   //toggles showing resource data in right info panel (Stats window) in Populaton View
   av.ui.toggleResourceData = function (from) {
-    console.log(from, 'called av.ui.toggleResourceData to to toggle dipslay of resource data');
-    if ('none' === document.getElementById('resrceDataHolder').style.display) {
-      document.getElementById('resrceDataHolder').style.display = 'block';
-    } else {
-      document.getElementById('resrceDataHolder').style.display = 'none';  //flex
+    if (av.debug.development) {
+      console.log(from, 'called av.ui.toggleResourceData to to toggle dipslay of resource data');
+      if ('none' === document.getElementById('resrceDataHolder').style.display) {
+        document.getElementById('resrceDataHolder').style.display = 'block';
+      } else {
+        document.getElementById('resrceDataHolder').style.display = 'none';  //flex
+      };
+      av.sgr.complexityChangeProcess('last-things-done');
     };
-    av.sgr.complexityChangeProcess('last-things-done');
   };
 
   // if (av.dbg.flg.root) { console.log('Root: before av.ui.toggleResourceComplexity'); }
