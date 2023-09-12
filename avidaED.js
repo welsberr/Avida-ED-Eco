@@ -738,7 +738,7 @@ console.log('Root: before postPost');
     av.post.addUser("Button: mnFlOpenDefaultWS");
     av.fio.useDefault = true;
     if ("no" === av.fzr.saveState) {
-      sWSfModalID.show(); 
+      document.getElementById('fzModalID').style.display = "block";    //sWSfModalID.show();    
     } else {
       av.fio.readZipWS(av.fio.defaultFname, false); //loadConfigFlag = false = do not load config file
     }
@@ -751,7 +751,7 @@ console.log('Root: before postPost');
 
   document.getElementById("sWSfOpen").onclick = function () {
     av.post.addUser("Button: sWSfOpen");
-    sWSfModalID.hide(sWSfModalID.hide);
+    document.getElementById('sWSfModalID').style.display = 'none';    //sWSfModalID.hide(sWSfModalID.hide);
     if (av.fio.useDefault) {
       av.fio.readZipWS(av.fio.defaultFname, false);  //loadConfigFlag = false = do not load config file
     }  
@@ -1196,7 +1196,7 @@ av.ui.feedback = function(){
 
     //need to 'start new experiment'
     av.ptd.resetDishFn(false);  //do not send reset to avida; avida restarted
-    restartAvidaDialog.hide();    //this is not useds
+    document.getElementById('restartAvidaDialog').style.display = 'none';    //restartAvidaDialog.hide();    //this is not useds
   };
 
   document.getElementById('restartAvidaNow').onclick = function () {
