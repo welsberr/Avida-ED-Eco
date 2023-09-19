@@ -166,14 +166,14 @@
           taskNum = av.grd.msg['r'+tskName].data[av.grd.selectedNdx];
           if (av.utl.isNumber(parseFloat(taskNum)) ) {
             //console.log('cell'+tskDom + '=', taskNum);
-            taskStr = av.utl.toMetric(taskNum, 0);
+            taskStr = av.utl.toModMetric(taskNum, 0);
             document.getElementById('cell'+tskDom).innerHTML = taskStr;
           };
           //taskNum = parseFloat(av.grd.msg['r'+tskName].maxVal);
           taskNum = av.grd.msg['r'+tskName].maxVal;
           if (av.utl.isNumber(parseFloat(taskNum)) ) {
             //console.log('max'+tskDom + ' =', taskNum);
-            taskStr = av.utl.toMetric(taskNum, 0);
+            taskStr = av.utl.toModMetric(taskNum, 0);
             document.getElementById('mx'+tskDom).innerHTML = taskStr;
             document.getElementById('mx'+tskDom).style.backgroundColor
           };
@@ -817,7 +817,7 @@
 
       for (var ii = 0; ii <= marks; ii++) {
         xx = ii * av.grd.fillmax / marks;
-        txt = av.utl.toMetric( xx, 0);
+        txt = av.utl.toModMetric( xx, 0);
         if (0.0004 > xx ) { txt = xx.formatNum(0); } //2 in this case is number of decimal places
         var txtW = av.grd.sCtx.measureText(txt).width;
         xx = xStart + ii * gradWidth / marks - txtW / 2;

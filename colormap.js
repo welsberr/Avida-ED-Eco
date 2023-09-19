@@ -983,6 +983,8 @@ av.color.ViridisCmap = [
    ,'rgb(253, 231, 37)'
 ];
 
+//Dave Green's ‘cubehelix’ colour scheme (but this version is brighter than the one online)
+
 av.color.cubehelixCmap = [  //djb version
 /* 'rgb(0, 0, 0)'
 , 'rgb(3, 3, 1)'

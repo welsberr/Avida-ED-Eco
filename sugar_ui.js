@@ -355,8 +355,8 @@ av.sgr.supplyChange = function (domObj) {
       document.getElementById(textID).style.color = 'black';
       equilbrium = parseFloat(document.getElementById(preID+'inflow'+ postID + 'Np').value)/
                    parseFloat(document.getElementById(preID+'outflow'+ postID + 'Np').value);
-      console.log('av.dom.'+preID+'chmstat'+postID+'Text = ', av.utl.toMetric(equilbrium,0) + ' = equilibrium');
-      document.getElementById(preID+'chmstat'+postID +'Text').innerHTML = av.utl.toMetric(equilbrium,0) + ' = equilibrium';
+      console.log('av.dom.'+preID+'chmstat'+postID+'Text = ', av.utl.toModMetric(equilbrium,0) + ' = equilibrium');
+      document.getElementById(preID+'chmstat'+postID +'Text').innerHTML = av.utl.toModMetric(equilbrium,0) + ' = equilibrium';
   };
 };
 
@@ -381,8 +381,8 @@ av.sgr.supplyChange = function (domObj) {
       document.getElementById(textID).style.color = 'black';
       equilbrium = parseFloat(document.getElementById(preID+'inflow'+ postID + 'Np').value)/
                    parseFloat(document.getElementById(preID+'outflow'+ postID + 'Np').value);
-      //console.log('av.dom.'+preID+'chmstat'+postID+'Text = ', av.utl.toMetric(equilbrium,0) + ' = equilibrium');
-      document.getElementById(preID+'chmstat'+postID +'Text').innerHTML = av.utl.toMetric(equilbrium,0) + ' = equilibrium';
+      //console.log('av.dom.'+preID+'chmstat'+postID+'Text = ', av.utl.toModMetric(equilbrium,0) + ' = equilibrium');
+      document.getElementById(preID+'chmstat'+postID +'Text').innerHTML = av.utl.toModMetric(equilbrium,0) + ' = equilibrium';
     }
   };
 
@@ -478,7 +478,7 @@ av.sgr.supplyChange = function (domObj) {
     if ('chemostat'  == document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase() && !openFlag) {
       chemoSummary = av.sgr.describe.short[tsk] + ' ' + document.getElementById(tsk+'0inflowHiNp').value + ' / '
                    + document.getElementById(tsk+'0outflowHiNp').value + ' = '
-                   + av.utl.toMetric(av.nut[numTsk].uiAll.equil,0);
+                   + av.utl.toModMetric(av.nut[numTsk].uiAll.equil,0);
       //console.log('new width is', tmpnum);
       notestr = 'Inflow / Outflow = Equilibrium';
     } else if ('chemostat'  == document.getElementById(tsk+'_supplyTypeSlct').value.toLowerCase() && openFlag) {
@@ -845,7 +845,7 @@ av.sgr.processBasicFn = function(numTsk, tsk) {
         document.getElementById(tsk+'0outflowHiText').innerHTML = 'outflow fract';
         if (true) {
           // horizontal
-          if (3 > tmpTxt.length) { tmpTxt = av.utl.toMetric(av.nut[numTsk].uiAll.equil, 0) + ' = equilibrium'; }
+          if (3 > tmpTxt.length) { tmpTxt = av.utl.toModMetric(av.nut[numTsk].uiAll.equil, 0) + ' = equilibrium'; }
           document.getElementById(tsk+'0chmstatHiText').innerHTML = tmpTxt;
           document.getElementById(tsk+'_taskRewardText').innerHTML = av.sgr.describe.lng2[tsk];
           document.getElementById(tsk+'_taskRewardText').style.width = av.sgr.describe.lng2.width;
@@ -861,7 +861,7 @@ av.sgr.processBasicFn = function(numTsk, tsk) {
           document.getElementById(tsk+'_taskRewardText').style.width = av.sgr.describe.lng2.width;
           document.getElementById(tsk+'0inflowHiNp').style.display = 'none';    //hide actual input block
           document.getElementById(tsk+'0outflowHiNp').style.display = 'none';  //hide actual input block
-          document.getElementById(tsk+'_chmstatHiTxt').innerHTML = av.utl.toMetric(av.nut[numTsk].uiAll.equil, 0) + ' = ';
+          document.getElementById(tsk+'_chmstatHiTxt').innerHTML = av.utl.toModMetric(av.nut[numTsk].uiAll.equil, 0) + ' = ';
           document.getElementById(tsk+'0chmstatHiText').innerHTML = 'equilibrium &nbsp;&nbsp;';
         };
         document.getElementById(tsk+'0subSection').className = 'sgr-detail-global-chemo-grid-container';
@@ -946,7 +946,7 @@ av.sgr.processAdvancedFn = function(numTsk, tsk) {
         document.getElementById(tsk+'0outflowHiText').innerHTML = 'outflow fract';
         if (true) {
           // horizontal
-          if (3 > tmpTxt.length) { tmpTxt = av.utl.toMetric(av.nut[numTsk].uiAll.equil, 0) + ' = equilibrium'; }
+          if (3 > tmpTxt.length) { tmpTxt = av.utl.toModMetric(av.nut[numTsk].uiAll.equil, 0) + ' = equilibrium'; }
           document.getElementById(tsk+'0chmstatHiText').innerHTML = tmpTxt;
           document.getElementById(tsk+'_taskRewardText').innerHTML = av.sgr.describe.lng2[tsk];
           document.getElementById(tsk+'_taskRewardText').style.width = av.sgr.describe.lng2.width;
@@ -961,7 +961,7 @@ av.sgr.processAdvancedFn = function(numTsk, tsk) {
           document.getElementById(tsk+'0detailText').innerHTML = av.sgr.describe.lng2[tsk];   // + '&nbsp;&nbsp;&nbsp;&nbsp;';
           document.getElementById(tsk+'0inflowHiNp').style.display = 'none';    //hide actual input block
           document.getElementById(tsk+'0outflowHiNp').style.display = 'none';  //hide actual input block
-          document.getElementById(tsk+'_chmstatHiTxt').innerHTML = av.utl.toMetric(av.nut[numTsk].uiAll.equil, 0) + ' = ';
+          document.getElementById(tsk+'_chmstatHiTxt').innerHTML = av.utl.toModMetric(av.nut[numTsk].uiAll.equil, 0) + ' = ';
           document.getElementById(tsk+'0chmstatHiText').innerHTML = 'equilibrium &nbsp;&nbsp;';
         };
         document.getElementById(tsk+'0subSection').className = 'sgr-detail-global-chemo-grid-container';
@@ -1100,7 +1100,7 @@ av.sgr.processAdvancedFn = function(numTsk, tsk) {
                        Number(document.getElementById(tsk+sub+'outflowHiNp').value) <=1 ) {
                 av.nut[numTsk].uiAll.equil = Number(document.getElementById(tsk+sub+'inflowHiNp').value) / 
                          Number(document.getElementById(tsk+sub+'outflowHiNp').value);
-                document.getElementById(tsk+sub+'chmstatHiText').innerHTML = av.utl.toMetric(av.nut[numTsk].uiAll.equil),0 + ' = equilibrium';                  
+                document.getElementById(tsk+sub+'chmstatHiText').innerHTML = av.utl.toModMetric(av.nut[numTsk].uiAll.equil),0 + ' = equilibrium';                  
               }
               else {
                 document.getElementById(tsk+sub+'chmstatHiText').innerHTML = 'outflow or inflow value is not valid';

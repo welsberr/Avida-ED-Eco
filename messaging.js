@@ -795,11 +795,11 @@ av.msg.updatePopStats = function (msg) {
   av.grd.updateNum = msg.update;
   
   popSizeLabel.textContent = msg.organisms.formatNum(0);
-  aFitLabel.textContent = av.utl.toMetric(msg.ave_fitness, 0);
+  aFitLabel.textContent = av.utl.toModMetric(msg.ave_fitness, 0);
 
-  aEnergyAcqRateLabel.textContent = av.utl.toMetric(msg.ave_metabolic_rate, 0);
+  aEnergyAcqRateLabel.textContent = av.utl.toModMetric(msg.ave_metabolic_rate, 0);
   if (0 < msg.ave_gestation_time) {
-    aOffspringCostLabel.textContent = av.utl.toMetric(msg.ave_gestation_time, 0);
+    aOffspringCostLabel.textContent = av.utl.toModMetric(msg.ave_gestation_time, 0);
   } else { 
     aOffspringCostLabel.textContent = 'non-viable'; 
   }
@@ -834,7 +834,7 @@ av.msg.updatePopStats = function (msg) {
       resrcAmount = obj[tskName];
       if ( av.utl.isNumber(parseFloat(resrcAmount)) && 'global' == av.nut[numTsk].uiAll.geometry.toLowerCase() ) {
         tskDom = av.sgr.logicTitleNames[ndx];
-        resrcMetric = av.utl.toMetric(resrcAmount, 0);
+        resrcMetric = av.utl.toModMetric(resrcAmount, 0);
         av.pch.resrcGlobal[tskName][msg.update] = parseFloat(resrcAmount);
         //console.log('key=', tskName, '; val=', resrcAmount, '; resrcMetric=', resrcMetric, '; dom = '+tskDom);
         document.getElementById('tot'+tskDom).innerHTML = resrcMetric;
@@ -937,14 +937,14 @@ av.grd.updateSelectedOrganismType = function (msg,) {
   else prefix = '';
   nameLabel.textContent = msg.genotypeName;
   if (null === msg.fitness) fitLabel.textContent = ' ';
-  else fitLabel.textContent = prefix + av.utl.toMetric(msg.fitness, 0);
+  else fitLabel.textContent = prefix + av.utl.toModMetric(msg.fitness, 0);
   if (null === msg.metabolism) energyAcqRateLabel.textContent = ' ';
   else {
-    energyAcqRateLabel.textContent = prefix + av.utl.toMetric(msg.metabolism, 0);
+    energyAcqRateLabel.textContent = prefix + av.utl.toModMetric(msg.metabolism, 0);
   }
   if (null === msg.gestation) offspringCostLabel.textContent = ' ';
   else if (0 < msg.gestation) {
-    offspringCostLabel.textContent = prefix + av.utl.toMetric(msg.gestation, 0);
+    offspringCostLabel.textContent = prefix + av.utl.toModMetric(msg.gestation, 0);
   }
   else {offspringCostLabel.textContent = 'non-viable';}
   if (null == msg.age) ageLabel.textContent = ' ';
